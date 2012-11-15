@@ -1,0 +1,173 @@
+/*  libsimdpp
+    Copyright (C) 2011-2012  p12 tir5c3@yahoo.co.uk
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+*/
+
+#ifndef LIBSIMDPP_TEST_TESTS_MATH_INT_H
+#define LIBSIMDPP_TEST_TESTS_MATH_INT_H
+
+namespace SIMDPP_ARCH_NAMESPACE {
+
+void test_math_int(TestResults& res)
+{
+    TestCase& tc = NEW_TEST_CASE(res, "math_int");
+
+    using namespace simdpp;
+
+    //int8x16
+    {
+        uint8x16 s[] = {
+            uint8x16::make_const(0x11, 0x22, 0x33, 0x44),
+            uint8x16::make_const(0xcc, 0xdd, 0xee, 0xff),
+            uint8x16::make_const(0x00, 0x01, 0x02, 0x03),
+            uint8x16::make_const(0xfc, 0xfd, 0xfe, 0xff),
+            uint8x16::make_const(0x7e, 0x7f, 0x80, 0x81),
+
+            uint8x16::make_const(0x11, 0x22, 0x33, 0x44),
+            uint8x16::make_const(0xcc, 0xdd, 0xee, 0xff),
+            uint8x16::make_const(0x00, 0x01, 0x02, 0x03),
+            uint8x16::make_const(0xfc, 0xfd, 0xfe, 0xff),
+            uint8x16::make_const(0x7e, 0x7f, 0x80, 0x81),
+        };
+
+        TEST_ALL_COMB_HELPER(tc, int8x16, add, s, 1);
+        TEST_ALL_COMB_HELPER(tc, int8x16, adds, s, 1);
+        TEST_ALL_COMB_HELPER(tc, int8x16, sub, s, 1);
+        TEST_ALL_COMB_HELPER(tc, int8x16, subs, s, 1);
+        TEST_ALL_COMB_HELPER(tc, int8x16, min, s, 1);
+        TEST_ALL_COMB_HELPER(tc, int8x16, max, s, 1);
+
+        TEST_ALL_COMB_HELPER(tc, uint8x16, add, s, 1);
+        TEST_ALL_COMB_HELPER(tc, uint8x16, adds, s, 1);
+        TEST_ALL_COMB_HELPER(tc, uint8x16, sub, s, 1);
+        TEST_ALL_COMB_HELPER(tc, uint8x16, subs, s, 1);
+        TEST_ALL_COMB_HELPER(tc, uint8x16, min, s, 1);
+        TEST_ALL_COMB_HELPER(tc, uint8x16, max, s, 1);
+        TEST_ALL_COMB_HELPER(tc, uint8x16, avg, s, 1);
+
+        TEST_ARRAY_HELPER1(tc, int8x16, neg, s);
+        TEST_ARRAY_HELPER1(tc, int8x16, abs, s);
+    }
+
+    //int16x8
+    {
+        uint16x8 s[] = {
+            uint16x8::make_const(0x1111, 0x2222, 0x3333, 0x4444),
+            uint16x8::make_const(0xcccc, 0xdddd, 0xeeee, 0xffff),
+            uint16x8::make_const(0x0000, 0x0001, 0x0002, 0x0003),
+            uint16x8::make_const(0xfffc, 0xfffd, 0xfffe, 0xffff),
+            uint16x8::make_const(0x7ffe, 0x7fff, 0x8000, 0x8001),
+
+            uint16x8::make_const(0x1111, 0x2222, 0x3333, 0x4444),
+            uint16x8::make_const(0xcccc, 0xdddd, 0xeeee, 0xffff),
+            uint16x8::make_const(0x0000, 0x0001, 0x0002, 0x0003),
+            uint16x8::make_const(0xfffc, 0xfffd, 0xfffe, 0xffff),
+            uint16x8::make_const(0x7ffe, 0x7fff, 0x8000, 0x8001),
+        };
+
+        TEST_ALL_COMB_HELPER(tc, int16x8, add, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, adds, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, sub, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, subs, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, mul_lo, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, mul_hi, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, min, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, max, s, 2);
+
+        TEST_ALL_COMB_HELPER(tc, uint16x8, add, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, adds, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, sub, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, subs, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, mul_lo, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, mul_hi, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, min, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, max, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, avg, s, 2);
+
+        TEST_ALL_COMB_HELPER_T(tc, int32x4, int16x8, mull_lo, s, 2);
+        TEST_ALL_COMB_HELPER_T(tc, int32x4, int16x8, mull_hi, s, 2);
+        TEST_ALL_COMB_HELPER_T(tc, uint32x4, uint16x8, mull_lo, s, 2);
+        TEST_ALL_COMB_HELPER_T(tc, uint32x4, uint16x8, mull_hi, s, 2);
+
+        TEST_ARRAY_HELPER1(tc, int16x8, neg, s);
+        TEST_ARRAY_HELPER1(tc, int16x8, abs, s);
+    }
+
+    //int32x4
+    {
+        uint32x4 s[] = {
+            uint32x4::make_const(0x11111111, 0x22222222, 0x33333333, 0x44444444),
+            uint32x4::make_const(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
+            uint32x4::make_const(0x00000000, 0x00000001, 0x00000002, 0x00000003),
+            uint32x4::make_const(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
+            uint32x4::make_const(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
+
+            uint32x4::make_const(0x11111111, 0x22222222, 0x33333333, 0x44444444),
+            uint32x4::make_const(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
+            uint32x4::make_const(0x00000000, 0x00000001, 0x00000002, 0x00000003),
+            uint32x4::make_const(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
+            uint32x4::make_const(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
+        };
+
+        TEST_ALL_COMB_HELPER(tc, int32x4, add, s, 4);
+        TEST_ALL_COMB_HELPER(tc, int32x4, sub, s, 4);
+        TEST_ALL_COMB_HELPER(tc, int32x4, min, s, 4);
+        TEST_ALL_COMB_HELPER(tc, int32x4, max, s, 4);
+
+        TEST_ALL_COMB_HELPER(tc, uint32x4, add, s, 4);
+        TEST_ALL_COMB_HELPER(tc, uint32x4, sub, s, 4);
+        TEST_ALL_COMB_HELPER(tc, uint32x4, min, s, 4);
+        TEST_ALL_COMB_HELPER(tc, uint32x4, max, s, 4);
+
+        TEST_ALL_COMB_HELPER_T(tc, uint64x2, uint32x4, mull_lo, s, 4);
+        TEST_ALL_COMB_HELPER_T(tc, uint64x2, uint32x4, mull_hi, s, 4);
+        TEST_ALL_COMB_HELPER_T(tc, uint64x2, uint32x4, mul_lo, s, 4);
+
+        TEST_ARRAY_HELPER1(tc, int32x4, neg, s);
+        TEST_ARRAY_HELPER1(tc, int32x4, abs, s);
+    }
+
+    //int64x2
+    {
+        uint64x2 s[] = {
+            uint64x2::make_const(0x1111111111111111, 0x2222222222222222),
+            uint64x2::make_const(0x3333333333333333, 0x4444444444444444),
+            uint64x2::make_const(0xcccccccccccccccc, 0xdddddddddddddddd),
+            uint64x2::make_const(0xeeeeeeeeeeeeeeee, 0xffffffffffffffff),
+            uint64x2::make_const(0x0000000000000000, 0x0000000000000001),
+
+            uint64x2::make_const(0x0000000000000002, 0x0000000000000003),
+            uint64x2::make_const(0xfffffffffffffffc, 0xfffffffffffffffd),
+            uint64x2::make_const(0xfffffffffffffffe, 0xffffffffffffffff),
+            uint64x2::make_const(0x7ffffffffffffffe, 0x7fffffffffffffff),
+            uint64x2::make_const(0x8000000000000000, 0x8000000000000001),
+
+            uint64x2::make_const(0x1111111111111111, 0x2222222222222222),
+            uint64x2::make_const(0x3333333333333333, 0x4444444444444444),
+            uint64x2::make_const(0xcccccccccccccccc, 0xdddddddddddddddd),
+            uint64x2::make_const(0xeeeeeeeeeeeeeeee, 0xffffffffffffffff),
+            uint64x2::make_const(0x0000000000000000, 0x0000000000000001),
+
+            uint64x2::make_const(0x0000000000000002, 0x0000000000000003),
+            uint64x2::make_const(0xfffffffffffffffc, 0xfffffffffffffffd),
+            uint64x2::make_const(0xfffffffffffffffe, 0xffffffffffffffff),
+            uint64x2::make_const(0x7ffffffffffffffe, 0x7fffffffffffffff),
+            uint64x2::make_const(0x8000000000000000, 0x8000000000000001),
+        };
+
+        TEST_ALL_COMB_HELPER(tc, int64x2, add, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int64x2, sub, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint64x2, add, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint64x2, sub, s, 2);
+
+        TEST_ARRAY_HELPER1(tc, int64x2, neg, s);
+        TEST_ARRAY_HELPER1(tc, int64x2, abs, s);
+    }
+
+}
+
+SIMDPP_ARCH_NAMESPACE_END
+
+#endif

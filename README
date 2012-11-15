@@ -1,0 +1,58 @@
+
+What is libsimdpp
+=================
+
+libsimdpp is a header-only zero-overhead C++ wrapper around single-instruction
+multiple-data (SIMD) intrinsics found in many compilers. Large subsets of
+several instruction sets are supported via single interface. Where reasonable
+differences between instruction sets are resolved by implementing missing
+instructions in terms of a combination of other instructions.
+
+The library implements a lot of additional, commonly used functionality -
+various variants of matrix transpositions, interleaving loads/stores, optimized
+compile-time shuffling instructions, etc. Each of these are implemented in the
+most efficient manner for the target instruction set.
+
+The library sits somewhere in the middle between programming directly in
+intrinsics and even higher-level SIMD frameworks. As much control as possible
+is given to the developer, so that it's possible to predict what exactly code
+the compiler will generate.
+
+Supported instruction sets
+==========================
+
+The library supports NEON and SSE2-AVX2 instruction sets. The library presents
+a common interface for all those instruction sets in the simdpp:: namespace.
+Some instruction set specific intrinsics are available in simdpp::sse:: or
+simdpp::neon:: namespaces. However, a lot of domain-specific instructions are
+not wrapped at all, the original intrinsics must be used for these.
+
+The actual instruction set is selected at compile time by including appropriate
+header. A single executable can include the library several times each time
+specifying different target instruction set. The library thus may allow easier
+implementation of a dynamic dispatch mechanism while using the same source
+code. See the implementation of tests for an example of generation of object
+files for different instruction sets from the same source code.
+
+64-bit floats on ARM
+====================
+
+On ARM systems 64 bit floating point support is provided only in scalar VFP
+core. To make matters worse, the transition between the VFP and NEON
+instruction sets is very expensive, so the traditional vector processing idioms
+(such as performing IF by ANDNOT, AND and OR) can not be used. The intrinsics
+are thus implemented in a way that helps the compiler to "devectorize" all such
+masking operations back to regular IF statements. In this way, the same
+interface can be used to perform 64-bit floating point math in both NEON VFP
+and other instruction sets.
+
+Usage
+=====
+
+To use the library, include appropriate header from the simdpp/ directory. It
+will pull the rest of the library in.
+
+License
+=======
+
+The library is distributed under Boost Software License, Version 1.0.
