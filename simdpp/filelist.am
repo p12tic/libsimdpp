@@ -2,7 +2,12 @@
 simdpp_files_cc =
 
 simdpp_files_h = \
+    avx.h                   \
+    avx2.h                  \
     neon.h                  \
+    neon_vfp_dp.h           \
+    neon_vfp_sp.h           \
+    null.h                  \
     simd.h                  \
     sse2.h                  \
     sse3.h                  \
@@ -11,6 +16,8 @@ simdpp_files_h = \
     neon/detail/shuffle_int16x8.h   \
     neon/detail/shuffle_int32x4.h   \
     neon/detail/shuffle_int64x2.h   \
+    neon/detail/vfp_float64x2.h     \
+    neon/insert.h           \
     neon/math_int.h         \
     neon/memory_store.h     \
     neon/shuffle.h          \
@@ -26,38 +33,40 @@ simdpp_files_h = \
     simd/detail/not_implemented.h   \
     simd/detail/shuffle_emul.h      \
     simd/detail/traits.h            \
+    simd/detail/width.h             \
     simd/bitwise.h          \
+    simd/cast.h             \
     simd/compare.h          \
     simd/convert.h          \
-    simd/cast.h             \
     simd/float32x4.h        \
     simd/float32x4.inl      \
-    simd/float64x2.h        \
-    simd/float64x2.inl      \
-    simd/int128.h           \
-    simd/int128.inl         \
-    simd/int16x8.h          \
-    simd/int16x8.inl        \
-    simd/int32x4.h          \
-    simd/int32x4.inl        \
-    simd/int64x2.h          \
-    simd/int64x2.inl        \
-    simd/int8x16.h          \
-    simd/int8x16.inl        \
     simd/float32x8.h        \
     simd/float32x8.inl      \
+    simd/float64x2.h        \
+    simd/float64x2.inl      \
     simd/float64x4.h        \
     simd/float64x4.inl      \
+    simd/fwd.h              \
+    simd/int128.h           \
+    simd/int128.inl         \
     simd/int256.h           \
     simd/int256.inl         \
-    simd/int16x16.h         \
-    simd/int16x16.inl       \
-    simd/int32x8.h          \
-    simd/int32x8.inl        \
-    simd/int64x4.h          \
-    simd/int64x4.inl        \
+    simd/int8x16.h          \
+    simd/int8x16.inl        \
     simd/int8x32.h          \
     simd/int8x32.inl        \
+    simd/int16x8.h          \
+    simd/int16x8.inl        \
+    simd/int16x16.h         \
+    simd/int16x16.inl       \
+    simd/int32x4.h          \
+    simd/int32x4.inl        \
+    simd/int32x8.h          \
+    simd/int32x8.inl        \
+    simd/int64x2.h          \
+    simd/int64x2.inl        \
+    simd/int64x4.h          \
+    simd/int64x4.inl        \
     simd/make_shuffle_bytes_mask.h  \
     simd/math_fp_adv.h      \
     simd/math_fp_basic.h    \
@@ -66,18 +75,21 @@ simdpp_files_h = \
     simd/math_shift.h       \
     simd/memory_load.h      \
     simd/memory_store.h     \
+    simd/shuffle.h          \
     simd/shuffle_bytes.h    \
     simd/shuffle_generic.h  \
-    simd/shuffle.h          \
     simd/transpose.h        \
     simd/types.h            \
+    sse/detail/load_packed.h        \
+    sse/detail/shuffle128.h         \
+    sse/detail/store_packed.h       \
+    sse/detail/transpose.h          \
     sse/cache.h             \
     sse/compare.h           \
     sse/convert.h           \
-    sse/detail/load_packed.h        \
-    sse/detail/store_packed.h       \
-    sse/detail/transpose.h          \
     sse/extract.h           \
+    sse/extract_half.h      \
+    sse/insert.h            \
     sse/math_fp.h           \
     sse/math_int.h          \
     sse/memory_load.h       \
