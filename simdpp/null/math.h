@@ -101,6 +101,24 @@ V mul(V a, V b)
     return r;
 }
 
+template<unsigned P, class V>
+V div_p(V a, V b)
+{
+    // the least P significant bits of the mask are set.
+    uint64_t mask = 0;
+    mask = ~mask;
+    mask <<= P;
+    mask = ~mask;
+
+    V r;
+    for (unsigned i = 0; i < traits<V>::length; i++) {
+        r[i] = (a[i] & mask) / (b[i] & mask);
+        r[i] &= mask;
+    }
+    return r;
+}
+
+
 template<class V>
 V shift_r(V a, unsigned shift)
 {
