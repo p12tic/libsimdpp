@@ -190,7 +190,7 @@ basic_int8x16 make_shuffle_bytes16_mask(basic_int8x16 &mask)
 }
 
 template<int s0, int s1, int s2, int s3>
-basic_int8x32 make_shuffle_bytes16_bask(basic_int8x32 &mask)
+basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
     auto b0 = detail::get_shuffle_bytex1_16<s0,4>();
@@ -264,7 +264,7 @@ basic_int8x16 make_shuffle_bytes16_mask(basic_int8x16 &mask)
 }
 
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7>
-basic_int8x32 make_shuffle_bytes16_bask(basic_int8x32 &mask)
+basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
@@ -349,7 +349,7 @@ basic_int8x16 make_shuffle_bytes16_mask(basic_int8x16 &mask)
 
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7,
          int s8, int s9, int s10, int s11, int s12, int s13, int s14, int s15>
-basic_int8x32 make_shuffle_bytes16_bask(basic_int8x32 &mask)
+basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,16>();
     detail::assert_selector_range<s4,s5,s6,s7,16>();
@@ -432,7 +432,7 @@ basic_int16x8 make_shuffle_bytes16_mask(basic_int16x8 &mask)
 }
 
 template<int s0, int s1>
-basic_int16x16 make_shuffle_bytes16_bask(basic_int16x16 &mask)
+basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
     auto b0 = detail::get_shuffle_bytex2_16<s0,2>();
@@ -502,7 +502,7 @@ basic_int16x8 make_shuffle_bytes16_mask(basic_int16x8 &mask)
 }
 
 template<int s0, int s1, int s2, int s3>
-basic_int16x16 make_shuffle_bytes16_bask(basic_int16x16 &mask)
+basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
     auto b0 = detail::get_shuffle_bytex2_16<s0,4>();
@@ -573,7 +573,7 @@ basic_int16x8 make_shuffle_bytes16_mask(basic_int16x8 &mask)
 }
 
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7>
-basic_int16x16 make_shuffle_bytes16_bask(basic_int16x16 &mask)
+basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
@@ -645,7 +645,7 @@ basic_int32x4 make_shuffle_bytes16_mask(basic_int32x4 &mask)
 }
 
 template<int s0, int s1>
-basic_int32x8 make_shuffle_bytes16_bask(basic_int32x8 &mask)
+basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
     auto b0 = detail::get_shuffle_bytex4_16<s0,2>();
@@ -707,7 +707,7 @@ basic_int32x4 make_shuffle_bytes16_mask(basic_int32x4 &mask)
 }
 
 template<int s0, int s1, int s2, int s3>
-basic_int32x8 make_shuffle_bytes16_bask(basic_int32x8 &mask)
+basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
     auto b0 = detail::get_shuffle_bytex4_16<s0,4>();
