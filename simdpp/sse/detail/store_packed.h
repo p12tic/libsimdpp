@@ -94,7 +94,6 @@ template<class T> void st_pack3_impl8(T& a, T& b, T& c)
     using w_b16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16;
     using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
     using w_u8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u8;
-    using w_u64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u64;
     using w_b8 = T;
 
     w_b16 t0, t1, t2, t3;
@@ -123,6 +122,8 @@ template<class T> void st_pack3_impl8(T& a, T& b, T& c)
     u2 = shuffle_epi8_wrapper(u2, idx);
     u3 = shuffle_epi8_wrapper(u3, idx);
 #else
+    using w_u64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u64;
+
     // the following is still faster than non-SIMD implementation
     w_b8 mask1 = w_u8::make_const(0xff, 0xff, 0xff, 0, 0, 0, 0, 0,
                                   0xff, 0xff, 0xff, 0, 0, 0, 0, 0);
@@ -191,11 +192,8 @@ template<class T> void st_pack3_impl8(T& a, T& b, T& c)
 template<class T> void st_pack3_impl16(T& a, T& b, T& c)
 {
     // either basic_int8x16 or basic_int8x32, other entries likewise
-    using w_b8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b8;
     using w_b16 = T;
     using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
-    using w_u8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u8;
-    using w_u16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u16;
 
     w_b32 t0, t1, t2, t3;
     t0 = zip_lo(a, b);
@@ -215,6 +213,9 @@ template<class T> void st_pack3_impl16(T& a, T& b, T& c)
     // [a6, b6, c6, 0, a7, b7, c7, 0 ]
 
 #if SIMDPP_USE_SSSE3
+    using w_b8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b8;
+    using w_u8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u8;
+
     // it's not worth to use 4 different index vectors to shuffle the vectors
     // properly and use only bit_or later
     w_b8 idx = w_u8::make_const(0,   1,  2,  3,    4,    5,    8,    9,
@@ -225,6 +226,8 @@ template<class T> void st_pack3_impl16(T& a, T& b, T& c)
     u3 = shuffle_epi8_wrapper(u3, idx);
 
 #else
+    using w_u16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u16;
+
     // the following is still faster than non-SIMD implementation
     w_b16 mask2 = w_u16::make_const(0xffff, 0xffff, 0xffff, 0,
                                     0, 0, 0, 0);
@@ -386,12 +389,10 @@ inline void st_pack3(float64x4& a, float64x4& b, float64x4& c)
 template<class T> void st_pack4_impl8(T& a, T& b, T& c, T& d)
 {
     // either basic_int16x8 or basic_int16x16, other entries likewise
-    using w_b16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16;
-    using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
-    using w_b64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b64;
-    using w_b8 = T;
 
 #if SIMDPP_USE_SSSE3
+    using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
+
     w_b32 b0, b1, b2, b3;
     b0 = a;  b1 = b;  b2 = c;  b3 = d;
     transpose4(b0, b1, b2, b3);
@@ -402,6 +403,10 @@ template<class T> void st_pack4_impl8(T& a, T& b, T& c, T& d)
     c = transpose_inplace(c);
     d = transpose_inplace(d);
 #else
+    using w_b8 = T;
+    using w_b16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16;
+    using w_b64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b64;
+
     w_b8 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
     d0 = a;  d1 = b;  d2 = c;  d3 = d;
