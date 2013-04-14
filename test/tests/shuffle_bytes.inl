@@ -18,7 +18,7 @@ struct Test_permute_bytes16_x2 {
     static constexpr unsigned limit = 2;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
@@ -32,7 +32,7 @@ struct Test_permute_bytes16_x4 {
     static constexpr unsigned limit = 4;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
@@ -46,7 +46,7 @@ struct Test_permute_bytes16_x8 {
     static constexpr unsigned limit = 8;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
@@ -60,7 +60,7 @@ struct Test_permute_bytes16_x16 {
     static constexpr unsigned limit = 16;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
@@ -74,7 +74,7 @@ struct Test_shuffle_bytes16_x2 {
     static constexpr unsigned limit = 2;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
@@ -88,7 +88,7 @@ struct Test_shuffle_bytes16_x4 {
     static constexpr unsigned limit = 4;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
@@ -102,7 +102,7 @@ struct Test_shuffle_bytes16_x8 {
     static constexpr unsigned limit = 8;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
@@ -116,7 +116,7 @@ struct Test_shuffle_bytes16_x16 {
     static constexpr unsigned limit = 16;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i;
+        constexpr int s = i;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
@@ -130,7 +130,7 @@ struct Test_permute_zbytes16_x2 {
     static constexpr unsigned limit = 3;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
@@ -144,7 +144,7 @@ struct Test_permute_zbytes16_x4 {
     static constexpr unsigned limit = 5;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
@@ -158,7 +158,7 @@ struct Test_permute_zbytes16_x8 {
     static constexpr unsigned limit = 9;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
@@ -172,7 +172,7 @@ struct Test_permute_zbytes16_x16 {
     static constexpr unsigned limit = 17;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
@@ -186,7 +186,7 @@ struct Test_shuffle_zbytes16_x2 {
     static constexpr unsigned limit = 5;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
@@ -200,7 +200,7 @@ struct Test_shuffle_zbytes16_x4 {
     static constexpr unsigned limit = 9;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
@@ -214,7 +214,7 @@ struct Test_shuffle_zbytes16_x8 {
     static constexpr unsigned limit = 17;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
@@ -228,7 +228,7 @@ struct Test_shuffle_zbytes16_x16 {
     static constexpr unsigned limit = 33;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s = i - 1;
+        constexpr int s = (int) i - 1;
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
@@ -316,7 +316,7 @@ void test_shuffle_bytes(TestResults& res)
     {
         uint16x8 mask = make_shuffle_bytes16_mask<-1,-1,-1,-1>(mask);
         uint16x8 r1 = uint16x8::zero();
-        uint16x8 r2 = permute_bytes16(u16[0], mask);
+        uint16x8 r2 = permute_zbytes16(u16[0], mask);
         TEST_PUSH(tc, uint16x8, cmp_eq(r1, r2));
     }
     {

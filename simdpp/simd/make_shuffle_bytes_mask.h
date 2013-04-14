@@ -44,7 +44,7 @@ void assert_selector_range()
 template<int s, int u>
 uint8_t get_shuffle_bytex1_16()
 {
-    return (s == -1) ? 0 : (s < u ? s : (s-u)+16);
+    return (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
 }
 
 /// s - selector, u - the number of elements per group
@@ -52,8 +52,8 @@ template<int s, int u>
 std::array<uint8_t,2> get_shuffle_bytex2_16()
 {
     std::array<uint8_t,2> r;
-    r[0] = (s == -1) ? 0 : (s < u ? s*2   : (s-u)*2+16);
-    r[1] = (s == -1) ? 0 : r[0]+1;
+    r[0] = (s == -1) ? 0x80 : (s < u ? s*2   : (s-u)*2+16);
+    r[1] = (s == -1) ? 0x80 : r[0]+1;
     return r;
 }
 
@@ -62,10 +62,10 @@ template<int s, int u>
 std::array<uint8_t,4> get_shuffle_bytex4_16()
 {
     std::array<uint8_t,4> r;
-    r[0] = (s == -1) ? 0 : (s < u ? s*4   : (s-u)*4+16);
-    r[1] = (s == -1) ? 0 : r[0]+1;
-    r[2] = (s == -1) ? 0 : r[0]+2;
-    r[3] = (s == -1) ? 0 : r[0]+3;
+    r[0] = (s == -1) ? 0x80 : (s < u ? s*4   : (s-u)*4+16);
+    r[1] = (s == -1) ? 0x80 : r[0]+1;
+    r[2] = (s == -1) ? 0x80 : r[0]+2;
+    r[3] = (s == -1) ? 0x80 : r[0]+3;
     return r;
 }
 
