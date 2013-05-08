@@ -1,7 +1,7 @@
 #initialize autoconf/automake
 AC_INIT(
         [libsimdpp],
-        [0.9],
+        [0.9.1],
         [tir5c3@yahoo.co.uk],
         [libsimdpp])
 
