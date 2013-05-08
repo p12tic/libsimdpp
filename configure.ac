@@ -5,9 +5,12 @@ AC_INIT(
         [tir5c3@yahoo.co.uk],
         [libsimdpp])
 
-CXXFLAGS="-O0 -g"
-
 AC_PREREQ([2.59])
+
+# Disable debugging info and enable maximum optimization by default.
+if test -z $CXXFLAGS; then
+    CXXFLAGS='-g0 -O3'
+fi
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
