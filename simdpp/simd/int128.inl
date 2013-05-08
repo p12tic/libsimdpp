@@ -17,9 +17,13 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 
 inline int128 int128::zero()
 {
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     int128 r;
     r = bit_xor(r, r);
     return r;
+#elif SIMDPP_USE_SSE2
+    return _mm_setzero_si128();
+#endif
 }
 
 inline int128 int128::ones()
