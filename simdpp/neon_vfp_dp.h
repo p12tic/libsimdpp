@@ -14,6 +14,7 @@
 
 #define SIMDPP_ARCH_FILE_INCLUDED
 
+// Double precision floating point numbers use VFP, the rest use NEON
 #define SIMDPP_USE_NEON 1
 #define SIMDPP_USE_NEON_VFP_DP 1
 #define SIMDPP_ARCH neon_vfp_dp
