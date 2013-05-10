@@ -15,8 +15,7 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    Casts between unrelated types. No changes to the stored values are
+/** Casts between unrelated types. No changes to the stored values are
     performed.
 */
 template<class R, class T>

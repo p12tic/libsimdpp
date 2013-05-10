@@ -32,14 +32,12 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    @defgroup simd_shuffle
+/** @defgroup simd_shuffle
     @{
 */
 
 /// @{
-/**
-    Interleaves the lower halves of two vectors.
+/** Interleaves the lower halves of two vectors.
 
     @code
         | 0  1  2  3  4  5  ... N-2      N-1      |
@@ -136,8 +134,7 @@ inline basic_int64x4 zip_lo(basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    Interleaves the lower halves of two vectors.
+/** Interleaves the lower halves of two vectors.
 
     @code
         | 0  1  2  3  4  5  ... N-2      N-1      |
@@ -193,8 +190,7 @@ inline float64x4 zip_lo(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Interleaves the higher halves of two vectors.
+/** Interleaves the higher halves of two vectors.
 
     @code
         | 0      1      2        3        ... N-2    N-1    |
@@ -291,8 +287,7 @@ inline basic_int64x4 zip_hi(basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    Interleaves the higher halves of two vectors.
+/** Interleaves the higher halves of two vectors.
 
     @code
         | 0      1      2        3        ... N-2    N-1    |
@@ -348,8 +343,7 @@ inline float64x4 zip_hi(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Moves the elements in an int8x16 vector to the left by @a shift positions.
+/** Moves the elements in an int8x16 vector to the left by @a shift positions.
 
     @code
     shift:  pos:| 0   1    .  14  15  |
@@ -412,8 +406,7 @@ template<> inline basic_int8x32 move_l<32>(basic_int8x32 a) { (void) a; return i
 /// @}
 
 /// @{
-/**
-    Moves the 16-bit elements in a vector to the left by @a shift positions.
+/** Moves the 16-bit elements in a vector to the left by @a shift positions.
 
     @code
     shift:  pos:| 0  1   . 6  7  |
@@ -450,8 +443,7 @@ basic_int16x16 move_l(basic_int16x16 a)
 /// @}
 
 /// @{
-/**
-    Moves the 32-bit elements in a vector to the left by @a shift positions.
+/** Moves the 32-bit elements in a vector to the left by @a shift positions.
 
     @code
     shift:  pos:| 0  1  2  3  |
@@ -486,8 +478,7 @@ basic_int32x8 move_l(basic_int32x8 a)
 /// @}
 
 /// @{
-/**
-    Moves the 64-bit elements in a vector to the left by @a shift positions.
+/** Moves the 64-bit elements in a vector to the left by @a shift positions.
 
     @code
     shift:  pos:| 0  1  |
@@ -520,8 +511,7 @@ basic_int64x4 move_l(basic_int64x4 a)
 /// @}
 
 /// @{
-/**
-    Moves the 32-bit elements in a vector to the left by @a shift positions.
+/** Moves the 32-bit elements in a vector to the left by @a shift positions.
 
     @code
     shift:  pos:| 0  1  2  3  |
@@ -556,8 +546,7 @@ float32x8 move_l(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Moves the 64-bit elements in a vector to the left by @a shift positions.
+/** Moves the 64-bit elements in a vector to the left by @a shift positions.
 
     @code
     shift:  pos:| 0  1  |
@@ -590,8 +579,7 @@ float64x4 move_l(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Moves the 8-bit elements in a vector to the right by @a shift positions.
+/** Moves the 8-bit elements in a vector to the right by @a shift positions.
 
     @code
     shift:  pos:| 0   1    .  14  15  |
@@ -654,8 +642,7 @@ template<> inline basic_int8x32 move_r<32>(basic_int8x32 a) { (void) a; return i
 /// @}
 
 /// @{
-/**
-    Moves the 16-bit elements in a vector to the right by @a shift positions.
+/** Moves the 16-bit elements in a vector to the right by @a shift positions.
 
     @code
     shift:  pos:| 0  1   . 6  7  |
@@ -692,8 +679,7 @@ basic_int16x16 move_r(basic_int16x16 a)
 /// @}
 
 /// @{
-/**
-    Moves the 32-bit elements in a vector to the right by @a shift positions.
+/** Moves the 32-bit elements in a vector to the right by @a shift positions.
 
     @code
     shift:  pos:| 0  1  2  3  |
@@ -728,8 +714,7 @@ basic_int32x8 move_r(basic_int32x8 a)
 /// @}
 
 /// @{
-/**
-    Moves the 64-bit elements in a vector to the right by @a shift positions.
+/** Moves the 64-bit elements in a vector to the right by @a shift positions.
 
     @code
     shift:  pos:| 0  1  |
@@ -762,8 +747,7 @@ basic_int64x4 move_r(basic_int64x4 a)
 /// @}
 
 /// @{
-/**
-    Moves the 32-bit elements in a vector to the right by @a shift positions.
+/** Moves the 32-bit elements in a vector to the right by @a shift positions.
 
     @code
     shift:  pos:| 0  1  2  3  |
@@ -798,8 +782,7 @@ float32x8 move_r(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Moves the 64-bit elements in a vector to the right by @a shift positions.
+/** Moves the 64-bit elements in a vector to the right by @a shift positions.
 
     @code
     shift:  pos:| 0  1  |
@@ -832,8 +815,7 @@ float64x4 move_r(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Broadcasts the specified 8-bit value to all elements.
+/** Broadcasts the specified 8-bit value to all elements.
 
     @code
     r0 = a[s]
@@ -902,8 +884,7 @@ basic_int8x32 broadcast(basic_int8x32 a)
 /// @}
 
 /// @{
-/**
-    Broadcasts the specified 16-bit value to all elements within a int16x8 vector
+/** Broadcasts the specified 16-bit value to all elements within a int16x8 vector
 
     @code
     r0 = a[s]
@@ -963,8 +944,7 @@ basic_int16x16 broadcast(basic_int16x16 a)
 /// @}
 
 /// @{
-/**
-    Broadcasts the specified 32-bit value to all elements within a int32x4 vector
+/** Broadcasts the specified 32-bit value to all elements within a int32x4 vector
 
     @code
     r0 = a[s]
@@ -1010,8 +990,7 @@ basic_int32x8 broadcast(basic_int32x8 a)
 /// @}
 
 /// @{
-/**
-    Broadcasts the specified 64-bit value to all elements within a int64x2 vector
+/** Broadcasts the specified 64-bit value to all elements within a int64x2 vector
 
     @code
     r0 = a[s]
@@ -1059,8 +1038,7 @@ basic_int64x4 broadcast(basic_int64x4 a)
 /// @}
 
 /// @{
-/**
-    Broadcasts the specified 32-bit value to all elements within a float32x4 vector
+/** Broadcasts the specified 32-bit value to all elements within a float32x4 vector
 
     @code
     r0 = a[s]
@@ -1107,8 +1085,7 @@ float32x8 broadcast(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Broadcasts the specified 64-bit value to all elements within a float64x2 vector
+/** Broadcasts the specified 64-bit value to all elements within a float64x2 vector
 
     @code
     r0 = a[s]
@@ -1151,8 +1128,7 @@ float64x4 broadcast(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Extracts a int8x16 vector from two concatenated int8x16 vectors
+/** Extracts a int8x16 vector from two concatenated int8x16 vectors
 
     @code
     shift:  pos:| 0   1    .  14  15  |
@@ -1234,8 +1210,7 @@ template<> inline basic_int8x32 align<32>(basic_int8x32 lower, basic_int8x32 upp
 /// @}
 
 /// @{
-/**
-    Extracts a int16x8 vector from two concatenated int16x8 vectors
+/** Extracts a int16x8 vector from two concatenated int16x8 vectors
 
     @code
     shift:  pos:| 0  1    .  6  7  |
@@ -1264,8 +1239,7 @@ basic_int16x16 align(basic_int16x16 lower, basic_int16x16 upper)
 /// @}
 
 /// @{
-/**
-    Extracts a int32x4 vector from two concatenated int32x4 vectors
+/** Extracts a int32x4 vector from two concatenated int32x4 vectors
 
     @code
     shift:  pos:| 0  1  2  3  |
@@ -1305,8 +1279,7 @@ basic_int32x8 align(basic_int32x8 lower, basic_int32x8 upper)
 /// @}
 
 /// @{
-/**
-    Extracts a int64x2 vector from two concatenated int64x2 vectors
+/** Extracts a int64x2 vector from two concatenated int64x2 vectors
 
     @code
     shift:  pos:| 0  1  |
@@ -1344,8 +1317,7 @@ basic_int64x4 align(basic_int64x4 lower, basic_int64x4 upper)
 /// @}
 
 /// @{
-/**
-    Extracts a float32x4 vector from two concatenated float32x4 vectors
+/** Extracts a float32x4 vector from two concatenated float32x4 vectors
 
     @code
     shift:  pos:| 0  1  2  3  |
@@ -1386,8 +1358,7 @@ float32x8 align(float32x8 lower, float32x8 upper)
 /// @}
 
 /// @{
-/**
-    Extracts a float64x2 vector from two concatenated float64x2 vectors
+/** Extracts a float64x2 vector from two concatenated float64x2 vectors
 
     @code
     shift:  pos:| 0  1  |
@@ -1426,8 +1397,7 @@ float64x4 align(float64x4 lower, float64x4 upper)
 /// @}
 
 /// @{
-/**
-    Composes a vector from two sources according to a mask. Each element within
+/** Composes a vector from two sources according to a mask. Each element within
     the mask must have either all bits set or all bits unset.
 
     @code
@@ -1475,8 +1445,7 @@ inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, basic_int8x32 ma
 /// @}
 
 /// @{
-/**
-    Composes vector from two sources according to a mask. Each element within
+/** Composes vector from two sources according to a mask. Each element within
     the mask must have either all bits set or all bits unset.
 
     @code
@@ -1524,8 +1493,7 @@ inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, basic_int16x1
 /// @}
 
 /// @{
-/**
-    Composes a vector from two sources according to a mask. Each element within
+/** Composes a vector from two sources according to a mask. Each element within
     the mask must have either all bits set or all bits unset.
 
     @code
@@ -1573,8 +1541,7 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, basic_int32x8 ma
 /// @}
 
 /// @{
-/**
-    Composes a vector from two sources according to a mask. Each element within
+/** Composes a vector from two sources according to a mask. Each element within
     the mask must have either all bits set or all bits unset.
 
     @code
@@ -1622,8 +1589,7 @@ inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, basic_int64x4 ma
 /// @}
 
 /// @{
-/**
-    Composes a vector from two sources according to a mask. Each element within
+/** Composes a vector from two sources according to a mask. Each element within
     the mask must have either all bits set or all bits unset.
 
     @code
@@ -1679,8 +1645,7 @@ inline float32x8 blend(float32x8 on, float32x8 off, int256 mask)
 /// @}
 
 /// @{
-/**
-    Composes a vector from two sources according to a mask. Each element within
+/** Composes a vector from two sources according to a mask. Each element within
     the mask must have either all bits set or all bits unset.
 
     @code
@@ -1734,8 +1699,7 @@ inline float64x4 blend(float64x4 on, float64x4 off, int256 mask)
 /// @}
 
 /// @{
-/**
-    De-interleaves the odd(lower) elements of two int8x16 vectors
+/** De-interleaves the odd(lower) elements of two int8x16 vectors
 
     @code
         | 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  |
@@ -1786,8 +1750,7 @@ inline basic_int8x32 unzip_lo(basic_int8x32 a, basic_int8x32 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the odd(lower) elements of two int16x8 vectors
+/** De-interleaves the odd(lower) elements of two int16x8 vectors
 
     @code
         | 0  1  2  3  4  5  6  7  |
@@ -1847,8 +1810,7 @@ inline basic_int16x16 unzip_lo(basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the odd(lower) elements of two int32x4 vectors
+/** De-interleaves the odd(lower) elements of two int32x4 vectors
 
     @code
         | 0  1  2  3  |
@@ -1883,8 +1845,7 @@ inline basic_int32x8 unzip_lo(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the odd(lower) elements of two int64x2 vectors
+/** De-interleaves the odd(lower) elements of two int64x2 vectors
 
     @code
         | 0  1  |
@@ -1909,8 +1870,7 @@ inline basic_int64x4 unzip_lo(basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the odd(lower) elements of two float32x4 vectors
+/** De-interleaves the odd(lower) elements of two float32x4 vectors
 
     @code
         | 0  1  2  3  |
@@ -1945,8 +1905,7 @@ inline float32x8 unzip_lo(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the odd(lower) elements of two float64x2 vectors
+/** De-interleaves the odd(lower) elements of two float64x2 vectors
 
     @code
         | 0  1  |
@@ -1971,8 +1930,7 @@ inline float64x4 unzip_lo(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the even(higher) elements of two int8x16 vectors
+/** De-interleaves the even(higher) elements of two int8x16 vectors
 
     @code
         | 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  |
@@ -2018,8 +1976,7 @@ inline basic_int8x32 unzip_hi(basic_int8x32 a, basic_int8x32 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the even(higher) elements of two int16x8 vectors
+/** De-interleaves the even(higher) elements of two int16x8 vectors
 
     @code
         | 0  1  2  3  4  5  6  7  |
@@ -2065,8 +2022,7 @@ inline basic_int16x16 unzip_hi(basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the even(higher) elements of two int32x4 vectors
+/** De-interleaves the even(higher) elements of two int32x4 vectors
 
     @code
         | 0  1  2  3  |
@@ -2101,8 +2057,7 @@ inline basic_int32x8 unzip_hi(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the even(higher) elements of two int64x2 vectors
+/** De-interleaves the even(higher) elements of two int64x2 vectors
 
     @code
         | 0  1  |
@@ -2127,8 +2082,7 @@ inline basic_int64x4 unzip_hi(basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the even(higher) elements of two float32x4 vectors
+/** De-interleaves the even(higher) elements of two float32x4 vectors
 
     @code
         | 0  1  2  3  |
@@ -2163,8 +2117,7 @@ inline float32x8 unzip_hi(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    De-interleaves the even(higher) elements of two float64x2 vectors
+/** De-interleaves the even(higher) elements of two float64x2 vectors
 
     @code
         | 0  1  |

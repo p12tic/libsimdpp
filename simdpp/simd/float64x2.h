@@ -20,8 +20,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 
 class basic_int64x2;
 
-/**
-    Class representing float64x2 vector
+/** Class representing float64x2 vector
 */
 class float64x2 {
 public:
@@ -66,8 +65,7 @@ public:
 #endif
 #endif
 
-    /**
-        Creates a float64x2 vector with the contens set to zero
+    /** Creates a float64x2 vector with the contens set to zero
 
         @code
         r0 = 0.0
@@ -76,8 +74,7 @@ public:
     */
     static float64x2 zero();
 
-    /**
-        Creates a float64x2 vector from a value loaded from memory.
+    /** Creates a float64x2 vector from a value loaded from memory.
 
         @code
             | 0  1  |
@@ -87,8 +84,7 @@ public:
     */
     static float64x2 load_broadcast(const double* v0);
 
-    /**
-        Creates a float64x2 vector from a value stored in a core register.
+    /** Creates a float64x2 vector from a value stored in a core register.
 
         @code
             | 0  1  |
@@ -98,8 +94,7 @@ public:
     */
     static float64x2 set_broadcast(double v0);
 
-    /**
-        Creates a float64x2 vector from a value known at compile-time
+    /** Creates a float64x2 vector from a value known at compile-time
 
         @code
             | 0  1  |
@@ -108,8 +103,7 @@ public:
     */
     static float64x2 make_const(double v0);
 
-    /**
-        Creates a float64x2 vector from two values known at compile-time
+    /** Creates a float64x2 vector from two values known at compile-time
 
         @code
             | 0  1  |

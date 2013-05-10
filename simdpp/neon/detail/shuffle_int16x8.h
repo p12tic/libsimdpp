@@ -45,8 +45,7 @@ T bcast(T a)
     return vcombine_u16(h1, h2);
 }
 
-/**
-    Selects the elements from two vectors according to selectors. 0 selects
+/** Selects the elements from two vectors according to selectors. 0 selects
     the value from the first vector, 1 selects from the second
     Cost: 2
 */
@@ -63,8 +62,7 @@ T sel(T a, T b)
     return vbslq_u16(mask, b, a);
 }
 
-/**
-    Within each 4-element set moves the elements to the left or right. The
+/** Within each 4-element set moves the elements to the left or right. The
     shifted-in values are undefined.
     Cost: 1
 */

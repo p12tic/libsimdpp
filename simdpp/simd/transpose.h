@@ -30,8 +30,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
 /// @{
-/**
-    Transposes four 2x2 16-bit matrices within two int16x8 vectors
+/** Transposes four 2x2 16-bit matrices within two int16x8 vectors
 
     @code
     r0_0 = [ a0_0; a1_0 ; ... ; a0_6; a1_6 ]
@@ -81,8 +80,7 @@ inline void transpose2(basic_int16x16& a0, basic_int16x16& a1)
 /// @}
 
 /// @{
-/**
-    Transposes two 2x2 32-bit matrices within two int32x4 vectors
+/** Transposes two 2x2 32-bit matrices within two int32x4 vectors
 
     @code
     r0_0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
@@ -132,8 +130,7 @@ inline void transpose2(basic_int32x8& a0, basic_int32x8& a1)
 /// @}
 
 /// @{
-/**
-    Transposes a 2x2 64-bit matrix within two int64x2 vectors
+/** Transposes a 2x2 64-bit matrix within two int64x2 vectors
 
     @code
     r0_0 = [ a0_0; a1_0 ]
@@ -179,8 +176,7 @@ inline void transpose2(basic_int64x4& a0, basic_int64x4& a1)
 /// @}
 
 /// @{
-/**
-    Transposes two 2x2 32-bit matrices within two float32x4 vectors
+/** Transposes two 2x2 32-bit matrices within two float32x4 vectors
 
     @code
     r0_0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
@@ -232,8 +228,7 @@ inline void transpose2(float32x8& a0, float32x8& a1)
 /// @}
 
 /// @{
-/**
-    Transposes a 2x2 64-bit matrix within two int64x2 vectors
+/** Transposes a 2x2 64-bit matrix within two int64x2 vectors
 
     @code
     r0_0 = [ a0_0; a1_0 ]
@@ -284,8 +279,7 @@ inline void transpose2(float64x4& a0, float64x4& a1)
 void transpose4(basic_int32x4& a0, basic_int32x4& a1,
                 basic_int32x4& a2, basic_int32x4& a3);
 /// @{
-/**
-    Transposes four 4x4 8-bit matrix within four int8x16 vectors
+/** Transposes four 4x4 8-bit matrix within four int8x16 vectors
 
     @code
     r0 = [ a0_0; a1_0; a2_0; a3_0 ; a0_4; a1_4; a2_4; a3_4 ...]
@@ -386,8 +380,7 @@ inline void transpose4(basic_int8x32& a0, basic_int8x32& a1,
 /// @}
 
 /// @{
-/**
-    Transposes two 4x4 16-bit matrices within four int16x8 vectors
+/** Transposes two 4x4 16-bit matrices within four int16x8 vectors
 
     @code
     r0 = [ a0_0; a1_0; a2_0; a3_0 ; a0_4; a1_4; a2_4; a3_4 ]
@@ -517,8 +510,7 @@ void sse_transpose4x32_impl(V& a0, V& a1, V& a2, V& a3)
 } // namespace detail
 
 /// @{
-/**
-    Transposes a 4x4 32-bit matrix within four int32x4 vectors
+/** Transposes a 4x4 32-bit matrix within four int32x4 vectors
 
     @code
     r0 = [ a0_0; a1_0; a2_0; a3_0 ]
@@ -584,8 +576,7 @@ inline void transpose4(basic_int32x8& a0, basic_int32x8& a1,
 /// @}
 
 /// @{
-/**
-    Transposes 4x4 32-bit matrix within four float32x4 vectors
+/** Transposes 4x4 32-bit matrix within four float32x4 vectors
 
     @code
     r0 = [ a0_0; a1_0; a2_0; a3_0 ]
@@ -631,8 +622,7 @@ inline void transpose4(float32x8& a0, float32x8& a1,
 }
 /// @}
 
-/**
-    Transposes two 8x8 8-bit matrices within eight int8x16 vectors
+/** Transposes two 8x8 8-bit matrices within eight int8x16 vectors
 
     @code
     r0 = [ a0_0; ...; a7_0 ; a0_8; ...; a7_8 ]
@@ -778,8 +768,7 @@ inline void transpose8(basic_int8x32& a0, basic_int8x32& a1,
 }
 /// @}
 
-/**
-    Transposes a 8x8 16-bit matrix within eight int16x8 vectors
+/** Transposes a 8x8 16-bit matrix within eight int16x8 vectors
 
     @code
     r0 = [ a0_0; a1_0; a2_0; a3_0 ...; a7_0 ]
@@ -944,8 +933,7 @@ inline void transpose8(basic_int16x16& a0, basic_int16x16& a1,
 #endif
 }
 
-/**
-    Transposes a 16x16 8-bit matrix within sixteen int8x16 vectors
+/** Transposes a 16x16 8-bit matrix within sixteen int8x16 vectors
 
     @code
     r0 =  [ a0_0; ...; a15_0 ]

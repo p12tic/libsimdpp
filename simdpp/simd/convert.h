@@ -23,8 +23,7 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    Sign extends the first 8 values of a signed int8x16 vector to 16-bits
+/** Sign extends the first 8 values of a signed int8x16 vector to 16-bits
 
     @code
     r0 = (int16_t) a0
@@ -53,8 +52,7 @@ inline basic_int16x8 to_int16x8(int8x16 a)
 #endif
 }
 
-/**
-    Sign extends the first 16 values of a signed int8x32 vector to 16-bits
+/** Sign extends the first 16 values of a signed int8x32 vector to 16-bits
 
     @code
     r0 = (int16_t) a0
@@ -96,8 +94,7 @@ inline basic_int16x16 to_int16x8(int8x32 a)
 #endif
 }
 
-/**
-    Extends the first 8 values of a unsigned int8x16 vector to 16-bits
+/** Extends the first 8 values of a unsigned int8x16 vector to 16-bits
 
     @code
     r0 = (uint16_t) a0
@@ -123,8 +120,7 @@ inline basic_int16x8 to_int16x8(uint8x16 a)
 #endif
 }
 
-/**
-    Extends the first 16 values of a unsigned int8x32 vector to 16-bits
+/** Extends the first 16 values of a unsigned int8x32 vector to 16-bits
 
     @code
     r0 = (uint16_t) a0
@@ -156,8 +152,7 @@ inline basic_int16x16 to_int16x8(uint8x32 a)
 #endif
 }
 
-/**
-    Sign extends the first 4 values of a signed int16x8 vector to 32-bits
+/** Sign extends the first 4 values of a signed int16x8 vector to 32-bits
 
     @code
     r0 = (int32_t) a0
@@ -186,8 +181,7 @@ inline basic_int32x4 to_int32x4(int16x8 a)
 #endif
 }
 
-/**
-    Sign extends the first 8 values of a signed int16x16 vector to 32-bits
+/** Sign extends the first 8 values of a signed int16x16 vector to 32-bits
 
     @code
     r0 = (int32_t) a0
@@ -228,8 +222,7 @@ inline basic_int32x8 to_int32x4(int16x16 a)
 #endif
 }
 
-/**
-    Zero-extends the values of a unsigned int16x8 vector to 32-bits
+/** Zero-extends the values of a unsigned int16x8 vector to 32-bits
 
     @code
     r0 = (uint32_t) a0
@@ -256,8 +249,7 @@ inline basic_int32x4 to_int32x4(uint16x8 a)
 #endif
 }
 
-/**
-    Zero-extends the first 8 values of a unsigned int16x16 vector to 32-bits
+/** Zero-extends the first 8 values of a unsigned int16x16 vector to 32-bits
 
     @code
     r0 = (uint32_t) a0
@@ -290,8 +282,7 @@ inline basic_int32x8 to_int32x4(uint16x16 a)
 }
 
 /// @{
-/**
-    Converts the values of a float32x4 vector into signed int32_t
+/** Converts the values of a float32x4 vector into signed int32_t
     representation using truncation if only an inexact conversion can be
     performed. The behavior is undefined if the value can not be represented in
     the result type.
@@ -336,8 +327,7 @@ inline basic_int32x8 to_int32x8(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Converts the values of a doublex2 vector into int32_t representation using
+/** Converts the values of a doublex2 vector into int32_t representation using
     truncation. The behavior is undefined if the value can not be represented
     in the result type.
 
@@ -432,8 +422,7 @@ inline basic_int32x8 to_int32x8(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Extends the values of a signed int32x4 vector to 64-bits
+/** Extends the values of a signed int32x4 vector to 64-bits
 
     @par 128-bit version:
     @code
@@ -496,8 +485,7 @@ inline basic_int64x4 to_int64x2(int32x8 a)
 }
 
 /// @{
-/**
-    Extends the values of an unsigned int32x4 vector to 64-bits
+/** Extends the values of an unsigned int32x4 vector to 64-bits
 
     @par 128-bit version:
     @code
@@ -556,8 +544,7 @@ inline basic_int64x4 to_int64x4(uint32x8 a)
 /// @}
 
 /// @{
-/**
-    Converts 32-bit integer values to 32-bit float values.
+/** Converts 32-bit integer values to 32-bit float values.
 
     SSE specific:
 
@@ -599,8 +586,7 @@ inline float32x8 to_float32x8(int32x8 a)
 /// @}
 
 /// @{
-/**
-    Converts 64-bit float values to 32-bit float values.
+/** Converts 64-bit float values to 32-bit float values.
 
     SSE specific:
 
@@ -690,8 +676,7 @@ inline float32x8 to_float32x8(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Converts the 32-bit integer values to 64-bit float values.
+/** Converts the 32-bit integer values to 64-bit float values.
 
     SSE specific:
 
@@ -777,8 +762,7 @@ inline float64x4 to_float64x4(int32x8 a)
 /// @}
 
 /// @{
-/**
-    Converts the 32-bit float values to 64-bit float values.
+/** Converts the 32-bit float values to 64-bit float values.
 
     SSE specific:
 

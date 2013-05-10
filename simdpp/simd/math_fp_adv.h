@@ -30,8 +30,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
 /// @{
-/**
-    Checks whether elements in @a a are IEEE754 NaN.
+/** Checks whether elements in @a a are IEEE754 NaN.
 
     @code
     r0 = isnan(a0) ? 0xffffffff : 0
@@ -66,8 +65,7 @@ inline basic_int32x8 isnan(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Checks whether elements in @a a are IEEE754 NaN.
+/** Checks whether elements in @a a are IEEE754 NaN.
 
     @code
     r0 = isnan(a0) ? 0xffffffffffffffff : 0
@@ -110,8 +108,7 @@ inline basic_int64x4 isnan(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Checks whether corresponding elements in either @a a or @a b are IEEE754 NaN.
+/** Checks whether corresponding elements in either @a a or @a b are IEEE754 NaN.
 
     @code
     r0 = isnan(a0) || isnan(b0) ? 0xffffffff : 0
@@ -152,8 +149,7 @@ inline basic_int32x8 isnan2(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Checks whether corresponding elements in either @a a or @a b are IEEE754
+/** Checks whether corresponding elements in either @a a or @a b are IEEE754
     NaN.
 
     @code
@@ -197,8 +193,7 @@ inline basic_int64x4 isnan2(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Computes approximate reciprocal.
+/** Computes approximate reciprocal.
 
     @code
     r0 = approx(1.0f / a0)
@@ -231,8 +226,7 @@ inline float32x8 rcp_e(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Computes one Newton-Rhapson iterations for reciprocal. @a x is the current
+/** Computes one Newton-Rhapson iterations for reciprocal. @a x is the current
     estimate, @a a are the values to estimate reciprocal for.
 
     @code
@@ -290,8 +284,7 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
 /// @}
 
 /// @{
-/**
-    Divides the values of two vectors.
+/** Divides the values of two vectors.
 
     @code
     r0 = a0 / b0
@@ -329,8 +322,7 @@ inline float32x8 div(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Divides the values of two vectors
+/** Divides the values of two vectors
 
     @code
     r0 = a0 / b0
@@ -367,8 +359,7 @@ inline float64x4 div(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Computes approximate reciprocal square root.
+/** Computes approximate reciprocal square root.
 
     @code
     r0 = approx(1 / sqrt(a0))
@@ -401,8 +392,7 @@ inline float32x8 rsqrt_e(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Computes one Newton-Rhapson iteration for inverse of square root. @a x is
+/** Computes one Newton-Rhapson iteration for inverse of square root. @a x is
     the current estimate, @a a are the values to estimate the inverse square
     root for.
 
@@ -472,8 +462,7 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 /// @}
 
 /// @{
-/**
-    Computes square root.
+/** Computes square root.
 
     @code
     r0 = sqrt(a0)
@@ -513,8 +502,7 @@ inline float32x8 sqrt(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Computes square root.
+/** Computes square root.
 
     @code
     r0 = sqrt(a0)
@@ -552,8 +540,7 @@ inline float64x4 sqrt(float64x4 a)
 
 // note: SSE doesn't provide a way to propagate NaNs in min/max
 /// @{
-/**
-    Computes minimum of the values in two vectors. If at least one of the
+/** Computes minimum of the values in two vectors. If at least one of the
     values is NaN, or both values are zeroes, it is unspecified which value
     would be returned.
 
@@ -589,8 +576,7 @@ inline float32x8 min(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Computes minima of the values in two vectors. If at least one of the values
+/** Computes minima of the values in two vectors. If at least one of the values
     is NaN, or both values are zeroes, it is unspecified which value would be
     returned.
 
@@ -629,8 +615,7 @@ inline float64x4 min(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Computes maxima of the values of two vectors. If at least one of the values
+/** Computes maxima of the values of two vectors. If at least one of the values
     is NaN, or both values are zeroes, it is unspecified which value would be
     returned.
 
@@ -665,8 +650,7 @@ inline float32x8 max(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Computes maxima of the values of two vectors. If at least one of the values
+/** Computes maxima of the values of two vectors. If at least one of the values
     is NaN, or both values are zeroes, it is unspecified which value would be
     returned.
 
@@ -705,8 +689,7 @@ inline float64x4 max(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Rounds the values of a vector towards negative infinity
+/** Rounds the values of a vector towards negative infinity
 
     @code
     r0 = floor(a0)
@@ -756,8 +739,7 @@ inline float32x8 floor(float32x8 a)
 }
 
 /// @{
-/**
-    Rounds the values a vector towards positive infinity
+/** Rounds the values a vector towards positive infinity
 
     @code
     r0 = ceil(a0)
@@ -809,8 +791,7 @@ inline float32x8 ceil(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Rounds the values of a vector towards zero
+/** Rounds the values of a vector towards zero
     @code
     r0 = trunc(a0)
     ...

@@ -20,8 +20,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
 /// @{
-/**
-    Selects bytes from a vector according to a mask. Each byte within the
+/** Selects bytes from a vector according to a mask. Each byte within the
     mask defines which element to select:
      * Bits 7-4 must be zero or the behavior is undefined
      * Bits 3-0 define the element within the given vector.
@@ -95,8 +94,7 @@ inline float64x4 permute_bytes16(float64x4 a, int256 mask)
 /// @}
 
 /// @{
-/**
-    Selects bytes from two vectors according to a mask. Each byte within the
+/** Selects bytes from two vectors according to a mask. Each byte within the
     mask defines which element to select:
      * Bits 7-5 must be zero or the behavior is undefined
      * Bit 4 defines which vector to select. 0 corresponds to @a a, 1 to @a b.
@@ -202,8 +200,7 @@ inline float64x4 shuffle_bytes16(float64x4 a, float64x4 b, int256 mask)
 /// @}
 
 /// @{
-/**
-    Selects bytes from a vector according to a mask, optionally selecting zero.
+/** Selects bytes from a vector according to a mask, optionally selecting zero.
     Each byte within the mask defines which element to select:
      * Bit 7 results in the result byte being zeroed, if set.
      * Bits 6-4 must be zero or the behavior is undefined
@@ -276,8 +273,7 @@ inline float64x4 permute_zbytes16(float64x4 a, int256 mask)
 /// @}
 
 /// @{
-/**
-    Selects bytes from two vectors according to a mask, optionally selecting
+/** Selects bytes from two vectors according to a mask, optionally selecting
     zero. Each byte within the mask defines which element to select:
      * Bit 7 results in the result byte being zeroed, if set.
      * Bits 6-5 must be zero or the behavior is undefined

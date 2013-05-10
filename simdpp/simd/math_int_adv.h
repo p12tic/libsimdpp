@@ -24,8 +24,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
 /// @{
-/**
-    Computes minimum of signed 8-bit values.
+/** Computes minimum of signed 8-bit values.
 
     @code
     r0 = min(a0, b0)
@@ -65,8 +64,7 @@ inline int8x32 min(int8x32 a, int8x32 b)
 /// @}
 
 /// @{
-/**
-    Computes minimum of the unsigned 8-bit values.
+/** Computes minimum of the unsigned 8-bit values.
 
     @code
     r0 = min(a0, b0)
@@ -99,8 +97,7 @@ inline uint8x32 min(uint8x32 a, uint8x32 b)
 /// @}
 
 /// @{
-/**
-    Computes minimum of the signed 16-bit values.
+/** Computes minimum of the signed 16-bit values.
 
     @code
     r0 = min(a0, b0)
@@ -133,8 +130,7 @@ inline int16x16 min(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Computes minimum of the unsigned 16-bit values.
+/** Computes minimum of the unsigned 16-bit values.
 
     @code
     r0 = min(a0, b0)
@@ -174,8 +170,7 @@ inline uint16x16 min(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Computes minimum of the signed 32-bit values.
+/** Computes minimum of the signed 32-bit values.
 
     @code
     r0 = min(a0, b0)
@@ -215,8 +210,7 @@ inline int32x8 min(int32x8 a, int32x8 b)
 /// @}
 
 /// @{
-/**
-    Computes minimum of the unsigned 32-bit values.
+/** Computes minimum of the unsigned 32-bit values.
 
     @code
     r0 = min(a0, b0)
@@ -256,8 +250,7 @@ inline uint32x8 min(uint32x8 a, uint32x8 b)
 /// @}
 
 /// @{
-/**
-    Computes maximum of the signed 8-bit values.
+/** Computes maximum of the signed 8-bit values.
 
     @code
     r0 = max(a0, b0)
@@ -297,8 +290,7 @@ inline int8x32 max(int8x32 a, int8x32 b)
 /// @}
 
 /// @{
-/**
-    Computes maximum of the unsigned 8-bit values.
+/** Computes maximum of the unsigned 8-bit values.
 
     @code
     r0 = max(a0, b0)
@@ -331,8 +323,7 @@ inline uint8x32 max(uint8x32 a, uint8x32 b)
 /// @}
 
 /// @{
-/**
-    Computes maximum of the signed 16-bit values.
+/** Computes maximum of the signed 16-bit values.
 
     @code
     r0 = max(a0, b0)
@@ -365,8 +356,7 @@ inline int16x16 max(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Computes maximum of the unsigned 16-bit values.
+/** Computes maximum of the unsigned 16-bit values.
 
     @code
     r0 = max(a0, b0)
@@ -406,8 +396,7 @@ inline uint16x16 max(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Computes maximum of the signed 32-bit values.
+/** Computes maximum of the signed 32-bit values.
 
     @code
     r0 = max(a0, b0)
@@ -448,8 +437,7 @@ inline int32x8 max(int32x8 a, int32x8 b)
 /// @}
 
 /// @{
-/**
-    Computes maximum of the unsigned 32-bit values.
+/** Computes maximum of the unsigned 32-bit values.
 
     @code
     r0 = max(a0, b0)
@@ -489,8 +477,7 @@ inline uint32x8 max(uint32x8 a, uint32x8 b)
 /// @}
 
 /// @{
-/**
-    Computes average of the unsigned 8-bit values.
+/** Computes average of the unsigned 8-bit values.
 
     @code
     r0 = (a0 + b0 + 1) / 2
@@ -525,8 +512,7 @@ inline uint8x32 avg(uint8x32 a, uint8x32 b)
 /// @}
 
 /// @{
-/**
-    Computes average of the unsigned 16-bit values.
+/** Computes average of the unsigned 16-bit values.
 
     @code
     r0 = (a0 + b0 + 1) / 2
@@ -561,8 +547,7 @@ inline uint16x16 avg(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Computes absolute value of 8-bit integer values.
+/** Computes absolute value of 8-bit integer values.
 
     @code
     r0 = abs(a0)
@@ -605,8 +590,7 @@ inline uint8x32 abs(int8x32 a)
 /// @}
 
 /// @{
-/**
-    Computes absolute value of 16-bit integer values.
+/** Computes absolute value of 16-bit integer values.
 
     @code
     r0 = abs(a0)
@@ -648,8 +632,7 @@ inline uint16x16 abs(int16x16 a)
 /// @}
 
 /// @{
-/**
-    Computes absolute value of 32-bit integer values.
+/** Computes absolute value of 32-bit integer values.
 
     @code
     r0 = abs(a0)
@@ -691,8 +674,7 @@ inline uint32x8 abs(int32x8 a)
 /// @}
 
 /// @{
-/**
-    Computes absolute value of 64-bit integer values.
+/** Computes absolute value of 64-bit integer values.
 
     @code
     r0 = abs(a0)
@@ -752,8 +734,7 @@ inline uint64x4 abs(int64x4 a)
 /// @}
 
 /// @{
-/**
-    Divides one 8-bit unsigned number by another. The precision of the operation
+/** Divides one 8-bit unsigned number by another. The precision of the operation
     is configurable: only P least significant bits of both numerator and
     denumerator are considered.
 

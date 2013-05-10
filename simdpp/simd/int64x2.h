@@ -19,8 +19,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 
 class float64x2;
 
-/**
-    Generic class representing 2x 64-bit integer vector.
+/** Generic class representing 2x 64-bit integer vector.
     To be used where the signedness of the underlying element type is not important
 */
 class basic_int64x2 : public int128 {
@@ -64,8 +63,7 @@ public:
 #endif
 };
 
-/**
-    Class representing 2x 64-bit signed integer vector
+/** Class representing 2x 64-bit signed integer vector
 */
 class int64x2 : public basic_int64x2 {
 public:
@@ -107,8 +105,7 @@ public:
 #endif
 #endif
 
-    /**
-        Creates a signed int64x4 vector with the contents set to zero
+    /** Creates a signed int64x4 vector with the contents set to zero
 
         @code
         r0 = 0
@@ -117,8 +114,7 @@ public:
     */
     static int64x2 zero();
 
-    /**
-        Creates a signed int64x4 vector from a value loaded from memory.
+    /** Creates a signed int64x4 vector from a value loaded from memory.
 
         @code
             | 0  1  |
@@ -129,8 +125,7 @@ public:
     */
     static int64x2 load_broadcast(const int64_t* v0);
 
-    /**
-        Creates a signed int64x4 vector from a value stored in a core register.
+    /** Creates a signed int64x4 vector from a value stored in a core register.
 
         @code
             | 0  1  |
@@ -140,8 +135,7 @@ public:
     */
     static int64x2 set_broadcast(int64_t v0);
 
-    /**
-        Creates a signed int64x4 vector from a value known at compile-time
+    /** Creates a signed int64x4 vector from a value known at compile-time
 
         @code
             | 0  1  |
@@ -150,8 +144,7 @@ public:
     */
     static int64x2 make_const(int64_t v0);
 
-    /**
-        Creates a signed int64x4 vector from two values known at compile-time
+    /** Creates a signed int64x4 vector from two values known at compile-time
 
         @code
             | 0  1  |
@@ -161,8 +154,7 @@ public:
     static int64x2 make_const(int64_t v0, int64_t v1);
 };
 
-/**
-    Class representing 2x 64-bit unsigned integer vector
+/** Class representing 2x 64-bit unsigned integer vector
 */
 class uint64x2 : public basic_int64x2 {
 public:
@@ -204,8 +196,7 @@ public:
 #endif
 #endif
 
-    /**
-        Creates an unsigned int64x4 vector with the contents set to zero
+    /** Creates an unsigned int64x4 vector with the contents set to zero
 
         @code
         r0 = 0
@@ -214,8 +205,7 @@ public:
     */
     static uint64x2 zero();
 
-    /**
-        Creates a int64x4 vector from a value loaded from memory.
+    /** Creates a int64x4 vector from a value loaded from memory.
 
         @code
             | 0  1  |
@@ -226,8 +216,7 @@ public:
     */
     static uint64x2 load_broadcast(const uint64_t* v0);
 
-    /**
-        Creates an unsigned int64x4 vector from a value stored in a core
+    /** Creates an unsigned int64x4 vector from a value stored in a core
         register.
 
         @code
@@ -238,8 +227,7 @@ public:
     */
     static uint64x2 set_broadcast(uint64_t v0);
 
-    /**
-        Creates an unsigned int64x4 vector from a value known at compile-time
+    /** Creates an unsigned int64x4 vector from a value known at compile-time
 
         @code
             | 0  1  |
@@ -248,8 +236,7 @@ public:
     */
     static uint64x2 make_const(uint64_t v0);
 
-    /**
-        Creates an unsigned int64x4 vector from two values known at
+    /** Creates an unsigned int64x4 vector from two values known at
         compile-time
 
         @code

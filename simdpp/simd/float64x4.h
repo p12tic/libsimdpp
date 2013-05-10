@@ -21,8 +21,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 
 class basic_int64x4;
 
-/**
-    Class representing float64x4 vector
+/** Class representing float64x4 vector
 */
 class float64x4 {
 public:
@@ -71,8 +70,7 @@ public:
 #endif
 
 
-    /**
-        Creates a float64x4 vector with the contens set to zero
+    /** Creates a float64x4 vector with the contens set to zero
 
         @code
         r0 = 0.0
@@ -82,8 +80,7 @@ public:
     */
     static float64x4 zero();
 
-    /**
-        Creates a float64x4 vector from a value loaded from memory.
+    /** Creates a float64x4 vector from a value loaded from memory.
 
         @code
             | 0  1  2  3  |
@@ -93,8 +90,7 @@ public:
     */
     static float64x4 load_broadcast(const double* v0);
 
-    /**
-        Creates a float64x4 vector from a value stored in a core register.
+    /** Creates a float64x4 vector from a value stored in a core register.
 
         @code
             | 0  1  2  3  |
@@ -104,8 +100,7 @@ public:
     */
     static float64x4 set_broadcast(double v0);
 
-    /**
-        Creates a float64x4 vector from a value known at compile-time
+    /** Creates a float64x4 vector from a value known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -114,8 +109,7 @@ public:
     */
     static float64x4 make_const(double v0);
 
-    /**
-        Creates a float64x4 vector from two values known at compile-time
+    /** Creates a float64x4 vector from two values known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -124,8 +118,7 @@ public:
     */
     static float64x4 make_const(double v0, double v1);
 
-    /**
-        Creates a float64x4 vector from four values known at compile-time
+    /** Creates a float64x4 vector from four values known at compile-time
 
         @code
             | 0  1  2  3  |

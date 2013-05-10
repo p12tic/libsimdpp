@@ -28,8 +28,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 /// @{
 
 /// @{
-/**
-    Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector
+/** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector
     from an aligned memory location.
 
     @par 128-bit version:
@@ -127,8 +126,7 @@ inline float64x4 load(float64x4& a, const double* p)
 /// @}
 
 /// @{
-/**
-    Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector from an
+/** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector from an
     unaligned memory location.
 
     @par 128-bit version:
@@ -371,8 +369,7 @@ void v256_load_i_packed4(V& a, V& b, V& c, V& d, const void* p)
 
 } // namespace detail
 /// @{
-/**
-    Loads 8-bit values packed in pairs, de-interleaves them and stores the
+/** Loads 8-bit values packed in pairs, de-interleaves them and stores the
     result into two vectors.
 
     @par 128-bit version:
@@ -413,8 +410,7 @@ inline void load_packed2(basic_int8x32& a, basic_int8x32& b, const void* p)
 /// @}
 
 /// @{
-/**
-    Loads 16-bit values packed in pairs, de-interleaves them and stores the
+/** Loads 16-bit values packed in pairs, de-interleaves them and stores the
     result into two vectors.
 
     @par 128-bit version:
@@ -455,8 +451,7 @@ inline void load_packed2(basic_int16x16& a, basic_int16x16& b, const void* p)
 /// @}
 
 /// @{
-/**
-    Loads 32-bit values packed in pairs, de-interleaves them and stores the
+/** Loads 32-bit values packed in pairs, de-interleaves them and stores the
     result into two vectors.
 
     @par 128-bit version:
@@ -497,8 +492,7 @@ inline void load_packed2(basic_int32x8& a, basic_int32x8& b, const void* p)
 /// @}
 
 /// @{
-/**
-    Loads 64-bit values packed in pairs, de-interleaves them and stores the
+/** Loads 64-bit values packed in pairs, de-interleaves them and stores the
     result into two vectors.
 
     @par 128-bit version:
@@ -530,8 +524,7 @@ inline void load_packed2(basic_int64x4& a, basic_int64x4& b, const void* p)
 /// @}
 
 /// @}
-/**
-    Loads 32-bit float values packed in pairs, de-interleaves them and stores
+/** Loads 32-bit float values packed in pairs, de-interleaves them and stores
     the result into two vectors.
 
     @par 128-bit version:
@@ -578,8 +571,7 @@ inline void load_packed2(float32x8& a, float32x8& b, const float* p)
 /// @}
 
 /// @{
-/**
-    Loads 64-bit float values packed in pairs, de-interleaves them and stores
+/** Loads 64-bit float values packed in pairs, de-interleaves them and stores
     the result into two vectors.
 
     @par 128-bit version:
@@ -617,8 +609,7 @@ inline void load_packed2(float64x4& a, float64x4& b, const double* p)
 /// @}
 
 /// @{
-/**
-    Loads 8-bit values packed in triplets, de-interleaves them and stores the
+/** Loads 8-bit values packed in triplets, de-interleaves them and stores the
     result into three vectors.
 
     @par 128-bit version:
@@ -664,8 +655,7 @@ inline void load_packed3(basic_int8x32& a, basic_int8x32& b, basic_int8x32& c,
 /// @}
 
 /// @{
-/**
-    Loads 16-bit values packed in triplets, de-interleaves them and stores the
+/** Loads 16-bit values packed in triplets, de-interleaves them and stores the
     result into three vectors.
 
     @par 128-bit version:
@@ -711,8 +701,7 @@ inline void load_packed3(basic_int16x16& a, basic_int16x16& b, basic_int16x16& c
 /// @}
 
 /// @{
-/**
-    Loads 32-bit values packed in triplets, de-interleaves them and stores the
+/** Loads 32-bit values packed in triplets, de-interleaves them and stores the
     result into three vectors.
 
     @par 128-bit version:
@@ -758,8 +747,7 @@ inline void load_packed3(basic_int32x8& a, basic_int32x8& b, basic_int32x8& c,
 /// @}
 
 /// @{
-/**
-    Loads 64-bit values packed in triplets, de-interleaves them and stores the
+/** Loads 64-bit values packed in triplets, de-interleaves them and stores the
     result into three vectors.
 
     @par 128-bit version:
@@ -817,8 +805,7 @@ inline void load_packed3(basic_int64x4& a, basic_int64x4& b, basic_int64x4& c,
 /// @}
 
 /// @{
-/**
-    Loads 32-bit floating point values packed in triplets, de-interleaves them
+/** Loads 32-bit floating point values packed in triplets, de-interleaves them
     and stores the result into three vectors.
 
     @par 128-bit version:
@@ -871,8 +858,7 @@ inline void load_packed3(float32x8& a, float32x8& b, float32x8& c,
 /// @}
 
 /// @{
-/**
-    Loads 64-bit floating point values packed in triplets, de-interleaves them
+/** Loads 64-bit floating point values packed in triplets, de-interleaves them
     and stores the result into three vectors.
 
     @par 128-bit version:
@@ -923,8 +909,7 @@ inline void load_packed3(float64x4& a, float64x4& b, float64x4& c, const double*
 /// @}
 
 /// @{
-/**
-    Loads 8-bit values packed in quartets, de-interleaves them and stores the
+/** Loads 8-bit values packed in quartets, de-interleaves them and stores the
     result into four vectors.
 
     @par 128-bit version:
@@ -974,8 +959,7 @@ inline void load_packed4(basic_int8x32& a, basic_int8x32& b,
 /// @}
 
 /// @{
-/**
-    Loads 16-bit values packed in quartets, de-interleaves them and stores the
+/** Loads 16-bit values packed in quartets, de-interleaves them and stores the
     result into four vectors.
 
     @par 128-bit version:
@@ -1025,8 +1009,7 @@ inline void load_packed4(basic_int16x16& a, basic_int16x16& b,
 /// @}
 
 /// @{
-/**
-    Loads 32-bit values packed in quartets, de-interleaves them and stores the
+/** Loads 32-bit values packed in quartets, de-interleaves them and stores the
     result into four vectors.
 
     @par 128-bit version:
@@ -1077,8 +1060,7 @@ inline void load_packed4(basic_int32x8& a, basic_int32x8& b,
 /// @}
 
 /// @{
-/**
-    Loads 64-bit values packed in quartets, de-interleaves them and stores the
+/** Loads 64-bit values packed in quartets, de-interleaves them and stores the
     result into four vectors.
 
     @par 128-bit version:
@@ -1121,8 +1103,7 @@ inline void load_packed4(basic_int64x4& a, basic_int64x4& b,
 /// @}
 
 /// @{
-/**
-    Loads 32-bit floating-point values packed in quartets, de-interleaves them
+/** Loads 32-bit floating-point values packed in quartets, de-interleaves them
     and stores the result into four vectors.
 
     @par 128-bit version:
@@ -1181,8 +1162,7 @@ inline void load_packed4(float32x8& a, float32x8& b,
 /// @}
 
 /// @{
-/**
-    Loads 64-bit floating-point values packed in quartets, de-interleaves them
+/** Loads 64-bit floating-point values packed in quartets, de-interleaves them
     and stores the result into four vectors.
 
     @par 128-bit version:

@@ -16,8 +16,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace neon {
 
-/**
-    @code
+/** @code
     a0 = b0
     a1 = a1
     b0 = a0
@@ -40,8 +39,7 @@ inline void swap_lo(basic_int64x2& a, basic_int64x2& b)
 #endif
 }
 
-/**
-    @code
+/** @code
     a0 = a0
     a1 = b1
     b0 = b0

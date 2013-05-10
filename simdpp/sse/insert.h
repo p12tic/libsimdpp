@@ -24,8 +24,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
-/**
-    Inserts an element into int8x16 vector at the position identified by @a id.
+/** Inserts an element into int8x16 vector at the position identified by @a id.
 
     @code
     r0 = (id == 0) ? x : a0
@@ -51,8 +50,7 @@ basic_int8x16 insert(basic_int8x16 a, uint8_t x)
 #endif
 }
 
-/**
-    Inserts an element into int16x8 vector at the position identified by @a id.
+/** Inserts an element into int16x8 vector at the position identified by @a id.
 
     @code
     r0 = (id == 0) ? x : a0
@@ -66,8 +64,7 @@ basic_int16x8 insert(basic_int16x8 a, uint16_t x)
     return _mm_insert_epi16(a, x, id);
 }
 
-/**
-    Inserts an element into int32x4 vector at the position identified by @a id.
+/** Inserts an element into int32x4 vector at the position identified by @a id.
 
     @code
     r0 = (id == 0) ? x : a0
@@ -92,8 +89,7 @@ int128 insert(basic_int32x4 a, uint32_t x)
 #endif
 }
 
-/**
-    Inserts an element into int64x2 vector at the position identified by @a id.
+/** Inserts an element into int64x2 vector at the position identified by @a id.
 
     @code
     r0 = (id == 0) ? x : a0
@@ -117,8 +113,7 @@ int128 insert(basic_int64x2 a, uint64_t x)
 #endif
 }
 
-/**
-    Inserts an element into float32x4 vector at the position identified by @a id.
+/** Inserts an element into float32x4 vector at the position identified by @a id.
 
     @code
     r0 = (id == 0) ? x : a0
@@ -134,8 +129,7 @@ float32x4 insert(float32x4 a, float x)
     return float32x4(insert<id>(int32x4(a), bit_cast<uint32_t>(x)));
 }
 
-/**
-    Inserts an element into float64x2 vector at the position identified by @a id.
+/** Inserts an element into float64x2 vector at the position identified by @a id.
 
     @code
     r0 = (id == 0) ? x : a0
@@ -150,8 +144,7 @@ float64x2 insert(float64x2 a, double x)
 }
 
 /// @{
-/**
-    Combines two 128-bit vectors into a 256-bit vector
+/** Combines two 128-bit vectors into a 256-bit vector
 
     @code
     r = [ a, b ]

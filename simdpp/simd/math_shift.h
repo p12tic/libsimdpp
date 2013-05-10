@@ -25,8 +25,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
 /// @{
-/**
-    Shifts signed 8-bit values right by @a count bits while shifting in the
+/** Shifts signed 8-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -87,8 +86,7 @@ inline int8x32 shift_r(int8x32 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 8-bit values right by @a count bits while shifting in zeros.
+/** Shifts unsigned 8-bit values right by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 >> count
@@ -144,8 +142,7 @@ inline uint8x32 shift_r(uint8x32 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts signed 16-bit values right by @a count bits while shifting in the
+/** Shifts signed 16-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -184,8 +181,7 @@ inline int16x16 shift_r(int16x16 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 16-bit values right by @a count bits while shifting in
+/** Shifts unsigned 16-bit values right by @a count bits while shifting in
     zeros.
 
     @code
@@ -224,8 +220,7 @@ inline uint16x16 shift_r(uint16x16 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts signed 32-bit values right by @a count bits while shifting in the
+/** Shifts signed 32-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -269,8 +264,7 @@ inline int32x8 shift_r(int32x8 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 32-bit values right by @a count bits while shifting in
+/** Shifts unsigned 32-bit values right by @a count bits while shifting in
     zeros.
 
     @code
@@ -309,8 +303,7 @@ inline uint32x8 shift_r(uint32x8 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts signed 64-bit values right by @a count bits while shifting in the
+/** Shifts signed 64-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -390,8 +383,7 @@ inline int64x4 shift_r(int64x4 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 64-bit values right by @a count bits while shifting in
+/** Shifts unsigned 64-bit values right by @a count bits while shifting in
     zeros.
 
     @code
@@ -430,8 +422,7 @@ inline uint64x4 shift_r(uint64x4 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts 8-bit values left by @a count bits while shifting in zeros.
+/** Shifts 8-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count
@@ -488,8 +479,7 @@ inline basic_int8x32 shift_l(basic_int8x32 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts 16-bit values left by @a count bits while shifting in zeros.
+/** Shifts 16-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count
@@ -527,8 +517,7 @@ inline basic_int16x16 shift_l(basic_int16x16 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts 32-bit values left by @a count bits while shifting in zeros.
+/** Shifts 32-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count
@@ -566,8 +555,7 @@ inline basic_int32x8 shift_l(basic_int32x8 a, unsigned count)
 /// @}
 
 /// @{
-/**
-    Shifts 64-bit values left by @a count bits while shifting in zeros.
+/** Shifts 64-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count
@@ -631,8 +619,7 @@ V v256_shift_l(V a)
 } // namespace detail
 
 /// @{
-/**
-    Shifts signed 8-bit values right by @a count bits while shifting in the
+/** Shifts signed 8-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -668,8 +655,7 @@ template<> inline int8x32 shift_r<0>(int8x32 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 8-bit values right by @a count bits while shifting in
+/** Shifts unsigned 8-bit values right by @a count bits while shifting in
     zeros.
 
     @code
@@ -705,8 +691,7 @@ template<> inline uint8x32 shift_r<0>(uint8x32 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts signed 16-bit values right by @a count bits while shifting in the
+/** Shifts signed 16-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -738,8 +723,7 @@ template<> inline int16x16 shift_r<0>(int16x16 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 16-bit values right by @a count bits while shifting in
+/** Shifts unsigned 16-bit values right by @a count bits while shifting in
     zeros.
 
     @code
@@ -769,8 +753,7 @@ template<> inline uint16x16 shift_r<0>(uint16x16 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts signed 32-bit values right by @a count bits while shifting in the
+/** Shifts signed 32-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -800,8 +783,7 @@ template<> inline int32x8 shift_r<0>(int32x8 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 32-bit values right by @a count bits while shifting in
+/** Shifts unsigned 32-bit values right by @a count bits while shifting in
     zeros.
 
     @code
@@ -831,8 +813,7 @@ template<> inline uint32x8 shift_r<0>(uint32x8 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts signed 64-bit values right by @a count bits while shifting in the
+/** Shifts signed 64-bit values right by @a count bits while shifting in the
     sign bit.
 
     @code
@@ -872,8 +853,7 @@ template<> inline int64x4 shift_r<0>(int64x4 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts unsigned 64-bit values right by @a count bits while shifting in
+/** Shifts unsigned 64-bit values right by @a count bits while shifting in
     zeros.
 
     @code
@@ -906,8 +886,7 @@ template<> inline uint64x4 shift_r<0>(uint64x4 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts 8-bit values left by @a count bits while shifting in zeros.
+/** Shifts 8-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count
@@ -946,8 +925,7 @@ template<> inline basic_int8x32 shift_l<0>(basic_int8x32 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts 16-bit values left by @a count bits while shifting in zeros.
+/** Shifts 16-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count
@@ -979,8 +957,7 @@ template<> inline basic_int16x16 shift_l<0>(basic_int16x16 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts 32-bit values left by @a count bits while shifting in zeros.
+/** Shifts 32-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count
@@ -1012,8 +989,7 @@ template<> inline basic_int32x8 shift_l<0>(basic_int32x8 a) { return a; }
 /// @}
 
 /// @{
-/**
-    Shifts 64-bit values left by @a count bits while shifting in zeros.
+/** Shifts 64-bit values left by @a count bits while shifting in zeros.
 
     @code
     r0 = a0 << count

@@ -17,8 +17,7 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    Base class for all 128-bit integer objects
+/** Base class for all 128-bit integer objects
 */
 class int256 {
 public:
@@ -60,8 +59,7 @@ public:
           int128& operator[](unsigned i)       { return d_[i]; }
 #endif
 
-    /**
-        Creates a 128-bit integer vector with the contents set to zero
+    /** Creates a 128-bit integer vector with the contents set to zero
 
         @code
         a[0..255] = 0
@@ -69,8 +67,7 @@ public:
     */
     static int256 zero();
 
-    /**
-        Creates a 128-bit integer vector with contents set to ones
+    /** Creates a 128-bit integer vector with contents set to ones
 
         @code
         a[0..255] = 0

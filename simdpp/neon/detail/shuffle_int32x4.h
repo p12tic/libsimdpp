@@ -51,8 +51,7 @@ inline T rev(T a)      { return vrev64q_u32(a); }
 inline H dup_lo(H a)   { return vdup_lane_u32(a, 0); }
 inline H dup_hi(H a)   { return vdup_lane_u32(a, 1); }
 
-/**
-    Shuffles two half-vectors or one vector
+/** Shuffles two half-vectors or one vector
     Cost: If s0,s1 == 0,3 or 2,1 then 2, otherwise 0-1.
 */
 template<unsigned s0, unsigned s1>

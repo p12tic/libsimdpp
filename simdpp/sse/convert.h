@@ -16,8 +16,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
-/**
-    Sign extends the values of a signed int8x16 vector to 32-bits
+/** Sign extends the values of a signed int8x16 vector to 32-bits
 
     @code
     r0 = (int32_t) a0
@@ -40,8 +39,7 @@ inline basic_int32x4 to_int32x4(int8x16 a)
 #endif
 }
 
-/**
-    Extends the values of a unsigned int8x16 vector to 32-bits
+/** Extends the values of a unsigned int8x16 vector to 32-bits
 
     @code
     r0 = (uint32_t) a0
@@ -61,8 +59,7 @@ inline basic_int32x4 to_int32x4(uint8x16 a)
 #endif
 }
 
-/**
-    Sign extends the values of a signed int8x16 vector to 64-bits
+/** Sign extends the values of a signed int8x16 vector to 64-bits
 
     @code
     r0 = (int64_t) a0
@@ -79,8 +76,7 @@ inline basic_int64x2 to_int64x2(int8x16 a)
 #endif
 }
 
-/**
-    Sign extends the values of a signed int16x8 vector to 64-bits
+/** Sign extends the values of a signed int16x8 vector to 64-bits
 
     @code
     r0 = (int64_t) a0
@@ -97,8 +93,7 @@ inline basic_int64x2 to_int64x2(int16x8 a)
 #endif
 }
 
-/**
-    Extends the values of a unsigned int8x16 vector to 64-bits
+/** Extends the values of a unsigned int8x16 vector to 64-bits
 
     @code
     r0 = (uint64_t) a0
@@ -118,8 +113,7 @@ inline basic_int64x2 to_int64x2(uint8x16 a)
 #endif
 }
 
-/**
-    Converts the values of a float32x4 vector into signed int32_t representation.
+/** Converts the values of a float32x4 vector into signed int32_t representation.
     If the value can not be represented by int32_t, @c 0x80000000 is returned
     If only inexact conversion can be performed, the current rounding mode is
     used.
@@ -136,8 +130,7 @@ inline basic_int32x4 to_int32x4_r(float32x4 a)
     return _mm_cvtps_epi32(a);
 }
 
-/**
-    Converts the values of a float64x2 vector into int32_t representation using
+/** Converts the values of a float64x2 vector into int32_t representation using
     truncation
 
     If the value can not be represented by int32_t, @c 0x80000000 is returned
@@ -154,8 +147,7 @@ inline basic_int32x4 to_int32x4(float64x2 a)
     return _mm_cvttpd_epi32(a);
 }
 
-/**
-    Converts the values of a float64x2 vector into int32_t representation.
+/** Converts the values of a float64x2 vector into int32_t representation.
 
     If the value can not be represented by int32_t, @c 0x80000000 is returned
     If only inexact conversion can be performed, it is rounded according to the

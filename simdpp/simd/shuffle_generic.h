@@ -28,8 +28,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
 /// @{
-/**
-    Permutes the 16-bit values within each 4 consecutive values of the vector.
+/** Permutes the 16-bit values within each 4 consecutive values of the vector.
     The selector values must be in range [0; 3].
 
     @code
@@ -90,8 +89,7 @@ basic_int16x16 permute(basic_int16x16 a)
 /// @}
 
 /// @{
-/**
-    Permutes the 16-bit values within sets of two consecutive elements of the
+/** Permutes the 16-bit values within sets of two consecutive elements of the
     vector. The selector values must be in range [0; 1].
 
     @code
@@ -129,8 +127,7 @@ basic_int16x16 permute(basic_int16x16 a)
 /// @}
 
 /// @{
-/**
-    Permutes the values of each set of four consecutive 32-bit values. The
+/** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 3].
 
     @code
@@ -177,8 +174,7 @@ basic_int32x8 permute(basic_int32x8 a)
 /// @}
 
 /// @{
-/**
-    Permutes the values of each set of four consecutive 32-bit values. The
+/** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 3].
 
     @code
@@ -216,8 +212,7 @@ basic_int32x8 permute(basic_int32x8 a)
 /// @}
 
 /// @{
-/**
-    Permutes the values of each set of four consecutive 32-bit floating point
+/** Permutes the values of each set of four consecutive 32-bit floating point
     values. The selector values must be in range [0; 3].
 
     @code
@@ -265,8 +260,7 @@ float32x8 permute(float32x8 a)
 
 
 /// @{
-/**
-    Permutes the values of each set of four consecutive 32-bit floating-point
+/** Permutes the values of each set of four consecutive 32-bit floating-point
     values. The selector values must be in range [0; 3].
 
     @code
@@ -304,8 +298,7 @@ float32x8 permute(float32x8 a)
 }
 /// @}
 
-/**
-    Permutes the values of each set of four consecutive 64-bit values. The
+/** Permutes the values of each set of four consecutive 64-bit values. The
     selector values must be in range [0; 3].
 
     @code
@@ -333,8 +326,7 @@ basic_int64x4 permute(basic_int64x4 a)
 #endif
 }
 
-/**
-    Permutes the values of each set of four consecutive 64-bit floating-point
+/** Permutes the values of each set of four consecutive 64-bit floating-point
     values. The selector values must be in range [0; 3].
 
     @code
@@ -365,8 +357,7 @@ float64x4 permute(float64x4 a)
 }
 
 /// @{
-/**
-    Permutes the values of each set of four consecutive 32-bit values. The
+/** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 1].
 
     @code
@@ -407,8 +398,7 @@ basic_int64x4 permute(basic_int64x4 a)
 /// @}
 
 /// @{
-/**
-    Permutes the values of each set of four consecutive 32-bit values. The
+/** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 1].
 
     @code
@@ -449,8 +439,7 @@ float64x4 permute(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Selects 64-bit floating-point values from two vectors. The first value in
+/** Selects 64-bit floating-point values from two vectors. The first value in
     each pair of values must come from @a a, the second - from @a b. The
     selector values must be in range [0; 1].
 
@@ -499,8 +488,7 @@ float64x4 shuffle1(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Selects 64-bit values from two vectors. The first value in each pair of
+/** Selects 64-bit values from two vectors. The first value in each pair of
     values must come from @a a, the second - from @a b. The selector values
     must be in range [0; 1].
 
@@ -544,8 +532,7 @@ basic_int64x4 shuffle1(basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    Selects 32-bit floating-point values from two vectors. The first two values
+/** Selects 32-bit floating-point values from two vectors. The first two values
     in each four consecutive values must come from @a a, the last two - from @a
     b. The selector values must be in range [0; 3].
 
@@ -596,8 +583,7 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Selects 32-bit values from two vectors. The first two values in each four
+/** Selects 32-bit values from two vectors. The first two values in each four
     consecutive values must come from @a a, the last two - from @a b. The
     selector values must be in range [0; 3].
 
@@ -633,8 +619,7 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Selects 32-bit values from two vectors. The first two values in each four
+/** Selects 32-bit values from two vectors. The first two values in each four
     consecutive values must come from @a a, the last two - from @a b. The
     selector values must be in range [0; 3].
 
@@ -682,8 +667,7 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    Selects 32-bit values from two vectors. The first two values in each four
+/** Selects 32-bit values from two vectors. The first two values in each four
     consecutive values must come from @a a, the last two - from @a b. The
     selector values must be in range [0; 3].
 

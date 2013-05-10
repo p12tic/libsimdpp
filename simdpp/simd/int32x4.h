@@ -19,8 +19,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 
 class float32x4;
 
-/**
-    Generic class representing 4x 32-bit integer vector.
+/** Generic class representing 4x 32-bit integer vector.
         To be used where the signedness of the underlying element type is not important
 */
 class basic_int32x4 : public int128 {
@@ -64,8 +63,7 @@ public:
 #endif
 };
 
-/**
-    Class representing 4x 32-bit signed integer vector
+/** Class representing 4x 32-bit signed integer vector
 */
 class int32x4 : public basic_int32x4 {
 public:
@@ -107,8 +105,7 @@ public:
 #endif
 #endif
 
-    /**
-        Creates a signed int32x4 vector with the contents set to zero
+    /** Creates a signed int32x4 vector with the contents set to zero
 
         @code
         r0 = 0
@@ -120,8 +117,7 @@ public:
     */
     static int32x4 zero();
 
-    /**
-        Creates a signed int32x4 vector from a value loaded from memory.
+    /** Creates a signed int32x4 vector from a value loaded from memory.
 
         @code
             | 0  1  2  3  |
@@ -133,8 +129,7 @@ public:
     */
     static int32x4 load_broadcast(const int32_t* v0);
 
-    /**
-        Creates a signed int32x4 vector from a value stored in a core register.
+    /** Creates a signed int32x4 vector from a value stored in a core register.
 
         @code
             | 0  1  2  3  |
@@ -145,8 +140,7 @@ public:
     */
     static int32x4 set_broadcast(int32_t v0);
 
-    /**
-        Creates a signed int32x4 vector from a value known at compile-time
+    /** Creates a signed int32x4 vector from a value known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -156,8 +150,7 @@ public:
     */
     static int32x4 make_const(int32_t v0);
 
-    /**
-        Creates a signed int32x4 vector from two values known at compile-time
+    /** Creates a signed int32x4 vector from two values known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -167,8 +160,7 @@ public:
     */
     static int32x4 make_const(int32_t v0, int32_t v1);
 
-    /**
-        Creates a signed int32x4 vector from four values known at compile-time
+    /** Creates a signed int32x4 vector from four values known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -179,8 +171,7 @@ public:
     static int32x4 make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3);
 };
 
-/**
-    Class representing 4x 32-bit unsigned integer vector
+/** Class representing 4x 32-bit unsigned integer vector
 */
 class uint32x4 : public basic_int32x4 {
 public:
@@ -222,8 +213,7 @@ public:
 #endif
 #endif
 
-    /**
-        Creates an unsigned int32x4 vector with the contents set to zero
+    /** Creates an unsigned int32x4 vector with the contents set to zero
 
         @code
         r0 = 0
@@ -235,8 +225,7 @@ public:
     */
     static uint32x4 zero();
 
-    /**
-        Creates an unsigned int32x4 vector from a value loaded from memory.
+    /** Creates an unsigned int32x4 vector from a value loaded from memory.
 
         @code
             | 0  1  2  3  |
@@ -248,8 +237,7 @@ public:
     */
     static uint32x4 load_broadcast(const uint32_t* v0);
 
-    /**
-        Creates an unsigned int32x4 vector from a value stored in a core
+    /** Creates an unsigned int32x4 vector from a value stored in a core
         register.
 
         @code
@@ -261,8 +249,7 @@ public:
     */
     static uint32x4 set_broadcast(uint32_t v0);
 
-    /**
-        Creates an unsigned int32x4 vector from a value known at compile-time
+    /** Creates an unsigned int32x4 vector from a value known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -272,8 +259,7 @@ public:
     */
     static uint32x4 make_const(uint32_t v0);
 
-    /**
-        Creates an unsigned int32x4 vector from two values known at
+    /** Creates an unsigned int32x4 vector from two values known at
         compile-time
 
         @code
@@ -284,8 +270,7 @@ public:
     */
     static uint32x4 make_const(uint32_t v0, uint32_t v1);
 
-    /**
-        Creates an unsigned int32x4 vector from four values known at
+    /** Creates an unsigned int32x4 vector from four values known at
         compile-time
 
         @code

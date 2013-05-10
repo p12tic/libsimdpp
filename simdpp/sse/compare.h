@@ -17,8 +17,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
 #ifdef SIMDPP_USE_SSE2
-/**
-    Compares the values of two float32x4 vectors for less-than or equal
+/** Compares the values of two float32x4 vectors for less-than or equal
 
     @code
     r0 = (a0 <= b0) ? 0xffffffff : 0x0
@@ -32,8 +31,7 @@ inline int128 cmp_le(float32x4 a, float32x4 b)
     return int32x4(_mm_cmple_ps(a, b));
 }
 
-/**
-    Compares the values of two float64x2 vectors for less-than or equal
+/** Compares the values of two float64x2 vectors for less-than or equal
 
     @code
     r0 = (a0 <= b0) ? 0xffffffffffffffff : 0x0
@@ -46,8 +44,7 @@ inline int128 cmp_le(float64x2 a, float64x2 b)
 }
 
 
-/**
-    Compares the values of two float32x4 vectors for greater-than or equal
+/** Compares the values of two float32x4 vectors for greater-than or equal
 
     @code
     r0 = (a0 >= b0) ? 0xffffffff : 0x0
@@ -61,8 +58,7 @@ inline int128 cmp_ge(float32x4 a, float32x4 b)
     return int32x4(_mm_cmpge_ps(a, b));
 }
 
-/**
-    Compares the values of two float64x2 vectors for greater-than or equal
+/** Compares the values of two float64x2 vectors for greater-than or equal
 
     @code
     r0 = (a0 >= b0) ? 0xffffffffffffffff : 0x0
@@ -74,8 +70,7 @@ inline int128 cmp_ge(float64x2 a, float64x2 b)
     return int64x2(_mm_cmpge_pd(a, b));
 }
 
-/**
-    Tests no bits are set in 128-bit integer vector. Returns @c true if
+/** Tests no bits are set in 128-bit integer vector. Returns @c true if
     <tt>a</tt> has all bits unset, @c false otherwise
 
     @icost{SSE2, SSE3, SSSE3, 3}
@@ -91,8 +86,7 @@ inline bool test_zero(int128 a)
 #endif
 }
 
-/**
-    Tests if 128-bit integer @a a consists only from zeros if a mask @a mask is
+/** Tests if 128-bit integer @a a consists only from zeros if a mask @a mask is
     applied. Returns @c true if <tt>a & mask</tt> has all bits unset, @c false
     otherwise
 
@@ -110,8 +104,7 @@ inline bool test_zero(int128 a, int128 mask)
 #endif
 }
 
-/**
-    Tests if all bits are set in a 128-bit integer. Returns @c true if @a a has
+/** Tests if all bits are set in a 128-bit integer. Returns @c true if @a a has
     all bits set, @c false otherwise.
 
     @icost{SSE2, SSE3, SSSE3, 3}
@@ -127,8 +120,7 @@ inline bool test_ones(int128 a)
 #endif
 }
 
-/**
-    Tests if 128-bit integer consists only from ones when a mask is applied.
+/** Tests if 128-bit integer consists only from ones when a mask is applied.
     Returns @c true if <tt>a & mask</tt> has all @a mask bits set, @c false
     otherwise.
 

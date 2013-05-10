@@ -45,8 +45,7 @@ void ld_unpack2_256_impl(T& a, T& b)
 }
 
 /// @{
-/**
-    Concatenates @a a and @a b and stores the elements of the resulting array
+/** Concatenates @a a and @a b and stores the elements of the resulting array
     as follows:
      * every (2n)-th element is stored to @a a
      * every (2n+1)-th element is stored to @a b
@@ -69,8 +68,7 @@ inline void ld_unpack2(float64x4& a, float64x4& b)         { ld_unpack2_256_impl
 /// @}
 
 /// @{
-/**
-    Generic implementation of ld_unpack3. The 256-bit version applies 128-bit
+/** Generic implementation of ld_unpack3. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
 template<class T> void ld_unpack3_impl8(T& a, T& b, T& c)
@@ -206,8 +204,7 @@ void ld_unpack3_256_shuffle(T& a, T& b, T& c)
     c = shuffle128<0,1>(t1, t2);
 }
 /// @{
-/**
-    Concatenates @a a, @a b and @a c and stores the elements of the resulting
+/** Concatenates @a a, @a b and @a c and stores the elements of the resulting
     array as follows:
      * every (3n)-th element is stored to @a a
      * every (3n+1)-th element is stored to @a b
@@ -278,8 +275,7 @@ inline void ld_unpack3(float64x4& a, float64x4& b, float64x4& c)
 /// @}
 
 /// @{
-/**
-    Generic implementation of ld_unpack4. The 256-bit version applies 128-bit
+/** Generic implementation of ld_unpack4. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
 template<class T> void ld_unpack4_impl8(T& a, T& b, T& c, T& d)
@@ -387,8 +383,7 @@ void ld_unpack4_256_shuffle(T& a, T& b, T& c, T& d)
 }
 
 /// @{
-/**
-    Concatenates @a a, @a b, @a c and @a d and stores the elements of the
+/** Concatenates @a a, @a b, @a c and @a d and stores the elements of the
     resulting array as follows:
      * every (4n)-th element is stored to @a a
      * every (4n+1)-th element is stored to @a b
@@ -475,8 +470,7 @@ inline void ld_unpack4(float64x4& a, float64x4& b, float64x4& c, float64x4& d)
 /// @}
 
 /// @{
-/**
-    Concatenates the given vectors and stores the elements of the resulting
+/** Concatenates the given vectors and stores the elements of the resulting
     array as follows:
      * every (3n)-th element of the first 48 elements is stored to @a a
      * every (3n+1)-th element of the first 48 elements is stored to @a b

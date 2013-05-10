@@ -17,8 +17,7 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    Generic class representing 16x 8-bit integer vector.
+/** Generic class representing 16x 8-bit integer vector.
     To be used where the signedness of the underlying element type is not important
 */
 class basic_int8x32 : public int256 {
@@ -51,8 +50,7 @@ public:
 #endif
 };
 
-/**
-    Class representing 16x 8-bit signed integer vector
+/** Class representing 16x 8-bit signed integer vector
 */
 class int8x32 : public basic_int8x32 {
 public:
@@ -85,8 +83,7 @@ public:
           int8x16& operator[](unsigned i)       { return i8(i); }
 #endif
 
-    /**
-        Creates a signed int8x32 vector with the contents set to zero
+    /** Creates a signed int8x32 vector with the contents set to zero
 
         @code
         r0 = 0
@@ -96,8 +93,7 @@ public:
     */
     static int8x32 zero();
 
-    /**
-        Creates a signed int8x32 vector from a value loaded from memory.
+    /** Creates a signed int8x32 vector from a value loaded from memory.
 
         @code
             | 0  1  ... 31 |
@@ -108,8 +104,7 @@ public:
     */
     static int8x32 load_broadcast(const int8_t* v0);
 
-    /**
-        Creates a signed int8x32 vector from a value stored in a core register.
+    /** Creates a signed int8x32 vector from a value stored in a core register.
 
         @code
             | 0  1  ... 31 |
@@ -119,8 +114,7 @@ public:
     */
     static int8x32 set_broadcast(int8_t v0);
 
-    /**
-        Creates a signed int8x32 vector from a value known at compile-time
+    /** Creates a signed int8x32 vector from a value known at compile-time
 
         @code
             | 0  1  ... 31 |
@@ -129,8 +123,7 @@ public:
     */
     static int8x32 make_const(int8_t v0);
 
-    /**
-        Creates a signed int8x32 vector from two values known at compile-time
+    /** Creates a signed int8x32 vector from two values known at compile-time
 
         @code
             | 0  1  2  3  ... 31 |
@@ -139,8 +132,7 @@ public:
     */
     static int8x32 make_const(int8_t v0, int8_t v1);
 
-    /**
-        Creates a signed int8x32 vector from four values known at compile-time
+    /** Creates a signed int8x32 vector from four values known at compile-time
 
         @code
             | 0  1  2  3  4  5  ... 31 |
@@ -149,8 +141,7 @@ public:
     */
     static int8x32 make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3);
 
-    /**
-        Creates a signed int8x32 vector from eight values known at compile-time
+    /** Creates a signed int8x32 vector from eight values known at compile-time
 
         @code
             | 0  ... 7   8  ... 15  16 ... 23  24 ... 31 |
@@ -160,8 +151,7 @@ public:
     static int8x32 make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
                               int8_t v4, int8_t v5, int8_t v6, int8_t v7);
 
-    /**
-        Creates a signed int8x32 vector from sixteen values known at
+    /** Creates a signed int8x32 vector from sixteen values known at
         compile-time
 
         @code
@@ -174,8 +164,7 @@ public:
                               int8_t v8, int8_t v9, int8_t v10, int8_t v11,
                               int8_t v12, int8_t v13, int8_t v14, int8_t v15);
 
-    /**
-        Creates a signed int8x32 vector from thirty two values known at
+    /** Creates a signed int8x32 vector from thirty two values known at
         compile-time
 
         @code
@@ -193,8 +182,7 @@ public:
                               int8_t v28, int8_t v29, int8_t v30, int8_t v31);
 };
 
-/**
-    Class representing 16x 8-bit unsigned integer vector
+/** Class representing 16x 8-bit unsigned integer vector
 */
 class uint8x32 : public basic_int8x32 {
 public:
@@ -227,8 +215,7 @@ public:
           uint8x16& operator[](unsigned i)       { return u8(i); }
 #endif
 
-    /**
-        Creates a unsigned int8x32 vector with the contents set to zero
+    /** Creates a unsigned int8x32 vector with the contents set to zero
 
         @code
         r0 = 0
@@ -238,8 +225,7 @@ public:
     */
     static uint8x32 zero();
 
-    /**
-        Creates a unsigned int8x32 vector from a value loaded from memory.
+    /** Creates a unsigned int8x32 vector from a value loaded from memory.
 
         @code
             | 0  1  ... 31 |
@@ -250,8 +236,7 @@ public:
     */
     static uint8x32 load_broadcast(const uint8_t* v0);
 
-    /**
-        Creates a unsigned int8x32 vector from a value stored in a core register.
+    /** Creates a unsigned int8x32 vector from a value stored in a core register.
 
         @code
             | 0  1  ... 31 |
@@ -261,8 +246,7 @@ public:
     */
     static uint8x32 set_broadcast(uint8_t v0);
 
-    /**
-        Creates a unsigned int8x32 vector from a value known at compile-time
+    /** Creates a unsigned int8x32 vector from a value known at compile-time
 
         @code
             | 0  1  ... 31 |
@@ -271,8 +255,7 @@ public:
     */
     static uint8x32 make_const(uint8_t v0);
 
-    /**
-        Creates a unsigned int8x32 vector from two values known at compile-time
+    /** Creates a unsigned int8x32 vector from two values known at compile-time
 
         @code
             | 0  1  2  3  ... 31 |
@@ -281,8 +264,7 @@ public:
     */
     static uint8x32 make_const(uint8_t v0, uint8_t v1);
 
-    /**
-        Creates a unsigned int8x32 vector from four values known at compile-time
+    /** Creates a unsigned int8x32 vector from four values known at compile-time
 
         @code
             | 0  1  2  3  4  5  ... 31 |
@@ -291,8 +273,7 @@ public:
     */
     static uint8x32 make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3);
 
-    /**
-        Creates a unsigned int8x32 vector from eight values known at compile-time
+    /** Creates a unsigned int8x32 vector from eight values known at compile-time
 
         @code
             | 0  ... 7   8  ... 15  16 ... 23  24 ... 31 |
@@ -302,8 +283,7 @@ public:
     static uint8x32 make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
                                uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7);
 
-    /**
-        Creates a unsigned int8x32 vector from sixteen values known at
+    /** Creates a unsigned int8x32 vector from sixteen values known at
         compile-time
 
         @code
@@ -316,8 +296,7 @@ public:
                                uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11,
                                uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15);
 
-    /**
-        Creates a unsigned int8x32 vector from thirty two values known at
+    /** Creates a unsigned int8x32 vector from thirty two values known at
         compile-time
 
         @code

@@ -16,8 +16,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace neon {
 
-/**
-    Multiplies the values of two int8x16 vectors and returns the low
+/** Multiplies the values of two int8x16 vectors and returns the low
     part of the multiplication
 
     @code
@@ -31,8 +30,7 @@ inline int128 mul_lo(basic_int8x16 a, basic_int8x16 b)
     return vmulq_u8(a, b);
 }
 
-/**
-    Multiplies the first 8 values of two signed int8x16 vectors and expands the
+/** Multiplies the first 8 values of two signed int8x16 vectors and expands the
     results to 16 bits.
 
     @code
@@ -46,8 +44,7 @@ inline int128 mull_lo(int8x16 a, int8x16 b)
     return vmullq_s8(vget_low_s8(a), vget_low_s8(b));
 }
 
-/**
-    Multiplies the first 8 values of two unsigned int8x16 vectors and expands the
+/** Multiplies the first 8 values of two unsigned int8x16 vectors and expands the
     results to 16 bits.
 
     @code
@@ -61,8 +58,7 @@ inline int128 mull_lo(uint8x16 a, uint8x16 b)
     return vmullq_u8(vget_low_u8(a), vget_low_u8(b));
 }
 
-/**
-    Multiplies the last 8 values of two signed int8x16 vectors and expands the
+/** Multiplies the last 8 values of two signed int8x16 vectors and expands the
     results to 16 bits.
 
     @code
@@ -77,8 +73,7 @@ inline int128 mull_hi(int8x16 a, int8x16 b)
 }
 
 
-/**
-    Multiplies the last 8 values of two unsigned int8x16 vectors and expands
+/** Multiplies the last 8 values of two unsigned int8x16 vectors and expands
     the results to 16 bits.
 
     @code

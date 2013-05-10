@@ -22,14 +22,12 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    @defgroup simd_bitwise
+/** @defgroup simd_bitwise
     @{
 */
 
 /// @{
-/**
-    Computes bitwise AND.
+/** Computes bitwise AND.
 
     @code
     r = a & b
@@ -60,8 +58,7 @@ inline int256 bit_and(int256 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise AND.
+/** Computes bitwise AND.
 
     @code
     r0 = a0 & b0
@@ -105,8 +102,7 @@ inline float32x8 bit_and(float32x8 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise AND.
+/** Computes bitwise AND.
 
     @code
     r0 = a0 & b0
@@ -149,8 +145,7 @@ inline float64x4 bit_and(float64x4 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise AND NOT.
+/** Computes bitwise AND NOT.
 
     @code
     r = a & ~b
@@ -181,8 +176,7 @@ inline int256 bit_andnot(int256 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise AND NOT.
+/** Computes bitwise AND NOT.
 
     @code
     r0 = a0 & ~b0
@@ -225,8 +219,7 @@ inline float32x8 bit_andnot(float32x8 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise AND NOT.
+/** Computes bitwise AND NOT.
 
     @code
     r0 = a0 & ~b0
@@ -269,8 +262,7 @@ inline float64x4 bit_andnot(float64x4 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise OR.
+/** Computes bitwise OR.
 
     @code
     r = a | b
@@ -301,8 +293,7 @@ inline int256 bit_or(int256 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise OR.
+/** Computes bitwise OR.
 
     @code
     r0 = a0 | b0
@@ -345,8 +336,7 @@ inline float32x8 bit_or(float32x8 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise OR.
+/** Computes bitwise OR.
 
     @code
     r0 = a0 | b0
@@ -389,8 +379,7 @@ inline float64x4 bit_or(float64x4 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise XOR.
+/** Computes bitwise XOR.
 
     @code
     r = a ^ b
@@ -421,8 +410,7 @@ inline int256 bit_xor(int256 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise XOR.
+/** Computes bitwise XOR.
 
     @code
     r0 = a0 | b0
@@ -465,8 +453,7 @@ inline float32x8 bit_xor(float32x8 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise XOR.
+/** Computes bitwise XOR.
 
     @code
     r0 = a0 | b0
@@ -509,8 +496,7 @@ inline float64x4 bit_xor(float64x4 a, int256 b)
 /// @}
 
 /// @{
-/**
-    Computes bitwise NOT of a 128-bit integer vector
+/** Computes bitwise NOT of a 128-bit integer vector
 
     @code
     r = ~a

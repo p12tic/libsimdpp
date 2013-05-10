@@ -44,8 +44,7 @@ auto permute_half(V a) -> typename traits<V>::half_vector_type
 }
 
 /// @{
-/**
-    Permutes 4 64-bit elements within 256-bit vector using 2 element shuffling
+/** Permutes 4 64-bit elements within 256-bit vector using 2 element shuffling
     functions.
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>

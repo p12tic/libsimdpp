@@ -16,8 +16,7 @@ namespace sse {
 namespace detail {
 
 /// @{
-/**
-    Helper function.
+/** Helper function.
 
     @code
     r = [a0,a4,a8,a12,a1,a5,a9,a13,a2,a6,a10,a14,a3,a7,a11,a15]
@@ -54,8 +53,7 @@ inline basic_int8x32 transpose_inplace(basic_int8x32 a)
 /// @}
 
 /// @{
-/**
-    Partially transposes two 8x8 8-bit matrices within eight int8x16 vectors
+/** Partially transposes two 8x8 8-bit matrices within eight int8x16 vectors
 
     @code
     r0 = [ a0_0; ...; a7_0 ; a0_1; ...; a7_1 ]

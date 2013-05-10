@@ -45,8 +45,7 @@ inline void st_pack2_256_impl(T& a, T& b)
 }
 
 /// @{
-/**
-    Interleaves the elements of @a a and @a b in such way that:
+/** Interleaves the elements of @a a and @a b in such way that:
      * every (2n)-th element comes from @a a
      * every (2n+1)-th element comes from @a b
 
@@ -84,8 +83,7 @@ inline basic_int8x32 shuffle_epi8_wrapper(basic_int8x32 x, basic_int8x32 idx)
 #endif
 
 /// @{
-/**
-    Generic implementation of st_pack3. The 256-bit version applies 128-bit
+/** Generic implementation of st_pack3. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
 template<class T> void st_pack3_impl8(T& a, T& b, T& c)
@@ -312,8 +310,7 @@ void st_pack3_256_shuffle(T& a, T& b, T& c)
 }
 
 /// @{
-/**
-    Interleaves the elements of @a a, @a b and @a c in such way that:
+/** Interleaves the elements of @a a, @a b and @a c in such way that:
      * every (3n)-th element comes from @a a
      * every (3n+1)-th element comes from @a b
      * every (3n+2)-th element comes from @a c
@@ -382,8 +379,7 @@ inline void st_pack3(float64x4& a, float64x4& b, float64x4& c)
 /// @}
 
 /// @{
-/**
-    Generic implementation of st_pack4. The 256-bit version applies 128-bit
+/** Generic implementation of st_pack4. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
 template<class T> void st_pack4_impl8(T& a, T& b, T& c, T& d)
@@ -492,8 +488,7 @@ void st_pack4_256_shuffle(T& a, T& b, T& c, T& d)
 }
 
 /// @{
-/**
-    Interleaves the elements of @a a, @a b, @a c and @a d in such way that:
+/** Interleaves the elements of @a a, @a b, @a c and @a d in such way that:
      * every (4n)-th element comes from @a a
      * every (4n+1)-th element comes from @a b
      * every (4n+2)-th element comes from @a c

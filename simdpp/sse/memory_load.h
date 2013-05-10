@@ -18,8 +18,7 @@ namespace sse {
 
 
 /// @{
-/**
-    Loads the first @a N elements of a 128-bit vector from memory.
+/** Loads the first @a N elements of a 128-bit vector from memory.
 
     @a N must be a power of 2 and at least @a M/4 where @a M is the number of
     elements within vector. @a P must be 0 or @a M/2 if @a N == M/2.

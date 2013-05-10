@@ -20,8 +20,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 
 class basic_int32x8;
 
-/**
-    Class representing a float32x8 vector
+/** Class representing a float32x8 vector
 */
 class float32x8 {
 public:
@@ -67,8 +66,7 @@ public:
           float32x4& operator[](unsigned i)       { return d_[i]; }
 #endif
 
-    /**
-        Creates a float32x8 vector with the contents set to zero
+    /** Creates a float32x8 vector with the contents set to zero
 
         @code
         r0 = 0.0f
@@ -79,8 +77,7 @@ public:
     */
     static float32x8 zero();
 
-    /**
-        Creates a float32x8 vector from a value loaded from memory.
+    /** Creates a float32x8 vector from a value loaded from memory.
 
         @code
             | 0  1  2  3  |
@@ -90,8 +87,7 @@ public:
     */
     static float32x8 load_broadcast(const float* v0);
 
-    /**
-        Creates a float32x8 vector from a value stored in a core register.
+    /** Creates a float32x8 vector from a value stored in a core register.
 
         @code
             | 0  1  2  3  |
@@ -102,8 +98,7 @@ public:
     */
     static float32x8 set_broadcast(float v0);
 
-    /**
-        Creates a float32x8 vector from a value known at compile-time
+    /** Creates a float32x8 vector from a value known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -112,8 +107,7 @@ public:
     */
     static float32x8 make_const(float v0);
 
-    /**
-        Creates a float32x8 vector from two values known at compile-time
+    /** Creates a float32x8 vector from two values known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -122,8 +116,7 @@ public:
     */
     static float32x8 make_const(float v0, float v1);
 
-    /**
-        Creates a float32x8 vector from four values known at compile-time
+    /** Creates a float32x8 vector from four values known at compile-time
 
         @code
             | 0  1  2  3  |
@@ -132,8 +125,7 @@ public:
     */
     static float32x8 make_const(float v0, float v1, float v2, float v3);
 
-    /**
-        Creates a float32x8 vector from four values known at compile-time
+    /** Creates a float32x8 vector from four values known at compile-time
 
         @code
             | 0  1  ... 7  |

@@ -19,8 +19,7 @@ namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
-/**
-    Extracts the @a id-th element from int8x16 vector
+/** Extracts the @a id-th element from int8x16 vector
 
     @code
     r = a[id]
@@ -38,8 +37,7 @@ inline uint8_t extract(basic_int8x16 a)
 #endif
 }
 
-/**
-    Extracts the @a id-th element from int16x8 vector
+/** Extracts the @a id-th element from int16x8 vector
 
     @code
     r = a[id]
@@ -51,8 +49,7 @@ inline uint16_t extract(basic_int16x8 a)
     return _mm_extract_epi16(a, id);
 }
 
-/**
-    Extracts the @a id-th element from int32x4 vector
+/** Extracts the @a id-th element from int32x4 vector
 
     @code
     r = a[id]
@@ -73,8 +70,7 @@ inline uint32_t extract(basic_int32x4 a)
 #endif
 }
 
-/**
-    Extracts an element from int64x2 vector
+/** Extracts an element from int64x2 vector
 
     @code
     r = a[id]
@@ -95,8 +91,7 @@ inline uint64_t extract(basic_int64x2 a)
 #endif
 }
 
-/**
-    Extracts an element from float32x4 vector
+/** Extracts an element from float32x4 vector
 
     @code
     r = a[id]
@@ -109,8 +104,7 @@ inline float extract(float32x4 a)
     return bit_cast<float>(extract<id>(int32x4(a)));
 }
 
-/**
-    Extracts an element from float64x2 vector
+/** Extracts an element from float64x2 vector
 
     @code
     r = a[id]

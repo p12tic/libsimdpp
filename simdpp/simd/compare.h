@@ -28,14 +28,12 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 // note 64-bit integer compare operations are not available neither on NEON nor
 // on SSE
 
-/**
-    @defgroup simd_compare
+/** @defgroup simd_compare
     @{
 */
 
 /// @{
-/**
-    Compares 8-bit values for equality.
+/** Compares 8-bit values for equality.
 
     @code
     r0 = (a0 == b0) ? 0xff : 0x0
@@ -68,8 +66,7 @@ inline basic_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
 /// @}
 
 /// @{
-/**
-    Compares 16-bit values for equality.
+/** Compares 16-bit values for equality.
 
     @code
     r0 = (a0 == b0) ? 0xffff : 0x0
@@ -102,8 +99,7 @@ inline basic_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two int32x4 vectors for equality
+/** Compares the values of two int32x4 vectors for equality
 
     @code
     r0 = (a0 == b0) ? 0xffffffff : 0x0
@@ -136,8 +132,7 @@ inline basic_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two float32x4 vectors for equality
+/** Compares the values of two float32x4 vectors for equality
 
     @code
     r0 = (a0 == b0) ? 0xffffffff : 0x0
@@ -170,8 +165,7 @@ inline basic_int32x8 cmp_eq(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two float64x2 vectors for equality
+/** Compares the values of two float64x2 vectors for equality
 
     @code
     r0 = (a0 == b0) ? 0xffffffffffffffff : 0x0
@@ -210,8 +204,7 @@ inline basic_int64x4 cmp_eq(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two int8x16 vectors for inequality
+/** Compares the values of two int8x16 vectors for inequality
 
     @code
     r0 = (a0 != b0) ? 0xff : 0x0
@@ -244,8 +237,7 @@ inline basic_int8x32 cmp_neq(basic_int8x32 a, basic_int8x32 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two int16x8 vectors for inequality
+/** Compares the values of two int16x8 vectors for inequality
 
     @code
     r0 = (a0 != b0) ? 0xffff : 0x0
@@ -278,8 +270,7 @@ inline basic_int16x16 cmp_neq(basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two int32x4 vectors for inequality
+/** Compares the values of two int32x4 vectors for inequality
 
     @code
     r0 = (a0 != b0) ? 0xffffffff : 0x0
@@ -312,8 +303,7 @@ inline basic_int32x8 cmp_neq(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two float32x4 vectors for inequality
+/** Compares the values of two float32x4 vectors for inequality
 
     @code
     r0 = (a0 != b0) ? 0xffffffff : 0x0
@@ -352,8 +342,7 @@ inline basic_int32x8 cmp_neq(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two float64x2 vectors for inequality
+/** Compares the values of two float64x2 vectors for inequality
 
     @code
     r0 = (a0 != b0) ? 0xffffffffffffffff : 0x0
@@ -394,8 +383,7 @@ inline basic_int64x4 cmp_neq(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two signed int16x8 vectors for greater-than
+/** Compares the values of two signed int16x8 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xff : 0x0
@@ -428,8 +416,7 @@ inline basic_int8x32 cmp_gt(int8x32 a, int8x32 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two unsigned int16x8 vectors for greater-than
+/** Compares the values of two unsigned int16x8 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xff : 0x0
@@ -472,8 +459,7 @@ inline basic_int8x32 cmp_gt(uint8x32 a, uint8x32 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two signed int16x8 vectors for greater-than
+/** Compares the values of two signed int16x8 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xffff : 0x0
@@ -506,8 +492,7 @@ inline basic_int16x16 cmp_gt(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two unsigned int16x8 vectors for greater-than
+/** Compares the values of two unsigned int16x8 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xffff : 0x0
@@ -550,8 +535,7 @@ inline basic_int16x16 cmp_gt(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two signed int32x4 vectors for greater-than
+/** Compares the values of two signed int32x4 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xffffffff : 0x0
@@ -584,8 +568,7 @@ inline basic_int32x8 cmp_gt(int32x8 a, int32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two unsigned int32x4 vectors for greater-than
+/** Compares the values of two unsigned int32x4 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xffffffff : 0x0
@@ -628,8 +611,7 @@ inline basic_int32x8 cmp_gt(uint32x8 a, uint32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two float32x4 vectors for greater-than
+/** Compares the values of two float32x4 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xffffffff : 0x0
@@ -664,8 +646,7 @@ inline basic_int32x8 cmp_gt(float32x8 a, float32x8 b)
 /// @}
 
 /// @}
-/**
-    Compares the values of two float64x2 vectors for greater-than
+/** Compares the values of two float64x2 vectors for greater-than
 
     @code
     r0 = (a0 > b0) ? 0xffffffffffffffff : 0x0
@@ -706,8 +687,7 @@ inline basic_int64x4 cmp_gt(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two signed int8x16 vectors for less-than
+/** Compares the values of two signed int8x16 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xff : 0x0
@@ -740,8 +720,7 @@ inline basic_int8x32 cmp_lt(int8x32 a, int8x32 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two unsigned int8x16 vectors for less-than
+/** Compares the values of two unsigned int8x16 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xff : 0x0
@@ -784,8 +763,7 @@ inline basic_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two signed int16x8 vectors for less-than
+/** Compares the values of two signed int16x8 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xffff : 0x0
@@ -818,8 +796,7 @@ inline basic_int16x16 cmp_lt(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two unsigned int16x8 vectors for less-than
+/** Compares the values of two unsigned int16x8 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xffff : 0x0
@@ -862,8 +839,7 @@ inline basic_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two signed int32x4 vectors for less-than
+/** Compares the values of two signed int32x4 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xffffffff : 0x0
@@ -896,8 +872,7 @@ inline basic_int32x8 cmp_lt(int32x8 a, int32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two unsigned int32x4 vectors for less-than
+/** Compares the values of two unsigned int32x4 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xffffffff : 0x0
@@ -940,8 +915,7 @@ inline basic_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two float32x4 vectors for less-than
+/** Compares the values of two float32x4 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xffffffff : 0x0
@@ -976,8 +950,7 @@ inline basic_int32x8 cmp_lt(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Compares the values of two float64x2 vectors for less-than
+/** Compares the values of two float64x2 vectors for less-than
 
     @code
     r0 = (a0 < b0) ? 0xffffffffffffffff : 0x0

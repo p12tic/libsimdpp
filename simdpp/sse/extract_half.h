@@ -18,8 +18,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
 /// @{
-/**
-    Extracts the lower half of a 256-bit vector
+/** Extracts the lower half of a 256-bit vector
     @icost{0}
 */
 inline int128 extract_lo(int256 a)
@@ -56,8 +55,7 @@ inline float64x2 extract_lo(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Extracts the higher half of a 256-bit vector
+/** Extracts the higher half of a 256-bit vector
     @icost{0}
 */
 inline int128 extract_hi(int256 a)

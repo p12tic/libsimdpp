@@ -20,8 +20,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
 
-/**
-    Adds the values in adjacent pairs of two float32x4 vectors
+/** Adds the values in adjacent pairs of two float32x4 vectors
 
     @code
     r0 = a0 + a1
@@ -40,8 +39,7 @@ inline float32x4 hadd2(float32x4 a, float32x4 b)
 #endif
 }
 
-/**
-    Adds the values in adjacent pairs of two float64x2 vectors
+/** Adds the values in adjacent pairs of two float64x2 vectors
 
     @code
     r0 = a0 + a1
@@ -58,8 +56,7 @@ inline float64x2 hadd2(float64x2 a, float64x2 b)
 #endif
 }
 
-/**
-    Sums the values of a float32x4 vector
+/** Sums the values of a float32x4 vector
 
     @code
     r0 = a0 + a1 + a2 + a3
@@ -80,8 +77,7 @@ inline float32x4 hadd4(float32x4 a)
 #endif
 }
 
-/**
-    Sums the values within each of four float32x4 vector
+/** Sums the values within each of four float32x4 vector
 
     @code
     r0 = a0 + a1 + a2 + a3
@@ -104,8 +100,7 @@ inline float32x4 hadd4(float32x4 a, float32x4 b, float32x4 c, float32x4 d)
 #endif
 }
 
-/**
-    Subtracts the values in adjacent pairs of two float32x4 vectors
+/** Subtracts the values in adjacent pairs of two float32x4 vectors
 
     @code
     r0 = a0 - a1
@@ -124,8 +119,7 @@ inline float32x4 hsub2(float32x4 a, float32x4 b)
 #endif
 }
 
-/**
-    Subtracts the values in adjacent pairs of two float64x2 vectors
+/** Subtracts the values in adjacent pairs of two float64x2 vectors
 
     @code
     r0 = a0 - a1
@@ -142,8 +136,7 @@ inline float64x2 hsub2(float64x2 a, float64x2 b)
 #endif
 }
 
-/**
-    Adds or substracts the values of two float32x4 vectors
+/** Adds or substracts the values of two float32x4 vectors
 
     @code
     r0 = a0 - b0
@@ -162,8 +155,7 @@ inline float32x4 sub_add(float32x4 a, float32x4 b)
 #endif
 }
 
-/**
-    Adds or subtracts the values of two float64x2 vectors
+/** Adds or subtracts the values of two float64x2 vectors
 
     @code
     r0 = a0 - b0
@@ -181,8 +173,7 @@ inline float64x2 sub_add(float64x2 a, float64x2 b)
 }
 
 #if 0
-/**
-    Rounds the values of a float64x2 vector towards negative infinity
+/** Rounds the values of a float64x2 vector towards negative infinity
 
     @code
     r0 = floor(a0)
@@ -216,8 +207,7 @@ inline float64x2 floor(float64x2 a)
 #endif
 }
 
-/**
-    Rounds the values of a float64x2 vector towards positive infinity
+/** Rounds the values of a float64x2 vector towards positive infinity
 
     @code
     r0 = ceil(a0)
@@ -252,8 +242,7 @@ inline float64x2 ceil(float64x2 a)
 #endif
 }
 
-/**
-    Rounds the values of a float64x2 vector towards zero
+/** Rounds the values of a float64x2 vector towards zero
 
     @code
     r0 = floor(a0)

@@ -24,8 +24,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 /// @defgroup simd_math_fp
 /// @{
 
-/**
-    Computes absolute value of floating point values.
+/** Computes absolute value of floating point values.
 
     @code
     r0 = abs(a0)
@@ -62,8 +61,7 @@ inline float32x8 abs(float32x8 a)
 /// @{
 
 /// @{
-/**
-    Computes absolute value of floating point values.
+/** Computes absolute value of floating point values.
 
     @code
     r0 = abs(a0)
@@ -102,8 +100,7 @@ inline float64x4 abs(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Extracts sign bits from the values in float32x4 vector
+/** Extracts sign bits from the values in float32x4 vector
 
     @code
     r0 = a0 & 0x80000000
@@ -130,8 +127,7 @@ inline float32x8 sign(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Extracts sigh bit from the values in float64x2 vector.
+/** Extracts sigh bit from the values in float64x2 vector.
 
     @code
     r0 = a0 & 0x8000000000000000
@@ -168,8 +164,7 @@ inline float64x4 sign(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Adds the values of two vectors
+/** Adds the values of two vectors
 
     @code
     r0 = a0 + b0
@@ -202,8 +197,7 @@ inline float32x8 add(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Adds the values of two vectors
+/** Adds the values of two vectors
 
     @code
     r0 = a0 + b0
@@ -240,8 +234,7 @@ inline float64x4 add(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Substracts the values of two vectors
+/** Substracts the values of two vectors
 
     @code
     r0 = a0 - b0
@@ -274,8 +267,7 @@ inline float32x8 sub(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Subtracts the values of two vectors
+/** Subtracts the values of two vectors
 
     @code
     r0 = a0 - b0
@@ -312,8 +304,7 @@ inline float64x4 sub(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Negates the values of a float32x4 vector
+/** Negates the values of a float32x4 vector
 
     @code
     r0 = -a0
@@ -353,8 +344,7 @@ inline float32x8 neg(float32x8 a)
 /// @}
 
 /// @{
-/**
-    Negates the values of a vector
+/** Negates the values of a vector
 
     @code
     r0 = -a0
@@ -394,8 +384,7 @@ inline float64x4 neg(float64x4 a)
 /// @}
 
 /// @{
-/**
-    Multiplies the values of two vectors
+/** Multiplies the values of two vectors
 
     @code
     r0 = a0 * b0
@@ -428,8 +417,7 @@ inline float32x8 mul(float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Multiplies the values of two vectors
+/** Multiplies the values of two vectors
 
     @code
     r0 = a0 * b0

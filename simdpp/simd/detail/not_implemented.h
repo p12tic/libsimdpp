@@ -20,8 +20,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 
 namespace detail {
 
-/**
-    A data type that can be implicitly converted to all types used in the
+/** A data type that can be implicitly converted to all types used in the
     library. Used to silence 'no return value' warnings
 */
 class not_implemented_proxy {
@@ -59,8 +58,7 @@ public:
 
 } // namespace detail
 
-/**
-    Causes linker error whenever unimplemented functionality is used.
+/** Causes linker error whenever unimplemented functionality is used.
 */
 void libsimdpp_instruction_not_available();
 

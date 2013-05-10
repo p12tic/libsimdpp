@@ -18,8 +18,7 @@ namespace sse {
 namespace detail {
 
 /// @{
-/**
-    Shuffles 128 bit parts within the vectors.
+/** Shuffles 128 bit parts within the vectors.
 
 @code
     switch(s0):

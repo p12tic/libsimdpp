@@ -17,8 +17,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
 /// @{
-/**
-    Stores the first @a N elements of a 128-bit vector to memory.
+/** Stores the first @a N elements of a 128-bit vector to memory.
 
     @a N must be a power of 2 and at least @a M/4 where @a M is the number of
     elements within vector. @a P must be 0 or @a M/2 if @a N == M/2.
@@ -124,8 +123,7 @@ void store_lane(double* p, float64x2 a)
 }
 /// @}
 
-/**
-    Stores bytes in an 128-bit integer vector according to a mask. The highest
+/** Stores bytes in an 128-bit integer vector according to a mask. The highest
     bit in the corresponding byte in the mask defines whether the byte will
     be saved. @a p does not need to be aligned to 16 bytes.
 */

@@ -18,8 +18,7 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    Generic class representing 16x 16-bit integer vector.
+/** Generic class representing 16x 16-bit integer vector.
     To be used where the signedness of the underlying element type is not important
 */
 class basic_int16x16 : public int256 {
@@ -52,8 +51,7 @@ public:
 #endif
 };
 
-/**
-    Class representing 16x 16-bit signed integer vector
+/** Class representing 16x 16-bit signed integer vector
 */
 class int16x16 : public basic_int16x16 {
 public:
@@ -86,8 +84,7 @@ public:
           int16x8& operator[](unsigned i)       { return i16(i); }
 #endif
 
-    /**
-        Creates a signed int16x16 vector with the contents set to zero
+    /** Creates a signed int16x16 vector with the contents set to zero
 
         @code
             | 0  1  ... 15 |
@@ -96,8 +93,7 @@ public:
     */
     static int16x16 zero();
 
-    /**
-        Creates a signed int16x16 vector from a value loaded from memory.
+    /** Creates a signed int16x16 vector from a value loaded from memory.
 
         @code
             | 0  1  ... 15 |
@@ -108,8 +104,7 @@ public:
     */
     static int16x16 load_broadcast(const int16_t* v0);
 
-    /**
-        Creates a signed int16x16 vector from a value stored in a core register.
+    /** Creates a signed int16x16 vector from a value stored in a core register.
 
         @code
             | 0  1  ... 15 |
@@ -119,8 +114,7 @@ public:
     */
     static int16x16 set_broadcast(int16_t v0);
 
-    /**
-        Creates a signed int16x16 vector from a value known at compile-time
+    /** Creates a signed int16x16 vector from a value known at compile-time
 
         @code
             | 0  1  ... 15 |
@@ -129,8 +123,7 @@ public:
     */
     static int16x16 make_const(int16_t v0);
 
-    /**
-        Creates a signed int16x16 vector from two values known at compile-time
+    /** Creates a signed int16x16 vector from two values known at compile-time
 
         @code
             | 0  1  2  3  4  ... 15 |
@@ -139,8 +132,7 @@ public:
     */
     static int16x16 make_const(int16_t v0, int16_t v1);
 
-    /**
-        Creates a signed int16x16 vector from four values known at compile-time
+    /** Creates a signed int16x16 vector from four values known at compile-time
 
         @code
             | 0  1  2  3  4  5  ... 15 |
@@ -149,8 +141,7 @@ public:
     */
     static int16x16 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3);
 
-    /**
-        Creates a signed int16x16 vector from eight values known at compile-time
+    /** Creates a signed int16x16 vector from eight values known at compile-time
 
         @code
             | 0  ... 7   8  ... 15 |
@@ -160,8 +151,7 @@ public:
     static int16x16 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
                                int16_t v4, int16_t v5, int16_t v6, int16_t v7);
 
-    /**
-        Creates a signed int16x16 vector from eight values known at compile-time
+    /** Creates a signed int16x16 vector from eight values known at compile-time
 
         @code
             | 0  1  ... 15  |
@@ -174,8 +164,7 @@ public:
                                int16_t v12, int16_t v13, int16_t v14, int16_t v15);
 };
 
-/**
-    Class representing 8x 16-bit unsigned integer vector
+/** Class representing 8x 16-bit unsigned integer vector
 */
 class uint16x16 : public basic_int16x16 {
 public:
@@ -208,8 +197,7 @@ public:
           uint16x8& operator[](unsigned i)       { return u16(i); }
 #endif
 
-    /**
-        Creates a unsigned int16x16 vector with the contents set to zero
+    /** Creates a unsigned int16x16 vector with the contents set to zero
 
         @code
             | 0  1  ... 15 |
@@ -218,8 +206,7 @@ public:
     */
     static uint16x16 zero();
 
-    /**
-        Creates a unsigned int16x16 vector from a value loaded from memory.
+    /** Creates a unsigned int16x16 vector from a value loaded from memory.
 
         @code
             | 0  1  ... 15 |
@@ -230,8 +217,7 @@ public:
     */
     static uint16x16 load_broadcast(const uint16_t* v0);
 
-    /**
-        Creates a unsigned int16x16 vector from a value stored in a core register.
+    /** Creates a unsigned int16x16 vector from a value stored in a core register.
 
         @code
             | 0  1  ... 15 |
@@ -241,8 +227,7 @@ public:
     */
     static uint16x16 set_broadcast(uint16_t v0);
 
-    /**
-        Creates a unsigned int16x16 vector from a value known at compile-time
+    /** Creates a unsigned int16x16 vector from a value known at compile-time
 
         @code
             | 0  1  ... 15 |
@@ -251,8 +236,7 @@ public:
     */
     static uint16x16 make_const(uint16_t v0);
 
-    /**
-        Creates a unsigned int16x16 vector from two values known at compile-time
+    /** Creates a unsigned int16x16 vector from two values known at compile-time
 
         @code
             | 0  1  2  3  4  ... 15 |
@@ -261,8 +245,7 @@ public:
     */
     static uint16x16 make_const(uint16_t v0, uint16_t v1);
 
-    /**
-        Creates a unsigned int16x16 vector from four values known at compile-time
+    /** Creates a unsigned int16x16 vector from four values known at compile-time
 
         @code
             | 0  1  2  3  4  5  ... 15 |
@@ -271,8 +254,7 @@ public:
     */
     static uint16x16 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3);
 
-    /**
-        Creates a unsigned int16x16 vector from eight values known at compile-time
+    /** Creates a unsigned int16x16 vector from eight values known at compile-time
 
         @code
             | 0  ... 7   8  ... 15 |
@@ -282,8 +264,7 @@ public:
     static uint16x16 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
                                 uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
 
-    /**
-        Creates a unsigned int16x16 vector from eight values known at compile-time
+    /** Creates a unsigned int16x16 vector from eight values known at compile-time
 
         @code
             | 0  1  ... 15  |

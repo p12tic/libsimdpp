@@ -17,8 +17,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace neon {
 
 /// @{
-/**
-    Stores @a n elements of a 128-bit vector starting from the @a pos-th one.
+/** Stores @a n elements of a 128-bit vector starting from the @a pos-th one.
     @a p must be aligned to 16 bytes.
 
     @a n must be a power of 2. @a pos must be a multiple of @a n. The behavior is

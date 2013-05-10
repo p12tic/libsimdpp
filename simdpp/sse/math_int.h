@@ -20,8 +20,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
 
-/**
-    Copies sign from the values of one int8x16 vector to another
+/** Copies sign from the values of one int8x16 vector to another
 
     @code
     r0 = (b0 > 0) ? a0 : ((b0 == 0) ? 0 : -a0)
@@ -39,8 +38,7 @@ inline int128 copysign(int8x16 a, int8x16 b)
 #endif
 }
 
-/**
-    Copies sign from the values of one int16x8 vector to another
+/** Copies sign from the values of one int16x8 vector to another
 
     @code
     r0 = (b0 > 0) ? a0 : ((b0 == 0) ? 0 : -a0)
@@ -58,8 +56,7 @@ inline int128 copysign(int16x8 a, int16x8 b)
 #endif
 }
 
-/**
-    Copies sign from the values of one int32x4 vector to another
+/** Copies sign from the values of one int32x4 vector to another
 
     @code
     r0 = (b0 > 0) ? a0 : ((b0 == 0) ? 0 : -a0)
@@ -78,8 +75,7 @@ inline int128 copysign(int32x4 a, int32x4 b)
 #endif
 }
 
-/**
-    Adds values in adjacent pairs of two int16x8 vectors
+/** Adds values in adjacent pairs of two int16x8 vectors
 
     @code
     r0 = a0 + a1
@@ -100,8 +96,7 @@ inline int128 hadd2(basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-/**
-    Adds values in adjacent pairs of two int32x4 vectors
+/** Adds values in adjacent pairs of two int32x4 vectors
 
     @code
     r0 = a0 + a1
@@ -120,8 +115,7 @@ inline int128 hadd2(basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-/**
-    Adds values in adjacent pairs of two int64x2 vectors
+/** Adds values in adjacent pairs of two int64x2 vectors
 
     @code
     r0 = a0 + a1
@@ -138,8 +132,7 @@ inline int128 hadd2(basic_int64x2 a, basic_int64x2 b)
     return ia;
 }
 
-/**
-    Adds and saturates values in adjacent pairs of two signed int16x8 vectors
+/** Adds and saturates values in adjacent pairs of two signed int16x8 vectors
 
     @code
     r0 = signed_saturate(a0 + a1)
@@ -160,8 +153,7 @@ inline int128 hadds2(int16x8 a, int16x8 b)
 #endif
 }
 
-/**
-    Sums the values within each of four int32x4 vector
+/** Sums the values within each of four int32x4 vector
 
     @code
     r0 = a0 + a1 + a2 + a3
@@ -184,8 +176,7 @@ inline int128 hadd4(basic_int32x4 a, basic_int32x4 b, basic_int32x4 c, basic_int
 #endif
 }
 
-/**
-    Subtracts values in adjacent pairs of two int16x8 vectors
+/** Subtracts values in adjacent pairs of two int16x8 vectors
 
     @code
     r0 = a0 - a1
@@ -206,8 +197,7 @@ inline int128 hsub2(basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-/**
-    Subtracts values in adjacent pairs of two int32x4 vectors
+/** Subtracts values in adjacent pairs of two int32x4 vectors
 
     @code
     r0 = a0 - a1
@@ -226,8 +216,7 @@ inline int128 hsub2(basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-/**
-    Subtracts values in adjacent pairs of two int64x2 vectors
+/** Subtracts values in adjacent pairs of two int64x2 vectors
 
     @code
     r0 = a0 - a1
@@ -248,8 +237,7 @@ inline int128 hsub2(basic_int64x2 a, basic_int64x2 b)
 #endif
 }
 
-/**
-    Subtracts and saturates values in adjacent pairs of two signed int16x8 vectors
+/** Subtracts and saturates values in adjacent pairs of two signed int16x8 vectors
 
     @code
     r0 = signed_saturate(a0 + a1)

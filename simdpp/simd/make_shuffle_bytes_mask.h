@@ -72,8 +72,7 @@ std::array<uint8_t,4> get_shuffle_bytex4_16()
 } // namespace detail
 
 /// @{
-/**
-    Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     All elements within vectors are grouped into sets of two adjacent elements.
@@ -138,8 +137,7 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     All elements within vectors are grouped into sets of four adjacent
@@ -210,8 +208,7 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     All elements within vectors are grouped into sets of eight adjacent
@@ -289,8 +286,7 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     The template arguments define which elements to select from each element
@@ -384,8 +380,7 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int16x8 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int16x8 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     All elements within vectors are grouped into sets of two adjacent elements.
@@ -450,8 +445,7 @@ basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int16x8 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int16x8 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     All elements within vectors are grouped into sets of four adjacent
@@ -522,8 +516,7 @@ basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int16x8 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int16x8 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     The template arguments define which elements to select from each element
@@ -600,8 +593,7 @@ basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int32x4 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int32x4 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     All elements within vectors are grouped into sets of two adjacent elements.
@@ -664,8 +656,7 @@ basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
 /// @}
 
 /// @{
-/**
-    Makes a mask to shuffle an int32x4 vector using @c permute_bytes16,
+/** Makes a mask to shuffle an int32x4 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
 
     The template arguments define which elements to select from each element

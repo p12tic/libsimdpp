@@ -17,8 +17,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 namespace sse {
 
 /// @{
-/**
-    Permutes the first 4 16-bit values in of each set of 8 consecutive valuees.
+/** Permutes the first 4 16-bit values in of each set of 8 consecutive valuees.
     The selector values @a s0, @a s1, @a s2 and @a s3 must be in range [0; 3].
 
     @code
@@ -64,8 +63,7 @@ basic_int16x16 permute_lo(basic_int16x16 a)
 
 
 /// @{
-/**
-    Permutes the last 4 16-bit values in of each set of 8 consecutive valuees.
+/** Permutes the last 4 16-bit values in of each set of 8 consecutive valuees.
     The selector values @a s0, @a s1, @a s2 and @a s3 must be in range [0; 3].
 
     @code

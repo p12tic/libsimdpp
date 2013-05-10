@@ -29,8 +29,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 /// @{
 
 /// @{
-/**
-    Stores a 128-bit or 256-bit integer vector to an aligned memory location.
+/** Stores a 128-bit or 256-bit integer vector to an aligned memory location.
 
     @par 128-bit version:
 
@@ -112,8 +111,7 @@ inline void store(double* p, float64x4 a)
 #endif
 }
 /// @{
-/**
-    Stores a 128-bit or 256-bit integer, 32-bit or 64-bit float vector to an
+/** Stores a 128-bit or 256-bit integer, 32-bit or 64-bit float vector to an
     unaligned memory location.
 
     @par 128-bit version:
@@ -271,8 +269,7 @@ inline void store_u(double* p, float64x4 a)
 /// @}
 
 /// @{
-/**
-    Stores a 128-bit or 256-bit integer, 32-bit or 64-bit floating point vector
+/** Stores a 128-bit or 256-bit integer, 32-bit or 64-bit floating point vector
     to memory without polluting the caches, if possible.
 
     @par 128-bit version:
@@ -404,8 +401,7 @@ void v256_store_last(P* p, V a, unsigned n)
 } // namespace detail
 
 /// @{
-/**
-    Stores the first @a n elements of an 128-bit or 256-bit integer, 32-bit or
+/** Stores the first @a n elements of an 128-bit or 256-bit integer, 32-bit or
     64-bit floating point vector to memory. @a n must be in range [0..N-1]
     where @a N is the number of elements in the vector. If @a n is zero, no
     store is made.
@@ -648,8 +644,7 @@ inline void store_first(double* p, float64x4 a, unsigned n)
 /// @}
 
 /// @{
-/**
-    Stores the last @a n elements of an 128-bit or 256-bit integer, 32-bit or
+/** Stores the last @a n elements of an 128-bit or 256-bit integer, 32-bit or
     64-bit floating point vector to memory. @a n must be in range [0..N-1]
     where @a N is the number of elements in the vector. If @a n is zero, no
     store is made.
@@ -952,8 +947,7 @@ void v256_store_i_pack4(void* p, V a, V b, V c, V d)
 } // namespace detail
 
 /// @{
-/**
-    Interleaves 8-bit values from two vectors and stores the result into
+/** Interleaves 8-bit values from two vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -992,8 +986,7 @@ inline void store_packed2(void* p, basic_int8x32 a, basic_int8x32 b)
 /// @}
 
 /// @{
-/**
-    Interleaves 16-bit values from two vectors and stores the result into
+/** Interleaves 16-bit values from two vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1032,8 +1025,7 @@ inline void store_packed2(void* p, basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    Interleaves 32-bit values from two vectors and stores the result into
+/** Interleaves 32-bit values from two vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1072,8 +1064,7 @@ inline void store_packed2(void* p, basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    Interleaves 64-bit values from two vectors and stores the result into
+/** Interleaves 64-bit values from two vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1105,8 +1096,7 @@ inline void store_packed2(void* p, basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    Interleaves 32-bit floating-point values from two vectors and stores
+/** Interleaves 32-bit floating-point values from two vectors and stores
     the result into successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1150,8 +1140,7 @@ inline void store_packed2(float* p, float32x8 a, float32x8 b)
 /// @}
 
 /// @{
-/**
-    Interleaves 64-bit floating-point values from two vectors and stores
+/** Interleaves 64-bit floating-point values from two vectors and stores
     the result into successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1189,8 +1178,7 @@ inline void store_packed2(double* p, float64x4 a, float64x4 b)
 /// @}
 
 /// @{
-/**
-    Interleaves 8-bit values from three vectors and stores the result into
+/** Interleaves 8-bit values from three vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1234,8 +1222,7 @@ inline void store_packed3(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 16-bit values from three vectors and stores the result into
+/** Interleaves 16-bit values from three vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1279,8 +1266,7 @@ inline void store_packed3(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 32-bit values from three vectors and stores the result into
+/** Interleaves 32-bit values from three vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1324,8 +1310,7 @@ inline void store_packed3(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 64-bit values from three vectors and stores the result into
+/** Interleaves 64-bit values from three vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1372,8 +1357,7 @@ inline void store_packed3(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 32-bit floating-point values from three vectors and stores
+/** Interleaves 32-bit floating-point values from three vectors and stores
     the result into successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1422,8 +1406,7 @@ inline void store_packed3(float* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 64-bit floating-point values from three vectors and stores
+/** Interleaves 64-bit floating-point values from three vectors and stores
     the result into successive locations starting from @a p.
 
     Loads 64-bit floating point values packed in triplets, de-interleaves them
@@ -1477,8 +1460,7 @@ inline void store_packed3(double* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 8-bit values from four vectors and stores the result into
+/** Interleaves 8-bit values from four vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1527,8 +1509,7 @@ inline void store_packed4(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 16-bit values from four vectors and stores the result into
+/** Interleaves 16-bit values from four vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1577,8 +1558,7 @@ inline void store_packed4(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 32-bit values from four vectors and stores the result into
+/** Interleaves 32-bit values from four vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1628,8 +1608,7 @@ inline void store_packed4(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 64-bit values from four vectors and stores the result into
+/** Interleaves 64-bit values from four vectors and stores the result into
     successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1675,8 +1654,7 @@ inline void store_packed4(void* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 32-bit floating-point values from four vectors and stores
+/** Interleaves 32-bit floating-point values from four vectors and stores
     the result into successive locations starting from @a p.
 
     @par 128-bit version:
@@ -1731,8 +1709,7 @@ inline void store_packed4(float* p,
 /// @}
 
 /// @{
-/**
-    Interleaves 64-bit floating-point values from four vectors and stores
+/** Interleaves 64-bit floating-point values from four vectors and stores
     the result into successive locations starting from @a p.
 
     @par 128-bit version:

@@ -23,14 +23,12 @@
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
 
-/**
-    @defgroup simd_math_int
+/** @defgroup simd_math_int
     @{
 */
 
 /// @{
-/**
-    Adds 8-bit integer values.
+/** Adds 8-bit integer values.
 
     @code
     r0 = a0 + b0
@@ -63,8 +61,7 @@ inline basic_int8x32 add(basic_int8x32 a, basic_int8x32 b)
 /// @}
 
 /// @{
-/**
-    Adds 16-bit integer values.
+/** Adds 16-bit integer values.
 
     @code
     r0 = a0 + b0
@@ -97,8 +94,7 @@ inline basic_int16x16 add(basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    Adds 32-bit integer values.
+/** Adds 32-bit integer values.
 
     @code
     r0 = a0 + b0
@@ -131,8 +127,7 @@ inline basic_int32x8 add(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    Adds 64-bit integer values.
+/** Adds 64-bit integer values.
 
     @code
     r0 = a0 + b0
@@ -165,8 +160,7 @@ inline basic_int64x4 add(basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    Adds and saturates signed 8-bit integer values.
+/** Adds and saturates signed 8-bit integer values.
 
     @code
     r0 = signed_saturate(a0 + b0)
@@ -199,8 +193,7 @@ inline int8x32 adds(int8x32 a, int8x32 b)
 /// @}
 
 /// @{
-/**
-    Adds and saturates signed 16-bit integer values.
+/** Adds and saturates signed 16-bit integer values.
 
     @code
     r0 = signed_saturate(a0 + b0)
@@ -233,8 +226,7 @@ inline int16x16 adds(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Adds and saturates unsigned 8-bit integer values.
+/** Adds and saturates unsigned 8-bit integer values.
 
     @code
     r0 = unsigned_saturate(a0 + b0)
@@ -267,8 +259,7 @@ inline uint8x32 adds(uint8x32 a, uint8x32 b)
 /// @}
 
 /// @{
-/**
-    Adds and saturates unsigned 16-bit integer values.
+/** Adds and saturates unsigned 16-bit integer values.
 
     @code
     r0 = unsigned_saturate(a0 + b0)
@@ -301,8 +292,7 @@ inline uint16x16 adds(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Subtracts 8-bit integer values.
+/** Subtracts 8-bit integer values.
 
     @code
     r0 = a0 - b0
@@ -335,8 +325,7 @@ inline basic_int8x32 sub(basic_int8x32 a, basic_int8x32 b)
 /// @}
 
 /// @{
-/**
-    Subtracts 16-bit integer values.
+/** Subtracts 16-bit integer values.
 
     @code
     r0 = a0 - b0
@@ -369,8 +358,7 @@ inline basic_int16x16 sub(basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    Subtracts 32-bit integer values.
+/** Subtracts 32-bit integer values.
 
     @code
     r0 = a0 - b0
@@ -403,8 +391,7 @@ inline basic_int32x8 sub(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    Subtracts 64-bit integer values.
+/** Subtracts 64-bit integer values.
 
     @code
     r0 = a0 - b0
@@ -437,8 +424,7 @@ inline basic_int64x4 sub(basic_int64x4 a, basic_int64x4 b)
 /// @}
 
 /// @{
-/**
-    Subtracts and saturaters signed 8-bit integer values.
+/** Subtracts and saturaters signed 8-bit integer values.
 
     @code
     r0 = saturated(a0 - b0)
@@ -471,8 +457,7 @@ inline int8x32 subs(int8x32 a, int8x32 b)
 /// @}
 
 /// @{
-/**
-    Subtracts and saturaters signed 16-bit integer values.
+/** Subtracts and saturaters signed 16-bit integer values.
 
     @code
     r0 = saturated(a0 - b0)
@@ -505,8 +490,7 @@ inline int16x16 subs(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Subtracts and saturaters unsigned 8-bit integer values.
+/** Subtracts and saturaters unsigned 8-bit integer values.
 
     @code
     r0 = saturated(a0 - b0)
@@ -539,8 +523,7 @@ inline uint8x32 subs(uint8x32 a, uint8x32 b)
 /// @}
 
 /// @{
-/**
-    Subtracts and saturaters unsigned 16-bit integer values.
+/** Subtracts and saturaters unsigned 16-bit integer values.
 
     @code
     r0 = saturated(a0 - b0)
@@ -573,8 +556,7 @@ inline uint16x16 subs(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Negates signed 8-bit values.
+/** Negates signed 8-bit values.
 
     @code
     r0 = -a0
@@ -607,8 +589,7 @@ inline int8x32 neg(int8x32 a)
 /// @}
 
 /// @{
-/**
-    Negates signed 16-bit values.
+/** Negates signed 16-bit values.
 
     @code
     r0 = -a0
@@ -641,8 +622,7 @@ inline int16x16 neg(int16x16 a)
 /// @}
 
 /// @{
-/**
-    Negates signed 32-bit values.
+/** Negates signed 32-bit values.
 
     @code
     r0 = -a0
@@ -675,8 +655,7 @@ inline int32x8 neg(int32x8 a)
 /// @}
 
 /// @{
-/**
-    Negates signed 64-bit values.
+/** Negates signed 64-bit values.
 
     @code
     r0 = -a0
@@ -712,8 +691,7 @@ inline int64x4 neg(int64x4 a)
 
 // no 8 bit multiplications in SSE
 /// @{
-/**
-    Multiplies 16-bit values and returns the lower part of the multiplication
+/** Multiplies 16-bit values and returns the lower part of the multiplication
 
     @code
     r0 = low(a0 * b0)
@@ -746,8 +724,7 @@ inline basic_int16x16 mul_lo(basic_int16x16 a, basic_int16x16 b)
 /// @}
 
 /// @{
-/**
-    Multiplies signed 16-bit values and returns the higher half of the result.
+/** Multiplies signed 16-bit values and returns the higher half of the result.
 
     @code
     r0 = high(a0 * b0)
@@ -786,8 +763,7 @@ inline int16x16 mul_hi(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Multiplies unsigned 16-bit values and returns the higher half of the result.
+/** Multiplies unsigned 16-bit values and returns the higher half of the result.
 
     @code
     r0 = high(a0 * b0)
@@ -826,8 +802,7 @@ inline uint16x16 mul_hi(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Multiplies 32-bit values and returns the lower half of the result.
+/** Multiplies 32-bit values and returns the lower half of the result.
 
     @code
     r0 = low(a0 * b0)
@@ -873,8 +848,7 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /// @{
-/**
-    Multiplies signed 16-bit values in the lower halves of the vectors and
+/** Multiplies signed 16-bit values in the lower halves of the vectors and
     expands the results to 32 bits.
 
     @par 128-bit version:
@@ -925,8 +899,7 @@ inline int32x8 mull_lo(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Multiplies unsigned 16-bit values in the lower halves of the vectors and
+/** Multiplies unsigned 16-bit values in the lower halves of the vectors and
     expands the results to 32 bits.
 
     @par 128-bit version:
@@ -975,8 +948,7 @@ inline uint32x8 mull_lo(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Multiplies signed 16-bit values in the higher halves of the vectors and
+/** Multiplies signed 16-bit values in the higher halves of the vectors and
     expands the results to 32 bits.
 
     @par 128-bit version:
@@ -1025,8 +997,7 @@ inline int32x8 mull_hi(int16x16 a, int16x16 b)
 /// @}
 
 /// @{
-/**
-    Multiplies unsigned 16-bit values in the higher halves of the vectors and
+/** Multiplies unsigned 16-bit values in the higher halves of the vectors and
     expands the results to 32 bits.
 
     @par 128-bit version:
@@ -1075,8 +1046,7 @@ inline uint32x8 mull_hi(uint16x16 a, uint16x16 b)
 /// @}
 
 /// @{
-/**
-    Multiplies signed 32-bit values in the lower halves of the vectors and
+/** Multiplies signed 32-bit values in the lower halves of the vectors and
     expands the results to 64 bits.
 
     @par 128-bit version:
@@ -1127,8 +1097,7 @@ inline int64x4 mull_lo(int32x8 a, int32x8 b)
 /// @}
 
 /// @{
-/**
-    Multiplies unsigned 32-bit values in the lower halves of the vectors and
+/** Multiplies unsigned 32-bit values in the lower halves of the vectors and
     expands the results to 64 bits.
 
     @par 128-bit version:
@@ -1175,8 +1144,7 @@ inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
 /// @}
 
 /// @{
-/**
-    Multiplies signed 32-bit values in the higher halves of the vectors and
+/** Multiplies signed 32-bit values in the higher halves of the vectors and
     expands the results to 64 bits.
 
     @par 128-bit version:
@@ -1227,8 +1195,7 @@ inline int64x4 mull_hi(int32x8 a, int32x8 b)
 /// @}
 
 /// @{
-/**
-    Multiplies unsigned 32-bit values in the higher halves of the vectors and
+/** Multiplies unsigned 32-bit values in the higher halves of the vectors and
     expands the results to 64 bits.
 
     @par 128-bit version:
