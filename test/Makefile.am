@@ -12,7 +12,7 @@ test_simd_SOURCES =                 \
     arch/null_shuffle.cc            \
     arch/null_shuffle_bytes.cc
 
-test_simd_CXXFLAGS = $(AM_CXXFLAGS) -save-temps
+test_simd_CXXFLAGS = $(AM_CXXFLAGS)
 
 if HAS_SSE2
 test_simd_CXXFLAGS += -msse2
