@@ -616,6 +616,84 @@ V v256_shift_l(V a)
 #endif
 }
 
+template<unsigned count, class V>
+struct shift_u8_mask;
+
+template<class V>
+struct shift_u8_mask<1,V> { V operator()() { return V::make_const(0x01); } };
+template<class V>
+struct shift_u8_mask<2,V> { V operator()() { return V::make_const(0x03); } };
+template<class V>
+struct shift_u8_mask<3,V> { V operator()() { return V::make_const(0x07); } };
+template<class V>
+struct shift_u8_mask<4,V> { V operator()() { return V::make_const(0x0f); } };
+template<class V>
+struct shift_u8_mask<5,V> { V operator()() { return V::make_const(0x1f); } };
+template<class V>
+struct shift_u8_mask<6,V> { V operator()() { return V::make_const(0x3f); } };
+template<class V>
+struct shift_u8_mask<7,V> { V operator()() { return V::make_const(0x7f); } };
+
+template<unsigned count>
+uint8x16 shift_r_u8(uint8x16 a)
+{
+#if SIMDPP_USE_NULL
+    return shift_r(a, count);
+#elif SIMDPP_USE_SSE2
+    uint8x16 mask = detail::shift_u8_mask<count, uint8x16>()();
+    uint16x8 a16 = bit_andnot(a, mask);
+    a16 = shift_r<count>(a16);
+    return a16;
+#elif SIMDPP_USE_NEON
+    return vshrq_n_u8(a, count);
+#endif
+}
+
+template<unsigned count>
+uint8x32 shift_r_u8(uint8x32 a)
+{
+#if SIMDPP_USE_NULL
+    return shift_r(a, count);
+#elif SIMDPP_USE_SSE2
+    uint8x32 mask = detail::shift_u8_mask<count, uint8x32>()();
+    uint16x16 a16 = bit_andnot(a, mask);
+    a16 = shift_r<count>(a16);
+    return a16;
+#elif SIMDPP_USE_NEON
+    return { shift_r_u8<count>(a[0]), shift_r_u8<count>(a[1]) };
+#endif
+}
+
+template<unsigned count>
+basic_int8x16 shift_l_8(basic_int8x16 a)
+{
+#if SIMDPP_USE_NULL
+    return shift_l(a, count);
+#elif SIMDPP_USE_SSE2
+    uint8x16 mask = detail::shift_u8_mask<8-count, uint8x16>()();
+    uint16x8 a16 = bit_and(a, mask);
+    a16 = shift_l<count>(a16);
+    return a16;
+#elif SIMDPP_USE_NEON
+    return vshlq_n_u8(a, count);
+#endif
+}
+
+template<unsigned count>
+basic_int8x32 shift_l_8(basic_int8x32 a)
+{
+#if SIMDPP_USE_NULL
+    return shift_l(a, count);
+#elif SIMDPP_USE_SSE2
+    uint8x32 mask = detail::shift_u8_mask<8-count, uint8x32>()();
+    uint16x16 a16 = bit_and(a, mask);
+    a16 = shift_l<count>(a16);
+    return a16;
+#elif SIMDPP_USE_NEON
+    return { shift_l_8<count>(a[0]), shift_l_8<count>(a[1]) };
+#endif
+}
+
 } // namespace detail
 
 /// @{
@@ -665,13 +743,12 @@ template<> inline int8x32 shift_r<0>(int8x32 a) { return a; }
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 5}
+    @icost{SSE2-AVX2, 3}
     @icost{NEON, 2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 10}
-    @icost{AVX2, 5}
-    @icost{NEON, 3}
+    @icost{SSE2-AVX, 5}
+    @icost{AVX2,NEON, 3}
 */
 template<unsigned count>
 uint8x16 shift_r(uint8x16 a)
@@ -688,6 +765,24 @@ uint8x32 shift_r(uint8x32 a) { return detail::v256_shift_r<count>(a); }
 
 template<> inline uint8x16 shift_r<0>(uint8x16 a) { return a; }
 template<> inline uint8x32 shift_r<0>(uint8x32 a) { return a; }
+
+template<> inline uint8x16 shift_r<1>(uint8x16 a) { return detail::shift_r_u8<1>(a); }
+template<> inline uint8x32 shift_r<1>(uint8x32 a) { return detail::shift_r_u8<1>(a); }
+template<> inline uint8x16 shift_r<2>(uint8x16 a) { return detail::shift_r_u8<2>(a); }
+template<> inline uint8x32 shift_r<2>(uint8x32 a) { return detail::shift_r_u8<2>(a); }
+template<> inline uint8x16 shift_r<3>(uint8x16 a) { return detail::shift_r_u8<3>(a); }
+template<> inline uint8x32 shift_r<3>(uint8x32 a) { return detail::shift_r_u8<3>(a); }
+template<> inline uint8x16 shift_r<4>(uint8x16 a) { return detail::shift_r_u8<4>(a); }
+template<> inline uint8x32 shift_r<4>(uint8x32 a) { return detail::shift_r_u8<4>(a); }
+template<> inline uint8x16 shift_r<5>(uint8x16 a) { return detail::shift_r_u8<5>(a); }
+template<> inline uint8x32 shift_r<5>(uint8x32 a) { return detail::shift_r_u8<5>(a); }
+template<> inline uint8x16 shift_r<6>(uint8x16 a) { return detail::shift_r_u8<6>(a); }
+template<> inline uint8x32 shift_r<6>(uint8x32 a) { return detail::shift_r_u8<6>(a); }
+template<> inline uint8x16 shift_r<7>(uint8x16 a) { return detail::shift_r_u8<7>(a); }
+template<> inline uint8x32 shift_r<7>(uint8x32 a) { return detail::shift_r_u8<7>(a); }
+
+template<> inline uint8x16 shift_r<8>(uint8x16) { return uint8x16::zero(); }
+template<> inline uint8x32 shift_r<8>(uint8x32) { return uint8x32::zero(); }
 /// @}
 
 /// @{
@@ -896,13 +991,12 @@ template<> inline uint64x4 shift_r<0>(uint64x4 a) { return a; }
 
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 5}
+    @icost{SSE2-AVX2, 3}
     @icost{NEON, 2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 10}
-    @icost{AVX2, 5}
-    @icost{NEON, 3}
+    @icost{SSE2-AVX, 5}
+    @icost{AVX2,NEON, 3}
 */
 template<unsigned count>
 basic_int8x16 shift_l(basic_int8x16 a)
@@ -922,6 +1016,24 @@ inline basic_int8x32 shift_l(basic_int8x32 a)
 
 template<> inline basic_int8x16 shift_l<0>(basic_int8x16 a) { return a; }
 template<> inline basic_int8x32 shift_l<0>(basic_int8x32 a) { return a; }
+
+template<> inline basic_int8x16 shift_l<1>(basic_int8x16 a) { return detail::shift_l_8<1>(a); }
+template<> inline basic_int8x32 shift_l<1>(basic_int8x32 a) { return detail::shift_l_8<1>(a); }
+template<> inline basic_int8x16 shift_l<2>(basic_int8x16 a) { return detail::shift_l_8<2>(a); }
+template<> inline basic_int8x32 shift_l<2>(basic_int8x32 a) { return detail::shift_l_8<2>(a); }
+template<> inline basic_int8x16 shift_l<3>(basic_int8x16 a) { return detail::shift_l_8<3>(a); }
+template<> inline basic_int8x32 shift_l<3>(basic_int8x32 a) { return detail::shift_l_8<3>(a); }
+template<> inline basic_int8x16 shift_l<4>(basic_int8x16 a) { return detail::shift_l_8<4>(a); }
+template<> inline basic_int8x32 shift_l<4>(basic_int8x32 a) { return detail::shift_l_8<4>(a); }
+template<> inline basic_int8x16 shift_l<5>(basic_int8x16 a) { return detail::shift_l_8<5>(a); }
+template<> inline basic_int8x32 shift_l<5>(basic_int8x32 a) { return detail::shift_l_8<5>(a); }
+template<> inline basic_int8x16 shift_l<6>(basic_int8x16 a) { return detail::shift_l_8<6>(a); }
+template<> inline basic_int8x32 shift_l<6>(basic_int8x32 a) { return detail::shift_l_8<6>(a); }
+template<> inline basic_int8x16 shift_l<7>(basic_int8x16 a) { return detail::shift_l_8<7>(a); }
+template<> inline basic_int8x32 shift_l<7>(basic_int8x32 a) { return detail::shift_l_8<7>(a); }
+
+template<> inline basic_int8x16 shift_l<8>(basic_int8x16) { return uint8x16::zero(); }
+template<> inline basic_int8x32 shift_l<8>(basic_int8x32) { return uint8x32::zero(); }
 /// @}
 
 /// @{
