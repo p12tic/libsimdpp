@@ -39,6 +39,7 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER(tc, int8x16, min, s, 1);
         TEST_ALL_COMB_HELPER(tc, int8x16, max, s, 1);
         TEST_ALL_COMB_HELPER(tc, int8x16, avg, s, 1);
+        TEST_ALL_COMB_HELPER(tc, int8x16, avg_trunc, s, 1);
 
         TEST_ALL_COMB_HELPER(tc, uint8x16, add, s, 1);
         TEST_ALL_COMB_HELPER(tc, uint8x16, adds, s, 1);
@@ -47,6 +48,7 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER(tc, uint8x16, min, s, 1);
         TEST_ALL_COMB_HELPER(tc, uint8x16, max, s, 1);
         TEST_ALL_COMB_HELPER(tc, uint8x16, avg, s, 1);
+        TEST_ALL_COMB_HELPER(tc, uint8x16, avg_trunc, s, 1);
 
         TEST_ARRAY_HELPER1(tc, int8x16, neg, s);
         TEST_ARRAY_HELPER1(tc, int8x16, abs, s);
@@ -102,6 +104,7 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER(tc, int16x8, min, s, 2);
         TEST_ALL_COMB_HELPER(tc, int16x8, max, s, 2);
         TEST_ALL_COMB_HELPER(tc, int16x8, avg, s, 2);
+        TEST_ALL_COMB_HELPER(tc, int16x8, avg_trunc, s, 2);
 
         TEST_ALL_COMB_HELPER(tc, uint16x8, add, s, 2);
         TEST_ALL_COMB_HELPER(tc, uint16x8, adds, s, 2);
@@ -112,6 +115,7 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER(tc, uint16x8, min, s, 2);
         TEST_ALL_COMB_HELPER(tc, uint16x8, max, s, 2);
         TEST_ALL_COMB_HELPER(tc, uint16x8, avg, s, 2);
+        TEST_ALL_COMB_HELPER(tc, uint16x8, avg_trunc, s, 2);
 
         TEST_ALL_COMB_HELPER_T(tc, int32x4, int16x8, mull_lo, s, 2);
         TEST_ALL_COMB_HELPER_T(tc, int32x4, int16x8, mull_hi, s, 2);
@@ -183,12 +187,14 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER(tc, int32x4, min, s, 4);
         TEST_ALL_COMB_HELPER(tc, int32x4, max, s, 4);
         TEST_ALL_COMB_HELPER(tc, int32x4, avg, s, 4);
+        TEST_ALL_COMB_HELPER(tc, int32x4, avg_trunc, s, 4);
 
         TEST_ALL_COMB_HELPER(tc, uint32x4, add, s, 4);
         TEST_ALL_COMB_HELPER(tc, uint32x4, sub, s, 4);
         TEST_ALL_COMB_HELPER(tc, uint32x4, min, s, 4);
         TEST_ALL_COMB_HELPER(tc, uint32x4, max, s, 4);
         TEST_ALL_COMB_HELPER(tc, uint32x4, avg, s, 4);
+        TEST_ALL_COMB_HELPER(tc, uint32x4, avg_trunc, s, 4);
 
         TEST_ALL_COMB_HELPER_T(tc, uint64x2, uint32x4, mull_lo, s, 4);
         TEST_ALL_COMB_HELPER_T(tc, uint64x2, uint32x4, mull_hi, s, 4);
