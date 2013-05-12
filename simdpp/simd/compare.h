@@ -437,8 +437,8 @@ inline basic_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
     return null::cmp_gt(a, b);
 #elif SIMDPP_USE_SSE2
     uint8x16 bias = uint8x16::make_const(0x80);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm_cmpgt_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vcgtq_u8(a, b);
@@ -449,8 +449,8 @@ inline basic_int8x32 cmp_gt(uint8x32 a, uint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     uint8x32 bias = uint8x32::make_const(0x80);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi8(a, b);
 #else
     return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
@@ -513,8 +513,8 @@ inline basic_int16x8 cmp_gt(uint16x8 a, uint16x8 b)
     return null::cmp_gt(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 bias = uint16x8::make_const(0x8000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm_cmpgt_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vcgtq_u16(a, b);
@@ -525,8 +525,8 @@ inline basic_int16x16 cmp_gt(uint16x16 a, uint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 bias = uint16x16::make_const(0x8000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi16(a, b);
 #else
     return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
@@ -589,8 +589,8 @@ inline basic_int32x4 cmp_gt(uint32x4 a, uint32x4 b)
     return null::cmp_gt(a, b);
 #elif SIMDPP_USE_SSE2
     int32x4 bias = int32x4::make_const(0x80000000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm_cmpgt_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vcgtq_u32(a, b);
@@ -601,8 +601,8 @@ inline basic_int32x8 cmp_gt(uint32x8 a, uint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     uint32x8 bias = uint32x8::make_const(0x80000000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi32(a, b);
 #else
     return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
@@ -741,8 +741,8 @@ inline basic_int8x16 cmp_lt(uint8x16 a, uint8x16 b)
     return null::cmp_lt(a, b);
 #elif SIMDPP_USE_SSE2
     uint8x16 bias = uint8x16::make_const(0x80);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm_cmplt_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vcltq_u8(a, b);
@@ -753,8 +753,8 @@ inline basic_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     uint8x32 bias = uint8x32::make_const(0x80);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi8(b, a);
 #else
     return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
@@ -817,8 +817,8 @@ inline basic_int16x8 cmp_lt(uint16x8 a, uint16x8 b)
     return null::cmp_lt(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 bias = uint16x8::make_const(0x8000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm_cmplt_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vcltq_u16(a, b);
@@ -829,8 +829,8 @@ inline basic_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 bias = uint16x16::make_const(0x8000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi16(b, a);
 #else
     return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
@@ -893,8 +893,8 @@ inline basic_int32x4 cmp_lt(uint32x4 a, uint32x4 b)
     return null::cmp_lt(a, b);
 #elif SIMDPP_USE_SSE2
     uint32x4 bias = uint32x4::make_const(0x80000000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm_cmplt_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vcltq_u32(a, b);
@@ -905,8 +905,8 @@ inline basic_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     uint32x8 bias = uint32x8::make_const(0x80000000);
-    a = sub(a, bias);
-    b = sub(b, bias);
+    a = bit_xor(a, bias); // sub
+    b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi32(b, a);
 #else
     return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
