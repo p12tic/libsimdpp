@@ -7,7 +7,7 @@ else
 doc_subdirs =
 endif
 
-SUBDIRS = simdpp test $(doc_subdirs)
+SUBDIRS = simdpp test perf $(doc_subdirs)
 
 #dist_noinst_SCRIPTS = autogen.sh
 

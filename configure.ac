@@ -152,6 +152,7 @@ AC_CONFIG_FILES([
         simdpp/Makefile
         doc/Makefile
         doc/reference/Doxyfile
+        perf/Makefile
         test/Makefile
         libsimdpp.pc:libsimdpp.pc.in
         ])
