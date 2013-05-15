@@ -59,6 +59,9 @@
 #include <simdpp/simd/math_fp_basic.h>
 #include <simdpp/simd/math_fp_adv.h>
 
+#include <simdpp/simd/insert.h>
+#include <simdpp/simd/extract.h>
+
 #include <simdpp/simd/int128.inl>
 #include <simdpp/simd/int8x16.inl>
 #include <simdpp/simd/int16x8.inl>

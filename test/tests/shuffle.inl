@@ -57,8 +57,33 @@ struct Test_align {
     }
 };
 
+template<class V, unsigned i>
+struct Test_insert_extract {
+    static constexpr unsigned limit = traits<V>::length;
+    static void test(TestCase& tc, V a, V b)
+    {
+        a = simdpp::insert<i>(a, simdpp::extract<i>(b));
+        TEST_PUSH(tc, V, a);
+    }
+};
+
 template<class V>
-void test_shuffle_one_type(TestCase &tc, V v1, V v2)
+void test_shuffle_type128(TestCase &tc, V v1, V v2)
+{
+    TEST_PUSH(tc, V, zip_lo(v1, v2));
+    TEST_PUSH(tc, V, zip_hi(v1, v2));
+    TEST_PUSH(tc, V, unzip_lo(v1, v2));
+    TEST_PUSH(tc, V, unzip_hi(v1, v2));
+
+    TemplateTestHelper<Test_move_r, V>::run(tc, v1);
+    TemplateTestHelper<Test_move_l, V>::run(tc, v1);
+    TemplateTestHelper<Test_broadcast, V>::run(tc, v1);
+    TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
+    TemplateTestHelper<Test_insert_extract, V>::run(tc, v1, v2);
+}
+
+template<class V>
+void test_shuffle_type256(TestCase &tc, V v1, V v2)
 {
     TEST_PUSH(tc, V, zip_lo(v1, v2));
     TEST_PUSH(tc, V, zip_hi(v1, v2));
@@ -101,19 +126,19 @@ void test_shuffle(TestResults& res)
     // TODO blend
 
     // int8x16
-    test_shuffle_one_type<uint8x16>(tc, u8[0], u8[1]);
-    test_shuffle_one_type<uint16x8>(tc, u16[0], u16[1]);
-    test_shuffle_one_type<uint32x4>(tc, u32[0], u32[1]);
-    test_shuffle_one_type<uint64x2>(tc, u64[0], u64[1]);
-    test_shuffle_one_type<float32x4>(tc, f32[0], f32[1]);
-    test_shuffle_one_type<float64x2>(tc, f64[0], f64[1]);
+    test_shuffle_type128<uint8x16>(tc, u8[0], u8[1]);
+    test_shuffle_type128<uint16x8>(tc, u16[0], u16[1]);
+    test_shuffle_type128<uint32x4>(tc, u32[0], u32[1]);
+    test_shuffle_type128<uint64x2>(tc, u64[0], u64[1]);
+    test_shuffle_type128<float32x4>(tc, f32[0], f32[1]);
+    test_shuffle_type128<float64x2>(tc, f64[0], f64[1]);
 
-    test_shuffle_one_type<uint8x32>(tc, du8[0], du8[1]);
-    test_shuffle_one_type<uint16x16>(tc, du16[0], du16[1]);
-    test_shuffle_one_type<uint32x8>(tc, du32[0], du32[1]);
-    test_shuffle_one_type<uint64x4>(tc, du64[0], du64[1]);
-    test_shuffle_one_type<float32x8>(tc, df32[0], df32[1]);
-    test_shuffle_one_type<float64x4>(tc, df64[0], df64[1]);
+    test_shuffle_type256<uint8x32>(tc, du8[0], du8[1]);
+    test_shuffle_type256<uint16x16>(tc, du16[0], du16[1]);
+    test_shuffle_type256<uint32x8>(tc, du32[0], du32[1]);
+    test_shuffle_type256<uint64x4>(tc, du64[0], du64[1]);
+    test_shuffle_type256<float32x8>(tc, df32[0], df32[1]);
+    test_shuffle_type256<float64x4>(tc, df64[0], df64[1]);
 }
 
 SIMDPP_ARCH_NAMESPACE_END

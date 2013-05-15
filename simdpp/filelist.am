@@ -17,7 +17,6 @@ simdpp_files_h = \
     neon/detail/shuffle_int32x4.h   \
     neon/detail/shuffle_int64x2.h   \
     neon/detail/vfp_float64x2.h     \
-    neon/insert.h           \
     neon/math_int.h         \
     neon/memory_store.h     \
     neon/shuffle.h          \
@@ -38,6 +37,7 @@ simdpp_files_h = \
     simd/cast.h             \
     simd/compare.h          \
     simd/convert.h          \
+    simd/extract.h          \
     simd/float32x4.h        \
     simd/float32x4.inl      \
     simd/float32x8.h        \
@@ -47,6 +47,7 @@ simdpp_files_h = \
     simd/float64x4.h        \
     simd/float64x4.inl      \
     simd/fwd.h              \
+    simd/insert.h           \
     simd/int128.h           \
     simd/int128.inl         \
     simd/int256.h           \
@@ -87,9 +88,7 @@ simdpp_files_h = \
     sse/cache.h             \
     sse/compare.h           \
     sse/convert.h           \
-    sse/extract.h           \
     sse/extract_half.h      \
-    sse/insert.h            \
     sse/math_fp.h           \
     sse/math_int.h          \
     sse/memory_load.h       \

@@ -14,11 +14,10 @@
 
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle_generic.h>
+#include <simdpp/simd/extract.h>
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/math.h>
-#elif SIMDPP_USE_SSE2
-    #include <simdpp/sse/extract.h>
 #endif
 
 namespace simdpp {

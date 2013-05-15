@@ -12,9 +12,6 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd.h>
-#if SIMDPP_USE_AVX
-    #include <simdpp/sse/insert.h>
-#endif
 
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN

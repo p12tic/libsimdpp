@@ -15,8 +15,8 @@
 #include <simdpp/simd/types.h>
 
 #if SIMDPP_USE_SSE2
+    #include <simdpp/sse/extract_half.h>
     #include <simdpp/sse/memory_store.h>
-    #include <simdpp/sse/extract.h>
     #include <simdpp/sse/detail/store_packed.h>
 #elif SIMDPP_USE_NEON
     #include <simdpp/neon/memory_store.h>
