@@ -112,7 +112,7 @@ inline float64x4 abs(float64x4 a)
     @icost{SSE2, SSE3, SSSE3, SSE4.1, NEON, 2}
 
     @par 256-bit version:
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, NEON, 4}
+    @icost{SSE2, SSE3, SSSE3, SSE4.1, NEON, 3}
     @icost{AVX-AVX2, 2}
 */
 inline float32x4 sign(float32x4 a)
@@ -140,7 +140,7 @@ inline float32x8 sign(float32x8 a)
     @unimp{NEON}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, 4}
+    @icost{SSE2-SSE4.1, 3}
     @icost{AVX-AVX2, 2}
     @unimp{NEON}
 */
