@@ -22,10 +22,10 @@ void test_math_fp(TestResults& res)
 
     using namespace simdpp;
 
-    auto nanf = [](){ return std::numeric_limits<float>::quiet_NaN(); };
-    auto nan = [](){ return std::numeric_limits<double>::quiet_NaN(); };
-    auto inff = [](){ return std::numeric_limits<float>::infinity(); };
-    auto inf = [](){ return std::numeric_limits<double>::infinity(); };
+    float nanf = std::numeric_limits<float>::quiet_NaN();
+    double nan = std::numeric_limits<double>::quiet_NaN();
+    float inff = std::numeric_limits<float>::infinity();
+    double inf = std::numeric_limits<double>::infinity();
 
     //float32x4
     {
@@ -35,9 +35,9 @@ void test_math_fp(TestResults& res)
             float32x4::make_const(-1.0f, -2.0f, -3.0f, -4.0f),
             float32x4::make_const(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
             float32x4::make_const(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
-            float32x4::make_const(nanf(), nanf(), nanf(), nanf()),
-            float32x4::make_const(inff(), inff(), inff(), inff()),
-            float32x4::make_const(-inff(), -inff(), -inff(), -inff()),
+            float32x4::make_const(nanf, nanf, nanf, nanf),
+            float32x4::make_const(inff, inff, inff, inff),
+            float32x4::make_const(-inff, -inff, -inff, -inff),
         };
 
         TEST_ALL_COMB_HELPER(tc, float32x4, add, s, 4);
@@ -56,8 +56,8 @@ void test_math_fp(TestResults& res)
             float32x4::make_const(-1.0f, -2.0f, -3.0f, -4.0f),
             float32x4::make_const(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
             float32x4::make_const(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
-            float32x4::make_const(inff(), inff(), inff(), inff()),
-            float32x4::make_const(-inff(), -inff(), -inff(), -inff()),
+            float32x4::make_const(inff, inff, inff, inff),
+            float32x4::make_const(-inff, -inff, -inff, -inff),
         };
         TEST_ALL_COMB_HELPER(tc, float32x4, min, snan, 4);
         TEST_ALL_COMB_HELPER(tc, float32x4, max, snan, 4);
@@ -76,9 +76,9 @@ void test_math_fp(TestResults& res)
             float64x2::make_const(63100000000000008.0, 63100000000000012.0),
             float64x2::make_const(-63100000000000000.0, -63100000000000004.0),
             float64x2::make_const(-63100000000000008.0, -63100000000000012.0),
-            float64x2::make_const(nan(), nan()),
-            float64x2::make_const(inf(), inf()),
-            float64x2::make_const(-inf(), -inf()),
+            float64x2::make_const(nan, nan),
+            float64x2::make_const(inf, inf),
+            float64x2::make_const(-inf, -inf),
         };
 
         TEST_ALL_COMB_HELPER(tc64, float64x2, add, s, 4);
@@ -99,8 +99,8 @@ void test_math_fp(TestResults& res)
             float64x2::make_const(63100000000000008.0, 63100000000000012.0),
             float64x2::make_const(-63100000000000000.0, -63100000000000004.0),
             float64x2::make_const(-63100000000000008.0, -63100000000000012.0),
-            float64x2::make_const(inf(), inf()),
-            float64x2::make_const(-inf(), -inf()),
+            float64x2::make_const(inf, inf),
+            float64x2::make_const(-inf, -inf),
         };
         TEST_ALL_COMB_HELPER(tc64, float64x2, min, snan, 4);
         TEST_ALL_COMB_HELPER(tc64, float64x2, max, snan, 4);
