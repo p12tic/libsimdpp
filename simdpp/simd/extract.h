@@ -12,9 +12,11 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/fwd.h>
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/cast.h>
+#include <cstdint>
 
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
@@ -165,6 +167,84 @@ inline double extract(float64x2 a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     return bit_cast<double>(extract<id>(int64x2(a)));
 #endif
+}
+
+namespace detail {
+/* Implementation of extract_bits */
+template<unsigned id>
+struct extract_bits_impl {
+
+    uint16_t operator()(uint8x16 a)
+    {
+#if SIMDPP_USE_NULL
+        uint16_t r = 0;
+        return null::foreach<uint8x16>(a, [&r](uint8_t a){
+            a = (a >> id) & 1;
+            r = (r << 1) | a;
+        });
+        return r;
+#elif SIMDPP_USE_SSE2
+        a = shift_l<7-id>((uint16x8) a);
+        return _mm_movemask_epi8(a);
+#elif SIMDPP_USE_NEON
+        uint8x16 mask = uint8x16::make_const(0x80);
+        int8x16 shift_mask = int8x16::make_const(-7,-6,-5,-4,-3,-2,-1,0);
+
+        a = bit_and(a, mask);
+        a = vshlq_u8(a, shift_mask);
+        a = vpaddlq_u8(a);
+        a = vpaddlq_u16(a);
+        a = vpaddlq_u32(a);
+        a = zip_lo(a, a);
+        return extract<0>((uint16x8)a);
+#endif
+    }
+};
+
+// Optimized implementation
+template<>
+struct extract_bits_impl<777> {
+
+    uint16_t operator()(uint8x16 a)
+    {
+#if SIMDPP_USE_NULL
+        uint16_t r = 0;
+        null::foreach<uint8x16>(a, [&r](uint8_t x){
+            x = x & 1;
+            r = (r << 1) | x;
+            return 0;
+        });
+        return r;
+#elif SIMDPP_USE_SSE2
+        return _mm_movemask_epi8(a);
+#elif SIMDPP_USE_NEON
+        uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+
+        a = bit_and(a, mask);
+        a = vpaddlq_u8(a);
+        a = vpaddlq_u16(a);
+        a = vpaddlq_u32(a);
+        a = zip_lo(a, a);
+        return extract<0>((uint16x8)a);
+#endif
+    }
+};
+
+} // namespace detail
+/** Extracts specific bit from each byte of each element of a int8x16 vector.
+
+    The default template argument selects the bits from each byte in most
+    efficient way.
+
+    @code
+    r = (a[0] & 0x80 >> 7) | (a[1] & 0x80 >> 6) | ...  | (a[15] & 0x80 << 8)
+    @endcode
+*/
+template<unsigned id = 777>
+uint16_t extract_bits(uint8x16 a)
+{
+    static_assert(id < 8 || id == 777, "index out of bounds");
+    return detail::extract_bits_impl<id>()(a);
 }
 
 SIMDPP_ARCH_NAMESPACE_END
