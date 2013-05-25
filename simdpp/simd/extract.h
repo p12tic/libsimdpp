@@ -33,6 +33,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
 template<unsigned id>
 inline uint8_t extract(basic_int8x16 a)
 {
+    static_assert(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
@@ -56,6 +57,7 @@ inline uint8_t extract(basic_int8x16 a)
 template<unsigned id>
 inline uint16_t extract(basic_int16x8 a)
 {
+    static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE2
@@ -78,6 +80,7 @@ inline uint16_t extract(basic_int16x8 a)
 template<unsigned id>
 inline uint32_t extract(basic_int32x4 a)
 {
+    static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
@@ -106,6 +109,7 @@ inline uint32_t extract(basic_int32x4 a)
 template<unsigned id>
 inline uint64_t extract(basic_int64x2 a)
 {
+    static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
@@ -134,6 +138,7 @@ inline uint64_t extract(basic_int64x2 a)
 template<unsigned id>
 inline float extract(float32x4 a)
 {
+    static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE2
@@ -154,6 +159,7 @@ inline float extract(float32x4 a)
 template<unsigned id>
 inline double extract(float64x2 a)
 {
+    static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
