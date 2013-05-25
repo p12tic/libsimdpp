@@ -18,6 +18,7 @@
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/foreach.h>
+    #include <simdpp/null/math.h>
 #endif
 
 namespace simdpp {
