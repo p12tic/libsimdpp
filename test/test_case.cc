@@ -31,6 +31,7 @@ void TestCase::push(Type type, void* data, unsigned line)
 std::size_t TestCase::size_for_type(Type t)
 {
     switch (t) {
+    case TYPE_UINT16:   return 2;
     case TYPE_UINT8x16:
     case TYPE_INT8x16:
     case TYPE_UINT16x8:
@@ -73,7 +74,7 @@ template<> struct fix_char_type<uint8_t> { using type = int; };
 template<> struct fix_char_type<int8_t> { using type = int; };
 
 template<unsigned width, unsigned num_elems, class T>
-void fmt_hex(std::ostream& err, const char* prefix, const T* p)
+void fmt_vec_hex(std::ostream& err, const char* prefix, const T* p)
 {
     err << prefix << "[ " << std::hex << std::setfill('0');
     err.precision(width);
@@ -90,7 +91,7 @@ void fmt_hex(std::ostream& err, const char* prefix, const T* p)
 }
 
 template<unsigned precision, unsigned num_elems, class T>
-void fmt_num(std::ostream& err, const char* prefix, const T* p)
+void fmt_vec_num(std::ostream& err, const char* prefix, const T* p)
 {
     err << prefix << "[ ";
     err.precision(precision);
@@ -99,6 +100,18 @@ void fmt_num(std::ostream& err, const char* prefix, const T* p)
         if (i != num_elems - 1) {
             err << " ; ";
         }
+    }
+    err << " ]\n";
+    err << std::dec;
+}
+
+template<class T>
+void fmt_bin(std::ostream& err, const char* prefix, const T& n)
+{
+    err << prefix << "[ ";
+    unsigned bits = sizeof(T);
+    for (unsigned i = 0; i < bits; i++) {
+        err << ((n & (1 << i)) ? '1' : '0');
     }
     err << " ]\n";
     err << std::dec;
@@ -163,6 +176,7 @@ bool test_equal(const TestCase& a, const char* a_arch,
     auto type_str = [&](unsigned type) -> const char*
     {
         switch (type) {
+        case TestCase::TYPE_UINT16: return "uint16";
         case TestCase::TYPE_UINT8x16: return "uint8x16";
         case TestCase::TYPE_INT8x16: return "int8x16";
         case TestCase::TYPE_UINT16x8: return "uint16x8";
@@ -189,86 +203,89 @@ bool test_equal(const TestCase& a, const char* a_arch,
     auto fmt_vector = [&](const TestCase::Result& r, const char* prefix) -> void
     {
         switch (r.type) {
+        case TestCase::TYPE_UINT16:
+            fmt_bin(err, prefix, r.u16);
+            break;
         case TestCase::TYPE_UINT8x16:
-            fmt_hex<1,16>(err, prefix, r.u8);
-            fmt_num<4,16>(err, prefix, r.u8);
+            fmt_vec_hex<1,16>(err, prefix, r.v_u8);
+            fmt_vec_num<4,16>(err, prefix, r.v_u8);
             break;
         case TestCase::TYPE_INT8x16:
-            fmt_hex<1,16>(err, prefix, r.s8);
-            fmt_num<4,16>(err, prefix, r.s8);
+            fmt_vec_hex<1,16>(err, prefix, r.v_s8);
+            fmt_vec_num<4,16>(err, prefix, r.v_s8);
             break;
         case TestCase::TYPE_UINT16x8:
-            fmt_hex<2,8>(err, prefix, r.u16);
-            fmt_num<6,8>(err, prefix, r.u16);
+            fmt_vec_hex<2,8>(err, prefix, r.v_u16);
+            fmt_vec_num<6,8>(err, prefix, r.v_u16);
             break;
         case TestCase::TYPE_INT16x8:
-            fmt_hex<2,8>(err, prefix, r.s16);
-            fmt_num<6,8>(err, prefix, r.s16);
+            fmt_vec_hex<2,8>(err, prefix, r.v_s16);
+            fmt_vec_num<6,8>(err, prefix, r.v_s16);
             break;
         case TestCase::TYPE_UINT32x4:
-            fmt_hex<4,4>(err, prefix, r.u32);
-            fmt_num<11,4>(err, prefix, r.u32);
+            fmt_vec_hex<4,4>(err, prefix, r.v_u32);
+            fmt_vec_num<11,4>(err, prefix, r.v_u32);
             break;
         case TestCase::TYPE_INT32x4:
-            fmt_hex<4,4>(err, prefix, r.s32);
-            fmt_num<11,4>(err, prefix, r.s32);
+            fmt_vec_hex<4,4>(err, prefix, r.v_s32);
+            fmt_vec_num<11,4>(err, prefix, r.v_s32);
             break;
         case TestCase::TYPE_UINT64x2:
-            fmt_hex<8,2>(err, prefix, r.u64);
-            fmt_num<20,2>(err, prefix, r.u64);
+            fmt_vec_hex<8,2>(err, prefix, r.v_u64);
+            fmt_vec_num<20,2>(err, prefix, r.v_u64);
             break;
         case TestCase::TYPE_INT64x2:
-            fmt_hex<8,2>(err, prefix, r.s64);
-            fmt_num<20,2>(err, prefix, r.s64);
+            fmt_vec_hex<8,2>(err, prefix, r.v_s64);
+            fmt_vec_num<20,2>(err, prefix, r.v_s64);
             break;
         case TestCase::TYPE_FLOAT32x4:
-            fmt_hex<4,4>(err, prefix, r.u32);
-            fmt_num<7,4>(err, prefix, r.f32);
+            fmt_vec_hex<4,4>(err, prefix, r.v_u32);
+            fmt_vec_num<7,4>(err, prefix, r.v_f32);
             break;
         case TestCase::TYPE_FLOAT64x2:
-            fmt_hex<8,2>(err, prefix, r.u64);
-            fmt_num<17,2>(err, prefix, r.f64);
+            fmt_vec_hex<8,2>(err, prefix, r.v_u64);
+            fmt_vec_num<17,2>(err, prefix, r.v_f64);
             break;
         // 32-byte vectors
         case TestCase::TYPE_UINT8x32:
-            fmt_hex<1,32>(err, prefix, r.u8);
-            fmt_num<4,32>(err, prefix, r.u8);
+            fmt_vec_hex<1,32>(err, prefix, r.v_u8);
+            fmt_vec_num<4,32>(err, prefix, r.v_u8);
             break;
         case TestCase::TYPE_INT8x32:
-            fmt_hex<1,32>(err, prefix, r.s8);
-            fmt_num<4,32>(err, prefix, r.s8);
+            fmt_vec_hex<1,32>(err, prefix, r.v_s8);
+            fmt_vec_num<4,32>(err, prefix, r.v_s8);
             break;
         case TestCase::TYPE_UINT16x16:
-            fmt_hex<2,16>(err, prefix, r.u16);
-            fmt_num<6,16>(err, prefix, r.u16);
+            fmt_vec_hex<2,16>(err, prefix, r.v_u16);
+            fmt_vec_num<6,16>(err, prefix, r.v_u16);
             break;
         case TestCase::TYPE_INT16x16:
-            fmt_hex<2,16>(err, prefix, r.s16);
-            fmt_num<6,16>(err, prefix, r.s16);
+            fmt_vec_hex<2,16>(err, prefix, r.v_s16);
+            fmt_vec_num<6,16>(err, prefix, r.v_s16);
             break;
         case TestCase::TYPE_UINT32x8:
-            fmt_hex<4,8>(err, prefix, r.u32);
-            fmt_num<11,8>(err, prefix, r.u32);
+            fmt_vec_hex<4,8>(err, prefix, r.v_u32);
+            fmt_vec_num<11,8>(err, prefix, r.v_u32);
             break;
         case TestCase::TYPE_INT32x8:
-            fmt_hex<4,8>(err, prefix, r.s32);
-            fmt_num<11,8>(err, prefix, r.s32);
+            fmt_vec_hex<4,8>(err, prefix, r.v_s32);
+            fmt_vec_num<11,8>(err, prefix, r.v_s32);
             break;
         case TestCase::TYPE_UINT64x4:
-            fmt_hex<8,4>(err, prefix, r.u64);
-            fmt_num<20,4>(err, prefix, r.u64);
+            fmt_vec_hex<8,4>(err, prefix, r.v_u64);
+            fmt_vec_num<20,4>(err, prefix, r.v_u64);
             break;
         case TestCase::TYPE_INT64x4:
-            fmt_hex<8,4>(err, prefix, r.s64);
-            fmt_num<20,4>(err, prefix, r.s64);
+            fmt_vec_hex<8,4>(err, prefix, r.v_s64);
+            fmt_vec_num<20,4>(err, prefix, r.v_s64);
             break;
         case TestCase::TYPE_FLOAT32x8:
-            fmt_hex<4,8>(err, prefix, r.u32);
-            fmt_num<7,8>(err, prefix, r.f32);
+            fmt_vec_hex<4,8>(err, prefix, r.v_u32);
+            fmt_vec_num<7,8>(err, prefix, r.v_f32);
             break;
         case TestCase::TYPE_FLOAT64x4:
-            fmt_hex<8,4>(err, prefix, r.u64);
-            fmt_num<17,4>(err, prefix, r.f64);
+            fmt_vec_hex<8,4>(err, prefix, r.v_u64);
+            fmt_vec_num<17,4>(err, prefix, r.v_f64);
             break;
         }
     };
@@ -276,7 +293,7 @@ bool test_equal(const TestCase& a, const char* a_arch,
     auto cmpeq_result = [](const TestCase::Result& ia, const TestCase::Result& ib,
                            unsigned prec) -> bool
     {
-        if (std::memcmp(ia.u8, ib.u8, TestCase::size_for_type(ia.type)) == 0) {
+        if (std::memcmp(ia.v_u8, ib.v_u8, TestCase::size_for_type(ia.type)) == 0) {
             return true;
         }
 
@@ -286,13 +303,13 @@ bool test_equal(const TestCase& a, const char* a_arch,
 
         switch (ia.type) {
         case TestCase::TYPE_FLOAT32x4:
-            return cmpeq_arrays<4>(ia.f32, ib.f32, prec);
+            return cmpeq_arrays<4>(ia.v_f32, ib.v_f32, prec);
         case TestCase::TYPE_FLOAT64x2:
-            return cmpeq_arrays<2>(ia.f64, ib.f64, prec);
+            return cmpeq_arrays<2>(ia.v_f64, ib.v_f64, prec);
         case TestCase::TYPE_FLOAT32x8:
-            return cmpeq_arrays<8>(ia.f32, ib.f32, prec);
+            return cmpeq_arrays<8>(ia.v_f32, ib.v_f32, prec);
         case TestCase::TYPE_FLOAT64x4:
-            return cmpeq_arrays<4>(ia.f64, ib.f64, prec);
+            return cmpeq_arrays<4>(ia.v_f64, ib.v_f64, prec);
         default:
             return false;
         }

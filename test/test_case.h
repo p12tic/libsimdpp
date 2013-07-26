@@ -24,8 +24,10 @@ public:
 
     // Types of 16-bit vectors
     enum Type : uint8_t {
+        // 16-bit number
+        TYPE_UINT16 = 0,
         // 16-byte vector
-        TYPE_UINT8x16 = 0,
+        TYPE_UINT8x16,
         TYPE_INT8x16,
         TYPE_UINT16x8,
         TYPE_INT16x8,
@@ -88,7 +90,7 @@ private:
             line = aline;
             seq = aseq;
             prec_ulp = aprec_ulp;
-            std::memcpy(u8, adata, asize);
+            std::memcpy(v_u8, adata, asize);
         }
 
         Type type;
@@ -98,16 +100,18 @@ private:
         const char* file;
 
         union {
-            uint8_t u8[num_bytes];
-            int8_t s8[num_bytes];
-            uint16_t u16[num_bytes/2];
-            int16_t s16[num_bytes/2];
-            uint32_t u32[num_bytes/4];
-            int32_t s32[num_bytes/4];
-            uint64_t u64[num_bytes/8];
-            int64_t s64[num_bytes/8];
-            float f32[num_bytes/4];
-            double f64[num_bytes/8];
+            uint16_t u16;
+
+            uint8_t v_u8[num_bytes];
+            int8_t v_s8[num_bytes];
+            uint16_t v_u16[num_bytes/2];
+            int16_t v_s16[num_bytes/2];
+            uint32_t v_u32[num_bytes/4];
+            int32_t v_s32[num_bytes/4];
+            uint64_t v_u64[num_bytes/8];
+            int64_t v_s64[num_bytes/8];
+            float v_f32[num_bytes/4];
+            double v_f64[num_bytes/8];
         };
     };
 

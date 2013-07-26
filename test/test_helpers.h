@@ -13,6 +13,11 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+inline void test_push_internal(TestCase& t, std::uint16_t data, unsigned line)
+{
+    t.push(TestCase::TYPE_UINT16, &data, line);
+}
+
 inline void test_push_internal(TestCase& t, simdpp::int8x16 data, unsigned line)
 {
     t.push(TestCase::TYPE_INT8x16, &data, line);
