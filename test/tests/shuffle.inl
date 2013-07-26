@@ -125,7 +125,6 @@ void test_shuffle(TestResults& res)
 
     // TODO blend
 
-    // int8x16
     test_shuffle_type128<uint8x16>(tc, u8[0], u8[1]);
     test_shuffle_type128<uint16x8>(tc, u16[0], u16[1]);
     test_shuffle_type128<uint32x4>(tc, u32[0], u32[1]);
@@ -139,6 +138,36 @@ void test_shuffle(TestResults& res)
     test_shuffle_type256<uint64x4>(tc, du64[0], du64[1]);
     test_shuffle_type256<float32x8>(tc, df32[0], df32[1]);
     test_shuffle_type256<float64x4>(tc, df64[0], df64[1]);
+
+    // extract bits
+    union {
+        uint8_t ec[16];
+        uint8x16 eu8;
+    };
+    for (unsigned el = 0; el < 16; el++) {
+        for (auto& ic : ec) {
+            ic = 0;
+        }
+        ec[el] = 0xff;
+        TEST_PUSH(tc, uint16_t, extract_bits<>(eu8));
+        ec[el] = 1 << 0;
+        TEST_PUSH(tc, uint16_t, extract_bits<0>(eu8));
+        ec[el] = 1 << 1;
+        TEST_PUSH(tc, uint16_t, extract_bits<1>(eu8));
+        ec[el] = 1 << 2;
+        TEST_PUSH(tc, uint16_t, extract_bits<2>(eu8));
+        ec[el] = 1 << 3;
+        TEST_PUSH(tc, uint16_t, extract_bits<3>(eu8));
+        ec[el] = 1 << 4;
+        TEST_PUSH(tc, uint16_t, extract_bits<4>(eu8));
+        ec[el] = 1 << 5;
+        TEST_PUSH(tc, uint16_t, extract_bits<5>(eu8));
+        ec[el] = 1 << 6;
+        TEST_PUSH(tc, uint16_t, extract_bits<6>(eu8));
+        ec[el] = 1 << 7;
+        TEST_PUSH(tc, uint16_t, extract_bits<7>(eu8));
+    }
+
 }
 
 SIMDPP_ARCH_NAMESPACE_END
