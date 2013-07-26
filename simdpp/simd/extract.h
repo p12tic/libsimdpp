@@ -178,9 +178,10 @@ struct extract_bits_impl {
     {
 #if SIMDPP_USE_NULL
         uint16_t r = 0;
-        return null::foreach<uint8x16>(a, [&r](uint8_t a){
-            a = (a >> id) & 1;
-            r = (r << 1) | a;
+        null::foreach<uint8x16>(a, [&r](uint8_t x){
+            x = (x >> id) & 1;
+            r = (r >> 1) | (uint16_t(x) << 15);
+            return 0; // dummy
         });
         return r;
 #elif SIMDPP_USE_SSE2
@@ -211,8 +212,8 @@ struct extract_bits_impl<777> {
         uint16_t r = 0;
         null::foreach<uint8x16>(a, [&r](uint8_t x){
             x = x & 1;
-            r = (r << 1) | x;
-            return 0;
+            r = (r >> 1) | (uint16_t(x) << 15);
+            return 0; // dummy
         });
         return r;
 #elif SIMDPP_USE_SSE2
