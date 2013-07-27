@@ -15,7 +15,7 @@ compile-time shuffling instructions, etc. Each of these are implemented in the
 most efficient manner for the target instruction set.
 
 The library sits somewhere in the middle between programming directly in
-intrinsics and even higher-level SIMD frameworks. As much control as possible
+intrinsics and even higher-level SIMD libraries. As much control as possible
 is given to the developer, so that it's possible to exactly predict what code
 the compiler will generate.
 
