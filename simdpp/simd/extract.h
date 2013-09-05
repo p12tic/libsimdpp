@@ -48,6 +48,11 @@ inline uint8_t extract(basic_int8x16 a)
 #endif
 }
 
+template<unsigned id>
+inline int8_t extract(int8x16 a) {
+	return extract<id>((basic_int8x16)a);
+}
+
 /** Extracts the @a id-th element from int16x8 vector
 
     @code
@@ -67,6 +72,11 @@ inline uint16_t extract(basic_int16x8 a)
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u16(a, id);
 #endif
+}
+
+template<unsigned id>
+inline int16_t extract(int16x8 a) {
+	return extract<id>((basic_int16x8)a);
 }
 
 /** Extracts the @a id-th element from int32x4 vector
@@ -98,6 +108,11 @@ inline uint32_t extract(basic_int32x4 a)
 #endif
 }
 
+template<unsigned id>
+inline int32_t extract(int32x4 a) {
+	return extract<id>((basic_int32x4)a);
+}
+
 /** Extracts an element from int64x2 vector
 
     @code
@@ -125,6 +140,11 @@ inline uint64_t extract(basic_int64x2 a)
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u64(a, id);
 #endif
+}
+
+template<unsigned id>
+inline int64_t extract(int64x2 a) {
+	return extract<id>((basic_int64x2)a);
 }
 
 /** Extracts an element from float32x4 vector
