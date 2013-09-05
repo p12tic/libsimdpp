@@ -34,7 +34,7 @@ SIMDPP_ARCH_NAMESPACE_BEGIN
     @icost{SSE4.1-AVX, 1}
 */
 template<unsigned id>
-inline uint8_t extract(basic_int8x16 a)
+uint8_t extract(basic_int8x16 a)
 {
     static_assert(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -66,7 +66,7 @@ int8_t extract(int8x16 a)
     This function may have very high latency.
 */
 template<unsigned id>
-inline uint16_t extract(basic_int16x8 a)
+uint16_t extract(basic_int16x8 a)
 {
     static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -97,7 +97,7 @@ int16_t extract(int16x8 a)
     @icost{SSE2, SSE3, SSSE3, 1-2}
 */
 template<unsigned id>
-inline uint32_t extract(basic_int32x4 a)
+uint32_t extract(basic_int32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -134,7 +134,7 @@ int32_t extract(int32x4 a)
     @icost{SSE2, SSE3, SSSE3, 1-2}
 */
 template<unsigned id>
-inline uint64_t extract(basic_int64x2 a)
+uint64_t extract(basic_int64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -170,7 +170,7 @@ int64_t extract(int64x2 a)
     @icost{SSE2, SSE3, SSSE3, 1-2}
 */
 template<unsigned id>
-inline float extract(float32x4 a)
+float extract(float32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -191,7 +191,7 @@ inline float extract(float32x4 a)
     This function may have very high latency.
 */
 template<unsigned id>
-inline double extract(float64x2 a)
+double extract(float64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
