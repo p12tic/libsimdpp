@@ -12,6 +12,8 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd.h>
+#include <simdpp/simd/detail/word_size.h>
+
 
 namespace simdpp {
 SIMDPP_ARCH_NAMESPACE_BEGIN
@@ -78,10 +80,18 @@ inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
 #if SIMDPP_USE_NULL
     return null::make_vec<uint64x2>(v0);
 #elif SIMDPP_USE_SSE2
-    uint64x2 r0;
-    r0 = _mm_cvtsi64_si128(v0);
+#if SIMDPP_SSE_32_BITS
+    uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
+    uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
+    uint64x2 vx = zip_lo(va, vb);
+    return permute<0,0>(vx);
+#else
+    int32x4 ra = _mm_cvtsi32_si128(uint32_t(v0));
+    int32x4 rb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
+    int64x2 r0 = zip_lo(ra, rb);
     r0 = permute<0,0>(r0);
     return uint64x2(r0);
+#endif
 #elif SIMDPP_USE_NEON
     uint64x1_t r0 = vcreate_u64(v0);
     return vcombine_u64(r0, r0);

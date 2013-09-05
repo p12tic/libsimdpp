@@ -15,6 +15,7 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/cast.h>
+#include <simdpp/simd/detail/word_size.h>
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/set.h>
@@ -122,7 +123,10 @@ int128 insert(basic_int32x4 a, uint32_t x)
 
     This function may have very high latency.
 
-    @icost{SSE2-SSSE3, 2}
+    @icost{SSE2, SSE3, SSSE3, 2}
+    @icost{SSE4_1, 1}
+    @icost{SSE2_32bit, SSE3_32bit, SSSE3_32bit, 4}
+    @icost{SSE4_1_32bit, 2}
 */
 template<unsigned id>
 int128 insert(basic_int64x2 a, uint64_t x)
@@ -131,8 +135,26 @@ int128 insert(basic_int64x2 a, uint64_t x)
     a[id] = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
+#if SIMDPP_SSE_32_BITS
+    basic_int32x4 a0 = a;
+    a0 = insert<id*2>(a0, uint32_t(x));
+    a0 = insert<id*2+1>(a0, uint32_t(x >> 32));
+    return a0;
+#else
     return _mm_insert_epi64(a, x, id);
+#endif
 #elif SIMDPP_USE_SSE2
+#if SIMDPP_SSE_32_BITS
+    int32x4 va = _mm_cvtsi32_si128(uint32_t(x));
+    int32x4 vb = _mm_cvtsi32_si128(uint32_t(x >> 32));
+    int64x2 vx = zip_lo(va, vb);
+    if (id == 0) {
+        a = shuffle1<0,1>(vx, a);
+    } else {
+        a = shuffle1<0,0>(a, vx);
+    }
+    return a;
+#else
     int64x2 vx = _mm_cvtsi64_si128(x);
     if (id == 0) {
         a = shuffle1<0,1>(vx, a);
@@ -140,6 +162,7 @@ int128 insert(basic_int64x2 a, uint64_t x)
         a = shuffle1<0,0>(a, vx);
     }
     return a;
+#endif
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u64(x, a, id);
 #endif
