@@ -16,6 +16,7 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/cast.h>
+#include <simdpp/simd/detail/word_size.h>
 #include <cstdint>
 
 namespace simdpp {
@@ -132,6 +133,9 @@ int32_t extract(int32x4 a)
     This function may have very high latency.
 
     @icost{SSE2, SSE3, SSSE3, 1-2}
+    @icost{SSE4_1, 1}
+    @icost{SSE2_32bit, SSE3_32bit, SSSE3_32bit, 3-4}
+    @icost{SSE4_1_32bit, 2}
 */
 template<unsigned id>
 uint64_t extract(basic_int64x2 a)
@@ -140,13 +144,32 @@ uint64_t extract(basic_int64x2 a)
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
+#if SIMDPP_SSE_32_BITS
+    basic_int32x4 t = a;
+    uint64_t r = extract<id*2>(t);
+    r |= uint64_t(extract<id*2+1>(t)) << 32;
+    return r;
+#else
     return _mm_extract_epi64(a, id);
+#endif
 #elif SIMDPP_USE_SSE2
+#if SIMDPP_SSE_32_BITS
+    basic_int32x4 t = a;
+    uint64_t r = 0;
+    if (id != 0) {
+        t = move_l<id*2>(t);
+    }
+    r = extract<0>(t);
+    t = move_l<1>(t);
+    r |= uint64_t(extract<0>(t)) << 32;
+    return r;
+#else
     uint64x2 t = a;
     if (id != 0) {
         t = move_l<id>(t);
     }
     return _mm_cvtsi128_si64(t);
+#endif
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u64(a, id);
 #endif

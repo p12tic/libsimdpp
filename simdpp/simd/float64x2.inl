@@ -12,6 +12,7 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd.h>
+#include <simdpp/simd/detail/word_size.h>
 
 #if SIMDPP_USE_NEON_VFP_DP
     #include <simdpp/null/set.h>
@@ -48,9 +49,13 @@ inline float64x2 float64x2::set_broadcast(double v0)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
     return null::make_vec<float64x2>(v0);
 #elif SIMDPP_USE_SSE2
+#if SIMDPP_SSE_32_BITS
+    return float64x2::load_broadcast(&v0);
+#else
     int64x2 r0;
     r0 = _mm_cvtsi64_si128(bit_cast<int64_t>(v0));
     return permute<0,0>(float64x2(r0));
+#endif
 #else
     return SIMDPP_NOT_IMPLEMENTED1(v0);
 #endif
