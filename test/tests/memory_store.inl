@@ -105,6 +105,6 @@ void test_memory_store(TestResults& res)
     test_store_helper<float64x2, 4>(tc, sf64);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

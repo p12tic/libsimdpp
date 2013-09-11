@@ -336,6 +336,6 @@ void test_shuffle_bytes(TestResults& res)
 #endif
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

@@ -75,6 +75,6 @@ void test_memory_load(TestResults& res)
     test_load_helper<float64x2, 4>(tc, sdata);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

@@ -44,6 +44,6 @@ void test_bitwise(TestResults& res)
     TEST_PUSH32_1(tc, uint64x4,  bit_not, a11);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

@@ -39,8 +39,7 @@ void main_test_function(TestResults& res)
     test_transpose(res);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
-
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #if 0
 

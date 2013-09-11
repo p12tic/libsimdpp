@@ -118,7 +118,7 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
     t.push(TestCase::TYPE_FLOAT64x4, &data, line);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 // we are supposed to call this from within the test function which is in
 // SIMDPP_ARCH_NAMESPACE namespace

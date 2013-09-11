@@ -104,6 +104,6 @@ void test_convert(TestResults& res)
 #endif
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

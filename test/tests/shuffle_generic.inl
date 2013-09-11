@@ -140,6 +140,6 @@ void test_shuffle_generic(TestResults& res)
     TemplateTestHelper<Test_shuffle21, float64x4>::run(tc, df64[0], df64[1]);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

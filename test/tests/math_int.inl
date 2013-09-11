@@ -244,6 +244,6 @@ void test_math_int(TestResults& res)
     // TODO implement tests for 256-bit types
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

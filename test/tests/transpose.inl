@@ -183,6 +183,6 @@ void test_transpose(TestResults& res)
     }
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

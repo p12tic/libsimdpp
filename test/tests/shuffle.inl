@@ -170,6 +170,6 @@ void test_shuffle(TestResults& res)
 
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif

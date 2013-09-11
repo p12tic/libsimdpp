@@ -85,6 +85,6 @@ void test_math_shift(TestResults& res)
     TemplateTestArrayHelper<Test_shift_r, int64x2>::run(tc, s64, vnum);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+} // namespace SIMDPP_ARCH_NAMESPACE
 
 #endif
