@@ -24,7 +24,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** @defgroup simd_bitwise
+/** @defgroup simd_bitwise Operations: bitwise
     @{
 */
 

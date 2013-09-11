@@ -31,6 +31,9 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @defgroup simd_transpose Operations: transpose matrices consisting of several vectors
+/// @{
+
 /// @{
 /** Transposes four 2x2 16-bit matrices within two int16x8 vectors
 
@@ -1099,6 +1102,8 @@ inline void transpose16(basic_int8x32& a0, basic_int8x32& a1,
                 a8[1], a9[1], a10[1], a11[1], a12[1], a13[1], a14[1], a15[1]);
 #endif
 }
+
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

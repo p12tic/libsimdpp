@@ -60,9 +60,11 @@ public:
 
 } // namespace detail
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** Causes linker error whenever unimplemented functionality is used.
 */
 void libsimdpp_instruction_not_available();
+#endif
 
 #define SIMDPP_NOT_IMPLEMENTED0()  (                                    \
     libsimdpp_instruction_not_available(),                              \

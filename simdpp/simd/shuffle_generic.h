@@ -29,6 +29,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/** @ingroup simd_shuffle
+    @{
+*/
+
 /// @{
 /** Permutes the 16-bit values within each 4 consecutive values of the vector.
     The selector values must be in range [0; 3].
@@ -703,6 +707,8 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
     return shuffle2<s0,s1,s0,s1>(a, b);
 }
 /// @}
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

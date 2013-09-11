@@ -30,9 +30,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 // note 64-bit integer compare operations are not available neither on NEON nor
 // on SSE
 
-/** @defgroup simd_compare
-    @{
-*/
+/// @defgroup simd_compare Operations: compare
+/// @{
 
 /// @{
 /** Compares 8-bit values for equality.
@@ -992,7 +991,7 @@ inline basic_int64x4 cmp_lt(float64x4 a, float64x4 b)
 }
 /// @}
 
-/// @}
+/// @} -- end compare
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

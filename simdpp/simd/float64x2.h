@@ -22,8 +22,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 class basic_int64x2;
 
-/** Class representing float64x2 vector
-*/
+/// @ingroup simd_vec_fp
+/// @{
+
+/// Class representing float64x2 vector
 class float64x2 {
 public:
 
@@ -126,6 +128,8 @@ private:
     double d_[2];
 #endif
 };
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -19,6 +19,9 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @ingroup simd_vec_int
+/// @{
+
 /** Generic class representing 16x 8-bit integer vector.
     To be used where the signedness of the underlying element type is not important
 */
@@ -52,7 +55,8 @@ public:
 #endif
 };
 
-/** Class representing 16x 8-bit signed integer vector
+/** @ingroup simd_vec_int
+    Class representing 16x 8-bit signed integer vector
 */
 class int8x32 : public basic_int8x32 {
 public:
@@ -184,7 +188,8 @@ public:
                               int8_t v28, int8_t v29, int8_t v30, int8_t v31);
 };
 
-/** Class representing 16x 8-bit unsigned integer vector
+/** @ingroup simd_vec_int
+    Class representing 16x 8-bit unsigned integer vector
 */
 class uint8x32 : public basic_int8x32 {
 public:
@@ -315,6 +320,8 @@ public:
                                uint8_t v24, uint8_t v25, uint8_t v26, uint8_t v27,
                                uint8_t v28, uint8_t v29, uint8_t v30, uint8_t v31);
 };
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

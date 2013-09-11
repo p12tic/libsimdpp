@@ -26,7 +26,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** @defgroup simd_math_int
+/** @defgroup simd_math_int Operations: integer maths
     @{
 */
 
@@ -1244,7 +1244,7 @@ inline uint64x4 mull_hi(uint32x8 a, uint32x8 b)
 }
 /// @}
 
-/// @}
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

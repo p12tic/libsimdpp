@@ -23,7 +23,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @defgroup simd_math_fp
+/// @defgroup simd_math_fp Operations: floating point maths
 /// @{
 
 /** Computes absolute value of floating point values.
@@ -455,7 +455,7 @@ inline float64x4 mul(float64x4 a, float64x4 b)
 }
 /// @}
 
-/// @}
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

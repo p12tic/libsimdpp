@@ -21,8 +21,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 class float32x8;
 
+/// @ingroup simd_vec_int
+/// @{
+
 /** Generic class representing 4x 32-bit integer vector.
-        To be used where the signedness of the underlying element type is not important
+    To be used where the signedness of the underlying element type is not important
 */
 class basic_int32x8 : public int256 {
 public:
@@ -282,6 +285,8 @@ public:
     static uint32x8 make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3,
                                uint32_t v4, uint32_t v5, uint32_t v6, uint32_t v7);
 };
+
+/// @} -- end ingroup 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

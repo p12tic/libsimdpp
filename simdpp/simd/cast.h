@@ -17,7 +17,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** Casts between unrelated types. No changes to the stored values are
+/** @ingroup simd_convert
+    Casts between unrelated types. No changes to the stored values are
     performed.
 */
 template<class R, class T>

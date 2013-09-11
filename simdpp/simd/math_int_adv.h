@@ -25,6 +25,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/** @ingroup simd_math_int
+    @{
+*/
+
 /// @{
 /** Computes minimum of signed 8-bit values.
 
@@ -1349,8 +1353,9 @@ uint16x8 div_p(uint16x8 num, uint16x8 den)
     return q;
 #endif
 }
-
 /// @}
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

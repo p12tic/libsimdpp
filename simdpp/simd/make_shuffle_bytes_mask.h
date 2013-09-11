@@ -73,6 +73,9 @@ std::array<uint8_t,4> get_shuffle_bytex4_16()
 
 } // namespace detail
 
+/// @ingroup simd_shuffle
+/// @{
+
 /// @{
 /** Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
@@ -719,6 +722,8 @@ basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
     return mask;
 }
 /// @}
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

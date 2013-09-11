@@ -19,8 +19,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** Base class for all 128-bit integer objects
-*/
+/// @defgroup simd_vec_int Types: integral vectors
+/// @{
+
+/// Base class for all 128-bit integer objects
 class int128 {
 public:
 
@@ -139,6 +141,8 @@ private:
     };
 #endif
 };
+
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

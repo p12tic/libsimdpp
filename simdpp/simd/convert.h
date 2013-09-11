@@ -25,6 +25,9 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @defgroup simd_convert Operations: convert
+/// @{
+
 /** Sign extends the first 8 values of a signed int8x16 vector to 16-bits
 
     @code
@@ -848,6 +851,8 @@ inline float64x4 to_float64x4(float32x8 a)
 #endif
 }
 /// @}
+
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

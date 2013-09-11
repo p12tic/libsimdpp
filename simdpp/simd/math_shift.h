@@ -25,6 +25,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/** @defgroup simd_shift Operations: shift
+    @{
+*/
+
 /// @{
 /** Shifts signed 8-bit values right by @a count bits while shifting in the
     sign bit.
@@ -729,8 +733,11 @@ int8x16 shift_r(int8x16 a)
 template<unsigned count>
 int8x32 shift_r(int8x32 a) { return detail::v256_shift_r<count>(a); }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline int8x16 shift_r<0>(int8x16 a) { return a; }
 template<> inline int8x32 shift_r<0>(int8x32 a) { return a; }
+#endif
+
 /// @}
 
 /// @{
@@ -764,6 +771,7 @@ uint8x16 shift_r(uint8x16 a)
 template<unsigned count>
 uint8x32 shift_r(uint8x32 a) { return detail::v256_shift_r<count>(a); }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint8x16 shift_r<0>(uint8x16 a) { return a; }
 template<> inline uint8x32 shift_r<0>(uint8x32 a) { return a; }
 
@@ -784,6 +792,7 @@ template<> inline uint8x32 shift_r<7>(uint8x32 a) { return detail::shift_r_u8<7>
 
 template<> inline uint8x16 shift_r<8>(uint8x16) { return uint8x16::zero(); }
 template<> inline uint8x32 shift_r<8>(uint8x32) { return uint8x32::zero(); }
+#endif
 /// @}
 
 /// @{
@@ -814,8 +823,10 @@ int16x8 shift_r(int16x8 a)
 template<unsigned count>
 int16x16 shift_r(int16x16 a) { return detail::v256_shift_r<count>(a); }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline int16x8  shift_r<0>(int16x8 a) { return a; }
 template<> inline int16x16 shift_r<0>(int16x16 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -844,8 +855,10 @@ uint16x8 shift_r(uint16x8 a)
 template<unsigned count>
 uint16x16 shift_r(uint16x16 a) { return detail::v256_shift_r<count>(a); }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint16x8 shift_r<0>(uint16x8 a) { return a; }
 template<> inline uint16x16 shift_r<0>(uint16x16 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -874,8 +887,10 @@ int32x4 shift_r(int32x4 a)
 template<unsigned count>
 int32x8 shift_r(int32x8 a) { return detail::v256_shift_r<count>(a); }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline int32x4 shift_r<0>(int32x4 a) { return a; }
 template<> inline int32x8 shift_r<0>(int32x8 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -904,8 +919,10 @@ uint32x4 shift_r(uint32x4 a)
 template<unsigned count>
 uint32x8 shift_r(uint32x8 a) { return detail::v256_shift_r<count>(a); }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint32x4 shift_r<0>(uint32x4 a) { return a; }
 template<> inline uint32x8 shift_r<0>(uint32x8 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -944,8 +961,10 @@ int64x4 shift_r(int64x4 a)
     return detail::v256_shift_r<count>(a);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline int64x2 shift_r<0>(int64x2 a) { return a; }
 template<> inline int64x4 shift_r<0>(int64x4 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -977,8 +996,10 @@ uint64x4 shift_r(uint64x4 a)
     return detail::v256_shift_r<count>(a);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint64x2 shift_r<0>(uint64x2 a) { return a; }
 template<> inline uint64x4 shift_r<0>(uint64x4 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -1015,6 +1036,7 @@ inline basic_int8x32 shift_l(basic_int8x32 a)
     return detail::v256_shift_l<count>(a);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int8x16 shift_l<0>(basic_int8x16 a) { return a; }
 template<> inline basic_int8x32 shift_l<0>(basic_int8x32 a) { return a; }
 
@@ -1035,6 +1057,7 @@ template<> inline basic_int8x32 shift_l<7>(basic_int8x32 a) { return detail::shi
 
 template<> inline basic_int8x16 shift_l<8>(basic_int8x16) { return uint8x16::zero(); }
 template<> inline basic_int8x32 shift_l<8>(basic_int8x32) { return uint8x32::zero(); }
+#endif
 /// @}
 
 /// @{
@@ -1065,8 +1088,10 @@ inline basic_int16x16 shift_l(basic_int16x16 a)
     return detail::v256_shift_l<count>(a);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int16x8  shift_l<0>(basic_int16x8 a) { return a; }
 template<> inline basic_int16x16 shift_l<0>(basic_int16x16 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -1097,8 +1122,10 @@ inline basic_int32x8 shift_l(basic_int32x8 a)
     return detail::v256_shift_l<count>(a);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int32x4 shift_l<0>(basic_int32x4 a) { return a; }
 template<> inline basic_int32x8 shift_l<0>(basic_int32x8 a) { return a; }
+#endif
 /// @}
 
 /// @{
@@ -1129,9 +1156,13 @@ inline basic_int64x4 shift_l(basic_int64x4 a)
     return detail::v256_shift_l<count>(a);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int64x2 shift_l<0>(basic_int64x2 a) { return a; }
 template<> inline basic_int64x4 shift_l<0>(basic_int64x4 a) { return a; }
+#endif
 /// @}
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

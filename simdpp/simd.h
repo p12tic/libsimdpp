@@ -9,7 +9,7 @@
 #define LIBSIMDPP_SIMD_H
 
 #ifndef SIMDPP_ARCH_FILE_INCLUDED
-    #error "You must not include this file directly. Include the architecture specific headers"
+    #error "You must not include this file directly. Include the architecture-specific headers"
 #endif
 
 #include <cstdlib>

@@ -21,6 +21,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 class float64x2;
 
+/// @ingroup simd_vec_int
+/// @{
+
 /** Generic class representing 2x 64-bit integer vector.
     To be used where the signedness of the underlying element type is not important
 */
@@ -249,6 +252,8 @@ public:
     static uint64x2 make_const(uint64_t v0, uint64_t v1);
 
 };
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

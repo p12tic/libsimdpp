@@ -19,7 +19,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** Base class for all 128-bit integer objects
+/** @ingroup simd_vec_int
+    Base class for all 128-bit integer objects
 */
 class int256 {
 public:

@@ -26,7 +26,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @defgroup simd_load
+/// @defgroup simd_load Operations: load from memory to register
 /// @{
 
 /// @{
@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
     @a p must be aligned to 16 bytes.
 
-    @par 128-bit version:
+    @par 256-bit version:
 
     @code
     a[0..255] = *(p)
@@ -141,7 +141,7 @@ inline float64x4 load(float64x4& a, const double* p)
     only the referenced 16 byte block is accessed. Otherwise, memory within the
     smallest 16-byte aligned 32-byte block may be accessed.
 
-    @par 128-bit version:
+    @par 256-bit version:
 
     @code
     a[0..255] = *(p)
@@ -1220,7 +1220,7 @@ inline void load_packed4(float64x4& a, float64x4& b,
 }
 /// @}
 
-/// @}
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

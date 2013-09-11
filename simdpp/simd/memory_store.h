@@ -27,7 +27,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @defgroup simd_store
+/// @defgroup simd_store Operations: store a register to memory
 /// @{
 
 /// @{
@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
     @a p must be aligned to 16 bytes.
 
-    @par 128-bit version:
+    @par 256-bit version:
 
     @code
     *(p) = a[0..255]
@@ -126,7 +126,7 @@ inline void store(double* p, float64x4 a)
     only the referenced 16 byte block is accessed. Otherwise, memory within the
     smallest 16-byte aligned 32-byte block may be accessed.
 
-    @par 128-bit version:
+    @par 256-bit version:
 
     @code
     *(p) = a[0..255]
@@ -281,7 +281,7 @@ inline void store_u(double* p, float64x4 a)
     @endcode
     @a p must be aligned to 16 bytes.
 
-    @par 128-bit version:
+    @par 256-bit version:
 
     @code
     *(p) = a[0..255]
@@ -1766,6 +1766,8 @@ inline void store_packed4(double* p,
 #endif
 }
 /// @}
+
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

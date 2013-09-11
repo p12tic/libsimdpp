@@ -26,6 +26,9 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @defgroup simd_insert_extract Operations: insert or extract a single element from a vector
+/// @{
+
 /** Inserts an element into int8x16 vector at the position identified by @a id.
 
     @code
@@ -253,8 +256,9 @@ inline float64x4 combine(float64x2 a, float64x2 b)
     return {a, b};
 #endif
 }
-
 /// @}
+
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

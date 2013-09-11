@@ -34,7 +34,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** @defgroup simd_shuffle
+/** @defgroup simd_shuffle Operations: shuffle elements within vectors
     @{
 */
 
@@ -401,10 +401,12 @@ basic_int8x32 move_l(basic_int8x32 a)
 #endif
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int8x16 move_l<0>(basic_int8x16 a)  { return a; }
 template<> inline basic_int8x16 move_l<16>(basic_int8x16 a) { (void) a; return int8x16::zero(); }
 template<> inline basic_int8x32 move_l<0>(basic_int8x32 a)  { return a; }
 template<> inline basic_int8x32 move_l<32>(basic_int8x32 a) { (void) a; return int8x32::zero(); }
+#endif
 /// @}
 
 /// @{
@@ -637,10 +639,12 @@ basic_int8x32 move_r(basic_int8x32 a)
 #endif
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int8x16 move_r<0>(basic_int8x16 a)  { return a; }
 template<> inline basic_int8x16 move_r<16>(basic_int8x16 a) { (void) a; return int8x16::zero(); }
 template<> inline basic_int8x32 move_r<0>(basic_int8x32 a)  { return a; }
 template<> inline basic_int8x32 move_r<32>(basic_int8x32 a) { (void) a; return int8x32::zero(); }
+#endif
 /// @}
 
 /// @{
@@ -1193,6 +1197,7 @@ basic_int8x32 align(basic_int8x32 lower, basic_int8x32 upper)
 #endif
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int8x16 align<0> (basic_int8x16 lower, basic_int8x16 upper)
 {
     (void) upper; return lower;
@@ -1209,6 +1214,7 @@ template<> inline basic_int8x32 align<32>(basic_int8x32 lower, basic_int8x32 upp
 {
     (void) lower; return upper;
 }
+#endif
 /// @}
 
 /// @{

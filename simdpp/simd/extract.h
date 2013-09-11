@@ -24,6 +24,9 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @ingroup simd_insert_extract
+/// @{
+
 /// @{
 /** Extracts the @a id-th element from int8x16 vector
 
@@ -304,6 +307,8 @@ uint16_t extract_bits(uint8x16 a)
     static_assert(id < 8 || id == 777, "index out of bounds");
     return detail::extract_bits_impl<id>()(a);
 }
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

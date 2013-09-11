@@ -20,8 +20,11 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @ingroup simd_vec_int
+/// @{
+
 /** Generic class representing 8x 16-bit integer vector.
-        To be used where the signedness of the underlying element type is not important
+    To be used where the signedness of the underlying element type is not important
 */
 class basic_int16x8 : public int128 {
 public:
@@ -267,6 +270,8 @@ public:
     static int128 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
                              uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
 };
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

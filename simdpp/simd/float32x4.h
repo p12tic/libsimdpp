@@ -21,8 +21,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 class basic_int32x4;
 
-/** Class representing float32x4 vector
-*/
+/// @defgroup simd_vec_fp Types: floating-point vectors
+/// @{
+
+/// Class representing float32x4 vector
 class float32x4 {
 public:
 
@@ -145,6 +147,8 @@ private:
     float f32_[4];
 #endif
 };
+
+/// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

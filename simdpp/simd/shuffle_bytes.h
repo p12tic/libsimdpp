@@ -21,6 +21,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/** @ingroup simd_shuffle
+    @{
+*/
+
 /// @{
 /** Selects bytes from a vector according to a mask. Each byte within the
     mask defines which element to select:
@@ -384,6 +388,8 @@ inline float64x4 shuffle_zbytes16(float64x4 a, float64x4 b, int256 mask)
     return float64x4(shuffle_zbytes16(int64x4(a), int64x4(b), mask));
 }
 /// @}
+
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

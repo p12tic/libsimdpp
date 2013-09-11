@@ -31,6 +31,9 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @ingroup simd_math_fp
+/// @{
+
 /// @{
 /** Checks whether elements in @a a are IEEE754 NaN.
 
@@ -840,7 +843,7 @@ inline float32x8 trunc(float32x8 a)
 }
 /// @}
 
-/// @}
+/// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
