@@ -38,6 +38,11 @@ files for different instruction sets from the same source code.
 The support for AVX and AVX2 instruction sets is not complete. In particular,
 interleaving loads and stores are not implemented yet.
 
+Documentation
+=============
+
+Online documentation is provided at http://p12tic.github.io/libsimdpp/doc/html
+
 64-bit floats on ARM
 ====================
 
