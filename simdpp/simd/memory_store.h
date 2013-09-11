@@ -23,7 +23,9 @@
 #endif
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 /// @defgroup simd_store
 /// @{
@@ -1765,7 +1767,9 @@ inline void store_packed4(double* p,
 }
 /// @}
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

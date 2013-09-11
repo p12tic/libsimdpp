@@ -20,7 +20,9 @@
 #include <simdpp/sse/detail/shuffle128.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace sse {
 namespace detail {
 
@@ -559,7 +561,9 @@ inline void ld_unpack6(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c,
 
 } // namespace detail
 } // namespace sse
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

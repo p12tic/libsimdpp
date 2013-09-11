@@ -19,7 +19,9 @@
 #endif
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 inline float64x2 float64x2::zero()
 {
@@ -83,7 +85,9 @@ inline float64x2 float64x2::make_const(double v0, double v1)
 #endif
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

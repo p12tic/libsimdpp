@@ -20,7 +20,9 @@
 #include <cstdint>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 /// @{
 /** Extracts the @a id-th element from int8x16 vector
@@ -303,7 +305,9 @@ uint16_t extract_bits(uint8x16 a)
     return detail::extract_bits_impl<id>()(a);
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

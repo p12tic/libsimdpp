@@ -22,14 +22,6 @@
 #define SIMDPP_ARCH_NAMESPACE_HELPER(x) SIMDPP_ARCH_NAMESPACE_HELPER2(x)
 #define SIMDPP_ARCH_NAMESPACE SIMDPP_ARCH_NAMESPACE_HELPER(SIMDPP_ARCH)
 
-// Hide the namespace defined above from doxygen.s
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    #define SIMDPP_ARCH_NAMESPACE_BEGIN namespace SIMDPP_ARCH_NAMESPACE {
-    #define SIMDPP_ARCH_NAMESPACE_END }
-#else
-    #define SIMDPP_ARCH_NAMESPACE_BEGIN
-    #define SIMDPP_ARCH_NAMESPACE_END
-#endif
 
 #include <simdpp/simd/fwd.h>
 

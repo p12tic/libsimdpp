@@ -21,7 +21,9 @@
 #endif
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 /// @{
 /** Shifts signed 8-bit values right by @a count bits while shifting in the
@@ -1131,7 +1133,9 @@ template<> inline basic_int64x2 shift_l<0>(basic_int64x2 a) { return a; }
 template<> inline basic_int64x4 shift_l<0>(basic_int64x4 a) { return a; }
 /// @}
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

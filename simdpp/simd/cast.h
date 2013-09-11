@@ -13,7 +13,9 @@
 #endif
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 /** Casts between unrelated types. No changes to the stored values are
     performed.
@@ -30,7 +32,9 @@ R bit_cast(T t)
     return ur;
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

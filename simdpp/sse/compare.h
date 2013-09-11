@@ -13,7 +13,9 @@
 #endif
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace sse {
 
 #ifdef SIMDPP_USE_SSE2
@@ -141,7 +143,9 @@ inline bool test_ones(int128 a, int128 mask)
 #endif
 
 } // namespace sse
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

@@ -13,7 +13,9 @@
 #endif
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace neon {
 
 /** Multiplies the values of two int8x16 vectors and returns the low
@@ -88,7 +90,9 @@ inline int128 mull_hi(uint8x16 a, uint8x16 b)
 }
 
 } // namespace neon
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

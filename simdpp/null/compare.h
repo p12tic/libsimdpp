@@ -14,7 +14,9 @@
 #include <simdpp/null/traits.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace null {
 
 template<class V>
@@ -58,7 +60,9 @@ auto cmp_gt(V a, V b) -> typename traits<V>::int_vector_type
 }
 
 } // namespace null
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

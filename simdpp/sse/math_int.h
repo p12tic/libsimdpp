@@ -16,7 +16,9 @@
 #include <simdpp/simd/shuffle.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace sse {
 
 
@@ -259,7 +261,9 @@ inline int128 hsubs2(int16x8 a, int16x8 b)
 }
 
 } // namespace sse
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

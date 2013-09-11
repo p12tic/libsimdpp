@@ -15,7 +15,9 @@
 #include <simdpp/simd/types.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace detail {
 
 struct vec128_impl {
@@ -84,7 +86,9 @@ template<> struct same_width<float32x8> : vec256_impl {};
 template<> struct same_width<float64x4> : vec256_impl {};
 
 } // namespace detail
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

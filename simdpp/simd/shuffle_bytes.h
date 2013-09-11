@@ -17,7 +17,9 @@
 #include <simdpp/simd/compare.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 /// @{
 /** Selects bytes from a vector according to a mask. Each byte within the
@@ -383,7 +385,9 @@ inline float64x4 shuffle_zbytes16(float64x4 a, float64x4 b, int256 mask)
 }
 /// @}
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

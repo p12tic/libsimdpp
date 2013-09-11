@@ -16,7 +16,9 @@
 #include <simdpp/simd/detail/traits.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 namespace detail {
 
@@ -89,7 +91,9 @@ void libsimdpp_instruction_not_available();
     ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
     )
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

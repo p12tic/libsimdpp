@@ -11,7 +11,9 @@
 #include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace sse {
 namespace detail {
 
@@ -170,7 +172,9 @@ inline void partial_transpose8(basic_int8x32& a0, basic_int8x32& a1,
 
 } // namespace detail
 } // namespace sse
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

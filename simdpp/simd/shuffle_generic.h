@@ -25,7 +25,9 @@
 #endif
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 /// @{
 /** Permutes the 16-bit values within each 4 consecutive values of the vector.
@@ -702,7 +704,9 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
 }
 /// @}
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

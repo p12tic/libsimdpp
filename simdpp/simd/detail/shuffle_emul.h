@@ -16,7 +16,9 @@
 #include <simdpp/simd/detail/traits.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 namespace detail {
 
@@ -61,7 +63,9 @@ float64x4 permute_emul(float64x4 a)
 /// @}
 
 } // namespace detail
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

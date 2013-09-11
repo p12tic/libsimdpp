@@ -11,7 +11,9 @@
 #include <type_traits>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace neon {
 namespace detail {
 namespace shuffle_int64x2 {
@@ -64,7 +66,9 @@ T shuffle1(T a, T b)
 } // namespace shuffle_int64x2
 } // namespace detail
 } // namespace neon
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

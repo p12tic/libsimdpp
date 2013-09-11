@@ -15,7 +15,9 @@
 #include <simdpp/null/traits.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace null {
 
 template<class R, class V, class C>
@@ -39,7 +41,9 @@ R foreach(V1 v1, V2 v2, C c)
 }
 
 } // namespace null
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

@@ -15,7 +15,9 @@
 #include <cstdint>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 inline int16x16 int16x16::zero()
 {
@@ -147,7 +149,9 @@ inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, ui
 #endif
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

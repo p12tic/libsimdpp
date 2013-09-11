@@ -15,7 +15,9 @@
 #include <cstdint>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 class float32x4;
 
@@ -282,7 +284,9 @@ public:
     static uint32x4 make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3);
 };
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

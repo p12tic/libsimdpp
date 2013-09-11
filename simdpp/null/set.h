@@ -14,7 +14,9 @@
 #include <simdpp/null/traits.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace null {
 
 template<class V>
@@ -104,7 +106,9 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7,
 }
 
 } // namespace null
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

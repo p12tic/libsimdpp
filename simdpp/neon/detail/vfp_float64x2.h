@@ -12,7 +12,9 @@
 #include <cmath>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace neon {
 namespace detail {
 
@@ -84,7 +86,9 @@ inline basic_int64x2 isnan2(float64x2 a, float64x2 b)
 
 } // namespace detail
 } // namespace neon
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

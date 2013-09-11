@@ -14,7 +14,9 @@
 #include <simdpp/null/traits.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace null {
 
 template<class V>
@@ -132,7 +134,9 @@ void store_packed4(void* p, V& a, V& b, V& c, V& d)
 }
 
 } // namespace null
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

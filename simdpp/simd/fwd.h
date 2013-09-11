@@ -17,7 +17,9 @@
     are needed for proper compilation of other files.
 */
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -81,7 +83,9 @@ template<unsigned count> int32x8 shift_r(int32x8);
 
 #endif // DOXYGEN_SHOULD_SKIP_THIS
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

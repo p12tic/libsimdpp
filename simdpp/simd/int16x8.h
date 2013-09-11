@@ -16,7 +16,9 @@
 #include <cstdint>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 /** Generic class representing 8x 16-bit integer vector.
         To be used where the signedness of the underlying element type is not important
@@ -266,7 +268,9 @@ public:
                              uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
 };
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

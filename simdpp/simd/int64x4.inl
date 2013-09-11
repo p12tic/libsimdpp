@@ -14,7 +14,9 @@
 #include <simdpp/simd.h>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 
 
 inline basic_int64x4::basic_int64x4(const float64x4& d)
@@ -117,7 +119,9 @@ inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint
 #endif
 }
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

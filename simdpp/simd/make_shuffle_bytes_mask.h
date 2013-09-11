@@ -14,7 +14,9 @@
 #include <array>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace detail {
 
 /// s - selector, u - number of elements per group
@@ -718,7 +720,9 @@ basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
 }
 /// @}
 
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif

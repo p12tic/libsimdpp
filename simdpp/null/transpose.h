@@ -16,7 +16,9 @@
 #include <utility>
 
 namespace simdpp {
-SIMDPP_ARCH_NAMESPACE_BEGIN
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
 namespace null {
 
 template<class V>
@@ -78,7 +80,9 @@ void transpose16(V& a0, V& a1, V& a2,  V& a3,  V& a4,  V& a5,  V& a6,  V& a7,
 }
 
 } // namespace null
-SIMDPP_ARCH_NAMESPACE_END
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
 } // namespace simdpp
 
 #endif
