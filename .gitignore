@@ -1,0 +1,14 @@
+*.in
+*.m4
+autom4te.cache/*
+config.guess
+config.sub
+configure
+depcomp
+install-sh
+ltmain.sh
+*.user*
+missing
+*~
+!*.pc.in
+!Doxyfile.in
