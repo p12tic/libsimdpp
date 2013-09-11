@@ -35,6 +35,7 @@
 
 #include <simdpp/simd/detail/not_implemented.h>
 
+#include <simdpp/simd/cache.h>
 #include <simdpp/simd/bitwise.h>
 #include <simdpp/simd/math_shift.h>
 #include <simdpp/simd/shuffle.h>

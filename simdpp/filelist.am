@@ -35,6 +35,7 @@ simdpp_files_h = \
     simd/detail/width.h             \
     simd/bitwise.h          \
     simd/cast.h             \
+    simd/cache.h            \
     simd/compare.h          \
     simd/convert.h          \
     simd/extract.h          \
