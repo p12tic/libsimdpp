@@ -111,11 +111,7 @@ uint32_t extract(basic_int32x4 a)
 #elif SIMDPP_USE_SSE4_1
     return _mm_extract_epi32(a, id);
 #elif SIMDPP_USE_SSE2
-    int32x4 t = a;
-    if (id != 0) {
-        t = move_l<id>(t);
-    }
-    return _mm_cvtsi128_si32(t);
+    return _mm_cvtsi128_si32(move_l<id>(a)); // when id==0, move_l is template-specialized and does nothing
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u32(a, id);
 #endif
@@ -161,9 +157,7 @@ uint64_t extract(basic_int64x2 a)
 #if SIMDPP_SSE_32_BITS
     basic_int32x4 t = a;
     uint64_t r = 0;
-    if (id != 0) {
-        t = move_l<id*2>(t);
-    }
+    t = move_l<id*2>(t); // when id==0, move_l is template-specialized and does nothing
     r = extract<0>(t);
     t = move_l<1>(t);
     r |= uint64_t(extract<0>(t)) << 32;
