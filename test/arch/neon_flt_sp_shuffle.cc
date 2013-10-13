@@ -1,5 +1,5 @@
 /*  libsimdpp
-    Copyright (C) 2013  Povilas Kanapickas tir5c3@yahoo.co.uk
+    Copyright (C) 2012  Povilas Kanapickas tir5c3@yahoo.co.uk
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/neon_vfp_sp.h>
-#include "perf.h"
-
-
+#include <simdpp/neon_flt_sp.h>
+#include "../tests.h"
+#include "../tests/shuffle.inl"
+#include "../tests/shuffle_generic.inl"

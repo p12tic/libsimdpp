@@ -43,10 +43,6 @@ void test_compare(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "compare");
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
-    TestCase& tc64 = NEW_TEST_CASE(res, "compare_f64");
-#endif
-
     using namespace simdpp;
 
     //int8x16
@@ -129,7 +125,6 @@ void test_compare(TestResults& res)
         TEST_COMPARE_TESTER_HELPER(tc, float32x4, sl, sr);
     }
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
     //float64x2
     {
         float64x2 sl[] = {
@@ -165,11 +160,8 @@ void test_compare(TestResults& res)
             float64x2::make_const(nan(), nan()),
         };
 
-        TEST_COMPARE_TESTER_HELPER(tc64, float64x2, sl, sr);
+        TEST_COMPARE_TESTER_HELPER(tc, float64x2, sl, sr);
     }
-#else
-    (void) inf; (void) nan;
-#endif
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

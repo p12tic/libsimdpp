@@ -34,7 +34,7 @@
 
 #include <simdpp/simd/types.h>
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     #include <simdpp/null/foreach.h>
     #include <simdpp/null/bitwise.h>
 #endif
@@ -137,7 +137,7 @@ inline float32x8 bit_and(float32x8 a, int256 b)
 */
 inline float64x2 bit_and(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_and(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_and_pd(a, b);
@@ -254,7 +254,7 @@ inline float32x8 bit_andnot(float32x8 a, int256 b)
 */
 inline float64x2 bit_andnot(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_andnot(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_pd(b, a);
@@ -371,7 +371,7 @@ inline float32x8 bit_or(float32x8 a, int256 b)
 */
 inline float64x2 bit_or(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_or(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_or_pd(a, b);
@@ -488,7 +488,7 @@ inline float32x8 bit_xor(float32x8 a, int256 b)
 */
 inline float64x2 bit_xor(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_xor(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_xor_pd(a, b);

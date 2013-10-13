@@ -34,7 +34,7 @@
 #include <simdpp/simd.h>
 #include <simdpp/simd/detail/word_size.h>
 
-#if SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NEON
     #include <simdpp/null/set.h>
 #endif
 
@@ -52,7 +52,7 @@ inline float64x2 float64x2::zero()
 
 inline float64x2 float64x2::load_broadcast(const double* v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::make_vec<float64x2>(*v0);
 #elif SIMDPP_USE_SSE3
     return _mm_loaddup_pd(v0);
@@ -61,14 +61,12 @@ inline float64x2 float64x2::load_broadcast(const double* v0)
     r = _mm_load_sd(v0);
     r = permute<0,0>(r);
     return r;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(v0);
 #endif
 }
 
 inline float64x2 float64x2::set_broadcast(double v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::make_vec<float64x2>(v0);
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
@@ -78,30 +76,24 @@ inline float64x2 float64x2::set_broadcast(double v0)
     r0 = _mm_cvtsi64_si128(bit_cast<int64_t>(v0));
     return permute<0,0>(float64x2(r0));
 #endif
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(v0);
 #endif
 }
 
 inline float64x2 float64x2::make_const(double v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::make_vec<float64x2>(v0);
 #elif SIMDPP_USE_SSE2
     return _mm_set_pd(v0, v0);
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(v0);
 #endif
 }
 
 inline float64x2 float64x2::make_const(double v0, double v1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::make_vec<float64x2>(v0, v1);
 #elif SIMDPP_USE_SSE2
     return _mm_set_pd(v1, v0);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(v0, v1);
 #endif
 }
 

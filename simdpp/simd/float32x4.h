@@ -87,7 +87,7 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     /// For internal use only
     const float& operator[](unsigned i) const { return f32_[i]; }
           float& operator[](unsigned i)       { return f32_[i]; }
@@ -156,7 +156,7 @@ public:
 private:
 #if SIMDPP_USE_SSE2
     __m128 d_;
-#elif SIMDPP_USE_NEON_VFP_SP
+#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     union {
         float f32_[4];
         float32x4_t d_;

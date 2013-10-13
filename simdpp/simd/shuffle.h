@@ -191,7 +191,7 @@ inline float32x8 zip_lo(float32x8 a, float32x8 b)
 
 inline float64x2 zip_lo(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     return null::zip_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a),
@@ -344,7 +344,7 @@ inline float32x8 zip_hi(float32x8 a, float32x8 b)
 
 inline float64x2 zip_hi(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     return null::zip_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b),
@@ -1122,7 +1122,7 @@ template<unsigned s>
 float64x2 broadcast(float64x2 a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     return null::broadcast<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {

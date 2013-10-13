@@ -34,10 +34,6 @@ void test_construct(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "construct");
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
-    TestCase& tc64 = NEW_TEST_CASE(res, "construct_f64");
-#endif
-
     using namespace simdpp;
 
     union {
@@ -125,12 +121,10 @@ void test_construct(TestResults& res)
     TEST_PUSH(tc,float32x4,float32x4::make_const(1.0101010f, 1.1111111f));
     TEST_PUSH(tc,float32x4,float32x4::make_const(1.0101010f, 1.1111111f, 1.2121212f, 1.3131313f));
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
-    TEST_PUSH(tc64,float64x2,float64x2::load_broadcast(f64+0));
-    TEST_PUSH(tc64,float64x2,float64x2::set_broadcast(1.010101010101010));
-    TEST_PUSH(tc64,float64x2,float64x2::make_const(1.010101010101010));
-    TEST_PUSH(tc64,float64x2,float64x2::make_const(1.010101010101010, 1.111111111111111));
-#endif
+    TEST_PUSH(tc,float64x2,float64x2::load_broadcast(f64+0));
+    TEST_PUSH(tc,float64x2,float64x2::set_broadcast(1.010101010101010));
+    TEST_PUSH(tc,float64x2,float64x2::make_const(1.010101010101010));
+    TEST_PUSH(tc,float64x2,float64x2::make_const(1.010101010101010, 1.111111111111111));
 
     // 32-byte vectors
     TEST_PUSH(tc,uint8x32,uint8x32::load_broadcast(u8+6));
@@ -218,14 +212,12 @@ void test_construct(TestResults& res)
     TEST_PUSH(tc,float32x8,float32x8::make_const(1.0101010f, 1.1111111f, 1.2121212f, 1.3131313f,
                                                  1.1414141f, 1.1515151f, 1.1616161f, 1.1717171f));
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
-    TEST_PUSH(tc64,float64x4,float64x4::load_broadcast(f64+0));
-    TEST_PUSH(tc64,float64x4,float64x4::set_broadcast(1.010101010101010));
-    TEST_PUSH(tc64,float64x4,float64x4::make_const(1.010101010101010));
-    TEST_PUSH(tc64,float64x4,float64x4::make_const(1.010101010101010, 1.111111111111111));
-    TEST_PUSH(tc64,float64x4,float64x4::make_const(1.010101010101010, 1.111111111111111,
+    TEST_PUSH(tc,float64x4,float64x4::load_broadcast(f64+0));
+    TEST_PUSH(tc,float64x4,float64x4::set_broadcast(1.010101010101010));
+    TEST_PUSH(tc,float64x4,float64x4::make_const(1.010101010101010));
+    TEST_PUSH(tc,float64x4,float64x4::make_const(1.010101010101010, 1.111111111111111));
+    TEST_PUSH(tc,float64x4,float64x4::make_const(1.010101010101010, 1.111111111111111,
                                                    1.121212121212121, 1.131313131313131));
-#endif
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

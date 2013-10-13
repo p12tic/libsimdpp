@@ -114,7 +114,7 @@ inline void store(float* p, float32x8 a)
 
 inline void store(double *p, float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_pd(p, a);
@@ -270,7 +270,7 @@ inline void store_u(float* p, float32x8 a)
 
 inline void store_u(double* p, float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_storeu_pd(p, a);
@@ -632,7 +632,7 @@ inline void store_first(float* p, float32x8 a, unsigned n)
 
 inline void store_first(double* p, float64x2 a, unsigned n)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
@@ -886,7 +886,7 @@ inline void store_last(float* p, float32x8 a, unsigned n)
 
 inline void store_last(double* p, float64x2 a, unsigned n)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
@@ -1452,7 +1452,7 @@ inline void store_packed3(float* p,
 */
 inline void store_packed3(double* p, float64x2 a, float64x2 b, float64x2 c)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2
     sse::detail::st_pack3(a, b, c);
@@ -1756,7 +1756,7 @@ inline void store_packed4(float* p,
 inline void store_packed4(double* p,
                           float64x2 a, float64x2 b, float64x2 c, float64x2 d)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2
     sse::detail::st_pack4(a, b, c, d);

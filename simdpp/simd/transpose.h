@@ -39,10 +39,8 @@
 #elif SIMDPP_USE_SSE2
     #include <simdpp/sse/shuffle.h>
     #include <simdpp/sse/detail/transpose.h>
-#elif SIMDPP_USE_NEON_VFP_DP
-    #include <simdpp/null/transpose.h>
-    #include <simdpp/neon/shuffle.h>
 #elif SIMDPP_USE_NEON
+    #include <simdpp/null/transpose.h>
     #include <simdpp/neon/shuffle.h>
 #endif
 
@@ -272,7 +270,7 @@ inline void transpose2(float32x8& a0, float32x8& a1)
 */
 inline void transpose2(float64x2& a0, float64x2& a1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     float64x2 b0;

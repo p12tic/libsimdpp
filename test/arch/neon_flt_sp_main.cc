@@ -25,7 +25,9 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/neon_vfp_dp.h>
-#include "../tests.h"
-#include "../tests/shuffle.inl"
-#include "../tests/shuffle_generic.inl"
+#include <simdpp/neon_flt_sp.h>
+#include "../main_test_function.inl"
+#include "../arch_registration.h"
+
+static ArchRegistration tester_neon_flt_sp(SIMDPP_ARCH_NAMESPACE::main_test_function,
+                                           "NEON_FLT_SP");

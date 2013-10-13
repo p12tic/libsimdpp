@@ -63,12 +63,9 @@ test_simd_SOURCES +=                \
     arch/neon_main.cc               \
     arch/neon_shuffle.cc            \
     arch/neon_shuffle_bytes.cc      \
-    arch/neon_vfp_sp_main.cc        \
-    arch/neon_vfp_sp_shuffle.cc     \
-    arch/neon_vfp_sp_shuffle_bytes.cc   \
-    arch/neon_vfp_dp_main.cc        \
-    arch/neon_vfp_dp_shuffle.cc     \
-    arch/neon_vfp_dp_shuffle_bytes.cc
+    arch/neon_flt_sp_main.cc        \
+    arch/neon_flt_sp_shuffle.cc     \
+    arch/neon_flt_sp_shuffle_bytes.cc
 endif
 
 TESTS = test_simd

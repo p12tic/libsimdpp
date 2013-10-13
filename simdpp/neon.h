@@ -34,6 +34,8 @@
 
 #define SIMDPP_ARCH_FILE_INCLUDED
 
+// NEON is used only for integer arithmetic. VFP is used for floating-point
+// arithmetic
 #define SIMDPP_USE_NEON 1
 #define SIMDPP_ARCH neon
 

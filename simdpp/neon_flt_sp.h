@@ -1,5 +1,5 @@
 /*  libsimdpp
-    Copyright (C) 2013  Povilas Kanapickas tir5c3@yahoo.co.uk
+    Copyright (C) 2011  Povilas Kanapickas tir5c3@yahoo.co.uk
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -25,6 +25,23 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/neon_vfp_dp.h>
-#include "perf.h"
+#ifndef LIBSIMDPP_NEON_FLT_SP_H
+#define LIBSIMDPP_NEON_FLT_SP_H
 
+#if SIMDPP_ARCH_FILE_INCLUDED
+    #error "You must not include more than one architecture files."
+#endif
+
+#define SIMDPP_ARCH_FILE_INCLUDED
+
+// NEON is used for integer and single-precision floating-point arithmetic.
+// VFP is used for floating-point arithmetic
+#define SIMDPP_USE_NEON 1
+#define SIMDPP_USE_NEON_FLT_SP 1
+#define SIMDPP_ARCH neon_flt_sp
+
+#include <arm_neon.h>
+
+#include <simdpp/simd.h>
+
+#endif

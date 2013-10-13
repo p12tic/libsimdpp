@@ -36,10 +36,6 @@ void test_math_fp(TestResults& res)
 
     TestCase& tc = NEW_TEST_CASE(res, "math_fp");
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
-    TestCase& tc64 = NEW_TEST_CASE(res, "math_fp_f64");
-#endif
-
     using namespace simdpp;
 
     float nanf = std::numeric_limits<float>::quiet_NaN();
@@ -83,7 +79,6 @@ void test_math_fp(TestResults& res)
         TEST_ALL_COMB_HELPER(tc, float32x4, max, snan, 4);
     }
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
     //float64x2
     {
         float64x2 s[] = {
@@ -101,14 +96,14 @@ void test_math_fp(TestResults& res)
             float64x2::make_const(-inf, -inf),
         };
 
-        TEST_ALL_COMB_HELPER(tc64, float64x2, add, s, 4);
-        TEST_ALL_COMB_HELPER(tc64, float64x2, sub, s, 4);
-        TEST_ALL_COMB_HELPER(tc64, float64x2, mul, s, 4);
-        TEST_ALL_COMB_HELPER(tc64, float64x2, div, s, 4);
+        TEST_ALL_COMB_HELPER(tc, float64x2, add, s, 4);
+        TEST_ALL_COMB_HELPER(tc, float64x2, sub, s, 4);
+        TEST_ALL_COMB_HELPER(tc, float64x2, mul, s, 4);
+        TEST_ALL_COMB_HELPER(tc, float64x2, div, s, 4);
 
-        TEST_ARRAY_HELPER1(tc64, float64x2, abs, s);
-        TEST_ARRAY_HELPER1(tc64, float64x2, sign, s);
-        TEST_ARRAY_HELPER1(tc64, float64x2, neg, s);
+        TEST_ARRAY_HELPER1(tc, float64x2, abs, s);
+        TEST_ARRAY_HELPER1(tc, float64x2, sign, s);
+        TEST_ARRAY_HELPER1(tc, float64x2, neg, s);
 
         float64x2 snan[] = {
             float64x2::make_const(1.0, 2.0),
@@ -122,12 +117,9 @@ void test_math_fp(TestResults& res)
             float64x2::make_const(inf, inf),
             float64x2::make_const(-inf, -inf),
         };
-        TEST_ALL_COMB_HELPER(tc64, float64x2, min, snan, 4);
-        TEST_ALL_COMB_HELPER(tc64, float64x2, max, snan, 4);
+        TEST_ALL_COMB_HELPER(tc, float64x2, min, snan, 4);
+        TEST_ALL_COMB_HELPER(tc, float64x2, max, snan, 4);
     }
-#else
-    (void) nan; (void) inf;
-#endif
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -34,10 +34,6 @@ void test_convert(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "convert");
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
-    TestCase& tc64 = NEW_TEST_CASE(res, "convert_f64");
-#endif
-
     using namespace simdpp;
 
     //int8x16
@@ -82,9 +78,7 @@ void test_convert(TestResults& res)
     };
 
     TEST_ARRAY_HELPER1_T(tc, float32x4, int32x4, to_float32x4, sf);
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
-    TEST_ARRAY_HELPER1_T(tc64, float64x2, int32x4, to_float64x2, sf);
-#endif
+    TEST_ARRAY_HELPER1_T(tc, float64x2, int32x4, to_float64x2, sf);
     }
 
     //float32x4
@@ -104,7 +98,6 @@ void test_convert(TestResults& res)
     TEST_ARRAY_HELPER1_T(tc, int32x4, float32x4, to_int32x4, sf);
     }
 
-#if !SIMDPP_USE_NEON || SIMDPP_USE_NEON_VFP_DP
     //float64x2
     {
     float64x2 sf[] = {
@@ -119,9 +112,8 @@ void test_convert(TestResults& res)
         float64x2::make_const(-63100002.0, -63100003.0),
     };
 
-    TEST_ARRAY_HELPER1_T(tc64, int32x4, float64x2, to_int32x4, sf);
+    TEST_ARRAY_HELPER1_T(tc, int32x4, float64x2, to_int32x4, sf);
     }
-#endif
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

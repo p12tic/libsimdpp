@@ -82,7 +82,7 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     /// For internal use only
     const double& operator[](unsigned i) const { return d_[i]; }
           double& operator[](unsigned i)       { return d_[i]; }

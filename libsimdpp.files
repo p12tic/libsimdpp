@@ -112,8 +112,7 @@ simdpp/sse/detail/load_packed.h
 simdpp/sse/detail/store_packed.h
 simdpp/sse/detail/transpose.h
 simdpp/neon.h
-simdpp/neon_vfp_sp.h
-simdpp/neon_vfp_dp.h
+simdpp/neon_flt_sp.h
 simdpp/null.h
 simdpp/sse2.h
 simdpp/sse3.h
@@ -125,8 +124,7 @@ simdpp/avx2.h
 perf/Makefile.am
 perf/perf.h
 perf/neon.cc
-perf/neon_vfp_dp.cc
-perf/neon_vfp_sp.cc
+perf/neon_flt_sp.cc
 perf/null.cc
 perf/sse2.cc
 perf/sse3.cc
@@ -155,12 +153,9 @@ test/arch/avx2_shuffle_bytes.cc
 test/arch/neon_main.cc
 test/arch/neon_shuffle.cc
 test/arch/neon_shuffle_bytes.cc
-test/arch/neon_vfp_sp_main.cc
-test/arch/neon_vfp_sp_shuffle.cc
-test/arch/neon_vfp_sp_shuffle_bytes.cc
-test/arch/neon_vfp_dp_main.cc
-test/arch/neon_vfp_dp_shuffle.cc
-test/arch/neon_vfp_dp_shuffle_bytes.cc
+test/arch/neon_flt_sp_main.cc
+test/arch/neon_flt_sp_shuffle.cc
+test/arch/neon_flt_sp_shuffle_bytes.cc
 test/arch/null_main.cc
 test/arch/null_shuffle.cc
 test/arch/null_shuffle_bytes.cc

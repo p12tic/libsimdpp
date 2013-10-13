@@ -52,7 +52,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** @ingroup simd_shuffle
     @{
 */
-
 /// @{
 /** Permutes the 16-bit values within each 4 consecutive values of the vector.
     The selector values must be in range [0; 3].
@@ -366,7 +365,7 @@ basic_int64x4 permute(basic_int64x4 a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float64x4 permute(float64x4 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     float64x4 r;
     r[0][0] = a[s0/2][s0%2];
     r[0][1] = a[s1/2][s1%2];
@@ -444,9 +443,7 @@ template<unsigned s0, unsigned s1>
 float64x2 permute(float64x2 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
-    return float64x2(permute<s0,s1>(int64x2(a)));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_shuffle_pd(a, a, _MM_SHUFFLE2(s1, s0));
 #else
     return float64x2(permute<s0,s1>(int64x2(a)));

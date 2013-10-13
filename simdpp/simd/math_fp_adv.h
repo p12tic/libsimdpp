@@ -37,12 +37,12 @@
 #include <simdpp/simd/math_shift.h>
 #include <simdpp/simd/convert.h>
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     #include <cmath>
     #include <simdpp/null/foreach.h>
 #endif
 
-#if SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NEON
     #include <simdpp/neon/detail/vfp_float64x2.h>
 #endif
 
@@ -115,10 +115,8 @@ inline basic_int64x2 isnan(float64x2 a)
     return int64x2(_mm_cmp_pd(a, a, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpunord_pd(a, a));
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     return neon::detail::isnan(a);
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -200,10 +198,8 @@ inline basic_int64x2 isnan2(float64x2 a, float64x2 b)
     return int64x2(_mm_cmp_pd(a, b, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpunord_pd(a, b));
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     return neon::detail::isnan2(a, b);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
@@ -231,11 +227,11 @@ inline basic_int64x4 isnan2(float64x4 a, float64x4 b)
 */
 inline float32x4 rcp_e(float32x4 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(a, [](float a){ return 1.0f / a; });
 #elif SIMDPP_USE_SSE2
     return _mm_rcp_ps(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON_FLT_SP
     return vrecpeq_f32(a);
 #endif
 }
@@ -271,7 +267,7 @@ inline float32x8 rcp_e(float32x8 a)
 */
 inline float32x4 rcp_rh(float32x4 x, float32x4 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
 #elif SIMDPP_USE_SSE2
     float32x4 c2, r;
@@ -282,7 +278,7 @@ inline float32x4 rcp_rh(float32x4 x, float32x4 a)
     x = mul(x, r);
 
     return x;
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON_FLT_SP
     float32x4 r;
     r = vrecpsq_f32(a, x);
     x = mul(x, r);
@@ -323,11 +319,11 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
 */
 inline float32x4 div(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_ps(a, b);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x;
     x = rcp_e(b);
     x = rcp_rh(x, b);
@@ -364,12 +360,10 @@ inline float32x8 div(float32x8 a, float32x8 b)
 */
 inline float64x2 div(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
@@ -397,11 +391,11 @@ inline float64x4 div(float64x4 a, float64x4 b)
 */
 inline float32x4 rsqrt_e(float32x4 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(a, [](float a){ return 1.0f / std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_rsqrt_ps(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON_FLT_SP
     return vrsqrteq_f32(a);
 #endif
 }
@@ -439,7 +433,7 @@ inline float32x8 rsqrt_e(float32x8 a)
 inline float32x4 rsqrt_rh(float32x4 x, float32x4 a)
 {
     // x_n = x*(3-d*x*x)/2
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
 #elif SIMDPP_USE_SSE2
     float32x4 x2, c3, c0p5, r;
@@ -454,7 +448,7 @@ inline float32x4 rsqrt_rh(float32x4 x, float32x4 a)
     r = mul(x, r);
 
     return r;
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x2, r;
 
     x2 = mul(x, x);
@@ -504,11 +498,11 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 */
 inline float32x4 sqrt(float32x4 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_SP
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x;
     x = rsqrt_e(a);
     x = rsqrt_rh(x, a);
@@ -544,12 +538,10 @@ inline float32x8 sqrt(float32x8 a)
 */
 inline float64x2 sqrt(float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_pd(a);
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -620,12 +612,10 @@ inline float32x8 min(float32x8 a, float32x8 b)
 */
 inline float64x2 min(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::min(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_min_pd(a, b);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
@@ -694,12 +684,10 @@ inline float32x8 max(float32x8 a, float32x8 b)
 */
 inline float64x2 max(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::max(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_max_pd(a, b);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
@@ -730,11 +718,11 @@ inline float64x4 max(float64x4 a, float64x4 b)
 */
 inline float32x4 floor(float32x4 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(a, [](float x){ return std::floor(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_floor_ps(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
     int128 large_mask = cmp_gt(ba, float32x4::make_const(8388607.0f));
@@ -780,11 +768,11 @@ inline float32x8 floor(float32x8 a)
 */
 inline float32x4 ceil(float32x4 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(a, [](float x){ return std::ceil(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_ceil_ps(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
     int128 large_mask = cmp_gt(ba, float32x4::make_const(8388607.0f));
@@ -834,11 +822,11 @@ inline float32x8 ceil(float32x8 a)
 */
 inline float32x4 trunc(float32x4 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_round_ps(a, 3); // 3 = truncate
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large
     float32x4 af = abs(a);
     int128 mask = cmp_gt(af, float32x4::make_const(8388607.0f));

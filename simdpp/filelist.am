@@ -5,8 +5,7 @@ simdpp_files_h = \
     avx.h                   \
     avx2.h                  \
     neon.h                  \
-    neon_vfp_dp.h           \
-    neon_vfp_sp.h           \
+    neon_flt_sp.h           \
     null.h                  \
     simd.h                  \
     sse2.h                  \

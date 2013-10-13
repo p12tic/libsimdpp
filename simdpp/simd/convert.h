@@ -32,9 +32,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/simd/types.h>
-#include <simdpp/simd/shuffle.h>
+#include <simdpp/simd/cast.h>
 #include <simdpp/simd/math_shift.h>
+#include <simdpp/simd/shuffle.h>
+#include <simdpp/simd/types.h>
 
 #if SIMDPP_USE_AVX2
     #include <simdpp/sse/extract_half.h>
@@ -398,7 +399,7 @@ inline basic_int32x4 to_int32x4(float64x2 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvttpd_epi32(a);
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     int32x4 r = int32x4::zero();
     union {
         int32x2_t v;
@@ -408,8 +409,6 @@ inline basic_int32x4 to_int32x4(float64x2 a)
     i[1] = int32_t(a[1]);
     r = vcombine_s32(v, vget_high_s32(r));
     return r;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -428,7 +427,7 @@ inline basic_int32x8 to_int32x8(float64x4 a)
     int32x4 b0 = to_int32x4(a[0]);
     int32x4 b1 = to_int32x4(a[1]);
     return {zip_lo(b0, b1), int32x4::zero()};
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     int32x8 r = int32x8::zero();
     union {
         int32x4_t v;
@@ -656,7 +655,7 @@ inline float32x4 to_float32x4(float64x2 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtpd_ps(a);
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     float32x4 r = float32x4::zero();
     union {
         float rx[2];
@@ -684,7 +683,7 @@ inline float32x8 to_float32x8(float64x4 a)
     return _mm256_castps128_ps256(_mm256_cvtpd_ps(a));
 #elif SIMDPP_USE_SSE2
     return float32x8(to_float32x4(a[0]), to_float32x4(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     union {
         float rx[4];
         float32x4_t rv;
@@ -740,7 +739,7 @@ inline float64x2 to_float64x2(int32x4 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_pd(a);
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     float64x2 r;
     union {
         int32_t ax[2];
@@ -768,7 +767,7 @@ inline float64x4 to_float64x4(int32x8 a)
     return _mm256_cvtepi32_pd(sse::extract_lo(a));
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     float64x4 r;
     union {
         int32_t ax[4];
@@ -826,7 +825,7 @@ inline float64x2 to_float64x2(float32x4 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtps_pd(a);
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     float64x2 r;
     union {
         float ax[2];
@@ -854,7 +853,7 @@ inline float64x4 to_float64x4(float32x8 a)
     return _mm256_cvtps_pd(sse::extract_lo(a));
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON_VFP_DP
+#elif SIMDPP_USE_NEON
     float64x4 r;
     union {
         float ax[4];

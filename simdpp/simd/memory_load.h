@@ -122,7 +122,7 @@ inline float32x8 load(float32x8& a, const float* p)
 
 inline float64x2 load(float64x2& a, const double* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
@@ -249,7 +249,7 @@ inline float32x4 load_u(float32x4& a, const float* p)
 
 inline float64x2 load_u(float64x2& a, const double* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
@@ -901,7 +901,7 @@ inline void load_packed3(float32x8& a, float32x8& b, float32x8& c,
 */
 inline void load_packed3(float64x2& a, float64x2& b, float64x2& c, const double* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2
     load(a, p);
@@ -1209,7 +1209,7 @@ inline void load_packed4(float32x8& a, float32x8& b,
 inline void load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
                          const double* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_VFP_DP
+#if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2
     load(a, p);

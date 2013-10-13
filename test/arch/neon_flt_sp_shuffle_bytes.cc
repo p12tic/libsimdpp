@@ -25,7 +25,6 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/neon_vfp_sp.h>
+#include <simdpp/neon_flt_sp.h>
 #include "../tests.h"
-#include "../tests/shuffle.inl"
-#include "../tests/shuffle_generic.inl"
+#include "../tests/shuffle_bytes.inl"

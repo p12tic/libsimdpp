@@ -32,13 +32,10 @@ endif
 if HAS_NEON
 EXTRA_PROGRAMS +=      \
     perf_neon           \
-    perf_neon_vfp_sp    \
-    perf_neon_vfp_dp
+    perf_neon_flt_sp
 
 perf_neon_CXXFLAGS = $(AM_CXXFLAGS) -mfpu=neon
 perf_neon_SOURCES = neon.cc
-perf_neon_vfp_sp_CXXFLAGS = $(AM_CXXFLAGS) -mfpu=neon
-perf_neon_vfp_sp_SOURCES = neon_vfp_sp.cc
-perf_neon_vfp_dp_CXXFLAGS = $(AM_CXXFLAGS) -mfpu=neon
-perf_neon_vfp_dp_SOURCES = neon_vfp_dp.cc
+perf_neon_flt_sp_CXXFLAGS = $(AM_CXXFLAGS) -mfpu=neon
+perf_neon_flt_sp_SOURCES = neon_flt_sp.cc
 endif
