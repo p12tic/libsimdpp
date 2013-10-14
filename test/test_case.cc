@@ -129,7 +129,7 @@ template<class T>
 void fmt_bin(std::ostream& err, const char* prefix, const T& n)
 {
     err << prefix << "[ ";
-    unsigned bits = sizeof(T);
+    unsigned bits = sizeof(T)*8;
     for (unsigned i = 0; i < bits; i++) {
         err << ((n & (1 << i)) ? '1' : '0');
     }
