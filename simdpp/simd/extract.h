@@ -262,16 +262,17 @@ struct extract_bits_impl {
         a = shift_l<7-id>((uint16x8) a);
         return _mm_movemask_epi8(a);
 #elif SIMDPP_USE_NEON
-        uint8x16 mask = uint8x16::make_const(0x80);
-        int8x16 shift_mask = int8x16::make_const(-7,-6,-5,-4,-3,-2,-1,0);
+        uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+        int8x16 shift_mask = int8x16::make_const(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                                                 4-int(id), 5-int(id), 6-int(id), 7-int(id));
 
-        a = bit_and(a, mask);
         a = vshlq_u8(a, shift_mask);
+        a = bit_and(a, mask);
         a = vpaddlq_u8(a);
         a = vpaddlq_u16(a);
         a = vpaddlq_u32(a);
-        a = zip_lo(a, a);
-        return extract<0>((uint16x8)a);
+        uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
+        return vget_lane_u16(vreinterpret_u16_u8(r), 0);
 #endif
     }
 };
@@ -299,8 +300,8 @@ struct extract_bits_impl<777> {
         a = vpaddlq_u8(a);
         a = vpaddlq_u16(a);
         a = vpaddlq_u32(a);
-        a = zip_lo(a, a);
-        return extract<0>((uint16x8)a);
+        uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
+        return vget_lane_u16(vreinterpret_u16_u8(r), 0);
 #endif
     }
 };
