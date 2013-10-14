@@ -594,7 +594,16 @@ inline float32x4 to_float32x4(int32x4 a)
     return null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_ps(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+    float32x4 r;
+    struct Temp { int32_t a[4]; };
+    Temp t = bit_cast<Temp>(a);
+    r[0] = float(t.a[0]);
+    r[1] = float(t.a[1]);
+    r[2] = float(t.a[2]);
+    r[3] = float(t.a[3]);
+    return r;
+#elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_f32_s32(a);
 #endif
 }
