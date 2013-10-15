@@ -233,6 +233,13 @@
 
 #define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT8
 
+/** Usable in contexts where a string is required
+*/
+
+#define SIMDPP_STRINGIFY2(x) #x
+#define SIMDPP_STRINGIFY(x) SIMDPP_STRINGIFY2(x)
+#define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
+
 #include <cstdlib>
 
 #include <simdpp/simd/fwd.h>
