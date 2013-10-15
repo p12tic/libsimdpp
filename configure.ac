@@ -15,12 +15,11 @@ fi
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_PROG_CXX
+AC_PROG_RANLIB
 
 AM_INIT_AUTOMAKE([1.10 no-define subdir-objects -Wno-portability])
 AM_MAINTAINER_MODE
 AM_SILENT_RULES([yes])
-
-LT_INIT
 
 # Initialize documentation
 MM_PREREQ([0.9.3])

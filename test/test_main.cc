@@ -39,7 +39,7 @@ int main()
     auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
                                   [](const ArchRegistration::Arch& a) -> bool
                                   {
-                                      return std::strcmp(a.arch, "NULL") == 0;
+                                      return std::strcmp(a.arch, "arch_null") == 0;
                                   });
 
     if (null_arch == arch_list.end()) {

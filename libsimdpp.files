@@ -134,7 +134,6 @@ perf/README
 
 
 test/tests.h
-test/main_test_function.inl
 test/arch_registration.h
 test/arch_registration.cc
 test/test_case.h

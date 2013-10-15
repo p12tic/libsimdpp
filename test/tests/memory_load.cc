@@ -25,6 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include "../test_helpers.h"
+#include "../test_results.h"
 #include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
