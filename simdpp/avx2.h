@@ -33,19 +33,7 @@
 
 #define SIMDPP_ARCH_FILE_INCLUDED
 
-#define SIMDPP_USE_SSE2 1
-#define SIMDPP_USE_SSE3 1
-#define SIMDPP_USE_SSSE3 1
-#define SIMDPP_USE_SSE4_1 1
-#define SIMDPP_USE_AVX 1
-#define SIMDPP_USE_AVX2 1
-#define SIMDPP_ARCH avx2
-
-#include <xmmintrin.h>
-#include <emmintrin.h>
-#include <pmmintrin.h>
-#include <tmmintrin.h>
-#include <immintrin.h>
+#define SIMDPP_ARCH_X86_AVX2
 
 #include <simdpp/simd.h>
 

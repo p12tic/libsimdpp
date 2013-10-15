@@ -34,17 +34,8 @@
 
 #define SIMDPP_ARCH_FILE_INCLUDED
 
-#define SIMDPP_USE_SSE2 1
-#define SIMDPP_USE_SSE3 1
-#define SIMDPP_USE_SSSE3 1
-#define SIMDPP_ARCH ssse3
-
-#include <xmmintrin.h>
-#include <emmintrin.h>
-#include <pmmintrin.h>
-#include <tmmintrin.h>
+#define SIMDPP_ARCH_X86_SSSE3
 
 #include <simdpp/simd.h>
 
 #endif
-

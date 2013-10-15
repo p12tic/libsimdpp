@@ -34,9 +34,6 @@
 
 #define SIMDPP_ARCH_FILE_INCLUDED
 
-#define SIMDPP_USE_NULL 1
-#define SIMDPP_ARCH null
-
 #include <simdpp/simd.h>
 
 #endif

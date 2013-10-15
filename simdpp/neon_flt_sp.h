@@ -36,11 +36,7 @@
 
 // NEON is used for integer and single-precision floating-point arithmetic.
 // VFP is used for floating-point arithmetic
-#define SIMDPP_USE_NEON 1
-#define SIMDPP_USE_NEON_FLT_SP 1
-#define SIMDPP_ARCH neon_flt_sp
-
-#include <arm_neon.h>
+#define SIMDPP_ARCH_ARM_NEON_FLT_SP
 
 #include <simdpp/simd.h>
 
