@@ -28,9 +28,80 @@
 #ifndef LIBSIMDPP_SIMD_H
 #define LIBSIMDPP_SIMD_H
 
-#ifndef SIMDPP_ARCH_FILE_INCLUDED
-    #error "You must not include this file directly. Include the architecture-specific headers"
-#endif
+/** The libsimdpp library supports multiple instruction sets (architectures)
+    from the same codebase. The instruction set is selected by defining one or
+    more preprocessor macros before including the simd.h file.
+
+    The following instruction sets are supported:
+
+    * (null):
+        The instructions are not vectorized and use standard C++.
+        This instruction set is used if no SIMD instruction set is selected.
+
+    * x86 SSE2:
+        The x86/x86_64 SSE and SSE2 instruction sets are used.
+        Macro: @c SIMDPP_ARCH_X86_SSE2.
+
+    * x86 SSE3:
+        The x86/x86_64 SSE3 instruction set is used. The SSE and SSE2
+        instruction set support is required implicitly (no need to define the
+        macros for these instruction sets).
+
+        Macro: @c SIMDPP_ARCH_X86_SSE3.
+
+    * x86 SSSE3:
+        The x86/x86_64 SSSE3 instruction set is used. The SSE, SSE2 and SSE3
+        instruction set support is required implicitly (no need to define the
+        macros for these instruction sets).
+
+        Macro: @c SIMDPP_ARCH_X86_SSSE3.
+
+    * x86 SSE4.1:
+        The x86/x86_64 SSE4.1 instruction set is used. The SSE, SSE2 and SSE3
+        instruction set support is required implicitly (no need to define the
+        macros for these instruction sets).
+
+        Macro: @c SIMDPP_ARCH_X86_SSE4_1.
+
+    * x86 AVX:
+        The x86/x86_64 AVX instruction set is used. The SSE, SSE2, SSE3 and
+        SSSE3 instruction set support is required implicitly (no need to define
+        the macros for these instruction sets).
+
+        Macro: @c SIMDPP_ARCH_X86_AVX.
+
+    * x86 AVX2:
+        The x86/x86_64 AVX2 instruction set is used. The SSE, SSE2, SSE3, SSSE3
+        and AVX instruction set support is required implicitly (no need to
+        define the macros for these instruction sets).
+
+        Macro: @c SIMDPP_ARCH_X86_AVX2.
+
+    * NEON:
+        The ARM NEON instruction set. The VFP co-processor is used for any
+        floating-point functionality (NEON does not require the implementation
+        to be IEEE-754 compliant, whereas VFP does).
+
+        Macro @c SIMDPP_ARCH_ARM_NEON
+
+    * NEON_FLT_SP:
+        Performs 32-bit floating-point computations on the NEON co-processor.
+        The NEON instruction set support is required implicitly (no need to
+        define the macro for that instruction set).
+
+        Macro @c SIMDPP_ARCH_ARM_NEON_FLT_SP.
+
+    The same source code can be used to compile for any combination of
+    different instruction sets. Moreover, several versions of the same
+    functions can be included into the resulting binary and use a binary
+    dispatch mechanism to select the best version.
+
+    Since the C++ standard does not allow different definitions of the same
+    function name to reside in the same binary, all functionality is put into
+    a namespace, name of which is unique for each instruction set combination.
+    This method can be used in user-defined code -- the library supplies the
+    name of the namespace as @a SIMDPP_ARCH_NAMESPACE.
+*/
 
 #ifdef SIMDPP_ARCH_X86_SSE2
     #ifndef SIMDPP_USE_SSE2
@@ -221,7 +292,7 @@
 #define SIMDPP_CONCAT2(a, ...) a ## __VA_ARGS__
 #define SIMDPP_CONCAT(a, b) SIMDPP_CONCAT2(a, b)
 
-#define SIMDPP_PP_ARCH_CONCAT0 SIMDPP_PP_NULL
+#define SIMDPP_PP_ARCH_CONCAT0 SIMDPP_CONCAT(arch, SIMDPP_PP_NULL)
 #define SIMDPP_PP_ARCH_CONCAT1 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT0, SIMDPP_PP_SSE2)
 #define SIMDPP_PP_ARCH_CONCAT2 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT1, SIMDPP_PP_SSE3)
 #define SIMDPP_PP_ARCH_CONCAT3 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT2, SIMDPP_PP_SSSE3)
