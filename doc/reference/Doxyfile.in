@@ -5,8 +5,8 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = @PACKAGE_NAME@
-PROJECT_NUMBER         = @PACKAGE_VERSION@
+PROJECT_NAME           = @CMAKE_PROJECT_NAME@
+PROJECT_NUMBER         = @PROJECT_VERSION@
 OUTPUT_DIRECTORY       = reference
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
@@ -16,14 +16,10 @@ ABBREVIATE_BRIEF       =
 ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
-STRIP_FROM_PATH        = "@abs_top_builddir@/simdpp/" \
-                         "@abs_top_srcdir@/simdpp/" \
-                         "@abs_top_builddir@/" \
-                         "@abs_top_srcdir@/"
-STRIP_FROM_INC_PATH    = "@abs_top_builddir@/simdpp/" \
-                         "@abs_top_srcdir@/simdpp/" \
-                         "@abs_top_builddir@/" \
-                         "@abs_top_srcdir@/"
+STRIP_FROM_PATH        = "@PROJECT_SOURCE_DIR@/simdpp/" \
+                         "@PROJECT_SOURCE_DIR@/"
+STRIP_FROM_INC_PATH    = "@PROJECT_SOURCE_DIR@/simdpp/" \
+                         "@PROJECT_SOURCE_DIR@/"
 SHORT_NAMES            = YES
 JAVADOC_AUTOBRIEF      = YES
 QT_AUTOBRIEF           = NO
@@ -108,26 +104,21 @@ WARN_LOGFILE           = reference/doxygen.log
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  =
+INPUT                  = "@PROJECT_SOURCE_DIR@/simdpp/"
 INPUT_ENCODING         = UTF-8
-FILE_PATTERNS          =
-RECURSIVE              = NO
+FILE_PATTERNS          = *.h
+RECURSIVE              = YES
 EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       =
 EXCLUDE_SYMBOLS        = simdpp::detail          \
                          simdpp::sse::detail     \
                          simdpp::neon::detail
-EXAMPLE_PATH           = "@abs_top_srcdir@/demos"
+EXAMPLE_PATH           = "@PROJECT_SOURCE_DIR@/demos"
 EXAMPLE_PATTERNS       = *.cc \
                          *.h
 EXAMPLE_RECURSIVE      = YES
-IMAGE_PATH             = "@abs_top_srcdir@/docs/reference/images/stock/16" \
-                         "@abs_top_srcdir@/docs/reference/images/stock/20" \
-                         "@abs_top_srcdir@/docs/reference/images/stock/24" \
-                         "@abs_top_srcdir@/docs/reference/images/stock/32" \
-                         "@abs_top_srcdir@/docs/reference/images/stock/48" \
-                         "@abs_top_srcdir@/docs/reference/images/widgets"
+IMAGE_PATH             =
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
@@ -156,7 +147,7 @@ HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            =
 HTML_FOOTER            =
-HTML_STYLESHEET        = "@MMDOCTOOLDIR@/doxygen.css"
+HTML_STYLESHEET        = "@PROJECT_SOURCE_DIR@/doc/doxygen.css"
 HTML_DYNAMIC_SECTIONS  = NO
 GENERATE_DOCSET        = NO
 DOCSET_FEEDNAME        = "Doxygen generated docs"
@@ -240,8 +231,7 @@ ENABLE_PREPROCESSING   = YES
 MACRO_EXPANSION        = YES
 EXPAND_ONLY_PREDEF     = NO
 SEARCH_INCLUDES        = YES
-INCLUDE_PATH           = "@abs_top_builddir@/simdpp" \
-                         "@abs_top_srcdir@/simdpp"
+INCLUDE_PATH           = "@PROJECT_SOURCE_DIR@/simdpp"
 INCLUDE_FILE_PATTERNS  = *.h
 PREDEFINED             = __cplusplus \
                          DOXYGEN_SHOULD_SKIP_THIS=1
@@ -250,8 +240,8 @@ SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
-TAGFILES               = @DOXYGEN_TAGFILES@
-GENERATE_TAGFILE       = "reference/@PACKAGE_TARNAME@.tag"
+TAGFILES               =
+GENERATE_TAGFILE       = "reference/@PACKAGE_TAGNAME@.tag"
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = NO
 PERL_PATH              = @PERL@

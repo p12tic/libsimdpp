@@ -1,13 +1,9 @@
 
-configure.ac
-common.mk
+CMakeLists.txt
 
 Makefile.am
-doc/Makefile.am
+doc/CMakeLists.txt
 doc/reference/Doxyfile.in
-test/Makefile.am
-simdpp/Makefile.am
-simdpp/filelist.am
 
 libsimdpp.pc.in
 
@@ -29,6 +25,7 @@ debian/copyright
 debian/README.Debian
 debian/README.source
 
+simdpp/CMakeLists.txt
 simdpp/neon/shuffle.h
 simdpp/neon/memory_store.h
 simdpp/neon/math_int.h
@@ -121,6 +118,7 @@ simdpp/sse4_1.h
 simdpp/avx.h
 simdpp/avx2.h
 
+perf/CMakeLists.txt
 perf/Makefile.am
 perf/perf.h
 perf/neon.cc
@@ -133,6 +131,7 @@ perf/ssse3.cc
 perf/README
 
 
+test/CMakeLists.txt
 test/tests.h
 test/arch_registration.h
 test/arch_registration.cc
@@ -157,4 +156,6 @@ test/tests/shuffle.cc
 test/tests/shuffle_bytes.cc
 test/tests/transpose.cc
 test/tests/main.cc
+
+make_dist.sh
 

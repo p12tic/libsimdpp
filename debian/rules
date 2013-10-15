@@ -9,10 +9,17 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-%:
-	dh $@ --parallel
+SHELL=/bin/bash
+BUILDDIR="build"
+PREFIX="/usr/local"
 
-override_dh_auto_configure:
-	./configure --prefix=/usr/local
+%:
+	dh $@ --parallel --builddirectory=$(BUILDDIR)
 
 override_dh_usrlocal:
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DCMAKE_INSTALL_PREFIX=$(PREFIX)
+
+override_dh_auto_test:
+	pushd $(BUILDDIR); make check; popd
