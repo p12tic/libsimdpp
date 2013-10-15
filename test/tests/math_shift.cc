@@ -25,8 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_TESTS_MATH_SHIFT_H
-#define LIBSIMDPP_TEST_TESTS_MATH_SHIFT_H
+#include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -106,5 +105,3 @@ void test_math_shift(TestResults& res)
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
-
-#endif

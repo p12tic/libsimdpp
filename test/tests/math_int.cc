@@ -25,8 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_TESTS_MATH_INT_H
-#define LIBSIMDPP_TEST_TESTS_MATH_INT_H
+#include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -265,5 +264,3 @@ void test_math_int(TestResults& res)
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
-
-#endif

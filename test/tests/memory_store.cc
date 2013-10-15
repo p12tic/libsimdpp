@@ -25,9 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_TESTS_MEMORY_STORE_H
-#define LIBSIMDPP_TEST_TESTS_MEMORY_STORE_H
-
+#include <simdpp/simd.h>
 #include <cstring>
 
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -126,5 +124,3 @@ void test_memory_store(TestResults& res)
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
-
-#endif

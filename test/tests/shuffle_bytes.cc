@@ -25,8 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_TESTS_SHUFFLE_BYTES_H
-#define LIBSIMDPP_TEST_TESTS_SHUFFLE_BYTES_H
+#include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -357,5 +356,3 @@ void test_shuffle_bytes(TestResults& res)
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
-
-#endif

@@ -25,45 +25,73 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_TESTS_BITWISE_H
-#define LIBSIMDPP_TEST_TESTS_BITWISE_H
+#include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-void test_bitwise(TestResults& res)
+template<class V, unsigned vnum>
+void test_load_helper(TestCase& tc, void* sv_p)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "bitwise");
+    using E = typename traits<V>::element_type;
+    auto sdata = reinterpret_cast<E*>(sv_p);
+
+    V rv[vnum];
+
+    auto rzero = [&]()
+    {
+        for (unsigned i = 0; i < vnum; i++) {
+            rv[i] = V::zero();
+        }
+    };
+
+    for (unsigned i = 0; i < vnum; i++) {
+        V r = load(r, sdata + i*traits<V>::length);
+        TEST_PUSH(tc, V, r);
+    }
+
+    for (unsigned i = 0; i < (vnum-1)*traits<V>::length; i++) {
+        V r = load_u(r, sdata+i);
+        TEST_PUSH(tc, V, r);
+    }
+
+    rzero();
+    load_packed2(rv[0], rv[1], sdata);
+    TEST_ARRAY_PUSH(tc, V, rv);
+
+    rzero();
+    load_packed3(rv[0], rv[1], rv[2], sdata);
+    TEST_ARRAY_PUSH(tc, V, rv);
+
+    rzero();
+    load_packed4(rv[0], rv[1], rv[2], rv[3], sdata);
+    TEST_ARRAY_PUSH(tc, V, rv);
+}
+
+
+void test_memory_load(TestResults& res)
+{
+    TestCase& tc = NEW_TEST_CASE(res, "memory_load");
 
     using namespace simdpp;
 
-    uint64x4 a11 = uint64x4::make_const(0x0f0ff0f0ffff0000, 0x0f0ff0f0ffff0000);
-    uint64x4 a12 = uint64x4::make_const(0xffffffffffffffff, 0x0000000000000000);
+    constexpr unsigned vnum = 4;
+    constexpr unsigned size = 16*vnum;
 
-    float64x4 b11(a11);
-    float64x4 b12(a12);
+    union {
+        uint8_t sdata[size];
+        uint8x16 align;
+    };
 
-    float32x8 c11 = float32x8(a11);
-    float32x8 c12 = float32x8(a12);
+    for (unsigned i = 0; i < size; i++) {
+        sdata[i] = i;
+    }
 
-    TEST_PUSH32_2(tc, uint64x4,  bit_and, a11, a12);
-    TEST_PUSH32_2(tc, float64x4, bit_and, b11, b12);
-    TEST_PUSH32_2(tc, float32x8, bit_and, c11, c12);
-
-    TEST_PUSH32_2(tc, uint64x4,  bit_andnot, a11, a12);
-    TEST_PUSH32_2(tc, float64x4, bit_andnot, b11, b12);
-    TEST_PUSH32_2(tc, float32x8, bit_andnot, c11, c12);
-
-    TEST_PUSH32_2(tc, uint64x4,  bit_or, a11, a12);
-    TEST_PUSH32_2(tc, float64x4, bit_or, b11, b12);
-    TEST_PUSH32_2(tc, float32x8, bit_or, c11, c12);
-
-    TEST_PUSH32_2(tc, uint64x4,  bit_xor, a11, a12);
-    TEST_PUSH32_2(tc, float64x4, bit_xor, b11, b12);
-    TEST_PUSH32_2(tc, float32x8, bit_xor, c11, c12);
-
-    TEST_PUSH32_1(tc, uint64x4,  bit_not, a11);
+    test_load_helper<uint8x16, 4>(tc, sdata);
+    test_load_helper<uint16x8, 4>(tc, sdata);
+    test_load_helper<uint32x4, 4>(tc, sdata);
+    test_load_helper<uint64x2, 4>(tc, sdata);
+    test_load_helper<float32x4, 4>(tc, sdata);
+    test_load_helper<float64x2, 4>(tc, sdata);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
-
-#endif

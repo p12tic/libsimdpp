@@ -132,33 +132,6 @@ perf/sse4_1.cc
 perf/ssse3.cc
 perf/README
 
-test/arch/sse2_main.cc
-test/arch/sse2_shuffle.cc
-test/arch/sse2_shuffle_bytes.cc
-test/arch/sse3_main.cc
-test/arch/sse3_shuffle.cc
-test/arch/sse3_shuffle_bytes.cc
-test/arch/ssse3_main.cc
-test/arch/ssse3_shuffle.cc
-test/arch/ssse3_shuffle_bytes.cc
-test/arch/sse4_1_main.cc
-test/arch/sse4_1_shuffle.cc
-test/arch/sse4_1_shuffle_bytes.cc
-test/arch/avx_main.cc
-test/arch/avx_shuffle.cc
-test/arch/avx_shuffle_bytes.cc
-test/arch/avx2_main.cc
-test/arch/avx2_shuffle.cc
-test/arch/avx2_shuffle_bytes.cc
-test/arch/neon_main.cc
-test/arch/neon_shuffle.cc
-test/arch/neon_shuffle_bytes.cc
-test/arch/neon_flt_sp_main.cc
-test/arch/neon_flt_sp_shuffle.cc
-test/arch/neon_flt_sp_shuffle_bytes.cc
-test/arch/null_main.cc
-test/arch/null_shuffle.cc
-test/arch/null_shuffle_bytes.cc
 
 test/tests.h
 test/main_test_function.inl
@@ -171,17 +144,18 @@ test/test_helpers.h
 test/test_results.h
 test/traits.h
 
-test/tests/bitwise.inl
-test/tests/compare.inl
-test/tests/construct.inl
-test/tests/convert.inl
-test/tests/math_fp.inl
-test/tests/math_int.inl
-test/tests/math_shift.inl
-test/tests/memory_load.inl
-test/tests/memory_store.inl
-test/tests/shuffle_generic.inl
-test/tests/shuffle.inl
-test/tests/shuffle_bytes.inl
-test/tests/transpose.inl
+test/tests/bitwise.cc
+test/tests/compare.cc
+test/tests/construct.cc
+test/tests/convert.cc
+test/tests/math_fp.cc
+test/tests/math_int.cc
+test/tests/math_shift.cc
+test/tests/memory_load.cc
+test/tests/memory_store.cc
+test/tests/shuffle_generic.cc
+test/tests/shuffle.cc
+test/tests/shuffle_bytes.cc
+test/tests/transpose.cc
+test/tests/main.cc
 

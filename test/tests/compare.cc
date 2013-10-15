@@ -25,9 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_TESTS_COMPARE_H
-#define LIBSIMDPP_TEST_TESTS_COMPARE_H
-
+#include <simdpp/simd.h>
 #include <limits>
 
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -165,5 +163,3 @@ void test_compare(TestResults& res)
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
-
-#endif
