@@ -362,6 +362,9 @@
 #include <simdpp/simd/float32x8.inl>
 #include <simdpp/simd/float64x4.inl>
 
+#include <simdpp/simd/this_compile_arch.h>
+
+#include <simdpp/dispatcher.h>
 #include <simdpp/simd/detail/traits.h>
 
 namespace simdpp {

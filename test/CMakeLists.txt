@@ -76,3 +76,54 @@ set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11")
 add_test(test_simdpp test1)
 add_dependencies(check test1)
 
+# ------------------------------------------------------------------------------
+# Dispatcher test
+
+set(TEST_DISPATCHER_SOURCES
+    main_dispatcher.cc
+)
+
+set(TEST_DISPATCHER_ARCH_SOURCES
+    tests/dispatcher.cc
+)
+
+set(TEST_DISPATCHER_ARCH_GEN_SOURCES "")
+
+foreach(SRC ${TEST_DISPATCHER_ARCH_SOURCES})
+    simdpp_multiversion(TEST_DISPATCHER_ARCH_GEN_SOURCES ${SRC} ${NATIVE_ARCHS})
+endforeach()
+
+add_executable(test_dispatcher EXCLUDE_FROM_ALL
+    ${TEST_DISPATCHER_SOURCES}
+    ${TEST_DISPATCHER_ARCH_GEN_SOURCES}
+)
+target_link_libraries(test_dispatcher pthread)
+
+set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11")
+
+add_test(test_simdpp test_dispatcher "NONE_NULL")
+if(HAS_SSE2)
+    add_test(test_simdpp test_dispatcher "X86_SSE2")
+endif()
+if(HAS_SSE3)
+    add_test(test_simdpp test_dispatcher "X86_SSE3")
+endif()
+if(HAS_SSSE3)
+    add_test(test_simdpp test_dispatcher "X86_SSSE3")
+endif()
+if(HAS_SSE4_1)
+    add_test(test_simdpp test_dispatcher "X86_SSE4_1")
+endif()
+if(HAS_AVX)
+    add_test(test_simdpp test_dispatcher "X86_AVX")
+endif()
+if(HAS_AVX2)
+    add_test(test_simdpp test_dispatcher "X86_AVX2")
+endif()
+if(HAS_NEON)
+    add_test(test_simdpp test_dispatcher "ARM_NEON")
+    add_test(test_simdpp test_dispatcher "ARM_NEON_FLT_SP")
+endif()
+
+add_dependencies(check test_dispatcher)
+

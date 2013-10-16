@@ -27,6 +27,12 @@
 set(HEADERS
     simd.h
 
+    arch.h
+    dispatcher.h
+    dispatcher_macros.h
+
+    detail/dispatcher.h
+
     neon/detail/shuffle_int16x8.h
     neon/detail/shuffle_int32x4.h
     neon/detail/shuffle_int64x2.h
@@ -98,6 +104,7 @@ set(HEADERS
     simd/shuffle_bytes.h
     simd/shuffle_generic.h
     simd/shuffle.h
+    simd/this_compile_info.h
     simd/transpose.h
     simd/types.h
 

@@ -1,5 +1,5 @@
 /*  libsimdpp
-    Copyright (C) 2012  Povilas Kanapickas tir5c3@yahoo.co.uk
+    Copyright (C) 2013  Povilas Kanapickas tir5c3@yahoo.co.uk
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -25,16 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_TRAITS_H
-#define LIBSIMDPP_TEST_TRAITS_H
+#include <simdpp/arch.h>
 
-#include <simdpp/simd.h>
-
-namespace SIMDPP_ARCH_NAMESPACE {
-
-using ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::traits;
-
-} // namspace SIMDPP_ARCH_NAMESPACE
-
-#endif
-
+simdpp::ArchUserInfo get_supported_arch(); // in main_dispatcher.cc
+simdpp::Arch test_dispatcher();
