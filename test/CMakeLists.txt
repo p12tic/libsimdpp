@@ -31,7 +31,7 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 set(TEST1_SOURCES
     arch_registration.cc
     test_case.cc
-    test_main.cc
+    main_test1.cc
 )
 
 set(TEST1_HEADERS

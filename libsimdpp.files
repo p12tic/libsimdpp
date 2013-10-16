@@ -126,9 +126,9 @@ test/CMakeLists.txt
 test/tests.h
 test/arch_registration.h
 test/arch_registration.cc
+test/main_test1.cc
 test/test_case.h
 test/test_case.cc
-test/test_main.cc
 test/test_helpers.h
 test/test_results.h
 test/traits.h
