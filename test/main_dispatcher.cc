@@ -74,6 +74,9 @@ int main(int argc, char** argv)
         g_supported_arch = Arch::ARM_NEON;
     } else if (arch_name == "ARM_NEON_FLT_SP") {
         g_supported_arch = Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP;
+    } else {
+        std::cerr << "Invalid architecture specified: " << arch_name << "\n";
+        return EXIT_FAILURE;
     }
 
     Arch selected = test_dispatcher();
