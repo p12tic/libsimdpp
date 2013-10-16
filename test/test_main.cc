@@ -31,6 +31,12 @@
 #include <iostream>
 #include <cstdlib>
 
+/*  We test libsimdpp by comparing the results of the same computations done in
+    different 'architectures'. That is, we build a list of results for each
+    instruction set available plus the 'null' instruction set (simple,
+    non-vectorized code). All tests are generated from the same source code,
+    thus any discrepancies are likely caused by bugs in the library.
+*/
 int main()
 {
     std::ostream& err = std::cerr;
