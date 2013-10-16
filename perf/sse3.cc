@@ -25,7 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/sse3.h>
+#define SIMDPP_ARCH_X86_SSE3
+#include <simdpp/simd.h>
 #include "perf.h"
 
 

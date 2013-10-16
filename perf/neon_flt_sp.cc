@@ -25,6 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/neon_flt_sp.h>
+#define SIMDPP_ARCH_ARM_NEON_FLT_SP
+#include <simdpp/simd.h>
 #include "perf.h"
 
