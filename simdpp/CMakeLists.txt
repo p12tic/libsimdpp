@@ -104,7 +104,7 @@ set(HEADERS
     simd/shuffle_bytes.h
     simd/shuffle_generic.h
     simd/shuffle.h
-    simd/this_compile_info.h
+    simd/this_compile_arch.h
     simd/transpose.h
     simd/types.h
 
@@ -123,8 +123,7 @@ set(HEADERS
     sse/shuffle.h
 )
 
-install(FILES
-    ${HEADERS}
-    CMakeLists.txt
-    DESTINATION "${SIMDPP_INCLUDEDIR}/simdpp"
-)
+foreach(FILE ${HEADERS})
+    get_filename_component(FILE_PATH "${FILE}" PATH)
+    install(FILES "${FILE}" DESTINATION "${SIMDPP_INCLUDEDIR}/simdpp/${FILE_PATH}")
+endforeach()
