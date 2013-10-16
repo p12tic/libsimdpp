@@ -108,15 +108,6 @@ simdpp/sse/detail/shuffle128.h
 simdpp/sse/detail/load_packed.h
 simdpp/sse/detail/store_packed.h
 simdpp/sse/detail/transpose.h
-simdpp/neon.h
-simdpp/neon_flt_sp.h
-simdpp/null.h
-simdpp/sse2.h
-simdpp/sse3.h
-simdpp/ssse3.h
-simdpp/sse4_1.h
-simdpp/avx.h
-simdpp/avx2.h
 
 perf/CMakeLists.txt
 perf/Makefile.am

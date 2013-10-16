@@ -27,16 +27,6 @@
 set(HEADERS
     simd.h
 
-    sse2.h
-    sse3.h
-    ssse3.h
-    sse4_1.h
-    avx.h
-    avx2.h
-    null.h
-    neon.h
-    neon_flt_sp.h
-
     neon/detail/shuffle_int16x8.h
     neon/detail/shuffle_int32x4.h
     neon/detail/shuffle_int64x2.h
