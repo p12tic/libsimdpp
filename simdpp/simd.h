@@ -29,79 +29,200 @@
 #define LIBSIMDPP_SIMD_H
 
 /** @mainpage
-    The libsimdpp library supports multiple instruction sets (architectures)
-    from the same codebase. The instruction set is selected by defining one or
-    more preprocessor macros before including the simd.h file.
 
-    The following instruction sets are supported:
+    libsimdpp is a header-only zero-overhead C++ wrapper around SIMD intrinsics.
+    It supports multiple instruction sets via single interface. The same source
+    code may be compiled for different instruction sets and linked to the same
+    resulting binary. The library provides a convenient dynamic dispatch
+    mechanism to select the fastest version of a function for the target
+    processor.
 
-    * (null):
+    To use the library, define one or more macros that specify the instruction
+    set (architecture) of the target processor and then include @c
+    simdpp/simd.h. The following instruction sets are supported:
+
+    - @c NONE_NULL:
+
         The instructions are not vectorized and use standard C++.
         This instruction set is used if no SIMD instruction set is selected.
+        (no macro defined).
 
-    * x86 SSE2:
+    - @c X86_SSE2:
+
         The x86/x86_64 SSE and SSE2 instruction sets are used.
+
         Macro: @c SIMDPP_ARCH_X86_SSE2.
 
-    * x86 SSE3:
+    - @c X86_SSE3:
+
         The x86/x86_64 SSE3 instruction set is used. The SSE and SSE2
         instruction set support is required implicitly (no need to define the
         macros for these instruction sets).
 
         Macro: @c SIMDPP_ARCH_X86_SSE3.
 
-    * x86 SSSE3:
+    - @c X86_SSSE3:
+
         The x86/x86_64 SSSE3 instruction set is used. The SSE, SSE2 and SSE3
         instruction set support is required implicitly (no need to define the
         macros for these instruction sets).
 
         Macro: @c SIMDPP_ARCH_X86_SSSE3.
 
-    * x86 SSE4.1:
+    - @c X86_SSE4.1:
+
         The x86/x86_64 SSE4.1 instruction set is used. The SSE, SSE2 and SSE3
         instruction set support is required implicitly (no need to define the
         macros for these instruction sets).
 
         Macro: @c SIMDPP_ARCH_X86_SSE4_1.
 
-    * x86 AVX:
+    - @c X86_AVX:
+
         The x86/x86_64 AVX instruction set is used. The SSE, SSE2, SSE3 and
         SSSE3 instruction set support is required implicitly (no need to define
         the macros for these instruction sets).
 
         Macro: @c SIMDPP_ARCH_X86_AVX.
 
-    * x86 AVX2:
+    - @c X86_AVX2:
+
         The x86/x86_64 AVX2 instruction set is used. The SSE, SSE2, SSE3, SSSE3
         and AVX instruction set support is required implicitly (no need to
         define the macros for these instruction sets).
 
         Macro: @c SIMDPP_ARCH_X86_AVX2.
 
-    * NEON:
+    - @c ARM_NEON:
+
         The ARM NEON instruction set. The VFP co-processor is used for any
         floating-point functionality (NEON does not require the implementation
         to be IEEE-754 compliant, whereas VFP does).
 
         Macro @c SIMDPP_ARCH_ARM_NEON
 
-    * NEON_FLT_SP:
-        Performs 32-bit floating-point computations on the NEON co-processor.
+    - @c ARM_NEON_FLT_SP:
+
+        Performs 32-bit floating-point computations on the NEON vector unit.
         The NEON instruction set support is required implicitly (no need to
         define the macro for that instruction set).
 
         Macro @c SIMDPP_ARCH_ARM_NEON_FLT_SP.
 
-    The same source code can be used to compile for any combination of
-    different instruction sets. Moreover, several versions of the same
-    functions can be included into the resulting binary and use a binary
-    dispatch mechanism to select the best version.
+    If the user wants to include several versions of the same code, compiled
+    for different architectures sets, into the same executable, then all such
+    code @a must be put into @c SIMDPP_ARCH_NAMESPACE namespace. This macro
+    evaluates to an identifier which is unique for each architecture.
 
-    Since the C++ standard does not allow different definitions of the same
-    function name to reside in the same binary, all functionality is put into
-    a namespace, name of which is unique for each instruction set combination.
-    This method can be used in user-defined code -- the library supplies the
-    name of the namespace as @a SIMDPP_ARCH_NAMESPACE.
+    In addition to the above, the source file must not define any of the
+    architecture select macros; they must be supplied via the compiler options.
+    The code for @c NONE_NULL architecture must be linked to the resulting
+    executable.
+
+    To use dynamic dispatch mechanism, declare the function within an
+    @c SIMDPP_ARCH_NAMESPACE and then use one of @c SIMDPP_MAKE_DISPATCHER_***
+    macros.
+
+    Dynamic dispatch example
+    ------------------------
+
+    The following example demonstrates the simpliest usage of dynamic dispatch:
+
+    @code
+    // test.h
+    void print_arch();
+    @endcode
+
+    @code
+    // test.cc
+    #include "test.h"
+    #include <simdpp/simd.h>
+    #include <iostream>
+
+    namespace SIMDPP_ARCH_NAMESPACE {
+
+    void print_arch()
+    {
+        std::cout << static_cast<unsigned>(simdpp::this_compile_arch()) << '\n';
+    }
+
+    } // namespace SIMDPP_ARCH_NAMESPACE
+
+    SIMDPP_MAKE_DISPATCHER_VOID0(print_arch);
+    @endcode
+
+    @code
+    // main.cc
+    #include "test.h"
+
+    int main()
+    {
+        print_arch();
+    }
+    @endcode
+
+    @code
+    #Makefile
+
+    CXXFLAGS="-std=c++11"
+
+    test: main.o test_sse2.o test_sse3.o test_sse4_1.o test_null.o
+        g++ $^ -lpthread -o test
+
+    main.o: main.cc
+        g++ main.cc $(CXXFLAGS) -c -o main.o
+
+    # inclusion of NONE_NULL is mandatory
+    test_null.o: test.cc
+        g++ test.cc -c $(CXXFLAGS) -o test_sse2.o
+
+    test_sse2.o: test.cc
+        g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE2 -msse2 -o test_sse2.o
+
+    test_sse3.o: test.cc
+        g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE3 -msse3 -o test_sse3.o
+
+    test_sse4_1.o: test.cc
+        g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE4_1 -msse4.1 -o test_sse3.o
+    @endcode
+
+    If compiled, the above example selects the "fastest" of SSE2, SSE3 or SSE4.1
+    instruction sets, whichever is available on the target processor and
+    outputs an integer that identifiers that instruction set.
+
+    Note, that the object files must be linked directly to the executable. If
+    static libraries are used, the linker may throw out static dispatcher
+    registration code and break the mechanism. Do prevent this behavior,
+    @c -Wl,--whole-archive or an equivalent flag must be used.
+
+    CMake
+    -----
+
+    For CMake users, @c cmake/SimdppMultiarch.cmake contains several useful
+    functions:
+     - @c simdpp_get_compilable_archs: checks what architectures are
+        supported by the compiler.
+     - @c simdpp_get_runnable_archs: checks what architectures are supported by
+        both the compiler and the current processor.
+     - @c simdpp_multiversion: given a list of architectures (possibly
+        generated by @c simdpp_get_compilable_archs or
+        @c simdpp_get_runnable_archs), automatically configures compilation of
+        additional objects. The user only needs to add the returned list of
+        source files to @c add_library or @c add_executable.
+
+    The above example may be build with @c CMakeLists.txt as simple as follows:
+    @code
+    cmake_minimum_required(VERSION 2.8.0)
+    project(test)
+
+    include(SimdppMultiarch)
+
+    simdpp_get_runnable_archs(RUNNABLE_ARCHS)
+    simdpp_multiarch(GEN_ARCH_FILES test.cc ${RUNNABLE_ARCHS})
+    add_executable(test main.cc ${GEN_ARCH_FILES})
+    target_link_libraries(test pthread)
+    set_target_properties(test PROPERTIES COMPILE_FLAGS "-std=c++11")
+    @endcode
 */
 
 #ifdef SIMDPP_ARCH_X86_SSE2
@@ -286,7 +407,8 @@
     #define SIMDPP_PP_NEON_FLT_SP
 #endif
 
-/** Put all functions to a namespace that depends on the instruction set that
+/** @macro SIMDPP_ARCH_NAMESPACE
+    Put all functions to a namespace that depends on the instruction set that
     the library is compiled for. This is needed to avoid violating the One
     Definition Rule.
 */
@@ -305,7 +427,8 @@
 
 #define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT8
 
-/** Usable in contexts where a string is required
+/** @macro SIMDPP_ARCH_NAME
+    Usable in contexts where a string is required
 */
 
 #define SIMDPP_STRINGIFY2(x) #x
