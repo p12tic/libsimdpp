@@ -282,7 +282,7 @@ install(FILES
 
 enable_testing()
 
-#add_subdirectory(perf)
+add_subdirectory(perf)
 add_subdirectory(doc)
 add_subdirectory(simdpp)
 add_subdirectory(test)
