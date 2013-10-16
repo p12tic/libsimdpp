@@ -262,14 +262,14 @@
 
 #ifdef SIMDPP_USE_AVX
     #define SIMDPP_PP_AVX _avx
-    #include <avxintrin.h>
+    #include <immintrin.h>
 #else
     #define SIMDPP_PP_AVX
 #endif
 
 #ifdef SIMDPP_USE_AVX2
     #define SIMDPP_PP_AVX2 _avx2
-    #include <avx2intrin.h>
+    #include <immintrin.h>
 #else
     #define SIMDPP_PP_AVX2
 #endif
