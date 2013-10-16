@@ -63,7 +63,7 @@ set(TEST1_ARCH_SOURCES
 set(TEST1_ARCH_GEN_SOURCES "")
 
 foreach(SRC ${TEST1_ARCH_SOURCES})
-    simdpp_multiversion(TEST1_ARCH_GEN_SOURCES ${SRC} ${NATIVE_ARCHS})
+    simdpp_multiarch(TEST1_ARCH_GEN_SOURCES ${SRC} ${NATIVE_ARCHS})
 endforeach()
 
 add_executable(test1 EXCLUDE_FROM_ALL
@@ -90,7 +90,7 @@ set(TEST_DISPATCHER_ARCH_SOURCES
 set(TEST_DISPATCHER_ARCH_GEN_SOURCES "")
 
 foreach(SRC ${TEST_DISPATCHER_ARCH_SOURCES})
-    simdpp_multiversion(TEST_DISPATCHER_ARCH_GEN_SOURCES ${SRC} ${NATIVE_ARCHS})
+    simdpp_multiarch(TEST_DISPATCHER_ARCH_GEN_SOURCES ${SRC} ${NATIVE_ARCHS})
 endforeach()
 
 add_executable(test_dispatcher EXCLUDE_FROM_ALL

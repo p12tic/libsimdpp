@@ -1,5 +1,6 @@
 
 CMakeLists.txt
+cmake/SimdppMultiarch.cmake
 
 Makefile.am
 doc/CMakeLists.txt
