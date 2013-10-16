@@ -35,7 +35,9 @@
 #include <atomic>
 #include <algorithm>
 #include <cstdint>
+#include <cstdlib>
 #include <functional>
+#include <iostream>
 #include <mutex>
 #include <type_traits>
 #include <simdpp/arch.h>
@@ -142,6 +144,12 @@ inline unsigned select_version_any(std::vector<FnVersion>& versions,
         if ((versions[i].needed_arch & ~arch) == Arch::NONE_NULL) {
             break;
         }
+    }
+    if (i == versions.size()) {
+        // The user didn't provide the NONE_NULL version and no SIMD
+        // architecture is supported. We can't do anything except to abort
+        std::cerr << "simdpp: ERROR: NONE_NULL version not linked into the executable\n";
+        std::exit(EXIT_FAILURE);
     }
     return i;
 }
