@@ -1,7 +1,8 @@
 /* The standard CSS for doxygen 1.8.3.1 */
 
 body, table, div, p, dl {
-	font: 400 14px/19px Roboto,sans-serif;
+	font-family: "DejaVu Sans Serif",sans-serif;
+	font-size: 12px;
 }
 
 /* @group Heading Levels */
@@ -175,9 +176,9 @@ div.fragment {
 }
 
 div.line {
-	font-family: monospace, fixed;
-        font-size: 13px;
-	min-height: 13px;
+	font-family: "DejaVu Sans Mono", monospace, fixed;
+	font-size: 12px;
+	min-height: 12px;
 	line-height: 1.0;
 	text-wrap: unrestricted;
 	white-space: -moz-pre-wrap; /* Moz */
@@ -1182,3 +1183,7 @@ tr.heading h2 {
   }
 }
 
+#main {
+    width: 780px;
+    margin: 0 auto;
+}
