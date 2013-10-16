@@ -3,6 +3,9 @@ CMakeLists.txt
 
 Makefile.am
 doc/CMakeLists.txt
+doc/doxygen.css
+doc/header.html
+doc/footer.html
 doc/reference/Doxyfile.in
 
 libsimdpp.pc.in
