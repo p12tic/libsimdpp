@@ -25,7 +25,6 @@
 #   POSSIBILITY OF SUCH DAMAGE.
 
 include_directories(${libsimdpp_SOURCE_DIR})
-set(CMAKE_CXX_FLAGS "-std=c++11")
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
@@ -71,6 +70,8 @@ add_executable(test1 EXCLUDE_FROM_ALL
     ${TEST1_SOURCES}
     ${TEST1_ARCH_GEN_SOURCES}
 )
+
+set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11")
 
 add_test(test_simdpp test1)
 add_dependencies(check test1)
