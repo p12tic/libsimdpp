@@ -13,7 +13,7 @@ libsimdpp.pc.in
 AUTHORS
 ChangeLog
 NEWS
-README
+README.md
 
 debian/docs
 debian/libsimdpp-doc.install
