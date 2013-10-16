@@ -28,7 +28,8 @@
 #ifndef LIBSIMDPP_SIMD_H
 #define LIBSIMDPP_SIMD_H
 
-/** The libsimdpp library supports multiple instruction sets (architectures)
+/** @mainpage
+    The libsimdpp library supports multiple instruction sets (architectures)
     from the same codebase. The instruction set is selected by defining one or
     more preprocessor macros before including the simd.h file.
 
