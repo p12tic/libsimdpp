@@ -71,7 +71,7 @@ inline Arch& operator|=(Arch& x, const Arch& y)
 inline Arch& operator&=(Arch& x, const Arch& y)
 {
     using T = std::uint32_t;
-    x = static_cast<Arch>(static_cast<T>(x) | static_cast<T>(y));
+    x = static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
     return x;
 }
 
