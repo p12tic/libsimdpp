@@ -34,6 +34,11 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+/*  A bunch of overloads that wrap the TestCase::push() method. The push()
+    method accepts a type enum plus a pointer; the wrapper overloads determine
+    the type enum from the type of the supplied argument.
+    @{
+*/
 inline void test_push_internal(TestCase& t, std::uint16_t data, unsigned line)
 {
     t.push(TestCase::TYPE_UINT16, &data, line);
@@ -138,6 +143,7 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
 {
     t.push(TestCase::TYPE_FLOAT64x4, &data, line);
 }
+// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 
