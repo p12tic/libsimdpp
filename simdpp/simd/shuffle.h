@@ -930,13 +930,13 @@ basic_int16x8 broadcast(basic_int16x8 a)
 #elif SIMDPP_USE_SSE2
     // s2 is needed because SIMDPP_STATIC_ASSERT fires in branch we don't use
     if (s < 4) {
-        constexpr unsigned s2 = s < 4 ? s : s-4;
+        const unsigned s2 = s < 4 ? s : s-4;
         a = sse::permute_lo<s2,s2,s2,s2>(a);
         basic_int64x2 b{a};
         b = permute<0,0>(b);
         return b;
     } else {
-        constexpr unsigned s2 = s < 4 ? s : s-4;
+        const unsigned s2 = s < 4 ? s : s-4;
         a = sse::permute_hi<s2,s2,s2,s2>(a);
         basic_int64x2 b{a};
         b = permute<1,1>(b);

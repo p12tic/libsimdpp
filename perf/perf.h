@@ -151,7 +151,7 @@ template<class V, class Tag, class F>
 inline void perf_cycle(Tag, unsigned count, F f)
 {
     using E = typename detail::traits<V>::element_type;
-    constexpr unsigned length = detail::traits<V>::length;
+    const unsigned length = detail::traits<V>::length;
 
     unsigned z = 0;
 
