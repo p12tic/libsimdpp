@@ -168,6 +168,8 @@ inline basic_int32x4 cmp_eq(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
+#elif SIMDPP_USE_AVX
+    return int32x4(_mm_cmp_ps(a, b, _CMP_EQ_OQ));
 #elif SIMDPP_USE_SSE2
     return int32x4(_mm_cmpeq_ps(a, b));
 #elif SIMDPP_USE_NEON
@@ -205,6 +207,8 @@ inline basic_int64x2 cmp_eq(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
+#elif SIMDPP_USE_AVX
+    return int64x2(_mm_cmp_pd(a, b, _CMP_EQ_OQ));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpeq_pd(a, b));
 #elif SIMDPP_USE_NEON
