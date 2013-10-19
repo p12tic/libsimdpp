@@ -216,7 +216,7 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 
 // applies the same operation to 32-byte and 16-byte vectors
 // Single argument version
-#define TEST_PUSH16X2_1(TC,T,OP,Q1)                                       \
+#define TEST_PUSH16X2_1(TC,T,OP,Q1)                                     \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1)), __LINE__);                  \
     using H = typename traits<T>::half_vector_type;                     \
@@ -224,7 +224,7 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 }
 
 // Two argument version
-#define TEST_PUSH16X2_2(TC,T,OP,Q1,Q2)                                    \
+#define TEST_PUSH16X2_2(TC,T,OP,Q1,Q2)                                  \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2)), __LINE__);            \
     using H = typename traits<T>::half_vector_type;                     \
@@ -272,6 +272,34 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
     }                                                                   \
 }
 
+#define TEST_ARRAY_HELPER16X2_1(TC, T, OP, A)                           \
+{                                                                       \
+    (TC).reset_seq();                                                   \
+    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
+        const T* lp = reinterpret_cast<const T*>((A) + i);              \
+        TEST_PUSH16X2_1(TC, T, OP, *lp);                                \
+    }                                                                   \
+}
+
+#define TEST_ARRAY_HELPER16X2_1T(TC, R, T, OP, A)                       \
+{                                                                       \
+    (TC).reset_seq();                                                   \
+    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
+        const T* lp = reinterpret_cast<const T*>((A) + i);              \
+        TEST_PUSH16X2_1(TC, R, OP, *lp);                                \
+    }                                                                   \
+}
+
+#define TEST_ARRAY_HELPER16X2_2(TC, T, OP, A, B)                        \
+{                                                                       \
+    (TC).reset_seq();                                                   \
+    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
+        const T* lp = reinterpret_cast<const T*>((A) + i);              \
+        const T* rp = reinterpret_cast<const T*>((B) + i);              \
+        TEST_PUSH16X2_2(TC, T, OP, *lp, *rp);                           \
+    }                                                                   \
+}
+
 // tests OP on all pairs of elements within array A
 #define TEST_ALL_COMB_HELPER(TC, T, OP, A, EL_SIZE)                     \
 {                                                                       \
@@ -288,6 +316,7 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
         }                                                               \
     }                                                                   \
 }
+
 #define TEST_ALL_COMB_HELPER_T(TC, R, T, OP, A, EL_SIZE)                \
 {                                                                       \
     (TC).reset_seq();                                                   \
@@ -298,6 +327,38 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
             T l = *lp; T r = *rp;                                       \
             for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
                 TEST_PUSH(TC, R, OP(l, r));                             \
+                l = simdpp::align<1>(l, l);                             \
+            }                                                           \
+        }                                                               \
+    }                                                                   \
+}
+
+#define TEST_ALL_COMB_HELPER16X2_2(TC, T, OP, A, EL_SIZE)               \
+{                                                                       \
+    (TC).reset_seq();                                                   \
+    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
+        for (unsigned j = 0; j < sizeof(A) / sizeof(T); j++) {          \
+            const T* lp = reinterpret_cast<const T*>((A) + i);          \
+            const T* rp = reinterpret_cast<const T*>((A) + j);          \
+            T l = *lp; T r = *rp;                                       \
+            for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
+                TEST_PUSH16X2_2(TC, T, OP, l, r);                       \
+                l = simdpp::align<1>(l, l);                             \
+            }                                                           \
+        }                                                               \
+    }                                                                   \
+}
+
+#define TEST_ALL_COMB_HELPER16X2_2T(TC, R, T, OP, A, EL_SIZE)           \
+{                                                                       \
+    (TC).reset_seq();                                                   \
+    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
+        for (unsigned j = 0; j < sizeof(A) / sizeof(T); j++) {          \
+            const T* lp = reinterpret_cast<const T*>((A) + i);          \
+            const T* rp = reinterpret_cast<const T*>((A) + j);          \
+            T l = *lp; T r = *rp;                                       \
+            for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
+                TEST_PUSH16X2_2(TC, R, OP, l, r);                       \
                 l = simdpp::align<1>(l, l);                             \
             }                                                           \
         }                                                               \
