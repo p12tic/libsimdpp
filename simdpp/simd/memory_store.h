@@ -1657,8 +1657,6 @@ inline void store_packed4(void* p,
                           basic_int64x2 c, basic_int64x2 d)
 {
     char* q = reinterpret_cast<char*>(p);
-    basic_int64x2 t0, t1, t2, t3;
-
     transpose2(a, b);
     transpose2(c, d);
     store(q, a);
