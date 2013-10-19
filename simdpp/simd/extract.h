@@ -61,7 +61,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned id>
 uint8_t extract(basic_int8x16 a)
 {
-    static_assert(id < 16, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
@@ -93,7 +93,7 @@ int8_t extract(int8x16 a)
 template<unsigned id>
 uint16_t extract(basic_int16x8 a)
 {
-    static_assert(id < 8, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE2
@@ -124,7 +124,7 @@ int16_t extract(int16x8 a)
 template<unsigned id>
 uint32_t extract(basic_int32x4 a)
 {
-    static_assert(id < 4, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
@@ -160,7 +160,7 @@ int32_t extract(int32x4 a)
 template<unsigned id>
 uint64_t extract(basic_int64x2 a)
 {
-    static_assert(id < 2, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
@@ -213,7 +213,7 @@ int64_t extract(int64x2 a)
 template<unsigned id>
 float extract(float32x4 a)
 {
-    static_assert(id < 4, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE2
@@ -234,7 +234,7 @@ float extract(float32x4 a)
 template<unsigned id>
 double extract(float64x2 a)
 {
-    static_assert(id < 2, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
@@ -318,7 +318,7 @@ struct extract_bits_impl<777> {
 template<unsigned id = 777>
 uint16_t extract_bits(uint8x16 a)
 {
-    static_assert(id < 8 || id == 777, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 8 || id == 777, "index out of bounds");
     return detail::extract_bits_impl<id>()(a);
 }
 

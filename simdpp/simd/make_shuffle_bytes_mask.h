@@ -42,23 +42,23 @@ namespace detail {
 template<int s, unsigned u>
 void assert_selector_range()
 {
-    static_assert(-1 <= s && s < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s && s < u*2, "Selector out of range");
 }
 
 template<int s0, int s1, int u>
 void assert_selector_range()
 {
-    static_assert(-1 <= s0 && s0 < u*2, "Selector out of range");
-    static_assert(-1 <= s1 && s1 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s0 && s0 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s1 && s1 < u*2, "Selector out of range");
 }
 
 template<int s0, int s1, int s2, int s3, int u>
 void assert_selector_range()
 {
-    static_assert(-1 <= s0 && s0 < u*2, "Selector out of range");
-    static_assert(-1 <= s1 && s1 < u*2, "Selector out of range");
-    static_assert(-1 <= s2 && s2 < u*2, "Selector out of range");
-    static_assert(-1 <= s3 && s3 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s0 && s0 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s1 && s1 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s2 && s2 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s3 && s3 < u*2, "Selector out of range");
 }
 
 /// s - selector, u - the number of elements per group

@@ -47,8 +47,8 @@ namespace sse {
 template<unsigned P, unsigned N>
 void store_lane(void* p, basic_int8x16 a)
 {
-    static_assert(N==4 || N==8, "Size not supported");
-    static_assert(P==0 || (N==8 && P==8), "Position not supported");
+    SIMDPP_STATIC_ASSERT(N==4 || N==8, "Size not supported");
+    SIMDPP_STATIC_ASSERT(P==0 || (N==8 && P==8), "Position not supported");
     switch (N) {
     case 4:
         _mm_store_ss(reinterpret_cast<float*>(p), _mm_castsi128_ps(a));
@@ -66,8 +66,8 @@ void store_lane(void* p, basic_int8x16 a)
 template<unsigned P, unsigned N>
 void store_lane(void* p, basic_int16x8 a)
 {
-    static_assert(N==2 || N==4, "Size not supported");
-    static_assert(P==0 || (N==4 && P==4), "Position not supported");
+    SIMDPP_STATIC_ASSERT(N==2 || N==4, "Size not supported");
+    SIMDPP_STATIC_ASSERT(P==0 || (N==4 && P==4), "Position not supported");
     switch (N) {
     case 2:
         _mm_store_ss(reinterpret_cast<float*>(p), _mm_castsi128_ps(a));
@@ -85,8 +85,8 @@ void store_lane(void* p, basic_int16x8 a)
 template<unsigned P, unsigned N>
 void store_lane(void* p, basic_int32x4 a)
 {
-    static_assert(N==1 || N==2, "Size not supported");
-    static_assert(P==0 || (N==2 && P==2), "Position not supported");
+    SIMDPP_STATIC_ASSERT(N==1 || N==2, "Size not supported");
+    SIMDPP_STATIC_ASSERT(P==0 || (N==2 && P==2), "Position not supported");
     switch (N) {
     case 1:
         _mm_store_ss(reinterpret_cast<float*>(p), _mm_castsi128_ps(a));
@@ -104,8 +104,8 @@ void store_lane(void* p, basic_int32x4 a)
 template<unsigned P, unsigned N>
 void store_lane(void* p, basic_int64x2 a)
 {
-    static_assert(N==1, "Size not supported");
-    static_assert(P==0 || P==1, "Position not supported");
+    SIMDPP_STATIC_ASSERT(N==1, "Size not supported");
+    SIMDPP_STATIC_ASSERT(P==0 || P==1, "Position not supported");
     if (P == 0) {
         _mm_storel_pi(reinterpret_cast<__m64*>(p), _mm_castsi128_ps(a));
     } else {
@@ -116,8 +116,8 @@ void store_lane(void* p, basic_int64x2 a)
 template<unsigned P, unsigned N>
 void store_lane(float* p, float32x4 a)
 {
-    static_assert(N==1 || N==2, "Size not supported");
-    static_assert(P==0 || (N==2 && P==2), "Position not supported");
+    SIMDPP_STATIC_ASSERT(N==1 || N==2, "Size not supported");
+    SIMDPP_STATIC_ASSERT(P==0 || (N==2 && P==2), "Position not supported");
     switch (N) {
     case 1:
         _mm_store_ss(p, a);
@@ -135,8 +135,8 @@ void store_lane(float* p, float32x4 a)
 template<unsigned P, unsigned N>
 void store_lane(double* p, float64x2 a)
 {
-    static_assert(N==1, "Size not supported");
-    static_assert(P==0 || P==1, "Position not supported");
+    SIMDPP_STATIC_ASSERT(N==1, "Size not supported");
+    SIMDPP_STATIC_ASSERT(P==0 || P==1, "Position not supported");
     if (P == 0) {
         _mm_storel_pi(reinterpret_cast<__m64*>(p), _mm_castpd_ps(a));
     } else {
