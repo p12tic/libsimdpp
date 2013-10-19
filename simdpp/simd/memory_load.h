@@ -1107,7 +1107,6 @@ inline void load_packed4(basic_int32x8& a, basic_int32x8& b,
 inline void load_packed4(basic_int64x2& a, basic_int64x2& b,
                          basic_int64x2& c, basic_int64x2& d, const void* p)
 {
-    basic_int64x2 t0, t1, t2, t3;
     const char* q = reinterpret_cast<const char*>(p);
     a = load(a, q);
     c = load(c, q+16);
