@@ -31,9 +31,6 @@ in simdpp::sse:: or simdpp::neon:: namespaces. A lot of domain-specific
 instructions are not wrapped at all -- the original intrinsics must be used for
 these.
 
-The support for AVX and AVX2 instruction sets is not fully complete yet. In
-particular, interleaving loads and stores are not implemented yet.
-
 Documentation
 =============
 
