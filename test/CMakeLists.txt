@@ -79,6 +79,22 @@ add_dependencies(check test1)
 # ------------------------------------------------------------------------------
 # Dispatcher test
 
+# LIST_CONTAINS(<var> ENTRY [LIST...])
+#
+# Helper macro that checks whether a list contains a specific entry. It sets
+# ${VAR} to TRUE if VALUE is within LIST.
+#
+macro(list_contains VAR VALUE)
+    set(${VAR})
+    foreach(IV ${ARGN})
+        if(${VALUE} STREQUAL ${IV})
+            SET(${VAR} TRUE)
+        endif()
+    endforeach()
+endmacro()
+
+# ---------------
+
 set(TEST_DISPATCHER_SOURCES
     main_dispatcher.cc
 )
@@ -100,6 +116,14 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 target_link_libraries(test_dispatcher pthread)
 
 set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11")
+
+list_contains(HAS_SSE2 X86_SSE2 ${NATIVE_ARCHS})
+list_contains(HAS_SSE3 X86_SSE3 ${NATIVE_ARCHS})
+list_contains(HAS_SSSE3 X86_SSSE3 ${NATIVE_ARCHS})
+list_contains(HAS_SSE4_1 X86_SSE4_1 ${NATIVE_ARCHS})
+list_contains(HAS_AVX X86_AVX ${NATIVE_ARCHS})
+list_contains(HAS_AVX2 X86_AVX2 ${NATIVE_ARCHS})
+list_contains(HAS_NEON X86_NEON ${NATIVE_ARCHS})
 
 add_test(s_test_dispatcher1 test_dispatcher "NONE_NULL")
 if(HAS_SSE2)
