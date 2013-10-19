@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace null {
 
 template<class V>
-auto cmp_eq(V a, V b) -> typename traits<V>::int_vector_type
+typename traits<V>::int_vector_type cmp_eq(V a, V b)
 {
     typename traits<V>::int_vector_type r;
     for (unsigned i = 0; i < traits<V>::length; i++) {
@@ -50,7 +50,7 @@ auto cmp_eq(V a, V b) -> typename traits<V>::int_vector_type
 }
 
 template<class V>
-auto cmp_neq(V a, V b) -> typename traits<V>::int_vector_type
+typename traits<V>::int_vector_type cmp_neq(V a, V b)
 {
     typename traits<V>::int_vector_type r;
     for (unsigned i = 0; i < traits<V>::length; i++) {
@@ -60,7 +60,7 @@ auto cmp_neq(V a, V b) -> typename traits<V>::int_vector_type
 }
 
 template<class V>
-auto cmp_lt(V a, V b) -> typename traits<V>::int_vector_type
+typename traits<V>::int_vector_type cmp_lt(V a, V b)
 {
     typename traits<V>::int_vector_type r;
     for (unsigned i = 0; i < traits<V>::length; i++) {
@@ -70,7 +70,7 @@ auto cmp_lt(V a, V b) -> typename traits<V>::int_vector_type
 }
 
 template<class V>
-auto cmp_gt(V a, V b) -> typename traits<V>::int_vector_type
+typename traits<V>::int_vector_type cmp_gt(V a, V b)
 {
     typename traits<V>::int_vector_type r;
     for (unsigned i = 0; i < traits<V>::length; i++) {
