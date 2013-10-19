@@ -101,7 +101,7 @@ void test_memory_store(TestResults& res)
     using namespace simdpp;
 
     constexpr unsigned vnum = 4;
-    constexpr unsigned size = 16*vnum;
+    constexpr unsigned size = 32*vnum;
 
     union {
         uint8_t sdata[size];
@@ -111,18 +111,34 @@ void test_memory_store(TestResults& res)
         uint64x2 su64[vnum];
         float32x4 sf32[vnum];
         float64x2 sf64[vnum];
+
+        uint8x32 su8_32[vnum];
+        uint16x16 su16_32[vnum];
+        uint32x8 su32_32[vnum];
+        uint64x4 su64_32[vnum];
+        float32x8 sf32_32[vnum];
+        float64x4 sf64_32[vnum];
     };
 
     for (unsigned i = 0; i < size; i++) {
         sdata[i] = i;
     }
 
+    // 16-byte vectors
     test_store_helper<uint8x16, 4>(tc, su8);
     test_store_helper<uint16x8, 4>(tc, su16);
     test_store_helper<uint32x4, 4>(tc, su32);
     test_store_helper<uint64x2, 4>(tc, su64);
     test_store_helper<float32x4, 4>(tc, sf32);
     test_store_helper<float64x2, 4>(tc, sf64);
+
+    // 32-byte vectors
+    test_store_helper<uint8x32, 4>(tc, su8_32);
+    test_store_helper<uint16x16, 4>(tc, su16_32);
+    test_store_helper<uint32x8, 4>(tc, su32_32);
+    test_store_helper<uint64x4, 4>(tc, su64_32);
+    test_store_helper<float32x8, 4>(tc, sf32_32);
+    test_store_helper<float64x4, 4>(tc, sf64_32);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
