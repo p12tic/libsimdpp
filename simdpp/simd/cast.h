@@ -46,7 +46,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class R, class T>
 R bit_cast(T t)
 {
-    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+    SIMDPP_STATIC_ASSERT(sizeof(R) == sizeof(T), "Size mismatch");
     R r;
     std::memcpy(&r, &t, sizeof(R));
     return r;

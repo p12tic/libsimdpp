@@ -60,7 +60,7 @@ namespace detail {
 template<unsigned s0, unsigned s1>
 int256 shuffle128(int256 a, int256 b)
 {
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
     return _mm256_permute2x128_si256(a, b, s1*0x10 + s0);
 #else
@@ -70,7 +70,7 @@ int256 shuffle128(int256 a, int256 b)
 template<unsigned s0, unsigned s1>
 float32x8 shuffle128(float32x8 a, float32x8 b)
 {
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX
     return _mm256_permute2f128_ps(a, b, s1*0x10 + s0);
 #else
@@ -80,7 +80,7 @@ float32x8 shuffle128(float32x8 a, float32x8 b)
 template<unsigned s0, unsigned s1>
 float64x4 shuffle128(float64x4 a, float64x4 b)
 {
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX
     return _mm256_permute2f128_pd(a, b, s1*0x10 + s0);
 #else

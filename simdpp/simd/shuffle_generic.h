@@ -90,7 +90,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 int128 permute(basic_int16x8 a)
 {
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::permute<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_SSE2
@@ -109,7 +109,7 @@ int128 permute(basic_int16x8 a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 basic_int16x16 permute(basic_int16x16 a)
 {
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
     a = sse::permute_lo<s0,s1,s2,s3>(a);
     a = sse::permute_hi<s0,s1,s2,s3>(a);
@@ -147,14 +147,14 @@ basic_int16x16 permute(basic_int16x16 a)
 template<unsigned s0, unsigned s1>
 basic_int16x8 permute(basic_int16x8 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 
 template<unsigned s0, unsigned s1>
 basic_int16x16 permute(basic_int16x16 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 /// @}
@@ -186,7 +186,7 @@ basic_int16x16 permute(basic_int16x16 a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 basic_int32x4 permute(basic_int32x4 a)
 {
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::permute<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_SSE2
@@ -204,7 +204,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 basic_int32x8 permute(basic_int32x8 a)
 {
 #if SIMDPP_USE_AVX2
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     return _mm256_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
 #else
     return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
@@ -240,14 +240,14 @@ basic_int32x8 permute(basic_int32x8 a)
 template<unsigned s0, unsigned s1>
 basic_int32x4 permute(basic_int32x4 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 
 template<unsigned s0, unsigned s1>
 basic_int32x8 permute(basic_int32x8 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 /// @}
@@ -279,7 +279,7 @@ basic_int32x8 permute(basic_int32x8 a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float32x4 permute(float32x4 a)
 {
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::permute<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_SSE2
@@ -297,7 +297,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float32x8 permute(float32x8 a)
 {
 #if SIMDPP_USE_AVX
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     return _mm256_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
 #else
     return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
@@ -335,14 +335,14 @@ float32x8 permute(float32x8 a)
 template<unsigned s0, unsigned s1>
 float32x4 permute(float32x4 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 
 template<unsigned s0, unsigned s1>
 float32x8 permute(float32x8 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 /// @}
@@ -431,7 +431,7 @@ float64x4 permute(float64x4 a)
 template<unsigned s0, unsigned s1>
 basic_int64x2 permute(basic_int64x2 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::permute<s0,s1>(a);
 #elif SIMDPP_USE_SSE2
@@ -448,7 +448,7 @@ basic_int64x2 permute(basic_int64x2 a)
 template<unsigned s0, unsigned s1>
 basic_int64x4 permute(basic_int64x4 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
     return _mm256_permute4x64_epi64(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
 #else
@@ -480,7 +480,7 @@ basic_int64x4 permute(basic_int64x4 a)
 template<unsigned s0, unsigned s1>
 float64x2 permute(float64x2 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_SSE2
     return _mm_shuffle_pd(a, a, _MM_SHUFFLE2(s1, s0));
 #else
@@ -490,7 +490,7 @@ float64x2 permute(float64x2 a)
 template<unsigned s0, unsigned s1>
 float64x4 permute(float64x4 a)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
     return _mm256_permute4x64_pd(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
 #elif SIMDPP_USE_AVX
@@ -525,8 +525,8 @@ float64x4 permute(float64x4 a)
 template<unsigned s0, unsigned s1>
 float64x2 shuffle1(float64x2 a, float64x2 b)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVE
     return float64x2(shuffle1<s0,s1>(int64x2(a), int64x2(b)));
 #elif SIMDPP_USE_SSE2
     if (s0 == 0 && s1 == 0) {
@@ -579,7 +579,7 @@ float64x4 shuffle1(float64x4 a, float64x4 b)
 template<unsigned s0, unsigned s1>
 basic_int64x2 shuffle1(basic_int64x2 a, basic_int64x2 b)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::shuffle1<s0,s1>(a, b);
 #elif SIMDPP_USE_SSE2
@@ -596,7 +596,7 @@ basic_int64x2 shuffle1(basic_int64x2 a, basic_int64x2 b)
 template<unsigned s0, unsigned s1>
 basic_int64x4 shuffle1(basic_int64x4 a, basic_int64x4 b)
 {
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
     // We can't do this in the integer execution domain. Beware of additional latency
     return int64x4(shuffle1<s0,s1>(float64x4(a), float64x4(b)));
@@ -636,7 +636,7 @@ basic_int64x4 shuffle1(basic_int64x4 a, basic_int64x4 b)
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 float32x4 shuffle2(float32x4 a, float32x4 b)
 {
-    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return float32x4(shuffle2<a0,a1,b0,b1>(int32x4(a), int32x4(b)));
 #elif SIMDPP_USE_SSE2
@@ -657,7 +657,7 @@ float32x4 shuffle2(float32x4 a, float32x4 b)
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 float32x8 shuffle2(float32x8 a, float32x8 b)
 {
-    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX
     return _mm256_shuffle_ps(a, b, _MM_SHUFFLE(b1, b0, a1, a0));
 #else
@@ -696,14 +696,14 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
 template<unsigned s0, unsigned s1>
 float32x4 shuffle2(float32x4 a, float32x4 b)
 {
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);
 }
 
 template<unsigned s0, unsigned s1>
 float32x8 shuffle2(float32x8 a, float32x8 b)
 {
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);
 }
 /// @}
@@ -738,7 +738,7 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
 {
-    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::shuffle2<a0,a1,b0,b1>(a, b);
 #elif SIMDPP_USE_SSE2
@@ -755,7 +755,7 @@ basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
 {
-    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
     // We can't do this in the integer execution domain. Beware of additional latency
     return int32x8(shuffle2<a0,a1,b0,b1>(float32x8(a), float32x8(b)));
@@ -795,14 +795,14 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
 template<unsigned s0, unsigned s1>
 basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
 {
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);
 }
 
 template<unsigned s0, unsigned s1>
 basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
 {
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);
 }
 /// @}

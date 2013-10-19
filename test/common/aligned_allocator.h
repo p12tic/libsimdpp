@@ -39,7 +39,7 @@ template<class T, std::size_t A>
 class AlignedAllocator {
 private:
 
-    static_assert(!(A & (A - 1)), "A is not a power of two");
+    //SIMDPP_STATIC_ASSERT(!(A & (A - 1)), "A is not a power of two");
 
 public:
     using value_type = T;

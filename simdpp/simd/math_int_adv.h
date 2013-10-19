@@ -1317,7 +1317,7 @@ uint8x16 div_p(uint8x16 num, uint8x16 den)
 #if SIMDPP_USE_NULL
     return null::div_p<P>(num, den);
 #else
-    static_assert(P <= 8, "Precision too large");
+    SIMDPP_STATIC_ASSERT(P <= 8, "Precision too large");
     uint8x16 r, q, bit_mask;
     r = q = uint8x16::zero();
     bit_mask = uint8x16::make_const(1 << (P-1));
@@ -1366,7 +1366,7 @@ uint16x8 div_p(uint16x8 num, uint16x8 den)
 #if SIMDPP_USE_NULL
     return null::div_p<P>(num, den);
 #else
-    static_assert(P <= 16, "Precision too large");
+    SIMDPP_STATIC_ASSERT(P <= 16, "Precision too large");
     uint16x8 r, q, bit_mask;
 
     r = q = uint16x8::zero();

@@ -410,7 +410,7 @@ inline float64x4 zip_hi(float64x4 a, float64x4 b)
 template<unsigned shift>
 basic_int8x16 move_l(basic_int8x16 a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     if (shift == 0) return a;
     if (shift == 16) return uint8x16::zero();
 
@@ -438,7 +438,7 @@ basic_int8x16 move_l(basic_int8x16 a)
 template<unsigned shift>
 basic_int8x32 move_l(basic_int8x32 a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     if (shift == 0) return a;
     if (shift == 16) return uint8x32::zero();
 
@@ -626,7 +626,7 @@ float64x4 move_l(float64x4 a)
 template<unsigned shift>
 basic_int8x16 move_r(basic_int8x16 a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     if (shift == 0) return a;
     if (shift == 16) return uint8x16::zero();
 
@@ -654,7 +654,7 @@ basic_int8x16 move_r(basic_int8x16 a)
 template<unsigned shift>
 basic_int8x32 move_r(basic_int8x32 a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     if (shift == 0) return a;
     if (shift == 16) return uint8x32::zero();
 
@@ -845,7 +845,7 @@ float64x4 move_r(float64x4 a)
 template<unsigned s>
 basic_int8x16 broadcast(basic_int8x16 a)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_AVX2
@@ -883,7 +883,7 @@ basic_int8x16 broadcast(basic_int8x16 a)
 template<unsigned s>
 basic_int8x32 broadcast(basic_int8x32 a)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     basic_int16x16 b = s < 8 ? zip_lo(a, a) : zip_hi(a, a);
     return broadcast<s%8>(b);
@@ -916,7 +916,7 @@ basic_int8x32 broadcast(basic_int8x32 a)
 template<unsigned s>
 basic_int16x8 broadcast(basic_int16x8 a)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_AVX2
@@ -926,7 +926,7 @@ basic_int16x8 broadcast(basic_int16x8 a)
     uint16x8 mask = make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
     return permute_bytes16(a, mask);
 #elif SIMDPP_USE_SSE2
-    // s2 is needed because static_assert fires in branch we don't use
+    // s2 is needed because SIMDPP_STATIC_ASSERT fires in branch we don't use
     basic_int64x2 b;
     if (s < 4) {
         const unsigned s2 = s < 4 ? s : s-4;
@@ -953,7 +953,7 @@ basic_int16x8 broadcast(basic_int16x8 a)
 template<unsigned s>
 basic_int16x16 broadcast(basic_int16x16 a)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     if (s < 4) {
         const unsigned q = (s < 4) ? s : 0;
@@ -988,7 +988,7 @@ basic_int16x16 broadcast(basic_int16x16 a)
 template<unsigned s>
 basic_int32x4 broadcast(basic_int32x4 a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
@@ -1011,7 +1011,7 @@ basic_int32x4 broadcast(basic_int32x4 a)
 template<unsigned s>
 basic_int32x8 broadcast(basic_int32x8 a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
 #else
@@ -1038,7 +1038,7 @@ basic_int32x8 broadcast(basic_int32x8 a)
 template<unsigned s>
 basic_int64x2 broadcast(basic_int64x2 a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
@@ -1064,7 +1064,7 @@ basic_int64x2 broadcast(basic_int64x2 a)
 template<unsigned s>
 basic_int64x4 broadcast(basic_int64x4 a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     return permute<s,s>(a);
 #else
@@ -1089,7 +1089,7 @@ basic_int64x4 broadcast(basic_int64x4 a)
 template<unsigned s>
 float32x4 broadcast(float32x4 a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
@@ -1112,7 +1112,7 @@ float32x4 broadcast(float32x4 a)
 template<unsigned s>
 float32x8 broadcast(float32x8 a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX
     return permute<s,s,s,s>(a);
 #else
@@ -1139,7 +1139,7 @@ float32x8 broadcast(float32x8 a)
 template<unsigned s>
 float64x2 broadcast(float64x2 a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
@@ -1156,7 +1156,7 @@ float64x2 broadcast(float64x2 a)
 template<unsigned s>
 float64x4 broadcast(float64x4 a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
 #if SIMDPP_USE_AVX
     return permute<s,s>(a);
 #else
@@ -1193,7 +1193,7 @@ basic_int8x16 broadcast_w(basic_int8x16 a)
 template<unsigned s>
 basic_int8x32 broadcast_w(basic_int8x32 a)
 {
-    static_assert(s < 32, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 32, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     basic_int8x16 lo;
     lo = s < 16 ? sse::extract_lo(a) : sse::extract_hi(a);
@@ -1234,7 +1234,7 @@ basic_int16x8 broadcast_w(basic_int16x8 a)
 template<unsigned s>
 basic_int16x16 broadcast_w(basic_int16x16 a)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     basic_int16x8 lo;
     lo = s < 8 ? sse::extract_lo(a) : sse::extract_hi(a);
@@ -1270,7 +1270,7 @@ basic_int32x4 broadcast_w(basic_int32x4 a)
 template<unsigned s>
 basic_int32x8 broadcast_w(basic_int32x8 a)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     a = permute<s%4,s%4,s%4,s%4>(a);
     a = detail::shuffle128<s/4, s/4>(a, a);
@@ -1307,7 +1307,7 @@ basic_int64x2 broadcast_w(basic_int64x2 a)
 template<unsigned s>
 basic_int64x4 broadcast_w(basic_int64x4 a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
 #else
@@ -1340,7 +1340,7 @@ float32x4 broadcast_w(float32x4 a)
 template<unsigned s>
 float32x8 broadcast_w(float32x8 a)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX
     a = detail::shuffle128<s/4,s/4>(a, a);
     return permute<s%4,s%4,s%4,s%4>(a);
@@ -1376,7 +1376,7 @@ float64x2 broadcast_w(float64x2 a)
 template<unsigned s>
 float64x4 broadcast_w(float64x4 a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
 #elif SIMDPP_USE_AVX
@@ -1417,7 +1417,7 @@ float64x4 broadcast_w(float64x4 a)
 template<unsigned shift>
 basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
 {
-    static_assert(shift <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Shift out of bounds");
     if (shift == 0) return lower;
     if (shift == 16) return upper;
 
@@ -1449,7 +1449,7 @@ basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
 template<unsigned shift>
 basic_int8x32 align(basic_int8x32 lower, basic_int8x32 upper)
 {
-    static_assert(shift <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Shift out of bounds");
     if (shift == 0) return lower;
     if (shift == 16) return upper;
 
@@ -1487,14 +1487,14 @@ basic_int8x32 align(basic_int8x32 lower, basic_int8x32 upper)
 template<unsigned shift>
 basic_int16x8 align(basic_int16x8 lower, basic_int16x8 upper)
 {
-    static_assert(shift <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 8, "Shift out of bounds");
     return align<shift*2>(basic_int8x16(lower), basic_int8x16(upper));
 }
 
 template<unsigned shift>
 basic_int16x16 align(basic_int16x16 lower, basic_int16x16 upper)
 {
-    static_assert(shift <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 8, "Shift out of bounds");
     return align<shift*2>(basic_int8x32(lower), basic_int8x32(upper));
 }
 /// @}
@@ -1524,14 +1524,14 @@ basic_int16x16 align(basic_int16x16 lower, basic_int16x16 upper)
 template<unsigned shift>
 basic_int32x4 align(basic_int32x4 lower, basic_int32x4 upper)
 {
-    static_assert(shift <= 4, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Shift out of bounds");
     return align<shift*4>(basic_int8x16(lower), basic_int8x16(upper));
 }
 
 template<unsigned shift>
 basic_int32x8 align(basic_int32x8 lower, basic_int32x8 upper)
 {
-    static_assert(shift <= 4, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Shift out of bounds");
     return align<shift*4>(basic_int8x32(lower), basic_int8x32(upper));
 }
 /// @}
@@ -1559,14 +1559,14 @@ basic_int32x8 align(basic_int32x8 lower, basic_int32x8 upper)
 template<unsigned shift>
 basic_int64x2 align(basic_int64x2 lower, basic_int64x2 upper)
 {
-    static_assert(shift <= 2, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Shift out of bounds");
     return align<shift*8>(basic_int8x16(lower), basic_int8x16(upper));
 }
 
 template<unsigned shift>
 basic_int64x4 align(basic_int64x4 lower, basic_int64x4 upper)
 {
-    static_assert(shift <= 2, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Shift out of bounds");
     return align<shift*8>(basic_int8x32(lower), basic_int8x32(upper));
 }
 /// @}
@@ -1596,7 +1596,7 @@ basic_int64x4 align(basic_int64x4 lower, basic_int64x4 upper)
 template<unsigned shift>
 float32x4 align(float32x4 lower, float32x4 upper)
 {
-    static_assert(shift <= 4, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Shift out of bounds");
     return float32x4(align<shift>(basic_int32x4(lower),
                                   basic_int32x4(upper)));
 }
@@ -1604,7 +1604,7 @@ float32x4 align(float32x4 lower, float32x4 upper)
 template<unsigned shift>
 float32x8 align(float32x8 lower, float32x8 upper)
 {
-    static_assert(shift <= 4, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Shift out of bounds");
     return float32x8(align<shift>(basic_int32x8(lower), basic_int32x8(upper)));
 }
 /// @}
@@ -1634,7 +1634,7 @@ float32x8 align(float32x8 lower, float32x8 upper)
 template<unsigned shift>
 float64x2 align(float64x2 lower, float64x2 upper)
 {
-    static_assert(shift <= 2, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Shift out of bounds");
     return float64x2(align<shift>(basic_int64x2(lower),
                                   basic_int64x2(upper)));
 }
@@ -1642,7 +1642,7 @@ float64x2 align(float64x2 lower, float64x2 upper)
 template<unsigned shift>
 float64x4 align(float64x4 lower, float64x4 upper)
 {
-    static_assert(shift <= 2, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Shift out of bounds");
     return float64x4(align<shift>(basic_int64x4(lower), basic_int64x4(upper)));
 }
 /// @}

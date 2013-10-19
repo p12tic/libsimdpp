@@ -797,7 +797,7 @@ basic_int8x32 shift_l_8(basic_int8x32 a)
 template<unsigned count>
 int8x16 shift_r(int8x16 a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
@@ -813,7 +813,7 @@ int8x16 shift_r(int8x16 a)
 template<unsigned count>
 int8x32 shift_r(int8x32 a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
 
     return detail::v256_shift_r<count>(a);
@@ -843,7 +843,7 @@ int8x32 shift_r(int8x32 a)
 template<unsigned count>
 uint8x16 shift_r(uint8x16 a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 8) return uint8x16::zero();
 
@@ -865,7 +865,7 @@ uint8x16 shift_r(uint8x16 a)
 template<unsigned count>
 uint8x32 shift_r(uint8x32 a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 8) return uint8x32::zero();
 
@@ -893,7 +893,7 @@ uint8x32 shift_r(uint8x32 a)
 template<unsigned count>
 int16x8 shift_r(int16x8 a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
 
 #if SIMDPP_USE_NULL
@@ -911,7 +911,7 @@ int16x8 shift_r(int16x8 a)
 template<unsigned count>
 int16x16 shift_r(int16x16 a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
 
     return detail::v256_shift_r<count>(a);
@@ -938,7 +938,7 @@ int16x16 shift_r(int16x16 a)
 template<unsigned count>
 uint16x8 shift_r(uint16x8 a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 16) return uint16x8::zero();
 
@@ -955,7 +955,7 @@ uint16x8 shift_r(uint16x8 a)
 template<unsigned count>
 uint16x16 shift_r(uint16x16 a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 16) return uint16x16::zero();
 
@@ -983,7 +983,7 @@ uint16x16 shift_r(uint16x16 a)
 template<unsigned count>
 int32x4 shift_r(int32x4 a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
@@ -999,7 +999,7 @@ int32x4 shift_r(int32x4 a)
 template<unsigned count>
 int32x8 shift_r(int32x8 a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
 
     return detail::v256_shift_r<count>(a);
@@ -1026,7 +1026,7 @@ int32x8 shift_r(int32x8 a)
 template<unsigned count>
 uint32x4 shift_r(uint32x4 a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 32) return uint32x4::zero();
 
@@ -1043,7 +1043,7 @@ uint32x4 shift_r(uint32x4 a)
 template<unsigned count>
 uint32x8 shift_r(uint32x8 a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 32) return uint32x8::zero();
 
@@ -1076,7 +1076,7 @@ uint32x8 shift_r(uint32x8 a)
 template<unsigned count>
 int64x2 shift_r(int64x2 a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
@@ -1091,7 +1091,7 @@ int64x2 shift_r(int64x2 a)
 template<unsigned count>
 int64x4 shift_r(int64x4 a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
 
     return detail::v256_shift_r<count>(a);
@@ -1117,7 +1117,7 @@ int64x4 shift_r(int64x4 a)
 template<unsigned count>
 uint64x2 shift_r(uint64x2 a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 64) return uint64x2::zero();
 
@@ -1133,7 +1133,7 @@ uint64x2 shift_r(uint64x2 a)
 template<unsigned count>
 uint64x4 shift_r(uint64x4 a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 64) return uint64x4::zero();
 
@@ -1162,7 +1162,7 @@ uint64x4 shift_r(uint64x4 a)
 template<unsigned count>
 basic_int8x16 shift_l(basic_int8x16 a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 8) return uint8x16::zero();
 
@@ -1184,7 +1184,7 @@ basic_int8x16 shift_l(basic_int8x16 a)
 template<unsigned count>
 inline basic_int8x32 shift_l(basic_int8x32 a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 8) return uint8x32::zero();
 
@@ -1211,7 +1211,7 @@ inline basic_int8x32 shift_l(basic_int8x32 a)
 template<unsigned count>
 basic_int16x8 shift_l(basic_int16x8 a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 16) return uint16x8::zero();
 
@@ -1228,7 +1228,7 @@ basic_int16x8 shift_l(basic_int16x8 a)
 template<unsigned count>
 inline basic_int16x16 shift_l(basic_int16x16 a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 16) return uint16x16::zero();
 
@@ -1255,7 +1255,7 @@ inline basic_int16x16 shift_l(basic_int16x16 a)
 template<unsigned count>
 basic_int32x4 shift_l(basic_int32x4 a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 32) return uint32x4::zero();
 
@@ -1272,7 +1272,7 @@ basic_int32x4 shift_l(basic_int32x4 a)
 template<unsigned count>
 inline basic_int32x8 shift_l(basic_int32x8 a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 32) return uint32x8::zero();
 
@@ -1298,7 +1298,7 @@ inline basic_int32x8 shift_l(basic_int32x8 a)
 template<unsigned count>
 basic_int64x2 shift_l(basic_int64x2 a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 64) return uint64x2::zero();
 
@@ -1314,7 +1314,7 @@ basic_int64x2 shift_l(basic_int64x2 a)
 template<unsigned count>
 inline basic_int64x4 shift_l(basic_int64x4 a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
     if (count == 64) return uint64x4::zero();
 
