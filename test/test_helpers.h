@@ -38,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     the type enum from the type of the supplied argument.
     @{
 */
-inline void test_push_internal(TestCase& t, std::uint16_t data, unsigned line)
+inline void test_push_internal(TestCase& t, uint16_t data, unsigned line)
 {
     t.push(TestCase::TYPE_UINT16, &data, line);
 }

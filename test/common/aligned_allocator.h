@@ -30,7 +30,7 @@
 
 #include <memory>
 #include <cstddef>
-#include <cstdint>
+#include <stdint.h>
 
 /** An allocator that allocates memory with stricter alignment requirements than
     the defaults. @a A must be a power of two.
@@ -92,7 +92,7 @@ public:
     T* allocate(std::size_t n) const
     {
         if (n == 0) {
-            return nullptr;
+            return NULL;
         }
 
         if (n > max_size()) {
@@ -109,7 +109,7 @@ public:
         std::size_t al = A < 2*sizeof(void*) ? 2*sizeof(void*) : A;
 
         char* pv = new char[n*sizeof(T) + al];
-        std::uintptr_t upv = reinterpret_cast<std::uintptr_t>(pv);
+        uintptr_t upv = reinterpret_cast<uintptr_t>(pv);
         upv = (upv + al) & ~(al - 1);
         char** aligned_pv = reinterpret_cast<char**>(upv);
 

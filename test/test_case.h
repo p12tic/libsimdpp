@@ -31,7 +31,7 @@
 #include <vector>
 #include <cstring>
 #include <iosfwd>
-#include <cstdint>
+#include <stdint.h>
 
 class TestCase;
 

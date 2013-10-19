@@ -31,7 +31,7 @@
 #include "test_helpers.h"
 #include "test_results.h"
 
-#include <cstdint>
+#include <stdint.h>
 #include <iostream>
 
 namespace SIMDPP_ARCH_NAMESPACE {
