@@ -77,23 +77,33 @@ void test_memory_load(TestResults& res)
     using namespace simdpp;
 
     constexpr unsigned vnum = 4;
-    constexpr unsigned size = 16*vnum;
+    constexpr unsigned size = 32*vnum;
 
     union {
         uint8_t sdata[size];
-        uint8x16 align;
+        uint8x32 align1;
+        float32x8 align2;
     };
 
     for (unsigned i = 0; i < size; i++) {
         sdata[i] = i;
     }
 
+    // 16-byte vectors
     test_load_helper<uint8x16, 4>(tc, sdata);
     test_load_helper<uint16x8, 4>(tc, sdata);
     test_load_helper<uint32x4, 4>(tc, sdata);
     test_load_helper<uint64x2, 4>(tc, sdata);
     test_load_helper<float32x4, 4>(tc, sdata);
     test_load_helper<float64x2, 4>(tc, sdata);
+
+    // 32-byte vectors
+    test_load_helper<uint8x32, 4>(tc, sdata);
+    test_load_helper<uint16x16, 4>(tc, sdata);
+    test_load_helper<uint32x8, 4>(tc, sdata);
+    test_load_helper<uint64x4, 4>(tc, sdata);
+    test_load_helper<float32x8, 4>(tc, sdata);
+    test_load_helper<float64x4, 4>(tc, sdata);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
