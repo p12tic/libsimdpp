@@ -93,7 +93,7 @@ inline basic_int8x32 zip_lo(basic_int8x32 a, basic_int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi8(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    return basic_int8x32(zip_lo(a[0], b[0]), zip_lo(a[1], b[1]));
 #endif
 }
 
@@ -115,7 +115,7 @@ inline basic_int16x16 zip_lo(basic_int16x16 a, basic_int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi16(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    return basic_int16x16(zip_lo(a[0], b[0]), zip_lo(a[1], b[1]));
 #endif
 }
 
@@ -137,7 +137,7 @@ inline basic_int32x8 zip_lo(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi32(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    return basic_int32x8(zip_lo(a[0], b[0]), zip_lo(a[1], b[1]));
 #endif
 }
 
@@ -160,7 +160,7 @@ inline basic_int64x4 zip_lo(basic_int64x4 a, basic_int64x4 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi64(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    return basic_int64x4(zip_lo(a[0], b[0]), zip_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -197,7 +197,7 @@ inline float32x8 zip_lo(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpacklo_ps(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    return float32x8(zip_lo(a[0], b[0]), zip_lo(a[1], b[1]));
 #endif
 }
 
@@ -218,7 +218,7 @@ inline float64x4 zip_lo(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpacklo_pd(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    return float64x4(zip_lo(a[0], b[0]), zip_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -257,7 +257,7 @@ inline basic_int8x32 zip_hi(basic_int8x32 a, basic_int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi8(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    return basic_int8x32(zip_hi(a[0], b[0]), zip_hi(a[1], b[1]));
 #endif
 }
 
@@ -279,7 +279,7 @@ inline basic_int16x16 zip_hi(basic_int16x16 a, basic_int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi16(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    return basic_int16x16(zip_hi(a[0], b[0]), zip_hi(a[1], b[1]));
 #endif
 }
 
@@ -301,7 +301,7 @@ inline basic_int32x8 zip_hi(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi32(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    return basic_int32x8(zip_hi(a[0], b[0]), zip_hi(a[1], b[1]));
 #endif
 }
 
@@ -324,7 +324,7 @@ inline basic_int64x4 zip_hi(basic_int64x4 a, basic_int64x4 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi64(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    return basic_int64x4(zip_hi(a[0], b[0]), zip_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -361,7 +361,7 @@ inline float32x8 zip_hi(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpackhi_ps(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    return float32x8(zip_hi(a[0], b[0]), zip_hi(a[1], b[1]));
 #endif
 }
 
@@ -382,7 +382,7 @@ inline float64x4 zip_hi(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpackhi_pd(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    return float64x4(zip_hi(a[0], b[0]), zip_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -445,7 +445,7 @@ basic_int8x32 move_l(basic_int8x32 a)
 #if SIMDPP_USE_AVX2
     return _mm256_srli_si256(a, shift);
 #else
-    return {move_l<shift>(a[0]), move_l<shift>(a[1])};
+    return basic_int8x32(move_l<shift>(a[0]), move_l<shift>(a[1]));
 #endif
 }
 /// @}
@@ -661,7 +661,7 @@ basic_int8x32 move_r(basic_int8x32 a)
 #if SIMDPP_USE_AVX2
     return _mm256_slli_si256(a, shift);
 #else
-    return {move_r<shift>(a[0]), move_r<shift>(a[1])};
+    return basic_int8x32(move_r<shift>(a[0]), move_r<shift>(a[1]));
 #endif
 }
 /// @}
@@ -888,7 +888,7 @@ basic_int8x32 broadcast(basic_int8x32 a)
     basic_int16x16 b = s < 8 ? zip_lo(a, a) : zip_hi(a, a);
     return broadcast<s%8>(b);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    return basic_int8x32(broadcast<s>(a[0]), broadcast<s>(a[1]));
 #endif
 }
 /// @}
@@ -967,7 +967,7 @@ basic_int16x16 broadcast(basic_int16x16 a)
         return h;
     }
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    return basic_int16x16(broadcast<s>(a[0]), broadcast<s>(a[1]));
 #endif
 }
 /// @}
@@ -1015,7 +1015,7 @@ basic_int32x8 broadcast(basic_int32x8 a)
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    return basic_int32x8(broadcast<s>(a[0]), broadcast<s>(a[1]));
 #endif
 }
 /// @}
@@ -1068,7 +1068,7 @@ basic_int64x4 broadcast(basic_int64x4 a)
 #if SIMDPP_USE_AVX2
     return permute<s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    return basic_int64x4(broadcast<s>(a[0]), broadcast<s>(a[1]));
 #endif
 }
 /// @}
@@ -1116,7 +1116,7 @@ float32x8 broadcast(float32x8 a)
 #if SIMDPP_USE_AVX
     return permute<s,s,s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    return float32x8(broadcast<s>(a[0]), broadcast<s>(a[1]));
 #endif
 }
 /// @}
@@ -1160,7 +1160,7 @@ float64x4 broadcast(float64x4 a)
 #if SIMDPP_USE_AVX
     return permute<s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    return float64x4(broadcast<s>(a[0]), broadcast<s>(a[1]));
 #endif
 }
 /// @}
@@ -1202,7 +1202,7 @@ basic_int8x32 broadcast_w(basic_int8x32 a)
 #else
     basic_int8x16 p = a[s/16];
     p = broadcast<s%16>(p);
-    return {p, p};
+    return basic_int8x32(p, p);
 #endif
 }
 /// @}
@@ -1704,7 +1704,7 @@ inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, basic_int8x32 ma
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    return basic_int8x32(blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1]));
 #endif
 }
 
@@ -1763,7 +1763,7 @@ inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, mask_int16x16
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    return basic_int16x16(blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1]));
 #endif
 }
 /// @}
@@ -1813,7 +1813,7 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, mask_int32x8 mas
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    return basic_int32x8(blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1]));
 #endif
 }
 /// @}
@@ -1845,7 +1845,7 @@ inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, basic_int64x4 ma
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    return basic_int64x4(blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1]));
 #endif
 }
 
@@ -1915,7 +1915,7 @@ inline float32x8 blend(float32x8 on, float32x8 off, float32x8 mask)
 #if SIMDPP_USE_AVX
     return _mm256_blendv_ps(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    return float32x8(blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1]));
 #endif
 }
 
@@ -1987,7 +1987,7 @@ inline float64x4 blend(float64x4 on, float64x4 off, float64x4 mask)
 #if SIMDPP_USE_AVX
     return _mm256_blendv_pd(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    return float64x4(blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1]));
 #endif
 }
 
@@ -2069,7 +2069,7 @@ inline basic_int8x32 unzip_lo(basic_int8x32 a, basic_int8x32 b)
     r = _mm256_packus_epi16(a, b);
     return r;
 #else
-    return {unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1])};
+    return basic_int8x32(unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -2136,7 +2136,7 @@ inline basic_int16x16 unzip_lo(basic_int16x16 a, basic_int16x16 b)
     r = _mm256_packus_epi32(a, b);
     return r;
 #else
-    return {unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1])};
+    return basic_int16x16(unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -2178,7 +2178,7 @@ inline basic_int32x8 unzip_lo(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return shuffle2<0,2,0,2>(a,b);
 #else
-    return {unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1])};
+    return basic_int32x8(unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -2241,7 +2241,7 @@ inline float32x8 unzip_lo(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return shuffle2<0,2,0,2>(a,b);
 #else
-    return {unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1])};
+    return float32x8(unzip_lo(a[0], b[0]), unzip_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -2319,7 +2319,7 @@ inline basic_int8x32 unzip_hi(basic_int8x32 a, basic_int8x32 b)
     a = _mm256_packs_epi16(a, b);
     return a;
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    return basic_int8x32(unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -2367,7 +2367,7 @@ inline basic_int16x16 unzip_hi(basic_int16x16 a, basic_int16x16 b)
     a = _mm256_packs_epi32(a, b);
     return a;
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    return basic_int16x16(unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -2406,7 +2406,7 @@ inline basic_int32x8 unzip_hi(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return shuffle2<1,3,1,3>(a, b);
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    return basic_int32x8(unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -2472,7 +2472,7 @@ inline float32x8 unzip_hi(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return shuffle2<1,3,1,3>(a, b);
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    return float32x8(unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1]));
 #endif
 }
 /// @}

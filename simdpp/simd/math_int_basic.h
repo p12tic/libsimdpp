@@ -82,7 +82,7 @@ inline basic_int8x32 add(basic_int8x32 a, basic_int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_add_epi8(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    return basic_int8x32(add(a[0], b[0]), add(a[1], b[1]));
 #endif
 }
 /// @}
@@ -117,7 +117,7 @@ inline basic_int16x16 add(basic_int16x16 a, basic_int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_add_epi16(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    return basic_int16x16(add(a[0], b[0]), add(a[1], b[1]));
 #endif
 }
 /// @}
@@ -152,7 +152,7 @@ inline basic_int32x8 add(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_add_epi32(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    return basic_int32x8(add(a[0], b[0]), add(a[1], b[1]));
 #endif
 }
 /// @}
@@ -198,7 +198,7 @@ inline basic_int64x4 add(basic_int64x4 a, basic_int64x4 b)
 #if SIMDPP_USE_AVX2
     return _mm256_add_epi64(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    return basic_int64x4(add(a[0], b[0]), add(a[1], b[1]));
 #endif
 }
 /// @}
@@ -233,7 +233,7 @@ inline int8x32 adds(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_adds_epi8(a, b);
 #else
-    return {adds(a[0], b[0]), adds(a[1], b[1])};
+    return int8x32(adds(a[0], b[0]), adds(a[1], b[1]));
 #endif
 }
 /// @}
@@ -268,7 +268,7 @@ inline int16x16 adds(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_adds_epi16(a, b);
 #else
-    return {adds(a[0], b[0]), adds(a[1], b[1])};
+    return int16x16(adds(a[0], b[0]), adds(a[1], b[1]));
 #endif
 }
 /// @}
@@ -303,7 +303,7 @@ inline uint8x32 adds(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_adds_epu8(a, b);
 #else
-    return {adds(a[0], b[0]), adds(a[1], b[1])};
+    return uint8x32(adds(a[0], b[0]), adds(a[1], b[1]));
 #endif
 }
 /// @}
@@ -338,7 +338,7 @@ inline uint16x16 adds(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_adds_epu16(a, b);
 #else
-    return {adds(a[0], b[0]), adds(a[1], b[1])};
+    return uint16x16(adds(a[0], b[0]), adds(a[1], b[1]));
 #endif
 }
 /// @}
@@ -373,7 +373,7 @@ inline basic_int8x32 sub(basic_int8x32 a, basic_int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi8(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    return basic_int8x32(sub(a[0], b[0]), sub(a[1], b[1]));
 #endif
 }
 /// @}
@@ -408,7 +408,7 @@ inline basic_int16x16 sub(basic_int16x16 a, basic_int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi16(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    return basic_int16x16(sub(a[0], b[0]), sub(a[1], b[1]));
 #endif
 }
 /// @}
@@ -443,7 +443,7 @@ inline basic_int32x8 sub(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi32(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    return basic_int32x8(sub(a[0], b[0]), sub(a[1], b[1]));
 #endif
 }
 /// @}
@@ -489,7 +489,7 @@ inline basic_int64x4 sub(basic_int64x4 a, basic_int64x4 b)
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi64(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    return basic_int64x4(sub(a[0], b[0]), sub(a[1], b[1]));
 #endif
 }
 /// @}
@@ -524,7 +524,7 @@ inline int8x32 subs(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epi8(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    return int8x32(subs(a[0], b[0]), subs(a[1], b[1]));
 #endif
 }
 /// @}
@@ -559,7 +559,7 @@ inline int16x16 subs(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epi16(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    return int16x16(subs(a[0], b[0]), subs(a[1], b[1]));
 #endif
 }
 /// @}
@@ -594,7 +594,7 @@ inline uint8x32 subs(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epu8(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    return uint8x32(subs(a[0], b[0]), subs(a[1], b[1]));
 #endif
 }
 /// @}
@@ -629,7 +629,7 @@ inline uint16x16 subs(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epu16(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    return uint16x16(subs(a[0], b[0]), subs(a[1], b[1]));
 #endif
 }
 /// @}
@@ -662,7 +662,7 @@ inline int8x32 neg(int8x32 a)
 #if SIMDPP_USE_AVX2
     return sub(int8x32::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    return int8x32(neg(a[0]), neg(a[1]));
 #endif
 }
 /// @}
@@ -695,7 +695,7 @@ inline int16x16 neg(int16x16 a)
 #if SIMDPP_USE_AVX2
     return sub(int16x16::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    return int16x16(neg(a[0]), neg(a[1]));
 #endif
 }
 /// @}
@@ -728,7 +728,7 @@ inline int32x8 neg(int32x8 a)
 #if SIMDPP_USE_AVX2
     return sub(int32x8::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    return int32x8(neg(a[0]), neg(a[1]));
 #endif
 }
 /// @}
@@ -763,7 +763,7 @@ inline int64x4 neg(int64x4 a)
 #if SIMDPP_USE_AVX2
     return sub(int64x4::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    return int64x4(neg(a[0]), neg(a[1]));
 #endif
 }
 /// @}
@@ -800,7 +800,7 @@ inline basic_int16x16 mul_lo(basic_int16x16 a, basic_int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mullo_epi16(a, b);
 #else
-    return {mul_lo(a[0], b[0]), mul_lo(a[1], b[1])};
+    return basic_int16x16(mul_lo(a[0], b[0]), mul_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -843,7 +843,7 @@ inline int16x16 mul_hi(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mulhi_epi16(a, b);
 #else
-    return {mul_hi(a[0], b[0]), mul_hi(a[1], b[1])};
+    return int16x16(mul_hi(a[0], b[0]), mul_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -886,7 +886,7 @@ inline uint16x16 mul_hi(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mulhi_epu16(a, b);
 #else
-    return {mul_hi(a[0], b[0]), mul_hi(a[1], b[1])};
+    return uint16x16(mul_hi(a[0], b[0]), mul_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -949,7 +949,7 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mullo_epi32(a, b);
 #else
-    return {mul_lo(a[0], b[0]), mul_lo(a[1], b[1])};
+    return basic_int32x8(mul_lo(a[0], b[0]), mul_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1032,7 +1032,7 @@ inline int32x8 mull_lo(int16x16 a, int16x16 b)
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return zip_lo(lo, hi);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    return int32x8(mull_lo(a[0], b[0]), mull_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1087,7 +1087,7 @@ inline uint32x8 mull_lo(uint16x16 a, uint16x16 b)
     uint16x16 hi = _mm256_mulhi_epu16(a, b);
     return zip_lo(lo, hi);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    return uint32x8(mull_lo(a[0], b[0]), mull_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1142,7 +1142,7 @@ inline int32x8 mull_hi(int16x16 a, int16x16 b)
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return zip_hi(lo, hi);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    return int32x8(mull_hi(a[0], b[0]), mull_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1197,7 +1197,7 @@ inline uint32x8 mull_hi(uint16x16 a, uint16x16 b)
     uint16x16 hi = _mm256_mulhi_epu16(a, b);
     return zip_hi(lo, hi);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    return uint32x8(mull_hi(a[0], b[0]), mull_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1248,7 +1248,7 @@ inline int64x4 mull_lo(int32x8 a, int32x8 b)
     b = zip_lo(b, b);
     return _mm256_mul_epi32(a, b);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    return int64x4(mull_lo(a[0], b[0]), mull_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1298,7 +1298,7 @@ inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
     b = zip_lo(b, b);
     return _mm256_mul_epu32(a, b);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    return uint64x4(mull_lo(a[0], b[0]), mull_lo(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1349,7 +1349,7 @@ inline int64x4 mull_hi(int32x8 a, int32x8 b)
     b = zip_hi(b, b);
     return _mm256_mul_epi32(a, b);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    return int64x4(mull_hi(a[0], b[0]), mull_hi(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1399,7 +1399,7 @@ inline uint64x4 mull_hi(uint32x8 a, uint32x8 b)
     b = zip_hi(b, b);
     return _mm256_mul_epu32(a, b);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    return uint64x4(mull_hi(a[0], b[0]), mull_hi(a[1], b[1]));
 #endif
 }
 /// @}

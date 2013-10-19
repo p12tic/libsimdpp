@@ -527,7 +527,7 @@ inline void store_first(float* p, float32x4 a, unsigned n)
         return;
     }
 #else
-    store_first(p, int32x4{a}, n);
+    store_first(p, int32x4(a), n);
 #endif
 }
 
@@ -841,7 +841,7 @@ inline void store_last(float* p, float32x4 a, unsigned n)
     }
     }
 #else
-    store_last(p, int32x4{a}, n);
+    store_last(p, int32x4(a), n);
 #endif
 }
 

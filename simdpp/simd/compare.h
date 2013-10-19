@@ -80,7 +80,7 @@ inline mask_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi8(a, b);
 #else
-    return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
+    return mask_int8x32(cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1]));
 #endif
 }
 /// @}
@@ -115,7 +115,7 @@ inline mask_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi16(a, b);
 #else
-    return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
+    return mask_int16x16(cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1]));
 #endif
 }
 /// @}
@@ -150,7 +150,7 @@ inline mask_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi32(a, b);
 #else
-    return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
+    return mask_int32x8(cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1]));
 #endif
 }
 /// @}
@@ -245,7 +245,7 @@ inline mask_float32x8 cmp_eq(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_EQ_OQ);
 #else
-    return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
+    return mask_float32x8(cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1]));
 #endif
 }
 /// @}
@@ -284,7 +284,7 @@ inline mask_float64x4 cmp_eq(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_EQ_OQ);
 #else
-    return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
+    return mask_float64x4(cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1]));
 #endif
 }
 /// @}
@@ -500,7 +500,7 @@ inline mask_float32x8 cmp_neq(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_NEQ_UQ);
 #else
-    return {cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1])};
+    return mask_float32x8(cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]));
 #endif
 }
 /// @}
@@ -539,7 +539,7 @@ inline mask_float64x4 cmp_neq(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_NEQ_UQ);
 #else
-    return {cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1])};
+    return mask_float64x4(cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]));
 #endif
 }
 /// @}
@@ -574,7 +574,7 @@ inline mask_int8x32 cmp_gt(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi8(a, b);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_int8x32(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -624,7 +624,7 @@ inline mask_int8x32 cmp_gt(uint8x32 a, uint8x32 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi8(a, b);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_int8x32(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -659,7 +659,7 @@ inline mask_int16x16 cmp_gt(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi16(a, b);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_int16x16(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -708,7 +708,7 @@ inline mask_int16x16 cmp_gt(uint16x16 a, uint16x16 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi16(a, b);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_int16x16(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -743,7 +743,7 @@ inline mask_int32x8 cmp_gt(int32x8 a, int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi32(a, b);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_int32x8(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -792,7 +792,7 @@ inline mask_int32x8 cmp_gt(uint32x8 a, uint32x8 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi32(a, b);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_int32x8(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -829,7 +829,7 @@ inline mask_float32x8 cmp_gt(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_GT_OQ);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_float32x8(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -868,7 +868,7 @@ inline mask_float64x4 cmp_gt(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_GT_OQ);
 #else
-    return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
+    return mask_float64x4(cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -977,7 +977,7 @@ inline mask_int8x32 cmp_lt(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi8(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    return mask_int8x32(cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1026,7 +1026,7 @@ inline mask_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi8(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    return mask_int8x32(cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1061,7 +1061,7 @@ inline mask_int16x16 cmp_lt(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi16(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    return mask_int16x16(cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1110,7 +1110,7 @@ inline mask_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi16(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    return mask_int16x16(cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1145,7 +1145,7 @@ inline mask_int32x8 cmp_lt(int32x8 a, int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi32(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    return mask_int32x8(cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1194,7 +1194,7 @@ inline mask_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi32(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    return mask_int32x8(cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1231,7 +1231,7 @@ inline mask_float32x8 cmp_lt(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_LT_OQ);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    return mask_float32x8(cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1342,7 +1342,7 @@ inline mask_float64x4 cmp_le(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_LE_OQ);
 #else
-    return {cmp_le(a[0], b[0]), cmp_le(a[1], b[1])};
+    return mask_float64x4(cmp_le(a[0], b[0]), cmp_le(a[1], b[1]));
 #endif
 }
 /// @}

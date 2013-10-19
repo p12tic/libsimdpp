@@ -107,7 +107,7 @@ inline int256 permute_bytes16(int256 a, int256 mask)
 #if SIMDPP_USE_AVX2
     return _mm256_shuffle_epi8(a, mask);
 #else
-    return {permute_bytes16(a[0], mask[0]), permute_bytes16(a[1], mask[1])};
+    return int256(permute_bytes16(a[0], mask[0]), permute_bytes16(a[1], mask[1]));
 #endif
 }
 
@@ -223,7 +223,7 @@ inline int256 shuffle_bytes16(int256 a, int256 b, int256 mask)
     r = _mm256_blendv_epi8(ai, bi, sel);
     return r;
 #else
-    return {shuffle_bytes16(a[0], b[0], mask[0]), shuffle_bytes16(a[1], b[1], mask[1])};
+    return int256(shuffle_bytes16(a[0], b[0], mask[0]), shuffle_bytes16(a[1], b[1], mask[1]));
 #endif
 }
 
@@ -307,7 +307,7 @@ inline int256 permute_zbytes16(int256 a, int256 mask)
 #if SIMDPP_USE_AVX2
     return _mm256_shuffle_epi8(a, mask);
 #else
-    return {permute_zbytes16(a[0], mask[0]), permute_zbytes16(a[1], mask[1])};
+    return int256(permute_zbytes16(a[0], mask[0]), permute_zbytes16(a[1], mask[1]));
 #endif
 }
 
@@ -433,8 +433,8 @@ inline int256 shuffle_zbytes16(int256 a, int256 b, int256 mask)
     r = bit_andnot(r, set_zero);
     return r;
 #else
-    return {shuffle_zbytes16(a[0], b[0], mask[0]),
-            shuffle_zbytes16(a[1], b[1], mask[1])};
+    return int256(shuffle_zbytes16(a[0], b[0], mask[0]),
+                  shuffle_zbytes16(a[1], b[1], mask[1]));
 #endif
 }
 

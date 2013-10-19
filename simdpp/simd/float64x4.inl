@@ -60,7 +60,7 @@ inline float64x4 float64x4::load_broadcast(const double* v0)
     return _mm256_broadcast_sd(v0);
 #else
     float64x2 a = float64x2::load_broadcast(v0);
-    return {a, a};
+    return float64x4(a, a);
 #endif
 }
 
@@ -70,7 +70,7 @@ inline float64x4 float64x4::set_broadcast(double v0)
     return float64x4::load_broadcast(&v0);
 #else
     float64x2 a = float64x2::set_broadcast(v0);
-    return {a, a};
+    return float64x4(a, a);
 #endif
 }
 
@@ -89,8 +89,8 @@ inline float64x4 float64x4::make_const(double v0, double v1, double v2, double v
 #if SIMDPP_USE_AVX
     return _mm256_set_pd(v3, v2, v1, v0);
 #else
-    return {float64x2::make_const(v0, v1),
-            float64x2::make_const(v2, v3)};
+    return float64x4(float64x2::make_const(v0, v1),
+                     float64x2::make_const(v2, v3));
 #endif
 }
 

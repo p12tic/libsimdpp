@@ -82,7 +82,7 @@ inline float32x8 abs(float32x8 a)
 #if SIMDPP_USE_AVX
     return bit_and(a, int32x8::make_const(0x7fffffff));
 #else
-    return {abs(a[0]), abs(a[1])};
+    return float32x8(abs(a[0]), abs(a[1]));
 #endif
 }
 /// @{
@@ -119,7 +119,7 @@ inline float64x4 abs(float64x4 a)
 #if SIMDPP_USE_AVX
     return bit_and(a, int64x4::make_const(0x7fffffffffffffff));
 #else
-    return {abs(a[0]), abs(a[1])};
+    return float64x4(abs(a[0]), abs(a[1]));
 #endif
 }
 /// @}
@@ -179,7 +179,7 @@ inline float64x4 sign(float64x4 a)
 #if SIMDPP_USE_AVX
     return bit_and(a, uint64x4::make_const(0x8000000000000000));
 #else
-    return {sign(a[0]), sign(a[1])};
+    return float64x4(sign(a[0]), sign(a[1]));
 #endif
 }
 /// @}
@@ -214,7 +214,7 @@ inline float32x8 add(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_add_ps(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    return float32x8(add(a[0], b[0]), add(a[1], b[1]));
 #endif
 }
 /// @}
@@ -249,7 +249,7 @@ inline float64x4 add(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_add_pd(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    return float64x4(add(a[0], b[0]), add(a[1], b[1]));
 #endif
 }
 /// @}
@@ -284,7 +284,7 @@ inline float32x8 sub(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_sub_ps(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    return float32x8(sub(a[0], b[0]), sub(a[1], b[1]));
 #endif
 }
 /// @}
@@ -319,7 +319,7 @@ inline float64x4 sub(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_sub_pd(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    return float64x4(sub(a[0], b[0]), sub(a[1], b[1]));
 #endif
 }
 /// @}
@@ -359,7 +359,7 @@ inline float32x8 neg(float32x8 a)
     int32x8 zero = int32x8::make_const(0x80000000);
     return bit_xor(a, zero);
 #else
-    return {neg(a[0]), neg(a[1])};
+    return float32x8(neg(a[0]), neg(a[1]));
 #endif
 }
 /// @}
@@ -398,7 +398,7 @@ inline float64x4 neg(float64x4 a)
     int64x4 zero = int64x4::make_const(0x8000000000000000);
     return bit_xor(a, zero);
 #else
-    return {neg(a[0]), neg(a[1])};
+    return float64x4(neg(a[0]), neg(a[1]));
 #endif
 }
 /// @}
@@ -434,7 +434,7 @@ inline float32x8 mul(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_mul_ps(a, b);
 #else
-    return {mul(a[0], b[0]), mul(a[1], b[1])};
+    return float32x8(mul(a[0], b[0]), mul(a[1], b[1]));
 #endif
 }
 /// @}
@@ -469,7 +469,7 @@ inline float64x4 mul(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_mul_pd(a, b);
 #else
-    return {mul(a[0], b[0]), mul(a[1], b[1])};
+    return float64x4(mul(a[0], b[0]), mul(a[1], b[1]));
 #endif
 }
 /// @}

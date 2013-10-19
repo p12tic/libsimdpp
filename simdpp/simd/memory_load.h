@@ -90,7 +90,7 @@ inline int256 load(int256& a, const void* p)
     return a;
 #else
     const char* q = reinterpret_cast<const char*>(p);
-    a = int256{load(a[0], q), load(a[1], q+16)};
+    a = int256(load(a[0], q), load(a[1], q+16));
     return a;
 #endif
 }
@@ -118,7 +118,7 @@ inline float32x8 load(float32x8& a, const float* p)
     a = _mm256_load_ps(p);
     return a;
 #else
-    a = float32x8{load(a[0], p), load(a[1], p+4)};
+    a = float32x8(load(a[0], p), load(a[1], p+4));
     return a;
 #endif
 }
@@ -144,7 +144,7 @@ inline float64x4 load(float64x4& a, const double* p)
     a = _mm256_load_pd(p);
     return a;
 #else
-    a = float64x4{load(a[0], p), load(a[1], p+2)};
+    a = float64x4(load(a[0], p), load(a[1], p+2));
     return a;
 #endif
 }

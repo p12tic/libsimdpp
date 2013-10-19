@@ -283,7 +283,7 @@ inline int256 combine(int128 a, int128 b)
     r = _mm256_inserti128_si256(r, b, 1);
     return r;
 #else
-    return {a, b};
+    return int256(a, b);
 #endif
 }
 
@@ -295,7 +295,7 @@ inline float32x8 combine(float32x4 a, float32x4 b)
     r = _mm256_insertf128_ps(r, b, 1);
     return r;
 #else
-    return {a, b};
+    return float32x8(a, b);
 #endif
 }
 
@@ -307,7 +307,7 @@ inline float64x4 combine(float64x2 a, float64x2 b)
     r = _mm256_insertf128_pd(r, b, 1);
     return r;
 #else
-    return {a, b};
+    return float64x4(a, b);
 #endif
 }
 /// @}

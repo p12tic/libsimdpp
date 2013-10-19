@@ -112,7 +112,7 @@ inline basic_int8x32 transpose_inplace(basic_int8x32 a)
                                         2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);
 #elif SIMDPP_USE_SSSE3
-    return {transpose_inplace(a[0]), transpose_inplace(a[1])};
+    return basic_int8x32(transpose_inplace(a[0]), transpose_inplace(a[1]));
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif

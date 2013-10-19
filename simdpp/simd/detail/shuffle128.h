@@ -64,7 +64,7 @@ int256 shuffle128(int256 a, int256 b)
 #if SIMDPP_USE_AVX2
     return _mm256_permute2x128_si256(a, b, s1*0x10 + s0);
 #else
-    return {a[s0], b[s1]};
+    return int256(a[s0], b[s1]);
 #endif
 }
 template<unsigned s0, unsigned s1>
@@ -74,7 +74,7 @@ float32x8 shuffle128(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_permute2f128_ps(a, b, s1*0x10 + s0);
 #else
-    return {a[s0], b[s1]};
+    return float32x8(a[s0], b[s1]);
 #endif
 }
 template<unsigned s0, unsigned s1>
@@ -84,7 +84,7 @@ float64x4 shuffle128(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_permute2f128_pd(a, b, s1*0x10 + s0);
 #else
-    return {a[s0], b[s1]};
+    return float64x4(a[s0], b[s1]);
 #endif
 }
 /// @}

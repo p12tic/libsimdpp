@@ -82,7 +82,7 @@ inline basic_int8x32 bit_and(basic_int8x32 a, int256 b)
 #if SIMDPP_USE_AVX2
     return _mm256_and_si256(a, b);
 #else
-    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+    return int256(bit_and(a[0], b[0]), bit_and(a[1], b[1]));
 #endif
 }
 
@@ -272,7 +272,7 @@ inline float32x8 bit_and(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_and_ps(a, b);
 #else
-    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+    return float32x8(bit_and(a[0], b[0]), bit_and(a[1], b[1]));
 #endif
 }
 
@@ -338,7 +338,7 @@ inline float64x4 bit_and(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_and_pd(a, b);
 #else
-    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+    return float64x4(bit_and(a[0], b[0]), bit_and(a[1], b[1]));
 #endif
 }
 
@@ -424,7 +424,7 @@ inline basic_int8x32 bit_andnot(basic_int8x32 a, int256 b)
 #if SIMDPP_USE_AVX2
     return _mm256_andnot_si256(b, a);
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    return int256(bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1]));
 #endif
 }
 inline basic_int16x16 bit_andnot(basic_int16x16 a, int256 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
@@ -613,7 +613,7 @@ inline float32x8 bit_andnot(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_andnot_ps(b, a);
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    return float32x8(bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1]));
 #endif
 }
 
@@ -679,7 +679,7 @@ inline float64x4 bit_andnot(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_andnot_pd(b, a);
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    return float64x4(bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1]));
 #endif
 }
 
@@ -841,7 +841,7 @@ inline mask_int64x4 bit_or(mask_int64x4 a, mask_int64x4 b)
 #if SIMDPP_USE_AVX2
     return bit_or(uint64x4(a), uint64x4(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    return int256(bit_or(a[0], b[0]), bit_or(a[1], b[1]));
 #endif
 }
 /// @}
@@ -876,7 +876,7 @@ inline float32x8 bit_or(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_or_ps(a, b);
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    return float32x8(bit_or(a[0], b[0]), bit_or(a[1], b[1]));
 #endif
 }
 
@@ -906,7 +906,7 @@ inline float64x4 bit_or(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_or_pd(a, b);
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    return float64x4(bit_or(a[0], b[0]), bit_or(a[1], b[1]));
 #endif
 }
 
@@ -993,7 +993,7 @@ inline basic_int8x32 bit_xor(basic_int8x32 a, int256 b)
 #if SIMDPP_USE_AVX2
     return _mm256_xor_si256(a, b);
 #else
-    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+    return int256(bit_xor(a[0], b[0]), bit_xor(a[1], b[1]));
 #endif
 }
 
@@ -1107,7 +1107,7 @@ inline float32x8 bit_xor(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_xor_ps(a, b);
 #else
-    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+    return float32x8(bit_xor(a[0], b[0]), bit_xor(a[1], b[1]));
 #endif
 }
 
@@ -1137,7 +1137,7 @@ inline float64x4 bit_xor(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_xor_pd(a, b);
 #else
-    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+    return float64x4(bit_xor(a[0], b[0]), bit_xor(a[1], b[1]));
 #endif
 }
 
@@ -1365,7 +1365,7 @@ inline float64x4 bit_not(float64x4 a)
     uint64x4 ones = uint64x4::ones();
     return bit_xor(a, ones);
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    return int256(bit_not(a[0]), bit_not(a[1]));
 #endif
 }
 
