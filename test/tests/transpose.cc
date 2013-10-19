@@ -189,11 +189,11 @@ void test_transpose(TestResults& res)
     {
         Test u = t;
         transpose4(u.f32[0], u.f32[1], u.f32[2], u.f32[3]);
-        TEST_ARRAY_PUSH(tc, float32x8, u.f32);
+        TEST_ARRAY_PUSH(tc, float32x8, u.df32);
 
         u = t;
         transpose2(u.f32[0], u.f32[1]);
-        TEST_ARRAY_PUSH(tc, float32x8, u.f32);
+        TEST_ARRAY_PUSH(tc, float32x8, u.df32);
     }
 
     // float64x4
