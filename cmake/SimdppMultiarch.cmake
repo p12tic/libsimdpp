@@ -134,7 +134,10 @@ set(SIMDPP_ARCH_TEST_SSE2_CODE
     "#include <emmintrin.h>
     int main()
     {
-        volatile char a[16];
+        union {
+            volatile char a[16];
+            __m128i align;
+        };
         __m128i one = _mm_load_si128((__m128i*)(a));
         one = _mm_or_si128(one, one);
         _mm_store_si128((__m128i*)(a), one);
@@ -144,7 +147,10 @@ set(SIMDPP_ARCH_TEST_SSE3_CODE
     "#include <pmmintrin.h>
     int main()
     {
-        volatile float a[4];
+        union {
+            volatile char a[16];
+            __m128 align;
+        };
         __m128 one = _mm_load_ps((float*)(a));
         one = _mm_hadd_ps(one, one);
         _mm_store_ps((float*)(a), one);
@@ -154,7 +160,10 @@ set(SIMDPP_ARCH_TEST_SSSE3_CODE
     "#include <tmmintrin.h>
     int main()
     {
-        volatile char a[16];
+        union {
+            volatile char a[16];
+            __m128i align;
+        };
         __m128i one = _mm_load_si128((__m128i*)(a));
         one = _mm_abs_epi8(one);
         _mm_store_si128((__m128i*)(a), one);
@@ -164,7 +173,10 @@ set(SIMDPP_ARCH_TEST_SSE4_1_CODE
     "#include <smmintrin.h>
     int main()
     {
-        volatile char a[16];
+        union {
+            volatile char a[16];
+            __m128i align;
+        };
         __m128i one = _mm_load_si128((__m128i*)(a));
         one = _mm_cvtepi16_epi32(one);
         _mm_store_si128((__m128i*)(a), one);
@@ -174,17 +186,23 @@ set(SIMDPP_ARCH_TEST_AVX_CODE
     "#include <immintrin.h>
     int main()
     {
-        volatile char a[32];
-        __m256 one = _mm256_load_ps((__m256*)(a));
+        union {
+            volatile char a[32];
+            __m256 align;
+        };
+        __m256 one = _mm256_load_ps((float*)a);
         one = _mm256_add_ps(one, one);
-        _mm256_store_ps((__m256*)(a), one);
+        _mm256_store_ps((float*)a, one);
     }"
 )
 set(SIMDPP_ARCH_TEST_AVX2_CODE
     "#include <immintrin.h>
     int main()
     {
-        volatile char a[32];
+        union {
+            volatile char a[32];
+            __m256 align;
+        };
         __m256i one = _mm256_load_si256((__m256i*)(a));
         one = _mm256_or_si256(one, one);
         _mm_store_si256((__m256i*)(a), one);
