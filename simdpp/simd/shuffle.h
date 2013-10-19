@@ -46,6 +46,7 @@
     #include <simdpp/null/shuffle.h>
 #elif SIMDPP_USE_SSE2
     #include <simdpp/sse/shuffle.h>
+    #include <simdpp/sse/detail/shuffle128.h>
     #include <simdpp/sse/extract_half.h>
 #endif
 
@@ -1003,10 +1004,9 @@ basic_int32x8 broadcast(basic_int32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
-    basic_int32x4 lo;
-    lo = s < 4 ? sse::extract_lo(a) : sse::extract_hi(a);
-    lo = move_l<s % 4>(lo);
-    return _mm256_broadcastd_epi32(lo);
+    a = permute<s%4,s%4,s%4,s%4>(a);
+    a = sse::detail::shuffle128<s/4, s/4>(a, a);
+    return a;
 #else
     basic_int32x4 p = a[s/4];
     p = broadcast<s%4>(p);
@@ -1051,10 +1051,7 @@ basic_int64x4 broadcast(basic_int64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
-    basic_int64x2 lo;
-    lo = s < 2 ? sse::extract_lo(a) : sse::extract_hi(a);
-    lo = move_l<s % 2>(lo);
-    return _mm256_broadcastq_epi64(lo);
+    return permute<s,s,s,s>(a);
 #else
     basic_int64x2 p = a[s/2];
     p = broadcast<s%2>(p);
@@ -1097,11 +1094,8 @@ float32x8 broadcast(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX
-    float32x4 lo;
-    lo = s < 4 ? sse::extract_lo(a) : sse::extract_hi(a);
-    lo = move_l<s % 4>(lo);
-    __m128 r = lo;
-    return _mm256_broadcast_ps(&r);
+    a = sse::detail::shuffle128<s/4,s/4>(a, a);
+    return permute<s%4,s%4,s%4,s%4>(a);
 #else
     float32x4 p = a[s/4];
     p = broadcast<s%4>(p);
@@ -1139,12 +1133,12 @@ template<unsigned s>
 float64x4 broadcast(float64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
-#if SIMDPP_USE_AVX
-    float64x2 lo;
-    lo = s < 2 ? sse::extract_lo(a) : sse::extract_hi(a);
-    lo = move_l<s % 2>(lo);
-    __m128d r = lo;
-    return _mm256_broadcast_pd(&r);
+#if SIMDPP_USE_AVX2
+    return permute<s,s,s,s>(a);
+#elif SIMDPP_USE_AVX
+    a = sse::detail::shuffle128<s/2,s/2>(a, a);
+    a = permute<s%2,s%2>(a);
+    return a;
 #else
     float64x2 p = a[s/2];
     p = broadcast<s%2>(p);
