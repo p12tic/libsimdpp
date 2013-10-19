@@ -62,7 +62,7 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    basic_int64x4(__m256i d) : int256{d} {}
+    basic_int64x4(__m256i d) : int256(d) {}
     basic_int64x4& operator=(__m256i d) { int256::operator=(d); return *this; }
 #endif
     /// @}
@@ -75,7 +75,7 @@ public:
 
 #if SIMDPP_USE_AVX2
 #else
-    basic_int64x4(basic_int64x2 d0, basic_int64x2 d1) : int256{d0, d1} {}
+    basic_int64x4(basic_int64x2 d0, basic_int64x2 d1) : int256(d0, d1) {}
 
     const basic_int64x2& operator[](unsigned i) const { return u64(i); }
           basic_int64x2& operator[](unsigned i)       { return u64(i); }
@@ -94,28 +94,28 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    int64x4(__m256i d) : basic_int64x4{d} {}
+    int64x4(__m256i d) : basic_int64x4(d) {}
     int64x4& operator=(__m256i d) { basic_int64x4::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int64x4(const int256& d) : basic_int64x4{d} {}
-    int64x4(basic_int64x4 d) : basic_int64x4{d} {}
+    int64x4(const int256& d) : basic_int64x4(d) {}
+    int64x4(basic_int64x4 d) : basic_int64x4(d) {}
     int64x4& operator=(int256 d) { basic_int64x4::operator=(d); return *this; }
     int64x4& operator=(basic_int64x4 d) { basic_int64x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float64x4 integer vector type
-    explicit int64x4(const float64x4& d) : basic_int64x4{d} {}
+    explicit int64x4(const float64x4& d) : basic_int64x4(d) {}
     int64x4& operator=(const float64x4& d) { basic_int64x4::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    int64x4(int64x2 d0, int64x2 d1) : basic_int64x4{d0, d1} {}
+    int64x4(int64x2 d0, int64x2 d1) : basic_int64x4(d0, d1) {}
 
     const int64x2& operator[](unsigned i) const { return i64(i); }
           int64x2& operator[](unsigned i)       { return i64(i); }
@@ -193,28 +193,28 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX2
-    uint64x4(__m256i d) : basic_int64x4{d} {}
+    uint64x4(__m256i d) : basic_int64x4(d) {}
     uint64x4& operator=(__m256i d) { basic_int64x4::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint64x4(const int256& d) : basic_int64x4{d} {}
-    uint64x4(basic_int64x4 d) : basic_int64x4{d} {}
+    uint64x4(const int256& d) : basic_int64x4(d) {}
+    uint64x4(basic_int64x4 d) : basic_int64x4(d) {}
     uint64x4& operator=(int256 d) { basic_int64x4::operator=(d); return *this; }
     uint64x4& operator=(basic_int64x4 d) { basic_int64x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float64x4 integer vector type
-    explicit uint64x4(const float64x4& d) : basic_int64x4{d} {}
+    explicit uint64x4(const float64x4& d) : basic_int64x4(d) {}
     uint64x4& operator=(const float64x4& d) { basic_int64x4::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    uint64x4(uint64x2 d0, uint64x2 d1) : basic_int64x4{d0, d1} {}
+    uint64x4(uint64x2 d0, uint64x2 d1) : basic_int64x4(d0, d1) {}
 
     const uint64x2& operator[](unsigned i) const { return u64(i); }
           uint64x2& operator[](unsigned i)       { return u64(i); }

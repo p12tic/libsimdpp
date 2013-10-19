@@ -62,11 +62,11 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    basic_int32x4(__m128i d) : int128{d} {}
+    basic_int32x4(__m128i d) : int128(d) {}
     basic_int32x4& operator=(__m128i d) { int128::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    basic_int32x4(uint32x4_t d) : int128{d} {}
-    basic_int32x4( int32x4_t d) : int128{d} {}
+    basic_int32x4(uint32x4_t d) : int128(d) {}
+    basic_int32x4( int32x4_t d) : int128(d) {}
     basic_int32x4& operator=(uint32x4_t d) { int128::operator=(d); return *this; }
     basic_int32x4& operator=( int32x4_t d) { int128::operator=(d); return *this; }
 #endif
@@ -99,25 +99,25 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    int32x4(__m128i d) : basic_int32x4{d} {}
+    int32x4(__m128i d) : basic_int32x4(d) {}
     int32x4& operator=(__m128i d) { basic_int32x4::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    int32x4(int32x4_t d) : basic_int32x4{d} {}
+    int32x4(int32x4_t d) : basic_int32x4(d) {}
     int32x4& operator=(int32x4_t d) { basic_int32x4::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int32x4(const int128& d) : basic_int32x4{d} {}
-    int32x4(const basic_int32x4& d) : basic_int32x4{d} {}
+    int32x4(const int128& d) : basic_int32x4(d) {}
+    int32x4(const basic_int32x4& d) : basic_int32x4(d) {}
     int32x4& operator=(int128 d) { basic_int32x4::operator=(d); return *this; }
     int32x4& operator=(basic_int32x4 d) { basic_int32x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float32x4 integer vector type
-    explicit int32x4(const float32x4& d) : basic_int32x4{d} {}
+    explicit int32x4(const float32x4& d) : basic_int32x4(d) {}
     int32x4& operator=(const float32x4& d) { basic_int32x4::operator=(d); return *this; }
     /// @}
 
@@ -207,25 +207,25 @@ public:
     /// @{
     /// Construct from the underlying vector type
     #if SIMDPP_USE_SSE2
-    uint32x4(__m128i d) : basic_int32x4{d} {}
+    uint32x4(__m128i d) : basic_int32x4(d) {}
     uint32x4& operator=(__m128i d) { basic_int32x4::operator=(d); return *this; }
     #elif SIMDPP_USE_NEON
-    uint32x4(uint32x4_t d) : basic_int32x4{d} {}
+    uint32x4(uint32x4_t d) : basic_int32x4(d) {}
     uint32x4& operator=(uint32x4_t d) { basic_int32x4::operator=(d); return *this; }
     #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint32x4(const int128& d) : basic_int32x4{d} {}
-    uint32x4(const basic_int32x4& d) : basic_int32x4{d} {}
+    uint32x4(const int128& d) : basic_int32x4(d) {}
+    uint32x4(const basic_int32x4& d) : basic_int32x4(d) {}
     uint32x4& operator=(int128 d) { basic_int32x4::operator=(d); return *this; }
     uint32x4& operator=(basic_int32x4 d) { basic_int32x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float32x4 integer vector type
-    explicit uint32x4(const float32x4& d) : basic_int32x4{d} {}
+    explicit uint32x4(const float32x4& d) : basic_int32x4(d) {}
     uint32x4& operator=(const float32x4& d) { basic_int32x4::operator=(d); return *this; }
     /// @}
 
