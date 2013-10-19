@@ -45,6 +45,13 @@ struct Test_permute_bytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
+        ah = simdpp::permute_bytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -59,6 +66,13 @@ struct Test_permute_bytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
+        ah = simdpp::permute_bytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -73,6 +87,13 @@ struct Test_permute_bytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::permute_bytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -88,6 +109,14 @@ struct Test_permute_bytes16_x16 {
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
+                                                  s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::permute_bytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 template<class V, unsigned i>
@@ -101,6 +130,14 @@ struct Test_shuffle_bytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
+        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -115,6 +152,14 @@ struct Test_shuffle_bytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
+        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -129,6 +174,14 @@ struct Test_shuffle_bytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -144,6 +197,15 @@ struct Test_shuffle_bytes16_x16 {
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
+                                                  s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 template<class V, unsigned i>
@@ -157,6 +219,13 @@ struct Test_permute_zbytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
+        ah = simdpp::permute_zbytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -171,6 +240,13 @@ struct Test_permute_zbytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
+        ah = simdpp::permute_zbytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -185,6 +261,13 @@ struct Test_permute_zbytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::permute_zbytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -197,9 +280,17 @@ struct Test_permute_zbytes16_x16 {
 
         typename traits<V>::int_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
-                s,s,s,s,s,s,s,s>(mask);
+                                                 s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
+                                                  s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::permute_zbytes16(ah, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 template<class V, unsigned i>
@@ -213,6 +304,14 @@ struct Test_shuffle_zbytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
+        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -227,6 +326,14 @@ struct Test_shuffle_zbytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
+        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -241,6 +348,14 @@ struct Test_shuffle_zbytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -256,6 +371,15 @@ struct Test_shuffle_zbytes16_x16 {
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
+
+        using H = typename traits<V>::half_vector_type;
+        H ah = tst_ext_half(a);
+        H bh = tst_ext_half(b);
+        typename traits<H>::int_vector_type maskh;
+        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
+                                                  s,s,s,s,s,s,s,s>(maskh);
+        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
+        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -269,88 +393,88 @@ void test_shuffle_bytes(TestResults& res)
 
     union {
         uint8_t c[32];
-        uint8x16 u8[2];
-        uint16x8 u16[2];
-        uint32x4 u32[2];
+        uint8x32 u8[2];
+        uint16x16 u16[2];
+        uint32x8 u32[2];
         uint64x2 u64[2];
-        float32x4 f32[2];
+        float32x8 f32[2];
         float64x2 f64[2];
     };
 
-    for (unsigned i = 0; i < 32; i++) {
+    for (unsigned i = 0; i < 64; i++) {
         c[i] = i;
     }
 
-    // int8x16
-    TemplateTestHelper<Test_permute_bytes16_x2, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_permute_bytes16_x4, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_permute_bytes16_x8, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_permute_bytes16_x16, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_shuffle_bytes16_x2, uint8x16>::run(tc, u8[0], u8[1]);
-    TemplateTestHelper<Test_shuffle_bytes16_x4, uint8x16>::run(tc, u8[0], u8[1]);
-    TemplateTestHelper<Test_shuffle_bytes16_x8, uint8x16>::run(tc, u8[0], u8[1]);
-    TemplateTestHelper<Test_shuffle_bytes16_x16, uint8x16>::run(tc, u8[0], u8[1]);
-    TemplateTestHelper<Test_permute_zbytes16_x2, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_permute_zbytes16_x4, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_permute_zbytes16_x8, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_permute_zbytes16_x16, uint8x16>::run(tc, u8[0]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x2, uint8x16>::run(tc, u8[0], u8[1]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x4, uint8x16>::run(tc, u8[0], u8[1]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x8, uint8x16>::run(tc, u8[0], u8[1]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x16, uint8x16>::run(tc, u8[0], u8[1]);
+    // Vectors with 8-bit integer elements
+    TemplateTestHelper<Test_permute_bytes16_x2, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_permute_bytes16_x4, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_permute_bytes16_x8, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_permute_bytes16_x16, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_shuffle_bytes16_x2, uint8x32>::run(tc, u8[0], u8[1]);
+    TemplateTestHelper<Test_shuffle_bytes16_x4, uint8x32>::run(tc, u8[0], u8[1]);
+    TemplateTestHelper<Test_shuffle_bytes16_x8, uint8x32>::run(tc, u8[0], u8[1]);
+    TemplateTestHelper<Test_shuffle_bytes16_x16, uint8x32>::run(tc, u8[0], u8[1]);
+    TemplateTestHelper<Test_permute_zbytes16_x2, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_permute_zbytes16_x4, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_permute_zbytes16_x8, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_permute_zbytes16_x16, uint8x32>::run(tc, u8[0]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x2, uint8x32>::run(tc, u8[0], u8[1]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x4, uint8x32>::run(tc, u8[0], u8[1]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x8, uint8x32>::run(tc, u8[0], u8[1]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x16, uint8x32>::run(tc, u8[0], u8[1]);
 
-    // int16x8
-    TemplateTestHelper<Test_permute_bytes16_x2, uint16x8>::run(tc, u16[0]);
-    TemplateTestHelper<Test_permute_bytes16_x4, uint16x8>::run(tc, u16[0]);
-    TemplateTestHelper<Test_permute_bytes16_x8, uint16x8>::run(tc, u16[0]);
-    TemplateTestHelper<Test_shuffle_bytes16_x2, uint16x8>::run(tc, u16[0], u16[1]);
-    TemplateTestHelper<Test_shuffle_bytes16_x4, uint16x8>::run(tc, u16[0], u16[1]);
-    TemplateTestHelper<Test_shuffle_bytes16_x8, uint16x8>::run(tc, u16[0], u16[1]);
-    TemplateTestHelper<Test_permute_zbytes16_x2, uint16x8>::run(tc, u16[0]);
-    TemplateTestHelper<Test_permute_zbytes16_x4, uint16x8>::run(tc, u16[0]);
-    TemplateTestHelper<Test_permute_zbytes16_x8, uint16x8>::run(tc, u16[0]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x2, uint16x8>::run(tc, u16[0], u16[1]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x4, uint16x8>::run(tc, u16[0], u16[1]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x8, uint16x8>::run(tc, u16[0], u16[1]);
+    // Vectors with 16-bit integer elements
+    TemplateTestHelper<Test_permute_bytes16_x2, uint16x16>::run(tc, u16[0]);
+    TemplateTestHelper<Test_permute_bytes16_x4, uint16x16>::run(tc, u16[0]);
+    TemplateTestHelper<Test_permute_bytes16_x8, uint16x16>::run(tc, u16[0]);
+    TemplateTestHelper<Test_shuffle_bytes16_x2, uint16x16>::run(tc, u16[0], u16[1]);
+    TemplateTestHelper<Test_shuffle_bytes16_x4, uint16x16>::run(tc, u16[0], u16[1]);
+    TemplateTestHelper<Test_shuffle_bytes16_x8, uint16x16>::run(tc, u16[0], u16[1]);
+    TemplateTestHelper<Test_permute_zbytes16_x2, uint16x16>::run(tc, u16[0]);
+    TemplateTestHelper<Test_permute_zbytes16_x4, uint16x16>::run(tc, u16[0]);
+    TemplateTestHelper<Test_permute_zbytes16_x8, uint16x16>::run(tc, u16[0]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x2, uint16x16>::run(tc, u16[0], u16[1]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x4, uint16x16>::run(tc, u16[0], u16[1]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x8, uint16x16>::run(tc, u16[0], u16[1]);
 
-    // int32x4
-    TemplateTestHelper<Test_permute_bytes16_x2, uint32x4>::run(tc, u32[0]);
-    TemplateTestHelper<Test_permute_bytes16_x4, uint32x4>::run(tc, u32[0]);
-    TemplateTestHelper<Test_shuffle_bytes16_x2, uint32x4>::run(tc, u32[0], u32[1]);
-    TemplateTestHelper<Test_shuffle_bytes16_x4, uint32x4>::run(tc, u32[0], u32[1]);
-    TemplateTestHelper<Test_permute_zbytes16_x2, uint32x4>::run(tc, u32[0]);
-    TemplateTestHelper<Test_permute_zbytes16_x4, uint32x4>::run(tc, u32[0]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x2, uint32x4>::run(tc, u32[0], u32[1]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x4, uint32x4>::run(tc, u32[0], u32[1]);
+    // Vectors with 32-bit integer elements
+    TemplateTestHelper<Test_permute_bytes16_x2, uint32x8>::run(tc, u32[0]);
+    TemplateTestHelper<Test_permute_bytes16_x4, uint32x8>::run(tc, u32[0]);
+    TemplateTestHelper<Test_shuffle_bytes16_x2, uint32x8>::run(tc, u32[0], u32[1]);
+    TemplateTestHelper<Test_shuffle_bytes16_x4, uint32x8>::run(tc, u32[0], u32[1]);
+    TemplateTestHelper<Test_permute_zbytes16_x2, uint32x8>::run(tc, u32[0]);
+    TemplateTestHelper<Test_permute_zbytes16_x4, uint32x8>::run(tc, u32[0]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x2, uint32x8>::run(tc, u32[0], u32[1]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x4, uint32x8>::run(tc, u32[0], u32[1]);
 
-    // float32x4
-    TemplateTestHelper<Test_permute_bytes16_x2, float32x4>::run(tc, f32[0]);
-    TemplateTestHelper<Test_permute_bytes16_x4, float32x4>::run(tc, f32[0]);
-    TemplateTestHelper<Test_shuffle_bytes16_x2, float32x4>::run(tc, f32[0], f32[1]);
-    TemplateTestHelper<Test_shuffle_bytes16_x4, float32x4>::run(tc, f32[0], f32[1]);
-    TemplateTestHelper<Test_permute_zbytes16_x2, float32x4>::run(tc, f32[0]);
-    TemplateTestHelper<Test_permute_zbytes16_x4, float32x4>::run(tc, f32[0]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x2, float32x4>::run(tc, f32[0], f32[1]);
-    TemplateTestHelper<Test_shuffle_zbytes16_x4, float32x4>::run(tc, f32[0], f32[1]);
+    // Vectors with 32-bit floating-point elements
+    TemplateTestHelper<Test_permute_bytes16_x2, float32x8>::run(tc, f32[0]);
+    TemplateTestHelper<Test_permute_bytes16_x4, float32x8>::run(tc, f32[0]);
+    TemplateTestHelper<Test_shuffle_bytes16_x2, float32x8>::run(tc, f32[0], f32[1]);
+    TemplateTestHelper<Test_shuffle_bytes16_x4, float32x8>::run(tc, f32[0], f32[1]);
+    TemplateTestHelper<Test_permute_zbytes16_x2, float32x8>::run(tc, f32[0]);
+    TemplateTestHelper<Test_permute_zbytes16_x4, float32x8>::run(tc, f32[0]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x2, float32x8>::run(tc, f32[0], f32[1]);
+    TemplateTestHelper<Test_shuffle_zbytes16_x4, float32x8>::run(tc, f32[0], f32[1]);
 
     // some tests whether the permute mask itself is correctly generated
     {
-        uint16x8 mask = make_shuffle_bytes16_mask<-1,-1,-1,-1>(mask);
-        uint16x8 r1 = uint16x8::zero();
-        uint16x8 r2 = permute_zbytes16(u16[0], mask);
-        TEST_PUSH(tc, uint16x8, cmp_eq(r1, r2));
+        uint16x16 mask = make_shuffle_bytes16_mask<-1,-1,-1,-1>(mask);
+        uint16x16 r1 = uint16x16::zero();
+        uint16x16 r2 = permute_zbytes16(u16[0], mask);
+        TEST_PUSH(tc, uint16x16, cmp_eq(r1, r2));
     }
     {
-        uint16x8 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
-        uint16x8 r1 = permute<0,1,2,3>(u16[0]);
-        uint16x8 r2 = permute_bytes16(u16[0], mask);
-        TEST_PUSH(tc, uint16x8, cmp_eq(r1, r2));
+        uint16x16 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
+        uint16x16 r1 = permute<0,1,2,3>(u16[0]);
+        uint16x16 r2 = permute_bytes16(u16[0], mask);
+        TEST_PUSH(tc, uint16x16, cmp_eq(r1, r2));
     }
     {
-        uint32x4 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
-        uint32x4 r1 = permute<0,1,2,3>(u32[0]);
-        uint32x4 r2 = permute_zbytes16(u32[0], mask);
-        TEST_PUSH(tc, uint32x4, cmp_eq(r1, r2));
+        uint32x8 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
+        uint32x8 r1 = permute<0,1,2,3>(u32[0]);
+        uint32x8 r2 = permute_zbytes16(u32[0], mask);
+        TEST_PUSH(tc, uint32x8, cmp_eq(r1, r2));
     }
 #else
     (void) res;
