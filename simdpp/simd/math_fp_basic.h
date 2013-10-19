@@ -75,7 +75,7 @@ inline float32x4 abs(float32x4 a)
 inline float32x8 abs(float32x8 a)
 {
 #if SIMDPP_USE_AVX
-    return bit_and(a, float32x8::make_const(0x7fffffff));
+    return bit_and(a, int32x8::make_const(0x7fffffff));
 #else
     return {abs(a[0]), abs(a[1])};
 #endif
@@ -112,7 +112,7 @@ inline float64x2 abs(float64x2 a)
 inline float64x4 abs(float64x4 a)
 {
 #if SIMDPP_USE_AVX
-    return bit_and(a, float64x4::make_const(0x7fffffffffffffff));
+    return bit_and(a, int64x4::make_const(0x7fffffffffffffff));
 #else
     return {abs(a[0]), abs(a[1])};
 #endif
