@@ -454,7 +454,7 @@ float64x4 permute(float64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX
-    return _mm256_permute_pd(a, _MM_SHUFFLE2(s1, s0));
+    return _mm256_permute_pd(a, s0 | s1<<1 | s0<<2 | s1<<3);
 #else
     return permute<s0,s1,s0+2,s1+2>(a);
 #endif
@@ -503,7 +503,7 @@ template<unsigned s0, unsigned s1>
 float64x4 shuffle1(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return _mm256_shuffle_pd(a, b, _MM_SHUFFLE2(s1, s0));
+    return _mm256_shuffle_pd(a, b, s0 | s1<<1 | s0<<2 | s1<<3);
 #else
     return {shuffle1<s0,s1>(a[0], b[0]), shuffle1<s0,s1>(a[1], b[1])};
 #endif
