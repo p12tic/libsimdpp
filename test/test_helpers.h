@@ -251,7 +251,6 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 }
 
 #define NEW_TEST_CASE(R, NAME) ((R).new_test_case((NAME), __FILE__))
-#define tc     (test_case_internal)
 
 #define TEST_ARRAY_PUSH(TC, T, A)                                       \
 {                                                                       \
