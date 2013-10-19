@@ -929,11 +929,11 @@ basic_int16x8 broadcast(basic_int16x8 a)
     // s2 is needed because static_assert fires in branch we don't use
     basic_int64x2 b;
     if (s < 4) {
-        constexpr unsigned s2 = s < 4 ? s : s-4;
+        const unsigned s2 = s < 4 ? s : s-4;
         b = sse::permute_lo<s2,s2,s2,s2>(a);
         return permute<0,0>(b);
     } else {
-        constexpr unsigned s2 = s < 4 ? s : s-4;
+        const unsigned s2 = s < 4 ? s : s-4;
         b = sse::permute_hi<s2,s2,s2,s2>(a);
         return permute<1,1>(b);
     }
@@ -956,12 +956,12 @@ basic_int16x16 broadcast(basic_int16x16 a)
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     if (s < 4) {
-        constexpr unsigned q = (s < 4) ? s : 0;
+        const unsigned q = (s < 4) ? s : 0;
         basic_int64x4 h = _mm256_shufflelo_epi16(a, q << 6 | q << 4 | q << 2 | q);
         h = permute<0,0>(h);
         return h;
     } else {
-        constexpr unsigned q = (s < 4) ? 0 : s - 4;
+        const unsigned q = (s < 4) ? 0 : s - 4;
         basic_int64x4 h = _mm256_shufflehi_epi16(a, q << 6 | q << 4 | q << 2 | q);
         h = permute<1,1>(h);
         return h;

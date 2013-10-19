@@ -56,9 +56,9 @@ public:
     using half_vector_type = float32x4;
     using mask_type = mask_float32x8;
 
-    static constexpr unsigned length = 8;
-    static constexpr unsigned num_bits = 32;
-    static constexpr uint_element_type all_bits = 0xffffffff;
+    static const unsigned length = 8;
+    static const unsigned num_bits = 32;
+    static const uint_element_type all_bits = 0xffffffff;
 
     float32x8() = default;
     float32x8(const float32x8&) = default;
@@ -182,7 +182,7 @@ private:
 /// Class representing a mask for 8x 32-bit floating-point vector
 class mask_float32x8 {
 public:
-    static constexpr unsigned length = 8;
+    static const unsigned length = 8;
 
     mask_float32x8() = default;
     mask_float32x8(const mask_float32x8 &) = default;

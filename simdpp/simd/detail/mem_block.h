@@ -49,7 +49,7 @@ template<class V>
 class mem_block {
 public:
     using element_type = typename V::element_type;
-    static constexpr unsigned length = V::length;
+    static const unsigned length = V::length;
 
     mem_block() = default;
     mem_block(const mem_block&) = default;

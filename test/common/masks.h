@@ -43,7 +43,7 @@ M make_mask(unsigned i)
 
 template<unsigned L>
 struct Masks {
-    static constexpr unsigned length = L;
+    static const unsigned length = L;
 
     simdpp::mask_int8x16 u8[L/16];
     simdpp::mask_int16x8 u16[L/16];

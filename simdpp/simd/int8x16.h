@@ -53,9 +53,9 @@ public:
     using uint_vector_type = uint8x16;
     using mask_type = mask_int8x16;
 
-    static constexpr unsigned length = 16;
-    static constexpr unsigned num_bits = 8;
-    static constexpr uint_element_type all_bits = 0xff;
+    static const unsigned length = 16;
+    static const unsigned num_bits = 8;
+    static const uint_element_type all_bits = 0xff;
 
     basic_int8x16() = default;
     basic_int8x16(const basic_int8x16 &) = default;
@@ -341,7 +341,7 @@ public:
 /// Class representing mask for 16x 8-bit integer vector
 class mask_int8x16 {
 public:
-    static constexpr unsigned length = 16;
+    static const unsigned length = 16;
 
     mask_int8x16() = default;
     mask_int8x16(const mask_int8x16 &) = default;

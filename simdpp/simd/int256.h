@@ -49,9 +49,9 @@ public:
     using uint_element_type = uint64_t;
     using int_vector_type = int256;
 
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 64;
-    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 4;
+    static const unsigned num_bits = 64;
+    static const uint_element_type all_bits = 0xffffffffffffffff;
 
     int256() = default;
     int256(const int256 &) = default;

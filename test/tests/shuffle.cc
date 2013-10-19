@@ -37,13 +37,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 // shuffles within 256-bit vectors are limited to 128-bit halves
 template<class V>
 struct Shuffle_width {
-    static constexpr bool is_256 = (V::length * V::num_bits) == 256 ? true : false;
-    static constexpr unsigned value = is_256 ? V::length / 2 : V::length;
+    static const bool is_256 = (V::length * V::num_bits) == 256 ? true : false;
+    static const unsigned value = is_256 ? V::length / 2 : V::length;
 };
 
 template<class V, unsigned i>
 struct Test_move_r {
-    static constexpr unsigned limit = Shuffle_width<V>::value + 1;
+    static const unsigned limit = Shuffle_width<V>::value + 1;
     static void test(TestCase& tc, V a)
     {
         a = simdpp::move_r<i>(a);
@@ -53,7 +53,7 @@ struct Test_move_r {
 
 template<class V, unsigned i>
 struct Test_move_l {
-    static constexpr unsigned limit = Shuffle_width<V>::value + 1;
+    static const unsigned limit = Shuffle_width<V>::value + 1;
     static void test(TestCase& tc, V a)
     {
         a = simdpp::move_l<i>(a);
@@ -63,7 +63,7 @@ struct Test_move_l {
 
 template<class V, unsigned i>
 struct Test_broadcast {
-    static constexpr unsigned limit = Shuffle_width<V>::value;
+    static const unsigned limit = Shuffle_width<V>::value;
     static void test(TestCase& tc, V a)
     {
         a = simdpp::broadcast<i>(a);
@@ -73,7 +73,7 @@ struct Test_broadcast {
 
 template<class V, unsigned i>
 struct Test_broadcast_w {
-    static constexpr unsigned limit = V::length;
+    static const unsigned limit = V::length;
     static void test(TestCase& tc, V a)
     {
         a = simdpp::broadcast_w<i>(a);
@@ -83,7 +83,7 @@ struct Test_broadcast_w {
 
 template<class V, unsigned i>
 struct Test_align {
-    static constexpr unsigned limit = Shuffle_width<V>::value + 1;
+    static const unsigned limit = Shuffle_width<V>::value + 1;
     static void test(TestCase& tc, V a, V b)
     {
         a = simdpp::align<i>(a, b);
@@ -93,7 +93,7 @@ struct Test_align {
 
 template<class V, unsigned i>
 struct Test_insert_extract {
-    static constexpr unsigned limit = V::length;
+    static const unsigned limit = V::length;
     static void test(TestCase& tc, V a, V b)
     {
         a = simdpp::insert<i>(a, simdpp::extract<i>(b));

@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 template<unsigned L>
 struct Vectors {
-    static constexpr unsigned length = L;
+    static const unsigned length = L;
 
     union {
         uint8_t c[L];

@@ -53,7 +53,7 @@ template<class V>
 V zip_hi(V a, V b)
 {
     V r;
-    constexpr unsigned half = V::length/2;
+    const unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
         r[i*2] = a[half+i];
         r[i*2+1] = b[half+i];

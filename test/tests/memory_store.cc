@@ -95,8 +95,8 @@ void test_memory_store(TestResults& res)
 
     using namespace simdpp;
 
-    constexpr unsigned vnum = 4;
-    constexpr unsigned size = 32*vnum;
+    const unsigned vnum = 4;
+    const unsigned size = 32*vnum;
 
     Vectors<size> v;
 

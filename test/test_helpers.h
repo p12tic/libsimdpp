@@ -464,14 +464,14 @@ struct TemplateTestHelperImpl<F, V, false, i, limit> {
     static void run(TestCase& tc, V a)
     {
         F<V, i>::test(tc, a);
-        constexpr bool is_large = i + 30 < limit;
+        const bool is_large = i + 30 < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a);
     }
 
     static void run(TestCase& tc, V a, V b)
     {
         F<V, i>::test(tc, a, b);
-        constexpr bool is_large = i + 30 < limit;
+        const bool is_large = i + 30 < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a, b);
     }
 };
@@ -512,7 +512,7 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         F<V, i+27>::test(tc, a);
         F<V, i+28>::test(tc, a);
         F<V, i+29>::test(tc, a);
-        constexpr bool is_large = i + 60 < limit;
+        const bool is_large = i + 60 < limit;
         TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a);
     }
 
@@ -549,7 +549,7 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         F<V, i+27>::test(tc, a, b);
         F<V, i+28>::test(tc, a, b);
         F<V, i+29>::test(tc, a, b);
-        constexpr bool is_large = i + 60 < limit;
+        const bool is_large = i + 60 < limit;
         TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a, b);
     }
 };
@@ -570,7 +570,7 @@ template<template<class, unsigned> class F, class V>
 struct TemplateTestHelper {
     static void run(TestCase& tc, V a)
     {
-        constexpr unsigned limit = F<V,0>::limit;
+        const unsigned limit = F<V,0>::limit;
 
         tc.reset_seq();
         TemplateTestHelperImpl<F, V, false, 0, limit>::run(tc, a);
@@ -578,7 +578,7 @@ struct TemplateTestHelper {
 
     static void run(TestCase& tc, V a, V b)
     {
-        constexpr unsigned limit = F<V,0>::limit;
+        const unsigned limit = F<V,0>::limit;
 
         tc.reset_seq();
         TemplateTestHelperImpl<F, V, false, 0, limit>::run(tc, a, b);
@@ -589,7 +589,7 @@ template<template<class, unsigned> class F, class V>
 struct TemplateTestArrayHelper {
     static void run(TestCase& tc, V* a, unsigned n)
     {
-        constexpr unsigned limit = F<V,0>::limit;
+        const unsigned limit = F<V,0>::limit;
 
         tc.reset_seq();
         for (unsigned i = 0; i < n; i++) {
@@ -599,7 +599,7 @@ struct TemplateTestArrayHelper {
 
     static void run(TestCase& tc, V* a, V* b, unsigned n)
     {
-        constexpr unsigned limit = F<V,0>::limit;
+        const unsigned limit = F<V,0>::limit;
 
         tc.reset_seq();
         for (unsigned i = 0; i < n; i++) {

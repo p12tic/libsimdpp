@@ -50,9 +50,9 @@ public:
     using uint_element_type = uint64_t;
     using int_vector_type = int128;
 
-    static constexpr unsigned length = 2;
-    static constexpr unsigned num_bits = 64;
-    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 2;
+    static const unsigned num_bits = 64;
+    static const uint_element_type all_bits = 0xffffffffffffffff;
 
     int128() = default;
     int128(const int128 &) = default;

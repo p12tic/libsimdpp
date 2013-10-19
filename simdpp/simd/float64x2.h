@@ -55,9 +55,9 @@ public:
     using uint_vector_type = uint64x2;
     using mask_type = mask_float64x2;
 
-    static constexpr unsigned length = 2;
-    static constexpr unsigned num_bits = 64;
-    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 2;
+    static const unsigned num_bits = 64;
+    static const uint_element_type all_bits = 0xffffffffffffffff;
 
     float64x2() = default;
     float64x2(const float64x2&) = default;
@@ -147,7 +147,7 @@ private:
 /// Class representing a mask for 2x 64-bit floating-point vector
 class mask_float64x2 {
 public:
-    static constexpr unsigned length = 2;
+    static const unsigned length = 2;
 
     mask_float64x2() = default;
     mask_float64x2(const mask_float64x2 &) = default;

@@ -55,9 +55,9 @@ public:
     using uint_vector_type = uint32x4;
     using mask_type = mask_int32x4;
 
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 32;
-    static constexpr uint_element_type all_bits = 0xffffffff;
+    static const unsigned length = 4;
+    static const unsigned num_bits = 32;
+    static const uint_element_type all_bits = 0xffffffff;
 
     basic_int32x4() = default;
     basic_int32x4(const basic_int32x4&) = default;
@@ -332,7 +332,7 @@ public:
 /// Class representing mask for 4x 32-bit integer vector
 class mask_int32x4 {
 public:
-    static constexpr unsigned length = 4;
+    static const unsigned length = 4;
 
     mask_int32x4() = default;
     mask_int32x4(const mask_int32x4 &) = default;

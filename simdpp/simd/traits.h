@@ -41,55 +41,55 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Allows detection whether specific type is a simdpp vector
 template<class T>
-struct is_vector { static constexpr bool value = false; };
+struct is_vector { static const bool value = false; };
 
-template<> class is_vector<float32x4>   { static constexpr bool value = true; };
-template<> class is_vector<float64x2>   { static constexpr bool value = true; };
-template<> class is_vector<float32x8>   { static constexpr bool value = true; };
-template<> class is_vector<float64x4>   { static constexpr bool value = true; };
-template<> class is_vector<int128>      { static constexpr bool value = true; };
-template<> class is_vector<int256>      { static constexpr bool value = true; };
-template<> class is_vector<int8x16>     { static constexpr bool value = true; };
-template<> class is_vector<int16x8>     { static constexpr bool value = true; };
-template<> class is_vector<int32x4>     { static constexpr bool value = true; };
-template<> class is_vector<int64x2>     { static constexpr bool value = true; };
-template<> class is_vector<int8x32>     { static constexpr bool value = true; };
-template<> class is_vector<int16x16>    { static constexpr bool value = true; };
-template<> class is_vector<int32x8>     { static constexpr bool value = true; };
-template<> class is_vector<int64x4>     { static constexpr bool value = true; };
-template<> class is_vector<uint8x16>    { static constexpr bool value = true; };
-template<> class is_vector<uint16x8>    { static constexpr bool value = true; };
-template<> class is_vector<uint32x4>    { static constexpr bool value = true; };
-template<> class is_vector<uint64x2>    { static constexpr bool value = true; };
-template<> class is_vector<uint8x32>    { static constexpr bool value = true; };
-template<> class is_vector<uint16x16>   { static constexpr bool value = true; };
-template<> class is_vector<uint32x8>    { static constexpr bool value = true; };
-template<> class is_vector<uint64x4>    { static constexpr bool value = true; };
-template<> class is_vector<basic_int8x16>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int16x8>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int32x4>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int64x2>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int8x32>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int16x16>  { static constexpr bool value = true; };
-template<> class is_vector<basic_int32x8>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int64x4>   { static constexpr bool value = true; };
+template<> class is_vector<float32x4>   { static const bool value = true; };
+template<> class is_vector<float64x2>   { static const bool value = true; };
+template<> class is_vector<float32x8>   { static const bool value = true; };
+template<> class is_vector<float64x4>   { static const bool value = true; };
+template<> class is_vector<int128>      { static const bool value = true; };
+template<> class is_vector<int256>      { static const bool value = true; };
+template<> class is_vector<int8x16>     { static const bool value = true; };
+template<> class is_vector<int16x8>     { static const bool value = true; };
+template<> class is_vector<int32x4>     { static const bool value = true; };
+template<> class is_vector<int64x2>     { static const bool value = true; };
+template<> class is_vector<int8x32>     { static const bool value = true; };
+template<> class is_vector<int16x16>    { static const bool value = true; };
+template<> class is_vector<int32x8>     { static const bool value = true; };
+template<> class is_vector<int64x4>     { static const bool value = true; };
+template<> class is_vector<uint8x16>    { static const bool value = true; };
+template<> class is_vector<uint16x8>    { static const bool value = true; };
+template<> class is_vector<uint32x4>    { static const bool value = true; };
+template<> class is_vector<uint64x2>    { static const bool value = true; };
+template<> class is_vector<uint8x32>    { static const bool value = true; };
+template<> class is_vector<uint16x16>   { static const bool value = true; };
+template<> class is_vector<uint32x8>    { static const bool value = true; };
+template<> class is_vector<uint64x4>    { static const bool value = true; };
+template<> class is_vector<basic_int8x16>   { static const bool value = true; };
+template<> class is_vector<basic_int16x8>   { static const bool value = true; };
+template<> class is_vector<basic_int32x4>   { static const bool value = true; };
+template<> class is_vector<basic_int64x2>   { static const bool value = true; };
+template<> class is_vector<basic_int8x32>   { static const bool value = true; };
+template<> class is_vector<basic_int16x16>  { static const bool value = true; };
+template<> class is_vector<basic_int32x8>   { static const bool value = true; };
+template<> class is_vector<basic_int64x4>   { static const bool value = true; };
 
 /// Allows detection whether specific type is a simdpp mask
 template<class T>
-struct is_mask { static constexpr bool value = false; };
+struct is_mask { static const bool value = false; };
 
-template<> class is_mask<mask_int8x16>  { static constexpr bool value = true; };
-template<> class is_mask<mask_int8x32>  { static constexpr bool value = true; };
-template<> class is_mask<mask_int16x8>  { static constexpr bool value = true; };
-template<> class is_mask<mask_int16x16> { static constexpr bool value = true; };
-template<> class is_mask<mask_int32x4>  { static constexpr bool value = true; };
-template<> class is_mask<mask_int32x8>  { static constexpr bool value = true; };
-template<> class is_mask<mask_int64x2>  { static constexpr bool value = true; };
-template<> class is_mask<mask_int64x4>  { static constexpr bool value = true; };
-template<> class is_mask<mask_float32x4> { static constexpr bool value = true; };
-template<> class is_mask<mask_float32x8> { static constexpr bool value = true; };
-template<> class is_mask<mask_float64x2> { static constexpr bool value = true; };
-template<> class is_mask<mask_float64x4> { static constexpr bool value = true; };
+template<> class is_mask<mask_int8x16>  { static const bool value = true; };
+template<> class is_mask<mask_int8x32>  { static const bool value = true; };
+template<> class is_mask<mask_int16x8>  { static const bool value = true; };
+template<> class is_mask<mask_int16x16> { static const bool value = true; };
+template<> class is_mask<mask_int32x4>  { static const bool value = true; };
+template<> class is_mask<mask_int32x8>  { static const bool value = true; };
+template<> class is_mask<mask_int64x2>  { static const bool value = true; };
+template<> class is_mask<mask_int64x4>  { static const bool value = true; };
+template<> class is_mask<mask_float32x4> { static const bool value = true; };
+template<> class is_mask<mask_float32x8> { static const bool value = true; };
+template<> class is_mask<mask_float64x2> { static const bool value = true; };
+template<> class is_mask<mask_float64x4> { static const bool value = true; };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
