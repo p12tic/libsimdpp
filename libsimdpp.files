@@ -51,6 +51,7 @@ simdpp/simd/detail/width.h
 simdpp/simd/detail/traits.h
 simdpp/simd/detail/shuffle_emul.h
 simdpp/simd/detail/not_implemented.h
+simdpp/simd/detail/word_size.h
 simdpp/simd/bitwise.h
 simdpp/simd/cast.h
 simdpp/simd/extract.h
