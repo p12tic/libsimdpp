@@ -354,7 +354,7 @@ void v256_load_i_packed2(V& a, V& b, const void* p)
     sse::detail::ld_unpack2(a, b);
 #else
     load_packed2(a[0], b[0], q);
-    load_packed2(a[1], b[1], q + 64);
+    load_packed2(a[1], b[1], q + 32);
 #endif
 }
 
@@ -369,7 +369,7 @@ void v256_load_i_packed3(V& a, V& b, V& c, const void* p)
     sse::detail::ld_unpack3(a, b, c);
 #else
     load_packed3(a[0], b[0], c[0], q);
-    load_packed3(a[1], b[1], c[1], q + 96);
+    load_packed3(a[1], b[1], c[1], q + 48);
 #endif
 }
 
@@ -385,7 +385,7 @@ void v256_load_i_packed4(V& a, V& b, V& c, V& d, const void* p)
     sse::detail::ld_unpack4(a, b, c, d);
 #else
     load_packed4(a[0], b[0], c[0], d[0], q);
-    load_packed4(a[1], b[1], c[1], d[1], q + 128);
+    load_packed4(a[1], b[1], c[1], d[1], q + 64);
 #endif
 }
 

@@ -931,7 +931,7 @@ void v256_store_i_pack2(void* p, V a, V b)
     store(q + 32, b);
 #else
     store_packed2(q, a[0], b[0]);
-    store_packed2(q + 64, a[1], b[1]);
+    store_packed2(q + 32, a[1], b[1]);
 #endif
 }
 
@@ -946,7 +946,7 @@ void v256_store_i_pack3(void* p, V a, V b, V c)
     store(q + 64, c);
 #else
     store_packed3(q, a[0], b[0], c[0]);
-    store_packed3(q + 96, a[1], b[1], c[1]);
+    store_packed3(q + 48, a[1], b[1], c[1]);
 #endif
 }
 
@@ -962,7 +962,7 @@ void v256_store_i_pack4(void* p, V a, V b, V c, V d)
     store(q + 96, d);
 #else
     store_packed4(q, a[0], b[0], c[0], d[0]);
-    store_packed4(q + 128, a[1], b[1], c[1], d[1]);
+    store_packed4(q + 64, a[1], b[1], c[1], d[1]);
 #endif
 }
 
