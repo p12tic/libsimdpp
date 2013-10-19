@@ -209,14 +209,16 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 }
 
 // applies the same operation to 32-byte and 16-byte vectors
-#define TEST_PUSH32_1(TC,T,OP,Q1)                                       \
+// Single argument version
+#define TEST_PUSH16X2_1(TC,T,OP,Q1)                                       \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1)), __LINE__);                  \
     using H = typename traits<T>::half_vector_type;                     \
     test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)))), __LINE__);  \
 }
 
-#define TEST_PUSH32_2(TC,T,OP,Q1,Q2)                                    \
+// Two argument version
+#define TEST_PUSH16X2_2(TC,T,OP,Q1,Q2)                                    \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2)), __LINE__);            \
     using H = typename traits<T>::half_vector_type;                     \
