@@ -33,7 +33,6 @@
 #endif
 
 #include <simdpp/simd/int128.h>
-#include <cstdint>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
