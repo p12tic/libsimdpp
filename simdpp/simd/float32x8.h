@@ -70,7 +70,7 @@ public:
 #elif SIMDPP_USE_AVX
     explicit float32x8(basic_int32x8 d)
     {
-        d_ = _mm256_castsi256_ps(_mm256_inserti128_si256(_mm256_castsi128_si256(d[0]), d[1], 1));
+        d_ = _mm256_castsi256_ps(_mm256_insertf128_si256(_mm256_castsi128_si256(d[0]), d[1], 1));
     }
 #else
     explicit float32x8(basic_int32x8 d)

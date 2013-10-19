@@ -487,7 +487,7 @@ inline basic_int64x2 to_int64x2(int32x4 a)
 #endif
 }
 
-inline basic_int64x4 to_int64x2(int32x8 a)
+inline basic_int64x4 to_int64x4(int32x8 a)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;
@@ -496,7 +496,7 @@ inline basic_int64x4 to_int64x2(int32x8 a)
     r[1][0] = int64_t(a[0][2]);
     r[1][1] = int64_t(a[0][3]);
     return r;
-#elif SIMDPP_USE_AVX
+#elif SIMDPP_USE_AVX2
     return _mm256_cvtepi32_epi64(sse::extract_lo(a));
 #elif SIMDPP_USE_SSE2
     return int64x4(to_int64x2(a[0]), to_int64x2(move_l<2>(a[0])));

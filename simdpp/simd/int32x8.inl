@@ -45,7 +45,7 @@ inline basic_int32x8::basic_int32x8(const float32x8& d)
 #elif SIMDPP_USE_AVX
     __m256i d1 = _mm256_castps_si256(d);
     u32(0) = _mm256_castsi256_si128(d1);
-    u32(1) = _mm256_extracti128_si256(d1, 1);
+    u32(1) = _mm256_extractf128_si256(d1, 1);
 #else
     u32(0) = d[0];
     u32(1) = d[1];

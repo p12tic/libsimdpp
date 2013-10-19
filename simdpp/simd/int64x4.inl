@@ -46,7 +46,7 @@ inline basic_int64x4::basic_int64x4(const float64x4& d)
 #elif SIMDPP_USE_AVX
     __m256i d1 = _mm256_castpd_si256(d);
     u64(0) = _mm256_castsi256_si128(d1);
-    u64(1) = _mm256_extracti128_si256(d1, 1);
+    u64(1) = _mm256_extractf128_si256(d1, 1);
 #else
     u64(0) = d[0];
     u64(1) = d[1];

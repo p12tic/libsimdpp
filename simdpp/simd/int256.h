@@ -69,7 +69,7 @@ public:
 #elif SIMDPP_USE_AVX
     operator __m256i() const
     {
-        return _mm256_inserti128_si256(_mm256_castsi128_si256(d_[0]), d_[1], 1);
+        return _mm256_insertf128_si256(_mm256_castsi128_si256(d_[0]), d_[1], 1);
     }
 #endif
     /// @}
