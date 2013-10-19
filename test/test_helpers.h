@@ -145,21 +145,9 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
 }
 // @}
 
-} // namespace SIMDPP_ARCH_NAMESPACE
-
-// we are supposed to call this from within the test function which is in
-// SIMDPP_ARCH_NAMESPACE namespace
-
-/*
-    T - type
-    D - an object of type T to push
-    A - array of objects to push
-    O1, Q2 - arguments to apply OP to
-    OP - operation to apply to the array or arguments
-    R - type to cast the object to be pushed to
+/* Extracts the lower half of a vector.
+    @{
 */
-#define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __LINE__); }
-
 template<class R, class T>
 inline R tst_ext_half_impl(T x)
 {
@@ -231,6 +219,22 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 {
     return tst_ext_half_impl<simdpp::float64x2>(x);
 }
+// @}
+
+} // namespace SIMDPP_ARCH_NAMESPACE
+
+// we are supposed to call this from within the test function which is in
+// SIMDPP_ARCH_NAMESPACE namespace
+
+/*
+    T - type
+    D - an object of type T to push
+    A - array of objects to push
+    O1, Q2 - arguments to apply OP to
+    OP - operation to apply to the array or arguments
+    R - type to cast the object to be pushed to
+*/
+#define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __LINE__); }
 
 // applies the same operation to 32-byte and 16-byte vectors
 // Single argument version
