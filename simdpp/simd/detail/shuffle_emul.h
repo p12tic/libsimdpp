@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<unsigned s0, unsigned s1, class V>
-auto permute_half(V a) -> typename traits<V>::half_vector_type
+typename traits<V>::half_vector_type permute_half(V a)
 {
     switch (s0*4+s1) {
     case 0: /* 0 0 */ return permute<0,0>(a[0]);
