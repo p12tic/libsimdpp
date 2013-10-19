@@ -81,6 +81,7 @@ inline void get_arch_info_impl(std::atomic<Arch>& info,
 {
     Arch arch_info{};
 #ifdef __GNUC__
+#if __i386__ || __amd64__
     if (__builtin_cpu_supports("avx2")) {
         arch_info |= Arch::X86_SSE2;
         arch_info |= Arch::X86_SSE3;
@@ -109,6 +110,7 @@ inline void get_arch_info_impl(std::atomic<Arch>& info,
     } else if (__builtin_cpu_supports("sse2")) {
         arch_info |= Arch::X86_SSE2;
     }
+#endif
 #endif
     ArchUserInfo user_info = get_info_cb();
     arch_info |= user_info.supported;       // add supported
