@@ -35,9 +35,9 @@
 #include <cstdlib>
 
 TestCase::TestCase(const char* name, const char* file) :
-    name_{name},
-    file_{file},
-    curr_precision_ulp_{0}
+    name_(name),
+    file_(file),
+    curr_precision_ulp_(0)
 {
     reset_seq();
 }

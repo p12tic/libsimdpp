@@ -72,16 +72,16 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    basic_int64x2(__m128i d) : int128{d} {}
+    basic_int64x2(__m128i d) : int128(d) {}
     basic_int64x2& operator=(__m128i d) { int128::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    basic_int64x2(uint64x2_t d) : int128{d} {}
-    basic_int64x2( int64x2_t d) : int128{d} {}
+    basic_int64x2(uint64x2_t d) : int128(d) {}
+    basic_int64x2( int64x2_t d) : int128(d) {}
     basic_int64x2& operator=(uint64x2_t d) { int128::operator=(d); return *this; }
     basic_int64x2& operator=( int64x2_t d) { int128::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    basic_int64x2(__vector uint32_t d) : int128{d} {}
-    basic_int64x2(__vector  int32_t d) : int128{d} {}
+    basic_int64x2(__vector uint32_t d) : int128(d) {}
+    basic_int64x2(__vector  int32_t d) : int128(d) {}
     basic_int64x2& operator=(__vector uint32_t d) { int128::operator=(d); return *this; }
     basic_int64x2& operator=(__vector  int32_t d) { int128::operator=(d); return *this; }
 #endif
@@ -116,28 +116,28 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    int64x2(__m128i d) : basic_int64x2{d} {}
+    int64x2(__m128i d) : basic_int64x2(d) {}
     int64x2& operator=(__m128i d) { basic_int64x2::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    int64x2(int64x2_t d) : basic_int64x2{d} {}
+    int64x2(int64x2_t d) : basic_int64x2(d) {}
     int64x2& operator=(int64x2_t d) { basic_int64x2::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    int64x2(__vector  int32_t d) : basic_int64x2{d} {}
+    int64x2(__vector  int32_t d) : basic_int64x2(d) {}
     int64x2& operator=(__vector  int32_t d) { basic_int64x2::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int64x2(const int128& d) : basic_int64x2{d} {}
-    int64x2(basic_int64x2 d) : basic_int64x2{d} {}
+    int64x2(const int128& d) : basic_int64x2(d) {}
+    int64x2(basic_int64x2 d) : basic_int64x2(d) {}
     int64x2& operator=(int128 d) { basic_int64x2::operator=(d); return *this; }
     int64x2& operator=(basic_int64x2 d) { basic_int64x2::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float64x4 integer vector type
-    explicit int64x2(const float64x2& d) : basic_int64x2{d} {}
+    explicit int64x2(const float64x2& d) : basic_int64x2(d) {}
     int64x2& operator=(const float64x2& d) { basic_int64x2::operator=(d); return *this; }
     /// @}
 
@@ -210,28 +210,28 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    uint64x2(__m128i d) : basic_int64x2{d} {}
+    uint64x2(__m128i d) : basic_int64x2(d) {}
     uint64x2& operator=(__m128i d) { basic_int64x2::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    uint64x2(uint64x2_t d) : basic_int64x2{d} {}
+    uint64x2(uint64x2_t d) : basic_int64x2(d) {}
     uint64x2& operator=(uint64x2_t d) { basic_int64x2::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    uint64x2(__vector uint32_t d) : basic_int64x2{d} {}
+    uint64x2(__vector uint32_t d) : basic_int64x2(d) {}
     uint64x2& operator=(__vector uint32_t d) { basic_int64x2::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint64x2(const int128& d) : basic_int64x2{d} {}
-    uint64x2(basic_int64x2 d) : basic_int64x2{d} {}
+    uint64x2(const int128& d) : basic_int64x2(d) {}
+    uint64x2(basic_int64x2 d) : basic_int64x2(d) {}
     uint64x2& operator=(int128 d) { basic_int64x2::operator=(d); return *this; }
     uint64x2& operator=(basic_int64x2 d) { basic_int64x2::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float64x4 integer vector type
-    explicit uint64x2(const float64x2& d) : basic_int64x2{d} {}
+    explicit uint64x2(const float64x2& d) : basic_int64x2(d) {}
     uint64x2& operator=(const float64x2& d) { basic_int64x2::operator=(d); return *this; }
     /// @}
 

@@ -73,9 +73,9 @@ namespace SIMDPP_ARCH_NAMESPACE {                                           $n$
                                                                             $n$
 static ::simdpp::detail::DispatchRegistrator<                               $n$
         simdpp_ ## NAME ## _tag,$ret_type$$types$                           $n$
-> simdpp_dispatch_registrator_ ## NAME {                                    $n$
+> simdpp_dispatch_registrator_ ## NAME (                                    $n$
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),               $n$
-        static_cast<$ret_type$(*)($types$)>(&NAME)};                        $n$
+        static_cast<$ret_type$(*)($types$)>(&NAME));                        $n$
                                                                             $n$
 } /* namespace SIMDPP_ARCH_NAMESPACE */
 '''

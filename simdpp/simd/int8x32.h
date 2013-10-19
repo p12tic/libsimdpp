@@ -71,14 +71,14 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    basic_int8x32(__m256i d) : int256{d} {}
+    basic_int8x32(__m256i d) : int256(d) {}
     basic_int8x32& operator=(__m256i d) { int256::operator=(d); return *this; }
 #endif
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    basic_int8x32(basic_int8x16 d0, basic_int8x16 d1) : int256{d0, d1} {}
+    basic_int8x32(basic_int8x16 d0, basic_int8x16 d1) : int256(d0, d1) {}
 
     const basic_int8x16& operator[](unsigned i) const { return u8(i); }
           basic_int8x16& operator[](unsigned i)       { return u8(i); }
@@ -101,22 +101,22 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    int8x32(__m256i d) : basic_int8x32{d} {}
+    int8x32(__m256i d) : basic_int8x32(d) {}
     int8x32& operator=( __m256i d) { basic_int8x32::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int8x32(const int256& d) : basic_int8x32{d} {}
-    int8x32(const basic_int8x32& d) : basic_int8x32{d} {}
+    int8x32(const int256& d) : basic_int8x32(d) {}
+    int8x32(const basic_int8x32& d) : basic_int8x32(d) {}
     int8x32& operator=(int256 d) { basic_int8x32::operator=(d); return *this; }
     int8x32& operator=(basic_int8x32 d) { basic_int8x32::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    int8x32(int8x16 d0, int8x16 d1) : basic_int8x32{d0, d1} {}
+    int8x32(int8x16 d0, int8x16 d1) : basic_int8x32(d0, d1) {}
 
     const int8x16& operator[](unsigned i) const { return i8(i); }
           int8x16& operator[](unsigned i)       { return i8(i); }
@@ -235,22 +235,22 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    uint8x32(__m256i d) : basic_int8x32{d} {}
+    uint8x32(__m256i d) : basic_int8x32(d) {}
     uint8x32& operator=(__m256i d) { basic_int8x32::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint8x32(const int256& d) : basic_int8x32{d} {}
-    uint8x32(const basic_int8x32& d) : basic_int8x32{d} {}
+    uint8x32(const int256& d) : basic_int8x32(d) {}
+    uint8x32(const basic_int8x32& d) : basic_int8x32(d) {}
     uint8x32& operator=(int256 d) { basic_int8x32::operator=(d); return *this; }
     uint8x32& operator=(basic_int8x32 d) { basic_int8x32::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    uint8x32(uint8x16 d0, uint8x16 d1) : basic_int8x32{d0, d1} {}
+    uint8x32(uint8x16 d0, uint8x16 d1) : basic_int8x32(d0, d1) {}
 
     const uint8x16& operator[](unsigned i) const { return u8(i); }
           uint8x16& operator[](unsigned i)       { return u8(i); }
