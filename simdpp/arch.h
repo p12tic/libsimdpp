@@ -28,7 +28,7 @@
 #ifndef LIBSIMDPP_ARCH_H
 #define LIBSIMDPP_ARCH_H
 
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 

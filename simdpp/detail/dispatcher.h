@@ -34,7 +34,7 @@
 
 #include <atomic>
 #include <algorithm>
-#include <cstdint>
+#include <stdint.h>
 #include <cstdlib>
 #include <functional>
 #include <iostream>
