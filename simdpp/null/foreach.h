@@ -66,4 +66,18 @@ R foreach(V1 v1, V2 v2, C c)
 #endif
 } // namespace simdpp
 
+#define SIMDPP_DEF_FUNCTOR(name, arg, expr) \
+    namespace { \
+    template <class T, class R=T, class ParamType=T> struct name { \
+        R operator()(T arg) { return expr; } \
+    };\
+    }
+
+#define SIMDPP_DEF_FUNCTOR2(name, arg1, arg2, expr) \
+    namespace { \
+    template <class T, class R=T, class ParamType=T> struct name { \
+        R operator()(T arg1, T arg2) { return expr; } \
+    };\
+    }
+
 #endif

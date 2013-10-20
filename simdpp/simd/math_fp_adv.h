@@ -51,6 +51,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+SIMDPP_DEF_FUNCTOR(null_isnan, x, std::isnan(x) ? 0xffffffffffffffff : 0);
+
 /// @ingroup simd_math_fp
 /// @{
 
@@ -69,7 +71,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 inline basic_int32x4 isnan(float32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, [](float x) { return std::isnan(x) ? 0xffffffff : 0; });
+    return null::foreach<int32x4>(a, null_isnan<float>());
 #elif SIMDPP_USE_AVX
     return int32x4(_mm_cmp_ps(a, a, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
@@ -108,9 +110,7 @@ inline basic_int32x8 isnan(float32x8 a)
 inline basic_int64x2 isnan(float64x2 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int64x2>(a, [](float x) {
-        return std::isnan(x) ? 0xffffffffffffffff : 0;
-    });
+    return null::foreach<int64x2>(a, null_isnan<double>());
 #elif SIMDPP_USE_AVX2
     return int64x2(_mm_cmp_pd(a, a, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
@@ -129,6 +129,8 @@ inline basic_int64x4 isnan(float64x4 a)
 #endif
 }
 /// @}
+
+SIMDPP_DEF_FUNCTOR2(null_isnan2, a, b, std::isnan(a) || std::isnan(b) ? 0xffffffffffffffff : 0);
 
 /// @{
 /** Checks whether corresponding elements in either @a a or @a b are IEEE754 NaN.
@@ -149,9 +151,7 @@ inline basic_int64x4 isnan(float64x4 a)
 inline basic_int32x4 isnan2(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, b, [](float a, float b) {
-        return std::isnan(a) || std::isnan(b) ? 0xffffffff : 0;
-    });
+    return null::foreach<int32x4>(a, b, null_isnan2<float>());
 #elif SIMDPP_USE_AVX
     return int32x4(_mm_cmp_ps(a, b, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
@@ -191,9 +191,7 @@ inline basic_int32x8 isnan2(float32x8 a, float32x8 b)
 inline basic_int64x2 isnan2(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int64x2>(a, b, [](double a, double b) {
-        return std::isnan(a) || std::isnan(b) ? 0xffffffffffffffff : 0;
-    });
+    return null::foreach<int64x2>(a, b, null_isnan2<double>());
 #elif SIMDPP_USE_AVX
     return int64x2(_mm_cmp_pd(a, b, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
@@ -213,6 +211,8 @@ inline basic_int64x4 isnan2(float64x4 a, float64x4 b)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR(null_rcp_e, x, T(1.0) / x);
+
 /// @{
 /** Computes approximate reciprocal.
 
@@ -228,7 +228,7 @@ inline basic_int64x4 isnan2(float64x4 a, float64x4 b)
 inline float32x4 rcp_e(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return 1.0f / a; });
+    return null::foreach<float32x4>(a, null_rcp_e<float>());
 #elif SIMDPP_USE_SSE2
     return _mm_rcp_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -245,6 +245,8 @@ inline float32x8 rcp_e(float32x8 a)
 #endif
 }
 /// @}
+
+SIMDPP_DEF_FUNCTOR2(null_rcp_rh, x, a, x*(T(2.0) - x*a));
 
 /// @{
 /** Computes one Newton-Rhapson iterations for reciprocal. @a x is the current
@@ -268,7 +270,7 @@ inline float32x8 rcp_e(float32x8 a)
 inline float32x4 rcp_rh(float32x4 x, float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
+    return null::foreach<float32x4>(x, a, null_rcp_rh<float>());
 #elif SIMDPP_USE_SSE2
     float32x4 c2, r;
     c2 = float32x4::make_const(2.0f);
@@ -304,6 +306,8 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR2(null_div, a, b, a/b);
+
 /// @{
 /** Divides the values of two vectors.
 
@@ -320,7 +324,7 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
 inline float32x4 div(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
+    return null::foreach<float32x4>(a, b, null_div<float>());
 #elif SIMDPP_USE_SSE2
     return _mm_div_ps(a, b);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -361,7 +365,7 @@ inline float32x8 div(float32x8 a, float32x8 b)
 inline float64x2 div(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    return null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
+    return null::foreach<float64x2>(a, b, null_div<double>());
 #elif SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
 #endif
@@ -376,6 +380,8 @@ inline float64x4 div(float64x4 a, float64x4 b)
 #endif
 }
 /// @}
+
+SIMDPP_DEF_FUNCTOR(null_rsqrt_e, a, T(1.0) / std::sqrt(a));
 
 /// @{
 /** Computes approximate reciprocal square root.
@@ -392,7 +398,7 @@ inline float64x4 div(float64x4 a, float64x4 b)
 inline float32x4 rsqrt_e(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return 1.0f / std::sqrt(a); });
+    return null::foreach<float32x4>(a, null_rsqrt_e<float>());
 #elif SIMDPP_USE_SSE2
     return _mm_rsqrt_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -409,6 +415,8 @@ inline float32x8 rsqrt_e(float32x8 a)
 #endif
 }
 /// @}
+
+SIMDPP_DEF_FUNCTOR2(null_rsqrt_rh, x, a, x * (T(3.0) - a*x*x) * T(0.5));
 
 /// @{
 /** Computes one Newton-Rhapson iteration for inverse of square root. @a x is
@@ -434,7 +442,7 @@ inline float32x4 rsqrt_rh(float32x4 x, float32x4 a)
 {
     // x_n = x*(3-d*x*x)/2
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
+    return null::foreach<float32x4>(x, a, null_rsqrt_rh<float>());
 #elif SIMDPP_USE_SSE2
     float32x4 x2, c3, c0p5, r;
 
@@ -480,6 +488,8 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR(null_sqrt, a, std::sqrt(a));
+
 /// @{
 /** Computes square root.
 
@@ -499,7 +509,7 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 inline float32x4 sqrt(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
+    return null::foreach<float32x4>(a, null_sqrt<float>());
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -539,7 +549,7 @@ inline float32x8 sqrt(float32x8 a)
 inline float64x2 sqrt(float64x2 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    return null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
+    return null::foreach<float64x2>(a, null_sqrt<double>());
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_pd(a);
 #endif
@@ -701,6 +711,8 @@ inline float64x4 max(float64x4 a, float64x4 b)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR(null_floor, x, std::floor(x));
+
 /// @{
 /** Rounds the values of a vector towards negative infinity
 
@@ -719,7 +731,7 @@ inline float64x4 max(float64x4 a, float64x4 b)
 inline float32x4 floor(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::floor(x); });
+    return null::foreach<float32x4>(a, null_floor<float>());
 #elif SIMDPP_USE_SSE4_1
     return _mm_floor_ps(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
@@ -751,6 +763,8 @@ inline float32x8 floor(float32x8 a)
 #endif
 }
 
+SIMDPP_DEF_FUNCTOR(null_ceil, x, std::ceil(x));
+
 /// @{
 /** Rounds the values a vector towards positive infinity
 
@@ -769,7 +783,7 @@ inline float32x8 floor(float32x8 a)
 inline float32x4 ceil(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::ceil(x); });
+    return null::foreach<float32x4>(a, null_ceil<float>());
 #elif SIMDPP_USE_SSE4_1
     return _mm_ceil_ps(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
@@ -803,6 +817,8 @@ inline float32x8 ceil(float32x8 a)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR(null_trunc, x, x > 0 ? std::floor(x) : std::ceil(x));
+
 /// @{
 /** Rounds the values of a vector towards zero
     @code
@@ -823,7 +839,7 @@ inline float32x8 ceil(float32x8 a)
 inline float32x4 trunc(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
+    return null::foreach<float32x4>(a, null_trunc<float>());
 #elif SIMDPP_USE_SSE4_1
     return _mm_round_ps(a, 3); // 3 = truncate
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP

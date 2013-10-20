@@ -502,6 +502,8 @@ inline uint32x8 max(uint32x8 a, uint32x8 b)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR2(null_avg, a, b, (ParamType(a) + b + 1) >> 1);
+
 /// @{
 /** Computes rounded average of the unsigned 8-bit values.
 
@@ -517,9 +519,7 @@ inline uint32x8 max(uint32x8 a, uint32x8 b)
 inline uint8x16 avg(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint8x16>(a, b, [](uint8_t a, uint8_t b){
-        return (uint16_t(a) + b + 1) >> 1;
-    });
+    return null::foreach<uint8x16>(a, b, null_avg<uint8_t, uint8_t, uint16_t>());
 #elif SIMDPP_USE_SSE2
     return _mm_avg_epu8(a, b);
 #elif SIMDPP_USE_NEON
@@ -558,9 +558,7 @@ inline uint8x32 avg(uint8x32 a, uint8x32 b)
 inline int8x16 avg(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int8x16>(a, b, [](int8_t a, int8_t b){
-        return (int16_t(a) + b + 1) >> 1;
-    });
+    return null::foreach<int8x16>(a, b, null_avg<int8_t, int8_t, int16_t>());
 #elif SIMDPP_USE_SSE2
     uint8x16 a2, b2, bias, r;
     bias = uint8x16::make_const(0x80);
@@ -605,9 +603,7 @@ inline int8x32 avg(int8x32 a, int8x32 b)
 inline uint16x8 avg(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){
-        return (uint32_t(a) + b + 1) >> 1;
-    });
+    return null::foreach<uint16x8>(a, b, null_avg<uint16_t, uint16_t, uint32_t>());
 #elif SIMDPP_USE_SSE2
     return _mm_avg_epu16(a, b);
 #elif SIMDPP_USE_NEON
@@ -646,9 +642,7 @@ inline uint16x16 avg(uint16x16 a, uint16x16 b)
 inline int16x8 avg(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){
-        return (int32_t(a) + b + 1) >> 1;
-    });
+    return null::foreach<int16x8>(a, b, null_avg<int16_t, int16_t, int32_t>());
 #elif SIMDPP_USE_SSE2
     uint16x8 a2, b2, bias, r;
     bias = uint16x8::make_const(0x8000);
@@ -699,9 +693,7 @@ inline int16x16 avg(int16x16 a, int16x16 b)
 inline uint32x4 avg(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint32x4>(a, b, [](uint32_t a, uint32_t b){
-        return (uint64_t(a) + b + 1) >> 1;
-    });
+    return null::foreach<uint32x4>(a, b, null_avg<uint32_t, uint32_t, uint64_t>());
 #elif SIMDPP_USE_SSE2
     // (x & y) + ((x ^ y) >> 1) + (x ^ y) & 1
     uint32x4 x1, x2, round;
@@ -754,9 +746,7 @@ inline uint32x8 avg(uint32x8 a, uint32x8 b)
 inline int32x4 avg(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, b, [](int32_t a, int32_t b){
-        return (int64_t(a) + b + 1) >> 1;
-    });
+    return null::foreach<int32x4>(a, b, null_avg<int32_t, int32_t, int64_t>());
 #elif SIMDPP_USE_SSE2
     uint32x4 a2, b2, bias, r;
     bias = uint32x4::make_const(0x80000000);
@@ -786,6 +776,8 @@ inline int32x8 avg(int32x8 a, int32x8 b)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR2(null_avg_trunc, a, b, (ParamType(a) + b) >> 1);
+
 /// @{
 /** Computes truncated average of the unsigned 8-bit values.
 
@@ -807,9 +799,7 @@ inline int32x8 avg(int32x8 a, int32x8 b)
 inline uint8x16 avg_trunc(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint8x16>(a, b, [](uint8_t a, uint8_t b){
-        return (uint16_t(a) + b) >> 1;
-    });
+    return null::foreach<uint8x16>(a, b, null_avg_trunc<uint8_t, uint8_t, uint16_t>());
 #elif SIMDPP_USE_SSE2
     // (x & y) + ((x ^ y) >> 1)
     uint8x16 x1 = bit_and(a, b);
@@ -854,9 +844,7 @@ inline uint8x32 avg_trunc(uint8x32 a, uint8x32 b)
 inline int8x16 avg_trunc(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int8x16>(a, b, [](int8_t a, int8_t b){
-        return (int16_t(a) + b) >> 1;
-    });
+    return null::foreach<int8x16>(a, b, null_avg_trunc<int8_t, int8_t, int16_t>());
 #elif SIMDPP_USE_SSE2
     uint8x16 a2, b2, bias, r;
     bias = uint8x16::make_const(0x80);
@@ -907,9 +895,7 @@ inline int8x32 avg_trunc(int8x32 a, int8x32 b)
 inline uint16x8 avg_trunc(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){
-        return (uint32_t(a) + b) >> 1;
-    });
+    return null::foreach<uint16x8>(a, b, null_avg_trunc<uint16_t, uint16_t, uint32_t>());
 #elif SIMDPP_USE_SSE2
     // (x & y) + ((x ^ y) >> 1)
     uint16x8 x1 = bit_and(a, b);
@@ -954,9 +940,7 @@ inline uint16x16 avg_trunc(uint16x16 a, uint16x16 b)
 inline int16x8 avg_trunc(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){
-        return (int32_t(a) + b) >> 1;
-    });
+    return null::foreach<int16x8>(a, b, null_avg_trunc<int16_t, int16_t, int32_t>());
 #elif SIMDPP_USE_SSE2
     uint16x8 a2, b2, bias, r;
     bias = uint16x8::make_const(0x8000);
@@ -1007,9 +991,7 @@ inline int16x16 avg_trunc(int16x16 a, int16x16 b)
 inline uint32x4 avg_trunc(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint32x4>(a, b, [](uint32_t a, uint32_t b){
-        return (uint64_t(a) + b) >> 1;
-    });
+    return null::foreach<uint32x4>(a, b, null_avg_trunc<uint32_t, uint32_t, uint64_t>());
 #elif SIMDPP_USE_SSE2
     // (x & y) + ((x ^ y) >> 1)
     uint32x4 x1 = bit_and(a, b);
@@ -1054,9 +1036,7 @@ inline uint32x8 avg_trunc(uint32x8 a, uint32x8 b)
 inline int32x4 avg_trunc(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, b, [](int32_t a, int32_t b){
-        return (int64_t(a) + b) >> 1;
-    });
+    return null::foreach<int32x4>(a, b, null_avg_trunc<int32_t, int32_t, int64_t>());
 #elif SIMDPP_USE_SSE2
     uint32x4 a2, b2, bias, r;
     bias = uint32x4::make_const(0x80000000);

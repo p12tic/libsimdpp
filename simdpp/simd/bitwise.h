@@ -517,6 +517,8 @@ inline float64x4 bit_xor(float64x4 a, int256 b)
 }
 /// @}
 
+SIMDPP_DEF_FUNCTOR(null_bit_not, x, ~x);
+
 /// @{
 /** Computes bitwise NOT of a 128-bit integer vector
 
@@ -535,7 +537,7 @@ inline float64x4 bit_xor(float64x4 a, int256 b)
 inline int128 bit_not(int128 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int128>(a, [](uint64_t a){ return ~a; });
+    return null::foreach<int128>(a, null_bit_not<uint64_t>());
 #elif SIMDPP_USE_SSE2
     int128 ones = int128::ones();
     return bit_xor(a, ones);
