@@ -242,6 +242,21 @@ double extract(float64x2 a)
 #endif
 }
 
+namespace {
+template<unsigned id>
+struct null_extract_bits_impl {
+    null_extract_bits_impl(uint16_t* r) : r_(r) {}
+
+    uint16_t* r_;
+
+    uint8_t operator()(uint8_t x) {
+        x = (x >> id) & 1;
+        *r_ = (*r_ >> 1) | (uint16_t(x) << 15);
+        return 0; // dummy
+    }
+};
+}  // namespace
+
 namespace detail {
 /* Implementation of extract_bits */
 template<unsigned id>
@@ -251,11 +266,7 @@ struct extract_bits_impl {
     {
 #if SIMDPP_USE_NULL
         uint16_t r = 0;
-        null::foreach<uint8x16>(a, [&r](uint8_t x){
-            x = (x >> id) & 1;
-            r = (r >> 1) | (uint16_t(x) << 15);
-            return 0; // dummy
-        });
+        null::foreach<uint8x16>(a, null_extract_bits_impl<id>(&r));
         return r;
 #elif SIMDPP_USE_SSE2
         a = shift_l<7-id>((uint16x8) a);
@@ -277,6 +288,20 @@ struct extract_bits_impl {
 };
 
 // Optimized implementation
+namespace {
+struct null_extract_bits_impl_777 {
+    null_extract_bits_impl_777(uint16_t* r) : r_(r) {}
+
+    uint16_t* r_;
+
+    uint8_t operator()(uint8_t x) {
+        x = x & 1;
+        *r_ = (*r_ >> 1) | (uint16_t(x) << 15);
+        return 0; // dummy
+    }
+};
+}  // namespace
+
 template<>
 struct extract_bits_impl<777> {
 
@@ -284,11 +309,7 @@ struct extract_bits_impl<777> {
     {
 #if SIMDPP_USE_NULL
         uint16_t r = 0;
-        null::foreach<uint8x16>(a, [&r](uint8_t x){
-            x = x & 1;
-            r = (r >> 1) | (uint16_t(x) << 15);
-            return 0; // dummy
-        });
+        null::foreach<uint8x16>(a, null_extract_bits_impl_777(&r));
         return r;
 #elif SIMDPP_USE_SSE2
         return _mm_movemask_epi8(a);
