@@ -78,10 +78,8 @@ inline float32x4 float32x4::set_broadcast(float v0)
 
 inline float32x4 float32x4::make_const(float v0)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<float32x4>(v0);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_ps(v0, v0, v0, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return float32x4::make_const(v0, v0, v0, v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_f32(&v0);
 #endif
@@ -89,10 +87,8 @@ inline float32x4 float32x4::make_const(float v0)
 
 inline float32x4 float32x4::make_const(float v0, float v1)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<float32x4>(v0, v1);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_ps(v1, v0, v1, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return float32x4::make_const(v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
         int128 align;

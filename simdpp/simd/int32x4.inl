@@ -120,10 +120,8 @@ inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
 
 inline uint32x4 uint32x4::make_const(uint32_t v0)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint32x4>(v0);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi32(v0, v0, v0, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return uint32x4::make_const(v0, v0, v0, v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u32(&v0);
 #endif
@@ -131,10 +129,8 @@ inline uint32x4 uint32x4::make_const(uint32_t v0)
 
 inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint32x4>(v0, v1);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi32(v1, v0, v1, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return uint32x4::make_const(v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
         int128 align;

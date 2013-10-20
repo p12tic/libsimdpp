@@ -66,32 +66,17 @@ inline float32x8 float32x8::set_broadcast(float v0)
 
 inline float32x8 float32x8::make_const(float v0)
 {
-#if SIMDPP_USE_AVX
-    return _mm256_set_ps(v0, v0, v0, v0, v0, v0, v0, v0);
-#else
-    float32x4 a = float32x4::make_const(v0);
-    return {a, a};
-#endif
+    return float32x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);
 }
 
 inline float32x8 float32x8::make_const(float v0, float v1)
 {
-#if SIMDPP_USE_AVX
-    return _mm256_set_ps(v1, v0, v1, v0, v1, v0, v1, v0);
-#else
-    float32x4 a = float32x4::make_const(v0, v1);
-    return {a, a};
-#endif
+    return float32x8::make_const(v0, v1, v0, v1, v0, v1, v0, v1);
 }
 
 inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3)
 {
-#if SIMDPP_USE_AVX
-    return _mm256_set_ps(v3, v2, v1, v0, v3, v2, v1, v0);
-#else
-    float32x4 a = float32x4::make_const(v0, v1, v2, v3);
-    return {a, a};
-#endif
+    return float32x8::make_const(v0, v1, v2, v3, v0, v1, v2, v3);
 }
 
 inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3,

@@ -111,22 +111,12 @@ inline uint64x4 uint64x4::set_broadcast(uint64_t v0)
 
 inline uint64x4 uint64x4::make_const(uint64_t v0)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi64x(v0, v0, v0, v0);
-#else
-    uint64x2 a = uint64x2::make_const(v0);
-    return {a, a};
-#endif
+    return uint64x4::make_const(v0, v0, v0, v0);
 }
 
 inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi64x(v1, v0, v1, v0);
-#else
-    uint64x2 a = uint64x2::make_const(v0, v1);
-    return {a, a};
-#endif
+    return uint64x4::make_const(v0, v1, v0, v1);
 }
 
 inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint64_t v3)

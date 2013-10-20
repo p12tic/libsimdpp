@@ -126,55 +126,35 @@ inline uint8x32 uint8x32::set_broadcast(uint8_t v0)
 
 inline uint8x32 uint8x32::make_const(uint8_t v0)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi8(v0, v0, v0, v0, v0, v0, v0, v0,
-                           v0, v0, v0, v0, v0, v0, v0, v0,
-                           v0, v0, v0, v0, v0, v0, v0, v0,
-                           v0, v0, v0, v0, v0, v0, v0, v0);
-#else
-    uint8x16 a = uint8x16::make_const(v0);
-    return uint8x32(a, a);
-#endif
+    return uint8x32::make_const(v0, v0, v0, v0, v0, v0, v0, v0,
+                                v0, v0, v0, v0, v0, v0, v0, v0,
+                                v0, v0, v0, v0, v0, v0, v0, v0,
+                                v0, v0, v0, v0, v0, v0, v0, v0);
 }
 
 inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi8(v1, v0, v1, v0, v1, v0, v1, v0,
-                           v1, v0, v1, v0, v1, v0, v1, v0,
-                           v1, v0, v1, v0, v1, v0, v1, v0,
-                           v1, v0, v1, v0, v1, v0, v1, v0);
-#else
-    uint8x16 a = uint8x16::make_const(v0, v1);
-    return uint8x32(a, a);
-#endif
+    return uint8x32::make_const(v0, v1, v0, v1, v0, v1, v0, v1,
+                                v0, v1, v0, v1, v0, v1, v0, v1,
+                                v0, v1, v0, v1, v0, v1, v0, v1,
+                                v0, v1, v0, v1, v0, v1, v0, v1);
 }
 
 inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi8(v3, v2, v1, v0, v3, v2, v1, v0,
-                           v3, v2, v1, v0, v3, v2, v1, v0,
-                           v3, v2, v1, v0, v3, v2, v1, v0,
-                           v3, v2, v1, v0, v3, v2, v1, v0);
-#else
-    uint8x16 a = uint8x16::make_const(v0, v1, v2, v3);
-    return uint8x32(a, a);
-#endif
+    return uint8x32::make_const(v0, v1, v2, v3, v0, v1, v2, v3,
+                                v0, v1, v2, v3, v0, v1, v2, v3,
+                                v0, v1, v2, v3, v0, v1, v2, v3,
+                                v0, v1, v2, v3, v0, v1, v2, v3);
 }
 
 inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
                                      uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi8(v7, v6, v5, v4, v3, v2, v1, v0,
-                           v7, v6, v5, v4, v3, v2, v1, v0,
-                           v7, v6, v5, v4, v3, v2, v1, v0,
-                           v7, v6, v5, v4, v3, v2, v1, v0);
-#else
-    uint8x16 a = uint8x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-    return uint8x32(a, a);
-#endif
+    return uint8x32::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
+                                v0, v1, v2, v3, v4, v5, v6, v7,
+                                v0, v1, v2, v3, v4, v5, v6, v7,
+                                v0, v1, v2, v3, v4, v5, v6, v7);
 }
 
 inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
@@ -182,16 +162,10 @@ inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
                                      uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11,
                                      uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi8(v15, v14, v13, v12, v11, v10, v9, v8,
-                           v7, v6, v5, v4, v3, v2, v1, v0,
-                           v15, v14, v13, v12, v11, v10, v9, v8,
-                           v7, v6, v5, v4, v3, v2, v1, v0);
-#else
-    uint8x16 a = uint8x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                      v8, v9, v10, v11, v12, v13, v14, v15);
-    return uint8x32(a, a);
-#endif
+    return uint8x32::make_const(v0, v1, v2,  v3,  v4,  v5,  v6,  v7,
+                                v8, v9, v10, v11, v12, v13, v14, v15,
+                                v0, v1, v2,  v3,  v4,  v5,  v6,  v7,
+                                v8, v9, v10, v11, v12, v13, v14, v15);
 }
 
 inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,

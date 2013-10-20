@@ -116,32 +116,17 @@ inline uint32x8 uint32x8::set_broadcast(uint32_t v0)
 
 inline uint32x8 uint32x8::make_const(uint32_t v0)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi32(v0, v0, v0, v0, v0, v0, v0, v0);
-#else
-    uint32x4 a = uint32x4::make_const(v0);
-    return {a, a};
-#endif
+    return uint32x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);
 }
 
 inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi32(v1, v0, v1, v0, v1, v0, v1, v0);
-#else
-    uint32x4 a = uint32x4::make_const(v0, v1);
-    return {a, a};
-#endif
+    return uint32x8::make_const(v0, v1, v0, v1, v0, v1, v0, v1);
 }
 
 inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi32(v3, v2, v1, v0, v3, v2, v1, v0);
-#else
-    uint32x4 a = uint32x4::make_const(v0, v1, v2, v3);
-    return {a, a};
-#endif
+    return uint32x8::make_const(v0, v1, v2, v3, v0, v1, v2, v3);
 }
 
 inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3,

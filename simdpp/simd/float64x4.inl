@@ -75,22 +75,12 @@ inline float64x4 float64x4::set_broadcast(double v0)
 
 inline float64x4 float64x4::make_const(double v0)
 {
-#if SIMDPP_USE_AVX
-    return _mm256_set_pd(v0, v0, v0, v0);
-#else
-    float64x2 a = float64x2::make_const(v0, v0);
-    return {a, a};
-#endif
+    return float64x4::make_const(v0, v0, v0, v0);
 }
 
 inline float64x4 float64x4::make_const(double v0, double v1)
 {
-#if SIMDPP_USE_AVX
-    return _mm256_set_pd(v1, v0, v1, v0);
-#else
-    float64x2 a = float64x2::make_const(v0, v1);
-    return {a, a};
-#endif
+    return float64x4::make_const(v0, v1, v0, v1);
 }
 
 inline float64x4 float64x4::make_const(double v0, double v1, double v2, double v3)

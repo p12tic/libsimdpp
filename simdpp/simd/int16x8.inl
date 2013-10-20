@@ -103,10 +103,8 @@ inline int128 uint16x8::set_broadcast(uint16_t v0)
 
 inline int128 uint16x8::make_const(uint16_t v0)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint16x8>(v0);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi16(v0, v0, v0, v0, v0, v0, v0, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return uint16x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u16(&v0);
 #endif
@@ -114,10 +112,8 @@ inline int128 uint16x8::make_const(uint16_t v0)
 
 inline int128 uint16x8::make_const(uint16_t v0, uint16_t v1)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint16x8>(v0, v1);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi16(v1, v0, v1, v0, v1, v0, v1, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return uint16x8::make_const(v0, v1, v0, v1, v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
         uint16_t v[2];
@@ -131,10 +127,8 @@ inline int128 uint16x8::make_const(uint16_t v0, uint16_t v1)
 
 inline int128 uint16x8::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint16x8>(v0, v1, v2, v3);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi16(v3, v2, v1, v0, v3, v2, v1, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return uint16x8::make_const(v0, v1, v2, v3, v0, v1, v2, v3);
 #elif SIMDPP_USE_NEON
     union {
         uint64_t align;

@@ -122,10 +122,8 @@ inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
 
 inline uint64x2 uint64x2::make_const(uint64_t v0)
 {
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint64x2>(v0);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi64x(v0, v0);
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    return uint64x2::make_const(v0, v0);
 #elif SIMDPP_USE_NEON
     uint64x1_t r0 = vcreate_u64(v0);
     return vcombine_u64(r0, r0);

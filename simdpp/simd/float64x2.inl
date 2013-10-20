@@ -81,11 +81,7 @@ inline float64x2 float64x2::set_broadcast(double v0)
 
 inline float64x2 float64x2::make_const(double v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    return null::make_vec<float64x2>(v0);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_pd(v0, v0);
-#endif
+    return float64x2::make_const(v0, v0);
 }
 
 inline float64x2 float64x2::make_const(double v0, double v1)

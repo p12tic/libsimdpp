@@ -111,47 +111,27 @@ inline uint16x16 uint16x16::set_broadcast(uint16_t v0)
 
 inline uint16x16 uint16x16::make_const(uint16_t v0)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi16(v0, v0, v0, v0, v0, v0, v0, v0,
-                            v0, v0, v0, v0, v0, v0, v0, v0);
-#else
-    uint16x8 a = uint16x8::make_const(v0);
-    return {a, a};
-#endif
+    return uint16x16::make_const(v0, v0, v0, v0, v0, v0, v0, v0,
+                                 v0, v0, v0, v0, v0, v0, v0, v0);
 }
 
 inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi16(v1, v0, v1, v0, v1, v0, v1, v0,
-                            v1, v0, v1, v0, v1, v0, v1, v0);
-#else
-    uint16x8 a = uint16x8::make_const(v0, v1);
-    return {a, a};
-#endif
+    return uint16x16::make_const(v0, v1, v0, v1, v0, v1, v0, v1,
+                                 v0, v1, v0, v1, v0, v1, v0, v1);
 }
 
 inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi16(v3, v2, v1, v0, v3, v2, v1, v0,
-                            v3, v2, v1, v0, v3, v2, v1, v0);
-#else
-    uint16x8 a = uint16x8::make_const(v0, v1, v2, v3);
-    return {a, a};
-#endif
+    return uint16x16::make_const(v0, v1, v2, v3, v0, v1, v2, v3,
+                                 v0, v1, v2, v3, v0, v1, v2, v3);
 }
 
 inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
                                        uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_set_epi16(v7, v6, v5, v4, v3, v2, v1, v0,
-                            v7, v6, v5, v4, v3, v2, v1, v0);
-#else
-    uint16x8 a = uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-    return {a, a};
-#endif
+    return uint16x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
+                                 v0, v1, v2, v3, v4, v5, v6, v7);
 }
 
 inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
