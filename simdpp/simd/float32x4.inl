@@ -48,6 +48,8 @@ inline float32x4 float32x4::load_broadcast(const float* v0)
 {
 #if SIMDPP_USE_NULL
     return null::make_vec<float32x4>(*v0);
+#elif SIMDPP_USE_AVX
+    return _mm_broadcast_ss(v0);
 #elif SIMDPP_USE_SSE2
     float32x4 r;
     r = _mm_load_ss(v0);
