@@ -41,7 +41,7 @@ namespace simdpp {
     @{
 */
 
-using GetArchCb = std::function<ArchUserInfo()>;
+using GetArchCb = ArchUserInfo(*)();
 
 /** @macro SIMDPP_USER_ARCH_INFO
     User-definable macro that specifies user-defined way to get supported
