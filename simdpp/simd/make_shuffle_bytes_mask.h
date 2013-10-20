@@ -31,7 +31,6 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <array>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -69,8 +68,24 @@ uint8_t get_shuffle_bytex1_16()
     return (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
 }
 
-using uint8x2 = std::array<uint8_t,2>;
-using uint8x4 = std::array<uint8_t,4>;
+/*  This reduces diff with the C++03 branch. We can use std::array as a standard
+    alternative.
+*/
+class uint8x2 {
+public:
+    uint8_t&       operator[](unsigned id) { return d[id]; }
+    const uint8_t& operator[](unsigned id) const { return d[id]; }
+private:
+    uint8_t d[2];
+};
+
+class uint8x4 {
+public:
+    uint8_t&       operator[](unsigned id) { return d[id]; }
+    const uint8_t& operator[](unsigned id) const { return d[id]; }
+private:
+    uint8_t d[4];
+};
 
 /// s - selector, u - the number of elements per group
 template<int s, int u>
