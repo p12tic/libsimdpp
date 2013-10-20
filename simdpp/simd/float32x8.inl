@@ -50,7 +50,7 @@ inline float32x8 float32x8::load_broadcast(const float* v0)
     return _mm256_broadcast_ss(v0);
 #else
     float32x4 a = float32x4::load_broadcast(v0);
-    return {a, a};
+    return float32x8(a, a);
 #endif
 }
 
@@ -60,7 +60,7 @@ inline float32x8 float32x8::set_broadcast(float v0)
     return _mm256_broadcast_ss(&v0);
 #else
     float32x4 a = float32x4::set_broadcast(v0);
-    return {a, a};
+    return float32x8(a, a);
 #endif
 }
 
@@ -85,8 +85,8 @@ inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3,
 #if SIMDPP_USE_AVX
     return _mm256_set_ps(v7, v6, v5, v4, v3, v2, v1, v0);
 #else
-    return {float32x4::make_const(v0, v1, v2, v3),
-            float32x4::make_const(v4, v5, v6, v7)};
+    return float32x8(float32x4::make_const(v0, v1, v2, v3),
+                     float32x4::make_const(v4, v5, v6, v7));
 #endif
 }
 

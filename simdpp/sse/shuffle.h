@@ -78,7 +78,7 @@ basic_int16x16 permute_lo(basic_int16x16 a)
     a = _mm256_shufflelo_epi16(a, _MM_SHUFFLE(s3, s2, s1, s0));
     return a;
 #else
-    return {permute_lo<s0,s1,s2,s3>(a[0]), permute_lo<s0,s1,s2,s3>(a[1])};
+    return basic_int16x16(permute_lo<s0,s1,s2,s3>(a[0]), permute_lo<s0,s1,s2,s3>(a[1]));
 #endif
 }
 /// @}
@@ -124,7 +124,7 @@ basic_int16x16 permute_hi(basic_int16x16 a)
     a = _mm256_shufflehi_epi16(a, _MM_SHUFFLE(s3, s2, s1, s0));
     return a;
 #else
-    return {permute_hi<s0,s1,s2,s3>(a[0]), permute_hi<s0,s1,s2,s3>(a[1])};
+    return basic_int16x16(permute_hi<s0,s1,s2,s3>(a[0]), permute_hi<s0,s1,s2,s3>(a[1]));
 #endif
 }
 /// @}

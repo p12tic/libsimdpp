@@ -84,7 +84,7 @@ inline basic_int32x8 isnan(float32x8 a)
 #if SIMDPP_USE_AVX
     return int32x8(_mm256_cmp_ps(a, a, _CMP_UNORD_Q));
 #else
-    return {isnan(a[0]), isnan(a[1])};
+    return basic_int32x8(isnan(a[0]), isnan(a[1]));
 #endif
 }
 /// @}
@@ -125,7 +125,7 @@ inline basic_int64x4 isnan(float64x4 a)
 #if SIMDPP_USE_AVX
     return int64x4(_mm256_cmp_pd(a, a, _CMP_UNORD_Q));
 #else
-    return {isnan(a[0]), isnan(a[1])};
+    return basic_int64x4(isnan(a[0]), isnan(a[1]));
 #endif
 }
 /// @}
@@ -166,7 +166,7 @@ inline basic_int32x8 isnan2(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return int32x8(_mm256_cmp_ps(a, b, _CMP_UNORD_Q));
 #else
-    return {isnan2(a[0], b[0]), isnan2(a[1], b[1])};
+    return basic_int32x8(isnan2(a[0], b[0]), isnan2(a[1], b[1]));
 #endif
 }
 /// @}
@@ -208,7 +208,7 @@ inline basic_int64x4 isnan2(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return int64x4(_mm256_cmp_pd(a, b, _CMP_UNORD_Q));
 #else
-    return {isnan2(a[0], b[0]), isnan2(a[1], b[1])};
+    return basic_int64x4(isnan2(a[0], b[0]), isnan2(a[1], b[1]));
 #endif
 }
 /// @}
@@ -241,7 +241,7 @@ inline float32x8 rcp_e(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_rcp_ps(a);
 #else
-    return {rcp_e(a[0]), rcp_e(a[1])};
+    return float32x8(rcp_e(a[0]), rcp_e(a[1]));
 #endif
 }
 /// @}
@@ -299,7 +299,7 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
 
     return x;
 #else
-    return {rcp_rh(x[0], a[0]), rcp_rh(x[1], a[1])};
+    return float32x8(rcp_rh(x[0], a[0]), rcp_rh(x[1], a[1]));
 #endif
 }
 /// @}
@@ -337,7 +337,7 @@ inline float32x8 div(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_div_ps(a, b);
 #else
-    return {div(a[0], b[0]), div(a[1], b[1])};
+    return float32x8(div(a[0], b[0]), div(a[1], b[1]));
 #endif
 }
 /// @}
@@ -372,7 +372,7 @@ inline float64x4 div(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_div_pd(a, b);
 #else
-    return {div(a[0], b[0]), div(a[1], b[1])};
+    return float64x4(div(a[0], b[0]), div(a[1], b[1]));
 #endif
 }
 /// @}
@@ -405,7 +405,7 @@ inline float32x8 rsqrt_e(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_rsqrt_ps(a);
 #else
-    return {rsqrt_e(a[0]), rsqrt_e(a[1])};
+    return float32x8(rsqrt_e(a[0]), rsqrt_e(a[1]));
 #endif
 }
 /// @}
@@ -475,7 +475,7 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 
     return r;
 #else
-    return {rsqrt_rh(x[0], a[0]), rsqrt_rh(x[1], a[1])};
+    return float32x8(rsqrt_rh(x[0], a[0]), rsqrt_rh(x[1], a[1]));
 #endif
 }
 /// @}
@@ -515,7 +515,7 @@ inline float32x8 sqrt(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_sqrt_ps(a);
 #else
-    return {sqrt(a[0]), sqrt(a[1])};
+    return float32x8(sqrt(a[0]), sqrt(a[1]));
 #endif
 }
 /// @}
@@ -550,7 +550,7 @@ inline float64x4 sqrt(float64x4 a)
 #if SIMDPP_USE_AVX
     return _mm256_sqrt_pd(a);
 #else
-    return {sqrt(a[0]), sqrt(a[1])};
+    return float64x4(sqrt(a[0]), sqrt(a[1]));
 #endif
 }
 /// @}
@@ -587,7 +587,7 @@ inline float32x8 min(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_min_ps(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return float32x8(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -624,7 +624,7 @@ inline float64x4 min(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_min_pd(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return float64x4(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -659,7 +659,7 @@ inline float32x8 max(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_max_ps(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return float32x8(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -696,7 +696,7 @@ inline float64x4 max(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_max_pd(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return float64x4(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -747,7 +747,7 @@ inline float32x8 floor(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_floor_ps(a);
 #else
-    return {floor(a[0]), floor(a[1])};
+    return float32x8(floor(a[0]), floor(a[1]));
 #endif
 }
 
@@ -798,7 +798,7 @@ inline float32x8 ceil(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_ceil_ps(a);
 #else
-    return {ceil(a[0]), ceil(a[1])};
+    return float32x8(ceil(a[0]), ceil(a[1]));
 #endif
 }
 /// @}
@@ -846,7 +846,7 @@ inline float32x8 trunc(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_round_ps(a, 3); // 3 = truncate
 #else
-    return {ceil(a[0]), ceil(a[1])};
+    return float32x8(ceil(a[0]), ceil(a[1]));
 #endif
 }
 /// @}

@@ -108,7 +108,7 @@ basic_int16x16 permute(basic_int16x16 a)
     a = sse::permute_hi<s0,s1,s2,s3>(a);
     return a;
 #else
-    return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
+    return basic_int16x16(permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1]));
 #endif
 }
 /// @}
@@ -193,7 +193,7 @@ basic_int32x8 permute(basic_int32x8 a)
     SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     return _mm256_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
 #else
-    return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
+    return basic_int32x8(permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1]));
 #endif
 }
 /// @}
@@ -278,7 +278,7 @@ float32x8 permute(float32x8 a)
     SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     return _mm256_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
 #else
-    return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
+    return float32x8(permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1]));
 #endif
 }
 /// @}
@@ -511,7 +511,7 @@ float64x4 shuffle1(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_shuffle_pd(a, b, s0 | s1<<1 | s0<<2 | s1<<3);
 #else
-    return {shuffle1<s0,s1>(a[0], b[0]), shuffle1<s0,s1>(a[1], b[1])};
+    return float64x4(shuffle1<s0,s1>(a[0], b[0]), shuffle1<s0,s1>(a[1], b[1]));
 #endif
 }
 /// @}
@@ -555,7 +555,7 @@ basic_int64x4 shuffle1(basic_int64x4 a, basic_int64x4 b)
     // We can't do this in the integer execution domain. Beware of additional latency
     return int64x4(shuffle1<s0,s1>(float64x4(a), float64x4(b)));
 #else
-    return {shuffle1<s0,s1>(a[0], b[0]), shuffle1<s0,s1>(a[1], b[1])};
+    return basic_int64x4(shuffle1<s0,s1>(a[0], b[0]), shuffle1<s0,s1>(a[1], b[1]));
 #endif
 }
 /// @}
@@ -606,7 +606,7 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_shuffle_ps(a, b, _MM_SHUFFLE(b1, b0, a1, a0));
 #else
-    return {shuffle2<a0,a1,b0,b1>(a[0], b[0]), shuffle2<a0,a1,b0,b1>(a[1], b[1])};
+    return float32x8(shuffle2<a0,a1,b0,b1>(a[0], b[0]), shuffle2<a0,a1,b0,b1>(a[1], b[1]));
 #endif
 }
 /// @}
@@ -690,7 +690,7 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
     // We can't do this in the integer execution domain. Beware of additional latency
     return int32x8(shuffle2<a0,a1,b0,b1>(float32x8(a), float32x8(b)));
 #else
-    return {shuffle2<a0,a1,b0,b1>(a[0], b[0]), shuffle2<a0,a1,b0,b1>(a[1], b[1])};
+    return basic_int32x8(shuffle2<a0,a1,b0,b1>(a[0], b[0]), shuffle2<a0,a1,b0,b1>(a[1], b[1]));
 #endif
 }
 /// @}

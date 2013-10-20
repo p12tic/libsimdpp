@@ -84,7 +84,7 @@ inline int8x32 min(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_min_epi8(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return int8x32(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -117,7 +117,7 @@ inline uint8x32 min(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_min_epu8(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return uint8x32(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -150,7 +150,7 @@ inline int16x16 min(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_min_epi16(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return int16x16(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -190,7 +190,7 @@ inline uint16x16 min(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_min_epu16(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return uint16x16(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -230,7 +230,7 @@ inline int32x8 min(int32x8 a, int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_min_epi32(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return int32x8(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -270,7 +270,7 @@ inline uint32x8 min(uint32x8 a, uint32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_min_epu32(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    return uint32x8(min(a[0], b[0]), min(a[1], b[1]));
 #endif
 }
 /// @}
@@ -310,7 +310,7 @@ inline int8x32 max(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epi8(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return int8x32(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -343,7 +343,7 @@ inline uint8x32 max(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epu8(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return uint8x32(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -376,7 +376,7 @@ inline int16x16 max(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epi16(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return int16x16(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -416,7 +416,7 @@ inline uint16x16 max(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epu16(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return uint16x16(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -457,7 +457,7 @@ inline int32x8 max(int32x8 a, int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epi32(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return int32x8(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -497,7 +497,7 @@ inline uint32x8 max(uint32x8 a, uint32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epu32(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    return uint32x8(max(a[0], b[0]), max(a[1], b[1]));
 #endif
 }
 /// @}
@@ -532,7 +532,7 @@ inline uint8x32 avg(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_avg_epu8(a, b);
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    return uint8x32(avg(a[0], b[0]), avg(a[1], b[1]));
 #endif
 }
 /// @}
@@ -585,7 +585,7 @@ inline int8x32 avg(int8x32 a, int8x32 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    return int8x32(avg(a[0], b[0]), avg(a[1], b[1]));
 #endif
 }
 /// @}
@@ -620,7 +620,7 @@ inline uint16x16 avg(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_avg_epu16(a, b);
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    return uint16x16(avg(a[0], b[0]), avg(a[1], b[1]));
 #endif
 }
 /// @}
@@ -673,7 +673,7 @@ inline int16x16 avg(int16x16 a, int16x16 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    return int16x16(avg(a[0], b[0]), avg(a[1], b[1]));
 #endif
 }
 /// @}
@@ -728,7 +728,7 @@ inline uint32x8 avg(uint32x8 a, uint32x8 b)
     x1 = add(x1, round);
     return x1;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    return uint32x8(avg(a[0], b[0]), avg(a[1], b[1]));
 #endif
 }
 /// @}
@@ -781,7 +781,7 @@ inline int32x8 avg(int32x8 a, int32x8 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    return int32x8(avg(a[0], b[0]), avg(a[1], b[1]));
 #endif
 }
 /// @}
@@ -828,7 +828,7 @@ inline uint8x32 avg_trunc(uint8x32 a, uint8x32 b)
     uint8x32 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    return uint8x32(avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1]));
 #endif
 }
 /// @}
@@ -881,7 +881,7 @@ inline int8x32 avg_trunc(int8x32 a, int8x32 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    return int8x32(avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1]));
 #endif
 }
 /// @}
@@ -928,7 +928,7 @@ inline uint16x16 avg_trunc(uint16x16 a, uint16x16 b)
     uint16x16 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    return uint16x16(avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1]));
 #endif
 }
 /// @}
@@ -981,7 +981,7 @@ inline int16x16 avg_trunc(int16x16 a, int16x16 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    return int16x16(avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1028,7 +1028,7 @@ inline uint32x8 avg_trunc(uint32x8 a, uint32x8 b)
     uint32x8 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    return uint32x8(avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1081,7 +1081,7 @@ inline int32x8 avg_trunc(int32x8 a, int32x8 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    return int32x8(avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1]));
 #endif
 }
 /// @}
@@ -1124,7 +1124,7 @@ inline uint8x32 abs(int8x32 a)
 #if SIMDPP_USE_AVX2
     return _mm256_abs_epi8(a);
 #else
-    return {abs(a[0]), abs(a[1])};
+    return uint8x32(abs(a[0]), abs(a[1]));
 #endif
 }
 /// @}
@@ -1166,7 +1166,7 @@ inline uint16x16 abs(int16x16 a)
 #if SIMDPP_USE_AVX2
     return _mm256_abs_epi16(a);
 #else
-    return {abs(a[0]), abs(a[1])};
+    return uint16x16(abs(a[0]), abs(a[1]));
 #endif
 }
 /// @}
@@ -1208,7 +1208,7 @@ inline uint32x8 abs(int32x8 a)
 #if SIMDPP_USE_AVX2
     return _mm256_abs_epi32(a);
 #else
-    return {abs(a[0]), abs(a[1])};
+    return uint32x8(abs(a[0]), abs(a[1]));
 #endif
 }
 /// @}
@@ -1268,7 +1268,7 @@ inline uint64x4 abs(int64x4 a)
     a = sub(a, t);
     return a;
 #else
-    return {abs(a[0]), abs(a[1])};
+    return uint64x4(abs(a[0]), abs(a[1]));
 #endif
 }
 /// @}

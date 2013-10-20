@@ -94,7 +94,7 @@ inline uint64x4 uint64x4::load_broadcast(const uint64_t* v0)
     return uint64x4::set_broadcast(*v0);
 #else
     uint64x2 a = uint64x2::load_broadcast(v0);
-    return {a, a};
+    return uint64x4(a, a);
 #endif
 }
 
@@ -105,7 +105,7 @@ inline uint64x4 uint64x4::set_broadcast(uint64_t v0)
     return _mm256_broadcastq_epi64(a);
 #else
     uint64x2 a = uint64x2::set_broadcast(v0);
-    return {a, a};
+    return uint64x4(a, a);
 #endif
 }
 
@@ -124,8 +124,8 @@ inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint
 #if SIMDPP_USE_AVX2
     return _mm256_set_epi64x(v3, v2, v1, v0);
 #else
-    return {uint64x2::make_const(v0, v1),
-            uint64x2::make_const(v2, v3)};
+    return uint64x4(uint64x2::make_const(v0, v1),
+                    uint64x2::make_const(v2, v3));
 #endif
 }
 
