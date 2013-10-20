@@ -69,11 +69,14 @@ uint8_t get_shuffle_bytex1_16()
     return (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
 }
 
+using uint8x2 = std::array<uint8_t,2>;
+using uint8x4 = std::array<uint8_t,4>;
+
 /// s - selector, u - the number of elements per group
 template<int s, int u>
-std::array<uint8_t,2> get_shuffle_bytex2_16()
+uint8x2 get_shuffle_bytex2_16()
 {
-    std::array<uint8_t,2> r;
+    uint8x2 r;
     r[0] = (s == -1) ? 0x80 : (s < u ? s*2   : (s-u)*2+16);
     r[1] = (s == -1) ? 0x80 : r[0]+1;
     return r;
@@ -81,9 +84,9 @@ std::array<uint8_t,2> get_shuffle_bytex2_16()
 
 /// s - selector, u - the number of elements per group
 template<int s, int u>
-std::array<uint8_t,4> get_shuffle_bytex4_16()
+uint8x4 get_shuffle_bytex4_16()
 {
-    std::array<uint8_t,4> r;
+    uint8x4 r;
     r[0] = (s == -1) ? 0x80 : (s < u ? s*4   : (s-u)*4+16);
     r[1] = (s == -1) ? 0x80 : r[0]+1;
     r[2] = (s == -1) ? 0x80 : r[0]+2;
@@ -134,8 +137,8 @@ template<int s0, int s1>
 basic_int8x16 make_shuffle_bytes16_mask(basic_int8x16 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,2>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,2>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,2>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,2>();
     mask = uint8x16::make_const(b0,   b1,   b0+2, b1+2,
                                 b0+4, b1+4, b0+6, b1+6,
                                 b0+8, b1+8, b0+10,b1+10,
@@ -147,8 +150,8 @@ template<int s0, int s1>
 basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,2>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,2>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,2>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,2>();
     mask = uint8x32::make_const(b0,   b1,   b0+2, b1+2,
                                 b0+4, b1+4, b0+6, b1+6,
                                 b0+8, b1+8, b0+10,b1+10,
@@ -201,10 +204,10 @@ template<int s0, int s1, int s2, int s3>
 basic_int8x16 make_shuffle_bytes16_mask(basic_int8x16 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,4>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,4>();
-    auto b2 = detail::get_shuffle_bytex1_16<s2,4>();
-    auto b3 = detail::get_shuffle_bytex1_16<s3,4>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,4>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,4>();
+    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,4>();
+    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,4>();
     mask = uint8x16::make_const(b0,   b1,   b2,   b3,
                                 b0+4, b1+4, b2+4, b3+4,
                                 b0+8, b1+8, b2+8, b3+8,
@@ -216,10 +219,10 @@ template<int s0, int s1, int s2, int s3>
 basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,4>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,4>();
-    auto b2 = detail::get_shuffle_bytex1_16<s2,4>();
-    auto b3 = detail::get_shuffle_bytex1_16<s3,4>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,4>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,4>();
+    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,4>();
+    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,4>();
     mask = uint8x32::make_const(b0,   b1,   b2,   b3,
                                 b0+4, b1+4, b2+4, b3+4,
                                 b0+8, b1+8, b2+8, b3+8,
@@ -270,14 +273,14 @@ basic_int8x16 make_shuffle_bytes16_mask(basic_int8x16 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,8>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,8>();
-    auto b2 = detail::get_shuffle_bytex1_16<s2,8>();
-    auto b3 = detail::get_shuffle_bytex1_16<s3,8>();
-    auto b4 = detail::get_shuffle_bytex1_16<s4,8>();
-    auto b5 = detail::get_shuffle_bytex1_16<s5,8>();
-    auto b6 = detail::get_shuffle_bytex1_16<s6,8>();
-    auto b7 = detail::get_shuffle_bytex1_16<s7,8>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,8>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,8>();
+    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,8>();
+    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,8>();
+    uint8_t b4 = detail::get_shuffle_bytex1_16<s4,8>();
+    uint8_t b5 = detail::get_shuffle_bytex1_16<s5,8>();
+    uint8_t b6 = detail::get_shuffle_bytex1_16<s6,8>();
+    uint8_t b7 = detail::get_shuffle_bytex1_16<s7,8>();
     mask = uint8x16::make_const(b0,   b1,   b2,   b3,
                                 b4,   b5,   b6,   b7,
                                 b0+8, b1+8, b2+8, b3+8,
@@ -290,14 +293,14 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,8>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,8>();
-    auto b2 = detail::get_shuffle_bytex1_16<s2,8>();
-    auto b3 = detail::get_shuffle_bytex1_16<s3,8>();
-    auto b4 = detail::get_shuffle_bytex1_16<s4,8>();
-    auto b5 = detail::get_shuffle_bytex1_16<s5,8>();
-    auto b6 = detail::get_shuffle_bytex1_16<s6,8>();
-    auto b7 = detail::get_shuffle_bytex1_16<s7,8>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,8>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,8>();
+    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,8>();
+    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,8>();
+    uint8_t b4 = detail::get_shuffle_bytex1_16<s4,8>();
+    uint8_t b5 = detail::get_shuffle_bytex1_16<s5,8>();
+    uint8_t b6 = detail::get_shuffle_bytex1_16<s6,8>();
+    uint8_t b7 = detail::get_shuffle_bytex1_16<s7,8>();
     mask = uint8x32::make_const(b0,   b1,   b2,   b3,
                                 b4,   b5,   b6,   b7,
                                 b0+8, b1+8, b2+8, b3+8,
@@ -345,22 +348,22 @@ basic_int8x16 make_shuffle_bytes16_mask(basic_int8x16 &mask)
     detail::assert_selector_range<s4,s5,s6,s7,16>();
     detail::assert_selector_range<s8,s9,s10,s11,16>();
     detail::assert_selector_range<s12,s13,s14,s15,16>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,16>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,16>();
-    auto b2 = detail::get_shuffle_bytex1_16<s2,16>();
-    auto b3 = detail::get_shuffle_bytex1_16<s3,16>();
-    auto b4 = detail::get_shuffle_bytex1_16<s4,16>();
-    auto b5 = detail::get_shuffle_bytex1_16<s5,16>();
-    auto b6 = detail::get_shuffle_bytex1_16<s6,16>();
-    auto b7 = detail::get_shuffle_bytex1_16<s7,16>();
-    auto b8 = detail::get_shuffle_bytex1_16<s8,16>();
-    auto b9 = detail::get_shuffle_bytex1_16<s9,16>();
-    auto b10 = detail::get_shuffle_bytex1_16<s10,16>();
-    auto b11 = detail::get_shuffle_bytex1_16<s11,16>();
-    auto b12 = detail::get_shuffle_bytex1_16<s12,16>();
-    auto b13 = detail::get_shuffle_bytex1_16<s13,16>();
-    auto b14 = detail::get_shuffle_bytex1_16<s14,16>();
-    auto b15 = detail::get_shuffle_bytex1_16<s15,16>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,16>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,16>();
+    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,16>();
+    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,16>();
+    uint8_t b4 = detail::get_shuffle_bytex1_16<s4,16>();
+    uint8_t b5 = detail::get_shuffle_bytex1_16<s5,16>();
+    uint8_t b6 = detail::get_shuffle_bytex1_16<s6,16>();
+    uint8_t b7 = detail::get_shuffle_bytex1_16<s7,16>();
+    uint8_t b8 = detail::get_shuffle_bytex1_16<s8,16>();
+    uint8_t b9 = detail::get_shuffle_bytex1_16<s9,16>();
+    uint8_t b10 = detail::get_shuffle_bytex1_16<s10,16>();
+    uint8_t b11 = detail::get_shuffle_bytex1_16<s11,16>();
+    uint8_t b12 = detail::get_shuffle_bytex1_16<s12,16>();
+    uint8_t b13 = detail::get_shuffle_bytex1_16<s13,16>();
+    uint8_t b14 = detail::get_shuffle_bytex1_16<s14,16>();
+    uint8_t b15 = detail::get_shuffle_bytex1_16<s15,16>();
     mask = uint8x16::make_const(b0,  b1,  b2,  b3,
                                 b4,  b5,  b6,  b7,
                                 b8,  b9,  b10, b11,
@@ -376,22 +379,22 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
     detail::assert_selector_range<s4,s5,s6,s7,16>();
     detail::assert_selector_range<s8,s9,s10,s11,16>();
     detail::assert_selector_range<s12,s13,s14,s15,16>();
-    auto b0 = detail::get_shuffle_bytex1_16<s0,16>();
-    auto b1 = detail::get_shuffle_bytex1_16<s1,16>();
-    auto b2 = detail::get_shuffle_bytex1_16<s2,16>();
-    auto b3 = detail::get_shuffle_bytex1_16<s3,16>();
-    auto b4 = detail::get_shuffle_bytex1_16<s4,16>();
-    auto b5 = detail::get_shuffle_bytex1_16<s5,16>();
-    auto b6 = detail::get_shuffle_bytex1_16<s6,16>();
-    auto b7 = detail::get_shuffle_bytex1_16<s7,16>();
-    auto b8 = detail::get_shuffle_bytex1_16<s8,16>();
-    auto b9 = detail::get_shuffle_bytex1_16<s9,16>();
-    auto b10 = detail::get_shuffle_bytex1_16<s10,16>();
-    auto b11 = detail::get_shuffle_bytex1_16<s11,16>();
-    auto b12 = detail::get_shuffle_bytex1_16<s12,16>();
-    auto b13 = detail::get_shuffle_bytex1_16<s13,16>();
-    auto b14 = detail::get_shuffle_bytex1_16<s14,16>();
-    auto b15 = detail::get_shuffle_bytex1_16<s15,16>();
+    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,16>();
+    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,16>();
+    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,16>();
+    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,16>();
+    uint8_t b4 = detail::get_shuffle_bytex1_16<s4,16>();
+    uint8_t b5 = detail::get_shuffle_bytex1_16<s5,16>();
+    uint8_t b6 = detail::get_shuffle_bytex1_16<s6,16>();
+    uint8_t b7 = detail::get_shuffle_bytex1_16<s7,16>();
+    uint8_t b8 = detail::get_shuffle_bytex1_16<s8,16>();
+    uint8_t b9 = detail::get_shuffle_bytex1_16<s9,16>();
+    uint8_t b10 = detail::get_shuffle_bytex1_16<s10,16>();
+    uint8_t b11 = detail::get_shuffle_bytex1_16<s11,16>();
+    uint8_t b12 = detail::get_shuffle_bytex1_16<s12,16>();
+    uint8_t b13 = detail::get_shuffle_bytex1_16<s13,16>();
+    uint8_t b14 = detail::get_shuffle_bytex1_16<s14,16>();
+    uint8_t b15 = detail::get_shuffle_bytex1_16<s15,16>();
     mask = uint8x32::make_const(b0,  b1,  b2,  b3,
                                 b4,  b5,  b6,  b7,
                                 b8,  b9,  b10, b11,
@@ -442,8 +445,8 @@ template<int s0, int s1>
 basic_int16x8 make_shuffle_bytes16_mask(basic_int16x8 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    auto b0 = detail::get_shuffle_bytex2_16<s0,2>();
-    auto b1 = detail::get_shuffle_bytex2_16<s1,2>();
+    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,2>();
+    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,2>();
     mask = uint8x16::make_const(b0[0],   b0[1],   b1[0],   b1[1],
                                 b0[0]+4, b0[1]+4, b1[0]+4, b1[1]+4,
                                 b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
@@ -455,8 +458,8 @@ template<int s0, int s1>
 basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    auto b0 = detail::get_shuffle_bytex2_16<s0,2>();
-    auto b1 = detail::get_shuffle_bytex2_16<s1,2>();
+    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,2>();
+    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,2>();
     mask = uint8x32::make_const(b0[0],   b0[1],   b1[0],   b1[1],
                                 b0[0]+4, b0[1]+4, b1[0]+4, b1[1]+4,
                                 b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
@@ -509,10 +512,10 @@ template<int s0, int s1, int s2, int s3>
 basic_int16x8 make_shuffle_bytes16_mask(basic_int16x8 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    auto b0 = detail::get_shuffle_bytex2_16<s0,4>();
-    auto b1 = detail::get_shuffle_bytex2_16<s1,4>();
-    auto b2 = detail::get_shuffle_bytex2_16<s2,4>();
-    auto b3 = detail::get_shuffle_bytex2_16<s3,4>();
+    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,4>();
+    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,4>();
+    detail::uint8x2 b2 = detail::get_shuffle_bytex2_16<s2,4>();
+    detail::uint8x2 b3 = detail::get_shuffle_bytex2_16<s3,4>();
     mask = uint8x16::make_const(b0[0],   b0[1],   b1[0],   b1[1],
                                 b2[0],   b2[1],   b3[0],   b3[1],
                                 b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
@@ -524,10 +527,10 @@ template<int s0, int s1, int s2, int s3>
 basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    auto b0 = detail::get_shuffle_bytex2_16<s0,4>();
-    auto b1 = detail::get_shuffle_bytex2_16<s1,4>();
-    auto b2 = detail::get_shuffle_bytex2_16<s2,4>();
-    auto b3 = detail::get_shuffle_bytex2_16<s3,4>();
+    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,4>();
+    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,4>();
+    detail::uint8x2 b2 = detail::get_shuffle_bytex2_16<s2,4>();
+    detail::uint8x2 b3 = detail::get_shuffle_bytex2_16<s3,4>();
     mask = uint8x32::make_const(b0[0],   b0[1],   b1[0],   b1[1],
                                 b2[0],   b2[1],   b3[0],   b3[1],
                                 b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
@@ -575,14 +578,14 @@ basic_int16x8 make_shuffle_bytes16_mask(basic_int16x8 &mask)
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
 
-    auto b0 = detail::get_shuffle_bytex2_16<s0,8>();
-    auto b1 = detail::get_shuffle_bytex2_16<s1,8>();
-    auto b2 = detail::get_shuffle_bytex2_16<s2,8>();
-    auto b3 = detail::get_shuffle_bytex2_16<s3,8>();
-    auto b4 = detail::get_shuffle_bytex2_16<s4,8>();
-    auto b5 = detail::get_shuffle_bytex2_16<s5,8>();
-    auto b6 = detail::get_shuffle_bytex2_16<s6,8>();
-    auto b7 = detail::get_shuffle_bytex2_16<s7,8>();
+    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,8>();
+    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,8>();
+    detail::uint8x2 b2 = detail::get_shuffle_bytex2_16<s2,8>();
+    detail::uint8x2 b3 = detail::get_shuffle_bytex2_16<s3,8>();
+    detail::uint8x2 b4 = detail::get_shuffle_bytex2_16<s4,8>();
+    detail::uint8x2 b5 = detail::get_shuffle_bytex2_16<s5,8>();
+    detail::uint8x2 b6 = detail::get_shuffle_bytex2_16<s6,8>();
+    detail::uint8x2 b7 = detail::get_shuffle_bytex2_16<s7,8>();
     mask = uint8x16::make_const(b0[0], b0[1], b1[0], b1[1],
                                 b2[0], b2[1], b3[0], b3[1],
                                 b4[0], b4[1], b5[0], b5[1],
@@ -596,14 +599,14 @@ basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
 
-    auto b0 = detail::get_shuffle_bytex2_16<s0,8>();
-    auto b1 = detail::get_shuffle_bytex2_16<s1,8>();
-    auto b2 = detail::get_shuffle_bytex2_16<s2,8>();
-    auto b3 = detail::get_shuffle_bytex2_16<s3,8>();
-    auto b4 = detail::get_shuffle_bytex2_16<s4,8>();
-    auto b5 = detail::get_shuffle_bytex2_16<s5,8>();
-    auto b6 = detail::get_shuffle_bytex2_16<s6,8>();
-    auto b7 = detail::get_shuffle_bytex2_16<s7,8>();
+    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,8>();
+    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,8>();
+    detail::uint8x2 b2 = detail::get_shuffle_bytex2_16<s2,8>();
+    detail::uint8x2 b3 = detail::get_shuffle_bytex2_16<s3,8>();
+    detail::uint8x2 b4 = detail::get_shuffle_bytex2_16<s4,8>();
+    detail::uint8x2 b5 = detail::get_shuffle_bytex2_16<s5,8>();
+    detail::uint8x2 b6 = detail::get_shuffle_bytex2_16<s6,8>();
+    detail::uint8x2 b7 = detail::get_shuffle_bytex2_16<s7,8>();
 
     mask = uint8x32::make_const(b0[0], b0[1], b1[0], b1[1],
                                 b2[0], b2[1], b3[0], b3[1],
@@ -652,8 +655,8 @@ template<int s0, int s1>
 basic_int32x4 make_shuffle_bytes16_mask(basic_int32x4 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    auto b0 = detail::get_shuffle_bytex4_16<s0,2>();
-    auto b1 = detail::get_shuffle_bytex4_16<s1,2>();
+    detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,2>();
+    detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,2>();
     mask = uint8x16::make_const(b0[0],   b0[1],   b0[2],   b0[3],
                                 b1[0],   b1[1],   b1[2],   b1[3],
                                 b0[0]+8, b0[1]+8, b0[2]+8, b0[3]+8,
@@ -665,8 +668,8 @@ template<int s0, int s1>
 basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    auto b0 = detail::get_shuffle_bytex4_16<s0,2>();
-    auto b1 = detail::get_shuffle_bytex4_16<s1,2>();
+    detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,2>();
+    detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,2>();
 
     mask = uint8x32::make_const(b0[0],   b0[1],   b0[2],   b0[3],
                                 b1[0],   b1[1],   b1[2],   b1[3],
@@ -711,10 +714,10 @@ template<int s0, int s1, int s2, int s3>
 basic_int32x4 make_shuffle_bytes16_mask(basic_int32x4 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    auto b0 = detail::get_shuffle_bytex4_16<s0,4>();
-    auto b1 = detail::get_shuffle_bytex4_16<s1,4>();
-    auto b2 = detail::get_shuffle_bytex4_16<s2,4>();
-    auto b3 = detail::get_shuffle_bytex4_16<s3,4>();
+    detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,4>();
+    detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,4>();
+    detail::uint8x4 b2 = detail::get_shuffle_bytex4_16<s2,4>();
+    detail::uint8x4 b3 = detail::get_shuffle_bytex4_16<s3,4>();
     mask = uint8x16::make_const(b0[0], b0[1], b0[2], b0[3],
                                 b1[0], b1[1], b1[2], b1[3],
                                 b2[0], b2[1], b2[2], b2[3],
@@ -726,10 +729,10 @@ template<int s0, int s1, int s2, int s3>
 basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    auto b0 = detail::get_shuffle_bytex4_16<s0,4>();
-    auto b1 = detail::get_shuffle_bytex4_16<s1,4>();
-    auto b2 = detail::get_shuffle_bytex4_16<s2,4>();
-    auto b3 = detail::get_shuffle_bytex4_16<s3,4>();
+    detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,4>();
+    detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,4>();
+    detail::uint8x4 b2 = detail::get_shuffle_bytex4_16<s2,4>();
+    detail::uint8x4 b3 = detail::get_shuffle_bytex4_16<s3,4>();
 
     mask = uint8x32::make_const(b0[0], b0[1], b0[2], b0[3],
                                 b1[0], b1[1], b1[2], b1[3],
