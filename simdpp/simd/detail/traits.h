@@ -60,18 +60,18 @@ template<> struct traits<int128> {
     using unsigned_element_type = uint64_t;
     using int_vector_type = int128;
 
-    static constexpr unsigned length = 2;
-    static constexpr unsigned num_bits = 64;
-    static constexpr unsigned_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 2;
+    static const unsigned num_bits = 64;
+    static const unsigned_element_type all_bits = 0xffffffffffffffff;
 };
 
 template<> struct traits<uint8x16> {
     using element_type = uint8_t;
     using unsigned_element_type = uint8_t;
     using int_vector_type = basic_int8x16;
-    static constexpr unsigned length = 16;
-    static constexpr unsigned num_bits = 8;
-    static constexpr unsigned_element_type all_bits = 0xff;
+    static const unsigned length = 16;
+    static const unsigned num_bits = 8;
+    static const unsigned_element_type all_bits = 0xff;
 };
 template<> struct traits<int8x16> : public traits<uint8x16> {
     using element_type = int8_t;
@@ -82,9 +82,9 @@ template<> struct traits<uint16x8> {
     using element_type = uint16_t;
     using unsigned_element_type = uint16_t;
     using int_vector_type = basic_int16x8;
-    static constexpr unsigned length = 8;
-    static constexpr unsigned num_bits = 16;
-    static constexpr unsigned_element_type all_bits = 0xffff;
+    static const unsigned length = 8;
+    static const unsigned num_bits = 16;
+    static const unsigned_element_type all_bits = 0xffff;
 };
 template<> struct traits<int16x8> : public traits<uint16x8> {
     using element_type = int16_t;
@@ -95,9 +95,9 @@ template<> struct traits<uint32x4> {
     using element_type = uint32_t;
     using unsigned_element_type = uint32_t;
     using int_vector_type = basic_int32x4;
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 32;
-    static constexpr unsigned_element_type all_bits = 0xffffffff;
+    static const unsigned length = 4;
+    static const unsigned num_bits = 32;
+    static const unsigned_element_type all_bits = 0xffffffff;
 };
 template<> struct traits<int32x4> : public traits<uint32x4> {
     using element_type = int32_t;
@@ -108,9 +108,9 @@ template<> struct traits<uint64x2> {
     using element_type = uint64_t;
     using unsigned_element_type = uint64_t;
     using int_vector_type = basic_int64x2;
-    static constexpr unsigned length = 2;
-    static constexpr unsigned num_bits = 64;
-    static constexpr unsigned_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 2;
+    static const unsigned num_bits = 64;
+    static const unsigned_element_type all_bits = 0xffffffffffffffff;
 };
 template<> struct traits<int64x2> : public traits<uint64x2> {
     using element_type = int64_t;
@@ -121,18 +121,18 @@ template<> struct traits<float32x4> {
     using element_type = float;
     using unsigned_element_type = uint32_t;
     using int_vector_type = basic_int32x4;
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 32;
-    static constexpr unsigned_element_type all_bits = 0xffffffff;
+    static const unsigned length = 4;
+    static const unsigned num_bits = 32;
+    static const unsigned_element_type all_bits = 0xffffffff;
 };
 
 template<> struct traits<float64x2> {
     using element_type = double;
     using unsigned_element_type = uint64_t;
     using int_vector_type = basic_int64x2;
-    static constexpr unsigned length = 2;
-    static constexpr unsigned num_bits = 64;
-    static constexpr unsigned_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 2;
+    static const unsigned num_bits = 64;
+    static const unsigned_element_type all_bits = 0xffffffffffffffff;
 };
 
 // this one needed by null
@@ -141,9 +141,9 @@ template<> struct traits<int256> {
     using unsigned_element_type = uint64_t;
     using int_vector_type = int256;
 
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 64;
-    static constexpr unsigned_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 4;
+    static const unsigned num_bits = 64;
+    static const unsigned_element_type all_bits = 0xffffffffffffffff;
 };
 
 template<> struct traits<uint8x32> {
@@ -152,9 +152,9 @@ template<> struct traits<uint8x32> {
     using int_vector_type = basic_int8x32;
     using half_vector_type = uint8x16;
 
-    static constexpr unsigned length = 32;
-    static constexpr unsigned num_bits = 8;
-    static constexpr unsigned_element_type all_bits = 0xff;
+    static const unsigned length = 32;
+    static const unsigned num_bits = 8;
+    static const unsigned_element_type all_bits = 0xff;
 };
 template<> struct traits<int8x32> : public traits<uint8x32> {
     using element_type = int8_t;
@@ -170,9 +170,9 @@ template<> struct traits<uint16x16> {
     using int_vector_type = basic_int16x16;
     using half_vector_type = uint16x8;
 
-    static constexpr unsigned length = 16;
-    static constexpr unsigned num_bits = 16;
-    static constexpr unsigned_element_type all_bits = 0xffff;
+    static const unsigned length = 16;
+    static const unsigned num_bits = 16;
+    static const unsigned_element_type all_bits = 0xffff;
 };
 template<> struct traits<int16x16> : public traits<uint16x16> {
     using element_type = int16_t;
@@ -188,9 +188,9 @@ template<> struct traits<uint32x8> {
     using int_vector_type = basic_int32x8;
     using half_vector_type = uint32x4;
 
-    static constexpr unsigned length = 8;
-    static constexpr unsigned num_bits = 32;
-    static constexpr unsigned_element_type all_bits = 0xffffffff;
+    static const unsigned length = 8;
+    static const unsigned num_bits = 32;
+    static const unsigned_element_type all_bits = 0xffffffff;
 };
 template<> struct traits<int32x8> : public traits<uint32x8> {
     using element_type = int32_t;
@@ -206,9 +206,9 @@ template<> struct traits<uint64x4> {
     using int_vector_type = basic_int64x4;
     using half_vector_type = uint64x2;
 
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 64;
-    static constexpr unsigned_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 4;
+    static const unsigned num_bits = 64;
+    static const unsigned_element_type all_bits = 0xffffffffffffffff;
 };
 template<> struct traits<int64x4> : public traits<uint64x4> {
     using element_type = int64_t;
@@ -224,9 +224,9 @@ template<> struct traits<float32x8> {
     using int_vector_type = basic_int32x8;
     using half_vector_type = float32x4;
 
-    static constexpr unsigned length = 8;
-    static constexpr unsigned num_bits = 32;
-    static constexpr unsigned_element_type all_bits = 0xffffffff;
+    static const unsigned length = 8;
+    static const unsigned num_bits = 32;
+    static const unsigned_element_type all_bits = 0xffffffff;
 };
 
 template<> struct traits<float64x4> {
@@ -235,9 +235,9 @@ template<> struct traits<float64x4> {
     using int_vector_type = basic_int64x4;
     using half_vector_type = float64x2;
 
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 64;
-    static constexpr unsigned_element_type all_bits = 0xffffffffffffffff;
+    static const unsigned length = 4;
+    static const unsigned num_bits = 64;
+    static const unsigned_element_type all_bits = 0xffffffffffffffff;
 };
 
 } // namespace detail

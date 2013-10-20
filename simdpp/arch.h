@@ -28,7 +28,7 @@
 #ifndef LIBSIMDPP_ARCH_H
 #define LIBSIMDPP_ARCH_H
 
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 
@@ -46,61 +46,69 @@ namespace simdpp {
 
     detail::select_version depends on this.
 */
-enum class Arch : std::uint32_t {
+// Simulate enum class Arch : uint32_t
+class Arch {
+    using T = uint32_t;
+public:
     /// Indicates that no SIMD instructions are supported
-    NONE_NULL = 0,
+    static const T NONE_NULL = 0;
     /// Indicates x86 SSE2 support
-    X86_SSE2 = 1 << 1,
+    static const T X86_SSE2  = 1<<1;
     /// Indicates x86 SSE3 support
-    X86_SSE3 = 1 << 2,
+    static const T X86_SSE3 = 1 << 2;
     /// Indicates x86 SSSE3 support
-    X86_SSSE3 = 1 << 3,
+    static const T X86_SSSE3 = 1 << 3;
     /// Indicates x86 SSE4.1 support
-    X86_SSE4_1 = 1 << 4,
+    static const T X86_SSE4_1 = 1 << 4;
     /// Indicates x86 AVX support
-    X86_AVX = 1 << 5,
+    static const T X86_AVX = 1 << 5;
     /// Indicates x86 AVX2 support
-    X86_AVX2 = 1 << 6,
+    static const T X86_AVX2 = 1 << 6;
 
     /// Indicates ARM NEON support (SP and DP floating-point math is executed
     /// on VFP)
-    ARM_NEON = 1 << 0,
+    static const T ARM_NEON = 1 << 0;
     /// Indicates ARM NEON support (SP floating-point math is executed on NEON,
     /// DP floating-point math is executed on VFP)
-    ARM_NEON_FLT_SP = 1 << 1
+    static const T ARM_NEON_FLT_SP = 1 << 1;
+
+    Arch(T val) : val_(val) {}
+    operator T() const { return val_; }
+private:
+    T val_;
 };
 
 /// Bitwise operators for @c Arch
 /// @{
 inline Arch& operator|=(Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    using T = uint32_t;
     x = static_cast<Arch>(static_cast<T>(x) | static_cast<T>(y));
     return x;
 }
 
 inline Arch& operator&=(Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    using T = uint32_t;
     x = static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
     return x;
 }
 
 inline Arch operator|(const Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    using T = uint32_t;
     return static_cast<Arch>(static_cast<T>(x) | static_cast<T>(y));
 }
 
 inline Arch operator&(const Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    using T = uint32_t;
     return static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
 }
 
 inline Arch operator~(const Arch& x)
 {
-    using T = std::uint32_t;
+    using T = uint32_t;
     return static_cast<Arch>(~static_cast<T>(x));
 }
 /// @}

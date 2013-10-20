@@ -99,7 +99,7 @@ inline basic_int8x32 shuffle_epi8_wrapper(basic_int8x32 x, basic_int8x32 idx)
 #if SIMDPP_USE_AVX2
     return _mm256_shuffle_epi8(x, idx);
 #else
-    return {_mm_shuffle_epi8(x[0], idx[0]), _mm_shuffle_epi8(x[1], idx[1])};
+    return basic_int8x32(_mm_shuffle_epi8(x[0], idx[0]), _mm_shuffle_epi8(x[1], idx[1]));
 #endif
 }
 #endif

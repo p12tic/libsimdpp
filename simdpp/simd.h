@@ -435,6 +435,10 @@
 #define SIMDPP_STRINGIFY(x) SIMDPP_STRINGIFY2(x)
 #define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
 
+template <bool> struct SimdppCompileAssert {};
+#define SIMDPP_STATIC_ASSERT(expr, ignored_message) \
+    typedef SimdppCompileAssert<(bool)(expr)> __FILE__##__LINE__[(bool)(expr) ? 1 : -1]
+
 #include <cstdlib>
 
 #include <simdpp/simd/fwd.h>

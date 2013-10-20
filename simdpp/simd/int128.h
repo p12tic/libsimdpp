@@ -32,7 +32,7 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

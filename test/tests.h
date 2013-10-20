@@ -32,7 +32,7 @@
 #include "test_results.h"
 #include "traits.h"
 
-#include <cstdint>
+#include <stdint.h>
 #include <iostream>
 
 namespace SIMDPP_ARCH_NAMESPACE {

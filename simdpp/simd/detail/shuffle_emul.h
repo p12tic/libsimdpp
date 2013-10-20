@@ -72,13 +72,13 @@ typename traits<V>::half_vector_type permute_half(V a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 basic_int64x4 permute_emul(basic_int64x4 a)
 {
-    return {permute_half<s0,s1>(a), permute_half<s2,s3>(a)};
+    return basic_int64x4(permute_half<s0,s1>(a), permute_half<s2,s3>(a));
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float64x4 permute_emul(float64x4 a)
 {
-    return {permute_half<s0,s1>(a), permute_half<s2,s3>(a)};
+    return float64x4(permute_half<s0,s1>(a), permute_half<s2,s3>(a));
 }
 /// @}
 

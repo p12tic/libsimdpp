@@ -307,6 +307,8 @@ inline basic_int32x8 to_int32x4(uint16x16 a)
 #endif
 }
 
+SIMDPP_DEF_FUNCTOR(null_convert, x, R(x));
+
 /// @{
 /** Converts the values of a float32x4 vector into signed int32_t
     representation using truncation if only an inexact conversion can be
@@ -334,7 +336,7 @@ inline basic_int32x8 to_int32x4(uint16x16 a)
 inline basic_int32x4 to_int32x4(float32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
+    return null::foreach<int32x4>(a, null_convert<float, int32_t>());
 #elif SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
 #elif SIMDPP_USE_NEON
@@ -426,7 +428,7 @@ inline basic_int32x8 to_int32x8(float64x4 a)
 #elif SIMDPP_USE_SSE2
     int32x4 b0 = to_int32x4(a[0]);
     int32x4 b1 = to_int32x4(a[1]);
-    return {zip_lo(b0, b1), int32x4::zero()};
+    return basic_int32x8(zip_lo(b0, b1), int32x4::zero());
 #elif SIMDPP_USE_NEON
     int32x8 r = int32x8::zero();
     union {
@@ -591,7 +593,7 @@ inline basic_int64x4 to_int64x4(uint32x8 a)
 inline float32x4 to_float32x4(int32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
+    return null::foreach<float32x4>(a, null_convert<int32_t, float>());
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_ps(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP

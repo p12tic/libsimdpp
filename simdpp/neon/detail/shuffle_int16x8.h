@@ -74,7 +74,7 @@ T bcast(T a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 T sel(T a, T b)
 {
-    constexpr uint64_t um =
+    const uint64_t um =
         (s0 > 0 ? 0xffffLL : 0) |
         (s1 > 0 ? 0xffffLL << 16 : 0) |
         (s2 > 0 ? 0xffffLL << 32 : 0) |
@@ -192,7 +192,7 @@ inline T dup_unpack_hi(T a)
 template<unsigned n1, unsigned n2>
 inline T swap1(T a)
 {
-    constexpr unsigned sel = n1*4 + n2;
+    const unsigned sel = n1*4 + n2;
     switch (sel) {
     case 0: //00
     case 5: //11

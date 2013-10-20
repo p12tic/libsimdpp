@@ -94,7 +94,7 @@ inline uint16x16 uint16x16::load_broadcast(const uint16_t* v0)
     return uint16x16::set_broadcast(*v0);
 #else
     uint16x8 a = uint16x8::load_broadcast(v0);
-    return {a, a};
+    return uint16x16(a, a);
 #endif
 }
 
@@ -105,7 +105,7 @@ inline uint16x16 uint16x16::set_broadcast(uint16_t v0)
     return _mm256_broadcastw_epi16(a);
 #else
     uint16x8 a = uint16x8::set_broadcast(v0);
-    return {a, a};
+    return uint16x16(a, a);
 #endif
 }
 
@@ -143,8 +143,8 @@ inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, ui
     return _mm256_set_epi16(v15, v14, v13, v12, v11, v10, v9, v8,
                             v7, v6, v5, v4, v3, v2, v1, v0);
 #else
-    return {uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7),
-            uint16x8::make_const(v8, v9, v10, v11, v12, v13, v14, v15)};
+    return uint16x16(uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7),
+                     uint16x8::make_const(v8, v9, v10, v11, v12, v13, v14, v15));
 #endif
 }
 

@@ -61,14 +61,14 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    basic_int16x16(__m256i d) : int256{d} {}
+    basic_int16x16(__m256i d) : int256(d) {}
     basic_int16x16& operator=(__m256i d) { int256::operator=(d); return *this; }
 #endif
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    basic_int16x16(basic_int16x8 d0, basic_int16x8 d1) : int256{d0, d1} {}
+    basic_int16x16(basic_int16x8 d0, basic_int16x8 d1) : int256(d0, d1) {}
 
     const basic_int16x8& operator[](unsigned i) const { return u16(i); }
           basic_int16x8& operator[](unsigned i)       { return u16(i); }
@@ -87,22 +87,22 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    int16x16(__m256i d) : basic_int16x16{d} {}
+    int16x16(__m256i d) : basic_int16x16(d) {}
     int16x16& operator=(__m256i d) { basic_int16x16::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int16x16(const int256& d) : basic_int16x16{d} {}
-    int16x16(basic_int16x16 d) : basic_int16x16{d} {}
+    int16x16(const int256& d) : basic_int16x16(d) {}
+    int16x16(basic_int16x16 d) : basic_int16x16(d) {}
     int16x16& operator=(int256 d) { basic_int16x16::operator=(d); return *this; }
     int16x16& operator=(basic_int16x16 d) { basic_int16x16::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    int16x16(int16x8 d0, int16x8 d1) : basic_int16x16{d0, d1} {}
+    int16x16(int16x8 d0, int16x8 d1) : basic_int16x16(d0, d1) {}
 
     const int16x8& operator[](unsigned i) const { return i16(i); }
           int16x8& operator[](unsigned i)       { return i16(i); }
@@ -200,22 +200,22 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    uint16x16(__m256i d) : basic_int16x16{d} {}
+    uint16x16(__m256i d) : basic_int16x16(d) {}
     uint16x16& operator=(__m256i d) { basic_int16x16::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint16x16(const int256& d) : basic_int16x16{d} {}
-    uint16x16(basic_int16x16 d) : basic_int16x16{d} {}
+    uint16x16(const int256& d) : basic_int16x16(d) {}
+    uint16x16(basic_int16x16 d) : basic_int16x16(d) {}
     uint16x16& operator=(int256 d) { basic_int16x16::operator=(d); return *this; }
     uint16x16& operator=(basic_int16x16 d) { basic_int16x16::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    uint16x16(uint16x8 d0, uint16x8 d1) : basic_int16x16{d0, d1} {}
+    uint16x16(uint16x8 d0, uint16x8 d1) : basic_int16x16(d0, d1) {}
 
     const uint16x8& operator[](unsigned i) const { return u16(i); }
           uint16x8& operator[](unsigned i)       { return u16(i); }
