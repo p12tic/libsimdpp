@@ -712,6 +712,82 @@ inline basic_int64x4 cmp_gt(float64x4 a, float64x4 b)
 /// @}
 
 /// @{
+/** Compares the values of two float32x4 vectors for greater-than or equal
+
+    @code
+    r0 = (a0 >= b0) ? 0xffffffff : 0x0
+    ...
+    rN = (aN >= bN) ? 0xffffffff : 0x0
+    @endcode
+
+    @par 256-bit version:
+    @icost{SSE2-SSE4.1, NEON, 2}
+*/
+inline basic_int32x4 cmp_ge(float32x4 a, float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::cmp_ge(a, b);
+#elif SIMDPP_USE_AVX
+    return int32x4(_mm_cmp_ps(a, b, _CMP_GE_OQ));
+#elif SIMDPP_USE_SSE2
+    return int32x4(_mm_cmpge_ps(a, b));
+#elif SIMDPP_USE_NEON
+    return vcgeq_f32(a, b);
+#endif
+}
+
+inline basic_int32x8 cmp_ge(float32x8 a, float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return int32x8(_mm256_cmp_ps(a, b, _CMP_GE_OQ));
+#else
+    return {cmp_ge(a[0], b[0]), cmp_ge(a[1], b[1])};
+#endif
+}
+/// @}
+
+/// @}
+/** Compares the values of two float64x2 vectors for greater-than
+
+    @code
+    r0 = (a0 >= b0) ? 0xffffffffffffffff : 0x0
+    ...
+    rN = (aN >= bN) ? 0xffffffffffffffff : 0x0
+    @endcode
+
+    @par 128-bit version:
+    @unimp{NEON}
+
+    @par 256-bit version:
+    @unimp{NEON}
+    @icost{SSE2-SSE4.1, 2}
+*/
+inline basic_int64x2 cmp_ge(float64x2 a, float64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::cmp_ge(a, b);
+#elif SIMDPP_USE_AVX
+    return int64x2(_mm_cmp_pd(a, b, _CMP_GE_OQ));
+#elif SIMDPP_USE_SSE2
+    return int64x2(_mm_cmpge_pd(a, b));
+#elif SIMDPP_USE_NEON
+    return neon::detail::cmp_ge(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+inline basic_int64x4 cmp_ge(float64x4 a, float64x4 b)
+{
+#if SIMDPP_USE_AVX
+    return int64x4(_mm256_cmp_pd(a, b, _CMP_GE_OQ));
+#else
+    return {cmp_ge(a[0], b[0]), cmp_ge(a[1], b[1])};
+#endif
+}
+/// @}
+
+/// @{
 /** Compares the values of two signed int8x16 vectors for less-than
 
     @code
@@ -1011,6 +1087,82 @@ inline basic_int64x4 cmp_lt(float64x4 a, float64x4 b)
     return int64x4(_mm256_cmp_pd(a, b, _CMP_LT_OQ));
 #else
     return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+#endif
+}
+/// @}
+
+/// @{
+/** Compares the values of two float32x4 vectors for less-than or equal
+
+    @code
+    r0 = (a0 <= b0) ? 0xffffffff : 0x0
+    ...
+    rN = (aN <= bN) ? 0xffffffff : 0x0
+    @endcode
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, NEON, 2}
+*/
+inline basic_int32x4 cmp_le(float32x4 a, float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::cmp_le(a, b);
+#elif SIMDPP_USE_AVX
+    return int32x4(_mm_cmp_ps(a, b, _CMP_LE_OQ));
+#elif SIMDPP_USE_SSE2
+    return int32x4(_mm_cmple_ps(a, b));
+#elif SIMDPP_USE_NEON
+    return vcleq_f32(a, b);
+#endif
+}
+
+inline basic_int32x8 cmp_le(float32x8 a, float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return int32x8(_mm256_cmp_ps(a, b, _CMP_LE_OQ));
+#else
+    return {cmp_le(a[0], b[0]), cmp_le(a[1], b[1])};
+#endif
+}
+/// @}
+
+/// @{
+/** Compares the values of two float64x2 vectors for less-than or equal
+
+    @code
+    r0 = (a0 <= b0) ? 0xffffffffffffffff : 0x0
+    ...
+    rN = (aN <= bN) ? 0xffffffffffffffff : 0x0
+    @endcode
+
+    @par 128-bit version:
+    @unimp{NEON}
+
+    @par 256-bit version:
+    @unimp{NEON}
+    @icost{SSE2-SSE4.1, 2}
+*/
+inline basic_int64x2 cmp_le(float64x2 a, float64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::cmp_le(a, b);
+#elif SIMDPP_USE_AVX
+    return int64x2(_mm_cmp_pd(a, b, _CMP_LE_OQ));
+#elif SIMDPP_USE_SSE2
+    return int64x2(_mm_cmple_pd(a, b));
+#elif SIMDPP_USE_NEON
+    return neon::detail::cmp_le(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+inline basic_int64x4 cmp_le(float64x4 a, float64x4 b)
+{
+#if SIMDPP_USE_AVX
+    return int64x4(_mm256_cmp_pd(a, b, _CMP_LE_OQ));
+#else
+    return {cmp_le(a[0], b[0]), cmp_le(a[1], b[1])};
 #endif
 }
 /// @}

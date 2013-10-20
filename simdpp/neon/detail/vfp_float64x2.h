@@ -71,6 +71,17 @@ inline basic_int64x2 cmp_lt(float64x2 a, float64x2 b)
     return rv;
 }
 
+inline basic_int64x2 cmp_le(float64x2 a, float64x2 b)
+{
+    union {
+        basic_int64x2 rv;
+        int64_t r[2];
+    };
+    r[0] = (a[0] <= b[0]) ? 0xffffffffffffffff : 0;
+    r[1] = (a[1] <= b[1]) ? 0xffffffffffffffff : 0;
+    return rv;
+}
+
 inline basic_int64x2 cmp_gt(float64x2 a, float64x2 b)
 {
     union {
@@ -79,6 +90,17 @@ inline basic_int64x2 cmp_gt(float64x2 a, float64x2 b)
     };
     r[0] = (a[0] > b[0]) ? 0xffffffffffffffff : 0;
     r[1] = (a[1] > b[1]) ? 0xffffffffffffffff : 0;
+    return rv;
+}
+
+inline basic_int64x2 cmp_ge(float64x2 a, float64x2 b)
+{
+    union {
+        basic_int64x2 rv;
+        int64_t r[2];
+    };
+    r[0] = (a[0] >= b[0]) ? 0xffffffffffffffff : 0;
+    r[1] = (a[1] >= b[1]) ? 0xffffffffffffffff : 0;
     return rv;
 }
 

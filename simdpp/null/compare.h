@@ -70,11 +70,31 @@ typename traits<V>::int_vector_type cmp_lt(V a, V b)
 }
 
 template<class V>
+typename traits<V>::int_vector_type cmp_le(V a, V b)
+{
+    typename traits<V>::int_vector_type r;
+    for (unsigned i = 0; i < traits<V>::length; i++) {
+        r[i] = (a[i] <= b[i]) ? traits<V>::all_bits : 0;
+    }
+    return r;
+}
+
+template<class V>
 typename traits<V>::int_vector_type cmp_gt(V a, V b)
 {
     typename traits<V>::int_vector_type r;
     for (unsigned i = 0; i < traits<V>::length; i++) {
         r[i] = (a[i] > b[i]) ? traits<V>::all_bits : 0;
+    }
+    return r;
+}
+
+template<class V>
+typename traits<V>::int_vector_type cmp_ge(V a, V b)
+{
+    typename traits<V>::int_vector_type r;
+    for (unsigned i = 0; i < traits<V>::length; i++) {
+        r[i] = (a[i] >= b[i]) ? traits<V>::all_bits : 0;
     }
     return r;
 }

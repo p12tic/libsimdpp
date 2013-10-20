@@ -124,6 +124,8 @@ void test_compare(TestResults& res)
 
         TEST_COMPARE_TESTER_HELPER(tc, float32x8, sl, sr);
         TEST_ARRAY_HELPER16X2_2(tc, float32x8, cmp_neq, sl, sr);
+        TEST_ARRAY_HELPER16X2_2(tc, float32x8, cmp_le, sl, sr);
+        TEST_ARRAY_HELPER16X2_2(tc, float32x8, cmp_ge, sl, sr);
     }
 
     //float64x4
@@ -163,6 +165,8 @@ void test_compare(TestResults& res)
 
         TEST_COMPARE_TESTER_HELPER(tc, float64x4, sl, sr);
         TEST_ARRAY_HELPER16X2_2(tc, float64x4, cmp_neq, sl, sr);
+        TEST_ARRAY_HELPER16X2_2(tc, float64x4, cmp_le, sl, sr);
+        TEST_ARRAY_HELPER16X2_2(tc, float64x4, cmp_ge, sl, sr);
     }
 }
 
