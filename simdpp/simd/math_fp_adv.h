@@ -108,7 +108,7 @@ inline basic_int32x8 isnan(float32x8 a)
 inline basic_int64x2 isnan(float64x2 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int64x2>(a, [](float x) {
+    return null::foreach<int64x2>(a, [](double x) {
         return std::isnan(x) ? 0xffffffffffffffff : 0;
     });
 #elif SIMDPP_USE_AVX2
