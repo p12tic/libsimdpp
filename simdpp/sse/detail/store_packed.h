@@ -34,6 +34,7 @@
 
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle.h>
+#include <simdpp/simd/shuffle_bytes.h>
 #include <simdpp/simd/math_shift.h>
 #include <simdpp/simd/transpose.h>
 #include <simdpp/simd/detail/width.h>
@@ -90,22 +91,6 @@ inline void mem_pack2(float32x8& a, float32x8& b)         { mem_pack2_256_impl(a
 inline void mem_pack2(float64x4& a, float64x4& b)         { mem_pack2_256_impl(a, b); }
 /// @}
 
-#if SIMDPP_USE_SSSE3
-inline basic_int8x16 shuffle_epi8_wrapper(basic_int8x16 x, basic_int8x16 idx)
-{
-    return _mm_shuffle_epi8(x, idx);
-}
-
-inline basic_int8x32 shuffle_epi8_wrapper(basic_int8x32 x, basic_int8x32 idx)
-{
-#if SIMDPP_USE_AVX2
-    return _mm256_shuffle_epi8(x, idx);
-#else
-    return {_mm_shuffle_epi8(x[0], idx[0]), _mm_shuffle_epi8(x[1], idx[1])};
-#endif
-}
-#endif
-
 /// @{
 /** Generic implementation of mem_pack3. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
@@ -139,10 +124,10 @@ template<class T> void mem_pack3_impl8(T& a, T& b, T& c)
     // properly and use only bit_or later
     w_b8 idx = w_u8::make_const(0,   1,  2,  4,    5,    6,    8,    9,
                                10, 12, 13, 14, 0xff, 0xff, 0xff, 0xff);
-    u0 = shuffle_epi8_wrapper(u0, idx);
-    u1 = shuffle_epi8_wrapper(u1, idx);
-    u2 = shuffle_epi8_wrapper(u2, idx);
-    u3 = shuffle_epi8_wrapper(u3, idx);
+    u0 = permute_bytes16(u0, idx);
+    u1 = permute_bytes16(u1, idx);
+    u2 = permute_bytes16(u2, idx);
+    u3 = permute_bytes16(u3, idx);
 #else
     using w_u64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u64;
 
@@ -242,10 +227,10 @@ template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
     // properly and use only bit_or later
     w_b8 idx = w_u8::make_const(0,   1,  2,  3,    4,    5,    8,    9,
                                 10, 11, 12, 13, 0xff, 0xff, 0xff, 0xff);
-    u0 = shuffle_epi8_wrapper(u0, idx);
-    u1 = shuffle_epi8_wrapper(u1, idx);
-    u2 = shuffle_epi8_wrapper(u2, idx);
-    u3 = shuffle_epi8_wrapper(u3, idx);
+    u0 = permute_bytes16(u0, idx);
+    u1 = permute_bytes16(u1, idx);
+    u2 = permute_bytes16(u2, idx);
+    u3 = permute_bytes16(u3, idx);
 
 #else
     using w_u16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u16;
