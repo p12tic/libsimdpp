@@ -49,6 +49,14 @@ class float32x4;
 class basic_int32x4 : public int128 {
 public:
 
+    using element_type = uint32_t;
+    using uint_element_type = uint32_t;
+    using int_vector_type = basic_int32x4;
+
+    static constexpr unsigned length = 4;
+    static constexpr unsigned num_bits = 32;
+    static constexpr uint_element_type all_bits = 0xffffffff;
+
     basic_int32x4() = default;
     basic_int32x4(const basic_int32x4&) = default;
     basic_int32x4& operator=(const basic_int32x4&) = default;
@@ -91,6 +99,8 @@ public:
 */
 class int32x4 : public basic_int32x4 {
 public:
+
+    using element_type = int32_t;
 
     int32x4() = default;
     int32x4(const int32x4&) = default;

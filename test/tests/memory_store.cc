@@ -35,10 +35,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned vnum>
 void test_store_helper(TestCase& tc, V* sv)
 {
-    using E = typename traits<V>::element_type;
+    using E = typename V::element_type;
 
     union {
-        E rdata[traits<V>::length * vnum];
+        E rdata[V::length * vnum];
         V rv[vnum];
     };
 
@@ -51,25 +51,25 @@ void test_store_helper(TestCase& tc, V* sv)
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero();
-        store(rdata+i*traits<V>::length, sv[0]);
+        store(rdata+i*V::length, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero();
-        stream(rdata+i*traits<V>::length, sv[0]);
+        stream(rdata+i*V::length, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     tc.reset_seq();
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         rzero();
         store_first(rdata, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
     }
 
     tc.reset_seq();
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         rzero();
         store_last(rdata, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);

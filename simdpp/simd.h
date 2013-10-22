@@ -488,7 +488,6 @@
 #include <simdpp/simd/this_compile_arch.h>
 
 #include <simdpp/dispatcher.h>
-#include <simdpp/simd/detail/traits.h>
 
 namespace simdpp {
 using namespace SIMDPP_ARCH_NAMESPACE;

@@ -45,6 +45,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
 class int256 {
 public:
 
+    using element_type = uint64_t;
+    using uint_element_type = uint64_t;
+    using int_vector_type = int256;
+
+    static constexpr unsigned length = 4;
+    static constexpr unsigned num_bits = 64;
+    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
+
     int256() = default;
     int256(const int256 &) = default;
     int256 &operator=(const int256 &) = default;

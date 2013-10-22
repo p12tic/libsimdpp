@@ -47,6 +47,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
 class basic_int8x32 : public int256 {
 public:
 
+    using element_type = uint8_t;
+    using uint_element_type = uint8_t;
+    using int_vector_type = basic_int8x32;
+    using half_vector_type = basic_int8x16;
+
+    static constexpr unsigned length = 32;
+    static constexpr unsigned num_bits = 8;
+    static constexpr uint_element_type all_bits = 0xff;
+
     basic_int8x32() = default;
     basic_int8x32(const basic_int8x32 &) = default;
     basic_int8x32 &operator=(const basic_int8x32 &) = default;
@@ -79,6 +88,9 @@ public:
 */
 class int8x32 : public basic_int8x32 {
 public:
+
+    using element_type = int8_t;
+    using half_vector_type = int8x16;
 
     int8x32() = default;
     int8x32(const int8x32 &) = default;
@@ -212,6 +224,7 @@ public:
 */
 class uint8x32 : public basic_int8x32 {
 public:
+    using half_vector_type = uint8x16;
 
     uint8x32() = default;
     uint8x32(const uint8x32 &) = default;

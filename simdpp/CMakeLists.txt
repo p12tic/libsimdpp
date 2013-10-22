@@ -48,7 +48,6 @@ set(HEADERS
     null/memory.h
     null/set.h
     null/shuffle.h
-    null/traits.h
     null/transpose.h
 
     simd/detail/not_implemented.h
@@ -56,7 +55,6 @@ set(HEADERS
     simd/detail/mem_unpack.h
     simd/detail/shuffle128.h
     simd/detail/shuffle_emul.h
-    simd/detail/traits.h
     simd/detail/transpose.h
     simd/detail/width.h
     simd/detail/word_size.h

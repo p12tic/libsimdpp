@@ -25,8 +25,6 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/simd/detail/traits.h>
-
 #include <iostream>
 #include <ctime>
 #include <iomanip>
@@ -150,8 +148,8 @@ inline V perf_one_iteration(BinaryTag, V v1, V v2, V c1, V c2, F f)
 template<class V, class Tag, class F>
 inline void perf_cycle(Tag, unsigned count, F f)
 {
-    using E = typename detail::traits<V>::element_type;
-    constexpr unsigned length = detail::traits<V>::length;
+    using E = typename V::element_type;
+    constexpr unsigned length = V::length;
 
     unsigned z = 0;
 

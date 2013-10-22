@@ -33,7 +33,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned i>
 struct Test_shift_l {
-    static constexpr unsigned limit = traits<V>::num_bits;
+    static constexpr unsigned limit = V::num_bits;
     static void test(TestCase& tc, V a)
     {
         V b = simdpp::shift_l<i>(a);
@@ -41,7 +41,7 @@ struct Test_shift_l {
         TEST_PUSH(tc, V, b);
         TEST_PUSH(tc, V, c);
 
-        using H = typename traits<V>::half_vector_type;
+        using H = typename V::half_vector_type;
         H ah = tst_ext_half(a);
         H bh = simdpp::shift_l<i>(ah);
         H ch = simdpp::shift_l(ah, i);
@@ -52,7 +52,7 @@ struct Test_shift_l {
 
 template<class V, unsigned i>
 struct Test_shift_r {
-    static constexpr unsigned limit = traits<V>::num_bits;
+    static constexpr unsigned limit = V::num_bits;
     static void test(TestCase& tc, V a)
     {
         V b = simdpp::shift_r<i>(a);
@@ -60,7 +60,7 @@ struct Test_shift_r {
         TEST_PUSH(tc, V, b);
         TEST_PUSH(tc, V, c);
 
-        using H = typename traits<V>::half_vector_type;
+        using H = typename V::half_vector_type;
         H ah = tst_ext_half(a);
         H bh = simdpp::shift_r<i>(ah);
         H ch = simdpp::shift_r(ah, i);

@@ -49,6 +49,15 @@ class float64x4;
 class basic_int64x4 : public int256 {
 public:
 
+    using element_type = uint64_t;
+    using uint_element_type = uint64_t;
+    using int_vector_type = basic_int64x4;
+    using half_vector_type = basic_int64x2;
+
+    static constexpr unsigned length = 4;
+    static constexpr unsigned num_bits = 64;
+    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
+
     basic_int64x4() = default;
     basic_int64x4(const basic_int64x4 &) = default;
     basic_int64x4 &operator=(const basic_int64x4 &) = default;
@@ -86,6 +95,9 @@ public:
 */
 class int64x4 : public basic_int64x4 {
 public:
+
+    using element_type = int64_t;
+    using half_vector_type = int64x2;
 
     int64x4() = default;
     int64x4(const int64x4 &) = default;
@@ -185,6 +197,8 @@ public:
 */
 class uint64x4 : public basic_int64x4 {
 public:
+
+    using half_vector_type = uint64x2;
 
     uint64x4() = default;
     uint64x4(const uint64x4 &) = default;

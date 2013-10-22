@@ -31,7 +31,6 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/null/traits.h>
 #include <simdpp/simd/cast.h>
 
 #include <cmath>
@@ -47,7 +46,7 @@ namespace null {
 template<class V>
 V abs(V a)
 {
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         a[i] = std::abs(a[i]);
     }
     return a;
@@ -67,7 +66,7 @@ template<class V>
 V add(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = a[i] + b[i];
     }
     return r;
@@ -77,8 +76,8 @@ template<class V>
 V adds(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        r[i] = saturate<typename traits<V>::element_type>(int32_t(a[i]) + b[i]);
+    for (unsigned i = 0; i < V::length; i++) {
+        r[i] = saturate<typename V::element_type>(int32_t(a[i]) + b[i]);
     }
     return r;
 }
@@ -87,7 +86,7 @@ template<class V>
 V sub(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = a[i] - b[i];
     }
     return r;
@@ -97,8 +96,8 @@ template<class V>
 V subs(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        r[i] = saturate<typename traits<V>::element_type>(int32_t(a[i]) - b[i]);
+    for (unsigned i = 0; i < V::length; i++) {
+        r[i] = saturate<typename V::element_type>(int32_t(a[i]) - b[i]);
     }
     return r;
 }
@@ -107,7 +106,7 @@ template<class V>
 V neg(V a)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = -a[i];
     }
     return r;
@@ -117,7 +116,7 @@ template<class V>
 V mul(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = a[i] * b[i];
     }
     return r;
@@ -133,7 +132,7 @@ V div_p(V a, V b)
     mask = ~mask;
 
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = (a[i] & mask) / (b[i] & mask);
         r[i] &= mask;
     }
@@ -145,7 +144,7 @@ template<class V>
 V shift_r(V a, unsigned shift)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = a[i] >> shift;
     }
     return r;
@@ -155,7 +154,7 @@ template<class V>
 V shift_l(V a, unsigned shift)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = a[i] << shift;
     }
     return r;
@@ -165,7 +164,7 @@ template<class V>
 V min(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = a[i] <= b[i] ? a[i] : b[i];
     }
     return r;
@@ -175,7 +174,7 @@ template<class V>
 V max(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = a[i] >= b[i] ? a[i] : b[i];
     }
     return r;

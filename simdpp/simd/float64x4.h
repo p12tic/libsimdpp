@@ -50,6 +50,15 @@ class basic_int64x4;
 class float64x4 {
 public:
 
+    using element_type = double;
+    using uint_element_type = uint64_t;
+    using int_vector_type = basic_int64x4;
+    using half_vector_type = float64x2;
+
+    static constexpr unsigned length = 4;
+    static constexpr unsigned num_bits = 64;
+    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
+
     float64x4() = default;
     float64x4(const float64x4&) = default;
     float64x4& operator=(const float64x4&) = default;

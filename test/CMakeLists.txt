@@ -40,7 +40,6 @@ set(TEST1_HEADERS
     test_helpers.h
     test_results.h
     tests.h
-    traits.h
 )
 
 set(TEST1_ARCH_SOURCES

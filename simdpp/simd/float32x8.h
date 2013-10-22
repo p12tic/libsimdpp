@@ -49,6 +49,15 @@ class basic_int32x8;
 class float32x8 {
 public:
 
+    using element_type = float;
+    using uint_element_type = uint32_t;
+    using int_vector_type = basic_int32x8;
+    using half_vector_type = float32x4;
+
+    static constexpr unsigned length = 8;
+    static constexpr unsigned num_bits = 32;
+    static constexpr uint_element_type all_bits = 0xffffffff;
+
     float32x8() = default;
     float32x8(const float32x8&) = default;
     float32x8& operator=(const float32x8&) = default;

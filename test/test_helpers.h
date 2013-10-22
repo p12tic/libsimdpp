@@ -30,7 +30,6 @@
 
 #include <simdpp/simd.h>
 #include "test_case.h"
-#include "traits.h"
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -251,7 +250,7 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 #define TEST_PUSH16X2_1(TC,T,OP,Q1)                                     \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1)), __LINE__);                  \
-    using H = typename traits<T>::half_vector_type;                     \
+    using H = typename T::half_vector_type;                     \
     test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)))), __LINE__);  \
 }
 
@@ -259,7 +258,7 @@ inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 #define TEST_PUSH16X2_2(TC,T,OP,Q1,Q2)                                  \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2)), __LINE__);            \
-    using H = typename traits<T>::half_vector_type;                     \
+    using H = typename T::half_vector_type;                     \
     test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)),               \
                                       tst_ext_half((Q2)))), __LINE__);  \
 }

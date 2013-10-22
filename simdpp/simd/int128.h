@@ -33,6 +33,7 @@
 #endif
 
 #include <cstdint>
+#include <simdpp/simd/fwd.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -45,6 +46,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// Base class for all 128-bit integer objects
 class int128 {
 public:
+    using element_type = uint64_t;
+    using uint_element_type = uint64_t;
+    using int_vector_type = int128;
+
+    static constexpr unsigned length = 2;
+    static constexpr unsigned num_bits = 64;
+    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
     int128() = default;
     int128(const int128 &) = default;

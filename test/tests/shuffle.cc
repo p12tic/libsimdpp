@@ -35,8 +35,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 // shuffles within 256-bit vectors are limited to 128-bit halves
 template<class V>
 struct Shuffle_width {
-    static constexpr bool is_256 = (traits<V>::length * traits<V>::num_bits) == 256 ? true : false;
-    static constexpr unsigned value = is_256 ? traits<V>::length / 2 : traits<V>::length;
+    static constexpr bool is_256 = (V::length * V::num_bits) == 256 ? true : false;
+    static constexpr unsigned value = is_256 ? V::length / 2 : V::length;
 };
 
 template<class V, unsigned i>
@@ -81,7 +81,7 @@ struct Test_align {
 
 template<class V, unsigned i>
 struct Test_insert_extract {
-    static constexpr unsigned limit = traits<V>::length;
+    static constexpr unsigned limit = V::length;
     static void test(TestCase& tc, V a, V b)
     {
         a = simdpp::insert<i>(a, simdpp::extract<i>(b));
@@ -121,8 +121,8 @@ void test_shuffle_type256(TestCase &tc, V v1, V v2)
 template<class V>
 std::vector<V> test_blend_make_masks()
 {
-    using U = typename traits<V>::unsigned_element_type;
-    using T = typename traits<V>::element_type;
+    using U = typename V::uint_element_type;
+    using T = typename V::element_type;
     std::vector<V> r;
 
     T z = simdpp::bit_cast<T, U>(U(0));

@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned vnum>
 void test_load_helper(TestCase& tc, void* sv_p)
 {
-    using E = typename traits<V>::element_type;
+    using E = typename V::element_type;
     auto sdata = reinterpret_cast<E*>(sv_p);
 
     V rv[vnum];
@@ -47,11 +47,11 @@ void test_load_helper(TestCase& tc, void* sv_p)
     };
 
     for (unsigned i = 0; i < vnum; i++) {
-        V r = load(r, sdata + i*traits<V>::length);
+        V r = load(r, sdata + i*V::length);
         TEST_PUSH(tc, V, r);
     }
 
-    for (unsigned i = 0; i < (vnum-1)*traits<V>::length; i++) {
+    for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
         V r = load_u(r, sdata+i);
         TEST_PUSH(tc, V, r);
     }

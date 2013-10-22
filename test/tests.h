@@ -30,7 +30,6 @@
 
 #include "test_helpers.h"
 #include "test_results.h"
-#include "traits.h"
 
 #include <cstdint>
 #include <iostream>

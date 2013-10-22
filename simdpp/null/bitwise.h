@@ -31,7 +31,6 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/null/traits.h>
 #include <simdpp/simd/cast.h>
 
 namespace simdpp {
@@ -44,9 +43,9 @@ template<class V>
 V bit_and(V a, V b)
 {
     V r;
-    using E = typename traits<V>::element_type;
-    using U = typename traits<V>::unsigned_element_type;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    using E = typename V::element_type;
+    using U = typename V::uint_element_type;
+    for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
         r[i] = bit_cast<E, U>(a1 & b1);
@@ -58,9 +57,9 @@ template<class V>
 V bit_andnot(V a, V b)
 {
     V r;
-    using E = typename traits<V>::element_type;
-    using U = typename traits<V>::unsigned_element_type;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    using E = typename V::element_type;
+    using U = typename V::uint_element_type;
+    for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
         r[i] = bit_cast<E, U>(a1 & ~b1);
@@ -72,9 +71,9 @@ template<class V>
 V bit_or(V a, V b)
 {
     V r;
-    using E = typename traits<V>::element_type;
-    using U = typename traits<V>::unsigned_element_type;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    using E = typename V::element_type;
+    using U = typename V::uint_element_type;
+    for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
         r[i] = bit_cast<E, U>(a1 | b1);
@@ -86,9 +85,9 @@ template<class V>
 V bit_xor(V a, V b)
 {
     V r;
-    using E = typename traits<V>::element_type;
-    using U = typename traits<V>::unsigned_element_type;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    using E = typename V::element_type;
+    using U = typename V::uint_element_type;
+    for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
         r[i] = bit_cast<E, U>(a1 ^ b1);

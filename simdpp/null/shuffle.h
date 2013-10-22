@@ -31,7 +31,6 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/null/traits.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -43,7 +42,7 @@ template<class V>
 V zip_lo(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length/2; i++) {
+    for (unsigned i = 0; i < V::length/2; i++) {
         r[i*2] = a[i];
         r[i*2+1] = b[i];
     }
@@ -54,7 +53,7 @@ template<class V>
 V zip_hi(V a, V b)
 {
     V r;
-    constexpr unsigned half = traits<V>::length/2;
+    constexpr unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
         r[i*2] = a[half+i];
         r[i*2+1] = b[half+i];
@@ -66,7 +65,7 @@ template<unsigned pos, class V>
 V broadcast(V v)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = v[pos];
     }
     return r;
@@ -89,7 +88,7 @@ template<class V>
 V unzip_lo(V a, V b)
 {
     V r;
-    unsigned half = traits<V>::length/2;
+    unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
         r[i] = a[i*2];
         r[i + half] = b[i*2];
@@ -101,7 +100,7 @@ template<class V>
 V unzip_hi(V a, V b)
 {
     V r;
-    unsigned half = traits<V>::length/2;
+    unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
         r[i] = a[i*2+1];
         r[i + half] = b[i*2+1];
@@ -123,7 +122,7 @@ template<unsigned s0, unsigned s1, class V>
 V permute(V a)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=2) {
+    for (unsigned i = 0; i < V::length; i+=2) {
         r[i] =   a[i + s0];
         r[i+1] = a[i + s1];
     }
@@ -134,7 +133,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V>
 V permute(V a)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=4) {
+    for (unsigned i = 0; i < V::length; i+=4) {
         r[i] =   a[i + s0];
         r[i+1] = a[i + s1];
         r[i+2] = a[i + s2];
@@ -147,7 +146,7 @@ template<unsigned s0, unsigned s1, class V>
 V shuffle1(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=2) {
+    for (unsigned i = 0; i < V::length; i+=2) {
         r[i] =   a[i + s0];
         r[i+1] = b[i + s1];
     }
@@ -158,7 +157,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V>
 V shuffle2(V a, V b)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=4) {
+    for (unsigned i = 0; i < V::length; i+=4) {
         r[i] =   a[i + s0];
         r[i+1] = a[i + s1];
         r[i+2] = b[i + s2];

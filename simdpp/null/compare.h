@@ -31,7 +31,6 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/null/traits.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -40,79 +39,79 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace null {
 
 template<class V>
-typename traits<V>::int_vector_type cmp_eq(V a, V b)
+typename V::int_vector_type cmp_eq(V a, V b)
 {
     union {
-        typename traits<V>::unsigned_element_type ri[traits<V>::length];
-        typename traits<V>::int_vector_type r;
+        typename V::uint_element_type ri[V::length];
+        typename V::int_vector_type r;
     };
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        ri[i] = (a[i] == b[i]) ? traits<V>::all_bits : 0;
+    for (unsigned i = 0; i < V::length; i++) {
+        ri[i] = (a[i] == b[i]) ? V::all_bits : 0;
     }
     return r;
 }
 
 template<class V>
-typename traits<V>::int_vector_type cmp_neq(V a, V b)
+typename V::int_vector_type cmp_neq(V a, V b)
 {
     union {
-        typename traits<V>::unsigned_element_type ri[traits<V>::length];
-        typename traits<V>::int_vector_type r;
+        typename V::uint_element_type ri[V::length];
+        typename V::int_vector_type r;
     };
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        ri[i] = (a[i] != b[i]) ? traits<V>::all_bits : 0;
+    for (unsigned i = 0; i < V::length; i++) {
+        ri[i] = (a[i] != b[i]) ? V::all_bits : 0;
     }
     return r;
 }
 
 template<class V>
-typename traits<V>::int_vector_type cmp_lt(V a, V b)
+typename V::int_vector_type cmp_lt(V a, V b)
 {
     union {
-        typename traits<V>::unsigned_element_type ri[traits<V>::length];
-        typename traits<V>::int_vector_type r;
+        typename V::uint_element_type ri[V::length];
+        typename V::int_vector_type r;
     };
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        ri[i] = (a[i] < b[i]) ? traits<V>::all_bits : 0;
+    for (unsigned i = 0; i < V::length; i++) {
+        ri[i] = (a[i] < b[i]) ? V::all_bits : 0;
     }
     return r;
 }
 
 template<class V>
-typename traits<V>::int_vector_type cmp_le(V a, V b)
+typename V::int_vector_type cmp_le(V a, V b)
 {
     union {
-        typename traits<V>::unsigned_element_type ri[traits<V>::length];
-        typename traits<V>::int_vector_type r;
+        typename V::uint_element_type ri[V::length];
+        typename V::int_vector_type r;
     };
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        ri[i] = (a[i] <= b[i]) ? traits<V>::all_bits : 0;
+    for (unsigned i = 0; i < V::length; i++) {
+        ri[i] = (a[i] <= b[i]) ? V::all_bits : 0;
     }
     return r;
 }
 
 template<class V>
-typename traits<V>::int_vector_type cmp_gt(V a, V b)
+typename V::int_vector_type cmp_gt(V a, V b)
 {
     union {
-        typename traits<V>::unsigned_element_type ri[traits<V>::length];
-        typename traits<V>::int_vector_type r;
+        typename V::uint_element_type ri[V::length];
+        typename V::int_vector_type r;
     };
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        ri[i] = (a[i] > b[i]) ? traits<V>::all_bits : 0;
+    for (unsigned i = 0; i < V::length; i++) {
+        ri[i] = (a[i] > b[i]) ? V::all_bits : 0;
     }
     return r;
 }
 
 template<class V>
-typename traits<V>::int_vector_type cmp_ge(V a, V b)
+typename V::int_vector_type cmp_ge(V a, V b)
 {
     union {
-        typename traits<V>::unsigned_element_type ri[traits<V>::length];
-        typename traits<V>::int_vector_type r;
+        typename V::uint_element_type ri[V::length];
+        typename V::int_vector_type r;
     };
-    for (unsigned i = 0; i < traits<V>::length; i++) {
-        ri[i] = (a[i] >= b[i]) ? traits<V>::all_bits : 0;
+    for (unsigned i = 0; i < V::length; i++) {
+        ri[i] = (a[i] >= b[i]) ? V::all_bits : 0;
     }
     return r;
 }

@@ -31,7 +31,6 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/null/traits.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -40,40 +39,40 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace null {
 
 template<class V>
-V set_broadcast(V& a, typename traits<V>::element_type x)
+V set_broadcast(V& a, typename V::element_type x)
 {
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         a[i] = x;
     }
     return a;
 }
 
-template<class V, class E = typename traits<V>::element_type>
+template<class V, class E = typename V::element_type>
 V make_vec(E v0)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i++) {
+    for (unsigned i = 0; i < V::length; i++) {
         r[i] = v0;
     }
     return r;
 }
 
-template<class V, class E = typename traits<V>::element_type>
+template<class V, class E = typename V::element_type>
 V make_vec(E v0, E v1)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=2) {
+    for (unsigned i = 0; i < V::length; i+=2) {
         r[i] = v0;
         r[i+1] = v1;
     }
     return r;
 }
 
-template<class V, class E = typename traits<V>::element_type>
+template<class V, class E = typename V::element_type>
 V make_vec(E v0, E v1, E v2, E v3)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=4) {
+    for (unsigned i = 0; i < V::length; i+=4) {
         r[i] = v0;
         r[i+1] = v1;
         r[i+2] = v2;
@@ -82,11 +81,11 @@ V make_vec(E v0, E v1, E v2, E v3)
     return r;
 }
 
-template<class V, class E = typename traits<V>::element_type>
+template<class V, class E = typename V::element_type>
 V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=8) {
+    for (unsigned i = 0; i < V::length; i+=8) {
         r[i] = v0;
         r[i+1] = v1;
         r[i+2] = v2;
@@ -99,12 +98,12 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7)
     return r;
 }
 
-template<class V, class E = typename traits<V>::element_type>
+template<class V, class E = typename V::element_type>
 V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7,
            E v8, E v9, E v10, E v11, E v12, E v13, E v14, E v15)
 {
     V r;
-    for (unsigned i = 0; i < traits<V>::length; i+=16) {
+    for (unsigned i = 0; i < V::length; i+=16) {
         r[i] = v0;
         r[i+1] = v1;
         r[i+2] = v2;
