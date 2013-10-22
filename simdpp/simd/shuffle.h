@@ -1487,21 +1487,7 @@ inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, basic_int8x32 ma
 */
 inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, basic_int16x8 mask)
 {
-#if SIMDPP_USE_NULL
-    return null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX2
-    return _mm_blendv_epi8(off, on, mask);
-#elif SIMDPP_USE_SSE2
-    // _mm_blendv_epi8 needs xmm0 and occupies the shuffle ports, yet saves
-    // only one uop
-    int128 r;
-     on = bit_and(on, mask);
-    off = bit_andnot(off, mask);
-      r = bit_or(on, off);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vbslq_u16(on, off, mask);
-#endif
+    return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
 }
 
 inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, basic_int16x16 mask)
@@ -1535,21 +1521,7 @@ inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, basic_int16x1
 */
 inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, basic_int32x4 mask)
 {
-#if SIMDPP_USE_NULL
-    return null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX2
-    return _mm_blendv_epi8(off, on, mask);
-#elif SIMDPP_USE_SSE2
-    // _mm_blendv_epi8 needs xmm0 and occupies the shuffle ports, yet saves
-    // only one uop
-    int128 r;
-     on = bit_and(on, mask);
-    off = bit_andnot(off, mask);
-      r = bit_or(on, off);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vbslq_u32(on, off, mask);
-#endif
+    return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
 }
 
 inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, basic_int32x8 mask)
@@ -1583,21 +1555,7 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, basic_int32x8 ma
 */
 inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, basic_int64x2 mask)
 {
-#if SIMDPP_USE_NULL
-    return null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX2
-    return _mm_blendv_epi8(off, on, mask);
-#elif SIMDPP_USE_SSE2
-    // _mm_blendv_epi8 needs xmm0 and occupies the shuffle ports, yet saves
-    // only one uop
-    int128 r;
-     on = bit_and(on, mask);
-    off = bit_andnot(off, mask);
-      r = bit_or(on, off);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vbslq_u64(on, off, mask);
-#endif
+    return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
 }
 
 inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, basic_int64x4 mask)
