@@ -24,16 +24,16 @@
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBSIMDPP_SSE_DETAIL_TRANSPOSE_H
-#define LIBSIMDPP_SSE_DETAIL_TRANSPOSE_H
+#ifndef LIBSIMDPP_SIMD_DETAIL_TRANSPOSE_H
+#define LIBSIMDPP_SIMD_DETAIL_TRANSPOSE_H
 
-#include <simdpp/sse/shuffle.h>
+#include <simdpp/simd/types.h>
+#include <simdpp/simd/shuffle_bytes.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
-namespace sse {
 namespace detail {
 
 /// @{
@@ -53,7 +53,7 @@ inline basic_int8x16 transpose_inplace(basic_int8x16 a)
     // the compiler will take this out of any loops automatically
     uint8x16 idx = uint8x16::make_const(0, 4, 8, 12, 1, 5, 9, 13,
                                         2, 6, 10,14, 3, 7, 11,15);
-    return _mm_shuffle_epi8(a, idx);
+    return permute_bytes16(a, idx);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
@@ -64,7 +64,7 @@ inline basic_int8x32 transpose_inplace(basic_int8x32 a)
 #if SIMDPP_USE_AVX2
     uint8x32 idx = uint8x32::make_const(0, 4, 8, 12, 1, 5, 9, 13,
                                         2, 6, 10,14, 3, 7, 11,15);
-    return _mm256_shuffle_epi8(a, idx);
+    return permute_bytes16(a, idx);
 #elif SIMDPP_USE_SSSE3
     return {transpose_inplace(a[0]), transpose_inplace(a[1])};
 #else
@@ -190,7 +190,6 @@ inline void partial_transpose8(basic_int8x32& a0, basic_int8x32& a1,
 /// @}
 
 } // namespace detail
-} // namespace sse
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

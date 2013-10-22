@@ -33,12 +33,12 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/transpose.h>
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/transpose.h>
 #elif SIMDPP_USE_SSE2
     #include <simdpp/sse/shuffle.h>
-    #include <simdpp/sse/detail/transpose.h>
 #elif SIMDPP_USE_NEON
     #include <simdpp/null/transpose.h>
     #include <simdpp/neon/shuffle.h>
@@ -675,7 +675,7 @@ inline void transpose8(basic_int8x16& a0, basic_int8x16& a1,
     null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 #elif SIMDPP_USE_SSE2
 
-    sse::detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
+    detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 
     basic_int64x2 d0, d1, d2, d3, d4, d5, d6, d7;
     d0 = a0;  d1 = a1;  d2 = a2;  d3 = a3;
@@ -989,8 +989,8 @@ inline void transpose16(basic_int8x16& a0, basic_int8x16& a1,
     null::transpose16(a0, a1, a2,  a3,  a4,  a5,  a6,  a7,
                       a8, a9, a10, a11, a12, a13, a14, a15);
 #elif SIMDPP_USE_SSE2
-    sse::detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
-    sse::detail::partial_transpose8(a8, a9, a10, a11, a12, a13, a14, a15);
+    detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
+    detail::partial_transpose8(a8, a9, a10, a11, a12, a13, a14, a15);
     /*
     [a0,...,h0,a1,...,h1]
     [a2,...,h2,a3,...,h3]

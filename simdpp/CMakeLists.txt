@@ -57,6 +57,7 @@ set(HEADERS
     simd/detail/shuffle128.h
     simd/detail/shuffle_emul.h
     simd/detail/traits.h
+    simd/detail/transpose.h
     simd/detail/width.h
     simd/detail/word_size.h
 
@@ -114,7 +115,6 @@ set(HEADERS
     sse/cache.h
     sse/compare.h
     sse/convert.h
-    sse/detail/transpose.h
     sse/extract_half.h
     sse/math_fp.h
     sse/math_int.h

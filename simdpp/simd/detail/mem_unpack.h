@@ -37,9 +37,7 @@
 #include <simdpp/simd/transpose.h>
 #include <simdpp/simd/detail/width.h>
 #include <simdpp/simd/detail/shuffle128.h>
-#if SIMDPP_USE_SSE2
-    #include <simdpp/sse/detail/transpose.h>
-#endif
+#include <simdpp/simd/detail/transpose.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -305,10 +303,10 @@ template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
 {
 #if SIMDPP_USE_SSSE3
     typename same_width<T>::b32 b0, b1, b2, b3;
-    b0 = sse::detail::transpose_inplace(a);
-    b1 = sse::detail::transpose_inplace(b);
-    b2 = sse::detail::transpose_inplace(c);
-    b3 = sse::detail::transpose_inplace(d);
+    b0 = transpose_inplace(a);
+    b1 = transpose_inplace(b);
+    b2 = transpose_inplace(c);
+    b3 = transpose_inplace(d);
 
     transpose4(b0, b1, b2, b3);
     a = b0;  b = b1;  c = b2;  d = b3;

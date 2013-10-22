@@ -34,7 +34,6 @@
 
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle.h>
-#include <simdpp/simd/transpose.h>
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/foreach.h>

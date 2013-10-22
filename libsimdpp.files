@@ -54,6 +54,7 @@ simdpp/simd/detail/mem_unpack.h
 simdpp/simd/detail/shuffle_emul.h
 simdpp/simd/detail/shuffle128.h
 simdpp/simd/detail/not_implemented.h
+simdpp/simd/detail/transpose.h
 simdpp/simd/detail/word_size.h
 simdpp/simd/bitwise.h
 simdpp/simd/cast.h
@@ -114,7 +115,6 @@ simdpp/sse/memory_load.h
 simdpp/sse/memory_store.h
 simdpp/sse/math_fp.h
 simdpp/sse/math_int.h
-simdpp/sse/detail/transpose.h
 simdpp/arch.h
 simdpp/dispatcher.h
 simdpp/dispatcher_macros.h
