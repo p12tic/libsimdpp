@@ -727,6 +727,7 @@ basic_int8x32 shift_l_8(basic_int8x32 a)
 template<unsigned count>
 int8x16 shift_r(int8x16 a)
 {
+    static_assert(count <= 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -735,7 +736,11 @@ int8x16 shift_r(int8x16 a)
 }
 
 template<unsigned count>
-int8x32 shift_r(int8x32 a) { return detail::v256_shift_r<count>(a); }
+int8x32 shift_r(int8x32 a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    return detail::v256_shift_r<count>(a);
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline int8x16 shift_r<0>(int8x16 a) { return a; }
@@ -765,6 +770,7 @@ template<> inline int8x32 shift_r<0>(int8x32 a) { return a; }
 template<unsigned count>
 uint8x16 shift_r(uint8x16 a)
 {
+    static_assert(count <= 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -773,7 +779,11 @@ uint8x16 shift_r(uint8x16 a)
 }
 
 template<unsigned count>
-uint8x32 shift_r(uint8x32 a) { return detail::v256_shift_r<count>(a); }
+uint8x32 shift_r(uint8x32 a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    return detail::v256_shift_r<count>(a);
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint8x16 shift_r<0>(uint8x16 a) { return a; }
@@ -819,6 +829,7 @@ template<> inline uint8x32 shift_r<7>(uint8x32 a) { return detail::shift_r_u8<7>
 template<unsigned count>
 int16x8 shift_r(int16x8 a)
 {
+    static_assert(count <= 16, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -829,7 +840,11 @@ int16x8 shift_r(int16x8 a)
 }
 
 template<unsigned count>
-int16x16 shift_r(int16x16 a) { return detail::v256_shift_r<count>(a); }
+int16x16 shift_r(int16x16 a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    return detail::v256_shift_r<count>(a);
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline int16x8  shift_r<0>(int16x8 a) { return a; }
@@ -853,6 +868,7 @@ template<> inline int16x16 shift_r<0>(int16x16 a) { return a; }
 template<unsigned count>
 uint16x8 shift_r(uint16x8 a)
 {
+    static_assert(count <= 16, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -861,7 +877,11 @@ uint16x8 shift_r(uint16x8 a)
 }
 
 template<unsigned count>
-uint16x16 shift_r(uint16x16 a) { return detail::v256_shift_r<count>(a); }
+uint16x16 shift_r(uint16x16 a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    return detail::v256_shift_r<count>(a);
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint16x8 shift_r<0>(uint16x8 a) { return a; }
@@ -885,6 +905,7 @@ template<> inline uint16x16 shift_r<0>(uint16x16 a) { return a; }
 template<unsigned count>
 int32x4 shift_r(int32x4 a)
 {
+    static_assert(count <= 32, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -893,7 +914,11 @@ int32x4 shift_r(int32x4 a)
 }
 
 template<unsigned count>
-int32x8 shift_r(int32x8 a) { return detail::v256_shift_r<count>(a); }
+int32x8 shift_r(int32x8 a)
+{
+    static_assert(count <= 32, "Shift out of bounds");
+    return detail::v256_shift_r<count>(a);
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline int32x4 shift_r<0>(int32x4 a) { return a; }
@@ -917,6 +942,7 @@ template<> inline int32x8 shift_r<0>(int32x8 a) { return a; }
 template<unsigned count>
 uint32x4 shift_r(uint32x4 a)
 {
+    static_assert(count <= 32, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -925,7 +951,11 @@ uint32x4 shift_r(uint32x4 a)
 }
 
 template<unsigned count>
-uint32x8 shift_r(uint32x8 a) { return detail::v256_shift_r<count>(a); }
+uint32x8 shift_r(uint32x8 a)
+{
+    static_assert(count <= 32, "Shift out of bounds");
+    return detail::v256_shift_r<count>(a);
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint32x4 shift_r<0>(uint32x4 a) { return a; }
@@ -956,6 +986,7 @@ template<> inline uint32x8 shift_r<0>(uint32x8 a) { return a; }
 template<unsigned count>
 int64x2 shift_r(int64x2 a)
 {
+    static_assert(count <= 64, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -966,6 +997,7 @@ int64x2 shift_r(int64x2 a)
 template<unsigned count>
 int64x4 shift_r(int64x4 a)
 {
+    static_assert(count <= 64, "Shift out of bounds");
     return detail::v256_shift_r<count>(a);
 }
 
@@ -991,6 +1023,7 @@ template<> inline int64x4 shift_r<0>(int64x4 a) { return a; }
 template<unsigned count>
 uint64x2 shift_r(uint64x2 a)
 {
+    static_assert(count <= 64, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -1001,6 +1034,7 @@ uint64x2 shift_r(uint64x2 a)
 template<unsigned count>
 uint64x4 shift_r(uint64x4 a)
 {
+    static_assert(count <= 64, "Shift out of bounds");
     return detail::v256_shift_r<count>(a);
 }
 
@@ -1031,6 +1065,7 @@ template<> inline uint64x4 shift_r<0>(uint64x4 a) { return a; }
 template<unsigned count>
 basic_int8x16 shift_l(basic_int8x16 a)
 {
+    static_assert(count <= 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_l(a, count);
 #elif SIMDPP_USE_NEON
@@ -1088,6 +1123,7 @@ template<> inline basic_int8x32 shift_l<7>(basic_int8x32 a) { return detail::shi
 template<unsigned count>
 basic_int16x8 shift_l(basic_int16x8 a)
 {
+    static_assert(count <= 16, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_l(a, count);
 #elif SIMDPP_USE_NEON
@@ -1098,6 +1134,7 @@ basic_int16x8 shift_l(basic_int16x8 a)
 template<unsigned count>
 inline basic_int16x16 shift_l(basic_int16x16 a)
 {
+    static_assert(count <= 16, "Shift out of bounds");
     return detail::v256_shift_l<count>(a);
 }
 
@@ -1122,6 +1159,7 @@ template<> inline basic_int16x16 shift_l<0>(basic_int16x16 a) { return a; }
 template<unsigned count>
 basic_int32x4 shift_l(basic_int32x4 a)
 {
+    static_assert(count <= 32, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_l(a, count);
 #elif SIMDPP_USE_NEON
@@ -1132,6 +1170,7 @@ basic_int32x4 shift_l(basic_int32x4 a)
 template<unsigned count>
 inline basic_int32x8 shift_l(basic_int32x8 a)
 {
+    static_assert(count <= 32, "Shift out of bounds");
     return detail::v256_shift_l<count>(a);
 }
 
@@ -1156,6 +1195,7 @@ template<> inline basic_int32x8 shift_l<0>(basic_int32x8 a) { return a; }
 template<unsigned count>
 basic_int64x2 shift_l(basic_int64x2 a)
 {
+    static_assert(count <= 64, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return shift_l(a, count);
 #elif SIMDPP_USE_NEON
@@ -1166,6 +1206,7 @@ basic_int64x2 shift_l(basic_int64x2 a)
 template<unsigned count>
 inline basic_int64x4 shift_l(basic_int64x4 a)
 {
+    static_assert(count <= 64, "Shift out of bounds");
     return detail::v256_shift_l<count>(a);
 }
 
