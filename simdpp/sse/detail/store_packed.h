@@ -49,7 +49,7 @@ namespace detail {
 using ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::shuffle128;
 
 template<class T>
-inline void st_pack2_impl(T& a, T& b)
+inline void mem_pack2_impl(T& a, T& b)
 {
     T c1, c2;
     c1 = a;
@@ -59,7 +59,7 @@ inline void st_pack2_impl(T& a, T& b)
 }
 
 template<class T>
-inline void st_pack2_256_impl(T& a, T& b)
+inline void mem_pack2_256_impl(T& a, T& b)
 {
     T c1, c2;
     c1 = zip_lo(a, b);
@@ -75,19 +75,19 @@ inline void st_pack2_256_impl(T& a, T& b)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void st_pack2(basic_int8x16& a, basic_int8x16& b) { st_pack2_impl(a, b); }
-inline void st_pack2(basic_int16x8& a, basic_int16x8& b) { st_pack2_impl(a, b); }
-inline void st_pack2(basic_int32x4& a, basic_int32x4& b) { st_pack2_impl(a, b); }
-inline void st_pack2(basic_int64x2& a, basic_int64x2& b) { st_pack2_impl(a, b); }
-inline void st_pack2(float32x4& a, float32x4& b)         { st_pack2_impl(a, b); }
-inline void st_pack2(float64x2& a, float64x2& b)         { st_pack2_impl(a, b); }
+inline void mem_pack2(basic_int8x16& a, basic_int8x16& b) { mem_pack2_impl(a, b); }
+inline void mem_pack2(basic_int16x8& a, basic_int16x8& b) { mem_pack2_impl(a, b); }
+inline void mem_pack2(basic_int32x4& a, basic_int32x4& b) { mem_pack2_impl(a, b); }
+inline void mem_pack2(basic_int64x2& a, basic_int64x2& b) { mem_pack2_impl(a, b); }
+inline void mem_pack2(float32x4& a, float32x4& b)         { mem_pack2_impl(a, b); }
+inline void mem_pack2(float64x2& a, float64x2& b)         { mem_pack2_impl(a, b); }
 
-inline void st_pack2(basic_int8x32& a, basic_int8x32& b) { st_pack2_256_impl(a, b); }
-inline void st_pack2(basic_int16x16& a, basic_int16x16& b){st_pack2_256_impl(a, b); }
-inline void st_pack2(basic_int32x8& a, basic_int32x8& b) { st_pack2_256_impl(a, b); }
-inline void st_pack2(basic_int64x4& a, basic_int64x4& b) { st_pack2_256_impl(a, b); }
-inline void st_pack2(float32x8& a, float32x8& b)         { st_pack2_256_impl(a, b); }
-inline void st_pack2(float64x4& a, float64x4& b)         { st_pack2_256_impl(a, b); }
+inline void mem_pack2(basic_int8x32& a, basic_int8x32& b) { mem_pack2_256_impl(a, b); }
+inline void mem_pack2(basic_int16x16& a, basic_int16x16& b){mem_pack2_256_impl(a, b); }
+inline void mem_pack2(basic_int32x8& a, basic_int32x8& b) { mem_pack2_256_impl(a, b); }
+inline void mem_pack2(basic_int64x4& a, basic_int64x4& b) { mem_pack2_256_impl(a, b); }
+inline void mem_pack2(float32x8& a, float32x8& b)         { mem_pack2_256_impl(a, b); }
+inline void mem_pack2(float64x4& a, float64x4& b)         { mem_pack2_256_impl(a, b); }
 /// @}
 
 #if SIMDPP_USE_SSSE3
@@ -107,10 +107,10 @@ inline basic_int8x32 shuffle_epi8_wrapper(basic_int8x32 x, basic_int8x32 idx)
 #endif
 
 /// @{
-/** Generic implementation of st_pack3. The 256-bit version applies 128-bit
+/** Generic implementation of mem_pack3. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
-template<class T> void st_pack3_impl8(T& a, T& b, T& c)
+template<class T> void mem_pack3_impl8(T& a, T& b, T& c)
 {
     // either basic_int16x8 or basic_int16x16, other entries likewise
     using w_b16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16;
@@ -211,7 +211,7 @@ template<class T> void st_pack3_impl8(T& a, T& b, T& c)
     c = bit_or(k3, l3);
 }
 
-template<class T> void st_pack3_impl16(T& a, T& b, T& c)
+template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
 {
     // either basic_int8x16 or basic_int8x32, other entries likewise
     using w_b16 = T;
@@ -291,7 +291,7 @@ template<class T> void st_pack3_impl16(T& a, T& b, T& c)
     c = bit_or(k3, l3);
 }
 
-template<class T> void st_pack3_impl32(T& a, T& b, T& c)
+template<class T> void mem_pack3_impl32(T& a, T& b, T& c)
 {
     T t0, t1, t2;
     t0 = shuffle2<0,2,0,2>(a, b);
@@ -311,7 +311,7 @@ template<class T> void st_pack3_impl32(T& a, T& b, T& c)
     c = shuffle2<2,3,2,3>(t1, t2);
 }
 
-template<class T> void st_pack3_impl64(T& a, T& b, T& c)
+template<class T> void mem_pack3_impl64(T& a, T& b, T& c)
 {
     T d0, d1, d2;
     d0 = shuffle1<0,0>(a, b);
@@ -322,7 +322,7 @@ template<class T> void st_pack3_impl64(T& a, T& b, T& c)
 /// @}
 
 template<class T>
-void st_pack3_256_shuffle(T& a, T& b, T& c)
+void mem_pack3_256_shuffle(T& a, T& b, T& c)
 {
     // shuffle the vectors with the lower halves containing the first 3 128-bit
     // items and the higher halves contain the rest
@@ -341,72 +341,72 @@ void st_pack3_256_shuffle(T& a, T& b, T& c)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void st_pack3(basic_int8x16& a, basic_int8x16& b, basic_int8x16& c)
+inline void mem_pack3(basic_int8x16& a, basic_int8x16& b, basic_int8x16& c)
 {
-    st_pack3_impl8(a, b, c);
+    mem_pack3_impl8(a, b, c);
 }
-inline void st_pack3(basic_int8x32& a, basic_int8x32& b, basic_int8x32& c)
+inline void mem_pack3(basic_int8x32& a, basic_int8x32& b, basic_int8x32& c)
 {
-    st_pack3_impl8(a, b, c);
-    st_pack3_256_shuffle(a, b, c);
-}
-
-inline void st_pack3(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c)
-{
-    st_pack3_impl16(a, b, c);
-}
-inline void st_pack3(basic_int16x16& a, basic_int16x16& b, basic_int16x16& c)
-{
-    st_pack3_impl16(a, b, c);
-    st_pack3_256_shuffle(a, b, c);
+    mem_pack3_impl8(a, b, c);
+    mem_pack3_256_shuffle(a, b, c);
 }
 
-inline void st_pack3(basic_int32x4& a, basic_int32x4& b, basic_int32x4& c)
+inline void mem_pack3(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c)
 {
-    st_pack3_impl32(a, b, c);
+    mem_pack3_impl16(a, b, c);
 }
-inline void st_pack3(basic_int32x8& a, basic_int32x8& b, basic_int32x8& c)
+inline void mem_pack3(basic_int16x16& a, basic_int16x16& b, basic_int16x16& c)
 {
-    st_pack3_impl32(a, b, c);
-    st_pack3_256_shuffle(a, b, c);
-}
-
-inline void st_pack3(basic_int64x2& a, basic_int64x2& b, basic_int64x2& c)
-{
-    st_pack3_impl64(a, b, c);
-}
-inline void st_pack3(basic_int64x4& a, basic_int64x4& b, basic_int64x4& c)
-{
-    st_pack3_impl64(a, b, c);
-    st_pack3_256_shuffle(a, b, c);
+    mem_pack3_impl16(a, b, c);
+    mem_pack3_256_shuffle(a, b, c);
 }
 
-inline void st_pack3(float32x4& a, float32x4& b, float32x4& c)
+inline void mem_pack3(basic_int32x4& a, basic_int32x4& b, basic_int32x4& c)
 {
-    st_pack3_impl32(a, b, c);
+    mem_pack3_impl32(a, b, c);
 }
-inline void st_pack3(float32x8& a, float32x8& b, float32x8& c)
+inline void mem_pack3(basic_int32x8& a, basic_int32x8& b, basic_int32x8& c)
 {
-    st_pack3_impl32(a, b, c);
-    st_pack3_256_shuffle(a, b, c);
+    mem_pack3_impl32(a, b, c);
+    mem_pack3_256_shuffle(a, b, c);
 }
 
-inline void st_pack3(float64x2& a, float64x2& b, float64x2& c)
+inline void mem_pack3(basic_int64x2& a, basic_int64x2& b, basic_int64x2& c)
 {
-    st_pack3_impl64(a, b, c);
+    mem_pack3_impl64(a, b, c);
 }
-inline void st_pack3(float64x4& a, float64x4& b, float64x4& c)
+inline void mem_pack3(basic_int64x4& a, basic_int64x4& b, basic_int64x4& c)
 {
-    st_pack3_impl64(a, b, c);
-    st_pack3_256_shuffle(a, b, c);
+    mem_pack3_impl64(a, b, c);
+    mem_pack3_256_shuffle(a, b, c);
+}
+
+inline void mem_pack3(float32x4& a, float32x4& b, float32x4& c)
+{
+    mem_pack3_impl32(a, b, c);
+}
+inline void mem_pack3(float32x8& a, float32x8& b, float32x8& c)
+{
+    mem_pack3_impl32(a, b, c);
+    mem_pack3_256_shuffle(a, b, c);
+}
+
+inline void mem_pack3(float64x2& a, float64x2& b, float64x2& c)
+{
+    mem_pack3_impl64(a, b, c);
+}
+inline void mem_pack3(float64x4& a, float64x4& b, float64x4& c)
+{
+    mem_pack3_impl64(a, b, c);
+    mem_pack3_256_shuffle(a, b, c);
 }
 /// @}
 
 /// @{
-/** Generic implementation of st_pack4. The 256-bit version applies 128-bit
+/** Generic implementation of mem_pack4. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
-template<class T> void st_pack4_impl8(T& a, T& b, T& c, T& d)
+template<class T> void mem_pack4_impl8(T& a, T& b, T& c, T& d)
 {
     // either basic_int16x8 or basic_int16x16, other entries likewise
 
@@ -454,7 +454,7 @@ template<class T> void st_pack4_impl8(T& a, T& b, T& c, T& d)
 #endif
 }
 
-template<class T> void st_pack4_impl16(T& a, T& b, T& c, T& d)
+template<class T> void mem_pack4_impl16(T& a, T& b, T& c, T& d)
 {
     using w_b16 = T;
     using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
@@ -486,7 +486,7 @@ template<class T> void st_pack4_impl16(T& a, T& b, T& c, T& d)
     d = zip_hi(f2, f3);
 }
 
-template<class T> void st_pack4_impl64(T& a, T& b, T& c, T& d)
+template<class T> void mem_pack4_impl64(T& a, T& b, T& c, T& d)
 {
     transpose2(a, b);
     transpose2(c, d);
@@ -499,7 +499,7 @@ template<class T> void st_pack4_impl64(T& a, T& b, T& c, T& d)
 /// @}
 
 template<class T>
-void st_pack4_256_shuffle(T& a, T& b, T& c, T& d)
+void mem_pack4_256_shuffle(T& a, T& b, T& c, T& d)
 {
     // shuffle the vectors with the lower halves containing the first 4 128-bit
     // items and the higher halves contain the rest
@@ -520,72 +520,72 @@ void st_pack4_256_shuffle(T& a, T& b, T& c, T& d)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void st_pack4(basic_int8x16& a, basic_int8x16& b,
+inline void mem_pack4(basic_int8x16& a, basic_int8x16& b,
                      basic_int8x16& c, basic_int8x16& d)
 {
-    st_pack4_impl8(a, b, c, d);
+    mem_pack4_impl8(a, b, c, d);
 }
-inline void st_pack4(basic_int8x32& a, basic_int8x32& b,
+inline void mem_pack4(basic_int8x32& a, basic_int8x32& b,
                      basic_int8x32& c, basic_int8x32& d)
 {
-    st_pack4_impl8(a, b, c, d);
-    st_pack4_256_shuffle(a, b, c, d);
+    mem_pack4_impl8(a, b, c, d);
+    mem_pack4_256_shuffle(a, b, c, d);
 }
 
-inline void st_pack4(basic_int16x8& a, basic_int16x8& b,
+inline void mem_pack4(basic_int16x8& a, basic_int16x8& b,
                      basic_int16x8& c, basic_int16x8& d)
 {
-    st_pack4_impl16(a, b, c, d);
+    mem_pack4_impl16(a, b, c, d);
 }
-inline void st_pack4(basic_int16x16& a, basic_int16x16& b,
+inline void mem_pack4(basic_int16x16& a, basic_int16x16& b,
                      basic_int16x16& c, basic_int16x16& d)
 {
-    st_pack4_impl16(a, b, c, d);
-    st_pack4_256_shuffle(a, b, c, d);
+    mem_pack4_impl16(a, b, c, d);
+    mem_pack4_256_shuffle(a, b, c, d);
 }
 
-inline void st_pack4(basic_int32x4& a, basic_int32x4& b,
+inline void mem_pack4(basic_int32x4& a, basic_int32x4& b,
                      basic_int32x4& c, basic_int32x4& d)
 {
     transpose4(a, b, c, d);
 }
-inline void st_pack4(basic_int32x8& a, basic_int32x8& b,
+inline void mem_pack4(basic_int32x8& a, basic_int32x8& b,
                      basic_int32x8& c, basic_int32x8& d)
 {
     transpose4(a, b, c, d);
-    st_pack4_256_shuffle(a, b, c, d);
+    mem_pack4_256_shuffle(a, b, c, d);
 }
 
-inline void st_pack4(basic_int64x2& a, basic_int64x2& b,
+inline void mem_pack4(basic_int64x2& a, basic_int64x2& b,
                      basic_int64x2& c, basic_int64x2& d)
 {
-    st_pack4_impl64(a, b, c, d);
+    mem_pack4_impl64(a, b, c, d);
 }
-inline void st_pack4(basic_int64x4& a, basic_int64x4& b,
+inline void mem_pack4(basic_int64x4& a, basic_int64x4& b,
                      basic_int64x4& c, basic_int64x4& d)
 {
-    st_pack4_impl64(a, b, c, d);
-    st_pack4_256_shuffle(a, b, c, d);
+    mem_pack4_impl64(a, b, c, d);
+    mem_pack4_256_shuffle(a, b, c, d);
 }
 
-inline void st_pack4(float32x4& a, float32x4& b, float32x4& c, float32x4& d)
+inline void mem_pack4(float32x4& a, float32x4& b, float32x4& c, float32x4& d)
 {
     transpose4(a, b, c, d);
 }
-inline void st_pack4(float32x8& a, float32x8& b, float32x8& c, float32x8& d)
+inline void mem_pack4(float32x8& a, float32x8& b, float32x8& c, float32x8& d)
 {
     transpose4(a, b, c, d);
-    st_pack4_256_shuffle(a, b, c, d);
+    mem_pack4_256_shuffle(a, b, c, d);
 }
 
-inline void st_pack4(float64x2& a, float64x2& b, float64x2& c, float64x2& d)
+inline void mem_pack4(float64x2& a, float64x2& b, float64x2& c, float64x2& d)
 {
-    st_pack4_impl64(a, b, c, d);
+    mem_pack4_impl64(a, b, c, d);
 }
-inline void st_pack4(float64x4& a, float64x4& b, float64x4& c, float64x4& d)
+inline void mem_pack4(float64x4& a, float64x4& b, float64x4& c, float64x4& d)
 {
-    st_pack4_impl64(a, b, c, d);
-    st_pack4_256_shuffle(a, b, c, d);
+    mem_pack4_impl64(a, b, c, d);
+    mem_pack4_256_shuffle(a, b, c, d);
 }
 /// @}
 
