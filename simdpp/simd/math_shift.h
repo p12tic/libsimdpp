@@ -886,6 +886,8 @@ uint16x16 shift_r(uint16x16 a)
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint16x8 shift_r<0>(uint16x8 a) { return a; }
 template<> inline uint16x16 shift_r<0>(uint16x16 a) { return a; }
+template<> inline uint16x8 shift_r<16>(uint16x8 a) { return uint16x8::zero(); }
+template<> inline uint16x16 shift_r<16>(uint16x16 a) { return uint16x16::zero(); }
 #endif
 /// @}
 
@@ -960,6 +962,8 @@ uint32x8 shift_r(uint32x8 a)
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint32x4 shift_r<0>(uint32x4 a) { return a; }
 template<> inline uint32x8 shift_r<0>(uint32x8 a) { return a; }
+template<> inline uint32x4 shift_r<32>(uint32x4 a) { return uint32x4::zero(); }
+template<> inline uint32x8 shift_r<32>(uint32x8 a) { return uint32x8::zero(); }
 #endif
 /// @}
 
@@ -1041,6 +1045,8 @@ uint64x4 shift_r(uint64x4 a)
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline uint64x2 shift_r<0>(uint64x2 a) { return a; }
 template<> inline uint64x4 shift_r<0>(uint64x4 a) { return a; }
+template<> inline uint64x2 shift_r<64>(uint64x2 a) { return uint64x2::zero(); }
+template<> inline uint64x4 shift_r<64>(uint64x4 a) { return uint64x4::zero(); }
 #endif
 /// @}
 
@@ -1141,6 +1147,8 @@ inline basic_int16x16 shift_l(basic_int16x16 a)
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int16x8  shift_l<0>(basic_int16x8 a) { return a; }
 template<> inline basic_int16x16 shift_l<0>(basic_int16x16 a) { return a; }
+template<> inline basic_int16x8  shift_l<16>(basic_int16x8 a) { return uint16x8::zero(); }
+template<> inline basic_int16x16 shift_l<16>(basic_int16x16 a) { return uint16x16::zero(); }
 #endif
 /// @}
 
@@ -1177,6 +1185,8 @@ inline basic_int32x8 shift_l(basic_int32x8 a)
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int32x4 shift_l<0>(basic_int32x4 a) { return a; }
 template<> inline basic_int32x8 shift_l<0>(basic_int32x8 a) { return a; }
+template<> inline basic_int32x4 shift_l<32>(basic_int32x4 a) { return uint32x4::zero(); }
+template<> inline basic_int32x8 shift_l<32>(basic_int32x8 a) { return uint32x8::zero(); }
 #endif
 /// @}
 
@@ -1213,6 +1223,8 @@ inline basic_int64x4 shift_l(basic_int64x4 a)
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<> inline basic_int64x2 shift_l<0>(basic_int64x2 a) { return a; }
 template<> inline basic_int64x4 shift_l<0>(basic_int64x4 a) { return a; }
+template<> inline basic_int64x2 shift_l<64>(basic_int64x2 a) { return uint64x2::zero(); }
+template<> inline basic_int64x4 shift_l<64>(basic_int64x4 a) { return uint64x4::zero(); }
 #endif
 /// @}
 
