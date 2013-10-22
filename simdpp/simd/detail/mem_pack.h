@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SSE_DETAIL_STORE_PACKED_H
-#define LIBSIMDPP_SSE_DETAIL_STORE_PACKED_H
+#ifndef LIBSIMDPP_SIMD_DETAIL_MEM_PACK_H
+#define LIBSIMDPP_SIMD_DETAIL_MEM_PACK_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -44,10 +44,7 @@ namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
-namespace sse {
 namespace detail {
-
-using ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::shuffle128;
 
 template<class T>
 inline void mem_pack2_impl(T& a, T& b)
@@ -98,9 +95,9 @@ inline void mem_pack2(float64x4& a, float64x4& b)         { mem_pack2_256_impl(a
 template<class T> void mem_pack3_impl8(T& a, T& b, T& c)
 {
     // either basic_int16x8 or basic_int16x16, other entries likewise
-    using w_b16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16;
-    using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
-    using w_u8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u8;
+    using w_b16 = typename same_width<T>::b16;
+    using w_b32 = typename same_width<T>::b32;
+    using w_u8 = typename same_width<T>::u8;
     using w_b8 = T;
 
     w_b16 t0, t1, t2, t3;
@@ -129,7 +126,7 @@ template<class T> void mem_pack3_impl8(T& a, T& b, T& c)
     u2 = permute_bytes16(u2, idx);
     u3 = permute_bytes16(u3, idx);
 #else
-    using w_u64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u64;
+    using w_u64 = typename same_width<T>::u64;
 
     // the following is still faster than non-SIMD implementation
     w_b8 mask1 = w_u8::make_const(0xff, 0xff, 0xff, 0, 0, 0, 0, 0,
@@ -200,7 +197,7 @@ template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
 {
     // either basic_int8x16 or basic_int8x32, other entries likewise
     using w_b16 = T;
-    using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
+    using w_b32 = typename same_width<T>::b32;
 
     w_b32 t0, t1, t2, t3;
     t0 = zip_lo(a, b);
@@ -220,8 +217,8 @@ template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
     // [a6, b6, c6, 0, a7, b7, c7, 0 ]
 
 #if SIMDPP_USE_SSSE3
-    using w_b8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b8;
-    using w_u8 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u8;
+    using w_b8 = typename same_width<T>::b8;
+    using w_u8 = typename same_width<T>::u8;
 
     // it's not worth to use 4 different index vectors to shuffle the vectors
     // properly and use only bit_or later
@@ -233,7 +230,7 @@ template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
     u3 = permute_bytes16(u3, idx);
 
 #else
-    using w_u16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::u16;
+    using w_u16 = typename same_width<T>::u16;
 
     // the following is still faster than non-SIMD implementation
     w_b16 mask2 = w_u16::make_const(0xffff, 0xffff, 0xffff, 0,
@@ -396,21 +393,21 @@ template<class T> void mem_pack4_impl8(T& a, T& b, T& c, T& d)
     // either basic_int16x8 or basic_int16x16, other entries likewise
 
 #if SIMDPP_USE_SSSE3
-    using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
+    using w_b32 = typename same_width<T>::b32;
 
     w_b32 b0, b1, b2, b3;
     b0 = a;  b1 = b;  b2 = c;  b3 = d;
     transpose4(b0, b1, b2, b3);
     a = b0;  b = b1;  c = b2;  d = b3;
 
-    a = transpose_inplace(a);
-    b = transpose_inplace(b);
-    c = transpose_inplace(c);
-    d = transpose_inplace(d);
+    a = sse::detail::transpose_inplace(a);
+    b = sse::detail::transpose_inplace(b);
+    c = sse::detail::transpose_inplace(c);
+    d = sse::detail::transpose_inplace(d);
 #else
     using w_b8 = T;
-    using w_b16 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16;
-    using w_b64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b64;
+    using w_b16 = typename same_width<T>::b16;
+    using w_b64 = typename same_width<T>::b64;
 
     w_b8 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
@@ -442,8 +439,8 @@ template<class T> void mem_pack4_impl8(T& a, T& b, T& c, T& d)
 template<class T> void mem_pack4_impl16(T& a, T& b, T& c, T& d)
 {
     using w_b16 = T;
-    using w_b32 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32;
-    using w_b64 = typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b64;
+    using w_b32 = typename same_width<T>::b32;
+    using w_b64 = typename same_width<T>::b64;
 
     w_b16 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
@@ -575,7 +572,6 @@ inline void mem_pack4(float64x4& a, float64x4& b, float64x4& c, float64x4& d)
 /// @}
 
 } // namespace detail
-} // namespace sse
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

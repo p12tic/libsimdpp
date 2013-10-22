@@ -33,11 +33,11 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/mem_pack.h>
 
 #if SIMDPP_USE_SSE2
     #include <simdpp/sse/extract_half.h>
     #include <simdpp/sse/memory_store.h>
-    #include <simdpp/sse/detail/store_packed.h>
 #elif SIMDPP_USE_NEON
     #include <simdpp/neon/memory_store.h>
 #endif
@@ -769,7 +769,7 @@ void v256_store_i_pack2(void* p, V a, V b)
 {
     char* q = reinterpret_cast<char*>(p);
 #if SIMDPP_USE_AVX2
-    sse::detail::mem_pack2(a, b);
+    detail::mem_pack2(a, b);
     store(q, a);
     store(q + 32, b);
 #else
@@ -783,7 +783,7 @@ void v256_store_i_pack3(void* p, V a, V b, V c)
 {
     char* q = reinterpret_cast<char*>(p);
 #if SIMDPP_USE_AVX2
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(q, a);
     store(q + 32, b);
     store(q + 64, c);
@@ -798,7 +798,7 @@ void v256_store_i_pack4(void* p, V a, V b, V c, V d)
 {
     char* q = reinterpret_cast<char*>(p);
 #if SIMDPP_USE_AVX2
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(q, a);
     store(q + 32, b);
     store(q + 64, c);
@@ -836,7 +836,7 @@ inline void store_packed2(void* p, basic_int8x16 a, basic_int8x16 b)
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack2(a, b);
+    detail::mem_pack2(a, b);
     store(q, a);
     store(q+16, b);
 #elif SIMDPP_USE_NEON
@@ -875,7 +875,7 @@ inline void store_packed2(void* p, basic_int16x8 a, basic_int16x8 b)
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack2(a, b);
+    detail::mem_pack2(a, b);
     store(q, a);
     store(q+16, b);
 #elif SIMDPP_USE_NEON
@@ -914,7 +914,7 @@ inline void store_packed2(void* p, basic_int32x4 a, basic_int32x4 b)
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack2(a, b);
+    detail::mem_pack2(a, b);
     store(q, a);
     store(q+16, b);
 #elif SIMDPP_USE_NEON
@@ -983,7 +983,7 @@ inline void store_packed2(float* p, float32x4 a, float32x4 b)
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2
-    sse::detail::mem_pack2(a, b);
+    detail::mem_pack2(a, b);
     store(p, a);
     store(p+4, b);
 #elif SIMDPP_USE_NEON
@@ -994,7 +994,7 @@ inline void store_packed2(float* p, float32x4 a, float32x4 b)
 inline void store_packed2(float* p, float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    sse::detail::mem_pack2(a, b);
+    detail::mem_pack2(a, b);
     store(p, a);
     store(p + 8, b);
 #else
@@ -1032,7 +1032,7 @@ inline void store_packed2(double* p, float64x2 a, float64x2 b)
 inline void store_packed2(double* p, float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    sse::detail::mem_pack2(a, b);
+    detail::mem_pack2(a, b);
     store(p, a);
     store(p + 4, b);
 #else
@@ -1070,7 +1070,7 @@ inline void store_packed3(void* p,
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(q, a);
     store(q+16, b);
     store(q+32, c);
@@ -1114,7 +1114,7 @@ inline void store_packed3(void* p,
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(q, a);
     store(q+16, b);
     store(q+32, c);
@@ -1158,7 +1158,7 @@ inline void store_packed3(void* p,
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(q, a);
     store(q+16, b);
     store(q+32, c);
@@ -1202,7 +1202,7 @@ inline void store_packed3(void* p,
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(q, a);
     store(q+16, b);
     store(q+32, c);
@@ -1246,7 +1246,7 @@ inline void store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(p, a);
     store(p+4, b);
     store(p+8, c);
@@ -1259,7 +1259,7 @@ inline void store_packed3(float* p,
                           float32x8 a, float32x8 b, float32x8 c)
 {
 #if SIMDPP_USE_AVX
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(p, a);
     store(p + 8, b);
     store(p + 16, c);
@@ -1298,7 +1298,7 @@ inline void store_packed3(double* p, float64x2 a, float64x2 b, float64x2 c)
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(p, a);
     store(p+2, b);
     store(p+4, c);
@@ -1313,7 +1313,7 @@ inline void store_packed3(double* p,
                           float64x4 a, float64x4 b, float64x4 c)
 {
 #if SIMDPP_USE_AVX
-    sse::detail::mem_pack3(a, b, c);
+    detail::mem_pack3(a, b, c);
     store(p, a);
     store(p + 4, b);
     store(p + 8, c);
@@ -1355,7 +1355,7 @@ inline void store_packed4(void* p,
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(q, a);
     store(q+16, b);
     store(q+32, c);
@@ -1404,7 +1404,7 @@ inline void store_packed4(void* p,
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(q, a);
     store(q+16, b);
     store(q+32, c);
@@ -1453,7 +1453,7 @@ inline void store_packed4(void* p,
 #elif SIMDPP_USE_SSE2
     char* q = reinterpret_cast<char*>(p);
 
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(q, a);
     store(q+16, b);
     store(q+32, c);
@@ -1544,7 +1544,7 @@ inline void store_packed4(float* p,
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p+4, b);
     store(p+8, c);
@@ -1558,7 +1558,7 @@ inline void store_packed4(float* p,
                           float32x8 a, float32x8 b, float32x8 c, float32x8 d)
 {
 #if SIMDPP_USE_AVX
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p + 8, b);
     store(p + 16, c);
@@ -1599,7 +1599,7 @@ inline void store_packed4(double* p,
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p+2, b);
     store(p+4, c);
@@ -1615,7 +1615,7 @@ inline void store_packed4(double* p,
                           float64x4 a, float64x4 b, float64x4 c, float64x4 d)
 {
 #if SIMDPP_USE_AVX
-    sse::detail::mem_pack4(a, b, c, d);
+    detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p + 4, b);
     store(p + 8, c);

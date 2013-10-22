@@ -52,6 +52,8 @@ set(HEADERS
     null/transpose.h
 
     simd/detail/not_implemented.h
+    simd/detail/mem_pack.h
+    simd/detail/mem_unpack.h
     simd/detail/shuffle128.h
     simd/detail/shuffle_emul.h
     simd/detail/traits.h
@@ -112,8 +114,6 @@ set(HEADERS
     sse/cache.h
     sse/compare.h
     sse/convert.h
-    sse/detail/load_packed.h
-    sse/detail/store_packed.h
     sse/detail/transpose.h
     sse/extract_half.h
     sse/math_fp.h

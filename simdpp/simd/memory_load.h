@@ -34,11 +34,10 @@
 
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/transpose.h>
+#include <simdpp/simd/detail/mem_unpack.h>
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     #include <simdpp/null/memory.h>
-#elif SIMDPP_USE_SSE2
-    #include <simdpp/sse/detail/load_packed.h>
 #endif
 
 namespace simdpp {
@@ -345,7 +344,7 @@ void v256_load_i_packed2(V& a, V& b, const void* p)
 #if SIMDPP_USE_AVX2
     load(a, q);
     load(b, q + 32);
-    sse::detail::mem_unpack2(a, b);
+    detail::mem_unpack2(a, b);
 #else
     load_packed2(a[0], b[0], q);
     load_packed2(a[1], b[1], q + 32);
@@ -360,7 +359,7 @@ void v256_load_i_packed3(V& a, V& b, V& c, const void* p)
     load(a, q);
     load(b, q + 32);
     load(c, q + 64);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #else
     load_packed3(a[0], b[0], c[0], q);
     load_packed3(a[1], b[1], c[1], q + 48);
@@ -376,7 +375,7 @@ void v256_load_i_packed4(V& a, V& b, V& c, V& d, const void* p)
     load(b, q + 32);
     load(c, q + 64);
     load(d, q + 96);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #else
     load_packed4(a[0], b[0], c[0], d[0], q);
     load_packed4(a[1], b[1], c[1], d[1], q + 64);
@@ -411,7 +410,7 @@ inline void load_packed2(basic_int8x16& a, basic_int8x16& b, const void* p)
 
     load(a, q);
     load(b, q+16);
-    sse::detail::mem_unpack2(a, b);
+    detail::mem_unpack2(a, b);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u8(reinterpret_cast<const uint8_t*>(p));
     a = r.val[0];
@@ -452,7 +451,7 @@ inline void load_packed2(basic_int16x8& a, basic_int16x8& b, const void* p)
 
     load(a, q);
     load(b, q+16);
-    sse::detail::mem_unpack2(a, b);
+    detail::mem_unpack2(a, b);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u16(reinterpret_cast<const uint16_t*>(p));
     a = r.val[0];
@@ -493,7 +492,7 @@ inline void load_packed2(basic_int32x4& a, basic_int32x4& b, const void* p)
 
     load(a, q);
     load(b, q+16);
-    sse::detail::mem_unpack2(a, b);
+    detail::mem_unpack2(a, b);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u32(reinterpret_cast<const uint32_t*>(p));
     a = r.val[0];
@@ -565,7 +564,7 @@ inline void load_packed2(float32x4& a, float32x4& b, const float* p)
 #elif SIMDPP_USE_SSE2
     load(a, p);
     load(b, p+4);
-    sse::detail::mem_unpack2(a, b);
+    detail::mem_unpack2(a, b);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_f32(p);
     a = r.val[0];
@@ -578,7 +577,7 @@ inline void load_packed2(float32x8& a, float32x8& b, const float* p)
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 8);
-    sse::detail::mem_unpack2(a, b);
+    detail::mem_unpack2(a, b);
 #else
     load_packed2(a[0], b[0], p);
     load_packed2(a[1], b[1], p + 8);
@@ -616,7 +615,7 @@ inline void load_packed2(float64x4& a, float64x4& b, const double* p)
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 4);
-    sse::detail::mem_unpack2(a, b);
+    detail::mem_unpack2(a, b);
 #else
     load_packed2(a[0], b[0], p);
     load_packed2(a[1], b[1], p + 4);
@@ -654,7 +653,7 @@ inline void load_packed3(basic_int8x16& a, basic_int8x16& b, basic_int8x16& c,
     load(a, q);
     load(b, q+16);
     load(c, q+32);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_u8(reinterpret_cast<const uint8_t*>(p));
     a = r.val[0];
@@ -700,7 +699,7 @@ inline void load_packed3(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c,
     load(a, q);
     load(b, q+16);
     load(c, q+32);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_u16(reinterpret_cast<const uint16_t*>(p));
     a = r.val[0];
@@ -746,7 +745,7 @@ inline void load_packed3(basic_int32x4& a, basic_int32x4& b, basic_int32x4&c,
     load(a, q);
     load(b, q+16);
     load(c, q+32);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_u32(reinterpret_cast<const uint32_t*>(p));
     a = r.val[0];
@@ -792,7 +791,7 @@ inline void load_packed3(basic_int64x2& a, basic_int64x2& b, basic_int64x2& c,
     load(a, q);
     load(b, q+16);
     load(c, q+32);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     const char* q = reinterpret_cast<const char*>(p);
     uint64x2 a0, b0, c0;
@@ -849,7 +848,7 @@ inline void load_packed3(float32x4& a, float32x4& b, float32x4& c,
     load(a, p);
     load(b, p+4);
     load(c, p+8);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_f32(p);
     a = r.val[0];
@@ -865,7 +864,7 @@ inline void load_packed3(float32x8& a, float32x8& b, float32x8& c,
     load(a, p);
     load(b, p + 8);
     load(c, p + 16);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #else
     load_packed3(a[0], b[0], c[0], p);
     load_packed3(a[1], b[1], c[1], p + 12);
@@ -901,7 +900,7 @@ inline void load_packed3(float64x2& a, float64x2& b, float64x2& c, const double*
     load(a, p);
     load(b, p+2);
     load(c, p+4);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     int64x2 a1, b1, c1;
     a1 = a; b1 = b; c1 = c;
@@ -916,7 +915,7 @@ inline void load_packed3(float64x4& a, float64x4& b, float64x4& c, const double*
     load(a, p);
     load(b, p + 4);
     load(c, p + 8);
-    sse::detail::mem_unpack3(a, b, c);
+    detail::mem_unpack3(a, b, c);
 #else
     load_packed3(a[0], b[0], c[0], p);
     load_packed3(a[1], b[1], c[1], p + 6);
@@ -957,7 +956,7 @@ inline void load_packed4(basic_int8x16& a, basic_int8x16& b,
     load(b, q+16);
     load(c, q+32);
     load(d, q+48);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u8(reinterpret_cast<const uint8_t*>(p));
     a = r.val[0];
@@ -1007,7 +1006,7 @@ inline void load_packed4(basic_int16x8& a, basic_int16x8& b,
     load(b, q+16);
     load(c, q+32);
     load(d, q+48);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u16(reinterpret_cast<const uint16_t*>(p));
     a = r.val[0];
@@ -1057,7 +1056,7 @@ inline void load_packed4(basic_int32x4& a, basic_int32x4& b,
     load(b, q+16);
     load(c, q+32);
     load(d, q+48);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u32(reinterpret_cast<const uint32_t*>(p));
     a = r.val[0];
@@ -1147,7 +1146,7 @@ inline void load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& d,
     load(b, p+4);
     load(c, p+8);
     load(d, p+12);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_f32(p);
     a = r.val[0];
@@ -1165,7 +1164,7 @@ inline void load_packed4(float32x8& a, float32x8& b,
     load(b, p + 8);
     load(c, p + 16);
     load(d, p + 24);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #else
     load_packed4(a[0], b[0], c[0], d[0], p);
     load_packed4(a[1], b[1], c[1], d[1], p + 16);
@@ -1205,7 +1204,7 @@ inline void load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
     load(b, p+2);
     load(c, p+4);
     load(d, p+6);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     int64x2 a1, b1, c1, d1;
     load_packed4(a1, b1, c1, d1, p);
@@ -1221,7 +1220,7 @@ inline void load_packed4(float64x4& a, float64x4& b,
     load(b, p + 4);
     load(c, p + 8);
     load(d, p + 12);
-    sse::detail::mem_unpack4(a, b, c, d);
+    detail::mem_unpack4(a, b, c, d);
 #else
     load_packed4(a[0], b[0], c[0], d[0], p);
     load_packed4(a[1], b[1], c[1], d[1], p + 8);

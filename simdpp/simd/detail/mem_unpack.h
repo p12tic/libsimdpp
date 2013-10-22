@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SSE_DETAIL_LOAD_PACKED_H
-#define LIBSIMDPP_SSE_DETAIL_LOAD_PACKED_H
+#ifndef LIBSIMDPP_SIMD_DETAIL_MEM_UNPACK_H
+#define LIBSIMDPP_SIMD_DETAIL_MEM_UNPACK_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -37,16 +37,15 @@
 #include <simdpp/simd/transpose.h>
 #include <simdpp/simd/detail/width.h>
 #include <simdpp/simd/detail/shuffle128.h>
-#include <simdpp/sse/detail/transpose.h>
+#if SIMDPP_USE_SSE2
+    #include <simdpp/sse/detail/transpose.h>
+#endif
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
-namespace sse {
 namespace detail {
-
-using ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::shuffle128;
 
 template<class T>
 void mem_unpack2_impl(T& a, T& b)
@@ -97,7 +96,7 @@ inline void mem_unpack2(float64x4& a, float64x4& b)         { mem_unpack2_256_im
 */
 template<class T> void mem_unpack3_impl8(T& a, T& b, T& c)
 {
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b8 t0, t1, t2, t3;
+    typename same_width<T>::b8 t0, t1, t2, t3;
     t0 = a;
     t1 = align<12>(a, b);
     t2 = align<8>(b, c);
@@ -106,7 +105,7 @@ template<class T> void mem_unpack3_impl8(T& a, T& b, T& c)
     // [a4, b4, c4, a5, b5, c5, a6, b6, c6, a7, b7, c7, ...]
     // [a8, b8, c8, a9, b9, c9, a10,b10,c10,a11,b11,c11, ...]
     // [a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15, ...]
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16 b0, b1, b2, b3;
+    typename same_width<T>::b16 b0, b1, b2, b3;
     b0 = zip_lo(t0, t1);
     b1 = zip_lo(t2, t3);
     b2 = zip_hi(t0, t1);
@@ -115,7 +114,7 @@ template<class T> void mem_unpack3_impl8(T& a, T& b, T& c)
     // [a8, a12,b8, b12,c9, c13,a9, a13,b9, b13,c9, c13,a10,a14,b10,b14,]
     // [c2, c6, a3, a7, b3, b7, c3, c7, ... ]
     // [c10,c14,a11,a15,b11,b15,c11,c15,... ]
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b8 u0, u1, u2;
+    typename same_width<T>::b8 u0, u1, u2;
     u0 = zip_lo(b0, b1);
     u1 = zip_hi(b0, b1);
     u2 = zip_lo(b2, b3);
@@ -154,7 +153,7 @@ template<class T> void mem_unpack3_impl16(T& a, T& b, T& c)
     // [a2,b2,c2,a3,b3,c3, ... ]
     // [a4,b4,c4,a5,b5,c5, ... ]
     // [a6,b6,c6,a7,b7,c7, ... ]
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32 b0, b1, b2, b3;
+    typename same_width<T>::b32 b0, b1, b2, b3;
     b0 = zip_lo(t0, t1);
     b1 = zip_lo(t2, t3);
     b2 = zip_hi(t0, t1);
@@ -163,7 +162,7 @@ template<class T> void mem_unpack3_impl16(T& a, T& b, T& c)
     // [a4,a6,b4,b6,c4,c6,a5,a7]
     // [b1,b3,c1,c3, ... ]
     // [b5,b7,c5,c7, ... ]
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b64 c0, c1, c2;
+    typename same_width<T>::b64 c0, c1, c2;
     c0 = zip_lo(b0, b1);
     c1 = zip_hi(b0, b1);
     c2 = zip_lo(b2, b3);
@@ -305,11 +304,11 @@ inline void mem_unpack3(float64x4& a, float64x4& b, float64x4& c)
 template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
 {
 #if SIMDPP_USE_SSSE3
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b32 b0, b1, b2, b3;
-    b0 = transpose_inplace(a);
-    b1 = transpose_inplace(b);
-    b2 = transpose_inplace(c);
-    b3 = transpose_inplace(d);
+    typename same_width<T>::b32 b0, b1, b2, b3;
+    b0 = sse::detail::transpose_inplace(a);
+    b1 = sse::detail::transpose_inplace(b);
+    b2 = sse::detail::transpose_inplace(c);
+    b3 = sse::detail::transpose_inplace(d);
 
     transpose4(b0, b1, b2, b3);
     a = b0;  b = b1;  c = b2;  d = b3;
@@ -335,7 +334,7 @@ template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
     // [a1, a3, a5, a7, b1, b3, b5, b7, c1, c3, c5, c7, d1, d3, d5, d7 ]
     // [a8, a10,a12,a14,b8, b10,b12,b14,c8, c10,c12,c14,d8, d10,d12,d14]
     // [a9, a11,a13,a15,b9, b11,b13,b15,c9, c11,c13,c15,d9, d11,d13,d15]
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b64 d0, d1, d2, d3;
+    typename same_width<T>::b64 d0, d1, d2, d3;
     d0 = zip_lo(c0, c1);
     d1 = zip_hi(c0, c1);
     d2 = zip_lo(c2, c3);
@@ -357,7 +356,7 @@ template<class T> void mem_unpack4_impl16(T& a, T& b, T& c, T& d)
     // [a2,b2,c2,d2,a3,b3,c3,d3]
     // [a4,b4,c4,d4,a5,b5,c5,d5]
     // [a6,b6,c6,d6,a7,b7,c7,d7]
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b16 t0, t1, t2, t3;
+    typename same_width<T>::b16 t0, t1, t2, t3;
     t0 = zip_lo(a, b);
     t1 = zip_hi(a, b);
     t2 = zip_lo(c, d);
@@ -366,7 +365,7 @@ template<class T> void mem_unpack4_impl16(T& a, T& b, T& c, T& d)
     // [a1,a3,b1,b3,c1,c3,d1,d3]
     // [a4,a6,b4,b6,c4,c6,d4,d6]
     // [a5,a7,b5,b7,c5,c7,d5,d7]
-    typename ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::same_width<T>::b64 u0, u1, u2, u3;
+    typename same_width<T>::b64 u0, u1, u2, u3;
     u0 = zip_lo(t0, t1);
     u1 = zip_hi(t0, t1);
     u2 = zip_lo(t2, t3);
@@ -582,7 +581,6 @@ inline void mem_unpack6(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c,
 /// @}
 
 } // namespace detail
-} // namespace sse
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
