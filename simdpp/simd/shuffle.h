@@ -1452,7 +1452,7 @@ inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 ma
       r = bit_or(on, off);
     return r;
 #elif SIMDPP_USE_NEON
-    return vbslq_u8(on, off, mask);
+    return vbslq_u8(mask, on, off);
 #endif
 }
 
@@ -1600,7 +1600,7 @@ inline float32x4 blend(float32x4 on, float32x4 off, float32x4 mask)
       r = bit_or(on, off);
     return r;
 #elif SIMDPP_USE_NEON
-    return vbslq_f32(uint32x4(on), off, mask);
+    return vbslq_f32(uint32x4(mask), on, off);
 #endif
 }
 
