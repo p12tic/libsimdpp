@@ -407,7 +407,7 @@
     #define SIMDPP_PP_NEON_FLT_SP
 #endif
 
-/** @macro SIMDPP_ARCH_NAMESPACE
+/** @def SIMDPP_ARCH_NAMESPACE
     Put all functions to a namespace that depends on the instruction set that
     the library is compiled for. This is needed to avoid violating the One
     Definition Rule.
@@ -427,7 +427,7 @@
 
 #define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT8
 
-/** @macro SIMDPP_ARCH_NAME
+/** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required
 */
 

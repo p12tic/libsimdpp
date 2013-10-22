@@ -208,12 +208,12 @@ inline void transpose2(basic_int64x4& a0, basic_int64x4& a1)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4}
-    @uinmp{NEON}
+    @unimp{NEON}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 8}
     @icost{AVX-AVX2, 4}
-    @uinmp{NEON}
+    @unimp{NEON}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.

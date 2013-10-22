@@ -43,7 +43,7 @@ namespace simdpp {
 
 using GetArchCb = std::function<ArchUserInfo()>;
 
-/** @macro SIMDPP_USER_ARCH_INFO
+/** @def SIMDPP_USER_ARCH_INFO
     User-definable macro that specifies user-defined way to get supported
     instruction sets of the current processor. If the macro is defined, this
     must be done before including simdpp/simd.h. The macro must evaluate to
