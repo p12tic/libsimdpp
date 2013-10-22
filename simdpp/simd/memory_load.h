@@ -193,11 +193,9 @@ inline basic_int8x16 load_u(basic_int8x16& a, const void* p)
 
 inline basic_int16x8 load_u(basic_int16x8& a, const void* p)
 {
-#if SIMDPP_USE_NULL
-    null::load(a, p);
-    return a;
-#elif SIMDPP_USE_SSE2
-    a = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    uint8x16 b = load_u(b, p);
+    a = b;
     return a;
 #elif SIMDPP_USE_NEON
     a = vld1q_u16(reinterpret_cast<const uint16_t*>(p));
@@ -207,11 +205,9 @@ inline basic_int16x8 load_u(basic_int16x8& a, const void* p)
 
 inline basic_int32x4 load_u(basic_int32x4& a, const void* p)
 {
-#if SIMDPP_USE_NULL
-    null::load(a, p);
-    return a;
-#elif SIMDPP_USE_SSE2
-    a = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    uint8x16 b = load_u(b, p);
+    a = b;
     return a;
 #elif SIMDPP_USE_NEON
     a = vld1q_u32(reinterpret_cast<const uint32_t*>(p));
@@ -221,11 +217,9 @@ inline basic_int32x4 load_u(basic_int32x4& a, const void* p)
 
 inline basic_int64x2 load_u(basic_int64x2& a, const void* p)
 {
-#if SIMDPP_USE_NULL
-    null::load(a, p);
-    return a;
-#elif SIMDPP_USE_SSE2
-    a = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+    uint8x16 b = load_u(b, p);
+    a = b;
     return a;
 #elif SIMDPP_USE_NEON
     a = vld1q_u64(reinterpret_cast<const uint64_t*>(p));
