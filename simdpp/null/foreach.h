@@ -43,9 +43,12 @@ namespace null {
 template<class R, class V, class C>
 R foreach(V v, C c)
 {
-    R r;
+    union {
+        typename traits<R>::element_type ri[traits<R>::length];
+        R r;
+    };
     for (unsigned i = 0; i < traits<V>::length; i++) {
-        r[i] = c(v[i]);
+        ri[i] = c(v[i]);
     }
     return r;
 }
@@ -53,9 +56,12 @@ R foreach(V v, C c)
 template<class R, class V1, class V2, class C>
 R foreach(V1 v1, V2 v2, C c)
 {
-    R r;
+    union {
+        typename traits<R>::element_type ri[traits<R>::length];
+        R r;
+    };
     for (unsigned i = 0; i < traits<V1>::length; i++) {
-        r[i] = c(v1[i], v2[i]);
+        ri[i] = c(v1[i], v2[i]);
     }
     return r;
 }
