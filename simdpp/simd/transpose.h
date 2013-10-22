@@ -358,18 +358,12 @@ inline void transpose4(basic_int8x16& a0, basic_int8x16& a1,
     a3 = c3;
 #elif SIMDPP_USE_NEON
     basic_int16x8 b0, b1, b2, b3;
-    auto r01 = vtrnq_u8(a0, a1);
-    auto r23 = vtrnq_u8(a2, a3);
-    b0 = r01.val[0];  b1 = r01.val[1];
-    b2 = r23.val[0];  b3 = r23.val[1];
-    // [a0,b0,a2,b2 ... ]
-    // [a1,b1,a3,b3 ... ]
-    // [c0,d0,c2,d2 ... ]
-    // [c1,d1,c3,d3 ... ]
-    auto q02 = vtrnq_u16(b0, b2);
-    auto q13 = vtrnq_u16(b1, b3);
-    a0 = q02.val[0];  a2 = q02.val[1];
-    a1 = q13.val[0];  a3 = q13.val[1];
+    detail::transpose2(a0, a1);  // 8-bit transpose
+    detail::transpose2(a2, a3);
+    b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
+    transpose2(b0, b2);  // 16-bit transpose
+    transpose2(b1, b3);
+    a0 = b0;  a1 = b1;  a2 = b2;  a3 = b3;
 #endif
 }
 
@@ -458,16 +452,12 @@ inline void transpose4(basic_int16x8& a0, basic_int16x8& a1,
     // [a3,b3,c3,d3,a7,b7,c7,d7]
 #elif SIMDPP_USE_NEON
     basic_int32x4 b0, b1, b2, b3;
-    auto r0 = vtrnq_u16(a0, a1);
-    auto r1 = vtrnq_u16(a2, a3);
-    b0 = r0.val[0];  b1 = r0.val[1];
-    b2 = r1.val[0];  b3 = r1.val[1];
-
-    auto q02 = vtrnq_u32(b0, b2);
-    auto q13 = vtrnq_u32(b1, b3);
-
-    a0 = int128(q02.val[0]);  a1 = int128(q13.val[0]);
-    a2 = int128(q02.val[1]);  a3 = int128(q13.val[1]);
+    transpose2(a0, a1);  // 16-bit transpose
+    transpose2(a2, a3);
+    b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
+    transpose2(b0, b2);  // 32-bit transpose
+    transpose2(b1, b3);
+    a0 = b0;  a1 = b1;  a2 = b2;  a3 = b3;
 #endif
 }
 
@@ -557,33 +547,19 @@ void sse_transpose4x32_impl(V& a0, V& a1, V& a2, V& a3)
 inline void transpose4(basic_int32x4& a0, basic_int32x4& a1,
                        basic_int32x4& a2, basic_int32x4& a3)
 {
-    // [a0,a1,a2,a3]
-    // [b0,b1,b2,b3]
-    // [c0,c1,c2,c3]
-    // [d0,d1,d2,d3]
 #if SIMDPP_USE_NULL
     null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     detail::sse_transpose4x32_impl(a0, a1, a2, a3);
 #elif SIMDPP_USE_NEON
-
     basic_int64x2 b0, b1, b2, b3;
-    auto r0 = vtrnq_u32(a0, a1);
-    auto r1 = vtrnq_u32(a2, a3);
-    b0 = r0.val[0]; b1 = r0.val[1];
-    b2 = r1.val[0]; b3 = r1.val[1];
-    // [a0;b0;a2;b2]
-    // [a1;b1;a3;b3]
-    // [c0;d0;c2;d2]
-    // [c1;d1;c3;d3]
-    neon::transpose2(b0, b2);
-    neon::transpose2(b1, b3);
+    transpose2(a0, a1);  // 32-bit transpose
+    transpose2(a2, a3);
+    b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
+    transpose2(b0, b2);  // 64-bit transpose
+    transpose2(b1, b3);
     a0 = b0;  a1 = b1;  a2 = b2;  a3 = b3;
 #endif
-    // [a0,b0,c0,d0]
-    // [a1,b1,c1,d1]
-    // [a2,b2,c2,d2]
-    // [a3,b3,c3,d3]
 }
 
 inline void transpose4(basic_int32x8& a0, basic_int32x8& a1,
@@ -700,15 +676,13 @@ inline void transpose8(basic_int8x16& a0, basic_int8x16& a1,
     a7 = zip_hi(d3, d7);
 
 #elif SIMDPP_USE_NEON
-
-    auto r01 = vtrnq_u8(a0, a1);
-    auto r23 = vtrnq_u8(a2, a3);
-    auto r45 = vtrnq_u8(a4, a5);
-    auto r67 = vtrnq_u8(a6, a7);
-
     basic_int16x8 b0, b1, b2, b3, b4, b5, b6, b7;
-    b0 = r01.val[0]; b1 = r01.val[1]; b2 = r23.val[0]; b3 = r23.val[1];
-    b4 = r45.val[0]; b5 = r45.val[1]; b6 = r67.val[0]; b7 = r67.val[1];
+    detail::transpose2(a0, a1); // 8-bit transpose
+    detail::transpose2(a2, a3);
+    detail::transpose2(a4, a5);
+    detail::transpose2(a6, a7);
+    b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
+    b4 = a4;  b5 = a5;  b6 = a6;  b7 = a7;
 
     /*
     [a0,b0,a2,b2,...,a14,b14]
@@ -720,16 +694,13 @@ inline void transpose8(basic_int8x16& a0, basic_int8x16& a1,
     [g0,h0,g2,h2,...,g14,h14]
     [g1,h1,g3,h3,...,g15,h15]
     */
-    auto q02 = vtrnq_u16(b0, b2);
-    auto q13 = vtrnq_u16(b1, b3);
-    auto q46 = vtrnq_u16(b4, b6);
-    auto q57 = vtrnq_u16(b5, b7);
     basic_int32x4 c0, c1, c2, c3, c4, c5, c6, c7;
-
-    c0 = q02.val[0]; c1 = q13.val[0];
-    c2 = q02.val[1]; c3 = q13.val[1];
-    c4 = q46.val[0]; c5 = q57.val[0];
-    c6 = q46.val[1]; c7 = q57.val[1];
+    transpose2(b0, b2); // 16-bit transpose
+    transpose2(b1, b3);
+    transpose2(b4, b6);
+    transpose2(b5, b7);
+    c0 = b0;  c1 = b1;  c2 = b2;  c3 = b3;
+    c4 = b4;  c5 = b5;  c6 = b6;  c7 = b7;
 
     /*
     [a0,...,d0,a4,...,d4,a8 ,...,d8 ,a12,...,d12]
@@ -741,16 +712,12 @@ inline void transpose8(basic_int8x16& a0, basic_int8x16& a1,
     [e2,...,h2,e6,...,h6,e10,...,h10,e14,...,h14]
     [e3,...,h3,e7,...,h7,e11,...,h11,e15,...,h15]
     */
-    auto p04 = vtrnq_u32(c0, c4);
-    auto p15 = vtrnq_u32(c1, c5);
-    auto p26 = vtrnq_u32(c2, c6);
-    auto p37 = vtrnq_u32(c3, c7);
-
-    a0 = p04.val[0]; a4 = p04.val[1];
-    a1 = p15.val[0]; a5 = p15.val[1];
-    a2 = p26.val[0]; a6 = p26.val[1];
-    a3 = p37.val[0]; a7 = p37.val[1];
-
+    transpose2(c0, c4); // 32-bit transpose
+    transpose2(c1, c5);
+    transpose2(c2, c6);
+    transpose2(c3, c7);
+    a0 = c0;  a1 = c1;  a2 = c2;  a3 = c3;
+    a4 = c4;  a5 = c5;  a6 = c6;  a7 = c7;
 #endif
     /*
     [a0,...,h0,a8,...,h8]
@@ -895,10 +862,10 @@ inline void transpose8(basic_int16x8& a0, basic_int16x8& a1,
     [e2,f2,g2,h2,e6,f6,g6,h6]
     [e3,f3,g3,h3,e7,f7,g7,h7]
     */
-    neon::transpose2(b0, b4);
-    neon::transpose2(b1, b5);
-    neon::transpose2(b2, b6);
-    neon::transpose2(b3, b7);
+    transpose2(b0, b4); // 64-bit transpose
+    transpose2(b1, b5);
+    transpose2(b2, b6);
+    transpose2(b3, b7);
     a0 = b0;  a1 = b1;  a2 = b2;  a3 = b3;
     a4 = b4;  a5 = b5;  a6 = b6;  a7 = b7;
 
@@ -1062,14 +1029,14 @@ inline void transpose16(basic_int8x16& a0, basic_int8x16& a1,
     d8 = a8;  d9 = a9;  d10 = a10;  d11 = a11;
     d12 = a12;  d13 = a13;  d14 = a14;  d15 = a15;
 
-    neon::transpose2(d0, d8);
-    neon::transpose2(d1, d9);
-    neon::transpose2(d2, d10);
-    neon::transpose2(d3, d11);
-    neon::transpose2(d4, d12);
-    neon::transpose2(d5, d13);
-    neon::transpose2(d6, d14);
-    neon::transpose2(d7, d15);
+    transpose2(d0, d8); // 64-bit transpose
+    transpose2(d1, d9);
+    transpose2(d2, d10);
+    transpose2(d3, d11);
+    transpose2(d4, d12);
+    transpose2(d5, d13);
+    transpose2(d6, d14);
+    transpose2(d7, d15);
 
     a0 = d0;  a1 = d1;  a2 = d2;  a3 = d3;
     a4 = d4;  a5 = d5;  a6 = d6;  a7 = d7;
