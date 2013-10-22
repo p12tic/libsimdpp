@@ -61,12 +61,6 @@ void test_store_helper(TestCase& tc, V* sv)
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
-    for (unsigned i = 0; i < (vnum-1)*traits<V>::length; i++) {
-        rzero();
-        store_u(rdata+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
-    }
-
     tc.reset_seq();
     for (unsigned i = 0; i < traits<V>::length; i++) {
         rzero();
