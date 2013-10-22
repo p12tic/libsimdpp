@@ -30,11 +30,48 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle_bytes.h>
 
+#if SIMDPP_USE_NULL
+    #include <simdpp/null/transpose.h>
+#endif
+
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
+
+/// @{
+/** Transposes eight 2x2 8-bit matrices within two int8x16 vectors
+
+    @code
+    r0 = [ a0_0; a1_0 ; ... ; a0_14; a1_14 ]
+    r1 = [ a1_1; a1_1 ; ... ; a0_15; a0_15 ]
+    @endcode
+
+    @par 128-bit version:
+    @icost{SSE2-AVX2, 4}
+    @icost{ALTIVEC, 2-4}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 8}
+    @icost{AVX2, 4}
+    @icost{ALTIVEC, 4-6}
+
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+*/
+inline void transpose2(basic_int8x16& a0, basic_int8x16& a1)
+{
+#if SIMDPP_USE_NULL
+    null::transpose2(a0, a1);
+#elif SIMDPP_USE_NEON
+    auto r = vtrnq_u8(a0, a1);
+    a0 = r.val[0];
+    a1 = r.val[1];
+#else
+    SIMDPP_NOT_IMPLEMENTED2(a0, a1);
+#endif
+}
 
 /// @{
 /** Helper function.
