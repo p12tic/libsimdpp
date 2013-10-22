@@ -35,6 +35,7 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/bitwise.h>
 #include <simdpp/simd/shuffle_generic.h>
+#include <simdpp/simd/detail/shuffle128.h>
 
 #include <iostream>
 #include <iomanip>
@@ -46,7 +47,6 @@
     #include <simdpp/null/shuffle.h>
 #elif SIMDPP_USE_SSE2
     #include <simdpp/sse/shuffle.h>
-    #include <simdpp/sse/detail/shuffle128.h>
     #include <simdpp/sse/extract_half.h>
 #endif
 
@@ -1005,7 +1005,7 @@ basic_int32x8 broadcast(basic_int32x8 a)
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     a = permute<s%4,s%4,s%4,s%4>(a);
-    a = sse::detail::shuffle128<s/4, s/4>(a, a);
+    a = detail::shuffle128<s/4, s/4>(a, a);
     return a;
 #else
     basic_int32x4 p = a[s/4];
@@ -1094,7 +1094,7 @@ float32x8 broadcast(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX
-    a = sse::detail::shuffle128<s/4,s/4>(a, a);
+    a = detail::shuffle128<s/4,s/4>(a, a);
     return permute<s%4,s%4,s%4,s%4>(a);
 #else
     float32x4 p = a[s/4];
@@ -1136,7 +1136,7 @@ float64x4 broadcast(float64x4 a)
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
 #elif SIMDPP_USE_AVX
-    a = sse::detail::shuffle128<s/2,s/2>(a, a);
+    a = detail::shuffle128<s/2,s/2>(a, a);
     a = permute<s%2,s%2>(a);
     return a;
 #else

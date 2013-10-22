@@ -37,7 +37,7 @@
 #include <simdpp/simd/math_shift.h>
 #include <simdpp/simd/transpose.h>
 #include <simdpp/simd/detail/width.h>
-#include <simdpp/sse/detail/shuffle128.h>
+#include <simdpp/simd/detail/shuffle128.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -45,6 +45,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace sse {
 namespace detail {
+
+using ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::shuffle128;
 
 template<class T>
 inline void st_pack2_impl(T& a, T& b)

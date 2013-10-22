@@ -52,6 +52,7 @@ set(HEADERS
     null/transpose.h
 
     simd/detail/not_implemented.h
+    simd/detail/shuffle128.h
     simd/detail/shuffle_emul.h
     simd/detail/traits.h
     simd/detail/width.h
@@ -112,7 +113,6 @@ set(HEADERS
     sse/compare.h
     sse/convert.h
     sse/detail/load_packed.h
-    sse/detail/shuffle128.h
     sse/detail/store_packed.h
     sse/detail/transpose.h
     sse/extract_half.h

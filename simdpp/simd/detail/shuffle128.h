@@ -25,18 +25,19 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SSE_DETAIL_SHUFFLE128_H
-#define LIBSIMDPP_SSE_DETAIL_SHUFFLE128_H
+#ifndef LIBSIMDPP_SIMD_DETAIL_SHUFFLE128_H
+#define LIBSIMDPP_SIMD_DETAIL_SHUFFLE128_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/types.h>
+
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
-namespace sse {
 namespace detail {
 
 /// @{
@@ -89,7 +90,6 @@ float64x4 shuffle128(float64x4 a, float64x4 b)
 /// @}
 
 } // namespace detail
-} // namespace sse
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
