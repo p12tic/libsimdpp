@@ -28,6 +28,7 @@
 #include "../test_helpers.h"
 #include "../test_results.h"
 #include <simdpp/simd.h>
+#include <vector>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -117,6 +118,31 @@ void test_shuffle_type256(TestCase &tc, V v1, V v2)
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
 }
 
+template<class V>
+std::vector<V> test_blend_make_masks()
+{
+    using U = typename traits<V>::unsigned_element_type;
+    using T = typename traits<V>::element_type;
+    std::vector<V> r;
+
+    T z = simdpp::bit_cast<T, U>(U(0));
+    T o = simdpp::bit_cast<T, U>(~U(0));
+    r.push_back(V::make_const(z, z));
+    r.push_back(V::make_const(z, o));
+    r.push_back(V::make_const(o, z));
+    r.push_back(V::make_const(o, o));
+
+    return r;
+}
+
+template<class V, class VM>
+void test_blend(TestCase &tc, V v1, V v2, const std::vector<VM>& masks)
+{
+    for (const auto& v: masks) {
+        TEST_PUSH(tc, V, blend(v1, v2, v));
+    }
+}
+
 void test_shuffle(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "shuffle");
@@ -144,8 +170,6 @@ void test_shuffle(TestResults& res)
         c[i] = i;
     }
 
-    // TODO blend
-
     test_shuffle_type128<uint8x16>(tc, u8[0], u8[1]);
     test_shuffle_type128<uint16x8>(tc, u16[0], u16[1]);
     test_shuffle_type128<uint32x4>(tc, u32[0], u32[1]);
@@ -159,6 +183,25 @@ void test_shuffle(TestResults& res)
     test_shuffle_type256<uint64x4>(tc, du64[0], du64[1]);
     test_shuffle_type256<float32x8>(tc, df32[0], df32[1]);
     test_shuffle_type256<float64x4>(tc, df64[0], df64[1]);
+
+    // blend
+    test_blend<uint8x16>(tc, u8[0], u8[1], test_blend_make_masks<uint8x16>());
+    test_blend<uint16x8>(tc, u16[0], u16[1], test_blend_make_masks<uint16x8>());
+    test_blend<uint32x4>(tc, u32[0], u32[1], test_blend_make_masks<uint32x4>());
+    test_blend<uint64x2>(tc, u64[0], u64[1], test_blend_make_masks<uint64x2>());
+    test_blend<float32x4>(tc, f32[0], f32[1], test_blend_make_masks<uint32x4>());
+    test_blend<float32x4>(tc, f32[0], f32[1], test_blend_make_masks<float32x4>());
+    test_blend<float64x2>(tc, f64[0], f64[1], test_blend_make_masks<uint64x2>());
+    test_blend<float64x2>(tc, f64[0], f64[1], test_blend_make_masks<float64x2>());
+
+    test_blend<uint8x32>(tc, du8[0], du8[1], test_blend_make_masks<uint8x32>());
+    test_blend<uint16x16>(tc, du16[0], du16[1], test_blend_make_masks<uint16x16>());
+    test_blend<uint32x8>(tc, du32[0], du32[1], test_blend_make_masks<uint32x8>());
+    test_blend<uint64x4>(tc, du64[0], du64[1], test_blend_make_masks<uint64x4>());
+    test_blend<float32x8>(tc, df32[0], df32[1], test_blend_make_masks<uint32x8>());
+    test_blend<float32x8>(tc, df32[0], df32[1], test_blend_make_masks<float32x8>());
+    test_blend<float64x4>(tc, df64[0], df64[1], test_blend_make_masks<uint64x4>());
+    test_blend<float64x4>(tc, df64[0], df64[1], test_blend_make_masks<float64x4>());
 
     // extract bits
     union {
