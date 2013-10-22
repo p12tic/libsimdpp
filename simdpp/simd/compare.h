@@ -36,10 +36,8 @@
 #include <simdpp/simd/bitwise.h>
 #include <simdpp/simd/math_int_basic.h>
 
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     #include <simdpp/null/compare.h>
-#elif SIMDPP_USE_NEON
-    #include <simdpp/neon/detail/vfp_float64x2.h>
 #endif
 
 namespace simdpp {
@@ -205,14 +203,12 @@ inline basic_int32x8 cmp_eq(float32x8 a, float32x8 b)
 */
 inline basic_int64x2 cmp_eq(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_eq(a, b);
 #elif SIMDPP_USE_AVX
     return int64x2(_mm_cmp_pd(a, b, _CMP_EQ_OQ));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpeq_pd(a, b));
-#elif SIMDPP_USE_NEON
-    return neon::detail::cmp_eq(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -384,14 +380,12 @@ inline basic_int32x8 cmp_neq(float32x8 a, float32x8 b)
 */
 inline basic_int64x2 cmp_neq(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_neq(a, b);
 #elif SIMDPP_USE_AVX
     return int64x2(_mm_cmp_pd(a, b, _CMP_NEQ_UQ));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpneq_pd(a, b));
-#elif SIMDPP_USE_NEON
-    return neon::detail::cmp_neq(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -467,6 +461,8 @@ inline basic_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
     return _mm_cmpgt_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vcgtq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return (__vector uint8_t) vec_cmpgt((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -688,14 +684,12 @@ inline basic_int32x8 cmp_gt(float32x8 a, float32x8 b)
 */
 inline basic_int64x2 cmp_gt(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_gt(a, b);
 #elif SIMDPP_USE_AVX
     return int64x2(_mm_cmp_pd(a, b, _CMP_GT_OQ));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpgt_pd(a, b));
-#elif SIMDPP_USE_NEON
-    return neon::detail::cmp_gt(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -764,14 +758,12 @@ inline basic_int32x8 cmp_ge(float32x8 a, float32x8 b)
 */
 inline basic_int64x2 cmp_ge(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_ge(a, b);
 #elif SIMDPP_USE_AVX
     return int64x2(_mm_cmp_pd(a, b, _CMP_GE_OQ));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpge_pd(a, b));
-#elif SIMDPP_USE_NEON
-    return neon::detail::cmp_ge(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -1068,14 +1060,12 @@ inline basic_int32x8 cmp_lt(float32x8 a, float32x8 b)
 */
 inline basic_int64x2 cmp_lt(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_lt(a, b);
 #elif SIMDPP_USE_AVX
     return int64x2(_mm_cmp_pd(a, b, _CMP_LT_OQ));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmplt_pd(a, b));
-#elif SIMDPP_USE_NEON
-    return neon::detail::cmp_lt(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -1144,14 +1134,12 @@ inline basic_int32x8 cmp_le(float32x8 a, float32x8 b)
 */
 inline basic_int64x2 cmp_le(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_le(a, b);
 #elif SIMDPP_USE_AVX
     return int64x2(_mm_cmp_pd(a, b, _CMP_LE_OQ));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmple_pd(a, b));
-#elif SIMDPP_USE_NEON
-    return neon::detail::cmp_le(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif

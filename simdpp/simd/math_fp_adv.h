@@ -40,10 +40,7 @@
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     #include <cmath>
     #include <simdpp/null/foreach.h>
-#endif
-
-#if SIMDPP_USE_NEON
-    #include <simdpp/neon/detail/vfp_float64x2.h>
+    #include <simdpp/null/math.h>
 #endif
 
 namespace simdpp {
@@ -107,7 +104,7 @@ inline basic_int32x8 isnan(float32x8 a)
 */
 inline basic_int64x2 isnan(float64x2 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::foreach<int64x2>(a, [](double x) {
         return std::isnan(x) ? 0xffffffffffffffff : 0;
     });
@@ -115,8 +112,6 @@ inline basic_int64x2 isnan(float64x2 a)
     return int64x2(_mm_cmp_pd(a, a, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpunord_pd(a, a));
-#elif SIMDPP_USE_NEON
-    return neon::detail::isnan(a);
 #endif
 }
 
@@ -190,7 +185,7 @@ inline basic_int32x8 isnan2(float32x8 a, float32x8 b)
 */
 inline basic_int64x2 isnan2(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::foreach<int64x2>(a, b, [](double a, double b) {
         return std::isnan(a) || std::isnan(b) ? 0xffffffffffffffff : 0;
     });
@@ -198,8 +193,6 @@ inline basic_int64x2 isnan2(float64x2 a, float64x2 b)
     return int64x2(_mm_cmp_pd(a, b, _CMP_UNORD_Q));
 #elif SIMDPP_USE_SSE2
     return int64x2(_mm_cmpunord_pd(a, b));
-#elif SIMDPP_USE_NEON
-    return neon::detail::isnan2(a, b);
 #endif
 }
 
