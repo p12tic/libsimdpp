@@ -323,6 +323,7 @@ public:
 /// Class representing a mask for 8x 32-bit integer vector
 class mask_int32x8 {
 public:
+    static constexpr unsigned length = 8;
 
     mask_int32x8() = default;
     mask_int32x8(const mask_int32x8 &) = default;

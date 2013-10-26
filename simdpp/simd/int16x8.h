@@ -304,6 +304,7 @@ public:
 /// Class representing mask for 8x 16-bit integer vector
 class mask_int16x8 {
 public:
+    static constexpr unsigned length = 8;
 
     mask_int16x8() = default;
     mask_int16x8(const mask_int16x8 &) = default;

@@ -162,6 +162,7 @@ private:
 /// Class representing a mask for 2x 64-bit floating-point vector
 class mask_float64x2 {
 public:
+    static constexpr unsigned length = 2;
 
     mask_float64x2() = default;
     mask_float64x2(const mask_float64x2 &) = default;

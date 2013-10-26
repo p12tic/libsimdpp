@@ -286,6 +286,7 @@ public:
 /// Class representing mask for 2x 64-bit integer vector
 class mask_int64x2 {
 public:
+    static constexpr unsigned length = 2;
 
     mask_int64x2() = default;
     mask_int64x2(const mask_int64x2 &) = default;

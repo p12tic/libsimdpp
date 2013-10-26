@@ -180,6 +180,7 @@ private:
 /// Class representing a mask for 4x 32-bit floating-point vector
 class mask_float32x4 {
 public:
+    static constexpr unsigned length = 4;
 
     mask_float32x4() = default;
     mask_float32x4(const mask_float32x4 &) = default;
@@ -192,6 +193,7 @@ public:
     mask_float32x4(__m128 d) : d_(d) {}
 #elif SIMDPP_USE_NEON
     mask_float32x4(float32x4_t d) : d_(d) {}
+    mask_float32x4(uint32x4_t d) : d_(d) {}
 #endif
 #if SIMDPP_USE_NULL
 #else

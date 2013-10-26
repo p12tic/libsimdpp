@@ -39,6 +39,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace null {
 
+/* *_vm variants accept a vector as the first argument and a mask as the second
+   *_mm variants accept masks as both arguments
+*/
+
 template<class V>
 V bit_and(V a, V b)
 {
@@ -52,6 +56,27 @@ V bit_and(V a, V b)
     }
     return r;
 }
+
+template<class V, class M>
+V bit_and_vm(V a, M m)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r[i] = m[i] ? a[i] : 0;
+    }
+    return r;
+}
+
+template<class M>
+M bit_and_mm(M a, M b)
+{
+    M r;
+    for (unsigned i = 0; i < M::length; i++) {
+        r[i] = a[i] && b[i];
+    }
+    return r;
+}
+
 
 template<class V>
 V bit_andnot(V a, V b)
@@ -67,6 +92,27 @@ V bit_andnot(V a, V b)
     return r;
 }
 
+template<class V, class M>
+V bit_andnot_vm(V a, M m)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r[i] = !m[i] ? a[i] : 0;
+    }
+    return r;
+}
+
+template<class M>
+M bit_andnot_mm(M a, M b)
+{
+    M r;
+    for (unsigned i = 0; i < M::length; i++) {
+        r[i] = a[i] && !b[i];
+    }
+    return r;
+}
+
+
 template<class V>
 V bit_or(V a, V b)
 {
@@ -81,6 +127,16 @@ V bit_or(V a, V b)
     return r;
 }
 
+template<class M>
+M bit_or_mm(M a, M b)
+{
+    M r;
+    for (unsigned i = 0; i < M::length; i++) {
+        r[i] = a[i] || b[i];
+    }
+    return r;
+}
+
 template<class V>
 V bit_xor(V a, V b)
 {
@@ -91,6 +147,26 @@ V bit_xor(V a, V b)
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
         r[i] = bit_cast<E, U>(a1 ^ b1);
+    }
+    return r;
+}
+
+template<class M>
+M bit_xor_mm(M a, M b)
+{
+    M r;
+    for (unsigned i = 0; i < M::length; i++) {
+        r[i] = (a[i] && !b[i]) || (!a[i] && b[i]);
+    }
+    return r;
+}
+
+template<class M>
+M bit_not_mm(M a)
+{
+    M r;
+    for (unsigned i = 0; i < M::length; i++) {
+        r[i] = !a[i];
     }
     return r;
 }

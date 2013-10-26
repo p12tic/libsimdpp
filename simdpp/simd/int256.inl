@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 inline int256 int256::zero()
 {
-    int256 r;
+    basic_int32x8 r;
     r = bit_xor(r, r);
     return r;
 }

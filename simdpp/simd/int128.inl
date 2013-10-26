@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 inline int128 int128::zero()
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    int128 r;
+    basic_int32x4 r;
     r = bit_xor(r, r);
     return r;
 #elif SIMDPP_USE_SSE2

@@ -300,6 +300,7 @@ public:
 /// Class representing a mask for 4x 64-bit integer vector
 class mask_int64x4 {
 public:
+    static constexpr unsigned length = 4;
 
     mask_int64x4() = default;
     mask_int64x4(const mask_int64x4 &) = default;

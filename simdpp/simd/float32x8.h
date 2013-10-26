@@ -180,6 +180,7 @@ private:
 /// Class representing a mask for 8x 32-bit floating-point vector
 class mask_float32x8 {
 public:
+    static constexpr unsigned length = 8;
 
     mask_float32x8() = default;
     mask_float32x8(const mask_float32x8 &) = default;

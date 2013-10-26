@@ -52,37 +52,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Computes bitwise AND.
 
     @code
-    r = a & b
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-*/
-inline int128 bit_and(int128 a, int128 b)
-{
-#if SIMDPP_USE_NULL
-    return null::bit_and(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_and_si128(a, b);
-#elif SIMDPP_USE_NEON
-    return vandq_u32(a, b);
-#endif
-}
-
-inline int256 bit_and(int256 a, int256 b)
-{
-#if SIMDPP_USE_AVX2
-    return _mm256_and_si256(a, b);
-#else
-    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
-#endif
-}
-/// @}
-
-/// @{
-/** Computes bitwise AND.
-
-    @code
     r0 = a0 & b0
     ...
     rN = aN & bN
@@ -91,6 +60,186 @@ inline int256 bit_and(int256 a, int256 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
+inline basic_int8x16 bit_and(basic_int8x16 a, int128 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and(uint8x16(a), uint8x16(b));
+#elif SIMDPP_USE_SSE2
+    return _mm_and_si128(a, b);
+#elif SIMDPP_USE_NEON
+    return vandq_u8(a, b);
+#endif
+}
+
+inline basic_int16x8 bit_and(basic_int16x8 a, int128 b) { return bit_and(uint8x16(a), uint8x16(b)); }
+inline basic_int32x4 bit_and(basic_int32x4 a, int128 b) { return bit_and(uint8x16(a), uint8x16(b)); }
+inline basic_int64x2 bit_and(basic_int64x2 a, int128 b) { return bit_and(uint8x16(a), uint8x16(b)); }
+
+inline basic_int8x32 bit_and(basic_int8x32 a, int256 b)
+{
+#if SIMDPP_USE_AVX2
+    return _mm256_and_si256(a, b);
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline basic_int16x16 bit_and(basic_int16x16 a, int256 b) { return bit_and(uint8x32(a), uint8x32(b)); }
+inline basic_int32x8 bit_and(basic_int32x8 a, int256 b)   { return bit_and(uint8x32(a), uint8x32(b)); }
+inline basic_int64x4 bit_and(basic_int64x4 a, int256 b)   { return bit_and(uint8x32(a), uint8x32(b)); }
+
+// -----------------------------------------------------------------------------
+
+inline basic_int8x16 bit_and(basic_int8x16 a, mask_int8x16 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_vm(a, b);
+#else
+    return bit_and(a, uint8x16(b));
+#endif
+}
+
+inline basic_int16x8 bit_and(basic_int16x8 a, mask_int16x8 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_vm(a, b);
+#else
+    return bit_and(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline basic_int32x4 bit_and(basic_int32x4 a, mask_int32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_vm(a, b);
+#else
+    return bit_and(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline basic_int64x2 bit_and(basic_int64x2 a, mask_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_vm(a, b);
+#else
+    return bit_and(uint8x16(a), uint8x16(b));
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
+inline basic_int8x32 bit_and(basic_int8x32 a, mask_int8x32 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(a, uint8x32(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline basic_int16x16 bit_and(basic_int16x16 a, mask_int16x16 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(uint8x32(a), uint8x32(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline basic_int32x8 bit_and(basic_int32x8 a, mask_int32x8 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(uint8x32(a), uint8x32(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline basic_int64x4 bit_and(basic_int64x4 a, mask_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(uint8x32(a), uint8x32(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
+inline mask_int8x16 bit_and(mask_int8x16 a, mask_int8x16 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_mm(a, b);
+#else
+    return bit_and(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline mask_int16x8 bit_and(mask_int16x8 a, mask_int16x8 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_mm(a, b);
+#else
+    return bit_and(uint16x8(a), uint16x8(b));
+#endif
+}
+
+inline mask_int32x4 bit_and(mask_int32x4 a, mask_int32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_mm(a, b);
+#else
+    return bit_and(uint32x4(a), uint32x4(b));
+#endif
+}
+
+inline mask_int64x2 bit_and(mask_int64x2 a, mask_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_mm(a, b);
+#else
+    return bit_and(uint64x2(a), uint64x2(b));
+#endif
+}
+
+inline mask_int8x32 bit_and(mask_int8x32 a, mask_int8x32 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(uint8x32(a), uint8x32(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline mask_int16x16 bit_and(mask_int16x16 a, mask_int16x16 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(uint16x16(a), uint16x16(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline mask_int32x8 bit_and(mask_int32x8 a, mask_int32x8 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(uint32x8(a), uint32x8(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline mask_int64x4 bit_and(mask_int64x4 a, mask_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_and(uint64x4(a), uint64x4(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
 inline float32x4 bit_and(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -121,28 +270,51 @@ inline float32x8 bit_and(float32x8 a, int256 b)
 {
     return bit_and(a, float32x8(b));
 }
-/// @}
 
-/// @{
-/** Computes bitwise AND.
+inline float32x4 bit_and(float32x4 a, mask_float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_vm(a, b);
+#else
+    return bit_and(a, uint32x4(b));
+#endif
+}
 
-    @code
-    r0 = a0 & b0
-    ...
-    rN = aN & bN
-    @endcode
+inline float32x8 bit_and(float32x8 a, mask_float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_and(a, uint32x8(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
 
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-*/
+inline mask_float32x4 bit_and(mask_float32x4 a, mask_float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_and_mm(a, b);
+#else
+    return bit_and(float32x4(a), float32x4(b));
+#endif
+}
+
+inline mask_float32x8 bit_and(mask_float32x8 a, mask_float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_and(float32x8(a), float32x8(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
 inline float64x2 bit_and(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_and(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_and_pd(a, b);
-#elif SIMDPP_USE_NEON
-    return float64x2(bit_and(int64x2(a), int64x2(b)));
 #endif
 }
 
@@ -164,37 +336,43 @@ inline float64x4 bit_and(float64x4 a, int256 b)
 {
     return bit_and(a, float64x4(b));
 }
-/// @}
 
-/// @{
-/** Computes bitwise AND NOT.
-
-    @code
-    r = a & ~b
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-*/
-inline int128 bit_andnot(int128 a, int128 b)
+inline float64x2 bit_and(float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_andnot_si128(b, a);
-#elif SIMDPP_USE_NEON
-    return vbicq_u32(a, b);
-#endif
-}
-
-inline int256 bit_andnot(int256 a, int256 b)
-{
-#if SIMDPP_USE_AVX2
-    return _mm256_andnot_si256(b, a);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::bit_and_vm(a, b);
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    return bit_and(a, float64x2(b));
 #endif
 }
+
+inline float64x4 bit_and(float64x4 a, mask_float64x4 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_and(a, float64x4(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
+inline mask_float64x2 bit_and(mask_float64x2 a, mask_float64x2 b)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::bit_and_mm(a, b);
+#else
+    return bit_and(float64x2(a), float64x2(b));
+#endif
+}
+
+inline mask_float64x4 bit_and(mask_float64x4 a, mask_float64x4 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_and(float64x4(a), float64x4(b));
+#else
+    return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
+#endif
+}
+
 /// @}
 
 /// @{
@@ -209,6 +387,186 @@ inline int256 bit_andnot(int256 a, int256 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
+inline basic_int8x16 bit_andnot(basic_int8x16 a, int128 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot(uint8x16(a), uint8x16(b));
+#elif SIMDPP_USE_SSE2
+    return _mm_andnot_si128(b, a);
+#elif SIMDPP_USE_NEON
+    return vbicq_u8(a, b);
+#endif
+}
+
+inline basic_int16x8 bit_andnot(basic_int16x8 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
+inline basic_int32x4 bit_andnot(basic_int32x4 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
+inline basic_int64x2 bit_andnot(basic_int64x2 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
+
+inline basic_int8x32 bit_andnot(basic_int8x32 a, int256 b)
+{
+#if SIMDPP_USE_AVX2
+    return _mm256_andnot_si256(b, a);
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline basic_int16x16 bit_andnot(basic_int16x16 a, int256 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
+inline basic_int32x8 bit_andnot(basic_int32x8 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
+inline basic_int64x4 bit_andnot(basic_int64x4 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
+
+// -----------------------------------------------------------------------------
+
+inline basic_int8x16 bit_andnot(basic_int8x16 a, mask_int8x16 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_vm(a, b);
+#else
+    return bit_andnot(a, uint8x16(b));
+#endif
+}
+
+inline basic_int16x8 bit_andnot(basic_int16x8 a, mask_int16x8 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_vm(a, b);
+#else
+    return bit_andnot(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline basic_int32x4 bit_andnot(basic_int32x4 a, mask_int32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_vm(a, b);
+#else
+    return bit_andnot(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline basic_int64x2 bit_andnot(basic_int64x2 a, mask_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_vm(a, b);
+#else
+    return bit_andnot(uint8x16(a), uint8x16(b));
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
+inline basic_int8x32 bit_andnot(basic_int8x32 a, mask_int8x32 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(a, uint8x32(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline basic_int16x16 bit_andnot(basic_int16x16 a, mask_int16x16 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(uint8x32(a), uint8x32(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline basic_int32x8 bit_andnot(basic_int32x8 a, mask_int32x8 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(uint8x32(a), uint8x32(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline basic_int64x4 bit_andnot(basic_int64x4 a, mask_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(uint8x32(a), uint8x32(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
+inline mask_int8x16 bit_andnot(mask_int8x16 a, mask_int8x16 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_mm(a, b);
+#else
+    return bit_andnot(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline mask_int16x8 bit_andnot(mask_int16x8 a, mask_int16x8 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_mm(a, b);
+#else
+    return bit_andnot(uint16x8(a), uint16x8(b));
+#endif
+}
+
+inline mask_int32x4 bit_andnot(mask_int32x4 a, mask_int32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_mm(a, b);
+#else
+    return bit_andnot(uint32x4(a), uint32x4(b));
+#endif
+}
+
+inline mask_int64x2 bit_andnot(mask_int64x2 a, mask_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_mm(a, b);
+#else
+    return bit_andnot(uint64x2(a), uint64x2(b));
+#endif
+}
+
+inline mask_int8x32 bit_andnot(mask_int8x32 a, mask_int8x32 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(uint8x32(a), uint8x32(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline mask_int16x16 bit_andnot(mask_int16x16 a, mask_int16x16 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(uint16x16(a), uint16x16(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline mask_int32x8 bit_andnot(mask_int32x8 a, mask_int32x8 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(uint32x8(a), uint32x8(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline mask_int64x4 bit_andnot(mask_int64x4 a, mask_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_andnot(uint64x4(a), uint64x4(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
 inline float32x4 bit_andnot(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -216,14 +574,15 @@ inline float32x4 bit_andnot(float32x4 a, float32x4 b)
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_ps(b, a);
 #elif SIMDPP_USE_NEON
-    return vreinterpretq_f32_s32(vbicq_s32(vreinterpretq_s32_f32(a), vreinterpretq_s32_f32(b)));
+    return vreinterpretq_f32_u32(vbicq_u32(vreinterpretq_u32_f32(a),
+                                           vreinterpretq_u32_f32(b)));
 #endif
 }
 
 inline float32x8 bit_andnot(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return _mm256_andnot_ps(b, a);
+    return _mm256_and_ps(a, b);
 #else
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
@@ -238,35 +597,58 @@ inline float32x8 bit_andnot(float32x8 a, int256 b)
 {
     return bit_andnot(a, float32x8(b));
 }
-/// @}
 
-/// @{
-/** Computes bitwise AND NOT.
+inline float32x4 bit_andnot(float32x4 a, mask_float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_vm(a, b);
+#else
+    return bit_andnot(a, uint32x4(b));
+#endif
+}
 
-    @code
-    r0 = a0 & ~b0
-    ...
-    rN = aN & ~bN
-    @endcode
+inline float32x8 bit_andnot(float32x8 a, mask_float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_andnot(a, uint32x8(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
 
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-*/
+inline mask_float32x4 bit_andnot(mask_float32x4 a, mask_float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_andnot_mm(a, b);
+#else
+    return bit_andnot(float32x4(a), float32x4(b));
+#endif
+}
+
+inline mask_float32x8 bit_andnot(mask_float32x8 a, mask_float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_andnot(float32x8(a), float32x8(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
 inline float64x2 bit_andnot(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_andnot(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_pd(b, a);
-#elif SIMDPP_USE_NEON
-    return float64x2(bit_andnot(int64x2(a), int64x2(b)));
 #endif
 }
 
 inline float64x4 bit_andnot(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return _mm256_andnot_pd(b, a);
+    return _mm256_and_pd(a, b);
 #else
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
@@ -281,35 +663,40 @@ inline float64x4 bit_andnot(float64x4 a, int256 b)
 {
     return bit_andnot(a, float64x4(b));
 }
-/// @}
 
-/// @{
-/** Computes bitwise OR.
-
-    @code
-    r = a | b
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-*/
-inline int128 bit_or(int128 a, int128 b)
+inline float64x2 bit_andnot(float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_or(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_or_si128(a, b);
-#elif SIMDPP_USE_NEON
-    return vorrq_u32(a, b);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::bit_andnot_vm(a, b);
+#else
+    return bit_andnot(a, float64x2(b));
 #endif
 }
 
-inline int256 bit_or(int256 a, int256 b)
+inline float64x4 bit_andnot(float64x4 a, mask_float64x4 b)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_or_si256(a, b);
+#if SIMDPP_USE_AVX
+    return bit_andnot(a, float64x4(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+#endif
+}
+
+inline mask_float64x2 bit_andnot(mask_float64x2 a, mask_float64x2 b)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::bit_andnot_mm(a, b);
+#else
+    return bit_andnot(float64x2(a), float64x2(b));
+#endif
+}
+
+inline mask_float64x4 bit_andnot(mask_float64x4 a, mask_float64x4 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_andnot(float64x4(a), float64x4(b));
+#else
+    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
 }
 /// @}
@@ -326,6 +713,106 @@ inline int256 bit_or(int256 a, int256 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
+inline basic_int8x16 bit_or(basic_int8x16 a, int128 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_or(a, basic_int8x16(b));
+#elif SIMDPP_USE_SSE2
+    return _mm_or_si128(a, b);
+#elif SIMDPP_USE_NEON
+    return vorrq_u8(a, b);
+#endif
+}
+
+inline basic_int16x8 bit_or(basic_int16x8 a, int128 b) { return bit_or(uint8x16(a), uint8x16(b)); }
+inline basic_int32x4 bit_or(basic_int32x4 a, int128 b) { return bit_or(uint8x16(a), uint8x16(b)); }
+inline basic_int64x2 bit_or(basic_int64x2 a, int128 b) { return bit_or(uint8x16(a), uint8x16(b)); }
+
+inline basic_int8x32 bit_or(basic_int8x32 a, int256 b)
+{
+#if SIMDPP_USE_AVX2
+    return _mm256_or_si256(a, b);
+#else
+    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+#endif
+}
+
+inline basic_int16x16 bit_or(basic_int16x16 a, int256 b) { return bit_or(uint8x32(a), uint8x32(b)); }
+inline basic_int32x8 bit_or(basic_int32x8 a, int256 b)   { return bit_or(uint8x32(a), uint8x32(b)); }
+inline basic_int64x4 bit_or(basic_int64x4 a, int256 b)   { return bit_or(uint8x32(a), uint8x32(b)); }
+
+
+inline mask_int8x16 bit_or(mask_int8x16 a, mask_int8x16 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_or_mm(a, b);
+#else
+    return bit_or(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline mask_int16x8 bit_or(mask_int16x8 a, mask_int16x8 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_or_mm(a, b);
+#else
+    return bit_or(uint16x8(a), uint16x8(b));
+#endif
+}
+
+inline mask_int32x4 bit_or(mask_int32x4 a, mask_int32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_or_mm(a, b);
+#else
+    return bit_or(uint32x4(a), uint32x4(b));
+#endif
+}
+
+inline mask_int64x2 bit_or(mask_int64x2 a, mask_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_or_mm(a, b);
+#else
+    return bit_or(uint64x2(a), uint64x2(b));
+#endif
+}
+
+inline mask_int8x32 bit_or(mask_int8x32 a, mask_int8x32 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_or(uint8x32(a), uint8x32(b));
+#else
+    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+#endif
+}
+
+inline mask_int16x16 bit_or(mask_int16x16 a, mask_int16x16 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_or(uint16x16(a), uint16x16(b));
+#else
+    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+#endif
+}
+
+inline mask_int32x8 bit_or(mask_int32x8 a, mask_int32x8 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_or(uint32x8(a), uint32x8(b));
+#else
+    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+#endif
+}
+
+inline mask_int64x4 bit_or(mask_int64x4 a, mask_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_or(uint64x4(a), uint64x4(b));
+#else
+    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+#endif
+}
 inline float32x4 bit_or(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -355,28 +842,15 @@ inline float32x8 bit_or(float32x8 a, int256 b)
 {
     return bit_or(a, float32x8(b));
 }
-/// @}
 
-/// @{
-/** Computes bitwise OR.
+// -----------------------------------------------------------------------------
 
-    @code
-    r0 = a0 | b0
-    ...
-    rN = aN | bN
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-*/
 inline float64x2 bit_or(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_or(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_or_pd(a, b);
-#elif SIMDPP_USE_NEON
-    return float64x2(bit_or(int64x2(a), int64x2(b)));
 #endif
 }
 
@@ -398,30 +872,77 @@ inline float64x4 bit_or(float64x4 a, int256 b)
 {
     return bit_or(a, float64x4(b));
 }
+
+// -----------------------------------------------------------------------------
+
+inline mask_float32x4 bit_or(mask_float32x4 a, mask_float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_or_mm(a, b);
+#else
+    return bit_or(float32x4(a), float32x4(b));
+#endif
+}
+
+inline mask_float64x2 bit_or(mask_float64x2 a, mask_float64x2 b)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::bit_or_mm(a, b);
+#else
+    return bit_or(float64x2(a), float64x2(b));
+#endif
+}
+
+inline mask_float32x8 bit_or(mask_float32x8 a, mask_float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_or(float32x8(a), float32x8(b));
+#else
+    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+#endif
+}
+
+inline mask_float64x4 bit_or(mask_float64x4 a, mask_float64x4 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_or(float64x4(a), float64x4(b));
+#else
+    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
 /// @}
 
 /// @{
 /** Computes bitwise XOR.
 
     @code
-    r = a ^ b
+    r0 = a0 ^ b0
+    ...
+    rN = aN ^ bN
     @endcode
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline int128 bit_xor(int128 a, int128 b)
+inline basic_int8x16 bit_xor(basic_int8x16 a, int128 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_xor(a, b);
+    return null::bit_xor(a, basic_int8x16(b));
 #elif SIMDPP_USE_SSE2
     return _mm_xor_si128(a, b);
 #elif SIMDPP_USE_NEON
-    return veorq_u32(a, b);
+    return veorq_u8(a, b);
 #endif
 }
 
-inline int256 bit_xor(int256 a, int256 b)
+inline basic_int16x8 bit_xor(basic_int16x8 a, int128 b) { return bit_xor(uint8x16(a), uint8x16(b)); }
+inline basic_int32x4 bit_xor(basic_int32x4 a, int128 b) { return bit_xor(uint8x16(a), uint8x16(b)); }
+inline basic_int64x2 bit_xor(basic_int64x2 a, int128 b) { return bit_xor(uint8x16(a), uint8x16(b)); }
+
+inline basic_int8x32 bit_xor(basic_int8x32 a, int256 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_xor_si256(a, b);
@@ -429,20 +950,84 @@ inline int256 bit_xor(int256 a, int256 b)
     return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
 #endif
 }
-/// @}
 
-/// @{
-/** Computes bitwise XOR.
+inline basic_int16x16 bit_xor(basic_int16x16 a, int256 b) { return bit_xor(uint8x32(a), uint8x32(b)); }
+inline basic_int32x8 bit_xor(basic_int32x8 a, int256 b)   { return bit_xor(uint8x32(a), uint8x32(b)); }
+inline basic_int64x4 bit_xor(basic_int64x4 a, int256 b)   { return bit_xor(uint8x32(a), uint8x32(b)); }
 
-    @code
-    r0 = a0 | b0
-    ...
-    rN = aN | bN
-    @endcode
+// -----------------------------------------------------------------------------
 
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-*/
+inline mask_int8x16 bit_xor(mask_int8x16 a, mask_int8x16 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_xor_mm(a, b);
+#else
+    return bit_xor(uint8x16(a), uint8x16(b));
+#endif
+}
+
+inline mask_int16x8 bit_xor(mask_int16x8 a, mask_int16x8 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_xor_mm(a, b);
+#else
+    return bit_xor(uint16x8(a), uint16x8(b));
+#endif
+}
+
+inline mask_int32x4 bit_xor(mask_int32x4 a, mask_int32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_xor_mm(a, b);
+#else
+    return bit_xor(uint32x4(a), uint32x4(b));
+#endif
+}
+
+inline mask_int64x2 bit_xor(mask_int64x2 a, mask_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_xor_mm(a, b);
+#else
+    return bit_xor(uint64x2(a), uint64x2(b));
+#endif
+}
+
+inline mask_int8x32 bit_xor(mask_int8x32 a, mask_int8x32 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_xor(uint8x32(a), uint8x32(b));
+#else
+    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+#endif
+}
+
+inline mask_int16x16 bit_xor(mask_int16x16 a, mask_int16x16 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_xor(uint16x16(a), uint16x16(b));
+#else
+    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+#endif
+}
+
+inline mask_int32x8 bit_xor(mask_int32x8 a, mask_int32x8 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_xor(uint32x8(a), uint32x8(b));
+#else
+    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+#endif
+}
+
+inline mask_int64x4 bit_xor(mask_int64x4 a, mask_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_xor(uint64x4(a), uint64x4(b));
+#else
+    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+#endif
+}
 inline float32x4 bit_xor(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -472,28 +1057,15 @@ inline float32x8 bit_xor(float32x8 a, int256 b)
 {
     return bit_xor(a, float32x8(b));
 }
-/// @}
 
-/// @{
-/** Computes bitwise XOR.
+// -----------------------------------------------------------------------------
 
-    @code
-    r0 = a0 | b0
-    ...
-    rN = aN | bN
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-*/
 inline float64x2 bit_xor(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::bit_xor(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_xor_pd(a, b);
-#elif SIMDPP_USE_NEON
-    return float64x2(bit_xor(int64x2(a), int64x2(b)));
 #endif
 }
 
@@ -515,10 +1087,51 @@ inline float64x4 bit_xor(float64x4 a, int256 b)
 {
     return bit_xor(a, float64x4(b));
 }
+
+// -----------------------------------------------------------------------------
+
+inline mask_float32x4 bit_xor(mask_float32x4 a, mask_float32x4 b)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_xor_mm(a, b);
+#else
+    return bit_xor(float32x4(a), float32x4(b));
+#endif
+}
+
+inline mask_float64x2 bit_xor(mask_float64x2 a, mask_float64x2 b)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::bit_xor_mm(a, b);
+#else
+    return bit_xor(float64x2(a), float64x2(b));
+#endif
+}
+
+inline mask_float32x8 bit_xor(mask_float32x8 a, mask_float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_xor(float32x8(a), float32x8(b));
+#else
+    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+#endif
+}
+
+inline mask_float64x4 bit_xor(mask_float64x4 a, mask_float64x4 b)
+{
+#if SIMDPP_USE_AVX
+    return bit_xor(float64x4(a), float64x4(b));
+#else
+    return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
 /// @}
 
 /// @{
-/** Computes bitwise NOT of a 128-bit integer vector
+/** Computes bitwise NOT of an integer vector
 
     @code
     r = ~a
@@ -532,27 +1145,191 @@ inline float64x4 bit_xor(float64x4 a, int256 b)
     @icost{SSE2-AVX, NEON, 4}
     @icost{AVX2, 2}
 */
-inline int128 bit_not(int128 a)
+inline basic_int8x16 bit_not(basic_int8x16 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int128>(a, [](uint64_t a){ return ~a; });
+    return null::foreach<basic_int8x16>(a, [](uint64_t a){ return ~a; });
 #elif SIMDPP_USE_SSE2
-    int128 ones = int128::ones();
+    basic_int8x16 ones = basic_int8x16::ones();
     return bit_xor(a, ones);
 #elif SIMDPP_USE_NEON
-    return vmvnq_u32(a);
+    return vmvnq_u8(a);
 #endif
 }
 
-inline int256 bit_not(int256 a)
+inline basic_int16x8 bit_not(basic_int16x8 a) { return bit_not(uint8x16(a)); }
+inline basic_int32x4 bit_not(basic_int32x4 a) { return bit_not(uint8x16(a)); }
+inline basic_int64x2 bit_not(basic_int64x2 a) { return bit_not(uint8x16(a)); }
+
+inline basic_int8x32 bit_not(basic_int8x32 a)
 {
 #if SIMDPP_USE_AVX2
-    int256 ones = int256::ones();
+    basic_int8x32 ones = basic_int8x32::ones();
     return bit_xor(a, ones);
 #else
     return {bit_not(a[0]), bit_not(a[1])};
 #endif
 }
+
+inline basic_int16x16 bit_not(basic_int16x16 a) { return bit_not(uint8x32(a)); }
+inline basic_int32x8 bit_not(basic_int32x8 a)   { return bit_not(uint8x32(a)); }
+inline basic_int64x4 bit_not(basic_int64x4 a)   { return bit_not(uint8x32(a)); }
+
+// -----------------------------------------------------------------------------
+
+inline mask_int8x16 bit_not(mask_int8x16 a)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_not_mm(a);
+#else
+    return bit_not(uint8x16(a));
+#endif
+}
+
+inline mask_int16x8 bit_not(mask_int16x8 a)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_not_mm(a);
+#else
+    return bit_not(uint16x8(a));
+#endif
+}
+
+inline mask_int32x4 bit_not(mask_int32x4 a)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_not_mm(a);
+#else
+    return bit_not(uint32x4(a));
+#endif
+}
+
+inline mask_int64x2 bit_not(mask_int64x2 a)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_not_mm(a);
+#else
+    return bit_not(uint64x2(a));
+#endif
+}
+
+inline mask_int8x32 bit_not(mask_int8x32 a)
+{
+#if SIMDPP_USE_AVX2
+    return bit_not(uint8x32(a));
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+
+inline mask_int16x16 bit_not(mask_int16x16 a)
+{
+#if SIMDPP_USE_AVX2
+    return bit_not(uint16x16(a));
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+
+inline mask_int32x8 bit_not(mask_int32x8 a)
+{
+#if SIMDPP_USE_AVX2
+    return bit_not(uint32x8(a));
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+
+inline mask_int64x4 bit_not(mask_int64x4 a)
+{
+#if SIMDPP_USE_AVX2
+    return bit_not(uint64x4(a));
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+inline float32x4 bit_not(float32x4 a)
+{
+#if SIMDPP_USE_NULL
+    return float32x4(bit_not(uint32x4(a)));
+#elif SIMDPP_USE_SSE2
+    uint32x4 ones = uint32x4::ones();
+    return bit_xor(a, ones);
+#elif SIMDPP_USE_NEON
+    return (float32x4) vmvnq_u32((uint32x4)a);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_nor((__vector float)a, (__vector float)a);
+#endif
+}
+
+inline float64x2 bit_not(float64x2 a)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    return float64x2(bit_not(uint64x2(a)));
+#elif SIMDPP_USE_SSE2
+    uint64x2 ones = uint64x2::ones();
+    return bit_xor(a, ones);
+#endif
+}
+
+inline float32x8 bit_not(float32x8 a)
+{
+#if SIMDPP_USE_AVX
+    float32x8 ones = float32x8::ones();
+    return bit_xor(a, ones);
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+
+inline float64x4 bit_not(float64x4 a)
+{
+#if SIMDPP_USE_AVX
+    float64x4 ones = float64x4::ones();
+    return bit_xor(a, ones);
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+
+inline mask_float32x4 bit_not(mask_float32x4 a)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_not_mm(a);
+#else
+    return bit_not(float32x4(a));
+#endif
+}
+
+inline mask_float64x2 bit_not(mask_float64x2 a)
+{
+#if SIMDPP_USE_NULL
+    return null::bit_not_mm(a);
+#else
+    return bit_not(float64x2(a));
+#endif
+}
+
+inline mask_float32x8 bit_not(mask_float32x8 a)
+{
+#if SIMDPP_USE_AVX
+    return bit_not(float32x8(a));
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+
+inline mask_float64x4 bit_not(mask_float64x4 a)
+{
+#if SIMDPP_USE_AVX
+    return bit_not(float64x4(a));
+#else
+    return {bit_not(a[0]), bit_not(a[1])};
+#endif
+}
+
+// -----------------------------------------------------------------------------
+
 /// @}
 
 /// @}
