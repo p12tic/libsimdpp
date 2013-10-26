@@ -73,7 +73,7 @@ basic_int8x16 insert(basic_int8x16 a, uint8_t x)
     a[id] = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_insert_epi8(a, x, id);
+    return _mm_insert_epi8(a.operator __m128i(), x, id);
 #elif SIMDPP_USE_SSE2
     uint16_t r = _mm_extract_epi16(a, id/2);
     if (id % 2 == 1) {
@@ -144,7 +144,7 @@ int128 insert(basic_int32x4 a, uint32_t x)
     a[id] = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_insert_epi32(a, x, id);
+    return _mm_insert_epi32(a.operator __m128i(), x, id);
 #elif SIMDPP_USE_SSE2
     uint16_t lo = x & 0xffff;
     uint16_t hi = x >> 16;
@@ -190,7 +190,7 @@ int128 insert(basic_int64x2 a, uint64_t x)
     a0 = insert<id*2+1>(a0, uint32_t(x >> 32));
     return a0;
 #else
-    return _mm_insert_epi64(a, x, id);
+    return _mm_insert_epi64(a.operator __m128i(), x, id);
 #endif
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS

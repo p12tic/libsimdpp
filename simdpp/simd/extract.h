@@ -66,7 +66,11 @@ uint8_t extract(basic_int8x16 a)
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
-    return _mm_extract_epi8(a, id);
+    // Explicit cast is needed due to bug in Clang headers (intrinsic
+    // implemented as a macro with no appropriate casts) and a bug in Clang
+    // (thinks explicit conversion operators have the same rank as the regular
+    // ones)
+    return _mm_extract_epi8(a.operator __m128i(), id);
 #elif SIMDPP_USE_SSE2
     unsigned shift = (id % 2 == 1) ? 8 : 0;
     return _mm_extract_epi16(a, id/2) >> shift;
@@ -140,7 +144,7 @@ uint32_t extract(basic_int32x4 a)
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
-    return _mm_extract_epi32(a, id);
+    return _mm_extract_epi32(a.operator __m128i(), id);
 #elif SIMDPP_USE_SSE2
     return _mm_cvtsi128_si32(move_l<id>(a)); // when id==0, move_l is template-specialized and does nothing
 #elif SIMDPP_USE_NEON
@@ -187,7 +191,7 @@ uint64_t extract(basic_int64x2 a)
     r |= uint64_t(extract<id*2+1>(t)) << 32;
     return r;
 #else
-    return _mm_extract_epi64(a, id);
+    return _mm_extract_epi64(a.operator __m128i(), id);
 #endif
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
