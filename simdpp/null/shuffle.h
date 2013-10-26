@@ -118,6 +118,16 @@ V blend(V on, V off, V mask)
     return r;
 }
 
+template<class V, class M>
+V blend_mask(V on, V off, M mask)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r[i] = mask[i] ? on[i] : off[i];
+    }
+    return r;
+}
+
 template<unsigned s0, unsigned s1, class V>
 V permute(V a)
 {

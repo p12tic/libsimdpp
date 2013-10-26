@@ -1456,10 +1456,28 @@ inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 ma
 #endif
 }
 
+inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, mask_int8x16 mask)
+{
+#if SIMDPP_USE_NULL
+    return null::blend_mask(on, off, mask);
+#else
+    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
+#endif
+}
+
 inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, basic_int8x32 mask)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
+#else
+    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+#endif
+}
+
+inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, mask_int8x32 mask)
+{
+#if SIMDPP_USE_AVX2
+    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
     return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
 #endif
@@ -1493,7 +1511,25 @@ inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, basic_int16x8 ma
 inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, basic_int16x16 mask)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_blendv_epi8(off, on, mask);
+    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
+#else
+    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+#endif
+}
+
+inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, mask_int16x8 mask)
+{
+#if SIMDPP_USE_NULL
+    return null::blend_mask(on, off, mask);
+#else
+    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
+#endif
+}
+
+inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, mask_int16x16 mask)
+{
+#if SIMDPP_USE_AVX2
+    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
     return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
 #endif
@@ -1527,7 +1563,25 @@ inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, basic_int32x4 ma
 inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, basic_int32x8 mask)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_blendv_epi8(off, on, mask);
+    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
+#else
+    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+#endif
+}
+
+inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, mask_int32x4 mask)
+{
+#if SIMDPP_USE_NULL
+    return null::blend_mask(on, off, mask);
+#else
+    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
+#endif
+}
+
+inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, mask_int32x8 mask)
+{
+#if SIMDPP_USE_AVX2
+    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
     return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
 #endif
@@ -1555,13 +1609,31 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, basic_int32x8 ma
 */
 inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, basic_int64x2 mask)
 {
-    return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
+    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
 }
 
 inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, basic_int64x4 mask)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
+#else
+    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+#endif
+}
+
+inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, mask_int64x2 mask)
+{
+#if SIMDPP_USE_NULL
+    return null::blend_mask(on, off, mask);
+#else
+    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
+#endif
+}
+
+inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, mask_int64x4 mask)
+{
+#if SIMDPP_USE_AVX2
+    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
     return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
 #endif
@@ -1622,6 +1694,25 @@ inline float32x8 blend(float32x8 on, float32x8 off, int256 mask)
 {
     return blend(on, off, bit_cast<float32x8>(mask));
 }
+
+
+inline float32x4 blend(float32x4 on, float32x4 off, mask_float32x4 mask)
+{
+#if SIMDPP_USE_NULL
+    return null::blend_mask(on, off, mask);
+#else
+    return blend(on, off, uint32x4(mask));
+#endif
+}
+
+inline float32x8 blend(float32x8 on, float32x8 off, mask_float32x8 mask)
+{
+#if SIMDPP_USE_AVX
+    return blend(on, off, uint32x8(mask));
+#else
+    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+#endif
+}
 /// @}
 
 /// @{
@@ -1675,6 +1766,24 @@ inline float64x4 blend(float64x4 on, float64x4 off, float64x4 mask)
 inline float64x4 blend(float64x4 on, float64x4 off, int256 mask)
 {
     return blend(on, off, bit_cast<float64x4>(mask));
+}
+
+inline float64x2 blend(float64x2 on, float64x2 off, mask_float64x2 mask)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::blend_mask(on, off, mask);
+#else
+    return blend(on, off, uint64x2(mask));
+#endif
+}
+
+inline float64x4 blend(float64x4 on, float64x4 off, mask_float64x4 mask)
+{
+#if SIMDPP_USE_AVX
+    return blend(on, off, uint64x4(mask));
+#else
+    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+#endif
 }
 /// @}
 
