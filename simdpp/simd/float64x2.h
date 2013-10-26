@@ -66,6 +66,7 @@ public:
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
     float64x2(__m128d d) : d_(d) {}
+    float64x2& operator=(__m128d d) { d_ = d; return *this; }
 #endif
 
     /// Convert to underlying vector type

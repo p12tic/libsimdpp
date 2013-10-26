@@ -68,6 +68,7 @@ public:
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
     float64x4(__m256d d) : d_(d) {}
+    float64x4& operator=(__m256d d) { d_ = d; return *this; }
 #endif
 
     /// Convert to underlying vector type

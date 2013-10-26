@@ -65,10 +65,13 @@ public:
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
     float32x4(__m128 d) : d_(d) {}
+    float32x4& operator=(__m128 d) { d_ = d; return *this; }
 #elif SIMDPP_USE_NEON
     float32x4(float32x4_t d) : d_(d) {}
+    float32x4& operator=(float32x4_t d) { d_ = d; return *this; }
 #elif SIMDPP_USE_ALTIVEC
     float32x4(__vector float d) : d_(d) {}
+    float32x4& operator=(__vector float d) { d_ = d; return *this; }
 #endif
 
     /// Convert to underlying vector type
