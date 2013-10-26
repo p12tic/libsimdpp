@@ -245,20 +245,15 @@ inline mask_int8x16 cmp_neq(basic_int8x16 a, basic_int8x16 b)
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
 #else
-    basic_int8x16 r;
-    r = cmp_eq(a, b);
-    r = bit_not(r);
-    return r;
+    mask_int8x16 r;
+    return bit_not(cmp_eq(a, b));
 #endif
 }
 
 inline mask_int8x32 cmp_neq(basic_int8x32 a, basic_int8x32 b)
 {
 #if SIMDPP_USE_AVX2
-    basic_int8x32 r;
-    r = cmp_eq(a, b);
-    r = bit_not(r);
-    return r;
+    return bit_not(cmp_eq(a, b));
 #else
     return { cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]) };
 #endif
@@ -286,20 +281,14 @@ inline mask_int16x8 cmp_neq(basic_int16x8 a, basic_int16x8 b)
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
 #else
-    basic_int16x8 r;
-    r = cmp_eq(a, b);
-    r = bit_not(r);
-    return r;
+    return bit_not(cmp_eq(a, b));
 #endif
 }
 
 inline mask_int16x16 cmp_neq(basic_int16x16 a, basic_int16x16 b)
 {
 #if SIMDPP_USE_AVX2
-    basic_int16x16 r;
-    r = cmp_eq(a, b);
-    r = bit_not(r);
-    return r;
+    return bit_not(cmp_eq(a, b));
 #else
     return { cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]) };
 #endif
@@ -327,20 +316,14 @@ inline mask_int32x4 cmp_neq(basic_int32x4 a, basic_int32x4 b)
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
 #else
-    basic_int32x4 r;
-    r = cmp_eq(a, b);
-    r = bit_not(r);
-    return r;
+    return bit_not(cmp_eq(a, b));
 #endif
 }
 
 inline mask_int32x8 cmp_neq(basic_int32x8 a, basic_int32x8 b)
 {
 #if SIMDPP_USE_AVX2
-    basic_int32x8 r;
-    r = cmp_eq(a, b);
-    r = bit_not(r);
-    return r;
+    return bit_not(cmp_eq(a, b));
 #else
     return { cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]) };
 #endif
