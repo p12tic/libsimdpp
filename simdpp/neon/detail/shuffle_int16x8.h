@@ -79,7 +79,7 @@ T sel(T a, T b)
         (s1 > 0 ? 0xffffLL << 16 : 0) |
         (s2 > 0 ? 0xffffLL << 32 : 0) |
         (s3 > 0 ? 0xffffLL << 48 : 0);
-    T mask = T(vmovq_n_u64(um));
+    T mask = T(uint64x2(vmovq_n_u64(um)));
 
     return vbslq_u16(mask, b, a);
 }

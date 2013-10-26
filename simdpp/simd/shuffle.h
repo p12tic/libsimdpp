@@ -863,10 +863,10 @@ basic_int8x16 broadcast(basic_int8x16 a)
 #elif SIMDPP_USE_NEON
     if (s < 8) {
         uint8x8_t z = vget_low_u8(a);
-        return vdupq_lane_u8(z, s);
+        return (uint8x16_t) vdupq_lane_u8(z, s);
     } else {
         uint8x8_t z = vget_high_u8(a);
-        return vdupq_lane_u8(z, s-8);
+        return (uint8x16_t) vdupq_lane_u8(z, s-8);
     }
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector uint8_t)a, s);
@@ -932,10 +932,10 @@ basic_int16x8 broadcast(basic_int16x8 a)
 #elif SIMDPP_USE_NEON
     if (s < 4) {
         uint16x4_t z = vget_low_u16(a);
-        return vdupq_lane_u16(z, s);
+        return (uint16x8_t) vdupq_lane_u16(z, s);
     } else {
         uint16x4_t z = vget_high_u16(a);
-        return vdupq_lane_u16(z, s-4);
+        return (uint16x8_t) vdupq_lane_u16(z, s-4);
     }
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector uint16_t)a, s);
@@ -983,10 +983,10 @@ basic_int32x4 broadcast(basic_int32x4 a)
 #elif SIMDPP_USE_NEON
     if (s < 2) {
         uint32x2_t z = vget_low_u32(a);
-        return vdupq_lane_u32(z, s);
+        return (uint32x4_t) vdupq_lane_u32(z, s);
     } else {
         uint32x2_t z = vget_high_u32(a);
-        return vdupq_lane_u32(z, s-2);
+        return (uint32x4_t) vdupq_lane_u32(z, s-2);
     }
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector uint32_t)a, s);
@@ -1043,7 +1043,7 @@ basic_int64x2 broadcast(basic_int64x2 a)
     } else {
         z = vget_high_u64(a);
     }
-    return vdupq_lane_u64(z, 0);
+    return (uint64x2_t) vdupq_lane_u64(z, 0);
 #elif SIMDPP_USE_ALTIVEC
     uint64x2 mask = make_shuffle_bytes16_mask<s, s>(mask);
     return permute_bytes16(a, mask);
@@ -1088,10 +1088,10 @@ float32x4 broadcast(float32x4 a)
 #elif SIMDPP_USE_NEON
     if (s < 2) {
         float32x2_t z = vget_low_f32(a);
-        return vdupq_lane_f32(z, s);
+        return (float32x4_t) vdupq_lane_f32(z, s);
     } else {
         float32x2_t z = vget_high_f32(a);
-        return vdupq_lane_f32(z, s-2);
+        return (float32x4_t) vdupq_lane_f32(z, s-2);
     }
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector float)a, s);

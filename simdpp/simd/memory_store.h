@@ -963,7 +963,10 @@ inline void store_packed2(void* p, basic_int8x16 a, basic_int8x16 b)
     store(q, a);
     store(q+16, b);
 #elif SIMDPP_USE_NEON
-    vst2q_u8(reinterpret_cast<uint8_t*>(p), {{a, b}});
+    uint8x16x2_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    vst2q_u8(reinterpret_cast<uint8_t*>(p), t);
 #endif
 }
 
@@ -1002,7 +1005,10 @@ inline void store_packed2(void* p, basic_int16x8 a, basic_int16x8 b)
     store(q, a);
     store(q+16, b);
 #elif SIMDPP_USE_NEON
-    vst2q_u16(reinterpret_cast<uint16_t*>(p), {{a, b}});
+    uint16x8x2_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    vst2q_u16(reinterpret_cast<uint16_t*>(p), t);
 #endif
 }
 
@@ -1041,7 +1047,10 @@ inline void store_packed2(void* p, basic_int32x4 a, basic_int32x4 b)
     store(q, a);
     store(q+16, b);
 #elif SIMDPP_USE_NEON
-    vst2q_u32(reinterpret_cast<uint32_t*>(p), {{a, b}});
+    uint32x4x2_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    vst2q_u32(reinterpret_cast<uint32_t*>(p), t);
 #endif
 }
 
@@ -1110,7 +1119,10 @@ inline void store_packed2(float* p, float32x4 a, float32x4 b)
     store(p, a);
     store(p+4, b);
 #elif SIMDPP_USE_NEON
-    vst2q_f32(p, {{a, b}});
+    float32x4x2_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    vst2q_f32(p, t);
 #endif
 }
 
@@ -1198,7 +1210,11 @@ inline void store_packed3(void* p,
     store(q+16, b);
     store(q+32, c);
 #elif SIMDPP_USE_NEON
-    vst3q_u8(reinterpret_cast<uint8_t*>(p), {{a, b, c}});
+    uint8x16x3_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    vst3q_u8(reinterpret_cast<uint8_t*>(p), t);
 #endif
 }
 
@@ -1242,7 +1258,11 @@ inline void store_packed3(void* p,
     store(q+16, b);
     store(q+32, c);
 #elif SIMDPP_USE_NEON
-    vst3q_u16(reinterpret_cast<uint16_t*>(p), {{a, b, c}});
+    uint16x8x3_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    vst3q_u16(reinterpret_cast<uint16_t*>(p), t);
 #endif
 }
 
@@ -1286,7 +1306,11 @@ inline void store_packed3(void* p,
     store(q+16, b);
     store(q+32, c);
 #elif SIMDPP_USE_NEON
-    vst3q_u32(reinterpret_cast<uint32_t*>(p), {{a, b, c}});
+    uint32x4x3_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    vst3q_u32(reinterpret_cast<uint32_t*>(p), t);
 #endif
 }
 
@@ -1331,9 +1355,14 @@ inline void store_packed3(void* p,
     store(q+32, c);
 #elif SIMDPP_USE_NEON
     uint64_t* q = reinterpret_cast<uint64_t*>(p);
-    vst2_u64(q,   {{vget_low_u64(a), vget_low_u64(b)}} );
-    vst2_u64(q+2, {{vget_low_u64(c), vget_high_u64(a)}} );
-    vst2_u64(q+4, {{vget_high_u64(b), vget_high_u64(c)}} );
+    uint64x1x2_t t1, t2, t3;
+    t1.val[0] = vget_low_u64(a);  t1.val[1] = vget_low_u64(b);
+    t2.val[0] = vget_low_u64(c);  t2.val[1] = vget_high_u64(a);
+    t3.val[0] = vget_high_u64(b);  t3.val[1] = vget_high_u64(c);
+
+    vst2_u64(q, t1);
+    vst2_u64(q+2, t2);
+    vst2_u64(q+4, t3);
 #endif
 }
 
@@ -1374,7 +1403,11 @@ inline void store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
     store(p+4, b);
     store(p+8, c);
 #elif SIMDPP_USE_NEON
-    vst3q_f32(p, {{a, b, c}});
+    float32x4x3_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    vst3q_f32(p, t);
 #endif
 }
 
@@ -1484,7 +1517,12 @@ inline void store_packed4(void* p,
     store(q+32, c);
     store(q+48, d);
 #elif SIMDPP_USE_NEON
-    vst4q_u8(reinterpret_cast<uint8_t*>(p), {{a, b, c, d}});
+    uint8x16x4_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    t.val[3] = d;
+    vst4q_u8(reinterpret_cast<uint8_t*>(p), t);
 #endif
 }
 
@@ -1533,7 +1571,12 @@ inline void store_packed4(void* p,
     store(q+32, c);
     store(q+48, d);
 #elif SIMDPP_USE_NEON
-    vst4q_u16(reinterpret_cast<uint16_t*>(p), {{a, b, c, d}});
+    uint16x8x4_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    t.val[3] = d;
+    vst4q_u16(reinterpret_cast<uint16_t*>(p), t);
 #endif
 }
 
@@ -1582,7 +1625,12 @@ inline void store_packed4(void* p,
     store(q+32, c);
     store(q+48, d);
 #elif SIMDPP_USE_NEON
-    vst4q_u32(reinterpret_cast<uint32_t*>(p), {{a, b, c, d}});
+    uint32x4x4_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    t.val[3] = d;
+    vst4q_u32(reinterpret_cast<uint32_t*>(p), t);
 #endif
 }
 
@@ -1673,7 +1721,12 @@ inline void store_packed4(float* p,
     store(p+8, c);
     store(p+12, d);
 #elif SIMDPP_USE_NEON
-    vst4q_f32(p, {{a, b, c, d}});
+    float32x4x4_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    t.val[3] = d;
+    vst4q_f32(p, t);
 #endif
 }
 

@@ -59,7 +59,7 @@ template<unsigned N>
 T bcast(T a)
 {
     H h = (N < 2) ? lo(a) : hi(a);
-    return vdupq_lane_u32(h, N % 2);
+    return (uint32x4_t) vdupq_lane_u32(h, N % 2);
 }
 
 /// Combines two half vectors. Cost: 0
