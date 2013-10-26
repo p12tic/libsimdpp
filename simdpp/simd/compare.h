@@ -461,8 +461,6 @@ inline basic_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
     return _mm_cmpgt_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vcgtq_u8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return (__vector uint8_t) vec_cmpgt((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 

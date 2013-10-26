@@ -36,7 +36,6 @@ set(HEADERS
     neon/detail/shuffle_int16x8.h
     neon/detail/shuffle_int32x4.h
     neon/detail/shuffle_int64x2.h
-    neon/detail/vfp_float64x2.h
     neon/math_int.h
     neon/memory_store.h
     neon/shuffle.h
