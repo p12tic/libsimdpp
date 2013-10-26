@@ -242,70 +242,43 @@ double extract(float64x2 a)
 #endif
 }
 
-namespace detail {
-/* Implementation of extract_bits */
-template<unsigned id>
-struct extract_bits_impl {
+/** Extracts a bit from each byte of each element of a int8x16 vector.
 
-    uint16_t operator()(uint8x16 a)
-    {
+    This operation is only sensible if each byte within the vector is either
+    0x00 or 0xff.
+
+    @code
+    r = ((a[0] & 0x??) ? 0x01 : 0) |
+        ((a[1] & 0x??) ? 0x02 : 0) |
+        ...
+        ((a[15] & 0x??) ? 0x80 : 0)
+    @endcode
+*/
+inline uint16_t extract_bits_any(uint8x16 a)
+{
+    // extract_bits_impl depends on the exact implementation of this function
 #if SIMDPP_USE_NULL
-        uint16_t r = 0;
-        null::foreach<uint8x16>(a, [&r](uint8_t x){
-            x = (x >> id) & 1;
-            r = (r >> 1) | (uint16_t(x) << 15);
-            return 0; // dummy
-        });
-        return r;
+    uint16_t r = 0;
+    null::foreach<uint8x16>(a, [&r](uint8_t x){
+        x = x & 1;
+        r = (r >> 1) | (uint16_t(x) << 15);
+        return 0; // dummy
+    });
+    return r;
 #elif SIMDPP_USE_SSE2
-        a = shift_l<7-id>((uint16x8) a);
-        return _mm_movemask_epi8(a);
+    return _mm_movemask_epi8(a);
 #elif SIMDPP_USE_NEON
-        uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
-        int8x16 shift_mask = int8x16::make_const(0-int(id), 1-int(id), 2-int(id), 3-int(id),
-                                                 4-int(id), 5-int(id), 6-int(id), 7-int(id));
+    uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
 
-        a = vshlq_u8(a, shift_mask);
-        a = bit_and(a, mask);
-        a = vpaddlq_u8(a);
-        a = vpaddlq_u16(a);
-        a = vpaddlq_u32(a);
-        uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
-        return vget_lane_u16(vreinterpret_u16_u8(r), 0);
+    a = bit_and(a, mask);
+    a = vpaddlq_u8(a);
+    a = vpaddlq_u16(a);
+    a = vpaddlq_u32(a);
+    uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
+    return vget_lane_u16(vreinterpret_u16_u8(r), 0);
 #endif
-    }
-};
+}
 
-// Optimized implementation
-template<>
-struct extract_bits_impl<777> {
-
-    uint16_t operator()(uint8x16 a)
-    {
-#if SIMDPP_USE_NULL
-        uint16_t r = 0;
-        null::foreach<uint8x16>(a, [&r](uint8_t x){
-            x = x & 1;
-            r = (r >> 1) | (uint16_t(x) << 15);
-            return 0; // dummy
-        });
-        return r;
-#elif SIMDPP_USE_SSE2
-        return _mm_movemask_epi8(a);
-#elif SIMDPP_USE_NEON
-        uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
-
-        a = bit_and(a, mask);
-        a = vpaddlq_u8(a);
-        a = vpaddlq_u16(a);
-        a = vpaddlq_u32(a);
-        uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
-        return vget_lane_u16(vreinterpret_u16_u8(r), 0);
-#endif
-    }
-};
-
-} // namespace detail
 /** Extracts specific bit from each byte of each element of a int8x16 vector.
 
     The default template argument selects the bits from each byte in most
@@ -315,11 +288,28 @@ struct extract_bits_impl<777> {
     r = (a[0] & 0x80 >> 7) | (a[1] & 0x80 >> 6) | ...  | (a[15] & 0x80 << 8)
     @endcode
 */
-template<unsigned id = 777>
+template<unsigned id>
 uint16_t extract_bits(uint8x16 a)
 {
-    static_assert(id < 8 || id == 777, "index out of bounds");
-    return detail::extract_bits_impl<id>()(a);
+    static_assert(id < 8, "index out of bounds");
+#if SIMDPP_USE_NULL
+    uint16_t r = 0;
+    null::foreach<uint8x16>(a, [&r](uint8_t x){
+        x = (x >> id) & 1;
+        r = (r >> 1) | (uint16_t(x) << 15);
+        return 0; // dummy
+    });
+    return r;
+#elif SIMDPP_USE_SSE2
+    a = shift_l<7-id>((uint16x8) a);
+    return extract_bits_any(a);
+#elif SIMDPP_USE_NEON
+    int8x16 shift_mask = int8x16::make_const(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                                             4-int(id), 5-int(id), 6-int(id), 7-int(id));
+
+    a = vshlq_u8(a, shift_mask);
+    return extract_bits_any(a);
+#endif
 }
 
 /// @} -- end ingroup

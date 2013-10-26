@@ -213,7 +213,7 @@ void test_shuffle(TestResults& res)
             ic = 0;
         }
         ec[el] = 0xff;
-        TEST_PUSH(tc, uint16_t, extract_bits<>(eu8));
+        TEST_PUSH(tc, uint16_t, extract_bits_any(eu8));
         ec[el] = 1 << 0;
         TEST_PUSH(tc, uint16_t, extract_bits<0>(eu8));
         ec[el] = 1 << 1;
