@@ -1,6 +1,6 @@
 
 What is libsimdpp
-=================
+-----------------
 
 libsimdpp is a header-only zero-overhead C++ wrapper around single-instruction
 multiple-data (SIMD) intrinsics found in many compilers. The library presents
@@ -21,33 +21,29 @@ intrinsics and even higher-level SIMD libraries. As much control as possible
 is given to the developer, so that it's possible to exactly predict what code
 the compiler will generate.
 
-Supported instruction sets
-==========================
+Compiler and instruction set support
+------------------------------------
 
 The library supports SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2 and NEON instruction
-sets. The library presents a common interface for all those instruction sets in
-the simdpp:: namespace. Some instruction set specific intrinsics are available
-in simdpp::sse:: or simdpp::neon:: namespaces. A lot of domain-specific
-instructions are not wrapped at all -- the original intrinsics must be used for
-these.
+sets.
+
+Code for ALTIVEC instruction set has been added, but it has not been tested
+on actual hardware, thus definitely contains bugs.
+
+The library is developed in C++11. A separate, C++98/boost branch is planned.
+Currently the library is tested with the following compilers:
+
+ - GCC (C++11 mode): 4.8.1, 4.7.3
+ - Clang (C++11 mode): 3.3, 3.4
 
 Documentation
-=============
+-------------
 
 Online documentation is provided
 [here](http://p12tic.github.io/libsimdpp/doc/html).
 
-Caveats
-=======
-
-On ARM systems 64-bit floating point support is provided only in scalar VFP
-core. To make matters worse, the transition between the VFP and NEON
-instruction sets is very expensive, so the traditional vector processing idioms
-(such as performing IF by ANDNOT, AND and OR) can not be used. Therefore, the
-library is not useful for this use-case.
-
 Roadmap
-=======
+-------
 
  - Implement an interface that would allow the library to seamlessly choose the
    vector type that is most optimal for the target instruction set. Currently
@@ -56,7 +52,7 @@ Roadmap
    vector unit.
 
 License
-=======
+-------
 
 The library is distributed under two-clause BSD license:
 
