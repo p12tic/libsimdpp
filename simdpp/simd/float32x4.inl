@@ -76,8 +76,13 @@ inline float32x4 float32x4::set_broadcast(float v0)
     r0 = permute<0,0,0,0>(r0);
     return float32x4(r0);
 #elif SIMDPP_USE_NEON
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuninitialized"
+    // Yes, we know what we're doing here. The unused elements within the
+    // vector are overwritten by broadcast
     float32x4 r0 = vsetq_lane_f32(v0, r0, 0);
     r0 = broadcast<0>(r0);
+#pragma clang diagnostic pop
     return r0;
 #elif SIMDPP_USE_ALTIVEC
     union {
