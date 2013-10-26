@@ -53,17 +53,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @par 128-bit version:
     @unimp{SSE2-SSE3}
-    @icost{SSSE3-AVX2, 1}
     @icost{NEON, 2}
 
     @par 256-bit version:
-    @unimp{SSE2-SSE3}
-    @icost{SSSE3-AVX, 2}
-    @icost{AVX2, 1}
-    @icost{NEON, 4}
-
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
+
+    @unimp{SSE2-SSE3}
+    @icost{SSSE3-AVX, ALTIVEC, 2}
+    @icost{NEON, 4}
 */
 inline int128 permute_bytes16(int128 a, int128 mask)
 {
@@ -133,14 +131,14 @@ inline float64x4 permute_bytes16(float64x4 a, int256 mask)
     @icost{NEON, 2}
 
     @par 256-bit version:
+    The vectors will be shuffled as if the 128-bit version was applied to the
+    lower and higher halves of the vectors separately.
+
     @unimp{SSE2-SSE3}
     @icost{SSSE3, 12}
     @icost{SSE4.1-AVX, 8}
-    @icost{AVX2, 1}
     @icost{NEON, 4}
 
-    The vectors will be shuffled as if the 128-bit version was applied to the
-    lower and higher halves of the vectors separately.
 */
 inline int128 shuffle_bytes16(int128 a, int128 b, int128 mask)
 {
@@ -234,17 +232,17 @@ inline float64x4 shuffle_bytes16(float64x4 a, float64x4 b, int256 mask)
 
     @par 128-bit version:
     @unimp{SSE2-SSE3}
-    @icost{SSSE3-AVX2, 1}
     @icost{NEON, 2}
 
     @par 256-bit version:
+    The vectors will be shuffled as if the 128-bit version was applied to the
+    lower and higher halves of the vectors separately.
+
     @unimp{SSE2-SSE3}
     @icost{SSSE3-AVX, 2}
     @icost{AVX2, 1}
     @icost{NEON, 4}
 
-    The vectors will be shuffled as if the 128-bit version was applied to the
-    lower and higher halves of the vectors separately.
 */
 inline int128 permute_zbytes16(int128 a, int128 mask)
 {
@@ -313,14 +311,15 @@ inline float64x4 permute_zbytes16(float64x4 a, int256 mask)
     @icost{NEON, 2}
 
     @par 256-bit version:
+    The vectors will be shuffled as if the 128-bit version was applied to the
+    lower and higher halves of the vectors separately.
+
     @unimp{SSE2-SSE3}
     @icost{SSSE3, 18}
     @icost{SSE4.1-AVX, 12}
     @icost{AVX2, 6}
     @icost{NEON, 4}
 
-    The vectors will be shuffled as if the 128-bit version was applied to the
-    lower and higher halves of the vectors separately.
 */
 inline int128 shuffle_zbytes16(int128 a, int128 b, int128 mask)
 {

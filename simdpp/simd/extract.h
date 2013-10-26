@@ -230,6 +230,8 @@ float extract(float32x4 a)
     @endcode
 
     This function may have very high latency.
+
+    @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned id>
 double extract(float64x2 a)
@@ -253,6 +255,8 @@ double extract(float64x2 a)
         ...
         ((a[15] & 0x??) ? 0x80 : 0)
     @endcode
+
+    @icost{NEON, 6-7}
 */
 inline uint16_t extract_bits_any(uint8x16 a)
 {
@@ -287,6 +291,9 @@ inline uint16_t extract_bits_any(uint8x16 a)
     @code
     r = (a[0] & 0x80 >> 7) | (a[1] & 0x80 >> 6) | ...  | (a[15] & 0x80 << 8)
     @endcode
+
+    @icost{SSE2-AVX2, 2}
+    @icost{NEON, 7-9}
 */
 template<unsigned id>
 uint16_t extract_bits(uint8x16 a)

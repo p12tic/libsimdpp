@@ -134,13 +134,13 @@ uint8x4 get_shuffle_bytex4_16()
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0])
-    r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1])
-    r2 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+2] : b[s0+2])
-    r3 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+2] : b[s1+2])
+    r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0-2])
+    r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1-2])
+    r2 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+2] : b[s0])
+    r3 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+2] : b[s1])
     ...
-    r14 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+14] : b[s0+14])
-    r15 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+14] : b[s1+14])
+    r14 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+14] : b[s0+12])
+    r15 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+14] : b[s1+12])
     @endcode
 
     @par 256-bit version:
@@ -199,15 +199,15 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0] : b[s0])
-    r1 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1] : b[s1])
-    r2 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2] : b[s2])
-    r3 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3] : b[s3])
+    r0 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0] : b[s0-4])
+    r1 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1] : b[s1-4])
+    r2 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2] : b[s2-4])
+    r3 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3] : b[s3-4])
     ...
-    r12 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0+12] : b[s0+12])
-    r13 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1+12] : b[s1+12])
-    r14 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2+12] : b[s2+12])
-    r15 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3+12] : b[s3+12])
+    r12 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0+12] : b[s0+8])
+    r13 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1+12] : b[s1+8])
+    r14 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2+12] : b[s2+8])
+    r15 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3+12] : b[s3+8])
     @endcode
 
     @par 256-bit version:
@@ -270,12 +270,12 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0] : b[s0])
+    r0 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0] : b[s0-8])
     ...
-    r7 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7] : b[s7])
-    r8 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0+8] : b[s0+8])
+    r7 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7] : b[s7-8])
+    r8 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0+8] : b[s0])
     ...
-    r15 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7+8] : b[s7+8])
+    r15 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7+8] : b[s7])
     @endcode
 
     @par 256-bit version:
@@ -344,10 +344,10 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 16 ? a[s0] : b[s0])
-    r1 = (s1 == -1) ? 0 : (s0 < 16 ? a[s1] : b[s1])
+    r0 = (s0 == -1) ? 0 : (s0 < 16 ? a[s0] : b[s0-16])
+    r1 = (s1 == -1) ? 0 : (s0 < 16 ? a[s1] : b[s1-16])
     ...
-    r15 = (s15 == -1) ? 0 : (s15 < 16 ? a[s15] : b[s15])
+    r15 = (s15 == -1) ? 0 : (s15 < 16 ? a[s15] : b[s15-16])
     @endcode
 
     @par 256-bit version:
@@ -442,13 +442,13 @@ basic_int8x32 make_shuffle_bytes16_mask(basic_int8x32 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0])
-    r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1])
-    r2 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+2] : b[s0+2])
-    r3 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+2] : b[s1+2])
+    r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0-2])
+    r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1-2])
+    r2 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+2] : b[s0])
+    r3 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+2] : b[s1])
     ...
-    r6 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+6] : b[s0+6])
-    r7 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+6] : b[s1+6])
+    r6 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+6] : b[s0+4])
+    r7 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+6] : b[s1+4])
     @endcode
 
     @par 256-bit version:
@@ -507,15 +507,15 @@ basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0] : b[s0])
-    r1 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1] : b[s1])
-    r2 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2] : b[s2])
-    r3 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3] : b[s3])
+    r0 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0] : b[s0-4])
+    r1 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1] : b[s1-4])
+    r2 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2] : b[s2-4])
+    r3 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3] : b[s3-4])
     ...
-    r12 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0+12] : b[s0+12])
-    r13 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1+12] : b[s1+12])
-    r14 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2+12] : b[s2+12])
-    r15 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3+12] : b[s3+12])
+    r12 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0+12] : b[s0+8])
+    r13 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1+12] : b[s1+8])
+    r14 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2+12] : b[s2+8])
+    r15 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3+12] : b[s3+8])
     @endcode
 
     @par 256-bit version:
@@ -574,12 +574,12 @@ basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0] : b[s0])
+    r0 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0] : b[s0-8])
     ...
-    r7 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7] : b[s7])
-    r8 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0+8] : b[s0+8])
+    r7 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7] : b[s7-8])
+    r8 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0+8] : b[s0])
     ...
-    r15 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7+8] : b[s7+8])
+    r15 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7+8] : b[s7])
     @endcode
 
     @par 256-bit version:
@@ -655,10 +655,10 @@ basic_int16x16 make_shuffle_bytes16_mask(basic_int16x16 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0])
-    r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1])
-    r2 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+2] : b[s0+2])
-    r3 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+2] : b[s1+2])
+    r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0-2])
+    r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1-2])
+    r2 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+2] : b[s0])
+    r3 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+2] : b[s1])
     @endcode
 
     @par 256-bit version:
@@ -714,10 +714,10 @@ basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
 
     The created mask will cause @c shuffle_bytes16 to perform as follows:
     @code
-    r0 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0] : b[s0])
-    r1 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1] : b[s1])
-    r2 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2] : b[s2])
-    r3 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3] : b[s3])
+    r0 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0] : b[s0-4])
+    r1 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1] : b[s1-4])
+    r2 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2] : b[s2-4])
+    r3 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3] : b[s3-4])
     @endcode
 
     @par 256-bit version:

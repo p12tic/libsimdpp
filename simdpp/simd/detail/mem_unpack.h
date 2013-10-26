@@ -1,5 +1,5 @@
 /*  libsimdpp
-    Copyright (C) 2012  Povilas Kanapickas tir5c3@yahoo.co.uk
+    Copyright (C) 2013  Povilas Kanapickas tir5c3@yahoo.co.uk
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without

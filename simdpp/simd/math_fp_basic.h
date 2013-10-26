@@ -55,11 +55,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, NEON, 2}
+    @icost{SSE2-AVX2, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, NEON, 4}
-    @icost{AVX-AVX2, 2}
+    @icost{SSE2-SSE4.1, 2-3}
+    @icost{NEON, 2}
+    @icost{AVX-AVX2, 1-2}
 */
 inline float32x4 abs(float32x4 a)
 {
@@ -92,13 +93,13 @@ inline float32x8 abs(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, 2}
+    @novec{NEON}
+    @icost{SSE2-AVX2, 1-2}
 
     @par 256-bit version:
-    @unimp{NEON}
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, 4}
-    @icost{AVX-AVX2, 2}
+    @novec{NEON}
+    @icost{SSE2-SSE4.1, 2-3}
+    @icost{AVX-AVX2, 1-2}
 */
 inline float64x2 abs(float64x2 a)
 {
@@ -129,11 +130,11 @@ inline float64x4 abs(float64x4 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, NEON, 3}
-    @icost{AVX-AVX2, 2}
+    @icost{SSE2-SSE4.1, NEON, 2-3}
+    @icost{AVX-AVX2, 1-2}
 */
 inline float32x4 sign(float32x4 a)
 {
@@ -156,13 +157,13 @@ inline float32x8 sign(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 2}
-    @unimp{NEON}
+    @icost{SSE2-AVX2, 1-2}
+    @novec{NEON}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, 3}
-    @icost{AVX-AVX2, 2}
-    @unimp{NEON}
+    @icost{SSE2-SSE4.1, 2-3}
+    @icost{AVX-AVX2, 1-2}
+    @novec{NEON}
 */
 inline float64x2 sign(float64x2 a)
 {
@@ -222,10 +223,10 @@ inline float32x8 add(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 add(float64x2 a, float64x2 b)
@@ -290,10 +291,10 @@ inline float32x8 sub(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 sub(float64x2 a, float64x2 b)
@@ -325,10 +326,10 @@ inline float64x4 sub(float64x4 a, float64x4 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 2}
+    @icost{SSE2-AVX2, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, 3}
+    @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, NEON, 2}
 */
 inline float32x4 neg(float32x4 a)
@@ -365,12 +366,13 @@ inline float32x8 neg(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 2}
+    @icost{SSE2-AVX2, 1-2}
+    @novec{NEON}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, 3}
-    @icost{AVX-AVX2, NEON, 2}
-    @unimp{NEON}
+    @icost{SSE2-SSE4.1, 2-3}
+    @icost{AVX-AVX2, 1-2}
+    @novec{NEON}
 */
 inline float64x2 neg(float64x2 a)
 {
@@ -436,10 +438,10 @@ inline float32x8 mul(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 mul(float64x2 a, float64x2 b)

@@ -61,12 +61,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 6}
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 12}
     @icost{AVX2, 6}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline int8x16 shift_r(int8x16 a, unsigned count)
 {
@@ -120,13 +120,13 @@ inline int8x32 shift_r(int8x32 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 5}
-    @icost{NEON, 2}
+    @icost{SSE2-AVX2, 4-5}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 10}
-    @icost{AVX2, 5}
-    @icost{NEON, 3}
+    @icost{SSE2-AVX, 8-9}
+    @icost{AVX2, 4-5}
+    @icost{NEON, 2-3}
 */
 inline uint8x16 shift_r(uint8x16 a, unsigned count)
 {
@@ -177,11 +177,11 @@ inline uint8x32 shift_r(uint8x32 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline int16x8 shift_r(int16x8 a, unsigned count)
 {
@@ -216,11 +216,11 @@ inline int16x16 shift_r(int16x16 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline uint16x8 shift_r(uint16x8 a, unsigned count)
 {
@@ -260,11 +260,11 @@ inline uint16x16 shift_r(uint16x16 a, unsigned count)
     @icost{NEON, 2}
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline int32x4 shift_r(int32x4 a, unsigned count)
 {
@@ -299,11 +299,11 @@ inline int32x8 shift_r(int32x8 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline uint32x4 shift_r(uint32x4 a, unsigned count)
 {
@@ -418,11 +418,11 @@ inline int64x4 shift_r(int64x4 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline uint64x2 shift_r(uint64x2 a, unsigned count)
 {
@@ -457,13 +457,13 @@ inline uint64x4 shift_r(uint64x4 a, unsigned count)
 
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 5}
-    @icost{NEON, 2}
+    @icost{SSE2-AVX, 4-5}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 10}
-    @icost{AVX2, 5}
-    @icost{NEON, 3}
+    @icost{SSE2-AVX, 8-9}
+    @icost{AVX2, 4-5}
+    @icost{NEON, 2-3}
 */
 inline basic_int8x16 shift_l(basic_int8x16 a, unsigned count)
 {
@@ -513,11 +513,11 @@ inline basic_int8x32 shift_l(basic_int8x32 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline basic_int16x8 shift_l(basic_int16x8 a, unsigned count)
 {
@@ -551,11 +551,11 @@ inline basic_int16x16 shift_l(basic_int16x16 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline basic_int32x4 shift_l(basic_int32x4 a, unsigned count)
 {
@@ -589,11 +589,11 @@ inline basic_int32x8 shift_l(basic_int32x8 a, unsigned count)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 2-3}
 */
 inline basic_int64x2 shift_l(basic_int64x2 a, unsigned count)
 {
@@ -717,12 +717,11 @@ basic_int8x32 shift_l_8(basic_int8x32 a)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 6}
-    @icost{NEON, 2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 12}
-    @icost{AVX2, 5}
-    @icost{NEON, 3}
+    @icost{AVX2, 6}
+    @icost{NEON, 2}
 */
 template<unsigned count>
 int8x16 shift_r(int8x16 a)
@@ -760,12 +759,13 @@ template<> inline int8x32 shift_r<0>(int8x32 a) { return a; }
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 3}
-    @icost{NEON, 2}
+    @icost{ALTIVEC, 1-2}
+    @icost{SSE2-AVX2, 2-3}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 5}
-    @icost{AVX2,NEON, 3}
+    @icost{SSE2-AVX, 4-5}
+    @icost{AVX2, 2-3}
+    @icost{NEON, 2}
 */
 template<unsigned count>
 uint8x16 shift_r(uint8x16 a)
@@ -979,12 +979,12 @@ template<> inline uint32x8 shift_r<32>(uint32x8 a) { return uint32x8::zero(); }
 
     @par 128-bit version:
     @novec{SSE2-AVX2}
-    @icost{SSE2-AVX2, 4-8}
+    @icost{SSE2-AVX2, 4-6}
 
     @par 256-bit version:
     @novec{SSE2-AVX}
-    @icost{SSE2-AVX, 8-16}
-    @icost{AVX2, 4-8}
+    @icost{SSE2-AVX, 8-10}
+    @icost{AVX2, 4-6}
     @icost{NEON, 2}
 */
 template<unsigned count>
@@ -1061,12 +1061,12 @@ template<> inline uint64x4 shift_r<64>(uint64x4 a) { return uint64x4::zero(); }
 
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 3}
-    @icost{NEON, 2}
+    @icost{SSE2-AVX2, 2-3}
+    @icost{NEON, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 5}
-    @icost{AVX2,NEON, 3}
+    @icost{SSE2-AVX, 4-5}
+    @icost{AVX2,NEON, 2-3}
 */
 template<unsigned count>
 basic_int8x16 shift_l(basic_int8x16 a)

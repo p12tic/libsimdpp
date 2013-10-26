@@ -686,11 +686,9 @@ inline int32x8 neg(int32x8 a)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 2}
+    @icost{SSE2-AVX, NEON, 2}
 */
 inline int64x2 neg(int64x2 a)
 {
@@ -833,11 +831,10 @@ inline uint16x16 mul_hi(uint16x16 a, uint16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSSE3, 3}
-
-    @par 256-bit version:
     @icost{SSE2-SSSE3, 6}
-    @icost{SSE4.1-AVX, NEON 2}
+    @par 256-bit version:
+    @icost{SSE2-SSSE3, 12}
+    @icost{SSE4.1, AVX, NEON, 2}
 */
 inline int128 mul_lo(basic_int32x4 a, basic_int32x4 b)
 {
@@ -869,6 +866,34 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
 }
 /// @}
 
+/*  Note: widening integer multiplication instructions are very different among
+    instruction. The main difference is in which half of the elements are
+    selected for multiplication. Trying to abstract this incurs definite
+    overhead.
+
+     - SSE2-SSE4.1 and AVX2 provide only instructions with interfaces similar
+        to mul_lo and mul_hi. The result vectors must be interleaved to obtain
+        contiguous result values. Multiplying 2 vectors always incurs
+        overhead of at least two interleaving instructions.
+
+     - AVX512 only provides 32-bit integer support. Widening multiplication
+        can be done only by using PMULDQ, which takes odd elements and produces
+        widened multiplication results. Multiplication of two whole vectors
+        always incurs overhead of at least two shifts or interleaving
+        instructions.
+
+     - NEON, NEONv2 provide instructions that take elements of either the lower
+        or higher halves of two 128-bit vectors and multiply them. No
+        additional overhead is incurred to obtain contiguous result values.
+
+     - ALTIVEC hav multiply odd and multiply even instructions. No additional
+        overhead is incurred to obtain contiguous result values.
+
+    The abstraction below uses the NEON model. No additional overhead is
+    incurred on SSE/AVX and NEON. On ALTIVEC, a single additional permute
+    instruction is needed for each vector multiplication on average.
+*/
+
 /// @{
 /** Multiplies signed 16-bit values in the lower halves of the vectors and
     expands the results to 32 bits.
@@ -880,15 +905,15 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
     r3 = a3 * b3
     @endcode
 
-    @icost{SSE2-AVX, 2}
+    @icost{SSE2-AVX, 2-3}
 
     @par 256-bit version:
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4}
-    @icost{AVX2, NEON, 2}
+    @icost{SSE2-AVX, 4-6}
+    @icost{AVX2, NEON, 2-3}
     @note Use with mull_hi on the same arguments to save instructions.
 */
 inline int32x4 mull_lo(int16x8 a, int16x8 b)
@@ -931,13 +956,15 @@ inline int32x8 mull_lo(int16x16 a, int16x16 b)
     r3 = a3 * b3
     @endcode
 
-    @icost{SSE2-AVX, 2}
+    @icost{SSE2-AVX2, 2-3}
 
+    @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4}
-    @icost{AVX2, NEON, 2}
+    @icost{SSE2-AVX, 4-6}
+    @icost{AVX2, 2-3}
+    @icost{NEON, 2}
     @note Use with mull_hi on the same arguments to save instructions.
 */
 inline uint32x4 mull_lo(uint16x8 a, uint16x8 b)
@@ -980,13 +1007,14 @@ inline uint32x8 mull_lo(uint16x16 a, uint16x16 b)
     r3 = a7 * b7
     @endcode
 
-    @icost{SSE2-AVX, 2}
+    @icost{SSE2-AVX2, 2-3}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4}
-    @icost{AVX2, NEON, 2}
+    @icost{SSE2-AVX, 4-6}
+    @icost{AVX2, 2-3}
+    @icost{NEON, 2}
     @note Use with mull_lo on the same arguments to save instructions.
 */
 inline int32x4 mull_hi(int16x8 a, int16x8 b)
@@ -1029,13 +1057,15 @@ inline int32x8 mull_hi(int16x16 a, int16x16 b)
     r3 = a7 * b7
     @endcode
 
-    @icost{SSE2-AVX, 2}
+    @icost{SSE2-AVX2, 2-3}
 
+    @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4}
-    @icost{AVX2, NEON, 2}
+    @icost{SSE2-AVX, 4-6}
+    @icost{AVX2, 2-3}
+    @icost{NEON, 2}
     @note Use with mull_lo on the same arguments to save instructions.
 */
 inline uint32x4 mull_hi(uint16x8 a, uint16x8 b)
@@ -1174,7 +1204,7 @@ inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
     r0 = a0 * b0
     r1 = a1 * b1
     @endcode
-    @icost{SSE4.1-AVX, 3}
+    @icost{SSE4.1-AVX2, 3}
     @unimp{SSE2-SSSE3}
 
     @par 256-bit version:

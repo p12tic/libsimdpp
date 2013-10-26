@@ -68,10 +68,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 inline basic_int8x16 zip_lo(basic_int8x16 a, basic_int8x16 b)
 {
@@ -221,10 +221,10 @@ inline float64x4 zip_lo(float64x4 a, float64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 inline basic_int8x16 zip_hi(basic_int8x16 a, basic_int8x16 b)
 {
@@ -318,10 +318,10 @@ inline basic_int64x4 zip_hi(basic_int64x4 a, basic_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE4.1, NEON, 2}
 */
 inline float32x4 zip_hi(float32x4 a, float32x4 b)
 {
@@ -379,15 +379,11 @@ inline float64x4 zip_hi(float64x4 a, float64x4 b)
      16     r = [  0   0   .   0   0  ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int8x16 move_l(basic_int8x16 a)
@@ -444,15 +440,11 @@ template<> inline basic_int8x32 move_l<32>(basic_int8x32 a) { (void) a; return i
      8      r = [  0  0  .  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int16x8 move_l(basic_int16x8 a)
@@ -479,15 +471,11 @@ basic_int16x16 move_l(basic_int16x16 a)
      4      r = [  0  0  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int32x4 move_l(basic_int32x4 a)
@@ -512,15 +500,11 @@ basic_int32x8 move_l(basic_int32x8 a)
      2      r = [  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int64x2 move_l(basic_int64x2 a)
@@ -547,15 +531,11 @@ basic_int64x4 move_l(basic_int64x4 a)
      4      r = [  0  0  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 float32x4 move_l(float32x4 a)
@@ -580,15 +560,11 @@ float32x8 move_l(float32x8 a)
      2      r = [  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 float64x2 move_l(float64x2 a)
@@ -617,15 +593,11 @@ float64x4 move_l(float64x4 a)
      16     r = [  0   0   .   0   0  ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int8x16 move_r(basic_int8x16 a)
@@ -654,7 +626,7 @@ basic_int8x32 move_r(basic_int8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
 #if SIMDPP_USE_AVX2
-    return _mm256_slli_si256(a, shift); // TODO: has been changed to _mm256_slli_si128
+    return _mm256_slli_si256(a, shift);
 #else
     return {move_r<shift>(a[0]), move_r<shift>(a[1])};
 #endif
@@ -682,15 +654,11 @@ template<> inline basic_int8x32 move_r<32>(basic_int8x32 a) { (void) a; return i
      8      r = [  0  0  .  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int16x8 move_r(basic_int16x8 a)
@@ -711,21 +679,17 @@ basic_int16x16 move_r(basic_int16x16 a)
     @code
     shift:  pos:| 0  1  2  3  |
      0      r = [ a0 a1 a2 a3 ]
-     0      r = [  0 a0 a1 a2 ]
-     0      r = [  0  0 a0 a1 ]
-     0      r = [  0  0  0 a0 ]
-     0      r = [  0  0  0  0 ]
+     1      r = [  0 a0 a1 a2 ]
+     2      r = [  0  0 a0 a1 ]
+     3      r = [  0  0  0 a0 ]
+     4      r = [  0  0  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int32x4 move_r(basic_int32x4 a)
@@ -750,15 +714,11 @@ basic_int32x8 move_r(basic_int32x8 a)
      2      r = [  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int64x2 move_r(basic_int64x2 a)
@@ -779,21 +739,17 @@ basic_int64x4 move_r(basic_int64x4 a)
     @code
     shift:  pos:| 0  1  2  3  |
      0      r = [ a0 a1 a2 a3 ]
-     0      r = [  0 a0 a1 a2 ]
-     0      r = [  0  0 a0 a1 ]
-     0      r = [  0  0  0 a0 ]
-     0      r = [  0  0  0  0 ]
+     1      r = [  0 a0 a1 a2 ]
+     2      r = [  0  0 a0 a1 ]
+     3      r = [  0  0  0 a0 ]
+     4      r = [  0  0  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 float32x4 move_r(float32x4 a)
@@ -818,15 +774,11 @@ float32x8 move_r(float32x8 a)
      2      r = [  0  0 ]
     @endcode
 
-    @par 128-bit version:
-    @icost{NEON, 2}
-
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned shift>
 float64x2 move_r(float64x2 a)
@@ -854,12 +806,10 @@ float64x4 move_r(float64x4 a)
     @par 128-bit version:
     @icost{SSE2-AVX, 5}
     @icost{AVX2, 2}
-    @icost{NEON, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
     @icost{NEON, 2}
-    @icost{AVX2, 1}
 */
 template<unsigned s>
 basic_int8x16 broadcast(basic_int8x16 a)
@@ -919,7 +869,14 @@ basic_int8x32 broadcast(basic_int8x32 a)
     ...
     r7 = a[s]
     @endcode
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, 2}
+
+    @par 128-bit version:
+    @icost{SSE2-AVX, 5}
+    @icost{AVX2, 2}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 6}
+    @icost{NEON, 2}
 */
 template<unsigned s>
 basic_int16x8 broadcast(basic_int16x8 a)
@@ -979,6 +936,9 @@ basic_int16x16 broadcast(basic_int16x16 a)
     r2 = a[s]
     r3 = a[s]
     @endcode
+
+    @par 256-bit version:
+    @icost{NEON, 2}
 */
 template<unsigned s>
 basic_int32x4 broadcast(basic_int32x4 a)
@@ -1022,6 +982,12 @@ basic_int32x8 broadcast(basic_int32x8 a)
     r0 = a[s]
     r1 = a[s]
     @endcode
+
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned s>
 basic_int64x2 broadcast(basic_int64x2 a)
@@ -1069,6 +1035,8 @@ basic_int64x4 broadcast(basic_int64x4 a)
     r2 = a[s]
     r3 = a[s]
     @endcode
+    @par 256-bit version:
+    @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned s>
 float32x4 broadcast(float32x4 a)
@@ -1111,6 +1079,13 @@ float32x8 broadcast(float32x8 a)
     r0 = a[s]
     r1 = a[s]
     @endcode
+
+    @par 128-bit version:
+    @novec{NEON}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @novec{NEON}
 */
 template<unsigned s>
 float64x2 broadcast(float64x2 a)
@@ -1156,22 +1131,19 @@ float64x4 broadcast(float64x4 a)
      1      r = [ l1  l2   .  l15 u0  ]
      2      r = [ l2  l3   .  u0  l1  ]
       ...    ..   .. ..  ... .. ..
-     14     r = [ l15 u0   .  u13 u14 ]
-     15     r = [ u0  u1   .  u14 u15 ]
+     15     r = [ l15 u0   .  u13 u14 ]
+     16     r = [ u0  u1   .  u14 u15 ]
     @endcode
 
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
-    @icost{SSSE3-AVX2, 1}
-    @icost{NEON, 1}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, 2}
-    @icost{NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
@@ -1240,10 +1212,19 @@ template<> inline basic_int8x32 align<32>(basic_int8x32 lower, basic_int8x32 upp
      1      r = [ l1 l2   .  l7 u0 ]
      2      r = [ l2 l3   .  u0 l1 ]
       ...    ..   .. ..  ... .. ..
-     6      r = [ l3 u0   .  u5 u6 ]
-     7      r = [ u0 u1   .  u6 u7 ]
+     7      r = [ l3 u0   .  u5 u6 ]
+     8      r = [ u0 u1   .  u6 u7 ]
     @endcode
-    @icost{SSE2,SSE3,3}
+
+    @par 128-bit version:
+    @icost{SSE2-SSE3, 3}
+
+    @par 256-bit version:
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int16x8 align(basic_int16x8 lower, basic_int16x8 upper)
@@ -1272,18 +1253,15 @@ basic_int16x16 align(basic_int16x16 lower, basic_int16x16 upper)
      4      r = [ u0 u1 u2 u3 ]
     @endcode
 
-    @par 128-bit version:
+   @par 128-bit version:
     @icost{SSE2-SSE3, 3}
-    @icost{SSSE3-AVX2, 1}
-    @icost{NEON, 1}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, 2}
-    @icost{NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int32x4 align(basic_int32x4 lower, basic_int32x4 upper)
@@ -1312,16 +1290,13 @@ basic_int32x8 align(basic_int32x8 lower, basic_int32x8 upper)
 
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
-    @icost{SSSE3-AVX2, 1}
-    @icost{NEON, 1}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, 2}
-    @icost{NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-AVX, NEON, 2}
 */
 template<unsigned shift>
 basic_int64x2 align(basic_int64x2 lower, basic_int64x2 upper)
@@ -1352,16 +1327,13 @@ basic_int64x4 align(basic_int64x4 lower, basic_int64x4 upper)
 
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
-    @icost{SSSE3-AVX2, 1}
-    @icost{NEON, 1}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, 2}
-    @icost{NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-SSE4.1 NEON, 2}
 */
 template<unsigned shift>
 float32x4 align(float32x4 lower, float32x4 upper)
@@ -1391,16 +1363,15 @@ float32x8 align(float32x8 lower, float32x8 upper)
 
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
-    @icost{SSSE3-AVX2, 1}
-    @icost{NEON, 1}
+    @novec{NEON}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, 2}
-    @icost{NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-AVX, 2}
+    @novec{NEON}
 */
 template<unsigned shift>
 float64x2 align(float64x2 lower, float64x2 upper)
@@ -1430,12 +1401,10 @@ float64x4 align(float64x4 lower, float64x4 upper)
 
     @par 128-bit version:
     @icost{SSE2-AVX, 3}
-    @icost{NEON, AVX2, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
     @icost{NEON, 2}
-    @icost{AVX2, 1}
 */
 inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 mask)
 {
@@ -1496,12 +1465,10 @@ inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, mask_int8x32 mas
 
     @par 128-bit version:
     @icost{SSE2-AVX, 3}
-    @icost{NEON, AVX2, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
     @icost{NEON, 2}
-    @icost{AVX2, 1}
 */
 inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, basic_int16x8 mask)
 {
@@ -1548,12 +1515,10 @@ inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, mask_int16x16
 
     @par 128-bit version:
     @icost{SSE2-AVX, 3}
-    @icost{NEON, AVX2, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
     @icost{NEON, 2}
-    @icost{AVX2, 1}
 */
 inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, basic_int32x4 mask)
 {
@@ -1600,12 +1565,10 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, mask_int32x8 mas
 
     @par 128-bit version:
     @icost{SSE2-AVX, 3}
-    @icost{NEON, AVX2, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
     @icost{NEON, 2}
-    @icost{AVX2, 1}
 */
 inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, basic_int64x2 mask)
 {
@@ -1652,12 +1615,10 @@ inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, mask_int64x4 mas
 
     @par 128-bit version:
     @icost{SSE2-SSE4.1, 3}
-    @icost{NEON, SSE-AVX2, 1}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 6}
     @icost{NEON, 2}
-    @icost{AVX-AVX2, 1}
 */
 inline float32x4 blend(float32x4 on, float32x4 off, float32x4 mask)
 {
@@ -1727,12 +1688,11 @@ inline float32x8 blend(float32x8 on, float32x8 off, mask_float32x8 mask)
 
     @par 128-bit version:
     @icost{SSE2-SSE4.1, 3}
-    @icost{NEON, SSE-AVX2, 1}
+    @novec{NEON}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 6}
-    @icost{NEON, 2}
-    @icost{AVX-AVX2, 1}
+    @novec{NEON}
 */
 inline float64x2 blend(float64x2 on, float64x2 off, float64x2 mask)
 {
@@ -1795,15 +1755,16 @@ inline float64x4 blend(float64x4 on, float64x4 off, mask_float64x4 mask)
     r = [ a0  a2  a4  a6  a8  a10 a12 a14 b0  b2  b4  b6  b8  b10 b12 b14 ]
     @endcode
     @par 128-bit version:
-    @icost{SSE2-AVX2, 3-5}
+    @icost{SSE2-AVX2, 4-5}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 6-8}
-    @icost{NEON, 2}
-    @icost{AVX2, 3}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, 8-9}
+    @icost{NEON, 2}
+    @icost{AVX2, 4-5}
 */
 inline basic_int8x16 unzip_lo(basic_int8x16 a, basic_int8x16 b)
 {
@@ -1847,15 +1808,17 @@ inline basic_int8x32 unzip_lo(basic_int8x32 a, basic_int8x32 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 3-5}
+    @icost{SSE2-SSSE3, 5}
+    @icost{SSE4.1-AVX2, 4-5}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 4-8}
-    @icost{NEON, 2}
-    @icost{AVX2, 3}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSSE3, 5}
+    @icost{SSE4.1-AVX, 8-9}
+    @icost{AVX2, 4-5}
+    @icost{NEON, 2}
 */
 inline basic_int16x8 unzip_lo(basic_int16x8 a, basic_int16x8 b)
 {
@@ -1942,10 +1905,10 @@ inline basic_int32x8 unzip_lo(basic_int32x8 a, basic_int32x8 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 inline basic_int64x2 unzip_lo(basic_int64x2 a, basic_int64x2 b)
 {
@@ -1967,10 +1930,10 @@ inline basic_int64x4 unzip_lo(basic_int64x4 a, basic_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE4.1, NEON, 2}
 */
 inline float32x4 unzip_lo(float32x4 a, float32x4 b)
 {
@@ -2001,8 +1964,12 @@ inline float32x8 unzip_lo(float32x8 a, float32x8 b)
     r = [ a0 b0 ]
     @endcode
 
+    @par 128-bit version:
+    @novec{NEON}
+
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-AVX, 2}
+    @novec{NEON}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
@@ -2030,12 +1997,13 @@ inline float64x4 unzip_lo(float64x4 a, float64x4 b)
     @icost{SSE2-AVX2, 3}
 
     @par 256-bit version:
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+
     @icost{SSE2-AVX, 6}
     @icost{NEON, 2}
     @icost{AVX2, 3}
 
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
 */
 inline basic_int8x16 unzip_hi(basic_int8x16 a, basic_int8x16 b)
 {
@@ -2076,12 +2044,12 @@ inline basic_int8x32 unzip_hi(basic_int8x32 a, basic_int8x32 b)
     @icost{SSE2-AVX2, 3}
 
     @par 256-bit version:
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+
     @icost{SSE2-AVX, 6}
     @icost{NEON, 2}
     @icost{AVX2, 3}
-
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
 */
 inline basic_int16x8 unzip_hi(basic_int16x8 a, basic_int16x8 b)
 {
@@ -2119,10 +2087,10 @@ inline basic_int16x16 unzip_hi(basic_int16x16 a, basic_int16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, NEON, 2}
 */
 inline basic_int32x4 unzip_hi(basic_int32x4 a, basic_int32x4 b)
 {
@@ -2154,10 +2122,9 @@ inline basic_int32x8 unzip_hi(basic_int32x8 a, basic_int32x8 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+    @icost{SSE2-AVX, NEON, 2}
 */
 inline basic_int64x2 unzip_hi(basic_int64x2 a, basic_int64x2 b)
 {
@@ -2213,11 +2180,17 @@ inline float32x8 unzip_hi(float32x8 a, float32x8 b)
     r = [ a1 b1 ]
     @endcode
 
-    @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @par 128-bit version:
+    @novec{NEON}
 
+    @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @novec{NEON}
+    @icost{SSE2-AVX, 2}
+
+
 */
 inline float64x2 unzip_hi(float64x2 a, float64x2 b)
 {

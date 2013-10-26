@@ -49,26 +49,29 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @defgroup simd_transpose Operations: transpose matrices consisting of several vectors
-/// @{
+/** @defgroup simd_transpose Operations: transpose matrices consisting of
+    several vectors
+    @{
+*/
 
 /// @{
 /** Transposes four 2x2 16-bit matrices within two int16x8 vectors
 
     @code
-    r0_0 = [ a0_0; a1_0 ; ... ; a0_6; a1_6 ]
-    r1_0 = [ a0_1; a1_1 ; ... ; a0_7; a0_7 ]
+    r0 = [ a0_0; a1_0 ; ... ; a0_6; a1_6 ]
+    r1 = [ a0_1; a1_1 ; ... ; a0_7; a0_7 ]
     @endcode
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
-    @icost{AVX2, 4}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, 8}
+    @icost{AVX2, 4}
+    @icost{NEON, 2}
 */
 inline void transpose2(basic_int16x8& a0, basic_int16x8& a1)
 {
@@ -106,19 +109,20 @@ inline void transpose2(basic_int16x16& a0, basic_int16x16& a1)
 /** Transposes two 2x2 32-bit matrices within two int32x4 vectors
 
     @code
-    r0_0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
-    r1_0 = [ a0_1; a1_1 ; a0_3; a0_3 ]
+    r0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
+    r1 = [ a0_1; a1_1 ; a0_3; a0_3 ]
     @endcode
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
-    @icost{AVX2, 4}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, 8}
+    @icost{AVX2, 4}
+    @icost{NEON, 2}
 */
 inline void transpose2(basic_int32x4& a0, basic_int32x4& a1)
 {
@@ -156,19 +160,20 @@ inline void transpose2(basic_int32x8& a0, basic_int32x8& a1)
 /** Transposes a 2x2 64-bit matrix within two int64x2 vectors
 
     @code
-    r0_0 = [ a0_0; a1_0 ]
-    r1_0 = [ a0_1; a1_1 ]
+    r0 = [ a0_0; a1_0 ]
+    r1 = [ a0_1; a1_1 ]
     @endcode
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 4}
-    @icost{AVX2, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-AVX, 4}
+    @icost{AVX2, 2}
+    @icost{NEON, 2}
 */
 inline void transpose2(basic_int64x2& a0, basic_int64x2& a1)
 {
@@ -202,21 +207,20 @@ inline void transpose2(basic_int64x4& a0, basic_int64x4& a1)
 /** Transposes two 2x2 32-bit matrices within two float32x4 vectors
 
     @code
-    r0_0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
-    r1_0 = [ a0_1; a1_1 ; a0_3; a0_3 ]
+    r0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
+    r1 = [ a0_1; a1_1 ; a0_3; a0_3 ]
     @endcode
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4}
-    @unimp{NEON}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, 8}
-    @icost{AVX-AVX2, 4}
-    @unimp{NEON}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE4.1, 8}
+    @icost{AVX-AVX2, 4}
+    @icost{ALTIVEC, 4-6}
 */
 inline void transpose2(float32x4& a0, float32x4& a1)
 {
@@ -254,19 +258,21 @@ inline void transpose2(float32x8& a0, float32x8& a1)
 /** Transposes a 2x2 64-bit matrix within two int64x2 vectors
 
     @code
-    r0_0 = [ a0_0; a1_0 ]
-    r1_0 = [ a0_1; a1_1 ]
+    r0 = [ a0_0; a1_0 ]
+    r1 = [ a0_1; a1_1 ]
     @endcode
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 2}
+    @novec{NEON}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, 4}
-    @icost{AVX-AVX2, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE4.1, 4}
+    @icost{AVX-AVX2, 2}
+    @novec{NEON}
 */
 inline void transpose2(float64x2& a0, float64x2& a1)
 {
@@ -316,12 +322,12 @@ void transpose4(basic_int32x4& a0, basic_int32x4& a1,
     @icost{NEON, 4}
 
     @par 256-bit version:
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+
     @icost{SSE2-AVX, 32}
     @icost{AVX2, 16}
     @icost{NEON, 8}
-
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
 */
 inline void transpose4(basic_int8x16& a0, basic_int8x16& a1,
                        basic_int8x16& a2, basic_int8x16& a3)
@@ -411,12 +417,12 @@ inline void transpose4(basic_int8x32& a0, basic_int8x32& a1,
     @icost{NEON, 4}
 
     @par 256-bit version:
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+
     @icost{SSE2-AVX, 24}
     @icost{AVX2, 12}
     @icost{NEON, 8}
-
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
 */
 inline void transpose4(basic_int16x8& a0, basic_int16x8& a1,
                        basic_int16x8& a2, basic_int16x8& a3)
@@ -631,12 +637,12 @@ inline void transpose4(float32x8& a0, float32x8& a1,
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 24}
+    @icost{SSE2-AVX2, 32}
     @icost{NEON, 12}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 48}
-    @icost{AVX2, 24}
+    @icost{SSE2-AVX, 64}
+    @icost{AVX2, 32}
     @icost{NEON, 24}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction

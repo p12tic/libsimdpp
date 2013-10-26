@@ -165,10 +165,10 @@ inline int16x16 min(int16x16 a, int16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSSE3, 7}
+    @icost{SSE2-SSSE3, 6-7}
 
     @par 256-bit version:
-    @icost{SSE2-SSSE3, 14}
+    @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, 2}
 */
 inline uint16x8 min(uint16x8 a, uint16x8 b)
@@ -245,10 +245,10 @@ inline int32x8 min(int32x8 a, int32x8 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSSE3, 7}
+    @icost{SSE2-SSSE3, 6-7}
 
     @par 256-bit version:
-    @icost{SSE2-SSSE3, 14}
+    @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, 2}
 */
 inline uint32x4 min(uint32x4 a, uint32x4 b)
@@ -391,10 +391,10 @@ inline int16x16 max(int16x16 a, int16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSSE3, 7}
+    @icost{SSE2-SSSE3, 6-7}
 
     @par 256-bit version:
-    @icost{SSE2-SSSE3, 14}
+    @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, 2}
 */
 inline uint16x8 max(uint16x8 a, uint16x8 b)
@@ -472,10 +472,10 @@ inline int32x8 max(int32x8 a, int32x8 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSSE3, 7}
+    @icost{SSE2-SSSE3, 6-7}
 
     @par 256-bit version:
-    @icost{SSE2-SSSE3, 14}
+    @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, 2}
 */
 inline uint32x4 max(uint32x4 a, uint32x4 b)
@@ -547,12 +547,11 @@ inline uint8x32 avg(uint8x32 a, uint8x32 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 5}
-    @icost{NEON, 1}
+    @icost{SSE2-AVX2, 4-5}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 9}
-    @icost{AVX2, 5}
+    @icost{SSE2-AVX, 8-9}
+    @icost{AVX2, 4-5}
     @icost{NEON, 2}
 */
 inline int8x16 avg(int8x16 a, int8x16 b)
@@ -635,12 +634,11 @@ inline uint16x16 avg(uint16x16 a, uint16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 5}
-    @icost{NEON, 1}
+    @icost{SSE2-AVX2, 4-5}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 9}
-    @icost{AVX2, 5}
+    @icost{SSE2-AVX, 8-9}
+    @icost{AVX2, 4-5}
     @icost{NEON, 2}
 */
 inline int16x8 avg(int16x8 a, int16x8 b)
@@ -688,12 +686,11 @@ inline int16x16 avg(int16x16 a, int16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 8}
-    @icost{NEON, 1}
+    @icost{SSE2-AVX2, 6-7}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 15}
-    @icost{AVX2, 8}
+    @icost{SSE2-AVX, 12-13}
+    @icost{AVX2, 6-7}
     @icost{NEON, 2}
 */
 inline uint32x4 avg(uint32x4 a, uint32x4 b)
@@ -743,12 +740,12 @@ inline uint32x8 avg(uint32x8 a, uint32x8 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 12}
+    @icost{SSE2-AVX2, 9-10}
     @icost{NEON, 1}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 22}
-    @icost{AVX2, 12}
+    @icost{SSE2-AVX, 18-19}
+    @icost{AVX2, 9-10}
     @icost{NEON, 2}
 */
 inline int32x4 avg(int32x4 a, int32x4 b)
@@ -843,12 +840,11 @@ inline uint8x32 avg_trunc(uint8x32 a, uint8x32 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 8}
-    @icost{NEON, 1}
+    @icost{SSE2-AVX2, 7-8}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 16}
-    @icost{AVX2, 8}
+    @icost{SSE2-AVX, 14-15}
+    @icost{AVX2, 7-8}
     @icost{NEON, 2}
 */
 inline int8x16 avg_trunc(int8x16 a, int8x16 b)
@@ -943,12 +939,12 @@ inline uint16x16 avg_trunc(uint16x16 a, uint16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 8}
+    @icost{SSE2-AVX2, 7-8}
     @icost{NEON, 1}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 16}
-    @icost{AVX2, 8}
+    @icost{SSE2-AVX, 14-15}
+    @icost{AVX2, 7-8}
     @icost{NEON, 2}
 */
 inline int16x8 avg_trunc(int16x8 a, int16x8 b)
@@ -1043,12 +1039,11 @@ inline uint32x8 avg_trunc(uint32x8 a, uint32x8 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 8}
-    @icost{NEON, 1}
+    @icost{SSE2-AVX2, 7-8}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 16}
-    @icost{AVX2, 8}
+    @icost{SSE2-AVX, 14-15}
+    @icost{AVX2, 7-8}
     @icost{NEON, 2}
 */
 inline int32x4 avg_trunc(int32x4 a, int32x4 b)
@@ -1096,10 +1091,10 @@ inline int32x8 avg_trunc(int32x8 a, int32x8 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSE3, 4}
+    @icost{SSE2-SSE3, 3}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 8}
+    @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, 2}
 */
 inline uint8x16 abs(int8x16 a)
@@ -1138,10 +1133,10 @@ inline uint8x32 abs(int8x32 a)
     rN = abs(aN)
     @endcode
     @par 128-bit version:
-    @icost{SSE2-SSE3, 4}
+    @icost{SSE2-SSE3, 3}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 8}
+    @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, 2}
 */
 inline uint16x8 abs(int16x8 a)
@@ -1180,10 +1175,10 @@ inline uint16x16 abs(int16x16 a)
     rN = abs(aN)
     @endcode
     @par 128-bit version:
-    @icost{SSE2-SSE3, 4}
+    @icost{SSE2-SSE3, 3}
 
     @par 256-bit version:
-    @icost{SSE2-SSE3, 8}
+    @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, 2}
 */
 inline uint32x4 abs(int32x4 a)
@@ -1222,10 +1217,12 @@ inline uint32x8 abs(int32x8 a)
     rN = abs(aN)
     @endcode
     @par 128-bit version:
-    @icost{SSE2-AVX, NEON, 5}
+    @icost{SSE2-AVX, 5}
+    @icost{NEON, 6}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 10}
+    @icost{SSE2-AVX, 10}
+    @icost{NEON, 12}
     @icost{AVX2, 4}
 */
 inline uint64x2 abs(int64x2 a)

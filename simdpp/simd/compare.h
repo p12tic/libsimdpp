@@ -195,10 +195,10 @@ inline mask_float32x8 cmp_eq(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 cmp_eq(float64x2 a, float64x2 b)
@@ -398,10 +398,10 @@ inline mask_float32x8 cmp_neq(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 cmp_neq(float64x2 a, float64x2 b)
@@ -470,10 +470,11 @@ inline mask_int8x32 cmp_gt(int8x32 a, int8x32 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-AVX2, 3-4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
+    @icost{SSE2-AVX, 6-7}
+    @icost{AVX2, 3-4}
     @icost{NEON, 2}
 */
 inline mask_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
@@ -546,10 +547,11 @@ inline mask_int16x16 cmp_gt(int16x16 a, int16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-AVX2, 3-4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
+    @icost{SSE2-AVX, 6-7}
+    @icost{AVX2, 3-4}
     @icost{NEON, 2}
 */
 inline mask_int16x8 cmp_gt(uint16x8 a, uint16x8 b)
@@ -622,10 +624,11 @@ inline mask_int32x8 cmp_gt(int32x8 a, int32x8 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-AVX2, 3-4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
+    @icost{SSE2-AVX, 6-7}
+    @icost{AVX2, 3-4}
     @icost{NEON, 2}
 */
 inline mask_int32x4 cmp_gt(uint32x4 a, uint32x4 b)
@@ -700,10 +703,10 @@ inline mask_float32x8 cmp_gt(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 cmp_gt(float64x2 a, float64x2 b)
@@ -774,10 +777,10 @@ inline mask_float32x8 cmp_ge(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 cmp_ge(float64x2 a, float64x2 b)
@@ -846,10 +849,11 @@ inline mask_int8x32 cmp_lt(int8x32 a, int8x32 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-AVX2, 3-4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
+    @icost{SSE2-AVX, 6-7}
+    @icost{AVX2, 3-4}
     @icost{NEON, 2}
 */
 inline mask_int8x16 cmp_lt(uint8x16 a, uint8x16 b)
@@ -922,10 +926,11 @@ inline mask_int16x16 cmp_lt(int16x16 a, int16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-AVX2, 3-4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
+    @icost{SSE2-AVX, 6-7}
+    @icost{AVX2, 3-4}
     @icost{NEON, 2}
 */
 inline mask_int16x8 cmp_lt(uint16x8 a, uint16x8 b)
@@ -998,10 +1003,11 @@ inline mask_int32x8 cmp_lt(int32x8 a, int32x8 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-AVX2, 3-4}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 8}
+    @icost{SSE2-AVX, 6-7}
+    @icost{AVX2, 3-4}
     @icost{NEON, 2}
 */
 inline mask_int32x4 cmp_lt(uint32x4 a, uint32x4 b)
@@ -1076,10 +1082,10 @@ inline mask_float32x8 cmp_lt(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 cmp_lt(float64x2 a, float64x2 b)
@@ -1150,10 +1156,10 @@ inline mask_float32x8 cmp_le(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 cmp_le(float64x2 a, float64x2 b)

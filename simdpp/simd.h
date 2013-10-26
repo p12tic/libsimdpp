@@ -109,8 +109,34 @@
 
         Macro @c SIMDPP_ARCH_ARM_NEON_FLT_SP.
 
+    Instruction counts
+    ------------------
+
+    In this documentation all functions that map to more than one instruction
+    are marked as such by listing the number of instructions that are used to
+    implement a function. The instructions are counted as follows:
+
+     - Any register-register moves and copies that do not cross the processor
+        domains are ignored;
+     - Non-vector domain instructions are ignored except when they move data
+        to or from memory or vector domain.
+     - If the implementation of a function is dependent on template arguments
+        (for example, element selector), then the instruction count is defined
+        as a range with both lower and upper bounds
+     - If the function loads or computes static data, then the instruction
+        count is defined as a range. The lower count calculated as if the loads
+        from memory or computation didn't happen (for example, if the function
+        was used in a small loop and there were enough registers to cache the
+        data). The upper count is calculated the other way round.
+
+    If instruction count is not listed for specific architecture, then the
+    function directly maps to one instruction.
+
+    Dynamic dispatch
+    ----------------
+
     If the user wants to include several versions of the same code, compiled
-    for different architectures sets, into the same executable, then all such
+    for different architectures sets into the same executable, then all such
     code @a must be put into @c SIMDPP_ARCH_NAMESPACE namespace. This macro
     evaluates to an identifier which is unique for each architecture.
 

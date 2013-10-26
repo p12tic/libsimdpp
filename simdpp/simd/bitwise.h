@@ -49,7 +49,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 
 /// @{
-/** Computes bitwise AND.
+/** Computes bitwise AND of integer vectors.
 
     @code
     r0 = a0 & b0
@@ -237,9 +237,20 @@ inline mask_int64x4 bit_and(mask_int64x4 a, mask_int64x4 b)
     return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
 #endif
 }
+/// @}
 
-// -----------------------------------------------------------------------------
+/// @{
+/** Computes bitwise AND of floating-point vectors.
 
+    @code
+    r0 = a0 & b0
+    ...
+    rN = aN & bN
+    @endcode
+
+    @par 256-bit version:
+    @icost{SSE2-SSE4.1, NEON, 2}
+*/
 inline float32x4 bit_and(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -376,7 +387,7 @@ inline mask_float64x4 bit_and(mask_float64x4 a, mask_float64x4 b)
 /// @}
 
 /// @{
-/** Computes bitwise AND NOT.
+/** Computes bitwise AND NOT of integer vectors.
 
     @code
     r0 = a0 & ~b0
@@ -564,9 +575,20 @@ inline mask_int64x4 bit_andnot(mask_int64x4 a, mask_int64x4 b)
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
 }
+/// @}
 
-// -----------------------------------------------------------------------------
+/// @{
+/** Computes bitwise AND NOT of floating-point vectors.
 
+    @code
+    r0 = a0 & ~b0
+    ...
+    rN = aN & ~bN
+    @endcode
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, NEON, 2}
+*/
 inline float32x4 bit_andnot(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -702,7 +724,7 @@ inline mask_float64x4 bit_andnot(mask_float64x4 a, mask_float64x4 b)
 /// @}
 
 /// @{
-/** Computes bitwise OR.
+/** Computes bitwise OR of integer vectors.
 
     @code
     r0 = a0 | b0
@@ -813,6 +835,20 @@ inline mask_int64x4 bit_or(mask_int64x4 a, mask_int64x4 b)
     return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
 #endif
 }
+/// @}
+
+/// @{
+/** Computes bitwise OR of floating-point vectors
+
+    @code
+    r0 = a0 | b0
+    ...
+    rN = aN | bN
+    @endcode
+
+    @par 256-bit version:
+    @icost{SSE2-SSE4.1, NEON, 2}
+*/
 inline float32x4 bit_or(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -910,13 +946,10 @@ inline mask_float64x4 bit_or(mask_float64x4 a, mask_float64x4 b)
     return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
 #endif
 }
-
-// -----------------------------------------------------------------------------
-
 /// @}
 
 /// @{
-/** Computes bitwise XOR.
+/** Computes bitwise XOR of integer vectors.
 
     @code
     r0 = a0 ^ b0
@@ -1028,6 +1061,21 @@ inline mask_int64x4 bit_xor(mask_int64x4 a, mask_int64x4 b)
     return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
 #endif
 }
+
+/// @}
+
+/// @{
+/** Computes bitwise XOR of floating-point vectors
+
+    @code
+    r0 = a0 ^ b0
+    ...
+    rN = aN ^ bN
+    @endcode
+
+    @par 256-bit version:
+    @icost{SSE2-SSE4.1, NEON, 2}
+*/
 inline float32x4 bit_xor(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
@@ -1125,9 +1173,6 @@ inline mask_float64x4 bit_xor(mask_float64x4 a, mask_float64x4 b)
     return {bit_xor(a[0], b[0]), bit_xor(a[1], b[1])};
 #endif
 }
-
-// -----------------------------------------------------------------------------
-
 /// @}
 
 /// @{
@@ -1137,13 +1182,12 @@ inline mask_float64x4 bit_xor(mask_float64x4 a, mask_float64x4 b)
     r = ~a
     @endcode
 
+    @par 128-bit version:
+    @icost{SSE2-AVX, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 4}
-    @icost{AVX2, 2}
+    @icost{SSE2-AVX, 2-3}
+    @icost{AVX2, NEON, 2}
 */
 inline basic_int8x16 bit_not(basic_int8x16 a)
 {
@@ -1248,6 +1292,22 @@ inline mask_int64x4 bit_not(mask_int64x4 a)
     return {bit_not(a[0]), bit_not(a[1])};
 #endif
 }
+/// @}
+
+/// @{
+/** Computes bitwise NOT of a floating-point vector
+
+    @code
+    r = ~a
+    @endcode
+
+    @par 128-bit version:
+    @icost{SSE2-SSE4.1, 1-2}
+
+    @par 256-bit version:
+    @icost{SSE2-SSE4.1, 2-3}
+    @icost{AVX2, NEON, 2}
+*/
 inline float32x4 bit_not(float32x4 a)
 {
 #if SIMDPP_USE_NULL
@@ -1292,6 +1352,8 @@ inline float64x4 bit_not(float64x4 a)
 #endif
 }
 
+// -----------------------------------------------------------------------------
+
 inline mask_float32x4 bit_not(mask_float32x4 a)
 {
 #if SIMDPP_USE_NULL
@@ -1327,9 +1389,6 @@ inline mask_float64x4 bit_not(mask_float64x4 a)
     return {bit_not(a[0]), bit_not(a[1])};
 #endif
 }
-
-// -----------------------------------------------------------------------------
-
 /// @}
 
 /// @}

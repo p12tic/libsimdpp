@@ -360,7 +360,9 @@ basic_int64x4 permute(basic_int64x4 a)
     r2 = a[s2]
     r3 = a[s3]
     @endcode
-    @icost{SSE2-AVX2, 2}
+
+    @icost{SSE2-AVX, 1-2}
+    @icost{NEON, 1-4}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float64x4 permute(float64x4 a)
@@ -439,6 +441,7 @@ basic_int64x4 permute(basic_int64x4 a)
     r3 = a[s1+2]
     @endcode
     @icost{NEON, 2}
+    @par 128-bit version:
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
@@ -481,8 +484,12 @@ float64x4 permute(float64x4 a)
     r3 = b[s1+2]
     @endcode
 
+    @par 128-bit version:
+    @novec{NEON}
+
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
+    @novec{NEON}
 */
 template<unsigned s0, unsigned s1>
 float64x2 shuffle1(float64x2 a, float64x2 b)
@@ -530,8 +537,10 @@ float64x4 shuffle1(float64x4 a, float64x4 b)
     r3 = b[s1+2]
     @endcode
 
+    @par 128-bit version:
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
+    @icost{NEON, 1-2}
 */
 template<unsigned s0, unsigned s1>
 basic_int64x2 shuffle1(basic_int64x2 a, basic_int64x2 b)
@@ -578,8 +587,12 @@ basic_int64x4 shuffle1(basic_int64x4 a, basic_int64x4 b)
     r7 = b[b1+4]
     @endcode
 
+    @par 128-bit version:
+    @icost{NEON, 1-4}
+
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
+    @icost{NEON, 2-8}
 */
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 float32x4 shuffle2(float32x4 a, float32x4 b)
@@ -629,8 +642,12 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
     r7 = b[s1+4]
     @endcode
 
+    @par 128-bit version:
+    @icost{NEON, 2-4}
+
     @par 256-bit version:
-    @icost{SSE2-AVX, 2}
+    @icost{SSE2-SSE4.1, 2}
+    @icost{NEON, 4-8}
 */
 template<unsigned s0, unsigned s1>
 float32x4 shuffle2(float32x4 a, float32x4 b)
@@ -665,8 +682,11 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
     r7 = b[b1+4]
     @endcode
 
+    @par 128-bit version:
+    @icost{NEON, 1-4}
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
+    @icost{NEON, 2-8}
 */
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
@@ -713,8 +733,11 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
     r7 = b[s1+4]
     @endcode
 
+    @par 128-bit version:
+    @icost{NEON, 2-4}
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
+    @icost{NEON, 4-8}
 */
 template<unsigned s0, unsigned s1>
 basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)

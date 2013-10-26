@@ -186,7 +186,7 @@ inline basic_int16x16 to_int16x8(uint8x32 a)
     ...
     r3 = (int32_t) a3
     @endcode
-    @icost{SSE2-SSSE3, 3}
+    @icost{SSE2-SSSE3, 2}
 */
 inline basic_int32x4 to_int32x4(int16x8 a)
 {
@@ -256,7 +256,6 @@ inline basic_int32x8 to_int32x4(int16x16 a)
     ...
     r3 = (uint32_t) a3
     @endcode
-    @icost{SSE2, SSE3, SSSE3, 2}
 */
 inline basic_int32x4 to_int32x4(uint16x8 a)
 {
@@ -283,7 +282,8 @@ inline basic_int32x4 to_int32x4(uint16x8 a)
     ...
     r7 = (uint32_t) a7
     @endcode
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 2}
 */
 inline basic_int32x8 to_int32x4(uint16x16 a)
 {
@@ -320,8 +320,8 @@ inline basic_int32x8 to_int32x4(uint16x16 a)
 
     NEON specific:
     If the value can not be represented by int32_t, either @c 0x80000000 or @c
-    0x7fffffff is returned depending on the sign of the operand. Conversion of
-    NaNs results in @a 0.
+    0x7fffffff is returned depending on the sign of the operand (saturation
+    occurs). Conversion of NaNs results in @a 0.
 
     @code
     r0 = (int32_t) a0
@@ -368,7 +368,7 @@ inline basic_int32x8 to_int32x8(float32x8 a)
     NaNs results in @a 0.
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @code
     r0 = (int32_t) a0
@@ -386,7 +386,7 @@ inline basic_int32x8 to_int32x8(float32x8 a)
     ...
     r7 = 0
     @endcode
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 3}
 */
 inline basic_int32x4 to_int32x4(float64x2 a)
@@ -632,7 +632,7 @@ inline float32x8 to_float32x8(int32x8 a)
     r3 = 0.0f
     @endcode
 
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
     @code
@@ -645,7 +645,7 @@ inline float32x8 to_float32x8(int32x8 a)
     @endcode
 
     @icost{SSE2-SSE4.1, 3}
-    @unimp{NEON}
+    @novec{NEON}
 */
 inline float32x4 to_float32x4(float64x2 a)
 {
@@ -786,7 +786,7 @@ inline float64x4 to_float64x4(int32x8 a)
     r1 = (double) a1
     @endcode
 
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
     @code
@@ -796,7 +796,7 @@ inline float64x4 to_float64x4(int32x8 a)
     @endcode
 
     @icost{SSE2-SSE4.1, 3}
-    @unimp{NEON}
+    @novec{NEON}
 */
 inline float64x2 to_float64x2(float32x4 a)
 {

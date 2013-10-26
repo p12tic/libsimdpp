@@ -96,10 +96,10 @@ inline mask_float32x8 isnan(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 isnan(float64x2 a)
@@ -173,10 +173,10 @@ inline mask_float32x8 isnan2(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 isnan2(float64x2 a, float64x2 b)
@@ -202,6 +202,11 @@ inline mask_float64x4 isnan2(float64x4 a, float64x4 b)
 
 /// @{
 /** Computes approximate reciprocal.
+
+    Relative error is as follows:
+     - 1/2 ULP for NULL and NEON
+     - ~1/2730 for SSE2
+     - 1/256 for NEON_FLT_SP
 
     @code
     r0 = approx(1.0f / a0)
@@ -243,13 +248,25 @@ inline float32x8 rcp_e(float32x8 a)
     rN = xN * (2 - xN*aN)
     @endcode
 
+    Using this function, one can the division can be implemented as follows:
+    @code
+    // a/b
+    float32x4 x;
+    x = rcp_e(b);
+    x = rcp_rh(x, b);
+    x = rcp_rh(x, b);
+    return mul(a, x);
+    @endcode
+
+    Precision can be controlled by selecting the number of @c rcp_rh steps.
+
     @par 128-bit version:
-    @icost{SSE2-SSE4.1, 4}
+    @icost{SSE2-AVX2, 3-4}
     @icost{NEON, 2}
 
     @par 256-bit version:
-    @icost{AVX-AVX2, 4}
-    @icost{SSE2-SSE4.1, 8}
+    @icost{AVX-AVX2, 3-4}
+    @icost{SSE2-SSE4.1, 6-7}
     @icost{NEON, 4}
 */
 inline float32x4 rcp_rh(float32x4 x, float32x4 a)
@@ -300,9 +317,10 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
     rN = aN / bN
     @endcode
 
+    @icost{NEON, 6}
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @icost{NEON, 3}
+    @icost{NEON, 12}
 */
 inline float32x4 div(float32x4 a, float32x4 b)
 {
@@ -339,11 +357,11 @@ inline float32x8 div(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @unimp{NEON}
+    @novec{NEON}
 */
 inline float64x2 div(float64x2 a, float64x2 b)
 {
@@ -366,6 +384,11 @@ inline float64x4 div(float64x4 a, float64x4 b)
 
 /// @{
 /** Computes approximate reciprocal square root.
+
+    Relative error is as follows:
+     - 1/2 ULP for NULL and NEON
+     - ~1/2730 for SSE2
+     - 1/256 for NEON_FLT_SP
 
     @code
     r0 = approx(1 / sqrt(a0))
@@ -409,12 +432,12 @@ inline float32x8 rsqrt_e(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, 7}
+    @icost{SSE2, SSE3, SSSE3, SSE4.1, 5-7}
     @icost{NEON, 3}
 
     @par 256-bit version:
     @icost{AVX-AVX2, 7}
-    @icost{SSE2, SSE3, SSSE3, SSE4.1, 14}
+    @icost{SSE2, SSE3, SSSE3, SSE4.1, 10-12}
     @icost{NEON, 6}
 */
 inline float32x4 rsqrt_rh(float32x4 x, float32x4 a)
@@ -517,11 +540,11 @@ inline float32x8 sqrt(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @unimp{NEON}
+    @novec{NEON}
 */
 inline float64x2 sqrt(float64x2 a)
 {
@@ -546,7 +569,7 @@ inline float64x4 sqrt(float64x4 a)
 /// @{
 /** Computes minimum of the values in two vectors. If at least one of the
     values is NaN, or both values are zeroes, it is unspecified which value
-    would be returned.
+    will be returned.
 
     @code
     r0 = min(a0, b0)
@@ -581,7 +604,7 @@ inline float32x8 min(float32x8 a, float32x8 b)
 
 /// @{
 /** Computes minima of the values in two vectors. If at least one of the values
-    is NaN, or both values are zeroes, it is unspecified which value would be
+    is NaN, or both values are zeroes, it is unspecified which value will be
     returned.
 
     @code
@@ -591,10 +614,10 @@ inline float32x8 min(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
-    @unimp{NEON}
+    @novec{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 min(float64x2 a, float64x2 b)
@@ -618,7 +641,7 @@ inline float64x4 min(float64x4 a, float64x4 b)
 
 /// @{
 /** Computes maxima of the values of two vectors. If at least one of the values
-    is NaN, or both values are zeroes, it is unspecified which value would be
+    is NaN, or both values are zeroes, it is unspecified which value will be
     returned.
 
     @code
@@ -653,7 +676,7 @@ inline float32x8 max(float32x8 a, float32x8 b)
 
 /// @{
 /** Computes maxima of the values of two vectors. If at least one of the values
-    is NaN, or both values are zeroes, it is unspecified which value would be
+    is NaN, or both values are zeroes, it is unspecified which value will be
     returned.
 
     @code
@@ -663,11 +686,11 @@ inline float32x8 max(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @unimp{NEON}
+    @novec{NEON}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @unimp{NEON}
+    @novec{NEON}
 */
 inline float64x2 max(float64x2 a, float64x2 b)
 {
@@ -698,10 +721,12 @@ inline float64x4 max(float64x4 a, float64x4 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSSE3, NEON, 14}
+    @icost{SSE2-SSSE3, 12-14}
+    @icost{NEON, 10-11}
 
     @par 256-bit version:
-    @icost{SSE2-SSSE3, NEON, 28}
+    @icost{SSE2-SSSE3, 24-26}
+    @icost{NEON, 20-21}
 */
 inline float32x4 floor(float32x4 a)
 {
@@ -749,10 +774,12 @@ inline float32x8 floor(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2, SSE3, SSSE3, NEON, 14}
+    @icost{SSE2, SSE3, SSSE3, 13-15}
+    @icost{NEON, 11-13}
 
     @par 256-bit version:
-    @icost{SSE2, SSE3, SSSE3, NEON, 28}
+    @icost{SSE2, SSE3, SSSE3, 26-28}
+    @icost{NEON, 22-24}
 */
 inline float32x4 ceil(float32x4 a)
 {
@@ -801,12 +828,12 @@ inline float32x8 ceil(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2, SSE3, SSSE3, NEON, 8}
-    @icost{NEON, 6}
+    @icost{SSE2, SSE3, SSSE3, 7-9}
+    @icost{NEON, 5-6}
 
     @par 256-bit version:
-    @icost{SSE2, SSE3, SSSE3, NEON, 16}
-    @icost{NEON, 12}
+    @icost{SSE2, SSE3, SSSE3, 14-16}
+    @icost{NEON, 10-11}
     @icost{SSE4.1, 2}
 */
 inline float32x4 trunc(float32x4 a)

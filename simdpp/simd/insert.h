@@ -59,7 +59,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     This function may have very high latency.
 
-    @icost{SSE2-SSSE3, 4}
+    @icost{SSE2-SSSE3, 4-5}
 */
 template<unsigned id>
 basic_int8x16 insert(basic_int8x16 a, uint8_t x)
