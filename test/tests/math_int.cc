@@ -219,9 +219,11 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER16X2_2(tc, uint32x8, avg, s, 4);
         TEST_ALL_COMB_HELPER16X2_2(tc, uint32x8, avg_trunc, s, 4);
 
+#if !(SIMDPP_USE_ALTIVEC)
         TEST_ALL_COMB_HELPER16X2_2T(tc, uint64x4, uint32x8, mull_lo, s, 4);
         TEST_ALL_COMB_HELPER16X2_2T(tc, uint64x4, uint32x8, mull_hi, s, 4);
         TEST_ALL_COMB_HELPER16X2_2T(tc, uint64x4, uint32x8, mul_lo, s, 4);
+#endif
 
         TEST_ARRAY_HELPER16X2_1(tc, int32x8, neg, s);
         TEST_ARRAY_HELPER16X2_1(tc, int32x8, abs, s);

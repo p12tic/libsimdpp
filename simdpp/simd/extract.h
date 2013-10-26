@@ -57,6 +57,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @icost{SSE2-SSSE3, 1-2}
     @icost{SSE4.1-AVX, 1}
+    @icost{ALTIVEC, 2}
 */
 template<unsigned id>
 uint8_t extract(basic_int8x16 a)
@@ -71,6 +72,10 @@ uint8_t extract(basic_int8x16 a)
     return _mm_extract_epi16(a, id/2) >> shift;
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u8(a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint8x16> ax(a);
+    vec_ste((__vector uint8_t)a, 0, &ax[id]);
+    return ax[id];
 #endif
 }
 
@@ -89,6 +94,8 @@ int8_t extract(int8x16 a)
     @endcode
 
     This function may have very high latency.
+
+    @icost{ALTIVEC, 2}
 */
 template<unsigned id>
 uint16_t extract(basic_int16x8 a)
@@ -100,6 +107,10 @@ uint16_t extract(basic_int16x8 a)
     return _mm_extract_epi16(a, id);
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u16(a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint16x8> ax(a);
+    vec_ste((__vector uint16_t)a, 0, &ax[id]);
+    return ax[id];
 #endif
 }
 
@@ -120,6 +131,7 @@ int16_t extract(int16x8 a)
     This function may have very high latency.
 
     @icost{SSE2, SSE3, SSSE3, 1-2}
+    @icost{ALTIVEC, 2}
 */
 template<unsigned id>
 uint32_t extract(basic_int32x4 a)
@@ -133,6 +145,10 @@ uint32_t extract(basic_int32x4 a)
     return _mm_cvtsi128_si32(move_l<id>(a)); // when id==0, move_l is template-specialized and does nothing
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u32(a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint32x4> ax(a);
+    vec_ste((__vector uint32_t)a, 0, &ax[id]);
+    return ax[id];
 #endif
 }
 
@@ -156,6 +172,7 @@ int32_t extract(int32x4 a)
     @icost{SSE4_1, 1}
     @icost{SSE2_32bit, SSE3_32bit, SSSE3_32bit, 3-4}
     @icost{SSE4_1_32bit, 2}
+    @icost{ALTIVEC, 2}
 */
 template<unsigned id>
 uint64_t extract(basic_int64x2 a)
@@ -190,6 +207,9 @@ uint64_t extract(basic_int64x2 a)
 #endif
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u64(a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint64x2> ax(a);
+    return ax[id];
 #endif
 }
 
@@ -209,6 +229,7 @@ int64_t extract(int64x2 a)
     This function may have very high latency.
 
     @icost{SSE2, SSE3, SSSE3, 1-2}
+    @icost{ALTIVEC, 2}
 */
 template<unsigned id>
 float extract(float32x4 a)
@@ -220,6 +241,10 @@ float extract(float32x4 a)
     return bit_cast<float>(extract<id>(int32x4(a)));
 #elif SIMDPP_USE_NEON
     return vgetq_lane_f32(a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<float32x4> ax(a);
+    vec_ste((__vector float)a, 0, &ax[id]);
+    return ax[id];
 #endif
 }
 
@@ -239,8 +264,11 @@ double extract(float64x2 a)
     static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2
     return bit_cast<double>(extract<id>(int64x2(a)));
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<float64x2> ax(a);
+    return a[id];
 #endif
 }
 
@@ -257,6 +285,7 @@ double extract(float64x2 a)
     @endcode
 
     @icost{NEON, 6-7}
+    @icost{ALTIVEC, 8-9}
 */
 inline uint16_t extract_bits_any(uint8x16 a)
 {
@@ -280,6 +309,17 @@ inline uint16_t extract_bits_any(uint8x16 a)
     a = vpaddlq_u32(a);
     uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
     return vget_lane_u16(vreinterpret_u16_u8(r), 0);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+    a = bit_and(a, mask);
+    uint32x4 s = vec_sum4s((__vector uint8_t)a,
+                           (__vector uint32_t)uint32x4::zero());
+    uint32x4 s2 = (__vector uint32_t)vec_mergel((__vector uint8_t)a,
+                                                (__vector uint8_t)uint8x16::zero());
+    s = bit_or(s, s2);
+    s = (int32x4)vec_sums((__vector int32_t)s,
+                          (__vector int32_t)int32x4::zero());
+    return extract<7>(uint16x8(s));
 #endif
 }
 
@@ -294,6 +334,7 @@ inline uint16_t extract_bits_any(uint8x16 a)
 
     @icost{SSE2-AVX2, 2}
     @icost{NEON, 7-9}
+    @icost{ALTIVEC, 9-11}
 */
 template<unsigned id>
 uint16_t extract_bits(uint8x16 a)
@@ -315,6 +356,11 @@ uint16_t extract_bits(uint8x16 a)
                                              4-int(id), 5-int(id), 6-int(id), 7-int(id));
 
     a = vshlq_u8(a, shift_mask);
+    return extract_bits_any(a);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 rot_mask = int8x16::make_const(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                                            4-int(id), 5-int(id), 6-int(id), 7-int(id));
+    a = vec_rl((__vector uint8_t)a, (__vector uint8_t)rot_mask);
     return extract_bits_any(a);
 #endif
 }

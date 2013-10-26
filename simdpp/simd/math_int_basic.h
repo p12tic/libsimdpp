@@ -32,8 +32,11 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/fwd.h>
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/make_shuffle_bytes_mask.h>
 #include <simdpp/simd/shuffle.h>
+#include <simdpp/simd/shuffle_bytes.h>
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/foreach.h>
@@ -59,7 +62,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 add(basic_int8x16 a, basic_int8x16 b)
 {
@@ -69,6 +72,8 @@ inline basic_int8x16 add(basic_int8x16 a, basic_int8x16 b)
     return _mm_add_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vaddq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_add((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -92,7 +97,7 @@ inline basic_int8x32 add(basic_int8x32 a, basic_int8x32 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int16x8 add(basic_int16x8 a, basic_int16x8 b)
 {
@@ -102,6 +107,8 @@ inline basic_int16x8 add(basic_int16x8 a, basic_int16x8 b)
     return _mm_add_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vaddq_u16(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_add((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -125,7 +132,7 @@ inline basic_int16x16 add(basic_int16x16 a, basic_int16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int32x4 add(basic_int32x4 a, basic_int32x4 b)
 {
@@ -135,6 +142,8 @@ inline basic_int32x4 add(basic_int32x4 a, basic_int32x4 b)
     return _mm_add_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vaddq_u32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_add((__vector uint32_t)a, (__vector uint32_t)b);
 #endif
 }
 
@@ -157,10 +166,14 @@ inline basic_int32x8 add(basic_int32x8 a, basic_int32x8 b)
     rN = aN + bN
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 5-6}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 10-11}
 */
-inline int128 add(basic_int64x2 a, basic_int64x2 b)
+inline basic_int64x2 add(basic_int64x2 a, basic_int64x2 b)
 {
 #if SIMDPP_USE_NULL
     return null::add(a, b);
@@ -168,6 +181,15 @@ inline int128 add(basic_int64x2 a, basic_int64x2 b)
     return _mm_add_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return vaddq_u64(a, b);
+#else
+    uint64x2 c1 = uint64x2::make_const(1);
+    uint32x4 r, carry;
+    carry = vec_addc((__vector uint32_t) a, (__vector uint32_t) b);
+    carry = move_l<1>(carry);
+    r = add((uint32x4)a, (uint32x4)b);
+    carry = bit_and(carry, c1);
+    r = add(r, carry);
+    return r;
 #endif
 }
 
@@ -191,7 +213,7 @@ inline basic_int64x4 add(basic_int64x4 a, basic_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline int8x16 adds(int8x16 a, int8x16 b)
 {
@@ -201,6 +223,8 @@ inline int8x16 adds(int8x16 a, int8x16 b)
     return _mm_adds_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_s8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_adds((__vector int8_t)a, (__vector int8_t)b);
 #endif
 }
 
@@ -224,7 +248,7 @@ inline int8x32 adds(int8x32 a, int8x32 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline int16x8 adds(int16x8 a, int16x8 b)
 {
@@ -234,6 +258,8 @@ inline int16x8 adds(int16x8 a, int16x8 b)
     return _mm_adds_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_s16(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_adds((__vector int16_t)a, (__vector int16_t)b);
 #endif
 }
 
@@ -257,7 +283,7 @@ inline int16x16 adds(int16x16 a, int16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline uint8x16 adds(uint8x16 a, uint8x16 b)
 {
@@ -267,6 +293,8 @@ inline uint8x16 adds(uint8x16 a, uint8x16 b)
     return _mm_adds_epu8(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_adds((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -290,7 +318,7 @@ inline uint8x32 adds(uint8x32 a, uint8x32 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline uint16x8 adds(uint16x8 a, uint16x8 b)
 {
@@ -300,6 +328,8 @@ inline uint16x8 adds(uint16x8 a, uint16x8 b)
     return _mm_adds_epu16(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_u16(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_adds((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -323,7 +353,7 @@ inline uint16x16 adds(uint16x16 a, uint16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 sub(basic_int8x16 a, basic_int8x16 b)
 {
@@ -333,6 +363,8 @@ inline basic_int8x16 sub(basic_int8x16 a, basic_int8x16 b)
     return _mm_sub_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_sub((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -356,7 +388,7 @@ inline basic_int8x32 sub(basic_int8x32 a, basic_int8x32 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int16x8 sub(basic_int16x8 a, basic_int16x8 b)
 {
@@ -366,6 +398,8 @@ inline basic_int16x8 sub(basic_int16x8 a, basic_int16x8 b)
     return _mm_sub_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u16(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_sub((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -389,7 +423,7 @@ inline basic_int16x16 sub(basic_int16x16 a, basic_int16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int32x4 sub(basic_int32x4 a, basic_int32x4 b)
 {
@@ -399,6 +433,8 @@ inline basic_int32x4 sub(basic_int32x4 a, basic_int32x4 b)
     return _mm_sub_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_sub((__vector uint32_t)a, (__vector uint32_t)b);
 #endif
 }
 
@@ -421,8 +457,12 @@ inline basic_int32x8 sub(basic_int32x8 a, basic_int32x8 b)
     rN = aN - bN
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 5-6}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 10-11}
 */
 inline basic_int64x2 sub(basic_int64x2 a, basic_int64x2 b)
 {
@@ -432,6 +472,15 @@ inline basic_int64x2 sub(basic_int64x2 a, basic_int64x2 b)
     return _mm_sub_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u64(a, b);
+#else
+    uint64x2 c1 = uint64x2::make_const(1);
+    uint32x4 r, carry;
+    carry = vec_subc((__vector uint32_t) a, (__vector uint32_t) b);
+    carry = move_l<1>(carry);
+    r = sub((uint32x4)a, (uint32x4)b);
+    carry = bit_and(carry, c1);
+    r = sub(r, carry);
+    return r;
 #endif
 }
 
@@ -455,7 +504,7 @@ inline basic_int64x4 sub(basic_int64x4 a, basic_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline int8x16 subs(int8x16 a, int8x16 b)
 {
@@ -465,6 +514,8 @@ inline int8x16 subs(int8x16 a, int8x16 b)
     return _mm_subs_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vqsubq_s8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_subs((__vector int8_t)a, (__vector int8_t)b);
 #endif
 }
 
@@ -488,7 +539,7 @@ inline int8x32 subs(int8x32 a, int8x32 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline int16x8 subs(int16x8 a, int16x8 b)
 {
@@ -498,6 +549,8 @@ inline int16x8 subs(int16x8 a, int16x8 b)
     return _mm_subs_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vqsubq_s16(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_subs((__vector int16_t)a, (__vector int16_t)b);
 #endif
 }
 
@@ -521,7 +574,7 @@ inline int16x16 subs(int16x16 a, int16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline uint8x16 subs(uint8x16 a, uint8x16 b)
 {
@@ -531,6 +584,8 @@ inline uint8x16 subs(uint8x16 a, uint8x16 b)
     return _mm_subs_epu8(a, b);
 #elif SIMDPP_USE_NEON
     return vqsubq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_subs((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -554,7 +609,7 @@ inline uint8x32 subs(uint8x32 a, uint8x32 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline uint16x8 subs(uint16x8 a, uint16x8 b)
 {
@@ -564,6 +619,8 @@ inline uint16x8 subs(uint16x8 a, uint16x8 b)
     return _mm_subs_epu16(a, b);
 #elif SIMDPP_USE_NEON
     return vqsubq_u16(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_subs((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -587,13 +644,13 @@ inline uint16x16 subs(uint16x16 a, uint16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline int8x16 neg(int8x16 a)
 {
 #if SIMDPP_USE_NULL
     return null::neg(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(int8x16::zero(), a);
 #elif SIMDPP_USE_NEON
     return vnegq_s8(a);
@@ -620,13 +677,13 @@ inline int8x32 neg(int8x32 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline int16x8 neg(int16x8 a)
 {
 #if SIMDPP_USE_NULL
     return null::neg(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(int16x8::zero(), a);
 #elif SIMDPP_USE_NEON
     return vnegq_s16(a);
@@ -653,13 +710,13 @@ inline int16x16 neg(int16x16 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline int32x4 neg(int32x4 a)
 {
 #if SIMDPP_USE_NULL
     return null::neg(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(int32x4::zero(), a);
 #elif SIMDPP_USE_NEON
     return vnegq_s32(a);
@@ -686,15 +743,17 @@ inline int32x8 neg(int32x8 a)
     @endcode
 
     @par 128-bit version:
+    @icost{ALTIVEC, 4-5}
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 8-9}
 */
 inline int64x2 neg(int64x2 a)
 {
 #if SIMDPP_USE_NULL
     return null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return sub(int64x2::zero(), a);
 #endif
 }
@@ -720,7 +779,7 @@ inline int64x4 neg(int64x4 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int16x8 mul_lo(basic_int16x8 a, basic_int16x8 b)
 {
@@ -730,6 +789,9 @@ inline basic_int16x8 mul_lo(basic_int16x8 a, basic_int16x8 b)
     return _mm_mullo_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vmulq_s16(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mladd((__vector uint16_t)a, (__vector uint16_t)b,
+                     (__vector uint16_t)uint16x8::zero());
 #endif
 }
 
@@ -753,11 +815,11 @@ inline basic_int16x16 mul_lo(basic_int16x16 a, basic_int16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 3}
+    @icost{NEON, ALTIVEC, 3}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 6}
+    @icost{NEON, ALTIVEC, 6}
 */
 inline int16x8 mul_hi(int16x8 a, int16x8 b)
 {
@@ -766,9 +828,9 @@ inline int16x8 mul_hi(int16x8 a, int16x8 b)
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
-    int16x8 lo = int128(vmull_s16(vget_low_s16(a), vget_low_s16(b)));
-    int16x8 hi = int128(vmull_s16(vget_high_s16(a), vget_high_s16(b)));
-    return unzip_hi(lo, hi);
+    return unzip_hi((int16x8)mull_lo(a, b), (int16x8)mull_hi(a, b));
+#elif SIMDPP_USE_ALTIVEC
+    return unzip_lo(mull_lo(a, b), mull_hi(a, b));
 #endif
 }
 
@@ -792,11 +854,11 @@ inline int16x16 mul_hi(int16x16 a, int16x16 b)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 3}
+    @icost{NEON, ALTIVEC, 3}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @icost{NEON, 6}
+    @icost{NEON, ALTIVEC, 6}
 */
 inline uint16x8 mul_hi(uint16x8 a, uint16x8 b)
 {
@@ -805,9 +867,9 @@ inline uint16x8 mul_hi(uint16x8 a, uint16x8 b)
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epu16(a, b);
 #elif SIMDPP_USE_NEON
-    uint16x8 lo = int128(vmull_u16(vget_low_u16(a), vget_low_u16(b)));
-    uint16x8 hi = int128(vmull_u16(vget_high_u16(a), vget_high_u16(b)));
-    return unzip_hi(lo, hi);
+    return unzip_hi((uint16x8)mull_lo(a, b), (uint16x8)mull_hi(a, b));
+#elif SIMDPP_USE_ALTIVEC
+    return unzip_lo(mull_lo(a, b), mull_hi(a, b));
 #endif
 }
 
@@ -832,9 +894,12 @@ inline uint16x16 mul_hi(uint16x16 a, uint16x16 b)
 
     @par 128-bit version:
     @icost{SSE2-SSSE3, 6}
+    @icost{ALTIVEC, 8}
+
     @par 256-bit version:
     @icost{SSE2-SSSE3, 12}
     @icost{SSE4.1, AVX, NEON, 2}
+    @icost{ALTIVEC, 16}
 */
 inline int128 mul_lo(basic_int32x4 a, basic_int32x4 b)
 {
@@ -853,6 +918,21 @@ inline int128 mul_lo(basic_int32x4 a, basic_int32x4 b)
     return a;
 #elif SIMDPP_USE_NEON
     return vmulq_s32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    // implement in terms of 16-bit multiplies
+    uint16x8 la, lb, ha, hb;
+    uint32x4 rl, rh1, rh2;
+    la = a;  lb = b;
+    ha = move_r<1>(la);
+    hb = move_r<1>(lb);
+
+    rl = mull_lo(la, lb);
+    rh1 = mull_lo(la, hb);
+    rh2 = mull_lo(ha, lb);
+
+    rh1 = shift_l<16>(add(rh1, rh2));
+    rl = add(rl, rh1);
+    return rl;
 #endif
 }
 
@@ -906,6 +986,7 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
     @endcode
 
     @icost{SSE2-AVX, 2-3}
+    @icost{ALTIVEC, 2-4}
 
     @par 256-bit version:
 
@@ -914,6 +995,7 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
 
     @icost{SSE2-AVX, 4-6}
     @icost{AVX2, NEON, 2-3}
+    @icost{ALTIVEC, 4-7}
     @note Use with mull_hi on the same arguments to save instructions.
 */
 inline int32x4 mull_lo(int16x8 a, int16x8 b)
@@ -930,6 +1012,11 @@ inline int32x4 mull_lo(int16x8 a, int16x8 b)
     return zip_lo(lo, hi);
 #elif SIMDPP_USE_NEON
     return vmull_s16(vget_low_s16(a), vget_low_s16(b));
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
+    a = permute_bytes16(a, mask);
+    b = permute_bytes16(b, mask);
+    return vec_mule((__vector int16_t)a, (__vector int16_t)b);
 #endif
 }
 
@@ -957,12 +1044,14 @@ inline int32x8 mull_lo(int16x16 a, int16x16 b)
     @endcode
 
     @icost{SSE2-AVX2, 2-3}
+    @icost{ALTIVEC, 2-4}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
     @icost{SSE2-AVX, 4-6}
+    @icost{ALTIVEC, 4-7}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
     @note Use with mull_hi on the same arguments to save instructions.
@@ -981,6 +1070,11 @@ inline uint32x4 mull_lo(uint16x8 a, uint16x8 b)
     return zip_lo(lo, hi);
 #elif SIMDPP_USE_NEON
     return vmull_u16(vget_low_u16(a), vget_low_u16(b));
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
+    a = permute_bytes16(a, mask);
+    b = permute_bytes16(b, mask);
+    return vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -1008,11 +1102,14 @@ inline uint32x8 mull_lo(uint16x16 a, uint16x16 b)
     @endcode
 
     @icost{SSE2-AVX2, 2-3}
+    @icost{ALTIVEC, 2-4}
 
+    @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
     @icost{SSE2-AVX, 4-6}
+    @icost{ALTIVEC, 4-7}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
     @note Use with mull_lo on the same arguments to save instructions.
@@ -1031,6 +1128,11 @@ inline int32x4 mull_hi(int16x8 a, int16x8 b)
     return zip_hi(lo, hi);
 #elif SIMDPP_USE_NEON
     return vmull_s16(vget_high_s16(a), vget_high_s16(b));
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
+    a = permute_bytes16(a, mask);
+    b = permute_bytes16(b, mask);
+    return vec_mulo((__vector int16_t)a, (__vector int16_t)b);
 #endif
 }
 
@@ -1058,12 +1160,14 @@ inline int32x8 mull_hi(int16x16 a, int16x16 b)
     @endcode
 
     @icost{SSE2-AVX2, 2-3}
+    @icost{ALTIVEC, 2-4}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
     @icost{SSE2-AVX, 4-6}
+    @icost{ALTIVEC, 4-7}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
     @note Use with mull_lo on the same arguments to save instructions.
@@ -1082,6 +1186,11 @@ inline uint32x4 mull_hi(uint16x8 a, uint16x8 b)
     return zip_hi(lo, hi);
 #elif SIMDPP_USE_NEON
     return vmull_u16(vget_high_u16(a), vget_high_u16(b));
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
+    a = permute_bytes16(a, mask);
+    b = permute_bytes16(b, mask);
+    return (__vector uint32_t)vec_mulo((__vector int16_t)a, (__vector int16_t)b);
 #endif
 }
 
@@ -1107,7 +1216,7 @@ inline uint32x8 mull_hi(uint16x16 a, uint16x16 b)
     r1 = a1 * b1
     @endcode
     @icost{SSE4.1-AVX, 3}
-    @unimp{SSE2-SSSE3}
+    @unimp{SSE2-SSSE3, ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -1116,7 +1225,7 @@ inline uint32x8 mull_hi(uint16x16 a, uint16x16 b)
     @icost{SSE4.1-AVX, 6}
     @icost{AVX2, 3}
     @icost{NEON, 2}
-    @unimp{SSE2-SSSE3}
+    @unimp{SSE2-SSSE3, ALTIVEC}
 */
 inline int64x2 mull_lo(int32x4 a, int32x4 b)
 {
@@ -1158,6 +1267,7 @@ inline int64x4 mull_lo(int32x8 a, int32x8 b)
     r1 = a1 * b1
     @endcode
     @icost{SSE2-AVX, 3}
+    @unimp{ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -1166,13 +1276,15 @@ inline int64x4 mull_lo(int32x8 a, int32x8 b)
     @icost{SSE2-AVX, 6}
     @icost{AVX2, 3}
     @icost{NEON, 2}
+    @unimp{ALTIVEC}
 */
 inline uint64x2 mull_lo(uint32x4 a, uint32x4 b)
 {
-#if SIMDPP_USE_NULL
-    uint64x2 r;
-    r[0] = uint64_t(a[0]) * b[0];
-    r[1] = uint64_t(a[1]) * b[1];
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint64x2> r;
+    detail::mem_block<uint32x4> ax(a), bx(b);
+    r[0] = uint64_t(ax[0]) * bx[0];
+    r[1] = uint64_t(ax[1]) * bx[1];
     return r;
 #elif SIMDPP_USE_SSE2
     a = zip_lo(a, a);
@@ -1205,7 +1317,7 @@ inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
     r1 = a1 * b1
     @endcode
     @icost{SSE4.1-AVX2, 3}
-    @unimp{SSE2-SSSE3}
+    @unimp{SSE2-SSSE3, ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -1214,7 +1326,7 @@ inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
     @icost{SSE4.1-AVX, 6}
     @icost{AVX2, 3}
     @icost{NEON, 2}
-    @unimp{SSE2-SSSE3}
+    @unimp{SSE2-SSSE3, ALTIVEC}
 */
 inline int64x2 mull_hi(int32x4 a, int32x4 b)
 {
@@ -1256,6 +1368,7 @@ inline int64x4 mull_hi(int32x8 a, int32x8 b)
     r1 = a1 * b1
     @endcode
     @icost{SSE2-AVX, 3}
+    @novec{ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -1264,13 +1377,15 @@ inline int64x4 mull_hi(int32x8 a, int32x8 b)
     @icost{SSE2-AVX, 6}
     @icost{AVX2, 3}
     @icost{NEON, 2}
+    @novec{ALTIVEC}
 */
 inline uint64x2 mull_hi(uint32x4 a, uint32x4 b)
 {
-#if SIMDPP_USE_NULL
-    uint64x2 r;
-    r[0] = uint64_t(a[2]) * b[2];
-    r[1] = uint64_t(a[3]) * b[3];
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint64x2> r;
+    detail::mem_block<uint32x4> ax(a), bx(b);
+    r[0] = uint64_t(ax[2]) * bx[2];
+    r[1] = uint64_t(ax[3]) * bx[3];
     return r;
 #elif SIMDPP_USE_SSE2
     a = zip_hi(a, a);

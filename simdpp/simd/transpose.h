@@ -33,14 +33,14 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/fwd.h>
+#include <simdpp/simd/make_shuffle_bytes_mask.h>
 #include <simdpp/simd/detail/transpose.h>
+#include <simdpp/null/transpose.h>
 
-#if SIMDPP_USE_NULL
-    #include <simdpp/null/transpose.h>
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     #include <simdpp/sse/shuffle.h>
 #elif SIMDPP_USE_NEON
-    #include <simdpp/null/transpose.h>
     #include <simdpp/neon/shuffle.h>
 #endif
 
@@ -64,6 +64,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4}
+    @icost{ALTIVEC, 2-4}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -72,6 +73,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, 8}
     @icost{AVX2, 4}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 4-6}
 */
 inline void transpose2(basic_int16x8& a0, basic_int16x8& a1)
 {
@@ -87,6 +89,13 @@ inline void transpose2(basic_int16x8& a0, basic_int16x8& a1)
     auto r = vtrnq_u16(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 m0 = make_shuffle_bytes16_mask<0,8+0, 2,8+2, 4,8+4, 6,8+6>(m0);
+    uint16x8 m1 = make_shuffle_bytes16_mask<1,8+1, 3,8+3, 5,8+5, 7,8+7>(m1);
+    uint16x8 b0, b1;
+    b0 = shuffle_bytes16(a0, a1, m0);
+    b1 = shuffle_bytes16(a0, a1, m1);
+    a0 = b0;  a1 = b1;
 #endif
 }
 
@@ -115,6 +124,7 @@ inline void transpose2(basic_int16x16& a0, basic_int16x16& a1)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4}
+    @icost{ALTIVEC, 2-4}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -123,6 +133,7 @@ inline void transpose2(basic_int16x16& a0, basic_int16x16& a1)
     @icost{SSE2-AVX, 8}
     @icost{AVX2, 4}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 4-6}
 */
 inline void transpose2(basic_int32x4& a0, basic_int32x4& a1)
 {
@@ -138,6 +149,13 @@ inline void transpose2(basic_int32x4& a0, basic_int32x4& a1)
     auto r = vtrnq_u32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 m0 = make_shuffle_bytes16_mask<0,4+0, 2,4+2>(m0);
+    uint32x4 m1 = make_shuffle_bytes16_mask<1,4+1, 3,4+3>(m1);
+    uint32x4 b0, b1;
+    b0 = shuffle_bytes16(a0, a1, m0);
+    b1 = shuffle_bytes16(a0, a1, m1);
+    a0 = b0;  a1 = b1;
 #endif
 }
 
@@ -166,6 +184,7 @@ inline void transpose2(basic_int32x8& a0, basic_int32x8& a1)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 2}
+    @icost{ALTIVEC, 2-4}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -174,6 +193,7 @@ inline void transpose2(basic_int32x8& a0, basic_int32x8& a1)
     @icost{SSE2-AVX, 4}
     @icost{AVX2, 2}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 4-6}
 */
 inline void transpose2(basic_int64x2& a0, basic_int64x2& a1)
 {
@@ -186,6 +206,13 @@ inline void transpose2(basic_int64x2& a0, basic_int64x2& a1)
     a0 = b0;
 #elif SIMDPP_USE_NEON
     neon::transpose2(a0, a1);
+#elif SIMDPP_USE_ALTIVEC
+    uint64x2 m0 = make_shuffle_bytes16_mask<0,2+0>(m0);
+    uint64x2 m1 = make_shuffle_bytes16_mask<1,2+1>(m1);
+    uint32x4 b0, b1;
+    b0 = shuffle_bytes16(a0, a1, m0);
+    b1 = shuffle_bytes16(a0, a1, m1);
+    a0 = b0;  a1 = b1;
 #endif
 }
 
@@ -213,6 +240,7 @@ inline void transpose2(basic_int64x4& a0, basic_int64x4& a1)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4}
+    @icost{ALTIVEC, 2-4}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -221,6 +249,7 @@ inline void transpose2(basic_int64x4& a0, basic_int64x4& a1)
     @icost{SSE2-SSE4.1, 8}
     @icost{AVX-AVX2, 4}
     @icost{ALTIVEC, 4-6}
+    @icost{NEON, 2}
 */
 inline void transpose2(float32x4& a0, float32x4& a1)
 {
@@ -236,6 +265,13 @@ inline void transpose2(float32x4& a0, float32x4& a1)
     auto r = vtrnq_f32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 m0 = make_shuffle_bytes16_mask<0,4+0, 2,4+2>(m0);
+    uint32x4 m1 = make_shuffle_bytes16_mask<1,4+1, 3,4+3>(m1);
+    float32x4 b0, b1;
+    b0 = shuffle_bytes16(a0, a1, m0);
+    b1 = shuffle_bytes16(a0, a1, m1);
+    a0 = b0;  a1 = b1;
 #endif
 }
 
@@ -264,7 +300,7 @@ inline void transpose2(float32x8& a0, float32x8& a1)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -272,11 +308,11 @@ inline void transpose2(float32x8& a0, float32x8& a1)
 
     @icost{SSE2-SSE4.1, 4}
     @icost{AVX-AVX2, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline void transpose2(float64x2& a0, float64x2& a1)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     float64x2 b0;
@@ -320,6 +356,7 @@ void transpose4(basic_int32x4& a0, basic_int32x4& a1,
     @par 128-bit version:
     @icost{SSE2-AVX2, 16}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 8-12}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -328,6 +365,7 @@ void transpose4(basic_int32x4& a0, basic_int32x4& a1,
     @icost{SSE2-AVX, 32}
     @icost{AVX2, 16}
     @icost{NEON, 8}
+    @icost{ALTIVEC, 16-20}
 */
 inline void transpose4(basic_int8x16& a0, basic_int8x16& a1,
                        basic_int8x16& a2, basic_int8x16& a3)
@@ -362,7 +400,7 @@ inline void transpose4(basic_int8x16& a0, basic_int8x16& a1,
     a1 = c1;
     a2 = c2;
     a3 = c3;
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     basic_int16x8 b0, b1, b2, b3;
     detail::transpose2(a0, a1);  // 8-bit transpose
     detail::transpose2(a2, a3);
@@ -415,6 +453,7 @@ inline void transpose4(basic_int8x32& a0, basic_int8x32& a1,
     @par 128-bit version:
     @icost{SSE2-AVX2, 12}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 8-12}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -423,6 +462,7 @@ inline void transpose4(basic_int8x32& a0, basic_int8x32& a1,
     @icost{SSE2-AVX, 24}
     @icost{AVX2, 12}
     @icost{NEON, 8}
+    @icost{ALTIVEC, 16-20}
 */
 inline void transpose4(basic_int16x8& a0, basic_int16x8& a1,
                        basic_int16x8& a2, basic_int16x8& a3)
@@ -456,7 +496,7 @@ inline void transpose4(basic_int16x8& a0, basic_int16x8& a1,
     // [a1,b1,c1,d1,a5,b5,c5,d5]
     // [a2,b2,c2,d2,a6,b6,c6,d6]
     // [a3,b3,c3,d3,a7,b7,c7,d7]
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     basic_int32x4 b0, b1, b2, b3;
     transpose2(a0, a1);  // 16-bit transpose
     transpose2(a2, a3);
@@ -541,11 +581,13 @@ void sse_transpose4x32_impl(V& a0, V& a1, V& a2, V& a3)
     @par 128-bit version:
     @icost{SSE2-AVX2, 12}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 8-12}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 24}
     @icost{AVX2, 12}
     @icost{NEON, 8}
+    @icost{ALTIVEC, 16-20}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
@@ -557,7 +599,7 @@ inline void transpose4(basic_int32x4& a0, basic_int32x4& a1,
     null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     detail::sse_transpose4x32_impl(a0, a1, a2, a3);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     basic_int64x2 b0, b1, b2, b3;
     transpose2(a0, a1);  // 32-bit transpose
     transpose2(a2, a3);
@@ -593,11 +635,13 @@ inline void transpose4(basic_int32x8& a0, basic_int32x8& a1,
     @par 128-bit version:
     @icost{SSE2-AVX2, 12}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 8-12}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 24}
     @icost{AVX-AVX2, 12}
     @icost{NEON, 8}
+    @icost{ALTIVEC, 16-20}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
@@ -639,11 +683,13 @@ inline void transpose4(float32x8& a0, float32x8& a1,
     @par 128-bit version:
     @icost{SSE2-AVX2, 32}
     @icost{NEON, 12}
+    @icost{ALTIVEC, 24-30}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 64}
     @icost{AVX2, 32}
     @icost{NEON, 24}
+    @icost{ALTIVEC, 48-54}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
@@ -681,7 +727,7 @@ inline void transpose8(basic_int8x16& a0, basic_int8x16& a1,
     a6 = zip_lo(d3, d7);
     a7 = zip_hi(d3, d7);
 
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     basic_int16x8 b0, b1, b2, b3, b4, b5, b6, b7;
     detail::transpose2(a0, a1); // 8-bit transpose
     detail::transpose2(a2, a3);
@@ -849,7 +895,7 @@ inline void transpose8(basic_int16x8& a0, basic_int16x8& a1,
     a6 = zip_lo(c6, c7);
     a7 = zip_hi(c6, c7);
 
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
     transpose4(a0, a1, a2, a3);
     transpose4(a4, a5, a6, a7);
@@ -1004,7 +1050,7 @@ inline void transpose16(basic_int8x16& a0, basic_int8x16& a1,
     a14 = zip_lo(d7, d15);
     a15 = zip_hi(d7, d15);
 
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
     transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
     transpose8(a8, a9, a10, a11, a12, a13, a14, a15);

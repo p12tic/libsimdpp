@@ -30,6 +30,7 @@ debian/README.Debian
 debian/README.source
 
 simdpp/CMakeLists.txt
+simdpp/altivec/load1.h
 simdpp/detail/dispatcher.h
 simdpp/neon/shuffle.h
 simdpp/neon/memory_store.h
@@ -47,6 +48,7 @@ simdpp/null/memory.h
 simdpp/null/set.h
 simdpp/null/shuffle.h
 simdpp/null/transpose.h
+simdpp/simd/detail/move_signed.h
 simdpp/simd/detail/mem_block.h
 simdpp/simd/detail/width.h
 simdpp/simd/detail/mem_pack.h

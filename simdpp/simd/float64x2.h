@@ -81,6 +81,9 @@ public:
 #elif SIMDPP_USE_NEON
     explicit float64x2(basic_int64x2 d)  : di_(vreinterpretq_u64_u32(d)) {}
     float64x2& operator=(basic_int64x2 d) { di_ = vreinterpretq_u64_u32(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    explicit float64x2(basic_int64x2 d)   : di_(d) {}
+    float64x2& operator=(basic_int64x2 d) { di_ = d; return *this; }
 #elif SIMDPP_USE_NULL
     explicit float64x2(basic_int64x2 d)
     {
@@ -92,7 +95,7 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     /// For internal use only
     const double& operator[](unsigned i) const { return d_[i]; }
           double& operator[](unsigned i)       { return d_[i]; }
@@ -154,6 +157,11 @@ private:
         double d_[2];
         uint64x2_t di_;
     };
+#elif SIMDPP_USE_ALTIVEC
+    union {
+        double d_[2];
+        uint64x2 di_;
+    };
 #elif SIMDPP_USE_NULL
     double d_[2];
 #endif
@@ -173,7 +181,7 @@ public:
 #if SIMDPP_USE_SSE2
     mask_float64x2(__m128d d) : d_(d) {}
 #endif
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 #else
     mask_float64x2(float64x2 d) : d_(d) {}
 #endif
@@ -183,14 +191,14 @@ public:
     operator float64x2() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     bool& operator[](unsigned id) { return b_[id]; }
     const bool& operator[](unsigned id) const { return b_[id]; }
 #endif
 #endif
 
 private:
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     bool b_[2];
 #else
     float64x2 d_;

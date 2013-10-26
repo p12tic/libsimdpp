@@ -32,6 +32,7 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd/cast.h>
+#include <simdpp/simd/detail/mem_block.h>
 
 #include <cmath>
 #include <cstdlib>
@@ -66,10 +67,11 @@ typename V::mask_type isnan2(V a, V b)
 template<class V>
 V abs(V a)
 {
+    detail::mem_block<V> ax(a);
     for (unsigned i = 0; i < V::length; i++) {
-        a[i] = std::abs(a[i]);
+        ax[i] = std::abs(ax[i]);
     }
-    return a;
+    return ax;
 }
 
 template<class T, class U>

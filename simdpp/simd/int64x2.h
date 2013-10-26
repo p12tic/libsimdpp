@@ -79,6 +79,11 @@ public:
     basic_int64x2( int64x2_t d) : int128{d} {}
     basic_int64x2& operator=(uint64x2_t d) { int128::operator=(d); return *this; }
     basic_int64x2& operator=( int64x2_t d) { int128::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    basic_int64x2(__vector uint32_t d) : int128{d} {}
+    basic_int64x2(__vector  int32_t d) : int128{d} {}
+    basic_int64x2& operator=(__vector uint32_t d) { int128::operator=(d); return *this; }
+    basic_int64x2& operator=(__vector  int32_t d) { int128::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -116,6 +121,9 @@ public:
 #elif SIMDPP_USE_NEON
     int64x2(int64x2_t d) : basic_int64x2{d} {}
     int64x2& operator=(int64x2_t d) { basic_int64x2::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    int64x2(__vector  int32_t d) : basic_int64x2{d} {}
+    int64x2& operator=(__vector  int32_t d) { basic_int64x2::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -207,6 +215,9 @@ public:
 #elif SIMDPP_USE_NEON
     uint64x2(uint64x2_t d) : basic_int64x2{d} {}
     uint64x2& operator=(uint64x2_t d) { basic_int64x2::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    uint64x2(__vector uint32_t d) : basic_int64x2{d} {}
+    uint64x2& operator=(__vector uint32_t d) { basic_int64x2::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -301,7 +312,6 @@ public:
     mask_int64x2(uint64x2_t d) : d_(d) {}
     mask_int64x2( int64x2_t d) : d_(d) {}
 #endif
-
 #if SIMDPP_USE_NULL
 #else
     mask_int64x2(basic_int64x2 d) : d_(d) {}

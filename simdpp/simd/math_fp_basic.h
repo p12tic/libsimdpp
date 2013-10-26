@@ -56,20 +56,24 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 1-2}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2-3}
     @icost{NEON, 2}
     @icost{AVX-AVX2, 1-2}
+    @icost{ALTIVEC, 2-3}
 */
 inline float32x4 abs(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::abs(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return bit_and(a, int32x4::make_const(0x7fffffff));
 #elif SIMDPP_USE_NEON_FLT_SP
     return vabsq_f32(a);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_abs((__vector float)a);
 #endif
 }
 
@@ -93,17 +97,17 @@ inline float32x8 abs(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-AVX2, 1-2}
 
     @par 256-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
 inline float64x2 abs(float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::abs(a);
 #elif SIMDPP_USE_SSE2
     return bit_and(a, int64x2::make_const(0x7fffffffffffffff));
@@ -130,10 +134,10 @@ inline float64x4 abs(float64x4 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSE4.1, NEON, 1-2}
+    @icost{SSE2-SSE4.1, ALTIVEC, NEON, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2-3}
+    @icost{SSE2-SSE4.1, ALTIVEC, NEON, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
 inline float32x4 sign(float32x4 a)
@@ -158,12 +162,12 @@ inline float32x8 sign(float32x8 a)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 1-2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, 1-2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 sign(float64x2 a)
 {
@@ -190,7 +194,7 @@ inline float64x4 sign(float64x4 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 add(float32x4 a, float32x4 b)
 {
@@ -200,6 +204,8 @@ inline float32x4 add(float32x4 a, float32x4 b)
     return _mm_add_ps(a, b);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vaddq_f32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_add((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -223,15 +229,15 @@ inline float32x8 add(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 add(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::add(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_add_pd(a, b);
@@ -258,7 +264,7 @@ inline float64x4 add(float64x4 a, float64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 sub(float32x4 a, float32x4 b)
 {
@@ -268,6 +274,8 @@ inline float32x4 sub(float32x4 a, float32x4 b)
     return _mm_sub_ps(a,b);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vsubq_f32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_sub((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -291,15 +299,15 @@ inline float32x8 sub(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 sub(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::sub(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_sub_pd(a, b);
@@ -326,17 +334,17 @@ inline float64x4 sub(float64x4 a, float64x4 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX2, 1-2}
+    @icost{SSE2-AVX2, ALTIVEC, 1-2}
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, 2-3}
+    @icost{SSE2-SSE4.1, ALTIVEC, 2-3}
     @icost{AVX-AVX2, NEON, 2}
 */
 inline float32x4 neg(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::neg(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     // reversion of the sign bit required even for NaNs and zeros
     int32x4 zero = int32x4::make_const(0x80000000);
     return bit_xor(a, zero);
@@ -367,16 +375,16 @@ inline float32x8 neg(float32x8 a)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 1-2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, 1-2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 neg(float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::neg(a);
 #elif SIMDPP_USE_SSE2
     int64x2 zero = int64x2::make_const(0x8000000000000000);
@@ -405,7 +413,7 @@ inline float64x4 neg(float64x4 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 mul(float32x4 a, float32x4 b)
 {
@@ -415,6 +423,9 @@ inline float32x4 mul(float32x4 a, float32x4 b)
     return _mm_mul_ps(a,b);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vmulq_f32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_madd((__vector float)a, (__vector float)b,
+                    (__vector float)float32x4::zero());
 #endif
 }
 
@@ -438,15 +449,15 @@ inline float32x8 mul(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 mul(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::mul(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_mul_pd(a, b);

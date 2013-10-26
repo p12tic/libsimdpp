@@ -67,7 +67,10 @@ enum class Arch : std::uint32_t {
     ARM_NEON = 1 << 0,
     /// Indicates ARM NEON support (SP floating-point math is executed on NEON,
     /// DP floating-point math is executed on VFP)
-    ARM_NEON_FLT_SP = 1 << 1
+    ARM_NEON_FLT_SP = 1 << 1,
+
+    /// Indicates POWER ALTIVEC support.
+    POWER_ALTIVEC = 1 << 0
 };
 
 /// Bitwise operators for @c Arch

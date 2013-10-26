@@ -51,6 +51,7 @@ public:
     using element_type = uint16_t;
     using uint_element_type = uint16_t;
     using int_vector_type = basic_int16x8;
+    using uint_vector_type = uint16x8;
     using mask_type = mask_int16x8;
 
     static constexpr unsigned length = 8;
@@ -77,6 +78,11 @@ public:
     basic_int16x8( int16x8_t d) : int128{d} {}
     basic_int16x8& operator=(uint16x8_t d) { int128::operator=(d); return *this; }
     basic_int16x8& operator=( int16x8_t d) { int128::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    basic_int16x8(__vector uint16_t d) : int128{d} {}
+    basic_int16x8(__vector  int16_t d) : int128{d} {}
+    basic_int16x8& operator=(__vector uint16_t d) { int128::operator=(d); return *this; }
+    basic_int16x8& operator=(__vector  int16_t d) { int128::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -108,6 +114,9 @@ public:
 #elif SIMDPP_USE_NEON
     int16x8(int16x8_t d) : basic_int16x8{d} {}
     int16x8& operator=(int16x8_t d) { basic_int16x8::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    int16x8(__vector int16_t d) : basic_int16x8{d} {}
+    int16x8& operator=(__vector int16_t d) { basic_int16x8::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -213,6 +222,9 @@ public:
 #elif SIMDPP_USE_NEON
     uint16x8(uint16x8_t d) : basic_int16x8{d} {}
     uint16x8& operator=(uint16x8_t d) { basic_int16x8::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8(__vector uint16_t d) : basic_int16x8{d} {}
+    uint16x8& operator=(__vector uint16_t d) { basic_int16x8::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -311,12 +323,15 @@ public:
     mask_int16x8 &operator=(const mask_int16x8 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 #if SIMDPP_USE_SSE2
     mask_int16x8(__m128i d) : d_(d) {}
 #elif SIMDPP_USE_NEON
     mask_int16x8(uint16x8_t d) : d_(d) {}
     mask_int16x8( int16x8_t d) : d_(d) {}
+#elif SIMDPP_USE_ALTIVEC
+    mask_int16x8(__vector int16_t d) : d_(d) {}
+    mask_int16x8(__vector uint16_t d) : d_(d) {}
+    mask_int16x8(__vector __bool short d) : d_(d) {}
 #endif
 #if SIMDPP_USE_NULL
 #else

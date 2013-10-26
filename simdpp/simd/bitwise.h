@@ -34,7 +34,7 @@
 
 #include <simdpp/simd/types.h>
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     #include <simdpp/null/foreach.h>
     #include <simdpp/null/bitwise.h>
 #endif
@@ -58,7 +58,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 bit_and(basic_int8x16 a, int128 b)
 {
@@ -68,6 +68,8 @@ inline basic_int8x16 bit_and(basic_int8x16 a, int128 b)
     return _mm_and_si128(a, b);
 #elif SIMDPP_USE_NEON
     return vandq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_and((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -249,7 +251,7 @@ inline mask_int64x4 bit_and(mask_int64x4 a, mask_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 bit_and(float32x4 a, float32x4 b)
 {
@@ -260,6 +262,8 @@ inline float32x4 bit_and(float32x4 a, float32x4 b)
 #elif SIMDPP_USE_NEON
     return vreinterpretq_f32_u32(vandq_u32(vreinterpretq_u32_f32(a),
                                            vreinterpretq_u32_f32(b)));
+#elif SIMDPP_USE_ALTIVEC
+    return vec_and((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -322,7 +326,7 @@ inline mask_float32x8 bit_and(mask_float32x8 a, mask_float32x8 b)
 
 inline float64x2 bit_and(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_and(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_and_pd(a, b);
@@ -350,7 +354,7 @@ inline float64x4 bit_and(float64x4 a, int256 b)
 
 inline float64x2 bit_and(float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_and_vm(a, b);
 #else
     return bit_and(a, float64x2(b));
@@ -368,7 +372,7 @@ inline float64x4 bit_and(float64x4 a, mask_float64x4 b)
 
 inline mask_float64x2 bit_and(mask_float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_and_mm(a, b);
 #else
     return bit_and(float64x2(a), float64x2(b));
@@ -396,7 +400,7 @@ inline mask_float64x4 bit_and(mask_float64x4 a, mask_float64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 bit_andnot(basic_int8x16 a, int128 b)
 {
@@ -405,7 +409,9 @@ inline basic_int8x16 bit_andnot(basic_int8x16 a, int128 b)
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_si128(b, a);
 #elif SIMDPP_USE_NEON
-    return vbicq_u8(a, b);
+    return vbicq_u8(a, b);;
+#elif SIMDPP_USE_ALTIVEC
+    return vec_andc((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -421,7 +427,6 @@ inline basic_int8x32 bit_andnot(basic_int8x32 a, int256 b)
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
 }
-
 inline basic_int16x16 bit_andnot(basic_int16x16 a, int256 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
 inline basic_int32x8 bit_andnot(basic_int32x8 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
 inline basic_int64x4 bit_andnot(basic_int64x4 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
@@ -587,7 +592,7 @@ inline mask_int64x4 bit_andnot(mask_int64x4 a, mask_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline float32x4 bit_andnot(float32x4 a, float32x4 b)
 {
@@ -598,6 +603,8 @@ inline float32x4 bit_andnot(float32x4 a, float32x4 b)
 #elif SIMDPP_USE_NEON
     return vreinterpretq_f32_u32(vbicq_u32(vreinterpretq_u32_f32(a),
                                            vreinterpretq_u32_f32(b)));
+#elif SIMDPP_USE_ALTIVEC
+    return vec_andc((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -660,7 +667,7 @@ inline mask_float32x8 bit_andnot(mask_float32x8 a, mask_float32x8 b)
 
 inline float64x2 bit_andnot(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_andnot(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_pd(b, a);
@@ -688,7 +695,7 @@ inline float64x4 bit_andnot(float64x4 a, int256 b)
 
 inline float64x2 bit_andnot(float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_andnot_vm(a, b);
 #else
     return bit_andnot(a, float64x2(b));
@@ -706,7 +713,7 @@ inline float64x4 bit_andnot(float64x4 a, mask_float64x4 b)
 
 inline mask_float64x2 bit_andnot(mask_float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_andnot_mm(a, b);
 #else
     return bit_andnot(float64x2(a), float64x2(b));
@@ -733,7 +740,7 @@ inline mask_float64x4 bit_andnot(mask_float64x4 a, mask_float64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 bit_or(basic_int8x16 a, int128 b)
 {
@@ -743,6 +750,8 @@ inline basic_int8x16 bit_or(basic_int8x16 a, int128 b)
     return _mm_or_si128(a, b);
 #elif SIMDPP_USE_NEON
     return vorrq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_or((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -847,7 +856,7 @@ inline mask_int64x4 bit_or(mask_int64x4 a, mask_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 bit_or(float32x4 a, float32x4 b)
 {
@@ -857,6 +866,8 @@ inline float32x4 bit_or(float32x4 a, float32x4 b)
     return _mm_or_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vreinterpretq_f32_s32(vorrq_s32(vreinterpretq_s32_f32(a), vreinterpretq_s32_f32(b)));
+#elif SIMDPP_USE_ALTIVEC
+    return vec_or((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -883,7 +894,7 @@ inline float32x8 bit_or(float32x8 a, int256 b)
 
 inline float64x2 bit_or(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_or(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_or_pd(a, b);
@@ -922,7 +933,7 @@ inline mask_float32x4 bit_or(mask_float32x4 a, mask_float32x4 b)
 
 inline mask_float64x2 bit_or(mask_float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_or_mm(a, b);
 #else
     return bit_or(float64x2(a), float64x2(b));
@@ -958,7 +969,7 @@ inline mask_float64x4 bit_or(mask_float64x4 a, mask_float64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 bit_xor(basic_int8x16 a, int128 b)
 {
@@ -968,6 +979,8 @@ inline basic_int8x16 bit_xor(basic_int8x16 a, int128 b)
     return _mm_xor_si128(a, b);
 #elif SIMDPP_USE_NEON
     return veorq_u8(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_or((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -1074,7 +1087,7 @@ inline mask_int64x4 bit_xor(mask_int64x4 a, mask_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 bit_xor(float32x4 a, float32x4 b)
 {
@@ -1084,6 +1097,8 @@ inline float32x4 bit_xor(float32x4 a, float32x4 b)
     return _mm_xor_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vreinterpretq_f32_s32(veorq_s32(vreinterpretq_s32_f32(a), vreinterpretq_s32_f32(b)));
+#elif SIMDPP_USE_ALTIVEC
+    return vec_or((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -1110,7 +1125,7 @@ inline float32x8 bit_xor(float32x8 a, int256 b)
 
 inline float64x2 bit_xor(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_xor(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_xor_pd(a, b);
@@ -1149,7 +1164,7 @@ inline mask_float32x4 bit_xor(mask_float32x4 a, mask_float32x4 b)
 
 inline mask_float64x2 bit_xor(mask_float64x2 a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_xor_mm(a, b);
 #else
     return bit_xor(float64x2(a), float64x2(b));
@@ -1187,7 +1202,7 @@ inline mask_float64x4 bit_xor(mask_float64x4 a, mask_float64x4 b)
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2-3}
-    @icost{AVX2, NEON, 2}
+    @icost{AVX2, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 bit_not(basic_int8x16 a)
 {
@@ -1198,6 +1213,8 @@ inline basic_int8x16 bit_not(basic_int8x16 a)
     return bit_xor(a, ones);
 #elif SIMDPP_USE_NEON
     return vmvnq_u8(a);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_nor((__vector uint8_t)a, (__vector uint8_t)a);
 #endif
 }
 
@@ -1306,7 +1323,7 @@ inline mask_int64x4 bit_not(mask_int64x4 a)
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2-3}
-    @icost{AVX2, NEON, 2}
+    @icost{AVX2, NEON, ALTIVEC, 2}
 */
 inline float32x4 bit_not(float32x4 a)
 {
@@ -1335,7 +1352,7 @@ inline float64x2 bit_not(float64x2 a)
 inline float32x8 bit_not(float32x8 a)
 {
 #if SIMDPP_USE_AVX
-    float32x8 ones = float32x8::ones();
+    uint32x8 ones = uint32x8::ones();
     return bit_xor(a, ones);
 #else
     return {bit_not(a[0]), bit_not(a[1])};
@@ -1345,7 +1362,7 @@ inline float32x8 bit_not(float32x8 a)
 inline float64x4 bit_not(float64x4 a)
 {
 #if SIMDPP_USE_AVX
-    float64x4 ones = float64x4::ones();
+    uint64x4 ones = uint64x4::ones();
     return bit_xor(a, ones);
 #else
     return {bit_not(a[0]), bit_not(a[1])};
@@ -1365,7 +1382,7 @@ inline mask_float32x4 bit_not(mask_float32x4 a)
 
 inline mask_float64x2 bit_not(mask_float64x2 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_not_mm(a);
 #else
     return bit_not(float64x2(a));

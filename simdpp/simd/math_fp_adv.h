@@ -37,7 +37,7 @@
 #include <simdpp/simd/math_shift.h>
 #include <simdpp/simd/convert.h>
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     #include <cmath>
     #include <simdpp/null/foreach.h>
     #include <simdpp/null/math.h>
@@ -61,7 +61,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline mask_float32x4 isnan(float32x4 a)
 {
@@ -70,9 +70,11 @@ inline mask_float32x4 isnan(float32x4 a)
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, a, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
-    return _mm_cmpunord_ps(a, a);
+    return (mask_float32x4) _mm_cmpunord_ps(a, a);
 #elif SIMDPP_USE_NEON
     return vceqq_f32(a, a);
+#elif SIMDPP_USE_ALTIVEC
+    return (mask_float32x4) vec_cmpeq((__vector float)a, (__vector float)a);
 #endif
 }
 
@@ -96,15 +98,15 @@ inline mask_float32x8 isnan(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 isnan(float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::isnan(a);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a, a, _CMP_UNORD_Q);
@@ -133,11 +135,11 @@ inline mask_float64x4 isnan(float64x4 a)
     @endcode
 
     @par 128-bit version:
-    @icost{NEON, 3}
+    @icost{NEON, ALTIVEC, 3}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @icost{NEON, 6}
+    @icost{NEON, ALTIVEC, 6}
 */
 inline mask_float32x4 isnan2(float32x4 a, float32x4 b)
 {
@@ -146,8 +148,8 @@ inline mask_float32x4 isnan2(float32x4 a, float32x4 b)
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
-    return _mm_cmpunord_ps(a, b);
-#elif SIMDPP_USE_NEON
+    return (mask_float32x4) _mm_cmpunord_ps(a, b);
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return bit_or(isnan(a), isnan(b));
 #endif
 }
@@ -173,15 +175,15 @@ inline mask_float32x8 isnan2(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
 inline mask_float64x2 isnan2(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::isnan2(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_UNORD_Q);
@@ -206,6 +208,7 @@ inline mask_float64x4 isnan2(float64x4 a, float64x4 b)
     Relative error is as follows:
      - 1/2 ULP for NULL and NEON
      - ~1/2730 for SSE2
+     - 1/4096 for ALTIVEC
      - 1/256 for NEON_FLT_SP
 
     @code
@@ -215,7 +218,7 @@ inline mask_float64x4 isnan2(float64x4 a, float64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 rcp_e(float32x4 a)
 {
@@ -225,6 +228,8 @@ inline float32x4 rcp_e(float32x4 a)
     return _mm_rcp_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vrecpeq_f32(a);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_re((__vector float)a);
 #endif
 }
 
@@ -263,11 +268,13 @@ inline float32x8 rcp_e(float32x8 a)
     @par 128-bit version:
     @icost{SSE2-AVX2, 3-4}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 2-3}
 
     @par 256-bit version:
     @icost{AVX-AVX2, 3-4}
     @icost{SSE2-SSE4.1, 6-7}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 4-5}
 */
 inline float32x4 rcp_rh(float32x4 x, float32x4 a)
 {
@@ -287,6 +294,13 @@ inline float32x4 rcp_rh(float32x4 x, float32x4 a)
     r = vrecpsq_f32(a, x);
     x = mul(x, r);
 
+    return x;
+#elif SIMDPP_USE_ALTIVEC
+    float32x4 r, c2;
+    c2 = float32x4::make_const(2.0f);
+    // -(x*a-c2)
+    r = vec_nmsub((__vector float)x, (__vector float)a, (__vector float)c2);
+    x = mul(x, r);
     return x;
 #endif
 }
@@ -318,9 +332,12 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
     @endcode
 
     @icost{NEON, 6}
+    @icost{ALTIVEC, 10}
+
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 12}
+    @icost{ALTIVEC, 19}
 */
 inline float32x4 div(float32x4 a, float32x4 b)
 {
@@ -333,6 +350,12 @@ inline float32x4 div(float32x4 a, float32x4 b)
     x = rcp_e(b);
     x = rcp_rh(x, b);
     x = rcp_rh(x, b);
+    return mul(a, x);
+#elif SIMDPP_USE_ALTIVEC
+    float32x4 x;
+    x = rcp_e(b);
+    x = rcp_rh(x, b);
+    x = rcp_rh(x, b); // TODO: check how many approximation steps are needed
     return mul(a, x);
 #endif
 }
@@ -357,15 +380,15 @@ inline float32x8 div(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 div(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
@@ -388,6 +411,7 @@ inline float64x4 div(float64x4 a, float64x4 b)
     Relative error is as follows:
      - 1/2 ULP for NULL and NEON
      - ~1/2730 for SSE2
+     - 1/4096 for ALTIVEC
      - 1/256 for NEON_FLT_SP
 
     @code
@@ -397,7 +421,7 @@ inline float64x4 div(float64x4 a, float64x4 b)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 rsqrt_e(float32x4 a)
 {
@@ -407,6 +431,8 @@ inline float32x4 rsqrt_e(float32x4 a)
     return _mm_rsqrt_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vrsqrteq_f32(a);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_rsqrte((__vector float)a);
 #endif
 }
 
@@ -434,11 +460,13 @@ inline float32x8 rsqrt_e(float32x8 a)
     @par 128-bit version:
     @icost{SSE2, SSE3, SSSE3, SSE4.1, 5-7}
     @icost{NEON, 3}
+    @icost{ALTIVEC, 4-6}
 
     @par 256-bit version:
     @icost{AVX-AVX2, 7}
     @icost{SSE2, SSE3, SSSE3, SSE4.1, 10-12}
     @icost{NEON, 6}
+    @icost{ALTIVEC, 8-10}
 */
 inline float32x4 rsqrt_rh(float32x4 x, float32x4 a)
 {
@@ -466,6 +494,19 @@ inline float32x4 rsqrt_rh(float32x4 x, float32x4 a)
     x = mul(x, r);
 
     return x;
+#elif SIMDPP_USE_ALTIVEC
+    float32x4 c3, c0p5, x2, r, xp5;
+
+    c3 = float32x4::make_const(3.0f);
+    c0p5 = float32x4::make_const(0.5f);
+
+    x2 = mul(x, x);
+    // r = (c3 - a*x2)
+    r = vec_nmsub((__vector float)a, (__vector float)x2, (__vector float)c3);
+    xp5 = mul(x, c0p5);
+    r = mul(xp5, r);
+
+    return r;
 #endif
 }
 
@@ -501,10 +542,12 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 
     @par 128-bit version:
     @icost{NEON, 5}
+    @icost{ALTIVEC, 5-7}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 10}
+    @icost{ALTIVEC, 10-12}
 */
 inline float32x4 sqrt(float32x4 a)
 {
@@ -512,7 +555,7 @@ inline float32x4 sqrt(float32x4 a)
     return null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a);
-#elif SIMDPP_USE_NEON_FLT_SP
+#elif SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_ALTIVEC
     float32x4 x;
     x = rsqrt_e(a);
     x = rsqrt_rh(x, a);
@@ -540,15 +583,15 @@ inline float32x8 sqrt(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 sqrt(float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_pd(a);
@@ -579,7 +622,7 @@ inline float64x4 sqrt(float64x4 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 min(float32x4 a, float32x4 b)
 {
@@ -589,6 +632,8 @@ inline float32x4 min(float32x4 a, float32x4 b)
     return _mm_min_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vminq_f32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_min((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -614,15 +659,15 @@ inline float32x8 min(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
 inline float64x2 min(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::min(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_min_pd(a, b);
@@ -651,7 +696,7 @@ inline float64x4 min(float64x4 a, float64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 max(float32x4 a, float32x4 b)
 {
@@ -661,6 +706,8 @@ inline float32x4 max(float32x4 a, float32x4 b)
     return _mm_max_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vmaxq_f32(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_max((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -686,15 +733,15 @@ inline float32x8 max(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 max(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::max(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_max_pd(a, b);
@@ -727,6 +774,7 @@ inline float64x4 max(float64x4 a, float64x4 b)
     @par 256-bit version:
     @icost{SSE2-SSSE3, 24-26}
     @icost{NEON, 20-21}
+    @icost{ALTIVEC, 2}
 */
 inline float32x4 floor(float32x4 a)
 {
@@ -752,6 +800,8 @@ inline float32x4 floor(float32x4 a)
     //combine the results
     a = blend(a, fa, mask);
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    return vec_floor((__vector float)a);
 #endif
 }
 
@@ -780,6 +830,7 @@ inline float32x8 floor(float32x8 a)
     @par 256-bit version:
     @icost{SSE2, SSE3, SSSE3, 26-28}
     @icost{NEON, 22-24}
+    @icost{ALTIVEC, 2}
 */
 inline float32x4 ceil(float32x4 a)
 {
@@ -806,6 +857,8 @@ inline float32x4 ceil(float32x4 a)
     //combine the results
     a = blend(a, fa, mask);
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    return vec_ceil((__vector float)a);
 #endif
 }
 
@@ -834,7 +887,7 @@ inline float32x8 ceil(float32x8 a)
     @par 256-bit version:
     @icost{SSE2, SSE3, SSSE3, 14-16}
     @icost{NEON, 10-11}
-    @icost{SSE4.1, 2}
+    @icost{SSE4.1, ALTIVEC, 2}
 */
 inline float32x4 trunc(float32x4 a)
 {
@@ -854,6 +907,8 @@ inline float32x4 trunc(float32x4 a)
     //combine the results
     a = blend(a, fa, mask);     // takes care of NaNs
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    return vec_trunc((__vector float)a);
 #endif
 }
 

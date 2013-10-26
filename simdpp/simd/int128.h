@@ -71,6 +71,16 @@ public:
     int128(uint16x8_t d) : d_(vreinterpretq_u32_u16(d)) {}
     int128( int8x16_t d) : d_(vreinterpretq_u32_s8(d)) {}
     int128(uint8x16_t d) : d_(vreinterpretq_u32_u8(d)) {}
+#elif SIMDPP_USE_ALTIVEC
+    int128(__vector uint8_t d)          : d_(d) {}
+    int128(__vector  int8_t d)          : d_((__vector uint8_t)d) {}
+    int128(__vector   __bool char d)    : d_((__vector uint8_t)d) {}
+    int128(__vector uint16_t d)         : d_((__vector uint8_t)d) {}
+    int128(__vector  int16_t d)         : d_((__vector uint8_t)d) {}
+    int128(__vector   __bool short d)   : d_((__vector uint8_t)d) {}
+    int128(__vector uint32_t d)         : d_((__vector uint8_t)d) {}
+    int128(__vector  int32_t d)         : d_((__vector uint8_t)d) {}
+    int128(__vector   __bool int d)     : d_((__vector uint8_t)d) {}
 #endif
     /// @}
 
@@ -87,6 +97,16 @@ public:
     operator uint16x8_t() const     { return vreinterpretq_u16_u32(d_); }
     operator int8x16_t() const      { return vreinterpretq_s8_u32(d_); }
     operator uint8x16_t() const     { return vreinterpretq_u8_u32(d_); }
+#elif SIMDPP_USE_ALTIVEC
+    operator __vector uint8_t() const       { return (__vector uint8_t)d_; }
+    operator __vector  int8_t() const       { return (__vector int8_t)d_; }
+    operator __vector __bool int8_t() const   { return (__vector __bool int8_t)d_; }
+    operator __vector uint16_t() const      { return (__vector uint16_t)d_; }
+    operator __vector  int16_t() const      { return (__vector int16_t)d_; }
+    operator __vector __bool int16_t() const  { return (__vector __bool int16_t)d_; }
+    operator __vector uint32_t() const      { return (__vector uint32_t)d_; }
+    operator __vector  int32_t() const      { return (__vector int32_t)d_; }
+    operator __vector __bool int32_t() const    { return (__vector __bool int32_t)d_; }
 #endif
     /// @}
 
@@ -97,6 +117,8 @@ public:
     explicit operator __m128d()     { return _mm_castsi128_pd(d_); }
 #elif SIMDPP_USE_NEON
     explicit operator float32x4_t() const    { return vreinterpretq_f32_u32(d_); }
+#elif SIMDPP_USE_ALTIVEC
+    explicit operator __vector float() const { return (__vector float)(d_); }
 #endif
     /// @}
 
@@ -154,6 +176,8 @@ private:
      __m128i d_;
 #elif SIMDPP_USE_NEON
     uint32x4_t d_;
+#elif SIMDPP_USE_ALTIVEC
+    __vector uint8_t d_;
 #elif SIMDPP_USE_NULL
     union {
         uint64_t u64_[2];

@@ -66,7 +66,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     *(p) = a[0..255]
     @endcode
     @a p must be aligned to 32 bytes.
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
 inline void store(void* p, int128 a)
@@ -77,6 +77,8 @@ inline void store(void* p, int128 a)
     _mm_store_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
     vst1q_u32(reinterpret_cast<uint32_t*>(p), a);
+#elif SIMDPP_USE_ALTIVEC
+    vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
 #endif
 }
 
@@ -99,6 +101,8 @@ inline void store(float *p, float32x4 a)
     _mm_store_ps(p, a);
 #elif SIMDPP_USE_NEON
     vst1q_f32(p, a);
+#elif SIMDPP_USE_ALTIVEC
+    vec_stl((__vector float)a, 0, p);
 #endif
 }
 
@@ -114,7 +118,7 @@ inline void store(float* p, float32x8 a)
 
 inline void store(double *p, float64x2 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_pd(p, a);
@@ -150,7 +154,7 @@ inline void store(double* p, float64x4 a)
     *(p) = a[0..255]
     @endcode
     @a p must be aligned to 32 bytes.
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
 inline void stream(void* p, int128 a)
@@ -161,6 +165,8 @@ inline void stream(void* p, int128 a)
     _mm_stream_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
     store(p, a);
+#elif SIMDPP_USE_ALTIVEC
+    vec_st((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
 #endif
 }
 
@@ -183,6 +189,8 @@ inline void stream(float* p, float32x4 a)
     _mm_stream_ps(p, a);
 #elif SIMDPP_USE_NEON
     store(p, a);
+#elif SIMDPP_USE_ALTIVEC
+    vec_st((__vector float)a, 0, p);
 #endif
 }
 
@@ -198,7 +206,7 @@ inline void stream(float* p, float32x8 a)
 
 inline void stream(double* p, float64x2 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_pd(p, a);
@@ -337,6 +345,27 @@ inline void store_first(void* p, basic_int8x16 a, unsigned n)
     if (n%2 == 1) {
         neon::store_lane<0,1>(q, a);
     }
+#elif SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
+    if (n >= 8) {
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
+        q += 8;
+        n -= 8;
+    }
+    if (n >= 4) {
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        q += 4;
+        n -= 4;
+    }
+    if (n >= 2) {
+        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
+        q += 2;
+        n -= 2;
+    }
+    if (n == 1) {
+        vec_ste((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(q));
+    }
 #endif
 }
 
@@ -380,6 +409,22 @@ inline void store_first(void* p, basic_int16x8 a, unsigned n)
     if (n%2 >= 1) {
         neon::store_lane<0,1>(q, a);
     }
+#elif SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
+    if (n >= 4) {
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
+        q += 8;
+        n -= 4;
+    }
+    if (n >= 2) {
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        q += 4;
+        n -= 2;
+    }
+    if (n == 1) {
+        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
+    }
 #endif
 }
 
@@ -419,6 +464,18 @@ inline void store_first(void* p, basic_int32x4 a, unsigned n)
     if (n%2 == 1) {
         neon::store_lane<0,1>(q, a);
     }
+
+#elif SIMDPP_USE_ALTIVEC
+    u_int32_t* q = reinterpret_cast<uint32_t*>(p);
+    if (n >= 2) {
+        vec_ste((__vector uint32_t)a, 0, q);
+        vec_ste((__vector uint32_t)a, 4, q);
+        q += 8;
+        n -= 4;
+    }
+    if (n == 1) {
+        vec_ste((__vector uint32_t)a, 0, q);
+    }
 #endif
 }
 
@@ -438,6 +495,12 @@ inline void store_first(void* p, basic_int64x2 a, unsigned n)
 #elif SIMDPP_USE_NEON
     if (n == 1) {
         neon::store_lane<0,1>(p, a);
+    }
+#elif SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
+    if (n == 1) {
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
     }
 #endif
 }
@@ -475,7 +538,7 @@ inline void store_first(float* p, float32x8 a, unsigned n)
 
 inline void store_first(double* p, float64x2 a, unsigned n)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
@@ -580,6 +643,29 @@ inline void store_last(void* p, basic_int8x16 a, unsigned n)
         q -= 1;
         neon::store_lane<15,1>(q, a);
     }
+#elif SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
+    q += 16;
+    if (n >= 8) {
+        q -= 8;
+        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        n -= 8;
+    }
+    if (n >= 4) {
+        q -= 4;
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        n -= 4;
+    }
+    if (n >= 2) {
+        q -= 2;
+        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
+        n -= 2;
+    }
+    if (n == 1) {
+        q -= 1;
+        vec_ste((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(q));
+    }
 #endif
 }
 
@@ -625,6 +711,24 @@ inline void store_last(void* p, basic_int16x8 a, unsigned n)
         q -= 2;
         neon::store_lane<7,1>(q, a);
     }
+#elif SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
+    q += 16;
+    if (n >= 4) {
+        q -= 8;
+        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        n -= 4;
+    }
+    if (n >= 2) {
+        q -= 4;
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        n -= 2;
+    }
+    if (n == 1) {
+        q -= 2;
+        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
+    }
 #endif
 }
 
@@ -668,6 +772,19 @@ inline void store_last(void* p, basic_int32x4 a, unsigned n)
         q -= 4;
         neon::store_lane<3,1>(q, a);
     }
+#elif SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
+    q += 16;
+    if (n >= 2) {
+        q -= 8;
+        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+        n -= 2;
+    }
+    if (n >= 1) {
+        q -= 4;
+        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
+    }
 #endif
 }
 
@@ -689,6 +806,12 @@ inline void store_last(void* p, basic_int64x2 a, unsigned n)
     char* q = reinterpret_cast<char*>(p);
     if (n == 1) {
         neon::store_lane<1,1>(q+8, a);
+    }
+#elif SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
+    if (n == 1) {
+        vec_ste((__vector uint32_t)a, 8, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 12, reinterpret_cast<uint32_t*>(q));
     }
 #endif
 }
@@ -833,7 +956,7 @@ inline void store_packed2(void* p, basic_int8x16 a, basic_int8x16 b)
 {
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack2(a, b);
@@ -872,7 +995,7 @@ inline void store_packed2(void* p, basic_int16x8 a, basic_int16x8 b)
 {
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack2(a, b);
@@ -911,7 +1034,7 @@ inline void store_packed2(void* p, basic_int32x4 a, basic_int32x4 b)
 {
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack2(a, b);
@@ -982,7 +1105,7 @@ inline void store_packed2(float* p, float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     detail::mem_pack2(a, b);
     store(p, a);
     store(p+4, b);
@@ -1067,7 +1190,7 @@ inline void store_packed3(void* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack3(a, b, c);
@@ -1111,7 +1234,7 @@ inline void store_packed3(void* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack3(a, b, c);
@@ -1155,7 +1278,7 @@ inline void store_packed3(void* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack3(a, b, c);
@@ -1199,7 +1322,7 @@ inline void store_packed3(void* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack3(a, b, c);
@@ -1245,7 +1368,7 @@ inline void store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
 {
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     detail::mem_pack3(a, b, c);
     store(p, a);
     store(p+4, b);
@@ -1297,7 +1420,7 @@ inline void store_packed3(double* p, float64x2 a, float64x2 b, float64x2 c)
 {
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     detail::mem_pack3(a, b, c);
     store(p, a);
     store(p+2, b);
@@ -1352,7 +1475,7 @@ inline void store_packed4(void* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack4(a, b, c, d);
@@ -1401,7 +1524,7 @@ inline void store_packed4(void* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack4(a, b, c, d);
@@ -1450,7 +1573,7 @@ inline void store_packed4(void* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     char* q = reinterpret_cast<char*>(p);
 
     detail::mem_pack4(a, b, c, d);
@@ -1543,7 +1666,7 @@ inline void store_packed4(float* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p+4, b);
@@ -1598,7 +1721,7 @@ inline void store_packed4(double* p,
 {
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p+2, b);

@@ -32,19 +32,19 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/fwd.h>
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/bitwise.h>
 #include <simdpp/simd/shuffle_generic.h>
+#include <simdpp/simd/make_shuffle_bytes_mask.h>
 #include <simdpp/simd/detail/shuffle128.h>
+#include <simdpp/null/shuffle.h>
 
 #include <iostream>
 #include <iomanip>
 
-#if SIMDPP_USE_NULL
-    #include <simdpp/null/shuffle.h>
-#elif SIMDPP_USE_NEON
+#if SIMDPP_USE_NEON
     #include <simdpp/neon/shuffle.h>
-    #include <simdpp/null/shuffle.h>
 #elif SIMDPP_USE_SSE2
     #include <simdpp/sse/shuffle.h>
     #include <simdpp/sse/extract_half.h>
@@ -71,7 +71,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 zip_lo(basic_int8x16 a, basic_int8x16 b)
 {
@@ -83,6 +83,8 @@ inline basic_int8x16 zip_lo(basic_int8x16 a, basic_int8x16 b)
     // the compiler will optimize multiple vzip instructions if both zip_lo
     // and zip_hi are used on the same arguments
     return vzipq_u8(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergeh((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -103,6 +105,8 @@ inline basic_int16x8 zip_lo(basic_int16x8 a, basic_int16x8 b)
     return _mm_unpacklo_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vzipq_u16(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergeh((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -123,6 +127,8 @@ inline basic_int32x4 zip_lo(basic_int32x4 a, basic_int32x4 b)
     return _mm_unpacklo_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vzipq_u32(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergeh((__vector uint32_t)a, (__vector uint32_t)b);
 #endif
 }
 
@@ -143,6 +149,9 @@ inline basic_int64x2 zip_lo(basic_int64x2 a, basic_int64x2 b)
     return _mm_unpacklo_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return neon::zip_lo(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    uint64x2 mask = make_shuffle_bytes16_mask<0, 2>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -165,7 +174,7 @@ inline basic_int64x4 zip_lo(basic_int64x4 a, basic_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
@@ -178,6 +187,8 @@ inline float32x4 zip_lo(float32x4 a, float32x4 b)
     return _mm_unpacklo_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vzipq_f32(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergeh((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -192,7 +203,7 @@ inline float32x8 zip_lo(float32x8 a, float32x8 b)
 
 inline float64x2 zip_lo(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return null::zip_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a),
@@ -224,7 +235,7 @@ inline float64x4 zip_lo(float64x4 a, float64x4 b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 zip_hi(basic_int8x16 a, basic_int8x16 b)
 {
@@ -236,6 +247,8 @@ inline basic_int8x16 zip_hi(basic_int8x16 a, basic_int8x16 b)
     // the compiler will optimize multiple vzip instructions if both zip_hi
     // and zip_hi are used on the same arguments
     return vzipq_u8(a, b).val[1];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergel((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
 }
 
@@ -256,6 +269,8 @@ inline basic_int16x8 zip_hi(basic_int16x8 a, basic_int16x8 b)
     return _mm_unpackhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vzipq_u16(a, b).val[1];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergel((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -276,6 +291,8 @@ inline basic_int32x4 zip_hi(basic_int32x4 a, basic_int32x4 b)
     return _mm_unpackhi_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vzipq_u32(a, b).val[1];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergel((__vector uint32_t)a, (__vector uint32_t)b);
 #endif
 }
 
@@ -296,6 +313,9 @@ inline basic_int64x2 zip_hi(basic_int64x2 a, basic_int64x2 b)
     return _mm_unpackhi_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return neon::zip_hi(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    uint64x2 mask = make_shuffle_bytes16_mask<1, 3>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -321,7 +341,7 @@ inline basic_int64x4 zip_hi(basic_int64x4 a, basic_int64x4 b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 zip_hi(float32x4 a, float32x4 b)
 {
@@ -331,6 +351,8 @@ inline float32x4 zip_hi(float32x4 a, float32x4 b)
     return _mm_unpackhi_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vzipq_f32(a, b).val[1];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_mergel((__vector float)a, (__vector float)b);
 #endif
 }
 
@@ -345,7 +367,7 @@ inline float32x8 zip_hi(float32x8 a, float32x8 b)
 
 inline float64x2 zip_hi(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return null::zip_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b),
@@ -383,7 +405,7 @@ inline float64x4 zip_hi(float64x4 a, float64x4 b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int8x16 move_l(basic_int8x16 a)
@@ -404,6 +426,9 @@ basic_int8x16 move_l(basic_int8x16 a)
 #elif SIMDPP_USE_NEON
     int8x16 z = int8x16::zero();
     return vextq_u8(a, z, shift);
+#elif SIMDPP_USE_ALTIVEC
+    // return align<shift>(a, uint8x16::zero());
+    return vec_sld((__vector uint8_t)a, (__vector uint8_t)uint8x16::zero(), shift);
 #endif
 }
 
@@ -412,7 +437,7 @@ basic_int8x32 move_l(basic_int8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
 #if SIMDPP_USE_AVX2
-    return _mm256_srli_si256(a, shift); // TODO has been changed to _mm256_srli_si128
+    return _mm256_srli_si256(a, shift);
 #else
     return {move_l<shift>(a[0]), move_l<shift>(a[1])};
 #endif
@@ -444,7 +469,7 @@ template<> inline basic_int8x32 move_l<32>(basic_int8x32 a) { (void) a; return i
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int16x8 move_l(basic_int16x8 a)
@@ -475,7 +500,7 @@ basic_int16x16 move_l(basic_int16x16 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int32x4 move_l(basic_int32x4 a)
@@ -504,7 +529,7 @@ basic_int32x8 move_l(basic_int32x8 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int64x2 move_l(basic_int64x2 a)
@@ -535,7 +560,7 @@ basic_int64x4 move_l(basic_int64x4 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 float32x4 move_l(float32x4 a)
@@ -564,7 +589,7 @@ float32x8 move_l(float32x8 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 float64x2 move_l(float64x2 a)
@@ -597,7 +622,7 @@ float64x4 move_l(float64x4 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int8x16 move_r(basic_int8x16 a)
@@ -618,6 +643,9 @@ basic_int8x16 move_r(basic_int8x16 a)
 #elif SIMDPP_USE_NEON
     int8x16 z = int8x16::zero();
     return vextq_u8(z, a, 16-shift);
+#elif SIMDPP_USE_ALTIVEC
+    // return align<16-shift>(uint8x16::zero(), a);
+    return vec_sld((__vector uint8_t)uint8x16::zero(), (__vector uint8_t)a, 16-shift);
 #endif
 }
 
@@ -658,7 +686,7 @@ template<> inline basic_int8x32 move_r<32>(basic_int8x32 a) { (void) a; return i
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int16x8 move_r(basic_int16x8 a)
@@ -689,7 +717,7 @@ basic_int16x16 move_r(basic_int16x16 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int32x4 move_r(basic_int32x4 a)
@@ -718,7 +746,7 @@ basic_int32x8 move_r(basic_int32x8 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int64x2 move_r(basic_int64x2 a)
@@ -749,7 +777,7 @@ basic_int64x4 move_r(basic_int64x4 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 float32x4 move_r(float32x4 a)
@@ -778,7 +806,7 @@ float32x8 move_r(float32x8 a)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 float64x2 move_r(float64x2 a)
@@ -809,7 +837,7 @@ float64x4 move_r(float64x4 a)
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
 basic_int8x16 broadcast(basic_int8x16 a)
@@ -840,6 +868,8 @@ basic_int8x16 broadcast(basic_int8x16 a)
         uint8x8_t z = vget_high_u8(a);
         return vdupq_lane_u8(z, s-8);
     }
+#elif SIMDPP_USE_ALTIVEC
+    return vec_splat((__vector uint8_t)a, s);
 #endif
 }
 
@@ -876,7 +906,7 @@ basic_int8x32 broadcast(basic_int8x32 a)
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
 basic_int16x8 broadcast(basic_int16x8 a)
@@ -907,6 +937,8 @@ basic_int16x8 broadcast(basic_int16x8 a)
         uint16x4_t z = vget_high_u16(a);
         return vdupq_lane_u16(z, s-4);
     }
+#elif SIMDPP_USE_ALTIVEC
+    return vec_splat((__vector uint16_t)a, s);
 #endif
 }
 
@@ -938,7 +970,7 @@ basic_int16x16 broadcast(basic_int16x16 a)
     @endcode
 
     @par 256-bit version:
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
 basic_int32x4 broadcast(basic_int32x4 a)
@@ -956,6 +988,8 @@ basic_int32x4 broadcast(basic_int32x4 a)
         uint32x2_t z = vget_high_u32(a);
         return vdupq_lane_u32(z, s-2);
     }
+#elif SIMDPP_USE_ALTIVEC
+    return vec_splat((__vector uint32_t)a, s);
 #endif
 }
 
@@ -988,6 +1022,7 @@ basic_int32x8 broadcast(basic_int32x8 a)
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 1-2}
 */
 template<unsigned s>
 basic_int64x2 broadcast(basic_int64x2 a)
@@ -1009,6 +1044,9 @@ basic_int64x2 broadcast(basic_int64x2 a)
         z = vget_high_u64(a);
     }
     return vdupq_lane_u64(z, 0);
+#elif SIMDPP_USE_ALTIVEC
+    uint64x2 mask = make_shuffle_bytes16_mask<s, s>(mask);
+    return permute_bytes16(a, mask);
 #endif
 }
 
@@ -1035,8 +1073,9 @@ basic_int64x4 broadcast(basic_int64x4 a)
     r2 = a[s]
     r3 = a[s]
     @endcode
+
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned s>
 float32x4 broadcast(float32x4 a)
@@ -1054,6 +1093,8 @@ float32x4 broadcast(float32x4 a)
         float32x2_t z = vget_high_f32(a);
         return vdupq_lane_f32(z, s-2);
     }
+#elif SIMDPP_USE_ALTIVEC
+    return vec_splat((__vector float)a, s);
 #endif
 }
 
@@ -1081,17 +1122,17 @@ float32x8 broadcast(float32x8 a)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 template<unsigned s>
 float64x2 broadcast(float64x2 a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return null::broadcast<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
@@ -1143,7 +1184,7 @@ float64x4 broadcast(float64x4 a)
     was applied to each of them separately.
 
     @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, NEON, 2}
+    @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
@@ -1169,6 +1210,8 @@ basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
     return a;
 #elif SIMDPP_USE_NEON
     return vextq_u8(lower, upper, shift);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, (unsigned)shift);
 #endif
 }
 
@@ -1224,7 +1267,7 @@ template<> inline basic_int8x32 align<32>(basic_int8x32 lower, basic_int8x32 upp
     was applied to each of them separately.
 
     @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, NEON, 2}
+    @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int16x8 align(basic_int16x8 lower, basic_int16x8 upper)
@@ -1261,7 +1304,7 @@ basic_int16x16 align(basic_int16x16 lower, basic_int16x16 upper)
     was applied to each of them separately.
 
     @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, NEON, 2}
+    @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int32x4 align(basic_int32x4 lower, basic_int32x4 upper)
@@ -1296,7 +1339,7 @@ basic_int32x8 align(basic_int32x8 lower, basic_int32x8 upper)
     was applied to each of them separately.
 
     @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, NEON, 2}
+    @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 basic_int64x2 align(basic_int64x2 lower, basic_int64x2 upper)
@@ -1333,7 +1376,7 @@ basic_int64x4 align(basic_int64x4 lower, basic_int64x4 upper)
     was applied to each of them separately.
 
     @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-SSE4.1 NEON, 2}
+    @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
 float32x4 align(float32x4 lower, float32x4 upper)
@@ -1363,7 +1406,7 @@ float32x8 align(float32x8 lower, float32x8 upper)
 
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -1371,7 +1414,7 @@ float32x8 align(float32x8 lower, float32x8 upper)
 
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 template<unsigned shift>
 float64x2 align(float64x2 lower, float64x2 upper)
@@ -1404,7 +1447,7 @@ float64x4 align(float64x4 lower, float64x4 upper)
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 mask)
 {
@@ -1422,6 +1465,9 @@ inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 ma
     return r;
 #elif SIMDPP_USE_NEON
     return vbslq_u8(mask, on, off);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_sel((__vector uint8_t)off, (__vector uint8_t)on,
+                   (__vector uint8_t)mask);
 #endif
 }
 
@@ -1468,7 +1514,7 @@ inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, mask_int8x32 mas
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, basic_int16x8 mask)
 {
@@ -1518,7 +1564,7 @@ inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, mask_int16x16
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, basic_int32x4 mask)
 {
@@ -1568,7 +1614,7 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, mask_int32x8 mas
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, basic_int64x2 mask)
 {
@@ -1618,7 +1664,7 @@ inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, mask_int64x4 mas
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 inline float32x4 blend(float32x4 on, float32x4 off, float32x4 mask)
 {
@@ -1634,6 +1680,9 @@ inline float32x4 blend(float32x4 on, float32x4 off, float32x4 mask)
     return r;
 #elif SIMDPP_USE_NEON
     return vbslq_f32(uint32x4(mask), on, off);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_sel((__vector float)off, (__vector float)on,
+                   (__vector float)mask);
 #endif
 }
 
@@ -1688,15 +1737,15 @@ inline float32x8 blend(float32x8 on, float32x8 off, mask_float32x8 mask)
 
     @par 128-bit version:
     @icost{SSE2-SSE4.1, 3}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 6}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 blend(float64x2 on, float64x2 off, float64x2 mask)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::blend(on, off, mask);
 #elif SIMDPP_USE_AVX
     return _mm_blendv_pd(off, on, mask);
@@ -1730,7 +1779,7 @@ inline float64x4 blend(float64x4 on, float64x4 off, int256 mask)
 
 inline float64x2 blend(float64x2 on, float64x2 off, mask_float64x2 mask)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::blend_mask(on, off, mask);
 #else
     return blend(on, off, uint64x2(mask));
@@ -1754,17 +1803,20 @@ inline float64x4 blend(float64x4 on, float64x4 off, mask_float64x4 mask)
         | 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  |
     r = [ a0  a2  a4  a6  a8  a10 a12 a14 b0  b2  b4  b6  b8  b10 b12 b14 ]
     @endcode
+
     @par 128-bit version:
     @icost{SSE2-AVX2, 4-5}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
     @icost{SSE2-AVX, 8-9}
     @icost{NEON, 2}
     @icost{AVX2, 4-5}
+    @icost{ALTIVEC, 2-3}
+
 */
 inline basic_int8x16 unzip_lo(basic_int8x16 a, basic_int8x16 b)
 {
@@ -1780,6 +1832,10 @@ inline basic_int8x16 unzip_lo(basic_int8x16 a, basic_int8x16 b)
     return r;
 #elif SIMDPP_USE_NEON
     return vuzpq_u8(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 mask = make_shuffle_bytes16_mask<0,2,4,6,8,10,12,14,
+                                              16,18,20,22,24,26,28,30>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -1810,6 +1866,7 @@ inline basic_int8x32 unzip_lo(basic_int8x32 a, basic_int8x32 b)
     @par 128-bit version:
     @icost{SSE2-SSSE3, 5}
     @icost{SSE4.1-AVX2, 4-5}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
@@ -1819,6 +1876,7 @@ inline basic_int8x32 unzip_lo(basic_int8x32 a, basic_int8x32 b)
     @icost{SSE4.1-AVX, 8-9}
     @icost{AVX2, 4-5}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 inline basic_int16x8 unzip_lo(basic_int16x8 a, basic_int16x8 b)
 {
@@ -1842,6 +1900,9 @@ inline basic_int16x8 unzip_lo(basic_int16x8 a, basic_int16x8 b)
     return r;
 #elif SIMDPP_USE_NEON
     return vuzpq_u16(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 mask = make_shuffle_bytes16_mask<0,2,4,6,8,10,12,14>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -1869,8 +1930,12 @@ inline basic_int16x16 unzip_lo(basic_int16x16 a, basic_int16x16 b)
     r = [ a0 a2 b0 b2 ]
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 2-3}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
@@ -1883,6 +1948,9 @@ inline basic_int32x4 unzip_lo(basic_int32x4 a, basic_int32x4 b)
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON
     return vuzpq_u32(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -1908,7 +1976,7 @@ inline basic_int32x8 unzip_lo(basic_int32x8 a, basic_int32x8 b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline basic_int64x2 unzip_lo(basic_int64x2 a, basic_int64x2 b)
 {
@@ -1933,7 +2001,7 @@ inline basic_int64x4 unzip_lo(basic_int64x4 a, basic_int64x4 b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 unzip_lo(float32x4 a, float32x4 b)
 {
@@ -1943,6 +2011,9 @@ inline float32x4 unzip_lo(float32x4 a, float32x4 b)
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON
     return vuzpq_f32(a, b).val[0];
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -1965,11 +2036,11 @@ inline float32x8 unzip_lo(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
@@ -2001,7 +2072,7 @@ inline float64x4 unzip_lo(float64x4 a, float64x4 b)
     was applied to each of them separately.
 
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
     @icost{AVX2, 3}
 
 */
@@ -2016,6 +2087,8 @@ inline basic_int8x16 unzip_hi(basic_int8x16 a, basic_int8x16 b)
     return a;
 #elif SIMDPP_USE_NEON
     return vuzpq_u8(a, b).val[1];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_pack((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
 }
 
@@ -2048,7 +2121,7 @@ inline basic_int8x32 unzip_hi(basic_int8x32 a, basic_int8x32 b)
     was applied to each of them separately.
 
     @icost{SSE2-AVX, 6}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
     @icost{AVX2, 3}
 */
 inline basic_int16x8 unzip_hi(basic_int16x8 a, basic_int16x8 b)
@@ -2062,6 +2135,8 @@ inline basic_int16x8 unzip_hi(basic_int16x8 a, basic_int16x8 b)
     return a;
 #elif SIMDPP_USE_NEON
     return vuzpq_u16(a, b).val[1];
+#elif SIMDPP_USE_ALTIVEC
+    return vec_pack((__vector uint32_t)a, (__vector uint32_t)b);
 #endif
 }
 
@@ -2086,18 +2161,22 @@ inline basic_int16x16 unzip_hi(basic_int16x16 a, basic_int16x16 b)
     r = [ a1 a3 b1 b3 ]
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
+    @icost{ALTIVEC, 2-3}
     @icost{SSE2-AVX, NEON, 2}
 */
 inline basic_int32x4 unzip_hi(basic_int32x4 a, basic_int32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::unzip_hi(a, b);
-#elif SIMDPP_USE_SSE2
-    return shuffle2<1,3,1,3>(a,b);
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    return shuffle2<1,3,1,3>(a, b);
 #elif SIMDPP_USE_NEON
     return vuzpq_u32(a, b).val[1];
 #endif
@@ -2121,9 +2200,14 @@ inline basic_int32x8 unzip_hi(basic_int32x8 a, basic_int32x8 b)
     r = [ a1 b1 ]
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{ALTIVEC, 2-3}
     @icost{SSE2-AVX, NEON, 2}
 */
 inline basic_int64x2 unzip_hi(basic_int64x2 a, basic_int64x2 b)
@@ -2146,10 +2230,10 @@ inline basic_int64x4 unzip_hi(basic_int64x4 a, basic_int64x4 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
-
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
+
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 unzip_hi(float32x4 a, float32x4 b)
 {
@@ -2159,6 +2243,8 @@ inline float32x4 unzip_hi(float32x4 a, float32x4 b)
     return shuffle2<1,3,1,3>(a,b);
 #elif SIMDPP_USE_NEON
     return vuzpq_f32(a, b).val[1];
+#elif SIMDPP_USE_ALTIVEC
+    return float32x4(unzip_hi((uint32x4)a, (uint32x4)b));
 #endif
 }
 
@@ -2181,13 +2267,13 @@ inline float32x8 unzip_hi(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-AVX, 2}
 
 

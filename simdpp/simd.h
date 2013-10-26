@@ -109,6 +109,13 @@
 
         Macro @c SIMDPP_ARCH_ARM_NEON_FLT_SP.
 
+    - @c POWER_ALTIVEC:
+
+        The POWER Altivec instruction set. 64-bit floating point operations
+        are not supported.
+
+        Macro @c SIMDPP_ARCH_POWER_ALTIVEC.
+
     Instruction counts
     ------------------
 
@@ -371,6 +378,15 @@
     #endif
 #endif
 
+#ifdef SIMDPP_ARCH_POWER_ALTIVEC
+    #ifndef SIMDPP_USE_ALTIVEC
+        #define SIMDPP_USE_ALTIVEC 1
+    #endif
+    #ifndef SIMDPP_ARCH_NOT_NULL
+        #define SIMDPP_ARCH_NOT_NULL
+    #endif
+#endif
+
 #ifndef SIMDPP_ARCH_NOT_NULL
     #define SIMDPP_USE_NULL 1
     #define SIMDPP_PP_NULL _null
@@ -420,6 +436,7 @@
 #else
     #define SIMDPP_PP_AVX2
 #endif
+
 #ifdef SIMDPP_USE_NEON
     #define SIMDPP_PP_NEON _neon
     #include <arm_neon.h>
@@ -431,6 +448,16 @@
     #define SIMDPP_PP_NEON_FLT_SP _neonfltsp
 #else
     #define SIMDPP_PP_NEON_FLT_SP
+#endif
+
+#ifdef SIMDPP_USE_ALTIVEC
+    #define SIMDPP_PP_ALTIVEC _altivec
+    #include <altivec.h>
+    #undef vector
+    #undef pixel
+    #undef bool
+#else
+    #define SIMDPP_PP_ALTIVEC
 #endif
 
 /** @def SIMDPP_ARCH_NAMESPACE
@@ -450,8 +477,9 @@
 #define SIMDPP_PP_ARCH_CONCAT6 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT5, SIMDPP_PP_AVX2)
 #define SIMDPP_PP_ARCH_CONCAT7 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT6, SIMDPP_PP_NEON)
 #define SIMDPP_PP_ARCH_CONCAT8 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT7, SIMDPP_PP_NEON_FLT_SP)
+#define SIMDPP_PP_ARCH_CONCAT9 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT8, SIMDPP_PP_ALTIVEC)
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT8
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT9
 
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required

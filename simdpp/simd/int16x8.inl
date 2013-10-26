@@ -89,23 +89,36 @@ inline uint16x8 uint16x8::load_broadcast(const uint16_t* v0)
     return uint16x8::set_broadcast(*v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u16(v0);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 r = altivec::load1_u(r, v0);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
 inline uint16x8 uint16x8::set_broadcast(uint16_t v0)
 {
 #if SIMDPP_USE_NULL
-    return null::make_vec<uint16x8>(v0);
+    return uint16x8::load_broadcast(&v0);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     uint32_t u0;
     u0 = v0 | v0 << 16;
     return uint32x4::set_broadcast(u0);
+#elif SIMDPP_USE_ALTIVEC
+    union {
+        uint16_t v[8];
+        uint16x8 align;
+    };
+    v[0] = v0;
+    uint16x8 r = altivec::load1(r, v);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
 inline uint16x8 uint16x8::make_const(uint16_t v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint16x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u16(&v0);
@@ -114,7 +127,7 @@ inline uint16x8 uint16x8::make_const(uint16_t v0)
 
 inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint16x8::make_const(v0, v1, v0, v1, v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
@@ -129,7 +142,7 @@ inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1)
 
 inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint16x8::make_const(v0, v1, v2, v3, v0, v1, v2, v3);
 #elif SIMDPP_USE_NEON
     union {
@@ -160,6 +173,8 @@ inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint
     v[0] = v0;  v[1] = v1;  v[2] = v2;  v[3] = v3;
     v[4] = v4;  v[5] = v5;  v[6] = v6;  v[7] = v7;
     return vld1q_u16(v);
+#elif SIMDPP_USE_ALTIVEC
+    return (__vector uint16_t){v0, v1, v2, v3, v4, v5, v6, v7};
 #endif
 }
 

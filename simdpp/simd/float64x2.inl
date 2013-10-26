@@ -34,10 +34,7 @@
 #include <simdpp/simd.h>
 #include <simdpp/simd/detail/word_size.h>
 #include <simdpp/null/mask.h>
-
-#if SIMDPP_USE_NEON
-    #include <simdpp/null/set.h>
-#endif
+#include <simdpp/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -53,7 +50,7 @@ inline float64x2 float64x2::zero()
 
 inline float64x2 float64x2::load_broadcast(const double* v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::make_vec<float64x2>(*v0);
 #elif SIMDPP_USE_SSE3
     return _mm_loaddup_pd(v0);
@@ -67,7 +64,7 @@ inline float64x2 float64x2::load_broadcast(const double* v0)
 
 inline float64x2 float64x2::set_broadcast(double v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::make_vec<float64x2>(v0);
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
@@ -87,7 +84,7 @@ inline float64x2 float64x2::make_const(double v0)
 
 inline float64x2 float64x2::make_const(double v0, double v1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::make_vec<float64x2>(v0, v1);
 #elif SIMDPP_USE_SSE2
     return _mm_set_pd(v1, v0);
@@ -96,7 +93,7 @@ inline float64x2 float64x2::make_const(double v0, double v1)
 
 inline mask_float64x2::operator float64x2() const
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::convert_mask<float64x2>(*this);
 #else
     return d_;

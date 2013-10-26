@@ -97,11 +97,13 @@ void test_math_shift(TestResults& res)
     TemplateTestArrayHelper<Test_shift_r, uint32x8>::run(tc, v.du32, vnum);
     TemplateTestArrayHelper<Test_shift_r, int32x8>::run(tc, v.di32, vnum);
 
+#if !(SIMDPP_USE_ALTIVEC)
     // Vectors with 64-bit integer elements
     TemplateTestArrayHelper<Test_shift_l, uint64x4>::run(tc, v.du64, vnum);
     TemplateTestArrayHelper<Test_shift_l, int64x4>::run(tc, v.di64, vnum);
     TemplateTestArrayHelper<Test_shift_r, uint64x4>::run(tc, v.du64, vnum);
     TemplateTestArrayHelper<Test_shift_r, int64x4>::run(tc, v.di64, vnum);
+#endif
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

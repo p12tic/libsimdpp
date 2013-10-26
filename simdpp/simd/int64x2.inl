@@ -45,7 +45,7 @@ inline basic_int64x2::basic_int64x2(const float64x2& d)
 #if SIMDPP_USE_NULL
     u64(0) = bit_cast<uint64_t>(d[0]);
     u64(1) = bit_cast<uint64_t>(d[1]);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     operator=(bit_cast<basic_int64x2>(d));
 #elif SIMDPP_USE_SSE2
     operator=(_mm_castpd_si128(d));
@@ -94,13 +94,15 @@ inline uint64x2 uint64x2::load_broadcast(const uint64_t* v0)
 #elif SIMDPP_USE_NEON
     uint64x1_t r0 = vld1_dup_u64(v0);
     return vcombine_u64(r0, r0);
+#elif SIMDPP_USE_ALTIVEC
+    return uint64x2::set_broadcast(*v0);
 #endif
 }
 
 inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
 {
 #if SIMDPP_USE_NULL
-    return null::make_vec<uint64x2>(v0);
+    return uint64x2::load_broadcast(&v0);
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
@@ -117,12 +119,21 @@ inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
 #elif SIMDPP_USE_NEON
     uint64x1_t r0 = vcreate_u64(v0);
     return vcombine_u64(r0, r0);
+#elif SIMDPP_USE_ALTIVEC
+    union {
+        uint64_t v[2];
+        uint64x2 align;
+    };
+    v[0] = v0;
+    uint64x2 r = load(r, v);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
 inline uint64x2 uint64x2::make_const(uint64_t v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint64x2::make_const(v0, v0);
 #elif SIMDPP_USE_NEON
     uint64x1_t r0 = vcreate_u64(v0);
@@ -144,6 +155,8 @@ inline uint64x2 uint64x2::make_const(uint64_t v0, uint64_t v1)
     v[0] = v0;
     v[1] = v1;
     return vld1q_u64(v);
+#elif SIMDPP_USE_ALTIVEC
+    return uint32x4::make_const(v0 >> 32, v0, v1 >> 32, v1); // big endian
 #endif
 }
 

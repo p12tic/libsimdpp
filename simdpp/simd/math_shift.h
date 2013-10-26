@@ -62,11 +62,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 128-bit version:
     @icost{SSE2-AVX2, 6}
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 12}
     @icost{AVX2, 6}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline int8x16 shift_r(int8x16 a, unsigned count)
 {
@@ -87,6 +89,9 @@ inline int8x16 shift_r(int8x16 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int8x16 shift = int8x16::set_broadcast(-int(count));
     return vshlq_s8(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 shift = uint8x16::set_broadcast(count);
+    return vec_sra((__vector int8_t)a, (__vector uint8_t)shift);
 #endif
 }
 
@@ -122,11 +127,13 @@ inline int8x32 shift_r(int8x32 a, unsigned count)
     @par 128-bit version:
     @icost{SSE2-AVX2, 4-5}
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 8-9}
     @icost{AVX2, 4-5}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline uint8x16 shift_r(uint8x16 a, unsigned count)
 {
@@ -145,6 +152,9 @@ inline uint8x16 shift_r(uint8x16 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int8x16 shift = int8x16::set_broadcast(-int(count));
     return vshlq_u8(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 shift = uint8x16::set_broadcast(count);
+    return vec_sr((__vector uint8_t)a, (__vector uint8_t)shift);
 #endif
 }
 
@@ -178,10 +188,12 @@ inline uint8x32 shift_r(uint8x32 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline int16x8 shift_r(int16x8 a, unsigned count)
 {
@@ -192,6 +204,9 @@ inline int16x8 shift_r(int16x8 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int16x8 shift = int16x8::set_broadcast(-int(count));
     return vshlq_s16(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 shift = uint16x8::set_broadcast(count);
+    return vec_sra((__vector int16_t)a, (__vector uint16_t)shift);
 #endif
 }
 
@@ -217,10 +232,12 @@ inline int16x16 shift_r(int16x16 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline uint16x8 shift_r(uint16x8 a, unsigned count)
 {
@@ -231,6 +248,9 @@ inline uint16x8 shift_r(uint16x8 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int16x8 shift = int16x8::set_broadcast(-int(count));
     return vshlq_u16(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 shift = uint16x8::set_broadcast(count);
+    return vec_sr((__vector uint16_t)a, (__vector uint16_t)shift);
 #endif
 }
 
@@ -261,10 +281,12 @@ inline uint16x16 shift_r(uint16x16 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline int32x4 shift_r(int32x4 a, unsigned count)
 {
@@ -275,6 +297,9 @@ inline int32x4 shift_r(int32x4 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int32x4 shift = int32x4::set_broadcast(-int(count));
     return vshlq_s32(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 shift = uint32x4::set_broadcast(count);
+    return vec_sra((__vector int32_t)a, (__vector uint32_t)shift);
 #endif
 }
 
@@ -300,10 +325,12 @@ inline int32x8 shift_r(int32x8 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline uint32x4 shift_r(uint32x4 a, unsigned count)
 {
@@ -314,6 +341,9 @@ inline uint32x4 shift_r(uint32x4 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int32x4 shift = int32x4::set_broadcast(-int(count));
     return vshlq_u32(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 shift = uint32x4::set_broadcast(count);
+    return vec_sr((__vector uint32_t)a, (__vector uint32_t)shift);
 #endif
 }
 
@@ -340,11 +370,13 @@ inline uint32x8 shift_r(uint32x8 a, unsigned count)
     @par 128-bit version:
     @icost{SSE2-AVX2, 4-6}
     @icost{NEON, 2}
+    @unimp{ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 8-10}
     @icost{AVX2, 4-6}
     @icost{NEON, 3}
+    @unimp{ALTIVEC}
 */
 inline int64x2 shift_r(int64x2 a, unsigned count)
 {
@@ -374,6 +406,8 @@ inline int64x2 shift_r(int64x2 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int64x2 shift = int64x2::set_broadcast(-int(count));
     return vshlq_s64(a, shift);
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -419,10 +453,12 @@ inline int64x4 shift_r(int64x4 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @unimp{ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @unimp{ALTIVEC}
 */
 inline uint64x2 shift_r(uint64x2 a, unsigned count)
 {
@@ -433,6 +469,8 @@ inline uint64x2 shift_r(uint64x2 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int64x2 shift = int64x2::set_broadcast(-int(count));
     return vshlq_u64(a, shift);
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -459,11 +497,13 @@ inline uint64x4 shift_r(uint64x4 a, unsigned count)
     @par 128-bit version:
     @icost{SSE2-AVX, 4-5}
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 8-9}
     @icost{AVX2, 4-5}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline basic_int8x16 shift_l(basic_int8x16 a, unsigned count)
 {
@@ -482,6 +522,9 @@ inline basic_int8x16 shift_l(basic_int8x16 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int8x16 shift = int8x16::set_broadcast(count);
     return vshlq_u8(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 shift = uint8x16::set_broadcast(count);
+    return vec_sl((__vector uint8_t)a, (__vector uint8_t)shift);
 #endif
 }
 
@@ -514,10 +557,12 @@ inline basic_int8x32 shift_l(basic_int8x32 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline basic_int16x8 shift_l(basic_int16x8 a, unsigned count)
 {
@@ -528,6 +573,9 @@ inline basic_int16x8 shift_l(basic_int16x8 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int16x8 shift = int16x8::set_broadcast(count);
     return vshlq_u16(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 shift = uint16x8::set_broadcast(count);
+    return vec_sl((__vector uint16_t)a, (__vector uint16_t)shift);
 #endif
 }
 
@@ -552,10 +600,12 @@ inline basic_int16x16 shift_l(basic_int16x16 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
 */
 inline basic_int32x4 shift_l(basic_int32x4 a, unsigned count)
 {
@@ -566,6 +616,9 @@ inline basic_int32x4 shift_l(basic_int32x4 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int32x4 shift = int32x4::set_broadcast(count);
     return vshlq_u32(a, shift);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 shift = uint32x4::set_broadcast(count);
+    return vec_sl((__vector uint32_t)a, (__vector uint32_t)shift);
 #endif
 }
 
@@ -590,10 +643,12 @@ inline basic_int32x8 shift_l(basic_int32x8 a, unsigned count)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @unimp{ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-3}
+    @unimp{ALTIVEC}
 */
 inline basic_int64x2 shift_l(basic_int64x2 a, unsigned count)
 {
@@ -604,6 +659,8 @@ inline basic_int64x2 shift_l(basic_int64x2 a, unsigned count)
 #elif SIMDPP_USE_NEON
     int64x2 shift = int64x2::set_broadcast(count);
     return vshlq_u64(a, shift);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, count);
 #endif
 }
 
@@ -667,6 +724,8 @@ uint8x16 shift_r_u8(uint8x16 a)
     uint16x8 a16 = bit_andnot(a, mask);
     a16 = shift_r<count>(a16);
     return a16;
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -678,6 +737,8 @@ uint8x32 shift_r_u8(uint8x32 a)
     uint16x16 a16 = bit_andnot(a, mask);
     a16 = shift_r<count>(a16);
     return a16;
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -689,6 +750,8 @@ basic_int8x16 shift_l_8(basic_int8x16 a)
     uint16x8 a16 = bit_and(a, mask);
     a16 = shift_l<count>(a16);
     return a16;
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -700,6 +763,8 @@ basic_int8x32 shift_l_8(basic_int8x32 a)
     uint16x16 a16 = bit_and(a, mask);
     a16 = shift_l<count>(a16);
     return a16;
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -717,11 +782,13 @@ basic_int8x32 shift_l_8(basic_int8x32 a)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 6}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 12}
     @icost{AVX2, 6}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 int8x16 shift_r(int8x16 a)
@@ -731,6 +798,9 @@ int8x16 shift_r(int8x16 a)
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_s8(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 shift = uint8x16::make_const(count);
+    return vec_sra((__vector int8_t)a, (__vector uint8_t)shift);
 #endif
 }
 
@@ -766,15 +836,19 @@ template<> inline int8x32 shift_r<0>(int8x32 a) { return a; }
     @icost{SSE2-AVX, 4-5}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 uint8x16 shift_r(uint8x16 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
-    return shift_r(a, count);
+    return shift_r(a, count); // look below for SSE2-optimized specializations
 #elif SIMDPP_USE_NEON
     return vshrq_n_u8(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 shift = uint8x16::make_const(count);
+    return vec_sr((__vector uint8_t)a, (__vector uint8_t)shift);
 #endif
 }
 
@@ -823,8 +897,12 @@ template<> inline uint8x32 shift_r<7>(uint8x32 a) { return detail::shift_r_u8<7>
     rN = aN >> count
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 int16x8 shift_r(int16x8 a)
@@ -836,6 +914,9 @@ int16x8 shift_r(int16x8 a)
     return _mm_srai_epi16(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_s16(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 shift = uint16x8::make_const(count);
+    return vec_sra((__vector int16_t)a, (__vector uint16_t)shift);
 #endif
 }
 
@@ -862,8 +943,12 @@ template<> inline int16x16 shift_r<0>(int16x16 a) { return a; }
     rN = aN >> count
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 uint16x8 shift_r(uint16x8 a)
@@ -873,6 +958,9 @@ uint16x8 shift_r(uint16x8 a)
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_u16(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 shift = uint16x8::make_const(count);
+    return vec_sr((__vector uint16_t)a, (__vector uint16_t)shift);
 #endif
 }
 
@@ -901,8 +989,12 @@ template<> inline uint16x16 shift_r<16>(uint16x16 a) { return uint16x16::zero();
     rN = aN >> count
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 int32x4 shift_r(int32x4 a)
@@ -912,6 +1004,9 @@ int32x4 shift_r(int32x4 a)
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_s32(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 shift = uint32x4::make_const(count);
+    return vec_sra((__vector int32_t)a, (__vector uint32_t)shift);
 #endif
 }
 
@@ -938,8 +1033,12 @@ template<> inline int32x8 shift_r<0>(int32x8 a) { return a; }
     rN = aN >> count
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 uint32x4 shift_r(uint32x4 a)
@@ -949,6 +1048,9 @@ uint32x4 shift_r(uint32x4 a)
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_u32(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 shift = uint32x4::make_const(count);
+    return vec_sr((__vector uint32_t)a, (__vector uint32_t)shift);
 #endif
 }
 
@@ -980,12 +1082,14 @@ template<> inline uint32x8 shift_r<32>(uint32x8 a) { return uint32x8::zero(); }
     @par 128-bit version:
     @novec{SSE2-AVX2}
     @icost{SSE2-AVX2, 4-6}
+    @unimp{ALTIVEC}
 
     @par 256-bit version:
     @novec{SSE2-AVX}
     @icost{SSE2-AVX, 8-10}
     @icost{AVX2, 4-6}
     @icost{NEON, 2}
+    @unimp{ALTIVEC}
 */
 template<unsigned count>
 int64x2 shift_r(int64x2 a)
@@ -995,6 +1099,8 @@ int64x2 shift_r(int64x2 a)
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_s64(a, count);
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -1021,8 +1127,11 @@ template<> inline int64x4 shift_r<0>(int64x4 a) { return a; }
     rN = aN >> count
     @endcode
 
+    @unimp{ALTIVEC}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @unimp{ALTIVEC}
 */
 template<unsigned count>
 uint64x2 shift_r(uint64x2 a)
@@ -1032,6 +1141,8 @@ uint64x2 shift_r(uint64x2 a)
     return shift_r(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_u64(a, count);
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -1073,9 +1184,12 @@ basic_int8x16 shift_l(basic_int8x16 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
-    return shift_l(a, count);
+    return shift_l(a, count); // look below for SSE2-optimized specializations
 #elif SIMDPP_USE_NEON
     return vshlq_n_u8(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 shift = uint8x16::make_const(count);
+    return vec_sl((__vector uint8_t)a, (__vector uint8_t)shift);
 #endif
 }
 
@@ -1123,8 +1237,12 @@ template<> inline basic_int8x32 shift_l<7>(basic_int8x32 a) { return detail::shi
     rN = aN << count
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 basic_int16x8 shift_l(basic_int16x8 a)
@@ -1134,6 +1252,9 @@ basic_int16x8 shift_l(basic_int16x8 a)
     return shift_l(a, count);
 #elif SIMDPP_USE_NEON
     return vshlq_n_u16(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 shift = uint16x8::make_const(count);
+    return vec_sl((__vector uint16_t)a, (__vector uint16_t)shift);
 #endif
 }
 
@@ -1161,8 +1282,12 @@ template<> inline basic_int16x16 shift_l<16>(basic_int16x16 a) { return uint16x1
     rN = aN << count
     @endcode
 
+    @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
 basic_int32x4 shift_l(basic_int32x4 a)
@@ -1172,6 +1297,9 @@ basic_int32x4 shift_l(basic_int32x4 a)
     return shift_l(a, count);
 #elif SIMDPP_USE_NEON
     return vshlq_n_u32(a, count);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 shift = uint32x4::make_const(count);
+    return vec_sl((__vector uint32_t)a, (__vector uint32_t)shift);
 #endif
 }
 
@@ -1199,8 +1327,11 @@ template<> inline basic_int32x8 shift_l<32>(basic_int32x8 a) { return uint32x8::
     rN = aN << count
     @endcode
 
+    @unimp{ALTIVEC}
+
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
+    @unimp{ALTIVEC}
 */
 template<unsigned count>
 basic_int64x2 shift_l(basic_int64x2 a)
@@ -1210,6 +1341,8 @@ basic_int64x2 shift_l(basic_int64x2 a)
     return shift_l(a, count);
 #elif SIMDPP_USE_NEON
     return vshlq_n_u64(a, count);
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 

@@ -35,10 +35,7 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/transpose.h>
 #include <simdpp/simd/detail/mem_unpack.h>
-
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    #include <simdpp/null/memory.h>
-#endif
+#include <simdpp/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -65,7 +62,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     a[0..255] = *(p)
     @endcode
     @a p must be aligned to 32 bytes.
-    @icost{SSE2-SSE4.1, NEON, 2}
+
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
 inline int128 load(int128& a, const void* p)
@@ -78,6 +76,9 @@ inline int128 load(int128& a, const void* p)
     return a;
 #elif SIMDPP_USE_NEON
     a = vreinterpretq_u32_u64(vld1q_u64(reinterpret_cast<const uint64_t*>(p)));
+    return a;
+#elif SIMDPP_USE_ALTIVEC
+    a = vec_ldl(0, reinterpret_cast<const uint8_t*>(p));
     return a;
 #endif
 }
@@ -105,6 +106,9 @@ inline float32x4 load(float32x4& a, const float* p)
 #elif SIMDPP_USE_NEON
     a = vld1q_f32(p);
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    a = vec_ldl(0, p);
+    return a;
 #endif
 }
 
@@ -121,7 +125,7 @@ inline float32x8 load(float32x8& a, const float* p)
 
 inline float64x2 load(float64x2& a, const double* p)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
@@ -160,6 +164,8 @@ inline float64x4 load(float64x4& a, const double* p)
     only the referenced 16 byte block is accessed. Otherwise, memory within the
     smallest 16-byte aligned 32-byte block may be accessed.
 
+    @icost{ALTIVEC, 4}
+
     @par 256-bit version:
 
     @code
@@ -167,6 +173,7 @@ inline float64x4 load(float64x4& a, const double* p)
     @endcode
     @a p must be aligned to 32 bytes.
     @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{ALTIVEC, 6}
 
     @a p must be aligned to the element size. If @a p is aligned to 32 bytes
     only the referenced 16 byte block is accessed. Otherwise, memory within the
@@ -187,12 +194,21 @@ inline basic_int8x16 load_u(basic_int8x16& a, const void* p)
 #elif SIMDPP_USE_NEON
     a = vld1q_u8(reinterpret_cast<const uint8_t*>(p));
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    const uint8_t* q = reinterpret_cast<const uint8_t*>(p);
+    uint8x16 l1, l2, mask;
+    l1 = vec_ldl(0, q);
+    l2 = vec_ldl(16, q);
+    mask = vec_lvsl(0, q);
+    l1 = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
+                 (__vector uint8_t)mask);
+    return l1;
 #endif
 }
 
 inline basic_int16x8 load_u(basic_int16x8& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = load_u(b, p);
     a = b;
     return a;
@@ -204,7 +220,7 @@ inline basic_int16x8 load_u(basic_int16x8& a, const void* p)
 
 inline basic_int32x4 load_u(basic_int32x4& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = load_u(b, p);
     a = b;
     return a;
@@ -216,7 +232,7 @@ inline basic_int32x4 load_u(basic_int32x4& a, const void* p)
 
 inline basic_int64x2 load_u(basic_int64x2& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = load_u(b, p);
     a = b;
     return a;
@@ -237,12 +253,16 @@ inline float32x4 load_u(float32x4& a, const float* p)
 #elif SIMDPP_USE_NEON
     a = vld1q_f32(p);
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 b = load_u(b, reinterpret_cast<const uint32_t*>(p));
+    a = b;
+    return a;
 #endif
 }
 
 inline float64x2 load_u(float64x2& a, const double* p)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
@@ -262,6 +282,18 @@ inline basic_int8x32 load_u(basic_int8x32& a, const void* p)
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    const uint8_t* q = reinterpret_cast<const uint8_t*>(p);
+    uint8x16 l1, l2, l3, mask;
+    l1 = vec_ldl(0, q);
+    l2 = vec_ldl(16, q);
+    l3 = vec_ldl(32, q);
+    mask = vec_lvsl(0, q);
+    l1 = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
+                  (__vector uint8_t)mask);
+    l2 = vec_perm((__vector uint8_t)l2, (__vector uint8_t)l3,
+                  (__vector uint8_t)mask);
+    return basic_int8x32(l1, l2);
 #else
     const char* q = reinterpret_cast<const char*>(p);
     load_u(a[0], q);
@@ -274,6 +306,11 @@ inline basic_int16x16 load_u(basic_int16x16& a, const void* p)
 {
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
+    return a;
+#elif SIMDPP_USE_ALTIVEC
+    basic_int8x32 a0;
+    load_u(a0, p);
+    a = a0;
     return a;
 #else
     const char* q = reinterpret_cast<const char*>(p);
@@ -288,6 +325,11 @@ inline basic_int32x8 load_u(basic_int32x8& a, const void* p)
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    basic_int8x32 a0;
+    load_u(a0, p);
+    a = a0;
+    return a;
 #else
     const char* q = reinterpret_cast<const char*>(p);
     load_u(a[0], q);
@@ -301,6 +343,11 @@ inline basic_int64x4 load_u(basic_int64x4& a, const void* p)
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
     return a;
+#elif SIMDPP_USE_ALTIVEC
+    basic_int8x32 a0;
+    load_u(a0, p);
+    a = a0;
+    return a;
 #else
     const char* q = reinterpret_cast<const char*>(p);
     load_u(a[0], q);
@@ -313,6 +360,11 @@ inline float32x8 load_u(float32x8& a, const float* p)
 {
 #if SIMDPP_USE_AVX
     a = _mm256_loadu_ps(p);
+    return a;
+#elif SIMDPP_USE_ALTIVEC
+    basic_int32x8 a0;
+    load_u(a0, p);
+    a = a0;
     return a;
 #else
     load_u(a[0], p);
@@ -405,7 +457,7 @@ inline void load_packed2(basic_int8x16& a, basic_int8x16& b, const void* p)
 {
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
 
     load(a, q);
@@ -446,7 +498,7 @@ inline void load_packed2(basic_int16x8& a, basic_int16x8& b, const void* p)
 {
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
 
     load(a, q);
@@ -487,7 +539,7 @@ inline void load_packed2(basic_int32x4& a, basic_int32x4& b, const void* p)
 {
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
 
     load(a, q);
@@ -561,7 +613,7 @@ inline void load_packed2(float32x4& a, float32x4& b, const float* p)
 {
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     load(a, p);
     load(b, p+4);
     detail::mem_unpack2(a, b);
@@ -648,7 +700,7 @@ inline void load_packed3(basic_int8x16& a, basic_int8x16& b, basic_int8x16& c,
 {
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
     load(a, q);
     load(b, q+16);
@@ -694,7 +746,7 @@ inline void load_packed3(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c,
 {
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
     load(a, q);
     load(b, q+16);
@@ -740,7 +792,7 @@ inline void load_packed3(basic_int32x4& a, basic_int32x4& b, basic_int32x4&c,
 {
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
     load(a, q);
     load(b, q+16);
@@ -786,7 +838,7 @@ inline void load_packed3(basic_int64x2& a, basic_int64x2& b, basic_int64x2& c,
 {
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
     load(a, q);
     load(b, q+16);
@@ -844,7 +896,7 @@ inline void load_packed3(float32x4& a, float32x4& b, float32x4& c,
 {
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     load(a, p);
     load(b, p+4);
     load(c, p+8);
@@ -896,7 +948,7 @@ inline void load_packed3(float64x2& a, float64x2& b, float64x2& c, const double*
 {
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     load(a, p);
     load(b, p+2);
     load(c, p+4);
@@ -950,7 +1002,7 @@ inline void load_packed4(basic_int8x16& a, basic_int8x16& b,
 {
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
     load(a, q);
     load(b, q+16);
@@ -1000,7 +1052,7 @@ inline void load_packed4(basic_int16x8& a, basic_int16x8& b,
 {
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
     load(a, q);
     load(b, q+16);
@@ -1050,7 +1102,7 @@ inline void load_packed4(basic_int32x4& a, basic_int32x4& b,
 {
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     const char* q = reinterpret_cast<const char*>(p);
     load(a, q);
     load(b, q+16);
@@ -1141,7 +1193,7 @@ inline void load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& d,
 {
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     load(a, p);
     load(b, p+4);
     load(c, p+8);
@@ -1199,7 +1251,7 @@ inline void load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
 {
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     load(a, p);
     load(b, p+2);
     load(c, p+4);

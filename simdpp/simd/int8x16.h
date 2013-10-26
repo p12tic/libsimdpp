@@ -77,6 +77,11 @@ public:
     basic_int8x16( int8x16_t d) : int128{d} {}
     basic_int8x16& operator=(uint8x16_t d) { int128::operator=(d); return *this; }
     basic_int8x16& operator=( int8x16_t d) { int128::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    basic_int8x16(__vector uint8_t d) : int128{d} {}
+    basic_int8x16(__vector  int8_t d) : int128{d} {}
+    basic_int8x16& operator=(__vector uint8_t d) { int128::operator=(d); return *this; }
+    basic_int8x16& operator=(__vector  int8_t d) { int128::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -108,6 +113,9 @@ public:
 #elif SIMDPP_USE_NEON
     int8x16(int8x16_t d) : basic_int8x16{d} {}
     int8x16& operator=( int8x16_t d) { basic_int8x16::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    int8x16(__vector int8_t d) : basic_int8x16{d} {}
+    int8x16& operator=( __vector int8_t d) { basic_int8x16::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -226,6 +234,9 @@ public:
 #elif SIMDPP_USE_NEON
     uint8x16(uint8x16_t d) : basic_int8x16{d} {}
     uint8x16& operator=(uint8x16_t d) { basic_int8x16::operator=(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16(__vector uint8_t d) : basic_int8x16{d} {}
+    uint8x16& operator=(__vector uint8_t d) { basic_int8x16::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -337,12 +348,15 @@ public:
     mask_int8x16 &operator=(const mask_int8x16 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 #if SIMDPP_USE_SSE2
     mask_int8x16(__m128i d) : d_(d) {}
 #elif SIMDPP_USE_NEON
     mask_int8x16(int8x16_t d) : d_(d) {}
     mask_int8x16(uint8x16_t d) : d_(d) {}
+#elif SIMDPP_USE_ALTIVEC
+    mask_int8x16(__vector int8_t d) : d_(d) {}
+    mask_int8x16(__vector uint8_t d) : d_(d) {}
+    mask_int8x16(__vector __bool char d) : d_(d) {}
 #endif
 #if SIMDPP_USE_NULL
 #else

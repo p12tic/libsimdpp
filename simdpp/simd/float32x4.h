@@ -67,6 +67,8 @@ public:
     float32x4(__m128 d) : d_(d) {}
 #elif SIMDPP_USE_NEON
     float32x4(float32x4_t d) : d_(d) {}
+#elif SIMDPP_USE_ALTIVEC
+    float32x4(__vector float d) : d_(d) {}
 #endif
 
     /// Convert to underlying vector type
@@ -74,6 +76,8 @@ public:
     operator __m128() const { return d_; }
 #elif SIMDPP_USE_NEON
     operator float32x4_t() const { return d_; }
+#elif SIMDPP_USE_ALTIVEC
+    operator __vector float() const { return d_; }
 #endif
 
     /// @{
@@ -84,6 +88,9 @@ public:
 #elif SIMDPP_USE_NEON
     explicit float32x4(basic_int32x4 d)  : d_(float32x4_t(d)) {}
     float32x4& operator=(basic_int32x4 d) { d_ = float32x4_t(d); return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    explicit float32x4(basic_int32x4 d)  : d_((__vector float)d) {}
+    float32x4& operator=(basic_int32x4 d) { d_ = (__vector float)d; return *this; }
 #elif SIMDPP_USE_NULL
     explicit float32x4(basic_int32x4 d)
     {
@@ -173,6 +180,8 @@ private:
     };
 #elif SIMDPP_USE_NEON
     float32x4_t d_;
+#elif SIMDPP_USE_ALTIVEC
+    __vector float d_;
 #elif SIMDPP_USE_NULL
     float f32_[4];
 #endif
@@ -195,7 +204,11 @@ public:
 #elif SIMDPP_USE_NEON
     mask_float32x4(float32x4_t d) : d_(d) {}
     mask_float32x4(uint32x4_t d) : d_(d) {}
+#elif SIMDPP_USE_ALTIVEC
+    mask_float32x4(__vector float d) : d_(d) {}
+    mask_float32x4(__vector __bool int d) : d_((__vector float)d) {}
 #endif
+
 #if SIMDPP_USE_NULL
 #else
     mask_float32x4(float32x4 d) : d_(d) {}

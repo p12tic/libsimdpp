@@ -37,6 +37,10 @@
 #if SIMDPP_USE_NULL
     #include <simdpp/null/set.h>
 #endif
+#if SIMDPP_USE_ALTIVEC
+    #include <simdpp/altivec/load1.h>
+    #include <simdpp/simd/shuffle.h>
+#endif
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -101,6 +105,10 @@ inline uint8x16 uint8x16::load_broadcast(const uint8_t* v0)
     return uint8x16::set_broadcast(*v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u8(v0);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 r = altivec::load1_u(r, v0);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
@@ -112,12 +120,21 @@ inline uint8x16 uint8x16::set_broadcast(uint8_t v0)
     uint32_t u0;
     u0 = v0 * 0x01010101;
     return uint32x4::set_broadcast(u0);
+#elif SIMDPP_USE_ALTIVEC
+    union {
+        uint8_t v[16];
+        uint8x16 align;
+    };
+    v[0] = v0;
+    uint8x16 r = altivec::load1(r, v);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
 inline uint8x16 uint8x16::make_const(uint8_t v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint8x16::make_const(v0, v0, v0, v0, v0, v0, v0, v0,
                                 v0, v0, v0, v0, v0, v0, v0, v0);
 #elif SIMDPP_USE_NEON
@@ -127,7 +144,7 @@ inline uint8x16 uint8x16::make_const(uint8_t v0)
 
 inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint8x16::make_const(v0, v1, v0, v1, v0, v1, v0, v1,
                                 v0, v1, v0, v1, v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
@@ -143,7 +160,7 @@ inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1)
 
 inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint8x16::make_const(v0, v1, v2, v3, v0, v1, v2, v3,
                                 v0, v1, v2, v3, v0, v1, v2, v3);
 #elif SIMDPP_USE_NEON
@@ -159,7 +176,7 @@ inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
 inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
                                      uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint8x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
                                 v0, v1, v2, v3, v4, v5, v6, v7);
 #elif SIMDPP_USE_NEON
@@ -195,6 +212,9 @@ inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
     v[8] = v8;  v[9] = v9;  v[10] = v10; v[11] = v11;
     v[12] = v12; v[13] = v13; v[14] = v14; v[15] = v15;
     return vld1q_u8(v);
+#elif SIMDPP_USE_ALTIVEC
+    return (__vector uint8_t){v0, v1, v2, v3, v4, v5, v6, v7,
+                              v8, v9, v10, v11, v12, v13, v14, v15};
 #endif
 }
 

@@ -33,6 +33,8 @@ set(HEADERS
 
     detail/dispatcher.h
 
+    altivec/load1.h
+
     neon/detail/shuffle_int16x8.h
     neon/detail/shuffle_int32x4.h
     neon/detail/shuffle_int64x2.h
@@ -51,6 +53,7 @@ set(HEADERS
     null/transpose.h
 
     simd/detail/not_implemented.h
+    simd/detail/move_signed.h
     simd/detail/mem_block.h
     simd/detail/mem_pack.h
     simd/detail/mem_unpack.h

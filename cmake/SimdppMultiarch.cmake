@@ -76,6 +76,7 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     set(CXX_FLAG_X86_AVX2 "-mavx2 -DSIMDPP_ARCH_X86_AVX2")
     set(CXX_FLAG_ARM_NEON "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON")
     set(CXX_FLAG_ARM_NEON_FLT_SP "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON_FLT_SP")
+    set(CXX_FLAG_POWER_ALTIVEC "-maltivec -DSIMDPP_ARCH_POWER_ALTIVEC")
 
     set(FILE_LIST "")
     list(APPEND ARCHS ${ARGV})
@@ -113,10 +114,13 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
             elseif(${ID} STREQUAL "ARM_NEON_FLT_SP")
                 set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_ARM_NEON_FLT_SP}")
                 set(SUFFIX "${SUFFIX}-arm_neon_flt_sp")
+            elseif(${ID} STREQUAL "POWER_ALTIVEC")
+                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_POWER_ALTIVEC}")
+                set(SUFFIX "${SUFFIX}-power_altivec")
             endif()
         endforeach()
 
-        if(NOT "${SUFFIX}" STREQUAL "")
+        if(NOT "${SUFFIX}" STREQUAL "simdpp")
             set(DST_ABS_FILE "${CMAKE_CURRENT_BINARY_DIR}/${SRC_PATH}/${SRC_NAME}_${SUFFIX}${SRC_EXT}")
             set(SRC_ABS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
             configure_file("${SRC_ABS_FILE}" "${DST_ABS_FILE}" COPYONLY)
@@ -220,7 +224,16 @@ set(SIMDPP_ARCH_TEST_NEON_CODE
         vst1q_u32((uint32_t*)(a), one);
     }"
 )
-
+set(SIMDPP_ARCH_TEST_ALTIVEC_CODE
+    "#include <altivec.h>
+    int main()
+    {
+        volatile unsigned char a[16];
+        vector unsigned char v = vec_ld(a);
+        v = vec_add(v, v);
+        vec_st(a, v);
+    }"
+)
 
 # ------------------------------------------------------------------------------
 #
@@ -256,6 +269,9 @@ function(simdpp_get_compilable_archs ARCH_LIST_VAR)
     set(CMAKE_REQUIRED_FLAGS "-mfpu=neon")
     check_cxx_source_compiles("${SIMDPP_ARCH_TEST_NEON_CODE}" CAN_COMPILE_NEON)
 
+    set(CMAKE_REQUIRED_FLAGS "-maltivec")
+    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_ALTIVEC_CODE}" CAN_COMPILE_ALTIVEC)
+
     set(ARCHS "NONE_NULL")
     if(CAN_COMPILE_SSE2)
         list(APPEND ARCHS "X86_SSE2")
@@ -278,6 +294,9 @@ function(simdpp_get_compilable_archs ARCH_LIST_VAR)
     if(CAN_COMPILE_NEON)
         list(APPEND ARCHS "ARM_NEON")
         list(APPEND ARCHS "ARM_NEON_FLT_SP")
+    endif()
+    if(CAN_COMPILE_ALTIVEC)
+        list(APPEND ARCHS "POWER_ALTIVEC")
     endif()
     set(${ARCH_LIST_VAR} ${ARCHS} PARENT_SCOPE)
 endfunction()
@@ -317,6 +336,9 @@ function(simdpp_get_runnable_archs ARCH_LIST_VAR)
     set(CMAKE_REQUIRED_FLAGS "-mfpu=neon")
     check_cxx_source_runs("${SIMDPP_ARCH_TEST_NEON_CODE}" CAN_RUN_NEON)
 
+    set(CMAKE_REQUIRED_FLAGS "-maltivec")
+    check_cxx_source_runs("${SIMDPP_ARCH_TEST_ALTIVEC_CODE}" CAN_RUN_ALTIVEC)
+
     set(ARCHS "NONE_NULL")
     if(CAN_RUN_SSE2)
         list(APPEND ARCHS "X86_SSE2")
@@ -339,6 +361,9 @@ function(simdpp_get_runnable_archs ARCH_LIST_VAR)
     if(CAN_RUN_NEON)
         list(APPEND ARCHS "ARM_NEON")
         list(APPEND ARCHS "ARM_NEON_FLT_SP")
+    endif()
+    if(CAN_RUN_ALTIVEC)
+        list(APPEND ARCHS "POWER_ALTIVEC")
     endif()
     set(${ARCH_LIST_VAR} ${ARCHS} PARENT_SCOPE)
 endfunction()

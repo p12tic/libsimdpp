@@ -95,6 +95,41 @@ inline void mem_pack2(float64x4& a, float64x4& b)         { mem_pack2_256_impl(a
 */
 template<class T> void mem_pack3_impl8(T& a, T& b, T& c)
 {
+#if SIMDPP_USE_ALTIVEC
+    using U = typename T::uint_vector_type;
+
+    T a1, b1, c1;
+    a1 = align<11>(a, a);
+    b1 = b;
+    c1 = align<6>(c, c);
+
+    // [a11..a15,a0..a10]
+    // [b0..b15]
+    // [c5..c15,c0..c5]
+    U mask1 = U::make_const(0xff);
+    mask1 = move_l<5>(mask1);
+
+    T a2, b2, c2;
+    a2 = blend(a1, b1, mask1);
+    b2 = blend(b1, c1, mask1);
+    c2 = blend(c1, a1, mask1);
+    // [a11,a12,a13,a14,a15,a0, a1, a2, a3, a4, a5, b11,b12,b13,b14,b15]
+    // [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10,c0, c1, c2, c3, c4 ]
+    // [c5, c6, c7, c8, c9, c10,c11,c12,c13,c14,c15,a6, a7, a8, a9, a10]
+    U mask2 = make_shuffle_bytes16_mask<5, 16+0, 16+11,
+                                        6, 16+1, 16+12,
+                                        7, 16+2, 16+13,
+                                        8, 16+3, 16+14,
+                                        9, 16+4, 16+15,
+                                        10>(mask2);
+    a = shuffle_bytes16(a2, b2, mask2);
+    b = shuffle_bytes16(b2, c2, mask2);
+    c = shuffle_bytes16(c2, a2, mask2);
+
+    // [a0, b0, c0, a1, b1, c1, a2, b2, c2, a3, b3, c3, a4, b4, c4, a5 ]
+    // [b5, c5, a6, b6, c6, a7, b7, c7, a8, b8, c8, a9, b9, c9, a10,b10]
+    // [c10,a11,b11,c11,a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15]
+#else
     // either basic_int16x8 or basic_int16x16, other entries likewise
     using w_b16 = typename same_width<T>::b16;
     using w_b32 = typename same_width<T>::b32;
@@ -192,10 +227,48 @@ template<class T> void mem_pack3_impl8(T& a, T& b, T& c)
     a = bit_or(k0, l0);
     b = shuffle2<1,2,0,1>(k1, k2);
     c = bit_or(k3, l3);
+#endif
 }
 
 template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
 {
+#if SIMDPP_USE_ALTIVEC
+    using U = typename T::uint_vector_type;
+
+    // [a0..a7]
+    // [b0..b7]
+    // [c0..c7]
+    T a1, b1, c1;
+    a1 = a;
+    b1 = align<5>(b, b);
+    c1 = align<2>(c, c);
+
+    // [a0..a7]
+    // [b5..b7,b0..b4]
+    // [c2..c7,c0,c1]
+    T a2, b2, c2;
+    U mask2 = U::make_const(0xffff);
+    mask2 = move_l<2>(mask2);
+
+    a2 = blend(a1, b1, mask2);
+    b2 = blend(b1, c1, mask2);
+    c2 = blend(c1, a1, mask2);
+
+    // [a0,a1,a2,a3,a4,a5,b3,b4]
+    // [b5,b6,b7,b0,b1,b2,c0,c1]
+    // [c2,c3,c4,c5,c6,c7,a6,a7]
+    U mask1 = make_shuffle_bytes16_mask<0, 8+3, 8+6,
+                                        1, 8+4, 8+7,
+                                        2, 8+5>(mask1);
+    a = shuffle_bytes16(a, b, mask1);
+    b = shuffle_bytes16(c, a, mask1);
+    c = shuffle_bytes16(b, c, mask1);
+
+    // [a0,b0,c0,a1,b1,c1,a2,b2]
+    // [c2,a3,b3,c3,a4,b4,c4,a5]
+    // [b5,c5,a6,b6,c6,a7,b7,c7]
+
+#else
     // either basic_int8x16 or basic_int8x32, other entries likewise
     using w_b16 = T;
     using w_b32 = typename same_width<T>::b32;
@@ -272,10 +345,43 @@ template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
     a = bit_or(k0, l0);
     b = shuffle2<1,2,0,1>(k1, k2);
     c = bit_or(k3, l3);
+#endif
 }
 
 template<class T> void mem_pack3_impl32(T& a, T& b, T& c)
 {
+#if SIMDPP_USE_ALTIVEC
+    using U = typename T::uint_vector_type;
+
+    // [a0,a1,a2,a3]
+    // [b0,b1,b2,b3]
+    // [c0,c1,c2,c3]
+    T a1, b1, c1;
+    a1 = a;
+    b1 = align<1>(b, b);
+    c1 = align<2>(c, c);
+
+    // [a0,a1,a2,a3]
+    // [b1,b2,b3,b0]
+    // [c2,c3,c0,c1]
+    T a2, b2, c2;
+    U mask2 = U::make_const(0xffffffff);
+    mask2 = move_l<1>(mask2);
+
+    a2 = blend(a1, c1, mask2);
+    b2 = blend(b1, a1, mask2);
+    c2 = blend(c1, b1, mask2);
+    // [a0,a1,a2,c1]
+    // [b1,b2,b3,a3]
+    // [c2,c3,c0,b0]
+    U mask1 = make_shuffle_bytes16_mask<0,4+3,4+2,1>(mask1);
+    a1 = shuffle_bytes16(a, c, mask1);
+    b1 = shuffle_bytes16(b, a, mask1);
+    c1 = shuffle_bytes16(c, b, mask1);
+    // [a0,b0,c0,a1]
+    // [b1,c1,a2,b2]
+    // [c2,a3,b3,c3]
+#else
     T t0, t1, t2;
     t0 = shuffle2<0,2,0,2>(a, b);
     t1 = shuffle2<0,2,1,3>(c, a);
@@ -292,6 +398,7 @@ template<class T> void mem_pack3_impl32(T& a, T& b, T& c)
     a = shuffle2<0,1,0,1>(t0, t1);
     b = shuffle2<0,1,2,3>(t2, t0);
     c = shuffle2<2,3,2,3>(t1, t2);
+#endif
 }
 
 template<class T> void mem_pack3_impl64(T& a, T& b, T& c)
@@ -392,8 +499,8 @@ inline void mem_pack3(float64x4& a, float64x4& b, float64x4& c)
 template<class T> void mem_pack4_impl8(T& a, T& b, T& c, T& d)
 {
     // either basic_int16x8 or basic_int16x16, other entries likewise
-
-#if SIMDPP_USE_SSSE3
+#if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
+    // TODO: optimize for altivec
     using w_b32 = typename same_width<T>::b32;
 
     w_b32 b0, b1, b2, b3;

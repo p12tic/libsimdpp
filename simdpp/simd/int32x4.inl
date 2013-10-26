@@ -49,6 +49,9 @@ inline basic_int32x4::basic_int32x4(const float32x4& d)
     operator=(bit_cast<basic_int32x4>(d));
 #elif SIMDPP_USE_SSE2
     operator=(_mm_castps_si128(d));
+#elif SIMDPP_USE_ALTIVEC
+    __vector float df = d;
+    operator=((__vector uint32_t)(df));
 #endif
 }
 
@@ -98,13 +101,17 @@ inline uint32x4 uint32x4::load_broadcast(const uint32_t* v0)
     return r;
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u32(v0);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 r = altivec::load1_u(r, v0);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
 inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
 {
 #if SIMDPP_USE_NULL
-    return null::make_vec<uint32x4>(v0);
+    return uint32x4::load_broadcast(&v0);
 #elif SIMDPP_USE_SSE2
     uint32x4 r0;
     r0 = _mm_cvtsi32_si128(v0);
@@ -115,12 +122,21 @@ inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
     r0 = vsetq_lane_u32(v0, r0, 0);
     r0 = broadcast<0>(r0);
     return r0;
+#elif SIMDPP_USE_ALTIVEC
+    union {
+        uint32_t v[4];
+        uint32x4 align;
+    };
+    v[0] = v0;
+    uint32x4 r = altivec::load1(r, v);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
 inline uint32x4 uint32x4::make_const(uint32_t v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint32x4::make_const(v0, v0, v0, v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u32(&v0);
@@ -129,7 +145,7 @@ inline uint32x4 uint32x4::make_const(uint32_t v0)
 
 inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return uint32x4::make_const(v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
@@ -159,6 +175,8 @@ inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint
     v[2] = v2;
     v[3] = v3;
     return vld1q_u32(v);
+#elif SIMDPP_USE_ALTIVEC
+    return (__vector uint32_t){v0, v1, v2, v3};
 #endif
 }
 

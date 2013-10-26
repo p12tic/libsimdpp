@@ -68,6 +68,15 @@ inline void transpose2(basic_int8x16& a0, basic_int8x16& a1)
     auto r = vtrnq_u8(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 m0 = make_shuffle_bytes16_mask<0,16+0, 2,16+2, 4,16+4, 6,16+6,
+                                            8,16+8, 10,16+10, 12,16+12, 14,16+14>(m0);
+    uint8x16 m1 = make_shuffle_bytes16_mask<1,16+1, 3,16+3, 5,16+5, 7,16+7,
+                                            9,16+9, 11,16+11, 13,16+13, 15,16+15>(m1);
+    uint16x8 b0, b1;
+    b0 = shuffle_bytes16(a0, a1, m0);
+    b1 = shuffle_bytes16(a0, a1, m1);
+    a0 = b0;  a1 = b1;
 #else
     SIMDPP_NOT_IMPLEMENTED2(a0, a1);
 #endif
@@ -86,7 +95,7 @@ inline void transpose2(basic_int8x16& a0, basic_int8x16& a1)
 */
 inline basic_int8x16 transpose_inplace(basic_int8x16 a)
 {
-#if SIMDPP_USE_SSSE3
+#if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // the compiler will take this out of any loops automatically
     uint8x16 idx = uint8x16::make_const(0, 4, 8, 12, 1, 5, 9, 13,
                                         2, 6, 10,14, 3, 7, 11,15);
@@ -98,7 +107,7 @@ inline basic_int8x16 transpose_inplace(basic_int8x16 a)
 
 inline basic_int8x32 transpose_inplace(basic_int8x32 a)
 {
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2 || SIMDPP_USE_ALTIVEC
     uint8x32 idx = uint8x32::make_const(0, 4, 8, 12, 1, 5, 9, 13,
                                         2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);

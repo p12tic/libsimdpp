@@ -59,6 +59,10 @@ inline float32x4 float32x4::load_broadcast(const float* v0)
     return r;
 #elif SIMDPP_USE_NEON
     return vld1q_dup_f32(v0);
+#elif SIMDPP_USE_ALTIVEC
+    float32x4 r = altivec::load1_u(r, v0);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
@@ -75,12 +79,21 @@ inline float32x4 float32x4::set_broadcast(float v0)
     float32x4 r0 = vsetq_lane_f32(v0, r0, 0);
     r0 = broadcast<0>(r0);
     return r0;
+#elif SIMDPP_USE_ALTIVEC
+    union {
+        float v[4];
+        float32x4 align;
+    };
+    v[0] = v0;
+    float32x4 r = altivec::load1(r, v);
+    r = broadcast<0>(r);
+    return r;
 #endif
 }
 
 inline float32x4 float32x4::make_const(float v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return float32x4::make_const(v0, v0, v0, v0);
 #elif SIMDPP_USE_NEON
     return vld1q_dup_f32(&v0);
@@ -89,7 +102,7 @@ inline float32x4 float32x4::make_const(float v0)
 
 inline float32x4 float32x4::make_const(float v0, float v1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return float32x4::make_const(v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
@@ -119,6 +132,8 @@ inline float32x4 float32x4::make_const(float v0, float v1, float v2, float v3)
     v[2] = v2;
     v[3] = v3;
     return vld1q_f32(v);
+#elif SIMDPP_USE_ALTIVEC
+    return (__vector float){v0, v1, v2, v3};
 #endif
 }
 

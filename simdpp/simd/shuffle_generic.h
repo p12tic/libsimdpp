@@ -32,6 +32,8 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/fwd.h>
+#include <simdpp/simd/make_shuffle_bytes_mask.h>
 #include <simdpp/simd/detail/shuffle_emul.h>
 
 #if SIMDPP_USE_NULL
@@ -77,12 +79,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par: 128-bit version:
     @icost{SSE2-AVX2, 2}
     @icost{NEON, 1-5}
+    @icost{ALTIVEC, 1-2}
 
     @par: 256-bit version:
     @icost{SSE2-AVX, 4}
     @icost{AVX2, 2}
     @icost{NEON, 2-10}
-
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 int128 permute(basic_int16x8 a)
@@ -96,6 +99,10 @@ int128 permute(basic_int16x8 a)
     return a;
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int16x8::permute4<s0,s1,s2,s3>(a);
+#elif SIMDPP_USE_ALTIVEC
+    // TODO optimize
+    uint16x8 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
+    return permute_bytes16(a, mask);
 #endif
 }
 
@@ -129,12 +136,13 @@ basic_int16x16 permute(basic_int16x16 a)
 
     @par: 128-bit version:
     @icost{SSE2-AVX2, 2}
-    @icost{NEON, 1-2}
+    @icost{NEON, ALTIVEC, 1-2}
 
     @par: 256-bit version:
     @icost{SSE2-AVX, 4}
     @icost{AVX2, 2}
     @icost{NEON, 2-4}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
 basic_int16x8 permute(basic_int16x8 a)
@@ -168,10 +176,12 @@ basic_int16x16 permute(basic_int16x16 a)
 
     @par 128-bit version:
     @icost{NEON, 1-4}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 basic_int32x4 permute(basic_int32x4 a)
@@ -183,6 +193,10 @@ basic_int32x4 permute(basic_int32x4 a)
     return _mm_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int32x4::permute4<s0,s1,s2,s3>(a);
+#elif SIMDPP_USE_ALTIVEC
+    // TODO optimize
+    uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
+    return permute_bytes16(a, mask);
 #endif
 }
 
@@ -216,10 +230,12 @@ basic_int32x8 permute(basic_int32x8 a)
 
     @par 128-bit version:
     @icost{NEON, 2-4}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 4-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
 basic_int32x4 permute(basic_int32x4 a)
@@ -253,10 +269,12 @@ basic_int32x8 permute(basic_int32x8 a)
 
     @par 128-bit version:
     @icost{NEON, 1-4}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 2-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float32x4 permute(float32x4 a)
@@ -268,6 +286,10 @@ float32x4 permute(float32x4 a)
     return _mm_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
     return float32x4(neon::detail::shuffle_int32x4::permute4<s0,s1,s2,s3>(int32x4(a)));
+#elif SIMDPP_USE_ALTIVEC
+    // TODO optimize
+    uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
+    return permute_bytes16(a, mask);
 #endif
 }
 
@@ -303,10 +325,12 @@ float32x8 permute(float32x8 a)
 
     @par 128-bit version:
     @icost{NEON, 2-4}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 4-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
 float32x4 permute(float32x4 a)
@@ -346,7 +370,7 @@ basic_int64x4 permute(basic_int64x4 a)
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return detail::permute_emul<s0,s1,s2,s3>(a);
 #endif
 }
@@ -363,6 +387,7 @@ basic_int64x4 permute(basic_int64x4 a)
 
     @icost{SSE2-AVX, 1-2}
     @icost{NEON, 1-4}
+    @icost{ALTIVEC, 1-4}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float64x4 permute(float64x4 a)
@@ -376,9 +401,7 @@ float64x4 permute(float64x4 a)
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2
-    return detail::permute_emul<s0,s1,s2,s3>(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return detail::permute_emul<s0,s1,s2,s3>(a);
 #endif
 }
@@ -398,10 +421,12 @@ float64x4 permute(float64x4 a)
 
     @par 128-bit version:
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-4}
+    @icost{ALTIVEC, 2-4}
 */
 template<unsigned s0, unsigned s1>
 basic_int64x2 permute(basic_int64x2 a)
@@ -413,6 +438,10 @@ basic_int64x2 permute(basic_int64x2 a)
     return permute<s0*2, s0*2+1, s1*2, s1*2+1>(int32x4(a));
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int64x2::permute2<s0,s1>(a);
+#elif SIMDPP_USE_ALTIVEC
+    // TODO optimize
+    uint64x2 mask = make_shuffle_bytes16_mask<s0,s1>(mask);
+    return permute_bytes16(a, mask);
 #endif
 }
 
@@ -440,11 +469,13 @@ basic_int64x4 permute(basic_int64x4 a)
     r2 = a[s0+2]
     r3 = a[s1+2]
     @endcode
-    @icost{NEON, 2}
+
     @par 128-bit version:
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
+    @novec{NEON, ALTIVEC}
 */
 template<unsigned s0, unsigned s1>
 float64x2 permute(float64x2 a)
@@ -485,17 +516,17 @@ float64x4 permute(float64x4 a)
     @endcode
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 template<unsigned s0, unsigned s1>
 float64x2 shuffle1(float64x2 a, float64x2 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return float64x2(shuffle1<s0,s1>(int64x2(a), int64x2(b)));
 #elif SIMDPP_USE_SSE2
     if (s0 == 0 && s1 == 0) {
@@ -538,9 +569,12 @@ float64x4 shuffle1(float64x4 a, float64x4 b)
     @endcode
 
     @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 1-2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
 basic_int64x2 shuffle1(basic_int64x2 a, basic_int64x2 b)
@@ -553,6 +587,9 @@ basic_int64x2 shuffle1(basic_int64x2 a, basic_int64x2 b)
     return int64x2(shuffle1<s0,s1>(float64x2(a), float64x2(b)));
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int64x2::shuffle1<s0,s1>(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    uint64x2 mask = make_shuffle_bytes16_mask<s0,s1+2>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -588,11 +625,13 @@ basic_int64x4 shuffle1(basic_int64x4 a, basic_int64x4 b)
     @endcode
 
     @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
     @icost{NEON, 1-4}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 2-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 float32x4 shuffle2(float32x4 a, float32x4 b)
@@ -609,6 +648,9 @@ float32x4 shuffle2(float32x4 a, float32x4 b)
     } else {
         return _mm_shuffle_ps(a, b, _MM_SHUFFLE(b1, b0, a1, a0));
     }
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 mask = make_shuffle_bytes16_mask<a0,a1,b0+4,b1+4>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -643,11 +685,13 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
     @endcode
 
     @par 128-bit version:
+    @icost{ALTIVEC, 1-2}
     @icost{NEON, 2-4}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 4-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
 float32x4 shuffle2(float32x4 a, float32x4 b)
@@ -684,9 +728,12 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
 
     @par 128-bit version:
     @icost{NEON, 1-4}
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
@@ -699,6 +746,9 @@ basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
     return int32x4(shuffle2<a0,a1,b0,b1>(float32x4(a), float32x4(b)));
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int32x4::shuffle2<a0,a1,b0,b1>(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 mask = make_shuffle_bytes16_mask<a0,a1,b0+4,b1+4>(mask);
+    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -735,9 +785,12 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
 
     @par 128-bit version:
     @icost{NEON, 2-4}
+    @icost{ALTIVEC, 1-2}
+
     @par 256-bit version:
     @icost{SSE2-AVX, 2}
     @icost{NEON, 4-8}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
 basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)

@@ -82,6 +82,9 @@ inline int128 permute_bytes16(int128 a, int128 mask)
     uint8x8_t lo = vtbl2_u8(table, vget_low_u8(mask));
     uint8x8_t hi = vtbl2_u8(table, vget_high_u8(mask));
     return vcombine_u8(lo, hi);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_perm((__vector uint8_t)a, (__vector uint8_t)a,
+                    (__vector uint8_t)mask);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, mask);
 #endif
@@ -138,6 +141,7 @@ inline float64x4 permute_bytes16(float64x4 a, int256 mask)
     @icost{SSSE3, 12}
     @icost{SSE4.1-AVX, 8}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 2}
 
 */
 inline int128 shuffle_bytes16(int128 a, int128 b, int128 mask)
@@ -179,6 +183,9 @@ inline int128 shuffle_bytes16(int128 a, int128 b, int128 mask)
     uint8x8_t lo = vtbl4_u8(table, vget_low_u8(mask));
     uint8x8_t hi = vtbl4_u8(table, vget_high_u8(mask));
     return vcombine_u8(lo, hi);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_perm((__vector uint8_t)a, (__vector uint8_t)b,
+                    (__vector uint8_t)mask);
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, mask);
 #endif
@@ -233,6 +240,7 @@ inline float64x4 shuffle_bytes16(float64x4 a, float64x4 b, int256 mask)
     @par 128-bit version:
     @unimp{SSE2-SSE3}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     The vectors will be shuffled as if the 128-bit version was applied to the
@@ -242,6 +250,7 @@ inline float64x4 shuffle_bytes16(float64x4 a, float64x4 b, int256 mask)
     @icost{SSSE3-AVX, 2}
     @icost{AVX2, 1}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 2-3}
 
 */
 inline int128 permute_zbytes16(int128 a, int128 mask)
@@ -259,6 +268,13 @@ inline int128 permute_zbytes16(int128 a, int128 mask)
     return r;
 #elif SIMDPP_USE_SSSE3 || SIMDPP_USE_NEON
     return permute_bytes16(a, mask);
+#elif SIMDPP_USE_ALTIVEC
+    int8x16 a0 = a;
+    int8x16 zero_mask = mask;
+    zero_mask = shift_r<7>(zero_mask); // shift in the sign bit
+    a0 = permute_bytes16(a0, mask);
+    a0 = bit_andnot(a0, zero_mask);
+    return a0;
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, mask);
 #endif
@@ -309,6 +325,7 @@ inline float64x4 permute_zbytes16(float64x4 a, int256 mask)
     @icost{SSSE3, 9}
     @icost{SSE4.1-AVX2, 6}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 1-2}
 
     @par 256-bit version:
     The vectors will be shuffled as if the 128-bit version was applied to the
@@ -319,6 +336,7 @@ inline float64x4 permute_zbytes16(float64x4 a, int256 mask)
     @icost{SSE4.1-AVX, 12}
     @icost{AVX2, 6}
     @icost{NEON, 4}
+    @icost{ALTIVEC, 2-3}
 
 */
 inline int128 shuffle_zbytes16(int128 a, int128 b, int128 mask)
@@ -361,6 +379,13 @@ inline int128 shuffle_zbytes16(int128 a, int128 b, int128 mask)
     return r;
 #elif SIMDPP_USE_NEON
     return shuffle_bytes16(a, b, mask);
+#elif SIMDPP_USE_ALTIVEC
+    int8x16 a0 = a, b0 = b;
+    int8x16 zero_mask = mask;
+    zero_mask = shift_r<7>(zero_mask); // shift in the sign bit
+    a0 = shuffle_bytes16(a0, b0, mask);
+    a0 = bit_andnot(a0, zero_mask);
+    return a0;
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, mask);
 #endif

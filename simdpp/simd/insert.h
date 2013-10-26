@@ -36,9 +36,13 @@
 #include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/cast.h>
 #include <simdpp/simd/detail/word_size.h>
+#include <simdpp/simd/detail/move_signed.h>
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/set.h>
+#endif
+#if SIMDPP_USE_ALTIVEC
+    #include <simdpp/altivec/load1.h>
 #endif
 
 namespace simdpp {
@@ -60,6 +64,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     This function may have very high latency.
 
     @icost{SSE2-SSSE3, 4-5}
+    @icost{ALTIVEC, 3}
 */
 template<unsigned id>
 basic_int8x16 insert(basic_int8x16 a, uint8_t x)
@@ -80,6 +85,11 @@ basic_int8x16 insert(basic_int8x16 a, uint8_t x)
     return a;
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u8(x, a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint8x16> ax(a);
+    ax[id] = x;
+    a = ax;
+    return a;
 #endif
 }
 
@@ -92,6 +102,8 @@ basic_int8x16 insert(basic_int8x16 a, uint8_t x)
     @endcode
 
     This function may have very high latency.
+
+    @icost{ALTIVEC, 3}
 */
 template<unsigned id>
 basic_int16x8 insert(basic_int16x8 a, uint16_t x)
@@ -103,6 +115,11 @@ basic_int16x8 insert(basic_int16x8 a, uint16_t x)
     return _mm_insert_epi16(a, x, id);
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u16(x, a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint16x8> ax(a);
+    ax[id] = x;
+    a = ax;
+    return a;
 #endif
 }
 
@@ -118,6 +135,7 @@ basic_int16x8 insert(basic_int16x8 a, uint16_t x)
     This function may have very high latency.
 
     @icost{SSE2-SSSE3, 4}
+    @icost{ALTIVEC, 3}
 */
 template<unsigned id>
 int128 insert(basic_int32x4 a, uint32_t x)
@@ -136,6 +154,11 @@ int128 insert(basic_int32x4 a, uint32_t x)
     return a1;
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u32(x, a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint32x4> ax(a);
+    ax[id] = x;
+    a = ax;
+    return a;
 #endif
 }
 
@@ -152,6 +175,7 @@ int128 insert(basic_int32x4 a, uint32_t x)
     @icost{SSE4_1, 1}
     @icost{SSE2_32bit, SSE3_32bit, SSSE3_32bit, 4}
     @icost{SSE4_1_32bit, 2}
+    @icost{ALTIVEC, 3}
 */
 template<unsigned id>
 int128 insert(basic_int64x2 a, uint64_t x)
@@ -190,6 +214,11 @@ int128 insert(basic_int64x2 a, uint64_t x)
 #endif
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u64(x, a, id);
+#elif SIMDPP_USE_ALTIVEC
+    detail::mem_block<uint64x2> ax(a);
+    ax[id] = x;
+    a = ax;
+    return a;
 #endif
 }
 
@@ -205,11 +234,12 @@ int128 insert(basic_int64x2 a, uint64_t x)
     This function may have very high latency.
 
     @icost{SSE2-SSSE3, 4}
+    @icost{ALTIVEC, 3}
 */
 template<unsigned id>
 float32x4 insert(float32x4 a, float x)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return float32x4(insert<id>(int32x4(a), bit_cast<uint32_t>(x)));
 #elif SIMDPP_USE_NEON
     return vsetq_lane_f32(x, a, id);
@@ -227,6 +257,7 @@ float32x4 insert(float32x4 a, float x)
     This function may have very high latency.
 
     @icost{SSE2-SSSE3, 2}
+    @icost{ALTIVEC, 3}
 */
 template<unsigned id>
 float64x2 insert(float64x2 a, double x)
@@ -240,6 +271,9 @@ float64x2 insert(float64x2 a, double x)
     @code
     r = [ a, b ]
     @endcode
+
+    @icost{AVX2, 1}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 0}
 */
 inline int256 combine(int128 a, int128 b)
 {

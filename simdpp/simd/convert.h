@@ -76,6 +76,8 @@ inline basic_int16x8 to_int16x8(int8x16 a)
     return r;
 #elif SIMDPP_USE_NEON
     return vmovl_s8(vget_low_s8(a));
+#elif SIMDPP_USE_ALTIVEC
+    return vec_unpackh((__vector int8_t)a);
 #endif
 }
 
@@ -89,9 +91,9 @@ inline basic_int16x8 to_int16x8(int8x16 a)
 
     @icost{SSE4.1-AVX, 3}
     @icost{SSE2-SSSE3, 4}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
-inline basic_int16x16 to_int16x8(int8x32 a)
+inline basic_int16x16 to_int16x16(int8x32 a)
 {
 #if SIMDPP_USE_NULL
     int16x16 r;
@@ -118,6 +120,11 @@ inline basic_int16x16 to_int16x8(int8x32 a)
     r[0] = vmovl_s8(vget_low_s8(a[0]));
     r[1] = vmovl_s8(vget_high_s8(a[1]));
     return r;
+#elif SIMDPP_USE_ALTIVEC
+    int16x8 b0, b1;
+    b0 = vec_unpackh((__vector int8_t)a[0]);
+    b1 = vec_unpackl((__vector int8_t)a[0]);
+    return {b0, b1};
 #endif
 }
 
@@ -140,10 +147,11 @@ inline basic_int16x8 to_int16x8(uint8x16 a)
 #elif SIMDPP_USE_SSE4_1
     return _mm_cvtepu8_epi16(a);
 #elif SIMDPP_USE_SSE2
-    int16x8 r = zip_lo(a, int8x16::zero());
-    return r;
+    return zip_lo(a, uint8x16::zero());
 #elif SIMDPP_USE_NEON
     return vmovl_u8(vget_low_u8(a));
+#elif SIMDPP_USE_ALTIVEC
+    return zip_lo(uint8x16::zero(), a);
 #endif
 }
 
@@ -154,9 +162,9 @@ inline basic_int16x8 to_int16x8(uint8x16 a)
     ...
     r15 = (uint16_t) a15
     @endcode
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline basic_int16x16 to_int16x8(uint8x32 a)
+inline basic_int16x16 to_int16x16(uint8x32 a)
 {
 #if SIMDPP_USE_NULL
     int16x16 r;
@@ -166,7 +174,7 @@ inline basic_int16x16 to_int16x8(uint8x32 a)
     return r;
 #elif SIMDPP_USE_AVX2
     return  _mm256_cvtepu8_epi16(_mm256_castsi256_si128(a));
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     int16x8 b0, b1;
     b0 = zip_lo(a[0], int8x16::zero());
     b1 = zip_hi(a[0], int8x16::zero());
@@ -205,6 +213,8 @@ inline basic_int32x4 to_int32x4(int16x8 a)
     return r;
 #elif SIMDPP_USE_NEON
     return vmovl_s16(vget_low_s16(a));
+#elif SIMDPP_USE_ALTIVEC
+    return vec_unpackh((__vector int16_t)a);
 #endif
 }
 
@@ -217,9 +227,9 @@ inline basic_int32x4 to_int32x4(int16x8 a)
     @endcode
     @icost{SSE4.1-AVX, 3}
     @icost{SSE2-SSSE3, 4}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
-inline basic_int32x8 to_int32x4(int16x16 a)
+inline basic_int32x8 to_int32x8(int16x16 a)
 {
 #if SIMDPP_USE_NULL
     int32x8 r;
@@ -246,6 +256,11 @@ inline basic_int32x8 to_int32x4(int16x16 a)
     r[0] = vmovl_s16(vget_low_s16(a[0]));
     r[1] = vmovl_s16(vget_high_s16(a[1]));
     return r;
+#elif SIMDPP_USE_ALTIVEC
+    int32x4 b0, b1;
+    b0 = vec_unpackh((__vector int16_t)a[0]);
+    b1 = vec_unpackl((__vector int16_t)a[0]);
+    return {b0, b1};
 #endif
 }
 
@@ -267,7 +282,7 @@ inline basic_int32x4 to_int32x4(uint16x8 a)
     return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_cvtepu16_epi32(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     int32x4 r = zip_lo(a, int16x8::zero());
     return r;
 #elif SIMDPP_USE_NEON
@@ -282,10 +297,10 @@ inline basic_int32x4 to_int32x4(uint16x8 a)
     ...
     r7 = (uint32_t) a7
     @endcode
-    @icost{SSE2-AVX, 2}
+    @icost{SSE2-AVX, ALTIVEC, 2}
     @icost{NEON, 2}
 */
-inline basic_int32x8 to_int32x4(uint16x16 a)
+inline basic_int32x8 to_int32x8(uint16x16 a)
 {
 #if SIMDPP_USE_NULL
     uint32x8 r;
@@ -295,7 +310,7 @@ inline basic_int32x8 to_int32x4(uint16x16 a)
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_cvtepu16_epi32(_mm256_castsi256_si128(a));
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint32x4 b0, b1;
     b0 = zip_lo(a[0], uint16x8::zero());
     b1 = zip_hi(a[0], uint16x8::zero());
@@ -318,7 +333,7 @@ inline basic_int32x8 to_int32x4(uint16x16 a)
     If the value can not be represented by int32_t, @c 0x80000000 is returned
     TODO: NaN handling
 
-    NEON specific:
+    NEON, ALTIVEC specific:
     If the value can not be represented by int32_t, either @c 0x80000000 or @c
     0x7fffffff is returned depending on the sign of the operand (saturation
     occurs). Conversion of NaNs results in @a 0.
@@ -330,7 +345,7 @@ inline basic_int32x8 to_int32x4(uint16x16 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline basic_int32x4 to_int32x4(float32x4 a)
 {
@@ -340,6 +355,8 @@ inline basic_int32x4 to_int32x4(float32x4 a)
     return _mm_cvttps_epi32(a);
 #elif SIMDPP_USE_NEON
     return vcvtq_s32_f32(a);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_cts((__vector float)a, 0);
 #endif
 }
 
@@ -368,7 +385,7 @@ inline basic_int32x8 to_int32x8(float32x8 a)
     NaNs results in @a 0.
 
     @par 128-bit version:
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @code
     r0 = (int32_t) a0
@@ -386,7 +403,7 @@ inline basic_int32x8 to_int32x8(float32x8 a)
     ...
     r7 = 0
     @endcode
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 3}
 */
 inline basic_int32x4 to_int32x4(float64x2 a)
@@ -400,13 +417,15 @@ inline basic_int32x4 to_int32x4(float64x2 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvttpd_epi32(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
     r[0] = int32_t(a[0]);
     r[1] = int32_t(a[1]);
     r[2] = 0;
     r[3] = 0;
     return r;
+#else
+    SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();
 #endif
 }
 
@@ -425,7 +444,7 @@ inline basic_int32x8 to_int32x8(float64x4 a)
     int32x4 b0 = to_int32x4(a[0]);
     int32x4 b1 = to_int32x4(a[1]);
     return {zip_lo(b0, b1), int32x4::zero()};
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x8> r;
     r[0] = int32_t(a[0][0]);
     r[1] = int32_t(a[0][1]);
@@ -449,6 +468,7 @@ inline basic_int32x8 to_int32x8(float64x4 a)
     @endcode
 
     @icost{SSE2-SSSE3, 2}
+    @icost{ALTIVEC, 2-3}
 
     @par 256-bit version:
     @code
@@ -460,6 +480,7 @@ inline basic_int32x8 to_int32x8(float64x4 a)
     @icost{SSE2-SSSE3, 5}
     @icost{SSE4.1-AVX, 3}
     @icost{NEON, 2}
+    @icost{ALTIVEC, 3-4}
 */
 inline basic_int64x2 to_int64x2(int32x4 a)
 {
@@ -471,13 +492,17 @@ inline basic_int64x2 to_int64x2(int32x4 a)
 #elif SIMDPP_USE_SSE4_1
     return _mm_cvtepi32_epi64(a);
 #elif SIMDPP_USE_SSE2
-    int32x4 t, u;
-    t = a;
-    u = shift_r(t, 31);
-    t = zip_lo(t, u);
-    return t;
+    int32x4 u;
+    u = shift_r(a, 31);
+    a = zip_lo(a, u);
+    return a;
 #elif SIMDPP_USE_NEON
     return vmovl_s32(vget_low_s32(a));
+#elif SIMDPP_USE_ALTIVEC
+    int32x4 u;
+    u = shift_r(a, 31);
+    a = zip_lo(u, a);
+    return a;
 #endif
 }
 
@@ -499,6 +524,13 @@ inline basic_int64x4 to_int64x4(int32x8 a)
     r[0] = vmovl_s32(vget_low_s32(a[0]));
     r[1] = vmovl_s32(vget_high_s32(a[0]));
     return r;
+#elif SIMDPP_USE_ALTIVEC
+    int32x4 a0 = a[0];
+    int32x4 u = shift_r(a0, 31);
+    int64x2 b0, b1;
+    b0 = zip_lo(u, a0);
+    b1 = zip_hi(u, a0);
+    return { b0, b1 };
 #endif
 }
 
@@ -519,7 +551,7 @@ inline basic_int64x4 to_int64x4(int32x8 a)
     @endcode
 
     @icost{SSE2-AVX, 3}
-    @icost{NEON, 2}
+    @icost{NEON, ALTIVEC, 2}
 */
 inline basic_int64x2 to_int64x2(uint32x4 a)
 {
@@ -531,10 +563,11 @@ inline basic_int64x2 to_int64x2(uint32x4 a)
 #elif SIMDPP_USE_SSE4_1
     return _mm_cvtepu32_epi64(a);
 #elif SIMDPP_USE_SSE2
-    int64x2 r = zip_lo(a, int32x4::zero());
-    return r;
+    return zip_lo(a, uint32x4::zero());
 #elif SIMDPP_USE_NEON
     return vmovl_u32(vget_low_u32(a));
+#elif SIMDPP_USE_ALTIVEC
+    return zip_lo(uint32x4::zero(), a);
 #endif
 }
 
@@ -557,6 +590,8 @@ inline basic_int64x4 to_int64x4(uint32x8 a)
     r[0] = vmovl_u32(vget_low_u32(a[0]));
     r[1] = vmovl_u32(vget_high_u32(a[0]));
     return r;
+#elif SIMDPP_USE_ALTIVEC
+    return { zip_lo(uint32x4::zero(), a[0]), zip_hi(uint32x4::zero(), a[1]) };
 #endif
 }
 /// @}
@@ -569,7 +604,7 @@ inline basic_int64x4 to_int64x4(uint32x8 a)
     If only inexact conversion can be performed, the current rounding mode is
     used.
 
-    NEON specific:
+    NEON, ALTIVEC specific:
 
     If only inexact conversion can be performed, round to nearest mode is used.
 
@@ -580,7 +615,7 @@ inline basic_int64x4 to_int64x4(uint32x8 a)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline float32x4 to_float32x4(int32x4 a)
 {
@@ -599,6 +634,8 @@ inline float32x4 to_float32x4(int32x4 a)
     return r;
 #elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_f32_s32(a);
+#elif SIMDPP_USE_ALTIVEC
+    return vec_ctf((__vector int32_t)a, 0);
 #endif
 }
 
@@ -632,7 +669,7 @@ inline float32x8 to_float32x8(int32x8 a)
     r3 = 0.0f
     @endcode
 
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @code
@@ -645,7 +682,7 @@ inline float32x8 to_float32x8(int32x8 a)
     @endcode
 
     @icost{SSE2-SSE4.1, 3}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float32x4 to_float32x4(float64x2 a)
 {
@@ -658,21 +695,19 @@ inline float32x4 to_float32x4(float64x2 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtpd_ps(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
     r[0] = float(a[0]);
     r[1] = float(a[1]);
     r[2] = 0;
     r[3] = 0;
     return r;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
 inline float32x8 to_float32x8(float64x4 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
     r[0] = float(a[0][0]);
     r[1] = float(a[0][1]);
@@ -683,8 +718,6 @@ inline float32x8 to_float32x8(float64x4 a)
     return _mm256_castps128_ps256(_mm256_cvtpd_ps(a));
 #elif SIMDPP_USE_SSE2
     return float32x8(to_float32x4(a[0]), to_float32x4(move_l<2>(a[0])));
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 /// @}
@@ -708,7 +741,7 @@ inline float32x8 to_float32x8(float64x4 a)
     r1 = (double) a1
     @endcode
 
-    @unimp{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @code
@@ -718,7 +751,7 @@ inline float32x8 to_float32x8(float64x4 a)
     @endcode
 
     @icost{SSE2-SSE4.1, 3}
-    @unimp{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 to_float64x2(int32x4 a)
 {
@@ -729,14 +762,12 @@ inline float64x2 to_float64x2(int32x4 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_pd(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> ax(a);
     float64x2 r;
     r[0] = double(ax[0]);
     r[1] = double(ax[1]);
     return r;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -753,7 +784,7 @@ inline float64x4 to_float64x4(int32x8 a)
     return _mm256_cvtepi32_pd(sse::extract_lo(a));
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     float64x4 r;
     detail::mem_block<int32x8> ax(a);
     r[0][0] = double(ax[0]);
@@ -761,8 +792,6 @@ inline float64x4 to_float64x4(int32x8 a)
     r[1][0] = double(ax[2]);
     r[1][1] = double(ax[3]);
     return r;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 /// @}
@@ -786,7 +815,7 @@ inline float64x4 to_float64x4(int32x8 a)
     r1 = (double) a1
     @endcode
 
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @code
@@ -796,7 +825,7 @@ inline float64x4 to_float64x4(int32x8 a)
     @endcode
 
     @icost{SSE2-SSE4.1, 3}
-    @novec{NEON}
+    @novec{NEON, ALTIVEC}
 */
 inline float64x2 to_float64x2(float32x4 a)
 {
@@ -807,14 +836,12 @@ inline float64x2 to_float64x2(float32x4 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtps_pd(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
     float64x2 r;
     r[0] = double(ax[0]);
     r[1] = double(ax[1]);
     return r;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
@@ -831,7 +858,7 @@ inline float64x4 to_float64x4(float32x8 a)
     return _mm256_cvtps_pd(sse::extract_lo(a));
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x8> ax(a);
     float64x4 r;
     r[0][0] = double(ax[0]);
@@ -839,8 +866,6 @@ inline float64x4 to_float64x4(float32x8 a)
     r[1][0] = double(ax[2]);
     r[1][1] = double(ax[3]);
     return r;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 /// @}
