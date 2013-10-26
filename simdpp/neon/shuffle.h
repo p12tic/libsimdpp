@@ -74,7 +74,7 @@ inline void swap_hi(basic_int64x2& a, basic_int64x2& b)
 #ifdef __GNUC__
     asm ( "vswp %f1, %e1 \n\t" : "+w" (a), "+w" (b) : );
 #else
-    int64x1_t ah, bh. al, bl;
+    int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
     ah = vget_high_u64(a);
@@ -90,7 +90,7 @@ inline void transpose2(basic_int64x2& a, basic_int64x2& b)
 #ifdef __GNUC__
     asm ( "vswp %f0, %e1 \n\t" : "+w" (a), "+w" (b) : );
 #else
-    int64x1_t ah, bh. al, bl;
+    int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
     ah = vget_high_u64(a);
