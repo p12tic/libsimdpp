@@ -48,7 +48,7 @@ namespace neon {
 inline void swap_lo(basic_int64x2& a, basic_int64x2& b)
 {
 // As of version 4.7, GCC does not emit vswp
-#ifdef __GNUC__
+#if __GNUC__ && !defined(__clang__)
     asm ( "vswp %f0, %e0 \n\t" : "+w" (a), "+w" (b) : );
 #else
     int64x1_t ah, bh, al, bl;
@@ -71,7 +71,7 @@ inline void swap_lo(basic_int64x2& a, basic_int64x2& b)
 inline void swap_hi(basic_int64x2& a, basic_int64x2& b)
 {
 // As of version 4.7, GCC does not emit vswp
-#ifdef __GNUC__
+#if __GNUC__ && !defined(__clang__)
     asm ( "vswp %f1, %e1 \n\t" : "+w" (a), "+w" (b) : );
 #else
     int64x1_t ah, bh, al, bl;
@@ -87,7 +87,7 @@ inline void swap_hi(basic_int64x2& a, basic_int64x2& b)
 inline void transpose2(basic_int64x2& a, basic_int64x2& b)
 {
 // As of version 4.7, GCC does not emit vswp
-#ifdef __GNUC__
+#if __GNUC__ && !defined(__clang__)
     asm ( "vswp %f0, %e1 \n\t" : "+w" (a), "+w" (b) : );
 #else
     int64x1_t ah, bh, al, bl;
