@@ -120,7 +120,7 @@ void test_shuffle_type256(TestCase &tc, V v1, V v2)
 }
 
 template<class V>
-std::vector<V> test_blend_make_masks()
+std::vector<V> test_blend_make_sel_vec()
 {
     using U = typename V::uint_element_type;
     using T = typename V::element_type;
@@ -133,6 +133,17 @@ std::vector<V> test_blend_make_masks()
     r.push_back(V::make_const(o, z));
     r.push_back(V::make_const(o, o));
 
+    return r;
+}
+
+template<class V, class M>
+std::vector<M> test_blend_make_sel_mask()
+{
+    std::vector<M> r;
+    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(0, 0)));
+    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(0, 1)));
+    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(1, 0)));
+    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(1, 1)));
     return r;
 }
 
@@ -167,23 +178,38 @@ void test_shuffle(TestResults& res)
     test_shuffle_type256<float64x4>(tc, v.df64[0], v.df64[1]);
 
     // blend
-    test_blend<uint8x16>(tc, v.u8[0], v.u8[1], test_blend_make_masks<uint8x16>());
-    test_blend<uint16x8>(tc, v.u16[0], v.u16[1], test_blend_make_masks<uint16x8>());
-    test_blend<uint32x4>(tc, v.u32[0], v.u32[1], test_blend_make_masks<uint32x4>());
-    test_blend<uint64x2>(tc, v.u64[0], v.u64[1], test_blend_make_masks<uint64x2>());
-    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_masks<uint32x4>());
-    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_masks<float32x4>());
-    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_masks<uint64x2>());
-    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_masks<float64x2>());
+    test_blend<uint8x16>(tc, v.u8[0], v.u8[1], test_blend_make_sel_vec<uint8x16>());
+    test_blend<uint16x8>(tc, v.u16[0], v.u16[1], test_blend_make_sel_vec<uint16x8>());
+    test_blend<uint32x4>(tc, v.u32[0], v.u32[1], test_blend_make_sel_vec<uint32x4>());
+    test_blend<uint64x2>(tc, v.u64[0], v.u64[1], test_blend_make_sel_vec<uint64x2>());
+    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_sel_vec<uint32x4>());
+    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_sel_vec<float32x4>());
+    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_sel_vec<uint64x2>());
+    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_sel_vec<float64x2>());
 
-    test_blend<uint8x32>(tc, v.du8[0], v.du8[1], test_blend_make_masks<uint8x32>());
-    test_blend<uint16x16>(tc, v.du16[0], v.du16[1], test_blend_make_masks<uint16x16>());
-    test_blend<uint32x8>(tc, v.du32[0], v.du32[1], test_blend_make_masks<uint32x8>());
-    test_blend<uint64x4>(tc, v.du64[0], v.du64[1], test_blend_make_masks<uint64x4>());
-    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_masks<uint32x8>());
-    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_masks<float32x8>());
-    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_masks<uint64x4>());
-    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_masks<float64x4>());
+    test_blend<uint8x32>(tc, v.du8[0], v.du8[1], test_blend_make_sel_vec<uint8x32>());
+    test_blend<uint16x16>(tc, v.du16[0], v.du16[1], test_blend_make_sel_vec<uint16x16>());
+    test_blend<uint32x8>(tc, v.du32[0], v.du32[1], test_blend_make_sel_vec<uint32x8>());
+    test_blend<uint64x4>(tc, v.du64[0], v.du64[1], test_blend_make_sel_vec<uint64x4>());
+    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_sel_vec<uint32x8>());
+    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_sel_vec<float32x8>());
+    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_sel_vec<uint64x4>());
+    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_sel_vec<float64x4>());
+
+    // blend
+    test_blend<uint8x16>(tc, v.u8[0], v.u8[1], test_blend_make_sel_mask<uint8x16, mask_int8x16>());
+    test_blend<uint16x8>(tc, v.u16[0], v.u16[1], test_blend_make_sel_mask<uint16x8, mask_int16x8>());
+    test_blend<uint32x4>(tc, v.u32[0], v.u32[1], test_blend_make_sel_mask<uint32x4, mask_int32x4>());
+    //test_blend<uint64x2>(tc, v.u64[0], v.u64[1], test_blend_make_sel_mask<uint64x2, mask_int64x2>());
+    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_sel_mask<float32x4, mask_float32x4>());
+    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_sel_mask<float64x2, mask_float64x2>());
+
+    test_blend<uint8x32>(tc, v.du8[0], v.du8[1], test_blend_make_sel_mask<uint8x32, mask_int8x32>());
+    test_blend<uint16x16>(tc, v.du16[0], v.du16[1], test_blend_make_sel_mask<uint16x16, mask_int16x16>());
+    test_blend<uint32x8>(tc, v.du32[0], v.du32[1], test_blend_make_sel_mask<uint32x8, mask_int32x8>());
+    //test_blend<uint64x4>(tc, v.du64[0], v.du64[1], test_blend_make_sel_mask<uint64x4, mask_int64x4>());
+    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_sel_mask<float32x8, mask_float32x8>());
+    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_sel_mask<float64x4, mask_float64x4>());
 
     // extract bits
     v.reset();
