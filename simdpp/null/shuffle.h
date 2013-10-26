@@ -118,14 +118,58 @@ V blend(V on, V off, V mask)
     return r;
 }
 
+namespace detail_null {
+
+template<unsigned L> struct blend_mask_impl {
+    template<class V, class M>
+    static V run(V on, V off, M mask)
+    {
+        V r;
+        for (unsigned i = 0; i < L; i++) {
+            r[i] = mask[i] ? on[i] : off[i];
+        }
+        return r;
+    }
+};
+
+template<> struct blend_mask_impl<1> {
+    template<class V, class M>
+    static V run(V on, V off, M mask)
+    {
+        V r;
+        r[0] = mask[0] ? on[0] : off[0];
+        return r;
+    }
+};
+template<> struct blend_mask_impl<2> {
+    template<class V, class M>
+    static V run(V on, V off, M mask)
+    {
+        V r;
+        r[0] = mask[0] ? on[0] : off[0];
+        r[1] = mask[1] ? on[1] : off[1];
+        return r;
+    }
+};
+template<> struct blend_mask_impl<4> {
+    template<class V, class M>
+    static V run(V on, V off, M mask)
+    {
+        V r;
+        r[0] = mask[0] ? on[0] : off[0];
+        r[1] = mask[1] ? on[1] : off[1];
+        r[2] = mask[2] ? on[2] : off[2];
+        r[3] = mask[3] ? on[3] : off[3];
+        return r;
+    }
+};
+
+} // namespace detail_null
+
 template<class V, class M>
 V blend_mask(V on, V off, M mask)
 {
-    V r;
-    for (unsigned i = 0; i < V::length; i++) {
-        r[i] = mask[i] ? on[i] : off[i];
-    }
-    return r;
+    return detail_null::blend_mask_impl<V::length>::run(on, off, mask);
 }
 
 template<unsigned s0, unsigned s1, class V>
