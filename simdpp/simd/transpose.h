@@ -737,8 +737,7 @@ inline void transpose8(basic_int8x32& a0, basic_int8x32& a1,
                        basic_int8x32& a6, basic_int8x32& a7)
 {
 #if SIMDPP_USE_AVX2
-
-    sse::detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
+    detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 
     basic_int64x4 d0, d1, d2, d3, d4, d5, d6, d7;
     d0 = a0;  d1 = a1;  d2 = a2;  d3 = a3;
@@ -1055,8 +1054,8 @@ inline void transpose16(basic_int8x32& a0, basic_int8x32& a1,
                         basic_int8x32& a14, basic_int8x32& a15)
 {
 #if SIMDPP_USE_AVX2
-    sse::detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
-    sse::detail::partial_transpose8(a8, a9, a10, a11, a12, a13, a14, a15);
+    detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
+    detail::partial_transpose8(a8, a9, a10, a11, a12, a13, a14, a15);
 
     basic_int64x4 d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15;
     d0 = a0;  d1 = a1;  d2 = a2;  d3 = a3;
