@@ -63,23 +63,23 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, 2}
 */
-inline basic_int32x4 isnan(float32x4 a)
+inline mask_float32x4 isnan(float32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, [](float x) { return std::isnan(x) ? 0xffffffff : 0; });
+    return null::isnan(a);
 #elif SIMDPP_USE_AVX
-    return int32x4(_mm_cmp_ps(a, a, _CMP_UNORD_Q));
+    return _mm_cmp_ps(a, a, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
-    return int32x4(_mm_cmpunord_ps(a, a));
+    return _mm_cmpunord_ps(a, a);
 #elif SIMDPP_USE_NEON
     return vceqq_f32(a, a);
 #endif
 }
 
-inline basic_int32x8 isnan(float32x8 a)
+inline mask_float32x8 isnan(float32x8 a)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, a, _CMP_UNORD_Q));
+    return _mm256_cmp_ps(a, a, _CMP_UNORD_Q);
 #else
     return {isnan(a[0]), isnan(a[1])};
 #endif
@@ -102,23 +102,21 @@ inline basic_int32x8 isnan(float32x8 a)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 isnan(float64x2 a)
+inline mask_float64x2 isnan(float64x2 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    return null::foreach<int64x2>(a, [](double x) {
-        return std::isnan(x) ? 0xffffffffffffffff : 0;
-    });
-#elif SIMDPP_USE_AVX2
-    return int64x2(_mm_cmp_pd(a, a, _CMP_UNORD_Q));
+    return null::isnan(a);
+#elif SIMDPP_USE_AVX
+    return _mm_cmp_pd(a, a, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmpunord_pd(a, a));
+    return _mm_cmpunord_pd(a, a);
 #endif
 }
 
-inline basic_int64x4 isnan(float64x4 a)
+inline mask_float64x4 isnan(float64x4 a)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, a, _CMP_UNORD_Q));
+    return _mm256_cmp_pd(a, a, _CMP_UNORD_Q);
 #else
     return {isnan(a[0]), isnan(a[1])};
 #endif
@@ -141,25 +139,23 @@ inline basic_int64x4 isnan(float64x4 a)
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 6}
 */
-inline basic_int32x4 isnan2(float32x4 a, float32x4 b)
+inline mask_float32x4 isnan2(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, b, [](float a, float b) {
-        return std::isnan(a) || std::isnan(b) ? 0xffffffff : 0;
-    });
+    return null::isnan2(a, b);
 #elif SIMDPP_USE_AVX
-    return int32x4(_mm_cmp_ps(a, b, _CMP_UNORD_Q));
+    return _mm_cmp_ps(a, b, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
-    return int32x4(_mm_cmpunord_ps(a, b));
+    return _mm_cmpunord_ps(a, b);
 #elif SIMDPP_USE_NEON
-    return bit_and(isnan(a), isnan(b));
+    return bit_or(isnan(a), isnan(b));
 #endif
 }
 
-inline basic_int32x8 isnan2(float32x8 a, float32x8 b)
+inline mask_float32x8 isnan2(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, b, _CMP_UNORD_Q));
+    return _mm256_cmp_ps(a, b, _CMP_UNORD_Q);
 #else
     return {isnan2(a[0], b[0]), isnan2(a[1], b[1])};
 #endif
@@ -183,23 +179,21 @@ inline basic_int32x8 isnan2(float32x8 a, float32x8 b)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 isnan2(float64x2 a, float64x2 b)
+inline mask_float64x2 isnan2(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    return null::foreach<int64x2>(a, b, [](double a, double b) {
-        return std::isnan(a) || std::isnan(b) ? 0xffffffffffffffff : 0;
-    });
+    return null::isnan2(a, b);
 #elif SIMDPP_USE_AVX
-    return int64x2(_mm_cmp_pd(a, b, _CMP_UNORD_Q));
+    return _mm_cmp_pd(a, b, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmpunord_pd(a, b));
+    return _mm_cmpunord_pd(a, b);
 #endif
 }
 
-inline basic_int64x4 isnan2(float64x4 a, float64x4 b)
+inline mask_float64x4 isnan2(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, b, _CMP_UNORD_Q));
+    return _mm256_cmp_pd(a, b, _CMP_UNORD_Q);
 #else
     return {isnan2(a[0], b[0]), isnan2(a[1], b[1])};
 #endif
