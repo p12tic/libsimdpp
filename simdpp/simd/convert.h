@@ -36,6 +36,7 @@
 #include <simdpp/simd/math_shift.h>
 #include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/mem_block.h>
 
 #if SIMDPP_USE_AVX2
     #include <simdpp/sse/extract_half.h>
@@ -400,14 +401,11 @@ inline basic_int32x4 to_int32x4(float64x2 a)
 #elif SIMDPP_USE_SSE2
     return _mm_cvttpd_epi32(a);
 #elif SIMDPP_USE_NEON
-    int32x4 r = int32x4::zero();
-    union {
-        int32x2_t v;
-        int32_t i[2];
-    };
-    i[0] = int32_t(a[0]);
-    i[1] = int32_t(a[1]);
-    r = vcombine_s32(v, vget_high_s32(r));
+    detail::mem_block<int32x4> r;
+    r[0] = int32_t(a[0]);
+    r[1] = int32_t(a[1]);
+    r[2] = 0;
+    r[3] = 0;
     return r;
 #endif
 }
@@ -428,16 +426,12 @@ inline basic_int32x8 to_int32x8(float64x4 a)
     int32x4 b1 = to_int32x4(a[1]);
     return {zip_lo(b0, b1), int32x4::zero()};
 #elif SIMDPP_USE_NEON
-    int32x8 r = int32x8::zero();
-    union {
-        int32x4_t v;
-        int32_t i[4];
-    };
-    i[0] = int32_t(a[0][0]);
-    i[1] = int32_t(a[0][1]);
-    i[2] = int32_t(a[1][0]);
-    i[3] = int32_t(a[1][1]);
-    r[0] = v;
+    detail::mem_block<int32x8> r;
+    r[0] = int32_t(a[0][0]);
+    r[1] = int32_t(a[0][1]);
+    r[2] = int32_t(a[1][0]);
+    r[3] = int32_t(a[1][1]);
+    r[4] = 0;  r[5] = 0;  r[6] = 0;  r[7] = 0;
     return r;
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
@@ -665,14 +659,11 @@ inline float32x4 to_float32x4(float64x2 a)
 #elif SIMDPP_USE_SSE2
     return _mm_cvtpd_ps(a);
 #elif SIMDPP_USE_NEON
-    float32x4 r = float32x4::zero();
-    union {
-        float rx[2];
-        float32x2_t rv;
-    };
-    rx[0] = float(a[0]);
-    rx[1] = float(a[1]);
-    r = vcombine_f32(rv, vget_high_f32(r));
+    detail::mem_block<float32x4> r;
+    r[0] = float(a[0]);
+    r[1] = float(a[1]);
+    r[2] = 0;
+    r[3] = 0;
     return r;
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
@@ -681,8 +672,8 @@ inline float32x4 to_float32x4(float64x2 a)
 
 inline float32x8 to_float32x8(float64x4 a)
 {
-#if SIMDPP_USE_NULL
-    float32x4 r;
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    detail::mem_block<float32x4> r;
     r[0] = float(a[0][0]);
     r[1] = float(a[0][1]);
     r[2] = float(a[1][0]);
@@ -692,16 +683,6 @@ inline float32x8 to_float32x8(float64x4 a)
     return _mm256_castps128_ps256(_mm256_cvtpd_ps(a));
 #elif SIMDPP_USE_SSE2
     return float32x8(to_float32x4(a[0]), to_float32x4(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON
-    union {
-        float rx[4];
-        float32x4_t rv;
-    };
-    rx[0] = float(a[0][0]);
-    rx[1] = float(a[1][1]);
-    rx[2] = float(a[0][0]);
-    rx[3] = float(a[1][1]);
-    return float32x8(float32x4(rv), float32x4::zero());
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
@@ -749,12 +730,8 @@ inline float64x2 to_float64x2(int32x4 a)
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_pd(a);
 #elif SIMDPP_USE_NEON
+    detail::mem_block<int32x4> ax(a);
     float64x2 r;
-    union {
-        int32_t ax[2];
-        int32x2_t av;
-    };
-    av = vget_low_s32(a);
     r[0] = double(ax[0]);
     r[1] = double(ax[1]);
     return r;
@@ -778,11 +755,7 @@ inline float64x4 to_float64x4(int32x8 a)
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
 #elif SIMDPP_USE_NEON
     float64x4 r;
-    union {
-        int32_t ax[4];
-        int32x4_t av;
-    };
-    av = a[0];
+    detail::mem_block<int32x8> ax(a);
     r[0][0] = double(ax[0]);
     r[0][1] = double(ax[1]);
     r[1][0] = double(ax[2]);
@@ -835,12 +808,8 @@ inline float64x2 to_float64x2(float32x4 a)
 #elif SIMDPP_USE_SSE2
     return _mm_cvtps_pd(a);
 #elif SIMDPP_USE_NEON
+    detail::mem_block<float32x4> ax(a);
     float64x2 r;
-    union {
-        float ax[2];
-        float32x2_t av;
-    };
-    av = vget_low_f32(a);
     r[0] = double(ax[0]);
     r[1] = double(ax[1]);
     return r;
@@ -863,12 +832,8 @@ inline float64x4 to_float64x4(float32x8 a)
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
 #elif SIMDPP_USE_NEON
+    detail::mem_block<float32x8> ax(a);
     float64x4 r;
-    union {
-        float ax[4];
-        float32x4_t av;
-    };
-    av = a[0];
     r[0][0] = double(ax[0]);
     r[0][1] = double(ax[1]);
     r[1][0] = double(ax[2]);

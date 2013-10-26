@@ -32,6 +32,8 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/detail/mem_block.h>
+
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -41,27 +43,21 @@ namespace null {
 template<class R, class V, class C>
 R foreach(V v, C c)
 {
-    union {
-        typename R::element_type ri[R::length];
-        R r;
-    };
+    detail::mem_block<R> r;
     for (unsigned i = 0; i < V::length; i++) {
-        ri[i] = c(v[i]);
+        r[i] = c(v[i]);
     }
-    return r;
+    return static_cast<R>(r);
 }
 
 template<class R, class V1, class V2, class C>
 R foreach(V1 v1, V2 v2, C c)
 {
-    union {
-        typename R::element_type ri[R::length];
-        R r;
-    };
+    detail::mem_block<R> r;
     for (unsigned i = 0; i < V1::length; i++) {
-        ri[i] = c(v1[i], v2[i]);
+        r[i] = c(v1[i], v2[i]);
     }
-    return r;
+    return static_cast<R>(r);
 }
 
 } // namespace null

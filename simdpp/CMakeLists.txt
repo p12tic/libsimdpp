@@ -50,6 +50,7 @@ set(HEADERS
     null/transpose.h
 
     simd/detail/not_implemented.h
+    simd/detail/mem_block.h
     simd/detail/mem_pack.h
     simd/detail/mem_unpack.h
     simd/detail/shuffle128.h
