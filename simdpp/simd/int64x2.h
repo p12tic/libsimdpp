@@ -52,6 +52,7 @@ public:
     using element_type = uint64_t;
     using uint_element_type = uint64_t;
     using int_vector_type = basic_int64x2;
+    using uint_vector_type = uint64x2;
     using mask_type = mask_int64x2;
 
     static constexpr unsigned length = 2;

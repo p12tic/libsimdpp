@@ -50,6 +50,7 @@ public:
     using element_type = uint8_t;
     using uint_element_type = uint8_t;
     using int_vector_type = basic_int8x16;
+    using uint_vector_type = uint8x16;
     using mask_type = mask_int8x16;
 
     static constexpr unsigned length = 16;

@@ -52,6 +52,7 @@ public:
     using element_type = uint32_t;
     using uint_element_type = uint32_t;
     using int_vector_type = basic_int32x8;
+    using uint_vector_type = uint32x8;
     using half_vector_type = basic_int32x4;
     using mask_type = mask_int32x8;
 

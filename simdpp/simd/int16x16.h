@@ -51,6 +51,7 @@ public:
     using element_type = uint16_t;
     using uint_element_type = uint16_t;
     using int_vector_type = basic_int16x16;
+    using uint_vector_type = uint16x16;
     using half_vector_type = basic_int16x8;
     using mask_type = mask_int16x16;
 
