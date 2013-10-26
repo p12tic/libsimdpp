@@ -70,7 +70,7 @@ add_executable(test1 EXCLUDE_FROM_ALL
     ${TEST1_ARCH_GEN_SOURCES}
 )
 
-set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11")
+set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -g2")
 
 add_test(s_test1 test1)
 add_dependencies(check test1)
@@ -114,7 +114,7 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 )
 target_link_libraries(test_dispatcher pthread)
 
-set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11")
+set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -g2")
 
 list_contains(HAS_SSE2 X86_SSE2 ${NATIVE_ARCHS})
 list_contains(HAS_SSE3 X86_SSE3 ${NATIVE_ARCHS})
