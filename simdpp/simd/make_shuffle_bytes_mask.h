@@ -71,21 +71,18 @@ uint8_t get_shuffle_bytex1_16()
 /*  This reduces diff with the C++03 branch. We can use std::array as a standard
     alternative.
 */
-class uint8x2 {
+template<unsigned N>
+class uint8_array {
 public:
     uint8_t&       operator[](unsigned id) { return d[id]; }
     const uint8_t& operator[](unsigned id) const { return d[id]; }
 private:
-    uint8_t d[2];
+    uint8_t d[N];
 };
 
-class uint8x4 {
-public:
-    uint8_t&       operator[](unsigned id) { return d[id]; }
-    const uint8_t& operator[](unsigned id) const { return d[id]; }
-private:
-    uint8_t d[4];
-};
+using uint8x2 = uint8_array<2>;
+using uint8x4 = uint8_array<4>;
+using uint8x8 = uint8_array<8>;
 
 /// s - selector, u - the number of elements per group
 template<int s, int u>
@@ -106,6 +103,22 @@ uint8x4 get_shuffle_bytex4_16()
     r[1] = (s == -1) ? 0x80 : r[0]+1;
     r[2] = (s == -1) ? 0x80 : r[0]+2;
     r[3] = (s == -1) ? 0x80 : r[0]+3;
+    return r;
+}
+
+/// s - selector, u - the number of elements per group
+template<int s, int u>
+uint8x8 get_shuffle_bytex8_16()
+{
+    uint8x8 r;
+    r[0] = (s == -1) ? 0x80 : (s < u ? s*8   : (s-u)*8+16);
+    r[1] = (s == -1) ? 0x80 : r[0]+1;
+    r[2] = (s == -1) ? 0x80 : r[0]+2;
+    r[3] = (s == -1) ? 0x80 : r[0]+3;
+    r[4] = (s == -1) ? 0x80 : r[0]+4;
+    r[5] = (s == -1) ? 0x80 : r[0]+5;
+    r[6] = (s == -1) ? 0x80 : r[0]+6;
+    r[7] = (s == -1) ? 0x80 : r[0]+7;
     return r;
 }
 
@@ -757,6 +770,62 @@ basic_int32x8 make_shuffle_bytes16_mask(basic_int32x8 &mask)
                                 b1[0], b1[1], b1[2], b1[3],
                                 b2[0], b2[1], b2[2], b2[3],
                                 b3[0], b3[1], b3[2], b3[3]);
+    return mask;
+}
+/// @}
+
+/// @{
+/** Makes a mask to shuffle an int64x2 vector using @c permute_bytes16,
+    @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
+
+    The template arguments define which elements to select from each element
+    group:
+     * Values [0,1] select elements from the first vector.
+     * Values [2,3] select elements from the second vector. The mask can only be
+       used in @c shuffle_bytes16 or @c shuffle_zbytes16
+     * Value [-1] sets the corresponding element to zero. The mask can only be
+       used in @c permute_zbytes16 or @c shuffle_zbytes16
+
+    @par 128-bit version:
+
+    The created mask will cause @c shuffle_bytes16 to perform as follows:
+    @code
+    r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0])
+    r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1])
+    @endcode
+
+    @par 256-bit version:
+
+    The vectors will be shuffled as if the 128-bit version was applied to the
+    lower and higher halves of the vectors separately.
+*/
+template<int s0, int s1>
+basic_int64x2 make_shuffle_bytes16_mask(basic_int64x2 &mask)
+{
+    detail::assert_selector_range<s0,s1,2>();
+    detail::uint8x8 b0 = detail::get_shuffle_bytex8_16<s0,2>();
+    detail::uint8x8 b1 = detail::get_shuffle_bytex8_16<s1,2>();
+    mask = uint8x16::make_const(b0[0], b0[1], b0[2], b0[3],
+                                b0[4], b0[5], b0[6], b0[7],
+                                b1[0], b1[1], b1[2], b1[3],
+                                b1[4], b1[5], b1[6], b1[7]);
+    return mask;
+}
+
+template<int s0, int s1>
+basic_int64x4 make_shuffle_bytes16_mask(basic_int64x4 &mask)
+{
+    detail::assert_selector_range<s0,s1,2>();
+    detail::uint8x8 b0 = detail::get_shuffle_bytex8_16<s0,2>();
+    detail::uint8x8 b1 = detail::get_shuffle_bytex8_16<s1,2>();
+    mask = uint8x32::make_const(b0[0], b0[1], b0[2], b0[3],
+                                b0[4], b0[5], b0[6], b0[7],
+                                b1[0], b1[1], b1[2], b1[3],
+                                b1[4], b1[5], b1[6], b1[7],
+                                b0[0], b0[1], b0[2], b0[3],
+                                b0[4], b0[5], b0[6], b0[7],
+                                b1[0], b1[1], b1[2], b1[3],
+                                b1[4], b1[5], b1[6], b1[7]);
     return mask;
 }
 /// @}
