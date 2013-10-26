@@ -135,7 +135,7 @@ public:
         r7 = 0
         @endcode
     */
-    static int128 zero();
+    static int16x8 zero();
 
     /** Creates a signed int16x8 vector from a value loaded from memory.
 
@@ -146,7 +146,7 @@ public:
         @icost{SSE2-SSE4.1, 3}
         @icost{NEON, 1}
     */
-    static int128 load_broadcast(const int16_t* v0);
+    static int16x8 load_broadcast(const int16_t* v0);
 
     /** Creates a signed int16x8 vector from a value stored in a core register.
 
@@ -156,7 +156,7 @@ public:
         @endcode
         @icost{NEON, SSE2-SSE4.1, NEON, 2}
     */
-    static int128 set_broadcast(int16_t v0);
+    static int16x8 set_broadcast(int16_t v0);
 
     /** Creates a signed int16x8 vector from a value known at compile-time
 
@@ -165,7 +165,7 @@ public:
         r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
         @endcode
     */
-    static int128 make_const(int16_t v0);
+    static int16x8 make_const(int16_t v0);
 
     /** Creates a signed int16x8 vector from two values known at compile-time
 
@@ -174,7 +174,7 @@ public:
         r = [ v0 v1 v0 v1 v0 v1 v0 v1 ]
         @endcode
     */
-    static int128 make_const(int16_t v0, int16_t v1);
+    static int16x8 make_const(int16_t v0, int16_t v1);
 
     /** Creates a signed int16x8 vector from four values known at compile-time
 
@@ -183,7 +183,7 @@ public:
         r = [ v0 v1 v2 v3 v0 v1 v2 v3 ]
         @endcode
     */
-    static int128 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3);
+    static int16x8 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3);
 
     /** Creates a signed int16x8 vector from eight values known at compile-time
 
@@ -192,8 +192,8 @@ public:
         r = [ v0 v1 v2 v3 v4 v5 v6 v7 ]
         @endcode
     */
-    static int128 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                             int16_t v4, int16_t v5, int16_t v6, int16_t v7);
+    static int16x8 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
+                              int16_t v4, int16_t v5, int16_t v6, int16_t v7);
 };
 
 /** Class representing 8x 16-bit unsigned integer vector
@@ -240,7 +240,7 @@ public:
         r7 = 0
         @endcode
     */
-    static int128 zero();
+    static uint16x8 zero();
 
     /** Creates a unsigned int16x8 vector from a value loaded from memory.
 
@@ -251,7 +251,7 @@ public:
         @icost{SSE2-SSE4.1, 3}
         @icost{NEON, 1}
     */
-    static int128 load_broadcast(const uint16_t* v0);
+    static uint16x8 load_broadcast(const uint16_t* v0);
 
     /** Creates a unsigned int16x8 vector from a value stored in a core register.
 
@@ -261,7 +261,7 @@ public:
         @endcode
         @icost{SSE2-SSE4.1, NEON, 2}
     */
-    static int128 set_broadcast(uint16_t v0);
+    static uint16x8 set_broadcast(uint16_t v0);
 
     /** Creates a unsigned int16x8 vector from a value known at compile-time
 
@@ -270,7 +270,7 @@ public:
         r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
         @endcode
     */
-    static int128 make_const(uint16_t v0);
+    static uint16x8 make_const(uint16_t v0);
 
     /** Creates a unsigned int16x8 vector from two values known at compile-time
 
@@ -279,7 +279,7 @@ public:
         r = [ v0 v1 v0 v1 v0 v1 v0 v1 ]
         @endcode
     */
-    static int128 make_const(uint16_t v0, uint16_t v1);
+    static uint16x8 make_const(uint16_t v0, uint16_t v1);
 
     /** Creates a unsigned int16x8 vector from four values known at compile-time
 
@@ -288,7 +288,7 @@ public:
         r = [ v0 v1 v2 v3 v0 v1 v2 v3 ]
         @endcode
     */
-    static int128 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3);
+    static uint16x8 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3);
 
     /** Creates a unsigned int16x8 vector from eight values known at compile-time
 
@@ -297,8 +297,8 @@ public:
         r = [ v0 v1 v2 v3 v4 v5 v6 v7 ]
         @endcode
     */
-    static int128 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                             uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
+    static uint16x8 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
+                               uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
 };
 
 /// Class representing mask for 8x 16-bit integer vector
