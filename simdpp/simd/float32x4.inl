@@ -122,10 +122,10 @@ inline float32x4 float32x4::make_const(float v0, float v1, float v2, float v3)
 #endif
 }
 
-inline mask_float32x4::operator basic_int32x4() const
+inline mask_float32x4::operator float32x4() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<basic_int32x4>(*this);
+    return null::convert_mask<float32x4>(*this);
 #else
     return d_;
 #endif

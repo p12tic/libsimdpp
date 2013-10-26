@@ -189,18 +189,18 @@ public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #if SIMDPP_USE_SSE2
-    mask_float32x4(__m128 d) : d_(basic_int32x4(d)) {}
+    mask_float32x4(__m128 d) : d_(d) {}
 #elif SIMDPP_USE_NEON
-    mask_float32x4(float32x4_t d) : d_(basic_int32x4(d)) {}
+    mask_float32x4(float32x4_t d) : d_(d) {}
 #endif
 #if SIMDPP_USE_NULL
 #else
-    mask_float32x4(basic_int32x4 d) : d_(d) {}
+    mask_float32x4(float32x4 d) : d_(d) {}
 #endif
 #endif
 
     /// Access the underlying type
-    operator basic_int32x4() const;
+    operator float32x4() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
@@ -213,7 +213,7 @@ private:
 #if SIMDPP_USE_NULL
     bool b_[4];
 #else
-    basic_int32x4 d_;
+    float32x4 d_;
 #endif
 };
 

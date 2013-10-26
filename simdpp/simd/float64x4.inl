@@ -94,12 +94,12 @@ inline float64x4 float64x4::make_const(double v0, double v1, double v2, double v
 #endif
 }
 
-inline mask_float64x4::operator basic_int64x4() const
+inline mask_float64x4::operator float64x4() const
 {
 #if SIMDPP_USE_AVX
     return d_;
 #else
-    return basic_int64x4(m_[0], m_[1]);
+    return float64x4(m_[0], m_[1]);
 #endif
 }
 

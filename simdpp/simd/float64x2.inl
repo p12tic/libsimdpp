@@ -94,10 +94,10 @@ inline float64x2 float64x2::make_const(double v0, double v1)
 #endif
 }
 
-inline mask_float64x2::operator basic_int64x2() const
+inline mask_float64x2::operator float64x2() const
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    return null::convert_mask<basic_int64x2>(*this);
+    return null::convert_mask<float64x2>(*this);
 #else
     return d_;
 #endif

@@ -92,12 +92,12 @@ inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3,
 #endif
 }
 
-inline mask_float32x8::operator basic_int32x8() const
+inline mask_float32x8::operator float32x8() const
 {
 #if SIMDPP_USE_AVX
     return d_;
 #else
-    return basic_int32x8(m_[0], m_[1]);
+    return float32x8(m_[0], m_[1]);
 #endif
 }
 

@@ -718,9 +718,10 @@ inline float32x4 floor(float32x4 a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
-    int128 large_mask = cmp_gt(ba, float32x4::make_const(8388607.0f));
-    int128 zero_mask = cmp_eq(ba, float32x4::zero());
-    int128 mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
+    mask_float32x4 large_mask, zero_mask, mask;
+    large_mask = cmp_gt(ba, float32x4::make_const(8388607.0f));
+    zero_mask = cmp_eq(ba, float32x4::zero());
+    mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
 
     //calculate the floor using trunc
     int32x4 s = shift_r((uint32x4)a, 31); //=1 if a<0
@@ -768,9 +769,10 @@ inline float32x4 ceil(float32x4 a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
-    int128 large_mask = cmp_gt(ba, float32x4::make_const(8388607.0f));
-    int128 zero_mask = cmp_eq(ba, float32x4::zero());
-    int128 mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
+    mask_float32x4 large_mask, zero_mask, mask;
+    large_mask = cmp_gt(ba, float32x4::make_const(8388607.0f));
+    zero_mask = cmp_eq(ba, float32x4::zero());
+    mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
 
     //calculate the ceil using trunc
     int32x4 s = shift_r((uint32x4)a, 31);
@@ -822,7 +824,7 @@ inline float32x4 trunc(float32x4 a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large
     float32x4 af = abs(a);
-    int128 mask = cmp_gt(af, float32x4::make_const(8388607.0f));
+    mask_float32x4 mask = cmp_gt(af, float32x4::make_const(8388607.0f));
 
     //truncate
     int32x4 ia = to_int32x4(a);

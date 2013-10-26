@@ -179,15 +179,15 @@ public:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX
-    mask_float64x4(__m256d d) : d_(basic_float64x4(d)) {}
-    mask_float64x4(basic_int64x4 d) : d_(d) {}
+    mask_float64x4(__m256d d) : d_(d) {}
+    mask_float64x4(float64x4 d) : d_(d) {}
 #else
     mask_float64x4(mask_float64x2 m0, mask_float64x2 m1) { m_[0] = m0; m_[1] = m1; }
 #endif
 #endif
 
     /// Access the underlying type
-    operator basic_int64x4() const;
+    operator float64x4() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX
@@ -199,7 +199,7 @@ public:
 
 private:
 #if SIMDPP_USE_AVX
-    basic_int64x4 d_;
+    float64x4 d_;
 #else
     mask_float64x2 m_[2];
 #endif
