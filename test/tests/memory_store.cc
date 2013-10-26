@@ -27,6 +27,7 @@
 
 #include "../test_helpers.h"
 #include "../test_results.h"
+#include "../common/vectors.h"
 #include <simdpp/simd.h>
 #include <cstring>
 
@@ -97,42 +98,23 @@ void test_memory_store(TestResults& res)
     constexpr unsigned vnum = 4;
     constexpr unsigned size = 32*vnum;
 
-    union {
-        uint8_t sdata[size];
-        uint8x16 su8[vnum];
-        uint16x8 su16[vnum];
-        uint32x4 su32[vnum];
-        uint64x2 su64[vnum];
-        float32x4 sf32[vnum];
-        float64x2 sf64[vnum];
-
-        uint8x32 su8_32[vnum];
-        uint16x16 su16_32[vnum];
-        uint32x8 su32_32[vnum];
-        uint64x4 su64_32[vnum];
-        float32x8 sf32_32[vnum];
-        float64x4 sf64_32[vnum];
-    };
-
-    for (unsigned i = 0; i < size; i++) {
-        sdata[i] = i;
-    }
+    Vectors<size> v;
 
     // 16-byte vectors
-    test_store_helper<uint8x16, 4>(tc, su8);
-    test_store_helper<uint16x8, 4>(tc, su16);
-    test_store_helper<uint32x4, 4>(tc, su32);
-    test_store_helper<uint64x2, 4>(tc, su64);
-    test_store_helper<float32x4, 4>(tc, sf32);
-    test_store_helper<float64x2, 4>(tc, sf64);
+    test_store_helper<uint8x16, 4>(tc, v.u8);
+    test_store_helper<uint16x8, 4>(tc, v.u16);
+    test_store_helper<uint32x4, 4>(tc, v.u32);
+    test_store_helper<uint64x2, 4>(tc, v.u64);
+    test_store_helper<float32x4, 4>(tc, v.f32);
+    test_store_helper<float64x2, 4>(tc, v.f64);
 
     // 32-byte vectors
-    test_store_helper<uint8x32, 4>(tc, su8_32);
-    test_store_helper<uint16x16, 4>(tc, su16_32);
-    test_store_helper<uint32x8, 4>(tc, su32_32);
-    test_store_helper<uint64x4, 4>(tc, su64_32);
-    test_store_helper<float32x8, 4>(tc, sf32_32);
-    test_store_helper<float64x4, 4>(tc, sf64_32);
+    test_store_helper<uint8x32, 4>(tc, v.du8);
+    test_store_helper<uint16x16, 4>(tc, v.du16);
+    test_store_helper<uint32x8, 4>(tc, v.du32);
+    test_store_helper<uint64x4, 4>(tc, v.du64);
+    test_store_helper<float32x8, 4>(tc, v.df32);
+    test_store_helper<float64x4, 4>(tc, v.df64);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

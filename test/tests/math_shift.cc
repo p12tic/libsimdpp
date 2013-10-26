@@ -27,6 +27,7 @@
 
 #include "../test_helpers.h"
 #include "../test_results.h"
+#include "../common/vectors.h"
 #include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -76,48 +77,31 @@ void test_math_shift(TestResults& res)
     using namespace simdpp;
 
     unsigned vnum = 8;
-    union {
-        uint8_t c[256];
-        uint8x32 u8[8];
-        int8x32 s8[8];
-        uint16x16 u16[8];
-        int16x16 s16[8];
-        uint32x8 u32[8];
-        int32x8 s32[8];
-        uint64x4 u64[8];
-        int64x4 s64[8];
-    };
-
-    for (unsigned z = 0; z < 128; z++) {
-        c[z] = z*2;
-    }
-    for (unsigned z = 0; z < 128; z++) {
-        c[128+z] = 256-(z*2);
-    }
+    Vectors<16*16> v;
 
     // Vectors with 8-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint8x32>::run(tc, u8, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int8x32>::run(tc, s8, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint8x32>::run(tc, u8, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int8x32>::run(tc, s8, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint8x32>::run(tc, v.du8, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int8x32>::run(tc, v.di8, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint8x32>::run(tc, v.du8, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int8x32>::run(tc, v.di8, vnum);
 
     // Vectors with 16-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint16x16>::run(tc, u16, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int16x16>::run(tc, s16, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint16x16>::run(tc, u16, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int16x16>::run(tc, s16, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint16x16>::run(tc, v.du16, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int16x16>::run(tc, v.di16, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint16x16>::run(tc, v.du16, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int16x16>::run(tc, v.di16, vnum);
 
     // Vectors with 32-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint32x8>::run(tc, u32, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int32x8>::run(tc, s32, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint32x8>::run(tc, u32, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int32x8>::run(tc, s32, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint32x8>::run(tc, v.du32, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int32x8>::run(tc, v.di32, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint32x8>::run(tc, v.du32, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int32x8>::run(tc, v.di32, vnum);
 
     // Vectors with 64-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint64x4>::run(tc, u64, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int64x4>::run(tc, s64, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint64x4>::run(tc, u64, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int64x4>::run(tc, s64, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint64x4>::run(tc, v.du64, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int64x4>::run(tc, v.di64, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint64x4>::run(tc, v.du64, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int64x4>::run(tc, v.di64, vnum);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

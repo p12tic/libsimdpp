@@ -144,6 +144,8 @@ test/test_case.cc
 test/test_helpers.h
 test/test_results.h
 
+test/common/vectors.h
+
 test/tests/bitwise.cc
 test/tests/compare.cc
 test/tests/construct.cc

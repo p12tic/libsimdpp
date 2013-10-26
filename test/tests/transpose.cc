@@ -27,6 +27,7 @@
 
 #include "../test_helpers.h"
 #include "../test_results.h"
+#include "../common/vectors.h"
 #include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -37,170 +38,147 @@ void test_transpose(TestResults& res)
 
     using namespace simdpp;
 
-    struct Test {
-        union {
-            uint8_t c[512];
-            uint8x16 u8[32];
-            uint16x8 u16[32];
-            uint32x4 u32[32];
-            uint64x2 u64[32];
-            float32x4 f32[32];
-            float64x2 f64[32];
-            uint8x32 du8[16];
-            uint16x16 du16[16];
-            uint32x8 du32[16];
-            uint64x4 du64[16];
-            float32x8 df32[16];
-            float64x4 df64[16];
-        };
-    };
-
-    Test t;
-    for (unsigned z = 0; z < 512; z++) {
-        t.c[z] = z % 256;
-    }
-
     // int8x16
     {
-        Test u = t;
-        transpose16(u.u8[0], u.u8[1], u.u8[2], u.u8[3],
-                    u.u8[4], u.u8[5], u.u8[6], u.u8[7],
-                    u.u8[8], u.u8[9], u.u8[10], u.u8[11],
-                    u.u8[12], u.u8[13], u.u8[14], u.u8[15]);
-        TEST_ARRAY_PUSH(tc, uint8x16, u.u8);
+        Vectors<16*16> v;
+        transpose16(v.u8[0], v.u8[1], v.u8[2], v.u8[3],
+                    v.u8[4], v.u8[5], v.u8[6], v.u8[7],
+                    v.u8[8], v.u8[9], v.u8[10], v.u8[11],
+                    v.u8[12], v.u8[13], v.u8[14], v.u8[15]);
+        TEST_ARRAY_PUSH(tc, uint8x16, v.u8);
 
-        u = t;
-        transpose8(u.u8[0], u.u8[1], u.u8[2], u.u8[3],
-                   u.u8[4], u.u8[5], u.u8[6], u.u8[7]);
-        TEST_ARRAY_PUSH(tc, uint8x16, u.u8);
+        v.reset();
+        transpose8(v.u8[0], v.u8[1], v.u8[2], v.u8[3],
+                   v.u8[4], v.u8[5], v.u8[6], v.u8[7]);
+        TEST_ARRAY_PUSH(tc, uint8x16, v.u8);
 
-        u = t;
-        transpose4(u.u8[0], u.u8[1], u.u8[2], u.u8[3]);
-        TEST_ARRAY_PUSH(tc, uint8x16, u.u8);
+        v.reset();
+        transpose4(v.u8[0], v.u8[1], v.u8[2], v.u8[3]);
+        TEST_ARRAY_PUSH(tc, uint8x16, v.u8);
     }
 
     // int16x8
     {
-        Test u = t;
-        transpose8(u.u16[0], u.u16[1], u.u16[2], u.u16[3],
-                   u.u16[4], u.u16[5], u.u16[6], u.u16[7]);
-        TEST_ARRAY_PUSH(tc, uint16x8, u.u16);
+        Vectors<16*8> v;
+        transpose8(v.u16[0], v.u16[1], v.u16[2], v.u16[3],
+                   v.u16[4], v.u16[5], v.u16[6], v.u16[7]);
+        TEST_ARRAY_PUSH(tc, uint16x8, v.u16);
 
-        u = t;
-        transpose4(u.u16[0], u.u16[1], u.u16[2], u.u16[3]);
-        TEST_ARRAY_PUSH(tc, uint16x8, u.u16);
+        v.reset();
+        transpose4(v.u16[0], v.u16[1], v.u16[2], v.u16[3]);
+        TEST_ARRAY_PUSH(tc, uint16x8, v.u16);
 
-        u = t;
-        transpose2(u.u16[0], u.u16[1]);
-        TEST_ARRAY_PUSH(tc, uint16x8, u.u16);
+        v.reset();
+        transpose2(v.u16[0], v.u16[1]);
+        TEST_ARRAY_PUSH(tc, uint16x8, v.u16);
     }
 
     // int32x4
     {
-        Test u = t;
-        transpose4(u.u32[0], u.u32[1], u.u32[2], u.u32[3]);
-        TEST_ARRAY_PUSH(tc, uint32x4, u.u32);
+        Vectors<16*4> v;
+        transpose4(v.u32[0], v.u32[1], v.u32[2], v.u32[3]);
+        TEST_ARRAY_PUSH(tc, uint32x4, v.u32);
 
-        u = t;
-        transpose2(u.u32[0], u.u32[1]);
-        TEST_ARRAY_PUSH(tc, uint32x4, u.u32);
+        v.reset();
+        transpose2(v.u32[0], v.u32[1]);
+        TEST_ARRAY_PUSH(tc, uint32x4, v.u32);
     }
 
     // int64x2
     {
-        Test u = t;
-        transpose2(u.u64[0], u.u64[1]);
-        TEST_ARRAY_PUSH(tc, uint64x2, u.u64);
+        Vectors<16*2> v;
+        transpose2(v.u64[0], v.u64[1]);
+        TEST_ARRAY_PUSH(tc, uint64x2, v.u64);
     }
 
     // float32x4
     {
-        Test u = t;
-        transpose4(u.f32[0], u.f32[1], u.f32[2], u.f32[3]);
-        TEST_ARRAY_PUSH(tc, float32x4, u.f32);
+        Vectors<16*4> v;
+        transpose4(v.f32[0], v.f32[1], v.f32[2], v.f32[3]);
+        TEST_ARRAY_PUSH(tc, float32x4, v.f32);
 
-        u = t;
-        transpose2(u.f32[0], u.f32[1]);
-        TEST_ARRAY_PUSH(tc, float32x4, u.f32);
+        v.reset();
+        transpose2(v.f32[0], v.f32[1]);
+        TEST_ARRAY_PUSH(tc, float32x4, v.f32);
     }
 
     // float64x2
     {
-        Test u = t;
-        transpose2(u.f64[0], u.f64[1]);
-        TEST_ARRAY_PUSH(tc, float64x2, u.f64);
+        Vectors<16*2> v;
+        transpose2(v.f64[0], v.f64[1]);
+        TEST_ARRAY_PUSH(tc, float64x2, v.f64);
     }
 
 
     // int8x32
     {
-        Test u = t;
-        transpose16(u.du8[0], u.du8[1], u.du8[2], u.du8[3],
-                    u.du8[4], u.du8[5], u.du8[6], u.du8[7],
-                    u.du8[8], u.du8[9], u.du8[10], u.du8[11],
-                    u.du8[12], u.du8[13], u.du8[14], u.du8[15]);
-        TEST_ARRAY_PUSH(tc, uint8x32, u.du8);
+        Vectors<32*16> v;
+        transpose16(v.du8[0], v.du8[1], v.du8[2], v.du8[3],
+                    v.du8[4], v.du8[5], v.du8[6], v.du8[7],
+                    v.du8[8], v.du8[9], v.du8[10], v.du8[11],
+                    v.du8[12], v.du8[13], v.du8[14], v.du8[15]);
+        TEST_ARRAY_PUSH(tc, uint8x32, v.du8);
 
-        u = t;
-        transpose8(u.du8[0], u.du8[1], u.du8[2], u.du8[3],
-                   u.du8[4], u.du8[5], u.du8[6], u.du8[7]);
-        TEST_ARRAY_PUSH(tc, uint8x32, u.du8);
+        v.reset();
+        transpose8(v.du8[0], v.du8[1], v.du8[2], v.du8[3],
+                   v.du8[4], v.du8[5], v.du8[6], v.du8[7]);
+        TEST_ARRAY_PUSH(tc, uint8x32, v.du8);
 
-        u = t;
-        transpose4(u.du8[0], u.du8[1], u.du8[2], u.du8[3]);
-        TEST_ARRAY_PUSH(tc, uint8x32, u.du8);
+        v.reset();
+        transpose4(v.du8[0], v.du8[1], v.du8[2], v.du8[3]);
+        TEST_ARRAY_PUSH(tc, uint8x32, v.du8);
     }
 
     // int16x16
     {
-        Test u = t;
-        transpose8(u.du16[0], u.du16[1], u.du16[2], u.du16[3],
-                   u.du16[4], u.du16[5], u.du16[6], u.du16[7]);
-        TEST_ARRAY_PUSH(tc, uint16x16, u.du16);
+        Vectors<32*8> v;
+        transpose8(v.du16[0], v.du16[1], v.du16[2], v.du16[3],
+                   v.du16[4], v.du16[5], v.du16[6], v.du16[7]);
+        TEST_ARRAY_PUSH(tc, uint16x16, v.du16);
 
-        u = t;
-        transpose4(u.du16[0], u.du16[1], u.du16[2], u.du16[3]);
-        TEST_ARRAY_PUSH(tc, uint16x16, u.du16);
+        v.reset();
+        transpose4(v.du16[0], v.du16[1], v.du16[2], v.du16[3]);
+        TEST_ARRAY_PUSH(tc, uint16x16, v.du16);
 
-        u = t;
-        transpose2(u.du16[0], u.du16[1]);
-        TEST_ARRAY_PUSH(tc, uint16x16, u.du16);
+        v.reset();
+        transpose2(v.du16[0], v.du16[1]);
+        TEST_ARRAY_PUSH(tc, uint16x16, v.du16);
     }
 
     // int32x8
     {
-        Test u = t;
-        transpose4(u.du32[0], u.du32[1], u.du32[2], u.du32[3]);
-        TEST_ARRAY_PUSH(tc, uint32x8, u.du32);
+        Vectors<32*4> v;
+        transpose4(v.du32[0], v.du32[1], v.du32[2], v.du32[3]);
+        TEST_ARRAY_PUSH(tc, uint32x8, v.du32);
 
-        u = t;
-        transpose2(u.du32[0], u.du32[1]);
-        TEST_ARRAY_PUSH(tc, uint32x8, u.du32);
+        v.reset();
+        transpose2(v.du32[0], v.du32[1]);
+        TEST_ARRAY_PUSH(tc, uint32x8, v.du32);
     }
 
     // int64x4
     {
-        Test u = t;
-        transpose2(u.du64[0], u.du64[1]);
-        TEST_ARRAY_PUSH(tc, uint64x4, u.du64);
+        Vectors<32*2> v;
+        transpose2(v.du64[0], v.du64[1]);
+        TEST_ARRAY_PUSH(tc, uint64x4, v.du64);
     }
 
     // float32x8
     {
-        Test u = t;
-        transpose4(u.f32[0], u.f32[1], u.f32[2], u.f32[3]);
-        TEST_ARRAY_PUSH(tc, float32x8, u.df32);
+        Vectors<32*4> v;
+        transpose4(v.f32[0], v.f32[1], v.f32[2], v.f32[3]);
+        TEST_ARRAY_PUSH(tc, float32x8, v.df32);
 
-        u = t;
-        transpose2(u.f32[0], u.f32[1]);
-        TEST_ARRAY_PUSH(tc, float32x8, u.df32);
+        v.reset();
+        transpose2(v.f32[0], v.f32[1]);
+        TEST_ARRAY_PUSH(tc, float32x8, v.df32);
     }
 
     // float64x4
     {
-        Test u = t;
-        transpose2(u.df64[0], u.df64[1]);
-        TEST_ARRAY_PUSH(tc, float64x4, u.df64);
+        Vectors<32*2> v;
+        transpose2(v.df64[0], v.df64[1]);
+        TEST_ARRAY_PUSH(tc, float64x4, v.df64);
     }
 }
 
