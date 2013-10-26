@@ -162,6 +162,15 @@ inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint
 #endif
 }
 
+inline mask_int32x4::operator basic_int32x4() const
+{
+#if SIMDPP_USE_NULL
+    return null::convert_mask<basic_int32x4>(*this);
+#else
+    return d_;
+#endif
+}
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

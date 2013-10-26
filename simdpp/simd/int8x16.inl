@@ -31,6 +31,8 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+#include <simdpp/simd.h>
+#include <simdpp/null/mask.h>
 
 #if SIMDPP_USE_NULL
     #include <simdpp/null/set.h>
@@ -193,6 +195,15 @@ inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
     v[8] = v8;  v[9] = v9;  v[10] = v10; v[11] = v11;
     v[12] = v12; v[13] = v13; v[14] = v14; v[15] = v15;
     return vld1q_u8(v);
+#endif
+}
+
+inline mask_int8x16::operator basic_int8x16() const
+{
+#if SIMDPP_USE_NULL
+    return null::convert_mask<basic_int8x16>(*this);
+#else
+    return d_;
 #endif
 }
 

@@ -63,7 +63,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int8x16 cmp_eq(basic_int8x16 a, basic_int8x16 b)
+inline mask_int8x16 cmp_eq(basic_int8x16 a, basic_int8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -74,7 +74,7 @@ inline basic_int8x16 cmp_eq(basic_int8x16 a, basic_int8x16 b)
 #endif
 }
 
-inline basic_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
+inline mask_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi8(a, b);
@@ -96,7 +96,7 @@ inline basic_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int16x8 cmp_eq(basic_int16x8 a, basic_int16x8 b)
+inline mask_int16x8 cmp_eq(basic_int16x8 a, basic_int16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -107,7 +107,7 @@ inline basic_int16x8 cmp_eq(basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-inline basic_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
+inline mask_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi16(a, b);
@@ -129,7 +129,7 @@ inline basic_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int32x4 cmp_eq(basic_int32x4 a, basic_int32x4 b)
+inline mask_int32x4 cmp_eq(basic_int32x4 a, basic_int32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -140,7 +140,7 @@ inline basic_int32x4 cmp_eq(basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-inline basic_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
+inline mask_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi32(a, b);
@@ -162,7 +162,7 @@ inline basic_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, 2}
 */
-inline basic_int32x4 cmp_eq(float32x4 a, float32x4 b)
+inline mask_float32x4 cmp_eq(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -175,10 +175,10 @@ inline basic_int32x4 cmp_eq(float32x4 a, float32x4 b)
 #endif
 }
 
-inline basic_int32x8 cmp_eq(float32x8 a, float32x8 b)
+inline mask_float32x8 cmp_eq(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, b, _CMP_EQ_OQ));
+    return uint32x8(_mm256_cmp_ps(a, b, _CMP_EQ_OQ));
 #else
     return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
 #endif
@@ -201,23 +201,23 @@ inline basic_int32x8 cmp_eq(float32x8 a, float32x8 b)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 cmp_eq(float64x2 a, float64x2 b)
+inline mask_float64x2 cmp_eq(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_eq(a, b);
 #elif SIMDPP_USE_AVX
-    return int64x2(_mm_cmp_pd(a, b, _CMP_EQ_OQ));
+    return uint64x2(_mm_cmp_pd(a, b, _CMP_EQ_OQ));
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmpeq_pd(a, b));
+    return uint64x2(_mm_cmpeq_pd(a, b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
-inline basic_int64x4 cmp_eq(float64x4 a, float64x4 b)
+inline mask_float64x4 cmp_eq(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, b, _CMP_EQ_OQ));
+    return uint64x4(_mm256_cmp_pd(a, b, _CMP_EQ_OQ));
 #else
     return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
 #endif
@@ -240,20 +240,28 @@ inline basic_int64x4 cmp_eq(float64x4 a, float64x4 b)
     @icost{SSE2-AVX, NEON, 4}
     @icost{AVX2, 2}
 */
-inline basic_int8x16 cmp_neq(basic_int8x16 a, basic_int8x16 b)
+inline mask_int8x16 cmp_neq(basic_int8x16 a, basic_int8x16 b)
 {
-    int128 r;
+#if SIMDPP_USE_NULL
+    return null::cmp_neq(a, b);
+#else
+    basic_int8x16 r;
     r = cmp_eq(a, b);
     r = bit_not(r);
     return r;
+#endif
 }
 
-inline basic_int8x32 cmp_neq(basic_int8x32 a, basic_int8x32 b)
+inline mask_int8x32 cmp_neq(basic_int8x32 a, basic_int8x32 b)
 {
-    int256 r;
+#if SIMDPP_USE_AVX2
+    basic_int8x32 r;
     r = cmp_eq(a, b);
     r = bit_not(r);
     return r;
+#else
+    return { cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]) };
+#endif
 }
 /// @}
 
@@ -273,20 +281,28 @@ inline basic_int8x32 cmp_neq(basic_int8x32 a, basic_int8x32 b)
     @icost{SSE2-AVX, NEON, 4}
     @icost{AVX2, 2}
 */
-inline basic_int16x8 cmp_neq(basic_int16x8 a, basic_int16x8 b)
+inline mask_int16x8 cmp_neq(basic_int16x8 a, basic_int16x8 b)
 {
-    int128 r;
+#if SIMDPP_USE_NULL
+    return null::cmp_neq(a, b);
+#else
+    basic_int16x8 r;
     r = cmp_eq(a, b);
     r = bit_not(r);
     return r;
+#endif
 }
 
-inline basic_int16x16 cmp_neq(basic_int16x16 a, basic_int16x16 b)
+inline mask_int16x16 cmp_neq(basic_int16x16 a, basic_int16x16 b)
 {
-    int256 r;
+#if SIMDPP_USE_AVX2
+    basic_int16x16 r;
     r = cmp_eq(a, b);
     r = bit_not(r);
     return r;
+#else
+    return { cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]) };
+#endif
 }
 /// @}
 
@@ -306,20 +322,28 @@ inline basic_int16x16 cmp_neq(basic_int16x16 a, basic_int16x16 b)
     @icost{SSE2-AVX, NEON, 4}
     @icost{AVX2, 2}
 */
-inline basic_int32x4 cmp_neq(basic_int32x4 a, basic_int32x4 b)
+inline mask_int32x4 cmp_neq(basic_int32x4 a, basic_int32x4 b)
 {
-    int128 r;
+#if SIMDPP_USE_NULL
+    return null::cmp_neq(a, b);
+#else
+    basic_int32x4 r;
     r = cmp_eq(a, b);
     r = bit_not(r);
     return r;
+#endif
 }
 
-inline basic_int32x8 cmp_neq(basic_int32x8 a, basic_int32x8 b)
+inline mask_int32x8 cmp_neq(basic_int32x8 a, basic_int32x8 b)
 {
-    int256 r;
+#if SIMDPP_USE_AVX2
+    basic_int32x8 r;
     r = cmp_eq(a, b);
     r = bit_not(r);
     return r;
+#else
+    return { cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]) };
+#endif
 }
 /// @}
 
@@ -339,23 +363,25 @@ inline basic_int32x8 cmp_neq(basic_int32x8 a, basic_int32x8 b)
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 4}
 */
-inline basic_int32x4 cmp_neq(float32x4 a, float32x4 b)
+inline mask_float32x4 cmp_neq(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
 #elif SIMDPP_USE_AVX
-    return int32x4(_mm_cmp_ps(a, b, _CMP_NEQ_UQ));
+    return uint32x4(_mm_cmp_ps(a, b, _CMP_NEQ_UQ));
 #elif SIMDPP_USE_SSE2
-    return int32x4(_mm_cmpneq_ps(a, b));
+    return uint32x4(_mm_cmpneq_ps(a, b));
 #elif SIMDPP_USE_NEON
-    return bit_not(vceqq_f32(a, b));
+    uint32x4 r = vcvceqq_f32(a, b);
+    r = bit_not(r);
+    return r;
 #endif
 }
 
-inline basic_int32x8 cmp_neq(float32x8 a, float32x8 b)
+inline mask_float32x8 cmp_neq(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, b, _CMP_NEQ_UQ));
+    return uint32x8(_mm256_cmp_ps(a, b, _CMP_NEQ_UQ));
 #else
     return {cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1])};
 #endif
@@ -378,23 +404,23 @@ inline basic_int32x8 cmp_neq(float32x8 a, float32x8 b)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 cmp_neq(float64x2 a, float64x2 b)
+inline mask_float64x2 cmp_neq(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_neq(a, b);
 #elif SIMDPP_USE_AVX
-    return int64x2(_mm_cmp_pd(a, b, _CMP_NEQ_UQ));
+    return uint64x2(_mm_cmp_pd(a, b, _CMP_NEQ_UQ));
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmpneq_pd(a, b));
+    return uint64x2(_mm_cmpneq_pd(a, b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
-inline basic_int64x4 cmp_neq(float64x4 a, float64x4 b)
+inline mask_float64x4 cmp_neq(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, b, _CMP_NEQ_UQ));
+    return uint64x4(_mm256_cmp_pd(a, b, _CMP_NEQ_UQ));
 #else
     return {cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1])};
 #endif
@@ -413,7 +439,7 @@ inline basic_int64x4 cmp_neq(float64x4 a, float64x4 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int8x16 cmp_gt(int8x16 a, int8x16 b)
+inline mask_int8x16 cmp_gt(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
@@ -424,7 +450,7 @@ inline basic_int8x16 cmp_gt(int8x16 a, int8x16 b)
 #endif
 }
 
-inline basic_int8x32 cmp_gt(int8x32 a, int8x32 b)
+inline mask_int8x32 cmp_gt(int8x32 a, int8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi8(a, b);
@@ -450,7 +476,7 @@ inline basic_int8x32 cmp_gt(int8x32 a, int8x32 b)
     @icost{SSE2-AVX, 8}
     @icost{NEON, 2}
 */
-inline basic_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
+inline mask_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
@@ -464,7 +490,7 @@ inline basic_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
 #endif
 }
 
-inline basic_int8x32 cmp_gt(uint8x32 a, uint8x32 b)
+inline mask_int8x32 cmp_gt(uint8x32 a, uint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     uint8x32 bias = uint8x32::make_const(0x80);
@@ -489,7 +515,7 @@ inline basic_int8x32 cmp_gt(uint8x32 a, uint8x32 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int16x8 cmp_gt(int16x8 a, int16x8 b)
+inline mask_int16x8 cmp_gt(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
@@ -500,7 +526,7 @@ inline basic_int16x8 cmp_gt(int16x8 a, int16x8 b)
 #endif
 }
 
-inline basic_int16x16 cmp_gt(int16x16 a, int16x16 b)
+inline mask_int16x16 cmp_gt(int16x16 a, int16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi16(a, b);
@@ -526,7 +552,7 @@ inline basic_int16x16 cmp_gt(int16x16 a, int16x16 b)
     @icost{SSE2-AVX, 8}
     @icost{NEON, 2}
 */
-inline basic_int16x8 cmp_gt(uint16x8 a, uint16x8 b)
+inline mask_int16x8 cmp_gt(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
@@ -540,7 +566,7 @@ inline basic_int16x8 cmp_gt(uint16x8 a, uint16x8 b)
 #endif
 }
 
-inline basic_int16x16 cmp_gt(uint16x16 a, uint16x16 b)
+inline mask_int16x16 cmp_gt(uint16x16 a, uint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 bias = uint16x16::make_const(0x8000);
@@ -565,7 +591,7 @@ inline basic_int16x16 cmp_gt(uint16x16 a, uint16x16 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int32x4 cmp_gt(int32x4 a, int32x4 b)
+inline mask_int32x4 cmp_gt(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
@@ -576,7 +602,7 @@ inline basic_int32x4 cmp_gt(int32x4 a, int32x4 b)
 #endif
 }
 
-inline basic_int32x8 cmp_gt(int32x8 a, int32x8 b)
+inline mask_int32x8 cmp_gt(int32x8 a, int32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return int32x8(_mm256_cmpgt_epi32(a, b));
@@ -602,7 +628,7 @@ inline basic_int32x8 cmp_gt(int32x8 a, int32x8 b)
     @icost{SSE2-AVX, 8}
     @icost{NEON, 2}
 */
-inline basic_int32x4 cmp_gt(uint32x4 a, uint32x4 b)
+inline mask_int32x4 cmp_gt(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
@@ -616,7 +642,7 @@ inline basic_int32x4 cmp_gt(uint32x4 a, uint32x4 b)
 #endif
 }
 
-inline basic_int32x8 cmp_gt(uint32x8 a, uint32x8 b)
+inline mask_int32x8 cmp_gt(uint32x8 a, uint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     uint32x8 bias = uint32x8::make_const(0x80000000);
@@ -641,23 +667,23 @@ inline basic_int32x8 cmp_gt(uint32x8 a, uint32x8 b)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, 2}
 */
-inline basic_int32x4 cmp_gt(float32x4 a, float32x4 b)
+inline mask_float32x4 cmp_gt(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
 #elif SIMDPP_USE_AVX
-    return int32x4(_mm_cmp_ps(a, b, _CMP_GT_OQ));
+    return uint32x4(_mm_cmp_ps(a, b, _CMP_GT_OQ));
 #elif SIMDPP_USE_SSE2
-    return int32x4(_mm_cmpgt_ps(a, b));
+    return uint32x4(_mm_cmpgt_ps(a, b));
 #elif SIMDPP_USE_NEON
     return vcgtq_f32(a, b);
 #endif
 }
 
-inline basic_int32x8 cmp_gt(float32x8 a, float32x8 b)
+inline mask_float32x8 cmp_gt(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, b, _CMP_GT_OQ));
+    return uint32x8(_mm256_cmp_ps(a, b, _CMP_GT_OQ));
 #else
     return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
 #endif
@@ -680,23 +706,23 @@ inline basic_int32x8 cmp_gt(float32x8 a, float32x8 b)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 cmp_gt(float64x2 a, float64x2 b)
+inline mask_float64x2 cmp_gt(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_gt(a, b);
 #elif SIMDPP_USE_AVX
-    return int64x2(_mm_cmp_pd(a, b, _CMP_GT_OQ));
+    return uint64x2(_mm_cmp_pd(a, b, _CMP_GT_OQ));
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmpgt_pd(a, b));
+    return uint64x2(_mm_cmpgt_pd(a, b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
-inline basic_int64x4 cmp_gt(float64x4 a, float64x4 b)
+inline mask_float64x4 cmp_gt(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, b, _CMP_GT_OQ));
+    return uint64x4(_mm256_cmp_pd(a, b, _CMP_GT_OQ));
 #else
     return {cmp_gt(a[0], b[0]), cmp_gt(a[1], b[1])};
 #endif
@@ -715,23 +741,23 @@ inline basic_int64x4 cmp_gt(float64x4 a, float64x4 b)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, 2}
 */
-inline basic_int32x4 cmp_ge(float32x4 a, float32x4 b)
+inline mask_float32x4 cmp_ge(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_ge(a, b);
 #elif SIMDPP_USE_AVX
-    return int32x4(_mm_cmp_ps(a, b, _CMP_GE_OQ));
+    return uint32x4(_mm_cmp_ps(a, b, _CMP_GE_OQ));
 #elif SIMDPP_USE_SSE2
-    return int32x4(_mm_cmpge_ps(a, b));
+    return uint32x4(_mm_cmpge_ps(a, b));
 #elif SIMDPP_USE_NEON
     return vcgeq_f32(a, b);
 #endif
 }
 
-inline basic_int32x8 cmp_ge(float32x8 a, float32x8 b)
+inline mask_float32x8 cmp_ge(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, b, _CMP_GE_OQ));
+    return uint32x8(_mm256_cmp_ps(a, b, _CMP_GE_OQ));
 #else
     return {cmp_ge(a[0], b[0]), cmp_ge(a[1], b[1])};
 #endif
@@ -754,23 +780,23 @@ inline basic_int32x8 cmp_ge(float32x8 a, float32x8 b)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 cmp_ge(float64x2 a, float64x2 b)
+inline mask_float64x2 cmp_ge(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_ge(a, b);
 #elif SIMDPP_USE_AVX
-    return int64x2(_mm_cmp_pd(a, b, _CMP_GE_OQ));
+    return uint64x2(_mm_cmp_pd(a, b, _CMP_GE_OQ));
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmpge_pd(a, b));
+    return uint64x2(_mm_cmpge_pd(a, b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
-inline basic_int64x4 cmp_ge(float64x4 a, float64x4 b)
+inline mask_float64x4 cmp_ge(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, b, _CMP_GE_OQ));
+    return uint64x4(_mm256_cmp_pd(a, b, _CMP_GE_OQ));
 #else
     return {cmp_ge(a[0], b[0]), cmp_ge(a[1], b[1])};
 #endif
@@ -789,7 +815,7 @@ inline basic_int64x4 cmp_ge(float64x4 a, float64x4 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int8x16 cmp_lt(int8x16 a, int8x16 b)
+inline mask_int8x16 cmp_lt(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
@@ -800,7 +826,7 @@ inline basic_int8x16 cmp_lt(int8x16 a, int8x16 b)
 #endif
 }
 
-inline basic_int8x32 cmp_lt(int8x32 a, int8x32 b)
+inline mask_int8x32 cmp_lt(int8x32 a, int8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi8(b, a);
@@ -826,7 +852,7 @@ inline basic_int8x32 cmp_lt(int8x32 a, int8x32 b)
     @icost{SSE2-AVX, 8}
     @icost{NEON, 2}
 */
-inline basic_int8x16 cmp_lt(uint8x16 a, uint8x16 b)
+inline mask_int8x16 cmp_lt(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
@@ -840,7 +866,7 @@ inline basic_int8x16 cmp_lt(uint8x16 a, uint8x16 b)
 #endif
 }
 
-inline basic_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
+inline mask_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     uint8x32 bias = uint8x32::make_const(0x80);
@@ -865,7 +891,7 @@ inline basic_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int16x8 cmp_lt(int16x8 a, int16x8 b)
+inline mask_int16x8 cmp_lt(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
@@ -876,7 +902,7 @@ inline basic_int16x8 cmp_lt(int16x8 a, int16x8 b)
 #endif
 }
 
-inline basic_int16x16 cmp_lt(int16x16 a, int16x16 b)
+inline mask_int16x16 cmp_lt(int16x16 a, int16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi16(b, a);
@@ -902,7 +928,7 @@ inline basic_int16x16 cmp_lt(int16x16 a, int16x16 b)
     @icost{SSE2-AVX, 8}
     @icost{NEON, 2}
 */
-inline basic_int16x8 cmp_lt(uint16x8 a, uint16x8 b)
+inline mask_int16x8 cmp_lt(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
@@ -916,7 +942,7 @@ inline basic_int16x8 cmp_lt(uint16x8 a, uint16x8 b)
 #endif
 }
 
-inline basic_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
+inline mask_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 bias = uint16x16::make_const(0x8000);
@@ -941,7 +967,7 @@ inline basic_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int32x4 cmp_lt(int32x4 a, int32x4 b)
+inline mask_int32x4 cmp_lt(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
@@ -952,7 +978,7 @@ inline basic_int32x4 cmp_lt(int32x4 a, int32x4 b)
 #endif
 }
 
-inline basic_int32x8 cmp_lt(int32x8 a, int32x8 b)
+inline mask_int32x8 cmp_lt(int32x8 a, int32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi32(b, a);
@@ -978,7 +1004,7 @@ inline basic_int32x8 cmp_lt(int32x8 a, int32x8 b)
     @icost{SSE2-AVX, 8}
     @icost{NEON, 2}
 */
-inline basic_int32x4 cmp_lt(uint32x4 a, uint32x4 b)
+inline mask_int32x4 cmp_lt(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
@@ -992,7 +1018,7 @@ inline basic_int32x4 cmp_lt(uint32x4 a, uint32x4 b)
 #endif
 }
 
-inline basic_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
+inline mask_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     uint32x8 bias = uint32x8::make_const(0x80000000);
@@ -1017,23 +1043,23 @@ inline basic_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int32x4 cmp_lt(float32x4 a, float32x4 b)
+inline mask_float32x4 cmp_lt(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
 #elif SIMDPP_USE_AVX
-    return int32x4(_mm_cmp_ps(a, b, _CMP_LT_OQ));
+    return uint32x4(_mm_cmp_ps(a, b, _CMP_LT_OQ));
 #elif SIMDPP_USE_SSE2
-    return int32x4(_mm_cmplt_ps(a, b));
+    return uint32x4(_mm_cmplt_ps(a, b));
 #elif SIMDPP_USE_NEON
     return vcltq_f32(a, b);
 #endif
 }
 
-inline basic_int32x8 cmp_lt(float32x8 a, float32x8 b)
+inline mask_float32x8 cmp_lt(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, b, _CMP_LT_OQ));
+    return uint32x8(_mm256_cmp_ps(a, b, _CMP_LT_OQ));
 #else
     return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
 #endif
@@ -1056,23 +1082,23 @@ inline basic_int32x8 cmp_lt(float32x8 a, float32x8 b)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 cmp_lt(float64x2 a, float64x2 b)
+inline mask_float64x2 cmp_lt(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_lt(a, b);
 #elif SIMDPP_USE_AVX
-    return int64x2(_mm_cmp_pd(a, b, _CMP_LT_OQ));
+    return uint64x2(_mm_cmp_pd(a, b, _CMP_LT_OQ));
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmplt_pd(a, b));
+    return uint64x2(_mm_cmplt_pd(a, b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
-inline basic_int64x4 cmp_lt(float64x4 a, float64x4 b)
+inline mask_float64x4 cmp_lt(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, b, _CMP_LT_OQ));
+    return uint64x4(_mm256_cmp_pd(a, b, _CMP_LT_OQ));
 #else
     return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
 #endif
@@ -1091,23 +1117,23 @@ inline basic_int64x4 cmp_lt(float64x4 a, float64x4 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
 */
-inline basic_int32x4 cmp_le(float32x4 a, float32x4 b)
+inline mask_float32x4 cmp_le(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_le(a, b);
 #elif SIMDPP_USE_AVX
-    return int32x4(_mm_cmp_ps(a, b, _CMP_LE_OQ));
+    return uint32x4(_mm_cmp_ps(a, b, _CMP_LE_OQ));
 #elif SIMDPP_USE_SSE2
-    return int32x4(_mm_cmple_ps(a, b));
+    return uint32x4(_mm_cmple_ps(a, b));
 #elif SIMDPP_USE_NEON
     return vcleq_f32(a, b);
 #endif
 }
 
-inline basic_int32x8 cmp_le(float32x8 a, float32x8 b)
+inline mask_float32x8 cmp_le(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return int32x8(_mm256_cmp_ps(a, b, _CMP_LE_OQ));
+    return uint32x8(_mm256_cmp_ps(a, b, _CMP_LE_OQ));
 #else
     return {cmp_le(a[0], b[0]), cmp_le(a[1], b[1])};
 #endif
@@ -1130,23 +1156,23 @@ inline basic_int32x8 cmp_le(float32x8 a, float32x8 b)
     @unimp{NEON}
     @icost{SSE2-SSE4.1, 2}
 */
-inline basic_int64x2 cmp_le(float64x2 a, float64x2 b)
+inline mask_float64x2 cmp_le(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return null::cmp_le(a, b);
 #elif SIMDPP_USE_AVX
-    return int64x2(_mm_cmp_pd(a, b, _CMP_LE_OQ));
+    return uint64x2(_mm_cmp_pd(a, b, _CMP_LE_OQ));
 #elif SIMDPP_USE_SSE2
-    return int64x2(_mm_cmple_pd(a, b));
+    return uint64x2(_mm_cmple_pd(a, b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
 
-inline basic_int64x4 cmp_le(float64x4 a, float64x4 b)
+inline mask_float64x4 cmp_le(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return int64x4(_mm256_cmp_pd(a, b, _CMP_LE_OQ));
+    return uint64x4(_mm256_cmp_pd(a, b, _CMP_LE_OQ));
 #else
     return {cmp_le(a[0], b[0]), cmp_le(a[1], b[1])};
 #endif

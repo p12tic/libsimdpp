@@ -33,6 +33,7 @@
 #endif
 #include <simdpp/simd.h>
 #include <simdpp/simd/detail/word_size.h>
+#include <simdpp/null/mask.h>
 
 #if SIMDPP_USE_NEON
     #include <simdpp/null/set.h>
@@ -90,6 +91,15 @@ inline float64x2 float64x2::make_const(double v0, double v1)
     return null::make_vec<float64x2>(v0, v1);
 #elif SIMDPP_USE_SSE2
     return _mm_set_pd(v1, v0);
+#endif
+}
+
+inline mask_float64x2::operator basic_int64x2() const
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    return null::convert_mask<basic_int64x2>(*this);
+#else
+    return d_;
 #endif
 }
 

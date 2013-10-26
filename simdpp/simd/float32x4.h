@@ -51,6 +51,7 @@ public:
     using element_type = float;
     using uint_element_type = uint32_t;
     using int_vector_type = basic_int32x4;
+    using mask_type = mask_float32x4;
 
     static constexpr unsigned length = 4;
     static constexpr unsigned num_bits = 32;
@@ -173,6 +174,46 @@ private:
     float32x4_t d_;
 #elif SIMDPP_USE_NULL
     float f32_[4];
+#endif
+};
+
+/// Class representing a mask for 4x 32-bit floating-point vector
+class mask_float32x4 {
+public:
+
+    mask_float32x4() = default;
+    mask_float32x4(const mask_float32x4 &) = default;
+    mask_float32x4 &operator=(const mask_float32x4 &) = default;
+
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+#if SIMDPP_USE_SSE2
+    mask_float32x4(__m128 d) : d_(basic_int32x4(d)) {}
+#elif SIMDPP_USE_NEON
+    mask_float32x4(float32x4_t d) : d_(basic_int32x4(d)) {}
+#endif
+#if SIMDPP_USE_NULL
+#else
+    mask_float32x4(basic_int32x4 d) : d_(d) {}
+#endif
+#endif
+
+    /// Access the underlying type
+    operator basic_int32x4() const;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_NULL
+    bool& operator[](unsigned id) { return b_[id]; }
+    const bool& operator[](unsigned id) const { return b_[id]; }
+#endif
+#endif
+
+private:
+#if SIMDPP_USE_NULL
+    bool b_[4];
+#else
+    basic_int32x4 d_;
 #endif
 };
 

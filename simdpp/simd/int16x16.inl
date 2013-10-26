@@ -32,6 +32,7 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd.h>
+#include <simdpp/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -145,6 +146,15 @@ inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, ui
 #else
     return {uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7),
             uint16x8::make_const(v8, v9, v10, v11, v12, v13, v14, v15)};
+#endif
+}
+
+inline mask_int16x16::operator basic_int16x16() const
+{
+#if SIMDPP_USE_AVX2
+    return d_;
+#else
+    return basic_int16x16(m_[0], m_[1]);
 #endif
 }
 

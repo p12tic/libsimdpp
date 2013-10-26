@@ -74,6 +74,19 @@ class basic_int16x16;
 class basic_int32x8;
 class basic_int64x4;
 
+class mask_int8x16;
+class mask_int8x32;
+class mask_int16x8;
+class mask_int16x16;
+class mask_int32x4;
+class mask_int32x8;
+class mask_int64x2;
+class mask_int64x4;
+class mask_float32x4;
+class mask_float32x8;
+class mask_float64x2;
+class mask_float64x4;
+
 template<unsigned, unsigned> basic_int64x2 permute(basic_int64x2);
 template<unsigned, unsigned> basic_int64x2 shuffle1(basic_int64x2, basic_int64x2);
 template<unsigned, unsigned> float64x2 permute(float64x2);

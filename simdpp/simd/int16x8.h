@@ -51,6 +51,7 @@ public:
     using element_type = uint16_t;
     using uint_element_type = uint16_t;
     using int_vector_type = basic_int16x8;
+    using mask_type = mask_int16x8;
 
     static constexpr unsigned length = 8;
     static constexpr unsigned num_bits = 16;
@@ -298,6 +299,46 @@ public:
     */
     static int128 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
                              uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
+};
+
+/// Class representing mask for 8x 16-bit integer vector
+class mask_int16x8 {
+public:
+
+    mask_int16x8() = default;
+    mask_int16x8(const mask_int16x8 &) = default;
+    mask_int16x8 &operator=(const mask_int16x8 &) = default;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+#if SIMDPP_USE_SSE2
+    mask_int16x8(__m128i d) : d_(d) {}
+#elif SIMDPP_USE_NEON
+    mask_int16x8(uint16x8_t d) : d_(d) {}
+    mask_int16x8( int16x8_t d) : d_(d) {}
+#endif
+#if SIMDPP_USE_NULL
+#else
+    mask_int16x8(basic_int16x8 d) : d_(d) {}
+#endif
+#endif
+
+    /// Access the underlying type
+    operator basic_int16x8() const;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_NULL
+    bool& operator[](unsigned id) { return b_[id]; }
+    const bool& operator[](unsigned id) const { return b_[id]; }
+#endif
+#endif
+
+private:
+#if SIMDPP_USE_NULL
+    bool b_[8];
+#else
+    basic_int16x8 d_;
+#endif
 };
 
 /// @} -- end ingroup

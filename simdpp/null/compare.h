@@ -41,61 +41,61 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace null {
 
 template<class V>
-typename V::int_vector_type cmp_eq(V a, V b)
+typename V::mask_type cmp_eq(V a, V b)
 {
-    detail::mem_block<typename V::int_vector_type> r;
+    typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (a[i] == b[i]) ? V::all_bits : 0;
+        r[i] = (a[i] == b[i]) ? 1 : 0;
     }
     return r;
 }
 
 template<class V>
-typename V::int_vector_type cmp_neq(V a, V b)
+typename V::mask_type cmp_neq(V a, V b)
 {
-    detail::mem_block<typename V::int_vector_type> r;
+    typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (a[i] != b[i]) ? V::all_bits : 0;
+        r[i] = (a[i] != b[i]) ? 1 : 0;
     }
     return r;
 }
 
 template<class V>
-typename V::int_vector_type cmp_lt(V a, V b)
+typename V::mask_type cmp_lt(V a, V b)
 {
-    detail::mem_block<typename V::int_vector_type> r;
+    typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (a[i] < b[i]) ? V::all_bits : 0;
+        r[i] = (a[i] < b[i]) ? 1 : 0;
     }
     return r;
 }
 
 template<class V>
-typename V::int_vector_type cmp_le(V a, V b)
+typename V::mask_type cmp_le(V a, V b)
 {
-    detail::mem_block<typename V::int_vector_type> r;
+    typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (a[i] <= b[i]) ? V::all_bits : 0;
+        r[i] = (a[i] <= b[i]) ? 1 : 0;
     }
     return r;
 }
 
 template<class V>
-typename V::int_vector_type cmp_gt(V a, V b)
+typename V::mask_type cmp_gt(V a, V b)
 {
-    detail::mem_block<typename V::int_vector_type> r;
+    typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (a[i] > b[i]) ? V::all_bits : 0;
+        r[i] = (a[i] > b[i]) ? 1 : 0;
     }
     return r;
 }
 
 template<class V>
-typename V::int_vector_type cmp_ge(V a, V b)
+typename V::mask_type cmp_ge(V a, V b)
 {
-    detail::mem_block<typename V::int_vector_type> r;
+    typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (a[i] >= b[i]) ? V::all_bits : 0;
+        r[i] = (a[i] >= b[i]) ? 1 : 0;
     }
     return r;
 }

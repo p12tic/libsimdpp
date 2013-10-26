@@ -33,7 +33,7 @@
 #endif
 #include <simdpp/simd.h>
 #include <simdpp/simd/detail/word_size.h>
-
+#include <simdpp/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -144,6 +144,15 @@ inline uint64x2 uint64x2::make_const(uint64_t v0, uint64_t v1)
     v[0] = v0;
     v[1] = v1;
     return vld1q_u64(v);
+#endif
+}
+
+inline mask_int64x2::operator basic_int64x2() const
+{
+#if SIMDPP_USE_NULL
+    return null::convert_mask<basic_int64x2>(*this);
+#else
+    return d_;
 #endif
 }
 

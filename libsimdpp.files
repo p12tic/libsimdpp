@@ -41,6 +41,7 @@ simdpp/neon/detail/shuffle_int64x2.h
 simdpp/null/foreach.h
 simdpp/null/compare.h
 simdpp/null/math.h
+simdpp/null/mask.h
 simdpp/null/bitwise.h
 simdpp/null/memory.h
 simdpp/null/set.h

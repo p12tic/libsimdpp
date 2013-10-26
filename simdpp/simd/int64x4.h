@@ -53,6 +53,7 @@ public:
     using uint_element_type = uint64_t;
     using int_vector_type = basic_int64x4;
     using half_vector_type = basic_int64x2;
+    using mask_type = mask_int64x4;
 
     static constexpr unsigned length = 4;
     static constexpr unsigned num_bits = 64;
@@ -294,6 +295,42 @@ public:
     */
     static uint64x4 make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint64_t v3);
 
+};
+
+/// Class representing a mask for 4x 64-bit integer vector
+class mask_int64x4 {
+public:
+
+    mask_int64x4() = default;
+    mask_int64x4(const mask_int64x4 &) = default;
+    mask_int64x4 &operator=(const mask_int64x4 &) = default;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_AVX2
+    mask_int64x4(__m256i d) : d_(d) {}
+    mask_int64x4(basic_int64x4 d) : d_(d) {}
+#else
+    mask_int64x4(mask_int64x2 m0, mask_int64x2 m1) { m_[0] = m0; m_[1] = m1; }
+#endif
+#endif
+
+    /// Access the underlying type
+    operator basic_int64x4() const;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_AVX2
+#else
+    mask_int64x2& operator[](unsigned id) { return m_[id]; }
+    const mask_int64x2& operator[](unsigned id) const { return m_[id]; }
+#endif
+#endif
+
+private:
+#if SIMDPP_USE_AVX2
+    basic_int64x4 d_;
+#else
+    mask_int64x2 m_[2];
+#endif
 };
 
 /// @} -- end ingroup

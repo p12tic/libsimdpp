@@ -32,6 +32,7 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd.h>
+#include <simdpp/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -90,6 +91,15 @@ inline float64x4 float64x4::make_const(double v0, double v1, double v2, double v
 #else
     return {float64x2::make_const(v0, v1),
             float64x2::make_const(v2, v3)};
+#endif
+}
+
+inline mask_float64x4::operator basic_int64x4() const
+{
+#if SIMDPP_USE_AVX
+    return d_;
+#else
+    return basic_int64x4(m_[0], m_[1]);
 #endif
 }
 

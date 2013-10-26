@@ -53,6 +53,7 @@ public:
     using uint_element_type = uint32_t;
     using int_vector_type = basic_int32x8;
     using half_vector_type = float32x4;
+    using mask_type = mask_float32x8;
 
     static constexpr unsigned length = 8;
     static constexpr unsigned num_bits = 32;
@@ -173,6 +174,42 @@ private:
     __m256 d_;
 #else
     float32x4 d_[2];
+#endif
+};
+
+/// Class representing a mask for 8x 32-bit floating-point vector
+class mask_float32x8 {
+public:
+
+    mask_float32x8() = default;
+    mask_float32x8(const mask_float32x8 &) = default;
+    mask_float32x8 &operator=(const mask_float32x8 &) = default;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_AVX
+    mask_float32x8(__m256 d) : d_(basic_float32x8(d)) {}
+    mask_float32x8(basic_int32x8 d) : d_(d) {}
+#else
+    mask_float32x8(mask_float32x4 m0, mask_float32x4 m1) { m_[0] = m0; m_[1] = m1; }
+#endif
+#endif
+
+    /// Access the underlying type
+    operator basic_int32x8() const;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_AVX
+#else
+    mask_float32x4& operator[](unsigned id) { return m_[id]; }
+    const mask_float32x4& operator[](unsigned id) const { return m_[id]; }
+#endif
+#endif
+
+private:
+#if SIMDPP_USE_AVX
+    basic_int32x8 d_;
+#else
+    mask_float32x4 m_[2];
 #endif
 };
 

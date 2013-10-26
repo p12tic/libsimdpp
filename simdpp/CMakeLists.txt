@@ -44,6 +44,7 @@ set(HEADERS
     null/compare.h
     null/foreach.h
     null/math.h
+    null/mask.h
     null/memory.h
     null/set.h
     null/shuffle.h

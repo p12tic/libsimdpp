@@ -32,6 +32,7 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd.h>
+#include <simdpp/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -140,6 +141,14 @@ inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint
 #endif
 }
 
+inline mask_int32x8::operator basic_int32x8() const
+{
+#if SIMDPP_USE_AVX2
+    return d_;
+#else
+    return basic_int32x8(m_[0], m_[1]);
+#endif
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

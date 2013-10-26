@@ -31,7 +31,9 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
 #include <simdpp/simd.h>
+#include <simdpp/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -158,6 +160,15 @@ inline int128 uint16x8::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16
     v[0] = v0;  v[1] = v1;  v[2] = v2;  v[3] = v3;
     v[4] = v4;  v[5] = v5;  v[6] = v6;  v[7] = v7;
     return vld1q_u16(v);
+#endif
+}
+
+inline mask_int16x8::operator basic_int16x8() const
+{
+#if SIMDPP_USE_NULL
+    return null::convert_mask<basic_int16x8>(*this);
+#else
+    return d_;
 #endif
 }
 

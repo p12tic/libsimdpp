@@ -52,6 +52,7 @@ public:
     using element_type = double;
     using uint_element_type = uint64_t;
     using int_vector_type = basic_int64x2;
+    using mask_type = mask_float64x2;
 
     static constexpr unsigned length = 2;
     static constexpr unsigned num_bits = 64;
@@ -154,6 +155,43 @@ private:
     };
 #elif SIMDPP_USE_NULL
     double d_[2];
+#endif
+};
+
+
+/// Class representing a mask for 2x 64-bit floating-point vector
+class mask_float64x2 {
+public:
+
+    mask_float64x2() = default;
+    mask_float64x2(const mask_float64x2 &) = default;
+    mask_float64x2 &operator=(const mask_float64x2 &) = default;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_SSE2
+    mask_float64x2(__m128d d) : d_(float64x2(d)) {}
+#endif
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#else
+    mask_float64x2(basic_int64x2 d) : d_(d) {}
+#endif
+#endif
+
+    /// Access the underlying type
+    operator basic_int64x2() const;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    bool& operator[](unsigned id) { return b_[id]; }
+    const bool& operator[](unsigned id) const { return b_[id]; }
+#endif
+#endif
+
+private:
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    bool b_[2];
+#else
+    basic_int64x2 d_;
 #endif
 };
 

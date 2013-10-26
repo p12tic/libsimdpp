@@ -51,6 +51,7 @@ public:
     using uint_element_type = uint8_t;
     using int_vector_type = basic_int8x32;
     using half_vector_type = basic_int8x16;
+    using mask_type = mask_int8x32;
 
     static constexpr unsigned length = 32;
     static constexpr unsigned num_bits = 8;
@@ -351,6 +352,44 @@ public:
                                uint8_t v20, uint8_t v21, uint8_t v22, uint8_t v23,
                                uint8_t v24, uint8_t v25, uint8_t v26, uint8_t v27,
                                uint8_t v28, uint8_t v29, uint8_t v30, uint8_t v31);
+};
+
+/// Class representing a mask for 32x 8-bit integer vector
+class mask_int8x32 {
+public:
+
+    mask_int8x32() = default;
+    mask_int8x32(const mask_int8x32 &) = default;
+    mask_int8x32 &operator=(const mask_int8x32 &) = default;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_AVX2
+    mask_int8x32(__m256i d) : d_(d) {}
+    mask_int8x32(basic_int8x32 d) : d_(d) {}
+    mask_int8x32(int8x32 d) : d_(d) {}
+    mask_int8x32(uint8x32 d) : d_(d) {}
+#else
+    mask_int8x32(mask_int8x16 m0, mask_int8x16 m1) { m_[0] = m0; m_[1] = m1; }
+#endif
+#endif
+
+    /// Access the underlying type
+    operator basic_int8x32() const;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_AVX2
+#else
+    mask_int8x16& operator[](unsigned id) { return m_[id]; }
+    const mask_int8x16& operator[](unsigned id) const { return m_[id]; }
+#endif
+#endif
+
+private:
+#if SIMDPP_USE_AVX2
+    basic_int8x32 d_;
+#else
+    mask_int8x16 m_[2];
+#endif
 };
 
 /// @} -- end ingroup

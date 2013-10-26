@@ -32,6 +32,8 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/null/mask.h>
+
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -117,6 +119,15 @@ inline float32x4 float32x4::make_const(float v0, float v1, float v2, float v3)
     v[2] = v2;
     v[3] = v3;
     return vld1q_f32(v);
+#endif
+}
+
+inline mask_float32x4::operator basic_int32x4() const
+{
+#if SIMDPP_USE_NULL
+    return null::convert_mask<basic_int32x4>(*this);
+#else
+    return d_;
 #endif
 }
 
