@@ -108,6 +108,7 @@ set(HEADERS
     simd/shuffle_generic.h
     simd/shuffle.h
     simd/this_compile_arch.h
+    simd/traits.h
     simd/transpose.h
     simd/types.h
 

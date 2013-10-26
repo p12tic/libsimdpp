@@ -103,6 +103,7 @@ simdpp/simd/shuffle_generic.h
 simdpp/simd/convert.h
 simdpp/simd/types.h
 simdpp/simd/compare.h
+simdpp/simd/traits.h
 simdpp/simd/transpose.h
 simdpp/simd/this_compile_arch.h
 simdpp/simd.h
