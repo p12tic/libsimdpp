@@ -80,7 +80,7 @@ inline void get_arch_info_impl(std::atomic<Arch>& info,
                                const GetArchCb& get_info_cb)
 {
     Arch arch_info{};
-#ifdef __GNUC__
+#if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 8)
 #if __i386__ || __amd64__
     if (__builtin_cpu_supports("avx2")) {
         arch_info |= Arch::X86_SSE2;
