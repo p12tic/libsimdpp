@@ -43,48 +43,48 @@ void test_store_helper(TestCase& tc, V* sv)
         V rv[vnum];
     };
 
-    auto rzero = [&]()
+    auto rzero = [&](V* r)
     {
         for (unsigned i = 0; i < vnum; i++) {
-            rv[i] = V::zero();
+            r[i] = V::zero();
         }
     };
 
     for (unsigned i = 0; i < vnum; i++) {
-        rzero();
+        rzero(rv);
         store(rdata+i*V::length, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
-        rzero();
+        rzero(rv);
         stream(rdata+i*V::length, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
-        rzero();
+        rzero(rv);
         store_first(rdata, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
-        rzero();
+        rzero(rv);
         store_last(rdata, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
     }
 
-    rzero();
+    rzero(rv);
     store_packed2(rdata, sv[0], sv[1]);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero();
+    rzero(rv);
     store_packed3(rdata, sv[0], sv[1], sv[2]);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero();
+    rzero(rv);
     store_packed4(rdata, sv[0], sv[1], sv[2], sv[3]);
     TEST_ARRAY_PUSH(tc, V, rv);
 }
