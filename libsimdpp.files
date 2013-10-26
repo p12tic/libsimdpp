@@ -145,6 +145,7 @@ test/test_helpers.h
 test/test_results.h
 
 test/common/vectors.h
+test/common/masks.h
 
 test/tests/bitwise.cc
 test/tests/compare.cc

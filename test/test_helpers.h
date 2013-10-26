@@ -179,6 +179,10 @@ inline simdpp::uint8x16 tst_ext_half(simdpp::uint8x32 x)
 {
     return tst_ext_half_avx2_impl<simdpp::uint8x16>(x);
 }
+inline simdpp::mask_int8x16 tst_ext_half(simdpp::mask_int8x32 x)
+{
+    return tst_ext_half_avx2_impl<simdpp::mask_int8x16>(x);
+}
 
 inline simdpp::basic_int16x8 tst_ext_half(simdpp::basic_int16x16 x)
 {
@@ -191,6 +195,10 @@ inline simdpp::int16x8 tst_ext_half(simdpp::int16x16 x)
 inline simdpp::uint16x8 tst_ext_half(simdpp::uint16x16 x)
 {
     return tst_ext_half_avx2_impl<simdpp::uint16x8>(x);
+}
+inline simdpp::mask_int16x8 tst_ext_half(simdpp::mask_int16x16 x)
+{
+    return tst_ext_half_avx2_impl<simdpp::mask_int16x8>(x);
 }
 
 inline simdpp::basic_int32x4 tst_ext_half(simdpp::basic_int32x8 x)
@@ -205,6 +213,10 @@ inline simdpp::uint32x4 tst_ext_half(simdpp::uint32x8 x)
 {
     return tst_ext_half_avx2_impl<simdpp::uint32x4>(x);
 }
+inline simdpp::mask_int32x4 tst_ext_half(simdpp::mask_int32x8 x)
+{
+    return tst_ext_half_avx2_impl<simdpp::mask_int32x4>(x);
+}
 
 inline simdpp::basic_int64x2 tst_ext_half(simdpp::basic_int64x4 x)
 {
@@ -218,15 +230,27 @@ inline simdpp::uint64x2 tst_ext_half(simdpp::uint64x4 x)
 {
     return tst_ext_half_avx2_impl<simdpp::uint64x2>(x);
 }
+inline simdpp::mask_int64x2 tst_ext_half(simdpp::mask_int64x4 x)
+{
+    return tst_ext_half_avx2_impl<simdpp::mask_int64x2>(x);
+}
 
 inline simdpp::float32x4 tst_ext_half(simdpp::float32x8 x)
 {
     return tst_ext_half_avx_impl<simdpp::float32x4>(x);
 }
+inline simdpp::mask_float32x4 tst_ext_half(simdpp::mask_float32x8 x)
+{
+    return tst_ext_half_avx_impl<simdpp::mask_float32x4>(x);
+}
 
 inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
 {
     return tst_ext_half_avx_impl<simdpp::float64x2>(x);
+}
+inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
+{
+    return tst_ext_half_avx_impl<simdpp::mask_float64x2>(x);
 }
 // @}
 
