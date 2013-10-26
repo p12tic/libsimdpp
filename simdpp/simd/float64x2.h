@@ -75,23 +75,8 @@ public:
 
     /// @{
     /// Construct from compatible int64x2 integer vector type
-#if SIMDPP_USE_SSE2
-    explicit float64x2(basic_int64x2 d) : d_(_mm_castsi128_pd(d)) {}
-    float64x2& operator=(basic_int64x2 d) { d_ = _mm_castsi128_pd(d); return *this; }
-#elif SIMDPP_USE_NEON
-    explicit float64x2(basic_int64x2 d)  : di_(vreinterpretq_u64_u32(d)) {}
-    float64x2& operator=(basic_int64x2 d) { di_ = vreinterpretq_u64_u32(d); return *this; }
-#elif SIMDPP_USE_ALTIVEC
-    explicit float64x2(basic_int64x2 d)   : di_(d) {}
-    float64x2& operator=(basic_int64x2 d) { di_ = d; return *this; }
-#elif SIMDPP_USE_NULL
-    explicit float64x2(basic_int64x2 d)
-    {
-        d_[0] = bit_cast<double>(d[0]);
-        d_[1] = bit_cast<double>(d[1]);
-    }
+    explicit float64x2(basic_int64x2 d);
     float64x2& operator=(basic_int64x2 d) { operator=(float64x2(d)); return *this; }
-#endif
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -152,17 +137,7 @@ public:
 private:
 #if SIMDPP_USE_SSE2
     __m128d d_;
-#elif SIMDPP_USE_NEON
-    union {
-        double d_[2];
-        uint64x2_t di_;
-    };
-#elif SIMDPP_USE_ALTIVEC
-    union {
-        double d_[2];
-        uint64x2 di_;
-    };
-#elif SIMDPP_USE_NULL
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NULL
     double d_[2];
 #endif
 };

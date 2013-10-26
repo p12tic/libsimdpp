@@ -33,6 +33,7 @@
 #endif
 #include <simdpp/simd.h>
 #include <simdpp/simd/detail/word_size.h>
+#include <simdpp/simd/detail/mem_block.h>
 #include <simdpp/null/mask.h>
 
 namespace simdpp {
@@ -42,11 +43,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 inline basic_int64x2::basic_int64x2(const float64x2& d)
 {
-#if SIMDPP_USE_NULL
-    u64(0) = bit_cast<uint64_t>(d[0]);
-    u64(1) = bit_cast<uint64_t>(d[1]);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    operator=(bit_cast<basic_int64x2>(d));
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<basic_int64x2> ax;
+    ax[0] = bit_cast<uint64_t>(d[0]);
+    ax[1] = bit_cast<uint64_t>(d[1]);
+    operator=(basic_int64x2(ax));
 #elif SIMDPP_USE_SSE2
     operator=(_mm_castpd_si128(d));
 #endif

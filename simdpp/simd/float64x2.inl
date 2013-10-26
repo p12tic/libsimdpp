@@ -32,6 +32,7 @@
     #error "This file must be included through simd.h"
 #endif
 #include <simdpp/simd.h>
+#include <simdpp/simd/detail/mem_block.h>
 #include <simdpp/simd/detail/word_size.h>
 #include <simdpp/null/mask.h>
 #include <simdpp/null/set.h>
@@ -40,6 +41,17 @@ namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+
+inline float64x2::float64x2(basic_int64x2 d)
+{
+#if SIMDPP_USE_SSE2
+    d_ = _mm_castsi128_pd(d);
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON || SIMDPP_USE_NULL
+    detail::mem_block<basic_int64x2> ax(d);
+    d_[0] = bit_cast<double>(ax[0]);
+    d_[1] = bit_cast<double>(ax[1]);
+#endif
+}
 
 inline float64x2 float64x2::zero()
 {
