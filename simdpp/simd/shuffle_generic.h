@@ -644,7 +644,7 @@ float32x4 shuffle2(float32x4 a, float32x4 b)
         float64x2 arga = bit_cast<float64x2>(a);
         float64x2 argb = bit_cast<float64x2>(b);
         float64x2 res = shuffle1<a0/2,b0/2>(arga, argb);
-        return float32x4(int64x2(res));
+        return bit_cast<float32x4>(res);
     } else {
         return _mm_shuffle_ps(a, b, _MM_SHUFFLE(b1, b0, a1, a0));
     }

@@ -278,12 +278,12 @@ inline float32x8 bit_and(float32x8 a, float32x8 b)
 
 inline float32x4 bit_and(float32x4 a, int128 b)
 {
-    return bit_and(a, float32x4(b));
+    return bit_and(a, bit_cast<float32x4>(b));
 }
 
 inline float32x8 bit_and(float32x8 a, int256 b)
 {
-    return bit_and(a, float32x8(b));
+    return bit_and(a, bit_cast<float32x8>(b));
 }
 
 inline float32x4 bit_and(float32x4 a, mask_float32x4 b)
@@ -291,14 +291,14 @@ inline float32x4 bit_and(float32x4 a, mask_float32x4 b)
 #if SIMDPP_USE_NULL
     return null::bit_and_vm(a, b);
 #else
-    return bit_and(a, uint32x4(b));
+    return bit_and(a, float32x4(b));
 #endif
 }
 
 inline float32x8 bit_and(float32x8 a, mask_float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return bit_and(a, uint32x8(b));
+    return bit_and(a, float32x8(b));
 #else
     return {bit_and(a[0], b[0]), bit_and(a[1], b[1])};
 #endif
@@ -344,12 +344,12 @@ inline float64x4 bit_and(float64x4 a, float64x4 b)
 
 inline float64x2 bit_and(float64x2 a, int128 b)
 {
-    return bit_and(a, float64x2(b));
+    return bit_and(a, bit_cast<float64x2>(b));
 }
 
 inline float64x4 bit_and(float64x4 a, int256 b)
 {
-    return bit_and(a, float64x4(b));
+    return bit_and(a, bit_cast<float64x4>(b));
 }
 
 inline float64x2 bit_and(float64x2 a, mask_float64x2 b)
@@ -619,12 +619,12 @@ inline float32x8 bit_andnot(float32x8 a, float32x8 b)
 
 inline float32x4 bit_andnot(float32x4 a, int128 b)
 {
-    return bit_andnot(a, float32x4(b));
+    return bit_andnot(a, bit_cast<float32x4>(b));
 }
 
 inline float32x8 bit_andnot(float32x8 a, int256 b)
 {
-    return bit_andnot(a, float32x8(b));
+    return bit_andnot(a, bit_cast<float32x8>(b));
 }
 
 inline float32x4 bit_andnot(float32x4 a, mask_float32x4 b)
@@ -632,14 +632,14 @@ inline float32x4 bit_andnot(float32x4 a, mask_float32x4 b)
 #if SIMDPP_USE_NULL
     return null::bit_andnot_vm(a, b);
 #else
-    return bit_andnot(a, uint32x4(b));
+    return bit_andnot(a, float32x4(b));
 #endif
 }
 
 inline float32x8 bit_andnot(float32x8 a, mask_float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return bit_andnot(a, uint32x8(b));
+    return bit_andnot(a, float32x8(b));
 #else
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
@@ -685,12 +685,12 @@ inline float64x4 bit_andnot(float64x4 a, float64x4 b)
 
 inline float64x2 bit_andnot(float64x2 a, int128 b)
 {
-    return bit_andnot(a, float64x2(b));
+    return bit_andnot(a, bit_cast<float64x2>(b));
 }
 
 inline float64x4 bit_andnot(float64x4 a, int256 b)
 {
-    return bit_andnot(a, float64x4(b));
+    return bit_andnot(a, bit_cast<float64x4>(b));
 }
 
 inline float64x2 bit_andnot(float64x2 a, mask_float64x2 b)
@@ -882,12 +882,12 @@ inline float32x8 bit_or(float32x8 a, float32x8 b)
 
 inline float32x4 bit_or(float32x4 a, int128 b)
 {
-    return bit_or(a, float32x4(b));
+    return bit_or(a, bit_cast<float32x4>(b));
 }
 
 inline float32x8 bit_or(float32x8 a, int256 b)
 {
-    return bit_or(a, float32x8(b));
+    return bit_or(a, bit_cast<float32x8>(b));
 }
 
 // -----------------------------------------------------------------------------
@@ -912,12 +912,12 @@ inline float64x4 bit_or(float64x4 a, float64x4 b)
 
 inline float64x2 bit_or(float64x2 a, int128 b)
 {
-    return bit_or(a, float64x2(b));
+    return bit_or(a, bit_cast<float64x2>(b));
 }
 
 inline float64x4 bit_or(float64x4 a, int256 b)
 {
-    return bit_or(a, float64x4(b));
+    return bit_or(a, bit_cast<float64x4>(b));
 }
 
 // -----------------------------------------------------------------------------
@@ -1113,12 +1113,12 @@ inline float32x8 bit_xor(float32x8 a, float32x8 b)
 
 inline float32x4 bit_xor(float32x4 a, int128 b)
 {
-    return bit_xor(a, float32x4(b));
+    return bit_xor(a, bit_cast<float32x4>(b));
 }
 
 inline float32x8 bit_xor(float32x8 a, int256 b)
 {
-    return bit_xor(a, float32x8(b));
+    return bit_xor(a, bit_cast<float32x8>(b));
 }
 
 // -----------------------------------------------------------------------------
@@ -1143,12 +1143,12 @@ inline float64x4 bit_xor(float64x4 a, float64x4 b)
 
 inline float64x2 bit_xor(float64x2 a, int128 b)
 {
-    return bit_xor(a, float64x2(b));
+    return bit_xor(a, bit_cast<float64x2>(b));
 }
 
 inline float64x4 bit_xor(float64x4 a, int256 b)
 {
-    return bit_xor(a, float64x4(b));
+    return bit_xor(a, bit_cast<float64x4>(b));
 }
 
 // -----------------------------------------------------------------------------

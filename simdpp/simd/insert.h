@@ -138,7 +138,7 @@ basic_int16x8 insert(basic_int16x8 a, uint16_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-int128 insert(basic_int32x4 a, uint32_t x)
+basic_int32x4 insert(basic_int32x4 a, uint32_t x)
 {
 #if SIMDPP_USE_NULL
     a[id] = x;
@@ -178,7 +178,7 @@ int128 insert(basic_int32x4 a, uint32_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-int128 insert(basic_int64x2 a, uint64_t x)
+basic_int64x2 insert(basic_int64x2 a, uint64_t x)
 {
 #if SIMDPP_USE_NULL
     a[id] = x;

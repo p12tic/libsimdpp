@@ -45,8 +45,8 @@ void test_bitwise(TestResults& res)
     float64x4 b11(a11);
     float64x4 b12(a12);
 
-    float32x8 c11 = float32x8(a11);
-    float32x8 c12 = float32x8(a12);
+    float32x8 c11 = bit_cast<float32x8>(a11);
+    float32x8 c12 = bit_cast<float32x8>(a12);
 
     TEST_PUSH16X2_2(tc, uint64x4,  bit_and, a11, a12);
     TEST_PUSH16X2_2(tc, float64x4, bit_and, b11, b12);

@@ -92,12 +92,14 @@ inline int128 permute_bytes16(int128 a, int128 mask)
 
 inline float32x4 permute_bytes16(float32x4 a, int128 mask)
 {
-    return float32x4(permute_bytes16(int32x4(a), mask));
+    int32x4 r = permute_bytes16(int32x4(a), mask);
+    return float32x4(r);
 }
 
 inline float64x2 permute_bytes16(float64x2 a, int128 mask)
 {
-    return float64x2(permute_bytes16(int64x2(a), mask));
+    int64x2 r = permute_bytes16(int64x2(a), mask);
+    return float64x2(r);
 }
 
 inline int256 permute_bytes16(int256 a, int256 mask)
@@ -111,12 +113,14 @@ inline int256 permute_bytes16(int256 a, int256 mask)
 
 inline float32x8 permute_bytes16(float32x8 a, int256 mask)
 {
-    return float32x8(permute_bytes16(int32x8(a), mask));
+    int32x8 r = permute_bytes16(int32x8(a), mask);
+    return float32x8(r);
 }
 
 inline float64x4 permute_bytes16(float64x4 a, int256 mask)
 {
-    return float64x4(permute_bytes16(int64x4(a), mask));
+    int64x4 r = permute_bytes16(int64x4(a), mask);
+    return float64x4(r);
 }
 /// @}
 
@@ -221,12 +225,14 @@ inline int256 shuffle_bytes16(int256 a, int256 b, int256 mask)
 
 inline float32x8 shuffle_bytes16(float32x8 a, float32x8 b, int256 mask)
 {
-    return float32x8(shuffle_bytes16(int32x8(a), int32x8(b), mask));
+    int32x8 r = shuffle_bytes16(int32x8(a), int32x8(b), mask);
+    return float32x8(r);
 }
 
 inline float64x4 shuffle_bytes16(float64x4 a, float64x4 b, int256 mask)
 {
-    return float64x4(shuffle_bytes16(int64x4(a), int64x4(b), mask));
+    int64x4 r = shuffle_bytes16(int64x4(a), int64x4(b), mask);
+    return float64x4(r);
 }
 /// @}
 
@@ -303,12 +309,14 @@ inline int256 permute_zbytes16(int256 a, int256 mask)
 
 inline float32x8 permute_zbytes16(float32x8 a, int256 mask)
 {
-    return float32x8(permute_zbytes16(int32x8(a), mask));
+    int32x8 r = permute_zbytes16(int32x8(a), mask);
+    return float32x8(r);
 }
 
 inline float64x4 permute_zbytes16(float64x4 a, int256 mask)
 {
-    return float64x4(permute_zbytes16(int64x4(a), mask));
+    int64x4 r = permute_zbytes16(int64x4(a), mask);
+    return float64x4(r);
 }
 /// @}
 
@@ -424,12 +432,14 @@ inline int256 shuffle_zbytes16(int256 a, int256 b, int256 mask)
 
 inline float32x8 shuffle_zbytes16(float32x8 a, float32x8 b, int256 mask)
 {
-    return float32x8(shuffle_zbytes16(int32x8(a), int32x8(b), mask));
+    int32x8 r = shuffle_zbytes16(int32x8(a), int32x8(b), mask);
+    return float32x8(r);
 }
 
 inline float64x4 shuffle_zbytes16(float64x4 a, float64x4 b, int256 mask)
 {
-    return float64x4(shuffle_zbytes16(int64x4(a), int64x4(b), mask));
+    int64x4 r = shuffle_zbytes16(int64x4(a), int64x4(b), mask);
+    return float64x4(r);
 }
 /// @}
 
