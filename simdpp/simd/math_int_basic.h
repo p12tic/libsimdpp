@@ -336,7 +336,7 @@ inline uint16x8 adds(uint16x8 a, uint16x8 b)
 inline uint16x16 adds(uint16x16 a, uint16x16 b)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_adds_epi8(a, b);
+    return _mm256_adds_epu16(a, b);
 #else
     return {adds(a[0], b[0]), adds(a[1], b[1])};
 #endif
