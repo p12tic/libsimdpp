@@ -251,7 +251,6 @@ inline mask_int8x16 cmp_neq(basic_int8x16 a, basic_int8x16 b)
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
 #else
-    mask_int8x16 r;
     return bit_not(cmp_eq(a, b));
 #endif
 }

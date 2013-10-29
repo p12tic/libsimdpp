@@ -746,7 +746,7 @@ inline void store_last(void* p, basic_int32x4 a, unsigned n)
 
     switch (n) {
     case 3: {
-        basic_int32x4 b, c;
+        basic_int32x4 b;
         b = move_l<1>(a);
         sse::store_lane<0,1>(q+4, b);
         sse::store_lane<2,2>(q+8, a);
@@ -826,7 +826,7 @@ inline void store_last(float* p, float32x4 a, unsigned n)
 #if SIMDPP_USE_SSE2
     switch (n) {
     case 3: {
-        float32x4 b, c;
+        float32x4 b;
         b = permute<1,0,0,0>(a);
         sse::store_lane<0,1>(p+1, b);
         sse::store_lane<2,2>(p+2, a);
