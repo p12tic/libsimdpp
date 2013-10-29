@@ -105,6 +105,10 @@ inline int64x2 mull_hi(int32x4 a, int32x4 b);
 inline int64x4 mull_hi(int32x8 a, int32x8 b);
 inline uint64x2 mull_hi(uint32x4 a, uint32x4 b);
 
+// shuffle.h
+template<unsigned s>
+basic_int8x16 broadcast(basic_int8x16 a);
+
 // shuffle_bytes.h
 inline int128 permute_bytes16(int128 a, int128 mask);
 inline float32x4 permute_bytes16(float32x4 a, int128 mask);
@@ -136,6 +140,7 @@ inline float64x4 shuffle_zbytes16(float64x4 a, float64x4 b, int256 mask);
 
 // shuffle_generic.h
 template<unsigned, unsigned> basic_int64x2 permute(basic_int64x2);
+template<unsigned, unsigned> basic_int64x4 permute(basic_int64x4);
 template<unsigned, unsigned> basic_int64x2 shuffle1(basic_int64x2, basic_int64x2);
 template<unsigned, unsigned> float64x2 permute(float64x2);
 template<unsigned, unsigned> float64x2 shuffle1(float64x2, float64x2);

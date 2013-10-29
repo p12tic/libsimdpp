@@ -72,6 +72,16 @@ struct Test_broadcast {
 };
 
 template<class V, unsigned i>
+struct Test_broadcast_all {
+    static constexpr unsigned limit = V::length;
+    static void test(TestCase& tc, V a)
+    {
+        a = simdpp::broadcast_all<i>(a);
+        TEST_PUSH(tc, V, a);
+    }
+};
+
+template<class V, unsigned i>
 struct Test_align {
     static constexpr unsigned limit = Shuffle_width<V>::value + 1;
     static void test(TestCase& tc, V a, V b)
@@ -102,6 +112,7 @@ void test_shuffle_type128(TestCase &tc, V v1, V v2)
     TemplateTestHelper<Test_move_r, V>::run(tc, v1);
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);
     TemplateTestHelper<Test_broadcast, V>::run(tc, v1);
+    TemplateTestHelper<Test_broadcast_all, V>::run(tc, v1);
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
     TemplateTestHelper<Test_insert_extract, V>::run(tc, v1, v2);
 }
