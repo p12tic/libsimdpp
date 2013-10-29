@@ -140,6 +140,7 @@ template<unsigned, unsigned> basic_int64x2 shuffle1(basic_int64x2, basic_int64x2
 template<unsigned, unsigned> float64x2 permute(float64x2);
 template<unsigned, unsigned> float64x2 shuffle1(float64x2, float64x2);
 
+// math_shift.h
 inline int16x8 shift_r(int16x8, unsigned);
 inline uint16x8 shift_r(uint16x8, unsigned);
 inline basic_int16x8 shift_l(basic_int16x8, unsigned);

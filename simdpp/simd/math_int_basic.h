@@ -947,7 +947,7 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
 /// @}
 
 /*  Note: widening integer multiplication instructions are very different among
-    instruction. The main difference is in which half of the elements are
+    instruction sets. The main difference is in which half of the elements are
     selected for multiplication. Trying to abstract this incurs definite
     overhead.
 
@@ -1301,8 +1301,8 @@ inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
 
     @par 128-bit version:
     @code
-    r0 = a0 * b0
-    r1 = a1 * b1
+    r0 = a2 * b2
+    r1 = a3 * b3
     @endcode
     @icost{SSE4.1-AVX2, 3}
     @unimp{SSE2-SSSE3, ALTIVEC}
@@ -1352,8 +1352,8 @@ inline int64x4 mull_hi(int32x8 a, int32x8 b)
 
     @par 128-bit version:
     @code
-    r0 = a0 * b0
-    r1 = a1 * b1
+    r0 = a2 * b2
+    r1 = a3 * b3
     @endcode
     @icost{SSE2-AVX, 3}
     @novec{ALTIVEC}

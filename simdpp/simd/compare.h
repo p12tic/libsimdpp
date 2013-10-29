@@ -94,7 +94,7 @@ inline mask_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline mask_int16x8 cmp_eq(basic_int16x8 a, basic_int16x8 b)
 {
@@ -129,7 +129,7 @@ inline mask_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 inline mask_int32x4 cmp_eq(basic_int32x4 a, basic_int32x4 b)
 {
@@ -164,7 +164,7 @@ inline mask_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
     @endcode
 
     @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, 2}
+    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 inline mask_float32x4 cmp_eq(float32x4 a, float32x4 b)
 {
