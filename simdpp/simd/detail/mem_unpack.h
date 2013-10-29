@@ -553,7 +553,7 @@ inline void mem_unpack4(basic_int64x4& a, basic_int64x4& b,
                        basic_int64x4& c, basic_int64x4& d)
 {
     mem_unpack4_256_shuffle(a, b, c, d);
-    mem_unpack4_impl16(a, b, c, d);
+    mem_unpack4_impl64(a, b, c, d);
 }
 
 inline void mem_unpack4(float32x4& a, float32x4& b, float32x4& c, float32x4& d)
