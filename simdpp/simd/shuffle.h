@@ -832,14 +832,16 @@ float64x4 move_r(float64x4 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 7}
+    @icost{SSE2-SSE3, 7}
+    @icost{SSSE3-AVX, 1-2}
     @icost{AVX2, 2}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 14}
+    @icost{SSE2-SSE3, 14}
+    @icost{SSSE3-AVX, 2-3}
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
@@ -851,6 +853,10 @@ basic_int8x16 broadcast(basic_int8x16 a)
 #elif SIMDPP_USE_AVX2
     a = move_l<s>(a);
     return _mm_broadcastb_epi8(a);
+#elif SIMDPP_USE_SSSE3
+    uint8x16 mask = make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
+                                              s,s,s,s,s,s,s,s>(mask);
+    return permute_bytes16(a, mask);
 #elif SIMDPP_USE_SSE2
     basic_int16x8 b1, b2;
 
@@ -900,11 +906,13 @@ basic_int8x32 broadcast(basic_int8x32 a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-SSE3, 3}
+    @icost{SSSE3-AVX, 1-2}
     @icost{AVX2, 2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 4}
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-AVX, 2-3}
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
 template<unsigned s>
@@ -913,20 +921,23 @@ basic_int16x8 broadcast(basic_int16x8 a)
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return null::broadcast_all<s>(a);
+#elif SIMDPP_USE_AVX2
+    a = move_l<s>(a);
+    return _mm_broadcastw_epi16(a);
+#elif SIMDPP_USE_SSSE3
+    uint16x8 mask = make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
+    return permute_bytes16(a, mask);
 #elif SIMDPP_USE_SSE2
     // s2 is needed because static_assert fires in branch we don't use
+    basic_int64x2 b;
     if (s < 4) {
         constexpr unsigned s2 = s < 4 ? s : s-4;
-        a = sse::permute_lo<s2,s2,s2,s2>(a);
-        basic_int64x2 b{a};
-        b = permute<0,0>(b);
-        return b;
+        b = sse::permute_lo<s2,s2,s2,s2>(a);
+        return permute<0,0>(b);
     } else {
         constexpr unsigned s2 = s < 4 ? s : s-4;
-        a = sse::permute_hi<s2,s2,s2,s2>(a);
-        basic_int64x2 b{a};
-        b = permute<1,1>(b);
-        return b;
+        b = sse::permute_hi<s2,s2,s2,s2>(a);
+        return permute<1,1>(b);
     }
 #elif SIMDPP_USE_NEON
     if (s < 4) {
@@ -1024,7 +1035,7 @@ basic_int32x8 broadcast(basic_int32x8 a)
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
-    @icost{ALTIVEC, 1-2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s>
 basic_int64x2 broadcast(basic_int64x2 a)
