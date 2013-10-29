@@ -88,7 +88,7 @@ public:
     std::size_t num_results() const         { return results_.size(); }
 
 private:
-    class Result;
+    struct Result;
     friend class TestResults;
     friend bool test_equal(const TestCase& a, const char* a_arch,
                            const TestCase& b, const char* b_arch,
