@@ -42,6 +42,7 @@ set(TEST1_HEADERS
     tests.h
     common/masks.h
     common/vectors.h
+    common/aligned_allocator.h
 )
 
 set(TEST1_ARCH_SOURCES

@@ -28,6 +28,7 @@
 #include "../test_helpers.h"
 #include "../test_results.h"
 #include "../common/vectors.h"
+#include "../common/aligned_allocator.h"
 #include <simdpp/simd.h>
 #include <vector>
 
@@ -119,12 +120,15 @@ void test_shuffle_type256(TestCase &tc, V v1, V v2)
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
 }
 
+template<class T>
+using AlignedVector = std::vector<T, AlignedAllocator<T, 32>>;
+
 template<class V>
-std::vector<V> test_blend_make_sel_vec()
+AlignedVector<V> test_blend_make_sel_vec()
 {
     using U = typename V::uint_element_type;
     using T = typename V::element_type;
-    std::vector<V> r;
+    AlignedVector<V> r;
 
     T z = simdpp::bit_cast<T, U>(U(0));
     T o = simdpp::bit_cast<T, U>(~U(0));
@@ -137,9 +141,9 @@ std::vector<V> test_blend_make_sel_vec()
 }
 
 template<class V, class M>
-std::vector<M> test_blend_make_sel_mask()
+AlignedVector<M> test_blend_make_sel_mask()
 {
-    std::vector<M> r;
+    AlignedVector<M> r;
     r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(0, 0)));
     r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(0, 1)));
     r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(1, 0)));
@@ -148,7 +152,7 @@ std::vector<M> test_blend_make_sel_mask()
 }
 
 template<class V, class VM>
-void test_blend(TestCase &tc, V v1, V v2, const std::vector<VM>& masks)
+void test_blend(TestCase &tc, V v1, V v2, const AlignedVector<VM>& masks)
 {
     for (const auto& v: masks) {
         TEST_PUSH(tc, V, blend(v1, v2, v));

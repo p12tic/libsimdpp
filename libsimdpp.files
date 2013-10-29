@@ -151,6 +151,7 @@ test/test_results.h
 
 test/common/vectors.h
 test/common/masks.h
+test/common/aligned_allocator.h
 
 test/tests/bitwise.cc
 test/tests/compare.cc
