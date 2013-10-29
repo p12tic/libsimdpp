@@ -450,7 +450,7 @@ basic_int64x4 permute(basic_int64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
-    return _mm256_permute4x64_epi64(a, s0 | s1<<2 | s0<<4 | s1<<6);
+    return _mm256_permute4x64_epi64(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
 #else
     return permute<s0,s1,s0+2,s1+2>(a);
 #endif
@@ -492,7 +492,7 @@ float64x4 permute(float64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
-    return _mm256_permute4x64_pd(a, s0 | s1<<2 | s0<<4 | s1<<6);
+    return _mm256_permute4x64_pd(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
 #elif SIMDPP_USE_AVX
     return _mm256_permute_pd(a, s0 | s1<<1 | s0<<2 | s1<<3);
 #else
