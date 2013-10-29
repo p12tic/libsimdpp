@@ -264,7 +264,7 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
         set(CXX_FLAGS "-I${CMAKE_CURRENT_SOURCE_DIR}/${SRC_PATH}")
         set(SUFFIX "simdpp")
 
-        string(REGEX MATCHALL "[^,]+,|[^,]+$" ARCH_IDS "${ARCH}")
+        string(REPLACE "," ";" ARCH_IDS "${ARCH}")
         list(SORT ARCH_IDS)
         foreach(ID ${ARCH_IDS})
             if(${ID} STREQUAL "NONE_NULL")
