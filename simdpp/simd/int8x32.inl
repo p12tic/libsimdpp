@@ -187,8 +187,8 @@ inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
 #else
     return {uint8x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
                                  v8, v9, v10, v11, v12, v13, v14, v15),
-            uint8x16::make_const(v31, v30, v29, v28, v27, v26, v25, v24,
-                                 v23, v22, v21, v20, v19, v18, v17, v16)};
+            uint8x16::make_const(v16, v17, v18, v19, v20, v21, v22, v23,
+                                 v24, v25, v26, v27, v28, v29, v30, v31)};
 #endif
 }
 
