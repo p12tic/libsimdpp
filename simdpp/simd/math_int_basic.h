@@ -1219,8 +1219,8 @@ inline int64x2 mull_lo(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
     int64x2 r;
-    r[0] = int64_t(a[2]) * b[2];
-    r[1] = int64_t(a[3]) * b[3];
+    r[0] = int64_t(a[0]) * b[0];
+    r[1] = int64_t(a[1]) * b[1];
     return r;
 #elif SIMDPP_USE_SSE4_1
     a = zip_lo(a, a);
