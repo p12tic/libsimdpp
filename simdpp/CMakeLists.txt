@@ -33,6 +33,8 @@ set(HEADERS
 
     detail/dispatcher.h
 
+    dispatch/get_arch_gcc_builtin_cpu_supports.h
+
     altivec/load1.h
 
     neon/detail/shuffle_int16x8.h

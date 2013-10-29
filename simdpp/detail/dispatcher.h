@@ -46,15 +46,6 @@
 namespace simdpp {
 namespace detail {
 
-/// Default architecture information callback
-inline ArchUserInfo default_user_get_arch_info()
-{
-    ArchUserInfo info;
-    info.not_supported = Arch::NONE_NULL;
-    info.supported = Arch::NONE_NULL;
-    return info;
-}
-
 using VoidFunPtr = void (*)();
 
 struct FnVersion {
@@ -79,43 +70,7 @@ struct FnVersion {
 inline void get_arch_info_impl(std::atomic<Arch>& info,
                                const GetArchCb& get_info_cb)
 {
-    Arch arch_info{};
-#if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 8)
-#if __i386__ || __amd64__
-    if (__builtin_cpu_supports("avx2")) {
-        arch_info |= Arch::X86_SSE2;
-        arch_info |= Arch::X86_SSE3;
-        arch_info |= Arch::X86_SSSE3;
-        arch_info |= Arch::X86_SSE4_1;
-        arch_info |= Arch::X86_AVX;
-        arch_info |= Arch::X86_AVX2;
-    } else if (__builtin_cpu_supports("avx")) {
-        arch_info |= Arch::X86_SSE2;
-        arch_info |= Arch::X86_SSE3;
-        arch_info |= Arch::X86_SSSE3;
-        arch_info |= Arch::X86_SSE4_1;
-        arch_info |= Arch::X86_AVX;
-    } else if (__builtin_cpu_supports("sse4.1")) {
-        arch_info |= Arch::X86_SSE2;
-        arch_info |= Arch::X86_SSE3;
-        arch_info |= Arch::X86_SSSE3;
-        arch_info |= Arch::X86_SSE4_1;
-    } else if (__builtin_cpu_supports("ssse3")) {
-        arch_info |= Arch::X86_SSE2;
-        arch_info |= Arch::X86_SSE3;
-        arch_info |= Arch::X86_SSSE3;
-    } else if (__builtin_cpu_supports("sse3")) {
-        arch_info |= Arch::X86_SSE3;
-        arch_info |= Arch::X86_SSE2;
-    } else if (__builtin_cpu_supports("sse2")) {
-        arch_info |= Arch::X86_SSE2;
-    }
-#endif
-#endif
-    ArchUserInfo user_info = get_info_cb();
-    arch_info |= user_info.supported;       // add supported
-    arch_info &= ~user_info.not_supported;  // clear unsupported
-    info = arch_info;
+    info = get_info_cb();
 }
 
 /*  Returns the supported instruction set. Handles the synchronization

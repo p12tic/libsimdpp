@@ -31,6 +31,7 @@ debian/README.source
 
 simdpp/CMakeLists.txt
 simdpp/altivec/load1.h
+simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h
 simdpp/detail/dispatcher.h
 simdpp/neon/shuffle.h
 simdpp/neon/memory_store.h

@@ -108,14 +108,6 @@ inline Arch operator~(const Arch& x)
 }
 /// @}
 
-/** Identifies user supplied information about supported instruction sets. This
-    overrides auto-detected information.
-*/
-struct ArchUserInfo {
-    Arch supported;
-    Arch not_supported;
-};
-
 /// @} -- end defgroup
 
 } // namespace simdpp

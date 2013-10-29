@@ -25,46 +25,53 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_DISPATCHER_H
-#define LIBSIMDPP_DISPATCHER_H
+#ifndef LIBSIMDPP_DISPATCH_GET_ARCH_GCC_BUILTIN_CPU_SUPPORTS_H
+#define LIBSIMDPP_DISPATCH_GET_ARCH_GCC_BUILTIN_CPU_SUPPORTS_H
 
-#ifndef LIBSIMDPP_SIMD_H
-    #error "This file must be included through simd.h"
-#endif
-
-#include <functional>
 #include <simdpp/arch.h>
 
 namespace simdpp {
 
-/** @defgroup simd_dispatcher Dispatching support
-    @{
+/** Retrieves supported architecture using GCC __builtin_cpu_supports function.
+    Works only on x86.
 */
-
-using GetArchCb = std::function<Arch()>;
-
-/** @def SIMDPP_USER_ARCH_INFO
-    The user must define this macro if he wants to use the dispatcher
-    infrastructure. The macro must be defined before a SIMDPP_MAKE_DISPATCHER_*
-    function is used. All SIMDPP_MAKE_DISPATCHER_* usage sites must see the same
-    definition of the macro. The macro must evaluate to a constant expression
-    that could implicitly initialize an object of type @c std::function<Arch()>.
-
-    The function is called at unspecified time to determine what features are
-    supported by the processor.
-
-    The user must ensure that the returned information is sensible: e.g. SSE2
-    must be supported if SSE3 support is indicated.
-
-    The @c simdpp/dispatch/get_arch_*.h files provide several ready
-    implementations of CPU features detection.
-*/
-
-/// @} -- end defgroup
-
+inline Arch get_arch_gcc_builtin_cpu_supports()
+{
+    Arch arch_info;
+#if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 8)
+#if __i386__ || __amd64__
+    if (__builtin_cpu_supports("avx2")) {
+        arch_info |= Arch::X86_SSE2;
+        arch_info |= Arch::X86_SSE3;
+        arch_info |= Arch::X86_SSSE3;
+        arch_info |= Arch::X86_SSE4_1;
+        arch_info |= Arch::X86_AVX;
+        arch_info |= Arch::X86_AVX2;
+    } else if (__builtin_cpu_supports("avx")) {
+        arch_info |= Arch::X86_SSE2;
+        arch_info |= Arch::X86_SSE3;
+        arch_info |= Arch::X86_SSSE3;
+        arch_info |= Arch::X86_SSE4_1;
+        arch_info |= Arch::X86_AVX;
+    } else if (__builtin_cpu_supports("sse4.1")) {
+        arch_info |= Arch::X86_SSE2;
+        arch_info |= Arch::X86_SSE3;
+        arch_info |= Arch::X86_SSSE3;
+        arch_info |= Arch::X86_SSE4_1;
+    } else if (__builtin_cpu_supports("ssse3")) {
+        arch_info |= Arch::X86_SSE2;
+        arch_info |= Arch::X86_SSE3;
+        arch_info |= Arch::X86_SSSE3;
+    } else if (__builtin_cpu_supports("sse3")) {
+        arch_info |= Arch::X86_SSE3;
+        arch_info |= Arch::X86_SSE2;
+    } else if (__builtin_cpu_supports("sse2")) {
+        arch_info |= Arch::X86_SSE2;
+    }
+#endif
+#endif
+    return arch_info;
+}
 } // namespace simdpp
-
-#include <simdpp/detail/dispatcher.h>
-#include <simdpp/dispatcher_macros.h>
 
 #endif

@@ -27,5 +27,5 @@
 
 #include <simdpp/arch.h>
 
-simdpp::ArchUserInfo get_supported_arch(); // in main_dispatcher.cc
+simdpp::Arch get_supported_arch(); // in main_dispatcher.cc
 simdpp::Arch test_dispatcher();

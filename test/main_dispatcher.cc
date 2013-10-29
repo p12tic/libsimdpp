@@ -32,12 +32,9 @@
 
 static simdpp::Arch g_supported_arch;
 
-simdpp::ArchUserInfo get_supported_arch()
+simdpp::Arch get_supported_arch()
 {
-    simdpp::ArchUserInfo res;
-    res.supported = g_supported_arch;
-    res.not_supported = ~res.supported;
-    return res;
+    return g_supported_arch;
 }
 
 /*  We test the dispatcher by compiling a
