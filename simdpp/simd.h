@@ -163,7 +163,17 @@
         data). The upper count is calculated the other way round.
 
     If instruction count is not listed for specific architecture, then the
-    function directly maps to one instruction.
+    function directly maps to one instruction. This rule does not apply to the
+    following architectures:
+
+    @c X86_FMA3, @c X86_FMA4 and @c X86_XOP.
+
+    For these, if instruction count is not listed, the instruction counts
+    should be interpreted as if the architecture is not supported.
+
+    Note, that instruction count is very, very imprecise way to measure
+    performance. It is provided just as a quick way to estimate how well
+    specific functionality maps to target architecture.
 
     Dynamic dispatch
     ----------------

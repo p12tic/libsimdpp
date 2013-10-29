@@ -1663,7 +1663,6 @@ inline void store_packed4(void* p,
     [ *(p+3), *(p+7), *(p+11), *(p+15) ] = d
     @endcode
     @a p must be aligned to 32 bytes.
-    @endcode
 */
 inline void store_packed4(void* p,
                           basic_int64x2 a, basic_int64x2 b,
@@ -1707,7 +1706,6 @@ inline void store_packed4(void* p,
     [ *(p+3), *(p+7), *(p+11), ... , *(p+31) ] = d
     @endcode
     @a p must be aligned to 32 bytes.
-    @endcode
 */
 inline void store_packed4(float* p,
                           float32x4 a, float32x4 b, float32x4 c, float32x4 d)
@@ -1767,7 +1765,6 @@ inline void store_packed4(float* p,
     [ *(p+3), *(p+7), *(p+11), *(p+15) ] = d
     @endcode
     @a p must be aligned to 32 bytes.
-    @endcode
 */
 inline void store_packed4(double* p,
                           float64x2 a, float64x2 b, float64x2 c, float64x2 d)
