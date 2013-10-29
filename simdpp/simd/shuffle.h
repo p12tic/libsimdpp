@@ -411,6 +411,9 @@ template<unsigned shift>
 basic_int8x16 move_l(basic_int8x16 a)
 {
     static_assert(shift <= 16, "Selector out of range");
+    if (shift == 0) return a;
+    if (shift == 16) return uint8x16::zero();
+
 #if SIMDPP_USE_NULL
     uint8x16 r;
     //use int to disable warnings wrt. comparison result always being true/false
@@ -436,19 +439,15 @@ template<unsigned shift>
 basic_int8x32 move_l(basic_int8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
+    if (shift == 0) return a;
+    if (shift == 16) return uint8x32::zero();
+
 #if SIMDPP_USE_AVX2
     return _mm256_srli_si256(a, shift);
 #else
     return {move_l<shift>(a[0]), move_l<shift>(a[1])};
 #endif
 }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<> inline basic_int8x16 move_l<0>(basic_int8x16 a)  { return a; }
-template<> inline basic_int8x16 move_l<16>(basic_int8x16 a) { (void) a; return int8x16::zero(); }
-template<> inline basic_int8x32 move_l<0>(basic_int8x32 a)  { return a; }
-template<> inline basic_int8x32 move_l<32>(basic_int8x32 a) { (void) a; return int8x32::zero(); }
-#endif
 /// @}
 
 /// @{
@@ -628,6 +627,9 @@ template<unsigned shift>
 basic_int8x16 move_r(basic_int8x16 a)
 {
     static_assert(shift <= 16, "Selector out of range");
+    if (shift == 0) return a;
+    if (shift == 16) return uint8x16::zero();
+
 #if SIMDPP_USE_NULL
     basic_int8x16 r;
     //use int to disable warnings wrt. comparison result always being true/false
@@ -653,19 +655,15 @@ template<unsigned shift>
 basic_int8x32 move_r(basic_int8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
+    if (shift == 0) return a;
+    if (shift == 16) return uint8x32::zero();
+
 #if SIMDPP_USE_AVX2
     return _mm256_slli_si256(a, shift);
 #else
     return {move_r<shift>(a[0]), move_r<shift>(a[1])};
 #endif
 }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<> inline basic_int8x16 move_r<0>(basic_int8x16 a)  { return a; }
-template<> inline basic_int8x16 move_r<16>(basic_int8x16 a) { (void) a; return int8x16::zero(); }
-template<> inline basic_int8x32 move_r<0>(basic_int8x32 a)  { return a; }
-template<> inline basic_int8x32 move_r<32>(basic_int8x32 a) { (void) a; return int8x32::zero(); }
-#endif
 /// @}
 
 /// @{
@@ -1420,6 +1418,9 @@ template<unsigned shift>
 basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
+    if (shift == 0) return lower;
+    if (shift == 16) return upper;
+
 #if SIMDPP_USE_NULL
     basic_int8x16 r;
     //use int to disable warnings wrt. comparison result always being true/false
@@ -1449,31 +1450,15 @@ template<unsigned shift>
 basic_int8x32 align(basic_int8x32 lower, basic_int8x32 upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
+    if (shift == 0) return lower;
+    if (shift == 16) return upper;
+
 #if SIMDPP_USE_AVX2
     return _mm256_alignr_epi8(upper, lower, shift);
 #else
     return {align<shift>(lower[0], upper[0]), align<shift>(lower[1], upper[1])};
 #endif
 }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<> inline basic_int8x16 align<0> (basic_int8x16 lower, basic_int8x16 upper)
-{
-    (void) upper; return lower;
-}
-template<> inline basic_int8x16 align<16>(basic_int8x16 lower, basic_int8x16 upper)
-{
-    (void) lower; return upper;
-}
-template<> inline basic_int8x32 align<0> (basic_int8x32 lower, basic_int8x32 upper)
-{
-    (void) upper; return lower;
-}
-template<> inline basic_int8x32 align<32>(basic_int8x32 lower, basic_int8x32 upper)
-{
-    (void) lower; return upper;
-}
-#endif
 /// @}
 
 /// @{
