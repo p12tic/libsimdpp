@@ -29,6 +29,195 @@ include(CheckCXXSourceRuns)
 include(CheckCXXSourceCompiles)
 
 # ------------------------------------------------------------------------------
+# Architecture descriptions (internal)
+#
+# Each architecture has the following information specific to it:
+#  - SIMDPP_${ARCH}_TEST_CODE: source code snippet that uses functionality
+#       from that arch. Used for @c check_cxx_source_runs macro.
+#  - SIMDPP_${ARCH}_CXX_FLAGS: compiler flags that are needed for compilation.
+#       The flags predefine the SIMDPP_ARCH_* macro too.
+#  - SIMDPP_${ARCH}_SUFFIX: defines a suffix to append to the filename of the
+#       source file specific to this architecture.
+#
+# Three lists are created:
+#
+#  - SIMDPP_ARCHS_PRI - primary architectures.
+#  - SIMDPP_ARCHS_SEC - secondary architectures. Effectively equivalent to one
+#       of the primary architectures, just different instructions are generated
+#       in specific scenarios.
+#  - SIMDPP_ARCHS - all architectures
+#
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_SSE2")
+set(SIMDPP_X86_SSE2_CXX_FLAGS "-msse2 -DSIMDPP_ARCH_X86_SSE2")
+set(SIMDPP_X86_SSE2_SUFFIX "-x86_sse2")
+set(SIMDPP_X86_SSE2_TEST_CODE
+    "#include <emmintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[16];
+            __m128i align;
+        };
+        __m128i one = _mm_load_si128((__m128i*)(a));
+        one = _mm_or_si128(one, one);
+        _mm_store_si128((__m128i*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_SSE3")
+set(SIMDPP_X86_SSE3_CXX_FLAGS "-msse3 -DSIMDPP_ARCH_X86_SSE3")
+set(SIMDPP_X86_SSE3_SUFFIX "-x86_sse3")
+set(SIMDPP_X86_SSE3_TEST_CODE
+    "#include <pmmintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[16];
+            __m128 align;
+        };
+        __m128 one = _mm_load_ps((float*)(a));
+        one = _mm_hadd_ps(one, one);
+        _mm_store_ps((float*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_SSSE3")
+set(SIMDPP_X86_SSSE3_CXX_FLAGS "-mssse3 -DSIMDPP_ARCH_X86_SSSE3")
+set(SIMDPP_X86_SSSE3_SUFFIX "-x86_ssse3")
+set(SIMDPP_X86_SSSE3_TEST_CODE
+    "#include <tmmintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[16];
+            __m128i align;
+        };
+        __m128i one = _mm_load_si128((__m128i*)(a));
+        one = _mm_abs_epi8(one);
+        _mm_store_si128((__m128i*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_SSE4_1")
+set(SIMDPP_X86_SSE4_1_CXX_FLAGS "-msse4.1 -DSIMDPP_ARCH_X86_SSE4_1")
+set(SIMDPP_X86_SSE4_1_SUFFIX "-x86_sse4_1")
+set(SIMDPP_X86_SSE4_1_TEST_CODE
+    "#include <smmintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[16];
+            __m128i align;
+        };
+        __m128i one = _mm_load_si128((__m128i*)(a));
+        one = _mm_cvtepi16_epi32(one);
+        _mm_store_si128((__m128i*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_AVX")
+set(SIMDPP_X86_AVX_CXX_FLAGS "-mavx -DSIMDPP_ARCH_X86_AVX")
+set(SIMDPP_X86_AVX_SUFFIX "-x86_avx")
+set(SIMDPP_X86_AVX_TEST_CODE
+    "#include <immintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[32];
+            __m256 align;
+        };
+        __m256 one = _mm256_load_ps((float*)a);
+        one = _mm256_add_ps(one, one);
+        _mm256_store_ps((float*)a, one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_AVX2")
+set(SIMDPP_X86_AVX2_CXX_FLAGS "-mavx2 -DSIMDPP_ARCH_X86_AVX2")
+set(SIMDPP_X86_AVX2_SUFFIX "-x86_avx2")
+set(SIMDPP_X86_AVX2_TEST_CODE
+    "#include <immintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[32];
+            __m256 align;
+        };
+        __m256i one = _mm256_load_si256((__m256i*)(a));
+        one = _mm256_or_si256(one, one);
+        _mm_store_si256((__m256i*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_FMA3")
+set(SIMDPP_X86_FMA3_CXX_FLAGS "-mfma -DSIMDPP_ARCH_X86_FMA3")
+set(SIMDPP_X86_FMA3_SUFFIX "-x86_fma3")
+set(SIMDPP_X86_FMA3_TEST_CODE
+    "#include <immintrin.h>
+    int main()
+    {
+        union {
+            volatile float a[4];
+            __m128 align;
+        };
+        __m128 one = _mm_load_ps((__m128*)(a));
+        one = _mm_fmadd_ps(one, one, one);
+        _mm_store_ps((__m128*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_FMA4")
+set(SIMDPP_X86_FMA4_CXX_FLAGS "-mfma4 -DSIMDPP_ARCH_X86_FMA4")
+set(SIMDPP_X86_FMA4_SUFFIX "-x86_fma4")
+set(SIMDPP_X86_FMA4_TEST_CODE
+    "#include <x86intrin.h>
+    int main()
+    {
+        union {
+            volatile float a[4];
+            __m128 align;
+        };
+        __m128 one = _mm_load_ps((__m128*)(a));
+        one = _mm_fmacc_ps(one, one, one);
+        _mm_store_ps((__m128*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "ARM_NEON")
+set(SIMDPP_ARM_NEON_CXX_FLAGS "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON")
+set(SIMDPP_ARM_NEON_SUFFIX "-arm_neon")
+set(SIMDPP_ARM_NEON_TEST_CODE
+    "#include <arm_neon.h>
+    int main()
+    {
+        volatile long long a[4];
+        uint32x4_t one = vld1q_u32((uint32_t*)(a));
+        one = vaddq_u32(one, one);
+        vst1q_u32((uint32_t*)(a), one);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_SEC "ARM_NEON_FLT_SP")
+set(SIMDPP_ARM_NEON_FLT_SP_CXX_FLAGS "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON_FLT_SP")
+set(SIMDPP_ARM_NEON_FLT_SP_SUFFIX "-arm_neon_flt_sp")
+
+list(APPEND SIMDPP_ARCHS_PRI "POWER_ALTIVEC")
+set(SIMDPP_POWER_ALTIVEC_CXX_FLAGS "-maltivec -DSIMDPP_ARCH_POWER_ALTIVEC")
+set(SIMDPP_POWER_ALTIVEC_SUFFIX "-power_altivec")
+set(SIMDPP_POWER_ALTIVEC_TEST_CODE
+    "#include <altivec.h>
+    int main()
+    {
+        volatile unsigned char a[16];
+        vector unsigned char v = vec_ld(a);
+        v = vec_add(v, v);
+        vec_st(a, v);
+    }"
+)
+set(SIMDPP_ARCHS "${SIMDPP_ARCHS_PRI};${SIMDPP_ARCHS_SEC}")
+
+# ------------------------------------------------------------------------------
 #
 # simdpp_multiarch(FILE_LIST_VAR SRC_FILE [ARCH...])
 #
@@ -68,18 +257,6 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     get_filename_component(SRC_NAME "${SRC_FILE}" NAME_WE)
     get_filename_component(SRC_EXT "${SRC_FILE}" EXT)
 
-    set(CXX_FLAG_X86_SSE2 "-msse2 -DSIMDPP_ARCH_X86_SSE2")
-    set(CXX_FLAG_X86_SSE3 "-msse3 -DSIMDPP_ARCH_X86_SSE3")
-    set(CXX_FLAG_X86_SSSE3 "-mssse3 -DSIMDPP_ARCH_X86_SSSE3")
-    set(CXX_FLAG_X86_SSE4_1 "-msse4.1 -DSIMDPP_ARCH_X86_SSE4_1")
-    set(CXX_FLAG_X86_AVX "-mavx -DSIMDPP_ARCH_X86_AVX")
-    set(CXX_FLAG_X86_AVX2 "-mavx2 -DSIMDPP_ARCH_X86_AVX2")
-    set(CXX_FLAG_X86_FMA3 "-mfma3 -DSIMDPP_ARCH_X86_FMA3")
-    set(CXX_FLAG_X86_FMA4 "-mfma4 -DSIMDPP_ARCH_X86_FMA4")
-    set(CXX_FLAG_ARM_NEON "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON")
-    set(CXX_FLAG_ARM_NEON_FLT_SP "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON_FLT_SP")
-    set(CXX_FLAG_POWER_ALTIVEC "-maltivec -DSIMDPP_ARCH_POWER_ALTIVEC")
-
     set(FILE_LIST "")
     list(APPEND ARCHS ${ARGV})
     list(REMOVE_AT ARCHS 0 1)
@@ -93,38 +270,38 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
             if(${ID} STREQUAL "NONE_NULL")
                 set(SUFFIX "${SUFFIX}-null")
             elseif(${ID} STREQUAL "X86_SSE2")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_SSE2}")
-                set(SUFFIX "${SUFFIX}-x86_sse2")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSE2_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSE2_SUFFIX}")
             elseif(${ID} STREQUAL "X86_SSE3")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_SSE3}")
-                set(SUFFIX "${SUFFIX}-x86_sse3")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSE3_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSE3_SUFFIX}")
             elseif(${ID} STREQUAL "X86_SSSE3")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_SSSE3}")
-                set(SUFFIX "${SUFFIX}-x86_ssse3")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSSE3_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSSE3_SUFFIX}")
             elseif(${ID} STREQUAL "X86_SSE4_1")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_SSE4_1}")
-                set(SUFFIX "${SUFFIX}-x86_sse4_1")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSE4_1_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSE4_1_SUFFIX}")
             elseif(${ID} STREQUAL "X86_AVX")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_AVX}")
-                set(SUFFIX "${SUFFIX}-x86_avx")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_AVX_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_AVX_SUFFIX}")
             elseif(${ID} STREQUAL "X86_AVX2")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_AVX2}")
-                set(SUFFIX "${SUFFIX}-x86_avx2")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_AVX2_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_AVX2_SUFFIX}")
             elseif(${ID} STREQUAL "X86_FMA3")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_FMA3}")
-                set(SUFFIX "${SUFFIX}-x86_fma3")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_FMA3_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_FMA3_SUFFIX}")
             elseif(${ID} STREQUAL "X86_FMA4")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_FMA4}")
-                set(SUFFIX "${SUFFIX}-x86_fma4")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_FMA4_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_X86_FMA4_SUFFIX}")
             elseif(${ID} STREQUAL "ARM_NEON")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_ARM_NEON}")
-                set(SUFFIX "${SUFFIX}-arm_neon")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_ARM_NEON_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_ARM_NEON_SUFFIX}")
             elseif(${ID} STREQUAL "ARM_NEON_FLT_SP")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_ARM_NEON_FLT_SP}")
-                set(SUFFIX "${SUFFIX}-arm_neon_flt_sp")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_ARM_NEON_FLT_SP_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_ARM_NEON_FLT_SP_SUFFIX}")
             elseif(${ID} STREQUAL "POWER_ALTIVEC")
-                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_POWER_ALTIVEC}")
-                set(SUFFIX "${SUFFIX}-power_altivec")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_POWER_ALTIVEC_CXX_FLAGS}")
+                set(SUFFIX "${SUFFIX}${SIMDPP_POWER_ALTIVEC_SUFFIX}")
             endif()
         endforeach()
 
@@ -143,133 +320,6 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
 endfunction()
 
 # ------------------------------------------------------------------------------
-# some support code
-set(SIMDPP_ARCH_TEST_SSE2_CODE
-    "#include <emmintrin.h>
-    int main()
-    {
-        union {
-            volatile char a[16];
-            __m128i align;
-        };
-        __m128i one = _mm_load_si128((__m128i*)(a));
-        one = _mm_or_si128(one, one);
-        _mm_store_si128((__m128i*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_SSE3_CODE
-    "#include <pmmintrin.h>
-    int main()
-    {
-        union {
-            volatile char a[16];
-            __m128 align;
-        };
-        __m128 one = _mm_load_ps((float*)(a));
-        one = _mm_hadd_ps(one, one);
-        _mm_store_ps((float*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_SSSE3_CODE
-    "#include <tmmintrin.h>
-    int main()
-    {
-        union {
-            volatile char a[16];
-            __m128i align;
-        };
-        __m128i one = _mm_load_si128((__m128i*)(a));
-        one = _mm_abs_epi8(one);
-        _mm_store_si128((__m128i*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_SSE4_1_CODE
-    "#include <smmintrin.h>
-    int main()
-    {
-        union {
-            volatile char a[16];
-            __m128i align;
-        };
-        __m128i one = _mm_load_si128((__m128i*)(a));
-        one = _mm_cvtepi16_epi32(one);
-        _mm_store_si128((__m128i*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_AVX_CODE
-    "#include <immintrin.h>
-    int main()
-    {
-        union {
-            volatile char a[32];
-            __m256 align;
-        };
-        __m256 one = _mm256_load_ps((float*)a);
-        one = _mm256_add_ps(one, one);
-        _mm256_store_ps((float*)a, one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_AVX2_CODE
-    "#include <immintrin.h>
-    int main()
-    {
-        union {
-            volatile char a[32];
-            __m256 align;
-        };
-        __m256i one = _mm256_load_si256((__m256i*)(a));
-        one = _mm256_or_si256(one, one);
-        _mm_store_si256((__m256i*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_FMA3_CODE
-    "#include <immintrin.h>
-    int main()
-    {
-        union {
-            volatile float a[4];
-            __m128 align;
-        };
-        __m128 one = _mm_load_ps((__m128*)(a));
-        one = _mm_fmadd_ps(one, one, one);
-        _mm_store_ps((__m128*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_FMA4_CODE
-    "#include <x86intrin.h>
-    int main()
-    {
-        union {
-            volatile float a[4];
-            __m128 align;
-        };
-        __m128 one = _mm_load_ps((__m128*)(a));
-        one = _mm_fmacc_ps(one, one, one);
-        _mm_store_ps((__m128*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_NEON_CODE
-    "#include <arm_neon.h>
-    int main()
-    {
-        volatile long long a[4];
-        uint32x4_t one = vld1q_u32((uint32_t*)(a));
-        one = vaddq_u32(one, one);
-        vst1q_u32((uint32_t*)(a), one);
-    }"
-)
-set(SIMDPP_ARCH_TEST_ALTIVEC_CODE
-    "#include <altivec.h>
-    int main()
-    {
-        volatile unsigned char a[16];
-        vector unsigned char v = vec_ld(a);
-        v = vec_add(v, v);
-        vec_st(a, v);
-    }"
-)
-
-# ------------------------------------------------------------------------------
 #
 # simdpp_get_compilable_archs(ARCH_LIST_VAR)
 #
@@ -282,72 +332,72 @@ set(SIMDPP_ARCH_TEST_ALTIVEC_CODE
 #
 function(simdpp_get_compilable_archs ARCH_LIST_VAR)
 
-    set(CMAKE_REQUIRED_FLAGS "-msse2")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_SSE2_CODE}" CAN_COMPILE_SSE2)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE2_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_SSE2_TEST_CODE}" CAN_COMPILE_X86_SSE2)
 
-    set(CMAKE_REQUIRED_FLAGS "-msse3")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_SSE3_CODE}" CAN_COMPILE_SSE3)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE3_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_SSE3_TEST_CODE}" CAN_COMPILE_X86_SSE3)
 
-    set(CMAKE_REQUIRED_FLAGS "-mssse3")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_SSSE3_CODE}" CAN_COMPILE_SSSE3)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSSE3_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_SSSE3_TEST_CODE}" CAN_COMPILE_X86_SSSE3)
 
-    set(CMAKE_REQUIRED_FLAGS "-msse4.1")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_SSE4_1_CODE}" CAN_COMPILE_SSE4_1)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE4_1_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_SSE4_1_TEST_CODE}" CAN_COMPILE_X86_SSE4_1)
 
-    set(CMAKE_REQUIRED_FLAGS "-mavx")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_AVX_CODE}" CAN_COMPILE_AVX)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_AVX_TEST_CODE}" CAN_COMPILE_X86_AVX)
 
-    set(CMAKE_REQUIRED_FLAGS "-mavx2")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_AVX2_CODE}" CAN_COMPILE_AVX2)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX2_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_AVX2_TEST_CODE}" CAN_COMPILE_X86_AVX2)
 
-    set(CMAKE_REQUIRED_FLAGS "-mfma")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_FMA3_CODE}" CAN_COMPILE_FMA3)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA3_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_FMA3_TEST_CODE}" CAN_COMPILE_X86_FMA3)
 
-    set(CMAKE_REQUIRED_FLAGS "-mfma4")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_FMA4_CODE}" CAN_COMPILE_FMA4)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA4_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_X86_FMA4_TEST_CODE}" CAN_COMPILE_X86_FMA4)
 
-    set(CMAKE_REQUIRED_FLAGS "-mfpu=neon")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_NEON_CODE}" CAN_COMPILE_NEON)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_ARM_NEON_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_ARM_NEON_TEST_CODE}" CAN_COMPILE_ARM_NEON)
 
-    set(CMAKE_REQUIRED_FLAGS "-maltivec")
-    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_ALTIVEC_CODE}" CAN_COMPILE_ALTIVEC)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_POWER_ALTIVEC_CXX_FLAGS}")
+    check_cxx_source_compiles("${SIMDPP_POWER_ALTIVEC_TEST_CODE}" CAN_COMPILE_POWER_ALTIVEC)
 
     set(ARCHS "NONE_NULL")
-    if(CAN_COMPILE_SSE2)
+    if(CAN_COMPILE_X86_SSE2)
         list(APPEND ARCHS "X86_SSE2")
     endif()
-    if(CAN_COMPILE_SSE3)
+    if(CAN_COMPILE_X86_SSE3)
         list(APPEND ARCHS "X86_SSE3")
     endif()
-    if(CAN_COMPILE_SSSE3)
+    if(CAN_COMPILE_X86_SSSE3)
         list(APPEND ARCHS "X86_SSSE3")
     endif()
-    if(CAN_COMPILE_SSE4_1)
+    if(CAN_COMPILE_X86_SSE4_1)
         list(APPEND ARCHS "X86_SSE4_1")
     endif()
-    if(CAN_COMPILE_AVX)
+    if(CAN_COMPILE_X86_AVX)
         list(APPEND ARCHS "X86_AVX")
     endif()
-    if(CAN_COMPILE_AVX2)
+    if(CAN_COMPILE_X86_AVX2)
         list(APPEND ARCHS "X86_AVX2")
     endif()
-    if(CAN_COMPILE_FMA3)
+    if(CAN_COMPILE_X86_FMA3)
         list(APPEND ARCHS "X86_FMA3")
-        if(DEFINED CAN_COMPILE_AVX)
+        if(DEFINED CAN_COMPILE_X86_AVX)
             list(APPEND ARCHS "X86_AVX,X86_FMA3")
         endif()
     endif()
-    if(CAN_COMPILE_FMA4)
+    if(CAN_COMPILE_X86_FMA4)
         list(APPEND ARCHS "X86_FMA4")
-        if(DEFINED CAN_COMPILE_AVX)
+        if(DEFINED CAN_COMPILE_X86_AVX)
             list(APPEND ARCHS "X86_AVX,X86_FMA4")
         endif()
     endif()
-    if(CAN_COMPILE_NEON)
+    if(CAN_COMPILE_ARM_NEON)
         list(APPEND ARCHS "ARM_NEON")
         list(APPEND ARCHS "ARM_NEON_FLT_SP")
     endif()
-    if(CAN_COMPILE_ALTIVEC)
+    if(CAN_COMPILE_POWER_ALTIVEC)
         list(APPEND ARCHS "POWER_ALTIVEC")
     endif()
     set(${ARCH_LIST_VAR} ${ARCHS} PARENT_SCOPE)
@@ -367,72 +417,72 @@ endfunction()
 #
 function(simdpp_get_runnable_archs ARCH_LIST_VAR)
 
-    set(CMAKE_REQUIRED_FLAGS "-msse2")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_SSE2_CODE}" CAN_RUN_SSE2)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE2_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_SSE2_TEST_CODE}" CAN_RUN_X86_SSE2)
 
-    set(CMAKE_REQUIRED_FLAGS "-msse3")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_SSE3_CODE}" CAN_RUN_SSE3)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE3_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_SSE3_TEST_CODE}" CAN_RUN_X86_SSE3)
 
-    set(CMAKE_REQUIRED_FLAGS "-mssse3")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_SSSE3_CODE}" CAN_RUN_SSSE3)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSSE3_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_SSSE3_TEST_CODE}" CAN_RUN_X86_SSSE3)
 
-    set(CMAKE_REQUIRED_FLAGS "-msse4.1")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_SSE4_1_CODE}" CAN_RUN_SSE4_1)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE4_1_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_SSE4_1_TEST_CODE}" CAN_RUN_X86_SSE4_1)
 
-    set(CMAKE_REQUIRED_FLAGS "-mavx")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_AVX_CODE}" CAN_RUN_AVX)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_AVX_TEST_CODE}" CAN_RUN_X86_AVX)
 
-    set(CMAKE_REQUIRED_FLAGS "-mavx2")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_AVX2_CODE}" CAN_RUN_AVX2)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX2_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_AVX2_TEST_CODE}" CAN_RUN_X86_AVX2)
 
-    set(CMAKE_REQUIRED_FLAGS "-mfma")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_FMA3_CODE}" CAN_RUN_FMA3)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA3_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_FMA3_TEST_CODE}" CAN_RUN_X86_FMA3)
 
-    set(CMAKE_REQUIRED_FLAGS "-mfma4")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_FMA4_CODE}" CAN_RUN_FMA4)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA4_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_X86_FMA4_TEST_CODE}" CAN_RUN_X86_FMA4)
 
-    set(CMAKE_REQUIRED_FLAGS "-mfpu=neon")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_NEON_CODE}" CAN_RUN_NEON)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_ARM_NEON_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_ARM_NEON_TEST_CODE}" CAN_RUN_ARM_NEON)
 
-    set(CMAKE_REQUIRED_FLAGS "-maltivec")
-    check_cxx_source_runs("${SIMDPP_ARCH_TEST_ALTIVEC_CODE}" CAN_RUN_ALTIVEC)
+    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_POWER_ALTIVEC_CXX_FLAGS}")
+    check_cxx_source_runs("${SIMDPP_POWER_ALTIVEC_TEST_CODE}" CAN_RUN_POWER_ALTIVEC)
 
     set(ARCHS "NONE_NULL")
-    if(CAN_RUN_SSE2)
+    if(CAN_RUN_X86_SSE2)
         list(APPEND ARCHS "X86_SSE2")
     endif()
-    if(CAN_RUN_SSE3)
+    if(CAN_RUN_X86_SSE3)
         list(APPEND ARCHS "X86_SSE3")
     endif()
-    if(CAN_RUN_SSSE3)
+    if(CAN_RUN_X86_SSSE3)
         list(APPEND ARCHS "X86_SSSE3")
     endif()
-    if(CAN_RUN_SSE4_1)
+    if(CAN_RUN_X86_SSE4_1)
         list(APPEND ARCHS "X86_SSE4_1")
     endif()
-    if(CAN_RUN_AVX)
+    if(CAN_RUN_X86_AVX)
         list(APPEND ARCHS "X86_AVX")
     endif()
-    if(CAN_RUN_AVX2)
+    if(CAN_RUN_X86_AVX2)
         list(APPEND ARCHS "X86_AVX2")
     endif()
-    if(CAN_RUN_FMA3)
+    if(CAN_RUN_X86_FMA3)
         list(APPEND ARCHS "X86_FMA3")
-        if(DEFINED CAN_RUN_AVX)
+        if(DEFINED CAN_RUN_X86_AVX)
             list(APPEND ARCHS "X86_AVX,X86_FMA3")
         endif()
     endif()
-    if(CAN_RUN_FMA4)
+    if(CAN_RUN_X86_FMA4)
         list(APPEND ARCHS "X86_FMA4")
-        if(DEFINED CAN_RUN_AVX)
+        if(DEFINED CAN_RUN_X86_AVX)
             list(APPEND ARCHS "X86_AVX,X86_FMA4")
         endif()
     endif()
-    if(CAN_RUN_NEON)
+    if(CAN_RUN_ARM_NEON)
         list(APPEND ARCHS "ARM_NEON")
         list(APPEND ARCHS "ARM_NEON_FLT_SP")
     endif()
-    if(CAN_RUN_ALTIVEC)
+    if(CAN_RUN_POWER_ALTIVEC)
         list(APPEND ARCHS "POWER_ALTIVEC")
     endif()
     set(${ARCH_LIST_VAR} ${ARCHS} PARENT_SCOPE)
