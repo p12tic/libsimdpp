@@ -68,6 +68,10 @@ void test_math_fp(TestResults& res)
         TEST_ARRAY_HELPER16X2_1(tc, float32x8, sign, s);
         TEST_ARRAY_HELPER16X2_1(tc, float32x8, neg, s);
 
+#if SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4
+        TEST_ALL_COMB_HELPER16X2_3(tc, float32x8, fmadd, s, 4);
+        TEST_ALL_COMB_HELPER16X2_3(tc, float32x8, fmsub, s, 4);
+#endif
         float32x8 snan[] = {
             float32x8::make_const(1.0f, 2.0f, 3.0f, 4.0f),
             float32x8::make_const(-1.0f, -2.0f, -3.0f, -4.0f),
@@ -78,6 +82,8 @@ void test_math_fp(TestResults& res)
         };
         TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, min, snan, 4);
         TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, max, snan, 4);
+
+
     }
 
     // Vectors with 64-bit floating-point elements
@@ -97,14 +103,19 @@ void test_math_fp(TestResults& res)
             float64x4::make_const(-inf, -inf),
         };
 
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, add, s, 4);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, sub, s, 4);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, mul, s, 4);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, div, s, 4);
+        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, add, s, 8);
+        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, sub, s, 8);
+        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, mul, s, 8);
+        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, div, s, 8);
 
         TEST_ARRAY_HELPER16X2_1(tc, float64x4, abs, s);
         TEST_ARRAY_HELPER16X2_1(tc, float64x4, sign, s);
         TEST_ARRAY_HELPER16X2_1(tc, float64x4, neg, s);
+
+#if SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4
+        TEST_ALL_COMB_HELPER16X2_3(tc, float64x4, fmadd, s, 8);
+        TEST_ALL_COMB_HELPER16X2_3(tc, float64x4, fmsub, s, 8);
+#endif
 
         float64x4 snan[] = {
             float64x4::make_const(1.0, 2.0),
@@ -118,8 +129,8 @@ void test_math_fp(TestResults& res)
             float64x4::make_const(inf, inf),
             float64x4::make_const(-inf, -inf),
         };
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, min, snan, 4);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, max, snan, 4);
+        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, min, snan, 8);
+        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, max, snan, 8);
     }
 }
 

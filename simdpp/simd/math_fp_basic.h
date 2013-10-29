@@ -474,6 +474,144 @@ inline float64x4 mul(float64x4 a, float64x4 b)
 }
 /// @}
 
+/// @{
+/** Performs a fused multiply-add operation
+
+    @code
+    r0 = a0 * b0 + c0
+    ...
+    rN = aN * bN + cN
+    @endcode
+
+    Implemented only on architectures with either @c X86_FMA3 or @c X86_FMA4
+    support.
+*/
+inline float32x4 fmadd(float32x4 a, float32x4 b, float32x4 c)
+{
+#if SIMDPP_USE_NULL
+    return null::fmadd(a, b, c);
+#elif SIMDPP_USE_FMA3
+    return _mm_fmadd_ps(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm_macc_ps(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+}
+
+inline float32x8 fmadd(float32x8 a, float32x8 b, float32x8 c)
+{
+#if SIMDPP_USE_AVX
+#if SIMDPP_USE_FMA3
+    return _mm256_fmadd_ps(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm256_macc_ps(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+#else
+    return {fmadd(a[0], b[0], c[0]), fmadd(a[1], b[1], c[1])};
+#endif
+}
+
+inline float64x2 fmadd(float64x2 a, float64x2 b, float64x2 c)
+{
+#if SIMDPP_USE_NULL
+    return null::fmadd(a, b, c);
+#elif SIMDPP_USE_FMA3
+    return _mm_fmadd_pd(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm_macc_pd(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+}
+
+inline float64x4 fmadd(float64x4 a, float64x4 b, float64x4 c)
+{
+#if SIMDPP_USE_AVX
+#if SIMDPP_USE_FMA3
+    return _mm256_fmadd_pd(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm256_macc_pd(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+#else
+    return {fmadd(a[0], b[0], c[0]), fmadd(a[1], b[1], c[1])};
+#endif
+}
+/// @}
+
+/// @{
+/** Performs a fused multiply-sutract operation
+
+    @code
+    r0 = a0 * b0 - c0
+    ...
+    rN = aN * bN - cN
+    @endcode
+
+    Implemented only on architectures with either @c X86_FMA3 or @c X86_FMA4
+    support.
+*/
+inline float32x4 fmsub(float32x4 a, float32x4 b, float32x4 c)
+{
+#if SIMDPP_USE_NULL
+    return null::fmsub(a, b, c);
+#elif SIMDPP_USE_FMA3
+    return _mm_fmsub_ps(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm_msub_ps(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+}
+
+inline float32x8 fmsub(float32x8 a, float32x8 b, float32x8 c)
+{
+#if SIMDPP_USE_AVX
+#if SIMDPP_USE_FMA3
+    return _mm256_fmsub_ps(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm256_msub_ps(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+#else
+    return {fmsub(a[0], b[0], c[0]), fmsub(a[1], b[1], c[1])};
+#endif
+}
+
+inline float64x2 fmsub(float64x2 a, float64x2 b, float64x2 c)
+{
+#if SIMDPP_USE_NULL
+    return null::fmsub(a, b, c);
+#elif SIMDPP_USE_FMA3
+    return _mm_fmsub_pd(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm_msub_pd(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+}
+
+inline float64x4 fmsub(float64x4 a, float64x4 b, float64x4 c)
+{
+#if SIMDPP_USE_AVX
+#if SIMDPP_USE_FMA3
+    return _mm256_fmsub_pd(a, b, c);
+#elif SIMDPP_USE_FMA4
+    return _mm256_msub_pd(a, b, c);
+#else
+    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+#endif
+#else
+    return {fmsub(a[0], b[0], c[0]), fmsub(a[1], b[1], c[1])};
+#endif
+}
+/// @}
+
 /// @} -- end defgroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

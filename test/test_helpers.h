@@ -282,9 +282,19 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
 #define TEST_PUSH16X2_2(TC,T,OP,Q1,Q2)                                  \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2)), __LINE__);            \
-    using H = typename T::half_vector_type;                     \
+    using H = typename T::half_vector_type;                             \
     test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)),               \
                                       tst_ext_half((Q2)))), __LINE__);  \
+}
+
+// Three argument version
+#define TEST_PUSH16X2_3(TC,T,OP,Q1,Q2,Q3)                               \
+{                                                                       \
+    test_push_internal((TC), (T)(OP)((Q1), (Q2), (Q3)), __LINE__);      \
+    using H = typename T::half_vector_type;                             \
+    test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)),               \
+                                      tst_ext_half((Q2)),               \
+                                      tst_ext_half((Q3)))), __LINE__);  \
 }
 
 #define NEW_TEST_CASE(R, NAME) ((R).new_test_case((NAME), __FILE__))
@@ -417,6 +427,26 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
             }                                                           \
         }                                                               \
     }                                                                   \
+}
+
+#define TEST_ALL_COMB_HELPER16X2_3(TC, T, OP, A, EL_SIZE)               \
+{                                                                       \
+    (TC).reset_seq();                                                   \
+    for (unsigned i0 = 0; i0 < sizeof(A) / sizeof(T); i0++) {           \
+    for (unsigned i1 = 0; i1 < sizeof(A) / sizeof(T); i1++) {           \
+    for (unsigned i2 = 0; i2 < sizeof(A) / sizeof(T); i2++) {           \
+        const T* p0 = reinterpret_cast<const T*>((A) + i0);             \
+        const T* p1 = reinterpret_cast<const T*>((A) + i1);             \
+        const T* p2 = reinterpret_cast<const T*>((A) + i2);             \
+        T v0 = *p0; T v1 = *p1; T v2 = *p2;                             \
+        for (unsigned rot0 = 0; rot0 < sizeof(T)/EL_SIZE % 4; rot0++) { \
+            for (unsigned rot1 = 0; rot1 < sizeof(T)/EL_SIZE % 4; rot1++) { \
+                TEST_PUSH16X2_3(TC, T, OP, v0, v1, v2);                 \
+                v0 = simdpp::align<1>(v0, v0);                          \
+            }                                                           \
+            v1 = simdpp::align<1>(v1, v1);                              \
+        }                                                               \
+    }}}                                                                 \
 }
 
 /**

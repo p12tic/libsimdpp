@@ -57,8 +57,8 @@ include(CheckCXXSourceCompiles)
 #   identifiers is supplied.
 #
 #   The following identifiers are currently supported:
-#   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1, X86_AVX, X86_AVX2, ARM_NEON,
-#   ARM_NEON_FLT_SP
+#   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1, X86_AVX, X86_AVX2, X86_FMA3,
+#   X86_FMA4, ARM_NEON, ARM_NEON_FLT_SP
 #
 function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
@@ -74,6 +74,8 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     set(CXX_FLAG_X86_SSE4_1 "-msse4.1 -DSIMDPP_ARCH_X86_SSE4_1")
     set(CXX_FLAG_X86_AVX "-mavx -DSIMDPP_ARCH_X86_AVX")
     set(CXX_FLAG_X86_AVX2 "-mavx2 -DSIMDPP_ARCH_X86_AVX2")
+    set(CXX_FLAG_X86_FMA3 "-mfma3 -DSIMDPP_ARCH_X86_FMA3")
+    set(CXX_FLAG_X86_FMA4 "-mfma4 -DSIMDPP_ARCH_X86_FMA4")
     set(CXX_FLAG_ARM_NEON "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON")
     set(CXX_FLAG_ARM_NEON_FLT_SP "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON_FLT_SP")
     set(CXX_FLAG_POWER_ALTIVEC "-maltivec -DSIMDPP_ARCH_POWER_ALTIVEC")
@@ -108,6 +110,12 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
             elseif(${ID} STREQUAL "X86_AVX2")
                 set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_AVX2}")
                 set(SUFFIX "${SUFFIX}-x86_avx2")
+            elseif(${ID} STREQUAL "X86_FMA3")
+                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_FMA3}")
+                set(SUFFIX "${SUFFIX}-x86_fma3")
+            elseif(${ID} STREQUAL "X86_FMA4")
+                set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_X86_FMA4}")
+                set(SUFFIX "${SUFFIX}-x86_fma4")
             elseif(${ID} STREQUAL "ARM_NEON")
                 set(CXX_FLAGS "${CXX_FLAGS} ${CXX_FLAG_ARM_NEON}")
                 set(SUFFIX "${SUFFIX}-arm_neon")
@@ -214,6 +222,32 @@ set(SIMDPP_ARCH_TEST_AVX2_CODE
         _mm_store_si256((__m256i*)(a), one);
     }"
 )
+set(SIMDPP_ARCH_TEST_FMA3_CODE
+    "#include <immintrin.h>
+    int main()
+    {
+        union {
+            volatile float a[4];
+            __m128 align;
+        };
+        __m128 one = _mm_load_ps((__m128*)(a));
+        one = _mm_fmadd_ps(one, one, one);
+        _mm_store_ps((__m128*)(a), one);
+    }"
+)
+set(SIMDPP_ARCH_TEST_FMA4_CODE
+    "#include <x86intrin.h>
+    int main()
+    {
+        union {
+            volatile float a[4];
+            __m128 align;
+        };
+        __m128 one = _mm_load_ps((__m128*)(a));
+        one = _mm_fmacc_ps(one, one, one);
+        _mm_store_ps((__m128*)(a), one);
+    }"
+)
 set(SIMDPP_ARCH_TEST_NEON_CODE
     "#include <arm_neon.h>
     int main()
@@ -266,6 +300,12 @@ function(simdpp_get_compilable_archs ARCH_LIST_VAR)
     set(CMAKE_REQUIRED_FLAGS "-mavx2")
     check_cxx_source_compiles("${SIMDPP_ARCH_TEST_AVX2_CODE}" CAN_COMPILE_AVX2)
 
+    set(CMAKE_REQUIRED_FLAGS "-mfma")
+    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_FMA3_CODE}" CAN_COMPILE_FMA3)
+
+    set(CMAKE_REQUIRED_FLAGS "-mfma4")
+    check_cxx_source_compiles("${SIMDPP_ARCH_TEST_FMA4_CODE}" CAN_COMPILE_FMA4)
+
     set(CMAKE_REQUIRED_FLAGS "-mfpu=neon")
     check_cxx_source_compiles("${SIMDPP_ARCH_TEST_NEON_CODE}" CAN_COMPILE_NEON)
 
@@ -290,6 +330,18 @@ function(simdpp_get_compilable_archs ARCH_LIST_VAR)
     endif()
     if(CAN_COMPILE_AVX2)
         list(APPEND ARCHS "X86_AVX2")
+    endif()
+    if(CAN_COMPILE_FMA3)
+        list(APPEND ARCHS "X86_FMA3")
+        if(DEFINED CAN_COMPILE_AVX)
+            list(APPEND ARCHS "X86_AVX,X86_FMA3")
+        endif()
+    endif()
+    if(CAN_COMPILE_FMA4)
+        list(APPEND ARCHS "X86_FMA4")
+        if(DEFINED CAN_COMPILE_AVX)
+            list(APPEND ARCHS "X86_AVX,X86_FMA4")
+        endif()
     endif()
     if(CAN_COMPILE_NEON)
         list(APPEND ARCHS "ARM_NEON")
@@ -333,6 +385,12 @@ function(simdpp_get_runnable_archs ARCH_LIST_VAR)
     set(CMAKE_REQUIRED_FLAGS "-mavx2")
     check_cxx_source_runs("${SIMDPP_ARCH_TEST_AVX2_CODE}" CAN_RUN_AVX2)
 
+    set(CMAKE_REQUIRED_FLAGS "-mfma")
+    check_cxx_source_runs("${SIMDPP_ARCH_TEST_FMA3_CODE}" CAN_RUN_FMA3)
+
+    set(CMAKE_REQUIRED_FLAGS "-mfma4")
+    check_cxx_source_runs("${SIMDPP_ARCH_TEST_FMA4_CODE}" CAN_RUN_FMA4)
+
     set(CMAKE_REQUIRED_FLAGS "-mfpu=neon")
     check_cxx_source_runs("${SIMDPP_ARCH_TEST_NEON_CODE}" CAN_RUN_NEON)
 
@@ -357,6 +415,18 @@ function(simdpp_get_runnable_archs ARCH_LIST_VAR)
     endif()
     if(CAN_RUN_AVX2)
         list(APPEND ARCHS "X86_AVX2")
+    endif()
+    if(CAN_RUN_FMA3)
+        list(APPEND ARCHS "X86_FMA3")
+        if(DEFINED CAN_RUN_AVX)
+            list(APPEND ARCHS "X86_AVX,X86_FMA3")
+        endif()
+    endif()
+    if(CAN_RUN_FMA4)
+        list(APPEND ARCHS "X86_FMA4")
+        if(DEFINED CAN_RUN_AVX)
+            list(APPEND ARCHS "X86_AVX,X86_FMA4")
+        endif()
     endif()
     if(CAN_RUN_NEON)
         list(APPEND ARCHS "ARM_NEON")

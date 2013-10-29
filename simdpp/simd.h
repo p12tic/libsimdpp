@@ -93,6 +93,24 @@
 
         Macro: @c SIMDPP_ARCH_X86_AVX2.
 
+    - @c X86_FMA3:
+
+        The Intel x86/x86_64 FMA3 instruction set is used. The SSE, SSE2, SSE3
+        instruction set support is required implicitly (no need to define the
+        macros for these instruction sets). This instruction set must not be
+        combined with X86_FMA4.
+
+        Macro: @c SIMDPP_ARCH_X86_FMA3.
+
+    - @c X86_FMA4:
+
+        The AMD x86/x86_64 FMA4 instruction set is used. The SSE, SSE2, SSE3
+        instruction set support is required implicitly (no need to define the
+        macros for these instruction sets). This instruction set must not be
+        combined with X86_FMA3.
+
+        Macro: @c SIMDPP_ARCH_X86_FMA4.
+
     - @c ARM_NEON:
 
         The ARM NEON instruction set. The VFP co-processor is used for any
@@ -357,6 +375,36 @@
     #endif
 #endif
 
+#ifdef SIMDPP_ARCH_X86_FMA3
+    #ifndef SIMDPP_USE_FMA3
+        #define SIMDPP_USE_FMA3 1
+    #endif
+    #ifndef SIMDPP_USE_SSE2
+        #define SIMDPP_USE_SSE2 1
+    #endif
+    #ifndef SIMDPP_USE_SSE3
+        #define SIMDPP_USE_SSE3 1
+    #endif
+    #ifndef SIMDPP_ARCH_NOT_NULL
+        #define SIMDPP_ARCH_NOT_NULL
+    #endif
+#endif
+
+#ifdef SIMDPP_ARCH_X86_FMA4
+    #ifndef SIMDPP_USE_FMA4
+        #define SIMDPP_USE_FMA4 1
+    #endif
+    #ifndef SIMDPP_USE_SSE2
+        #define SIMDPP_USE_SSE2 1
+    #endif
+    #ifndef SIMDPP_USE_SSE3
+        #define SIMDPP_USE_SSE3 1
+    #endif
+    #ifndef SIMDPP_ARCH_NOT_NULL
+        #define SIMDPP_ARCH_NOT_NULL
+    #endif
+#endif
+
 #ifdef SIMDPP_ARCH_ARM_NEON
     #ifndef SIMDPP_USE_NEON
         #define SIMDPP_USE_NEON 1
@@ -437,6 +485,23 @@
     #define SIMDPP_PP_AVX2
 #endif
 
+#ifdef SIMDPP_USE_FMA3
+    #define SIMDPP_PP_FMA3 _fma3
+    #include <immintrin.h>
+#else
+    #define SIMDPP_PP_FMA3
+#endif
+
+#ifdef SIMDPP_USE_FMA4
+    #define SIMDPP_PP_FMA4 _fma4
+    #include <x86intrin.h>
+    #ifdef SIMDPP_USE_FMA3
+        #error "X86_FMA3 and X86_FMA4 can't be used together"
+    #endif
+#else
+    #define SIMDPP_PP_FMA4
+#endif
+
 #ifdef SIMDPP_USE_NEON
     #define SIMDPP_PP_NEON _neon
     #include <arm_neon.h>
@@ -468,18 +533,20 @@
 #define SIMDPP_CONCAT2(a, ...) a ## __VA_ARGS__
 #define SIMDPP_CONCAT(a, b) SIMDPP_CONCAT2(a, b)
 
-#define SIMDPP_PP_ARCH_CONCAT0 SIMDPP_CONCAT(arch, SIMDPP_PP_NULL)
-#define SIMDPP_PP_ARCH_CONCAT1 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT0, SIMDPP_PP_SSE2)
-#define SIMDPP_PP_ARCH_CONCAT2 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT1, SIMDPP_PP_SSE3)
-#define SIMDPP_PP_ARCH_CONCAT3 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT2, SIMDPP_PP_SSSE3)
-#define SIMDPP_PP_ARCH_CONCAT4 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT3, SIMDPP_PP_SSE4_1)
-#define SIMDPP_PP_ARCH_CONCAT5 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT4, SIMDPP_PP_AVX)
-#define SIMDPP_PP_ARCH_CONCAT6 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT5, SIMDPP_PP_AVX2)
-#define SIMDPP_PP_ARCH_CONCAT7 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT6, SIMDPP_PP_NEON)
-#define SIMDPP_PP_ARCH_CONCAT8 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT7, SIMDPP_PP_NEON_FLT_SP)
-#define SIMDPP_PP_ARCH_CONCAT9 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT8, SIMDPP_PP_ALTIVEC)
+#define SIMDPP_PP_ARCH_CONCAT0  SIMDPP_CONCAT(arch, SIMDPP_PP_NULL)
+#define SIMDPP_PP_ARCH_CONCAT1  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT0, SIMDPP_PP_SSE2)
+#define SIMDPP_PP_ARCH_CONCAT2  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT1, SIMDPP_PP_SSE3)
+#define SIMDPP_PP_ARCH_CONCAT3  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT2, SIMDPP_PP_SSSE3)
+#define SIMDPP_PP_ARCH_CONCAT4  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT3, SIMDPP_PP_SSE4_1)
+#define SIMDPP_PP_ARCH_CONCAT5  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT4, SIMDPP_PP_AVX)
+#define SIMDPP_PP_ARCH_CONCAT6  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT5, SIMDPP_PP_AVX2)
+#define SIMDPP_PP_ARCH_CONCAT7  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT6, SIMDPP_PP_FMA3)
+#define SIMDPP_PP_ARCH_CONCAT8  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT7, SIMDPP_PP_FMA4)
+#define SIMDPP_PP_ARCH_CONCAT9  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT8, SIMDPP_PP_NEON)
+#define SIMDPP_PP_ARCH_CONCAT10 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT9, SIMDPP_PP_NEON_FLT_SP)
+#define SIMDPP_PP_ARCH_CONCAT11 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT10, SIMDPP_PP_ALTIVEC)
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT9
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT11
 
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required

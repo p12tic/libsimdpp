@@ -24,8 +24,8 @@ the compiler will generate.
 Compiler and instruction set support
 ------------------------------------
 
-The library supports SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2 and NEON instruction
-sets.
+The library supports SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4 and NEON
+instruction sets.
 
 Code for ALTIVEC instruction set has been added, but it has not been tested
 on actual hardware, thus definitely contains bugs.
