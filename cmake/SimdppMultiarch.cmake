@@ -269,39 +269,12 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
         foreach(ID ${ARCH_IDS})
             if(${ID} STREQUAL "NONE_NULL")
                 set(SUFFIX "${SUFFIX}-null")
-            elseif(${ID} STREQUAL "X86_SSE2")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSE2_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSE2_SUFFIX}")
-            elseif(${ID} STREQUAL "X86_SSE3")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSE3_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSE3_SUFFIX}")
-            elseif(${ID} STREQUAL "X86_SSSE3")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSSE3_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSSE3_SUFFIX}")
-            elseif(${ID} STREQUAL "X86_SSE4_1")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_SSE4_1_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_SSE4_1_SUFFIX}")
-            elseif(${ID} STREQUAL "X86_AVX")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_AVX_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_AVX_SUFFIX}")
-            elseif(${ID} STREQUAL "X86_AVX2")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_AVX2_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_AVX2_SUFFIX}")
-            elseif(${ID} STREQUAL "X86_FMA3")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_FMA3_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_FMA3_SUFFIX}")
-            elseif(${ID} STREQUAL "X86_FMA4")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_X86_FMA4_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_X86_FMA4_SUFFIX}")
-            elseif(${ID} STREQUAL "ARM_NEON")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_ARM_NEON_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_ARM_NEON_SUFFIX}")
-            elseif(${ID} STREQUAL "ARM_NEON_FLT_SP")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_ARM_NEON_FLT_SP_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_ARM_NEON_FLT_SP_SUFFIX}")
-            elseif(${ID} STREQUAL "POWER_ALTIVEC")
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_POWER_ALTIVEC_CXX_FLAGS}")
-                set(SUFFIX "${SUFFIX}${SIMDPP_POWER_ALTIVEC_SUFFIX}")
+            else()
+                list(FIND SIMDPP_ARCHS "${ID}" FOUND)
+                if(NOT ${FOUND} EQUAL -1)
+                    set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_${ID}_CXX_FLAGS}")
+                    set(SUFFIX "${SUFFIX}${SIMDPP_${ID}_SUFFIX}")
+                endif()
             endif()
         endforeach()
 
@@ -332,35 +305,10 @@ endfunction()
 #
 function(simdpp_get_compilable_archs ARCH_LIST_VAR)
 
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE2_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_SSE2_TEST_CODE}" CAN_COMPILE_X86_SSE2)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE3_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_SSE3_TEST_CODE}" CAN_COMPILE_X86_SSE3)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSSE3_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_SSSE3_TEST_CODE}" CAN_COMPILE_X86_SSSE3)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE4_1_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_SSE4_1_TEST_CODE}" CAN_COMPILE_X86_SSE4_1)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_AVX_TEST_CODE}" CAN_COMPILE_X86_AVX)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX2_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_AVX2_TEST_CODE}" CAN_COMPILE_X86_AVX2)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA3_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_FMA3_TEST_CODE}" CAN_COMPILE_X86_FMA3)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA4_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_X86_FMA4_TEST_CODE}" CAN_COMPILE_X86_FMA4)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_ARM_NEON_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_ARM_NEON_TEST_CODE}" CAN_COMPILE_ARM_NEON)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_POWER_ALTIVEC_CXX_FLAGS}")
-    check_cxx_source_compiles("${SIMDPP_POWER_ALTIVEC_TEST_CODE}" CAN_COMPILE_POWER_ALTIVEC)
+    foreach(ARCH ${SIMDPP_ARCHS_PRI})
+        set(CMAKE_REQUIRED_FLAGS "${SIMDPP_${ARCH}_CXX_FLAGS}")
+        check_cxx_source_compiles("${SIMDPP_${ARCH}_TEST_CODE}" CAN_COMPILE_${ARCH})
+    endforeach()
 
     set(ARCHS "NONE_NULL")
     if(CAN_COMPILE_X86_SSE2)
@@ -417,35 +365,10 @@ endfunction()
 #
 function(simdpp_get_runnable_archs ARCH_LIST_VAR)
 
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE2_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_SSE2_TEST_CODE}" CAN_RUN_X86_SSE2)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE3_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_SSE3_TEST_CODE}" CAN_RUN_X86_SSE3)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSSE3_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_SSSE3_TEST_CODE}" CAN_RUN_X86_SSSE3)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_SSE4_1_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_SSE4_1_TEST_CODE}" CAN_RUN_X86_SSE4_1)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_AVX_TEST_CODE}" CAN_RUN_X86_AVX)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_AVX2_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_AVX2_TEST_CODE}" CAN_RUN_X86_AVX2)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA3_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_FMA3_TEST_CODE}" CAN_RUN_X86_FMA3)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_X86_FMA4_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_X86_FMA4_TEST_CODE}" CAN_RUN_X86_FMA4)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_ARM_NEON_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_ARM_NEON_TEST_CODE}" CAN_RUN_ARM_NEON)
-
-    set(CMAKE_REQUIRED_FLAGS "${SIMDPP_POWER_ALTIVEC_CXX_FLAGS}")
-    check_cxx_source_runs("${SIMDPP_POWER_ALTIVEC_TEST_CODE}" CAN_RUN_POWER_ALTIVEC)
+    foreach(ARCH ${SIMDPP_ARCHS_PRI})
+        set(CMAKE_REQUIRED_FLAGS "${SIMDPP_${ARCH}_CXX_FLAGS}")
+        check_cxx_source_runs("${SIMDPP_${ARCH}_TEST_CODE}" CAN_RUN_${ARCH})
+    endforeach()
 
     set(ARCHS "NONE_NULL")
     if(CAN_RUN_X86_SSE2)
