@@ -91,7 +91,7 @@ inline uint16x8 uint16x8::load_broadcast(const uint16_t* v0)
     return vld1q_dup_u16(v0);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 r = altivec::load1_u(r, v0);
-    r = broadcast<0>(r);
+    r = broadcast_all<0>(r);
     return r;
 #endif
 }
@@ -111,7 +111,7 @@ inline uint16x8 uint16x8::set_broadcast(uint16_t v0)
     };
     v[0] = v0;
     uint16x8 r = altivec::load1(r, v);
-    r = broadcast<0>(r);
+    r = broadcast_all<0>(r);
     return r;
 #endif
 }

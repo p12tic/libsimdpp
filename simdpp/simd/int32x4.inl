@@ -103,7 +103,7 @@ inline uint32x4 uint32x4::load_broadcast(const uint32_t* v0)
     return vld1q_dup_u32(v0);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 r = altivec::load1_u(r, v0);
-    r = broadcast<0>(r);
+    r = broadcast_all<0>(r);
     return r;
 #endif
 }
@@ -120,7 +120,7 @@ inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
 #elif SIMDPP_USE_NEON
     uint32x4 r0;
     r0 = vsetq_lane_u32(v0, r0, 0);
-    r0 = broadcast<0>(r0);
+    r0 = broadcast_all<0>(r0);
     return r0;
 #elif SIMDPP_USE_ALTIVEC
     union {
@@ -129,7 +129,7 @@ inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
     };
     v[0] = v0;
     uint32x4 r = altivec::load1(r, v);
-    r = broadcast<0>(r);
+    r = broadcast_all<0>(r);
     return r;
 #endif
 }
