@@ -48,14 +48,14 @@ struct Masks {
     simdpp::mask_int8x16 u8[L/16];
     simdpp::mask_int16x8 u16[L/16];
     simdpp::mask_int32x4 u32[L/16];
-    //simdpp::mask_int64x2 u64[L/16];
+    simdpp::mask_int64x2 u64[L/16];
     simdpp::mask_float32x4 f32[L/16];
     simdpp::mask_float64x2 f64[L/16];
 
     simdpp::mask_int8x32 du8[L/32];
     simdpp::mask_int16x16 du16[L/32];
     simdpp::mask_int32x8 du32[L/32];
-    //simdpp::mask_int64x4 du64[L/32];
+    simdpp::mask_int64x4 du64[L/32];
     simdpp::mask_float32x8 df32[L/32];
     simdpp::mask_float64x4 df64[L/32];
 
@@ -69,7 +69,7 @@ struct Masks {
             u8[i] = make_mask<mask_int8x16, uint8x16>(i);
             u16[i] = make_mask<mask_int16x8, uint16x8>(i);
             u32[i] = make_mask<mask_int32x4, uint32x4>(i);
-            //u64[i] = make_mask<mask_int64x2, uint64x2>(i);
+            u64[i] = make_mask<mask_int64x2, uint64x2>(i);
             f32[i] = make_mask<mask_float32x4, float32x4>(i);
             f64[i] = make_mask<mask_float64x2, float64x2>(i);
 
@@ -78,7 +78,7 @@ struct Masks {
             du8[i] = make_mask<mask_int8x32, uint8x32>(i);
             du16[i] = make_mask<mask_int16x16, uint16x16>(i);
             du32[i] = make_mask<mask_int32x8, uint32x8>(i);
-            //du64[i] = make_mask<mask_int64x4, uint64x4>(i);
+            du64[i] = make_mask<mask_int64x4, uint64x4>(i);
             df32[i] = make_mask<mask_float32x8, float32x8>(i);
             df64[i] = make_mask<mask_float64x4, float64x4>(i);
         }
