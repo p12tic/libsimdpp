@@ -49,17 +49,23 @@ using GetArchCb = std::function<Arch()>;
 
 /** @def SIMDPP_USER_ARCH_INFO
     The user must define this macro if he wants to use the dispatcher
-    infrastructure. The macro must be defined before a SIMDPP_MAKE_DISPATCHER_*
-    function is used. All SIMDPP_MAKE_DISPATCHER_* usage sites must see the same
-    definition of the macro. The macro must evaluate to a constant expression
-    that could implicitly initialize an object of type @c std::function<Arch()>.
+    infrastructure. The macro must evaluate to a constant expression that could
+    implicitly initialize an object of type @c std::function<Arch()>.
 
-    The function is called at unspecified time to determine what features are
-    supported by the processor.
+    The macro is used by @c SIMDPP_MAKE_DISPATCHER_* to specify function which
+    is invoked to determine which version of the dispatched function to
+    dispatch. The macro is just a more convenient method to pass a parameter
+    which has high chance to be the same in the majority of use cases. The user
+    may redefine the macro and use different definitions for each site of
+    @c SIMDPP_MAKE_DISPATCHER_* expansion.
+
+    The function identified by the @c SIMDPP_USER_ARCH_INFO is called at the
+    first time the specific dispatcher is invoked. The user must ensure that
+    proper synchronization is used if the dispatcher is called concurrently.
 
     The user must ensure that the returned information is sensible: e.g. SSE2
     must be supported if SSE3 support is indicated.
-
+s
     The @c simdpp/dispatch/get_arch_*.h files provide several ready
     implementations of CPU features detection.
 */
@@ -89,30 +95,11 @@ struct FnVersion {
     VoidFunPtr fun_ptr;
 };
 
-inline void get_arch_info_impl(std::atomic<Arch>& info,
-                               const GetArchCb& get_info_cb)
-{
-    info = get_info_cb();
-}
-
-/*  Returns the supported instruction set. Handles the synchronization
-    between different threads. Handles caching so that the instruction set
-    information is queried only single time.
-*/
-inline Arch get_arch_info(const GetArchCb& get_info_cb)
-{
-    static std::once_flag flag;
-    static std::atomic<Arch> cached_arch_info;
-
-    std::call_once(flag, get_arch_info_impl, std::ref(cached_arch_info), get_info_cb);
-    return cached_arch_info.load(std::memory_order_acquire);
-}
-
 inline unsigned select_version_any(std::vector<FnVersion>& versions,
                                    const GetArchCb& get_info_cb)
 {
     // No need to try to be very efficient here.
-    Arch arch = get_arch_info(get_info_cb);
+    Arch arch = get_info_cb();
     std::sort(versions.begin(), versions.end(),
               [](const FnVersion& lhs, const FnVersion& rhs) {
                   return lhs.needed_arch > rhs.needed_arch;
