@@ -35,6 +35,7 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/bitwise.h>
 #include <simdpp/simd/math_int_basic.h>
+#include <simdpp/simd/make_shuffle_bytes_mask.h>
 
 #include <simdpp/null/compare.h>
 
@@ -148,6 +149,64 @@ inline mask_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi32(a, b);
+#else
+    return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
+#endif
+}
+/// @}
+
+/// @{
+/** Compares the values of two int64x2 vectors for equality
+
+    @code
+    r0 = (a0 == b0) ? 0xffffffffffffffff : 0x0
+    ...
+    rN = (aN == bN) ? 0xffffffffffffffff : 0x0
+    @endcode
+
+    @par 128-bit version:
+    @icost{SSE2-SSSE3, 5}
+    @icost{XOP, 1}
+    @icost{ALTIVEC, 3-4}
+
+    @par 256-bit version:
+    @icost{SSE2-SSSE3, AVX, 10}
+    @icost{XOP, SSE4.1, NEON, 2}
+    @icost{ALTIVEC, 6-7}
+*/
+inline mask_int64x2 cmp_eq(basic_int64x2 a, basic_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::cmp_eq(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comeq_epi64(a, b);
+#elif SIMDPP_USE_SSE4_1
+    return _mm_cmpeq_epi64(a, b);
+#elif SIMDPP_USE_SSE2
+    uint64x2 r32, r32s, lo, hi;
+    r32 = cmp_eq(uint32x4(a), uint32x4(b));
+    // swap the 32-bit halves
+    r32s = bit_or(shift_l<32>(r32), shift_r<32>(r32));
+    // combine the results. Each 32-bit half is ANDed with the neighbouring pair
+    r32 = bit_and(r32, r32s);
+    return r32;
+#elif SIMDPP_USE_NEON
+    return vceqq_s64(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
+    uint32x4 a0, b0, r;
+    a0 = a;  b0 = b;
+    r = cmp_eq(a, b);
+    r = permute_bytes16(uint16x8(a), mask);
+    r = cmp_eq(r, uint32x4::zero();
+    return r;
+#endif
+}
+
+inline mask_int64x4 cmp_eq(basic_int64x4 a, basic_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return _mm256_cmpeq_epi64(a, b);
 #else
     return {cmp_eq(a[0], b[0]), cmp_eq(a[1], b[1])};
 #endif
@@ -343,6 +402,66 @@ inline mask_int32x8 cmp_neq(basic_int32x8 a, basic_int32x8 b)
     return bit_not(cmp_eq(a, b));
 #else
     return { cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1]) };
+#endif
+}
+/// @}
+
+/// @{
+/** Compares the values of two int64x2 vectors for inequality
+
+    @code
+    r0 = (a0 != b0) ? 0xffffffffffffffff : 0x0
+    ...
+    rN = (aN != bN) ? 0xffffffffffffffff : 0x0
+    @endcode
+
+    @par 128-bit version:
+    @icost{SSE2-SSSE3, 5}
+    @icost{SSE4.1, AVX, NEON, 2}
+    @icost{XOP, 1}
+    @icost{ALTIVEC, 3-5}
+
+    @par 256-bit version:
+    @icost{SSE2-SSSE3, AVX, 10}
+    @icost{SSE4.1, NEON, 4}
+    @icost{AVX2, XOP, 2}
+    @icost{ALTIVEC, 6-8}
+*/
+inline mask_int64x2 cmp_neq(basic_int64x2 a, basic_int64x2 b)
+{
+#if SIMDPP_USE_NULL
+    return null::cmp_neq(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comneq_epi64(a, b);
+#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON
+    return bit_not(cmp_eq(a, b));
+#elif SIMDPP_USE_SSE2
+    uint64x2 r32, r32s, lo, hi;
+    r32 = cmp_eq(uint32x4(a), uint32x4(b));
+    // swap the 32-bit halves
+    r32s = bit_or(shift_l<32>(r32), shift_r<32>(r32));
+    // combine the results. Each 32-bit half is ORed with the neighbouring pair
+    r32 = bit_or(r32, r32s);
+    return r32;
+#elif SIMDPP_USE_ALTIVEC
+    uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
+    uint32x4 a0, b0, r, ones;
+    ones = int128::ones();
+
+    a0 = a;  b0 = b;
+    r = cmp_eq(a, b);
+    r = permute_bytes16(uint16x8(a), mask);
+    r = cmp_eq(r, ones);
+    return r;
+#endif
+}
+
+inline mask_int64x4 cmp_neq(basic_int64x4 a, basic_int64x4 b)
+{
+#if SIMDPP_USE_AVX2
+    return bit_not(cmp_eq(a, b));
+#else
+    return {cmp_neq(a[0], b[0]), cmp_neq(a[1], b[1])};
 #endif
 }
 /// @}
