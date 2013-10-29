@@ -25,7 +25,6 @@
 #   POSSIBILITY OF SUCH DAMAGE.
 
 include_directories(${libsimdpp_SOURCE_DIR})
-set(CMAKE_CXX_FLAGS "-std=c++11")
 
 set(PERF_SOURCES
     neon.cc
