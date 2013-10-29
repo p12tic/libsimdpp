@@ -31,8 +31,10 @@ debian/README.source
 
 simdpp/CMakeLists.txt
 simdpp/altivec/load1.h
+simdpp/dispatch/arch.h
+simdpp/dispatch/dispatcher.h
 simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h
-simdpp/detail/dispatcher.h
+simdpp/dispatch/macros.h
 simdpp/neon/shuffle.h
 simdpp/neon/memory_store.h
 simdpp/neon/math_int.h
@@ -120,8 +122,6 @@ simdpp/sse/memory_store.h
 simdpp/sse/math_fp.h
 simdpp/sse/math_int.h
 simdpp/arch.h
-simdpp/dispatcher.h
-simdpp/dispatcher_macros.h
 
 perf/CMakeLists.txt
 perf/Makefile.am

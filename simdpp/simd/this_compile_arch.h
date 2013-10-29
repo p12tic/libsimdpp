@@ -28,7 +28,7 @@
 #ifndef LIBSIMDPP_SIMD_THIS_COMPILE_ARCH_H
 #define LIBSIMDPP_SIMD_THIS_COMPILE_ARCH_H
 
-#include <simdpp/arch.h>
+#include <simdpp/dispatch/arch.h>
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"

@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_ARCH_H
-#define LIBSIMDPP_ARCH_H
+#ifndef LIBSIMDPP_DISPATCH_ARCH_H
+#define LIBSIMDPP_DISPATCH_ARCH_H
 
 #include <cstdint>
 

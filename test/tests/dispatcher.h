@@ -25,7 +25,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <simdpp/arch.h>
+#include <simdpp/dispatch/arch.h>
 
 simdpp::Arch get_supported_arch(); // in main_dispatcher.cc
 simdpp::Arch test_dispatcher();

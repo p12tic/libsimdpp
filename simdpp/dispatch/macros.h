@@ -27,8 +27,8 @@
 
 // This file is generated automatically. See tools/gen_dispatcher_macros.py
 
-#ifndef LIBSIMDPP_DISPATCHER_MACROS_H
-#define LIBSIMDPP_DISPATCHER_MACROS_H
+#ifndef LIBSIMDPP_DISPATCH_MACROS_H
+#define LIBSIMDPP_DISPATCH_MACROS_H
 
 /** @def SIMDPP_MAKE_DISPATCHER_***
     Builds a dispatcher for a specific non-member function. Different macros

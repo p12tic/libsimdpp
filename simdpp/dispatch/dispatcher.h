@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_DETAIL_DISPATCHER_H
-#define LIBSIMDPP_DETAIL_DISPATCHER_H
+#ifndef LIBSIMDPP_DISPATCHER_H
+#define LIBSIMDPP_DISPATCHER_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -34,16 +34,38 @@
 
 #include <atomic>
 #include <algorithm>
-#include <cstdint>
-#include <cstdlib>
-#include <functional>
-#include <iostream>
 #include <mutex>
-#include <type_traits>
-#include <simdpp/arch.h>
-#include <simdpp/dispatcher.h>
+#include <functional>
+#include <vector>
+#include <simdpp/dispatch/arch.h>
 
 namespace simdpp {
+
+/** @defgroup simd_dispatcher Dispatching support
+    @{
+*/
+
+using GetArchCb = std::function<Arch()>;
+
+/** @def SIMDPP_USER_ARCH_INFO
+    The user must define this macro if he wants to use the dispatcher
+    infrastructure. The macro must be defined before a SIMDPP_MAKE_DISPATCHER_*
+    function is used. All SIMDPP_MAKE_DISPATCHER_* usage sites must see the same
+    definition of the macro. The macro must evaluate to a constant expression
+    that could implicitly initialize an object of type @c std::function<Arch()>.
+
+    The function is called at unspecified time to determine what features are
+    supported by the processor.
+
+    The user must ensure that the returned information is sensible: e.g. SSE2
+    must be supported if SSE3 support is indicated.
+
+    The @c simdpp/dispatch/get_arch_*.h files provide several ready
+    implementations of CPU features detection.
+*/
+
+/// @} -- end defgroup
+
 namespace detail {
 
 using VoidFunPtr = void (*)();
@@ -203,5 +225,7 @@ public:
 
 } // namespace detail
 } // namespace simdpp
+
+#include <simdpp/dispatch/macros.h>
 
 #endif

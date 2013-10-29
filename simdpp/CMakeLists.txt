@@ -27,13 +27,11 @@
 set(HEADERS
     simd.h
 
-    arch.h
-    dispatcher.h
-    dispatcher_macros.h
 
-    detail/dispatcher.h
-
+    dispatch/arch.h
+    dispatch/dispatcher.h
     dispatch/get_arch_gcc_builtin_cpu_supports.h
+    dispatch/macros.h
 
     altivec/load1.h
 

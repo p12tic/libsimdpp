@@ -28,7 +28,7 @@
 #ifndef LIBSIMDPP_DISPATCH_GET_ARCH_GCC_BUILTIN_CPU_SUPPORTS_H
 #define LIBSIMDPP_DISPATCH_GET_ARCH_GCC_BUILTIN_CPU_SUPPORTS_H
 
-#include <simdpp/arch.h>
+#include <simdpp/dispatch/arch.h>
 
 namespace simdpp {
 
