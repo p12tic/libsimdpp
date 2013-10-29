@@ -40,6 +40,8 @@ set(TEST1_HEADERS
     test_helpers.h
     test_results.h
     tests.h
+    common/masks.h
+    common/vectors.h
 )
 
 set(TEST1_ARCH_SOURCES
