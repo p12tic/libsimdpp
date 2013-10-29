@@ -611,7 +611,7 @@ inline float32x4 bit_andnot(float32x4 a, float32x4 b)
 inline float32x8 bit_andnot(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
-    return _mm256_and_ps(a, b);
+    return _mm256_andnot_ps(b, a);
 #else
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
@@ -677,7 +677,7 @@ inline float64x2 bit_andnot(float64x2 a, float64x2 b)
 inline float64x4 bit_andnot(float64x4 a, float64x4 b)
 {
 #if SIMDPP_USE_AVX
-    return _mm256_and_pd(a, b);
+    return _mm256_andnot_pd(b, a);
 #else
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
