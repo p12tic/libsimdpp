@@ -120,14 +120,15 @@ inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream&
     std::sort(to_compare.begin(), to_compare.end(), ins_cmp);
 
     // loop through cases with the same names
+    bool ok = true;
     for (const auto& io: to_compare) {
         bool r = test_equal(io.first.get().test_case, a.arch_,
                             io.second.get().test_case, b.arch_, err);
         if (!r) {
-            return false;
+            ok = false;
         }
     }
-    return true;
+    return ok;
 }
 
 #endif
