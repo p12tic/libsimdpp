@@ -939,7 +939,7 @@ inline int128 mul_lo(basic_int32x4 a, basic_int32x4 b)
 inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_mulhi_epu16(a, b);
+    return _mm256_mullo_epi32(a, b);
 #else
     return {mul_lo(a[0], b[0]), mul_lo(a[1], b[1])};
 #endif
