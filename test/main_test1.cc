@@ -59,7 +59,10 @@ int main()
     std::cout << "Num results: " << null_results.num_results() << '\n';
 
     bool ok = true;
+
     for (auto it = arch_list.begin(); it != arch_list.end(); it++) {
+        std::cout << "Testing: " << it->arch << std::endl;
+
         if (it == null_arch) {
             continue;
         }
