@@ -793,6 +793,7 @@ inline void transpose8(basic_int8x32& a0, basic_int8x32& a1,
 
     basic_int64x4 d0, d1, d2, d3, d4, d5, d6, d7;
     d0 = a0;  d1 = a1;  d2 = a2;  d3 = a3;
+    d4 = a4;  d5 = a5;  d6 = a6;  d7 = a7;
 
     a0 = zip_lo(d0, d4);
     a1 = zip_hi(d0, d4);
