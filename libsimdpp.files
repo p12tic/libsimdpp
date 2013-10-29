@@ -34,6 +34,7 @@ simdpp/altivec/load1.h
 simdpp/dispatch/arch.h
 simdpp/dispatch/dispatcher.h
 simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h
+simdpp/dispatch/get_arch_linux_cpuinfo.h
 simdpp/dispatch/macros.h
 simdpp/neon/shuffle.h
 simdpp/neon/memory_store.h

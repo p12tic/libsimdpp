@@ -31,6 +31,7 @@ set(HEADERS
     dispatch/arch.h
     dispatch/dispatcher.h
     dispatch/get_arch_gcc_builtin_cpu_supports.h
+    dispatch/get_arch_linux_cpuinfo.h
     dispatch/macros.h
 
     altivec/load1.h
