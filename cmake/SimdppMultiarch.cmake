@@ -184,6 +184,24 @@ set(SIMDPP_X86_FMA4_TEST_CODE
     }"
 )
 
+list(APPEND SIMDPP_ARCHS_PRI "X86_XOP")
+set(SIMDPP_X86_XOP_CXX_FLAGS "-mxop -DSIMDPP_ARCH_X86_XOP")
+set(SIMDPP_X86_XOP_SUFFIX "-x86_xop")
+set(SIMDPP_X86_XOP_TEST_CODE
+    "#include <x86intrin.h>
+    int main()
+    {
+        union {
+            volatile char a[16];
+            __m128i align;
+        };
+        __m128i one = _mm_load_si128((__m128i*)(a));
+        one = _mm_cmov_si128(one, one, one);
+        _mm_store_si128((__m128i*)(a), one);
+    }"
+)
+
+
 list(APPEND SIMDPP_ARCHS_PRI "ARM_NEON")
 set(SIMDPP_ARM_NEON_CXX_FLAGS "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM_NEON_SUFFIX "-arm_neon")
@@ -247,7 +265,7 @@ set(SIMDPP_ARCHS "${SIMDPP_ARCHS_PRI};${SIMDPP_ARCHS_SEC}")
 #
 #   The following identifiers are currently supported:
 #   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1, X86_AVX, X86_AVX2, X86_FMA3,
-#   X86_FMA4, ARM_NEON, ARM_NEON_FLT_SP
+#   X86_FMA4, X86_XOP, ARM_NEON, ARM_NEON_FLT_SP
 #
 function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
@@ -337,6 +355,12 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
         list(APPEND ALL_ARCHS "X86_FMA4")
         if(DEFINED ARCH_SUPPORTED_X86_AVX)
             list(APPEND ALL_ARCHS "X86_AVX,X86_FMA4")
+        endif()
+    endif()
+    if(DEFINED ARCH_SUPPORTED_X86_XOP)
+        list(APPEND ALL_ARCHS "X86_XOP")
+        if(DEFINED ARCH_SUPPORTED_X86_AVX)
+            list(APPEND ALL_ARCHS "X86_AVX,X86_XOP")
         endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_ARM_NEON)

@@ -111,6 +111,14 @@
 
         Macro: @c SIMDPP_ARCH_X86_FMA4.
 
+    - @c X86_XOP:
+
+        The AMD x86/x86_64 XOP instruction set is used. The SSE, SSE2, SSE3
+        instruction set support is required implicitly (no need to define
+        the macros for these instruction sets).
+
+        Macro: @c SIMDPP_ARCH_X86_XOP.
+
     - @c ARM_NEON:
 
         The ARM NEON instruction set. The VFP co-processor is used for any
@@ -405,6 +413,21 @@
     #endif
 #endif
 
+#ifdef SIMDPP_ARCH_X86_XOP
+    #ifndef SIMDPP_USE_XOP
+        #define SIMDPP_USE_XOP 1
+    #endif
+    #ifndef SIMDPP_USE_SSE2
+        #define SIMDPP_USE_SSE2 1
+    #endif
+    #ifndef SIMDPP_USE_SSE3
+        #define SIMDPP_USE_SSE3 1
+    #endif
+    #ifndef SIMDPP_ARCH_NOT_NULL
+        #define SIMDPP_ARCH_NOT_NULL
+    #endif
+#endif
+
 #ifdef SIMDPP_ARCH_ARM_NEON
     #ifndef SIMDPP_USE_NEON
         #define SIMDPP_USE_NEON 1
@@ -502,6 +525,13 @@
     #define SIMDPP_PP_FMA4
 #endif
 
+#ifdef SIMDPP_USE_XOP
+    #define SIMDPP_PP_XOP _xop
+    #include <x86intrin.h>
+#else
+    #define SIMDPP_PP_XOP
+#endif
+
 #ifdef SIMDPP_USE_NEON
     #define SIMDPP_PP_NEON _neon
     #include <arm_neon.h>
@@ -542,11 +572,12 @@
 #define SIMDPP_PP_ARCH_CONCAT6  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT5, SIMDPP_PP_AVX2)
 #define SIMDPP_PP_ARCH_CONCAT7  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT6, SIMDPP_PP_FMA3)
 #define SIMDPP_PP_ARCH_CONCAT8  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT7, SIMDPP_PP_FMA4)
-#define SIMDPP_PP_ARCH_CONCAT9  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT8, SIMDPP_PP_NEON)
-#define SIMDPP_PP_ARCH_CONCAT10 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT9, SIMDPP_PP_NEON_FLT_SP)
-#define SIMDPP_PP_ARCH_CONCAT11 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT10, SIMDPP_PP_ALTIVEC)
+#define SIMDPP_PP_ARCH_CONCAT9  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT8, SIMDPP_PP_XOP)
+#define SIMDPP_PP_ARCH_CONCAT10 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT9, SIMDPP_PP_NEON)
+#define SIMDPP_PP_ARCH_CONCAT11 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT10, SIMDPP_PP_NEON_FLT_SP)
+#define SIMDPP_PP_ARCH_CONCAT12 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT11, SIMDPP_PP_ALTIVEC)
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT11
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT12
 
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required

@@ -241,15 +241,19 @@ inline mask_float64x4 cmp_eq(float64x4 a, float64x4 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
+    @icost{XOP, 1}
 
     @par 256-bit version
     @icost{SSE2-AVX, NEON, ALTIVEC, 4}
     @icost{AVX2, 2}
+    @icost{XOP, 2}
 */
 inline mask_int8x16 cmp_neq(basic_int8x16 a, basic_int8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comneq_epi8(a, b);
 #else
     return bit_not(cmp_eq(a, b));
 #endif
@@ -276,15 +280,19 @@ inline mask_int8x32 cmp_neq(basic_int8x32 a, basic_int8x32 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
+    @icost{XOP, 1}
 
     @par 256-bit version
     @icost{SSE2-AVX, NEON, ALTIVEC, 4}
     @icost{AVX2, 2}
+    @icost{XOP, 2}
 */
 inline mask_int16x8 cmp_neq(basic_int16x8 a, basic_int16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comneq_epi16(a, b);
 #else
     return bit_not(cmp_eq(a, b));
 #endif
@@ -311,15 +319,19 @@ inline mask_int16x16 cmp_neq(basic_int16x16 a, basic_int16x16 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
+    @icost{XOP, 1}
 
     @par 256-bit version
     @icost{SSE2-AVX, NEON, ALTIVEC, 4}
     @icost{AVX2, 2}
+    @icost{XOP, 2}
 */
 inline mask_int32x4 cmp_neq(basic_int32x4 a, basic_int32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_neq(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comneq_epi32(a, b);
 #else
     return bit_not(cmp_eq(a, b));
 #endif
@@ -459,16 +471,20 @@ inline mask_int8x32 cmp_gt(int8x32 a, int8x32 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 3-4}
+    @icost{XOP, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6-7}
     @icost{AVX2, 3-4}
+    @icost{XOP, 2}
     @icost{NEON, ALTIVEC, 2}
 */
 inline mask_int8x16 cmp_gt(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comgt_epu8(a, b);
 #elif SIMDPP_USE_SSE2
     uint8x16 bias = uint8x16::make_const(0x80);
     a = bit_xor(a, bias); // sub
@@ -540,16 +556,19 @@ inline mask_int16x16 cmp_gt(int16x16 a, int16x16 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 3-4}
+    @icost{XOP, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6-7}
     @icost{AVX2, 3-4}
-    @icost{NEON, ALTIVEC, 2}
+    @icost{XOP, NEON, ALTIVEC, 2}
 */
 inline mask_int16x8 cmp_gt(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comgt_epu16(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 bias = uint16x8::make_const(0x8000);
     a = bit_xor(a, bias); // sub
@@ -621,16 +640,19 @@ inline mask_int32x8 cmp_gt(int32x8 a, int32x8 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 3-4}
+    @icost{XOP, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6-7}
     @icost{AVX2, 3-4}
-    @icost{NEON, ALTIVEC, 2}
+    @icost{XOP, NEON, ALTIVEC, 2}
 */
 inline mask_int32x4 cmp_gt(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_gt(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comgt_epu32(a, b);
 #elif SIMDPP_USE_SSE2
     int32x4 bias = int32x4::make_const(0x80000000);
     a = bit_xor(a, bias); // sub
@@ -852,16 +874,19 @@ inline mask_int8x32 cmp_lt(int8x32 a, int8x32 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 3-4}
+    @icost{XOP, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6-7}
     @icost{AVX2, 3-4}
-    @icost{NEON, ALTIVEC, 2}
+    @icost{XOP, NEON, ALTIVEC, 2}
 */
 inline mask_int8x16 cmp_lt(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comlt_epu8(a, b);
 #elif SIMDPP_USE_SSE2
     uint8x16 bias = uint8x16::make_const(0x80);
     a = bit_xor(a, bias); // sub
@@ -933,16 +958,19 @@ inline mask_int16x16 cmp_lt(int16x16 a, int16x16 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 3-4}
+    @icost{XOP, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6-7}
     @icost{AVX2, 3-4}
-    @icost{NEON, ALTIVEC, 2}
+    @icost{XOP, NEON, ALTIVEC, 2}
 */
 inline mask_int16x8 cmp_lt(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comlt_epu16(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 bias = uint16x8::make_const(0x8000);
     a = bit_xor(a, bias); // sub
@@ -1014,16 +1042,19 @@ inline mask_int32x8 cmp_lt(int32x8 a, int32x8 b)
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 3-4}
+    @icost{XOP, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6-7}
     @icost{AVX2, 3-4}
-    @icost{NEON, ALTIVEC, 2}
+    @icost{XOP, NEON, ALTIVEC, 2}
 */
 inline mask_int32x4 cmp_lt(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_lt(a, b);
+#elif SIMDPP_USE_XOP
+    return _mm_comlt_epu32(a, b);
 #elif SIMDPP_USE_SSE2
     uint32x4 bias = uint32x4::make_const(0x80000000);
     a = bit_xor(a, bias); // sub

@@ -65,6 +65,8 @@ enum class Arch : std::uint32_t {
     X86_FMA3 = 1 << 7,
     /// Indicates x86 FMA4 (AMD) support
     X86_FMA4 = 1 << 8,
+    /// Indicates x86 XOP (AMD) support
+    X86_XOP = 1 << 9,
 
     /// Indicates ARM NEON support (SP and DP floating-point math is executed
     /// on VFP)

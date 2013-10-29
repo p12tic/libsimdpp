@@ -135,6 +135,7 @@ inline float64x4 permute_bytes16(float64x4 a, int256 mask)
     @unimp{SSE2-SSE3}
     @icost{SSSE3, 6}
     @icost{SSE4.1-AVX2, 4}
+    @icost{XOP, 1}
     @icost{NEON, 2}
 
     @par 256-bit version:
@@ -144,6 +145,7 @@ inline float64x4 permute_bytes16(float64x4 a, int256 mask)
     @unimp{SSE2-SSE3}
     @icost{SSSE3, 12}
     @icost{SSE4.1-AVX, 8}
+    @icost{XOP, 2}
     @icost{NEON, 4}
     @icost{ALTIVEC, 2}
 
@@ -162,6 +164,8 @@ inline int128 shuffle_bytes16(int128 a, int128 b, int128 mask)
         r[i] = which ? ai[j] : bi[j];
     }
     return r;
+#elif SIMDPP_USE_XOP
+    return _mm_perm_epi8(a, b, mask);
 #elif SIMDPP_USE_SSE4_1
     int16x8 sel, ai, bi, r;
     sel = mask;
@@ -332,6 +336,7 @@ inline float64x4 permute_zbytes16(float64x4 a, int256 mask)
     @unimp{SSE2-SSE3}
     @icost{SSSE3, 9}
     @icost{SSE4.1-AVX2, 6}
+    @icost{XOP, 1}
     @icost{NEON, 2}
     @icost{ALTIVEC, 1-2}
 
@@ -343,6 +348,7 @@ inline float64x4 permute_zbytes16(float64x4 a, int256 mask)
     @icost{SSSE3, 18}
     @icost{SSE4.1-AVX, 12}
     @icost{AVX2, 6}
+    @icost{XOP, 2}
     @icost{NEON, 4}
     @icost{ALTIVEC, 2-3}
 
@@ -362,6 +368,8 @@ inline int128 shuffle_zbytes16(int128 a, int128 b, int128 mask)
         r[i] = zero ? 0 : (which ? ai[j] : bi[j]);
     }
     return r;
+#elif SIMDPP_USE_XOP
+    return _mm_perm_epi8(a, b, mask);
 #elif SIMDPP_USE_SSE4_1
     int8x16 sel, set_zero, ai, bi, r;
     sel = mask;

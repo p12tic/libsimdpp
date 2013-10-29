@@ -1448,10 +1448,12 @@ float64x4 align(float64x4 lower, float64x4 upper)
 
     @par 128-bit version:
     @icost{SSE2-AVX, 3}
+    @icost{XOP, 1}
 
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
+    @icost{XOP, 2}
 */
 inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 mask)
 {
@@ -1459,6 +1461,8 @@ inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 ma
     return null::blend(on, off, mask);
 #elif SIMDPP_USE_AVX2
     return _mm_blendv_epi8(off, on, mask);
+#elif SIMDPP_USE_XOP
+    return _mm_cmov_si128(on, off, mask);
 #elif SIMDPP_USE_SSE2
     // _mm_blendv_epi8 needs xmm0 and occupies the shuffle ports, yet saves
     // only one uop
