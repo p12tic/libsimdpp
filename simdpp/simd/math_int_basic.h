@@ -985,17 +985,15 @@ inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
     r3 = a3 * b3
     @endcode
 
-    @icost{SSE2-AVX, 2-3}
-    @icost{ALTIVEC, 2-4}
+    @icost{SSE2-AVX, ALTIVEC, 2-3}
 
     @par 256-bit version:
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4-6}
+    @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, NEON, 2-3}
-    @icost{ALTIVEC, 4-7}
     @note Use with mull_hi on the same arguments to save instructions.
 */
 inline int32x4 mull_lo(int16x8 a, int16x8 b)
@@ -1013,10 +1011,9 @@ inline int32x4 mull_lo(int16x8 a, int16x8 b)
 #elif SIMDPP_USE_NEON
     return vmull_s16(vget_low_s16(a), vget_low_s16(b));
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
-    a = permute_bytes16(a, mask);
-    b = permute_bytes16(b, mask);
-    return vec_mule((__vector int16_t)a, (__vector int16_t)b);
+    int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
+    int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
+    return zip_lo(lo, hi);
 #endif
 }
 
@@ -1043,15 +1040,13 @@ inline int32x8 mull_lo(int16x16 a, int16x16 b)
     r3 = a3 * b3
     @endcode
 
-    @icost{SSE2-AVX2, 2-3}
-    @icost{ALTIVEC, 2-4}
+    @icost{SSE2-AVX2, ALTIVEC, 2-3}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4-6}
-    @icost{ALTIVEC, 4-7}
+    @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
     @note Use with mull_hi on the same arguments to save instructions.
@@ -1071,10 +1066,9 @@ inline uint32x4 mull_lo(uint16x8 a, uint16x8 b)
 #elif SIMDPP_USE_NEON
     return vmull_u16(vget_low_u16(a), vget_low_u16(b));
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
-    a = permute_bytes16(a, mask);
-    b = permute_bytes16(b, mask);
-    return vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
+    uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
+    uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
+    return zip_lo(lo, hi);
 #endif
 }
 
@@ -1101,15 +1095,13 @@ inline uint32x8 mull_lo(uint16x16 a, uint16x16 b)
     r3 = a7 * b7
     @endcode
 
-    @icost{SSE2-AVX2, 2-3}
-    @icost{ALTIVEC, 2-4}
+    @icost{SSE2-AVX2, ALTIVEC, 2-3}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4-6}
-    @icost{ALTIVEC, 4-7}
+    @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
     @note Use with mull_lo on the same arguments to save instructions.
@@ -1129,10 +1121,9 @@ inline int32x4 mull_hi(int16x8 a, int16x8 b)
 #elif SIMDPP_USE_NEON
     return vmull_s16(vget_high_s16(a), vget_high_s16(b));
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
-    a = permute_bytes16(a, mask);
-    b = permute_bytes16(b, mask);
-    return vec_mulo((__vector int16_t)a, (__vector int16_t)b);
+    int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
+    int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
+    return zip_hi(lo, hi);
 #endif
 }
 
@@ -1159,15 +1150,13 @@ inline int32x8 mull_hi(int16x16 a, int16x16 b)
     r3 = a7 * b7
     @endcode
 
-    @icost{SSE2-AVX2, 2-3}
-    @icost{ALTIVEC, 2-4}
+    @icost{SSE2-AVX2, ALTIVEC, 2-3}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
-    @icost{SSE2-AVX, 4-6}
-    @icost{ALTIVEC, 4-7}
+    @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
     @note Use with mull_lo on the same arguments to save instructions.
@@ -1187,10 +1176,9 @@ inline uint32x4 mull_hi(uint16x8 a, uint16x8 b)
 #elif SIMDPP_USE_NEON
     return vmull_u16(vget_high_u16(a), vget_high_u16(b));
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 mask = make_shuffle_bytes16_mask<0,4,1,5,2,6,3,7>(mask);
-    a = permute_bytes16(a, mask);
-    b = permute_bytes16(b, mask);
-    return (__vector uint32_t)vec_mulo((__vector int16_t)a, (__vector int16_t)b);
+    uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
+    uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
+    return zip_hi(lo, hi);
 #endif
 }
 
