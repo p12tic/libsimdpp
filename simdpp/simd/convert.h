@@ -447,7 +447,7 @@ inline basic_int32x8 to_int32x8(float64x4 a)
 #elif SIMDPP_USE_SSE2
     int32x4 b0 = to_int32x4(a[0]);
     int32x4 b1 = to_int32x4(a[1]);
-    return {zip_lo(b0, b1), int32x4::zero()};
+    return basic_int32x8(zip_lo(b0, b1), int32x4::zero());
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x8> r;
     r[0] = int32_t(a[0][0]);

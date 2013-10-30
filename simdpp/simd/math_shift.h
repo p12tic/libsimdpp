@@ -110,7 +110,7 @@ inline int8x32 shift_r(int8x32 a, unsigned count)
     a = bit_or(lo, hi);    //higher part of lo is already clear
     return a;
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return int8x32(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -171,7 +171,7 @@ inline uint8x32 shift_r(uint8x32 a, unsigned count)
     a16 = bit_andnot(a16, mask);
     return a16;
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return uint8x32(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -215,7 +215,7 @@ inline int16x16 shift_r(int16x16 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_srai_epi16(a, count);
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return int16x16(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -259,7 +259,7 @@ inline uint16x16 shift_r(uint16x16 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_srli_epi16(a, count);
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return uint16x16(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -308,7 +308,7 @@ inline int32x8 shift_r(int32x8 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_srai_epi32(a, count);
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return int32x8(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -352,7 +352,7 @@ inline uint32x8 shift_r(uint32x8 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_srli_epi32(a, count);
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return uint32x8(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -436,7 +436,7 @@ inline int64x4 shift_r(int64x4 a, unsigned count)
         return v;
     }
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return int64x4(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -479,7 +479,7 @@ inline uint64x4 shift_r(uint64x4 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_srli_epi64(a, count);
 #else
-    return {shift_r(a[0], count), shift_r(a[1], count)};
+    return uint64x4(shift_r(a[0], count), shift_r(a[1], count));
 #endif
 }
 /// @}
@@ -541,7 +541,7 @@ inline basic_int8x32 shift_l(basic_int8x32 a, unsigned count)
     a16 = bit_andnot(a16, mask);
     return a16;
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    return basic_int8x32(shift_l(a[0], count), shift_l(a[1], count));
 #endif
 }
 /// @}
@@ -584,7 +584,7 @@ inline basic_int16x16 shift_l(basic_int16x16 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi16(a, count);
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    return basic_int16x16(shift_l(a[0], count), shift_l(a[1], count));
 #endif
 }
 /// @}
@@ -627,7 +627,7 @@ inline basic_int32x8 shift_l(basic_int32x8 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi32(a, count);
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    return basic_int32x8(shift_l(a[0], count), shift_l(a[1], count));
 #endif
 }
 /// @}
@@ -669,7 +669,7 @@ inline basic_int64x4 shift_l(basic_int64x4 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi64(a, count);
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    return basic_int64x4(shift_l(a[0], count), shift_l(a[1], count));
 #endif
 }
 /// @}
@@ -684,7 +684,7 @@ V v256_shift_r(V a)
 #if SIMDPP_USE_AVX2
     return shift_r(a, count);
 #else
-    return {shift_r<count>(a[0]), shift_r<count>(a[1])};
+    return V(shift_r<count>(a[0]), shift_r<count>(a[1]));
 #endif
 }
 
@@ -694,7 +694,7 @@ V v256_shift_l(V a)
 #if SIMDPP_USE_AVX2
     return shift_l(a, count);
 #else
-    return {shift_l<count>(a[0]), shift_l<count>(a[1])};
+    return V(shift_l<count>(a[0]), shift_l<count>(a[1]));
 #endif
 }
 

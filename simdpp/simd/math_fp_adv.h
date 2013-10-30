@@ -83,7 +83,7 @@ inline mask_float32x8 isnan(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, a, _CMP_UNORD_Q);
 #else
-    return basic_int32x8(isnan(a[0]), isnan(a[1]));
+    return mask_float32x8(isnan(a[0]), isnan(a[1]));
 #endif
 }
 /// @}
@@ -120,7 +120,7 @@ inline mask_float64x4 isnan(float64x4 a)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, a, _CMP_UNORD_Q);
 #else
-    return basic_int64x4(isnan(a[0]), isnan(a[1]));
+    return mask_float64x4(isnan(a[0]), isnan(a[1]));
 #endif
 }
 /// @}
@@ -159,7 +159,7 @@ inline mask_float32x8 isnan2(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_UNORD_Q);
 #else
-    return basic_int32x8(isnan2(a[0], b[0]), isnan2(a[1], b[1]));
+    return mask_float32x8(isnan2(a[0], b[0]), isnan2(a[1], b[1]));
 #endif
 }
 /// @}
@@ -197,7 +197,7 @@ inline mask_float64x4 isnan2(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_UNORD_Q);
 #else
-    return basic_int64x4(isnan2(a[0], b[0]), isnan2(a[1], b[1]));
+    return mask_float64x4(isnan2(a[0], b[0]), isnan2(a[1], b[1]));
 #endif
 }
 /// @}
