@@ -125,6 +125,26 @@ V subs(V a, V b)
 }
 
 template<class V>
+V avg(V a, V b) // note: breaks on vectors with 64-bit elements
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r[i] = (int64_t(a[i]) + b[i] + 1) >> 1;
+    }
+    return r;
+}
+
+template<class V>
+V avg_trunc(V a, V b)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r[i] = (int64_t(a[i]) + b[i]) >> 1;
+    }
+    return r;
+}
+
+template<class V>
 V neg(V a)
 {
     V r;

@@ -350,7 +350,11 @@ inline basic_int32x8 to_int32x8(uint16x16 a)
 inline basic_int32x4 to_int32x4(float32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
+    int32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = int32_t(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
 #elif SIMDPP_USE_NEON
@@ -620,7 +624,11 @@ inline basic_int64x4 to_int64x4(uint32x8 a)
 inline float32x4 to_float32x4(int32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = float(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_ps(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP

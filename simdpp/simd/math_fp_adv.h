@@ -223,7 +223,11 @@ inline mask_float64x4 isnan2(float64x4 a, float64x4 b)
 inline float32x4 rcp_e(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return 1.0f / a; });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = 1.0f / a[i];
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_rcp_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -279,7 +283,11 @@ inline float32x8 rcp_e(float32x8 a)
 inline float32x4 rcp_rh(float32x4 x, float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = x[i]*(2.0f - x[i]*a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     float32x4 c2, r;
     c2 = float32x4::make_const(2.0f);
@@ -342,7 +350,11 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
 inline float32x4 div(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = a[i]/b[i];
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_div_ps(a, b);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -389,7 +401,11 @@ inline float32x8 div(float32x8 a, float32x8 b)
 inline float64x2 div(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
+    float64x2 r;
+    for (unsigned i = 0; i < 2; ++i) {
+        r[i] = a[i]/b[i];
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
 #endif
@@ -426,7 +442,11 @@ inline float64x4 div(float64x4 a, float64x4 b)
 inline float32x4 rsqrt_e(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return 1.0f / std::sqrt(a); });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = 1.0f / std::sqrt(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_rsqrt_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -472,7 +492,11 @@ inline float32x4 rsqrt_rh(float32x4 x, float32x4 a)
 {
     // x_n = x*(3-d*x*x)/2
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = x[i] * (3.0f - a[i]*x[i]*x[i]) * 0.5f;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     float32x4 x2, c3, c0p5, r;
 
@@ -552,7 +576,11 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 inline float32x4 sqrt(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = std::sqrt(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_ALTIVEC
@@ -592,7 +620,11 @@ inline float32x8 sqrt(float32x8 a)
 inline float64x2 sqrt(float64x2 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
+    float64x2 r;
+    for (unsigned i = 0; i < 2; ++i) {
+        r[i] = std::sqrt(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_pd(a);
 #endif
@@ -779,7 +811,11 @@ inline float64x4 max(float64x4 a, float64x4 b)
 inline float32x4 floor(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::floor(x); });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = std::floor(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_floor_ps(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
@@ -835,7 +871,11 @@ inline float32x8 floor(float32x8 a)
 inline float32x4 ceil(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::ceil(x); });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = std::ceil(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_ceil_ps(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
@@ -892,7 +932,11 @@ inline float32x8 ceil(float32x8 a)
 inline float32x4 trunc(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
+    float32x4 r;
+    for (unsigned i = 0; i < 4; ++i) {
+        r[i] = std::trunc(a[i]);
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_round_ps(a, 3); // 3 = truncate
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP

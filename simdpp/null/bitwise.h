@@ -161,6 +161,19 @@ M bit_xor_mm(M a, M b)
     return r;
 }
 
+template<class V>
+V bit_not(V a)
+{
+    V r;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
+    for (unsigned i = 0; i < V::length; i++) {
+        U a1 = bit_cast<U, E>(a[i]);
+        r[i] = bit_cast<E, U>(~a1);
+    }
+    return r;
+}
+
 template<class M>
 M bit_not_mm(M a)
 {

@@ -824,7 +824,11 @@ inline basic_int16x16 mul_lo(basic_int16x16 a, basic_int16x16 b)
 inline int16x8 mul_hi(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){ return (int32_t(a) * b) >> 16; });
+    int16x8 r;
+    for (unsigned i = 0; i < int16x8::length; ++i) {
+        r[i] = (int32_t(a[i]) * b[i]) >> 16;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -863,7 +867,11 @@ inline int16x16 mul_hi(int16x16 a, int16x16 b)
 inline uint16x8 mul_hi(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){ return (int64_t(a) * b) >> 16; });
+    uint16x8 r;
+    for (unsigned i = 0; i < int16x8::length; ++i) {
+        r[i] = (int64_t(a[i]) * b[i]) >> 16;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epu16(a, b);
 #elif SIMDPP_USE_NEON

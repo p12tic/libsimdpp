@@ -1207,7 +1207,7 @@ inline mask_float64x4 bit_xor(mask_float64x4 a, mask_float64x4 b)
 inline basic_int8x16 bit_not(basic_int8x16 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<basic_int8x16>(a, [](uint64_t a){ return ~a; });
+    return null::bit_not(a);
 #elif SIMDPP_USE_SSE2
     basic_int8x16 ones = basic_int8x16::ones();
     return bit_xor(a, ones);
