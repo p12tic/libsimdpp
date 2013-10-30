@@ -32,6 +32,7 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+// note: all data is read only
 template<unsigned L>
 struct Vectors {
     static const unsigned length = L;
@@ -48,27 +49,31 @@ struct Vectors {
         int64_t pi64[L/8];
         float pf32[L/4];
         double pf64[L/8];
-        simdpp::uint8x16 u8[L/16];
-        simdpp::uint16x8 u16[L/16];
-        simdpp::uint32x4 u32[L/16];
-        simdpp::uint64x2 u64[L/16];
-        simdpp::int8x16 i8[L/16];
-        simdpp::int16x8 i16[L/16];
-        simdpp::int32x4 i32[L/16];
-        simdpp::int64x2 i64[L/16];
-        simdpp::float32x4 f32[L/16];
-        simdpp::float64x2 f64[L/16];
-        simdpp::uint8x32 du8[L/32];
-        simdpp::uint16x16 du16[L/32];
-        simdpp::uint32x8 du32[L/32];
-        simdpp::uint64x4 du64[L/32];
-        simdpp::int8x32 di8[L/32];
-        simdpp::int16x16 di16[L/32];
-        simdpp::int32x8 di32[L/32];
-        simdpp::int64x4 di64[L/32];
-        simdpp::float32x8 df32[L/32];
-        simdpp::float64x4 df64[L/32];
+
+        simdpp::detail::align_type align;
     };
+
+    simdpp::uint8x16 u8[L/16];
+    simdpp::uint16x8 u16[L/16];
+    simdpp::uint32x4 u32[L/16];
+    simdpp::uint64x2 u64[L/16];
+    simdpp::int8x16 i8[L/16];
+    simdpp::int16x8 i16[L/16];
+    simdpp::int32x4 i32[L/16];
+    simdpp::int64x2 i64[L/16];
+    simdpp::float32x4 f32[L/16];
+    simdpp::float64x2 f64[L/16];
+    simdpp::uint8x32 du8[L/32];
+    simdpp::uint16x16 du16[L/32];
+    simdpp::uint32x8 du32[L/32];
+    simdpp::uint64x4 du64[L/32];
+    simdpp::int8x32 di8[L/32];
+    simdpp::int16x16 di16[L/32];
+    simdpp::int32x8 di32[L/32];
+    simdpp::int64x4 di64[L/32];
+    simdpp::float32x8 df32[L/32];
+    simdpp::float64x4 df64[L/32];
+
 
     Vectors() { reset(); }
 
@@ -77,6 +82,7 @@ struct Vectors {
         for (unsigned i = 0; i < L; i++) {
             c[i] = i%256;
         }
+        broadcast();
     }
 
     void zero()
@@ -84,6 +90,31 @@ struct Vectors {
         for (unsigned i = 0; i < L; i++) {
             c[i] = 0;
         }
+    }
+private:
+    void broadcast()
+    {
+        std::memcpy(u8, c, L);
+        std::memcpy(u8, c, L);
+        std::memcpy(u16, c, L);
+        std::memcpy(u32, c, L);
+        std::memcpy(u64, c, L);
+        std::memcpy(i8, c, L);
+        std::memcpy(i16, c, L);
+        std::memcpy(i32, c, L);
+        std::memcpy(i64, c, L);
+        std::memcpy(f32, c, L);
+        std::memcpy(f64, c, L);
+        std::memcpy(du8, c, L);
+        std::memcpy(du16, c, L);
+        std::memcpy(du32, c, L);
+        std::memcpy(du64, c, L);
+        std::memcpy(di8, c, L);
+        std::memcpy(di16, c, L);
+        std::memcpy(di32, c, L);
+        std::memcpy(di64, c, L);
+        std::memcpy(df32, c, L);
+        std::memcpy(df64, c, L);
     }
 };
 

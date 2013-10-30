@@ -81,8 +81,7 @@ void test_memory_load(TestResults& res)
 
     union {
         uint8_t sdata[size];
-        uint8x32 align1;
-        float32x8 align2;
+        simdpp::detail::align_type align;
     };
 
     for (unsigned i = 0; i < size; i++) {

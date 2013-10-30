@@ -110,23 +110,23 @@ protected:
 
 #if SIMDPP_USE_AVX2
 #else
-    // For internaliuse only
-    const uint64x2& u64(unsigned i) const   { return u64_[i]; }
-          uint64x2& u64(unsigned i)         { return u64_[i]; }
-    const uint32x4& u32(unsigned i) const   { return u32_[i]; }
-          uint32x4& u32(unsigned i)         { return u32_[i]; }
-    const uint16x8& u16(unsigned i) const   { return u16_[i]; }
-          uint16x8& u16(unsigned i)         { return u16_[i]; }
-    const uint8x16& u8(unsigned i) const    { return u8_[i]; }
-          uint8x16& u8(unsigned i)          { return u8_[i]; }
-    const int64x2& i64(unsigned i) const   { return i64_[i]; }
-          int64x2& i64(unsigned i)         { return i64_[i]; }
-    const int32x4& i32(unsigned i) const   { return i32_[i]; }
-          int32x4& i32(unsigned i)         { return i32_[i]; }
-    const int16x8& i16(unsigned i) const   { return i16_[i]; }
-          int16x8& i16(unsigned i)         { return i16_[i]; }
-    const int8x16& i8(unsigned i) const    { return i8_[i]; }
-          int8x16& i8(unsigned i)          { return i8_[i]; }
+    // For internal use only
+    const uint64x2& u64(unsigned i) const   { return reinterpret_cast<const uint64x2&>(d_[i]); }
+          uint64x2& u64(unsigned i)         { return reinterpret_cast<uint64x2&>(d_[i]); }
+    const uint32x4& u32(unsigned i) const   { return reinterpret_cast<const uint32x4&>(d_[i]); }
+          uint32x4& u32(unsigned i)         { return reinterpret_cast<uint32x4&>(d_[i]); }
+    const uint16x8& u16(unsigned i) const   { return reinterpret_cast<const uint16x8&>(d_[i]); }
+          uint16x8& u16(unsigned i)         { return reinterpret_cast<uint16x8&>(d_[i]); }
+    const uint8x16& u8(unsigned i) const    { return reinterpret_cast<const uint8x16&>(d_[i]); }
+          uint8x16& u8(unsigned i)          { return reinterpret_cast<uint8x16&>(d_[i]); }
+    const int64x2& i64(unsigned i) const   { return reinterpret_cast<const int64x2&>(d_[i]); }
+          int64x2& i64(unsigned i)         { return reinterpret_cast<int64x2&>(d_[i]); }
+    const int32x4& i32(unsigned i) const   { return reinterpret_cast<const int32x4&>(d_[i]); }
+          int32x4& i32(unsigned i)         { return reinterpret_cast<int32x4&>(d_[i]); }
+    const int16x8& i16(unsigned i) const   { return reinterpret_cast<const int16x8&>(d_[i]); }
+          int16x8& i16(unsigned i)         { return reinterpret_cast<int16x8&>(d_[i]); }
+    const int8x16& i8(unsigned i) const    { return reinterpret_cast<const int8x16&>(d_[i]); }
+          int8x16& i8(unsigned i)          { return reinterpret_cast<int8x16&>(d_[i]); }
 #endif
 
 private:
@@ -134,17 +134,7 @@ private:
 #if SIMDPP_USE_AVX2
     __m256i d_;
 #else
-    union {
-        int128 d_[2];
-        uint64x2 u64_[2];
-        uint32x4 u32_[2];
-        uint16x8 u16_[2];
-        uint8x16 u8_[2];
-        int64x2 i64_[2];
-        int32x4 i32_[2];
-        int16x8 i16_[2];
-        int8x16 i8_[2];
-    };
+    int128 d_[2];
 #endif
 };
 

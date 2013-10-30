@@ -33,6 +33,7 @@
 #endif
 
 #include <cstring>
+#include <simdpp/simd/detail/align.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -64,7 +65,7 @@ public:
 private:
     union {
         element_type d_[length];
-        V align_;
+        align_type align;
     };
 };
 
