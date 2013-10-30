@@ -85,4 +85,22 @@ int main(int argc, char** argv)
                   << std::hex << static_cast<unsigned>(selected) << "\n";
         return EXIT_FAILURE;
     }
+
+    unsigned err = 0;
+    if (test_dispatcher1(1) != 1) {
+        err |= 1;
+    }
+    if (test_dispatcher2(1, 2) != 1+2) {
+        err |= 2;
+    }
+    if (test_dispatcher3(1, 2, 3) != 1+2+3) {
+        err |= 4;
+    }
+    if (test_dispatcher4(1, 2, 3, 4) != 1+2+3+4) {
+        err |= 8;
+    }
+    if (err != 0) {
+        std::cout << "ERR: " << err << "\n";
+        return EXIT_FAILURE;
+    }
 }
