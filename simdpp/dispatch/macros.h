@@ -107,7 +107,7 @@ void NAME(T1 a1)                                                              \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1                                        \
+        simdpp_ ## NAME ## _tag,void,T1                                       \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1)>(&NAME));                                     \
@@ -129,7 +129,7 @@ void NAME(T1 a1,T2 a2)                                                        \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2                                     \
+        simdpp_ ## NAME ## _tag,void,T1,T2                                    \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2)>(&NAME));                                  \
@@ -151,7 +151,7 @@ void NAME(T1 a1,T2 a2,T3 a3)                                                  \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3                                  \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3                                 \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3)>(&NAME));                               \
@@ -173,7 +173,7 @@ void NAME(T1 a1,T2 a2,T3 a3,T4 a4)                                            \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4                               \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4                              \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4)>(&NAME));                            \
@@ -195,7 +195,7 @@ void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5)                                      \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5                            \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5                           \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5)>(&NAME));                         \
@@ -217,7 +217,7 @@ void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6)                                \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6                         \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6                        \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6)>(&NAME));                      \
@@ -239,7 +239,7 @@ void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7)                          \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6,T7                      \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6,T7                     \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6,T7)>(&NAME));                   \
@@ -261,7 +261,7 @@ void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8)                    \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6,T7,T8                   \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6,T7,T8                  \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6,T7,T8)>(&NAME));                \
@@ -283,7 +283,7 @@ void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8,T9 a9)              \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6,T7,T8,T9                \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6,T7,T8,T9               \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(&NAME));             \
@@ -327,7 +327,7 @@ R NAME(T1 a1)                                                                 \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1                                           \
+        simdpp_ ## NAME ## _tag,R,T1                                          \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1)>(&NAME));                                        \
@@ -349,7 +349,7 @@ R NAME(T1 a1,T2 a2)                                                           \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2                                        \
+        simdpp_ ## NAME ## _tag,R,T1,T2                                       \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2)>(&NAME));                                     \
@@ -371,7 +371,7 @@ R NAME(T1 a1,T2 a2,T3 a3)                                                     \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3                                     \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3                                    \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3)>(&NAME));                                  \
@@ -393,7 +393,7 @@ R NAME(T1 a1,T2 a2,T3 a3,T4 a4)                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4                                  \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4                                 \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4)>(&NAME));                               \
@@ -415,7 +415,7 @@ R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5)                                         \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5                               \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5                              \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5)>(&NAME));                            \
@@ -437,7 +437,7 @@ R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6)                                   \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6                            \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6                           \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6)>(&NAME));                         \
@@ -459,7 +459,7 @@ R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7)                             \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6,T7                         \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6,T7                        \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6,T7)>(&NAME));                      \
@@ -481,7 +481,7 @@ R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8)                       \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6,T7,T8                      \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6,T7,T8                     \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6,T7,T8)>(&NAME));                   \
@@ -503,7 +503,7 @@ R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8,T9 a9)                 \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6,T7,T8,T9                   \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6,T7,T8,T9                  \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(&NAME));                \
@@ -534,7 +534,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1                                        \
+        simdpp_ ## NAME ## _tag,void,T1                                       \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1)>(&NAME));                                     \
@@ -548,7 +548,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2                                     \
+        simdpp_ ## NAME ## _tag,void,T1,T2                                    \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2)>(&NAME));                                  \
@@ -562,7 +562,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3                                  \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3                                 \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3)>(&NAME));                               \
@@ -576,7 +576,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4                               \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4                              \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4)>(&NAME));                            \
@@ -590,7 +590,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5                            \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5                           \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5)>(&NAME));                         \
@@ -604,7 +604,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6                         \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6                        \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6)>(&NAME));                      \
@@ -618,7 +618,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6,T7                      \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6,T7                     \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6,T7)>(&NAME));                   \
@@ -632,7 +632,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6,T7,T8                   \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6,T7,T8                  \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6,T7,T8)>(&NAME));                \
@@ -646,7 +646,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,voidT1,T2,T3,T4,T5,T6,T7,T8,T9                \
+        simdpp_ ## NAME ## _tag,void,T1,T2,T3,T4,T5,T6,T7,T8,T9               \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<void(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(&NAME));             \
@@ -674,7 +674,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1                                           \
+        simdpp_ ## NAME ## _tag,R,T1                                          \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1)>(&NAME));                                        \
@@ -688,7 +688,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2                                        \
+        simdpp_ ## NAME ## _tag,R,T1,T2                                       \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2)>(&NAME));                                     \
@@ -702,7 +702,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3                                     \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3                                    \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3)>(&NAME));                                  \
@@ -716,7 +716,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4                                  \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4                                 \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4)>(&NAME));                               \
@@ -730,7 +730,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5                               \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5                              \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5)>(&NAME));                            \
@@ -744,7 +744,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6                            \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6                           \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6)>(&NAME));                         \
@@ -758,7 +758,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6,T7                         \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6,T7                        \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6,T7)>(&NAME));                      \
@@ -772,7 +772,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6,T7,T8                      \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6,T7,T8                     \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6,T7,T8)>(&NAME));                   \
@@ -786,7 +786,7 @@ struct simdpp_ ## NAME ## _tag;                                               \
 namespace SIMDPP_ARCH_NAMESPACE {                                             \
                                                                               \
 static ::simdpp::detail::DispatchRegistrator<                                 \
-        simdpp_ ## NAME ## _tag,RT1,T2,T3,T4,T5,T6,T7,T8,T9                   \
+        simdpp_ ## NAME ## _tag,R,T1,T2,T3,T4,T5,T6,T7,T8,T9                  \
 > simdpp_dispatch_registrator_ ## NAME (                                      \
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),                 \
         static_cast<R(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(&NAME));                \
