@@ -46,37 +46,46 @@ namespace simdpp {
 
     detail::select_version depends on this.
 */
-enum class Arch : std::uint32_t {
+class Arch {
+// Simulate enum class Arch : uint32_t
+    typedef uint32_t T;
+public:
     /// Indicates that no SIMD instructions are supported
-    NONE_NULL = 0,
+    static const T NONE_NULL = 0;
     /// Indicates x86 SSE2 support
-    X86_SSE2 = 1 << 1,
+    static const T X86_SSE2 = 1 << 1;
     /// Indicates x86 SSE3 support
-    X86_SSE3 = 1 << 2,
+    static const T X86_SSE3 = 1 << 2;
     /// Indicates x86 SSSE3 support
-    X86_SSSE3 = 1 << 3,
+    static const T X86_SSSE3 = 1 << 3;
     /// Indicates x86 SSE4.1 support
-    X86_SSE4_1 = 1 << 4,
+    static const T X86_SSE4_1 = 1 << 4;
     /// Indicates x86 AVX support
-    X86_AVX = 1 << 5,
+    static const T X86_AVX = 1 << 5;
     /// Indicates x86 AVX2 support
-    X86_AVX2 = 1 << 6,
+    static const T X86_AVX2 = 1 << 6;
     /// Indicates x86 FMA3 (Intel) support
-    X86_FMA3 = 1 << 7,
+    static const T X86_FMA3 = 1 << 7;
     /// Indicates x86 FMA4 (AMD) support
-    X86_FMA4 = 1 << 8,
+    static const T X86_FMA4 = 1 << 8;
     /// Indicates x86 XOP (AMD) support
-    X86_XOP = 1 << 9,
+    static const T X86_XOP = 1 << 9;
 
     /// Indicates ARM NEON support (SP and DP floating-point math is executed
     /// on VFP)
-    ARM_NEON = 1 << 0,
+    static const T ARM_NEON = 1 << 0;
     /// Indicates ARM NEON support (SP floating-point math is executed on NEON,
     /// DP floating-point math is executed on VFP)
-    ARM_NEON_FLT_SP = 1 << 1,
+    static const T ARM_NEON_FLT_SP = 1 << 1;
 
     /// Indicates POWER ALTIVEC support.
-    POWER_ALTIVEC = 1 << 0
+    static const T POWER_ALTIVEC = 1 << 0;
+
+    Arch() : val_(NONE_NULL) {}
+    Arch(T val) : val_(val) {}
+    operator T() const { return val_; }
+private:
+    T val_;
 };
 
 /// Bitwise operators for @c Arch

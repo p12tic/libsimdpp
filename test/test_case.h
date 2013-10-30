@@ -43,7 +43,7 @@ class TestCase {
 public:
 
     // Types of 16-bit vectors
-    enum Type : uint8_t {
+    enum Type {
         // 16-bit number
         TYPE_UINT16 = 0,
         // 16-byte vector
