@@ -43,14 +43,14 @@ public:
     };
 
     TestResults(const char* arch) :
-        arch_{arch}
+        arch_(arch)
     {
     }
 
     TestCase& new_test_case(const char* name, const char* file)
     {
         unsigned id = test_cases_.size();
-        test_cases_.push_back(TestCaseCont{id, TestCase{name, file}});
+        test_cases_.push_back(TestCaseCont(id, TestCase(name, file)));
         return test_cases_.back().test_case;
     }
 

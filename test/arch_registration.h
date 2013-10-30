@@ -46,7 +46,10 @@ public:
 
     ArchRegistration(TestFunction fn, const char* arch)
     {
-        arch_list().push_back(Arch{fn, arch});
+        Arch a;
+        a.run = fn;
+        a.arch = arch;
+        arch_list().push_back(a);
     }
 
     static ArchList& arch_list();
