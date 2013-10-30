@@ -43,10 +43,10 @@ num_args = 10
     $ret_type$ - the return type -- 'void' if $ret_param$ not defined,
         $ret_param$ minus the preceding comma otherwise.
     $return$ - 'return ' if $ret_type$ is not 'void'
-    $types$ - the dispatched function parameter types.
+    $types$ - a comma-separated list of dispatched function parameter types.
     $types_vars$ - same as $types$, just each type is followed with some
         identifier
-    $vars$ - the list of identifiers referred to by $types_vars$
+    $vars$ - a comma-separated list of identifiers referred to by $types_vars$
     $n$ - identifies the backslash character
 '''
 
@@ -61,9 +61,10 @@ struct simdpp_ ## NAME ## _tag;                                             $n$
 template_fn = '''
 $ret_type$ NAME($types_vars$)                                               $n$
 {                                                                           $n$
+    using FunPtr = $ret_type$(*)($types$);                                  $n$
     using Tag = simdpp_ ## NAME ## _tag;                                    $n$
     $return$ ::simdpp::detail::Dispatcher<                                  $n$
-        Tag,$ret_type$$type_params$                                         $n$
+        Tag,FunPtr                                                          $n$
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)($vars$);                          $n$
 }                                                                           $n$
                                                                             $n$'''
@@ -72,7 +73,7 @@ template_registration = '''
 namespace SIMDPP_ARCH_NAMESPACE {                                           $n$
                                                                             $n$
 static ::simdpp::detail::DispatchRegistrator<                               $n$
-        simdpp_ ## NAME ## _tag,$ret_type$$type_params$                     $n$
+        simdpp_ ## NAME ## _tag,$ret_type$(*)($types$)                      $n$
 > simdpp_dispatch_registrator_ ## NAME (                                    $n$
         ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),               $n$
         static_cast<$ret_type$(*)($types$)>(&NAME));                        $n$

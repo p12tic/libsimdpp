@@ -122,13 +122,12 @@ inline unsigned select_version_any(std::vector<FnVersion>& versions,
 
 
 /*  Tracks versions of one particular function. @a Tag must be an unique type
-    for each different function. The same @a Tag, @a R and @a Args... must
-    be used when registering versions of the function to be dispatched.
+    for each different function. The same @a Tag and @a FunPtr must be used
+    when registering versions of the function to be dispatched.
 */
-template<class Tag, class R, class... Args>
+template<class Tag, class FunPtr>
 class Dispatcher {
 public:
-    using FunPtr = R(*)(Args...);
 
     /** Returns a pointer to the most efficient function for the current
         architecture. This function must not be called before initialization of
@@ -196,17 +195,15 @@ private:
 };
 
 /*  Registers a version of a function. @a Tag must be an unique type for each
-    function with different name. The same @a Tag, @a Ret and @a Args... must
-    be used when registering versions of the function to be dispatched.
+    function with different name. The same @a Tag and @a FunPtr must be used
+    when registering versions of the function to be dispatched.
 */
-template<class Tag, class R, class... Args>
+template<class Tag, class FunPtr>
 class DispatchRegistrator {
 public:
-    using FunPtr = R(*)(Args...);
-
     DispatchRegistrator(Arch this_compile_info, FunPtr f)
     {
-        Dispatcher<Tag,R,Args...>::add_fun_ptr(this_compile_info, f);
+        Dispatcher<Tag,FunPtr>::add_fun_ptr(this_compile_info, f);
     }
 };
 
