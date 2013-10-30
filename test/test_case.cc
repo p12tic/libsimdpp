@@ -146,7 +146,7 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned prec)
         T ia = *a++;
         T ib = *b++;
         for (unsigned i = 0; i < prec; i++) {
-            ia = std::nextafter(ia, ib);
+            ia = nextafter(ia, ib);
         }
         if (ia != ib) {
             return false;

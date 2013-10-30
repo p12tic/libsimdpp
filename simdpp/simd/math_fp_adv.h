@@ -39,6 +39,7 @@
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     #include <cmath>
+    #include <math.h>
     #include <simdpp/null/foreach.h>
     #include <simdpp/null/math.h>
 #endif
@@ -934,7 +935,7 @@ inline float32x4 trunc(float32x4 a)
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     float32x4 r;
     for (unsigned i = 0; i < 4; ++i) {
-        r[i] = std::trunc(a[i]);
+        r[i] = (a[i] > 0) ? std::floor(a[i]) : std::ceil(a[i]);
     }
     return r;
 #elif SIMDPP_USE_SSE4_1

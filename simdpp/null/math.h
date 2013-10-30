@@ -169,7 +169,7 @@ V fmadd(V a, V b, V c)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = std::fma(a[i], b[i], c[i]);
+        r[i] = fma(a[i], b[i], c[i]);
     }
     return r;
 }
@@ -179,7 +179,7 @@ V fmsub(V a, V b, V c)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = std::fma(a[i], b[i], -c[i]);
+        r[i] = fma(a[i], b[i], -c[i]);
     }
     return r;
 }
