@@ -54,9 +54,9 @@ public:
     static const unsigned num_bits = 64;
     static const uint_element_type all_bits = 0xffffffffffffffff;
 
-    int128() = default;
-    int128(const int128 &) = default;
-    int128 &operator=(const int128 &) = default;
+    int128() {}
+    int128(const int128& d) { std::memcpy(this, &d, sizeof(*this)); }
+    int128& operator=(const int128& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type

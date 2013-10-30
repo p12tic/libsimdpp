@@ -58,9 +58,9 @@ public:
     static const unsigned num_bits = 32;
     static const uint_element_type all_bits = 0xffffffff;
 
-    float32x4() = default;
-    float32x4(const float32x4&) = default;
-    float32x4& operator=(const float32x4&) = default;
+    float32x4() {}
+    float32x4(const float32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
+    float32x4& operator=(const float32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
@@ -186,7 +186,10 @@ private:
 #elif SIMDPP_USE_ALTIVEC
     __vector float d_;
 #elif SIMDPP_USE_NULL
-    float f32_[4];
+    union {
+        float f32_[4];
+        struct { float f[4]; } d_;
+    };
 #endif
 };
 
@@ -195,10 +198,9 @@ class mask_float32x4 {
 public:
     static const unsigned length = 4;
 
-    mask_float32x4() = default;
-    mask_float32x4(const mask_float32x4 &) = default;
-    mask_float32x4 &operator=(const mask_float32x4 &) = default;
-
+    mask_float32x4() {}
+    mask_float32x4(const mask_float32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
+    mask_float32x4& operator=(const mask_float32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 

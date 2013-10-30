@@ -60,9 +60,9 @@ public:
     static const unsigned num_bits = 64;
     static const uint_element_type all_bits = 0xffffffffffffffff;
 
-    basic_int64x4() = default;
-    basic_int64x4(const basic_int64x4 &) = default;
-    basic_int64x4 &operator=(const basic_int64x4 &) = default;
+    basic_int64x4() {}
+    basic_int64x4(const basic_int64x4& d) { std::memcpy(this, &d, sizeof(*this)); }
+    basic_int64x4& operator=(const basic_int64x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from base type
@@ -101,9 +101,9 @@ public:
     typedef int64_t element_type;
     typedef int64x2 half_vector_type;
 
-    int64x4() = default;
-    int64x4(const int64x4 &) = default;
-    int64x4 &operator=(const int64x4 &) = default;
+    int64x4() {}
+    int64x4(const int64x4& d) { std::memcpy(this, &d, sizeof(*this)); }
+    int64x4& operator=(const int64x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -202,9 +202,9 @@ public:
 
     typedef uint64x2 half_vector_type;
 
-    uint64x4() = default;
-    uint64x4(const uint64x4 &) = default;
-    uint64x4 &operator=(const uint64x4 &) = default;
+    uint64x4() {}
+    uint64x4(const uint64x4& d) { std::memcpy(this, &d, sizeof(*this)); }
+    uint64x4& operator=(const uint64x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -303,9 +303,9 @@ class mask_int64x4 {
 public:
     static const unsigned length = 4;
 
-    mask_int64x4() = default;
-    mask_int64x4(const mask_int64x4 &) = default;
-    mask_int64x4 &operator=(const mask_int64x4 &) = default;
+    mask_int64x4() {}
+    mask_int64x4(const mask_int64x4& d) { std::memcpy(this, &d, sizeof(*this)); }
+    mask_int64x4& operator=(const mask_int64x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX2

@@ -604,6 +604,7 @@ struct SimdppCompileAssert {};
     { typedef SimdppCompileAssert<(bool)(expr)> simdpp_static_assert[(bool)(expr) ? 1 : -1]; simdpp_static_assert x; (void) x; }
 
 #include <cstdlib>
+#include <cstring>
 
 #include <simdpp/simd/fwd.h>
 

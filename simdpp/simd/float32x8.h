@@ -60,9 +60,9 @@ public:
     static const unsigned num_bits = 32;
     static const uint_element_type all_bits = 0xffffffff;
 
-    float32x8() = default;
-    float32x8(const float32x8&) = default;
-    float32x8& operator=(const float32x8&) = default;
+    float32x8() {}
+    float32x8(const float32x8& d) { std::memcpy(this, &d, sizeof(*this)); }
+    float32x8& operator=(const float32x8& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
@@ -184,9 +184,9 @@ class mask_float32x8 {
 public:
     static const unsigned length = 8;
 
-    mask_float32x8() = default;
-    mask_float32x8(const mask_float32x8 &) = default;
-    mask_float32x8 &operator=(const mask_float32x8 &) = default;
+    mask_float32x8() {}
+    mask_float32x8(const mask_float32x8& d) { std::memcpy(this, &d, sizeof(*this)); }
+    mask_float32x8& operator=(const mask_float32x8& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX

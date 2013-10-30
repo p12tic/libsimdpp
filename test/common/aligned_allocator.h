@@ -50,15 +50,14 @@ public:
     typedef std::size_t size_type;
     typedef std::ptrdiff_t difference_type;
 
-    AlignedAllocator() = default;
-    AlignedAllocator(const AlignedAllocator&) = default;
+    AlignedAllocator() {}
+    AlignedAllocator(const AlignedAllocator&) {}
 
     template<class U>
     AlignedAllocator(const AlignedAllocator<U,A>&) {}
 
-    ~AlignedAllocator() = default;
+    ~AlignedAllocator() {}
 
-    AlignedAllocator& operator=(const AlignedAllocator&) = delete;
 
     template<class U>
     struct rebind {
@@ -76,8 +75,8 @@ public:
     }
 
     // stateless
-    bool operator!=(const AlignedAllocator& other) const { return false; }
-    bool operator==(const AlignedAllocator& other) const { return true; }
+    bool operator!=(const AlignedAllocator&) const { return false; }
+    bool operator==(const AlignedAllocator&) const { return true; }
 
     void construct(T* p, const T& t) const
     {
@@ -135,6 +134,9 @@ public:
         (void) hint;
         return allocate(n);
     }
+private:
+    AlignedAllocator& operator=(const AlignedAllocator&); // = delete
+
 };
 
 #endif

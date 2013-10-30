@@ -51,8 +51,8 @@ public:
     typedef typename V::element_type element_type;
     static const unsigned length = V::length;
 
-    mem_block() = default;
-    mem_block(const mem_block&) = default;
+    mem_block() {}
+    mem_block(const mem_block& d) { std::memcpy(d_, &d, sizeof(d)); }
     mem_block(V v) { std::memcpy(d_, &v, sizeof(v)); }
 
     operator V() const { V r; std::memcpy(&r, d_, sizeof(r)); return r; }
