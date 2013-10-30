@@ -42,13 +42,13 @@ private:
     //SIMDPP_STATIC_ASSERT(!(A & (A - 1)), "A is not a power of two");
 
 public:
-    using value_type = T;
-    using pointer = T*;
-    using const_pointer = const T*;
-    using reference = T&;
-    using const_reference = const T&;
-    using size_type = std::size_t;
-    using difference_type = std::ptrdiff_t;
+    typedef T value_type;
+    typedef T* pointer;
+    typedef const T* const_pointer;
+    typedef T& reference;
+    typedef const T& const_reference;
+    typedef std::size_t size_type;
+    typedef std::ptrdiff_t difference_type;
 
     AlignedAllocator() = default;
     AlignedAllocator(const AlignedAllocator&) = default;
@@ -62,7 +62,7 @@ public:
 
     template<class U>
     struct rebind {
-        using other = AlignedAllocator<U,A>;
+        typedef AlignedAllocator<U,A> other;
     };
 
     T* address(T& x) const

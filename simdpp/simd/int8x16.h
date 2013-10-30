@@ -47,11 +47,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 class basic_int8x16 : public int128 {
 public:
 
-    using element_type = uint8_t;
-    using uint_element_type = uint8_t;
-    using int_vector_type = basic_int8x16;
-    using uint_vector_type = uint8x16;
-    using mask_type = mask_int8x16;
+    typedef uint8_t element_type;
+    typedef uint8_t uint_element_type;
+    typedef basic_int8x16 int_vector_type;
+    typedef uint8x16 uint_vector_type;
+    typedef mask_int8x16 mask_type;
 
     static const unsigned length = 16;
     static const unsigned num_bits = 8;
@@ -99,7 +99,7 @@ public:
 class int8x16 : public basic_int8x16 {
 public:
 
-    using element_type = int8_t;
+    typedef int8_t element_type;
 
     int8x16() = default;
     int8x16(const int8x16 &) = default;

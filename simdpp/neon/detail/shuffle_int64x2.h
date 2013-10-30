@@ -42,13 +42,18 @@ namespace shuffle_int64x2 {
     The code below implements generalized permutations of elements within
     int64x2 vectors using half-vector move instructions available on NEON.
 */
-using _0 = std::integral_constant<unsigned, 0>;
-using _1 = std::integral_constant<unsigned, 1>;
-using _2 = std::integral_constant<unsigned, 2>;
-using _3 = std::integral_constant<unsigned, 3>;
-using T = basic_int64x2;    // full vector
-using H = uint64x1_t;       // half vector
+template<class T, T v>
+struct integral_constant
+{
+    static const T value = v;
+};
 
+typedef integral_constant<unsigned, 0> _1;
+typedef integral_constant<unsigned, 1> _2;
+typedef integral_constant<unsigned, 2> _3;
+typedef integral_constant<unsigned, 3> _4;
+typedef basic_int64x2 T;    // full vector
+typedef uint64x1_t H;       // half vector
 
 /// Returns the lower/higher part of a vector. Cost: 0
 inline H lo(T a)   { return vget_low_u64(a); }

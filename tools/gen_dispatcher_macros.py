@@ -61,8 +61,8 @@ struct simdpp_ ## NAME ## _tag;                                             $n$
 template_fn = '''
 $ret_type$ NAME($types_vars$)                                               $n$
 {                                                                           $n$
-    using FunPtr = $ret_type$(*)($types$);                                  $n$
-    using Tag = simdpp_ ## NAME ## _tag;                                    $n$
+    typedef $ret_type$(*FunPtr)($types$);                                   $n$
+    typedef simdpp_ ## NAME ## _tag Tag;                                    $n$
     $return$ ::simdpp::detail::Dispatcher<                                  $n$
         Tag,FunPtr                                                          $n$
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)($vars$);                          $n$

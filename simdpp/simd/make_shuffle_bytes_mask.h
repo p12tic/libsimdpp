@@ -80,9 +80,9 @@ private:
     uint8_t d[N];
 };
 
-using uint8x2 = uint8_array<2>;
-using uint8x4 = uint8_array<4>;
-using uint8x8 = uint8_array<8>;
+typedef uint8_array<2> uint8x2;
+typedef uint8_array<4> uint8x4;
+typedef uint8_array<8> uint8x8;
 
 /// s - selector, u - the number of elements per group
 template<int s, int u>

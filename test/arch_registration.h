@@ -36,13 +36,13 @@
 class ArchRegistration {
 public:
 
-    using TestFunction = std::function<void(TestResults&)>;
+    typedef std::function<void(TestResults&)> TestFunction;
 
     struct Arch {
         TestFunction run;
         const char* arch;
     };
-    using ArchList = std::vector<Arch>;
+    typedef std::vector<Arch> ArchList;
 
     ArchRegistration(TestFunction fn, const char* arch)
     {

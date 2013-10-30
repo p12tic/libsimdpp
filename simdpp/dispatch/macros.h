@@ -76,8 +76,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME()                                                                   \
 {                                                                             \
-    using FunPtr = void(*)();                                                 \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)();                                                  \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)();                                  \
@@ -99,8 +99,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1)                                                              \
 {                                                                             \
-    using FunPtr = void(*)(T1);                                               \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1);                                                \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1);                                \
@@ -122,8 +122,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2)                                                        \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2);                                            \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2);                                             \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2);                             \
@@ -145,8 +145,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3)                                                  \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3);                                         \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2,T3);                                          \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3);                          \
@@ -168,8 +168,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4)                                            \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4);                                      \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2,T3,T4);                                       \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4);                       \
@@ -191,8 +191,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5)                                      \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5);                                   \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5);                                    \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5);                    \
@@ -214,8 +214,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6)                                \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6);                                \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6);                                 \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6);                 \
@@ -237,8 +237,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7)                          \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6,T7);                             \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6,T7);                              \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6,a7);              \
@@ -260,8 +260,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8)                    \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6,T7,T8);                          \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8);                           \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6,a7,a8);           \
@@ -283,8 +283,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8,T9 a9)              \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                       \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                        \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
      ::simdpp::detail::Dispatcher<                                            \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6,a7,a8,a9);        \
@@ -306,8 +306,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME()                                                                      \
 {                                                                             \
-    using FunPtr = R(*)();                                                    \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)();                                                     \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)();                                  \
@@ -329,8 +329,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1)                                                                 \
 {                                                                             \
-    using FunPtr = R(*)(T1);                                                  \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1);                                                   \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1);                                \
@@ -352,8 +352,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2)                                                           \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2);                                               \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2);                                                \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2);                             \
@@ -375,8 +375,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3)                                                     \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3);                                            \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2,T3);                                             \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3);                          \
@@ -398,8 +398,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4)                                               \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4);                                         \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2,T3,T4);                                          \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4);                       \
@@ -421,8 +421,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5)                                         \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5);                                      \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5);                                       \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5);                    \
@@ -444,8 +444,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6)                                   \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6);                                   \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6);                                    \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6);                 \
@@ -467,8 +467,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7)                             \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6,T7);                                \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6,T7);                                 \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6,a7);              \
@@ -490,8 +490,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8)                       \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6,T7,T8);                             \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8);                              \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6,a7,a8);           \
@@ -513,8 +513,8 @@ struct simdpp_ ## NAME ## _tag;                                               \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8,T9 a9)                 \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                          \
-    using Tag = simdpp_ ## NAME ## _tag;                                      \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                           \
+    typedef simdpp_ ## NAME ## _tag Tag;                                      \
     return ::simdpp::detail::Dispatcher<                                      \
         Tag,FunPtr                                                            \
     >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)(a1,a2,a3,a4,a5,a6,a7,a8,a9);        \

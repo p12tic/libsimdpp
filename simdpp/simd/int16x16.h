@@ -48,12 +48,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
 class basic_int16x16 : public int256 {
 public:
 
-    using element_type = uint16_t;
-    using uint_element_type = uint16_t;
-    using int_vector_type = basic_int16x16;
-    using uint_vector_type = uint16x16;
-    using half_vector_type = basic_int16x8;
-    using mask_type = mask_int16x16;
+    typedef uint16_t element_type;
+    typedef uint16_t uint_element_type;
+    typedef basic_int16x16 int_vector_type;
+    typedef uint16x16 uint_vector_type;
+    typedef basic_int16x8 half_vector_type;
+    typedef mask_int16x16 mask_type;
 
     static const unsigned length = 16;
     static const unsigned num_bits = 16;
@@ -91,8 +91,8 @@ public:
 class int16x16 : public basic_int16x16 {
 public:
 
-    using element_type = int16_t;
-    using half_vector_type = int16x8;
+    typedef int16_t element_type;
+    typedef int16x8 half_vector_type;
 
     int16x16() = default;
     int16x16(const int16x16 &) = default;
@@ -207,7 +207,7 @@ public:
 class uint16x16 : public basic_int16x16 {
 public:
 
-    using half_vector_type = uint16x8;
+    typedef uint16x8 half_vector_type;
 
     uint16x16() = default;
     uint16x16(const uint16x16 &) = default;

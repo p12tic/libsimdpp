@@ -49,11 +49,11 @@ class basic_int64x2;
 class float64x2 {
 public:
 
-    using element_type = double;
-    using uint_element_type = uint64_t;
-    using int_vector_type = basic_int64x2;
-    using uint_vector_type = uint64x2;
-    using mask_type = mask_float64x2;
+    typedef double element_type;
+    typedef uint64_t uint_element_type;
+    typedef basic_int64x2 int_vector_type;
+    typedef uint64x2 uint_vector_type;
+    typedef mask_float64x2 mask_type;
 
     static const unsigned length = 2;
     static const unsigned num_bits = 64;

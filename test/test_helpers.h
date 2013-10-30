@@ -274,7 +274,7 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
 #define TEST_PUSH16X2_1(TC,T,OP,Q1)                                     \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1)), __LINE__);                  \
-    using H = typename T::half_vector_type;                     \
+    typedef T::half_vector_type H;                                      \
     test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)))), __LINE__);  \
 }
 
@@ -282,7 +282,7 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
 #define TEST_PUSH16X2_2(TC,T,OP,Q1,Q2)                                  \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2)), __LINE__);            \
-    using H = typename T::half_vector_type;                             \
+    typedef T::half_vector_type H;                                      \
     test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)),               \
                                       tst_ext_half((Q2)))), __LINE__);  \
 }
@@ -291,7 +291,7 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
 #define TEST_PUSH16X2_3(TC,T,OP,Q1,Q2,Q3)                               \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2), (Q3)), __LINE__);      \
-    using H = typename T::half_vector_type;                             \
+    typedef T::half_vector_type H;                                      \
     test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)),               \
                                       tst_ext_half((Q2)),               \
                                       tst_ext_half((Q3)))), __LINE__);  \

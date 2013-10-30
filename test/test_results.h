@@ -75,11 +75,11 @@ private:
 
 inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream& err)
 {
-    using TestCaseCont = TestResults::TestCaseCont;
-    using CaseContPair = std::pair<std::reference_wrapper<const TestCaseCont>,
-                                   std::reference_wrapper<const TestCaseCont>>;
+    typedef TestResults::TestCaseCont TestCaseCont;
+    typedef std::pair<std::reference_wrapper<const TestCaseCont>,
+                      std::reference_wrapper<const TestCaseCont>> CaseContPair;
 
-    using CaseContRef = std::reference_wrapper<const TestCaseCont>;
+    typedef std::reference_wrapper<const TestCaseCont> CaseContRef;
 
     auto case_cont_cmp = [](const TestCaseCont& lhs, const TestCaseCont& rhs)
     {

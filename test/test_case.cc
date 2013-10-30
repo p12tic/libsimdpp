@@ -89,9 +89,9 @@ unsigned TestCase::precision_for_result(const Result& res)
     }
 }
 
-template<class T> struct fix_char_type { using type = T; };
-template<> struct fix_char_type<uint8_t> { using type = int; };
-template<> struct fix_char_type<int8_t> { using type = int; };
+template<class T> struct fix_char_type { typedef T type; };
+template<> struct fix_char_type<uint8_t> { typedef int type; };
+template<> struct fix_char_type<int8_t> { typedef int type; };
 
 template<unsigned width, unsigned num_elems, class T>
 void fmt_vec_hex(std::ostream& err, const char* prefix, const T* p)

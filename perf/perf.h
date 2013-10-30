@@ -148,7 +148,7 @@ inline V perf_one_iteration(BinaryTag, V v1, V v2, V c1, V c2, F f)
 template<class V, class Tag, class F>
 inline void perf_cycle(Tag, unsigned count, F f)
 {
-    using E = typename V::element_type;
+    typedef typename V::element_type E;
     const unsigned length = V::length;
 
     unsigned z = 0;

@@ -45,7 +45,7 @@ namespace simdpp {
     @{
 */
 
-using GetArchCb = std::function<Arch()>;
+typedef std::function<Arch()> GetArchCb;
 
 /** @def SIMDPP_USER_ARCH_INFO
     The user must define this macro if he wants to use the dispatcher
@@ -74,7 +74,7 @@ s
 
 namespace detail {
 
-using VoidFunPtr = void (*)();
+typedef void (*)(VoidFunPtr);
 
 struct FnVersion {
     /*  Identifies the instruction support that is needed for this version to

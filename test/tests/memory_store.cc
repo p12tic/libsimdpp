@@ -36,7 +36,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned vnum>
 void test_store_helper(TestCase& tc, V* sv)
 {
-    using E = typename V::element_type;
+    typedef typename V::element_type E;
 
     union {
         E rdata[V::length * vnum];

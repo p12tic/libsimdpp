@@ -28,8 +28,6 @@
 #ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT32x4_H
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT32x4_H
 
-#include <type_traits>
-
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -42,13 +40,18 @@ namespace shuffle_int32x4 {
     The code below implements generalized permutations of elements within
     int32x4 vectors using various shuffling instructions available on NEON.
 */
-using _0 = std::integral_constant<unsigned, 0>;
-using _1 = std::integral_constant<unsigned, 1>;
-using _2 = std::integral_constant<unsigned, 2>;
-using _3 = std::integral_constant<unsigned, 3>;
-using T = basic_int32x4;    // full vector
-using H = uint32x2_t;       // half vector
+template<class T, T v>
+struct integral_constant
+{
+    static const T value = v;
+};
 
+typedef integral_constant<unsigned, 0> _1;
+typedef integral_constant<unsigned, 1> _2;
+typedef integral_constant<unsigned, 2> _3;
+typedef integral_constant<unsigned, 3> _4;
+typedef basic_int32x4 T;    // full vector
+typedef uint32x2_t H;       // half vector
 
 /// Returns the lower/higher part of a vector. Cost: 0
 inline H lo(T a)   { return vget_low_u32(a); }

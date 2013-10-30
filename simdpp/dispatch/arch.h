@@ -83,33 +83,33 @@ enum class Arch : std::uint32_t {
 /// @{
 inline Arch& operator|=(Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    typedef uint32_t T;
     x = static_cast<Arch>(static_cast<T>(x) | static_cast<T>(y));
     return x;
 }
 
 inline Arch& operator&=(Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    typedef uint32_t T;
     x = static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
     return x;
 }
 
 inline Arch operator|(const Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    typedef uint32_t T;
     return static_cast<Arch>(static_cast<T>(x) | static_cast<T>(y));
 }
 
 inline Arch operator&(const Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    typedef uint32_t T;
     return static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
 }
 
 inline Arch operator~(const Arch& x)
 {
-    using T = std::uint32_t;
+    typedef uint32_t T;
     return static_cast<Arch>(~static_cast<T>(x));
 }
 /// @}

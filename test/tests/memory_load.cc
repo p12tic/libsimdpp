@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned vnum>
 void test_load_helper(TestCase& tc, void* sv_p)
 {
-    using E = typename V::element_type;
+    typedef typename V::element_type E;
     auto sdata = reinterpret_cast<E*>(sv_p);
 
     V rv[vnum];

@@ -46,9 +46,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// Base class for all 128-bit integer objects
 class int128 {
 public:
-    using element_type = uint64_t;
-    using uint_element_type = uint64_t;
-    using int_vector_type = int128;
+    typedef uint64_t element_type;
+    typedef uint64_t uint_element_type;
+    typedef int128 int_vector_type;
 
     static const unsigned length = 2;
     static const unsigned num_bits = 64;

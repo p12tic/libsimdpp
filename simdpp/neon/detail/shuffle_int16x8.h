@@ -30,7 +30,6 @@
 
 #include <simdpp/simd/make_shuffle_bytes_mask.h>
 #include <simdpp/simd/shuffle_bytes.h>
-#include <type_traits>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -49,12 +48,18 @@ namespace shuffle_int16x8 {
     Note: the compiler should optimize all masks into one VMOV #imm instruction
 */
 
-using _0 = std::integral_constant<unsigned, 0>;
-using _1 = std::integral_constant<unsigned, 1>;
-using _2 = std::integral_constant<unsigned, 2>;
-using _3 = std::integral_constant<unsigned, 3>;
-using T = basic_int16x8;    // full vector
-using H = uint16x4_t;       // half vector
+template<class T, T v>
+struct integral_constant
+{
+    static const T value = v;
+};
+
+typedef integral_constant<unsigned, 0> _1;
+typedef integral_constant<unsigned, 1> _2;
+typedef integral_constant<unsigned, 2> _3;
+typedef integral_constant<unsigned, 3> _4;
+typedef basic_int16x8 T;    // full vector
+typedef uint16x4_t H;       // half vector
 
 /// Cost: 2
 template<unsigned n>

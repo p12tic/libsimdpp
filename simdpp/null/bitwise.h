@@ -47,8 +47,8 @@ template<class V>
 V bit_and(V a, V b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
@@ -82,8 +82,8 @@ template<class V>
 V bit_andnot(V a, V b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
@@ -117,8 +117,8 @@ template<class V>
 V bit_or(V a, V b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);
@@ -141,8 +141,8 @@ template<class V>
 V bit_xor(V a, V b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a[i]);
         U b1 = bit_cast<U, E>(b[i]);

@@ -48,11 +48,11 @@ class basic_int32x4;
 class float32x4 {
 public:
 
-    using element_type = float;
-    using uint_element_type = uint32_t;
-    using int_vector_type = basic_int32x4;
-    using uint_vector_type = uint32x4;
-    using mask_type = mask_float32x4;
+    typedef float element_type;
+    typedef uint32_t uint_element_type;
+    typedef basic_int32x4 int_vector_type;
+    typedef uint32x4 uint_vector_type;
+    typedef mask_float32x4 mask_type;
 
     static const unsigned length = 4;
     static const unsigned num_bits = 32;

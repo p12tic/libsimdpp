@@ -538,15 +538,15 @@ inline void transpose4(basic_int16x16& a0, basic_int16x16& a1,
 namespace detail {
 
 template<class V> struct dbl_length_vector;
-template<> struct dbl_length_vector<basic_int32x4> { using type = basic_int64x2; };
-template<> struct dbl_length_vector<basic_int32x8> { using type = basic_int64x4; };
-template<> struct dbl_length_vector<float32x4> { using type = float64x2; };
-template<> struct dbl_length_vector<float32x8> { using type = float64x4; };
+template<> struct dbl_length_vector<basic_int32x4> { typedef basic_int64x2 type; };
+template<> struct dbl_length_vector<basic_int32x8> { typedef basic_int64x4 type; };
+template<> struct dbl_length_vector<float32x4> { typedef float64x2 type; };
+template<> struct dbl_length_vector<float32x8> { typedef float64x4 type; };
 
 template<class V>
 void sse_transpose4x32_impl(V& a0, V& a1, V& a2, V& a3)
 {
-    using Z = typename dbl_length_vector<V>::type;
+    typedef typename dbl_length_vector<V>::type Z;
     Z b0, b1, b2, b3;
     // [a0,a1,a2,a3]
     // [b0,b1,b2,b3]

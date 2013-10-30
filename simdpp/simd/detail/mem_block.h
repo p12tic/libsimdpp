@@ -48,7 +48,7 @@ namespace detail {
 template<class V>
 class mem_block {
 public:
-    using element_type = typename V::element_type;
+    typedef typename V::element_type element_type;
     static const unsigned length = V::length;
 
     mem_block() = default;

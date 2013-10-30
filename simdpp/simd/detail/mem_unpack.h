@@ -96,7 +96,7 @@ inline void mem_unpack2(float64x4& a, float64x4& b)         { mem_unpack2_256_im
 template<class T> void mem_unpack3_impl8(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
+    typedef typename T::uint_vector_type U;
 
     // [a0, b0, c0, a1, b1, c1, a2, b2, c2, a3, b3, c3, a4, b4, c4, a5 ]
     // [b5, c5, a6, b6, c6, a7, b7, c7, a8, b8, c8, a9, b9, c9, a10,b10]
@@ -174,7 +174,7 @@ template<class T> void mem_unpack3_impl8(T& a, T& b, T& c)
 template<class T> void mem_unpack3_impl16(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
+    typedef typename T::uint_vector_type U;
 
     // [a0,b0,c0,a1,b1,c1,a2,b2]
     // [c2,a3,b3,c3,a4,b4,c4,a5]
@@ -243,7 +243,7 @@ template<class T> void mem_unpack3_impl16(T& a, T& b, T& c)
 template<class T> void mem_unpack3_impl32(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
+    typedef typename T::uint_vector_type U;
 
     // [a0,b0,c0,a1]
     // [b1,c1,a2,b2]
