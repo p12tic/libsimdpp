@@ -230,26 +230,26 @@ void test_shuffle(TestResults& res)
     v.reset();
 
     for (unsigned el = 0; el < 16; el++) {
-        v.u8[0] = uint8x16::zero();
-
-        v.c[el] = 0xff;
-        TEST_PUSH(tc, uint16_t, extract_bits_any(v.u8[0]));
-        v.c[el] = 1 << 0;
-        TEST_PUSH(tc, uint16_t, extract_bits<0>(v.u8[0]));
-        v.c[el] = 1 << 1;
-        TEST_PUSH(tc, uint16_t, extract_bits<1>(v.u8[0]));
-        v.c[el] = 1 << 2;
-        TEST_PUSH(tc, uint16_t, extract_bits<2>(v.u8[0]));
-        v.c[el] = 1 << 3;
-        TEST_PUSH(tc, uint16_t, extract_bits<3>(v.u8[0]));
-        v.c[el] = 1 << 4;
-        TEST_PUSH(tc, uint16_t, extract_bits<4>(v.u8[0]));
-        v.c[el] = 1 << 5;
-        TEST_PUSH(tc, uint16_t, extract_bits<5>(v.u8[0]));
-        v.c[el] = 1 << 6;
-        TEST_PUSH(tc, uint16_t, extract_bits<6>(v.u8[0]));
-        v.c[el] = 1 << 7;
-        TEST_PUSH(tc, uint16_t, extract_bits<7>(v.u8[0]));
+        simdpp::SIMDPP_ARCH_NAMESPACE::detail::mem_block<uint8x16> mu;
+        mu = uint8x16::zero();
+        mu[el] = 0xff;
+        TEST_PUSH(tc, uint16_t, extract_bits_any(uint16x8(mu)));
+        mu[el] = 1 << 0;
+        TEST_PUSH(tc, uint16_t, extract_bits<0>(uint16x8(mu)));
+        mu[el] = 1 << 1;
+        TEST_PUSH(tc, uint16_t, extract_bits<1>(uint16x8(mu)));
+        mu[el] = 1 << 2;
+        TEST_PUSH(tc, uint16_t, extract_bits<2>(uint16x8(mu)));
+        mu[el] = 1 << 3;
+        TEST_PUSH(tc, uint16_t, extract_bits<3>(uint16x8(mu)));
+        mu[el] = 1 << 4;
+        TEST_PUSH(tc, uint16_t, extract_bits<4>(uint16x8(mu)));
+        mu[el] = 1 << 5;
+        TEST_PUSH(tc, uint16_t, extract_bits<5>(uint16x8(mu)));
+        mu[el] = 1 << 6;
+        TEST_PUSH(tc, uint16_t, extract_bits<6>(uint16x8(mu)));
+        mu[el] = 1 << 7;
+        TEST_PUSH(tc, uint16_t, extract_bits<7>(uint16x8(mu)));
     }
 
 }
