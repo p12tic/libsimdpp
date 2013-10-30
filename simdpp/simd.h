@@ -654,6 +654,9 @@
 
 namespace simdpp {
 using namespace SIMDPP_ARCH_NAMESPACE;
+namespace detail {
+using namespace ::simdpp::SIMDPP_ARCH_NAMESPACE::detail;
+} // namespace detail
 } // namespace simdpp
 
 #endif
