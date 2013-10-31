@@ -138,7 +138,7 @@
     - @c POWER_ALTIVEC:
 
         The POWER Altivec instruction set. 64-bit floating point operations
-        are not supported.
+        are not vectorized.
 
         Macro @c SIMDPP_ARCH_POWER_ALTIVEC.
 
