@@ -183,7 +183,7 @@ inline mask_int64x2 cmp_eq(basic_int64x2 a, basic_int64x2 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_cmpeq_epi64(a, b);
 #elif SIMDPP_USE_SSE2
-    uint64x2 r32, r32s, lo, hi;
+    uint64x2 r32, r32s;
     r32 = cmp_eq(uint32x4(a), uint32x4(b));
     // swap the 32-bit halves
     r32s = bit_or(shift_l<32>(r32), shift_r<32>(r32));
@@ -436,7 +436,7 @@ inline mask_int64x2 cmp_neq(basic_int64x2 a, basic_int64x2 b)
 #elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON
     return bit_not(cmp_eq(a, b));
 #elif SIMDPP_USE_SSE2
-    uint64x2 r32, r32s, lo, hi;
+    uint64x2 r32, r32s;
     r32 = cmp_eq(uint32x4(a), uint32x4(b));
     // swap the 32-bit halves
     r32s = bit_or(shift_l<32>(r32), shift_r<32>(r32));
