@@ -98,28 +98,28 @@ void test_compare(TestResults& res)
 
     //int64x2 not available
 
-    auto nanf = [](){ return std::numeric_limits<float>::quiet_NaN(); };
-    auto nan = [](){ return std::numeric_limits<double>::quiet_NaN(); };
-    auto inff = [](){ return std::numeric_limits<float>::infinity(); };
-    auto inf = [](){ return std::numeric_limits<double>::infinity(); };
+    float nanf = std::numeric_limits<float>::quiet_NaN();
+    double nan = std::numeric_limits<double>::quiet_NaN();
+    float inff = std::numeric_limits<float>::infinity();
+    double inf = std::numeric_limits<double>::infinity();
 
     //float32x8
     {
         float32x8 sl[] = {
-            float32x8::make_const(0.0f, 1.0f, 2.0f, inff()),
-            float32x8::make_const(0.0f, 1.0f, 2.0f, inff()),
-            float32x8::make_const(-0.0f, -1.0f, -2.0f, -inff()),
-            float32x8::make_const(0.0f, 1.0f, -inff(), inff()),
+            float32x8::make_const(0.0f, 1.0f, 2.0f, inff),
+            float32x8::make_const(0.0f, 1.0f, 2.0f, inff),
+            float32x8::make_const(-0.0f, -1.0f, -2.0f, -inff),
+            float32x8::make_const(0.0f, 1.0f, -inff, inff),
             float32x8::make_const(0.0f, 1.0f, -0.0f, -1.0f),
-            float32x8::make_const(nanf(), 0.0, -inff(), inff()),
+            float32x8::make_const(nanf, 0.0, -inff, inff),
         };
         float32x8 sr[] = {
             float32x8::make_const(1.0f, 1.0f, 1.0f, 1.0f),
             float32x8::make_const(-1.0f, -1.0f, -1.0f, -1.0f),
             float32x8::make_const(-1.0f, -1.0f, -1.0f, -1.0f),
-            float32x8::make_const(inff(), inff(), inff(), inff()),
-            float32x8::make_const(nanf(), nanf(), nanf(), nanf()),
-            float32x8::make_const(nanf(), nanf(), nanf(), nanf()),
+            float32x8::make_const(inff, inff, inff, inff),
+            float32x8::make_const(nanf, nanf, nanf, nanf),
+            float32x8::make_const(nanf, nanf, nanf, nanf),
         };
 
         TEST_COMPARE_TESTER_HELPER(tc, float32x8, sl, sr);
@@ -132,19 +132,19 @@ void test_compare(TestResults& res)
     {
         float64x4 sl[] = {
             float64x4::make_const(0.0, 1.0),
-            float64x4::make_const(2.0, inf()),
+            float64x4::make_const(2.0, inf),
             float64x4::make_const(0.0, 1.0),
-            float64x4::make_const(2.0, inf()),
+            float64x4::make_const(2.0, inf),
             float64x4::make_const(-0.0, -1.0),
 
-            float64x4::make_const(-2.0, -inf()),
+            float64x4::make_const(-2.0, -inf),
             float64x4::make_const(0.0, 1.0),
-            float64x4::make_const(-inf(), inf()),
+            float64x4::make_const(-inf, inf),
             float64x4::make_const(0.0, 1.0),
             float64x4::make_const(-0.0, -1.0),
 
-            float64x4::make_const(nan(), 0.0),
-            float64x4::make_const(-inf(), inf()),
+            float64x4::make_const(nan, 0.0),
+            float64x4::make_const(-inf, inf),
         };
         float64x4 sr[] = {
             float64x4::make_const(1.0, 1.0),
@@ -154,13 +154,13 @@ void test_compare(TestResults& res)
             float64x4::make_const(-1.0, -1.0),
 
             float64x4::make_const(-1.0, -1.0),
-            float64x4::make_const(inf(), inf()),
-            float64x4::make_const(inf(), inf()),
-            float64x4::make_const(nan(), nan()),
-            float64x4::make_const(nan(), nan()),
+            float64x4::make_const(inf, inf),
+            float64x4::make_const(inf, inf),
+            float64x4::make_const(nan, nan),
+            float64x4::make_const(nan, nan),
 
-            float64x4::make_const(nan(), nan()),
-            float64x4::make_const(nan(), nan()),
+            float64x4::make_const(nan, nan),
+            float64x4::make_const(nan, nan),
         };
 
         TEST_COMPARE_TESTER_HELPER(tc, float64x4, sl, sr);
