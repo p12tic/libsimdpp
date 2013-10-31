@@ -25,7 +25,7 @@
 #   POSSIBILITY OF SUCH DAMAGE.
 
 cmake_minimum_required(VERSION 2.8.0)
-project(libsimdpp)
+project(libsimdpp98)
 set(PROJECT_VERSION "0.9.3")
 
 set(PKG_NAME "${CMAKE_PROJECT_NAME}")
