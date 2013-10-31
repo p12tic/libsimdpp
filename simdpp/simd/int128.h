@@ -110,18 +110,6 @@ public:
 #endif
     /// @}
 
-    /// @{
-    /// Convert to compatible 128-bit vector type
-#if SIMDPP_USE_SSE2
-    explicit operator __m128()      { return _mm_castsi128_ps(d_); }
-    explicit operator __m128d()     { return _mm_castsi128_pd(d_); }
-#elif SIMDPP_USE_NEON
-    explicit operator float32x4_t() const    { return vreinterpretq_f32_u32(d_); }
-#elif SIMDPP_USE_ALTIVEC
-    explicit operator __vector float() const { return (__vector float)(d_); }
-#endif
-    /// @}
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
     /// For internal use only
