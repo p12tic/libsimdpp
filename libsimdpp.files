@@ -52,6 +52,7 @@ simdpp/null/memory.h
 simdpp/null/set.h
 simdpp/null/shuffle.h
 simdpp/null/transpose.h
+simdpp/simd/detail/align.h
 simdpp/simd/detail/move_signed.h
 simdpp/simd/detail/mem_block.h
 simdpp/simd/detail/width.h

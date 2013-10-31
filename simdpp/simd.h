@@ -617,6 +617,7 @@ struct SimdppCompileAssert {};
 #include <simdpp/simd/float32x4.h>
 
 #include <simdpp/simd/detail/not_implemented.h>
+#include <simdpp/simd/detail/align.h>
 
 #include <simdpp/simd/cache.h>
 #include <simdpp/simd/bitwise.h>
