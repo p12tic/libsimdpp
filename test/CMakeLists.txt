@@ -26,6 +26,8 @@
 
 include_directories(${libsimdpp_SOURCE_DIR})
 
+find_package(Boost 1.53 COMPONENTS thread REQUIRED)
+
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
 set(TEST1_SOURCES
@@ -97,6 +99,8 @@ endmacro()
 
 # ---------------
 
+include_directories(${Boost_INCLUDE_DIRS})
+
 set(TEST_DISPATCHER_SOURCES
     main_dispatcher.cc
 )
@@ -115,7 +119,7 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
     ${TEST_DISPATCHER_SOURCES}
     ${TEST_DISPATCHER_ARCH_GEN_SOURCES}
 )
-target_link_libraries(test_dispatcher pthread)
+target_link_libraries(test_dispatcher pthread ${Boost_LIBRARIES})
 
 set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-g2 -Wall -Wextra")
 

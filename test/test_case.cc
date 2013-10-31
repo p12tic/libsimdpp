@@ -30,7 +30,6 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <type_traits>
 #include <typeinfo>
 #include <cstdlib>
 
@@ -44,8 +43,8 @@ TestCase::TestCase(const char* name, const char* file) :
 
 void TestCase::push(Type type, void* data, unsigned line)
 {
-    results_.emplace_back(type, data, size_for_type(type), line, seq_++,
-                          curr_precision_ulp_);
+    results_.push_back(Result(type, data, size_for_type(type), line, seq_++,
+                              curr_precision_ulp_));
 }
 
 std::size_t TestCase::size_for_type(Type t)
@@ -100,8 +99,7 @@ void fmt_vec_hex(std::ostream& err, const char* prefix, const T* p)
     err.precision(width);
     for (unsigned i = 0; i < num_elems; i++, p++) {
         // chars need to be converted to some other type
-        typename std::make_unsigned<T>::type usg = *p;
-        err << std::setw(width*2) << uint64_t(usg);
+        err << std::setw(width*2) << uint64_t(*p);
         if (i != num_elems - 1) {
             err << " ; ";
         }

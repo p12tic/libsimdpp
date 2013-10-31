@@ -32,9 +32,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <atomic>
+#include <boost/atomic.hpp>
 #include <algorithm>
-#include <mutex>
+#include <boost/thread/once.hpp>
+#include <boost/function.hpp>
 #include <functional>
 #include <vector>
 #include <simdpp/dispatch/arch.h>
@@ -45,7 +46,7 @@ namespace simdpp {
     @{
 */
 
-typedef std::function<Arch()> GetArchCb;
+typedef boost::function<Arch()> GetArchCb;
 
 /** @def SIMDPP_USER_ARCH_INFO
     The user must define this macro if he wants to use the dispatcher
@@ -74,7 +75,7 @@ s
 
 namespace detail {
 
-typedef void (*)(VoidFunPtr);
+typedef void (*VoidFunPtr);
 
 struct FnVersion {
     /*  Identifies the instruction support that is needed for this version to
@@ -95,15 +96,17 @@ struct FnVersion {
     VoidFunPtr fun_ptr;
 };
 
+inline bool version_less(const FnVersion& lhs, const FnVersion& rhs)
+{
+    return lhs.needed_arch > rhs.needed_arch;
+}
+
 inline unsigned select_version_any(std::vector<FnVersion>& versions,
                                    const GetArchCb& get_info_cb)
 {
     // No need to try to be very efficient here.
     Arch arch = get_info_cb();
-    std::sort(versions.begin(), versions.end(),
-              [](const FnVersion& lhs, const FnVersion& rhs) {
-                  return lhs.needed_arch > rhs.needed_arch;
-              });
+    std::sort(versions.begin(), versions.end(), version_less);
 
     unsigned i;
     for (i = 0; i < versions.size(); ++i) {
@@ -120,6 +123,23 @@ inline unsigned select_version_any(std::vector<FnVersion>& versions,
     return i;
 }
 
+template<class Dispatcher>
+struct DispatcherClosureOnce {
+
+    DispatcherClosureOnce(boost::atomic<VoidFunPtr>& void_ptr,
+                          const GetArchCb& cb) :
+        void_ptr_(void_ptr), cb_(cb)
+    {
+    }
+
+    void operator()()
+    {
+        Dispatcher::select_version_impl(void_ptr_, cb_);
+    }
+
+    boost::atomic<VoidFunPtr>& void_ptr_;
+    const GetArchCb& cb_;
+};
 
 /*  Tracks versions of one particular function. @a Tag must be an unique type
     for each different function. The same @a Tag and @a FunPtr must be used
@@ -139,16 +159,16 @@ public:
             local static variables are guaranteed to be initialized to zero
             before main() runs.
         */
-        static std::atomic<FunPtr> static_fun_ptr{nullptr};
+        static boost::atomic<FunPtr> static_fun_ptr(NULL);
 
         /*  We can use relaxed memory ordering since there's only single
             transition of the value stored within @a static_fun_ptr. The body
             of the if statement is already protected from data races.
         */
-        FunPtr fun_ptr = static_fun_ptr.load(std::memory_order_relaxed);
-        if (fun_ptr == nullptr) {
+        FunPtr fun_ptr = static_fun_ptr.load(boost::memory_order_relaxed);
+        if (fun_ptr == NULL) {
             fun_ptr = reinterpret_cast<FunPtr>(select_version(cb));
-            static_fun_ptr.store(fun_ptr, std::memory_order_seq_cst);
+            static_fun_ptr.store(fun_ptr, boost::memory_order_seq_cst);
         }
         return fun_ptr;
     }
@@ -166,6 +186,9 @@ public:
     }
 
 private:
+    template<class D>
+    friend struct DispatcherClosureOnce;
+
     static VoidFunPtr select_version(const GetArchCb& cb)
     {
         /*  This is pretty much the same what we do in @a get_fun_ptr,
@@ -173,13 +196,14 @@ private:
             synchronization overhead only on the first call to the dispatched
             function.
         */
-        static std::once_flag flag;
-        static std::atomic<VoidFunPtr> void_ptr{nullptr};
-        std::call_once(flag, select_version_impl, std::ref(void_ptr), cb);
+        static boost::once_flag flag;
+        static boost::atomic<VoidFunPtr> void_ptr(NULL);
+        DispatcherClosureOnce<Dispatcher> c(void_ptr, cb);
+        boost::call_once(flag, c);
         return void_ptr;
     }
 
-    static void select_version_impl(std::atomic<VoidFunPtr>& fun_ptr,
+    static void select_version_impl(boost::atomic<VoidFunPtr>& fun_ptr,
                                     const GetArchCb& cb)
     {
         std::vector<FnVersion>& v = get_all_versions();

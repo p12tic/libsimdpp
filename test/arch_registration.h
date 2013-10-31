@@ -29,14 +29,14 @@
 #define LIBSIMDPP_TEST_ARCH_REGISTRATION_H
 
 #include "test_results.h"
-#include <functional>
+#include <boost/function.hpp>
 #include <vector>
 #include <utility>
 
 class ArchRegistration {
 public:
 
-    typedef std::function<void(TestResults&)> TestFunction;
+    typedef boost::function<void(TestResults&)> TestFunction;
 
     struct Arch {
         TestFunction run;
