@@ -847,7 +847,7 @@ basic_int8x16 broadcast(basic_int8x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::broadcast_all<s>(a);
+    return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_AVX2
     a = move_l<s>(a);
     return _mm_broadcastb_epi8(a);
@@ -918,7 +918,7 @@ basic_int16x8 broadcast(basic_int16x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::broadcast_all<s>(a);
+    return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_AVX2
     a = move_l<s>(a);
     return _mm_broadcastw_epi16(a);
@@ -990,7 +990,7 @@ basic_int32x4 broadcast(basic_int32x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::broadcast_all<s>(a);
+    return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
     return permute<s,s,s,s>(a);
 #elif SIMDPP_USE_NEON
@@ -1040,7 +1040,7 @@ basic_int64x2 broadcast(basic_int64x2 a)
 {
     static_assert(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::broadcast_all<s>(a);
+    return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
         return permute<0,0>(a);
@@ -1091,7 +1091,7 @@ float32x4 broadcast(float32x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::broadcast_all<s>(a);
+    return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
     return permute<s,s,s,s>(a);
 #elif SIMDPP_USE_NEON
@@ -1141,7 +1141,7 @@ float64x2 broadcast(float64x2 a)
 {
     static_assert(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::broadcast_all<s>(a);
+    return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
         return permute<0,0>(a);
@@ -1185,13 +1185,13 @@ float64x4 broadcast(float64x4 a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int8x16 broadcast_all(basic_int8x16 a)
+basic_int8x16 broadcast_w(basic_int8x16 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int8x32 broadcast_all(basic_int8x32 a)
+basic_int8x32 broadcast_w(basic_int8x32 a)
 {
     static_assert(s < 32, "Access out of bounds");
 #if SIMDPP_USE_AVX2
@@ -1226,13 +1226,13 @@ basic_int8x32 broadcast_all(basic_int8x32 a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int16x8 broadcast_all(basic_int16x8 a)
+basic_int16x8 broadcast_w(basic_int16x8 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int16x16 broadcast_all(basic_int16x16 a)
+basic_int16x16 broadcast_w(basic_int16x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
 #if SIMDPP_USE_AVX2
@@ -1262,13 +1262,13 @@ basic_int16x16 broadcast_all(basic_int16x16 a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int32x4 broadcast_all(basic_int32x4 a)
+basic_int32x4 broadcast_w(basic_int32x4 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int32x8 broadcast_all(basic_int32x8 a)
+basic_int32x8 broadcast_w(basic_int32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
@@ -1299,13 +1299,13 @@ basic_int32x8 broadcast_all(basic_int32x8 a)
     @icost{ALTIVEC, 1-2}
 */
 template<unsigned s>
-basic_int64x2 broadcast_all(basic_int64x2 a)
+basic_int64x2 broadcast_w(basic_int64x2 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int64x4 broadcast_all(basic_int64x4 a)
+basic_int64x4 broadcast_w(basic_int64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
@@ -1332,13 +1332,13 @@ basic_int64x4 broadcast_all(basic_int64x4 a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-float32x4 broadcast_all(float32x4 a)
+float32x4 broadcast_w(float32x4 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-float32x8 broadcast_all(float32x8 a)
+float32x8 broadcast_w(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX
@@ -1368,13 +1368,13 @@ float32x8 broadcast_all(float32x8 a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned s>
-float64x2 broadcast_all(float64x2 a)
+float64x2 broadcast_w(float64x2 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-float64x4 broadcast_all(float64x4 a)
+float64x4 broadcast_w(float64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2

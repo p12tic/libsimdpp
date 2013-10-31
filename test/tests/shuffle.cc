@@ -72,11 +72,11 @@ struct Test_broadcast {
 };
 
 template<class V, unsigned i>
-struct Test_broadcast_all {
+struct Test_broadcast_w {
     static constexpr unsigned limit = V::length;
     static void test(TestCase& tc, V a)
     {
-        a = simdpp::broadcast_all<i>(a);
+        a = simdpp::broadcast_w<i>(a);
         TEST_PUSH(tc, V, a);
     }
 };
@@ -112,7 +112,7 @@ void test_shuffle_type128(TestCase &tc, V v1, V v2)
     TemplateTestHelper<Test_move_r, V>::run(tc, v1);
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);
     TemplateTestHelper<Test_broadcast, V>::run(tc, v1);
-    TemplateTestHelper<Test_broadcast_all, V>::run(tc, v1);
+    TemplateTestHelper<Test_broadcast_w, V>::run(tc, v1);
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
     TemplateTestHelper<Test_insert_extract, V>::run(tc, v1, v2);
 }

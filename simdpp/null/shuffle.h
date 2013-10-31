@@ -62,7 +62,7 @@ V zip_hi(V a, V b)
 }
 
 template<unsigned pos, class V>
-V broadcast_all(V v)
+V broadcast_w(V v)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
