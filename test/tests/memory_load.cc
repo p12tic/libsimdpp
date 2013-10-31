@@ -39,13 +39,6 @@ void test_load_helper(TestCase& tc, void* sv_p)
 
     V rv[vnum];
 
-    auto rzero = [&]()
-    {
-        for (unsigned i = 0; i < vnum; i++) {
-            rv[i] = V::zero();
-        }
-    };
-
     for (unsigned i = 0; i < vnum; i++) {
         V r = load(r, sdata + i*V::length);
         TEST_PUSH(tc, V, r);
@@ -56,15 +49,15 @@ void test_load_helper(TestCase& tc, void* sv_p)
         TEST_PUSH(tc, V, r);
     }
 
-    rzero();
+    std::memset(rv, 0, sizeof(rv));
     load_packed2(rv[0], rv[1], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero();
+    std::memset(rv, 0, sizeof(rv));
     load_packed3(rv[0], rv[1], rv[2], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero();
+    std::memset(rv, 0, sizeof(rv));
     load_packed4(rv[0], rv[1], rv[2], rv[3], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 }

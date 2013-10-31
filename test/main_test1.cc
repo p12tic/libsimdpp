@@ -41,13 +41,14 @@ int main()
 {
     std::ostream& err = std::cerr;
 
-    const auto& arch_list = ArchRegistration::arch_list();
-    auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
-                                  [](const ArchRegistration::Arch& a) -> bool
-                                  {
-                                      return std::strcmp(a.arch, "arch_null") == 0;
-                                  });
-
+    const ArchRegistration::ArchList& arch_list = ArchRegistration::arch_list();
+    ArchRegistration::ArchList::const_iterator it, null_arch;
+    for (it = arch_list.begin(); it != arch_list.end(); ++it) {
+        if (std::strcmp(it->arch, "arch_null") == 0) {
+            break;
+        }
+    };
+    null_arch = it;
     if (null_arch == arch_list.end()) {
         std::cerr << "FATAL: NULL architecture not defined\n";
         return EXIT_FAILURE;

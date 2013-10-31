@@ -160,40 +160,55 @@ bool test_equal(const TestCase& a, const char* a_arch,
                 std::ostream& err)
 
 {
-    auto fmt_separator = [&]()
+    struct TestEqualImpl {
+
+    const TestCase& a;
+    const char* a_arch;
+    const TestCase& b;
+    const char* b_arch;
+    std::ostream& err;
+
+    TestEqualImpl(const TestCase& d_a, const char* d_a_arch,
+                  const TestCase& d_b, const char* d_b_arch,
+                  std::ostream& d_err) :
+        a(d_a), a_arch(d_a_arch), b(d_b), b_arch(d_b_arch), err(d_err)
+    {
+    }
+
+    void fmt_separator()
     {
         err << "--------------------------------------------------------------\n";
-    };
-    auto fmt_arch = [&]()
+    }
+    void fmt_arch()
     {
         err << "  For architectures: " << a_arch << " and " << b_arch << " :\n";
-    };
-    auto fmt_file = [&]()
+    }
+    void fmt_file()
     {
         fmt_arch();
         err << "  In file \"" << a.file_ << "\" :\n";
-    };
-    auto fmt_file_line = [&](unsigned line)
+    }
+    void fmt_file_line(unsigned line)
     {
         fmt_arch();
         err << "  In file \"" << a.file_ << "\" at line " << line << " : \n";
-    };
-    auto fmt_test_case = [&]()
+    }
+    void fmt_test_case()
     {
         err << "  In test case \"" << a.name_ << "\" :\n";
-    };
-    auto fmt_seq = [&](unsigned num)
+    }
+    void fmt_seq(unsigned num)
     {
         err << "  Sequence number: " << num << "\n"; // start from one
-    };
-    auto fmt_prec = [&](unsigned prec)
+    }
+    void fmt_prec(unsigned prec)
     {
         if (prec > 0) {
             err << "  Precision: " << prec << "ULP\n";
         }
-    };
+    }
 
-    auto type_str = [&](unsigned type) -> const char*
+    const char* type_str(unsigned type)
     {
         switch (type) {
         case TestCase::TYPE_UINT16: return "uint16";
@@ -219,8 +234,8 @@ bool test_equal(const TestCase& a, const char* a_arch,
         case TestCase::TYPE_FLOAT64x4: return "float64x4";
         default: return "UNDEFINED";
         }
-    };
-    auto fmt_vector = [&](const TestCase::Result& r, const char* prefix) -> void
+    }
+    void fmt_vector(const TestCase::Result& r, const char* prefix)
     {
         switch (r.type) {
         case TestCase::TYPE_UINT16:
@@ -308,10 +323,10 @@ bool test_equal(const TestCase& a, const char* a_arch,
             fmt_vec_num<17,4>(err, prefix, r.v_f64);
             break;
         }
-    };
+    }
 
-    auto cmpeq_result = [](const TestCase::Result& ia, const TestCase::Result& ib,
-                           unsigned prec) -> bool
+    bool cmpeq_result(const TestCase::Result& ia, const TestCase::Result& ib,
+                      unsigned prec)
     {
         if (std::memcmp(ia.v_u8, ib.v_u8, TestCase::size_for_type(ia.type)) == 0) {
             return true;
@@ -333,72 +348,78 @@ bool test_equal(const TestCase& a, const char* a_arch,
         default:
             return false;
         }
-    };
-
-    // Handle fatal errors first
-    if (std::strcmp(a.name_, b.name_) != 0) {
-        fmt_separator();
-        fmt_file();
-        err << "FATAL: Test case names do not match: \""
-            << a.name_ << "\" and \""  << b.name_ << "\"\n";
-        fmt_separator();
-        return false;
     }
 
-    if (a.results_.size() != b.results_.size()) {
-        fmt_separator();
-        fmt_file();
-        fmt_test_case();
-        err << "FATAL: The lengths of the result vectors does not match: "
-            << a.results_.size() << "/" << b.results_.size() << "\n";
-        fmt_separator();
-        return false;
-    }
+    bool run()
+    {
+        // Handle fatal errors first
+        if (std::strcmp(a.name_, b.name_) != 0) {
+            fmt_separator();
+            fmt_file();
+            err << "FATAL: Test case names do not match: \""
+                << a.name_ << "\" and \""  << b.name_ << "\"\n";
+            fmt_separator();
+            return false;
+        }
 
-    bool ok = true;
-    // Compare results
-    for (unsigned i = 0; i < a.results_.size(); i++) {
-        const auto& ia = a.results_[i];
-        const auto& ib = b.results_[i];
-
-        if (ia.line != ib.line) {
+        if (a.results_.size() != b.results_.size()) {
             fmt_separator();
             fmt_file();
             fmt_test_case();
-            err << "FATAL: Line numbers do not match for items with the same "
-                << "sequence number: id: " << i
-                << " line_A: " << ia.line << " line_B: " << ib.line << "\n";
+            err << "FATAL: The lengths of the result vectors does not match: "
+                << a.results_.size() << "/" << b.results_.size() << "\n";
             fmt_separator();
             return false;
         }
 
-        if (ia.type != ib.type) {
-            fmt_separator();
-            fmt_file_line(ia.line);
-            fmt_test_case();
-            err << "FATAL: Types do not match for items with the same "
-                << "sequence number: id: " << i
-                << " type_A: " << type_str(ia.type)
-                << " line_B: " << type_str(ib.type) << "\n";
-            fmt_separator();
-            return false;
-        }
+        bool ok = true;
+        // Compare results
+        for (unsigned i = 0; i < a.results_.size(); i++) {
+            const TestCase::Result& ia = a.results_[i];
+            const TestCase::Result& ib = b.results_[i];
 
-        unsigned prec = std::max(TestCase::precision_for_result(ia),
-                                 TestCase::precision_for_result(ib));
+            if (ia.line != ib.line) {
+                fmt_separator();
+                fmt_file();
+                fmt_test_case();
+                err << "FATAL: Line numbers do not match for items with the same "
+                    << "sequence number: id: " << i
+                    << " line_A: " << ia.line << " line_B: " << ib.line << "\n";
+                fmt_separator();
+                return false;
+            }
 
-        if (!cmpeq_result(ia, ib, prec)) {
-            fmt_separator();
-            fmt_file_line(ia.line);
-            fmt_test_case();
-            fmt_seq(ia.seq);
-            err << "ERROR: Vectors not equal: \n";
-            fmt_vector(ia, "A : ");
-            fmt_vector(ib, "B : ");
-            fmt_prec(prec);
-            fmt_separator();
-            ok = false;
+            if (ia.type != ib.type) {
+                fmt_separator();
+                fmt_file_line(ia.line);
+                fmt_test_case();
+                err << "FATAL: Types do not match for items with the same "
+                    << "sequence number: id: " << i
+                    << " type_A: " << type_str(ia.type)
+                    << " line_B: " << type_str(ib.type) << "\n";
+                fmt_separator();
+                return false;
+            }
+
+            unsigned prec = std::max(TestCase::precision_for_result(ia),
+                                     TestCase::precision_for_result(ib));
+
+            if (!cmpeq_result(ia, ib, prec)) {
+                fmt_separator();
+                fmt_file_line(ia.line);
+                fmt_test_case();
+                fmt_seq(ia.seq);
+                err << "ERROR: Vectors not equal: \n";
+                fmt_vector(ia, "A : ");
+                fmt_vector(ib, "B : ");
+                fmt_prec(prec);
+                fmt_separator();
+                ok = false;
+            }
         }
+        return ok;
     }
-    return ok;
+    }; // end TestEqualImpl
+    TestEqualImpl tst(a, a_arch, b, b_arch, err);
+    return tst.run();
 }

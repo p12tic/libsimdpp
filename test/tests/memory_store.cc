@@ -38,54 +38,52 @@ void test_store_helper(TestCase& tc, V* sv)
 {
     typedef typename V::element_type E;
 
-    union {
-        E rdata[V::length * vnum];
-        V rv[vnum];
-    };
-
-    auto rzero = [&](V* r)
-    {
-        for (unsigned i = 0; i < vnum; i++) {
-            r[i] = V::zero();
-        }
-    };
+    E rdata[V::length * vnum];
+    V rv[vnum];
 
     for (unsigned i = 0; i < vnum; i++) {
-        rzero(rv);
+        std::memset(rdata, 0, sizeof(rv));
         store(rdata+i*V::length, sv[0]);
+        std::memcpy(rv, rdata, sizeof(rdata));
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
-        rzero(rv);
+        std::memset(rdata, 0, sizeof(rv));
         stream(rdata+i*V::length, sv[0]);
+        std::memcpy(rv, rdata, sizeof(rdata));
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
-        rzero(rv);
+        std::memset(rdata, 0, sizeof(rv));
         store_first(rdata, sv[0], i);
+        std::memcpy(rv, rdata, sizeof(rdata));
         TEST_PUSH(tc, V, rv[0]);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
-        rzero(rv);
+        std::memset(rdata, 0, sizeof(rv));
         store_last(rdata, sv[0], i);
+        std::memcpy(rv, rdata, sizeof(rdata));
         TEST_PUSH(tc, V, rv[0]);
     }
 
-    rzero(rv);
+    std::memset(rdata, 0, sizeof(rv));
     store_packed2(rdata, sv[0], sv[1]);
+    std::memcpy(rv, rdata, sizeof(rdata));
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero(rv);
+    std::memset(rdata, 0, sizeof(rv));
     store_packed3(rdata, sv[0], sv[1], sv[2]);
+    std::memcpy(rv, rdata, sizeof(rdata));
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero(rv);
+    std::memset(rdata, 0, sizeof(rv));
     store_packed4(rdata, sv[0], sv[1], sv[2], sv[3]);
+    std::memcpy(rv, rdata, sizeof(rdata));
     TEST_ARRAY_PUSH(tc, V, rv);
 }
 
