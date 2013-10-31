@@ -35,7 +35,7 @@ template<class V, unsigned vnum>
 void test_load_helper(TestCase& tc, void* sv_p)
 {
     typedef typename V::element_type E;
-    auto sdata = reinterpret_cast<E*>(sv_p);
+    E* sdata = reinterpret_cast<E*>(sv_p);
 
     V rv[vnum];
 

@@ -162,8 +162,9 @@ std::vector<M, AlignedAllocator<M,32> > test_blend_make_sel_mask()
 template<class V, class VM>
 void test_blend(TestCase &tc, V v1, V v2, const std::vector<VM, AlignedAllocator<VM,32> >& masks)
 {
-    for (const auto& v: masks) {
-        TEST_PUSH(tc, V, blend(v1, v2, v));
+    typename std::vector<VM, AlignedAllocator<VM,32> >::const_iterator it;
+    for (it = masks.begin(); it != masks.end(); ++it) {
+        TEST_PUSH(tc, V, blend(v1, v2, *it));
     }
 }
 

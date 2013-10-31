@@ -182,7 +182,7 @@ private:
     static void select_version_impl(std::atomic<VoidFunPtr>& fun_ptr,
                                     const GetArchCb& cb)
     {
-        auto& v = get_all_versions();
+        std::vector<FnVersion>& v = get_all_versions();
         unsigned id = select_version_any(v, cb);
         fun_ptr = v[id].fun_ptr;
     }

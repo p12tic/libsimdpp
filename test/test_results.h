@@ -57,8 +57,9 @@ public:
     std::size_t num_results() const
     {
         std::size_t r = 0;
-        for (const auto& i: test_cases_) {
-            r += i.test_case.num_results();
+        std::deque<TestCaseCont>::const_iterator it;
+        for (it = test_cases_.begin(); it != test_cases_.end(); ++it) {
+            r += it->test_case.num_results();
         }
         return r;
     }
@@ -95,10 +96,10 @@ inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream&
 
     std::vector<CaseContPair> to_compare;
 
-    auto first1 = a_cases.begin();
-    auto last1 = a_cases.end();
-    auto first2 = b_cases.begin();
-    auto last2 = b_cases.end();
+    std::vector<CaseContRef>::iterator first1 = a_cases.begin();
+    std::vector<CaseContRef>::iterator last1 = a_cases.end();
+    std::vector<CaseContRef>::iterator first2 = b_cases.begin();
+    std::vector<CaseContRef>::iterator last2 = b_cases.end();
 
     // set intersection. Get test cases present in both result sets
     while (first1 != last1 && first2 != last2) {
@@ -121,9 +122,10 @@ inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream&
 
     // loop through cases with the same names
     bool ok = true;
-    for (const auto& io: to_compare) {
-        bool r = test_equal(io.first.get().test_case, a.arch_,
-                            io.second.get().test_case, b.arch_, err);
+    std::vector<CaseContPair>::iterator it;
+    for (it = to_compare.begin(); it != to_compare.end(); ++it) {
+        bool r = test_equal(it->first.get().test_case, a.arch_,
+                            it->second.get().test_case, b.arch_, err);
         if (!r) {
             ok = false;
         }
