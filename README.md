@@ -30,11 +30,22 @@ NEON instruction sets.
 Code for ALTIVEC instruction set has been added, but it has not been tested
 on actual hardware, thus definitely contains bugs.
 
-The library is developed in C++11. A separate, C++98/boost branch is planned.
-Currently the library is tested with the following compilers:
+The primary development of the library happens in C++11. A C++98-compatible
+version of the library is provided on the
+[cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch. boost libraries
+are used as a replacement for C++11-only functionality. The library has been
+tested with the following compilers:
 
- - GCC (C++11 mode): 4.8.1, 4.7.3
- - Clang (C++11 mode): 3.3, 3.4
+ - C++11 version:
+   - GCC: 4.8.1, 4.7.3
+   - Clang: 3.3, 3.4
+
+ - C++98 version
+   - GCC: 4.8.1, 4.7.1
+   - Clang: 3.3, 3.4
+
+The C++98 version has been tested with boost 1.53 and 1.54. Most probably other
+versions will work too.
 
 Documentation
 -------------
