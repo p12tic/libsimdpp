@@ -89,8 +89,8 @@ public:
     explicit float32x4(basic_int32x4 d) : d_(_mm_castsi128_ps(d)) {}
     float32x4& operator=(basic_int32x4 d) { d_ = _mm_castsi128_ps(d); return *this; }
 #elif SIMDPP_USE_NEON
-    explicit float32x4(basic_int32x4 d)  : d_(float32x4_t(d)) {}
-    float32x4& operator=(basic_int32x4 d) { d_ = float32x4_t(d); return *this; }
+    explicit float32x4(basic_int32x4 d)  : d_(bit_cast<float32x4_t>(d)) {}
+    float32x4& operator=(basic_int32x4 d) { d_ = bit_cast<float32x4_t>(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
     explicit float32x4(basic_int32x4 d)  : d_((__vector float)d) {}
     float32x4& operator=(basic_int32x4 d) { d_ = (__vector float)d; return *this; }

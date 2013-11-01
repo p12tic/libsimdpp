@@ -150,7 +150,7 @@ inline uint64x2 uint64x2::make_const(uint64_t v0, uint64_t v1)
     return _mm_set_epi64x(v1, v0);
 #elif SIMDPP_USE_NEON
     union {
-        int128 align;
+        uint64x2_t align;
         uint64_t v[2];
     };
     v[0] = v0;

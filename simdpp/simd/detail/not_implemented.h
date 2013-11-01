@@ -71,6 +71,7 @@ public:
     operator int64x4() { return int256::zero(); }
     operator uint64x2() { return int128::zero(); }
     operator uint64x4() { return int256::zero(); }
+    operator mask_int64x2() { return mask_int64x2(); }
     operator float32x4() { return float32x4::zero(); }
     operator float32x8() { return float32x8::zero(); }
     operator float64x2() { return float64x2::zero(); }

@@ -65,7 +65,7 @@ inline void transpose2(basic_int8x16& a0, basic_int8x16& a1)
 #if SIMDPP_USE_NULL
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u8(a0, a1);
+    uint8x16x2_t r = vtrnq_u8(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
