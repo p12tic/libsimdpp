@@ -658,7 +658,9 @@ struct SimdppCompileAssert {};
 
 #include <simdpp/simd/this_compile_arch.h>
 
+#ifdef SIMDPP_USER_ARCH_INFO
 #include <simdpp/dispatch/dispatcher.h>
+#endif
 
 namespace simdpp {
 using namespace SIMDPP_ARCH_NAMESPACE;
