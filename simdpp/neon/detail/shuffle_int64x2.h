@@ -28,8 +28,6 @@
 #ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT64x2_H
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT64x2_H
 
-#include <type_traits>
-
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {

@@ -114,7 +114,7 @@ void store_lane(void* p, basic_int64x2 a)
 template<unsigned pos, unsigned n>
 void store_lane(float* p, float32x4 a)
 {
-    store_lane<pos,n>(p, basic_int32x4{a});
+    store_lane<pos,n>(p, basic_int32x4(a));
 }
 /// @}
 

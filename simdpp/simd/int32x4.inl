@@ -149,7 +149,7 @@ inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1)
     return uint32x4::make_const(v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
-        int128 align;
+        uint32x4_t align;
         uint32_t v[2];
     };
     v[0] = v0;
@@ -167,7 +167,7 @@ inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint
     return _mm_set_epi32(v3, v2, v1, v0);
 #elif SIMDPP_USE_NEON
     union {
-        int128 align;
+        uint32x4_t align;
         uint32_t v[4];
     };
     v[0] = v0;

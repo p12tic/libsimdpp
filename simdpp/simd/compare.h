@@ -191,7 +191,7 @@ inline mask_int64x2 cmp_eq(basic_int64x2 a, basic_int64x2 b)
     r32 = bit_and(r32, r32s);
     return r32;
 #elif SIMDPP_USE_NEON
-    return vceqq_s64(a, b);
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
     uint32x4 a0, b0, r;

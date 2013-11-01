@@ -600,6 +600,9 @@ inline basic_int64x4 to_int64x4(uint32x8 a)
 }
 /// @}
 
+// Local structs can't be used as template arguments. :(
+namespace { struct TempInt32x4 { int32_t a[4]; }; }
+
 /// @{
 /** Converts 32-bit integer values to 32-bit float values.
 
@@ -633,8 +636,7 @@ inline float32x4 to_float32x4(int32x4 a)
     return _mm_cvtepi32_ps(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     float32x4 r;
-    struct Temp { int32_t a[4]; };
-    Temp t = bit_cast<Temp>(a);
+    TempInt32x4 t = bit_cast<TempInt32x4>(a);
     r[0] = float(t.a[0]);
     r[1] = float(t.a[1]);
     r[2] = float(t.a[2]);
