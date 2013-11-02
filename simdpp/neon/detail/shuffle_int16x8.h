@@ -54,10 +54,10 @@ struct integral_constant
     static const T value = v;
 };
 
-typedef integral_constant<unsigned, 0> _1;
-typedef integral_constant<unsigned, 1> _2;
-typedef integral_constant<unsigned, 2> _3;
-typedef integral_constant<unsigned, 3> _4;
+typedef integral_constant<unsigned, 0> _0;
+typedef integral_constant<unsigned, 1> _1;
+typedef integral_constant<unsigned, 2> _2;
+typedef integral_constant<unsigned, 3> _3;
 typedef basic_int16x8 T;    // full vector
 typedef uint16x4_t H;       // half vector
 
@@ -490,10 +490,10 @@ inline T perm4(_3,_3,_3,_2, T a) { return sel<1,1,1,0>(swap1<2,3>(a), bcast<3>(a
 inline T perm4(_3,_3,_3,_3, T a) { return bcast<3>(a); }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-T perm4(std::integral_constant<unsigned, s0>,
-        std::integral_constant<unsigned, s1>,
-        std::integral_constant<unsigned, s2>,
-        std::integral_constant<unsigned, s3>, T a)
+T perm4(integral_constant<unsigned, s0>,
+        integral_constant<unsigned, s1>,
+        integral_constant<unsigned, s2>,
+        integral_constant<unsigned, s3>, T a)
 {
     return fallback<s0,s1,s2,s3>(a);
 }
@@ -501,10 +501,10 @@ T perm4(std::integral_constant<unsigned, s0>,
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 T permute4(T a)
 {
-    return perm4(std::integral_constant<unsigned, s0>{},
-                 std::integral_constant<unsigned, s1>{},
-                 std::integral_constant<unsigned, s2>{},
-                 std::integral_constant<unsigned, s3>{}, a);
+    return perm4(integral_constant<unsigned, s0>(),
+                 integral_constant<unsigned, s1>(),
+                 integral_constant<unsigned, s2>(),
+                 integral_constant<unsigned, s3>(), a);
 }
 
 } // namespace shuffle_int16x8
