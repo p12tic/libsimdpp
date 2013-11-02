@@ -45,6 +45,7 @@
 
 #if SIMDPP_USE_NEON
     #include <simdpp/neon/shuffle.h>
+    #include <simdpp/neon/detail/shuffle.h>
 #elif SIMDPP_USE_SSE2
     #include <simdpp/sse/shuffle.h>
     #include <simdpp/sse/extract_half.h>
@@ -428,7 +429,7 @@ basic_int8x16 move_l(basic_int8x16 a)
     return _mm_srli_si128(a, shift);
 #elif SIMDPP_USE_NEON
     int8x16 z = int8x16::zero();
-    return vextq_u8(a, z, shift);
+    return neon::detail::align<shift>(a, z);
 #elif SIMDPP_USE_ALTIVEC
     // return align<shift>(a, uint8x16::zero());
     return vec_sld((__vector uint8_t)a, (__vector uint8_t)uint8x16::zero(), shift);
@@ -644,7 +645,7 @@ basic_int8x16 move_r(basic_int8x16 a)
     return _mm_slli_si128(a, shift);
 #elif SIMDPP_USE_NEON
     int8x16 z = int8x16::zero();
-    return vextq_u8(z, a, 16-shift);
+    return neon::detail::align<16-shift>(z, a);
 #elif SIMDPP_USE_ALTIVEC
     // return align<16-shift>(uint8x16::zero(), a);
     return vec_sld((__vector uint8_t)uint8x16::zero(), (__vector uint8_t)a, 16-shift);
@@ -1440,7 +1441,7 @@ basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
     a = bit_or(upper, lower);
     return a;
 #elif SIMDPP_USE_NEON
-    return vextq_u8(lower, upper, shift);
+    return neon::detail::align<shift>(lower, upper);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, (unsigned)shift);
 #endif
