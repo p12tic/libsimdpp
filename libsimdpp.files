@@ -36,13 +36,17 @@ simdpp/dispatch/dispatcher.h
 simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h
 simdpp/dispatch/get_arch_linux_cpuinfo.h
 simdpp/dispatch/macros.h
+
 simdpp/neon/shuffle.h
 simdpp/neon/memory_store.h
 simdpp/neon/math_int.h
 simdpp/neon/detail/vfp_float64x2.h
+simdpp/neon/detail/math_shift.h
 simdpp/neon/detail/shuffle_int16x8.h
 simdpp/neon/detail/shuffle_int32x4.h
 simdpp/neon/detail/shuffle_int64x2.h
+simdpp/neon/detail/shuffle.h
+
 simdpp/null/foreach.h
 simdpp/null/compare.h
 simdpp/null/math.h
@@ -52,6 +56,7 @@ simdpp/null/memory.h
 simdpp/null/set.h
 simdpp/null/shuffle.h
 simdpp/null/transpose.h
+
 simdpp/simd/detail/move_signed.h
 simdpp/simd/detail/mem_block.h
 simdpp/simd/detail/width.h

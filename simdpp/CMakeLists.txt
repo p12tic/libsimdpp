@@ -36,6 +36,8 @@ set(HEADERS
 
     altivec/load1.h
 
+    neon/detail/math_shift.h
+    neon/detail/shuffle.h
     neon/detail/shuffle_int16x8.h
     neon/detail/shuffle_int32x4.h
     neon/detail/shuffle_int64x2.h
