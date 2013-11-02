@@ -71,12 +71,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 inline void store(void* p, int128 a)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
-    vst1q_u32(reinterpret_cast<uint32_t*>(p), a);
+    vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u32(a));
 #elif SIMDPP_USE_ALTIVEC
     vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
 #endif
@@ -84,6 +85,7 @@ inline void store(void* p, int128 a)
 
 inline void store(void* p, int256 a)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX2
     _mm256_store_si256(reinterpret_cast<__m256i*>(p), a);
 #else
@@ -95,6 +97,7 @@ inline void store(void* p, int256 a)
 
 inline void store(float *p, float32x4 a)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
@@ -108,6 +111,7 @@ inline void store(float *p, float32x4 a)
 
 inline void store(float* p, float32x8 a)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     _mm256_store_ps(p, a);
 #else
@@ -118,17 +122,17 @@ inline void store(float* p, float32x8 a)
 
 inline void store(double *p, float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_pd(p, a);
-#elif SIMDPP_USE_NEON
-    store(p, int64x2(a));
 #endif
 }
 
 inline void store(double* p, float64x4 a)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     _mm256_store_pd(p, a);
 #else
@@ -159,6 +163,7 @@ inline void store(double* p, float64x4 a)
 */
 inline void stream(void* p, int128 a)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
@@ -172,6 +177,7 @@ inline void stream(void* p, int128 a)
 
 inline void stream(void* p, int256 a)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX2
     _mm256_stream_si256(reinterpret_cast<__m256i*>(p), a);
 #else
@@ -183,6 +189,7 @@ inline void stream(void* p, int256 a)
 
 inline void stream(float* p, float32x4 a)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
@@ -196,6 +203,7 @@ inline void stream(float* p, float32x4 a)
 
 inline void stream(float* p, float32x8 a)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     _mm256_stream_ps(p, a);
 #else
@@ -206,17 +214,17 @@ inline void stream(float* p, float32x8 a)
 
 inline void stream(double* p, float64x2 a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_pd(p, a);
-#elif SIMDPP_USE_NEON
-    store(p, a);
 #endif
 }
 
 inline void stream(double* p, float64x4 a)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     _mm256_stream_pd(p, a);
 #else
@@ -233,6 +241,7 @@ namespace detail {
 template<unsigned hsz, class P, class V>
 void v256_store_first(P* p, V a, unsigned n)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_SSE2
     if (n >= hsz) {
         store(p, sse::extract_lo(a));
@@ -254,6 +263,7 @@ void v256_store_first(P* p, V a, unsigned n)
 template<unsigned hsz, class P, class V>
 void v256_store_last(P* p, V a, unsigned n)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_SSE2
     if (n >= hsz) {
         store_last(p, sse::extract_lo(a), n - hsz);
@@ -296,6 +306,7 @@ void v256_store_last(P* p, V a, unsigned n)
 */
 inline void store_first(void* p, basic_int8x16 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -376,6 +387,7 @@ inline void store_first(void* p, basic_int8x32 a, unsigned n)
 
 inline void store_first(void* p, basic_int16x8 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -435,6 +447,7 @@ inline void store_first(void* p, basic_int16x16 a, unsigned n)
 
 inline void store_first(void* p, basic_int32x4 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -486,6 +499,7 @@ inline void store_first(void* p, basic_int32x8 a, unsigned n)
 
 inline void store_first(void* p, basic_int64x2 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -512,6 +526,7 @@ inline void store_first(void* p, basic_int64x4 a, unsigned n)
 
 inline void store_first(float* p, float32x4 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2
     switch (n) {
     case 3:
@@ -538,19 +553,19 @@ inline void store_first(float* p, float32x8 a, unsigned n)
 
 inline void store_first(double* p, float64x2 a, unsigned n)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
         sse::store_lane<0,1>(p, a);
     }
-#elif SIMDPP_USE_NEON
-    store_first(p, int64x2(a), n);
 #endif
 }
 
 inline void store_first(double* p, float64x4 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     switch (n) {
     case 3:
@@ -594,6 +609,7 @@ inline void store_first(double* p, float64x4 a, unsigned n)
 */
 inline void store_last(void* p, basic_int8x16 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -676,6 +692,7 @@ inline void store_last(void* p, basic_int8x32 a, unsigned n)
 
 inline void store_last(void* p, basic_int16x8 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -739,6 +756,7 @@ inline void store_last(void* p, basic_int16x16 a, unsigned n)
 
 inline void store_last(void* p, basic_int32x4 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -795,6 +813,7 @@ inline void store_last(void* p, basic_int32x8 a, unsigned n)
 
 inline void store_last(void* p, basic_int64x2 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
@@ -823,6 +842,7 @@ inline void store_last(void* p, basic_int64x4 a, unsigned n)
 
 inline void store_last(float* p, float32x4 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2
     switch (n) {
     case 3: {
@@ -852,19 +872,19 @@ inline void store_last(float* p, float32x8 a, unsigned n)
 
 inline void store_last(double* p, float64x2 a, unsigned n)
 {
-#if SIMDPP_USE_NULL
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
         sse::store_lane<1,1>(p+1, a);
     }
-#else
-    store_last(p, int64x2(a), n);
 #endif
 }
 
 inline void store_last(double* p, float64x4 a, unsigned n)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     switch (n) {
     case 3:
@@ -890,6 +910,7 @@ namespace detail {
 template<class V>
 void v256_store_i_pack2(void* p, V a, V b)
 {
+    p = detail::assume_aligned(p, 32);
     char* q = reinterpret_cast<char*>(p);
 #if SIMDPP_USE_AVX2
     detail::mem_pack2(a, b);
@@ -904,6 +925,7 @@ void v256_store_i_pack2(void* p, V a, V b)
 template<class V>
 void v256_store_i_pack3(void* p, V a, V b, V c)
 {
+    p = detail::assume_aligned(p, 32);
     char* q = reinterpret_cast<char*>(p);
 #if SIMDPP_USE_AVX2
     detail::mem_pack3(a, b, c);
@@ -919,6 +941,7 @@ void v256_store_i_pack3(void* p, V a, V b, V c)
 template<class V>
 void v256_store_i_pack4(void* p, V a, V b, V c, V d)
 {
+    p = detail::assume_aligned(p, 32);
     char* q = reinterpret_cast<char*>(p);
 #if SIMDPP_USE_AVX2
     detail::mem_pack4(a, b, c, d);
@@ -954,6 +977,7 @@ void v256_store_i_pack4(void* p, V a, V b, V c, V d)
 */
 inline void store_packed2(void* p, basic_int8x16 a, basic_int8x16 b)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -996,6 +1020,7 @@ inline void store_packed2(void* p, basic_int8x32 a, basic_int8x32 b)
 */
 inline void store_packed2(void* p, basic_int16x8 a, basic_int16x8 b)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1038,6 +1063,7 @@ inline void store_packed2(void* p, basic_int16x16 a, basic_int16x16 b)
 */
 inline void store_packed2(void* p, basic_int32x4 a, basic_int32x4 b)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1080,6 +1106,7 @@ inline void store_packed2(void* p, basic_int32x8 a, basic_int32x8 b)
 */
 inline void store_packed2(void* p, basic_int64x2 a, basic_int64x2 b)
 {
+    p = detail::assume_aligned(p, 16);
     char* q = reinterpret_cast<char*>(p);
     transpose2(a, b);
     store(q, a);
@@ -1112,6 +1139,7 @@ inline void store_packed2(void* p, basic_int64x4 a, basic_int64x4 b)
 */
 inline void store_packed2(float* p, float32x4 a, float32x4 b)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1128,6 +1156,7 @@ inline void store_packed2(float* p, float32x4 a, float32x4 b)
 
 inline void store_packed2(float* p, float32x8 a, float32x8 b)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     detail::mem_pack2(a, b);
     store(p, a);
@@ -1159,6 +1188,7 @@ inline void store_packed2(float* p, float32x8 a, float32x8 b)
 */
 inline void store_packed2(double* p, float64x2 a, float64x2 b)
 {
+    p = detail::assume_aligned(p, 16);
     transpose2(a, b);
     store(p, a);
     store(p+2, b);
@@ -1166,6 +1196,7 @@ inline void store_packed2(double* p, float64x2 a, float64x2 b)
 
 inline void store_packed2(double* p, float64x4 a, float64x4 b)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     detail::mem_pack2(a, b);
     store(p, a);
@@ -1200,6 +1231,7 @@ inline void store_packed2(double* p, float64x4 a, float64x4 b)
 inline void store_packed3(void* p,
                           basic_int8x16 a, basic_int8x16 b, basic_int8x16 c)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1248,6 +1280,7 @@ inline void store_packed3(void* p,
 inline void store_packed3(void* p,
                           basic_int16x8 a, basic_int16x8 b, basic_int16x8 c)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1296,6 +1329,7 @@ inline void store_packed3(void* p,
 inline void store_packed3(void* p,
                           basic_int32x4 a, basic_int32x4 b, basic_int32x4 c)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1344,6 +1378,7 @@ inline void store_packed3(void* p,
 inline void store_packed3(void* p,
                           basic_int64x2 a, basic_int64x2 b, basic_int64x2 c)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1395,6 +1430,7 @@ inline void store_packed3(void* p,
 */
 inline void store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1414,6 +1450,7 @@ inline void store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
 inline void store_packed3(float* p,
                           float32x8 a, float32x8 b, float32x8 c)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     detail::mem_pack3(a, b, c);
     store(p, a);
@@ -1451,23 +1488,21 @@ inline void store_packed3(float* p,
 */
 inline void store_packed3(double* p, float64x2 a, float64x2 b, float64x2 c)
 {
-#if SIMDPP_USE_NULL
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     detail::mem_pack3(a, b, c);
     store(p, a);
     store(p+2, b);
     store(p+4, c);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1;
-    a1 = a; b1 = b; c1 = c;
-    store_packed3(p, a1, b1, c1);
 #endif
 }
 
 inline void store_packed3(double* p,
                           float64x4 a, float64x4 b, float64x4 c)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     detail::mem_pack3(a, b, c);
     store(p, a);
@@ -1506,6 +1541,7 @@ inline void store_packed4(void* p,
                           basic_int8x16 a, basic_int8x16 b,
                           basic_int8x16 c, basic_int8x16 d)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1560,6 +1596,7 @@ inline void store_packed4(void* p,
                           basic_int16x8 a, basic_int16x8 b,
                           basic_int16x8 c, basic_int16x8 d)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1614,6 +1651,7 @@ inline void store_packed4(void* p,
                           basic_int32x4 a, basic_int32x4 b,
                           basic_int32x4 c, basic_int32x4 d)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1668,6 +1706,7 @@ inline void store_packed4(void* p,
                           basic_int64x2 a, basic_int64x2 b,
                           basic_int64x2 c, basic_int64x2 d)
 {
+    p = detail::assume_aligned(p, 16);
     char* q = reinterpret_cast<char*>(p);
     transpose2(a, b);
     transpose2(c, d);
@@ -1710,6 +1749,7 @@ inline void store_packed4(void* p,
 inline void store_packed4(float* p,
                           float32x4 a, float32x4 b, float32x4 c, float32x4 d)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1731,6 +1771,7 @@ inline void store_packed4(float* p,
 inline void store_packed4(float* p,
                           float32x8 a, float32x8 b, float32x8 c, float32x8 d)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     detail::mem_pack4(a, b, c, d);
     store(p, a);
@@ -1769,24 +1810,22 @@ inline void store_packed4(float* p,
 inline void store_packed4(double* p,
                           float64x2 a, float64x2 b, float64x2 c, float64x2 d)
 {
-#if SIMDPP_USE_NULL
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p+2, b);
     store(p+4, c);
     store(p+6, d);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1, d1;
-    a1 = a; b1 = b; c1 = c; d1 = d;
-    store_packed4(p, a1, b1, c1, d1);
 #endif
 }
 
 inline void store_packed4(double* p,
                           float64x4 a, float64x4 b, float64x4 c, float64x4 d)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     detail::mem_pack4(a, b, c, d);
     store(p, a);

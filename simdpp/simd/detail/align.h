@@ -38,6 +38,29 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
+inline const void* assume_aligned_impl(const void* x, unsigned bytes)
+{
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ > 7) && !defined(__clang__)
+    // since GCC(>4.7.0)
+    x = __builtin_assume_aligned(x, bytes);
+    return x;
+#else
+    return x;
+#endif
+}
+
+template<class T>
+T* assume_aligned(T* x, unsigned bytes)
+{
+    return const_cast<T*>(reinterpret_cast<const T*>(assume_aligned_impl(x, bytes)));
+}
+
+template<class T>
+const T* assume_aligned(const T* x, unsigned bytes)
+{
+    return reinterpret_cast<const T*>(assume_aligned_impl(x, bytes));
+}
+
 #ifdef SIMDPP_USE_NULL
 typedef uint64_t align_type;
 #elif SIMDPP_USE_AVX

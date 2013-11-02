@@ -34,6 +34,7 @@
 
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/transpose.h>
+#include <simdpp/simd/detail/align.h>
 #include <simdpp/simd/detail/mem_unpack.h>
 #include <simdpp/null/memory.h>
 
@@ -68,6 +69,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 inline int128 load(int128& a, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load(a, p);
     return a;
@@ -85,6 +87,7 @@ inline int128 load(int128& a, const void* p)
 
 inline int256 load(int256& a, const void* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX2
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
     return a;
@@ -97,6 +100,7 @@ inline int256 load(int256& a, const void* p)
 
 inline float32x4 load(float32x4& a, const float* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load(a, p);
     return a;
@@ -114,6 +118,7 @@ inline float32x4 load(float32x4& a, const float* p)
 
 inline float32x8 load(float32x8& a, const float* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     a = _mm256_load_ps(p);
     return a;
@@ -125,21 +130,19 @@ inline float32x8 load(float32x8& a, const float* p)
 
 inline float64x2 load(float64x2& a, const double* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
     a = _mm_load_pd(p);
-    return a;
-#elif SIMDPP_USE_NEON
-    int64x2 b(a);
-    a = load(b, p);
     return a;
 #endif
 }
 
 inline float64x4 load(float64x4& a, const double* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     a = _mm256_load_pd(p);
     return a;
@@ -262,15 +265,11 @@ inline float32x4 load_u(float32x4& a, const float* p)
 
 inline float64x2 load_u(float64x2& a, const double* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
     a = _mm_loadu_pd(p);
-    return a;
-#elif SIMDPP_USE_NEON
-    int64x2 b(a);
-    a = load_u(b, p);
     return a;
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, p);
@@ -392,6 +391,7 @@ namespace detail {
 template<class V>
 void v256_load_i_packed2(V& a, V& b, const void* p)
 {
+    p = detail::assume_aligned(p, 32);
     const char* q = reinterpret_cast<const char*>(p);
 #if SIMDPP_USE_AVX2
     load(a, q);
@@ -406,6 +406,7 @@ void v256_load_i_packed2(V& a, V& b, const void* p)
 template<class V>
 void v256_load_i_packed3(V& a, V& b, V& c, const void* p)
 {
+    p = detail::assume_aligned(p, 32);
     const char* q = reinterpret_cast<const char*>(p);
 #if SIMDPP_USE_AVX2
     load(a, q);
@@ -421,6 +422,7 @@ void v256_load_i_packed3(V& a, V& b, V& c, const void* p)
 template<class V>
 void v256_load_i_packed4(V& a, V& b, V& c, V& d, const void* p)
 {
+    p = detail::assume_aligned(p, 32);
     const char* q = reinterpret_cast<const char*>(p);
 #if SIMDPP_USE_AVX2
     load(a, q);
@@ -455,6 +457,7 @@ void v256_load_i_packed4(V& a, V& b, V& c, V& d, const void* p)
 */
 inline void load_packed2(basic_int8x16& a, basic_int8x16& b, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -496,6 +499,7 @@ inline void load_packed2(basic_int8x32& a, basic_int8x32& b, const void* p)
 */
 inline void load_packed2(basic_int16x8& a, basic_int16x8& b, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -537,6 +541,7 @@ inline void load_packed2(basic_int16x16& a, basic_int16x16& b, const void* p)
 */
 inline void load_packed2(basic_int32x4& a, basic_int32x4& b, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -578,6 +583,7 @@ inline void load_packed2(basic_int32x8& a, basic_int32x8& b, const void* p)
 */
 inline void load_packed2(basic_int64x2& a, basic_int64x2& b, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
     const char* q = reinterpret_cast<const char*>(p);
     a = load(a, q);
     b = load(b, q+16);
@@ -611,6 +617,7 @@ inline void load_packed2(basic_int64x4& a, basic_int64x4& b, const void* p)
 */
 inline void load_packed2(float32x4& a, float32x4& b, const float* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -626,6 +633,7 @@ inline void load_packed2(float32x4& a, float32x4& b, const float* p)
 
 inline void load_packed2(float32x8& a, float32x8& b, const float* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 8);
@@ -657,6 +665,7 @@ inline void load_packed2(float32x8& a, float32x8& b, const float* p)
 */
 inline void load_packed2(float64x2& a, float64x2& b, const double* p)
 {
+    p = detail::assume_aligned(p, 16);
     a = load(a, p);
     b = load(b, p+2);
     transpose2(a, b);
@@ -664,6 +673,7 @@ inline void load_packed2(float64x2& a, float64x2& b, const double* p)
 
 inline void load_packed2(float64x4& a, float64x4& b, const double* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 4);
@@ -698,6 +708,7 @@ inline void load_packed2(float64x4& a, float64x4& b, const double* p)
 inline void load_packed3(basic_int8x16& a, basic_int8x16& b, basic_int8x16& c,
                          const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -744,6 +755,7 @@ inline void load_packed3(basic_int8x32& a, basic_int8x32& b, basic_int8x32& c,
 inline void load_packed3(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c,
                          const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -790,6 +802,7 @@ inline void load_packed3(basic_int16x16& a, basic_int16x16& b, basic_int16x16& c
 inline void load_packed3(basic_int32x4& a, basic_int32x4& b, basic_int32x4&c,
                          const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -836,6 +849,7 @@ inline void load_packed3(basic_int32x8& a, basic_int32x8& b, basic_int32x8& c,
 inline void load_packed3(basic_int64x2& a, basic_int64x2& b, basic_int64x2& c,
                          const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -894,6 +908,7 @@ inline void load_packed3(basic_int64x4& a, basic_int64x4& b, basic_int64x4& c,
 inline void load_packed3(float32x4& a, float32x4& b, float32x4& c,
                          const float* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -912,6 +927,7 @@ inline void load_packed3(float32x4& a, float32x4& b, float32x4& c,
 inline void load_packed3(float32x8& a, float32x8& b, float32x8& c,
                          const float* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 8);
@@ -946,23 +962,20 @@ inline void load_packed3(float32x8& a, float32x8& b, float32x8& c,
 */
 inline void load_packed3(float64x2& a, float64x2& b, float64x2& c, const double* p)
 {
-#if SIMDPP_USE_NULL
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     load(a, p);
     load(b, p+2);
     load(c, p+4);
     detail::mem_unpack3(a, b, c);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1;
-    a1 = a; b1 = b; c1 = c;
-    load_packed3(a1, b1, c1, p);
-    a = a1; b = b1; c = c1;
 #endif
 }
 
 inline void load_packed3(float64x4& a, float64x4& b, float64x4& c, const double* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 4);
@@ -1000,6 +1013,7 @@ inline void load_packed3(float64x4& a, float64x4& b, float64x4& c, const double*
 inline void load_packed4(basic_int8x16& a, basic_int8x16& b,
                          basic_int8x16& c, basic_int8x16& d, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1050,6 +1064,7 @@ inline void load_packed4(basic_int8x32& a, basic_int8x32& b,
 inline void load_packed4(basic_int16x8& a, basic_int16x8& b,
                          basic_int16x8& c, basic_int16x8& d, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1100,6 +1115,7 @@ inline void load_packed4(basic_int16x16& a, basic_int16x16& b,
 inline void load_packed4(basic_int32x4& a, basic_int32x4& b,
                          basic_int32x4& c, basic_int32x4& d, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1150,6 +1166,7 @@ inline void load_packed4(basic_int32x8& a, basic_int32x8& b,
 inline void load_packed4(basic_int64x2& a, basic_int64x2& b,
                          basic_int64x2& c, basic_int64x2& d, const void* p)
 {
+    p = detail::assume_aligned(p, 16);
     const char* q = reinterpret_cast<const char*>(p);
     a = load(a, q);
     c = load(c, q+16);
@@ -1191,6 +1208,7 @@ inline void load_packed4(basic_int64x4& a, basic_int64x4& b,
 inline void load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& d,
                          const float* p)
 {
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
@@ -1211,6 +1229,7 @@ inline void load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& d,
 inline void load_packed4(float32x8& a, float32x8& b,
                          float32x8& c, float32x8& d, const float* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 8);
@@ -1249,24 +1268,22 @@ inline void load_packed4(float32x8& a, float32x8& b,
 inline void load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
                          const double* p)
 {
-#if SIMDPP_USE_NULL
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     load(a, p);
     load(b, p+2);
     load(c, p+4);
     load(d, p+6);
     detail::mem_unpack4(a, b, c, d);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1, d1;
-    load_packed4(a1, b1, c1, d1, p);
-    a = a1; b = b1; c = c1; d = d1;
 #endif
 }
 
 inline void load_packed4(float64x4& a, float64x4& b,
                          float64x4& c, float64x4& d, const double* p)
 {
+    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
     load(a, p);
     load(b, p + 4);
