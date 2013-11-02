@@ -77,7 +77,7 @@ inline void store(void* p, int128 a)
 #elif SIMDPP_USE_SSE2
     _mm_store_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
-    vst1q_u32(reinterpret_cast<uint32_t*>(p), a);
+    vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u32(a));
 #elif SIMDPP_USE_ALTIVEC
     vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
 #endif
