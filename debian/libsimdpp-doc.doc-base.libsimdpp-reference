@@ -1,9 +1,0 @@
-Document: libsimdpp-reference
-Title: libsimdpp Reference Manual
-Author: Doxygen
-Abstract: Reference Manual for libsimdpp
-Section: Programming/C++
-
-Format: HTML
-Index: /usr/local/share/doc/libsimdpp/reference/html/index.html
-Files: /usr/local/share/doc/libsimdpp/reference/html/*.html
