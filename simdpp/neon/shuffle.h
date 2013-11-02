@@ -47,10 +47,6 @@ namespace neon {
 */
 inline void swap_lo(basic_int64x2& a, basic_int64x2& b)
 {
-// As of version 4.7, GCC does not emit vswp
-#if __GNUC__ && !defined(__clang__)
-    asm ( "vswp %f0, %e0 \n\t" : "+w" (a), "+w" (b) : );
-#else
     int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
@@ -58,7 +54,6 @@ inline void swap_lo(basic_int64x2& a, basic_int64x2& b)
     bh = vget_high_u64(b);
     a = vcombine_u64(bl, ah);
     b = vcombine_u64(al, bh);
-#endif
 }
 
 /** @code
@@ -70,10 +65,6 @@ inline void swap_lo(basic_int64x2& a, basic_int64x2& b)
 */
 inline void swap_hi(basic_int64x2& a, basic_int64x2& b)
 {
-// As of version 4.7, GCC does not emit vswp
-#if __GNUC__ && !defined(__clang__)
-    asm ( "vswp %f1, %e1 \n\t" : "+w" (a), "+w" (b) : );
-#else
     int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
@@ -81,15 +72,10 @@ inline void swap_hi(basic_int64x2& a, basic_int64x2& b)
     bh = vget_high_u64(b);
     a = vcombine_u64(al, bh);
     b = vcombine_u64(bl, ah);
-#endif
 }
 
 inline void transpose2(basic_int64x2& a, basic_int64x2& b)
 {
-// As of version 4.7, GCC does not emit vswp
-#if __GNUC__ && !defined(__clang__)
-    asm ( "vswp %f0, %e1 \n\t" : "+w" (a), "+w" (b) : );
-#else
     int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
@@ -97,7 +83,6 @@ inline void transpose2(basic_int64x2& a, basic_int64x2& b)
     bh = vget_high_u64(b);
     a = vcombine_u64(al, bl);
     b = vcombine_u64(ah, bh);
-#endif
 }
 
 inline basic_int64x2 zip_lo(basic_int64x2 a, basic_int64x2 b)

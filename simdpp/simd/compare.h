@@ -167,11 +167,13 @@ inline mask_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
     @par 128-bit version:
     @icost{SSE2-SSSE3, 5}
     @icost{XOP, 1}
+    @icost{NEON, 3}
     @icost{ALTIVEC, 3-4}
 
     @par 256-bit version:
     @icost{SSE2-SSSE3, AVX, 10}
-    @icost{XOP, SSE4.1, NEON, 2}
+    @icost{XOP, SSE4.1, 2}
+    @icost{NEON, 6}
     @icost{ALTIVEC, 6-7}
 */
 inline mask_int64x2 cmp_eq(basic_int64x2 a, basic_int64x2 b)
@@ -191,7 +193,14 @@ inline mask_int64x2 cmp_eq(basic_int64x2 a, basic_int64x2 b)
     r32 = bit_and(r32, r32s);
     return r32;
 #elif SIMDPP_USE_NEON
-    return vceqq_s64(a, b);
+    uint32x4 r32, r32s;
+    r32 = cmp_eq(uint32x4(a), uint32x4(b));
+    r32s = r32;
+    // swap the 32-bit halves
+    transpose2(r32, r32s);
+    // combine the results. Each 32-bit half is ANDed with the neighbouring pair
+    r32 = bit_and(r32, r32s);
+    return uint64x2(r32);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
     uint32x4 a0, b0, r;
@@ -417,14 +426,16 @@ inline mask_int32x8 cmp_neq(basic_int32x8 a, basic_int32x8 b)
 
     @par 128-bit version:
     @icost{SSE2-SSSE3, 5}
-    @icost{SSE4.1, AVX, NEON, 2}
+    @icost{SSE4.1, AVX, 2}
     @icost{XOP, 1}
+    @icost{NEON, 4}
     @icost{ALTIVEC, 3-5}
 
     @par 256-bit version:
     @icost{SSE2-SSSE3, AVX, 10}
     @icost{SSE4.1, NEON, 4}
     @icost{AVX2, XOP, 2}
+    @icost{NEON, 8}
     @icost{ALTIVEC, 6-8}
 */
 inline mask_int64x2 cmp_neq(basic_int64x2 a, basic_int64x2 b)

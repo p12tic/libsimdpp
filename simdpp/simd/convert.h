@@ -357,7 +357,15 @@ inline basic_int32x4 to_int32x4(float32x4 a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+    detail::mem_block<float32x4> mf(a);
+    detail::mem_block<int32x4> mi;
+    mi[0] = int(mf[0]);
+    mi[1] = int(mf[1]);
+    mi[2] = int(mf[2]);
+    mi[3] = int(mf[3]);
+    return mi;
+#elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_s32_f32(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cts((__vector float)a, 0);
@@ -632,14 +640,13 @@ inline float32x4 to_float32x4(int32x4 a)
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_ps(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
-    float32x4 r;
-    struct Temp { int32_t a[4]; };
-    Temp t = bit_cast<Temp>(a);
-    r[0] = float(t.a[0]);
-    r[1] = float(t.a[1]);
-    r[2] = float(t.a[2]);
-    r[3] = float(t.a[3]);
-    return r;
+    detail::mem_block<int32x4> mi(a);
+    detail::mem_block<float32x4> mf;
+    mf[0] = float(mi[0]);
+    mf[1] = float(mi[1]);
+    mf[2] = float(mi[2]);
+    mf[3] = float(mi[3]);
+    return mf;
 #elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_f32_s32(a);
 #elif SIMDPP_USE_ALTIVEC

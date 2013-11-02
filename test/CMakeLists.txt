@@ -121,7 +121,7 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 )
 target_link_libraries(test_dispatcher pthread ${Boost_LIBRARIES})
 
-set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-g2 -Wall -Wextra")
+set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-pthread -g2 -Wall -Wextra")
 
 list_contains(HAS_SSE2 X86_SSE2 ${NATIVE_ARCHS})
 list_contains(HAS_SSE3 X86_SSE3 ${NATIVE_ARCHS})

@@ -41,7 +41,7 @@ tested with the following compilers:
    - Clang: 3.3, 3.4
 
  - C++98 version
-   - GCC: 4.8.1, 4.7.1
+   - GCC: 4.8.1, 4.7.3
    - Clang: 3.3, 3.4
 
 The C++98 version has been tested with boost 1.53 and 1.54. Most probably other
