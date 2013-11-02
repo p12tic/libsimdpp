@@ -353,7 +353,15 @@ inline basic_int32x4 to_int32x4(float32x4 a)
     return null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
 #elif SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+    detail::mem_block<float32x4> mf(a);
+    detail::mem_block<int32x4> mi;
+    mi[0] = int(mf[0]);
+    mi[1] = int(mf[1]);
+    mi[2] = int(mf[2]);
+    mi[3] = int(mf[3]);
+    return mi;
+#elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_s32_f32(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cts((__vector float)a, 0);
