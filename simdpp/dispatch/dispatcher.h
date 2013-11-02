@@ -120,6 +120,24 @@ inline unsigned select_version_any(std::vector<FnVersion>& versions,
     return i;
 }
 
+#if __GNUC__ && !defined(__clang__)
+/*  A workaround for a GCC 4.8 bug: if we don't use threading functions, then
+    the threads library is not linked in, the threads implementation is dummy
+    and std::call_once throws system_error saying that the operation is not
+    supported. If we have a strong reference to at least one function from
+    libpthread, everything works
+*/
+inline void gcc_linker_bug_workaround()
+{
+    static volatile int i = 0;
+    if (i) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnonnull"
+        pthread_create(nullptr, nullptr, nullptr, nullptr);
+#pragma GCC diagnostic pop
+    }
+}
+#endif
 
 /*  Tracks versions of one particular function. @a Tag must be an unique type
     for each different function. The same @a Tag and @a FunPtr must be used
@@ -135,6 +153,9 @@ public:
     */
     static FunPtr get_fun_ptr(const GetArchCb& cb)
     {
+#if __GNUC__ && !defined(__clang__)
+        gcc_linker_bug_workaround();
+#endif
         /*  There are no problems with concurrent initialization, because even
             local static variables are guaranteed to be initialized to zero
             before main() runs.
