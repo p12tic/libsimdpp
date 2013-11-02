@@ -27,6 +27,7 @@
 cmake_minimum_required(VERSION 2.8.0)
 project(libsimdpp)
 set(PROJECT_VERSION "1.0~beta1")
+set(SIMDPP_API_VERSION "1.0")
 
 set(PKG_NAME "${CMAKE_PROJECT_NAME}")
 set(PKG_FULL_NAME "${CMAKE_PROJECT_NAME}-${PROJECT_VERSION}")
@@ -50,7 +51,7 @@ include(SimdppMultiarch)
 simdpp_get_runnable_archs(NATIVE_ARCHS)
 # ------------------------------------------------------------------------------
 
-set(SIMDPP_INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include/${PKG_FULL_NAME}")
+set(SIMDPP_INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include/${PKG_NAME}-${SIMDPP_API_VERSION}")
 set(SIMDPP_DOCDIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PKG_NAME}")
 set(SIMDPP_PKGCONFIGDIR "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig/${PKG_FULL_NAME}")
 
