@@ -24,7 +24,7 @@
 #   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #   POSSIBILITY OF SUCH DAMAGE.
 
-include_directories(${libsimdpp_SOURCE_DIR})
+include_directories(${libsimdpp98_SOURCE_DIR})
 
 set(PERF_SOURCES
     neon.cc
