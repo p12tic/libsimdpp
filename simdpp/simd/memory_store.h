@@ -123,12 +123,10 @@ inline void store(float* p, float32x8 a)
 inline void store(double *p, float64x2 a)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_pd(p, a);
-#elif SIMDPP_USE_NEON
-    store(p, int64x2(a));
 #endif
 }
 
@@ -217,12 +215,10 @@ inline void stream(float* p, float32x8 a)
 inline void stream(double* p, float64x2 a)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_pd(p, a);
-#elif SIMDPP_USE_NEON
-    store(p, a);
 #endif
 }
 
@@ -558,14 +554,12 @@ inline void store_first(float* p, float32x8 a, unsigned n)
 inline void store_first(double* p, float64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
         sse::store_lane<0,1>(p, a);
     }
-#elif SIMDPP_USE_NEON
-    store_first(p, int64x2(a), n);
 #endif
 }
 
@@ -879,14 +873,12 @@ inline void store_last(float* p, float32x8 a, unsigned n)
 inline void store_last(double* p, float64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
         sse::store_lane<1,1>(p+1, a);
     }
-#else
-    store_last(p, int64x2(a), n);
 #endif
 }
 
@@ -1497,17 +1489,13 @@ inline void store_packed3(float* p,
 inline void store_packed3(double* p, float64x2 a, float64x2 b, float64x2 c)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     detail::mem_pack3(a, b, c);
     store(p, a);
     store(p+2, b);
     store(p+4, c);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1;
-    a1 = a; b1 = b; c1 = c;
-    store_packed3(p, a1, b1, c1);
 #endif
 }
 
@@ -1823,18 +1811,14 @@ inline void store_packed4(double* p,
                           float64x2 a, float64x2 b, float64x2 c, float64x2 d)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     detail::mem_pack4(a, b, c, d);
     store(p, a);
     store(p+2, b);
     store(p+4, c);
     store(p+6, d);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1, d1;
-    a1 = a; b1 = b; c1 = c; d1 = d;
-    store_packed4(p, a1, b1, c1, d1);
 #endif
 }
 

@@ -131,15 +131,11 @@ inline float32x8 load(float32x8& a, const float* p)
 inline float64x2 load(float64x2& a, const double* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
     a = _mm_load_pd(p);
-    return a;
-#elif SIMDPP_USE_NEON
-    int64x2 b(a);
-    a = load(b, p);
     return a;
 #endif
 }
@@ -269,15 +265,11 @@ inline float32x4 load_u(float32x4& a, const float* p)
 
 inline float64x2 load_u(float64x2& a, const double* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
     a = _mm_loadu_pd(p);
-    return a;
-#elif SIMDPP_USE_NEON
-    int64x2 b(a);
-    a = load_u(b, p);
     return a;
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, p);
@@ -971,18 +963,13 @@ inline void load_packed3(float32x8& a, float32x8& b, float32x8& c,
 inline void load_packed3(float64x2& a, float64x2& b, float64x2& c, const double* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     load(a, p);
     load(b, p+2);
     load(c, p+4);
     detail::mem_unpack3(a, b, c);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1;
-    a1 = a; b1 = b; c1 = c;
-    load_packed3(a1, b1, c1, p);
-    a = a1; b = b1; c = c1;
 #endif
 }
 
@@ -1282,18 +1269,14 @@ inline void load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
                          const double* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     load(a, p);
     load(b, p+2);
     load(c, p+4);
     load(d, p+6);
     detail::mem_unpack4(a, b, c, d);
-#elif SIMDPP_USE_NEON
-    int64x2 a1, b1, c1, d1;
-    load_packed4(a1, b1, c1, d1, p);
-    a = a1; b = b1; c = c1; d = d1;
 #endif
 }
 
