@@ -55,6 +55,7 @@ set(HEADERS
     null/shuffle.h
     null/transpose.h
 
+    simd/detail/align.h
     simd/detail/not_implemented.h
     simd/detail/move_signed.h
     simd/detail/mem_block.h
