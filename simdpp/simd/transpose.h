@@ -86,7 +86,7 @@ inline void transpose2(basic_int16x8& a0, basic_int16x8& a1)
     a0 = shuffle2<0,2,0,2>(b0, b1);
     a1 = shuffle2<1,3,1,3>(b0, b1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u16(a0, a1);
+    uint16x8x2_t r = vtrnq_u16(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
@@ -146,7 +146,7 @@ inline void transpose2(basic_int32x4& a0, basic_int32x4& a1)
     a0 = zip_lo(b0, b1);
     a1 = zip_hi(b0, b1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u32(a0, a1);
+    uint32x4x2_t r = vtrnq_u32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
@@ -262,7 +262,7 @@ inline void transpose2(float32x4& a0, float32x4& a1)
     a0 = bit_cast<float32x4>(zip_lo(b0, b1));
     a1 = bit_cast<float32x4>(zip_hi(b0, b1));
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_f32(a0, a1);
+    float32x4x2_t r = vtrnq_f32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
