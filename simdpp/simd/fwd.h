@@ -168,6 +168,9 @@ template<unsigned count> uint16x16 shift_r(uint16x16);
 template<unsigned count> basic_int16x16 shift_l(basic_int16x16);
 template<unsigned count> int32x8 shift_r(int32x8);
 
+// transpose.h
+inline void transpose2(basic_int32x4& a0, basic_int32x4& a1);
+
 #endif // DOXYGEN_SHOULD_SKIP_THIS
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
