@@ -38,7 +38,10 @@ void test_store_helper(TestCase& tc, V* sv)
 {
     typedef typename V::element_type E;
 
-    E rdata[V::length * vnum];
+    union {
+        E rdata[V::length * vnum];
+        simdpp::detail::align_type align;
+    };
     V rv[vnum];
 
     for (unsigned i = 0; i < vnum; i++) {
