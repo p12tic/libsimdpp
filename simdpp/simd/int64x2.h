@@ -60,8 +60,6 @@ public:
     static const uint_element_type all_bits = 0xffffffffffffffff;
 
     basic_int64x2() {}
-    basic_int64x2(const basic_int64x2& d) { std::memcpy(this, &d, sizeof(*this)); }
-    basic_int64x2& operator=(const basic_int64x2& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from base type
@@ -110,8 +108,6 @@ public:
     typedef int64_t element_type;
 
     int64x2() {}
-    int64x2(const int64x2& d) { std::memcpy(this, &d, sizeof(*this)); }
-    int64x2& operator=(const int64x2& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -204,8 +200,6 @@ class uint64x2 : public basic_int64x2 {
 public:
 
     uint64x2() {}
-    uint64x2(const uint64x2& d) { std::memcpy(this, &d, sizeof(*this)); }
-    uint64x2& operator=(const uint64x2& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -301,8 +295,6 @@ public:
     static const unsigned length = 2;
 
     mask_int64x2() {}
-    mask_int64x2(const mask_int64x2& d) { std::memcpy(this, &d, sizeof(*this)); }
-    mask_int64x2& operator=(const mask_int64x2& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 

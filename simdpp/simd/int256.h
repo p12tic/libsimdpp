@@ -54,8 +54,6 @@ public:
     static const uint_element_type all_bits = 0xffffffffffffffff;
 
     int256() {}
-    int256(const int256& d) { std::memcpy(this, &d, sizeof(*this)); }
-    int256& operator=(const int256& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type

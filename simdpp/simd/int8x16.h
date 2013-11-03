@@ -58,8 +58,6 @@ public:
     static const uint_element_type all_bits = 0xff;
 
     basic_int8x16() {}
-    basic_int8x16(const basic_int8x16& d) { std::memcpy(this, &d, sizeof(*this)); }
-    basic_int8x16& operator=(const basic_int8x16& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from base type
@@ -102,8 +100,6 @@ public:
     typedef int8_t element_type;
 
     int8x16() {}
-    int8x16(const int8x16& d) { std::memcpy(this, &d, sizeof(*this)); }
-    int8x16& operator=(const int8x16& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -223,8 +219,6 @@ class uint8x16 : public basic_int8x16 {
 public:
 
     uint8x16() {}
-    uint8x16(const uint8x16& d) { std::memcpy(this, &d, sizeof(*this)); }
-    uint8x16& operator=(const uint8x16& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -344,8 +338,6 @@ public:
     static const unsigned length = 16;
 
     mask_int8x16() {}
-    mask_int8x16(const mask_int8x16& d) { std::memcpy(this, &d, sizeof(*this)); }
-    mask_int8x16& operator=(const mask_int8x16& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_SSE2

@@ -60,8 +60,6 @@ public:
     static const uint_element_type all_bits = 0xffffffff;
 
     basic_int32x4() {}
-    basic_int32x4(const basic_int32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
-    basic_int32x4& operator=(const basic_int32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from base type
@@ -110,8 +108,6 @@ public:
     typedef int32_t element_type;
 
     int32x4() {}
-    int32x4(const int32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
-    int32x4& operator=(const int32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -221,8 +217,6 @@ class uint32x4 : public basic_int32x4 {
 public:
 
     uint32x4() {}
-    uint32x4(const uint32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
-    uint32x4& operator=(const uint32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// @{
     /// Construct from the underlying vector type
@@ -335,8 +329,6 @@ public:
     static const unsigned length = 4;
 
     mask_int32x4() {}
-    mask_int32x4(const mask_int32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
-    mask_int32x4& operator=(const mask_int32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 

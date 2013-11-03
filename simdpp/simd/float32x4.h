@@ -59,8 +59,6 @@ public:
     static const uint_element_type all_bits = 0xffffffff;
 
     float32x4() {}
-    float32x4(const float32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
-    float32x4& operator=(const float32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
@@ -199,8 +197,6 @@ public:
     static const unsigned length = 4;
 
     mask_float32x4() {}
-    mask_float32x4(const mask_float32x4& d) { std::memcpy(this, &d, sizeof(*this)); }
-    mask_float32x4& operator=(const mask_float32x4& d) { std::memcpy(this, &d, sizeof(*this)); return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
