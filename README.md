@@ -1,13 +1,13 @@
 
-What is libsimdpp
------------------
+Overview
+--------
 
-libsimdpp is a header-only zero-overhead C++ wrapper around single-instruction
-multiple-data (SIMD) intrinsics found in many compilers. The library presents
-a single interface over several instruction sets. In addition to that, the
-library allows to compile the same source code for different instruction sets
-and seamlessly hook the implementations to an internal dynamic dispatch
-mechanism.
+libsimdpp is a portable header-only zero-overhead C++ wrapper around
+single-instruction multiple-data (SIMD) intrinsics found in many compilers. The
+library presents a single interface over several instruction sets. In addition
+to that, the library allows to compile the same source code for different
+instruction sets and seamlessly hook the implementations to an internal dynamic
+dispatch mechanism.
 
 The library resolves differences between instruction sets by implementing the
 missing functionality as a combination of several intrinsics. Moreover, the
