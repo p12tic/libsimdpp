@@ -118,10 +118,7 @@ inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
     r0 = permute<0,0,0,0>(r0);
     return uint32x4(r0);
 #elif SIMDPP_USE_NEON
-    uint32x4 r0;
-    r0 = vsetq_lane_u32(v0, r0, 0);
-    r0 = broadcast_w<0>(r0);
-    return r0;
+    return vdupq_n_u32(v0);
 #elif SIMDPP_USE_ALTIVEC
     union {
         uint32_t v[4];
