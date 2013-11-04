@@ -116,10 +116,12 @@ inline uint8x16 uint8x16::set_broadcast(uint8_t v0)
 {
 #if SIMDPP_USE_NULL
     return uint8x16::load_broadcast(&v0);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 * 0x01010101;
     return uint32x4::set_broadcast(u0);
+#elif SIMDPP_USE_NEON
+    return vdupq_n_u8(v0);
 #elif SIMDPP_USE_ALTIVEC
     union {
         uint8_t v[16];

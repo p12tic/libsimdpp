@@ -118,8 +118,7 @@ inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
     return uint64x2(r0);
 #endif
 #elif SIMDPP_USE_NEON
-    uint64x1_t r0 = vcreate_u64(v0);
-    return vcombine_u64(r0, r0);
+    return vdupq_n_u64(v0);
 #elif SIMDPP_USE_ALTIVEC
     union {
         uint64_t v[2];
