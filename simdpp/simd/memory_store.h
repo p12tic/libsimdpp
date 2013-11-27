@@ -289,6 +289,8 @@ void v256_store_last(P* p, V a, unsigned n)
     where @a N is the number of elements in the vector. If @a n is zero, no
     store is made.
 
+    The function may write entire block of 128 or 256 bits.
+
     @code
     *(p) = a0
     *(p+1) = a1
@@ -309,74 +311,16 @@ inline void store_first(void* p, basic_int8x16 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2
-    basic_int8x16 mask = int128::ones();
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    static const uint8_t mask_d[32] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                       0,0,0,0,0,0,0,0,
+                                       0,0,0,0,0,0,0,0};
 
-    // let the compiler build a jump table
-    switch (n) {
-    case 0: return;
-    case 1: mask = move_l<15>(mask); break;
-    case 2: mask = move_l<14>(mask); break;
-    case 3: mask = move_l<13>(mask); break;
-    case 4: mask = move_l<12>(mask); break;
-    case 5: mask = move_l<11>(mask); break;
-    case 6: mask = move_l<10>(mask); break;
-    case 7: mask = move_l<9>(mask); break;
-    case 8: mask = move_l<8>(mask); break;
-    case 9: mask = move_l<7>(mask); break;
-    case 10: mask = move_l<6>(mask); break;
-    case 11: mask = move_l<5>(mask); break;
-    case 12: mask = move_l<4>(mask); break;
-    case 13: mask = move_l<3>(mask); break;
-    case 14: mask = move_l<2>(mask); break;
-    case 15: mask = move_l<1>(mask); break;
-    default: return; //UB
-    }
-
-    sse::store_masked(p, a, mask);
-#elif SIMDPP_USE_NEON
-    // The following will be trainslated into conditional instructions, thus
-    // will incur no pipeline flushes
-    char* q = reinterpret_cast<char*>(p);
-    if (n >= 8) {
-        neon::store_lane<0,8>(q, a);
-        q += 8;
-        a = move_l<8>(a);
-    }
-    if (n%8 >= 4) {
-        neon::store_lane<0,4>(q, a);
-        q += 4;
-        a = move_l<4>(a);
-    }
-    if (n%4 >= 2) {
-        neon::store_lane<0,2>(q, a);
-        q += 2;
-        a = move_l<2>(a);
-    }
-    if (n%2 == 1) {
-        neon::store_lane<0,1>(q, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-    if (n >= 8) {
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
-        q += 8;
-        n -= 8;
-    }
-    if (n >= 4) {
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        q += 4;
-        n -= 4;
-    }
-    if (n >= 2) {
-        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
-        q += 2;
-        n -= 2;
-    }
-    if (n == 1) {
-        vec_ste((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(q));
-    }
+    basic_int8x16 mask = load_u(mask, mask_d + 16 - n);
+    basic_int8x16 old = load(old, p);
+    a = blend(a, old, mask);
+    store(p, a);
 #endif
 }
 
@@ -390,53 +334,8 @@ inline void store_first(void* p, basic_int16x8 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2
-    basic_int16x8 mask = int128::ones();
-
-    switch (n) {
-    case 0: return;
-    case 1: mask = move_l<7>(mask); break;
-    case 2: mask = move_l<6>(mask); break;
-    case 3: mask = move_l<5>(mask); break;
-    case 4: mask = move_l<4>(mask); break;
-    case 5: mask = move_l<3>(mask); break;
-    case 6: mask = move_l<2>(mask); break;
-    case 7: mask = move_l<1>(mask); break;
-    default: return; //UB
-    }
-
-    sse::store_masked(p, a, mask);
-#elif SIMDPP_USE_NEON
-    char* q = reinterpret_cast<char*>(p);
-    if (n >= 4) {
-        neon::store_lane<0,4>(q, a);
-        q += 8;
-        a = move_l<4>(a);
-    }
-    if (n%4 >= 2) {
-        neon::store_lane<0,2>(q, a);
-        q += 4;
-        a = move_l<2>(a);
-    }
-    if (n%2 >= 1) {
-        neon::store_lane<0,1>(q, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-    if (n >= 4) {
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
-        q += 8;
-        n -= 4;
-    }
-    if (n >= 2) {
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        q += 4;
-        n -= 2;
-    }
-    if (n == 1) {
-        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
-    }
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    store_first(p, (basic_int8x16)a, n*2);
 #endif
 }
 
@@ -450,45 +349,8 @@ inline void store_first(void* p, basic_int32x4 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2
-    char* q = reinterpret_cast<char*>(p);
-
-    switch (n) {
-    case 3:
-        sse::store_lane<0,2>(q, a);
-        a = move_l<2>(a);
-        sse::store_lane<0,1>(q+8, a);
-        return;
-    case 2:
-        sse::store_lane<0,2>(q, a);
-        return;
-    case 1:
-        sse::store_lane<0,1>(q, a);
-        return;
-    }
-#elif SIMDPP_USE_NEON
-    char* q = reinterpret_cast<char*>(p);
-
-    if (n >= 2) {
-        neon::store_lane<0,2>(q, a);
-        q += 8;
-        a = move_l<2>(a);
-    }
-    if (n%2 == 1) {
-        neon::store_lane<0,1>(q, a);
-    }
-
-#elif SIMDPP_USE_ALTIVEC
-    u_int32_t* q = reinterpret_cast<uint32_t*>(p);
-    if (n >= 2) {
-        vec_ste((__vector uint32_t)a, 0, q);
-        vec_ste((__vector uint32_t)a, 4, q);
-        q += 8;
-        n -= 4;
-    }
-    if (n == 1) {
-        vec_ste((__vector uint32_t)a, 0, q);
-    }
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    store_first(p, (basic_int8x16)a, n*4);
 #endif
 }
 
@@ -527,22 +389,25 @@ inline void store_first(void* p, basic_int64x4 a, unsigned n)
 inline void store_first(float* p, float32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_SSE2
-    switch (n) {
-    case 3:
-        sse::store_lane<0,2>(p, a);
-        a = permute<2,0,0,0>(a);
-        sse::store_lane<0,1>(p+2, a);
-        return;
-    case 2:
-        sse::store_lane<0,2>(p, a);
-        return;
-    case 1:
-        sse::store_lane<0,1>(p, a);
-        return;
-    }
-#else
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
     store_first(p, int32x4(a), n);
+#elif SIMDPP_USE_SSE2
+    static const uint32_t mask_d[8] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
+                                       0x00000000, 0x00000000, 0x00000000, 0x00000000};
+
+    const float* mask_dp = reinterpret_cast<const float*>(mask_d);
+    float32x4 mask = load_u(mask, mask_dp + 4-n);
+    float32x4 old = load(old, p);
+    a = blend(a, old, mask);
+    store(p, a);
+#elif SIMDPP_USE_NEON
+    // + VFP
+    if (n < 1) return;
+    neon::store_lane<0,1>(p, a);
+    if (n < 2) return;
+    neon::store_lane<1,1>(p, a);
+    if (n < 3) return;
+    neon::store_lane<2,1>(p, a);
 #endif
 }
 
@@ -592,6 +457,8 @@ inline void store_first(double* p, float64x4 a, unsigned n)
     where @a N is the number of elements in the vector. If @a n is zero, no
     store is made.
 
+    The function may write entire block of 128 or 256 bits.
+
     @code
     *(p+N-n) = a{N-n}
     ...
@@ -612,76 +479,16 @@ inline void store_last(void* p, basic_int8x16 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
-#elif SIMDPP_USE_SSE2
-    basic_int8x16 mask = int128::ones();
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    static const uint8_t mask_d[32] = {0,0,0,0,0,0,0,0,
+                                       0,0,0,0,0,0,0,0,
+                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
 
-    // let the compiler build a jump table
-    switch (n) {
-    case 0: return;
-    case 1: mask = move_r<15>(mask); break;
-    case 2: mask = move_r<14>(mask); break;
-    case 3: mask = move_r<13>(mask); break;
-    case 4: mask = move_r<12>(mask); break;
-    case 5: mask = move_r<11>(mask); break;
-    case 6: mask = move_r<10>(mask); break;
-    case 7: mask = move_r<9>(mask); break;
-    case 8: mask = move_r<8>(mask); break;
-    case 9: mask = move_r<7>(mask); break;
-    case 10: mask = move_r<6>(mask); break;
-    case 11: mask = move_r<5>(mask); break;
-    case 12: mask = move_r<4>(mask); break;
-    case 13: mask = move_r<3>(mask); break;
-    case 14: mask = move_r<2>(mask); break;
-    case 15: mask = move_r<1>(mask); break;
-    default: return; //UB
-    }
-
-    sse::store_masked(p, a, mask);
-#elif SIMDPP_USE_NEON
-    char* q = reinterpret_cast<char*>(p);
-    q += 16;
-    if (n >= 8) {
-        q -= 8;
-        neon::store_lane<8,8>(q, a);
-        a = move_r<8>(a);
-    }
-    if (n%8 >= 4) {
-        q -= 4;
-        neon::store_lane<12,4>(q, a);
-        a = move_r<4>(a);
-    }
-    if (n%4 >= 2) {
-        q -= 2;
-        neon::store_lane<14,2>(q, a);
-        a = move_r<2>(a);
-    }
-    if (n%2 == 1) {
-        q -= 1;
-        neon::store_lane<15,1>(q, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-    q += 16;
-    if (n >= 8) {
-        q -= 8;
-        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        n -= 8;
-    }
-    if (n >= 4) {
-        q -= 4;
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        n -= 4;
-    }
-    if (n >= 2) {
-        q -= 2;
-        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
-        n -= 2;
-    }
-    if (n == 1) {
-        q -= 1;
-        vec_ste((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(q));
-    }
+    basic_int8x16 mask = load_u(mask, mask_d + n);
+    basic_int8x16 old = load(old, p);
+    a = blend(a, old, mask);
+    store(p, a);
 #endif
 }
 
@@ -695,57 +502,8 @@ inline void store_last(void* p, basic_int16x8 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
-#elif SIMDPP_USE_SSE2
-    basic_int16x8 mask = int128::ones();
-
-    switch (n) {
-    case 0: return;
-    case 1: mask = move_r<7>(mask); break;
-    case 2: mask = move_r<6>(mask); break;
-    case 3: mask = move_r<5>(mask); break;
-    case 4: mask = move_r<4>(mask); break;
-    case 5: mask = move_r<3>(mask); break;
-    case 6: mask = move_r<2>(mask); break;
-    case 7: mask = move_r<1>(mask); break;
-    default: return; //UB
-    }
-
-    sse::store_masked(p, a, mask);
-#elif SIMDPP_USE_NEON
-    char* q = reinterpret_cast<char*>(p);
-    q += 16;
-    if (n >= 4) {
-        q -= 8;
-        neon::store_lane<4,4>(q, a);
-        a = move_r<4>(a);
-    }
-    if (n%4 >= 2) {
-        q -= 4;
-        neon::store_lane<6,2>(q, a);
-        a = move_r<2>(a);
-    }
-    if (n%2 == 1) {
-        q -= 2;
-        neon::store_lane<7,1>(q, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-    q += 16;
-    if (n >= 4) {
-        q -= 8;
-        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        n -= 4;
-    }
-    if (n >= 2) {
-        q -= 4;
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        n -= 2;
-    }
-    if (n == 1) {
-        q -= 2;
-        vec_ste((__vector uint16_t)a, 0, reinterpret_cast<uint16_t*>(q));
-    }
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    store_last(p, (basic_int8x16)a, n*2);
 #endif
 }
 
@@ -759,50 +517,8 @@ inline void store_last(void* p, basic_int32x4 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
-#elif SIMDPP_USE_SSE2
-    char* q = reinterpret_cast<char*>(p);
-
-    switch (n) {
-    case 3: {
-        basic_int32x4 b;
-        b = move_l<1>(a);
-        sse::store_lane<0,1>(q+4, b);
-        sse::store_lane<2,2>(q+8, a);
-        return;
-    } case 2: {
-        sse::store_lane<2,2>(q+8, a);
-        return;
-    } case 1: {
-        a = move_l<3>(a);
-        sse::store_lane<0,1>(q+12, a);
-        return;
-    }
-    }
-#elif SIMDPP_USE_NEON
-    char* q = reinterpret_cast<char*>(p);
-    q += 16;
-    if (n >= 2) {
-        q -= 8;
-        neon::store_lane<2,2>(q, a);
-        a = move_r<2>(a);
-    }
-    if (n%2 == 1) {
-        q -= 4;
-        neon::store_lane<3,1>(q, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-    q += 16;
-    if (n >= 2) {
-        q -= 8;
-        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        n -= 2;
-    }
-    if (n >= 1) {
-        q -= 4;
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-    }
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    store_last(p, (basic_int8x16)a, n*4);
 #endif
 }
 
@@ -843,25 +559,25 @@ inline void store_last(void* p, basic_int64x4 a, unsigned n)
 inline void store_last(float* p, float32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_SSE2
-    switch (n) {
-    case 3: {
-        float32x4 b;
-        b = permute<1,0,0,0>(a);
-        sse::store_lane<0,1>(p+1, b);
-        sse::store_lane<2,2>(p+2, a);
-        return;
-    } case 2: {
-        sse::store_lane<2,2>(p+2, a);
-        return;
-    } case 1: {
-        a = permute<3,0,0,0>(a);
-        sse::store_lane<0,1>(p+3, a);
-        return;
-    }
-    }
-#else
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
     store_last(p, int32x4(a), n);
+#elif SIMDPP_USE_SSE2
+    static const uint32_t mask_d[8] = {0x00000000, 0x00000000, 0x00000000, 0x00000000,
+                                       0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
+
+    const float* mask_dp = reinterpret_cast<const float*>(mask_d);
+    float32x4 mask = load_u(mask, mask_dp + n);
+    float32x4 old = load(old, p);
+    a = blend(a, old, mask);
+    store(p, a);
+#elif SIMDPP_USE_NEON
+    // + VFP
+    if (n < 1) return;
+    neon::store_lane<3,1>(p+3, a);
+    if (n < 2) return;
+    neon::store_lane<2,1>(p+2, a);
+    if (n < 3) return;
+    neon::store_lane<1,1>(p+1, a);
 #endif
 }
 

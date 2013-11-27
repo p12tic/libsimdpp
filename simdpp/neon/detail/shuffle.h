@@ -46,12 +46,14 @@ basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
 template<>
 inline basic_int8x16 align<0>(basic_int8x16 lower, basic_int8x16 upper)
 {
+    (void) upper;
     return lower;
 }
 
 template<>
 inline basic_int8x16 align<16>(basic_int8x16 lower, basic_int8x16 upper)
 {
+    (void) lower;
     return upper;
 }
 
