@@ -45,6 +45,7 @@ inline const void* assume_aligned_impl(const void* x, unsigned bytes)
     x = __builtin_assume_aligned(x, bytes);
     return x;
 #else
+    (void) bytes;
     return x;
 #endif
 }
