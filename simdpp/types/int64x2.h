@@ -56,8 +56,10 @@ public:
     using int_vector_type = gint64x2;
     using uint_vector_type = uint64x2;
     using mask_type = mask_int64x2;
+    using base_vector_type = gint64x2;
 
     static constexpr unsigned length = 2;
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
@@ -112,6 +114,16 @@ public:
     gint64<2>& operator=(const float64x2& d) { operator=(gint64x2(d)); return *this; }
     /// @}
 
+    /// @{
+    /// Range access
+    const gint64x2* begin() const                { return this; }
+          gint64x2* begin()                      { return this; }
+    const gint64x2* end() const                  { return this+1; }
+          gint64x2* end()                        { return this+1; }
+    const gint64x2& operator[](unsigned i) const { return *this; }
+          gint64x2& operator[](unsigned i)       { return *this; }
+    /// @}
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
     /// For internal use only
@@ -157,6 +169,7 @@ class int64<2> : public gint64x2 {
 public:
 
     using element_type = int64_t;
+    using base_vector_type = int64x2;
 
     int64<2>() = default;
     int64<2>(const int64x2 &) = default;
@@ -192,6 +205,16 @@ public:
     /// Construct from compatible float64x4 integer vector type
     explicit int64<2>(const float64x2& d) : gint64x2(d) {}
     int64<2>& operator=(const float64x2& d) { gint64x2::operator=(d); return *this; }
+    /// @}
+
+    /// @{
+    /// Range access
+    const int64x2* begin() const                { return this; }
+          int64x2* begin()                      { return this; }
+    const int64x2* end() const                  { return this+1; }
+          int64x2* end()                        { return this+1; }
+    const int64x2& operator[](unsigned i) const { return *this; }
+          int64x2& operator[](unsigned i)       { return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -248,6 +271,8 @@ template<>
 class uint64<2> : public gint64x2 {
 public:
 
+    using base_vector_type = uint64x2;
+
     uint64<2>() = default;
     uint64<2>(const uint64x2 &) = default;
     uint64<2> &operator=(const uint64x2 &) = default;
@@ -282,6 +307,16 @@ public:
     /// Construct from compatible float64x4 integer vector type
     explicit uint64<2>(const float64x2& d) : gint64x2(d) {}
     uint64<2>& operator=(const float64x2& d) { gint64x2::operator=(d); return *this; }
+    /// @}
+
+    /// @{
+    /// Range access
+    const uint64x2* begin() const                { return this; }
+          uint64x2* begin()                      { return this; }
+    const uint64x2* end() const                  { return this+1; }
+          uint64x2* end()                        { return this+1; }
+    const uint64x2& operator[](unsigned i) const { return *this; }
+          uint64x2& operator[](unsigned i)       { return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -339,7 +374,9 @@ public:
 template<>
 class mask_int64<2> {
 public:
+    using base_vector_type = mask_int64x2;
     static constexpr unsigned length = 2;
+    static constexpr unsigned vec_length = 1;
 
     mask_int64<2>() = default;
     mask_int64<2>(const mask_int64x2 &) = default;
@@ -361,6 +398,16 @@ public:
 
     /// Access the underlying type
     operator gint64x2() const;
+
+    /// @{
+    /// Range access
+    const mask_int64<2>* begin() const                { return this; }
+          mask_int64<2>* begin()                      { return this; }
+    const mask_int64<2>* end() const                  { return this+1; }
+          mask_int64<2>* end()                        { return this+1; }
+    const mask_int64<2>& operator[](unsigned i) const { return *this; }
+          mask_int64<2>& operator[](unsigned i)       { return *this; }
+    /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL

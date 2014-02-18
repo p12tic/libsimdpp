@@ -54,6 +54,7 @@ public:
     using int_vector_type = gint32<N>;
     using uint_vector_type = uint32<N>;
     using mask_type = mask_int32<N>;
+    using base_vector_type = gint32v;
 
     static constexpr unsigned length = N;
     static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT32_SIZE - 1) / SIMDPP_FAST_INT32_SIZE;
@@ -129,6 +130,7 @@ public:
 
     using element_type = int32_t;
     using gint32<N>::vec_length;
+    using base_vector_type = int32v;
 
     int32<N>() = default;
     int32<N>(const int32<N>&) = default;
@@ -237,6 +239,7 @@ public:
 
     using element_type = uint32_t;
     using gint32<N>::vec_length;
+    using base_vector_type = uint32v;
 
     uint32<N>() = default;
     uint32<N>(const uint32<N>&) = default;

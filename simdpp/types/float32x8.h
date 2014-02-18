@@ -54,7 +54,7 @@ public:
     using uint_element_type = uint32_t;
     using int_vector_type = gint32x8;
     using uint_vector_type = uint32x8;
-    using half_vector_type = float32x4;
+    using base_vector_type = float32x8;
     using mask_type = mask_float32x8;
 
     static constexpr unsigned vec_length = 2; // FIXME
@@ -176,6 +176,7 @@ private:
 template<>
 class mask_float32<8> {
 public:
+    using base_vector_type = mask_float32x8;
     static constexpr unsigned length = 8;
 
     mask_float32<8>() = default;

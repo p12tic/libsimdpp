@@ -57,6 +57,7 @@ public:
     using uint_vector_type = uint8x32;
     using half_vector_type = gint8x16;
     using mask_type = mask_int8x32;
+    using base_vector_type = gint8x32;
 
     static constexpr unsigned length = 32;
     static constexpr unsigned vec_length = 2; // FIXME
@@ -134,7 +135,7 @@ class int8<32> : public gint8x32 {
 public:
 
     using element_type = int8_t;
-    using half_vector_type = int8x16;
+    using base_vector_type = int8x32;
 
     int8<32>() = default;
     int8<32>(const int8x32 &) = default;
@@ -260,7 +261,7 @@ public:
 template<>
 class uint8<32> : public gint8x32 {
 public:
-    using half_vector_type = uint8x16;
+    using base_vector_type = uint8x32;
 
     uint8<32>() = default;
     uint8<32>(const uint8x32 &) = default;
@@ -384,7 +385,9 @@ public:
 template<>
 class mask_int8<32> {
 public:
+    using base_vector_type = mask_int8x32;
     static constexpr unsigned length = 32;
+    static constexpr unsigned vec_length = 1;
 
     mask_int8<32>() = default;
     mask_int8<32>(const mask_int8x32 &) = default;

@@ -54,9 +54,11 @@ public:
     using uint_element_type = uint64_t;
     using int_vector_type = gint64x2;
     using uint_vector_type = uint64x2;
+    using base_vector_type = float64x2;
     using mask_type = mask_float64x2;
 
     static constexpr unsigned length = 2;
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
@@ -79,6 +81,16 @@ public:
     /// Construct from compatible int64x2 integer vector type
     explicit float64<2>(gint64x2 d)     { *this = bit_cast<float64x2>(d); }
     float64<2>& operator=(gint64x2 d)   { *this = bit_cast<float64x2>(d); return *this; }
+    /// @}
+
+    /// @{
+    /// Range access
+    const float64x2* begin() const   { return this; }
+    float64x2* begin()               { return this; }
+    const float64x2* end() const     { return this+1; }
+    float64x2* end()                 { return this+1; }
+    const float64x2& operator[](unsigned i) const { return *this; }
+          float64x2& operator[](unsigned i)       { return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -149,6 +161,7 @@ private:
 template<>
 class mask_float64<2> {
 public:
+    using base_vector_type = mask_float64x2;
     static constexpr unsigned length = 2;
 
     mask_float64<2>() = default;

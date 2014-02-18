@@ -58,9 +58,10 @@ public:
     using uint_vector_type = uint16x16;
     using half_vector_type = gint16x8;
     using mask_type = mask_int16x16;
+    using base_vector_type = gint16x16;
 
     static constexpr unsigned length = 16;
-    static constexpr unsigned vec_length = 2;
+    static constexpr unsigned vec_length = 2; // FIXME
     static constexpr unsigned num_bits = 16;
     static constexpr uint_element_type all_bits = 0xffff;
 
@@ -128,6 +129,7 @@ private:
 template<>
 class int16<16> : public gint16x16 {
 public:
+    using base_vector_type = int16x16;
 
     using element_type = int16_t;
     using half_vector_type = int16x8;
@@ -239,6 +241,7 @@ class uint16<16> : public gint16x16 {
 public:
 
     using half_vector_type = uint16x8;
+    using base_vector_type = uint16x16;
 
     uint16<16>() = default;
     uint16<16>(const uint16x16 &) = default;
@@ -344,6 +347,8 @@ public:
 template<>
 class mask_int16<16> {
 public:
+    using base_vector_type = mask_int16x16;
+
     static constexpr unsigned length = 16;
 
     mask_int16<16>() = default;

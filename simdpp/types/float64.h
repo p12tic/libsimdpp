@@ -55,6 +55,7 @@ public:
     using uint_element_type = uint64_t;
     using int_vector_type = gint64<N>;
     using uint_vector_type = uint64<N>;
+    using base_vector_type = float64v;
     using mask_type = mask_float64<N>;
 
     static constexpr unsigned length = N;

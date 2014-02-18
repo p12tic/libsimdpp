@@ -57,6 +57,7 @@ public:
     using uint_vector_type = uint64x4;
     using half_vector_type = gint64x2;
     using mask_type = mask_int64x4;
+    using base_vector_type = gint64x4;
 
     static constexpr unsigned length = 4;
     static constexpr unsigned vec_length = 2; // FIXME
@@ -140,6 +141,7 @@ public:
 
     using element_type = int64_t;
     using half_vector_type = int64x2;
+    using base_vector_type = int64x4;
 
     int64<4>() = default;
     int64<4>(const int64x4 &) = default;
@@ -237,6 +239,7 @@ class uint64<4> : public gint64x4 {
 public:
 
     using half_vector_type = uint64x2;
+    using base_vector_type = uint64x4;
 
     uint64<4>() = default;
     uint64<4>(const uint64x4 &) = default;
@@ -333,6 +336,8 @@ public:
 template<>
 class mask_int64<4> {
 public:
+    using base_vector_type = mask_int64x4;
+
     static constexpr unsigned length = 4;
 
     mask_int64<4>() = default;

@@ -54,6 +54,7 @@ public:
     using int_vector_type = gint64<N>;
     using uint_vector_type = uint64<N>;
     using mask_type = mask_int64<N>;
+    using base_vector_type = gint64v;
 
     static constexpr unsigned length = N;
     static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT64_SIZE - 1) / SIMDPP_FAST_INT64_SIZE;
@@ -129,6 +130,7 @@ public:
 
     using element_type = int64_t;
     using gint64<N>::vec_length;
+    using base_vector_type = int64v;
 
     int64<N>() = default;
     int64<N>(const int64<N>&) = default;
@@ -225,6 +227,7 @@ public:
 
     using element_type = uint64_t;
     using gint64<N>::vec_length;
+    using base_vector_type = uint64v;
 
     uint64<N>() = default;
     uint64<N>(const uint64<N>&) = default;

@@ -56,8 +56,10 @@ public:
     using int_vector_type = gint32x4;
     using uint_vector_type = uint32x4;
     using mask_type = mask_int32x4;
+    using base_vector_type = gint32x4;
 
     static constexpr unsigned length = 4;
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned num_bits = 32;
     static constexpr uint_element_type all_bits = 0xffffffff;
 
@@ -112,6 +114,16 @@ public:
     gint32<4>& operator=(const float32x4& d) { operator=(gint32x4(d)); return *this; }
     /// @}
 
+    /// @{
+    /// Range access
+    const gint32x4* begin() const                { return this; }
+          gint32x4* begin()                      { return this; }
+    const gint32x4* end() const                  { return this+1; }
+          gint32x4* end()                        { return this+1; }
+    const gint32x4& operator[](unsigned i) const { return *this; }
+          gint32x4& operator[](unsigned i)       { return *this; }
+    /// @}
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
     /// For internal use only
@@ -155,7 +167,7 @@ private:
 template<>
 class int32<4> : public gint32x4 {
 public:
-
+    using base_vector_type = int32x4;
     using element_type = int32_t;
 
     int32<4>() = default;
@@ -192,6 +204,16 @@ public:
     /// Construct from compatible float32x4 integer vector type
     explicit int32<4>(const float32x4& d) : gint32x4(d) {}
     int32<4>& operator=(const float32x4& d) { gint32x4::operator=(d); return *this; }
+    /// @}
+
+    /// @{
+    /// Range access
+    const int32x4* begin() const                { return this; }
+          int32x4* begin()                      { return this; }
+    const int32x4* end() const                  { return this+1; }
+          int32x4* end()                        { return this+1; }
+    const int32x4& operator[](unsigned i) const { return *this; }
+          int32x4& operator[](unsigned i)       { return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -262,6 +284,8 @@ template<>
 class uint32<4> : public gint32x4 {
 public:
 
+    using base_vector_type = uint32x4;
+
     uint32<4>() = default;
     uint32<4>(const uint32x4&) = default;
     uint32<4>& operator=(const uint32x4&) = default;
@@ -296,6 +320,16 @@ public:
     /// Construct from compatible float32x4 integer vector type
     explicit uint32<4>(const float32x4& d) : gint32x4(d) {}
     uint32<4>& operator=(const float32x4& d) { gint32x4::operator=(d); return *this; }
+    /// @}
+
+    /// @{
+    /// Range access
+    const uint32x4* begin() const                { return this; }
+          uint32x4* begin()                      { return this; }
+    const uint32x4* end() const                  { return this+1; }
+          uint32x4* end()                        { return this+1; }
+    const uint32x4& operator[](unsigned i) const { return *this; }
+          uint32x4& operator[](unsigned i)       { return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -367,7 +401,10 @@ public:
 template<>
 class mask_int32<4> {
 public:
+    using base_vector_type = mask_int32x4;
+
     static constexpr unsigned length = 4;
+    static constexpr unsigned vec_length = 1;
 
     mask_int32<4>() = default;
     mask_int32<4>(const mask_int32x4 &) = default;
@@ -393,6 +430,16 @@ public:
 
     /// Access the underlying type
     operator gint32x4() const;
+
+    /// @{
+    /// Range access
+    const mask_int32<4>* begin() const                { return this; }
+          mask_int32<4>* begin()                      { return this; }
+    const mask_int32<4>* end() const                  { return this+1; }
+          mask_int32<4>* end()                        { return this+1; }
+    const mask_int32<4>& operator[](unsigned i) const { return *this; }
+          mask_int32<4>& operator[](unsigned i)       { return *this; }
+    /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL

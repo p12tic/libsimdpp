@@ -55,7 +55,7 @@ public:
     using uint_element_type = uint64_t;
     using int_vector_type = gint64x4;
     using uint_vector_type = uint64x4;
-    using half_vector_type = float64x2;
+    using base_vector_type = float64x4;
     using mask_type = mask_float64x4;
 
     static constexpr unsigned vec_length = 2; // FIXME
@@ -170,6 +170,7 @@ private:
 template<>
 class mask_float64<4> {
 public:
+    using base_vector_type = mask_float64x4;
     static constexpr unsigned length = 4;
 
     mask_float64<4>() = default;

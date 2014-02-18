@@ -54,9 +54,11 @@ public:
     using uint_element_type = uint32_t;
     using int_vector_type = gint32x4;
     using uint_vector_type = uint32x4;
+    using base_vector_type = float32x4;
     using mask_type = mask_float32x4;
 
     static constexpr unsigned length = 4;
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned num_bits = 32;
     static constexpr uint_element_type all_bits = 0xffffffff;
 
@@ -89,6 +91,16 @@ public:
     /// Construct from compatible int32x4 integer vector type
     explicit float32<4>(gint32x4 d)     { *this = bit_cast<float32x4>(d); }
     float32<4>& operator=(gint32x4 d)   { *this = bit_cast<float32x4>(d); return *this; }
+    /// @}
+
+    /// @{
+    /// Range access
+    const float32x4* begin() const   { return this; }
+    float32x4* begin()               { return this; }
+    const float32x4* end() const     { return this+1; }
+    float32x4* end()                 { return this+1; }
+    const float32x4& operator[](unsigned i) const { return *this; }
+          float32x4& operator[](unsigned i)       { return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -179,6 +191,7 @@ private:
 template<>
 class mask_float32<4> {
 public:
+    using base_vector_type = mask_float32x4;
     static constexpr unsigned length = 4;
 
     mask_float32<4>() = default;
@@ -213,6 +226,16 @@ public:
     const bool& el(unsigned id) const { return b_[id]; }
 #endif
 #endif
+
+    /// @{
+    /// Range access
+    const mask_float32x4* begin() const              { return this; }
+          mask_float32x4* begin()                    { return this; }
+    const mask_float32x4* end() const                { return this+1; }
+          mask_float32x4* end()                      { return this+1; }
+    const mask_float32x4& operator[](unsigned i) const { return *this; }
+          mask_float32x4& operator[](unsigned i)       { return *this; }
+    /// @}
 
 private:
 #if SIMDPP_USE_NULL

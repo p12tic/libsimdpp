@@ -54,6 +54,7 @@ public:
     using int_vector_type = gint8<N>;
     using uint_vector_type = uint8<N>;
     using mask_type = mask_int8<N>;
+    using base_vector_type = gint8v;
 
     static constexpr unsigned length = N;
     static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT8_SIZE - 1) / SIMDPP_FAST_INT8_SIZE;
@@ -118,6 +119,7 @@ public:
 
     using element_type = int8_t;
     using gint8<N>::vec_length;
+    using base_vector_type = int8v;
 
     int8<N>() = default;
     int8<N>(const int8<N>&) = default;
@@ -249,6 +251,7 @@ public:
 
     using element_type = uint8_t;
     using gint8<N>::vec_length;
+    using base_vector_type = uint8v;
 
     uint8<N>() = default;
     uint8<N>(const uint8<N>&) = default;
