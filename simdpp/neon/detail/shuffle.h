@@ -27,8 +27,9 @@
 
 #ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_H
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_H
+#if SIMDPP_USE_NEON
 
-#include <simdpp/simd.h>
+#include <simdpp/simd/types.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -64,5 +65,6 @@ inline basic_int8x16 align<16>(basic_int8x16 lower, basic_int8x16 upper)
 #endif
 } // namespace simdpp
 
+#endif
 #endif
 

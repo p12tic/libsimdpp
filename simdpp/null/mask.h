@@ -27,11 +27,13 @@
 
 #ifndef LIBSIMDPP_NULL_MASK_H
 #define LIBSIMDPP_NULL_MASK_H
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/types.h>
 #include <simdpp/simd/detail/mem_block.h>
 #include <simdpp/simd/cast.h>
 
@@ -57,4 +59,5 @@ V convert_mask(const M& m)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

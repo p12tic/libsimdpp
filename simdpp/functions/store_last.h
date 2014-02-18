@@ -33,6 +33,15 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/align.h>
+#include <simdpp/functions/blend.h>
+#include <simdpp/functions/load.h>
+#include <simdpp/functions/load_u.h>
+#include <simdpp/functions/store.h>
+#include <simdpp/neon/memory_store.h>
+#include <simdpp/null/memory.h>
+#include <simdpp/sse/extract_half.h>
+#include <simdpp/sse/memory_store.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

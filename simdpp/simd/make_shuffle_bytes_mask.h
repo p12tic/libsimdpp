@@ -32,6 +32,9 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <cstdint>
+#include <simdpp/simd/types.h>
+
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {

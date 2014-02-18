@@ -27,10 +27,13 @@
 
 #ifndef LIBSIMDPP_NULL_MEMORY_H
 #define LIBSIMDPP_NULL_MEMORY_H
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
+#include <simdpp/simd/types.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -158,4 +161,5 @@ void store_packed4(void* p, V& a, V& b, V& c, V& d)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

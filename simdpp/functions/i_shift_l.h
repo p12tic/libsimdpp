@@ -33,15 +33,12 @@
 #endif
 
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/shuffle_generic.h>
+#include <simdpp/simd/detail/not_implemented.h>
+#include <simdpp/functions/bit_and.h>
+#include <simdpp/functions/bit_andnot.h>
 #include <simdpp/functions/detail/i_shift.h>
-
-#if SIMDPP_USE_NULL
-    #include <simdpp/null/math.h>
-#endif
-#if SIMDPP_USE_NEON
-    #include <simdpp/neon/detail/math_shift.h>
-#endif
+#include <simdpp/null/math.h>
+#include <simdpp/neon/detail/math_shift.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

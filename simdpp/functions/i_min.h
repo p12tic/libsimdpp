@@ -33,6 +33,9 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/functions/blend.h>
+#include <simdpp/functions/cmp_lt.h>
+#include <simdpp/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

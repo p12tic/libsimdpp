@@ -27,9 +27,10 @@
 
 #ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT16x8_H
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT16x8_H
+#if SIMDPP_USE_NEON
 
 #include <simdpp/simd/make_shuffle_bytes_mask.h>
-#include <simdpp/simd/shuffle_bytes.h>
+#include <simdpp/functions/permute_bytes16.h>
 #include <type_traits>
 
 namespace simdpp {
@@ -510,4 +511,5 @@ T permute4(T a)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

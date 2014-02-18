@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/functions/bit_or.h>
 #include <simdpp/functions/move_l.h>
 #include <simdpp/functions/move_r.h>
 

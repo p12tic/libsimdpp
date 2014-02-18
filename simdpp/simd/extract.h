@@ -32,11 +32,11 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/simd/fwd.h>
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/cast.h>
+#include <simdpp/functions/move_l.h>
 #include <simdpp/functions/i_shift_l.h>
+#include <simdpp/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

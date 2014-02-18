@@ -27,12 +27,14 @@
 
 #ifndef LIBSIMDPP_SSE_MATH_FP_H
 #define LIBSIMDPP_SSE_MATH_FP_H
+#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/not_implemented.h>
 #include <simdpp/sse/convert.h>
 
 namespace simdpp {
@@ -306,4 +308,5 @@ inline float64x2 trunc(float64x2 a)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

@@ -33,13 +33,18 @@
 #endif
 
 #include <simdpp/simd/make_shuffle_bytes_mask.h>
-#include <simdpp/simd/shuffle.h>
-#include <simdpp/simd/shuffle_generic.h>
 #include <simdpp/simd/transpose.h>
 #include <simdpp/simd/detail/width.h>
 #include <simdpp/simd/detail/shuffle128.h>
 #include <simdpp/simd/detail/transpose.h>
+#include <simdpp/functions/align.h>
 #include <simdpp/functions/broadcast.h>
+#include <simdpp/functions/shuffle1.h>
+#include <simdpp/functions/shuffle2.h>
+#include <simdpp/functions/unzip_hi.h>
+#include <simdpp/functions/unzip_lo.h>
+#include <simdpp/functions/zip_hi.h>
+#include <simdpp/functions/zip_lo.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

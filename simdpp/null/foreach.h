@@ -27,6 +27,7 @@
 
 #ifndef LIBSIMDPP_NULL_FOREACH_H
 #define LIBSIMDPP_NULL_FOREACH_H
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -66,4 +67,5 @@ R foreach(V1 v1, V2 v2, C c)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

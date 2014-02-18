@@ -34,8 +34,8 @@
 
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/transpose.h>
-#include <simdpp/simd/detail/align.h>
 #include <simdpp/simd/detail/mem_unpack.h>
+#include <simdpp/functions/load.h>
 #include <simdpp/null/memory.h>
 
 namespace simdpp {

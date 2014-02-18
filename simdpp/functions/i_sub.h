@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

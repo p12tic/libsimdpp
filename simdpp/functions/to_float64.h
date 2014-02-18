@@ -33,6 +33,9 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/mem_block.h>
+#include <simdpp/functions/move_l.h>
+#include <simdpp/sse/extract_half.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

@@ -33,16 +33,13 @@
 #endif
 
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/fwd.h>
 #include <simdpp/simd/make_shuffle_bytes_mask.h>
 #include <simdpp/simd/detail/transpose.h>
+#include <simdpp/functions/bit_and.h>
+#include <simdpp/functions/shuffle2.h>
+#include <simdpp/neon/shuffle.h>
 #include <simdpp/null/transpose.h>
-
-#if SIMDPP_USE_SSE2
-    #include <simdpp/sse/shuffle.h>
-#elif SIMDPP_USE_NEON
-    #include <simdpp/neon/shuffle.h>
-#endif
+#include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

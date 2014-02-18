@@ -25,36 +25,12 @@
 #   POSSIBILITY OF SUCH DAMAGE.
 
 set(HEADERS
-    simd.h
-    setup_arch.h
-
+    altivec/load1.h
     dispatch/arch.h
     dispatch/dispatcher.h
     dispatch/get_arch_gcc_builtin_cpu_supports.h
     dispatch/get_arch_linux_cpuinfo.h
     dispatch/macros.h
-
-    altivec/load1.h
-
-    neon/detail/math_shift.h
-    neon/detail/shuffle.h
-    neon/detail/shuffle_int16x8.h
-    neon/detail/shuffle_int32x4.h
-    neon/detail/shuffle_int64x2.h
-    neon/math_int.h
-    neon/memory_store.h
-    neon/shuffle.h
-
-    null/bitwise.h
-    null/compare.h
-    null/foreach.h
-    null/math.h
-    null/mask.h
-    null/memory.h
-    null/set.h
-    null/shuffle.h
-    null/transpose.h
-
     functions/align.h
     functions/bit_and.h
     functions/bit_andnot.h
@@ -70,7 +46,6 @@ set(HEADERS
     functions/cmp_le.h
     functions/cmp_lt.h
     functions/cmp_neq.h
-    functions/detail
     functions/detail/i_shift.h
     functions/f_abs.h
     functions/f_add.h
@@ -79,8 +54,8 @@ set(HEADERS
     functions/f_floor.h
     functions/f_fmadd.h
     functions/f_fmsub.h
-    functions/f_isnan2.h
     functions/f_isnan.h
+    functions/f_isnan2.h
     functions/f_max.h
     functions/f_min.h
     functions/f_mul.h
@@ -123,8 +98,8 @@ set(HEADERS
     functions/shuffle2.h
     functions/shuffle_bytes16.h
     functions/shuffle_zbytes16.h
-    functions/store_first.h
     functions/store.h
+    functions/store_first.h
     functions/store_last.h
     functions/store_packed2.h
     functions/store_packed3.h
@@ -140,24 +115,38 @@ set(HEADERS
     functions/unzip_lo.h
     functions/zip_hi.h
     functions/zip_lo.h
-
+    neon/detail/math_shift.h
+    neon/detail/shuffle.h
+    neon/detail/shuffle_int16x8.h
+    neon/detail/shuffle_int32x4.h
+    neon/detail/shuffle_int64x2.h
+    neon/math_int.h
+    neon/memory_store.h
+    neon/shuffle.h
+    null/bitwise.h
+    null/compare.h
+    null/foreach.h
+    null/mask.h
+    null/math.h
+    null/memory.h
+    null/set.h
+    null/shuffle.h
+    null/transpose.h
+    setup_arch.h
+    simd.h
+    simd/cache.h
+    simd/cast.h
     simd/detail/align.h
-    simd/detail/not_implemented.h
-    simd/detail/move_signed.h
     simd/detail/mem_block.h
     simd/detail/mem_pack.h
     simd/detail/mem_unpack.h
+    simd/detail/move_signed.h
+    simd/detail/not_implemented.h
     simd/detail/shuffle128.h
     simd/detail/shuffle_emul.h
     simd/detail/transpose.h
     simd/detail/width.h
     simd/detail/word_size.h
-
-    simd/bitwise.h
-    simd/cache.h
-    simd/cast.h
-    simd/compare.h
-    simd/convert.h
     simd/extract.h
     simd/float32x4.h
     simd/float32x4.inl
@@ -190,21 +179,10 @@ set(HEADERS
     simd/int8x32.h
     simd/int8x32.inl
     simd/make_shuffle_bytes_mask.h
-    simd/math_fp_adv.h
-    simd/math_fp_basic.h
-    simd/math_int_adv.h
-    simd/math_int_basic.h
-    simd/math_shift.h
-    simd/memory_load.h
-    simd/memory_store.h
-    simd/shuffle_bytes.h
-    simd/shuffle_generic.h
-    simd/shuffle.h
     simd/this_compile_arch.h
     simd/traits.h
     simd/transpose.h
     simd/types.h
-
     sse/cache.h
     sse/compare.h
     sse/convert.h

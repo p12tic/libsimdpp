@@ -27,10 +27,13 @@
 
 #ifndef LIBSIMDPP_SSE_COMPARE_H
 #define LIBSIMDPP_SSE_COMPARE_H
+#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
+#include <simdpp/simd/types.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -168,4 +171,5 @@ inline bool test_ones(int128 a, int128 mask)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

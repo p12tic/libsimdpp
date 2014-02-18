@@ -30,9 +30,10 @@
 
 #include <algorithm>
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include <iterator>
 #include <map>
-#include <sstream>
 #include <vector>
 #include <simdpp/dispatch/arch.h>
 

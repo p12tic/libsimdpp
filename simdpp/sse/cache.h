@@ -27,10 +27,12 @@
 
 #ifndef LIBSIMDPP_SSE_CACHE_H
 #define LIBSIMDPP_SSE_CACHE_H
+#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+#include <simdpp/setup_arch.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -38,7 +40,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace sse {
 
-#ifdef SIMDPP_USE_SSE2
 /** @defgroup simd_cache
     @{
 */
@@ -76,7 +77,6 @@ inline void prefetch_nt(const void* ptr)
 }
 
 /// @}
-#endif
 
 } // namespace sse
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -84,5 +84,6 @@ inline void prefetch_nt(const void* ptr)
 #endif
 } // namespace simdpp
 
+#endif
 #endif
 

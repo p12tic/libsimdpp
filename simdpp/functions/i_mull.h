@@ -33,6 +33,10 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/mem_block.h>
+#include <simdpp/simd/detail/not_implemented.h>
+#include <simdpp/functions/zip_hi.h>
+#include <simdpp/functions/zip_lo.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

@@ -33,6 +33,13 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/functions/i_mull.h>
+#include <simdpp/functions/move_l.h>
+#include <simdpp/functions/permute4.h>
+#include <simdpp/functions/shuffle2.h>
+#include <simdpp/functions/unzip_hi.h>
+#include <simdpp/null/math.h>
+#include <simdpp/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

@@ -33,10 +33,7 @@
 #endif
 
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/bitwise.h>
-#include <simdpp/simd/math_int_basic.h>
-#include <simdpp/simd/make_shuffle_bytes_mask.h>
-
+#include <simdpp/functions/bit_xor.h>
 #include <simdpp/null/compare.h>
 
 namespace simdpp {

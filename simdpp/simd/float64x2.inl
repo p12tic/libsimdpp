@@ -31,9 +31,12 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/setup_arch.h>
+
+#include <simdpp/simd/float64x2.h>
 #include <simdpp/simd/detail/mem_block.h>
 #include <simdpp/simd/detail/word_size.h>
+#include <simdpp/functions/bit_xor.h>
+#include <simdpp/functions/permute2.h>
 #include <simdpp/null/mask.h>
 #include <simdpp/null/set.h>
 

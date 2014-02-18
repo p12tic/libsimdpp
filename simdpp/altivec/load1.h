@@ -27,13 +27,13 @@
 
 #ifndef LIBSIMDPP_ALTIVEC_LOAD1_H
 #define LIBSIMDPP_ALTIVEC_LOAD1_H
+#if SIMDPP_USE_ALTIVEC || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/shuffle_bytes.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -128,4 +128,5 @@ inline float32x4 load1(float32x4& a, const float* p)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

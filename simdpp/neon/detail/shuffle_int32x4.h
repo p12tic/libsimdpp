@@ -27,6 +27,7 @@
 
 #ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT32x4_H
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT32x4_H
+#if SIMDPP_USE_NEON
 
 #include <type_traits>
 
@@ -158,5 +159,6 @@ T shuffle2(T a, T b)
 #endif
 } // namespace simdpp
 
+#endif
 #endif
 

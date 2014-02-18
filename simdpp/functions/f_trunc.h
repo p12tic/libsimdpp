@@ -32,7 +32,10 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <cmath>
 #include <simdpp/simd/types.h>
+#include <simdpp/functions/f_ceil.h>
+#include <simdpp/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

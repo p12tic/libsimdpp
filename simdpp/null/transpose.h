@@ -27,11 +27,13 @@
 
 #ifndef LIBSIMDPP_NULL_TRANSPOSE_H
 #define LIBSIMDPP_NULL_TRANSPOSE_H
+#if SIMDPP_USE_NULL || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
+#include <simdpp/simd/types.h>
 #include <utility>
 
 namespace simdpp {
@@ -104,4 +106,5 @@ void transpose16(V& a0, V& a1, V& a2,  V& a3,  V& a4,  V& a5,  V& a6,  V& a7,
 #endif
 } // namespace simdpp
 
+#endif
 #endif

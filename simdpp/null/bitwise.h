@@ -27,10 +27,13 @@
 
 #ifndef LIBSIMDPP_NULL_BITWISE_H
 #define LIBSIMDPP_NULL_BITWISE_H
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
+#include <simdpp/simd/types.h>
 #include <simdpp/simd/cast.h>
 
 namespace simdpp {
@@ -177,4 +180,5 @@ M bit_not_mm(M a)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

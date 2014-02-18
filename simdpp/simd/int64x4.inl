@@ -31,7 +31,9 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/setup_arch.h>
+
+#include <simdpp/simd/int64x4.h>
+#include <simdpp/simd/float64x4.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

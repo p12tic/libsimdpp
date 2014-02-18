@@ -33,6 +33,8 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/neon/shuffle.h>
+#include <simdpp/null/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

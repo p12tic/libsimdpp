@@ -31,7 +31,10 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/setup_arch.h>
+
+#include <simdpp/simd/int256.h>
+#include <simdpp/functions/bit_xor.h>
+#include <simdpp/functions/cmp_eq.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

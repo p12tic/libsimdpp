@@ -28,7 +28,9 @@
 #ifndef LIBSIMDPP_SIMD_DETAIL_MOVE_SIGNED_H
 #define LIBSIMDPP_SIMD_DETAIL_MOVE_SIGNED_H
 
-#include <simdpp/simd/shuffle.h>
+#include <simdpp/simd/types.h>
+#include <simdpp/functions/move_l.h>
+#include <simdpp/functions/move_r.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

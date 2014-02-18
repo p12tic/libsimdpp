@@ -33,17 +33,12 @@
 #endif
 
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/cast.h>
 #include <simdpp/simd/detail/word_size.h>
 #include <simdpp/simd/detail/move_signed.h>
-
-#if SIMDPP_USE_NULL
-    #include <simdpp/null/set.h>
-#endif
-#if SIMDPP_USE_ALTIVEC
-    #include <simdpp/altivec/load1.h>
-#endif
+#include <simdpp/functions/shuffle1.h>
+#include <simdpp/altivec/load1.h>
+#include <simdpp/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

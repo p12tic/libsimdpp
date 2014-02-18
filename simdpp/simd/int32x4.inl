@@ -31,7 +31,13 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/setup_arch.h>
+
+#include <simdpp/simd/int32x4.h>
+#include <simdpp/simd/float32x4.h>
+#include <simdpp/simd/cast.h>
+#include <simdpp/functions/permute4.h>
+#include <simdpp/null/mask.h>
+#include <simdpp/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

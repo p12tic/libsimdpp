@@ -27,10 +27,16 @@
 
 #ifndef LIBSIMDPP_NULL_SHUFFLE_H
 #define LIBSIMDPP_NULL_SHUFFLE_H
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
+#include <simdpp/simd/types.h>
+#include <simdpp/functions/bit_and.h>
+#include <simdpp/functions/bit_andnot.h>
+#include <simdpp/functions/bit_or.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -226,4 +232,5 @@ V shuffle2(V a, V b)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

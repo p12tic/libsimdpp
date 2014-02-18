@@ -28,11 +28,11 @@
 #define LIBSIMDPP_SIMD_DETAIL_TRANSPOSE_H
 
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/shuffle_bytes.h>
-
-#if SIMDPP_USE_NULL
-    #include <simdpp/null/transpose.h>
-#endif
+#include <simdpp/null/transpose.h>
+#include <simdpp/simd/detail/not_implemented.h>
+#include <simdpp/functions/permute_bytes16.h>
+#include <simdpp/functions/zip_lo.h>
+#include <simdpp/functions/zip_hi.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

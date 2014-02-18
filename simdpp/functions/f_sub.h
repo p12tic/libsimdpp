@@ -33,9 +33,7 @@
 #endif
 
 #include <simdpp/simd/types.h>
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    #include <simdpp/null/math.h>
-#endif
+#include <simdpp/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

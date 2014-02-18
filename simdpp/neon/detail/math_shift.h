@@ -27,8 +27,9 @@
 
 #ifndef LIBSIMDPP_NEON_DETAIL_MATH_SHIFT_H
 #define LIBSIMDPP_NEON_DETAIL_MATH_SHIFT_H
+#if SIMDPP_USE_NEON
 
-#include <simdpp/simd.h>
+#include <simdpp/simd/types.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -94,5 +95,6 @@ inline basic_int64x2 shift_l<0>(basic_int64x2 a)  { return a; }
 #endif
 } // namespace simdpp
 
+#endif
 #endif
 

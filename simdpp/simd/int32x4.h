@@ -31,8 +31,9 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/setup_arch.h>
 
+#include <simdpp/setup_arch.h>
+#include <simdpp/simd/fwd.h>
 #include <simdpp/simd/int128.h>
 
 namespace simdpp {

@@ -33,13 +33,19 @@
 #endif
 
 #include <simdpp/simd/types.h>
-#include <simdpp/functions/permute2.h>
+// #include <simdpp/functions/permute2.h> break include cycle
 #include <simdpp/functions/shuffle1.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+
+// forward-declarations
+template<unsigned s0, unsigned s1>
+basic_int64x2 permute(basic_int64x2 a);
+template<unsigned s0, unsigned s1>
+float64x2 permute(float64x2 a);
 
 namespace detail {
 

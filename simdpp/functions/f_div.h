@@ -35,6 +35,7 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/functions/f_rcp_e.h>
 #include <simdpp/functions/f_rcp_rh.h>
+#include <simdpp/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

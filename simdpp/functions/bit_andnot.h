@@ -33,11 +33,8 @@
 #endif
 
 #include <simdpp/simd/types.h>
-
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    #include <simdpp/null/foreach.h>
-    #include <simdpp/null/bitwise.h>
-#endif
+#include <simdpp/null/foreach.h>
+#include <simdpp/null/bitwise.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

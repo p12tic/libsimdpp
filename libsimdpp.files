@@ -95,7 +95,6 @@ simdpp/functions/load_packed4.h
 simdpp/functions/load_u.h
 simdpp/functions/move_l.h
 simdpp/functions/move_r.h
-simdpp/functions/permute.h
 simdpp/functions/permute2.h
 simdpp/functions/permute4.h
 simdpp/functions/permute_bytes16.h
@@ -140,11 +139,8 @@ simdpp/null/shuffle.h
 simdpp/null/transpose.h
 simdpp/setup_arch.h
 simdpp/simd.h
-simdpp/simd/bitwise.h
 simdpp/simd/cache.h
 simdpp/simd/cast.h
-simdpp/simd/compare.h
-simdpp/simd/convert.h
 simdpp/simd/detail/align.h
 simdpp/simd/detail/mem_block.h
 simdpp/simd/detail/mem_pack.h
@@ -188,16 +184,6 @@ simdpp/simd/int8x16.inl
 simdpp/simd/int8x32.h
 simdpp/simd/int8x32.inl
 simdpp/simd/make_shuffle_bytes_mask.h
-simdpp/simd/math_fp_adv.h
-simdpp/simd/math_fp_basic.h
-simdpp/simd/math_int_adv.h
-simdpp/simd/math_int_basic.h
-simdpp/simd/math_shift.h
-simdpp/simd/memory_load.h
-simdpp/simd/memory_store.h
-simdpp/simd/shuffle.h
-simdpp/simd/shuffle_bytes.h
-simdpp/simd/shuffle_generic.h
 simdpp/simd/this_compile_arch.h
 simdpp/simd/traits.h
 simdpp/simd/transpose.h

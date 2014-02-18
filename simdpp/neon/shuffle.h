@@ -27,10 +27,13 @@
 
 #ifndef LIBSIMDPP_DETAIL_NEON_SHUFFLE_H
 #define LIBSIMDPP_DETAIL_NEON_SHUFFLE_H
+#if SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
+#include <simdpp/simd/types.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -103,4 +106,5 @@ inline basic_int64x2 zip_hi(basic_int64x2 a, basic_int64x2 b)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

@@ -27,10 +27,13 @@
 
 #ifndef LIBSIMDPP_SSE_MEMORY_LOAD_H
 #define LIBSIMDPP_SSE_MEMORY_LOAD_H
+#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
+#include <simdpp/simd/types.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -160,5 +163,6 @@ float64x2 load_lane(float64x2& a, const double* p)
 #endif
 } // namespace simdpp
 
+#endif
 #endif
 

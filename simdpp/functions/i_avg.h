@@ -33,6 +33,11 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/functions/bit_xor.h>
+#include <simdpp/functions/bit_and.h>
+#include <simdpp/functions/i_add.h>
+#include <simdpp/functions/i_shift_r.h>
+#include <simdpp/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

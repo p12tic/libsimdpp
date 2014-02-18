@@ -27,13 +27,14 @@
 
 #ifndef LIBSIMDPP_SSE_MATH_INT_H
 #define LIBSIMDPP_SSE_MATH_INT_H
+#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
 #include <simdpp/simd/types.h>
-#include <simdpp/simd/shuffle.h>
+#include <simdpp/simd/detail/not_implemented.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -286,4 +287,5 @@ inline int128 hsubs2(int16x8 a, int16x8 b)
 #endif
 } // namespace simdpp
 
+#endif
 #endif

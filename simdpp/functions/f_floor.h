@@ -32,7 +32,18 @@
     #error "This file must be included through simd.h"
 #endif
 
+#include <cmath>
 #include <simdpp/simd/types.h>
+#include <simdpp/functions/f_abs.h>
+#include <simdpp/functions/bit_or.h>
+#include <simdpp/functions/blend.h>
+#include <simdpp/functions/cmp_eq.h>
+#include <simdpp/functions/cmp_gt.h>
+#include <simdpp/functions/i_shift_r.h>
+#include <simdpp/functions/i_sub.h>
+#include <simdpp/functions/to_float32.h>
+#include <simdpp/functions/to_int32.h>
+#include <simdpp/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

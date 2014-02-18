@@ -33,6 +33,10 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/functions/bit_and.h>
+#include <simdpp/functions/bit_andnot.h>
+#include <simdpp/functions/bit_or.h>
+#include <simdpp/null/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

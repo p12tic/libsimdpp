@@ -27,10 +27,14 @@
 
 #ifndef LIBSIMDPP_SSE_SHUFFLE_H
 #define LIBSIMDPP_SSE_SHUFFLE_H
+#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+
+#include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/not_implemented.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -135,5 +139,6 @@ basic_int16x16 permute_hi(basic_int16x16 a)
 #endif
 } // namespace simdpp
 
+#endif
 #endif
 

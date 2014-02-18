@@ -31,16 +31,12 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/setup_arch.h>
-#include <simdpp/null/mask.h>
 
-#if SIMDPP_USE_NULL
-    #include <simdpp/null/set.h>
-#endif
-#if SIMDPP_USE_ALTIVEC
-    #include <simdpp/altivec/load1.h>
-    #include <simdpp/simd/shuffle.h>
-#endif
+#include <simdpp/simd/int8x16.h>
+#include <simdpp/simd/int32x4.h>
+#include <simdpp/altivec/load1.h>
+#include <simdpp/null/mask.h>
+#include <simdpp/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

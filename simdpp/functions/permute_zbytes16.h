@@ -33,6 +33,8 @@
 #endif
 
 #include <simdpp/simd/types.h>
+#include <simdpp/simd/detail/not_implemented.h>
+#include <simdpp/functions/permute_bytes16.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
