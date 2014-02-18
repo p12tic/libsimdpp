@@ -38,6 +38,31 @@ namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+
+// forward declarations
+inline int16x8 shift_r(int16x8, unsigned);
+inline uint16x8 shift_r(uint16x8, unsigned);
+inline basic_int16x8 shift_l(basic_int16x8, unsigned);
+inline int64x2 shift_r(int64x2, unsigned);
+inline uint64x2 shift_r(uint64x2, unsigned);
+inline basic_int64x2 shift_l(basic_int64x2, unsigned);
+template<unsigned count> int16x8 shift_r(int16x8);
+template<unsigned count> uint16x8 shift_r(uint16x8);
+template<unsigned count> basic_int16x8 shift_l(basic_int16x8);
+template<unsigned count> int32x4 shift_r(int32x4);
+
+inline int16x16 shift_r(int16x16, unsigned);
+inline uint16x16 shift_r(uint16x16, unsigned);
+inline basic_int16x16 shift_l(basic_int16x16, unsigned);
+inline int64x4 shift_r(int64x4, unsigned);
+inline uint64x4 shift_r(uint64x4, unsigned);
+inline basic_int64x4 shift_l(basic_int64x4, unsigned);
+template<unsigned count> int16x16 shift_r(int16x16);
+template<unsigned count> uint16x16 shift_r(uint16x16);
+template<unsigned count> basic_int16x16 shift_l(basic_int16x16);
+template<unsigned count> int32x8 shift_r(int32x8);
+
+
 namespace detail {
 
 template<unsigned count, class V>
