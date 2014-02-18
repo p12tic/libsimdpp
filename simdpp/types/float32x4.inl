@@ -120,7 +120,7 @@ inline float32x4 float32x4::make_const(float v0, float v1)
     return float32x4::make_const(v0, v1, v0, v1);
 #elif SIMDPP_USE_NEON
     union {
-        int128 align;
+        gint32x4 align;
         float v[2];
     };
     v[0] = v0;
@@ -138,7 +138,7 @@ inline float32x4 float32x4::make_const(float v0, float v1, float v2, float v3)
     return _mm_set_ps(v3, v2, v1, v0);
 #elif SIMDPP_USE_NEON
     union {
-        int128 align;
+        gint32x4 align;
         float v[4];
     };
     v[0] = v0;

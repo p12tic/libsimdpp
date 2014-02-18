@@ -90,7 +90,7 @@ inline int256 load(int256& a, const void* p)
     return a;
 #else
     const char* q = reinterpret_cast<const char*>(p);
-    a = int256{load(a[0], q), load(a[1], q+16)};
+    a = gint8x32{load(a[0], q), load(a[1], q+16)};
     return a;
 #endif
 }

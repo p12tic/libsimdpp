@@ -273,7 +273,7 @@ float64x2 insert(float64x2 a, double x)
 inline int256 combine(int128 a, int128 b)
 {
 #if SIMDPP_USE_AVX2
-    int256 r;
+    gint8x32 r;
     r = _mm256_castsi128_si256(a);
     r = _mm256_inserti128_si256(r, b, 1);
     return r;

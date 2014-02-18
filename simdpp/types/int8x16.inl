@@ -202,7 +202,7 @@ inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
                         v7, v6, v5, v4, v3, v2, v1, v0);
 #elif SIMDPP_USE_NEON
     union {
-        int128 align;
+        uint6x16 align;
         uint8_t v[16];
     };
     v[0] = v0;  v[1] = v1;  v[2] = v2;  v[3] = v3;

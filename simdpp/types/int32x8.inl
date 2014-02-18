@@ -109,7 +109,7 @@ inline uint32x8 uint32x8::load_broadcast(const uint32_t* v0)
 inline uint32x8 uint32x8::set_broadcast(uint32_t v0)
 {
 #if SIMDPP_USE_AVX2
-    int128 a = _mm_cvtsi32_si128(v0);
+    uint32x4 a = _mm_cvtsi32_si128(v0);
     return _mm256_broadcastd_epi32(a);
 #else
     uint32x4 a = uint32x4::set_broadcast(v0);

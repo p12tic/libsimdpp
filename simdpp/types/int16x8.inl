@@ -170,7 +170,7 @@ inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint
     return _mm_set_epi16(v7, v6, v5, v4, v3, v2, v1, v0);
 #elif SIMDPP_USE_NEON
     union {
-        int128 align;
+        uint16x8 align;
         uint16_t v[8];
     };
     v[0] = v0;  v[1] = v1;  v[2] = v2;  v[3] = v3;

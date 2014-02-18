@@ -74,7 +74,7 @@ inline gint8x16 blend(gint8x16 on, gint8x16 off, gint8x16 mask)
 #elif SIMDPP_USE_SSE2
     // _mm_blendv_epi8 needs xmm0 and occupies the shuffle ports, yet saves
     // only one uop
-    int128 r;
+    int8x16 r;
      on = bit_and(on, mask);
     off = bit_andnot(off, mask);
       r = bit_or(on, off);

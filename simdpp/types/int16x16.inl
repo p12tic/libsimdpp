@@ -103,7 +103,7 @@ inline uint16x16 uint16x16::load_broadcast(const uint16_t* v0)
 inline uint16x16 uint16x16::set_broadcast(uint16_t v0)
 {
 #if SIMDPP_USE_AVX2
-    int128 a = _mm_cvtsi32_si128(v0);
+    gint16x8 a = _mm_cvtsi32_si128(v0);
     return _mm256_broadcastw_epi16(a);
 #else
     uint16x8 a = uint16x8::set_broadcast(v0);
