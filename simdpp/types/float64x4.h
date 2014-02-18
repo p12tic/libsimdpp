@@ -53,7 +53,7 @@ public:
 
     using element_type = double;
     using uint_element_type = uint64_t;
-    using int_vector_type = basic_int64x4;
+    using int_vector_type = gint64x4;
     using uint_vector_type = uint64x4;
     using half_vector_type = float64x2;
     using mask_type = mask_float64x4;
@@ -80,17 +80,17 @@ public:
     /// @{
     /// Construct from compatible int64x4 integer vector type
 #if SIMDPP_USE_AVX2
-    explicit float64<4>(basic_int64x4 d) : d_(_mm256_castsi256_pd(d)) {}
+    explicit float64<4>(gint64x4 d) : d_(_mm256_castsi256_pd(d)) {}
 #elif SIMDPP_USE_AVX
-    explicit float64<4>(basic_int64x4 d);
+    explicit float64<4>(gint64x4 d);
 #else
-    explicit float64<4>(basic_int64x4 d)
+    explicit float64<4>(gint64x4 d)
     {
         d_[0] = float64x2(d[0]);
         d_[1] = float64x2(d[1]);
     }
 #endif
-    float64<4>& operator=(basic_int64x4 d) { operator=(float64x4(d)); return *this; }
+    float64<4>& operator=(gint64x4 d) { operator=(float64x4(d)); return *this; }
 
     /// @}
 

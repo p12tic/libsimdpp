@@ -50,7 +50,7 @@ inline float64x4 float64x4::zero()
 
 #if SIMDPP_USE_AVX2
 #elif SIMDPP_USE_AVX
-inline float64x4::float64x4(basic_int64x4 d)
+inline float64x4::float64x4(gint64x4 d)
 {
     d_ = float64x4(float64x2(d[0]), float64x2(d[1]));
 }

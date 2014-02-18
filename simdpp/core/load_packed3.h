@@ -86,7 +86,7 @@ void v256_load_i_packed3(V& a, V& b, V& c, const void* p)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed3(basic_int8x16& a, basic_int8x16& b, basic_int8x16& c,
+inline void load_packed3(gint8x16& a, gint8x16& b, gint8x16& c,
                          const void* p)
 {
     p = detail::assume_aligned(p, 16);
@@ -106,7 +106,7 @@ inline void load_packed3(basic_int8x16& a, basic_int8x16& b, basic_int8x16& c,
 #endif
 }
 
-inline void load_packed3(basic_int8x32& a, basic_int8x32& b, basic_int8x32& c,
+inline void load_packed3(gint8x32& a, gint8x32& b, gint8x32& c,
                          const void* p)
 {
     detail::v256_load_i_packed3(a, b, c, p);
@@ -133,7 +133,7 @@ inline void load_packed3(basic_int8x32& a, basic_int8x32& b, basic_int8x32& c,
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed3(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c,
+inline void load_packed3(gint16x8& a, gint16x8& b, gint16x8& c,
                          const void* p)
 {
     p = detail::assume_aligned(p, 16);
@@ -153,7 +153,7 @@ inline void load_packed3(basic_int16x8& a, basic_int16x8& b, basic_int16x8& c,
 #endif
 }
 
-inline void load_packed3(basic_int16x16& a, basic_int16x16& b, basic_int16x16& c,
+inline void load_packed3(gint16x16& a, gint16x16& b, gint16x16& c,
                          const void* p)
 {
     detail::v256_load_i_packed3(a, b, c, p);
@@ -180,7 +180,7 @@ inline void load_packed3(basic_int16x16& a, basic_int16x16& b, basic_int16x16& c
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed3(basic_int32x4& a, basic_int32x4& b, basic_int32x4&c,
+inline void load_packed3(gint32x4& a, gint32x4& b, gint32x4&c,
                          const void* p)
 {
     p = detail::assume_aligned(p, 16);
@@ -200,7 +200,7 @@ inline void load_packed3(basic_int32x4& a, basic_int32x4& b, basic_int32x4&c,
 #endif
 }
 
-inline void load_packed3(basic_int32x8& a, basic_int32x8& b, basic_int32x8& c,
+inline void load_packed3(gint32x8& a, gint32x8& b, gint32x8& c,
                          const void* p)
 {
     detail::v256_load_i_packed3(a, b, c, p);
@@ -227,7 +227,7 @@ inline void load_packed3(basic_int32x8& a, basic_int32x8& b, basic_int32x8& c,
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed3(basic_int64x2& a, basic_int64x2& b, basic_int64x2& c,
+inline void load_packed3(gint64x2& a, gint64x2& b, gint64x2& c,
                          const void* p)
 {
     p = detail::assume_aligned(p, 16);
@@ -259,7 +259,7 @@ inline void load_packed3(basic_int64x2& a, basic_int64x2& b, basic_int64x2& c,
 #endif
 }
 
-inline void load_packed3(basic_int64x4& a, basic_int64x4& b, basic_int64x4& c,
+inline void load_packed3(gint64x4& a, gint64x4& b, gint64x4& c,
                          const void* p)
 {
     detail::v256_load_i_packed3(a, b, c, p);

@@ -88,8 +88,8 @@ void v256_load_i_packed4(V& a, V& b, V& c, V& d, const void* p)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed4(basic_int8x16& a, basic_int8x16& b,
-                         basic_int8x16& c, basic_int8x16& d, const void* p)
+inline void load_packed4(gint8x16& a, gint8x16& b,
+                         gint8x16& c, gint8x16& d, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -110,8 +110,8 @@ inline void load_packed4(basic_int8x16& a, basic_int8x16& b,
 #endif
 }
 
-inline void load_packed4(basic_int8x32& a, basic_int8x32& b,
-                         basic_int8x32& c, basic_int8x32& d, const void* p)
+inline void load_packed4(gint8x32& a, gint8x32& b,
+                         gint8x32& c, gint8x32& d, const void* p)
 {
     detail::v256_load_i_packed4(a, b, c, d, p);
 }
@@ -139,8 +139,8 @@ inline void load_packed4(basic_int8x32& a, basic_int8x32& b,
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed4(basic_int16x8& a, basic_int16x8& b,
-                         basic_int16x8& c, basic_int16x8& d, const void* p)
+inline void load_packed4(gint16x8& a, gint16x8& b,
+                         gint16x8& c, gint16x8& d, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -161,8 +161,8 @@ inline void load_packed4(basic_int16x8& a, basic_int16x8& b,
 #endif
 }
 
-inline void load_packed4(basic_int16x16& a, basic_int16x16& b,
-                         basic_int16x16& c, basic_int16x16& d, const void* p)
+inline void load_packed4(gint16x16& a, gint16x16& b,
+                         gint16x16& c, gint16x16& d, const void* p)
 {
     detail::v256_load_i_packed4(a, b, c, d, p);
 }
@@ -190,8 +190,8 @@ inline void load_packed4(basic_int16x16& a, basic_int16x16& b,
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed4(basic_int32x4& a, basic_int32x4& b,
-                         basic_int32x4& c, basic_int32x4& d, const void* p)
+inline void load_packed4(gint32x4& a, gint32x4& b,
+                         gint32x4& c, gint32x4& d, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -212,8 +212,8 @@ inline void load_packed4(basic_int32x4& a, basic_int32x4& b,
 #endif
 }
 
-inline void load_packed4(basic_int32x8& a, basic_int32x8& b,
-                         basic_int32x8& c, basic_int32x8& d, const void* p)
+inline void load_packed4(gint32x8& a, gint32x8& b,
+                         gint32x8& c, gint32x8& d, const void* p)
 {
     detail::v256_load_i_packed4(a, b, c, d, p);
 }
@@ -241,8 +241,8 @@ inline void load_packed4(basic_int32x8& a, basic_int32x8& b,
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed4(basic_int64x2& a, basic_int64x2& b,
-                         basic_int64x2& c, basic_int64x2& d, const void* p)
+inline void load_packed4(gint64x2& a, gint64x2& b,
+                         gint64x2& c, gint64x2& d, const void* p)
 {
     p = detail::assume_aligned(p, 16);
     const char* q = reinterpret_cast<const char*>(p);
@@ -254,8 +254,8 @@ inline void load_packed4(basic_int64x2& a, basic_int64x2& b,
     transpose2(c, d);
 }
 
-inline void load_packed4(basic_int64x4& a, basic_int64x4& b,
-                         basic_int64x4& c, basic_int64x4& d, const void* p)
+inline void load_packed4(gint64x4& a, gint64x4& b,
+                         gint64x4& c, gint64x4& d, const void* p)
 {
     detail::v256_load_i_packed4(a, b, c, d, p);
 }

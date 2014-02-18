@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 // forward-declarations
 template<unsigned s0, unsigned s1>
-basic_int64x2 permute(basic_int64x2 a);
+gint64x2 permute(gint64x2 a);
 template<unsigned s0, unsigned s1>
 float64x2 permute(float64x2 a);
 
@@ -77,7 +77,7 @@ typename V::half_vector_type permute_half(V a)
     functions.
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-basic_int64x4 permute_emul(basic_int64x4 a)
+gint64x4 permute_emul(gint64x4 a)
 {
     return {permute_half<s0,s1>(a), permute_half<s2,s3>(a)};
 }

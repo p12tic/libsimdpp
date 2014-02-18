@@ -43,14 +43,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 inline int_bits<32> int_bits<32>::zero()
 {
-    basic_int32x8 r;
+    gint32x8 r;
     r = bit_xor(r, r);
     return r;
 }
 
 inline int_bits<32> int_bits<32>::ones()
 {
-    basic_int32x8 r;
+    gint32x8 r;
     r = cmp_eq(r, r);
     return r;
 }

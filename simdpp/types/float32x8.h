@@ -52,7 +52,7 @@ public:
 
     using element_type = float;
     using uint_element_type = uint32_t;
-    using int_vector_type = basic_int32x8;
+    using int_vector_type = gint32x8;
     using uint_vector_type = uint32x8;
     using half_vector_type = float32x4;
     using mask_type = mask_float32x8;
@@ -79,20 +79,20 @@ public:
     /// @{
     /// Construct from compatible int32x8 integer vector type
 #if SIMDPP_USE_AVX2
-    explicit float32<8>(basic_int32x8 d) : d_(_mm256_castsi256_ps(d)) {}
+    explicit float32<8>(gint32x8 d) : d_(_mm256_castsi256_ps(d)) {}
 #elif SIMDPP_USE_AVX
-    explicit float32<8>(basic_int32x8 d)
+    explicit float32<8>(gint32x8 d)
     {
         d_ = _mm256_castsi256_ps(_mm256_insertf128_si256(_mm256_castsi128_si256(d[0]), d[1], 1));
     }
 #else
-    explicit float32<8>(basic_int32x8 d)
+    explicit float32<8>(gint32x8 d)
     {
         d_[0] = int32x4(d[0]);
         d_[1] = int32x4(d[1]);
     }
 #endif
-    float32<8>& operator=(basic_int32x8 d) { operator=(float32x8(d)); return *this; }
+    float32<8>& operator=(gint32x8 d) { operator=(float32x8(d)); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX

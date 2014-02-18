@@ -49,10 +49,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 inline gint64<2>::gint64(const float64x2& d)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<basic_int64x2> ax;
+    detail::mem_block<gint64x2> ax;
     ax[0] = bit_cast<uint64_t>(d[0]);
     ax[1] = bit_cast<uint64_t>(d[1]);
-    operator=(basic_int64x2(ax));
+    operator=(gint64x2(ax));
 #elif SIMDPP_USE_SSE2
     operator=(_mm_castpd_si128(d));
 #endif
@@ -165,10 +165,10 @@ inline uint64x2 uint64x2::make_const(uint64_t v0, uint64_t v1)
 #endif
 }
 
-inline mask_int64x2::operator basic_int64x2() const
+inline mask_int64x2::operator gint64x2() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<basic_int64x2>(*this);
+    return null::convert_mask<gint64x2>(*this);
 #else
     return d_;
 #endif

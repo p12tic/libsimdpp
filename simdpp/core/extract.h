@@ -60,7 +60,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint8_t extract(basic_int8x16 a)
+uint8_t extract(gint8x16 a)
 {
     static_assert(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -86,7 +86,7 @@ uint8_t extract(basic_int8x16 a)
 template<unsigned id>
 int8_t extract(int8x16 a)
 {
-    return extract<id>(basic_int8x16(a));
+    return extract<id>(gint8x16(a));
 }
 /// @}
 
@@ -102,7 +102,7 @@ int8_t extract(int8x16 a)
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint16_t extract(basic_int16x8 a)
+uint16_t extract(gint16x8 a)
 {
     static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -121,7 +121,7 @@ uint16_t extract(basic_int16x8 a)
 template<unsigned id>
 int16_t extract(int16x8 a)
 {
-    return extract<id>(basic_int16x8(a));
+    return extract<id>(gint16x8(a));
 }
 /// @}
 
@@ -138,7 +138,7 @@ int16_t extract(int16x8 a)
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint32_t extract(basic_int32x4 a)
+uint32_t extract(gint32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -159,7 +159,7 @@ uint32_t extract(basic_int32x4 a)
 template<unsigned id>
 int32_t extract(int32x4 a)
 {
-    return extract<id>(basic_int32x4(a));
+    return extract<id>(gint32x4(a));
 }
 /// @}
 
@@ -179,14 +179,14 @@ int32_t extract(int32x4 a)
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint64_t extract(basic_int64x2 a)
+uint64_t extract(gint64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a[id];
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS
-    basic_int32x4 t = a;
+    gint32x4 t = a;
     uint64_t r = extract<id*2>(t);
     r |= uint64_t(extract<id*2+1>(t)) << 32;
     return r;
@@ -195,7 +195,7 @@ uint64_t extract(basic_int64x2 a)
 #endif
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
-    basic_int32x4 t = a;
+    gint32x4 t = a;
     uint64_t r = 0;
     t = move_l<id*2>(t); // when id==0, move_l is template-specialized and does nothing
     r = extract<0>(t);
@@ -220,7 +220,7 @@ uint64_t extract(basic_int64x2 a)
 template<unsigned id>
 int64_t extract(int64x2 a)
 {
-    return extract<id>(basic_int64x2(a));
+    return extract<id>(gint64x2(a));
 }
 /// @}
 

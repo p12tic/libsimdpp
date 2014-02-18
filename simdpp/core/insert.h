@@ -62,7 +62,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-basic_int8x16 insert(basic_int8x16 a, uint8_t x)
+gint8x16 insert(gint8x16 a, uint8_t x)
 {
 #if SIMDPP_USE_NULL
     a[id] = x;
@@ -101,7 +101,7 @@ basic_int8x16 insert(basic_int8x16 a, uint8_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-basic_int16x8 insert(basic_int16x8 a, uint16_t x)
+gint16x8 insert(gint16x8 a, uint16_t x)
 {
 #if SIMDPP_USE_NULL
     a[id] = x;
@@ -133,7 +133,7 @@ basic_int16x8 insert(basic_int16x8 a, uint16_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-basic_int32x4 insert(basic_int32x4 a, uint32_t x)
+gint32x4 insert(gint32x4 a, uint32_t x)
 {
 #if SIMDPP_USE_NULL
     a[id] = x;
@@ -143,7 +143,7 @@ basic_int32x4 insert(basic_int32x4 a, uint32_t x)
 #elif SIMDPP_USE_SSE2
     uint16_t lo = x & 0xffff;
     uint16_t hi = x >> 16;
-    basic_int16x8 a1 = a;
+    gint16x8 a1 = a;
     a1 = insert<id*2>(a1, lo);
     a1 = insert<id*2+1>(a1, hi);
     return a1;
@@ -173,14 +173,14 @@ basic_int32x4 insert(basic_int32x4 a, uint32_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-basic_int64x2 insert(basic_int64x2 a, uint64_t x)
+gint64x2 insert(gint64x2 a, uint64_t x)
 {
 #if SIMDPP_USE_NULL
     a[id] = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS
-    basic_int32x4 a0 = a;
+    gint32x4 a0 = a;
     a0 = insert<id*2>(a0, uint32_t(x));
     a0 = insert<id*2+1>(a0, uint32_t(x >> 32));
     return a0;

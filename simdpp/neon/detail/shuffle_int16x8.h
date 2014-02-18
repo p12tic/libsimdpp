@@ -54,7 +54,7 @@ using _0 = std::integral_constant<unsigned, 0>;
 using _1 = std::integral_constant<unsigned, 1>;
 using _2 = std::integral_constant<unsigned, 2>;
 using _3 = std::integral_constant<unsigned, 3>;
-using T = basic_int16x8;    // full vector
+using T = gint16x8;    // full vector
 using H = uint16x4_t;       // half vector
 
 /// Cost: 2

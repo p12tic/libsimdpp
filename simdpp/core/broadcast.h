@@ -69,7 +69,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int8x16 broadcast(basic_int8x16 a)
+gint8x16 broadcast(gint8x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
 #if SIMDPP_USE_NULL
@@ -82,7 +82,7 @@ basic_int8x16 broadcast(basic_int8x16 a)
                                               s,s,s,s,s,s,s,s>(mask);
     return permute_bytes16(a, mask);
 #elif SIMDPP_USE_SSE2
-    basic_int16x8 b1, b2;
+    gint16x8 b1, b2;
 
     if (s % 2 == 1) {
         b1 = _mm_srli_epi16(a, 8);
@@ -107,11 +107,11 @@ basic_int8x16 broadcast(basic_int8x16 a)
 }
 
 template<unsigned s>
-basic_int8x32 broadcast(basic_int8x32 a)
+gint8x32 broadcast(gint8x32 a)
 {
     static_assert(s < 16, "Access out of bounds");
 #if SIMDPP_USE_AVX2
-    basic_int16x16 b = s < 8 ? zip_lo(a, a) : zip_hi(a, a);
+    gint16x16 b = s < 8 ? zip_lo(a, a) : zip_hi(a, a);
     return broadcast<s%8>(b);
 #else
     return {broadcast<s>(a[0]), broadcast<s>(a[1])};
@@ -140,7 +140,7 @@ basic_int8x32 broadcast(basic_int8x32 a)
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int16x8 broadcast(basic_int16x8 a)
+gint16x8 broadcast(gint16x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_NULL
@@ -153,7 +153,7 @@ basic_int16x8 broadcast(basic_int16x8 a)
     return permute_bytes16(a, mask);
 #elif SIMDPP_USE_SSE2
     // s2 is needed because static_assert fires in branch we don't use
-    basic_int64x2 b;
+    gint64x2 b;
     if (s < 4) {
         constexpr unsigned s2 = s < 4 ? s : s-4;
         b = sse::permute_lo<s2,s2,s2,s2>(a);
@@ -177,18 +177,18 @@ basic_int16x8 broadcast(basic_int16x8 a)
 }
 
 template<unsigned s>
-basic_int16x16 broadcast(basic_int16x16 a)
+gint16x16 broadcast(gint16x16 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     if (s < 4) {
         constexpr unsigned q = (s < 4) ? s : 0;
-        basic_int64x4 h = _mm256_shufflelo_epi16(a, q << 6 | q << 4 | q << 2 | q);
+        gint64x4 h = _mm256_shufflelo_epi16(a, q << 6 | q << 4 | q << 2 | q);
         h = permute<0,0>(h);
         return h;
     } else {
         constexpr unsigned q = (s < 4) ? 0 : s - 4;
-        basic_int64x4 h = _mm256_shufflehi_epi16(a, q << 6 | q << 4 | q << 2 | q);
+        gint64x4 h = _mm256_shufflehi_epi16(a, q << 6 | q << 4 | q << 2 | q);
         h = permute<1,1>(h);
         return h;
     }
@@ -212,7 +212,7 @@ basic_int16x16 broadcast(basic_int16x16 a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int32x4 broadcast(basic_int32x4 a)
+gint32x4 broadcast(gint32x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
@@ -235,7 +235,7 @@ basic_int32x4 broadcast(basic_int32x4 a)
 }
 
 template<unsigned s>
-basic_int32x8 broadcast(basic_int32x8 a)
+gint32x8 broadcast(gint32x8 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
@@ -262,7 +262,7 @@ basic_int32x8 broadcast(basic_int32x8 a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s>
-basic_int64x2 broadcast(basic_int64x2 a)
+gint64x2 broadcast(gint64x2 a)
 {
     static_assert(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL
@@ -288,7 +288,7 @@ basic_int64x2 broadcast(basic_int64x2 a)
 }
 
 template<unsigned s>
-basic_int64x4 broadcast(basic_int64x4 a)
+gint64x4 broadcast(gint64x4 a)
 {
     static_assert(s < 2, "Access out of bounds");
 #if SIMDPP_USE_AVX2

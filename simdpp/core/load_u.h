@@ -77,7 +77,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 // offer better performance on e.g. ARM. Note, we don't use LDDQU on SSE,
 // because it has usage restrictions and offers improved performance only on
 // Pentium 4 era processors.
-inline basic_int8x16 load_u(basic_int8x16& a, const void* p)
+inline gint8x16 load_u(gint8x16& a, const void* p)
 {
 #if SIMDPP_USE_NULL
     null::load(a, p);
@@ -100,7 +100,7 @@ inline basic_int8x16 load_u(basic_int8x16& a, const void* p)
 #endif
 }
 
-inline basic_int16x8 load_u(basic_int16x8& a, const void* p)
+inline gint16x8 load_u(gint16x8& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = load_u(b, p);
@@ -112,7 +112,7 @@ inline basic_int16x8 load_u(basic_int16x8& a, const void* p)
 #endif
 }
 
-inline basic_int32x4 load_u(basic_int32x4& a, const void* p)
+inline gint32x4 load_u(gint32x4& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = load_u(b, p);
@@ -124,7 +124,7 @@ inline basic_int32x4 load_u(basic_int32x4& a, const void* p)
 #endif
 }
 
-inline basic_int64x2 load_u(basic_int64x2& a, const void* p)
+inline gint64x2 load_u(gint64x2& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = load_u(b, p);
@@ -167,7 +167,7 @@ inline float64x2 load_u(float64x2& a, const double* p)
 #endif
 }
 
-inline basic_int8x32 load_u(basic_int8x32& a, const void* p)
+inline gint8x32 load_u(gint8x32& a, const void* p)
 {
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
@@ -183,7 +183,7 @@ inline basic_int8x32 load_u(basic_int8x32& a, const void* p)
                   (__vector uint8_t)mask);
     l2 = vec_perm((__vector uint8_t)l2, (__vector uint8_t)l3,
                   (__vector uint8_t)mask);
-    return basic_int8x32(l1, l2);
+    return gint8x32(l1, l2);
 #else
     const char* q = reinterpret_cast<const char*>(p);
     load_u(a[0], q);
@@ -192,13 +192,13 @@ inline basic_int8x32 load_u(basic_int8x32& a, const void* p)
 #endif
 }
 
-inline basic_int16x16 load_u(basic_int16x16& a, const void* p)
+inline gint16x16 load_u(gint16x16& a, const void* p)
 {
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
     return a;
 #elif SIMDPP_USE_ALTIVEC
-    basic_int8x32 a0;
+    gint8x32 a0;
     load_u(a0, p);
     a = a0;
     return a;
@@ -210,13 +210,13 @@ inline basic_int16x16 load_u(basic_int16x16& a, const void* p)
 #endif
 }
 
-inline basic_int32x8 load_u(basic_int32x8& a, const void* p)
+inline gint32x8 load_u(gint32x8& a, const void* p)
 {
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
     return a;
 #elif SIMDPP_USE_ALTIVEC
-    basic_int8x32 a0;
+    gint8x32 a0;
     load_u(a0, p);
     a = a0;
     return a;
@@ -228,13 +228,13 @@ inline basic_int32x8 load_u(basic_int32x8& a, const void* p)
 #endif
 }
 
-inline basic_int64x4 load_u(basic_int64x4& a, const void* p)
+inline gint64x4 load_u(gint64x4& a, const void* p)
 {
 #if SIMDPP_USE_AVX2
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
     return a;
 #elif SIMDPP_USE_ALTIVEC
-    basic_int8x32 a0;
+    gint8x32 a0;
     load_u(a0, p);
     a = a0;
     return a;
@@ -252,7 +252,7 @@ inline float32x8 load_u(float32x8& a, const float* p)
     a = _mm256_loadu_ps(p);
     return a;
 #elif SIMDPP_USE_ALTIVEC
-    basic_int32x8 a0;
+    gint32x8 a0;
     load_u(a0, p);
     a = a0;
     return a;

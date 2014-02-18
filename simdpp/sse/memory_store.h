@@ -48,7 +48,7 @@ namespace sse {
     elements within vector. @a P must be 0 or @a M/2 if @a N == M/2.
 */
 template<unsigned P, unsigned N>
-void store_lane(void* p, basic_int8x16 a)
+void store_lane(void* p, gint8x16 a)
 {
     static_assert(N==4 || N==8, "Size not supported");
     static_assert(P==0 || (N==8 && P==8), "Position not supported");
@@ -67,7 +67,7 @@ void store_lane(void* p, basic_int8x16 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(void* p, basic_int16x8 a)
+void store_lane(void* p, gint16x8 a)
 {
     static_assert(N==2 || N==4, "Size not supported");
     static_assert(P==0 || (N==4 && P==4), "Position not supported");
@@ -86,7 +86,7 @@ void store_lane(void* p, basic_int16x8 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(void* p, basic_int32x4 a)
+void store_lane(void* p, gint32x4 a)
 {
     static_assert(N==1 || N==2, "Size not supported");
     static_assert(P==0 || (N==2 && P==2), "Position not supported");
@@ -105,7 +105,7 @@ void store_lane(void* p, basic_int32x4 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(void* p, basic_int64x2 a)
+void store_lane(void* p, gint64x2 a)
 {
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");

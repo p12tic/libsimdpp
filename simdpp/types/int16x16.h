@@ -52,9 +52,9 @@ public:
 
     using element_type = uint16_t;
     using uint_element_type = uint16_t;
-    using int_vector_type = basic_int16x16;
+    using int_vector_type = gint16x16;
     using uint_vector_type = uint16x16;
-    using half_vector_type = basic_int16x8;
+    using half_vector_type = gint16x8;
     using mask_type = mask_int16x16;
 
     static constexpr unsigned length = 16;
@@ -62,8 +62,8 @@ public:
     static constexpr uint_element_type all_bits = 0xffff;
 
     gint16<16>() = default;
-    gint16<16>(const basic_int16x16 &) = default;
-    gint16<16> &operator=(const basic_int16x16 &) = default;
+    gint16<16>(const gint16x16 &) = default;
+    gint16<16> &operator=(const gint16x16 &) = default;
 
     /// @{
     /// Construct from base type
@@ -81,17 +81,17 @@ public:
 
 #if SIMDPP_USE_AVX2
 #else
-    gint16<16>(basic_int16x8 d0, basic_int16x8 d1) : int256(d0, d1) {}
+    gint16<16>(gint16x8 d0, gint16x8 d1) : int256(d0, d1) {}
 
-    const basic_int16x8& operator[](unsigned i) const { return u16(i); }
-          basic_int16x8& operator[](unsigned i)       { return u16(i); }
+    const gint16x8& operator[](unsigned i) const { return u16(i); }
+          gint16x8& operator[](unsigned i)       { return u16(i); }
 #endif
 };
 
 /** Class representing 16x 16-bit signed integer vector
 */
 template<>
-class int16<16> : public basic_int16x16 {
+class int16<16> : public gint16x16 {
 public:
 
     using element_type = int16_t;
@@ -104,22 +104,22 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    int16<16>(__m256i d) : basic_int16x16(d) {}
-    int16<16>& operator=(__m256i d) { basic_int16x16::operator=(d); return *this; }
+    int16<16>(__m256i d) : gint16x16(d) {}
+    int16<16>& operator=(__m256i d) { gint16x16::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int16<16>(const int256& d) : basic_int16x16(d) {}
-    int16<16>(basic_int16x16 d) : basic_int16x16(d) {}
-    int16<16>& operator=(int256 d) { basic_int16x16::operator=(d); return *this; }
-    int16<16>& operator=(basic_int16x16 d) { basic_int16x16::operator=(d); return *this; }
+    int16<16>(const int256& d) : gint16x16(d) {}
+    int16<16>(gint16x16 d) : gint16x16(d) {}
+    int16<16>& operator=(int256 d) { gint16x16::operator=(d); return *this; }
+    int16<16>& operator=(gint16x16 d) { gint16x16::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    int16<16>(int16x8 d0, int16x8 d1) : basic_int16x16(d0, d1) {}
+    int16<16>(int16x8 d0, int16x8 d1) : gint16x16(d0, d1) {}
 
     const int16x8& operator[](unsigned i) const { return i16(i); }
           int16x8& operator[](unsigned i)       { return i16(i); }
@@ -208,7 +208,7 @@ public:
 /** Class representing 8x 16-bit unsigned integer vector
 */
 template<>
-class uint16<16> : public basic_int16x16 {
+class uint16<16> : public gint16x16 {
 public:
 
     using half_vector_type = uint16x8;
@@ -220,22 +220,22 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    uint16<16>(__m256i d) : basic_int16x16(d) {}
-    uint16<16>& operator=(__m256i d) { basic_int16x16::operator=(d); return *this; }
+    uint16<16>(__m256i d) : gint16x16(d) {}
+    uint16<16>& operator=(__m256i d) { gint16x16::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint16<16>(const int256& d) : basic_int16x16(d) {}
-    uint16<16>(basic_int16x16 d) : basic_int16x16(d) {}
-    uint16<16>& operator=(int256 d) { basic_int16x16::operator=(d); return *this; }
-    uint16<16>& operator=(basic_int16x16 d) { basic_int16x16::operator=(d); return *this; }
+    uint16<16>(const int256& d) : gint16x16(d) {}
+    uint16<16>(gint16x16 d) : gint16x16(d) {}
+    uint16<16>& operator=(int256 d) { gint16x16::operator=(d); return *this; }
+    uint16<16>& operator=(gint16x16 d) { gint16x16::operator=(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    uint16<16>(uint16x8 d0, uint16x8 d1) : basic_int16x16(d0, d1) {}
+    uint16<16>(uint16x8 d0, uint16x8 d1) : gint16x16(d0, d1) {}
 
     const uint16x8& operator[](unsigned i) const { return u16(i); }
           uint16x8& operator[](unsigned i)       { return u16(i); }
@@ -334,14 +334,14 @@ public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX2
     mask_int16<16>(__m256i d) : d_(d) {}
-    mask_int16<16>(basic_int16x16 d) : d_(d) {}
+    mask_int16<16>(gint16x16 d) : d_(d) {}
 #else
     mask_int16<16>(mask_int16x8 m0, mask_int16x8 m1) { m_[0] = m0; m_[1] = m1; }
 #endif
 #endif
 
     /// Access the underlying type
-    operator basic_int16x16() const;
+    operator gint16x16() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX2
@@ -353,7 +353,7 @@ public:
 
 private:
 #if SIMDPP_USE_AVX2
-    basic_int16x16 d_;
+    gint16x16 d_;
 #else
     mask_int16x8 m_[2];
 #endif

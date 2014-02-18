@@ -65,14 +65,14 @@ template<> class is_vector<uint8x32>    { static constexpr bool value = true; };
 template<> class is_vector<uint16x16>   { static constexpr bool value = true; };
 template<> class is_vector<uint32x8>    { static constexpr bool value = true; };
 template<> class is_vector<uint64x4>    { static constexpr bool value = true; };
-template<> class is_vector<basic_int8x16>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int16x8>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int32x4>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int64x2>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int8x32>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int16x16>  { static constexpr bool value = true; };
-template<> class is_vector<basic_int32x8>   { static constexpr bool value = true; };
-template<> class is_vector<basic_int64x4>   { static constexpr bool value = true; };
+template<> class is_vector<gint8x16>   { static constexpr bool value = true; };
+template<> class is_vector<gint16x8>   { static constexpr bool value = true; };
+template<> class is_vector<gint32x4>   { static constexpr bool value = true; };
+template<> class is_vector<gint64x2>   { static constexpr bool value = true; };
+template<> class is_vector<gint8x32>   { static constexpr bool value = true; };
+template<> class is_vector<gint16x16>  { static constexpr bool value = true; };
+template<> class is_vector<gint32x8>   { static constexpr bool value = true; };
+template<> class is_vector<gint64x4>   { static constexpr bool value = true; };
 
 /// Allows detection whether specific type is a simdpp mask
 template<class T>

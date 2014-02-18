@@ -39,20 +39,20 @@ namespace neon {
 namespace detail {
 
 template<unsigned shift>
-basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
+gint8x16 align(gint8x16 lower, gint8x16 upper)
 {
     return vextq_u8(lower, upper, shift);
 }
 
 template<>
-inline basic_int8x16 align<0>(basic_int8x16 lower, basic_int8x16 upper)
+inline gint8x16 align<0>(gint8x16 lower, gint8x16 upper)
 {
     (void) upper;
     return lower;
 }
 
 template<>
-inline basic_int8x16 align<16>(basic_int8x16 lower, basic_int8x16 upper)
+inline gint8x16 align<16>(gint8x16 lower, gint8x16 upper)
 {
     (void) lower;
     return upper;

@@ -53,7 +53,7 @@ public:
 
     using element_type = uint32_t;
     using uint_element_type = uint32_t;
-    using int_vector_type = basic_int32x4;
+    using int_vector_type = gint32x4;
     using uint_vector_type = uint32x4;
     using mask_type = mask_int32x4;
 
@@ -62,8 +62,8 @@ public:
     static constexpr uint_element_type all_bits = 0xffffffff;
 
     gint32<4>() = default;
-    gint32<4>(const basic_int32x4&) = default;
-    gint32<4>& operator=(const basic_int32x4&) = default;
+    gint32<4>(const gint32x4&) = default;
+    gint32<4>& operator=(const gint32x4&) = default;
 
     /// @{
     /// Construct from base type
@@ -92,7 +92,7 @@ public:
     /// @{
     /// Construct from compatible float32x4 integer vector type
     explicit gint32<4>(const float32x4& d);
-    gint32<4>& operator=(const float32x4& d) { operator=(basic_int32x4(d)); return *this; }
+    gint32<4>& operator=(const float32x4& d) { operator=(gint32x4(d)); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -107,7 +107,7 @@ public:
 /** Class representing 4x 32-bit signed integer vector
 */
 template<>
-class int32<4> : public basic_int32x4 {
+class int32<4> : public gint32x4 {
 public:
 
     using element_type = int32_t;
@@ -119,29 +119,29 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    int32<4>(__m128i d) : basic_int32x4(d) {}
-    int32<4>& operator=(__m128i d) { basic_int32x4::operator=(d); return *this; }
+    int32<4>(__m128i d) : gint32x4(d) {}
+    int32<4>& operator=(__m128i d) { gint32x4::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    int32<4>(int32x4_t d) : basic_int32x4(d) {}
-    int32<4>& operator=(int32x4_t d) { basic_int32x4::operator=(d); return *this; }
+    int32<4>(int32x4_t d) : gint32x4(d) {}
+    int32<4>& operator=(int32x4_t d) { gint32x4::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    int32<4>(__vector  int32_t d) : basic_int32x4(d) {}
-    int32<4>& operator=(__vector  int32_t d) { basic_int32x4::operator=(d); return *this; }
+    int32<4>(__vector  int32_t d) : gint32x4(d) {}
+    int32<4>& operator=(__vector  int32_t d) { gint32x4::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int32<4>(const int128& d) : basic_int32x4(d) {}
-    int32<4>(const basic_int32x4& d) : basic_int32x4(d) {}
-    int32<4>& operator=(int128 d) { basic_int32x4::operator=(d); return *this; }
-    int32<4>& operator=(basic_int32x4 d) { basic_int32x4::operator=(d); return *this; }
+    int32<4>(const int128& d) : gint32x4(d) {}
+    int32<4>(const gint32x4& d) : gint32x4(d) {}
+    int32<4>& operator=(int128 d) { gint32x4::operator=(d); return *this; }
+    int32<4>& operator=(gint32x4 d) { gint32x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float32x4 integer vector type
-    explicit int32<4>(const float32x4& d) : basic_int32x4(d) {}
-    int32<4>& operator=(const float32x4& d) { basic_int32x4::operator=(d); return *this; }
+    explicit int32<4>(const float32x4& d) : gint32x4(d) {}
+    int32<4>& operator=(const float32x4& d) { gint32x4::operator=(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -221,7 +221,7 @@ public:
 /** Class representing 4x 32-bit unsigned integer vector
 */
 template<>
-class uint32<4> : public basic_int32x4 {
+class uint32<4> : public gint32x4 {
 public:
 
     uint32<4>() = default;
@@ -231,29 +231,29 @@ public:
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    uint32<4>(__m128i d) : basic_int32x4(d) {}
-    uint32<4>& operator=(__m128i d) { basic_int32x4::operator=(d); return *this; }
+    uint32<4>(__m128i d) : gint32x4(d) {}
+    uint32<4>& operator=(__m128i d) { gint32x4::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    uint32<4>(uint32x4_t d) : basic_int32x4(d) {}
-    uint32<4>& operator=(uint32x4_t d) { basic_int32x4::operator=(d); return *this; }
+    uint32<4>(uint32x4_t d) : gint32x4(d) {}
+    uint32<4>& operator=(uint32x4_t d) { gint32x4::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    uint32<4>(__vector uint32_t d) : basic_int32x4(d) {}
-    uint32<4>& operator=(__vector uint32_t d) { basic_int32x4::operator=(d); return *this; }
+    uint32<4>(__vector uint32_t d) : gint32x4(d) {}
+    uint32<4>& operator=(__vector uint32_t d) { gint32x4::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint32<4>(const int128& d) : basic_int32x4(d) {}
-    uint32<4>(const basic_int32x4& d) : basic_int32x4(d) {}
-    uint32<4>& operator=(int128 d) { basic_int32x4::operator=(d); return *this; }
-    uint32<4>& operator=(basic_int32x4 d) { basic_int32x4::operator=(d); return *this; }
+    uint32<4>(const int128& d) : gint32x4(d) {}
+    uint32<4>(const gint32x4& d) : gint32x4(d) {}
+    uint32<4>& operator=(int128 d) { gint32x4::operator=(d); return *this; }
+    uint32<4>& operator=(gint32x4 d) { gint32x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible float32x4 integer vector type
-    explicit uint32<4>(const float32x4& d) : basic_int32x4(d) {}
-    uint32<4>& operator=(const float32x4& d) { basic_int32x4::operator=(d); return *this; }
+    explicit uint32<4>(const float32x4& d) : gint32x4(d) {}
+    uint32<4>& operator=(const float32x4& d) { gint32x4::operator=(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -357,12 +357,12 @@ public:
 #endif
 #if SIMDPP_USE_NULL
 #else
-    mask_int32<4>(basic_int32x4 d) : d_(d) {}
+    mask_int32<4>(gint32x4 d) : d_(d) {}
 #endif
 #endif
 
     /// Access the underlying type
-    operator basic_int32x4() const;
+    operator gint32x4() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
@@ -375,7 +375,7 @@ private:
 #if SIMDPP_USE_NULL
     bool b_[4];
 #else
-    basic_int32x4 d_;
+    gint32x4 d_;
 #endif
 };
 

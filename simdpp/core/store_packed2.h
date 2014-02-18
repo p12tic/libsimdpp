@@ -80,7 +80,7 @@ void v256_store_i_pack2(void* p, V a, V b)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void store_packed2(void* p, basic_int8x16 a, basic_int8x16 b)
+inline void store_packed2(void* p, gint8x16 a, gint8x16 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -99,7 +99,7 @@ inline void store_packed2(void* p, basic_int8x16 a, basic_int8x16 b)
 #endif
 }
 
-inline void store_packed2(void* p, basic_int8x32 a, basic_int8x32 b)
+inline void store_packed2(void* p, gint8x32 a, gint8x32 b)
 {
     detail::v256_store_i_pack2(p, a, b);
 }
@@ -123,7 +123,7 @@ inline void store_packed2(void* p, basic_int8x32 a, basic_int8x32 b)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void store_packed2(void* p, basic_int16x8 a, basic_int16x8 b)
+inline void store_packed2(void* p, gint16x8 a, gint16x8 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -142,7 +142,7 @@ inline void store_packed2(void* p, basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-inline void store_packed2(void* p, basic_int16x16 a, basic_int16x16 b)
+inline void store_packed2(void* p, gint16x16 a, gint16x16 b)
 {
     detail::v256_store_i_pack2(p, a, b);
 }
@@ -166,7 +166,7 @@ inline void store_packed2(void* p, basic_int16x16 a, basic_int16x16 b)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void store_packed2(void* p, basic_int32x4 a, basic_int32x4 b)
+inline void store_packed2(void* p, gint32x4 a, gint32x4 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -185,7 +185,7 @@ inline void store_packed2(void* p, basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-inline void store_packed2(void* p, basic_int32x8 a, basic_int32x8 b)
+inline void store_packed2(void* p, gint32x8 a, gint32x8 b)
 {
     detail::v256_store_i_pack2(p, a, b);
 }
@@ -209,7 +209,7 @@ inline void store_packed2(void* p, basic_int32x8 a, basic_int32x8 b)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void store_packed2(void* p, basic_int64x2 a, basic_int64x2 b)
+inline void store_packed2(void* p, gint64x2 a, gint64x2 b)
 {
     p = detail::assume_aligned(p, 16);
     char* q = reinterpret_cast<char*>(p);
@@ -218,7 +218,7 @@ inline void store_packed2(void* p, basic_int64x2 a, basic_int64x2 b)
     store(q+16, b);
 }
 
-inline void store_packed2(void* p, basic_int64x4 a, basic_int64x4 b)
+inline void store_packed2(void* p, gint64x4 a, gint64x4 b)
 {
     detail::v256_store_i_pack2(p, a, b);
 }

@@ -56,12 +56,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, 2-3}
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
-inline basic_int8x16 bit_not(basic_int8x16 a)
+inline gint8x16 bit_not(gint8x16 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<basic_int8x16>(a, [](uint64_t a){ return ~a; });
+    return null::foreach<gint8x16>(a, [](uint64_t a){ return ~a; });
 #elif SIMDPP_USE_SSE2
-    basic_int8x16 ones = basic_int8x16::ones();
+    gint8x16 ones = gint8x16::ones();
     return bit_xor(a, ones);
 #elif SIMDPP_USE_NEON
     return vmvnq_u8(a);
@@ -70,23 +70,23 @@ inline basic_int8x16 bit_not(basic_int8x16 a)
 #endif
 }
 
-inline basic_int16x8 bit_not(basic_int16x8 a) { return bit_not(uint8x16(a)); }
-inline basic_int32x4 bit_not(basic_int32x4 a) { return bit_not(uint8x16(a)); }
-inline basic_int64x2 bit_not(basic_int64x2 a) { return bit_not(uint8x16(a)); }
+inline gint16x8 bit_not(gint16x8 a) { return bit_not(uint8x16(a)); }
+inline gint32x4 bit_not(gint32x4 a) { return bit_not(uint8x16(a)); }
+inline gint64x2 bit_not(gint64x2 a) { return bit_not(uint8x16(a)); }
 
-inline basic_int8x32 bit_not(basic_int8x32 a)
+inline gint8x32 bit_not(gint8x32 a)
 {
 #if SIMDPP_USE_AVX2
-    basic_int8x32 ones = basic_int8x32::ones();
+    gint8x32 ones = gint8x32::ones();
     return bit_xor(a, ones);
 #else
     return {bit_not(a[0]), bit_not(a[1])};
 #endif
 }
 
-inline basic_int16x16 bit_not(basic_int16x16 a) { return bit_not(uint8x32(a)); }
-inline basic_int32x8 bit_not(basic_int32x8 a)   { return bit_not(uint8x32(a)); }
-inline basic_int64x4 bit_not(basic_int64x4 a)   { return bit_not(uint8x32(a)); }
+inline gint16x16 bit_not(gint16x16 a) { return bit_not(uint8x32(a)); }
+inline gint32x8 bit_not(gint32x8 a)   { return bit_not(uint8x32(a)); }
+inline gint64x4 bit_not(gint64x4 a)   { return bit_not(uint8x32(a)); }
 
 // -----------------------------------------------------------------------------
 

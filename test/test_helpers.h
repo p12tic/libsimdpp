@@ -167,9 +167,9 @@ inline R tst_ext_half_avx2_impl(T x)
 #endif
 }
 
-inline simdpp::basic_int8x16 tst_ext_half(simdpp::basic_int8x32 x)
+inline simdpp::gint8x16 tst_ext_half(simdpp::gint8x32 x)
 {
-    return tst_ext_half_avx2_impl<simdpp::basic_int8x16>(x);
+    return tst_ext_half_avx2_impl<simdpp::gint8x16>(x);
 }
 inline simdpp::int8x16 tst_ext_half(simdpp::int8x32 x)
 {
@@ -184,9 +184,9 @@ inline simdpp::mask_int8x16 tst_ext_half(simdpp::mask_int8x32 x)
     return tst_ext_half_avx2_impl<simdpp::mask_int8x16>(x);
 }
 
-inline simdpp::basic_int16x8 tst_ext_half(simdpp::basic_int16x16 x)
+inline simdpp::gint16x8 tst_ext_half(simdpp::gint16x16 x)
 {
-    return tst_ext_half_avx2_impl<simdpp::basic_int16x8>(x);
+    return tst_ext_half_avx2_impl<simdpp::gint16x8>(x);
 }
 inline simdpp::int16x8 tst_ext_half(simdpp::int16x16 x)
 {
@@ -201,9 +201,9 @@ inline simdpp::mask_int16x8 tst_ext_half(simdpp::mask_int16x16 x)
     return tst_ext_half_avx2_impl<simdpp::mask_int16x8>(x);
 }
 
-inline simdpp::basic_int32x4 tst_ext_half(simdpp::basic_int32x8 x)
+inline simdpp::gint32x4 tst_ext_half(simdpp::gint32x8 x)
 {
-    return tst_ext_half_avx2_impl<simdpp::basic_int32x4>(x);
+    return tst_ext_half_avx2_impl<simdpp::gint32x4>(x);
 }
 inline simdpp::int32x4 tst_ext_half(simdpp::int32x8 x)
 {
@@ -218,9 +218,9 @@ inline simdpp::mask_int32x4 tst_ext_half(simdpp::mask_int32x8 x)
     return tst_ext_half_avx2_impl<simdpp::mask_int32x4>(x);
 }
 
-inline simdpp::basic_int64x2 tst_ext_half(simdpp::basic_int64x4 x)
+inline simdpp::gint64x2 tst_ext_half(simdpp::gint64x4 x)
 {
-    return tst_ext_half_avx2_impl<simdpp::basic_int64x2>(x);
+    return tst_ext_half_avx2_impl<simdpp::gint64x2>(x);
 }
 inline simdpp::int64x2 tst_ext_half(simdpp::int64x4 x)
 {

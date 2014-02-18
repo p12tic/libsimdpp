@@ -216,10 +216,10 @@ inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
 #endif
 }
 
-inline mask_int8x16::operator basic_int8x16() const
+inline mask_int8x16::operator gint8x16() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<basic_int8x16>(*this);
+    return null::convert_mask<gint8x16>(*this);
 #else
     return d_;
 #endif

@@ -53,7 +53,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline basic_int8x16 bit_andnot(basic_int8x16 a, int128 b)
+inline gint8x16 bit_andnot(gint8x16 a, int128 b)
 {
 #if SIMDPP_USE_NULL
     return null::bit_andnot(uint8x16(a), uint8x16(b));
@@ -66,11 +66,11 @@ inline basic_int8x16 bit_andnot(basic_int8x16 a, int128 b)
 #endif
 }
 
-inline basic_int16x8 bit_andnot(basic_int16x8 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
-inline basic_int32x4 bit_andnot(basic_int32x4 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
-inline basic_int64x2 bit_andnot(basic_int64x2 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
+inline gint16x8 bit_andnot(gint16x8 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
+inline gint32x4 bit_andnot(gint32x4 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
+inline gint64x2 bit_andnot(gint64x2 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
 
-inline basic_int8x32 bit_andnot(basic_int8x32 a, int256 b)
+inline gint8x32 bit_andnot(gint8x32 a, int256 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_andnot_si256(b, a);
@@ -78,13 +78,13 @@ inline basic_int8x32 bit_andnot(basic_int8x32 a, int256 b)
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
 }
-inline basic_int16x16 bit_andnot(basic_int16x16 a, int256 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline basic_int32x8 bit_andnot(basic_int32x8 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline basic_int64x4 bit_andnot(basic_int64x4 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
+inline gint16x16 bit_andnot(gint16x16 a, int256 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
+inline gint32x8 bit_andnot(gint32x8 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
+inline gint64x4 bit_andnot(gint64x4 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
 
 // -----------------------------------------------------------------------------
 
-inline basic_int8x16 bit_andnot(basic_int8x16 a, mask_int8x16 b)
+inline gint8x16 bit_andnot(gint8x16 a, mask_int8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::bit_andnot_vm(a, b);
@@ -93,7 +93,7 @@ inline basic_int8x16 bit_andnot(basic_int8x16 a, mask_int8x16 b)
 #endif
 }
 
-inline basic_int16x8 bit_andnot(basic_int16x8 a, mask_int16x8 b)
+inline gint16x8 bit_andnot(gint16x8 a, mask_int16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::bit_andnot_vm(a, b);
@@ -102,7 +102,7 @@ inline basic_int16x8 bit_andnot(basic_int16x8 a, mask_int16x8 b)
 #endif
 }
 
-inline basic_int32x4 bit_andnot(basic_int32x4 a, mask_int32x4 b)
+inline gint32x4 bit_andnot(gint32x4 a, mask_int32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::bit_andnot_vm(a, b);
@@ -111,7 +111,7 @@ inline basic_int32x4 bit_andnot(basic_int32x4 a, mask_int32x4 b)
 #endif
 }
 
-inline basic_int64x2 bit_andnot(basic_int64x2 a, mask_int64x2 b)
+inline gint64x2 bit_andnot(gint64x2 a, mask_int64x2 b)
 {
 #if SIMDPP_USE_NULL
     return null::bit_andnot_vm(a, b);
@@ -122,7 +122,7 @@ inline basic_int64x2 bit_andnot(basic_int64x2 a, mask_int64x2 b)
 
 // -----------------------------------------------------------------------------
 
-inline basic_int8x32 bit_andnot(basic_int8x32 a, mask_int8x32 b)
+inline gint8x32 bit_andnot(gint8x32 a, mask_int8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return bit_andnot(a, uint8x32(b));
@@ -131,7 +131,7 @@ inline basic_int8x32 bit_andnot(basic_int8x32 a, mask_int8x32 b)
 #endif
 }
 
-inline basic_int16x16 bit_andnot(basic_int16x16 a, mask_int16x16 b)
+inline gint16x16 bit_andnot(gint16x16 a, mask_int16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint8x32(a), uint8x32(b));
@@ -140,7 +140,7 @@ inline basic_int16x16 bit_andnot(basic_int16x16 a, mask_int16x16 b)
 #endif
 }
 
-inline basic_int32x8 bit_andnot(basic_int32x8 a, mask_int32x8 b)
+inline gint32x8 bit_andnot(gint32x8 a, mask_int32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint8x32(a), uint8x32(b));
@@ -149,7 +149,7 @@ inline basic_int32x8 bit_andnot(basic_int32x8 a, mask_int32x8 b)
 #endif
 }
 
-inline basic_int64x4 bit_andnot(basic_int64x4 a, mask_int64x4 b)
+inline gint64x4 bit_andnot(gint64x4 a, mask_int64x4 b)
 {
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint8x32(a), uint8x32(b));

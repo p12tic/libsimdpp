@@ -81,7 +81,7 @@ void v256_load_i_packed2(V& a, V& b, const void* p)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed2(basic_int8x16& a, basic_int8x16& b, const void* p)
+inline void load_packed2(gint8x16& a, gint8x16& b, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -99,7 +99,7 @@ inline void load_packed2(basic_int8x16& a, basic_int8x16& b, const void* p)
 #endif
 }
 
-inline void load_packed2(basic_int8x32& a, basic_int8x32& b, const void* p)
+inline void load_packed2(gint8x32& a, gint8x32& b, const void* p)
 {
     detail::v256_load_i_packed2(a, b, p);
 }
@@ -123,7 +123,7 @@ inline void load_packed2(basic_int8x32& a, basic_int8x32& b, const void* p)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed2(basic_int16x8& a, basic_int16x8& b, const void* p)
+inline void load_packed2(gint16x8& a, gint16x8& b, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -141,7 +141,7 @@ inline void load_packed2(basic_int16x8& a, basic_int16x8& b, const void* p)
 #endif
 }
 
-inline void load_packed2(basic_int16x16& a, basic_int16x16& b, const void* p)
+inline void load_packed2(gint16x16& a, gint16x16& b, const void* p)
 {
     detail::v256_load_i_packed2(a, b, p);
 }
@@ -165,7 +165,7 @@ inline void load_packed2(basic_int16x16& a, basic_int16x16& b, const void* p)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed2(basic_int32x4& a, basic_int32x4& b, const void* p)
+inline void load_packed2(gint32x4& a, gint32x4& b, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -183,7 +183,7 @@ inline void load_packed2(basic_int32x4& a, basic_int32x4& b, const void* p)
 #endif
 }
 
-inline void load_packed2(basic_int32x8& a, basic_int32x8& b, const void* p)
+inline void load_packed2(gint32x8& a, gint32x8& b, const void* p)
 {
     detail::v256_load_i_packed2(a, b, p);
 }
@@ -207,7 +207,7 @@ inline void load_packed2(basic_int32x8& a, basic_int32x8& b, const void* p)
     @endcode
     @a p must be aligned to 32 bytes.
 */
-inline void load_packed2(basic_int64x2& a, basic_int64x2& b, const void* p)
+inline void load_packed2(gint64x2& a, gint64x2& b, const void* p)
 {
     p = detail::assume_aligned(p, 16);
     const char* q = reinterpret_cast<const char*>(p);
@@ -216,7 +216,7 @@ inline void load_packed2(basic_int64x2& a, basic_int64x2& b, const void* p)
     transpose2(a, b);
 }
 
-inline void load_packed2(basic_int64x4& a, basic_int64x4& b, const void* p)
+inline void load_packed2(gint64x4& a, gint64x4& b, const void* p)
 {
     detail::v256_load_i_packed2(a, b, p);
 }

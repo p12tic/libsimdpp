@@ -176,7 +176,7 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
-basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
+gint32x4 shuffle2(gint32x4 a, gint32x4 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -193,7 +193,7 @@ basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
 }
 
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
-basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
+gint32x8 shuffle2(gint32x8 a, gint32x8 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
@@ -233,14 +233,14 @@ basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
-basic_int32x4 shuffle2(basic_int32x4 a, basic_int32x4 b)
+gint32x4 shuffle2(gint32x4 a, gint32x4 b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);
 }
 
 template<unsigned s0, unsigned s1>
-basic_int32x8 shuffle2(basic_int32x8 a, basic_int32x8 b)
+gint32x8 shuffle2(gint32x8 a, gint32x8 b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);

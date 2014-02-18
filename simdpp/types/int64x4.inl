@@ -131,12 +131,12 @@ inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint
 #endif
 }
 
-inline mask_int64x4::operator basic_int64x4() const
+inline mask_int64x4::operator gint64x4() const
 {
 #if SIMDPP_USE_AVX2
     return d_;
 #else
-    return basic_int64x4(m_[0], m_[1]);
+    return gint64x4(m_[0], m_[1]);
 #endif
 }
 

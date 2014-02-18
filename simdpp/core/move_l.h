@@ -62,7 +62,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int8x16 move_l(basic_int8x16 a)
+gint8x16 move_l(gint8x16 a)
 {
     static_assert(shift <= 16, "Selector out of range");
     if (shift == 0) return a;
@@ -90,7 +90,7 @@ basic_int8x16 move_l(basic_int8x16 a)
 }
 
 template<unsigned shift>
-basic_int8x32 move_l(basic_int8x32 a)
+gint8x32 move_l(gint8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
     if (shift == 0) return a;
@@ -125,15 +125,15 @@ basic_int8x32 move_l(basic_int8x32 a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int16x8 move_l(basic_int16x8 a)
+gint16x8 move_l(gint16x8 a)
 {
-    return move_l<shift*2>(basic_int8x16(a));
+    return move_l<shift*2>(gint8x16(a));
 }
 
 template<unsigned shift>
-basic_int16x16 move_l(basic_int16x16 a)
+gint16x16 move_l(gint16x16 a)
 {
-    return move_l<shift*2>(basic_int8x32(a));
+    return move_l<shift*2>(gint8x32(a));
 }
 /// @}
 
@@ -156,15 +156,15 @@ basic_int16x16 move_l(basic_int16x16 a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int32x4 move_l(basic_int32x4 a)
+gint32x4 move_l(gint32x4 a)
 {
-    return move_l<shift*4>(basic_int8x16(a));
+    return move_l<shift*4>(gint8x16(a));
 }
 
 template<unsigned shift>
-basic_int32x8 move_l(basic_int32x8 a)
+gint32x8 move_l(gint32x8 a)
 {
-    return move_l<shift*4>(basic_int8x32(a));
+    return move_l<shift*4>(gint8x32(a));
 }
 /// @}
 
@@ -185,15 +185,15 @@ basic_int32x8 move_l(basic_int32x8 a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int64x2 move_l(basic_int64x2 a)
+gint64x2 move_l(gint64x2 a)
 {
-    return move_l<shift*8>(basic_int8x16(a));
+    return move_l<shift*8>(gint8x16(a));
 }
 
 template<unsigned shift>
-basic_int64x4 move_l(basic_int64x4 a)
+gint64x4 move_l(gint64x4 a)
 {
-    return move_l<shift*8>(basic_int8x32(a));
+    return move_l<shift*8>(gint8x32(a));
 }
 /// @}
 
@@ -218,13 +218,13 @@ basic_int64x4 move_l(basic_int64x4 a)
 template<unsigned shift>
 float32x4 move_l(float32x4 a)
 {
-    return float32x4(move_l<shift>(basic_int32x4(a)));
+    return float32x4(move_l<shift>(gint32x4(a)));
 }
 
 template<unsigned shift>
 float32x8 move_l(float32x8 a)
 {
-    return float32x8(move_l<shift>(basic_int32x8(a)));
+    return float32x8(move_l<shift>(gint32x8(a)));
 }
 /// @}
 
@@ -247,13 +247,13 @@ float32x8 move_l(float32x8 a)
 template<unsigned shift>
 float64x2 move_l(float64x2 a)
 {
-    return float64x2(move_l<shift>(basic_int64x2(a)));
+    return float64x2(move_l<shift>(gint64x2(a)));
 }
 
 template<unsigned shift>
 float64x4 move_l(float64x4 a)
 {
-    return float64x4(move_l<shift>(basic_int64x4(a)));
+    return float64x4(move_l<shift>(gint64x4(a)));
 }
 /// @}
 

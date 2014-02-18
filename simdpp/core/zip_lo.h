@@ -55,7 +55,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline basic_int8x16 zip_lo(basic_int8x16 a, basic_int8x16 b)
+inline gint8x16 zip_lo(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip_lo(a, b);
@@ -70,7 +70,7 @@ inline basic_int8x16 zip_lo(basic_int8x16 a, basic_int8x16 b)
 #endif
 }
 
-inline basic_int8x32 zip_lo(basic_int8x32 a, basic_int8x32 b)
+inline gint8x32 zip_lo(gint8x32 a, gint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi8(a, b);
@@ -79,7 +79,7 @@ inline basic_int8x32 zip_lo(basic_int8x32 a, basic_int8x32 b)
 #endif
 }
 
-inline basic_int16x8 zip_lo(basic_int16x8 a, basic_int16x8 b)
+inline gint16x8 zip_lo(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip_lo(a, b);
@@ -92,7 +92,7 @@ inline basic_int16x8 zip_lo(basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-inline basic_int16x16 zip_lo(basic_int16x16 a, basic_int16x16 b)
+inline gint16x16 zip_lo(gint16x16 a, gint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi16(a, b);
@@ -101,7 +101,7 @@ inline basic_int16x16 zip_lo(basic_int16x16 a, basic_int16x16 b)
 #endif
 }
 
-inline basic_int32x4 zip_lo(basic_int32x4 a, basic_int32x4 b)
+inline gint32x4 zip_lo(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip_lo(a, b);
@@ -114,7 +114,7 @@ inline basic_int32x4 zip_lo(basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-inline basic_int32x8 zip_lo(basic_int32x8 a, basic_int32x8 b)
+inline gint32x8 zip_lo(gint32x8 a, gint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi32(a, b);
@@ -123,7 +123,7 @@ inline basic_int32x8 zip_lo(basic_int32x8 a, basic_int32x8 b)
 #endif
 }
 
-inline basic_int64x2 zip_lo(basic_int64x2 a, basic_int64x2 b)
+inline gint64x2 zip_lo(gint64x2 a, gint64x2 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip_lo(a, b);
@@ -137,7 +137,7 @@ inline basic_int64x2 zip_lo(basic_int64x2 a, basic_int64x2 b)
 #endif
 }
 
-inline basic_int64x4 zip_lo(basic_int64x4 a, basic_int64x4 b)
+inline gint64x4 zip_lo(gint64x4 a, gint64x4 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi64(a, b);

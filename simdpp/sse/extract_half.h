@@ -54,10 +54,10 @@ inline int128 extract_lo(int256 a)
 #endif
 }
 
-inline basic_int8x16 extract_lo(basic_int8x32 a) { return extract_lo(int256(a)); }
-inline basic_int16x8 extract_lo(basic_int16x16 a) { return extract_lo(int256(a)); }
-inline basic_int32x4 extract_lo(basic_int32x8 a) { return extract_lo(int256(a)); }
-inline basic_int64x2 extract_lo(basic_int64x4 a) { return extract_lo(int256(a)); }
+inline gint8x16 extract_lo(gint8x32 a) { return extract_lo(int256(a)); }
+inline gint16x8 extract_lo(gint16x16 a) { return extract_lo(int256(a)); }
+inline gint32x4 extract_lo(gint32x8 a) { return extract_lo(int256(a)); }
+inline gint64x2 extract_lo(gint64x4 a) { return extract_lo(int256(a)); }
 
 inline float32x4 extract_lo(float32x8 a)
 {
@@ -91,10 +91,10 @@ inline int128 extract_hi(int256 a)
 #endif
 }
 
-inline basic_int8x16 extract_hi(basic_int8x32 a) { return extract_hi(int256(a)); }
-inline basic_int16x8 extract_hi(basic_int16x16 a) { return extract_hi(int256(a)); }
-inline basic_int32x4 extract_hi(basic_int32x8 a) { return extract_hi(int256(a)); }
-inline basic_int64x2 extract_hi(basic_int64x4 a) { return extract_hi(int256(a)); }
+inline gint8x16 extract_hi(gint8x32 a) { return extract_hi(int256(a)); }
+inline gint16x8 extract_hi(gint16x16 a) { return extract_hi(int256(a)); }
+inline gint32x4 extract_hi(gint32x8 a) { return extract_hi(int256(a)); }
+inline gint64x2 extract_hi(gint64x4 a) { return extract_hi(int256(a)); }
 
 inline float32x4 extract_hi(float32x8 a)
 {

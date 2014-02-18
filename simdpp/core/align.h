@@ -66,14 +66,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
+gint8x16 align(gint8x16 lower, gint8x16 upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
     if (shift == 0) return lower;
     if (shift == 16) return upper;
 
 #if SIMDPP_USE_NULL
-    basic_int8x16 r;
+    gint8x16 r;
     //use int to disable warnings wrt. comparison result always being true/false
     for (int i = 0; i < (int)(16-shift); i++) {
         r[i] = lower[i + shift];
@@ -85,7 +85,7 @@ basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
 #elif SIMDPP_USE_SSSE3
     return _mm_alignr_epi8(upper, lower, shift);
 #elif SIMDPP_USE_SSE2
-    basic_int8x16 a;
+    gint8x16 a;
     lower = move_l<shift>(lower);
     upper = move_r<16-shift>(upper);
     a = bit_or(upper, lower);
@@ -98,7 +98,7 @@ basic_int8x16 align(basic_int8x16 lower, basic_int8x16 upper)
 }
 
 template<unsigned shift>
-basic_int8x32 align(basic_int8x32 lower, basic_int8x32 upper)
+gint8x32 align(gint8x32 lower, gint8x32 upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
     if (shift == 0) return lower;
@@ -136,17 +136,17 @@ basic_int8x32 align(basic_int8x32 lower, basic_int8x32 upper)
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int16x8 align(basic_int16x8 lower, basic_int16x8 upper)
+gint16x8 align(gint16x8 lower, gint16x8 upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    return align<shift*2>(basic_int8x16(lower), basic_int8x16(upper));
+    return align<shift*2>(gint8x16(lower), gint8x16(upper));
 }
 
 template<unsigned shift>
-basic_int16x16 align(basic_int16x16 lower, basic_int16x16 upper)
+gint16x16 align(gint16x16 lower, gint16x16 upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    return align<shift*2>(basic_int8x32(lower), basic_int8x32(upper));
+    return align<shift*2>(gint8x32(lower), gint8x32(upper));
 }
 /// @}
 
@@ -173,17 +173,17 @@ basic_int16x16 align(basic_int16x16 lower, basic_int16x16 upper)
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int32x4 align(basic_int32x4 lower, basic_int32x4 upper)
+gint32x4 align(gint32x4 lower, gint32x4 upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return align<shift*4>(basic_int8x16(lower), basic_int8x16(upper));
+    return align<shift*4>(gint8x16(lower), gint8x16(upper));
 }
 
 template<unsigned shift>
-basic_int32x8 align(basic_int32x8 lower, basic_int32x8 upper)
+gint32x8 align(gint32x8 lower, gint32x8 upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return align<shift*4>(basic_int8x32(lower), basic_int8x32(upper));
+    return align<shift*4>(gint8x32(lower), gint8x32(upper));
 }
 /// @}
 
@@ -208,17 +208,17 @@ basic_int32x8 align(basic_int32x8 lower, basic_int32x8 upper)
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift>
-basic_int64x2 align(basic_int64x2 lower, basic_int64x2 upper)
+gint64x2 align(gint64x2 lower, gint64x2 upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return align<shift*8>(basic_int8x16(lower), basic_int8x16(upper));
+    return align<shift*8>(gint8x16(lower), gint8x16(upper));
 }
 
 template<unsigned shift>
-basic_int64x4 align(basic_int64x4 lower, basic_int64x4 upper)
+gint64x4 align(gint64x4 lower, gint64x4 upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return align<shift*8>(basic_int8x32(lower), basic_int8x32(upper));
+    return align<shift*8>(gint8x32(lower), gint8x32(upper));
 }
 /// @}
 
@@ -248,15 +248,15 @@ template<unsigned shift>
 float32x4 align(float32x4 lower, float32x4 upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return float32x4(align<shift>(basic_int32x4(lower),
-                                  basic_int32x4(upper)));
+    return float32x4(align<shift>(gint32x4(lower),
+                                  gint32x4(upper)));
 }
 
 template<unsigned shift>
 float32x8 align(float32x8 lower, float32x8 upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return float32x8(align<shift>(basic_int32x8(lower), basic_int32x8(upper)));
+    return float32x8(align<shift>(gint32x8(lower), gint32x8(upper)));
 }
 /// @}
 
@@ -286,15 +286,15 @@ template<unsigned shift>
 float64x2 align(float64x2 lower, float64x2 upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return float64x2(align<shift>(basic_int64x2(lower),
-                                  basic_int64x2(upper)));
+    return float64x2(align<shift>(gint64x2(lower),
+                                  gint64x2(upper)));
 }
 
 template<unsigned shift>
 float64x4 align(float64x4 lower, float64x4 upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return float64x4(align<shift>(basic_int64x4(lower), basic_int64x4(upper)));
+    return float64x4(align<shift>(gint64x4(lower), gint64x4(upper)));
 }
 /// @}
 

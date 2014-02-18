@@ -52,7 +52,7 @@ public:
 
     using element_type = double;
     using uint_element_type = uint64_t;
-    using int_vector_type = basic_int64x2;
+    using int_vector_type = gint64x2;
     using uint_vector_type = uint64x2;
     using mask_type = mask_float64x2;
 
@@ -77,8 +77,8 @@ public:
 
     /// @{
     /// Construct from compatible int64x2 integer vector type
-    explicit float64<2>(basic_int64x2 d);
-    float64<2>& operator=(basic_int64x2 d) { operator=(float64x2(d)); return *this; }
+    explicit float64<2>(gint64x2 d);
+    float64<2>& operator=(gint64x2 d) { operator=(float64x2(d)); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

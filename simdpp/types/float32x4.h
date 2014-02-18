@@ -52,7 +52,7 @@ public:
 
     using element_type = float;
     using uint_element_type = uint32_t;
-    using int_vector_type = basic_int32x4;
+    using int_vector_type = gint32x4;
     using uint_vector_type = uint32x4;
     using mask_type = mask_float32x4;
 
@@ -88,23 +88,23 @@ public:
     /// @{
     /// Construct from compatible int32x4 integer vector type
 #if SIMDPP_USE_SSE2
-    explicit float32<4>(basic_int32x4 d) : d_(_mm_castsi128_ps(d)) {}
-    float32<4>& operator=(basic_int32x4 d) { d_ = _mm_castsi128_ps(d); return *this; }
+    explicit float32<4>(gint32x4 d) : d_(_mm_castsi128_ps(d)) {}
+    float32<4>& operator=(gint32x4 d) { d_ = _mm_castsi128_ps(d); return *this; }
 #elif SIMDPP_USE_NEON
-    explicit float32<4>(basic_int32x4 d)  : d_(vreinterpretq_f32_s32(d)) {}
-    float32<4>& operator=(basic_int32x4 d) { d_ = vreinterpretq_f32_s32(d); return *this; }
+    explicit float32<4>(gint32x4 d)  : d_(vreinterpretq_f32_s32(d)) {}
+    float32<4>& operator=(gint32x4 d) { d_ = vreinterpretq_f32_s32(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    explicit float32<4>(basic_int32x4 d)  : d_((__vector float)d) {}
-    float32<4>& operator=(basic_int32x4 d) { d_ = (__vector float)d; return *this; }
+    explicit float32<4>(gint32x4 d)  : d_((__vector float)d) {}
+    float32<4>& operator=(gint32x4 d) { d_ = (__vector float)d; return *this; }
 #elif SIMDPP_USE_NULL
-    explicit float32<4>(basic_int32x4 d)
+    explicit float32<4>(gint32x4 d)
     {
         f32_[0] = bit_cast<float>(d[0]);
         f32_[1] = bit_cast<float>(d[1]);
         f32_[2] = bit_cast<float>(d[2]);
         f32_[3] = bit_cast<float>(d[3]);
     }
-    float32<4>& operator=(basic_int32x4 d) { operator=(float32x4(d)); return *this; }
+    float32<4>& operator=(gint32x4 d) { operator=(float32x4(d)); return *this; }
 #endif
     /// @}
 

@@ -52,7 +52,7 @@ inline gint32<4>::gint32(const float32x4& d)
     u32(2) = bit_cast<uint32_t>(d[2]);
     u32(3) = bit_cast<uint32_t>(d[3]);
 #elif SIMDPP_USE_NEON
-    operator=(bit_cast<basic_int32x4>(d));
+    operator=(bit_cast<gint32x4>(d));
 #elif SIMDPP_USE_SSE2
     operator=(_mm_castps_si128(d));
 #elif SIMDPP_USE_ALTIVEC
@@ -183,10 +183,10 @@ inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint
 #endif
 }
 
-inline mask_int32x4::operator basic_int32x4() const
+inline mask_int32x4::operator gint32x4() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<basic_int32x4>(*this);
+    return null::convert_mask<gint32x4>(*this);
 #else
     return d_;
 #endif

@@ -121,7 +121,7 @@ float64x4 shuffle1(float64x4 a, float64x4 b)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1>
-basic_int64x2 shuffle1(basic_int64x2 a, basic_int64x2 b)
+gint64x2 shuffle1(gint64x2 a, gint64x2 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -138,7 +138,7 @@ basic_int64x2 shuffle1(basic_int64x2 a, basic_int64x2 b)
 }
 
 template<unsigned s0, unsigned s1>
-basic_int64x4 shuffle1(basic_int64x4 a, basic_int64x4 b)
+gint64x4 shuffle1(gint64x4 a, gint64x4 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2

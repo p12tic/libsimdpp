@@ -59,7 +59,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline basic_int16x8 mul_lo(basic_int16x8 a, basic_int16x8 b)
+inline gint16x8 mul_lo(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::mul(a, b);
@@ -73,7 +73,7 @@ inline basic_int16x8 mul_lo(basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-inline basic_int16x16 mul_lo(basic_int16x16 a, basic_int16x16 b)
+inline gint16x16 mul_lo(gint16x16 a, gint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_mullo_epi16(a, b);
@@ -179,14 +179,14 @@ inline uint16x16 mul_hi(uint16x16 a, uint16x16 b)
     @icost{SSE4.1, AVX, NEON, 2}
     @icost{ALTIVEC, 16}
 */
-inline int128 mul_lo(basic_int32x4 a, basic_int32x4 b)
+inline int128 mul_lo(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::mul(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_mullo_epi32(a, b);
 #elif SIMDPP_USE_SSE2
-    basic_int32x4 a1, b1;
+    gint32x4 a1, b1;
     a1 = move_l<1>(a);
     b1 = move_l<1>(b);
     a = _mm_mul_epu32(a, b);
@@ -214,7 +214,7 @@ inline int128 mul_lo(basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-inline basic_int32x8 mul_lo(basic_int32x8 a, basic_int32x8 b)
+inline gint32x8 mul_lo(gint32x8 a, gint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_mullo_epi32(a, b);

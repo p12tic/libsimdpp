@@ -100,7 +100,7 @@ void v256_store_first(P* p, V a, unsigned n)
     @par 256-bit version:
     @a p must be aligned to 32 bytes.
 */
-inline void store_first(void* p, basic_int8x16 a, unsigned n)
+inline void store_first(void* p, gint8x16 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -111,49 +111,49 @@ inline void store_first(void* p, basic_int8x16 a, unsigned n)
                                        0,0,0,0,0,0,0,0,
                                        0,0,0,0,0,0,0,0};
 
-    basic_int8x16 mask = load_u(mask, mask_d + 16 - n);
-    basic_int8x16 old = load(old, p);
+    gint8x16 mask = load_u(mask, mask_d + 16 - n);
+    gint8x16 old = load(old, p);
     a = blend(a, old, mask);
     store(p, a);
 #endif
 }
 
-inline void store_first(void* p, basic_int8x32 a, unsigned n)
+inline void store_first(void* p, gint8x32 a, unsigned n)
 {
     detail::v256_store_first<16>(reinterpret_cast<char*>(p), a, n);
 }
 
-inline void store_first(void* p, basic_int16x8 a, unsigned n)
+inline void store_first(void* p, gint16x8 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    store_first(p, (basic_int8x16)a, n*2);
+    store_first(p, (gint8x16)a, n*2);
 #endif
 }
 
-inline void store_first(void* p, basic_int16x16 a, unsigned n)
+inline void store_first(void* p, gint16x16 a, unsigned n)
 {
     detail::v256_store_first<8>(reinterpret_cast<char*>(p), a, n);
 }
 
-inline void store_first(void* p, basic_int32x4 a, unsigned n)
+inline void store_first(void* p, gint32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    store_first(p, (basic_int8x16)a, n*4);
+    store_first(p, (gint8x16)a, n*4);
 #endif
 }
 
-inline void store_first(void* p, basic_int32x8 a, unsigned n)
+inline void store_first(void* p, gint32x8 a, unsigned n)
 {
     detail::v256_store_first<4>(reinterpret_cast<char*>(p), a, n);
 }
 
-inline void store_first(void* p, basic_int64x2 a, unsigned n)
+inline void store_first(void* p, gint64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -175,7 +175,7 @@ inline void store_first(void* p, basic_int64x2 a, unsigned n)
 #endif
 }
 
-inline void store_first(void* p, basic_int64x4 a, unsigned n)
+inline void store_first(void* p, gint64x4 a, unsigned n)
 {
     detail::v256_store_first<2>(reinterpret_cast<char*>(p), a, n);
 }

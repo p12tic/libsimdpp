@@ -52,7 +52,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline basic_int8x16 sub(basic_int8x16 a, basic_int8x16 b)
+inline gint8x16 sub(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
@@ -65,7 +65,7 @@ inline basic_int8x16 sub(basic_int8x16 a, basic_int8x16 b)
 #endif
 }
 
-inline basic_int8x32 sub(basic_int8x32 a, basic_int8x32 b)
+inline gint8x32 sub(gint8x32 a, gint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi8(a, b);
@@ -87,7 +87,7 @@ inline basic_int8x32 sub(basic_int8x32 a, basic_int8x32 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline basic_int16x8 sub(basic_int16x8 a, basic_int16x8 b)
+inline gint16x8 sub(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
@@ -100,7 +100,7 @@ inline basic_int16x8 sub(basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-inline basic_int16x16 sub(basic_int16x16 a, basic_int16x16 b)
+inline gint16x16 sub(gint16x16 a, gint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi16(a, b);
@@ -122,7 +122,7 @@ inline basic_int16x16 sub(basic_int16x16 a, basic_int16x16 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline basic_int32x4 sub(basic_int32x4 a, basic_int32x4 b)
+inline gint32x4 sub(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
@@ -135,7 +135,7 @@ inline basic_int32x4 sub(basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-inline basic_int32x8 sub(basic_int32x8 a, basic_int32x8 b)
+inline gint32x8 sub(gint32x8 a, gint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi32(a, b);
@@ -161,7 +161,7 @@ inline basic_int32x8 sub(basic_int32x8 a, basic_int32x8 b)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 10-11}
 */
-inline basic_int64x2 sub(basic_int64x2 a, basic_int64x2 b)
+inline gint64x2 sub(gint64x2 a, gint64x2 b)
 {
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
@@ -181,7 +181,7 @@ inline basic_int64x2 sub(basic_int64x2 a, basic_int64x2 b)
 #endif
 }
 
-inline basic_int64x4 sub(basic_int64x4 a, basic_int64x4 b)
+inline gint64x4 sub(gint64x4 a, gint64x4 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_sub_epi64(a, b);

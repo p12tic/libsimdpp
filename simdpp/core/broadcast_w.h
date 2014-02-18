@@ -60,22 +60,22 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int8x16 broadcast_w(basic_int8x16 a)
+gint8x16 broadcast_w(gint8x16 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int8x32 broadcast_w(basic_int8x32 a)
+gint8x32 broadcast_w(gint8x32 a)
 {
     static_assert(s < 32, "Access out of bounds");
 #if SIMDPP_USE_AVX2
-    basic_int8x16 lo;
+    gint8x16 lo;
     lo = s < 16 ? sse::extract_lo(a) : sse::extract_hi(a);
     lo = move_l<s % 16>(lo);
     return _mm256_broadcastb_epi8(lo);
 #else
-    basic_int8x16 p = a[s/16];
+    gint8x16 p = a[s/16];
     p = broadcast<s%16>(p);
     return {p, p};
 #endif
@@ -101,22 +101,22 @@ basic_int8x32 broadcast_w(basic_int8x32 a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int16x8 broadcast_w(basic_int16x8 a)
+gint16x8 broadcast_w(gint16x8 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int16x16 broadcast_w(basic_int16x16 a)
+gint16x16 broadcast_w(gint16x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
 #if SIMDPP_USE_AVX2
-    basic_int16x8 lo;
+    gint16x8 lo;
     lo = s < 8 ? sse::extract_lo(a) : sse::extract_hi(a);
     lo = move_l<s % 8>(lo);
     return _mm256_broadcastw_epi16(lo);
 #else
-    basic_int16x8 p = a[s/8];
+    gint16x8 p = a[s/8];
     p = broadcast<s%8>(p);
     return {p, p};
 #endif
@@ -137,13 +137,13 @@ basic_int16x16 broadcast_w(basic_int16x16 a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s>
-basic_int32x4 broadcast_w(basic_int32x4 a)
+gint32x4 broadcast_w(gint32x4 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int32x8 broadcast_w(basic_int32x8 a)
+gint32x8 broadcast_w(gint32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_AVX2
@@ -151,7 +151,7 @@ basic_int32x8 broadcast_w(basic_int32x8 a)
     a = detail::shuffle128<s/4, s/4>(a, a);
     return a;
 #else
-    basic_int32x4 p = a[s/4];
+    gint32x4 p = a[s/4];
     p = broadcast<s%4>(p);
     return {p, p};
 #endif
@@ -174,19 +174,19 @@ basic_int32x8 broadcast_w(basic_int32x8 a)
     @icost{ALTIVEC, 1-2}
 */
 template<unsigned s>
-basic_int64x2 broadcast_w(basic_int64x2 a)
+gint64x2 broadcast_w(gint64x2 a)
 {
     return broadcast<s>(a);
 }
 
 template<unsigned s>
-basic_int64x4 broadcast_w(basic_int64x4 a)
+gint64x4 broadcast_w(gint64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
 #else
-    basic_int64x2 p = a[s/2];
+    gint64x2 p = a[s/2];
     p = broadcast<s%2>(p);
     return {p, p};
 #endif

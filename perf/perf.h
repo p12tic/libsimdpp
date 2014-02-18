@@ -44,22 +44,22 @@ using namespace simdpp;
 
 // The following functions attempt to perform an operation on a and b such that
 // the compiler is unable to perform any optimizations
-inline basic_int8x16 isolate(basic_int8x16 a, basic_int8x16 b)
+inline gint8x16 isolate(gint8x16 a, gint8x16 b)
 {
     return avg((uint16x8)a, (uint16x8)b);
 }
 
-inline basic_int16x8 isolate(basic_int16x8 a, basic_int16x8 b)
+inline gint16x8 isolate(gint16x8 a, gint16x8 b)
 {
     return avg((uint16x8)a, (uint16x8)b);
 }
 
-inline basic_int32x4 isolate(basic_int32x4 a, basic_int32x4 b)
+inline gint32x4 isolate(gint32x4 a, gint32x4 b)
 {
     return avg((uint16x8)a, (uint16x8)b);
 }
 
-inline basic_int64x2 isolate(basic_int64x2 a, basic_int64x2 b)
+inline gint64x2 isolate(gint64x2 a, gint64x2 b)
 {
     return avg((uint16x8)a, (uint16x8)b);
 }

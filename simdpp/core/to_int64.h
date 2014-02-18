@@ -66,7 +66,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2}
     @icost{ALTIVEC, 3-4}
 */
-inline basic_int64x2 to_int64x2(int32x4 a)
+inline gint64x2 to_int64x2(int32x4 a)
 {
 #if SIMDPP_USE_NULL
     int64x2 r;
@@ -90,7 +90,7 @@ inline basic_int64x2 to_int64x2(int32x4 a)
 #endif
 }
 
-inline basic_int64x4 to_int64x4(int32x8 a)
+inline gint64x4 to_int64x4(int32x8 a)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;
@@ -137,7 +137,7 @@ inline basic_int64x4 to_int64x4(int32x8 a)
     @icost{SSE2-AVX, 3}
     @icost{NEON, ALTIVEC, 2}
 */
-inline basic_int64x2 to_int64x2(uint32x4 a)
+inline gint64x2 to_int64x2(uint32x4 a)
 {
 #if SIMDPP_USE_NULL
     int64x2 r;
@@ -155,7 +155,7 @@ inline basic_int64x2 to_int64x2(uint32x4 a)
 #endif
 }
 
-inline basic_int64x4 to_int64x4(uint32x8 a)
+inline gint64x4 to_int64x4(uint32x8 a)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;

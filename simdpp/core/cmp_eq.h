@@ -59,7 +59,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int8x16 cmp_eq(basic_int8x16 a, basic_int8x16 b)
+inline mask_int8x16 cmp_eq(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -72,7 +72,7 @@ inline mask_int8x16 cmp_eq(basic_int8x16 a, basic_int8x16 b)
 #endif
 }
 
-inline mask_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
+inline mask_int8x32 cmp_eq(gint8x32 a, gint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi8(a, b);
@@ -94,7 +94,7 @@ inline mask_int8x32 cmp_eq(basic_int8x32 a, basic_int8x32 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int16x8 cmp_eq(basic_int16x8 a, basic_int16x8 b)
+inline mask_int16x8 cmp_eq(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -107,7 +107,7 @@ inline mask_int16x8 cmp_eq(basic_int16x8 a, basic_int16x8 b)
 #endif
 }
 
-inline mask_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
+inline mask_int16x16 cmp_eq(gint16x16 a, gint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi16(a, b);
@@ -129,7 +129,7 @@ inline mask_int16x16 cmp_eq(basic_int16x16 a, basic_int16x16 b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int32x4 cmp_eq(basic_int32x4 a, basic_int32x4 b)
+inline mask_int32x4 cmp_eq(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -142,7 +142,7 @@ inline mask_int32x4 cmp_eq(basic_int32x4 a, basic_int32x4 b)
 #endif
 }
 
-inline mask_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
+inline mask_int32x8 cmp_eq(gint32x8 a, gint32x8 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi32(a, b);
@@ -173,7 +173,7 @@ inline mask_int32x8 cmp_eq(basic_int32x8 a, basic_int32x8 b)
     @icost{NEON, 6}
     @icost{ALTIVEC, 6-7}
 */
-inline mask_int64x2 cmp_eq(basic_int64x2 a, basic_int64x2 b)
+inline mask_int64x2 cmp_eq(gint64x2 a, gint64x2 b)
 {
 #if SIMDPP_USE_NULL
     return null::cmp_eq(a, b);
@@ -209,7 +209,7 @@ inline mask_int64x2 cmp_eq(basic_int64x2 a, basic_int64x2 b)
 #endif
 }
 
-inline mask_int64x4 cmp_eq(basic_int64x4 a, basic_int64x4 b)
+inline mask_int64x4 cmp_eq(gint64x4 a, gint64x4 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cmpeq_epi64(a, b);

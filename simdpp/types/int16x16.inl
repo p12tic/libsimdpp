@@ -150,12 +150,12 @@ inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, ui
 #endif
 }
 
-inline mask_int16x16::operator basic_int16x16() const
+inline mask_int16x16::operator gint16x16() const
 {
 #if SIMDPP_USE_AVX2
     return d_;
 #else
-    return basic_int16x16(m_[0], m_[1]);
+    return gint16x16(m_[0], m_[1]);
 #endif
 }
 

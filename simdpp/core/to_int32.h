@@ -54,7 +54,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
     @icost{SSE2-SSSE3, 2}
 */
-inline basic_int32x4 to_int32x4(int16x8 a)
+inline gint32x4 to_int32x4(int16x8 a)
 {
 #if SIMDPP_USE_NULL
     int32x4 r;
@@ -88,7 +88,7 @@ inline basic_int32x4 to_int32x4(int16x8 a)
     @icost{SSE2-SSSE3, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-inline basic_int32x8 to_int32x8(int16x16 a)
+inline gint32x8 to_int32x8(int16x16 a)
 {
 #if SIMDPP_USE_NULL
     int32x8 r;
@@ -131,7 +131,7 @@ inline basic_int32x8 to_int32x8(int16x16 a)
     r3 = (uint32_t) a3
     @endcode
 */
-inline basic_int32x4 to_int32x4(uint16x8 a)
+inline gint32x4 to_int32x4(uint16x8 a)
 {
 #if SIMDPP_USE_NULL
     int32x4 r;
@@ -161,7 +161,7 @@ inline basic_int32x4 to_int32x4(uint16x8 a)
     @icost{SSE2-AVX, ALTIVEC, 2}
     @icost{NEON, 2}
 */
-inline basic_int32x8 to_int32x8(uint16x16 a)
+inline gint32x8 to_int32x8(uint16x16 a)
 {
 #if SIMDPP_USE_NULL
     uint32x8 r;
@@ -208,7 +208,7 @@ inline basic_int32x8 to_int32x8(uint16x16 a)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline basic_int32x4 to_int32x4(float32x4 a)
+inline gint32x4 to_int32x4(float32x4 a)
 {
 #if SIMDPP_USE_NULL
     return null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
@@ -229,7 +229,7 @@ inline basic_int32x4 to_int32x4(float32x4 a)
 #endif
 }
 
-inline basic_int32x8 to_int32x8(float32x8 a)
+inline gint32x8 to_int32x8(float32x8 a)
 {
 #if SIMDPP_USE_AVX
     return _mm256_cvttps_epi32(a);
@@ -275,7 +275,7 @@ inline basic_int32x8 to_int32x8(float32x8 a)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 3}
 */
-inline basic_int32x4 to_int32x4(float64x2 a)
+inline gint32x4 to_int32x4(float64x2 a)
 {
 #if SIMDPP_USE_NULL
     int32x4 r;
@@ -298,7 +298,7 @@ inline basic_int32x4 to_int32x4(float64x2 a)
 #endif
 }
 
-inline basic_int32x8 to_int32x8(float64x4 a)
+inline gint32x8 to_int32x8(float64x4 a)
 {
 #if SIMDPP_USE_NULL
     int32x8 r = int32x8::zero();

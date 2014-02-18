@@ -47,26 +47,26 @@ namespace detail {
 class not_implemented_proxy {
 public:
     operator int128() { return int128::zero(); }
-    operator basic_int8x16() { return int128::zero(); }
-    operator basic_int8x32() { return int256::zero(); }
+    operator gint8x16() { return int128::zero(); }
+    operator gint8x32() { return int256::zero(); }
     operator int8x16() { return int128::zero(); }
     operator int8x32() { return int256::zero(); }
     operator uint8x16() { return int128::zero(); }
     operator uint8x32() { return int256::zero(); }
-    operator basic_int16x8() { return int128::zero(); }
-    operator basic_int16x16() { return int256::zero(); }
+    operator gint16x8() { return int128::zero(); }
+    operator gint16x16() { return int256::zero(); }
     operator int16x8() { return int128::zero(); }
     operator int16x16() { return int256::zero(); }
     operator uint16x8() { return int128::zero(); }
     operator uint16x16() { return int256::zero(); }
-    operator basic_int32x4() { return int128::zero(); }
-    operator basic_int32x8() { return int256::zero(); }
+    operator gint32x4() { return int128::zero(); }
+    operator gint32x8() { return int256::zero(); }
     operator int32x4() { return int128::zero(); }
     operator int32x8() { return int256::zero(); }
     operator uint32x4() { return int128::zero(); }
     operator uint32x8() { return int256::zero(); }
-    operator basic_int64x2() { return int128::zero(); }
-    operator basic_int64x4() { return int256::zero(); }
+    operator gint64x2() { return int128::zero(); }
+    operator gint64x4() { return int256::zero(); }
     operator int64x2() { return int128::zero(); }
     operator int64x4() { return int256::zero(); }
     operator uint64x2() { return int128::zero(); }

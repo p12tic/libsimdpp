@@ -110,7 +110,7 @@ inline int128 copysign(int32x4 a, int32x4 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hadd2(basic_int16x8 a, basic_int16x8 b)
+inline int128 hadd2(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi16(a, b);
@@ -129,7 +129,7 @@ inline int128 hadd2(basic_int16x8 a, basic_int16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hadd2(basic_int32x4 a, basic_int32x4 b)
+inline int128 hadd2(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi32(a, b);
@@ -146,9 +146,9 @@ inline int128 hadd2(basic_int32x4 a, basic_int32x4 b)
     @endcode
     @icost{3}
 */
-inline int128 hadd2(basic_int64x2 a, basic_int64x2 b)
+inline int128 hadd2(gint64x2 a, gint64x2 b)
 {
-    basic_int64x2 ia, ib;
+    gint64x2 ia, ib;
     ia = zip_lo(a, b);
     ib = zip_hi(a, b);
     ia = add(ia, ib);
@@ -187,7 +187,7 @@ inline int128 hadds2(int16x8 a, int16x8 b)
     @unimp{SSE2, SSE3}
     @icost{3}
 */
-inline int128 hadd4(basic_int32x4 a, basic_int32x4 b, basic_int32x4 c, basic_int32x4 d)
+inline int128 hadd4(gint32x4 a, gint32x4 b, gint32x4 c, gint32x4 d)
 {
 #if SIMDPP_USE_SSSE3
     a = hadd2(a, b);
@@ -211,7 +211,7 @@ inline int128 hadd4(basic_int32x4 a, basic_int32x4 b, basic_int32x4 c, basic_int
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hsub2(basic_int16x8 a, basic_int16x8 b)
+inline int128 hsub2(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi16(a, b);
@@ -230,7 +230,7 @@ inline int128 hsub2(basic_int16x8 a, basic_int16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hsub2(basic_int32x4 a, basic_int32x4 b)
+inline int128 hsub2(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi32(a, b);
@@ -247,10 +247,10 @@ inline int128 hsub2(basic_int32x4 a, basic_int32x4 b)
     @endcode
     @icost{3}
 */
-inline int128 hsub2(basic_int64x2 a, basic_int64x2 b)
+inline int128 hsub2(gint64x2 a, gint64x2 b)
 {
 #if SIMDPP_USE_SSSE3
-    basic_int64x2 ia, ib;
+    gint64x2 ia, ib;
     ia = zip_lo(a, b);
     ib = zip_hi(a, b);
     ia = sub(ia, ib);

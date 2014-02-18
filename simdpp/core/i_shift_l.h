@@ -74,7 +74,7 @@ inline uint8x32 shift_r(uint8x32, unsigned);
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
-inline basic_int8x16 shift_l(basic_int8x16 a, unsigned count)
+inline gint8x16 shift_l(gint8x16 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return null::shift_l(a, count);
@@ -97,7 +97,7 @@ inline basic_int8x16 shift_l(basic_int8x16 a, unsigned count)
 #endif
 }
 
-inline basic_int8x32 shift_l(basic_int8x32 a, unsigned count)
+inline gint8x32 shift_l(gint8x32 a, unsigned count)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 mask, a16;
@@ -133,7 +133,7 @@ inline basic_int8x32 shift_l(basic_int8x32 a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
-inline basic_int16x8 shift_l(basic_int16x8 a, unsigned count)
+inline gint16x8 shift_l(gint16x8 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return null::shift_l(a, count);
@@ -148,7 +148,7 @@ inline basic_int16x8 shift_l(basic_int16x8 a, unsigned count)
 #endif
 }
 
-inline basic_int16x16 shift_l(basic_int16x16 a, unsigned count)
+inline gint16x16 shift_l(gint16x16 a, unsigned count)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi16(a, count);
@@ -176,7 +176,7 @@ inline basic_int16x16 shift_l(basic_int16x16 a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
-inline basic_int32x4 shift_l(basic_int32x4 a, unsigned count)
+inline gint32x4 shift_l(gint32x4 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return null::shift_l(a, count);
@@ -191,7 +191,7 @@ inline basic_int32x4 shift_l(basic_int32x4 a, unsigned count)
 #endif
 }
 
-inline basic_int32x8 shift_l(basic_int32x8 a, unsigned count)
+inline gint32x8 shift_l(gint32x8 a, unsigned count)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi32(a, count);
@@ -219,7 +219,7 @@ inline basic_int32x8 shift_l(basic_int32x8 a, unsigned count)
     @icost{NEON, 2-3}
     @unimp{ALTIVEC}
 */
-inline basic_int64x2 shift_l(basic_int64x2 a, unsigned count)
+inline gint64x2 shift_l(gint64x2 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return null::shift_l(a, count);
@@ -233,7 +233,7 @@ inline basic_int64x2 shift_l(basic_int64x2 a, unsigned count)
 #endif
 }
 
-inline basic_int64x4 shift_l(basic_int64x4 a, unsigned count)
+inline gint64x4 shift_l(gint64x4 a, unsigned count)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi64(a, count);
@@ -244,13 +244,13 @@ inline basic_int64x4 shift_l(basic_int64x4 a, unsigned count)
 /// @}
 
 template<unsigned count>
-inline basic_int8x16 shift_l(basic_int8x16);
+inline gint8x16 shift_l(gint8x16);
 template<unsigned count>
-inline basic_int16x8 shift_l(basic_int16x8);
+inline gint16x8 shift_l(gint16x8);
 template<unsigned count>
-inline basic_int32x4 shift_l(basic_int32x4);
+inline gint32x4 shift_l(gint32x4);
 template<unsigned count>
-inline basic_int64x2 shift_l(basic_int64x2);
+inline gint64x2 shift_l(gint64x2);
 
 namespace detail {
 
@@ -265,7 +265,7 @@ V v256_shift_l(V a)
 }
 
 template<unsigned count>
-basic_int8x16 shift_l_8(basic_int8x16 a)
+gint8x16 shift_l_8(gint8x16 a)
 {
 #if SIMDPP_USE_SSE2
     uint8x16 mask = detail::shift_u8_mask<8-count, uint8x16>()();
@@ -278,7 +278,7 @@ basic_int8x16 shift_l_8(basic_int8x16 a)
 }
 
 template<unsigned count>
-basic_int8x32 shift_l_8(basic_int8x32 a)
+gint8x32 shift_l_8(gint8x32 a)
 {
 #if SIMDPP_USE_SSE2
     uint8x32 mask = detail::shift_u8_mask<8-count, uint8x32>()();
@@ -313,7 +313,7 @@ basic_int8x32 shift_l_8(basic_int8x32 a)
     @icost{AVX2,NEON, 2-3}
 */
 template<unsigned count>
-basic_int8x16 shift_l(basic_int8x16 a)
+gint8x16 shift_l(gint8x16 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
@@ -335,7 +335,7 @@ basic_int8x16 shift_l(basic_int8x16 a)
 }
 
 template<unsigned count>
-inline basic_int8x32 shift_l(basic_int8x32 a)
+inline gint8x32 shift_l(gint8x32 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
@@ -362,7 +362,7 @@ inline basic_int8x32 shift_l(basic_int8x32 a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
-basic_int16x8 shift_l(basic_int16x8 a)
+gint16x8 shift_l(gint16x8 a)
 {
     static_assert(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
@@ -379,7 +379,7 @@ basic_int16x8 shift_l(basic_int16x8 a)
 }
 
 template<unsigned count>
-inline basic_int16x16 shift_l(basic_int16x16 a)
+inline gint16x16 shift_l(gint16x16 a)
 {
     static_assert(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
@@ -406,7 +406,7 @@ inline basic_int16x16 shift_l(basic_int16x16 a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned count>
-basic_int32x4 shift_l(basic_int32x4 a)
+gint32x4 shift_l(gint32x4 a)
 {
     static_assert(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
@@ -423,7 +423,7 @@ basic_int32x4 shift_l(basic_int32x4 a)
 }
 
 template<unsigned count>
-inline basic_int32x8 shift_l(basic_int32x8 a)
+inline gint32x8 shift_l(gint32x8 a)
 {
     static_assert(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
@@ -449,7 +449,7 @@ inline basic_int32x8 shift_l(basic_int32x8 a)
     @unimp{ALTIVEC}
 */
 template<unsigned count>
-basic_int64x2 shift_l(basic_int64x2 a)
+gint64x2 shift_l(gint64x2 a)
 {
     static_assert(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
@@ -465,7 +465,7 @@ basic_int64x2 shift_l(basic_int64x2 a)
 }
 
 template<unsigned count>
-inline basic_int64x4 shift_l(basic_int64x4 a)
+inline gint64x4 shift_l(gint64x4 a)
 {
     static_assert(count <= 64, "Shift out of bounds");
     if (count == 0) return a;

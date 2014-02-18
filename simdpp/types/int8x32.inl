@@ -193,12 +193,12 @@ inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
 #endif
 }
 
-inline mask_int8x32::operator basic_int8x32() const
+inline mask_int8x32::operator gint8x32() const
 {
 #if SIMDPP_USE_AVX2
     return d_;
 #else
-    return basic_int8x32(m_[0], m_[1]);
+    return gint8x32(m_[0], m_[1]);
 #endif
 }
 

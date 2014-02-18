@@ -81,7 +81,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-int128 permute(basic_int16x8 a)
+int128 permute(gint16x8 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -100,7 +100,7 @@ int128 permute(basic_int16x8 a)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-basic_int16x16 permute(basic_int16x16 a)
+gint16x16 permute(gint16x16 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
@@ -138,7 +138,7 @@ basic_int16x16 permute(basic_int16x16 a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-basic_int32x4 permute(basic_int32x4 a)
+gint32x4 permute(gint32x4 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -155,7 +155,7 @@ basic_int32x4 permute(basic_int32x4 a)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-basic_int32x8 permute(basic_int32x8 a)
+gint32x8 permute(gint32x8 a)
 {
 #if SIMDPP_USE_AVX2
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
@@ -231,7 +231,7 @@ float32x8 permute(float32x8 a)
     @icost{SSE2-AVX, 2}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-basic_int64x4 permute(basic_int64x4 a)
+gint64x4 permute(gint64x4 a)
 {
 #if SIMDPP_USE_NULL
     uint64x4 r;

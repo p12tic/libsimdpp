@@ -63,7 +63,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
     @icost{XOP, 2}
 */
-inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 mask)
+inline gint8x16 blend(gint8x16 on, gint8x16 off, gint8x16 mask)
 {
 #if SIMDPP_USE_NULL
     return null::blend(on, off, mask);
@@ -87,7 +87,7 @@ inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, basic_int8x16 ma
 #endif
 }
 
-inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, mask_int8x16 mask)
+inline gint8x16 blend(gint8x16 on, gint8x16 off, mask_int8x16 mask)
 {
 #if SIMDPP_USE_NULL
     return null::blend_mask(on, off, mask);
@@ -96,7 +96,7 @@ inline basic_int8x16 blend(basic_int8x16 on, basic_int8x16 off, mask_int8x16 mas
 #endif
 }
 
-inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, basic_int8x32 mask)
+inline gint8x32 blend(gint8x32 on, gint8x32 off, gint8x32 mask)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
@@ -105,7 +105,7 @@ inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, basic_int8x32 ma
 #endif
 }
 
-inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, mask_int8x32 mask)
+inline gint8x32 blend(gint8x32 on, gint8x32 off, mask_int8x32 mask)
 {
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
@@ -132,12 +132,12 @@ inline basic_int8x32 blend(basic_int8x32 on, basic_int8x32 off, mask_int8x32 mas
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, basic_int16x8 mask)
+inline gint16x8 blend(gint16x8 on, gint16x8 off, gint16x8 mask)
 {
     return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
 }
 
-inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, basic_int16x16 mask)
+inline gint16x16 blend(gint16x16 on, gint16x16 off, gint16x16 mask)
 {
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
@@ -146,7 +146,7 @@ inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, basic_int16x1
 #endif
 }
 
-inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, mask_int16x8 mask)
+inline gint16x8 blend(gint16x8 on, gint16x8 off, mask_int16x8 mask)
 {
 #if SIMDPP_USE_NULL
     return null::blend_mask(on, off, mask);
@@ -155,7 +155,7 @@ inline basic_int16x8 blend(basic_int16x8 on, basic_int16x8 off, mask_int16x8 mas
 #endif
 }
 
-inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, mask_int16x16 mask)
+inline gint16x16 blend(gint16x16 on, gint16x16 off, mask_int16x16 mask)
 {
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
@@ -182,12 +182,12 @@ inline basic_int16x16 blend(basic_int16x16 on, basic_int16x16 off, mask_int16x16
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, basic_int32x4 mask)
+inline gint32x4 blend(gint32x4 on, gint32x4 off, gint32x4 mask)
 {
     return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
 }
 
-inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, basic_int32x8 mask)
+inline gint32x8 blend(gint32x8 on, gint32x8 off, gint32x8 mask)
 {
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
@@ -196,7 +196,7 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, basic_int32x8 ma
 #endif
 }
 
-inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, mask_int32x4 mask)
+inline gint32x4 blend(gint32x4 on, gint32x4 off, mask_int32x4 mask)
 {
 #if SIMDPP_USE_NULL
     return null::blend_mask(on, off, mask);
@@ -205,7 +205,7 @@ inline basic_int32x4 blend(basic_int32x4 on, basic_int32x4 off, mask_int32x4 mas
 #endif
 }
 
-inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, mask_int32x8 mask)
+inline gint32x8 blend(gint32x8 on, gint32x8 off, mask_int32x8 mask)
 {
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
@@ -232,12 +232,12 @@ inline basic_int32x8 blend(basic_int32x8 on, basic_int32x8 off, mask_int32x8 mas
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, basic_int64x2 mask)
+inline gint64x2 blend(gint64x2 on, gint64x2 off, gint64x2 mask)
 {
     return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
 }
 
-inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, basic_int64x4 mask)
+inline gint64x4 blend(gint64x4 on, gint64x4 off, gint64x4 mask)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
@@ -246,7 +246,7 @@ inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, basic_int64x4 ma
 #endif
 }
 
-inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, mask_int64x2 mask)
+inline gint64x2 blend(gint64x2 on, gint64x2 off, mask_int64x2 mask)
 {
 #if SIMDPP_USE_NULL
     return null::blend_mask(on, off, mask);
@@ -255,7 +255,7 @@ inline basic_int64x2 blend(basic_int64x2 on, basic_int64x2 off, mask_int64x2 mas
 #endif
 }
 
-inline basic_int64x4 blend(basic_int64x4 on, basic_int64x4 off, mask_int64x4 mask)
+inline gint64x4 blend(gint64x4 on, gint64x4 off, mask_int64x4 mask)
 {
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
