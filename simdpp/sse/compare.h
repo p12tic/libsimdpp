@@ -34,6 +34,8 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/bit_and.h>
+#include <simdpp/core/cmp_eq.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -106,8 +108,8 @@ inline bool test_zero(int128 a)
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(int8x16::zero(), a);
 #elif SIMDPP_USE_SSE2
-    int8x16 r = cmp_eq((int8x16)a, int8x16::zero());
-    return (_mm_movemask_epi8(r) == 0xffff);
+    mask_int8x16 r = cmp_eq((int8x16)a, int8x16::zero());
+    return (_mm_movemask_epi8(int8x16(r)) == 0xffff);
 #endif
 }
 
@@ -123,9 +125,11 @@ inline bool test_zero(int128 a, int128 mask)
 #if SIMDPP_USE_SSE4_1
     return _mm_testz_si128(a, mask);
 #elif SIMDPP_USE_SSE2
-    a = bit_and(a, mask);
-    int8x16 r = cmp_eq((int8x16)a, int8x16::zero());
-    return (_mm_movemask_epi8(r) == 0xffff);
+    int8x16 a1, mask1;
+    a1 = a;  mask1 = mask;
+    a1 = bit_and(a1, mask1);
+    mask_int8x16 r = cmp_eq(a1, int8x16::zero());
+    return (_mm_movemask_epi8(int8x16(r)) == 0xffff);
 #endif
 }
 
@@ -140,8 +144,8 @@ inline bool test_ones(int128 a)
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(a, int8x16::ones());
 #elif SIMDPP_USE_SSE2
-    int8x16 r = cmp_eq((int8x16)a, int8x16::ones());
-    return (_mm_movemask_epi8(r) == 0xffff);
+    mask_int8x16 r = cmp_eq((int8x16)a, int8x16::ones());
+    return (_mm_movemask_epi8(int8x16(r)) == 0xffff);
 #endif
 }
 
@@ -157,9 +161,12 @@ inline bool test_ones(int128 a, int128 mask)
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(a, mask);
 #elif SIMDPP_USE_SSE2
-    a = bit_andnot(mask, a);
-    int8x16 r = cmp_eq((int8x16)a, int8x16::zero());
-    return (_mm_movemask_epi8(r) == 0xffff);
+    int8x16 a1, mask1;
+    a1 = a;
+    mask1 = mask;
+    a1 = bit_andnot(mask1, a1);
+    mask_int8x16 r = cmp_eq(a, int8x16::zero());
+    return (_mm_movemask_epi8(int8x16(r)) == 0xffff);
 #endif
 }
 
