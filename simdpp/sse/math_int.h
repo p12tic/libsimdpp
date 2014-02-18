@@ -263,12 +263,12 @@ inline int128 hsub2(gint64x2 a, gint64x2 b)
 /** Subtracts and saturates values in adjacent pairs of two signed int16x8 vectors
 
     @code
-    r0 = signed_saturate(a0 + a1)
+    r0 = signed_saturate(a0 - a1)
     ...
-    r3 = signed_saturate(a6 + a7)
-    r4 = signed_saturate(b0 + b1)
+    r3 = signed_saturate(a6 - a7)
+    r4 = signed_saturate(b0 - b1)
     ...
-    r7 = signed_saturate(b6 + b7)
+    r7 = signed_saturate(b6 - b7)
     @endcode
     @unimp{SSE2, SSE3}
 */
