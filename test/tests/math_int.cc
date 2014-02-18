@@ -139,10 +139,8 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER2(tc, uint16x16, avg, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint16x16, avg_trunc, s, 2);
 
-        TEST_ALL_COMB_HELPER1_T(tc, int32x8, int16x16, mull_lo, s, 2);
-        TEST_ALL_COMB_HELPER1_T(tc, int32x8, int16x16, mull_hi, s, 2);
-        TEST_ALL_COMB_HELPER1_T(tc, uint32x8, uint16x16, mull_lo, s, 2);
-        TEST_ALL_COMB_HELPER1_T(tc, uint32x8, uint16x16, mull_hi, s, 2);
+        TEST_ALL_COMB_HELPER1_T(tc, int32<16>, int16x16, mull, s, 2);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32<16>, uint16x16, mull, s, 2);
 
         TEST_ARRAY_HELPER1(tc, int16x16, neg, s);
         TEST_ARRAY_HELPER1(tc, int16x16, abs, s);
@@ -220,9 +218,8 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER2(tc, uint32x8, avg_trunc, s, 4);
 
 #if !(SIMDPP_USE_ALTIVEC)
-        TEST_ALL_COMB_HELPER1_T(tc, uint64x4, uint32x8, mull_lo, s, 4);
-        TEST_ALL_COMB_HELPER1_T(tc, uint64x4, uint32x8, mull_hi, s, 4);
-        TEST_ALL_COMB_HELPER1_T(tc, uint64x4, uint32x8, mul_lo, s, 4);
+        TEST_ALL_COMB_HELPER1_T(tc, uint64<8>, uint32x8, mull, s, 4);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32x8, uint32x8, mul_lo, s, 4);
 #endif
 
         TEST_ARRAY_HELPER1(tc, int32x8, neg, s);
