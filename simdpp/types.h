@@ -46,5 +46,11 @@
 #include <simdpp/types/int64x4.h>
 #include <simdpp/types/float32x8.h>
 #include <simdpp/types/float64x4.h>
+#include <simdpp/types/int8.h>
+#include <simdpp/types/int16.h>
+#include <simdpp/types/int32.h>
+#include <simdpp/types/int64.h>
+#include <simdpp/types/float32.h>
+#include <simdpp/types/float64.h>
 
 #endif
