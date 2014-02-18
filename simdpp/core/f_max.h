@@ -73,7 +73,7 @@ inline float32x8 max(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_max_ps(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, max, a, b);
 #endif
 }
 /// @}
@@ -110,7 +110,7 @@ inline float64x4 max(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_max_pd(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, max, a, b);
 #endif
 }
 /// @}

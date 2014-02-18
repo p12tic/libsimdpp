@@ -41,6 +41,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX2
+
 inline gint32<8>::gint32(const gint8x32& d) { *this = bit_cast<gint32x8>(d); }
 inline gint32<8>::gint32(const gint16x16& d){ *this = bit_cast<gint32x8>(d); }
 inline gint32<8>::gint32(const gint64x4& d) { *this = bit_cast<gint32x8>(d); }
@@ -68,16 +70,7 @@ inline uint32<8>& uint32<8>::operator=(const gint64x4& d) { gint32x8::operator=(
 
 inline gint32<8>::gint32(const float32x8& d)
 {
-#if SIMDPP_USE_AVX2
-    operator=(_mm256_castps_si256(d));
-#elif SIMDPP_USE_AVX
-    __m256i d1 = _mm256_castps_si256(d);
-    u32(0) = _mm256_castsi256_si128(d1);
-    u32(1) = _mm256_extractf128_si256(d1, 1);
-#else
-    u32(0) = d[0];
-    u32(1) = d[1];
-#endif
+    *this = bit_cast<gint32x8>(d);
 }
 
 inline gint32x8 gint32x8::zero()
@@ -123,23 +116,13 @@ inline int32x8 int32x8::make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v
 
 inline uint32x8 uint32x8::load_broadcast(const uint32_t* v0)
 {
-#if SIMDPP_USE_AVX2
     return uint32x8::set_broadcast(*v0);
-#else
-    uint32x4 a = uint32x4::load_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline uint32x8 uint32x8::set_broadcast(uint32_t v0)
 {
-#if SIMDPP_USE_AVX2
     uint32x4 a = _mm_cvtsi32_si128(v0);
     return _mm256_broadcastd_epi32(a);
-#else
-    uint32x4 a = uint32x4::set_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline uint32x8 uint32x8::make_const(uint32_t v0)
@@ -160,22 +143,15 @@ inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint
 inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3,
                                      uint32_t v4, uint32_t v5, uint32_t v6, uint32_t v7)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_set_epi32(v7, v6, v5, v4, v3, v2, v1, v0);
-#else
-    return {uint32x4::make_const(v0, v1, v2, v3),
-            uint32x4::make_const(v4, v5, v6, v7)};
-#endif
 }
 
 inline mask_int32x8::operator gint32x8() const
 {
-#if SIMDPP_USE_AVX2
     return d_;
-#else
-    return gint32x8(m_[0], m_[1]);
-#endif
 }
+
+#endif // SIMDPP_USE_AVX2
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

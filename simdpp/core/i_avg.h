@@ -77,7 +77,7 @@ inline uint8x32 avg(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_avg_epu8(a, b);
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint8x32, avg, a, b);
 #endif
 }
 /// @}
@@ -131,7 +131,7 @@ inline int8x32 avg(int8x32 a, int8x32 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int8x32, avg, a, b);
 #endif
 }
 /// @}
@@ -168,7 +168,7 @@ inline uint16x16 avg(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_avg_epu16(a, b);
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint16x16, avg, a, b);
 #endif
 }
 /// @}
@@ -222,7 +222,7 @@ inline int16x16 avg(int16x16 a, int16x16 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int16x16, avg, a, b);
 #endif
 }
 /// @}
@@ -278,7 +278,7 @@ inline uint32x8 avg(uint32x8 a, uint32x8 b)
     x1 = add(x1, round);
     return x1;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, avg, a, b);
 #endif
 }
 /// @}
@@ -333,7 +333,7 @@ inline int32x8 avg(int32x8 a, int32x8 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg(a[0], b[0]), avg(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int32x8, avg, a, b);
 #endif
 }
 /// @}

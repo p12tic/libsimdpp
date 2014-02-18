@@ -72,7 +72,7 @@ inline mask_float32x8 isnan(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, a, _CMP_UNORD_Q);
 #else
-    return {isnan(a[0]), isnan(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_float32x8, isnan, a);
 #endif
 }
 /// @}
@@ -109,7 +109,7 @@ inline mask_float64x4 isnan(float64x4 a)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, a, _CMP_UNORD_Q);
 #else
-    return {isnan(a[0]), isnan(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_float64x4, isnan, a);
 #endif
 }
 /// @}

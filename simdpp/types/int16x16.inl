@@ -40,6 +40,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX2
+
 inline gint16<16>::gint16(const gint8x32& d) { *this = bit_cast<gint16x16>(d); }
 inline gint16<16>::gint16(const gint32x8& d) { *this = bit_cast<gint16x16>(d); }
 inline gint16<16>::gint16(const gint64x4& d) { *this = bit_cast<gint16x16>(d); }
@@ -117,23 +119,13 @@ inline int16x16 int16x16::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t
 
 inline uint16x16 uint16x16::load_broadcast(const uint16_t* v0)
 {
-#if SIMDPP_USE_AVX2
     return uint16x16::set_broadcast(*v0);
-#else
-    uint16x8 a = uint16x8::load_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline uint16x16 uint16x16::set_broadcast(uint16_t v0)
 {
-#if SIMDPP_USE_AVX2
     gint16x8 a = _mm_cvtsi32_si128(v0);
     return _mm256_broadcastw_epi16(a);
-#else
-    uint16x8 a = uint16x8::set_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline uint16x16 uint16x16::make_const(uint16_t v0)
@@ -166,23 +158,16 @@ inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, ui
                                        uint16_t v8, uint16_t v9, uint16_t v10, uint16_t v11,
                                        uint16_t v12, uint16_t v13, uint16_t v14, uint16_t v15)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_set_epi16(v15, v14, v13, v12, v11, v10, v9, v8,
                             v7, v6, v5, v4, v3, v2, v1, v0);
-#else
-    return {uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7),
-            uint16x8::make_const(v8, v9, v10, v11, v12, v13, v14, v15)};
-#endif
 }
 
 inline mask_int16x16::operator gint16x16() const
 {
-#if SIMDPP_USE_AVX2
     return d_;
-#else
-    return gint16x16(m_[0], m_[1]);
-#endif
 }
+
+#endif // SIMDPP_USE_AVX2
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

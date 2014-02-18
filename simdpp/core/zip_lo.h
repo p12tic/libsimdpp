@@ -75,7 +75,7 @@ inline gint8x32 zip_lo(gint8x32 a, gint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi8(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, zip_lo, a, b)
 #endif
 }
 
@@ -97,7 +97,7 @@ inline gint16x16 zip_lo(gint16x16 a, gint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi16(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint16x16, zip_lo, a, b)
 #endif
 }
 
@@ -119,7 +119,7 @@ inline gint32x8 zip_lo(gint32x8 a, gint32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi32(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, zip_lo, a, b)
 #endif
 }
 
@@ -142,7 +142,7 @@ inline gint64x4 zip_lo(gint64x4 a, gint64x4 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpacklo_epi64(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint64x4, zip_lo, a, b)
 #endif
 }
 /// @}
@@ -179,7 +179,7 @@ inline float32x8 zip_lo(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpacklo_ps(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, zip_lo, a, b)
 #endif
 }
 
@@ -200,7 +200,7 @@ inline float64x4 zip_lo(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpacklo_pd(a, b);
 #else
-    return {zip_lo(a[0], b[0]), zip_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, zip_lo, a, b)
 #endif
 }
 /// @}

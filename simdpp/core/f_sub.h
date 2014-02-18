@@ -70,7 +70,7 @@ inline float32x8 sub(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_sub_ps(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, sub, a, b);
 #endif
 }
 /// @}
@@ -105,7 +105,7 @@ inline float64x4 sub(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_sub_pd(a, b);
 #else
-    return {sub(a[0], b[0]), sub(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, sub, a, b);
 #endif
 }
 /// @}

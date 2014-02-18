@@ -70,7 +70,7 @@ inline int8x32 subs(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epi8(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int16x16, subs, a, b);
 #endif
 }
 /// @}
@@ -105,7 +105,7 @@ inline int16x16 subs(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epi16(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int16x16, subs, a, b);
 #endif
 }
 /// @}
@@ -140,7 +140,7 @@ inline uint8x32 subs(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epu8(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint8x32, subs, a, b);
 #endif
 }
 /// @}
@@ -175,7 +175,7 @@ inline uint16x16 subs(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_subs_epu16(a, b);
 #else
-    return {subs(a[0], b[0]), subs(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint16x16, subs, a, b);
 #endif
 }
 /// @}

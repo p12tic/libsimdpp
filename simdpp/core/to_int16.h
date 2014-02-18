@@ -88,6 +88,7 @@ inline gint16x8 to_int16x8(int8x16 a)
 */
 inline gint16x16 to_int16x16(int8x32 a)
 {
+    /*
 #if SIMDPP_USE_NULL
     int16x16 r;
     for (unsigned i = 0; i < 16; i++) {
@@ -119,6 +120,7 @@ inline gint16x16 to_int16x16(int8x32 a)
     b1 = vec_unpackl((__vector int8_t)a[0]);
     return {b0, b1};
 #endif
+    */
 }
 
 
@@ -160,6 +162,7 @@ inline gint16x8 to_int16x8(uint8x16 a)
 */
 inline gint16x16 to_int16x16(uint8x32 a)
 {
+    /*
 #if SIMDPP_USE_NULL
     int16x16 r;
     for (unsigned i = 0; i < 16; i++) {
@@ -179,6 +182,7 @@ inline gint16x16 to_int16x16(uint8x32 a)
     r[1] = vmovl_s8(vget_high_s8(a[1]));
     return r;
 #endif
+    */
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

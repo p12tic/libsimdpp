@@ -80,7 +80,7 @@ inline float32x8 rcp_e(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_rcp_ps(a);
 #else
-    return {rcp_e(a[0]), rcp_e(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, rcp_e, a);
 #endif
 }
 /// @}

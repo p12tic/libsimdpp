@@ -27,6 +27,7 @@
 
 #ifndef LIBSIMDPP_SIMDPP_CORE_DETAIL_SHUFFLE_EMUL_H
 #define LIBSIMDPP_SIMDPP_CORE_DETAIL_SHUFFLE_EMUL_H
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -49,8 +50,8 @@ float64x2 permute(float64x2 a);
 
 namespace detail {
 
-template<unsigned s0, unsigned s1, class V>
-typename V::half_vector_type permute_half(V a)
+template<class H, unsigned s0, unsigned s1, class V>
+H permute_half(V a)
 {
     switch (s0*4+s1) {
     case 0: /* 0 0 */ return permute<0,0>(a[0]);
@@ -79,13 +80,19 @@ typename V::half_vector_type permute_half(V a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 gint64x4 permute_emul(gint64x4 a)
 {
-    return {permute_half<s0,s1>(a), permute_half<s2,s3>(a)};
+    gint64x4 r;
+    r[0] = permute_half<gint64x2,s0,s1>(a);
+    r[1] = permute_half<gint64x2,s2,s3>(a);
+    return r;
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float64x4 permute_emul(float64x4 a)
 {
-    return {permute_half<s0,s1>(a), permute_half<s2,s3>(a)};
+    float64x4 r;
+    r[0] = permute_half<float64x2,s0,s1>(a);
+    r[1] = permute_half<float64x2,s2,s3>(a);
+    return r;
 }
 /// @}
 
@@ -95,4 +102,5 @@ float64x4 permute_emul(float64x4 a)
 #endif
 } // namespace simdpp
 
+#endif // SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(DOXYGEN_SHOULD_READ_THIS)
 #endif

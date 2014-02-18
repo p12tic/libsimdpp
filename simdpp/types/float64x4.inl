@@ -41,6 +41,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX
+
 inline float64x4 float64x4::zero()
 {
     float64x4 r;
@@ -48,32 +50,19 @@ inline float64x4 float64x4::zero()
     return r;
 }
 
-#if SIMDPP_USE_AVX2
-#elif SIMDPP_USE_AVX
 inline float64x4::float64x4(gint64x4 d)
 {
-    d_ = float64x4(float64x2(d[0]), float64x2(d[1]));
+    *this = bit_cast<float64x4(d);
 }
-#endif
 
 inline float64x4 float64x4::load_broadcast(const double* v0)
 {
-#if SIMDPP_USE_AVX
     return _mm256_broadcast_sd(v0);
-#else
-    float64x2 a = float64x2::load_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline float64x4 float64x4::set_broadcast(double v0)
 {
-#if SIMDPP_USE_AVX
     return float64x4::load_broadcast(&v0);
-#else
-    float64x2 a = float64x2::set_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline float64x4 float64x4::make_const(double v0)
@@ -88,22 +77,15 @@ inline float64x4 float64x4::make_const(double v0, double v1)
 
 inline float64x4 float64x4::make_const(double v0, double v1, double v2, double v3)
 {
-#if SIMDPP_USE_AVX
     return _mm256_set_pd(v3, v2, v1, v0);
-#else
-    return {float64x2::make_const(v0, v1),
-            float64x2::make_const(v2, v3)};
-#endif
 }
 
 inline mask_float64x4::operator float64x4() const
 {
-#if SIMDPP_USE_AVX
     return d_;
-#else
-    return float64x4(m_[0], m_[1]);
-#endif
 }
+
+#endif // SIMDPP_USE_AVX
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

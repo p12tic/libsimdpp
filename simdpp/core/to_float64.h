@@ -89,6 +89,7 @@ inline float64x2 to_float64x2(int32x4 a)
 
 inline float64x4 to_float64x4(int32x8 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     float64x4 r;
     detail::mem_block<int32x8> ax(a);
@@ -102,6 +103,7 @@ inline float64x4 to_float64x4(int32x8 a)
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
 #endif
+    */
 }
 /// @}
 
@@ -151,6 +153,7 @@ inline float64x2 to_float64x2(float32x4 a)
 
 inline float64x4 to_float64x4(float32x8 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x8> ax(a);
     float64x4 r;
@@ -164,6 +167,7 @@ inline float64x4 to_float64x4(float32x8 a)
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
 #endif
+    */
 }
 /// @}
 

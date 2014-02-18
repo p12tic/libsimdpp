@@ -108,7 +108,7 @@ gint16x16 permute(gint16x16 a)
     a = sse::permute_hi<s0,s1,s2,s3>(a);
     return a;
 #else
-    return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint16x16, (permute<s0,s1,s2,s3>), a);
 #endif
 }
 /// @}
@@ -161,7 +161,7 @@ gint32x8 permute(gint32x8 a)
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     return _mm256_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
 #else
-    return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, (permute<s0,s1,s2,s3>), a);
 #endif
 }
 /// @}
@@ -214,7 +214,7 @@ float32x8 permute(float32x8 a)
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     return _mm256_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
 #else
-    return {permute<s0,s1,s2,s3>(a[0]), permute<s0,s1,s2,s3>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, (permute<s0,s1,s2,s3>), a);
 #endif
 }
 /// @}

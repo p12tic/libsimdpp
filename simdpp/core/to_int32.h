@@ -90,6 +90,7 @@ inline gint32x4 to_int32x4(int16x8 a)
 */
 inline gint32x8 to_int32x8(int16x16 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
@@ -121,6 +122,7 @@ inline gint32x8 to_int32x8(int16x16 a)
     b1 = vec_unpackl((__vector int16_t)a[0]);
     return {b0, b1};
 #endif
+    */
 }
 
 /** Zero-extends the values of a unsigned int16x8 vector to 32-bits
@@ -133,6 +135,7 @@ inline gint32x8 to_int32x8(int16x16 a)
 */
 inline gint32x4 to_int32x4(uint16x8 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL
     int32x4 r;
     for (unsigned i = 0; i < 4; i++) {
@@ -147,6 +150,7 @@ inline gint32x4 to_int32x4(uint16x8 a)
 #elif SIMDPP_USE_NEON
     return vmovl_u16(vget_low_u16(a));
 #endif
+    */
 }
 
 
@@ -163,6 +167,7 @@ inline gint32x4 to_int32x4(uint16x8 a)
 */
 inline gint32x8 to_int32x8(uint16x16 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL
     uint32x8 r;
     for (unsigned i = 0; i < 8; i++) {
@@ -182,6 +187,7 @@ inline gint32x8 to_int32x8(uint16x16 a)
     r[1] = vmovl_u16(vget_high_u16(a[1]));
     return r;
 #endif
+    */
 }
 
 /// @{
@@ -234,7 +240,7 @@ inline gint32x8 to_int32x8(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_cvttps_epi32(a);
 #else
-    return int32x8(to_int32x4(a[0]), to_int32x4(a[1]));
+    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, to_int32x4, a);
 #endif
 }
 /// @}
@@ -293,6 +299,7 @@ inline gint32x4 to_int32x4(float64x2 a)
 
 inline gint32x8 to_int32x8(float64x4 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x8> r;
     r[0] = int32_t(a[0].el(0));
@@ -310,6 +317,7 @@ inline gint32x8 to_int32x8(float64x4 a)
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
+    */
 }
 /// @}
 

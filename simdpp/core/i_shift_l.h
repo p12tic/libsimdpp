@@ -110,7 +110,7 @@ inline gint8x32 shift_l(gint8x32 a, unsigned count)
     a16 = bit_andnot(a16, mask);
     return a16;
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    SIMDPP_VEC_ARRAY_IMPL2S(gint8x32, shift_l, a, count);
 #endif
 }
 /// @}
@@ -153,7 +153,7 @@ inline gint16x16 shift_l(gint16x16 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi16(a, count);
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    SIMDPP_VEC_ARRAY_IMPL2S(gint16x16, shift_l, a, count);
 #endif
 }
 /// @}
@@ -196,7 +196,7 @@ inline gint32x8 shift_l(gint32x8 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi32(a, count);
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    SIMDPP_VEC_ARRAY_IMPL2S(gint32x8, shift_l, a, count);
 #endif
 }
 /// @}
@@ -238,7 +238,7 @@ inline gint64x4 shift_l(gint64x4 a, unsigned count)
 #if SIMDPP_USE_AVX2
     return _mm256_slli_epi64(a, count);
 #else
-    return {shift_l(a[0], count), shift_l(a[1], count)};
+    SIMDPP_VEC_ARRAY_IMPL2S(gint64x4, shift_l, a, count);
 #endif
 }
 /// @}
@@ -260,7 +260,7 @@ V v256_shift_l(V a)
 #if SIMDPP_USE_AVX2
     return shift_l(a, count);
 #else
-    return {shift_l<count>(a[0]), shift_l<count>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(V, shift_l<count>, a);
 #endif
 }
 

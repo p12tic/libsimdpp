@@ -80,7 +80,7 @@ inline int8x32 max(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epi8(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int8x32, max, a, b);
 #endif
 }
 /// @}
@@ -115,7 +115,7 @@ inline uint8x32 max(uint8x32 a, uint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epu8(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint8x32, max, a, b);
 #endif
 }
 /// @}
@@ -150,7 +150,7 @@ inline int16x16 max(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epi16(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int16x16, max, a, b);
 #endif
 }
 /// @}
@@ -192,7 +192,7 @@ inline uint16x16 max(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epu16(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint16x16, max, a, b);
 #endif
 }
 /// @}
@@ -235,7 +235,7 @@ inline int32x8 max(int32x8 a, int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epi32(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int32x8, max, a, b);
 #endif
 }
 /// @}
@@ -277,7 +277,7 @@ inline uint32x8 max(uint32x8 a, uint32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_max_epu32(a, b);
 #else
-    return {max(a[0], b[0]), max(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, max, a, b);
 #endif
 }
 /// @}

@@ -46,13 +46,6 @@ struct Test_permute_bytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
-        ah = simdpp::permute_bytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -67,13 +60,6 @@ struct Test_permute_bytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
-        ah = simdpp::permute_bytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -88,13 +74,6 @@ struct Test_permute_bytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::permute_bytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -110,14 +89,6 @@ struct Test_permute_bytes16_x16 {
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
-                                                  s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::permute_bytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 template<class V, unsigned i>
@@ -131,14 +102,6 @@ struct Test_shuffle_bytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
-        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -153,14 +116,6 @@ struct Test_shuffle_bytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
-        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -175,14 +130,6 @@ struct Test_shuffle_bytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -198,15 +145,6 @@ struct Test_shuffle_bytes16_x16 {
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
-                                                  s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::shuffle_bytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 template<class V, unsigned i>
@@ -220,13 +158,6 @@ struct Test_permute_zbytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
-        ah = simdpp::permute_zbytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -241,13 +172,6 @@ struct Test_permute_zbytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
-        ah = simdpp::permute_zbytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -262,13 +186,6 @@ struct Test_permute_zbytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::permute_zbytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -284,14 +201,6 @@ struct Test_permute_zbytes16_x16 {
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
-                                                  s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::permute_zbytes16(ah, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 template<class V, unsigned i>
@@ -305,14 +214,6 @@ struct Test_shuffle_zbytes16_x2 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s>(maskh);
-        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -327,14 +228,6 @@ struct Test_shuffle_zbytes16_x4 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(maskh);
-        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -349,14 +242,6 @@ struct Test_shuffle_zbytes16_x8 {
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 
@@ -372,15 +257,6 @@ struct Test_shuffle_zbytes16_x16 {
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = tst_ext_half(b);
-        typename H::int_vector_type maskh;
-        maskh = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
-                                                  s,s,s,s,s,s,s,s>(maskh);
-        ah = simdpp::shuffle_zbytes16(ah, bh, maskh);
-        TEST_PUSH(tc, H, ah);
     }
 };
 

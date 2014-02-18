@@ -112,7 +112,7 @@ inline gint8x32 transpose_inplace(gint8x32 a)
                                         2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);
 #elif SIMDPP_USE_SSSE3
-    return {transpose_inplace(a[0]), transpose_inplace(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, transpose_inplace, a);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif

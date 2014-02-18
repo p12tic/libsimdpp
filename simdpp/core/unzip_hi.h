@@ -86,7 +86,7 @@ inline gint8x32 unzip_hi(gint8x32 a, gint8x32 b)
     a = _mm256_packs_epi16(a, b);
     return a;
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, unzip_hi, a, b)
 #endif
 }
 /// @}
@@ -134,7 +134,7 @@ inline gint16x16 unzip_hi(gint16x16 a, gint16x16 b)
     a = _mm256_packs_epi32(a, b);
     return a;
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint16x16, unzip_hi, a, b)
 #endif
 }
 /// @}
@@ -173,7 +173,7 @@ inline gint32x8 unzip_hi(gint32x8 a, gint32x8 b)
 #if SIMDPP_USE_AVX2
     return shuffle2<1,3,1,3>(a, b);
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, unzip_hi, a, b)
 #endif
 }
 /// @}
@@ -239,7 +239,7 @@ inline float32x8 unzip_hi(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return shuffle2<1,3,1,3>(a, b);
 #else
-    return {unzip_hi(a[0], b[0]), unzip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, unzip_hi, a, b)
 #endif
 }
 /// @}

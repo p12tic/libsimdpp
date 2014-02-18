@@ -71,7 +71,7 @@ inline gint8x32 bit_or(gint8x32 a, gint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_or_si256(a, b);
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, bit_or, a, b)
 #endif
 }
 
@@ -147,7 +147,7 @@ inline mask_int8x32 bit_or(mask_int8x32 a, mask_int8x32 b)
 #if SIMDPP_USE_AVX2
     return bit_or(uint8x32(a), uint8x32(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int8x32, bit_or, a, b)
 #endif
 }
 
@@ -156,7 +156,7 @@ inline mask_int16x16 bit_or(mask_int16x16 a, mask_int16x16 b)
 #if SIMDPP_USE_AVX2
     return bit_or(uint16x16(a), uint16x16(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int16x16, bit_or, a, b)
 #endif
 }
 
@@ -165,7 +165,7 @@ inline mask_int32x8 bit_or(mask_int32x8 a, mask_int32x8 b)
 #if SIMDPP_USE_AVX2
     return bit_or(uint32x8(a), uint32x8(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int32x8, bit_or, a, b)
 #endif
 }
 
@@ -174,7 +174,7 @@ inline mask_int64x4 bit_or(mask_int64x4 a, mask_int64x4 b)
 #if SIMDPP_USE_AVX2
     return bit_or(uint64x4(a), uint64x4(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64x4, bit_or, a, b)
 #endif
 }
 /// @}
@@ -209,7 +209,7 @@ inline float32x8 bit_or(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_or_ps(a, b);
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, bit_or, a, b)
 #endif
 }
 
@@ -235,7 +235,7 @@ inline float64x4 bit_or(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_or_pd(a, b);
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, bit_or, a, b)
 #endif
 }
 
@@ -270,7 +270,7 @@ inline mask_float32x8 bit_or(mask_float32x8 a, mask_float32x8 b)
 #if SIMDPP_USE_AVX
     return bit_or(float32x8(a), float32x8(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float32x8, bit_or, a, b)
 #endif
 }
 
@@ -279,7 +279,7 @@ inline mask_float64x4 bit_or(mask_float64x4 a, mask_float64x4 b)
 #if SIMDPP_USE_AVX
     return bit_or(float64x4(a), float64x4(b));
 #else
-    return {bit_or(a[0], b[0]), bit_or(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float64x4, bit_or, a, b)
 #endif
 }
 /// @}

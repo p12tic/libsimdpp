@@ -40,6 +40,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX2
+
 inline gint64<4>::gint64(const gint8x32& d) { *this = bit_cast<gint64x4>(d); }
 inline gint64<4>::gint64(const gint16x16& d) { *this = bit_cast<gint64x4>(d); }
 inline gint64<4>::gint64(const gint32x8& d) { *this = bit_cast<gint64x4>(d); }
@@ -67,16 +69,7 @@ inline uint64<4>& uint64<4>::operator=(const gint64x4& d) { gint64x4::operator=(
 
 inline gint64<4>::gint64(const float64x4& d)
 {
-#if SIMDPP_USE_AVX2
-    operator=(_mm256_castpd_si256(d));
-#elif SIMDPP_USE_AVX
-    __m256i d1 = _mm256_castpd_si256(d);
-    u64(0) = _mm256_castsi256_si128(d1);
-    u64(1) = _mm256_extractf128_si256(d1, 1);
-#else
-    u64(0) = d[0];
-    u64(1) = d[1];
-#endif
+    *this = bit_cast<gint64x4>(d);
 }
 
 inline gint64x4 gint64x4::zero()
@@ -116,23 +109,13 @@ inline int64x4 int64x4::make_const(int64_t v0, int64_t v1, int64_t v2, int64_t v
 
 inline uint64x4 uint64x4::load_broadcast(const uint64_t* v0)
 {
-#if SIMDPP_USE_AVX2
     return uint64x4::set_broadcast(*v0);
-#else
-    uint64x2 a = uint64x2::load_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline uint64x4 uint64x4::set_broadcast(uint64_t v0)
 {
-#if SIMDPP_USE_AVX2
     uint64x2 a = _mm_cvtsi64_si128(v0);
     return _mm256_broadcastq_epi64(a);
-#else
-    uint64x2 a = uint64x2::set_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline uint64x4 uint64x4::make_const(uint64_t v0)
@@ -147,22 +130,15 @@ inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1)
 
 inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint64_t v3)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_set_epi64x(v3, v2, v1, v0);
-#else
-    return {uint64x2::make_const(v0, v1),
-            uint64x2::make_const(v2, v3)};
-#endif
 }
 
 inline mask_int64x4::operator gint64x4() const
 {
-#if SIMDPP_USE_AVX2
     return d_;
-#else
-    return gint64x4(m_[0], m_[1]);
-#endif
 }
+
+#endif // SIMDPP_USE_AVX2
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -70,7 +70,7 @@ inline float32x8 add(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_add_ps(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, add, a, b);
 #endif
 }
 /// @}
@@ -105,7 +105,7 @@ inline float64x4 add(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_add_pd(a, b);
 #else
-    return {add(a[0], b[0]), add(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, add, a, b);
 #endif
 }
 /// @}

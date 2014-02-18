@@ -86,7 +86,7 @@ inline uint8x32 avg_trunc(uint8x32 a, uint8x32 b)
     uint8x32 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, avg_trunc, a, b);
 #endif
 }
 /// @}
@@ -138,7 +138,7 @@ inline int8x32 avg_trunc(int8x32 a, int8x32 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int8x32, avg_trunc, a, b);
 #endif
 }
 /// @}
@@ -185,7 +185,7 @@ inline uint16x16 avg_trunc(uint16x16 a, uint16x16 b)
     uint16x16 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint16x16, avg_trunc, a, b);
 #endif
 }
 /// @}
@@ -238,7 +238,7 @@ inline int16x16 avg_trunc(int16x16 a, int16x16 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int16x16, avg_trunc, a, b);
 #endif
 }
 /// @}
@@ -285,7 +285,7 @@ inline uint32x8 avg_trunc(uint32x8 a, uint32x8 b)
     uint32x8 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, avg_trunc, a, b);
 #endif
 }
 /// @}
@@ -339,7 +339,7 @@ inline int32x8 avg_trunc(int32x8 a, int32x8 b)
     r = bit_xor(r, bias); // sub
     return r;
 #else
-    return {avg_trunc(a[0], b[0]), avg_trunc(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int32x8, avg_trunc, a, b);
 #endif
 }
 /// @}

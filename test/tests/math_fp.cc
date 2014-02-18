@@ -57,16 +57,16 @@ void test_math_fp(TestResults& res)
             float32x8::make_const(-inff, -inff, -inff, -inff),
         };
 
-        TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, add, s, 4);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, sub, s, 4);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, mul, s, 4);
+        TEST_ALL_COMB_HELPER2(tc, float32x8, add, s, 4);
+        TEST_ALL_COMB_HELPER2(tc, float32x8, sub, s, 4);
+        TEST_ALL_COMB_HELPER2(tc, float32x8, mul, s, 4);
         tc.set_precision(1);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, div, s, 4);
+        TEST_ALL_COMB_HELPER2(tc, float32x8, div, s, 4);
         tc.unset_precision();
 
-        TEST_ARRAY_HELPER16X2_1(tc, float32x8, abs, s);
-        TEST_ARRAY_HELPER16X2_1(tc, float32x8, sign, s);
-        TEST_ARRAY_HELPER16X2_1(tc, float32x8, neg, s);
+        TEST_ARRAY_HELPER1(tc, float32x8, abs, s);
+        TEST_ARRAY_HELPER1(tc, float32x8, sign, s);
+        TEST_ARRAY_HELPER1(tc, float32x8, neg, s);
 
 #if SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4
         TEST_ALL_COMB_HELPER16X2_3(tc, float32x8, fmadd, s, 4);
@@ -80,8 +80,8 @@ void test_math_fp(TestResults& res)
             float32x8::make_const(inff, inff, inff, inff),
             float32x8::make_const(-inff, -inff, -inff, -inff),
         };
-        TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, min, snan, 4);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float32x8, max, snan, 4);
+        TEST_ALL_COMB_HELPER2(tc, float32x8, min, snan, 4);
+        TEST_ALL_COMB_HELPER2(tc, float32x8, max, snan, 4);
 
 
     }
@@ -103,14 +103,14 @@ void test_math_fp(TestResults& res)
             float64x4::make_const(-inf, -inf),
         };
 
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, add, s, 8);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, sub, s, 8);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, mul, s, 8);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, div, s, 8);
+        TEST_ALL_COMB_HELPER2(tc, float64x4, add, s, 8);
+        TEST_ALL_COMB_HELPER2(tc, float64x4, sub, s, 8);
+        TEST_ALL_COMB_HELPER2(tc, float64x4, mul, s, 8);
+        TEST_ALL_COMB_HELPER2(tc, float64x4, div, s, 8);
 
-        TEST_ARRAY_HELPER16X2_1(tc, float64x4, abs, s);
-        TEST_ARRAY_HELPER16X2_1(tc, float64x4, sign, s);
-        TEST_ARRAY_HELPER16X2_1(tc, float64x4, neg, s);
+        TEST_ARRAY_HELPER1(tc, float64x4, abs, s);
+        TEST_ARRAY_HELPER1(tc, float64x4, sign, s);
+        TEST_ARRAY_HELPER1(tc, float64x4, neg, s);
 
 #if SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4
         TEST_ALL_COMB_HELPER16X2_3(tc, float64x4, fmadd, s, 8);
@@ -129,8 +129,8 @@ void test_math_fp(TestResults& res)
             float64x4::make_const(inf, inf),
             float64x4::make_const(-inf, -inf),
         };
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, min, snan, 8);
-        TEST_ALL_COMB_HELPER16X2_2(tc, float64x4, max, snan, 8);
+        TEST_ALL_COMB_HELPER2(tc, float64x4, min, snan, 8);
+        TEST_ALL_COMB_HELPER2(tc, float64x4, max, snan, 8);
     }
 }
 

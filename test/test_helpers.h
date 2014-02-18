@@ -40,107 +40,76 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 inline void test_push_internal(TestCase& t, std::uint16_t data, unsigned line)
 {
-    t.push(TestCase::TYPE_UINT16, &data, line);
+    t.push(TestCase::TYPE_UINT16, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestCase& t, simdpp::int8x16 data, unsigned line)
+template<class V>
+void test_push_internal_vec(TestCase::Result& res, const V& data)
 {
-    t.push(TestCase::TYPE_INT8x16, &data, line);
+    for (unsigned i = 0; i < data.vec_length; ++i) {
+        using Base = typename V::base_vector_type;
+        simdpp::detail::mem_block<Base> block(data[i]);
+        for (unsigned j = 0; j < Base::length; j++) {
+            res.set(i*Base::length + j, &block[j]);
+        }
+    }
 }
 
-inline void test_push_internal(TestCase& t, simdpp::uint8x16 data, unsigned line)
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::int8<N> data, unsigned line)
 {
-    t.push(TestCase::TYPE_UINT8x16, &data, line);
+    test_push_internal_vec(t.push(TestCase::TYPE_INT8, N, line), data);
 }
 
-inline void test_push_internal(TestCase& t, simdpp::int16x8 data, unsigned line)
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::uint8<N> data, unsigned line)
 {
-    t.push(TestCase::TYPE_INT16x8, &data, line);
+    test_push_internal_vec(t.push(TestCase::TYPE_UINT8, N, line), data);
+}
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::int16<N> data, unsigned line)
+{
+    test_push_internal_vec(t.push(TestCase::TYPE_INT16, N, line), data);
 }
 
-inline void test_push_internal(TestCase& t, simdpp::uint16x8 data, unsigned line)
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::uint16<N> data, unsigned line)
 {
-    t.push(TestCase::TYPE_UINT16x8, &data, line);
+    test_push_internal_vec(t.push(TestCase::TYPE_UINT16, N, line), data);
+}
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::int32<N> data, unsigned line)
+{
+    test_push_internal_vec(t.push(TestCase::TYPE_INT32, N, line), data);
 }
 
-inline void test_push_internal(TestCase& t, simdpp::int32x4 data, unsigned line)
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::uint32<N> data, unsigned line)
 {
-    t.push(TestCase::TYPE_INT32x4, &data, line);
+    test_push_internal_vec(t.push(TestCase::TYPE_UINT32, N, line), data);
+}
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::int64<N> data, unsigned line)
+{
+    test_push_internal_vec(t.push(TestCase::TYPE_INT64, N, line), data);
 }
 
-inline void test_push_internal(TestCase& t, simdpp::uint32x4 data, unsigned line)
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::uint64<N> data, unsigned line)
 {
-    t.push(TestCase::TYPE_UINT32x4, &data, line);
+    test_push_internal_vec(t.push(TestCase::TYPE_UINT64, N, line), data);
 }
 
-inline void test_push_internal(TestCase& t, simdpp::int64x2 data, unsigned line)
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::float32<N> data, unsigned line)
 {
-    t.push(TestCase::TYPE_INT64x2, &data, line);
+    test_push_internal_vec(t.push(TestCase::TYPE_FLOAT32, N, line), data);
 }
 
-inline void test_push_internal(TestCase& t, simdpp::uint64x2 data, unsigned line)
+template<unsigned N>
+void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
 {
-    t.push(TestCase::TYPE_UINT64x2, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::float32x4 data, unsigned line)
-{
-    t.push(TestCase::TYPE_FLOAT32x4, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::float64x2 data, unsigned line)
-{
-    t.push(TestCase::TYPE_FLOAT64x2, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::int8x32 data, unsigned line)
-{
-    t.push(TestCase::TYPE_INT8x32, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::uint8x32 data, unsigned line)
-{
-    t.push(TestCase::TYPE_UINT8x32, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::int16x16 data, unsigned line)
-{
-    t.push(TestCase::TYPE_INT16x16, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::uint16x16 data, unsigned line)
-{
-    t.push(TestCase::TYPE_UINT16x16, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::int32x8 data, unsigned line)
-{
-    t.push(TestCase::TYPE_INT32x8, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::uint32x8 data, unsigned line)
-{
-    t.push(TestCase::TYPE_UINT32x8, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::int64x4 data, unsigned line)
-{
-    t.push(TestCase::TYPE_INT64x4, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::uint64x4 data, unsigned line)
-{
-    t.push(TestCase::TYPE_UINT64x4, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::float32x8 data, unsigned line)
-{
-    t.push(TestCase::TYPE_FLOAT32x8, &data, line);
-}
-
-inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned line)
-{
-    t.push(TestCase::TYPE_FLOAT64x4, &data, line);
+    test_push_internal_vec(t.push(TestCase::TYPE_FLOAT64, N, line), data);
 }
 // @}
 } // namespace SIMDPP_ARCH_NAMESPACE
@@ -197,36 +166,8 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
     }                                                                   \
 }
 
-#define TEST_ARRAY_HELPER16X2_1(TC, T, OP, A)                           \
-{                                                                       \
-    (TC).reset_seq();                                                   \
-    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
-        const T* lp = reinterpret_cast<const T*>((A) + i);              \
-        TEST_PUSH16X2_1(TC, T, OP, *lp);                                \
-    }                                                                   \
-}
-
-#define TEST_ARRAY_HELPER16X2_1T(TC, R, T, OP, A)                       \
-{                                                                       \
-    (TC).reset_seq();                                                   \
-    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
-        const T* lp = reinterpret_cast<const T*>((A) + i);              \
-        TEST_PUSH16X2_1(TC, R, OP, *lp);                                \
-    }                                                                   \
-}
-
-#define TEST_ARRAY_HELPER16X2_2(TC, T, OP, A, B)                        \
-{                                                                       \
-    (TC).reset_seq();                                                   \
-    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
-        const T* lp = reinterpret_cast<const T*>((A) + i);              \
-        const T* rp = reinterpret_cast<const T*>((B) + i);              \
-        TEST_PUSH16X2_2(TC, T, OP, *lp, *rp);                           \
-    }                                                                   \
-}
-
 // tests OP on all pairs of elements within array A
-#define TEST_ALL_COMB_HELPER(TC, T, OP, A, EL_SIZE)                     \
+#define TEST_ALL_COMB_HELPER1(TC, T, OP, A, EL_SIZE)                     \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
@@ -242,7 +183,7 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER_T(TC, R, T, OP, A, EL_SIZE)                \
+#define TEST_ALL_COMB_HELPER1_T(TC, R, T, OP, A, EL_SIZE)                \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
@@ -258,7 +199,7 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER16X2_2(TC, T, OP, A, EL_SIZE)               \
+#define TEST_ALL_COMB_HELPER2(TC, T, OP, A, EL_SIZE)                    \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
@@ -267,14 +208,14 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
             const T* rp = reinterpret_cast<const T*>((A) + j);          \
             T l = *lp; T r = *rp;                                       \
             for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
-                TEST_PUSH16X2_2(TC, T, OP, l, r);                       \
+                TEST_PUSH(TC, T, OP(l, r));                             \
                 l = simdpp::align<1>(l, l);                             \
             }                                                           \
         }                                                               \
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER16X2_2T(TC, R, T, OP, A, EL_SIZE)           \
+#define TEST_ALL_COMB_HELPER2_T(TC, R, T, OP, A, EL_SIZE)               \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
@@ -283,14 +224,14 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
             const T* rp = reinterpret_cast<const T*>((A) + j);          \
             T l = *lp; T r = *rp;                                       \
             for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
-                TEST_PUSH16X2_2(TC, R, OP, l, r);                       \
+                TEST_PUSH(TC, R, OP(l, r));                       \
                 l = simdpp::align<1>(l, l);                             \
             }                                                           \
         }                                                               \
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER16X2_3(TC, T, OP, A, EL_SIZE)               \
+#define TEST_ALL_COMB_HELPER3(TC, T, OP, A, EL_SIZE)                    \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i0 = 0; i0 < sizeof(A) / sizeof(T); i0++) {           \
@@ -302,7 +243,7 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
         T v0 = *p0; T v1 = *p1; T v2 = *p2;                             \
         for (unsigned rot0 = 0; rot0 < sizeof(T)/EL_SIZE % 4; rot0++) { \
             for (unsigned rot1 = 0; rot1 < sizeof(T)/EL_SIZE % 4; rot1++) { \
-                TEST_PUSH16X2_3(TC, T, OP, v0, v1, v2);                 \
+                TEST_PUSH(TC, T, OP(v0, v1, v2));                       \
                 v0 = simdpp::align<1>(v0, v0);                          \
             }                                                           \
             v1 = simdpp::align<1>(v1, v1);                              \

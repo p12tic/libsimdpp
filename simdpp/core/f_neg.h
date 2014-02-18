@@ -76,7 +76,7 @@ inline float32x8 neg(float32x8 a)
     int32x8 zero = int32x8::make_const(0x80000000);
     return bit_xor(a, zero);
 #else
-    return {neg(a[0]), neg(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, neg, a);
 #endif
 }
 /// @}
@@ -115,7 +115,7 @@ inline float64x4 neg(float64x4 a)
     int64x4 zero = int64x4::make_const(0x8000000000000000);
     return bit_xor(a, zero);
 #else
-    return {neg(a[0]), neg(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float64x4, neg, a);
 #endif
 }
 /// @}

@@ -125,7 +125,7 @@ inline float32x8 rsqrt_rh(float32x8 x, float32x8 a)
 
     return r;
 #else
-    return {rsqrt_rh(x[0], a[0]), rsqrt_rh(x[1], a[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, rsqrt_rh, x, a);
 #endif
 }
 /// @}

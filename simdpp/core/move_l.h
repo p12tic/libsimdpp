@@ -99,7 +99,7 @@ gint8x32 move_l(gint8x32 a)
 #if SIMDPP_USE_AVX2
     return _mm256_srli_si256(a, shift);
 #else
-    return {move_l<shift>(a[0]), move_l<shift>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, move_l<shift>, a);
 #endif
 }
 /// @}

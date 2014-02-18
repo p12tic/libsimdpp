@@ -71,7 +71,7 @@ inline gint8x32 bit_andnot(gint8x32 a, gint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_andnot_si256(b, a);
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, bit_andnot, a, b)
 #endif
 }
 
@@ -151,7 +151,7 @@ inline gint8x32 bit_andnot(gint8x32 a, mask_int8x32 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(a, uint8x32(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, bit_andnot, a, b)
 #endif
 }
 
@@ -160,7 +160,7 @@ inline gint16x16 bit_andnot(gint16x16 a, mask_int16x16 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint8x32(a), uint8x32(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint16x16, bit_andnot, a, b)
 #endif
 }
 
@@ -169,7 +169,7 @@ inline gint32x8 bit_andnot(gint32x8 a, mask_int32x8 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint8x32(a), uint8x32(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, bit_andnot, a, b)
 #endif
 }
 
@@ -178,7 +178,7 @@ inline gint64x4 bit_andnot(gint64x4 a, mask_int64x4 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint8x32(a), uint8x32(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint64x4, bit_andnot, a, b)
 #endif
 }
 
@@ -225,7 +225,7 @@ inline mask_int8x32 bit_andnot(mask_int8x32 a, mask_int8x32 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint8x32(a), uint8x32(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int8x32, bit_andnot, a, b)
 #endif
 }
 
@@ -234,7 +234,7 @@ inline mask_int16x16 bit_andnot(mask_int16x16 a, mask_int16x16 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint16x16(a), uint16x16(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int16x16, bit_andnot, a, b)
 #endif
 }
 
@@ -243,7 +243,7 @@ inline mask_int32x8 bit_andnot(mask_int32x8 a, mask_int32x8 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint32x8(a), uint32x8(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int32x8, bit_andnot, a, b)
 #endif
 }
 
@@ -252,7 +252,7 @@ inline mask_int64x4 bit_andnot(mask_int64x4 a, mask_int64x4 b)
 #if SIMDPP_USE_AVX2
     return bit_andnot(uint64x4(a), uint64x4(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64x4, bit_andnot, a, b)
 #endif
 }
 /// @}
@@ -288,7 +288,7 @@ inline float32x8 bit_andnot(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_andnot_ps(b, a);
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, bit_andnot, a, b)
 #endif
 }
 
@@ -312,7 +312,7 @@ inline float32x8 bit_andnot(float32x8 a, mask_float32x8 b)
 #if SIMDPP_USE_AVX
     return bit_andnot(a, float32x8(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, bit_andnot, a, b)
 #endif
 }
 
@@ -330,7 +330,7 @@ inline mask_float32x8 bit_andnot(mask_float32x8 a, mask_float32x8 b)
 #if SIMDPP_USE_AVX
     return bit_andnot(float32x8(a), float32x8(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float32x8, bit_andnot, a, b)
 #endif
 }
 
@@ -350,7 +350,7 @@ inline float64x4 bit_andnot(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_andnot_pd(b, a);
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, bit_andnot, a, b)
 #endif
 }
 
@@ -374,7 +374,7 @@ inline float64x4 bit_andnot(float64x4 a, mask_float64x4 b)
 #if SIMDPP_USE_AVX
     return bit_andnot(a, float64x4(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, bit_andnot, a, b)
 #endif
 }
 
@@ -392,7 +392,7 @@ inline mask_float64x4 bit_andnot(mask_float64x4 a, mask_float64x4 b)
 #if SIMDPP_USE_AVX
     return bit_andnot(float64x4(a), float64x4(b));
 #else
-    return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float64x4, bit_andnot, a, b)
 #endif
 }
 /// @}

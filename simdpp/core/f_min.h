@@ -74,7 +74,7 @@ inline float32x8 min(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_min_ps(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, min, a, b);
 #endif
 }
 /// @}
@@ -111,7 +111,7 @@ inline float64x4 min(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_min_pd(a, b);
 #else
-    return {min(a[0], b[0]), min(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, min, a, b);
 #endif
 }
 /// @}

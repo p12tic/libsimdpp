@@ -97,7 +97,7 @@ inline float64x4 sign(float64x4 a)
 #if SIMDPP_USE_AVX
     return bit_and(a, uint64x4::make_const(0x8000000000000000));
 #else
-    return {sign(a[0]), sign(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float64x4, sign, a);
 #endif
 }
 /// @}

@@ -74,7 +74,7 @@ inline float32x8 mul(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_mul_ps(a, b);
 #else
-    return {mul(a[0], b[0]), mul(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, mul, a, b);
 #endif
 }
 /// @}
@@ -109,7 +109,7 @@ inline float64x4 mul(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_mul_pd(a, b);
 #else
-    return {mul(a[0], b[0]), mul(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, mul, a, b);
 #endif
 }
 /// @}

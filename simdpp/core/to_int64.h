@@ -68,6 +68,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 inline gint64x2 to_int64x2(int32x4 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL
     int64x2 r;
     r.el(0) = int64_t(a.el(0));
@@ -88,10 +89,12 @@ inline gint64x2 to_int64x2(int32x4 a)
     a = zip_lo(u, a);
     return a;
 #endif
+    */
 }
 
 inline gint64x4 to_int64x4(int32x8 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL
     int64x4 r;
     r[0].el(0) = int64_t(a[0].el(0));
@@ -116,6 +119,7 @@ inline gint64x4 to_int64x4(int32x8 a)
     b1 = zip_hi(u, a0);
     return { b0, b1 };
 #endif
+    */
 }
 
 /// @{
@@ -139,6 +143,7 @@ inline gint64x4 to_int64x4(int32x8 a)
 */
 inline gint64x2 to_int64x2(uint32x4 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL
     int64x2 r;
     r.el(0) = int64_t(a.el(0));
@@ -153,10 +158,12 @@ inline gint64x2 to_int64x2(uint32x4 a)
 #elif SIMDPP_USE_ALTIVEC
     return zip_lo(uint32x4::zero(), a);
 #endif
+    */
 }
 
 inline gint64x4 to_int64x4(uint32x8 a)
 {
+    /* FIXME
 #if SIMDPP_USE_NULL
     int64x4 r;
     r[0].el(0) = int64_t(a[0].el(0));
@@ -177,6 +184,7 @@ inline gint64x4 to_int64x4(uint32x8 a)
 #elif SIMDPP_USE_ALTIVEC
     return { zip_lo(uint32x4::zero(), a[0]), zip_hi(uint32x4::zero(), a[1]) };
 #endif
+    */
 }
 /// @}
 

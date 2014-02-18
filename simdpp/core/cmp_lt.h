@@ -71,7 +71,7 @@ inline mask_int8x32 cmp_lt(int8x32 a, int8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi8(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int8x32, cmp_lt, a, b);
 #endif
 }
 /// @}
@@ -120,7 +120,7 @@ inline mask_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi8(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int8x32, cmp_lt, a, b);
 #endif
 }
 /// @}
@@ -155,7 +155,7 @@ inline mask_int16x16 cmp_lt(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi16(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int16x16, cmp_lt, a, b);
 #endif
 }
 /// @}
@@ -204,7 +204,7 @@ inline mask_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi16(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int16x16, cmp_lt, a, b);
 #endif
 }
 /// @}
@@ -239,7 +239,7 @@ inline mask_int32x8 cmp_lt(int32x8 a, int32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_cmpgt_epi32(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int32x8, cmp_lt, a, b);
 #endif
 }
 /// @}
@@ -288,7 +288,7 @@ inline mask_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi32(b, a);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int32x8, cmp_lt, a, b);
 #endif
 }
 /// @}
@@ -325,7 +325,7 @@ inline mask_float32x8 cmp_lt(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_LT_OQ);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float32x8, cmp_lt, a, b);
 #endif
 }
 /// @}
@@ -362,7 +362,7 @@ inline mask_float64x4 cmp_lt(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_LT_OQ);
 #else
-    return {cmp_lt(a[0], b[0]), cmp_lt(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float64x4, cmp_lt, a, b);
 #endif
 }
 /// @}

@@ -114,7 +114,7 @@ gint8x32 broadcast(gint8x32 a)
     gint16x16 b = s < 8 ? zip_lo(a, a) : zip_hi(a, a);
     return broadcast<s%8>(b);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, broadcast<s>, a);
 #endif
 }
 /// @}
@@ -193,7 +193,7 @@ gint16x16 broadcast(gint16x16 a)
         return h;
     }
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint16x16, broadcast<s>, a);
 #endif
 }
 /// @}
@@ -241,7 +241,7 @@ gint32x8 broadcast(gint32x8 a)
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, broadcast<s>, a);
 #endif
 }
 /// @}
@@ -294,7 +294,7 @@ gint64x4 broadcast(gint64x4 a)
 #if SIMDPP_USE_AVX2
     return permute<s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint64x4, broadcast<s>, a);
 #endif
 }
 /// @}
@@ -342,7 +342,7 @@ float32x8 broadcast(float32x8 a)
 #if SIMDPP_USE_AVX
     return permute<s,s,s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, broadcast<s>, a);
 #endif
 }
 /// @}
@@ -386,7 +386,7 @@ float64x4 broadcast(float64x4 a)
 #if SIMDPP_USE_AVX
     return permute<s,s>(a);
 #else
-    return {broadcast<s>(a[0]), broadcast<s>(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float64x4, broadcast<s>, a);
 #endif
 }
 /// @}

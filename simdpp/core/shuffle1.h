@@ -93,7 +93,7 @@ float64x4 shuffle1(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_shuffle_pd(a, b, s0 | s1<<1 | s0<<2 | s1<<3);
 #else
-    return {shuffle1<s0,s1>(a[0], b[0]), shuffle1<s0,s1>(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, (shuffle1<s0,s1>), a, b);
 #endif
 }
 /// @}
@@ -145,7 +145,7 @@ gint64x4 shuffle1(gint64x4 a, gint64x4 b)
     // We can't do this in the integer execution domain. Beware of additional latency
     return int64x4(shuffle1<s0,s1>(float64x4(a), float64x4(b)));
 #else
-    return {shuffle1<s0,s1>(a[0], b[0]), shuffle1<s0,s1>(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint64x4, (shuffle1<s0,s1>), a, b);
 #endif
 }
 /// @}

@@ -77,7 +77,7 @@ inline float32x8 abs(float32x8 a)
 #if SIMDPP_USE_AVX
     return bit_and(a, int32x8::make_const(0x7fffffff));
 #else
-    return {abs(a[0]), abs(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, abs, a);
 #endif
 }
 /// @}
@@ -114,7 +114,7 @@ inline float64x4 abs(float64x4 a)
 #if SIMDPP_USE_AVX
     return bit_and(a, int64x4::make_const(0x7fffffffffffffff));
 #else
-    return {abs(a[0]), abs(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float64x4, abs, a);
 #endif
 }
 /// @}

@@ -69,7 +69,7 @@ inline int8x32 neg(int8x32 a)
 #if SIMDPP_USE_AVX2
     return sub(int8x32::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(int8x32, neg, a);
 #endif
 }
 /// @}
@@ -102,7 +102,7 @@ inline int16x16 neg(int16x16 a)
 #if SIMDPP_USE_AVX2
     return sub(int16x16::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(int16x16, neg, a);
 #endif
 }
 /// @}
@@ -135,7 +135,7 @@ inline int32x8 neg(int32x8 a)
 #if SIMDPP_USE_AVX2
     return sub(int32x8::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(int32x8, neg, a);
 #endif
 }
 /// @}
@@ -170,7 +170,7 @@ inline int64x4 neg(int64x4 a)
 #if SIMDPP_USE_AVX2
     return sub(int64x4::zero(), a);
 #else
-    return {neg(a[0]), neg(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(int64x4, neg, a);
 #endif
 }
 /// @}

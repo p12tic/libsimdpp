@@ -43,6 +43,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX || DOXYGEN_SHOULD_READ_THIS
+
 /// @ingroup simd_vec_fp
 /// @{
 
@@ -58,7 +60,7 @@ public:
     using base_vector_type = float64x4;
     using mask_type = mask_float64x4;
 
-    static constexpr unsigned vec_length = 2; // FIXME
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned length = 4;
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
@@ -68,15 +70,11 @@ public:
     float64<4>& operator=(const float64x4&) = default;
 
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
     float64<4>(__m256d d) : d_(d) {}
     float64<4>& operator=(__m256d d) { d_ = d; return *this; }
-#endif
 
     /// Convert to underlying vector type
-#if SIMDPP_USE_AVX
     operator __m256d() const { return d_; }
-#endif
 
     /// @{
     /// Construct from compatible int64x4 integer vector type
@@ -84,22 +82,15 @@ public:
     float64<4>& operator=(gint64x4 d)   { *this = bit_cast<float64x4>(d); return *this; }
     /// @}
 
-#if SIMDPP_USE_AVX
-    float64<4>(float64x2 d0, float64x2 d1)
-    {
-        d_ = _mm256_insertf128_pd(_mm256_castpd128_pd256(d0), d1, 1);
-    }
-#else
-    float64<4>(float64x2 d0, float64x2 d1) { d_[0] = d0; d_[1] = d1; }
-
-    const float64x2* begin() const   { return d_; }
-    float64x2* begin()               { return d_; }
-    const float64x2* end() const     { return d_+vec_length; }
-    float64x2* end()                 { return d_+vec_length; }
-    const float64x2& operator[](unsigned i) const { return d_[i]; }
-          float64x2& operator[](unsigned i)       { return d_[i]; }
-#endif
-
+    /// @{
+    /// Range access
+    const float64x4* begin() const              { return this; }
+          float64x4* begin()                    { return this; }
+    const float64x4* end() const                { return this+1; }
+          float64x4* end()                      { return this+1; }
+    const float64x4& operator[](unsigned i) const { return *this; }
+          float64x4& operator[](unsigned i)       { return *this; }
+    /// @}
 
     /** Creates a float64x4 vector with the contens set to zero
 
@@ -159,11 +150,7 @@ public:
     static float64x4 make_const(double v0, double v1, double v2, double v3);
 
 private:
-#if SIMDPP_USE_AVX
     __m256d d_;
-#else
-    float64x2 d_[2];
-#endif
 };
 
 /// Class representing a mask for 4x 64-bit floating-point vector
@@ -178,34 +165,30 @@ public:
     mask_float64<4> &operator=(const mask_float64x4 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_AVX
     mask_float64<4>(__m256d d) : d_(d) {}
+#endif
     mask_float64<4>(float64x4 d) : d_(d) {}
-#else
-    mask_float64<4>(mask_float64x2 m0, mask_float64x2 m1) { m_[0] = m0; m_[1] = m1; }
-#endif
-#endif
 
     /// Access the underlying type
     operator float64x4() const;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_AVX
-#else
-    mask_float64x2& operator[](unsigned id) { return m_[id]; }
-    const mask_float64x2& operator[](unsigned id) const { return m_[id]; }
-#endif
-#endif
+    /// @{
+    /// Range access
+    const mask_float64x4* begin() const              { return this; }
+          mask_float64x4* begin()                    { return this; }
+    const mask_float64x4* end() const                { return this+1; }
+          mask_float64x4* end()                      { return this+1; }
+    const mask_float64x4& operator[](unsigned i) const { return *this; }
+          mask_float64x4& operator[](unsigned i)       { return *this; }
+    /// @}
 
 private:
-#if SIMDPP_USE_AVX
     float64x4 d_;
-#else
-    mask_float64x2 m_[2];
-#endif
 };
 
 /// @} -- end ingroup
+
+#endif // SIMDPP_USE_AVX || DOXYGEN_SHOULD_READ_THIS
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

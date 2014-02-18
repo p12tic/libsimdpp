@@ -78,7 +78,7 @@ inline gint16x16 mul_lo(gint16x16 a, gint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mullo_epi16(a, b);
 #else
-    return {mul_lo(a[0], b[0]), mul_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint16x16, mul_lo, a, b);
 #endif
 }
 /// @}
@@ -117,7 +117,7 @@ inline int16x16 mul_hi(int16x16 a, int16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mulhi_epi16(a, b);
 #else
-    return {mul_hi(a[0], b[0]), mul_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int16x16, mul_hi, a, b);
 #endif
 }
 /// @}
@@ -156,7 +156,7 @@ inline uint16x16 mul_hi(uint16x16 a, uint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mulhi_epu16(a, b);
 #else
-    return {mul_hi(a[0], b[0]), mul_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint16x16, mul_hi, a, b);
 #endif
 }
 /// @}
@@ -219,7 +219,7 @@ inline gint32x8 mul_lo(gint32x8 a, gint32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_mullo_epi32(a, b);
 #else
-    return {mul_lo(a[0], b[0]), mul_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, mul_lo, a, b);
 #endif
 }
 /// @}

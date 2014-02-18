@@ -101,7 +101,7 @@ inline gint8x32 blend(gint8x32 on, gint8x32 off, gint8x32 mask)
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint8x32, blend, on, off, mask)
 #endif
 }
 
@@ -110,7 +110,7 @@ inline gint8x32 blend(gint8x32 on, gint8x32 off, mask_int8x32 mask)
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint8x32, blend, on, off, mask)
 #endif
 }
 /// @}
@@ -142,7 +142,7 @@ inline gint16x16 blend(gint16x16 on, gint16x16 off, gint16x16 mask)
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint16x16, blend, on, off, mask)
 #endif
 }
 
@@ -160,7 +160,7 @@ inline gint16x16 blend(gint16x16 on, gint16x16 off, mask_int16x16 mask)
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint16x16, blend, on, off, mask)
 #endif
 }
 /// @}
@@ -192,7 +192,7 @@ inline gint32x8 blend(gint32x8 on, gint32x8 off, gint32x8 mask)
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint32x8, blend, on, off, mask);
 #endif
 }
 
@@ -210,7 +210,7 @@ inline gint32x8 blend(gint32x8 on, gint32x8 off, mask_int32x8 mask)
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint32x8, blend, on, off, mask);
 #endif
 }
 /// @}
@@ -242,7 +242,7 @@ inline gint64x4 blend(gint64x4 on, gint64x4 off, gint64x4 mask)
 #if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint64x4, blend, on, off, mask);
 #endif
 }
 
@@ -260,7 +260,7 @@ inline gint64x4 blend(gint64x4 on, gint64x4 off, mask_int64x4 mask)
 #if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint64x4, blend, on, off, mask);
 #endif
 }
 /// @}
@@ -307,7 +307,7 @@ inline float32x8 blend(float32x8 on, float32x8 off, float32x8 mask)
 #if SIMDPP_USE_AVX
     return _mm256_blendv_ps(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(float32x8, blend, on, off, mask);
 #endif
 }
 
@@ -331,7 +331,7 @@ inline float32x8 blend(float32x8 on, float32x8 off, mask_float32x8 mask)
 #if SIMDPP_USE_AVX
     return blend(on, off, uint32x8(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(float32x8, blend, on, off, mask);
 #endif
 }
 /// @}
@@ -374,7 +374,7 @@ inline float64x4 blend(float64x4 on, float64x4 off, float64x4 mask)
 #if SIMDPP_USE_AVX
     return _mm256_blendv_pd(off, on, mask);
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(float64x4, blend, on, off, mask);
 #endif
 }
 
@@ -398,7 +398,7 @@ inline float64x4 blend(float64x4 on, float64x4 off, mask_float64x4 mask)
 #if SIMDPP_USE_AVX
     return blend(on, off, uint64x4(mask));
 #else
-    return {blend(on[0], off[0], mask[0]), blend(on[1], off[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(float64x4, blend, on, off, mask);
 #endif
 }
 /// @}

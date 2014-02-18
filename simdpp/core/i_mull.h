@@ -122,7 +122,7 @@ inline int32x8 mull_lo(int16x16 a, int16x16 b)
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return zip_lo(lo, hi);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int32x8, mull_lo, a, b);
 #endif
 }
 /// @}
@@ -177,7 +177,7 @@ inline uint32x8 mull_lo(uint16x16 a, uint16x16 b)
     uint16x16 hi = _mm256_mulhi_epu16(a, b);
     return zip_lo(lo, hi);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, mull_lo, a, b);
 #endif
 }
 /// @}
@@ -232,7 +232,7 @@ inline int32x8 mull_hi(int16x16 a, int16x16 b)
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return zip_hi(lo, hi);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int32x8, mull_lo, a, b);
 #endif
 }
 /// @}
@@ -287,7 +287,7 @@ inline uint32x8 mull_hi(uint16x16 a, uint16x16 b)
     uint16x16 hi = _mm256_mulhi_epu16(a, b);
     return zip_hi(lo, hi);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, mull_hi, a, b);
 #endif
 }
 /// @}
@@ -338,7 +338,7 @@ inline int64x4 mull_lo(int32x8 a, int32x8 b)
     b = zip_lo(b, b);
     return _mm256_mul_epi32(a, b);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int64x4, mull_lo, a, b);
 #endif
 }
 /// @}
@@ -388,7 +388,7 @@ inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
     b = zip_lo(b, b);
     return _mm256_mul_epu32(a, b);
 #else
-    return {mull_lo(a[0], b[0]), mull_lo(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint64x4, mull_lo, a, b);
 #endif
 }
 /// @}
@@ -439,7 +439,7 @@ inline int64x4 mull_hi(int32x8 a, int32x8 b)
     b = zip_hi(b, b);
     return _mm256_mul_epi32(a, b);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(int64x4, mull_hi, a, b);
 #endif
 }
 /// @}
@@ -489,7 +489,7 @@ inline uint64x4 mull_hi(uint32x8 a, uint32x8 b)
     b = zip_hi(b, b);
     return _mm256_mul_epu32(a, b);
 #else
-    return {mull_hi(a[0], b[0]), mull_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(uint64x4, mull_hi, a, b);
 #endif
 }
 /// @}

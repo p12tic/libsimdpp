@@ -104,7 +104,7 @@ inline float32x8 ceil(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_ceil_ps(a);
 #else
-    return {ceil(a[0]), ceil(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, ceil, a);
 #endif
 }
 /// @}

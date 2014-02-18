@@ -76,7 +76,7 @@ inline gint8x32 zip_hi(gint8x32 a, gint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi8(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, zip_hi, a, b)
 #endif
 }
 
@@ -98,7 +98,7 @@ inline gint16x16 zip_hi(gint16x16 a, gint16x16 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi16(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint16x16, zip_hi, a, b)
 #endif
 }
 
@@ -120,7 +120,7 @@ inline gint32x8 zip_hi(gint32x8 a, gint32x8 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi32(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, zip_hi, a, b)
 #endif
 }
 
@@ -143,7 +143,7 @@ inline gint64x4 zip_hi(gint64x4 a, gint64x4 b)
 #if SIMDPP_USE_AVX2
     return _mm256_unpackhi_epi64(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint64x4, zip_hi, a, b)
 #endif
 }
 /// @}
@@ -180,7 +180,7 @@ inline float32x8 zip_hi(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpackhi_ps(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, zip_hi, a, b)
 #endif
 }
 
@@ -201,7 +201,7 @@ inline float64x4 zip_hi(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_unpackhi_pd(a, b);
 #else
-    return {zip_hi(a[0], b[0]), zip_hi(a[1], b[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(float64x4, zip_hi, a, b)
 #endif
 }
 /// @}

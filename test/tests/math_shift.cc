@@ -41,13 +41,6 @@ struct Test_shift_l {
         V c = simdpp::shift_l(a, i);
         TEST_PUSH(tc, V, b);
         TEST_PUSH(tc, V, c);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = simdpp::shift_l<i>(ah);
-        H ch = simdpp::shift_l(ah, i);
-        TEST_PUSH(tc, H, bh);
-        TEST_PUSH(tc, H, ch);
     }
 };
 
@@ -60,13 +53,6 @@ struct Test_shift_r {
         V c = simdpp::shift_r(a, i);
         TEST_PUSH(tc, V, b);
         TEST_PUSH(tc, V, c);
-
-        using H = typename V::half_vector_type;
-        H ah = tst_ext_half(a);
-        H bh = simdpp::shift_r<i>(ah);
-        H ch = simdpp::shift_r(ah, i);
-        TEST_PUSH(tc, H, bh);
-        TEST_PUSH(tc, H, ch);
     }
 };
 

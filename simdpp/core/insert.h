@@ -278,7 +278,10 @@ inline gint8x32 combine(gint8x16 a, gint8x16 b)
     r = _mm256_inserti128_si256(r, b, 1);
     return r;
 #else
-    return {a, b};
+    gint8x32 r;
+    r[0] = a;
+    r[1] = b;
+    return r;
 #endif
 }
 
@@ -303,7 +306,10 @@ inline float32x8 combine(float32x4 a, float32x4 b)
     r = _mm256_insertf128_ps(r, b, 1);
     return r;
 #else
-    return {a, b};
+    float32x8 r;
+    r[0] = a;
+    r[1] = b;
+    return r;
 #endif
 }
 
@@ -315,7 +321,10 @@ inline float64x4 combine(float64x2 a, float64x2 b)
     r = _mm256_insertf128_pd(r, b, 1);
     return r;
 #else
-    return {a, b};
+    float64x4 r;
+    r[0] = a;
+    r[1] = b;
+    return r;
 #endif
 }
 /// @}

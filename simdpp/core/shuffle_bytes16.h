@@ -130,7 +130,7 @@ inline gint8x32 shuffle_bytes16(gint8x32 a, gint8x32 b, gint8x32 mask)
     r = _mm256_blendv_epi8(ai, bi, sel);
     return r;
 #else
-    return {shuffle_bytes16(a[0], b[0], mask[0]), shuffle_bytes16(a[1], b[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(gint8x32, shuffle_bytes16, a, b, mask);
 #endif
 }
 

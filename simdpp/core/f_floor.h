@@ -103,7 +103,7 @@ inline float32x8 floor(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_floor_ps(a);
 #else
-    return {floor(a[0]), floor(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, floor, a);
 #endif
 }
 

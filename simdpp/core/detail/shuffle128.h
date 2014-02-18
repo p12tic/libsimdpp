@@ -64,7 +64,10 @@ gint8x32 shuffle128(gint8x32 a, gint8x32 b)
 #if SIMDPP_USE_AVX2
     return _mm256_permute2x128_si256(a, b, s1*0x10 + s0);
 #else
-    return {a[s0], b[s1]};
+    gint8x32 r;
+    r[0] = a[s0];
+    r[1] = b[s1];
+    return r;
 #endif
 }
 template<unsigned s0, unsigned s1>
@@ -81,7 +84,10 @@ float32x8 shuffle128(float32x8 a, float32x8 b)
 #if SIMDPP_USE_AVX
     return _mm256_permute2f128_ps(a, b, s1*0x10 + s0);
 #else
-    return {a[s0], b[s1]};
+    float32x8 r;
+    r[0] = a[s0];
+    r[1] = b[s1];
+    return r;
 #endif
 }
 template<unsigned s0, unsigned s1>
@@ -91,7 +97,10 @@ float64x4 shuffle128(float64x4 a, float64x4 b)
 #if SIMDPP_USE_AVX
     return _mm256_permute2f128_pd(a, b, s1*0x10 + s0);
 #else
-    return {a[s0], b[s1]};
+    float64x4 r;
+    r[0] = a[s0];
+    r[1] = b[s1];
+    return r;
 #endif
 }
 /// @}

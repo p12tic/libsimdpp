@@ -82,7 +82,7 @@ inline float32x8 sqrt(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_sqrt_ps(a);
 #else
-    return {sqrt(a[0]), sqrt(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, sqrt, a);
 #endif
 }
 /// @}
@@ -117,7 +117,7 @@ inline float64x4 sqrt(float64x4 a)
 #if SIMDPP_USE_AVX
     return _mm256_sqrt_pd(a);
 #else
-    return {sqrt(a[0]), sqrt(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float64x4, sqrt, a);
 #endif
 }
 /// @}

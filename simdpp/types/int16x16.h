@@ -42,6 +42,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX2 || DOXYGEN_SHOULD_READ_THIS
+
 /// @ingroup simd_vec_int
 /// @{
 
@@ -56,12 +58,11 @@ public:
     using uint_element_type = uint16_t;
     using int_vector_type = gint16x16;
     using uint_vector_type = uint16x16;
-    using half_vector_type = gint16x8;
     using mask_type = mask_int16x16;
     using base_vector_type = gint16x16;
 
     static constexpr unsigned length = 16;
-    static constexpr unsigned vec_length = 2; // FIXME
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned num_bits = 16;
     static constexpr uint_element_type all_bits = 0xffff;
 
@@ -71,10 +72,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
     gint16<16>(__m256i d) : d_(d) {}
     gint16<16>& operator=(__m256i d) { d_ = d; return *this; }
-#endif
     /// @}
 
     gint16<16>(const gint8x32& d);
@@ -84,17 +83,15 @@ public:
     gint16<16>& operator=(const gint32x8& d);
     gint16<16>& operator=(const gint64x4& d);
 
-#if SIMDPP_USE_AVX2
-#else
-    gint16<16>(gint16x8 d0, gint16x8 d1) { du_[0] = d0; du_[1] = d1; }
-
-    const gint16x8* begin() const   { return du_; }
-    gint16x8* begin()               { return du_; }
-    const gint16x8* end() const     { return du_+vec_length; }
-    gint16x8* end()                 { return du_+vec_length; }
-    const gint16x8& operator[](unsigned i) const { return u16(i); }
-          gint16x8& operator[](unsigned i)       { return u16(i); }
-#endif
+    /// @{
+    /// Range access
+    const gint16x16* begin() const                  { return this; }
+          gint16x16* begin()                        { return this; }
+    const gint16x16* end() const                    { return this+1; }
+          gint16x16* end()                          { return this+1; }
+    const gint16x16& operator[](unsigned i) const   { return *this; }
+          gint16x16& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /// Creates a int16x16 vector with the contents set to zero
     static gint16x16 zero();
@@ -102,26 +99,8 @@ public:
     /// Creates a int16x16 vector with the contents set to ones
     static gint16x16 ones();
 
-protected:
-#if SIMDPP_USE_AVX2
-#else
-    // For internal use only
-    const uint16x8& u16(unsigned i) const    { return du_[i]; }
-          uint16x8& u16(unsigned i)          { return du_[i]; }
-    const int16x8& i16(unsigned i) const    { return di_[i]; }
-          int16x8& i16(unsigned i)          { return di_[i]; }
-#endif
-
 private:
-
-#if SIMDPP_USE_AVX2
     __m256i d_;
-#else
-    union {
-        uint16x8 du_[2];
-        int16x8 di_[2];
-    };
-#endif
 };
 
 /** Class representing 16x 16-bit signed integer vector
@@ -130,9 +109,7 @@ template<>
 class int16<16> : public gint16x16 {
 public:
     using base_vector_type = int16x16;
-
     using element_type = int16_t;
-    using half_vector_type = int16x8;
 
     int16<16>() = default;
     int16<16>(const int16x16 &) = default;
@@ -140,10 +117,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
     int16<16>(__m256i d) : gint16x16(d) {}
     int16<16>& operator=(__m256i d) { gint16x16::operator=(d); return *this; }
-#endif
     /// @}
 
     int16<16>(const gint8x32& d);
@@ -155,13 +130,15 @@ public:
     int16<16>& operator=(const gint32x8& d);
     int16<16>& operator=(const gint64x4& d);
 
-#if SIMDPP_USE_AVX2
-#else
-    int16<16>(int16x8 d0, int16x8 d1) : gint16x16(d0, d1) {}
-
-    const int16x8& operator[](unsigned i) const { return i16(i); }
-          int16x8& operator[](unsigned i)       { return i16(i); }
-#endif
+    /// @{
+    /// Range access
+    const int16x16* begin() const                  { return this; }
+          int16x16* begin()                        { return this; }
+    const int16x16* end() const                    { return this+1; }
+          int16x16* end()                          { return this+1; }
+    const int16x16& operator[](unsigned i) const   { return *this; }
+          int16x16& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /** Creates a signed int16x16 vector from a value loaded from memory.
 
@@ -239,8 +216,6 @@ public:
 template<>
 class uint16<16> : public gint16x16 {
 public:
-
-    using half_vector_type = uint16x8;
     using base_vector_type = uint16x16;
 
     uint16<16>() = default;
@@ -249,10 +224,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
     uint16<16>(__m256i d) : gint16x16(d) {}
     uint16<16>& operator=(__m256i d) { gint16x16::operator=(d); return *this; }
-#endif
     /// @}
 
     uint16<16>(const gint8x32& d);
@@ -264,13 +237,15 @@ public:
     uint16<16>& operator=(const gint32x8& d);
     uint16<16>& operator=(const gint64x4& d);
 
-#if SIMDPP_USE_AVX2
-#else
-    uint16<16>(uint16x8 d0, uint16x8 d1) : gint16x16(d0, d1) {}
-
-    const uint16x8& operator[](unsigned i) const { return u16(i); }
-          uint16x8& operator[](unsigned i)       { return u16(i); }
-#endif
+    /// @{
+    /// Range access
+    const uint16x16* begin() const                  { return this; }
+          uint16x16* begin()                        { return this; }
+    const uint16x16* end() const                    { return this+1; }
+          uint16x16* end()                          { return this+1; }
+    const uint16x16& operator[](unsigned i) const   { return *this; }
+          uint16x16& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /** Creates a unsigned int16x16 vector from a value loaded from memory.
 
@@ -356,34 +331,30 @@ public:
     mask_int16<16> &operator=(const mask_int16x16 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_AVX2
     mask_int16<16>(__m256i d) : d_(d) {}
+#endif
     mask_int16<16>(gint16x16 d) : d_(d) {}
-#else
-    mask_int16<16>(mask_int16x8 m0, mask_int16x8 m1) { m_[0] = m0; m_[1] = m1; }
-#endif
-#endif
 
     /// Access the underlying type
     operator gint16x16() const;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_AVX2
-#else
-    mask_int16x8& operator[](unsigned id) { return m_[id]; }
-    const mask_int16x8& operator[](unsigned id) const { return m_[id]; }
-#endif
-#endif
+    /// @{
+    /// Range access
+    const mask_int16x16* begin() const                  { return this; }
+          mask_int16x16* begin()                        { return this; }
+    const mask_int16x16* end() const                    { return this+1; }
+          mask_int16x16* end()                          { return this+1; }
+    const mask_int16x16& operator[](unsigned i) const   { return *this; }
+          mask_int16x16& operator[](unsigned i)         { return *this; }
+    /// @}
 
 private:
-#if SIMDPP_USE_AVX2
     gint16x16 d_;
-#else
-    mask_int16x8 m_[2];
-#endif
 };
 
 /// @} -- end ingroup
+
+#endif // SIMDPP_USE_AVX2 || DOXYGEN_SHOULD_READ_THIS
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

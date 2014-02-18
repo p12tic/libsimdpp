@@ -79,7 +79,7 @@ inline float32x8 fmadd(float32x8 a, float32x8 b, float32x8 c)
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif
 #else
-    return {fmadd(a[0], b[0], c[0]), fmadd(a[1], b[1], c[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(float32x8, fmadd, a, b, c);
 #endif
 }
 
@@ -107,7 +107,7 @@ inline float64x4 fmadd(float64x4 a, float64x4 b, float64x4 c)
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif
 #else
-    return {fmadd(a[0], b[0], c[0]), fmadd(a[1], b[1], c[1])};
+    SIMDPP_VEC_ARRAY_IMPL3(float64x4, fmadd, a, b, c);
 #endif
 }
 /// @}

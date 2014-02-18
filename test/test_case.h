@@ -42,36 +42,59 @@ bool test_equal(const TestCase& a, const char* a_arch,
 class TestCase {
 public:
 
-    // Types of 16-bit vectors
+    // Types of vector elements
     enum Type : uint8_t {
-        // 16-bit number
-        TYPE_UINT16 = 0,
-        // 16-byte vector
-        TYPE_UINT8x16,
-        TYPE_INT8x16,
-        TYPE_UINT16x8,
-        TYPE_INT16x8,
-        TYPE_UINT32x4,
-        TYPE_INT32x4,
-        TYPE_UINT64x2,
-        TYPE_INT64x2,
-        TYPE_FLOAT32x4,
-        TYPE_FLOAT64x2,
-        // 32-byte vector
-        TYPE_UINT8x32,
-        TYPE_INT8x32,
-        TYPE_UINT16x16,
-        TYPE_INT16x16,
-        TYPE_UINT32x8,
-        TYPE_INT32x8,
-        TYPE_UINT64x4,
-        TYPE_INT64x4,
-        TYPE_FLOAT32x8,
-        TYPE_FLOAT64x4,
+        TYPE_INT8 = 0,
+        TYPE_UINT8,
+        TYPE_INT16,
+        TYPE_UINT16,
+        TYPE_UINT32,
+        TYPE_INT32,
+        TYPE_UINT64,
+        TYPE_INT64,
+        TYPE_FLOAT32,
+        TYPE_FLOAT64
+    };
+
+    // Holds one result vector
+    struct Result {
+        static constexpr unsigned num_bytes = 32;
+
+        Result(Type atype, unsigned alength, unsigned ael_size, unsigned aline,
+               unsigned aseq, unsigned aprec_ulp)
+        {
+            type = atype;
+            line = aline;
+            seq = aseq;
+            prec_ulp = aprec_ulp;
+            length = alength;
+            el_size = ael_size;
+            data.resize(el_size*length);
+        }
+
+        Type type;
+        unsigned line;
+        unsigned seq;
+        unsigned prec_ulp;
+        const char* file;
+        unsigned length;
+        unsigned el_size;
+
+        void set(unsigned id, void* adata)
+        {
+            std::memcpy(data.data() + id*el_size, adata, el_size);
+        }
+
+        const void* d() const
+        {
+            return data.data();
+        }
+
+        std::vector<std::uint8_t> data;
     };
 
     /// Stores the results into the results set.
-    void push(Type type, void* data, unsigned line);
+    Result& push(Type type, unsigned length, unsigned line);
 
     /// Sets the allowed error in ULPs. Only meaningful for floating-point data.
     /// Affects all pushed data until the next call to @a unset_precision
@@ -88,7 +111,6 @@ public:
     std::size_t num_results() const         { return results_.size(); }
 
 private:
-    struct Result;
     friend class TestResults;
     friend bool test_equal(const TestCase& a, const char* a_arch,
                            const TestCase& b, const char* b_arch,
@@ -98,42 +120,6 @@ private:
 
     static std::size_t size_for_type(Type t);
     static unsigned precision_for_result(const Result& res);
-
-    // Holds one result vector
-    struct Result {
-        static constexpr unsigned num_bytes = 32;
-
-        Result(Type atype, void* adata, std::size_t asize,
-               unsigned aline, unsigned aseq, unsigned aprec_ulp)
-        {
-            type = atype;
-            line = aline;
-            seq = aseq;
-            prec_ulp = aprec_ulp;
-            std::memcpy(v_u8, adata, asize);
-        }
-
-        Type type;
-        unsigned line;
-        unsigned seq;
-        unsigned prec_ulp;
-        const char* file;
-
-        union {
-            uint16_t u16;
-
-            uint8_t v_u8[num_bytes];
-            int8_t v_s8[num_bytes];
-            uint16_t v_u16[num_bytes/2];
-            int16_t v_s16[num_bytes/2];
-            uint32_t v_u32[num_bytes/4];
-            int32_t v_s32[num_bytes/4];
-            uint64_t v_u64[num_bytes/8];
-            int64_t v_s64[num_bytes/8];
-            float v_f32[num_bytes/4];
-            double v_f64[num_bytes/8];
-        };
-    };
 
     const char* name_;
     const char* file_;

@@ -107,7 +107,7 @@ gint8x32 align(gint8x32 lower, gint8x32 upper)
 #if SIMDPP_USE_AVX2
     return _mm256_alignr_epi8(upper, lower, shift);
 #else
-    return {align<shift>(lower[0], upper[0]), align<shift>(lower[1], upper[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, align<shift>, lower, upper);
 #endif
 }
 /// @}

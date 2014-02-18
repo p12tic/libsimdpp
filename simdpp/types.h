@@ -53,4 +53,25 @@
 #include <simdpp/types/float32.h>
 #include <simdpp/types/float64.h>
 
+#define SIMDPP_VEC_ARRAY_IMPL1(RTYPE, OP, V1)                   \
+    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+        r[i] = OP((V1)[i]); }                                   \
+    return r;
+
+#define SIMDPP_VEC_ARRAY_IMPL2(RTYPE, OP, V1, V2)               \
+    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+        r[i] = OP((V1)[i], (V2)[i]); }                          \
+    return r;
+
+#define SIMDPP_VEC_ARRAY_IMPL2S(RTYPE, OP, V1, A2)              \
+    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+        r[i] = OP((V1)[i], (A2)); }                             \
+    return r;
+
+#define SIMDPP_VEC_ARRAY_IMPL3(RTYPE, OP, V1, V2, V3)           \
+    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+        r[i] = OP((V1)[i], (V2)[i], (V3)[i]);                   \
+    }                                                           \
+    return r;
+
 #endif

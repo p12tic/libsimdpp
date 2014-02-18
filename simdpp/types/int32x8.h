@@ -41,6 +41,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX2 || DOXYGEN_SHOULD_READ_THIS
+
 /// @ingroup simd_vec_int
 /// @{
 
@@ -59,7 +61,7 @@ public:
     using mask_type = mask_int32x8;
     using base_vector_type = gint32x8;
 
-    static constexpr unsigned vec_length = 2; // FIXME
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned length = 8;
     static constexpr unsigned num_bits = 32;
     static constexpr uint_element_type all_bits = 0xffffffff;
@@ -70,10 +72,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
     gint32<8>(__m256i d) : d_(d) {}
     gint32<8>& operator=(__m256i d) { d_ = d; return *this; }
-#endif
     /// @}
 
     /// @{
@@ -92,17 +92,15 @@ public:
     gint32<8>& operator=(const float32x8& d) { operator=(gint32x8(d)); return *this; }
     /// @}
 
-#if SIMDPP_USE_AVX2
-#else
-    gint32<8>(gint32x4 d0, gint32x4 d1) { du_[0] = d0; du_[1] = d1; }
-
-    const gint32x4* begin() const   { return du_; }
-    gint32x4* begin()               { return du_; }
-    const gint32x4* end() const     { return du_+vec_length; }
-    gint32x4* end()                 { return du_+vec_length; }
-    const gint32x4& operator[](unsigned i) const { return u32(i); }
-          gint32x4& operator[](unsigned i)       { return u32(i); }
-#endif
+    /// @{
+    /// Range access
+    const gint32x8* begin() const                  { return this; }
+          gint32x8* begin()                        { return this; }
+    const gint32x8* end() const                    { return this+1; }
+          gint32x8* end()                          { return this+1; }
+    const gint32x8& operator[](unsigned i) const   { return *this; }
+          gint32x8& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /// Creates a int32x8 vector with the contents set to zero
     static gint32x8 zero();
@@ -173,13 +171,15 @@ public:
     int32<8>& operator=(const float32x8& d) { gint32x8::operator=(d); return *this; }
     /// @}
 
-#if SIMDPP_USE_AVX2
-#else
-    int32<8>(int32x4 d0, int32x4 d1) : gint32x8(d0, d1) {}
-
-    const int32x4& operator[](unsigned i) const { return i32(i); }
-          int32x4& operator[](unsigned i)       { return i32(i); }
-#endif
+    /// @{
+    /// Range access
+    const int32x8* begin() const                  { return this; }
+          int32x8* begin()                        { return this; }
+    const int32x8* end() const                    { return this+1; }
+          int32x8* end()                          { return this+1; }
+    const int32x8& operator[](unsigned i) const   { return *this; }
+          int32x8& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /** Creates a signed int32x8 vector from a value loaded from memory.
 
@@ -256,10 +256,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX2
     uint32<8>(__m256i d) : gint32x8(d) {}
     uint32<8>& operator=(__m256i d) { gint32x8::operator=(d); return *this; }
-#endif
     /// @}
 
     /// @{
@@ -280,13 +278,15 @@ public:
     uint32<8>& operator=(const float32x8& d) { gint32x8::operator=(d); return *this; }
     /// @}
 
-#if SIMDPP_USE_AVX2
-#else
-    uint32<8>(uint32x4 d0, uint32x4 d1) : gint32x8(d0, d1) {}
-
-    const uint32x4& operator[](unsigned i) const { return u32(i); }
-          uint32x4& operator[](unsigned i)       { return u32(i); }
-#endif
+    /// @{
+    /// Range access
+    const uint32x8* begin() const                  { return this; }
+          uint32x8* begin()                        { return this; }
+    const uint32x8* end() const                    { return this+1; }
+          uint32x8* end()                          { return this+1; }
+    const uint32x8& operator[](unsigned i) const   { return *this; }
+          uint32x8& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /** Creates an unsigned int32x8 vector from a value loaded from memory.
 
@@ -374,23 +374,23 @@ public:
     /// Access the underlying type
     operator gint32x8() const;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_AVX2
-#else
-    mask_int32x4& operator[](unsigned id) { return m_[id]; }
-    const mask_int32x4& operator[](unsigned id) const { return m_[id]; }
-#endif
-#endif
+    /// @{
+    /// Range access
+    const mask_int32x8* begin() const                  { return this; }
+          mask_int32x8* begin()                        { return this; }
+    const mask_int32x8* end() const                    { return this+1; }
+          mask_int32x8* end()                          { return this+1; }
+    const mask_int32x8& operator[](unsigned i) const   { return *this; }
+          mask_int32x8& operator[](unsigned i)         { return *this; }
+    /// @}
 
 private:
-#if SIMDPP_USE_AVX2
     gint32x8 d_;
-#else
-    mask_int32x4 m_[2];
-#endif
 };
 
 /// @} -- end ingroup
+
+#endif // SIMDPP_USE_AVX2 || DOXYGEN_SHOULD_READ_THIS
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

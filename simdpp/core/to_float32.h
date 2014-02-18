@@ -91,7 +91,7 @@ inline float32x8 to_float32x8(int32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_cvtepi32_ps(a);
 #else
-    return float32x8(to_float32x4(a[0]), to_float32x4(a[1]));
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, to_float32x4, a); //FIXME
 #endif
 }
 /// @}
@@ -153,11 +153,13 @@ inline float32x8 to_float32x8(float64x4 a)
     r[1] = float(a[0].el(1));
     r[2] = float(a[1].el(0));
     r[3] = float(a[1].el(1));
-    return float32x8(r, float32x4::zero());
+    //return float32x8(r, float32x4::zero());
+    // FIXME
 #elif SIMDPP_USE_AVX
     return _mm256_castps128_ps256(_mm256_cvtpd_ps(a));
 #elif SIMDPP_USE_SSE2
-    return float32x8(to_float32x4(a[0]), to_float32x4(move_l<2>(a[0])));
+    //return float32x8(to_float32x4(a[0]), to_float32x4(move_l<2>(a[0])));
+    // FIXME
 #endif
 }
 /// @}

@@ -41,6 +41,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX
+
 inline float32x8 float32x8::zero()
 {
     float32x8 r;
@@ -50,22 +52,12 @@ inline float32x8 float32x8::zero()
 
 inline float32x8 float32x8::load_broadcast(const float* v0)
 {
-#if SIMDPP_USE_AVX
     return _mm256_broadcast_ss(v0);
-#else
-    float32x4 a = float32x4::load_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline float32x8 float32x8::set_broadcast(float v0)
 {
-#if SIMDPP_USE_AVX
     return _mm256_broadcast_ss(&v0);
-#else
-    float32x4 a = float32x4::set_broadcast(v0);
-    return {a, a};
-#endif
 }
 
 inline float32x8 float32x8::make_const(float v0)
@@ -86,22 +78,16 @@ inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3)
 inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3,
                                        float v4, float v5, float v6, float v7)
 {
-#if SIMDPP_USE_AVX
     return _mm256_set_ps(v7, v6, v5, v4, v3, v2, v1, v0);
-#else
-    return {float32x4::make_const(v0, v1, v2, v3),
-            float32x4::make_const(v4, v5, v6, v7)};
-#endif
 }
 
 inline mask_float32x8::operator float32x8() const
 {
-#if SIMDPP_USE_AVX
     return d_;
-#else
-    return float32x8(m_[0], m_[1]);
-#endif
 }
+
+#endif // SIMDPP_USE_AVX
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

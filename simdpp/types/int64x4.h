@@ -41,10 +41,12 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+#if SIMDPP_USE_AVX2 || DOXYGEN_SHOULD_READ_THIS
+
 /// @ingroup simd_vec_int
 /// @{
 
-/** Generic class representing 2x 64-bit integer vector.
+/** Generic class representing 4x 64-bit integer vector.
     To be used where the signedness of the underlying element type is not important
 */
 template<>
@@ -60,7 +62,7 @@ public:
     using base_vector_type = gint64x4;
 
     static constexpr unsigned length = 4;
-    static constexpr unsigned vec_length = 2; // FIXME
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
@@ -70,10 +72,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
     gint64<4>(__m256i d) : d_(d) {}
     gint64<4>& operator=(__m256i d) { d_ = d; return *this; }
-#endif
     /// @}
 
     /// @{
@@ -92,17 +92,15 @@ public:
     gint64<4>& operator=(const float64x4& d) { operator=(gint64x4(d)); return *this; }
     /// @}
 
-#if SIMDPP_USE_AVX2
-#else
-    gint64<4>(gint64x2 d0, gint64x2 d1) { du_[0] = d0; du_[1] = d1; }
-
-    const uint64x2* begin() const   { return du_; }
-    uint64x2* begin()               { return du_; }
-    const uint64x2* end() const     { return du_+vec_length; }
-    uint64x2* end()                 { return du_+vec_length; }
-    const gint64x2& operator[](unsigned i) const { return u64(i); }
-          gint64x2& operator[](unsigned i)       { return u64(i); }
-#endif
+    /// @{
+    /// Range access
+    const gint64x4* begin() const                  { return this; }
+          gint64x4* begin()                        { return this; }
+    const gint64x4* end() const                    { return this+1; }
+          gint64x4* end()                          { return this+1; }
+    const gint64x4& operator[](unsigned i) const   { return *this; }
+          gint64x4& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /// Creates a int64x4 vector with the contents set to zero
     static gint64x4 zero();
@@ -110,27 +108,9 @@ public:
     /// Creates a int64x4 vector with the contents set to ones
     static gint64x4 ones();
 
-protected:
-
-#if SIMDPP_USE_AVX2
-#else
-    // For internal use only
-    const uint64x2& u64(unsigned i) const    { return du_[i]; }
-          uint64x2& u64(unsigned i)          { return du_[i]; }
-    const int64x2& i64(unsigned i) const    { return di_[i]; }
-          int64x2& i64(unsigned i)          { return di_[i]; }
-#endif
-
 private:
 
-#if SIMDPP_USE_AVX2
     __m256i d_;
-#else
-    union {
-        uint64x2 du_[2];
-        int64x2 di_[2];
-    };
-#endif
 };
 
 /** Class representing 2x 64-bit signed integer vector
@@ -149,10 +129,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
     int64<4>(__m256i d) : gint64x4(d) {}
     int64<4>& operator=(__m256i d) { gint64x4::operator=(d); return *this; }
-#endif
     /// @}
 
     /// @{
@@ -173,13 +151,15 @@ public:
     int64<4>& operator=(const float64x4& d) { gint64x4::operator=(d); return *this; }
     /// @}
 
-#if SIMDPP_USE_AVX2
-#else
-    int64<4>(int64x2 d0, int64x2 d1) : gint64x4(d0, d1) {}
-
-    const int64x2& operator[](unsigned i) const { return i64(i); }
-          int64x2& operator[](unsigned i)       { return i64(i); }
-#endif
+    /// @{
+    /// Range access
+    const int64x4* begin() const                  { return this; }
+          int64x4* begin()                        { return this; }
+    const int64x4* end() const                    { return this+1; }
+          int64x4* end()                          { return this+1; }
+    const int64x4& operator[](unsigned i) const   { return *this; }
+          int64x4& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /** Creates a signed int64x4 vector from a value loaded from memory.
 
@@ -247,10 +227,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX2
     uint64<4>(__m256i d) : gint64x4(d) {}
     uint64<4>& operator=(__m256i d) { gint64x4::operator=(d); return *this; }
-#endif
     /// @}
 
     /// @{
@@ -271,13 +249,15 @@ public:
     uint64<4>& operator=(const float64x4& d) { gint64x4::operator=(d); return *this; }
     /// @}
 
-#if SIMDPP_USE_AVX2
-#else
-    uint64<4>(uint64x2 d0, uint64x2 d1) : gint64x4(d0, d1) {}
-
-    const uint64x2& operator[](unsigned i) const { return u64(i); }
-          uint64x2& operator[](unsigned i)       { return u64(i); }
-#endif
+    /// @{
+    /// Range access
+    const uint64x4* begin() const                  { return this; }
+          uint64x4* begin()                        { return this; }
+    const uint64x4* end() const                    { return this+1; }
+          uint64x4* end()                          { return this+1; }
+    const uint64x4& operator[](unsigned i) const   { return *this; }
+          uint64x4& operator[](unsigned i)         { return *this; }
+    /// @}
 
     /** Creates a int64x4 vector from a value loaded from memory.
 
@@ -338,6 +318,7 @@ class mask_int64<4> {
 public:
     using base_vector_type = mask_int64x4;
 
+    static constexpr unsigned vec_length = 1;
     static constexpr unsigned length = 4;
 
     mask_int64<4>() = default;
@@ -345,34 +326,30 @@ public:
     mask_int64<4> &operator=(const mask_int64x4 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_AVX2
     mask_int64<4>(__m256i d) : d_(d) {}
+#endif
     mask_int64<4>(gint64x4 d) : d_(d) {}
-#else
-    mask_int64<4>(mask_int64x2 m0, mask_int64x2 m1) { m_[0] = m0; m_[1] = m1; }
-#endif
-#endif
 
     /// Access the underlying type
     operator gint64x4() const;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_AVX2
-#else
-    mask_int64x2& operator[](unsigned id) { return m_[id]; }
-    const mask_int64x2& operator[](unsigned id) const { return m_[id]; }
-#endif
-#endif
+    /// @{
+    /// Range access
+    const mask_int32x8* begin() const                  { return this; }
+          mask_int32x8* begin()                        { return this; }
+    const mask_int32x8* end() const                    { return this+1; }
+          mask_int32x8* end()                          { return this+1; }
+    const mask_int32x8& operator[](unsigned i) const   { return *this; }
+          mask_int32x8& operator[](unsigned i)         { return *this; }
+    /// @}
 
 private:
-#if SIMDPP_USE_AVX2
     gint64x4 d_;
-#else
-    mask_int64x2 m_[2];
-#endif
 };
 
 /// @} -- end ingroup
+
+#endif // SIMDPP_USE_AVX2 || DOXYGEN_SHOULD_READ_THIS
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

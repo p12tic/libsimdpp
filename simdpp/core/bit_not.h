@@ -76,7 +76,7 @@ inline gint8x32 bit_not(gint8x32 a)
     gint8x32 ones = gint8x32::ones();
     return bit_xor(a, ones);
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, bit_not, a)
 #endif
 }
 
@@ -130,7 +130,7 @@ inline mask_int8x32 bit_not(mask_int8x32 a)
 #if SIMDPP_USE_AVX2
     return bit_not(uint8x32(a));
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int8x32, bit_not, a)
 #endif
 }
 
@@ -139,7 +139,7 @@ inline mask_int16x16 bit_not(mask_int16x16 a)
 #if SIMDPP_USE_AVX2
     return bit_not(uint16x16(a));
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int16x16, bit_not, a)
 #endif
 }
 
@@ -148,7 +148,7 @@ inline mask_int32x8 bit_not(mask_int32x8 a)
 #if SIMDPP_USE_AVX2
     return bit_not(uint32x8(a));
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int32x8, bit_not, a)
 #endif
 }
 
@@ -157,7 +157,7 @@ inline mask_int64x4 bit_not(mask_int64x4 a)
 #if SIMDPP_USE_AVX2
     return bit_not(uint64x4(a));
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int64x4, bit_not, a)
 #endif
 }
 /// @}
@@ -206,7 +206,7 @@ inline float32x8 bit_not(float32x8 a)
     uint32x8 ones = uint32x8::ones();
     return bit_xor(a, ones);
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, bit_not, a)
 #endif
 }
 
@@ -216,7 +216,7 @@ inline float64x4 bit_not(float64x4 a)
     uint64x4 ones = uint64x4::ones();
     return bit_xor(a, ones);
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(float64x4, bit_not, a)
 #endif
 }
 
@@ -245,7 +245,7 @@ inline mask_float32x8 bit_not(mask_float32x8 a)
 #if SIMDPP_USE_AVX
     return bit_not(float32x8(a));
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_float32x8, bit_not, a)
 #endif
 }
 
@@ -254,7 +254,7 @@ inline mask_float64x4 bit_not(mask_float64x4 a)
 #if SIMDPP_USE_AVX
     return bit_not(float64x4(a));
 #else
-    return {bit_not(a[0]), bit_not(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(mask_float64x4, bit_not, a)
 #endif
 }
 /// @}

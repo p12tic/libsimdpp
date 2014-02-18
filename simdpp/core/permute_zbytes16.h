@@ -97,7 +97,7 @@ inline gint8x32 permute_zbytes16(gint8x32 a, gint8x32 mask)
 #if SIMDPP_USE_AVX2
     return _mm256_shuffle_epi8(a, mask);
 #else
-    return {permute_zbytes16(a[0], mask[0]), permute_zbytes16(a[1], mask[1])};
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, permute_zbytes16, a, mask);
 #endif
 }
 

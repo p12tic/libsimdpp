@@ -88,7 +88,7 @@ inline uint8x32 abs(int8x32 a)
 #if SIMDPP_USE_AVX2
     return _mm256_abs_epi8(a);
 #else
-    return {abs(a[0]), abs(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(uint8x32, abs, a);
 #endif
 }
 /// @}
@@ -135,7 +135,7 @@ inline uint16x16 abs(int16x16 a)
 #if SIMDPP_USE_AVX2
     return _mm256_abs_epi16(a);
 #else
-    return {abs(a[0]), abs(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(uint16x16, abs, a);
 #endif
 }
 /// @}
@@ -182,7 +182,7 @@ inline uint32x8 abs(int32x8 a)
 #if SIMDPP_USE_AVX2
     return _mm256_abs_epi32(a);
 #else
-    return {abs(a[0]), abs(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(uint32x8, abs, a);
 #endif
 }
 /// @}
@@ -239,7 +239,7 @@ inline uint64x4 abs(int64x4 a)
     a = sub(a, t);
     return a;
 #else
-    return {abs(a[0]), abs(a[1])};
+    SIMDPP_VEC_ARRAY_IMPL1(uint64x4, abs, a);
 #endif
 }
 /// @}
