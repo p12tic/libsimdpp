@@ -25,18 +25,23 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_TEST_COMMON_ALIGNED_ALLOCATOR_H
-#define LIBSIMDPP_TEST_COMMON_ALIGNED_ALLOCATOR_H
+#ifndef LIBSIMDPP_CORE_ALIGNED_ALLOCATOR_H
+#define LIBSIMDPP_CORE_ALIGNED_ALLOCATOR_H
 
 #include <memory>
 #include <cstddef>
 #include <cstdint>
 
+namespace simdpp {
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
+
 /** An allocator that allocates memory with stricter alignment requirements than
     the defaults. @a A must be a power of two.
 */
 template<class T, std::size_t A>
-class AlignedAllocator {
+class aligned_allocator {
 private:
 
     static_assert(!(A & (A - 1)), "A is not a power of two");
@@ -50,19 +55,19 @@ public:
     using size_type = std::size_t;
     using difference_type = std::ptrdiff_t;
 
-    AlignedAllocator() = default;
-    AlignedAllocator(const AlignedAllocator&) = default;
+    aligned_allocator() = default;
+    aligned_allocator(const aligned_allocator&) = default;
 
     template<class U>
-    AlignedAllocator(const AlignedAllocator<U,A>&) {}
+    aligned_allocator(const aligned_allocator<U,A>&) {}
 
-    ~AlignedAllocator() = default;
+    ~aligned_allocator() = default;
 
-    AlignedAllocator& operator=(const AlignedAllocator&) = delete;
+    aligned_allocator& operator=(const aligned_allocator&) = delete;
 
     template<class U>
     struct rebind {
-        using other = AlignedAllocator<U,A>;
+        using other = aligned_allocator<U,A>;
     };
 
     T* address(T& x) const
@@ -76,8 +81,8 @@ public:
     }
 
     // stateless
-    bool operator!=(const AlignedAllocator& other) const { return false; }
-    bool operator==(const AlignedAllocator& other) const { return true; }
+    bool operator!=(const aligned_allocator& other) const { return false; }
+    bool operator==(const aligned_allocator& other) const { return true; }
 
     void construct(T* p, const T& t) const
     {
@@ -97,7 +102,7 @@ public:
         }
 
         if (n > max_size()) {
-            throw std::length_error("AlignedAllocator<T,A>::allocate() - Integer overflow.");
+            throw std::length_error("aligned_allocator<T,A>::allocate() - Integer overflow.");
         }
 
 
@@ -136,5 +141,10 @@ public:
         return allocate(n);
     }
 };
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
+} // namespace simdpp
 
 #endif

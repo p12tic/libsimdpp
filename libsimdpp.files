@@ -35,6 +35,7 @@ simdpp/adv/transpose.h
 simdpp/altivec/load1.h
 simdpp/cast.h
 simdpp/core/align.h
+simdpp/core/aligned_allocator.h
 simdpp/core/bit_and.h
 simdpp/core/bit_andnot.h
 simdpp/core/bit_not.h
@@ -200,7 +201,6 @@ simdpp/types/traits.h
 test/CMakeLists.txt
 test/arch_registration.cc
 test/arch_registration.h
-test/common/aligned_allocator.h
 test/common/masks.h
 test/common/vectors.h
 test/main_dispatcher.cc

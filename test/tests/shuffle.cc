@@ -28,7 +28,6 @@
 #include "../test_helpers.h"
 #include "../test_results.h"
 #include "../common/vectors.h"
-#include "../common/aligned_allocator.h"
 #include <simdpp/simd.h>
 #include <vector>
 
@@ -132,7 +131,7 @@ void test_shuffle_type256(TestCase &tc, V v1, V v2)
 }
 
 template<class T>
-using AlignedVector = std::vector<T, AlignedAllocator<T, 32>>;
+using AlignedVector = std::vector<T, simdpp::aligned_allocator<T, 32>>;
 
 template<class V>
 AlignedVector<V> test_blend_make_sel_vec()

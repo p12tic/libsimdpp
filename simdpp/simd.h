@@ -306,6 +306,7 @@
 #include <simdpp/altivec/load1.h>
 #include <simdpp/cast.h>
 #include <simdpp/core/align.h>
+#include <simdpp/core/aligned_allocator.h>
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/core/bit_not.h>
