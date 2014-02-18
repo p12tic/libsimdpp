@@ -171,14 +171,10 @@ set(HEADERS
     types/float64x4.h
     types/float64x4.inl
     types/fwd.h
-    types/int128.h
-    types/int128.inl
     types/int16x16.h
     types/int16x16.inl
     types/int16x8.h
     types/int16x8.inl
-    types/int256.h
-    types/int256.inl
     types/int32x4.h
     types/int32x4.inl
     types/int32x8.h

@@ -43,6 +43,31 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint8<16>::gint8(const gint16x8& d) { *this = bit_cast<gint8x16>(d); }
+inline gint8<16>::gint8(const gint32x4& d) { *this = bit_cast<gint8x16>(d); }
+inline gint8<16>::gint8(const gint64x2& d) { *this = bit_cast<gint8x16>(d); }
+inline gint8<16>& gint8<16>::operator=(const gint16x8& d) { *this = bit_cast<gint8x16>(d); return *this; }
+inline gint8<16>& gint8<16>::operator=(const gint32x4& d) { *this = bit_cast<gint8x16>(d); return *this; }
+inline gint8<16>& gint8<16>::operator=(const gint64x2& d) { *this = bit_cast<gint8x16>(d); return *this; }
+
+inline int8<16>::int8(const gint8x16& d) : gint8x16(d) {}
+inline int8<16>::int8(const gint16x8& d) : gint8x16(bit_cast<gint8x16>(d)) {}
+inline int8<16>::int8(const gint32x4& d) : gint8x16(bit_cast<gint8x16>(d)) {}
+inline int8<16>::int8(const gint64x2& d) : gint8x16(bit_cast<gint8x16>(d)) {}
+inline int8<16>& int8<16>::operator=(const gint8x16& d) { gint8x16::operator=(d); return *this; }
+inline int8<16>& int8<16>::operator=(const gint16x8& d) { gint8x16::operator=(d); return *this; }
+inline int8<16>& int8<16>::operator=(const gint32x4& d) { gint8x16::operator=(d); return *this; }
+inline int8<16>& int8<16>::operator=(const gint64x2& d) { gint8x16::operator=(d); return *this; }
+
+inline uint8<16>::uint8(const gint8x16& d) : gint8x16(d) {}
+inline uint8<16>::uint8(const gint16x8& d) : gint8x16(bit_cast<gint8x16>(d)) {}
+inline uint8<16>::uint8(const gint32x4& d) : gint8x16(bit_cast<gint8x16>(d)) {}
+inline uint8<16>::uint8(const gint64x2& d) : gint8x16(bit_cast<gint8x16>(d)) {}
+inline uint8<16>& uint8<16>::operator=(const gint8x16& d) { gint8x16::operator=(d); return *this; }
+inline uint8<16>& uint8<16>::operator=(const gint16x8& d) { gint8x16::operator=(d); return *this; }
+inline uint8<16>& uint8<16>::operator=(const gint32x4& d) { gint8x16::operator=(d); return *this; }
+inline uint8<16>& uint8<16>::operator=(const gint64x2& d) { gint8x16::operator=(d); return *this; }
+
 inline gint8x16 gint8x16::zero()
 {
     return uint8x16::make_const(0);

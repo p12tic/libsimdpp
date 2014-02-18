@@ -41,6 +41,31 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint32<8>::gint32(const gint8x32& d) { *this = bit_cast<gint32x8>(d); }
+inline gint32<8>::gint32(const gint16x16& d){ *this = bit_cast<gint32x8>(d); }
+inline gint32<8>::gint32(const gint64x4& d) { *this = bit_cast<gint32x8>(d); }
+inline gint32<8>& gint32<8>::operator=(const gint8x32& d) { *this = bit_cast<gint32x8>(d); return *this; }
+inline gint32<8>& gint32<8>::operator=(const gint16x16& d){ *this = bit_cast<gint32x8>(d); return *this; }
+inline gint32<8>& gint32<8>::operator=(const gint64x4& d) { *this = bit_cast<gint32x8>(d); return *this; }
+
+inline int32<8>::int32(const gint8x32& d) : gint32x8(bit_cast<gint32x8>(d)) {}
+inline int32<8>::int32(const gint16x16& d): gint32x8(bit_cast<gint32x8>(d)) {}
+inline int32<8>::int32(const gint32x8& d) : gint32x8(d) {}
+inline int32<8>::int32(const gint64x4& d) : gint32x8(bit_cast<gint32x8>(d)) {}
+inline int32<8>& int32<8>::operator=(const gint8x32& d) { gint32x8::operator=(d); return *this; }
+inline int32<8>& int32<8>::operator=(const gint16x16& d){ gint32x8::operator=(d); return *this; }
+inline int32<8>& int32<8>::operator=(const gint32x8& d) { gint32x8::operator=(d); return *this; }
+inline int32<8>& int32<8>::operator=(const gint64x4& d) { gint32x8::operator=(d); return *this; }
+
+inline uint32<8>::uint32(const gint8x32& d) : gint32x8(bit_cast<gint32x8>(d)) {}
+inline uint32<8>::uint32(const gint16x16& d): gint32x8(bit_cast<gint32x8>(d)) {}
+inline uint32<8>::uint32(const gint32x8& d) : gint32x8(d) {}
+inline uint32<8>::uint32(const gint64x4& d) : gint32x8(bit_cast<gint32x8>(d)) {}
+inline uint32<8>& uint32<8>::operator=(const gint8x32& d) { gint32x8::operator=(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const gint16x16& d){ gint32x8::operator=(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const gint32x8& d) { gint32x8::operator=(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const gint64x4& d) { gint32x8::operator=(d); return *this; }
+
 inline gint32<8>::gint32(const float32x8& d)
 {
 #if SIMDPP_USE_AVX2

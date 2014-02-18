@@ -33,14 +33,13 @@
 #endif
 #include <simdpp/setup_arch.h>
 
-#include <simdpp/types/int128.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int16x8.h>
 #include <simdpp/types/int32x4.h>
 #include <simdpp/types/int64x2.h>
 #include <simdpp/types/float32x4.h>
 #include <simdpp/types/float64x2.h>
-#include <simdpp/types/int256.h>
 #include <simdpp/types/int8x32.h>
 #include <simdpp/types/int16x16.h>
 #include <simdpp/types/int32x8.h>

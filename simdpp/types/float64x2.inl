@@ -45,17 +45,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline float64<2>::float64(gint64x2 d)
-{
-#if SIMDPP_USE_SSE2
-    d_ = _mm_castsi128_pd(d);
-#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON || SIMDPP_USE_NULL
-    detail::mem_block<gint64x2> ax(d);
-    d_[0] = bit_cast<double>(ax[0]);
-    d_[1] = bit_cast<double>(ax[1]);
-#endif
-}
-
 inline float64x2 float64x2::zero()
 {
     float64x2 r;

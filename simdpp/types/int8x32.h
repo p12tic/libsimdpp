@@ -34,7 +34,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
-#include <simdpp/types/int256.h>
+#include <cstdint>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -48,7 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint8<32> : public int256 {
+class gint8<32> {
 public:
 
     using element_type = uint8_t;
@@ -59,6 +59,7 @@ public:
     using mask_type = mask_int8x32;
 
     static constexpr unsigned length = 32;
+    static constexpr unsigned vec_length = 2; // FIXME
     static constexpr unsigned num_bits = 8;
     static constexpr uint_element_type all_bits = 0xff;
 
@@ -67,23 +68,31 @@ public:
     gint8<32> &operator=(const gint8x32 &) = default;
 
     /// @{
-    /// Construct from base type
-    gint8<32>(const int256& d) : int256(d) {}
-    gint8<32>& operator=(const int256& d) { int256::operator=(d); return *this; }
+    /// Construct from the underlying vector type
+#if SIMDPP_USE_AVX
+    gint8<32>(__m256i d) : d_(d) {}
+    gint8<32>& operator=(__m256i d) { d_ = d; return *this; }
+#endif
     /// @}
 
     /// @{
-    /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
-    gint8<32>(__m256i d) : int256(d) {}
-    gint8<32>& operator=(__m256i d) { int256::operator=(d); return *this; }
-#endif
+    /// Construct from compatible integer type
+    gint8<32>(const gint16x16& d);
+    gint8<32>(const gint32x8& d);
+    gint8<32>(const gint64x4& d);
+    gint8<32>& operator=(const gint16x16& d);
+    gint8<32>& operator=(const gint32x8& d);
+    gint8<32>& operator=(const gint64x4& d);
     /// @}
 
 #if SIMDPP_USE_AVX2
 #else
-    gint8<32>(gint8x16 d0, gint8x16 d1) : int256(d0, d1) {}
+    gint8<32>(gint8x16 d0, gint8x16 d1) { du_[0] = d0; du_[1] = d1; }
 
+    const gint8x16* begin() const   { return du_; }
+    gint8x16* begin()               { return du_; }
+    const gint8x16* end() const     { return du_+vec_length; }
+    gint8x16* end()                 { return du_+vec_length; }
     const gint8x16& operator[](unsigned i) const { return u8(i); }
           gint8x16& operator[](unsigned i)       { return u8(i); }
 #endif
@@ -94,6 +103,27 @@ public:
     /// Creates a int8x32 vector with the contents set to ones
     static gint8x32 ones();
 
+protected:
+
+#if SIMDPP_USE_AVX2
+#else
+    // For internal use only
+    const uint8x16& u8(unsigned i) const    { return du_[i]; }
+          uint8x16& u8(unsigned i)          { return du_[i]; }
+    const int8x16& i8(unsigned i) const    { return di_[i]; }
+          int8x16& i8(unsigned i)          { return di_[i]; }
+#endif
+
+private:
+
+#if SIMDPP_USE_AVX2
+    __m256i d_;
+#else
+    union {
+        uint8x16 du_[2];
+        int8x16 di_[2];
+    };
+#endif
 };
 
 /** @ingroup simd_vec_int
@@ -118,13 +148,14 @@ public:
 #endif
     /// @}
 
-    /// @{
-    /// Construct from the base type
-    int8<32>(const int256& d) : gint8x32(d) {}
-    int8<32>(const gint8x32& d) : gint8x32(d) {}
-    int8<32>& operator=(int256 d) { gint8x32::operator=(d); return *this; }
-    int8<32>& operator=(gint8x32 d) { gint8x32::operator=(d); return *this; }
-    /// @}
+    int8<32>(const gint8x32& d);
+    int8<32>(const gint16x16& d);
+    int8<32>(const gint32x8& d);
+    int8<32>(const gint64x4& d);
+    int8<32>& operator=(const gint8x32& d);
+    int8<32>& operator=(const gint16x16& d);
+    int8<32>& operator=(const gint32x8& d);
+    int8<32>& operator=(const gint64x4& d);
 
 #if SIMDPP_USE_AVX2
 #else
@@ -243,13 +274,14 @@ public:
 #endif
     /// @}
 
-    /// @{
-    /// Construct from the base type
-    uint8<32>(const int256& d) : gint8x32(d) {}
-    uint8<32>(const gint8x32& d) : gint8x32(d) {}
-    uint8<32>& operator=(int256 d) { gint8x32::operator=(d); return *this; }
-    uint8<32>& operator=(gint8x32 d) { gint8x32::operator=(d); return *this; }
-    /// @}
+    uint8<32>(const gint8x32& d);
+    uint8<32>(const gint16x16& d);
+    uint8<32>(const gint32x8& d);
+    uint8<32>(const gint64x4& d);
+    uint8<32>& operator=(const gint8x32& d);
+    uint8<32>& operator=(const gint16x16& d);
+    uint8<32>& operator=(const gint32x8& d);
+    uint8<32>& operator=(const gint64x4& d);
 
 #if SIMDPP_USE_AVX2
 #else

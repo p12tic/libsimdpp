@@ -40,6 +40,31 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint16<16>::gint16(const gint8x32& d) { *this = bit_cast<gint16x16>(d); }
+inline gint16<16>::gint16(const gint32x8& d) { *this = bit_cast<gint16x16>(d); }
+inline gint16<16>::gint16(const gint64x4& d) { *this = bit_cast<gint16x16>(d); }
+inline gint16<16>& gint16<16>::operator=(const gint8x32& d) { *this = bit_cast<gint16x16>(d); return *this; }
+inline gint16<16>& gint16<16>::operator=(const gint32x8& d) { *this = bit_cast<gint16x16>(d); return *this; }
+inline gint16<16>& gint16<16>::operator=(const gint64x4& d) { *this = bit_cast<gint16x16>(d); return *this; }
+
+inline int16<16>::int16(const gint8x32& d) : gint16x16(bit_cast<gint16x16>(d)) {}
+inline int16<16>::int16(const gint16x16& d) : gint16x16(d) {}
+inline int16<16>::int16(const gint32x8& d) : gint16x16(bit_cast<gint16x16>(d)) {}
+inline int16<16>::int16(const gint64x4& d) : gint16x16(bit_cast<gint16x16>(d)) {}
+inline int16<16>& int16<16>::operator=(const gint8x32& d) { gint16x16::operator=(d); return *this; }
+inline int16<16>& int16<16>::operator=(const gint16x16& d) { gint16x16::operator=(d); return *this; }
+inline int16<16>& int16<16>::operator=(const gint32x8& d) { gint16x16::operator=(d); return *this; }
+inline int16<16>& int16<16>::operator=(const gint64x4& d) { gint16x16::operator=(d); return *this; }
+
+inline uint16<16>::uint16(const gint8x32& d) : gint16x16(bit_cast<gint16x16>(d)) {}
+inline uint16<16>::uint16(const gint16x16& d) : gint16x16(d) {}
+inline uint16<16>::uint16(const gint32x8& d) : gint16x16(bit_cast<gint16x16>(d)) {}
+inline uint16<16>::uint16(const gint64x4& d) : gint16x16(bit_cast<gint16x16>(d)) {}
+inline uint16<16>& uint16<16>::operator=(const gint8x32& d) { gint16x16::operator=(d); return *this; }
+inline uint16<16>& uint16<16>::operator=(const gint16x16& d) { gint16x16::operator=(d); return *this; }
+inline uint16<16>& uint16<16>::operator=(const gint32x8& d) { gint16x16::operator=(d); return *this; }
+inline uint16<16>& uint16<16>::operator=(const gint64x4& d) { gint16x16::operator=(d); return *this; }
+
 inline gint16x16 gint16x16::zero()
 {
     return uint16x16::make_const(0);

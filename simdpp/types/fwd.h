@@ -41,8 +41,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 // types
 template<unsigned N> class float32;
 template<unsigned N> class mask_float32;
@@ -57,10 +55,6 @@ using float64x2 = float64<2>;
 using float64x4 = float64<4>;
 using mask_float64x2 = mask_float64<2>;
 using mask_float64x4 = mask_float64<4>;
-
-template<unsigned B> class int_bits;
-using int128 = int_bits<16>;
-using int256 = int_bits<32>;
 
 template<unsigned N> class gint8;
 template<unsigned N> class int8;
@@ -121,6 +115,103 @@ using uint64x2 = uint64<2>;
 using uint64x4 = uint64<4>;
 using mask_int64x2 = mask_int64<2>;
 using mask_int64x4 = mask_int64<4>;
+
+#if SIMDPP_USE_AVX
+#define SIMDPP_FAST_FLOAT32_SIZE 8
+#define SIMDPP_FAST_FLOAT64_SIZE 4
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NULL
+#define SIMDPP_FAST_FLOAT32_SIZE 4
+#define SIMDPP_FAST_FLOAT64_SIZE 2
+#endif
+#if SIMDPP_USE_AVX2
+#define SIMDPP_FAST_INT8_SIZE 32
+#define SIMDPP_FAST_INT16_SIZE 16
+#define SIMDPP_FAST_INT32_SIZE 8
+#define SIMDPP_FAST_INT64_SIZE 4
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NULL
+#define SIMDPP_FAST_INT8_SIZE 16
+#define SIMDPP_FAST_INT16_SIZE 8
+#define SIMDPP_FAST_INT32_SIZE 4
+#define SIMDPP_FAST_INT64_SIZE 2
+#endif
+
+using float32v =           float32<SIMDPP_FAST_FLOAT32_SIZE>;
+using mask_float32v = mask_float32<SIMDPP_FAST_FLOAT32_SIZE>;
+using float64v =           float64<SIMDPP_FAST_FLOAT64_SIZE>;
+using mask_float64v = mask_float64<SIMDPP_FAST_FLOAT64_SIZE>;
+
+using gint8v =         gint8<SIMDPP_FAST_INT8_SIZE>;
+using int8v =           int8<SIMDPP_FAST_INT8_SIZE>;
+using uint8v =         uint8<SIMDPP_FAST_INT8_SIZE>;
+using mask_int8v = mask_int8<SIMDPP_FAST_INT8_SIZE>;
+
+using gint16v =         gint16<SIMDPP_FAST_INT16_SIZE>;
+using int16v =           int16<SIMDPP_FAST_INT16_SIZE>;
+using uint16v =         uint16<SIMDPP_FAST_INT16_SIZE>;
+using mask_int16v = mask_int16<SIMDPP_FAST_INT16_SIZE>;
+
+using gint32v =         gint32<SIMDPP_FAST_INT32_SIZE>;
+using int32v =           int32<SIMDPP_FAST_INT32_SIZE>;
+using uint32v =         uint32<SIMDPP_FAST_INT32_SIZE>;
+using mask_int32v = mask_int32<SIMDPP_FAST_INT32_SIZE>;
+
+using gint64v =         gint64<SIMDPP_FAST_INT64_SIZE>;
+using int64v =           int64<SIMDPP_FAST_INT64_SIZE>;
+using uint64v =         uint64<SIMDPP_FAST_INT64_SIZE>;
+using mask_int64v = mask_int64<SIMDPP_FAST_INT64_SIZE>;
+
+using float32v2 =           float32<SIMDPP_FAST_FLOAT32_SIZE*2>;
+using mask_float32v2 = mask_float32<SIMDPP_FAST_FLOAT32_SIZE*2>;
+using float64v2 =           float64<SIMDPP_FAST_FLOAT64_SIZE*2>;
+using mask_float64v2 = mask_float64<SIMDPP_FAST_FLOAT64_SIZE*2>;
+
+using gint8v2 =         gint8<SIMDPP_FAST_INT8_SIZE*2>;
+using int8v2 =           int8<SIMDPP_FAST_INT8_SIZE*2>;
+using uint8v2 =         uint8<SIMDPP_FAST_INT8_SIZE*2>;
+using mask_int8v2 = mask_int8<SIMDPP_FAST_INT8_SIZE*2>;
+
+using gint16v2 =         gint16<SIMDPP_FAST_INT16_SIZE*2>;
+using int16v2 =           int16<SIMDPP_FAST_INT16_SIZE*2>;
+using uint16v2 =         uint16<SIMDPP_FAST_INT16_SIZE*2>;
+using mask_int16v2 = mask_int16<SIMDPP_FAST_INT16_SIZE*2>;
+
+using gint32v2 =         gint32<SIMDPP_FAST_INT32_SIZE*2>;
+using int32v2 =           int32<SIMDPP_FAST_INT32_SIZE*2>;
+using uint32v2 =         uint32<SIMDPP_FAST_INT32_SIZE*2>;
+using mask_int32v2 = mask_int32<SIMDPP_FAST_INT32_SIZE*2>;
+
+using gint64v2 =         gint64<SIMDPP_FAST_INT64_SIZE*2>;
+using int64v2 =           int64<SIMDPP_FAST_INT64_SIZE*2>;
+using uint64v2 =         uint64<SIMDPP_FAST_INT64_SIZE*2>;
+using mask_int64v2 = mask_int64<SIMDPP_FAST_INT64_SIZE*2>;
+
+
+using float32v4 =           float32<SIMDPP_FAST_FLOAT32_SIZE*4>;
+using mask_float32v4 = mask_float32<SIMDPP_FAST_FLOAT32_SIZE*4>;
+using float64v4 =           float64<SIMDPP_FAST_FLOAT64_SIZE*4>;
+using mask_float64v4 = mask_float64<SIMDPP_FAST_FLOAT64_SIZE*4>;
+
+using gint8v4 =         gint8<SIMDPP_FAST_INT8_SIZE*4>;
+using int8v4 =           int8<SIMDPP_FAST_INT8_SIZE*4>;
+using uint8v4 =         uint8<SIMDPP_FAST_INT8_SIZE*4>;
+using mask_int8v4 = mask_int8<SIMDPP_FAST_INT8_SIZE*4>;
+
+using gint16v4 =         gint16<SIMDPP_FAST_INT16_SIZE*4>;
+using int16v4 =           int16<SIMDPP_FAST_INT16_SIZE*4>;
+using uint16v4 =         uint16<SIMDPP_FAST_INT16_SIZE*4>;
+using mask_int16v4 = mask_int16<SIMDPP_FAST_INT16_SIZE*4>;
+
+using gint32v4 =         gint32<SIMDPP_FAST_INT32_SIZE*4>;
+using int32v4 =           int32<SIMDPP_FAST_INT32_SIZE*4>;
+using uint32v4 =         uint32<SIMDPP_FAST_INT32_SIZE*4>;
+using mask_int32v4 = mask_int32<SIMDPP_FAST_INT32_SIZE*4>;
+
+using gint64v4 =         gint64<SIMDPP_FAST_INT64_SIZE*4>;
+using int64v4 =           int64<SIMDPP_FAST_INT64_SIZE*4>;
+using uint64v4 =         uint64<SIMDPP_FAST_INT64_SIZE*4>;
+using mask_int64v4 = mask_int64<SIMDPP_FAST_INT64_SIZE*4>;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 // math_shift.h
 inline int16x8 shift_r(int16x8, unsigned);

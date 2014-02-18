@@ -40,6 +40,30 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint64<4>::gint64(const gint8x32& d) { *this = bit_cast<gint64x4>(d); }
+inline gint64<4>::gint64(const gint16x16& d) { *this = bit_cast<gint64x4>(d); }
+inline gint64<4>::gint64(const gint32x8& d) { *this = bit_cast<gint64x4>(d); }
+inline gint64<4>& gint64<4>::operator=(const gint8x32& d) { *this = bit_cast<gint64x4>(d); return *this; }
+inline gint64<4>& gint64<4>::operator=(const gint16x16& d){ *this = bit_cast<gint64x4>(d); return *this; }
+inline gint64<4>& gint64<4>::operator=(const gint32x8& d) { *this = bit_cast<gint64x4>(d); return *this; }
+
+inline int64<4>::int64(const gint8x32& d) : gint64x4(bit_cast<gint64x4>(d)) {}
+inline int64<4>::int64(const gint16x16& d): gint64x4(bit_cast<gint64x4>(d)) {}
+inline int64<4>::int64(const gint32x8& d) : gint64x4(bit_cast<gint64x4>(d)) {}
+inline int64<4>::int64(const gint64x4& d) : gint64x4(d) {}
+inline int64<4>& int64<4>::operator=(const gint8x32& d) { gint64x4::operator=(d); return *this; }
+inline int64<4>& int64<4>::operator=(const gint16x16& d){ gint64x4::operator=(d); return *this; }
+inline int64<4>& int64<4>::operator=(const gint32x8& d) { gint64x4::operator=(d); return *this; }
+inline int64<4>& int64<4>::operator=(const gint64x4& d) { gint64x4::operator=(d); return *this; }
+
+inline uint64<4>::uint64(const gint8x32& d) : gint64x4(bit_cast<gint64x4>(d)) {}
+inline uint64<4>::uint64(const gint16x16& d): gint64x4(bit_cast<gint64x4>(d)) {}
+inline uint64<4>::uint64(const gint32x8& d) : gint64x4(bit_cast<gint64x4>(d)) {}
+inline uint64<4>::uint64(const gint64x4& d) : gint64x4(d) {}
+inline uint64<4>& uint64<4>::operator=(const gint8x32& d) { gint64x4::operator=(d); return *this; }
+inline uint64<4>& uint64<4>::operator=(const gint16x16& d){ gint64x4::operator=(d); return *this; }
+inline uint64<4>& uint64<4>::operator=(const gint32x8& d) { gint64x4::operator=(d); return *this; }
+inline uint64<4>& uint64<4>::operator=(const gint64x4& d) { gint64x4::operator=(d); return *this; }
 
 inline gint64<4>::gint64(const float64x4& d)
 {

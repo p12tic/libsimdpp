@@ -46,6 +46,31 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint64<2>::gint64(const gint8x16& d) { *this = bit_cast<gint64x2>(d); }
+inline gint64<2>::gint64(const gint16x8& d) { *this = bit_cast<gint64x2>(d); }
+inline gint64<2>::gint64(const gint32x4& d) { *this = bit_cast<gint64x2>(d); }
+inline gint64<2>& gint64<2>::operator=(const gint8x16& d) { *this = bit_cast<gint64x2>(d); return *this; }
+inline gint64<2>& gint64<2>::operator=(const gint16x8& d) { *this = bit_cast<gint64x2>(d); return *this; }
+inline gint64<2>& gint64<2>::operator=(const gint32x4& d) { *this = bit_cast<gint64x2>(d); return *this; }
+
+inline int64<2>::int64(const gint8x16& d) : gint64x2(bit_cast<gint64x2>(d)) {}
+inline int64<2>::int64(const gint16x8& d) : gint64x2(bit_cast<gint64x2>(d)) {}
+inline int64<2>::int64(const gint32x4& d) : gint64x2(bit_cast<gint64x2>(d)) {}
+inline int64<2>::int64(const gint64x2& d) : gint64x2(d) {}
+inline int64<2>& int64<2>::operator=(const gint8x16& d) { gint64x2::operator=(d); return *this; }
+inline int64<2>& int64<2>::operator=(const gint16x8& d) { gint64x2::operator=(d); return *this; }
+inline int64<2>& int64<2>::operator=(const gint32x4& d) { gint64x2::operator=(d); return *this; }
+inline int64<2>& int64<2>::operator=(const gint64x2& d) { gint64x2::operator=(d); return *this; }
+
+inline uint64<2>::uint64(const gint8x16& d) : gint64x2(bit_cast<gint64x2>(d)) {}
+inline uint64<2>::uint64(const gint16x8& d) : gint64x2(bit_cast<gint64x2>(d)) {}
+inline uint64<2>::uint64(const gint32x4& d) : gint64x2(bit_cast<gint64x2>(d)) {}
+inline uint64<2>::uint64(const gint64x2& d) : gint64x2(d) {}
+inline uint64<2>& uint64<2>::operator=(const gint8x16& d) { gint64x2::operator=(d); return *this; }
+inline uint64<2>& uint64<2>::operator=(const gint16x8& d) { gint64x2::operator=(d); return *this; }
+inline uint64<2>& uint64<2>::operator=(const gint32x4& d) { gint64x2::operator=(d); return *this; }
+inline uint64<2>& uint64<2>::operator=(const gint64x2& d) { gint64x2::operator=(d); return *this; }
+
 inline gint64<2>::gint64(const float64x2& d)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC

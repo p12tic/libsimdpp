@@ -33,7 +33,8 @@
 #endif
 
 #include <simdpp/setup_arch.h>
-#include <simdpp/types/int128.h>
+#include <simdpp/types/fwd.h>
+#include <cstdint>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -47,7 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint8<16> : public int128 {
+class gint8<16> {
 public:
 
     using element_type = uint8_t;
@@ -65,27 +66,44 @@ public:
     gint8<16> &operator=(const gint8x16 &) = default;
 
     /// @{
-    /// Construct from base type
-    gint8<16>(const int128& d) : int128(d) {}
-    gint8<16>& operator=(const int128& d) { int128::operator=(d); return *this; }
+    /// Construct from the underlying vector type
+#if SIMDPP_USE_SSE2
+    gint8<16>(__m128i d) : d_(d) {}
+    gint8<16>& operator=(__m128i d) { d_ = d; return *this; }
+#elif SIMDPP_USE_NEON
+    gint8<16>(uint8x16_t d) : d_(d) {}
+    gint8<16>( int8x16_t d) : d_(d) {}
+    gint8<16>& operator=(uint8x16_t d) { d_ = d; return *this; }
+    gint8<16>& operator=( int8x16_t d) { d_ = d; return *this; }
+#elif SIMDPP_USE_ALTIVEC
+    gint8<16>(__vector uint8_t d) : d_(d) {}
+    gint8<16>(__vector  int8_t d) : d_(d) {}
+    gint8<16>& operator=(__vector uint8_t d) { d_ = d;; return *this; }
+    gint8<16>& operator=(__vector  int8_t d) { d_ = d;; return *this; }
+#endif
     /// @}
 
     /// @{
-    /// Construct from the underlying vector type
+    /// Convert to underlying vector type
 #if SIMDPP_USE_SSE2
-    gint8<16>(__m128i d) : int128(d) {}
-    gint8<16>& operator=(__m128i d) { int128::operator=(d); return *this; }
+    operator __m128i() const        { return d_; }
 #elif SIMDPP_USE_NEON
-    gint8<16>(uint8x16_t d) : int128(d) {}
-    gint8<16>( int8x16_t d) : int128(d) {}
-    gint8<16>& operator=(uint8x16_t d) { int128::operator=(d); return *this; }
-    gint8<16>& operator=( int8x16_t d) { int128::operator=(d); return *this; }
+    operator int8x16_t() const      { return vreinterpretq_s8_u8(d_); }
+    operator uint8x16_t() const     { return d_; }
 #elif SIMDPP_USE_ALTIVEC
-    gint8<16>(__vector uint8_t d) : int128(d) {}
-    gint8<16>(__vector  int8_t d) : int128(d) {}
-    gint8<16>& operator=(__vector uint8_t d) { int128::operator=(d); return *this; }
-    gint8<16>& operator=(__vector  int8_t d) { int128::operator=(d); return *this; }
+    operator __vector uint8_t() const       { return (__vector uint8_t)d_; }
+    operator __vector  int8_t() const       { return (__vector int8_t)d_; }
 #endif
+    /// @}
+
+    /// @{
+    /// Construct from compatible integer type
+    gint8<16>(const gint16x8& d);
+    gint8<16>(const gint32x4& d);
+    gint8<16>(const gint64x2& d);
+    gint8<16>& operator=(const gint16x8& d);
+    gint8<16>& operator=(const gint32x4& d);
+    gint8<16>& operator=(const gint64x2& d);
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -101,6 +119,28 @@ public:
 
     /// Creates a int8x32 vector with the contents set to ones
     static gint8x16 ones();
+
+protected:
+#if SIMDPP_USE_NULL
+    const uint8_t& u8(unsigned i) const   { return du_[i]; }
+          uint8_t& u8(unsigned i)         { return du_[i]; }
+    const int8_t& i8(unsigned i) const   { return di_[i]; }
+          int8_t& i8(unsigned i)         { return di_[i]; }
+#endif
+
+private:
+#if SIMDPP_USE_SSE2
+     __m128i d_;
+#elif SIMDPP_USE_NEON
+    uint8x16_t d_;
+#elif SIMDPP_USE_ALTIVEC
+    __vector uint8_t d_;
+#elif SIMDPP_USE_NULL
+    union {
+        uint8_t du_[16];
+        int8_t di_[16];
+    };
+#endif
 };
 
 /** Class representing 16x 8-bit signed integer vector
@@ -129,11 +169,15 @@ public:
     /// @}
 
     /// @{
-    /// Construct from the base type
-    int8<16>(const int128& d) : gint8x16(d) {}
-    int8<16>(const gint8x16& d) : gint8x16(d) {}
-    int8<16>& operator=(int128 d) { gint8x16::operator=(d); return *this; }
-    int8<16>& operator=(gint8x16 d) { gint8x16::operator=(d); return *this; }
+    /// Construct from compatible integer type
+    int8<16>(const gint8x16& d);
+    int8<16>(const gint16x8& d);
+    int8<16>(const gint32x4& d);
+    int8<16>(const gint64x2& d);
+    int8<16>& operator=(const gint8x16& d);
+    int8<16>& operator=(const gint16x8& d);
+    int8<16>& operator=(const gint32x4& d);
+    int8<16>& operator=(const gint64x2& d);
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -241,11 +285,15 @@ public:
     /// @}
 
     /// @{
-    /// Construct from the base type
-    uint8<16>(const int128& d) : gint8x16(d) {}
-    uint8<16>(const gint8x16& d) : gint8x16(d) {}
-    uint8<16>& operator=(int128 d) { gint8x16::operator=(d); return *this; }
-    uint8<16>& operator=(gint8x16 d) { gint8x16::operator=(d); return *this; }
+    /// Construct from compatible integer type
+    uint8<16>(const gint8x16& d);
+    uint8<16>(const gint16x8& d);
+    uint8<16>(const gint32x4& d);
+    uint8<16>(const gint64x2& d);
+    uint8<16>& operator=(const gint8x16& d);
+    uint8<16>& operator=(const gint16x8& d);
+    uint8<16>& operator=(const gint32x4& d);
+    uint8<16>& operator=(const gint64x2& d);
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

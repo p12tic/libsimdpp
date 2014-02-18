@@ -33,7 +33,8 @@
 #endif
 
 #include <simdpp/setup_arch.h>
-#include <simdpp/types/int256.h>
+#include <simdpp/types/fwd.h>
+#include <cstdint>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -47,7 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint32<8> : public int256 {
+class gint32<8> {
 public:
 
     using element_type = uint32_t;
@@ -57,6 +58,7 @@ public:
     using half_vector_type = gint32x4;
     using mask_type = mask_int32x8;
 
+    static constexpr unsigned vec_length = 2; // FIXME
     static constexpr unsigned length = 8;
     static constexpr unsigned num_bits = 32;
     static constexpr uint_element_type all_bits = 0xffffffff;
@@ -66,17 +68,21 @@ public:
     gint32<8>& operator=(const gint32x8&) = default;
 
     /// @{
-    /// Construct from base type
-    gint32<8>(const int256& d) : int256(d) {}
-    gint32<8>& operator=(int256 d) { int_bits<32>::operator=(d); return *this; }
+    /// Construct from the underlying vector type
+#if SIMDPP_USE_AVX
+    gint32<8>(__m256i d) : d_(d) {}
+    gint32<8>& operator=(__m256i d) { d_ = d; return *this; }
+#endif
     /// @}
 
     /// @{
-    /// Construct from the underlying vector type
-#if SIMDPP_USE_AVX
-    gint32<8>(__m256i d) : int256(d) {}
-    gint32<8>& operator=(__m256i d) { int_bits<32>::operator=(d); return *this; }
-#endif
+    /// Construct from compatible integer type
+    gint32<8>(const gint8x32& d);
+    gint32<8>(const gint16x16& d);
+    gint32<8>(const gint64x4& d);
+    gint32<8>& operator=(const gint8x32& d);
+    gint32<8>& operator=(const gint16x16& d);
+    gint32<8>& operator=(const gint64x4& d);
     /// @}
 
     /// @{
@@ -87,8 +93,12 @@ public:
 
 #if SIMDPP_USE_AVX2
 #else
-    gint32<8>(gint32x4 d0, gint32x4 d1) : int256(d0, d1) {}
+    gint32<8>(gint32x4 d0, gint32x4 d1) { du_[0] = d0; du_[1] = d1; }
 
+    const gint32x4* begin() const   { return du_; }
+    gint32x4* begin()               { return du_; }
+    const gint32x4* end() const     { return du_+vec_length; }
+    gint32x4* end()                 { return du_+vec_length; }
     const gint32x4& operator[](unsigned i) const { return u32(i); }
           gint32x4& operator[](unsigned i)       { return u32(i); }
 #endif
@@ -98,6 +108,28 @@ public:
 
     /// Creates a int32x8 vector with the contents set to ones
     static gint32x8 ones();
+
+protected:
+
+#if SIMDPP_USE_AVX2
+#else
+    // For internal use only
+    const uint32x4& u32(unsigned i) const    { return du_[i]; }
+          uint32x4& u32(unsigned i)          { return du_[i]; }
+    const int32x4& i32(unsigned i) const    { return di_[i]; }
+          int32x4& i32(unsigned i)          { return di_[i]; }
+#endif
+
+private:
+
+#if SIMDPP_USE_AVX2
+    __m256i d_;
+#else
+    union {
+        uint32x4 du_[2];
+        int32x4 di_[2];
+    };
+#endif
 };
 
 /** Class representing 4x 32-bit signed integer vector
@@ -122,11 +154,15 @@ public:
     /// @}
 
     /// @{
-    /// Construct from the base type
-    int32<8>(const int256& d) : gint32x8(d) {}
-    int32<8>(const gint32x8& d) : gint32x8(d) {}
-    int32<8>& operator=(int256 d) { gint32x8::operator=(d); return *this; }
-    int32<8>& operator=(gint32x8 d) { gint32x8::operator=(d); return *this; }
+    /// Construct from compatible integer type
+    int32<8>(const gint8x32& d);
+    int32<8>(const gint16x16& d);
+    int32<8>(const gint32x8& d);
+    int32<8>(const gint64x4& d);
+    int32<8>& operator=(const gint8x32& d);
+    int32<8>& operator=(const gint16x16& d);
+    int32<8>& operator=(const gint32x8& d);
+    int32<8>& operator=(const gint64x4& d);
     /// @}
 
     /// @{
@@ -224,11 +260,15 @@ public:
     /// @}
 
     /// @{
-    /// Construct from the base type
-    uint32<8>(const int256& d) : gint32x8(d) {}
-    uint32<8>(const gint32x8& d) : gint32x8(d) {}
-    uint32<8>& operator=(int256 d) { gint32x8::operator=(d); return *this; }
-    uint32<8>& operator=(gint32x8 d) { gint32x8::operator=(d); return *this; }
+    /// Construct from compatible integer type
+    uint32<8>(const gint8x32& d);
+    uint32<8>(const gint16x16& d);
+    uint32<8>(const gint32x8& d);
+    uint32<8>(const gint64x4& d);
+    uint32<8>& operator=(const gint8x32& d);
+    uint32<8>& operator=(const gint16x16& d);
+    uint32<8>& operator=(const gint32x8& d);
+    uint32<8>& operator=(const gint64x4& d);
     /// @}
 
     /// @{

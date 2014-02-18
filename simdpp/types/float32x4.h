@@ -87,25 +87,8 @@ public:
 
     /// @{
     /// Construct from compatible int32x4 integer vector type
-#if SIMDPP_USE_SSE2
-    explicit float32<4>(gint32x4 d) : d_(_mm_castsi128_ps(d)) {}
-    float32<4>& operator=(gint32x4 d) { d_ = _mm_castsi128_ps(d); return *this; }
-#elif SIMDPP_USE_NEON
-    explicit float32<4>(gint32x4 d)  : d_(vreinterpretq_f32_s32(d)) {}
-    float32<4>& operator=(gint32x4 d) { d_ = vreinterpretq_f32_s32(d); return *this; }
-#elif SIMDPP_USE_ALTIVEC
-    explicit float32<4>(gint32x4 d)  : d_((__vector float)d) {}
-    float32<4>& operator=(gint32x4 d) { d_ = (__vector float)d; return *this; }
-#elif SIMDPP_USE_NULL
-    explicit float32<4>(gint32x4 d)
-    {
-        f32_[0] = bit_cast<float>(d[0]);
-        f32_[1] = bit_cast<float>(d[1]);
-        f32_[2] = bit_cast<float>(d[2]);
-        f32_[3] = bit_cast<float>(d[3]);
-    }
-    float32<4>& operator=(gint32x4 d) { operator=(float32x4(d)); return *this; }
-#endif
+    explicit float32<4>(gint32x4 d)     { *this = bit_cast<float32x4>(d); }
+    float32<4>& operator=(gint32x4 d)   { *this = bit_cast<float32x4>(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

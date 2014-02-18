@@ -1,5 +1,5 @@
 /*  libsimdpp
-    Copyright (C) 2011-2012  Povilas Kanapickas tir5c3@yahoo.co.uk
+    Copyright (C) 2011-2013  Povilas Kanapickas povilas@radix.lt
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -31,9 +31,11 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
-#include <simdpp/setup_arch.h>
 
-#include <cstring>
+#include <simdpp/setup_arch.h>
+#include <simdpp/core/detail/cast.h>
+#include <simdpp/types/traits.h>
+#include <type_traits>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -48,10 +50,9 @@ template<class R, class T>
 R bit_cast(T t)
 {
     static_assert(sizeof(R) == sizeof(T), "Size mismatch");
-    R r;
-    std::memcpy(&r, &t, sizeof(R));
-    return r;
+    return detail::cast_wrapper<is_vector<T>::value>::template run<R>(t);
 }
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

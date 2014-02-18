@@ -34,7 +34,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
-#include <simdpp/types/int128.h>
+#include <cstdint>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -48,7 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint64<2> : public int128 {
+class gint64<2> {
 public:
 
     using element_type = uint64_t;
@@ -66,30 +66,47 @@ public:
     gint64<2> &operator=(const gint64x2 &) = default;
 
     /// @{
-    /// Construct from base type
-    gint64<2>(const int128& d) : int128(d) {}
-    gint64<2>& operator=(int128 d) { int_bits<16>::operator=(d); return *this; }
-    /// @}
-
-    /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    gint64<2>(__m128i d) : int128(d) {}
-    gint64<2>& operator=(__m128i d) { int_bits<16>::operator=(d); return *this; }
+    gint64<2>(__m128i d) : d_(d) {}
+    gint64<2>& operator=(__m128i d) { d_ = d; return *this; }
 #elif SIMDPP_USE_NEON
-    gint64<2>(uint64x2_t d) : int128(d) {}
-    gint64<2>( int64x2_t d) : int128(d) {}
-    gint64<2>& operator=(uint64x2_t d) { int_bits<16>::operator=(d); return *this; }
-    gint64<2>& operator=( int64x2_t d) { int_bits<16>::operator=(d); return *this; }
+    gint64<2>(uint64x2_t d) : d_(d) {}
+    gint64<2>( int64x2_t d) : d_(d) {}
+    gint64<2>& operator=(uint64x2_t d) { d_ = d; return *this; }
+    gint64<2>& operator=( int64x2_t d) { d_ = d; return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    gint64<2>(__vector uint32_t d) : int128(d) {}
-    gint64<2>(__vector  int32_t d) : int128(d) {}
-    gint64<2>& operator=(__vector uint32_t d) { int_bits<16>::operator=(d); return *this; }
-    gint64<2>& operator=(__vector  int32_t d) { int_bits<16>::operator=(d); return *this; }
+    gint64<2>(__vector uint32_t d) : d_(d) {}
+    gint64<2>(__vector  int32_t d) : d_(d) {}
+    gint64<2>& operator=(__vector uint32_t d) { d_ = d; return *this; }
+    gint64<2>& operator=(__vector  int32_t d) { d_ = d; return *this; }
 #endif
     /// @}
 
-     /// @{
+    /// @{
+    /// Convert to underlying vector type
+#if SIMDPP_USE_SSE2
+    operator __m128i() const        { return d_; }
+#elif SIMDPP_USE_NEON
+    operator int64x2_t() const      { return vreinterpretq_s64_u64(d_); }
+    operator uint64x2_t() const     { return d_; }
+#elif SIMDPP_USE_ALTIVEC
+    operator __vector uint32_t() const       { return (__vector uint32_t)d_; }
+    operator __vector  int32_t() const       { return (__vector int32_t)d_; }
+#endif
+    /// @}
+    ///
+    /// @{
+    /// Construct from compatible integer type
+    gint64<2>(const gint8x16& d);
+    gint64<2>(const gint16x8& d);
+    gint64<2>(const gint32x4& d);
+    gint64<2>& operator=(const gint8x16& d);
+    gint64<2>& operator=(const gint16x8& d);
+    gint64<2>& operator=(const gint32x4& d);
+    /// @}
+
+    /// @{
     /// Construct from compatible float32x4 integer vector type
     explicit gint64<2>(const float64x2& d);
     gint64<2>& operator=(const float64x2& d) { operator=(gint64x2(d)); return *this; }
@@ -102,12 +119,35 @@ public:
           uint64_t& operator[](unsigned i)        { return u64(i); }
 #endif
 #endif
+
     /// Creates a int64x2 vector with the contents set to zero
     static gint64x2 zero();
 
     /// Creates a int64x2 vector with the contents set to ones
     static gint64x2 ones();
 
+protected:
+
+#if SIMDPP_USE_NULL
+    const uint64_t& u64(unsigned i) const   { return du_[i]; }
+          uint64_t& u64(unsigned i)         { return du_[i]; }
+    const int64_t& i64(unsigned i) const   { return di_[i]; }
+          int64_t& i64(unsigned i)         { return di_[i]; }
+#endif
+
+private:
+#if SIMDPP_USE_SSE2
+    __m128i d_;
+#elif SIMDPP_USE_NEON
+    uint64x2_t d_;
+#elif SIMDPP_USE_ALTIVEC
+    __vector uint32_t d_;
+#elif SIMDPP_USE_NULL
+    union {
+        uint64_t du_[2];
+        int64_t di_[2];
+    };
+#endif
 };
 
 /** Class representing 2x 64-bit signed integer vector
@@ -137,11 +177,15 @@ public:
     /// @}
 
     /// @{
-    /// Construct from the base type
-    int64<2>(const int128& d) : gint64x2(d) {}
-    int64<2>(gint64x2 d) : gint64x2(d) {}
-    int64<2>& operator=(int128 d) { gint64x2::operator=(d); return *this; }
-    int64<2>& operator=(gint64x2 d) { gint64x2::operator=(d); return *this; }
+    /// Construct from compatible integer type
+    int64<2>(const gint8x16& d);
+    int64<2>(const gint16x8& d);
+    int64<2>(const gint32x4& d);
+    int64<2>(const gint64x2& d);
+    int64<2>& operator=(const gint8x16& d);
+    int64<2>& operator=(const gint16x8& d);
+    int64<2>& operator=(const gint32x4& d);
+    int64<2>& operator=(const gint64x2& d);
     /// @}
 
     /// @{
@@ -223,11 +267,15 @@ public:
     /// @}
 
     /// @{
-    /// Construct from the base type
-    uint64<2>(const int128& d) : gint64x2(d) {}
-    uint64<2>(gint64x2 d) : gint64x2(d) {}
-    uint64<2>& operator=(int128 d) { gint64x2::operator=(d); return *this; }
-    uint64<2>& operator=(gint64x2 d) { gint64x2::operator=(d); return *this; }
+    /// Construct from compatible integer type
+    uint64<2>(const gint8x16& d);
+    uint64<2>(const gint16x8& d);
+    uint64<2>(const gint32x4& d);
+    uint64<2>(const gint64x2& d);
+    uint64<2>& operator=(const gint8x16& d);
+    uint64<2>& operator=(const gint16x8& d);
+    uint64<2>& operator=(const gint32x4& d);
+    uint64<2>& operator=(const gint64x2& d);
     /// @}
 
     /// @{

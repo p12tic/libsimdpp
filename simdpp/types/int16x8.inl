@@ -42,6 +42,31 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint16<8>::gint16(const gint8x16& d) { *this = bit_cast<gint16x8>(d); }
+inline gint16<8>::gint16(const gint32x4& d) { *this = bit_cast<gint16x8>(d); }
+inline gint16<8>::gint16(const gint64x2& d) { *this = bit_cast<gint16x8>(d); }
+inline gint16<8>& gint16<8>::operator=(const gint8x16& d) { *this = bit_cast<gint16x8>(d); return *this; }
+inline gint16<8>& gint16<8>::operator=(const gint32x4& d) { *this = bit_cast<gint16x8>(d); return *this; }
+inline gint16<8>& gint16<8>::operator=(const gint64x2& d) { *this = bit_cast<gint16x8>(d); return *this; }
+
+inline int16<8>::int16(const gint8x16& d) : gint16x8(bit_cast<gint16x8>(d)) {}
+inline int16<8>::int16(const gint16x8& d) : gint16x8(d) {}
+inline int16<8>::int16(const gint32x4& d) : gint16x8(bit_cast<gint16x8>(d)) {}
+inline int16<8>::int16(const gint64x2& d) : gint16x8(bit_cast<gint16x8>(d)) {}
+inline int16<8>& int16<8>::operator=(const gint8x16& d) { gint16x8::operator=(d); return *this; }
+inline int16<8>& int16<8>::operator=(const gint16x8& d) { gint16x8::operator=(d); return *this; }
+inline int16<8>& int16<8>::operator=(const gint32x4& d) { gint16x8::operator=(d); return *this; }
+inline int16<8>& int16<8>::operator=(const gint64x2& d) { gint16x8::operator=(d); return *this; }
+
+inline uint16<8>::uint16(const gint8x16& d) : gint16x8(bit_cast<gint16x8>(d)) {}
+inline uint16<8>::uint16(const gint16x8& d) : gint16x8(d) {}
+inline uint16<8>::uint16(const gint32x4& d) : gint16x8(bit_cast<gint16x8>(d)) {}
+inline uint16<8>::uint16(const gint64x2& d) : gint16x8(bit_cast<gint16x8>(d)) {}
+inline uint16<8>& uint16<8>::operator=(const gint8x16& d) { gint16x8::operator=(d); return *this; }
+inline uint16<8>& uint16<8>::operator=(const gint16x8& d) { gint16x8::operator=(d); return *this; }
+inline uint16<8>& uint16<8>::operator=(const gint32x4& d) { gint16x8::operator=(d); return *this; }
+inline uint16<8>& uint16<8>::operator=(const gint64x2& d) { gint16x8::operator=(d); return *this; }
+
 inline gint16x8 gint16x8::zero()
 {
     return uint16x8::make_const(0);
@@ -51,6 +76,7 @@ inline gint16x8 gint16x8::ones()
 {
     return uint16x8::make_const(0xffff);
 }
+
 inline int16x8 int16x8::load_broadcast(const int16_t* v0)
 {
     return uint16x8::load_broadcast(reinterpret_cast<const uint16_t*>(v0));
@@ -81,6 +107,7 @@ inline int16x8 int16x8::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v
 {
     return uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
 }
+
 
 inline uint16x8 uint16x8::load_broadcast(const uint16_t* v0)
 {

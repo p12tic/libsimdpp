@@ -51,6 +51,8 @@ simdpp/core/cmp_gt.h
 simdpp/core/cmp_le.h
 simdpp/core/cmp_lt.h
 simdpp/core/cmp_neq.h
+simdpp/core/detail/cast.h
+simdpp/core/detail/cast.inl
 simdpp/core/detail/i_shift.h
 simdpp/core/detail/mem_pack.h
 simdpp/core/detail/mem_unpack.h
@@ -177,14 +179,10 @@ simdpp/types/float64x2.inl
 simdpp/types/float64x4.h
 simdpp/types/float64x4.inl
 simdpp/types/fwd.h
-simdpp/types/int128.h
-simdpp/types/int128.inl
 simdpp/types/int16x16.h
 simdpp/types/int16x16.inl
 simdpp/types/int16x8.h
 simdpp/types/int16x8.inl
-simdpp/types/int256.h
-simdpp/types/int256.inl
 simdpp/types/int32x4.h
 simdpp/types/int32x4.inl
 simdpp/types/int32x8.h

@@ -77,8 +77,8 @@ public:
 
     /// @{
     /// Construct from compatible int64x2 integer vector type
-    explicit float64<2>(gint64x2 d);
-    float64<2>& operator=(gint64x2 d) { operator=(float64x2(d)); return *this; }
+    explicit float64<2>(gint64x2 d)     { *this = bit_cast<float64x2>(d); }
+    float64<2>& operator=(gint64x2 d)   { *this = bit_cast<float64x2>(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

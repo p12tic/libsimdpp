@@ -304,7 +304,6 @@
 
 #include <simdpp/adv/transpose.h>
 #include <simdpp/altivec/load1.h>
-#include <simdpp/cast.h>
 #include <simdpp/core/align.h>
 #include <simdpp/core/aligned_allocator.h>
 #include <simdpp/core/bit_and.h>
@@ -316,6 +315,7 @@
 #include <simdpp/core/broadcast.h>
 #include <simdpp/core/broadcast_w.h>
 #include <simdpp/core/cache.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/core/cmp_eq.h>
 #include <simdpp/core/cmp_ge.h>
 #include <simdpp/core/cmp_gt.h>
@@ -393,6 +393,8 @@
 #include <simdpp/core/unzip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
+#include <simdpp/core/detail/cast.h>
+#include <simdpp/core/detail/cast.inl>
 
 #include <simdpp/neon/math_int.h>
 #include <simdpp/neon/memory_store.h>
@@ -428,14 +430,10 @@
 #include <simdpp/types/float64x4.h>
 #include <simdpp/types/float64x4.inl>
 #include <simdpp/types/fwd.h>
-#include <simdpp/types/int128.h>
-#include <simdpp/types/int128.inl>
 #include <simdpp/types/int16x16.h>
 #include <simdpp/types/int16x16.inl>
 #include <simdpp/types/int16x8.h>
 #include <simdpp/types/int16x8.inl>
-#include <simdpp/types/int256.h>
-#include <simdpp/types/int256.inl>
 #include <simdpp/types/int32x4.h>
 #include <simdpp/types/int32x4.inl>
 #include <simdpp/types/int32x8.h>

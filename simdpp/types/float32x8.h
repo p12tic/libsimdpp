@@ -57,6 +57,7 @@ public:
     using half_vector_type = float32x4;
     using mask_type = mask_float32x8;
 
+    static constexpr unsigned vec_length = 2; // FIXME
     static constexpr unsigned length = 8;
     static constexpr unsigned num_bits = 32;
     static constexpr uint_element_type all_bits = 0xffffffff;
@@ -78,27 +79,18 @@ public:
 
     /// @{
     /// Construct from compatible int32x8 integer vector type
-#if SIMDPP_USE_AVX2
-    explicit float32<8>(gint32x8 d) : d_(_mm256_castsi256_ps(d)) {}
-#elif SIMDPP_USE_AVX
-    explicit float32<8>(gint32x8 d)
-    {
-        d_ = _mm256_castsi256_ps(_mm256_insertf128_si256(_mm256_castsi128_si256(d[0]), d[1], 1));
-    }
-#else
-    explicit float32<8>(gint32x8 d)
-    {
-        d_[0] = int32x4(d[0]);
-        d_[1] = int32x4(d[1]);
-    }
-#endif
-    float32<8>& operator=(gint32x8 d) { operator=(float32x8(d)); return *this; }
+    float32<8>(gint32x8 d)              { *this = bit_cast<float32x8>(d); }
+    float32<8>& operator=(gint32x8 d)   { *this = bit_cast<float32x8>(d); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX
 #else
     float32<8>(float32x4 d0, float32x4 d1) { d_[0] = d0;  d_[1] = d1; }
 
+    const float32x4* begin() const   { return d_; }
+    float32x4* begin()               { return d_; }
+    const float32x4* end() const     { return d_+vec_length; }
+    float32x4* end()                 { return d_+vec_length; }
     const float32x4& operator[](unsigned i) const { return d_[i]; }
           float32x4& operator[](unsigned i)       { return d_[i]; }
 #endif
