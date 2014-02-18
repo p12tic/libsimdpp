@@ -162,7 +162,7 @@ public:
         @endcode
 
     */
-    static int32x4 zero();
+    static int32x4 zero() { return int32x4::make_const(0); }
 
     /** Creates a signed int32x4 vector from a value loaded from memory.
 
@@ -274,7 +274,7 @@ public:
         @endcode
 
     */
-    static uint32x4 zero();
+    static uint32x4 zero() { return uint32x4::make_const(0); }
 
     /** Creates an unsigned int32x4 vector from a value loaded from memory.
 

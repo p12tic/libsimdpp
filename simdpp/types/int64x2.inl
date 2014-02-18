@@ -58,11 +58,6 @@ inline gint64<2>::gint64(const float64x2& d)
 #endif
 }
 
-inline int64x2 int64x2::zero()
-{
-    return int128::zero();
-}
-
 inline int64x2 int64x2::load_broadcast(const int64_t* v0)
 {
     return uint64x2::load_broadcast(reinterpret_cast<const uint64_t*>(v0));
@@ -81,11 +76,6 @@ inline int64x2 int64x2::make_const(int64_t v0)
 inline int64x2 int64x2::make_const(int64_t v0, int64_t v1)
 {
     return uint64x2::make_const(v0, v1);
-}
-
-inline uint64x2 uint64x2::zero()
-{
-    return int128::zero();
 }
 
 inline uint64x2 uint64x2::load_broadcast(const uint64_t* v0)

@@ -55,11 +55,6 @@ inline gint32<8>::gint32(const float32x8& d)
 #endif
 }
 
-inline int32x8 int32x8::zero()
-{
-    return int256::zero();
-}
-
 inline int32x8 int32x8::load_broadcast(const int32_t* v0)
 {
     return uint32x8::load_broadcast(reinterpret_cast<const uint32_t*>(v0));
@@ -89,11 +84,6 @@ inline int32x8 int32x8::make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v
                                    int32_t v4, int32_t v5, int32_t v6, int32_t v7)
 {
     return uint32x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-inline uint32x8 uint32x8::zero()
-{
-    return int256::zero();
 }
 
 inline uint32x8 uint32x8::load_broadcast(const uint32_t* v0)

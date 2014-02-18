@@ -43,11 +43,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline int8x16 int8x16::zero()
-{
-    return int128::zero();
-}
-
 inline int8x16 int8x16::load_broadcast(const int8_t* v0)
 {
     return uint8x16::load_broadcast(reinterpret_cast<const uint8_t*>(v0));
@@ -86,11 +81,6 @@ inline int8x16 int8x16::make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
 {
     return uint8x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
                                 v8, v9, v10, v11, v12, v13, v14, v15);
-}
-
-inline uint8x16 uint8x16::zero()
-{
-    return int128::zero();
 }
 
 inline uint8x16 uint8x16::load_broadcast(const uint8_t* v0)

@@ -145,7 +145,7 @@ public:
         r1 = 0
         @endcode
     */
-    static int64x4 zero();
+    static int64x4 zero() { return int64x4::make_const(0); }
 
     /** Creates a signed int64x4 vector from a value loaded from memory.
 
@@ -247,7 +247,7 @@ public:
         r1 = 0
         @endcode
     */
-    static uint64x4 zero();
+    static uint64x4 zero() { return uint64x4::make_const(0); }
 
     /** Creates a int64x4 vector from a value loaded from memory.
 

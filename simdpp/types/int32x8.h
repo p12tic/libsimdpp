@@ -146,7 +146,7 @@ public:
         r3 = 0
         @endcode
     */
-    static int32x8 zero();
+    static int32x8 zero() { return int32x8::make_const(0); }
 
     /** Creates a signed int32x8 vector from a value loaded from memory.
 
@@ -259,7 +259,7 @@ public:
         r3 = 0
         @endcode
     */
-    static uint32x8 zero();
+    static uint32x8 zero() { return uint32x8::make_const(0); }
 
     /** Creates an unsigned int32x8 vector from a value loaded from memory.
 

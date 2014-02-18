@@ -147,7 +147,7 @@ public:
         r7 = 0
         @endcode
     */
-    static int16x8 zero();
+    static int16x8 zero() { return int16x8::make_const(0); }
 
     /** Creates a signed int16x8 vector from a value loaded from memory.
 
@@ -256,7 +256,7 @@ public:
         r7 = 0
         @endcode
     */
-    static uint16x8 zero();
+    static uint16x8 zero() { return uint16x8::make_const(0); }
 
     /** Creates a unsigned int16x8 vector from a value loaded from memory.
 
