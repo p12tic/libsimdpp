@@ -65,7 +65,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 to_float32x4(int32x4 a)
+inline float32x4 to_float32(int32x4 a)
 {
 #if SIMDPP_USE_NULL
     return null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
@@ -86,12 +86,12 @@ inline float32x4 to_float32x4(int32x4 a)
 #endif
 }
 
-inline float32x8 to_float32x8(int32x8 a)
+inline float32x8 to_float32(int32x8 a)
 {
 #if SIMDPP_USE_AVX
     return _mm256_cvtepi32_ps(a);
 #else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, to_float32x4, a); //FIXME
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, to_float32, a); //FIXME
 #endif
 }
 /// @}
@@ -131,21 +131,7 @@ inline float32x8 to_float32x8(int32x8 a)
     @icost{SSE2-SSE4.1, 3}
     @novec{NEON, ALTIVEC}
 */
-inline float32x4 to_float32x4(float64x2 a)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<float32x4> r;
-    r[0] = float(a.el(0));
-    r[1] = float(a.el(1));
-    r[2] = 0;
-    r[3] = 0;
-    return r;
-#elif SIMDPP_USE_SSE2
-    return _mm_cvtpd_ps(a);
-#endif
-}
-
-inline float32x8 to_float32x8(float64x4 a)
+inline float32x4 to_float32(float64x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
@@ -153,13 +139,15 @@ inline float32x8 to_float32x8(float64x4 a)
     r[1] = float(a[0].el(1));
     r[2] = float(a[1].el(0));
     r[3] = float(a[1].el(1));
-    //return float32x8(r, float32x4::zero());
-    // FIXME
+    return r;
 #elif SIMDPP_USE_AVX
-    return _mm256_castps128_ps256(_mm256_cvtpd_ps(a));
+    return _mm256_cvtpd_ps(a);
 #elif SIMDPP_USE_SSE2
-    //return float32x8(to_float32x4(a[0]), to_float32x4(move_l<2>(a[0])));
-    // FIXME
+    float32x4 r1, r2;
+    r1 = _mm_cvtpd_ps(a[0]);
+    r2 = _mm_cvtpd_ps(a[1]);
+    r2 = move_l<2>(r2);
+    return bit_or(r1, r2);
 #endif
 }
 /// @}

@@ -87,9 +87,9 @@ inline float32x4 ceil(float32x4 a)
     int32x4 s = shift_r((uint32x4)a, 31);
             s = bit_xor(s, int32x4::make_const(0x00000001)); //=1 if a>0
     float32x4 at = (float32x4) sub((int32x4)a, s); //=nextafter towards -inf if a>0
-    int32x4 ia = to_int32x4(at);
+    int32x4 ia = to_int32(at);
             ia = add(ia, s);
-    float32x4 fa = to_float32x4(ia);
+    float32x4 fa = to_float32(ia);
 
     //combine the results
     a = blend(a, fa, mask);

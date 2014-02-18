@@ -38,44 +38,13 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
+#include <simdpp/core/insert.h>
 #include <simdpp/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
-
-/** Sign extends the first 4 values of a signed int16x8 vector to 32-bits
-
-    @code
-    r0 = (int32_t) a0
-    ...
-    r3 = (int32_t) a3
-    @endcode
-    @icost{SSE2-SSSE3, 2}
-*/
-inline gint32x4 to_int32x4(int16x8 a)
-{
-#if SIMDPP_USE_NULL
-    int32x4 r;
-    for (unsigned i = 0; i < 4; i++) {
-        r.el(i) = int32_t(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
-    return _mm_cvtepi16_epi32(a);
-#elif SIMDPP_USE_SSE2
-    int32x4 r;
-    r = zip_lo(int16x8::zero(), a);
-    r = shift_r(r, 16);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vmovl_s16(vget_low_s16(a));
-#elif SIMDPP_USE_ALTIVEC
-    return vec_unpackh((__vector int16_t)a);
-#endif
-}
-
 
 /** Sign extends the first 8 values of a signed int16x16 vector to 32-bits
 
@@ -88,9 +57,8 @@ inline gint32x4 to_int32x4(int16x8 a)
     @icost{SSE2-SSSE3, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint32x8 to_int32x8(int16x16 a)
+inline gint32x8 to_int32(int16x8 a)
 {
-    /* FIXME
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
@@ -98,19 +66,19 @@ inline gint32x8 to_int32x8(int16x16 a)
     }
     return r;
 #elif SIMDPP_USE_AVX2
-    return  _mm256_cvtepi16_epi32(_mm256_castsi256_si128(a));
+    return  _mm256_cvtepi16_epi32(a);
 #elif SIMDPP_USE_SSE4_1
     int32x8 r;
-    r[0] = to_int32x4(a[0]);
-    r[1] = to_int32x4(move_l<4>(a[0]));
+    r[0] = _mm_cvtepi16_epi32(a);
+    r[1] = _mm_cvtepi16_epi32(move_l<4>(a));
     return r;
 #elif SIMDPP_USE_SSE2
     int16x8 b0, b1;
     b0 = zip_lo(int16x8::zero(), a[0]);
     b1 = zip_hi(int16x8::zero(), a[0]);
-    b0 = shift_r<8>(b0);
-    b1 = shift_r<8>(b1);
-    return int32x8(b0, b1);
+    b0 = shift_r<16>(b0);
+    b1 = shift_r<16>(b1);
+    return gint32x8(combine(b0, b1));
 #elif SIMDPP_USE_NEON
     int32x8 r;
     r[0] = vmovl_s16(vget_low_s16(a[0]));
@@ -120,74 +88,8 @@ inline gint32x8 to_int32x8(int16x16 a)
     int32x4 b0, b1;
     b0 = vec_unpackh((__vector int16_t)a[0]);
     b1 = vec_unpackl((__vector int16_t)a[0]);
-    return {b0, b1};
+    return combine(b0, b1);
 #endif
-    */
-}
-
-/** Zero-extends the values of a unsigned int16x8 vector to 32-bits
-
-    @code
-    r0 = (uint32_t) a0
-    ...
-    r3 = (uint32_t) a3
-    @endcode
-*/
-inline gint32x4 to_int32x4(uint16x8 a)
-{
-    /* FIXME
-#if SIMDPP_USE_NULL
-    int32x4 r;
-    for (unsigned i = 0; i < 4; i++) {
-        r.el(i) = int32_t(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
-    return _mm_cvtepu16_epi32(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    int32x4 r = zip_lo(a, int16x8::zero());
-    return r;
-#elif SIMDPP_USE_NEON
-    return vmovl_u16(vget_low_u16(a));
-#endif
-    */
-}
-
-
-
-/** Zero-extends the first 8 values of a unsigned int16x16 vector to 32-bits
-
-    @code
-    r0 = (uint32_t) a0
-    ...
-    r7 = (uint32_t) a7
-    @endcode
-    @icost{SSE2-AVX, ALTIVEC, 2}
-    @icost{NEON, 2}
-*/
-inline gint32x8 to_int32x8(uint16x16 a)
-{
-    /* FIXME
-#if SIMDPP_USE_NULL
-    uint32x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r[i/4].el(i%4) = uint32_t(a[0].el(i));
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
-    return _mm256_cvtepu16_epi32(_mm256_castsi256_si128(a));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    uint32x4 b0, b1;
-    b0 = zip_lo(a[0], uint16x8::zero());
-    b1 = zip_hi(a[0], uint16x8::zero());
-    return uint32x8(b0, b1);
-#elif SIMDPP_USE_NEON
-    uint32x8 r;
-    r[0] = vmovl_u16(vget_low_u16(a[0]));
-    r[1] = vmovl_u16(vget_high_u16(a[1]));
-    return r;
-#endif
-    */
 }
 
 /// @{
@@ -214,7 +116,7 @@ inline gint32x8 to_int32x8(uint16x16 a)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline gint32x4 to_int32x4(float32x4 a)
+inline gint32x4 to_int32(float32x4 a)
 {
 #if SIMDPP_USE_NULL
     return null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
@@ -240,7 +142,7 @@ inline gint32x8 to_int32x8(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_cvttps_epi32(a);
 #else
-    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, to_int32x4, a);
+    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, to_int32, a);
 #endif
 }
 /// @}
@@ -265,60 +167,34 @@ inline gint32x8 to_int32x8(float32x8 a)
     @code
     r0 = (int32_t) a0
     r1 = (int32_t) a1
-    r2 = 0
-    r3 = 0
+    r2 = (int32_t) a2
+    r3 = (int32_t) a3
     @endcode
 
-    @par 256-bit version:
-    @code
-    r0 = (int32_t) a0
-    ...
-    r3 = (int32_t) a3
-    r4 = 0
-    ...
-    r7 = 0
-    @endcode
-    @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 3}
 */
-inline gint32x4 to_int32x4(float64x2 a)
+inline gint32x4 to_int32(float64x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
-    r[0] = int32_t(a.el(0));
-    r[1] = int32_t(a.el(1));
-    r[2] = 0;
-    r[3] = 0;
+    r[0] = int32_t(a[0].el(0));
+    r[1] = int32_t(a[0].el(1));
+    r[2] = int32_t(a[1].el(0));
+    r[3] = int32_t(a[1].el(1));
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_cvttpd_epi32(a);
+    gint32x4 r1, r2;
+    float64x2 a1, a2;
+    split(a, a1, a2);
+    r1 = _mm_cvttpd_epi32(a1);
+    r2 = _mm_cvttpd_epi32(a2);
+    r2 = move_l<2>(r2);
+    return bit_or(r1, r2);
 #else
     SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();
 #endif
 }
 
-inline gint32x8 to_int32x8(float64x4 a)
-{
-    /* FIXME
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int32x8> r;
-    r[0] = int32_t(a[0].el(0));
-    r[1] = int32_t(a[0].el(1));
-    r[2] = int32_t(a[1].el(0));
-    r[3] = int32_t(a[1].el(1));
-    r[4] = 0;  r[5] = 0;  r[6] = 0;  r[7] = 0;
-    return r;
-#elif SIMDPP_USE_AVX
-    return _mm256_castsi128_si256(_mm256_cvttpd_epi32(a));
-#elif SIMDPP_USE_SSE2
-    int32x4 b0 = to_int32x4(a[0]);
-    int32x4 b1 = to_int32x4(a[1]);
-    return {zip_lo(b0, b1), int32x4::zero()};
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
-#endif
-    */
-}
 /// @}
 
 

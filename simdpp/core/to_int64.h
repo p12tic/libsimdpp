@@ -45,16 +45,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @{
 /** Extends the values of a signed int32x4 vector to 64-bits
 
-    @par 128-bit version:
-    @code
-    r0 = (int64_t) a0
-    r1 = (int64_t) a1
-    @endcode
-
-    @icost{SSE2-SSSE3, 2}
-    @icost{ALTIVEC, 2-3}
-
-    @par 256-bit version:
     @code
     r0 = (int64_t) a0
     ...
@@ -66,72 +56,37 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2}
     @icost{ALTIVEC, 3-4}
 */
-inline gint64x2 to_int64x2(int32x4 a)
+inline gint64x4 to_int64(int32x4 a)
 {
-    /* FIXME
-#if SIMDPP_USE_NULL
-    int64x2 r;
-    r.el(0) = int64_t(a.el(0));
-    r.el(1) = int64_t(a.el(1));
-    return r;
-#elif SIMDPP_USE_SSE4_1
-    return _mm_cvtepi32_epi64(a);
-#elif SIMDPP_USE_SSE2
-    int32x4 u;
-    u = shift_r(a, 31);
-    a = zip_lo(a, u);
-    return a;
-#elif SIMDPP_USE_NEON
-    return vmovl_s32(vget_low_s32(a));
-#elif SIMDPP_USE_ALTIVEC
-    int32x4 u;
-    u = shift_r(a, 31);
-    a = zip_lo(u, a);
-    return a;
-#endif
-    */
-}
-
-inline gint64x4 to_int64x4(int32x8 a)
-{
-    /* FIXME
 #if SIMDPP_USE_NULL
     int64x4 r;
-    r[0].el(0) = int64_t(a[0].el(0));
-    r[0].el(1) = int64_t(a[0].el(1));
-    r[1].el(0) = int64_t(a[0].el(2));
-    r[1].el(1) = int64_t(a[0].el(3));
+    r[0].el(0) = int64_t(a.el(0));
+    r[0].el(1) = int64_t(a.el(1));
+    r[1].el(0) = int64_t(a.el(2));
+    r[1].el(1) = int64_t(a.el(3));
     return r;
 #elif SIMDPP_USE_AVX2
-    return _mm256_cvtepi32_epi64(sse::extract_lo(a));
-#elif SIMDPP_USE_SSE2
-    return int64x4(to_int64x2(a[0]), to_int64x2(move_l<2>(a[0])));
+    return _mm256_cvtepi32_epi64(a);
+#elif SIMDPP_USE_SSE4_1
+    gint64x2 r1, r2;
+    r1 = _mm_cvtepi32_epi64(a);
+    r2 = _mm_cvtepi32_epi64(move_r<2>(a));
+    return combine(r1, r2);
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    int32x4 u;
+    u = shift_r(a, 31);
+    return combine(zip_lo(a, u), zip_hi(a, u));
 #elif SIMDPP_USE_NEON
-    int64x4 r;
-    r[0] = vmovl_s32(vget_low_s32(a[0]));
-    r[1] = vmovl_s32(vget_high_s32(a[0]));
-    return r;
-#elif SIMDPP_USE_ALTIVEC
-    int32x4 a0 = a[0];
-    int32x4 u = shift_r(a0, 31);
-    int64x2 b0, b1;
-    b0 = zip_lo(u, a0);
-    b1 = zip_hi(u, a0);
-    return { b0, b1 };
+    int64x2 r1, r2;
+    r1 = vmovl_s32(vget_low_s32(a));
+    r2 = vmovl_s32(vget_high_s32(a));
+    return combine(r1, r2);
 #endif
-    */
 }
 
 /// @{
 /** Extends the values of an unsigned int32x4 vector to 64-bits
 
-    @par 128-bit version:
-    @code
-    r0 = (uint64_t) a0
-    r1 = (uint64_t) a1
-    @endcode
-
-    @par 256-bit version:
     @code
     r0 = (uint64_t) a0
     ...
@@ -141,50 +96,31 @@ inline gint64x4 to_int64x4(int32x8 a)
     @icost{SSE2-AVX, 3}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint64x2 to_int64x2(uint32x4 a)
+inline gint64x4 to_int64(uint32x4 a)
 {
-    /* FIXME
 #if SIMDPP_USE_NULL
-    int64x2 r;
-    r.el(0) = int64_t(a.el(0));
-    r.el(1) = int64_t(a.el(1));
-    return r;
-#elif SIMDPP_USE_SSE4_1
-    return _mm_cvtepu32_epi64(a);
-#elif SIMDPP_USE_SSE2
-    return zip_lo(a, uint32x4::zero());
-#elif SIMDPP_USE_NEON
-    return vmovl_u32(vget_low_u32(a));
-#elif SIMDPP_USE_ALTIVEC
-    return zip_lo(uint32x4::zero(), a);
-#endif
-    */
-}
-
-inline gint64x4 to_int64x4(uint32x8 a)
-{
-    /* FIXME
-#if SIMDPP_USE_NULL
-    int64x4 r;
-    r[0].el(0) = int64_t(a[0].el(0));
-    r[0].el(1) = int64_t(a[0].el(1));
-    r[1].el(0) = int64_t(a[0].el(2));
-    r[1].el(1) = int64_t(a[0].el(3));
+    uint64x4 r;
+    r[0].el(0) = uint64_t(a.el(0));
+    r[0].el(1) = uint64_t(a.el(1));
+    r[1].el(0) = uint64_t(a.el(2));
+    r[1].el(1) = uint64_t(a.el(3));
     return r;
 #elif SIMDPP_USE_AVX2
-    return _mm256_cvtepu32_epi64(sse::extract_lo(a));
-#elif SIMDPP_USE_SSE2
-    uint32x4 u1 = move_l<2>(a[0]);
-    return int64x4(to_int64x2(a[0]), u1);
+    return _mm256_cvtepu32_epi64(a);
+#elif SIMDPP_USE_SSE4_1
+    gint64x2 r1, r2;
+    r1 = _mm_cvtepu32_epi64(a);
+    r2 = _mm_cvtepu32_epi64(move_r<2>(a));
+    return combine(r1, r2);
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    return combine(zip_lo(a, uint32x4::zero()),
+                   zip_hi(a, uint32x4::zero()));
 #elif SIMDPP_USE_NEON
-    uint64x4 r;
-    r[0] = vmovl_u32(vget_low_u32(a[0]));
-    r[1] = vmovl_u32(vget_high_u32(a[0]));
-    return r;
-#elif SIMDPP_USE_ALTIVEC
-    return { zip_lo(uint32x4::zero(), a[0]), zip_hi(uint32x4::zero(), a[1]) };
+    int64x2 r1, r2;
+    r1 = vmovl_u32(vget_low_u32(a));
+    r2 = vmovl_u32(vget_high_u32(a));
+    return combine(r1, r2);
 #endif
-    */
 }
 /// @}
 

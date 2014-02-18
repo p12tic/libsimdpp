@@ -72,8 +72,8 @@ inline float32x4 trunc(float32x4 a)
     mask_float32x4 mask = cmp_gt(af, float32x4::make_const(8388607.0f));
 
     //truncate
-    int32x4 ia = to_int32x4(a);
-    float32x4 fa = to_float32x4(ia);
+    int32x4 ia = to_int32(a);
+    float32x4 fa = to_float32(ia);
 
     //combine the results
     a = blend(a, fa, mask);     // takes care of NaNs

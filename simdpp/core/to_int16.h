@@ -36,6 +36,7 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
+#include <simdpp/core/insert.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -43,38 +44,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/** Sign extends the first 8 values of a signed int8x16 vector to 16-bits
-
-    @code
-    r0 = (int16_t) a0
-    ...
-    r7 = (int16_t) a7
-    @endcode
-    @icost{SSE2-SSSE3, 2}
-*/
-inline gint16x8 to_int16x8(int8x16 a)
-{
-#if SIMDPP_USE_NULL
-    int16x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r.el(i) = int16_t(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
-    return _mm_cvtepi8_epi16(a);
-#elif SIMDPP_USE_SSE2
-    int16x8 r;
-    r = zip_lo(int8x16::zero(), a);
-    r = shift_r(r, 8);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vmovl_s8(vget_low_s8(a));
-#elif SIMDPP_USE_ALTIVEC
-    return vec_unpackh((__vector int8_t)a);
-#endif
-}
-
-/** Sign extends the first 16 values of a signed int8x32 vector to 16-bits
+/** Sign extends the 16 values of a signed int8x16 vector to 16-bits
 
     @code
     r0 = (int16_t) a0
@@ -86,72 +56,40 @@ inline gint16x8 to_int16x8(int8x16 a)
     @icost{SSE2-SSSE3, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint16x16 to_int16x16(int8x32 a)
+inline gint16x16 to_int16(int8x16 a)
 {
-    /*
 #if SIMDPP_USE_NULL
     int16x16 r;
     for (unsigned i = 0; i < 16; i++) {
-        r[i/8].el(i%8) = int16_t(a[0].el(i));
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
-    return  _mm256_cvtepi8_epi16(_mm256_castsi256_si128(a));
-#elif SIMDPP_USE_SSE4_1
-    int16x16 r;
-    r[0] = to_int16x8(a[0]);
-    r[1] = to_int16x8(move_l<8>(a[0]));
-    return r;
-#elif SIMDPP_USE_SSE2
-    int16x8 b0, b1;
-    b0 = zip_lo(int8x16::zero(), a[0]);
-    b1 = zip_hi(int8x16::zero(), a[0]);
-    b0 = shift_r<8>(b0);
-    b1 = shift_r<8>(b1);
-    return int16x16(b0, b1);
-#elif SIMDPP_USE_NEON
-    int16x16 r;
-    r[0] = vmovl_s8(vget_low_s8(a[0]));
-    r[1] = vmovl_s8(vget_high_s8(a[1]));
-    return r;
-#elif SIMDPP_USE_ALTIVEC
-    int16x8 b0, b1;
-    b0 = vec_unpackh((__vector int8_t)a[0]);
-    b1 = vec_unpackl((__vector int8_t)a[0]);
-    return {b0, b1};
-#endif
-    */
-}
-
-
-/** Extends the first 8 values of a unsigned int8x16 vector to 16-bits
-
-    @code
-    r0 = (uint16_t) a0
-    ...
-    r7 = (uint16_t) a7
-    @endcode
-*/
-inline gint16x8 to_int16x8(uint8x16 a)
-{
-#if SIMDPP_USE_NULL
-    uint16x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r.el(i) = int16_t(a.el(i));
+        r[i/8].el(i%8) = int16_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_cvtepu8_epi16(a);
+    int16x8 r1, r2;
+    r1 = _mm_cvtepi8_epi16(a);
+    r2 = _mm_cvtepi8_epi16(move_r<8>(a));
+    return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
-    return zip_lo(a, uint8x16::zero());
+    int16x8 r1, r2;
+    r1 = zip_lo(int8x16::zero(), a);
+    r1 = shift_r(r1, 8);
+    r2 = zip_hi(int8x16::zero(), a);
+    r2 = shift_r(r2, 8);
+    return combine(r1, r2);
 #elif SIMDPP_USE_NEON
-    return vmovl_u8(vget_low_u8(a));
+    int16x16 r;
+    r[0] = vmovl_s8(vget_low_s8(a));
+    r[1] = vmovl_s8(vget_high_s8(a));
+    return r;
 #elif SIMDPP_USE_ALTIVEC
-    return zip_lo(uint8x16::zero(), a);
+    int16x16 r;
+    r[0] = vec_unpackh((__vector int8_t)a[0]);
+    r[1] = vec_unpackl((__vector int8_t)a[0]);
+    return r;
 #endif
 }
 
-/** Extends the first 16 values of a unsigned int8x32 vector to 16-bits
+/** Extends the 16 values of a unsigned int8x16 vector to 16-bits
 
     @code
     r0 = (uint16_t) a0
@@ -160,29 +98,35 @@ inline gint16x8 to_int16x8(uint8x16 a)
     @endcode
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint16x16 to_int16x16(uint8x32 a)
+inline gint16x16 to_int16(uint8x16 a)
 {
-    /*
 #if SIMDPP_USE_NULL
-    int16x16 r;
-    for (unsigned i = 0; i < 16; i++) {
-        r[i/8].el(i%8) = uint16_t(a[0].el(i));
+    uint16x16 r;
+    for (unsigned i = 0; i < 8; i++) {
+        r[i/8].el(i%8) = uint16_t(a.el(i));
     }
     return r;
-#elif SIMDPP_USE_AVX2
-    return  _mm256_cvtepu8_epi16(_mm256_castsi256_si128(a));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    int16x8 b0, b1;
-    b0 = zip_lo(a[0], int8x16::zero());
-    b1 = zip_hi(a[0], int8x16::zero());
-    return int16x16(b0, b1);
+#elif SIMDPP_USE_SSE4_1
+    int16x8 r1, r2;
+    r1 = _mm_cvtepi8_epi16(a);
+    r2 = _mm_cvtepi8_epi16(move_r<8>(a));
+    return combine(r1, r2);
+#elif SIMDPP_USE_SSE2
+    int16x8 r1, r2;
+    r1 = zip_lo(a, uint8x16::zero());
+    r2 = zip_hi(a, uint8x16::zero());
+    return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;
-    r[0] = vmovl_s8(vget_low_s8(a[0]));
-    r[1] = vmovl_s8(vget_high_s8(a[1]));
+    r[0] = vmovl_u8(vget_low_u8(a));
+    r[1] = vmovl_u8(vget_high_u8(a));
+    return r;
+#elif SIMDPP_USE_ALTIVEC
+    int16x16 r;
+    r[0] = vmovl_u8(vget_low_u8(a[0]));
+    r[1] = vmovl_u8(vget_high_u8(a[1]));
     return r;
 #endif
-    */
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

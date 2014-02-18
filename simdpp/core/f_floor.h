@@ -86,9 +86,9 @@ inline float32x4 floor(float32x4 a)
     //calculate the floor using trunc
     int32x4 s = shift_r((uint32x4)a, 31); //=1 if a<0
     float32x4 at = (float32x4) sub((int32x4)a, s); //=nextafter towards +inf, if a<0
-    int32x4 ia = to_int32x4(at);
+    int32x4 ia = to_int32(at);
             ia = sub(ia, s);
-    float32x4 fa = to_float32x4(ia);
+    float32x4 fa = to_float32(ia);
 
     //combine the results
     a = blend(a, fa, mask);
