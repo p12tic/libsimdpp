@@ -66,7 +66,7 @@ inline int8x16 max(int8x16 a, int8x16 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_max_epi8(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_gt(a, b);
+    mask_int8x16 mask = cmp_gt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vmaxq_s8(a, b);
@@ -178,7 +178,7 @@ inline uint16x8 max(uint16x8 a, uint16x8 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_max_epu16(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_gt(a, b);
+    mask_int16x8 mask = cmp_gt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vmaxq_u16(a, b);
@@ -220,7 +220,7 @@ inline int32x4 max(int32x4 a, int32x4 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_max_epi32(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_gt(a, b);
+    mask_int32x4 mask = cmp_gt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vmaxq_s32(a, b);
@@ -263,7 +263,7 @@ inline uint32x4 max(uint32x4 a, uint32x4 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_max_epu32(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_gt(a, b);
+    mask_int32x4 mask = cmp_gt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vmaxq_u32(a, b);

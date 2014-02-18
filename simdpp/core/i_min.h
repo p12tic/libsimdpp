@@ -66,7 +66,7 @@ inline int8x16 min(int8x16 a, int8x16 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epi8(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_lt(a, b);
+    mask_int8x16 mask = cmp_lt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vminq_s8(a, b);
@@ -178,7 +178,7 @@ inline uint16x8 min(uint16x8 a, uint16x8 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epu16(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_lt(a, b);
+    mask_int16x8 mask = cmp_lt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vminq_u16(a, b);
@@ -220,7 +220,7 @@ inline int32x4 min(int32x4 a, int32x4 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epi32(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_lt(a, b);
+    mask_int32x4 mask = cmp_lt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vminq_s32(a, b);
@@ -262,7 +262,7 @@ inline uint32x4 min(uint32x4 a, uint32x4 b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epu32(a, b);
 #elif SIMDPP_USE_SSE2
-    int128 mask = cmp_lt(a, b);
+    mask_int32x4 mask = cmp_lt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_NEON
     return vminq_u32(a, b);
