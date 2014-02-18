@@ -66,10 +66,6 @@ inline gint8x16 bit_andnot(gint8x16 a, int128 b)
 #endif
 }
 
-inline gint16x8 bit_andnot(gint16x8 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
-inline gint32x4 bit_andnot(gint32x4 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
-inline gint64x2 bit_andnot(gint64x2 a, int128 b) { return bit_andnot(uint8x16(a), uint8x16(b)); }
-
 inline gint8x32 bit_andnot(gint8x32 a, int256 b)
 {
 #if SIMDPP_USE_AVX2
@@ -78,9 +74,13 @@ inline gint8x32 bit_andnot(gint8x32 a, int256 b)
     return {bit_andnot(a[0], b[0]), bit_andnot(a[1], b[1])};
 #endif
 }
-inline gint16x16 bit_andnot(gint16x16 a, int256 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline gint32x8 bit_andnot(gint32x8 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline gint64x4 bit_andnot(gint64x4 a, int256 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
+
+template<unsigned N>
+gint16<N> bit_andnot(gint16<N> a, int_bits<N*2> b) { return bit_andnot(uint8<N*2>(a), uint8<N*2>(b)); }
+template<unsigned N>
+gint32<N> bit_andnot(gint32<N> a, int_bits<N*4> b) { return bit_andnot(uint8<N*4>(a), uint8<N*4>(b)); }
+template<unsigned N>
+gint64<N> bit_andnot(gint64<N> a, int_bits<N*8> b) { return bit_andnot(uint8<N*8>(a), uint8<N*8>(b)); }
 
 // -----------------------------------------------------------------------------
 

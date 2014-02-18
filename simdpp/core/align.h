@@ -112,7 +112,6 @@ gint8x32 align(gint8x32 lower, gint8x32 upper)
 }
 /// @}
 
-/// @{
 /** Extracts a int16x8 vector from two concatenated int16x8 vectors
 
     @code
@@ -135,22 +134,13 @@ gint8x32 align(gint8x32 lower, gint8x32 upper)
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-gint16x8 align(gint16x8 lower, gint16x8 upper)
+template<unsigned shift, unsigned N>
+gint16<N> align(gint16<N> lower, gint16<N> upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    return align<shift*2>(gint8x16(lower), gint8x16(upper));
+    return align<shift*2>(gint8<N*2>(lower), gint8<N*2>(upper));
 }
 
-template<unsigned shift>
-gint16x16 align(gint16x16 lower, gint16x16 upper)
-{
-    static_assert(shift <= 8, "Shift out of bounds");
-    return align<shift*2>(gint8x32(lower), gint8x32(upper));
-}
-/// @}
-
-/// @{
 /** Extracts a int32x4 vector from two concatenated int32x4 vectors
 
     @code
@@ -172,22 +162,13 @@ gint16x16 align(gint16x16 lower, gint16x16 upper)
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-gint32x4 align(gint32x4 lower, gint32x4 upper)
+template<unsigned shift, unsigned N>
+gint32<N> align(gint32<N> lower, gint32<N> upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return align<shift*4>(gint8x16(lower), gint8x16(upper));
+    return align<shift*4>(gint8<N*4>(lower), gint8<N*4>(upper));
 }
 
-template<unsigned shift>
-gint32x8 align(gint32x8 lower, gint32x8 upper)
-{
-    static_assert(shift <= 4, "Shift out of bounds");
-    return align<shift*4>(gint8x32(lower), gint8x32(upper));
-}
-/// @}
-
-/// @{
 /** Extracts a int64x2 vector from two concatenated int64x2 vectors
 
     @code
@@ -207,22 +188,13 @@ gint32x8 align(gint32x8 lower, gint32x8 upper)
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-gint64x2 align(gint64x2 lower, gint64x2 upper)
+template<unsigned shift, unsigned N>
+gint64<N> align(gint64<N> lower, gint64<N> upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return align<shift*8>(gint8x16(lower), gint8x16(upper));
+    return align<shift*8>(gint8<N*8>(lower), gint8<N*8>(upper));
 }
 
-template<unsigned shift>
-gint64x4 align(gint64x4 lower, gint64x4 upper)
-{
-    static_assert(shift <= 2, "Shift out of bounds");
-    return align<shift*8>(gint8x32(lower), gint8x32(upper));
-}
-/// @}
-
-/// @{
 /** Extracts a float32x4 vector from two concatenated float32x4 vectors
 
     @code
@@ -244,23 +216,14 @@ gint64x4 align(gint64x4 lower, gint64x4 upper)
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-float32x4 align(float32x4 lower, float32x4 upper)
+template<unsigned shift, unsigned N>
+float32<N> align(float32<N> lower, float32<N> upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return float32x4(align<shift>(gint32x4(lower),
-                                  gint32x4(upper)));
+    return float32<N>(align<shift>(gint32<N>(lower),
+                                   gint32<N>(upper)));
 }
 
-template<unsigned shift>
-float32x8 align(float32x8 lower, float32x8 upper)
-{
-    static_assert(shift <= 4, "Shift out of bounds");
-    return float32x8(align<shift>(gint32x8(lower), gint32x8(upper)));
-}
-/// @}
-
-/// @{
 /** Extracts a float64x2 vector from two concatenated float64x2 vectors
 
     @code
@@ -282,21 +245,13 @@ float32x8 align(float32x8 lower, float32x8 upper)
     @icost{SSSE3-AVX, 2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned shift>
-float64x2 align(float64x2 lower, float64x2 upper)
+template<unsigned shift, unsigned N>
+float64<N> align(float64<N> lower, float64<N> upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return float64x2(align<shift>(gint64x2(lower),
-                                  gint64x2(upper)));
+    return float64<N>(align<shift>(gint64<N>(lower),
+                                   gint64<N>(upper)));
 }
-
-template<unsigned shift>
-float64x4 align(float64x4 lower, float64x4 upper)
-{
-    static_assert(shift <= 2, "Shift out of bounds");
-    return float64x4(align<shift>(gint64x4(lower), gint64x4(upper)));
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

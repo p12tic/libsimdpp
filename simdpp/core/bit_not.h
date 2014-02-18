@@ -70,10 +70,6 @@ inline gint8x16 bit_not(gint8x16 a)
 #endif
 }
 
-inline gint16x8 bit_not(gint16x8 a) { return bit_not(uint8x16(a)); }
-inline gint32x4 bit_not(gint32x4 a) { return bit_not(uint8x16(a)); }
-inline gint64x2 bit_not(gint64x2 a) { return bit_not(uint8x16(a)); }
-
 inline gint8x32 bit_not(gint8x32 a)
 {
 #if SIMDPP_USE_AVX2
@@ -84,9 +80,12 @@ inline gint8x32 bit_not(gint8x32 a)
 #endif
 }
 
-inline gint16x16 bit_not(gint16x16 a) { return bit_not(uint8x32(a)); }
-inline gint32x8 bit_not(gint32x8 a)   { return bit_not(uint8x32(a)); }
-inline gint64x4 bit_not(gint64x4 a)   { return bit_not(uint8x32(a)); }
+template<unsigned N>
+gint16<N> bit_not(gint16<N> a) { return bit_not(uint8<N*2>(a)); }
+template<unsigned N>
+gint32<N> bit_not(gint32<N> a) { return bit_not(uint8<N*4>(a)); }
+template<unsigned N>
+gint64<N> bit_not(gint64<N> a) { return bit_not(uint8<N*8>(a)); }
 
 // -----------------------------------------------------------------------------
 
