@@ -43,60 +43,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace sse {
 
-#ifdef SIMDPP_USE_SSE2
-/** Compares the values of two float32x4 vectors for less-than or equal
-
-    @code
-    r0 = (a0 <= b0) ? 0xffffffff : 0x0
-    r1 = (a1 <= b1) ? 0xffffffff : 0x0
-    r2 = (a2 <= b2) ? 0xffffffff : 0x0
-    r3 = (a3 <= b3) ? 0xffffffff : 0x0
-    @endcode
-*/
-inline int128 cmp_le(float32x4 a, float32x4 b)
-{
-    return int32x4(_mm_cmple_ps(a, b));
-}
-
-/** Compares the values of two float64x2 vectors for less-than or equal
-
-    @code
-    r0 = (a0 <= b0) ? 0xffffffffffffffff : 0x0
-    r1 = (a1 <= b1) ? 0xffffffffffffffff : 0x0
-    @endcode
-*/
-inline int128 cmp_le(float64x2 a, float64x2 b)
-{
-    return int64x2(_mm_cmple_pd(a, b));
-}
-
-
-/** Compares the values of two float32x4 vectors for greater-than or equal
-
-    @code
-    r0 = (a0 >= b0) ? 0xffffffff : 0x0
-    r1 = (a1 >= b1) ? 0xffffffff : 0x0
-    r2 = (a2 >= b2) ? 0xffffffff : 0x0
-    r3 = (a3 >= b3) ? 0xffffffff : 0x0
-    @endcode
-*/
-inline int128 cmp_ge(float32x4 a, float32x4 b)
-{
-    return int32x4(_mm_cmpge_ps(a, b));
-}
-
-/** Compares the values of two float64x2 vectors for greater-than or equal
-
-    @code
-    r0 = (a0 >= b0) ? 0xffffffffffffffff : 0x0
-    r1 = (a1 >= b1) ? 0xffffffffffffffff : 0x0
-    @endcode
-*/
-inline int128 cmp_ge(float64x2 a, float64x2 b)
-{
-    return int64x2(_mm_cmpge_pd(a, b));
-}
-
 /** Tests no bits are set in 128-bit integer vector. Returns @c true if
     <tt>a</tt> has all bits unset, @c false otherwise
 
