@@ -39,6 +39,7 @@
 #include <simdpp/simd/detail/width.h>
 #include <simdpp/simd/detail/shuffle128.h>
 #include <simdpp/simd/detail/transpose.h>
+#include <simdpp/functions/broadcast.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

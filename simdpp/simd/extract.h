@@ -36,7 +36,7 @@
 #include <simdpp/simd/types.h>
 #include <simdpp/simd/shuffle.h>
 #include <simdpp/simd/cast.h>
-#include <simdpp/simd/detail/word_size.h>
+#include <simdpp/functions/i_shift_l.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
