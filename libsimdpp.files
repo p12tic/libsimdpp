@@ -59,6 +59,8 @@ simdpp/core/detail/mem_unpack.h
 simdpp/core/detail/move_signed.h
 simdpp/core/detail/shuffle128.h
 simdpp/core/detail/shuffle_emul.h
+simdpp/core/detail/vec_extract.h
+simdpp/core/detail/vec_insert.h
 simdpp/core/extract.h
 simdpp/core/f_abs.h
 simdpp/core/f_add.h
