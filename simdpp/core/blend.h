@@ -302,11 +302,6 @@ inline float32x4 blend(float32x4 on, float32x4 off, float32x4 mask)
 #endif
 }
 
-inline float32x4 blend(float32x4 on, float32x4 off, int128 mask)
-{
-    return blend(on, off, bit_cast<float32x4>(mask));
-}
-
 inline float32x8 blend(float32x8 on, float32x8 off, float32x8 mask)
 {
 #if SIMDPP_USE_AVX
@@ -316,11 +311,11 @@ inline float32x8 blend(float32x8 on, float32x8 off, float32x8 mask)
 #endif
 }
 
-inline float32x8 blend(float32x8 on, float32x8 off, int256 mask)
+template<unsigned N>
+inline float32<N> blend(float32<N> on, float32<N> off, gint32<N> mask)
 {
-    return blend(on, off, bit_cast<float32x8>(mask));
+    return blend(on, off, float32<N>(mask));
 }
-
 
 inline float32x4 blend(float32x4 on, float32x4 off, mask_float32x4 mask)
 {
@@ -374,11 +369,6 @@ inline float64x2 blend(float64x2 on, float64x2 off, float64x2 mask)
 #endif
 }
 
-inline float64x2 blend(float64x2 on, float64x2 off, int128 mask)
-{
-    return blend(on, off, bit_cast<float64x2>(mask));
-}
-
 inline float64x4 blend(float64x4 on, float64x4 off, float64x4 mask)
 {
 #if SIMDPP_USE_AVX
@@ -388,9 +378,10 @@ inline float64x4 blend(float64x4 on, float64x4 off, float64x4 mask)
 #endif
 }
 
-inline float64x4 blend(float64x4 on, float64x4 off, int256 mask)
+template<unsigned N>
+inline float64<N> blend(float64<N> on, float64<N> off, gint64<N> mask)
 {
-    return blend(on, off, bit_cast<float64x4>(mask));
+    return blend(on, off, float64<N>(mask));
 }
 
 inline float64x2 blend(float64x2 on, float64x2 off, mask_float64x2 mask)
