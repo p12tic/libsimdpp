@@ -33,8 +33,8 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/cast.h>
 #include <simdpp/detail/word_size.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/core/detail/move_signed.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/altivec/load1.h>
@@ -270,7 +270,7 @@ float64x2 insert(float64x2 a, double x)
     @icost{AVX2, 1}
     @icost{SSE2-AVX, NEON, ALTIVEC, 0}
 */
-inline int256 combine(int128 a, int128 b)
+inline gint8x32 combine(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_AVX2
     gint8x32 r;
@@ -280,6 +280,19 @@ inline int256 combine(int128 a, int128 b)
 #else
     return {a, b};
 #endif
+}
+
+inline gint16x16 combine(gint16x8 a, gint16x8 b)
+{
+    return combine(uint16x8(a), uint16x8(b));
+}
+inline gint32x8 combine(gint32x4 a, gint32x4 b)
+{
+    return combine(uint16x8(a), uint16x8(b));
+}
+inline gint64x4 combine(gint64x2 a, gint64x2 b)
+{
+    return combine(uint16x8(a), uint16x8(b));
 }
 
 inline float32x8 combine(float32x4 a, float32x4 b)

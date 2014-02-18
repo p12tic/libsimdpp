@@ -45,7 +45,7 @@ namespace sse {
 /** Extracts the lower half of a 256-bit vector
     @icost{0}
 */
-inline int128 extract_lo(int256 a)
+inline gint8x16 extract_lo(gint8x32 a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_castsi256_si128(a);
@@ -54,10 +54,9 @@ inline int128 extract_lo(int256 a)
 #endif
 }
 
-inline gint8x16 extract_lo(gint8x32 a) { return extract_lo(int256(a)); }
-inline gint16x8 extract_lo(gint16x16 a) { return extract_lo(int256(a)); }
-inline gint32x4 extract_lo(gint32x8 a) { return extract_lo(int256(a)); }
-inline gint64x2 extract_lo(gint64x4 a) { return extract_lo(int256(a)); }
+inline gint16x8 extract_lo(gint16x16 a) { return extract_lo(gint8x32(a)); }
+inline gint32x4 extract_lo(gint32x8 a) { return extract_lo(gint8x32(a)); }
+inline gint64x2 extract_lo(gint64x4 a) { return extract_lo(gint8x32(a)); }
 
 inline float32x4 extract_lo(float32x8 a)
 {
@@ -82,7 +81,7 @@ inline float64x2 extract_lo(float64x4 a)
 /** Extracts the higher half of a 256-bit vector
     @icost{0}
 */
-inline int128 extract_hi(int256 a)
+inline gint8x16 extract_hi(gint8x32 a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_extracti128_si256(a, 1);
@@ -91,10 +90,9 @@ inline int128 extract_hi(int256 a)
 #endif
 }
 
-inline gint8x16 extract_hi(gint8x32 a) { return extract_hi(int256(a)); }
-inline gint16x8 extract_hi(gint16x16 a) { return extract_hi(int256(a)); }
-inline gint32x4 extract_hi(gint32x8 a) { return extract_hi(int256(a)); }
-inline gint64x2 extract_hi(gint64x4 a) { return extract_hi(int256(a)); }
+inline gint16x8 extract_hi(gint16x16 a) { return extract_hi(gint8x32(a)); }
+inline gint32x4 extract_hi(gint32x8 a) { return extract_hi(gint8x32(a)); }
+inline gint64x2 extract_hi(gint64x4 a) { return extract_hi(gint8x32(a)); }
 
 inline float32x4 extract_hi(float32x8 a)
 {

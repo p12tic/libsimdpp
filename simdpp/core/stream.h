@@ -63,7 +63,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-inline void stream(void* p, int128 a)
+inline void stream(void* p, gint8<16> a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -77,7 +77,7 @@ inline void stream(void* p, int128 a)
 #endif
 }
 
-inline void stream(void* p, int256 a)
+inline void stream(void* p, gint8<32> a)
 {
     p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX2
@@ -88,6 +88,13 @@ inline void stream(void* p, int256 a)
     stream(q+16, a[1]);
 #endif
 }
+
+template<unsigned N>
+void stream(void* p, gint16<N> a) { stream(p, gint8<N*2>(a)); }
+template<unsigned N>
+void stream(void* p, gint32<N> a) { stream(p, gint8<N*4>(a)); }
+template<unsigned N>
+void stream(void* p, gint64<N> a) { stream(p, gint8<N*8>(a)); }
 
 inline void stream(float* p, float32x4 a)
 {

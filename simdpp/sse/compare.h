@@ -49,7 +49,7 @@ namespace sse {
     @icost{SSE2, SSE3, SSSE3, 3}
     @icost{SSE4.1, 2}
 */
-inline bool test_zero(int128 a)
+inline bool test_zero(gint8x16 a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(int8x16::zero(), a);
@@ -58,6 +58,9 @@ inline bool test_zero(int128 a)
     return (_mm_movemask_epi8(int8x16(r)) == 0xffff);
 #endif
 }
+inline bool test_zero(gint16x8 a) { return test_zero(gint8x16(a)); }
+inline bool test_zero(gint32x4 a) { return test_zero(gint8x16(a)); }
+inline bool test_zero(gint64x2 a) { return test_zero(gint8x16(a)); }
 
 /** Tests if 128-bit integer @a a consists only from zeros if a mask @a mask is
     applied. Returns @c true if <tt>a & mask</tt> has all bits unset, @c false
@@ -66,7 +69,7 @@ inline bool test_zero(int128 a)
     @icost{SSE2, SSE3, SSSE3, 4}
     @icost{SSE4.1, 1}
 */
-inline bool test_zero(int128 a, int128 mask)
+inline bool test_zero(gint8x16 a, gint8x16 mask)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testz_si128(a, mask);
@@ -79,13 +82,17 @@ inline bool test_zero(int128 a, int128 mask)
 #endif
 }
 
+inline bool test_zero(gint16x8 a, gint16x8 mask) { return test_zero(gint8x16(a), gint8x16(mask)); }
+inline bool test_zero(gint32x4 a, gint32x4 mask) { return test_zero(gint8x16(a), gint8x16(mask)); }
+inline bool test_zero(gint64x2 a, gint64x2 mask) { return test_zero(gint8x16(a), gint8x16(mask)); }
+
 /** Tests if all bits are set in a 128-bit integer. Returns @c true if @a a has
     all bits set, @c false otherwise.
 
     @icost{SSE2, SSE3, SSSE3, 3}
     @icost{SSE4.1, 2}
 */
-inline bool test_ones(int128 a)
+inline bool test_ones(gint8x16 a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(a, int8x16::ones());
@@ -95,6 +102,11 @@ inline bool test_ones(int128 a)
 #endif
 }
 
+inline bool test_ones(gint16x8 a) { return test_ones(gint8x16(a)); }
+inline bool test_ones(gint32x4 a) { return test_ones(gint8x16(a)); }
+inline bool test_ones(gint64x2 a) { return test_ones(gint8x16(a)); }
+
+
 /** Tests if 128-bit integer consists only from ones when a mask is applied.
     Returns @c true if <tt>a & mask</tt> has all @a mask bits set, @c false
     otherwise.
@@ -102,7 +114,7 @@ inline bool test_ones(int128 a)
     @icost{SSE2, SSE3, SSSE3, 4}
     @icost{SSE4.1, 1}
 */
-inline bool test_ones(int128 a, int128 mask)
+inline bool test_ones(gint8x16 a, gint8x16 mask)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(a, mask);
@@ -116,7 +128,9 @@ inline bool test_ones(int128 a, int128 mask)
 #endif
 }
 
-#endif
+inline bool test_ones(gint16x8 a, gint16x8 mask) { return test_ones(gint8x16(a), gint8x16(mask)); }
+inline bool test_ones(gint32x4 a, gint32x4 mask) { return test_ones(gint8x16(a), gint8x16(mask)); }
+inline bool test_ones(gint64x2 a, gint64x2 mask) { return test_ones(gint8x16(a), gint8x16(mask)); }
 
 } // namespace sse
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

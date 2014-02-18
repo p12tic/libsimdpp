@@ -58,7 +58,7 @@ namespace detail {
 @endcode
 */
 template<unsigned s0, unsigned s1>
-int256 shuffle128(int256 a, int256 b)
+gint8x32 shuffle128(gint8x32 a, gint8x32 b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
@@ -67,6 +67,13 @@ int256 shuffle128(int256 a, int256 b)
     return {a[s0], b[s1]};
 #endif
 }
+template<unsigned s0, unsigned s1>
+gint16x16 shuffle128(gint16x16 a, gint16x16 b) { return shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+template<unsigned s0, unsigned s1>
+gint32x8 shuffle128(gint32x8 a, gint32x8 b) { return shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+template<unsigned s0, unsigned s1>
+gint64x4 shuffle128(gint64x4 a, gint64x4 b) { return shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+
 template<unsigned s0, unsigned s1>
 float32x8 shuffle128(float32x8 a, float32x8 b)
 {

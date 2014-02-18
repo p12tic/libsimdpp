@@ -64,7 +64,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-inline int128 load(int128& a, const void* p)
+inline gint8x16 load(gint8x16& a, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -82,7 +82,7 @@ inline int128 load(int128& a, const void* p)
 #endif
 }
 
-inline int256 load(int256& a, const void* p)
+inline gint8x32 load(gint8x32& a, const void* p)
 {
     p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX2
@@ -94,6 +94,13 @@ inline int256 load(int256& a, const void* p)
     return a;
 #endif
 }
+
+template<unsigned N>
+gint16<N> load(gint16<N>& a, const void* p) { gint8<N*2> r; load(r, p); a = r; return a; }
+template<unsigned N>
+gint32<N> load(gint32<N>& a, const void* p) { gint8<N*4> r; load(r, p); a = r; return a; }
+template<unsigned N>
+gint64<N> load(gint64<N>& a, const void* p) { gint8<N*8> r; load(r, p); a = r; return a; }
 
 inline float32x4 load(float32x4& a, const float* p)
 {

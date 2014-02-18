@@ -59,7 +59,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, ALTIVEC, 2}
     @icost{NEON, 4}
 */
-inline int128 permute_bytes16(int128 a, int128 mask)
+inline gint8x16 permute_bytes16(gint8x16 a, gint8x16 mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -86,19 +86,7 @@ inline int128 permute_bytes16(int128 a, int128 mask)
 #endif
 }
 
-inline float32x4 permute_bytes16(float32x4 a, int128 mask)
-{
-    int32x4 r = permute_bytes16(int32x4(a), mask);
-    return float32x4(r);
-}
-
-inline float64x2 permute_bytes16(float64x2 a, int128 mask)
-{
-    int64x2 r = permute_bytes16(int64x2(a), mask);
-    return float64x2(r);
-}
-
-inline int256 permute_bytes16(int256 a, int256 mask)
+inline gint8x32 permute_bytes16(gint8x32 a, gint8x32 mask)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_shuffle_epi8(a, mask);
@@ -107,16 +95,30 @@ inline int256 permute_bytes16(int256 a, int256 mask)
 #endif
 }
 
-inline float32x8 permute_bytes16(float32x8 a, int256 mask)
+template<unsigned N>
+gint16<N> permute_bytes16(gint16<N> a, gint16<N> mask)
 {
-    int32x8 r = permute_bytes16(int32x8(a), mask);
-    return float32x8(r);
+    return permute_bytes16(gint8<N*2>(a), gint8<N*2>(mask));
 }
-
-inline float64x4 permute_bytes16(float64x4 a, int256 mask)
+template<unsigned N>
+gint32<N> permute_bytes16(gint32<N> a, gint32<N> mask)
 {
-    int64x4 r = permute_bytes16(int64x4(a), mask);
-    return float64x4(r);
+    return permute_bytes16(gint8<N*4>(a), gint8<N*4>(mask));
+}
+template<unsigned N>
+gint64<N> permute_bytes16(gint64<N> a, gint64<N> mask)
+{
+    return permute_bytes16(gint8<N*4>(a), gint8<N*4>(mask));
+}
+template<unsigned N>
+float32<N> permute_bytes16(float32<N> a, gint32<N> mask)
+{
+    return float32<N>(permute_bytes16(gint32<N>(a), mask));
+}
+template<unsigned N>
+float64<N> permute_bytes16(float64<N> a, gint64<N> mask)
+{
+    return float64<N>(permute_bytes16(gint64<N>(a), mask));
 }
 /// @}
 

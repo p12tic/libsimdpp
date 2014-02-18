@@ -152,10 +152,15 @@ void store_lane(double* p, float64x2 a)
     bit in the corresponding byte in the mask defines whether the byte will
     be saved. @a p does not need to be aligned to 16 bytes.
 */
-inline void store_masked(void* p, int128 a, int128 mask)
+inline void store_masked(void* p, gint8x16 a, gint8x16 mask)
 {
     _mm_maskmoveu_si128(a, mask, reinterpret_cast<char*>(p));
 }
+
+inline void store_masked(void* p, gint16x8 a, gint16x8 mask) { store_masked(p, gint8x16(a), gint8x16(mask)); }
+inline void store_masked(void* p, gint32x4 a, gint32x4 mask) { store_masked(p, gint8x16(a), gint8x16(mask)); }
+inline void store_masked(void* p, gint64x2 a, gint64x2 mask) { store_masked(p, gint8x16(a), gint8x16(mask)); }
+
 
 } // namespace sse
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

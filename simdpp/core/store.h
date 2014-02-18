@@ -61,7 +61,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-inline void store(void* p, int128 a)
+inline void store(void* p, gint8x16 a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -75,7 +75,7 @@ inline void store(void* p, int128 a)
 #endif
 }
 
-inline void store(void* p, int256 a)
+inline void store(void* p, gint8x32 a)
 {
     p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX2
@@ -86,6 +86,13 @@ inline void store(void* p, int256 a)
     store(q+16, a[1]);
 #endif
 }
+
+template<unsigned N>
+void store(void* p, gint16<N> a) { store(p, gint8<N*2>(a)); }
+template<unsigned N>
+void store(void* p, gint32<N> a) { store(p, gint8<N*4>(a)); }
+template<unsigned N>
+void store(void* p, gint64<N> a) { store(p, gint8<N*8>(a)); }
 
 inline void store(float *p, float32x4 a)
 {
