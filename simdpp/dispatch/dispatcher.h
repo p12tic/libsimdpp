@@ -114,8 +114,7 @@ inline unsigned select_version_any(std::vector<FnVersion>& versions,
     if (i == versions.size()) {
         // The user didn't provide the NONE_NULL version and no SIMD
         // architecture is supported. We can't do anything except to abort
-        std::cerr << "simdpp: ERROR: NONE_NULL version not linked into the executable\n";
-        std::exit(EXIT_FAILURE);
+        std::abort();
     }
     return i;
 }
