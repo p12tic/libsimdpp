@@ -369,6 +369,85 @@ uint16_t extract_bits(uint8x16 a)
 #endif
 }
 
+namespace detail {
+
+template<class A, class R>
+void v256_split(A a, R& r1, R& r2)
+{
+#if SIMDPP_USE_AVX2
+    r1 = _mm256_extracti128_si256(a, 0);
+    r2 = _mm256_extracti128_si256(a, 1);
+#else
+    r1 = a[0];
+    r2 = a[1];
+#endif
+}
+
+} // namespcae detail
+/// @{
+/** Splits a 256-bit vector into two 128-bit vectors.
+
+    @code
+    [ r1, r2 ] = a
+    @endcode
+
+    @icost{AVX2, 1}
+    @icost{SSE2-AVX, NEON, ALTIVEC, 0}
+*/
+inline void split(gint8x32 a, gint8x16& r1, gint8x16& r2)  { detail::v256_split(a, r1, r2); }
+inline void split(gint16x16 a, gint16x8& r1, gint16x8& r2) { detail::v256_split(a, r1, r2); }
+inline void split(gint32x8 a, gint32x4& r1, gint32x4& r2)  { detail::v256_split(a, r1, r2); }
+inline void split(gint64x4 a, gint64x2& r1, gint64x2& r2)  { detail::v256_split(a, r1, r2); }
+
+inline void split(float32x8 a, float32x4& r1, float32x4& r2)
+{
+#if SIMDPP_USE_AVX2
+    r1 = _mm256_extractf128_ps(a, 0);
+    r2 = _mm256_extractf128_ps(a, 1);
+#else
+    r1 = a[0];
+    r2 = a[1];
+#endif
+}
+
+inline void split(float64x4 a, float64x2& r1, float64x2& r2)
+{
+#if SIMDPP_USE_AVX2
+    r1 = _mm256_extractf128_pd(a, 0);
+    r2 = _mm256_extractf128_pd(a, 1);
+#else
+    r1 = a[0];
+    r2 = a[1];
+#endif
+}
+
+namespace detail {
+
+template<class V, class H>
+void v_split(V a, H& r1, H& r2)
+{
+    unsigned h = H::vec_length;
+    for (unsigned i = 0; i < h; ++i) { r1[i] = a[i]; }
+    for (unsigned i = 0; i < h; ++i) { r2[i] = a[i+h]; }
+}
+
+} // namespace detail
+
+template<unsigned N>
+void split(gint8<N> a, gint8<N/2>& r1, gint8<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(gint16<N> a, gint16<N/2>& r1, gint16<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(gint32<N> a, gint32<N/2>& r1, gint32<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(gint64<N> a, gint64<N/2>& r1, gint64<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(float32<N> a, float32<N/2>& r1, float32<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(float64<N> a, float64<N/2>& r1, float64<N/2>& r2) { detail::v_split(a, r1, r2); }
+
+/// @}
+
 /// @} -- end ingroup
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
