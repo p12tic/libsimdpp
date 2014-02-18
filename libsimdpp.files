@@ -170,6 +170,7 @@ simdpp/sse/memory_store.h
 simdpp/sse/shuffle.h
 simdpp/this_compile_arch.h
 simdpp/types.h
+simdpp/types/README
 simdpp/types/float32.h
 simdpp/types/float32x4.h
 simdpp/types/float32x4.inl
