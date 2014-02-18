@@ -140,7 +140,7 @@ inline uint8x16 shift_r(uint8x16 a, unsigned count)
     return null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
-    mask = int128::ones();
+    mask = uint16x8::ones();
     mask = shift_l(mask, 16-count);
     mask = shift_r<8>(mask);
 
@@ -161,7 +161,7 @@ inline uint8x32 shift_r(uint8x32 a, unsigned count)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 mask, a16;
-    mask = int256::ones();
+    mask = uint16x16::ones();
     mask = shift_l(mask, 16-count);
     mask = shift_r<8>(mask);
 
@@ -428,7 +428,7 @@ inline int64x4 shift_r(int64x4 a, unsigned count)
         v = sgn = a;
         v = shift_r(v, count);
         sgn = shift_r(sgn, count);
-        mask = int256::ones();
+        mask = uint64x4::ones();
         mask = shift_l(mask, 64 - count);
         sgn = bit_and(sgn, mask);
         v = bit_or(v, sgn);

@@ -80,7 +80,7 @@ inline gint8x16 shift_l(gint8x16 a, unsigned count)
     return null::shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
-    mask = int128::ones();
+    mask = uint16x8::ones();
     mask = shift_r(mask, 16-count);
     mask = shift_l(mask, 8);
 
@@ -101,7 +101,7 @@ inline gint8x32 shift_l(gint8x32 a, unsigned count)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 mask, a16;
-    mask = int256::ones();
+    mask = uint16x16::ones();
     mask = shift_r(mask, 16-count);
     mask = shift_l(mask, 8);
 

@@ -202,7 +202,7 @@ inline mask_int64x2 cmp_neq(gint64x2 a, gint64x2 b)
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
     uint32x4 a0, b0, r, ones;
-    ones = int128::ones();
+    ones = uint32x4::ones();
 
     a0 = a;  b0 = b;
     r = cmp_eq(a, b);

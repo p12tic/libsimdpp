@@ -72,7 +72,7 @@ inline gint8x16 unzip_lo(gint8x16 a, gint8x16 b)
     return null::unzip_lo(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, r;
-    mask = int128::ones();
+    mask = uint16x8::ones();
     mask = _mm_srli_epi16(mask, 8);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
@@ -91,7 +91,7 @@ inline gint8x32 unzip_lo(gint8x32 a, gint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     uint16x16 mask, r;
-    mask = int256::ones();
+    mask = uint16x16::ones();
     mask = _mm256_srli_epi16(mask, 8);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
@@ -132,7 +132,7 @@ inline gint16x8 unzip_lo(gint16x8 a, gint16x8 b)
     return null::unzip_lo(a, b);
 #elif SIMDPP_USE_SSE4_1
     uint32x4 mask, r;
-    mask = int128::ones();
+    mask = uint32x4::ones();
     mask = _mm_srli_epi32(mask, 16);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
@@ -158,7 +158,7 @@ inline gint16x16 unzip_lo(gint16x16 a, gint16x16 b)
 {
 #if SIMDPP_USE_AVX2
     uint32x8 mask, r;
-    mask = int256::ones();
+    mask = uint32x8::ones();
     mask = _mm256_srli_epi32(mask, 16);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
