@@ -391,12 +391,13 @@ inline int64x2 shift_r(int64x2 a, unsigned count)
         v = permute<0,2,1,3>(v);
         return v;
     } else {
-        uint64x2 v, mask;
-        int32x4 sgn;
+        // shift the sign bit using 32-bit shift, then combine the result with
+        // the unsigned shift using a mask
+        uint64x2 v, mask, sgn;
         v = sgn = a;
         v = shift_r(v, count);
-        sgn = shift_r(sgn, count);
-        mask = int128::ones();
+        sgn = shift_r(int32x4(sgn), count);
+        mask = uint64x2::ones();
         mask = shift_l(mask, 64 - count);
         sgn = bit_and(sgn, mask);
         v = bit_or(v, sgn);
