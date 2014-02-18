@@ -70,14 +70,18 @@ inline float32x4 neg(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 neg(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     int32x8 zero = int32x8::make_const(0x80000000);
     return bit_xor(a, zero);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, neg, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> neg(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, neg, a);
 }
 /// @}
 
@@ -109,14 +113,18 @@ inline float64x2 neg(float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 neg(float64x4 a)
 {
-#if SIMDPP_USE_AVX
     int64x4 zero = int64x4::make_const(0x8000000000000000);
     return bit_xor(a, zero);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float64x4, neg, a);
+}
 #endif
+
+template<unsigned N>
+float64<N> neg(float64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, neg, a);
 }
 /// @}
 

@@ -45,6 +45,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+
 /// @{
 /** Broadcasts the specified 8-bit value to all elements within 128-bit lanes.
 
@@ -106,16 +107,21 @@ gint8x16 broadcast(gint8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint8x32 broadcast(gint8x32 a)
 {
     static_assert(s < 16, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     gint16x16 b = s < 8 ? zip_lo(a, a) : zip_hi(a, a);
     return broadcast<s%8>(b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, broadcast<s>, a);
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint8<N> broadcast(gint8<N> a)
+{
+    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_VEC_ARRAY_IMPL1(gint8<N>, broadcast<s>, a);
 }
 /// @}
 
@@ -176,11 +182,11 @@ gint16x8 broadcast(gint16x8 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint16x16 broadcast(gint16x16 a)
 {
     static_assert(s < 8, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     if (s < 4) {
         constexpr unsigned q = (s < 4) ? s : 0;
         gint64x4 h = _mm256_shufflelo_epi16(a, q << 6 | q << 4 | q << 2 | q);
@@ -192,9 +198,14 @@ gint16x16 broadcast(gint16x16 a)
         h = permute<1,1>(h);
         return h;
     }
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(gint16x16, broadcast<s>, a);
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint16<N> broadcast(gint16<N> a)
+{
+    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_VEC_ARRAY_IMPL1(gint16<N>, broadcast<s>, a);
 }
 /// @}
 
@@ -234,15 +245,20 @@ gint32x4 broadcast(gint32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint32x8 broadcast(gint32x8 a)
 {
     static_assert(s < 4, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, broadcast<s>, a);
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint32<N> broadcast(gint32<N> a)
+{
+    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, broadcast<s>, a);
 }
 /// @}
 
@@ -287,15 +303,20 @@ gint64x2 broadcast(gint64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint64x4 broadcast(gint64x4 a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     return permute<s,s>(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(gint64x4, broadcast<s>, a);
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint64<N> broadcast(gint64<N> a)
+{
+    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_VEC_ARRAY_IMPL1(gint64<N>, broadcast<s>, a);
 }
 /// @}
 
@@ -335,15 +356,20 @@ float32x4 broadcast(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 template<unsigned s>
 float32x8 broadcast(float32x8 a)
 {
     static_assert(s < 4, "Access out of bounds");
-#if SIMDPP_USE_AVX
     return permute<s,s,s,s>(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, broadcast<s>, a);
+}
 #endif
+
+template<unsigned s, unsigned N>
+float32<N> broadcast(float32<N> a)
+{
+    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, broadcast<s>, a);
 }
 /// @}
 
@@ -379,15 +405,20 @@ float64x2 broadcast(float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 template<unsigned s>
 float64x4 broadcast(float64x4 a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_AVX
     return permute<s,s>(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float64x4, broadcast<s>, a);
+}
 #endif
+
+template<unsigned s, unsigned N>
+float64<N> broadcast(float64<N> a)
+{
+    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, broadcast<s>, a);
 }
 /// @}
 

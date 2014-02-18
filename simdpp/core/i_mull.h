@@ -115,15 +115,19 @@ inline int32x4 mull_lo(int16x8 a, int16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int32x8 mull_lo(int16x16 a, int16x16 b)
 {
-#if SIMDPP_USE_AVX2
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return zip_lo(lo, hi);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(int32x8, mull_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+int32<N/2> mull_lo(int16<N> a, int16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int32<N/2>, mull_lo, a, b);
 }
 /// @}
 
@@ -170,15 +174,19 @@ inline uint32x4 mull_lo(uint16x8 a, uint16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint32x8 mull_lo(uint16x16 a, uint16x16 b)
 {
-#if SIMDPP_USE_AVX2
     uint16x16 lo = _mm256_mullo_epi16(a, b);
     uint16x16 hi = _mm256_mulhi_epu16(a, b);
     return zip_lo(lo, hi);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, mull_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+uint32<N/2> mull_lo(uint16<N> a, uint16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N/2>, mull_lo, a, b);
 }
 /// @}
 
@@ -225,15 +233,19 @@ inline int32x4 mull_hi(int16x8 a, int16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int32x8 mull_hi(int16x16 a, int16x16 b)
 {
-#if SIMDPP_USE_AVX2
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return zip_hi(lo, hi);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(int32x8, mull_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+int32<N/2> mull_hi(int16<N> a, int16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int32<N/2>, mull_lo, a, b);
 }
 /// @}
 
@@ -280,15 +292,19 @@ inline uint32x4 mull_hi(uint16x8 a, uint16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint32x8 mull_hi(uint16x16 a, uint16x16 b)
 {
-#if SIMDPP_USE_AVX2
     uint16x16 lo = _mm256_mullo_epi16(a, b);
     uint16x16 hi = _mm256_mulhi_epu16(a, b);
     return zip_hi(lo, hi);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, mull_hi, a, b);
+}
 #endif
+
+template<unsigned N>
+uint32<N/2> mull_hi(uint16<N> a, uint16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N/2>, mull_hi, a, b);
 }
 /// @}
 
@@ -331,15 +347,19 @@ inline int64x2 mull_lo(int32x4 a, int32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int64x4 mull_lo(int32x8 a, int32x8 b)
 {
-#if SIMDPP_USE_AVX2
     a = zip_lo(a, a);
     b = zip_lo(b, b);
     return _mm256_mul_epi32(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(int64x4, mull_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+int64<N/2> mull_lo(int32<N> a, int32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int64<N/2>, mull_lo, a, b);
 }
 /// @}
 
@@ -381,15 +401,19 @@ inline uint64x2 mull_lo(uint32x4 a, uint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint64x4 mull_lo(uint32x8 a, uint32x8 b)
 {
-#if SIMDPP_USE_AVX2
     a = zip_lo(a, a);
     b = zip_lo(b, b);
     return _mm256_mul_epu32(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(uint64x4, mull_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+uint64<N/2> mull_lo(uint32<N> a, uint32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N/2>, mull_lo, a, b);
 }
 /// @}
 
@@ -432,15 +456,19 @@ inline int64x2 mull_hi(int32x4 a, int32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int64x4 mull_hi(int32x8 a, int32x8 b)
 {
-#if SIMDPP_USE_AVX2
     a = zip_hi(a, a);
     b = zip_hi(b, b);
     return _mm256_mul_epi32(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(int64x4, mull_hi, a, b);
+}
 #endif
+
+template<unsigned N>
+int64<N/2> mull_hi(int32<N> a, int32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int64<N/2>, mull_hi, a, b);
 }
 /// @}
 
@@ -482,15 +510,19 @@ inline uint64x2 mull_hi(uint32x4 a, uint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint64x4 mull_hi(uint32x8 a, uint32x8 b)
 {
-#if SIMDPP_USE_AVX2
     a = zip_hi(a, a);
     b = zip_hi(b, b);
     return _mm256_mul_epu32(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(uint64x4, mull_hi, a, b);
+}
 #endif
+
+template<unsigned N>
+uint64<N/2> mull_hi(uint32<N> a, uint32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N/2>, mull_hi, a, b);
 }
 /// @}
 

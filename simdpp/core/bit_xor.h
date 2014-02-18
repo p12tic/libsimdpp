@@ -66,13 +66,17 @@ inline gint8x16 bit_xor(gint8x16 a, gint8x16 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 bit_xor(gint8x32 a, gint8x32 b)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_xor_si256(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, bit_xor, a, b)
+}
 #endif
+
+template<unsigned N>
+inline gint8<N> bit_xor(gint8<N> a, gint8<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, bit_xor, a, b)
 }
 
 template<unsigned N>
@@ -144,40 +148,35 @@ inline mask_int64x2 bit_xor(mask_int64x2 a, mask_int64x2 b)
 #endif
 }
 
-inline mask_int8x32 bit_xor(mask_int8x32 a, mask_int8x32 b)
-{
 #if SIMDPP_USE_AVX2
-    return bit_xor(uint8x32(a), uint8x32(b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8x32, bit_xor, a, b)
+inline mask_int8x32  bit_xor(mask_int8x32 a,  mask_int8x32 b)  { return bit_xor(uint8x32(a), uint8x32(b)); }
+inline mask_int16x16 bit_xor(mask_int16x16 a, mask_int16x16 b) { return bit_xor(uint8x32(a), uint8x32(b)); }
+inline mask_int32x8  bit_xor(mask_int32x8 a,  mask_int32x8 b)  { return bit_xor(uint8x32(a), uint8x32(b)); }
+inline mask_int64x4  bit_xor(mask_int64x4 a,  mask_int64x4 b)  { return bit_xor(uint8x32(a), uint8x32(b)); }
 #endif
+
+template<unsigned N>
+mask_int8<N> bit_xor(mask_int8<N> a, mask_int8<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, bit_xor, a, b)
 }
 
-inline mask_int16x16 bit_xor(mask_int16x16 a, mask_int16x16 b)
+template<unsigned N>
+mask_int16<N> bit_xor(mask_int16<N> a, mask_int16<N> b)
 {
-#if SIMDPP_USE_AVX2
-    return bit_xor(uint16x16(a), uint16x16(b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16x16, bit_xor, a, b)
-#endif
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, bit_xor, a, b)
 }
 
-inline mask_int32x8 bit_xor(mask_int32x8 a, mask_int32x8 b)
+template<unsigned N>
+mask_int32<N> bit_xor(mask_int32<N> a, mask_int32<N> b)
 {
-#if SIMDPP_USE_AVX2
-    return bit_xor(uint32x8(a), uint32x8(b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32x8, bit_xor, a, b)
-#endif
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, bit_xor, a, b)
 }
 
-inline mask_int64x4 bit_xor(mask_int64x4 a, mask_int64x4 b)
+template<unsigned N>
+mask_int64<N> bit_xor(mask_int64<N> a, mask_int64<N> b)
 {
-#if SIMDPP_USE_AVX2
-    return bit_xor(uint64x4(a), uint64x4(b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64x4, bit_xor, a, b)
-#endif
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, bit_xor, a, b)
 }
 
 /// @}
@@ -207,13 +206,17 @@ inline float32x4 bit_xor(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 bit_xor(float32x8 a, float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_xor_ps(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, bit_xor, a, b)
+}
 #endif
+
+template<unsigned N>
+float32<N> bit_xor(float32<N> a, float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, bit_xor, a, b)
 }
 
 template<unsigned N>
@@ -233,13 +236,17 @@ inline float64x2 bit_xor(float64x2 a, float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 bit_xor(float64x4 a, float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_xor_pd(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float64x4, bit_xor, a, b)
+}
 #endif
+
+template<unsigned N>
+float64<N> bit_xor(float64<N> a, float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, bit_xor, a, b)
 }
 
 template<unsigned N>
@@ -268,22 +275,30 @@ inline mask_float64x2 bit_xor(mask_float64x2 a, mask_float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float32x8 bit_xor(mask_float32x8 a, mask_float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return bit_xor(float32x8(a), float32x8(b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32x8, bit_xor, a, b)
+}
 #endif
+
+template<unsigned N>
+mask_float32<N> bit_xor(mask_float32<N> a, mask_float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, bit_xor, a, b)
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float64x4 bit_xor(mask_float64x4 a, mask_float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return bit_xor(float64x4(a), float64x4(b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64x4, bit_xor, a, b)
+}
 #endif
+
+template<unsigned N>
+mask_float64<N> bit_xor(mask_float64<N> a, mask_float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, bit_xor, a, b)
 }
 /// @}
 

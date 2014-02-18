@@ -66,13 +66,17 @@ inline gint8x16 add(gint8x16 a, gint8x16 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 add(gint8x32 a, gint8x32 b)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_add_epi8(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, add, a, b);
+}
 #endif
+
+template<unsigned N>
+gint8<N> add(gint8<N> a, gint8<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, add, a, b);
 }
 /// @}
 
@@ -101,13 +105,17 @@ inline gint16x8 add(gint16x8 a, gint16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint16x16 add(gint16x16 a, gint16x16 b)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_add_epi16(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint16x16, add, a, b);
+}
 #endif
+
+template<unsigned N>
+gint16<N> add(gint16<N> a, gint16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, add, a, b);
 }
 /// @}
 
@@ -136,13 +144,17 @@ inline gint32x4 add(gint32x4 a, gint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint32x8 add(gint32x8 a, gint32x8 b)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_add_epi32(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, add, a, b);
+}
 #endif
+
+template<unsigned N>
+gint32<N> add(gint32<N> a, gint32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, add, a, b);
 }
 /// @}
 
@@ -182,13 +194,17 @@ inline gint64x2 add(gint64x2 a, gint64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint64x4 add(gint64x4 a, gint64x4 b)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_add_epi64(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint64x4, add, a, b);
+}
 #endif
+
+template<unsigned N>
+gint64<N> add(gint64<N> a, gint64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, add, a, b);
 }
 /// @}
 

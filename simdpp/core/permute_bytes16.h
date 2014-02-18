@@ -86,15 +86,18 @@ inline gint8x16 permute_bytes16(gint8x16 a, gint8x16 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 permute_bytes16(gint8x32 a, gint8x32 mask)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_shuffle_epi8(a, mask);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, permute_bytes16, a, mask)
-#endif
 }
+#endif
 
+template<unsigned N>
+gint8<N> permute_bytes16(gint8<N> a, gint8<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, permute_bytes16, a, mask)
+}
 template<unsigned N>
 gint16<N> permute_bytes16(gint16<N> a, gint16<N> mask)
 {
@@ -108,7 +111,7 @@ gint32<N> permute_bytes16(gint32<N> a, gint32<N> mask)
 template<unsigned N>
 gint64<N> permute_bytes16(gint64<N> a, gint64<N> mask)
 {
-    return permute_bytes16(gint8<N*4>(a), gint8<N*4>(mask));
+    return permute_bytes16(gint8<N*8>(a), gint8<N*8>(mask));
 }
 template<unsigned N>
 float32<N> permute_bytes16(float32<N> a, gint32<N> mask)

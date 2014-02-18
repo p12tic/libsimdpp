@@ -87,9 +87,9 @@ inline gint8x16 unzip_lo(gint8x16 a, gint8x16 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 unzip_lo(gint8x32 a, gint8x32 b)
 {
-#if SIMDPP_USE_AVX2
     uint16x16 mask, r;
     mask = uint16x16::ones();
     mask = _mm256_srli_epi16(mask, 8);
@@ -97,9 +97,13 @@ inline gint8x32 unzip_lo(gint8x32 a, gint8x32 b)
     b = bit_and(b, mask);
     r = _mm256_packus_epi16(a, b);
     return r;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, unzip_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+gint8<N> unzip_lo(gint8<N> a, gint8<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, unzip_lo, a, b);
 }
 /// @}
 
@@ -154,9 +158,9 @@ inline gint16x8 unzip_lo(gint16x8 a, gint16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint16x16 unzip_lo(gint16x16 a, gint16x16 b)
 {
-#if SIMDPP_USE_AVX2
     uint32x8 mask, r;
     mask = uint32x8::ones();
     mask = _mm256_srli_epi32(mask, 16);
@@ -164,9 +168,13 @@ inline gint16x16 unzip_lo(gint16x16 a, gint16x16 b)
     b = bit_and(b, mask);
     r = _mm256_packus_epi32(a, b);
     return r;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint16x16, unzip_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+gint16<N> unzip_lo(gint16<N> a, gint16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, unzip_lo, a, b);
 }
 /// @}
 
@@ -202,13 +210,17 @@ inline gint32x4 unzip_lo(gint32x4 a, gint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint32x8 unzip_lo(gint32x8 a, gint32x8 b)
 {
-#if SIMDPP_USE_AVX2
     return shuffle2<0,2,0,2>(a,b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, unzip_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+gint32<N> unzip_lo(gint32<N> a, gint32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, unzip_lo, a, b);
 }
 /// @}
 
@@ -226,12 +238,8 @@ inline gint32x8 unzip_lo(gint32x8 a, gint32x8 b)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint64x2 unzip_lo(gint64x2 a, gint64x2 b)
-{
-    return zip_lo(a, b);
-}
-
-inline gint64x4 unzip_lo(gint64x4 a, gint64x4 b)
+template<unsigned N>
+gint64<N> unzip_lo(gint64<N> a, gint64<N> b)
 {
     return zip_lo(a, b);
 }
@@ -265,17 +273,20 @@ inline float32x4 unzip_lo(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 unzip_lo(float32x8 a, float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return shuffle2<0,2,0,2>(a,b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, unzip_lo, a, b);
+}
 #endif
+
+template<unsigned N>
+float32<N> unzip_lo(float32<N> a, float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, unzip_lo, a, b);
 }
 /// @}
 
-/// @{
 /** De-interleaves the odd(lower) elements of two float64x2 vectors
 
     @code
@@ -293,16 +304,11 @@ inline float32x8 unzip_lo(float32x8 a, float32x8 b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-inline float64x2 unzip_lo(float64x2 a, float64x2 b)
+template<unsigned N>
+inline float64<N> unzip_lo(float64<N> a, float64<N> b)
 {
     return zip_lo(a, b);
 }
-
-inline float64x4 unzip_lo(float64x4 a, float64x4 b)
-{
-    return zip_lo(a, b);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

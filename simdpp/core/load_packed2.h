@@ -43,23 +43,28 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-
 namespace detail {
 
 // the 256-bit versions are mostly boilerplate. Collect that stuff here.
-template<class V>
-void v256_load_i_packed2(V& a, V& b, const void* p)
+template<class V, class P>
+void v256_load_packed2(V& a, V& b, const P* p)
 {
     p = detail::assume_aligned(p, 32);
-    const char* q = reinterpret_cast<const char*>(p);
-#if SIMDPP_USE_AVX2
-    load(a, q);
-    load(b, q + 32);
+    load(a, p);
+    load(b, p + 32 / sizeof(P));
     detail::mem_unpack2(a, b);
-#else
-    load_packed2(a[0], b[0], q);
-    load_packed2(a[1], b[1], q + 32);
-#endif
+}
+
+template<class V, class P>
+void v_load_packed2(V& a, V& b, const P* p)
+{
+    unsigned veclen = sizeof(typename V::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        load_packed2(a[i], b[i], p);
+        p += veclen*2 / sizeof(P);
+    }
 }
 } // namespace detail
 
@@ -99,9 +104,17 @@ inline void load_packed2(gint8x16& a, gint8x16& b, const void* p)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed2(gint8x32& a, gint8x32& b, const void* p)
 {
-    detail::v256_load_i_packed2(a, b, p);
+    detail::v256_load_packed2(a, b, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed2(gint8<N>& a, gint8<N>& b, const void* p)
+{
+    detail::v_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -141,9 +154,17 @@ inline void load_packed2(gint16x8& a, gint16x8& b, const void* p)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed2(gint16x16& a, gint16x16& b, const void* p)
 {
-    detail::v256_load_i_packed2(a, b, p);
+    detail::v256_load_packed2(a, b, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed2(gint16<N>& a, gint16<N>& b, const void* p)
+{
+    detail::v_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -183,9 +204,17 @@ inline void load_packed2(gint32x4& a, gint32x4& b, const void* p)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed2(gint32x8& a, gint32x8& b, const void* p)
 {
-    detail::v256_load_i_packed2(a, b, p);
+    detail::v256_load_packed2(a, b, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed2(gint32<N>& a, gint32<N>& b, const void* p)
+{
+    detail::v_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -216,9 +245,17 @@ inline void load_packed2(gint64x2& a, gint64x2& b, const void* p)
     transpose2(a, b);
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed2(gint64x4& a, gint64x4& b, const void* p)
 {
-    detail::v256_load_i_packed2(a, b, p);
+    detail::v256_load_packed2(a, b, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed2(gint64<N>& a, gint64<N>& b, const void* p)
+{
+    detail::v_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -257,17 +294,17 @@ inline void load_packed2(float32x4& a, float32x4& b, const float* p)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void load_packed2(float32x8& a, float32x8& b, const float* p)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    load(a, p);
-    load(b, p + 8);
-    detail::mem_unpack2(a, b);
-#else
-    load_packed2(a[0], b[0], p);
-    load_packed2(a[1], b[1], p + 8);
+    detail::v256_load_packed2(a, b, p);
+}
 #endif
+
+template<unsigned N>
+void load_packed2(float32<N>& a, float32<N>& b, const float* p)
+{
+    detail::v_load_packed2(a, b, p);
 }
 /// @}
 
@@ -297,17 +334,17 @@ inline void load_packed2(float64x2& a, float64x2& b, const double* p)
     transpose2(a, b);
 }
 
+#if SIMDPP_USE_AVX
 inline void load_packed2(float64x4& a, float64x4& b, const double* p)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    load(a, p);
-    load(b, p + 4);
-    detail::mem_unpack2(a, b);
-#else
-    load_packed2(a[0], b[0], p);
-    load_packed2(a[1], b[1], p + 4);
+    detail::v256_load_packed2(a, b, p);
+}
 #endif
+
+template<unsigned N>
+void load_packed2(float64<N>& a, float64<N>& b, const double* p)
+{
+    detail::v_load_packed2(a, b, p);
 }
 /// @}
 

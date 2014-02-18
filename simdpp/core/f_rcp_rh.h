@@ -109,9 +109,9 @@ inline float32x4 rcp_rh(float32x4 x, float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 rcp_rh(float32x8 x, float32x8 a)
 {
-#if SIMDPP_USE_AVX
     float32x8 c2, r;
     c2 = float32x8::make_const(2.0f);
 
@@ -120,9 +120,13 @@ inline float32x8 rcp_rh(float32x8 x, float32x8 a)
     x = mul(x, r);
 
     return x;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, rcp_rh, x, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> rcp_rh(float32<N> x, float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, rcp_rh, x, a);
 }
 /// @}
 

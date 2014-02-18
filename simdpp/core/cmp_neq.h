@@ -72,13 +72,17 @@ inline mask_int8x16 cmp_neq(gint8x16 a, gint8x16 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline mask_int8x32 cmp_neq(gint8x32 a, gint8x32 b)
 {
-#if SIMDPP_USE_AVX2
     return bit_not(cmp_eq(a, b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8x32, cmp_neq, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_int8<N> cmp_neq(gint8<N> a, gint8<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, cmp_neq, a, b);
 }
 /// @}
 
@@ -111,13 +115,17 @@ inline mask_int16x8 cmp_neq(gint16x8 a, gint16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline mask_int16x16 cmp_neq(gint16x16 a, gint16x16 b)
 {
-#if SIMDPP_USE_AVX2
     return bit_not(cmp_eq(a, b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16x16, cmp_neq, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_int16<N> cmp_neq(gint16<N> a, gint16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, cmp_neq, a, b);
 }
 /// @}
 
@@ -150,13 +158,17 @@ inline mask_int32x4 cmp_neq(gint32x4 a, gint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline mask_int32x8 cmp_neq(gint32x8 a, gint32x8 b)
 {
-#if SIMDPP_USE_AVX2
     return bit_not(cmp_eq(a, b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32x8, cmp_neq, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_int32<N> cmp_neq(gint32<N> a, gint32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, cmp_neq, a, b);
 }
 /// @}
 
@@ -212,13 +224,17 @@ inline mask_int64x2 cmp_neq(gint64x2 a, gint64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline mask_int64x4 cmp_neq(gint64x4 a, gint64x4 b)
 {
-#if SIMDPP_USE_AVX2
     return bit_not(cmp_eq(a, b));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64x4, cmp_neq, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_int64<N> cmp_neq(gint64<N> a, gint64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, cmp_neq, a, b);
 }
 /// @}
 
@@ -251,13 +267,17 @@ inline mask_float32x4 cmp_neq(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float32x8 cmp_neq(float32x8 a, float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_NEQ_UQ);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32x8, cmp_neq, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_float32<N> cmp_neq(float32<N> a, float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, cmp_neq, a, b);
 }
 /// @}
 
@@ -290,13 +310,17 @@ inline mask_float64x2 cmp_neq(float64x2 a, float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float64x4 cmp_neq(float64x4 a, float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_NEQ_UQ);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64x4, cmp_neq, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_float64<N> cmp_neq(float64<N> a, float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, cmp_neq, a, b);
 }
 /// @}
 

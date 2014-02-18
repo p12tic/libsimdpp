@@ -129,9 +129,9 @@ inline gint8x16 shuffle_zbytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 shuffle_zbytes16(gint8x32 a, gint8x32 b, gint8x32 mask)
 {
-#if SIMDPP_USE_AVX2
     int8x32 sel, set_zero, ai, bi, r;
     sel = mask;
     set_zero = cmp_lt(sel, int8x32::zero());
@@ -142,9 +142,13 @@ inline gint8x32 shuffle_zbytes16(gint8x32 a, gint8x32 b, gint8x32 mask)
     r = _mm256_blendv_epi8(ai, bi, sel);
     r = bit_andnot(r, set_zero);
     return r;
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint8x32, shuffle_zbytes16, a, b, mask);
+}
 #endif
+
+template<unsigned N>
+gint8<N> shuffle_zbytes16(gint8<N> a, gint8<N> b, gint8<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, shuffle_zbytes16, a, b, mask);
 }
 
 template<unsigned N>

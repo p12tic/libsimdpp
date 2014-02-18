@@ -42,7 +42,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Extracts sign bits from the values in float32x4 vector
 
     @code
@@ -58,16 +57,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, ALTIVEC, NEON, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
-inline float32x4 sign(float32x4 a)
+template<unsigned N>
+float32<N> sign(float32<N> a)
 {
-    return bit_and(a, int32x4::make_const(0x80000000));
+    return bit_and(a, int32<N>::make_const(0x80000000));
 }
-
-inline float32x8 sign(float32x8 a)
-{
-    return bit_and(a, int32x8::make_const(0x80000000));
-}
-/// @}
 
 /// @{
 /** Extracts sigh bit from the values in float64x2 vector.
@@ -87,18 +81,10 @@ inline float32x8 sign(float32x8 a)
     @icost{AVX-AVX2, 1-2}
     @novec{NEON, ALTIVEC}
 */
-inline float64x2 sign(float64x2 a)
+template<unsigned N>
+float64<N> sign(float64<N> a)
 {
-    return bit_and(a, uint64x2::make_const(0x8000000000000000));
-}
-
-inline float64x4 sign(float64x4 a)
-{
-#if SIMDPP_USE_AVX
-    return bit_and(a, uint64x4::make_const(0x8000000000000000));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float64x4, sign, a);
-#endif
+    return bit_and(a, uint64<N>::make_const(0x8000000000000000));
 }
 /// @}
 

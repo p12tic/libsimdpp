@@ -68,13 +68,17 @@ inline float32x4 max(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 max(float32x8 a, float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_max_ps(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, max, a, b);
+}
 #endif
+
+template<unsigned N>
+float32<N> max(float32<N> a, float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, max, a, b);
 }
 /// @}
 
@@ -105,13 +109,17 @@ inline float64x2 max(float64x2 a, float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 max(float64x4 a, float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_max_pd(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float64x4, max, a, b);
+}
 #endif
+
+template<unsigned N>
+float64<N> max(float64<N> a, float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, max, a, b);
 }
 /// @}
 

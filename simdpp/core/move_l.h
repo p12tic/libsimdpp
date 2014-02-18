@@ -89,18 +89,24 @@ gint8x16 move_l(gint8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned shift>
 gint8x32 move_l(gint8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
     if (shift == 0) return a;
     if (shift == 16) return uint8x32::zero();
-
-#if SIMDPP_USE_AVX2
     return _mm256_srli_si256(a, shift);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, move_l<shift>, a);
+}
 #endif
+
+template<unsigned shift, unsigned N>
+gint8<N> move_l(gint8<N> a)
+{
+    static_assert(shift <= 16, "Selector out of range");
+    if (shift == 0) return a;
+    if (shift == 16) return uint8<N>::zero();
+    SIMDPP_VEC_ARRAY_IMPL1(gint8<N>, move_l<shift>, a);
 }
 /// @}
 
@@ -124,18 +130,11 @@ gint8x32 move_l(gint8x32 a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-gint16x8 move_l(gint16x8 a)
+template<unsigned shift, unsigned N>
+gint16<N> move_l(gint16<N> a)
 {
-    return move_l<shift*2>(gint8x16(a));
+    return move_l<shift*2>(gint8<N*2>(a));
 }
-
-template<unsigned shift>
-gint16x16 move_l(gint16x16 a)
-{
-    return move_l<shift*2>(gint8x32(a));
-}
-/// @}
 
 /// @{
 /** Moves the 32-bit elements in a vector to the left by @a shift positions.
@@ -155,20 +154,12 @@ gint16x16 move_l(gint16x16 a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-gint32x4 move_l(gint32x4 a)
+template<unsigned shift, unsigned N>
+gint32<N> move_l(gint32<N> a)
 {
-    return move_l<shift*4>(gint8x16(a));
+    return move_l<shift*4>(gint8<N*4>(a));
 }
 
-template<unsigned shift>
-gint32x8 move_l(gint32x8 a)
-{
-    return move_l<shift*4>(gint8x32(a));
-}
-/// @}
-
-/// @{
 /** Moves the 64-bit elements in a vector to the left by @a shift positions.
 
     @code
@@ -184,20 +175,12 @@ gint32x8 move_l(gint32x8 a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-gint64x2 move_l(gint64x2 a)
+template<unsigned shift, unsigned N>
+gint64<N> move_l(gint64<N> a)
 {
-    return move_l<shift*8>(gint8x16(a));
+    return move_l<shift*8>(gint8<N*8>(a));
 }
 
-template<unsigned shift>
-gint64x4 move_l(gint64x4 a)
-{
-    return move_l<shift*8>(gint8x32(a));
-}
-/// @}
-
-/// @{
 /** Moves the 32-bit elements in a vector to the left by @a shift positions.
 
     @code
@@ -215,20 +198,12 @@ gint64x4 move_l(gint64x4 a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-float32x4 move_l(float32x4 a)
+template<unsigned shift, unsigned N>
+float32<N> move_l(float32<N> a)
 {
-    return float32x4(move_l<shift>(gint32x4(a)));
+    return float32<N>(move_l<shift>(gint32<N>(a)));
 }
 
-template<unsigned shift>
-float32x8 move_l(float32x8 a)
-{
-    return float32x8(move_l<shift>(gint32x8(a)));
-}
-/// @}
-
-/// @{
 /** Moves the 64-bit elements in a vector to the left by @a shift positions.
 
     @code
@@ -244,18 +219,11 @@ float32x8 move_l(float32x8 a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-float64x2 move_l(float64x2 a)
+template<unsigned shift, unsigned N>
+float64<N> move_l(float64<N> a)
 {
-    return float64x2(move_l<shift>(gint64x2(a)));
+    return float64<N>(move_l<shift>(gint64<N>(a)));
 }
-
-template<unsigned shift>
-float64x4 move_l(float64x4 a)
-{
-    return float64x4(move_l<shift>(gint64x4(a)));
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

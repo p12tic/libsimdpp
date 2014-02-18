@@ -65,13 +65,17 @@ inline float32x4 sub(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 sub(float32x8 a, float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_sub_ps(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, sub, a, b);
+}
 #endif
+
+template<unsigned N>
+float32<N> sub(float32<N> a, float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, sub, a, b);
 }
 /// @}
 
@@ -100,13 +104,17 @@ inline float64x2 sub(float64x2 a, float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 sub(float64x4 a, float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_sub_pd(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float64x4, sub, a, b);
+}
 #endif
+
+template<unsigned N>
+float64<N> sub(float64<N> a, float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, sub, a, b);
 }
 /// @}
 

@@ -96,22 +96,30 @@ inline gint8x16 blend(gint8x16 on, gint8x16 off, mask_int8x16 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 blend(gint8x32 on, gint8x32 off, gint8x32 mask)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_blendv_epi8(off, on, mask);
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint8x32, blend, on, off, mask)
+}
 #endif
+
+template<unsigned N>
+gint8<N> blend(gint8<N> on, gint8<N> off, gint8<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, blend, on, off, mask)
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 blend(gint8x32 on, gint8x32 off, mask_int8x32 mask)
 {
-#if SIMDPP_USE_AVX2
     return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint8x32, blend, on, off, mask)
+}
 #endif
+
+template<unsigned N>
+inline gint8<N> blend(gint8<N> on, gint8<N> off, mask_int8<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, blend, on, off, mask)
 }
 /// @}
 
@@ -132,36 +140,17 @@ inline gint8x32 blend(gint8x32 on, gint8x32 off, mask_int8x32 mask)
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint16x8 blend(gint16x8 on, gint16x8 off, gint16x8 mask)
+template<unsigned N>
+inline gint16<N> blend(gint16<N> on, gint16<N> off, gint16<N> mask)
 {
-    return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
+    return blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
 }
 
-inline gint16x16 blend(gint16x16 on, gint16x16 off, gint16x16 mask)
+template<unsigned N>
+inline gint16<N> blend(gint16<N> on, gint16<N> off, mask_int16<N> mask)
 {
-#if SIMDPP_USE_AVX2
-    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint16x16, blend, on, off, mask)
-#endif
-}
-
-inline gint16x8 blend(gint16x8 on, gint16x8 off, mask_int16x8 mask)
-{
-#if SIMDPP_USE_NULL
-    return null::blend_mask(on, off, mask);
-#else
-    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
-#endif
-}
-
-inline gint16x16 blend(gint16x16 on, gint16x16 off, mask_int16x16 mask)
-{
-#if SIMDPP_USE_AVX2
-    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint16x16, blend, on, off, mask)
-#endif
+    // FIXME: null::blend_mask(on, off, mask);
+    return blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
 }
 /// @}
 
@@ -182,36 +171,17 @@ inline gint16x16 blend(gint16x16 on, gint16x16 off, mask_int16x16 mask)
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint32x4 blend(gint32x4 on, gint32x4 off, gint32x4 mask)
+template<unsigned N>
+inline gint32<N> blend(gint32<N> on, gint32<N> off, gint32<N> mask)
 {
-    return blend((uint8x16)on, (uint8x16)off, (uint8x16)mask);
+    return blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
 }
 
-inline gint32x8 blend(gint32x8 on, gint32x8 off, gint32x8 mask)
+template<unsigned N>
+inline gint32<N> blend(gint32<N> on, gint32<N> off, mask_int32<N> mask)
 {
-#if SIMDPP_USE_AVX2
-    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint32x8, blend, on, off, mask);
-#endif
-}
-
-inline gint32x4 blend(gint32x4 on, gint32x4 off, mask_int32x4 mask)
-{
-#if SIMDPP_USE_NULL
-    return null::blend_mask(on, off, mask);
-#else
-    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
-#endif
-}
-
-inline gint32x8 blend(gint32x8 on, gint32x8 off, mask_int32x8 mask)
-{
-#if SIMDPP_USE_AVX2
-    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint32x8, blend, on, off, mask);
-#endif
+    // FIXME: null::blend_mask(on, off, mask);
+    return blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
 }
 /// @}
 
@@ -232,36 +202,17 @@ inline gint32x8 blend(gint32x8 on, gint32x8 off, mask_int32x8 mask)
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint64x2 blend(gint64x2 on, gint64x2 off, gint64x2 mask)
+template<unsigned N>
+inline gint64<N> blend(gint64<N> on, gint64<N> off, gint64<N> mask)
 {
-    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
+    return blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
 }
 
-inline gint64x4 blend(gint64x4 on, gint64x4 off, gint64x4 mask)
+template<unsigned N>
+inline gint64<N> blend(gint64<N> on, gint64<N> off, mask_int64<N> mask)
 {
-#if SIMDPP_USE_AVX2
-    return _mm256_blendv_epi8(off, on, mask);
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint64x4, blend, on, off, mask);
-#endif
-}
-
-inline gint64x2 blend(gint64x2 on, gint64x2 off, mask_int64x2 mask)
-{
-#if SIMDPP_USE_NULL
-    return null::blend_mask(on, off, mask);
-#else
-    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
-#endif
-}
-
-inline gint64x4 blend(gint64x4 on, gint64x4 off, mask_int64x4 mask)
-{
-#if SIMDPP_USE_AVX2
-    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint64x4, blend, on, off, mask);
-#endif
+    // FIXME: null::blend_mask(on, off, mask);
+    return blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
 }
 /// @}
 
@@ -302,13 +253,17 @@ inline float32x4 blend(float32x4 on, float32x4 off, float32x4 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 blend(float32x8 on, float32x8 off, float32x8 mask)
 {
-#if SIMDPP_USE_AVX
     return _mm256_blendv_ps(off, on, mask);
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(float32x8, blend, on, off, mask);
+}
 #endif
+
+template<unsigned N>
+float32<N> blend(float32<N> on, float32<N> off, float32<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(float32<N>, blend, on, off, mask);
 }
 
 template<unsigned N>
@@ -326,13 +281,17 @@ inline float32x4 blend(float32x4 on, float32x4 off, mask_float32x4 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 blend(float32x8 on, float32x8 off, mask_float32x8 mask)
 {
-#if SIMDPP_USE_AVX
     return blend(on, off, uint32x8(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(float32x8, blend, on, off, mask);
+}
 #endif
+
+template<unsigned N>
+float32<N> blend(float32<N> on, float32<N> off, mask_float32<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(float32<N>, blend, on, off, mask);
 }
 /// @}
 
@@ -369,13 +328,17 @@ inline float64x2 blend(float64x2 on, float64x2 off, float64x2 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 blend(float64x4 on, float64x4 off, float64x4 mask)
 {
-#if SIMDPP_USE_AVX
     return _mm256_blendv_pd(off, on, mask);
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(float64x4, blend, on, off, mask);
+}
 #endif
+
+template<unsigned N>
+float64<N> blend(float64<N> on, float64<N> off, float64<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(float64<N>, blend, on, off, mask);
 }
 
 template<unsigned N>
@@ -393,13 +356,17 @@ inline float64x2 blend(float64x2 on, float64x2 off, mask_float64x2 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 blend(float64x4 on, float64x4 off, mask_float64x4 mask)
 {
-#if SIMDPP_USE_AVX
     return blend(on, off, uint64x4(mask));
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(float64x4, blend, on, off, mask);
+}
 #endif
+
+template<unsigned N>
+float64<N> blend(float64<N> on, float64<N> off, mask_float64<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(float64<N>, blend, on, off, mask);
 }
 /// @}
 

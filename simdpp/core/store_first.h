@@ -49,29 +49,27 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 namespace detail {
-// The 256-bit store_first and store_last are mostly boilerplate.
 
-// hsz - the number of elements in the half-vector
-template<unsigned hsz, class P, class V>
-void v256_store_first(P* p, V a, unsigned n)
+// Multi-vector store_first is mostly boilerplate
+template<class P, class V>
+void v_store_first(P* p, V a, unsigned n)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_SSE2
-    if (n >= hsz) {
-        store(p, sse::extract_lo(a));
-        // P may not be char*, hence sizeof
-        store_first(p + 16 / sizeof(P), sse::extract_hi(a), n - hsz);
-    } else {
-        store_first(p, sse::extract_lo(a), n);
+    unsigned veclen = sizeof(typename V::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+
+    unsigned n_full_vec = n / V::length;
+    unsigned mid_vec_fill_count = n % V::length;
+    unsigned curr_vec = 0;
+
+    for (; curr_vec < n_full_vec; ++curr_vec) {
+        store(p, a[curr_vec]);
+        p += veclen / sizeof(P);
     }
-#else
-    if (n >= hsz) {
-        store(p, a[0]);
-        store_first(p + 16 / sizeof(P), a[1], n - hsz);
-    } else {
-        store_first(p, a[0], n);
+
+    if (mid_vec_fill_count > 0) {
+        store_first(p, a[curr_vec], mid_vec_fill_count);
     }
-#endif
 }
 
 } // namespace defail
@@ -118,10 +116,30 @@ inline void store_first(void* p, gint8x16 a, unsigned n)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_first(void* p, gint8x32 a, unsigned n)
 {
-    detail::v256_store_first<16>(reinterpret_cast<char*>(p), a, n);
+    static const uint8_t mask_d[64] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                       0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,
+                                       0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0};
+
+    gint8x32 mask = load_u(mask, mask_d + 32 - n);
+    gint8x32 old = load(old, p);
+    a = blend(a, old, mask);
+    store(p, a);
 }
+#endif
+
+template<unsigned N>
+void store_first(void* p, gint8<N> a, unsigned n)
+{
+    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
+}
+
+// 16 bits
 
 inline void store_first(void* p, gint16x8 a, unsigned n)
 {
@@ -133,10 +151,20 @@ inline void store_first(void* p, gint16x8 a, unsigned n)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_first(void* p, gint16x16 a, unsigned n)
 {
-    detail::v256_store_first<8>(reinterpret_cast<char*>(p), a, n);
+    store_first(p, gint8x32(a), n*2);
 }
+#endif
+
+template<unsigned N>
+void store_first(void* p, gint16<N> a, unsigned n)
+{
+    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
+}
+
+// 32 bits
 
 inline void store_first(void* p, gint32x4 a, unsigned n)
 {
@@ -148,10 +176,20 @@ inline void store_first(void* p, gint32x4 a, unsigned n)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_first(void* p, gint32x8 a, unsigned n)
 {
-    detail::v256_store_first<4>(reinterpret_cast<char*>(p), a, n);
+    store_first(p, gint8x32(a), n*4);
 }
+#endif
+
+template<unsigned N>
+void store_first(void* p, gint32<N> a, unsigned n)
+{
+    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
+}
+
+// 64 bits
 
 inline void store_first(void* p, gint64x2 a, unsigned n)
 {
@@ -175,10 +213,20 @@ inline void store_first(void* p, gint64x2 a, unsigned n)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_first(void* p, gint64x4 a, unsigned n)
 {
-    detail::v256_store_first<2>(reinterpret_cast<char*>(p), a, n);
+    store_first(p, gint8x32(a), n*8);
 }
+#endif
+
+template<unsigned N>
+void store_first(void* p, gint64<N> a, unsigned n)
+{
+    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
+}
+
+// 32 bits float
 
 inline void store_first(float* p, float32x4 a, unsigned n)
 {
@@ -205,10 +253,29 @@ inline void store_first(float* p, float32x4 a, unsigned n)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_first(float* p, float32x8 a, unsigned n)
 {
-    detail::v256_store_first<4>(p, a, n);
+    static const uint32_t mask_d[16] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
+                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
+                                        0x00000000, 0x00000000, 0x00000000, 0x00000000,
+                                        0x00000000, 0x00000000, 0x00000000, 0x00000000};
+
+    const float* mask_dp = reinterpret_cast<const float*>(mask_d);
+    float32x8 mask = load_u(mask, mask_dp + 8-n);
+    float32x8 old = load(old, p);
+    a = blend(a, old, mask);
+    store(p, a);
 }
+#endif
+
+template<unsigned N>
+void store_first(float* p, float32<N> a, unsigned n)
+{
+    detail::v_store_first(p, a, n);
+}
+
+// 64 bit float
 
 inline void store_first(double* p, float64x2 a, unsigned n)
 {
@@ -222,27 +289,27 @@ inline void store_first(double* p, float64x2 a, unsigned n)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_first(double* p, float64x4 a, unsigned n)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    switch (n) {
-    case 3:
-        store(p, sse::extract_lo(a));
-        sse::store_lane<0,1>(p+2, sse::extract_hi(a));
-        return;
-    case 2:
-        store(p, sse::extract_lo(a));
-        return;
-    case 1:
-        sse::store_lane<0,1>(p, sse::extract_lo(a));
-        return;
-    }
-#else
-    detail::v256_store_first<2>(p, a, n);
-#endif
-}
+    static const uint64_t mask_d[16] = {0xffffffffffffffff, 0xffffffffffffffff,
+                                        0xffffffffffffffff, 0xffffffffffffffff,
+                                        0x0000000000000000, 0x0000000000000000,
+                                        0x0000000000000000, 0x0000000000000000};
 
+    const double* mask_dp = reinterpret_cast<const double*>(mask_d);
+    float64x4 mask = load_u(mask, mask_dp + 4-n);
+    float64x4 old = load(old, p);
+    a = blend(a, old, mask);
+    store(p, a);
+}
+#endif
+
+template<unsigned N>
+void store_first(double* p, float64<N> a, unsigned n)
+{
+    detail::v_store_first(p, a, n);
+}
 /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

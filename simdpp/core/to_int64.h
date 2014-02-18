@@ -84,6 +84,8 @@ inline gint64x4 to_int64(int32x4 a)
 #endif
 }
 
+// TODO support arbitrary length vectors
+
 /// @{
 /** Extends the values of an unsigned int32x4 vector to 64-bits
 
@@ -123,6 +125,8 @@ inline gint64x4 to_int64(uint32x4 a)
 #endif
 }
 /// @}
+
+// TODO support arbitrary length vectors
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

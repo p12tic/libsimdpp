@@ -83,13 +83,17 @@ inline float32x4 trunc(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 trunc(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_round_ps(a, 3); // 3 = truncate
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, trunc, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> trunc(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, trunc, a);
 }
 /// @}
 

@@ -99,13 +99,17 @@ inline float32x4 ceil(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 ceil(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_ceil_ps(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, ceil, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> ceil(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, ceil, a);
 }
 /// @}
 

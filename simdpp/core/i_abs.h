@@ -83,13 +83,17 @@ inline uint8x16 abs(int8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint8x32 abs(int8x32 a)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_abs_epi8(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(uint8x32, abs, a);
+}
 #endif
+
+template<unsigned N>
+uint8<N> abs(int8<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, abs, a);
 }
 /// @}
 
@@ -130,13 +134,17 @@ inline uint16x8 abs(int16x8 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint16x16 abs(int16x16 a)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_abs_epi16(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(uint16x16, abs, a);
+}
 #endif
+
+template<unsigned N>
+uint16<N> abs(int16<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, abs, a);
 }
 /// @}
 
@@ -177,13 +185,17 @@ inline uint32x4 abs(int32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint32x8 abs(int32x8 a)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_abs_epi32(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(uint32x8, abs, a);
+}
 #endif
+
+template<unsigned N>
+uint32<N> abs(int32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, abs, a);
 }
 /// @}
 
@@ -230,17 +242,21 @@ inline uint64x2 abs(int64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint64x4 abs(int64x4 a)
 {
-#if SIMDPP_USE_AVX2
     int64x4 t;
     t = _mm256_cmpgt_epi64(int64x4::zero(), a);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(uint64x4, abs, a);
+}
 #endif
+
+template<unsigned N>
+uint64<N> abs(int64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, abs, a);
 }
 /// @}
 

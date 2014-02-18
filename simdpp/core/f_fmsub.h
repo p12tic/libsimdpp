@@ -67,9 +67,9 @@ inline float32x4 fmsub(float32x4 a, float32x4 b, float32x4 c)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 fmsub(float32x8 a, float32x8 b, float32x8 c)
 {
-#if SIMDPP_USE_AVX
 #if SIMDPP_USE_FMA3
     return _mm256_fmsub_ps(a, b, c);
 #elif SIMDPP_USE_FMA4
@@ -77,9 +77,13 @@ inline float32x8 fmsub(float32x8 a, float32x8 b, float32x8 c)
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(float32x8, fmsub, a, b, c);
+}
 #endif
+
+template<unsigned N>
+float32<N> fmsub(float32<N> a, float32<N> b, float32<N> c)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(float32<N>, fmsub, a, b, c);
 }
 
 inline float64x2 fmsub(float64x2 a, float64x2 b, float64x2 c)
@@ -95,9 +99,9 @@ inline float64x2 fmsub(float64x2 a, float64x2 b, float64x2 c)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 fmsub(float64x4 a, float64x4 b, float64x4 c)
 {
-#if SIMDPP_USE_AVX
 #if SIMDPP_USE_FMA3
     return _mm256_fmsub_pd(a, b, c);
 #elif SIMDPP_USE_FMA4
@@ -105,9 +109,13 @@ inline float64x4 fmsub(float64x4 a, float64x4 b, float64x4 c)
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(float64x4, fmsub, a, b, c);
+}
 #endif
+
+template<unsigned N>
+float64<N> fmsub(float64<N> a, float64<N> b, float64<N> c)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(float64<N>, fmsub, a, b, c);
 }
 /// @}
 

@@ -77,13 +77,17 @@ inline float32x4 sqrt(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 sqrt(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_sqrt_ps(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, sqrt, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> sqrt(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, sqrt, a);
 }
 /// @}
 
@@ -112,13 +116,17 @@ inline float64x2 sqrt(float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 sqrt(float64x4 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_sqrt_pd(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float64x4, sqrt, a);
+}
 #endif
+
+template<unsigned N>
+float64<N> sqrt(float64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, sqrt, a);
 }
 /// @}
 

@@ -72,13 +72,17 @@ inline float32x4 abs(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 abs(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return bit_and(a, int32x8::make_const(0x7fffffff));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, abs, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> abs(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, abs, a);
 }
 /// @}
 
@@ -109,13 +113,17 @@ inline float64x2 abs(float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 abs(float64x4 a)
 {
-#if SIMDPP_USE_AVX
     return bit_and(a, int64x4::make_const(0x7fffffffffffffff));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float64x4, abs, a);
+}
 #endif
+
+template<unsigned N>
+float64<N> abs(float64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, abs, a);
 }
 /// @}
 

@@ -94,9 +94,9 @@ inline int8x16 shift_r(int8x16 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int8x32 shift_r(int8x32 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     uint16x16 hi, lo;
     lo = hi = a;
 
@@ -108,9 +108,13 @@ inline int8x32 shift_r(int8x32 a, unsigned count)
     hi = shift_l<8>(hi);
     a = bit_or(lo, hi);    //higher part of lo is already clear
     return a;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(int8x32, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+int8<N> shift_r(int8<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(int8<N>, shift_r, a, count);
 }
 /// @}
 
@@ -157,9 +161,9 @@ inline uint8x16 shift_r(uint8x16 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint8x32 shift_r(uint8x32 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     uint16x16 mask, a16;
     mask = uint16x16::ones();
     mask = shift_l(mask, 16-count);
@@ -169,9 +173,13 @@ inline uint8x32 shift_r(uint8x32 a, unsigned count)
     a16 = shift_r(a16, count);
     a16 = bit_andnot(a16, mask);
     return a16;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(uint8x32, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+uint8<N> shift_r(uint8<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(uint8<N>, shift_r, a, count);
 }
 /// @}
 
@@ -209,13 +217,17 @@ inline int16x8 shift_r(int16x8 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int16x16 shift_r(int16x16 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_srai_epi16(shift_r, a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(int16x16, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+int16<N> shift_r(int16<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(int16<N>, shift_r, a, count);
 }
 /// @}
 
@@ -253,13 +265,17 @@ inline uint16x8 shift_r(uint16x8 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint16x16 shift_r(uint16x16 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_srli_epi16(shift_r, a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(uint16x16, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+uint16<N> shift_r(uint16<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(uint16<N>, shift_r, a, count);
 }
 /// @}
 
@@ -302,13 +318,17 @@ inline int32x4 shift_r(int32x4 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int32x8 shift_r(int32x8 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_srai_epi32(shift_r, a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(int32x8, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+int32<N> shift_r(int32<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(int32<N>, shift_r, a, count);
 }
 /// @}
 
@@ -346,13 +366,17 @@ inline uint32x4 shift_r(uint32x4 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint32x8 shift_r(uint32x8 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_srli_epi32(shift_r, a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(uint32x8, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+uint32<N> shift_r(uint32<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(uint32<N>, shift_r, a, count);
 }
 /// @}
 
@@ -411,9 +435,9 @@ inline int64x2 shift_r(int64x2 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int64x4 shift_r(int64x4 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     // a copy of the 128-bit implementation
     if (count > 31) {
         int32x8 s, v;
@@ -435,9 +459,13 @@ inline int64x4 shift_r(int64x4 a, unsigned count)
         v = bit_or(v, sgn);
         return v;
     }
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(int64x4, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+int64<N> shift_r(int64<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(int64<N>, shift_r, a, count);
 }
 /// @}
 
@@ -474,25 +502,25 @@ inline uint64x2 shift_r(uint64x2 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint64x4 shift_r(uint64x4 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_srli_epi64(shift_r, a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(uint64x4, shift_r, a, count);
+}
 #endif
+
+template<unsigned N>
+uint64<N> shift_r(uint64<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(uint64<N>, shift_r, a, count);
 }
 /// @}
 
 
 namespace detail {
 
-template<unsigned count, class V>
-V v256_shift_r(V a);
-template<unsigned count>
-uint8x16 shift_r_u8(uint8x16 a);
-template<unsigned count>
-uint8x32 shift_r_u8(uint8x32 a);
+template<unsigned count, unsigned N>
+uint8<N> shift_r_u8(uint8<N> a);
 
 } // namespace detail
 
@@ -532,13 +560,24 @@ int8x16 shift_r(int8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 int8x32 shift_r(int8x32 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+int8<N> shift_r(int8<N> a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    if (count == 0) return a;
+
+    SIMDPP_VEC_ARRAY_IMPL1(int8<N>, shift_r<count>, a);
 }
 /// @}
 
@@ -584,14 +623,26 @@ uint8x16 shift_r(uint8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 uint8x32 shift_r(uint8x32 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
-    if (count == 8) return uint8x32::zero();
+    if (count == 8) return uint8x4::zero();
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+uint8<N> shift_r(uint8<N> a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 8) return uint8<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, shift_r<count>, a);
 }
 /// @}
 
@@ -630,13 +681,24 @@ int16x8 shift_r(int16x8 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 int16x16 shift_r(int16x16 a)
 {
     static_assert(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+int16<N> shift_r(int16<N> a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    if (count == 0) return a;
+
+    SIMDPP_VEC_ARRAY_IMPL1(int16<N>, shift_r<count>, a);
 }
 /// @}
 
@@ -674,6 +736,7 @@ uint16x8 shift_r(uint16x8 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 uint16x16 shift_r(uint16x16 a)
 {
@@ -681,7 +744,18 @@ uint16x16 shift_r(uint16x16 a)
     if (count == 0) return a;
     if (count == 16) return uint16x16::zero();
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+uint16<N> shift_r(uint16<N> a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 16) return uint16<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, shift_r<count>, a);
 }
 /// @}
 
@@ -718,13 +792,24 @@ int32x4 shift_r(int32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 int32x8 shift_r(int32x8 a)
 {
     static_assert(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+int32<N> shift_r(int32<N> a)
+{
+    static_assert(count <= 32, "Shift out of bounds");
+    if (count == 0) return a;
+
+    SIMDPP_VEC_ARRAY_IMPL1(int32<N>, shift_r<count>, a);
 }
 /// @}
 
@@ -762,6 +847,7 @@ uint32x4 shift_r(uint32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 uint32x8 shift_r(uint32x8 a)
 {
@@ -769,7 +855,18 @@ uint32x8 shift_r(uint32x8 a)
     if (count == 0) return a;
     if (count == 32) return uint32x8::zero();
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+uint32<N> shift_r(uint32<N> a)
+{
+    static_assert(count <= 32, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 32) return uint32<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, shift_r<count>, a);
 }
 /// @}
 
@@ -810,13 +907,24 @@ int64x2 shift_r(int64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 int64x4 shift_r(int64x4 a)
 {
     static_assert(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+int64<N> shift_r(int64<N> a)
+{
+    static_assert(count <= 64, "Shift out of bounds");
+    if (count == 0) return a;
+
+    SIMDPP_VEC_ARRAY_IMPL1(int64<N>, shift_r<count>, a);
 }
 /// @}
 
@@ -852,6 +960,7 @@ uint64x2 shift_r(uint64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 uint64x4 shift_r(uint64x4 a)
 {
@@ -859,44 +968,31 @@ uint64x4 shift_r(uint64x4 a)
     if (count == 0) return a;
     if (count == 64) return uint64x4::zero();
 
-    return detail::v256_shift_r<count>(a);
+    return shift_r(a, count);
 }
+#endif
+
+template<unsigned count, unsigned N>
+uint64<N> shift_r(uint64<N> a)
+{
+    static_assert(count <= 64, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 64) return uint64<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, shift_r<count>, a);
+}
+
 /// @}
 
 
 namespace detail {
 
-// 256-bit cases are boilerplate code to use a dynamic version on
-// AVX2 or half-width static version otherwise.
-template<unsigned count, class V>
-V v256_shift_r(V a)
-{
-#if SIMDPP_USE_AVX2
-    return shift_r(a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(V, shift_r<count>, a);
-#endif
-}
-
-template<unsigned count>
-uint8x16 shift_r_u8(uint8x16 a)
+template<unsigned count, unsigned N>
+uint8<N> shift_r_u8(uint8<N> a)
 {
 #if SIMDPP_USE_SSE2
-    uint8x16 mask = detail::shift_u8_mask<count, uint8x16>()();
-    uint16x8 a16 = bit_andnot(a, mask);
-    a16 = shift_r<count>(a16);
-    return a16;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
-#endif
-}
-
-template<unsigned count>
-uint8x32 shift_r_u8(uint8x32 a)
-{
-#if SIMDPP_USE_SSE2
-    uint8x32 mask = detail::shift_u8_mask<count, uint8x32>()();
-    uint16x16 a16 = bit_andnot(a, mask);
+    uint8<N> mask = detail::shift_u8_mask<count, uint8<N>>()();
+    uint16<N/2> a16 = bit_andnot(a, mask);
     a16 = shift_r<count>(a16);
     return a16;
 #else

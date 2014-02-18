@@ -97,6 +97,7 @@ gint8x16 align(gint8x16 lower, gint8x16 upper)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned shift>
 gint8x32 align(gint8x32 lower, gint8x32 upper)
 {
@@ -104,11 +105,18 @@ gint8x32 align(gint8x32 lower, gint8x32 upper)
     if (shift == 0) return lower;
     if (shift == 16) return upper;
 
-#if SIMDPP_USE_AVX2
     return _mm256_alignr_epi8(upper, lower, shift);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, align<shift>, lower, upper);
+}
 #endif
+
+template<unsigned shift, unsigned N>
+gint8<N> align(gint8<N> lower, gint8<N> upper)
+{
+    static_assert(shift <= 16, "Shift out of bounds");
+    if (shift == 0) return lower;
+    if (shift == 16) return upper;
+
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, align<shift>, lower, upper);
 }
 /// @}
 

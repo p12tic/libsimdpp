@@ -44,6 +44,22 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+namespace detail {
+
+// collect some boilerplate here
+template<class P, class V>
+void v_load_u(V& a, const P* p)
+{
+    unsigned veclen = sizeof(typename V::base_vector_type);
+
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        load_u(a[i], p);
+        p += veclen / sizeof(P);
+    }
+}
+
+} // namespace detail
+
 /// @{
 /** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector from an
     unaligned memory location.
@@ -167,112 +183,62 @@ inline float64x2 load_u(float64x2& a, const double* p)
 #endif
 }
 
-inline gint8x32 load_u(gint8x32& a, const void* p)
-{
 #if SIMDPP_USE_AVX2
-    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
-    return a;
-#elif SIMDPP_USE_ALTIVEC
-    const uint8_t* q = reinterpret_cast<const uint8_t*>(p);
-    uint8x16 l1, l2, l3, mask;
-    l1 = vec_ldl(0, q);
-    l2 = vec_ldl(16, q);
-    l3 = vec_ldl(32, q);
-    mask = vec_lvsl(0, q);
-    l1 = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
-                  (__vector uint8_t)mask);
-    l2 = vec_perm((__vector uint8_t)l2, (__vector uint8_t)l3,
-                  (__vector uint8_t)mask);
-    return gint8x32(l1, l2);
-#else
-    const char* q = reinterpret_cast<const char*>(p);
-    load_u(a[0], q);
-    load_u(a[1], q+16);
-    return a;
-#endif
+inline gint8x32  load_u(gint8x32& a,  const void* p)
+{
+    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-
 inline gint16x16 load_u(gint16x16& a, const void* p)
 {
-#if SIMDPP_USE_AVX2
-    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
-    return a;
-#elif SIMDPP_USE_ALTIVEC
-    gint8x32 a0;
-    load_u(a0, p);
-    a = a0;
-    return a;
-#else
-    const char* q = reinterpret_cast<const char*>(p);
-    load_u(a[0], q);
-    load_u(a[1], q+16);
-    return a;
-#endif
+    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-
-inline gint32x8 load_u(gint32x8& a, const void* p)
+inline gint32x8  load_u(gint32x8& a,  const void* p)
 {
-#if SIMDPP_USE_AVX2
-    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
-    return a;
-#elif SIMDPP_USE_ALTIVEC
-    gint8x32 a0;
-    load_u(a0, p);
-    a = a0;
-    return a;
-#else
-    const char* q = reinterpret_cast<const char*>(p);
-    load_u(a[0], q);
-    load_u(a[1], q+16);
-    return a;
-#endif
+    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-
-inline gint64x4 load_u(gint64x4& a, const void* p)
+inline gint64x4  load_u(gint64x4& a,  const void* p)
 {
-#if SIMDPP_USE_AVX2
-    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
-    return a;
-#elif SIMDPP_USE_ALTIVEC
-    gint8x32 a0;
-    load_u(a0, p);
-    a = a0;
-    return a;
-#else
-    const char* q = reinterpret_cast<const char*>(p);
-    load_u(a[0], q);
-    load_u(a[1], q+16);
-    return a;
-#endif
+    a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-
 inline float32x8 load_u(float32x8& a, const float* p)
 {
-#if SIMDPP_USE_AVX
-    a = _mm256_loadu_ps(p);
-    return a;
-#elif SIMDPP_USE_ALTIVEC
-    gint32x8 a0;
-    load_u(a0, p);
-    a = a0;
-    return a;
-#else
-    load_u(a[0], p);
-    load_u(a[1], p+4);
-    return a;
-#endif
+    a = _mm256_loadu_ps(p); return a;
 }
-
 inline float64x4 load_u(float64x4& a, const double* p)
 {
-#if SIMDPP_USE_AVX
-    a = _mm256_loadu_pd(p);
-    return a;
-#else
-    load_u(a[0], p);
-    load_u(a[1], p+2);
-    return a;
+    a = _mm256_loadu_pd(p); return a;
+}
 #endif
+
+template<unsigned N>
+gint8<N>  load_u(gint8<N>& a,  const void* p)
+{
+    detail::v_load_u(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+gint16<N> load_u(gint16<N>& a, const void* p)
+{
+    detail::v_load_u(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+gint32<N> load_u(gint32<N>& a, const void* p)
+{
+    detail::v_load_u(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+gint64<N> load_u(gint64<N>& a, const void* p)
+{
+    detail::v_load_u(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+float32<N> load_u(float32<N>& a, const float* p)
+{
+    detail::v_load_u(a, p); return a;
+}
+template<unsigned N>
+float64<N> load_u(float64<N>& a, const double* p)
+{
+    detail::v_load_u(a, p); return a;
 }
 /// @}
 

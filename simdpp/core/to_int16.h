@@ -89,6 +89,8 @@ inline gint16x16 to_int16(int8x16 a)
 #endif
 }
 
+// TODO support arbitrary length vectors
+
 /** Extends the 16 values of a unsigned int8x16 vector to 16-bits
 
     @code
@@ -128,6 +130,8 @@ inline gint16x16 to_int16(uint8x16 a)
     return r;
 #endif
 }
+
+// TODO support arbitrary length vectors
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

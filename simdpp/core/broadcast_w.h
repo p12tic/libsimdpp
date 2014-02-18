@@ -41,6 +41,24 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+namespace detail {
+
+template<unsigned s, class V>
+V v_broadcast_w(V a)
+{
+    using U = typename V::base_vector_type;
+    U one = a[s / U::length];
+
+    one = broadcast<s % U::length>(one);
+
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        a[i] = one;
+    }
+    return a;
+}
+
+} // namespace detail
+
 /// @{
 /** Broadcasts the specified 8-bit value to all elements within 128-bit lane
 
@@ -65,20 +83,23 @@ gint8x16 broadcast_w(gint8x16 a)
     return broadcast<s>(a);
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint8x32 broadcast_w(gint8x32 a)
 {
     static_assert(s < 32, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     gint8x16 lo;
     lo = s < 16 ? sse::extract_lo(a) : sse::extract_hi(a);
     lo = move_l<s % 16>(lo);
     return _mm256_broadcastb_epi8(lo);
-#else
-    gint8x16 p = a[s/16];
-    p = broadcast<s%16>(p);
-    return {p, p};
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint8<N> broadcast_w(gint8<N> a)
+{
+    static_assert(s < N, "Access out of bounds");
+    return detail::v_broadcast_w<s>(a);
 }
 /// @}
 
@@ -106,20 +127,23 @@ gint16x8 broadcast_w(gint16x8 a)
     return broadcast<s>(a);
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint16x16 broadcast_w(gint16x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     gint16x8 lo;
     lo = s < 8 ? sse::extract_lo(a) : sse::extract_hi(a);
     lo = move_l<s % 8>(lo);
     return _mm256_broadcastw_epi16(lo);
-#else
-    gint16x8 p = a[s/8];
-    p = broadcast<s%8>(p);
-    return {p, p};
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint16<N> broadcast_w(gint16<N> a)
+{
+    static_assert(s < N, "Access out of bounds");
+    return detail::v_broadcast_w<s>(a);
 }
 /// @}
 
@@ -142,19 +166,22 @@ gint32x4 broadcast_w(gint32x4 a)
     return broadcast<s>(a);
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint32x8 broadcast_w(gint32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     a = permute<s%4,s%4,s%4,s%4>(a);
     a = detail::shuffle128<s/4, s/4>(a, a);
     return a;
-#else
-    gint32x4 p = a[s/4];
-    p = broadcast<s%4>(p);
-    return {p, p};
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint32<N> broadcast_w(gint32<N> a)
+{
+    static_assert(s < N, "Access out of bounds");
+    return detail::v_broadcast_w<s>(a);
 }
 /// @}
 
@@ -179,17 +206,20 @@ gint64x2 broadcast_w(gint64x2 a)
     return broadcast<s>(a);
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s>
 gint64x4 broadcast_w(gint64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
-#if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
-#else
-    gint64x2 p = a[s/2];
-    p = broadcast<s%2>(p);
-    return {p, p};
+}
 #endif
+
+template<unsigned s, unsigned N>
+gint64<N> broadcast_w(gint64<N> a)
+{
+    static_assert(s < N, "Access out of bounds");
+    return detail::v_broadcast_w<s>(a);
 }
 /// @}
 
@@ -212,18 +242,21 @@ float32x4 broadcast_w(float32x4 a)
     return broadcast<s>(a);
 }
 
+#if SIMDPP_USE_AVX
 template<unsigned s>
 float32x8 broadcast_w(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
-#if SIMDPP_USE_AVX
     a = detail::shuffle128<s/4,s/4>(a, a);
     return permute<s%4,s%4,s%4,s%4>(a);
-#else
-    float32x4 p = a[s/4];
-    p = broadcast<s%4>(p);
-    return {p, p};
+}
 #endif
+
+template<unsigned s, unsigned N>
+float32<N> broadcast_w(float32<N> a)
+{
+    static_assert(s < N, "Access out of bounds");
+    return detail::v_broadcast_w<s>(a);
 }
 /// @}
 
@@ -248,21 +281,26 @@ float64x2 broadcast_w(float64x2 a)
     return broadcast<s>(a);
 }
 
+#if SIMDPP_USE_AVX
 template<unsigned s>
 float64x4 broadcast_w(float64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     return permute<s,s,s,s>(a);
-#elif SIMDPP_USE_AVX
+#else // SIMDPP_USE_AVX
     a = detail::shuffle128<s/2,s/2>(a, a);
     a = permute<s%2,s%2>(a);
     return a;
-#else
-    float64x2 p = a[s/2];
-    p = broadcast<s%2>(p);
-    return {p, p};
 #endif
+}
+#endif
+
+template<unsigned s, unsigned N>
+float64<N> broadcast_w(float64<N> a)
+{
+    static_assert(s < N, "Access out of bounds");
+    return detail::v_broadcast_w<s>(a);
 }
 /// @}
 ///

@@ -75,16 +75,25 @@ inline void store(void* p, gint8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store(void* p, gint8x32 a)
 {
     p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX2
     _mm256_store_si256(reinterpret_cast<__m256i*>(p), a);
-#else
-    char* q = reinterpret_cast<char*>(p);
-    store(q, a[0]);
-    store(q+16, a[1]);
+}
 #endif
+
+template<unsigned N>
+void store(void* p, gint8<N> a)
+{
+    unsigned veclen = sizeof(typename gint8<N>::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    char* q = reinterpret_cast<char*>(p);
+    for (unsigned i = 0; i < gint8<N>::vec_length; ++i) {
+        store(q, a[i]);
+        q += veclen;
+    }
 }
 
 template<unsigned N>
@@ -108,15 +117,24 @@ inline void store(float *p, float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void store(float* p, float32x8 a)
 {
     p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
     _mm256_store_ps(p, a);
-#else
-    store(p, a[0]);
-    store(p+4, a[1]);
+}
 #endif
+
+template<unsigned N>
+void store(float* p, float32<N> a)
+{
+    unsigned veclen = sizeof(typename float32<N>::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < gint8<N>::vec_length; ++i) {
+        store(p, a[i]);
+        p += veclen / sizeof(float);
+    }
 }
 
 inline void store(double *p, float64x2 a)
@@ -129,16 +147,26 @@ inline void store(double *p, float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void store(double* p, float64x4 a)
 {
     p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
     _mm256_store_pd(p, a);
-#else
-    store(p, a[0]);
-    store(p+2, a[1]);
-#endif
 }
+#endif
+
+template<unsigned N>
+void store(double* p, float64<N> a)
+{
+    unsigned veclen = sizeof(typename float64<N>::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < float64<N>::vec_length; ++i) {
+        store(p, a[i]);
+        p += veclen / sizeof(double);
+    }
+}
+
 /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

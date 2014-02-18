@@ -70,14 +70,18 @@ inline gint8x16 bit_not(gint8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 bit_not(gint8x32 a)
 {
-#if SIMDPP_USE_AVX2
     gint8x32 ones = gint8x32::ones();
     return bit_xor(a, ones);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, bit_not, a)
+}
 #endif
+
+template<unsigned N>
+inline gint8<N> bit_not(gint8<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(gint8<N>, bit_not, a)
 }
 
 template<unsigned N>
@@ -125,40 +129,32 @@ inline mask_int64x2 bit_not(mask_int64x2 a)
 #endif
 }
 
-inline mask_int8x32 bit_not(mask_int8x32 a)
-{
 #if SIMDPP_USE_AVX2
-    return bit_not(uint8x32(a));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int8x32, bit_not, a)
+inline mask_int8x32  bit_not(mask_int8x32 a)  { return bit_not(uint8x32(a)); }
+inline mask_int16x16 bit_not(mask_int16x16 a) { return bit_not(uint16x16(a)); }
+inline mask_int32x8  bit_not(mask_int32x8 a)  { return bit_not(uint32x8(a)); }
+inline mask_int64x4  bit_not(mask_int64x4 a)  { return bit_not(uint64x4(a)); }
 #endif
-}
 
-inline mask_int16x16 bit_not(mask_int16x16 a)
+template<unsigned N>
+inline mask_int8<N> bit_not(mask_int8<N> a)
 {
-#if SIMDPP_USE_AVX2
-    return bit_not(uint16x16(a));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int16x16, bit_not, a)
-#endif
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int8<N>, bit_not, a)
 }
-
-inline mask_int32x8 bit_not(mask_int32x8 a)
+template<unsigned N>
+inline mask_int16<N> bit_not(mask_int16<N> a)
 {
-#if SIMDPP_USE_AVX2
-    return bit_not(uint32x8(a));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int32x8, bit_not, a)
-#endif
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int16<N>, bit_not, a)
 }
-
-inline mask_int64x4 bit_not(mask_int64x4 a)
+template<unsigned N>
+inline mask_int32<N> bit_not(mask_int32<N> a)
 {
-#if SIMDPP_USE_AVX2
-    return bit_not(uint64x4(a));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int64x4, bit_not, a)
-#endif
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int32<N>, bit_not, a)
+}
+template<unsigned N>
+inline mask_int64<N> bit_not(mask_int64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(mask_int64<N>, bit_not, a)
 }
 /// @}
 
@@ -200,24 +196,32 @@ inline float64x2 bit_not(float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 bit_not(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     uint32x8 ones = uint32x8::ones();
     return bit_xor(a, ones);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, bit_not, a)
+}
 #endif
+
+template<unsigned N>
+float32<N> bit_not(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, bit_not, a)
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 bit_not(float64x4 a)
 {
-#if SIMDPP_USE_AVX
     uint64x4 ones = uint64x4::ones();
     return bit_xor(a, ones);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float64x4, bit_not, a)
+}
 #endif
+
+template<unsigned N>
+float64<N> bit_not(float64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, bit_not, a)
 }
 
 // -----------------------------------------------------------------------------
@@ -240,22 +244,30 @@ inline mask_float64x2 bit_not(mask_float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float32x8 bit_not(mask_float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return bit_not(float32x8(a));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float32x8, bit_not, a)
+}
 #endif
+
+template<unsigned N>
+inline mask_float32<N> bit_not(mask_float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(mask_float32<N>, bit_not, a)
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float64x4 bit_not(mask_float64x4 a)
 {
-#if SIMDPP_USE_AVX
     return bit_not(float64x4(a));
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float64x4, bit_not, a)
+}
 #endif
+
+template<unsigned N>
+inline mask_float64<N> bit_not(mask_float64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(mask_float64<N>, bit_not, a)
 }
 /// @}
 

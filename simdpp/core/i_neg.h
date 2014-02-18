@@ -64,13 +64,17 @@ inline int8x16 neg(int8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int8x32 neg(int8x32 a)
 {
-#if SIMDPP_USE_AVX2
     return sub(int8x32::zero(), a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(int8x32, neg, a);
+}
 #endif
+
+template<unsigned N>
+int8<N> neg(int8<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(int8<N>, neg, a);
 }
 /// @}
 
@@ -97,13 +101,17 @@ inline int16x8 neg(int16x8 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int16x16 neg(int16x16 a)
 {
-#if SIMDPP_USE_AVX2
     return sub(int16x16::zero(), a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(int16x16, neg, a);
+}
 #endif
+
+template<unsigned N>
+int16<N> neg(int16<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(int16<N>, neg, a);
 }
 /// @}
 
@@ -130,13 +138,17 @@ inline int32x4 neg(int32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int32x8 neg(int32x8 a)
 {
-#if SIMDPP_USE_AVX2
     return sub(int32x8::zero(), a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(int32x8, neg, a);
+}
 #endif
+
+template<unsigned N>
+int32<N> neg(int32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(int32<N>, neg, a);
 }
 /// @}
 
@@ -165,13 +177,17 @@ inline int64x2 neg(int64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int64x4 neg(int64x4 a)
 {
-#if SIMDPP_USE_AVX2
     return sub(int64x4::zero(), a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(int64x4, neg, a);
+}
 #endif
+
+template<unsigned N>
+int64<N> neg(int64<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(int64<N>, neg, a);
 }
 /// @}
 

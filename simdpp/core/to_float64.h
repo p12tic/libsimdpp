@@ -85,7 +85,21 @@ inline float64x4 to_float64(int32x4 a)
     return combine(r1, r2);
 #endif
 }
+
+#if SIMDPP_USE_AVX2
+inline float64<8> to_float64(float32x8 a)
+{
+    float64x4 r1, r2;
+    float32x4 a1, a2;
+    split(a, a1, a2);
+    r1 = _mm256_cvtepi32_pd(a1);
+    r2 = _mm256_cvtepi32_pd(a2);
+    return combine(r1, r2);
+}
+#endif
 /// @}
+
+// TODO support arbitrary length vectors
 
 /// @{
 /** Converts the 32-bit float values to 64-bit float values.
@@ -129,6 +143,21 @@ inline float64x4 to_float64(float32x4 a)
     return combine(r1, r2);
 #endif
 }
+
+#if SIMDPP_USE_AVX
+inline float64<8> to_float64(float32x8 a)
+{
+    float64x2 r1, r2;
+    float32x4 a1, a2;
+    split(a, a1, a2);
+    r1 = _mm256_cvtps_pd(a1);
+    r2 = _mm256_cvtps_pd(a2);
+    return combine(r1, r2);
+}
+#endif
+
+// TODO support arbitrary length vectors
+
 /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

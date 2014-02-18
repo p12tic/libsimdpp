@@ -44,21 +44,28 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 namespace detail {
+
 // the 256-bit versions are mostly boilerplate. Collect that stuff here.
-template<class V>
-void v256_store_i_pack3(void* p, V a, V b, V c)
+template<class P, class V>
+void v256_store_pack3(P* p, V a, V b, V c)
 {
     p = detail::assume_aligned(p, 32);
-    char* q = reinterpret_cast<char*>(p);
-#if SIMDPP_USE_AVX2
     detail::mem_pack3(a, b, c);
-    store(q, a);
-    store(q + 32, b);
-    store(q + 64, c);
-#else
-    store_packed3(q, a[0], b[0], c[0]);
-    store_packed3(q + 48, a[1], b[1], c[1]);
-#endif
+    store(p, a);
+    store(p + 32 / sizeof(P), b);
+    store(p + 64 / sizeof(P), c);
+}
+
+template<class P, class V>
+void v_store_pack3(P* p, V a, V b, V c)
+{
+    unsigned veclen = sizeof(typename V::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        store_packed3(p, a[i], b[i], c[i]);
+        p += veclen*3 / sizeof(P);
+    }
 }
 } //namespace detail
 
@@ -104,10 +111,19 @@ inline void store_packed3(void* p,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed3(void* p,
                           gint8x32 a, gint8x32 b, gint8x32 c)
 {
-    detail::v256_store_i_pack3(p, a, b, c);
+    detail::v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+}
+#endif
+
+template<unsigned N>
+void store_packed3(void* p,
+                   gint8<N> a, gint8<N> b, gint8<N> c)
+{
+    detail::v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 /// @}
 
@@ -153,10 +169,19 @@ inline void store_packed3(void* p,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed3(void* p,
                           gint16x16 a, gint16x16 b, gint16x16 c)
 {
-    detail::v256_store_i_pack3(p, a, b, c);
+    detail::v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+}
+#endif
+
+template<unsigned N>
+void store_packed3(void* p,
+                   gint16<N> a, gint16<N> b, gint16<N> c)
+{
+    detail::v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 /// @}
 
@@ -202,10 +227,19 @@ inline void store_packed3(void* p,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed3(void* p,
                           gint32x8 a, gint32x8 b, gint32x8 c)
 {
-    detail::v256_store_i_pack3(p, a, b, c);
+    detail::v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+}
+#endif
+
+template<unsigned N>
+void store_packed3(void* p,
+                   gint32<N> a, gint32<N> b, gint32<N> c)
+{
+    detail::v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 /// @}
 
@@ -255,10 +289,19 @@ inline void store_packed3(void* p,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed3(void* p,
                           gint64x4 a, gint64x4 b, gint64x4 c)
 {
-    detail::v256_store_i_pack3(p, a, b, c);
+    detail::v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+}
+#endif
+
+template<unsigned N>
+void store_packed3(void* p,
+                   gint64<N> a, gint64<N> b, gint64<N> c)
+{
+    detail::v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 /// @}
 
@@ -301,19 +344,19 @@ inline void store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void store_packed3(float* p,
                           float32x8 a, float32x8 b, float32x8 c)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    detail::mem_pack3(a, b, c);
-    store(p, a);
-    store(p + 8, b);
-    store(p + 16, c);
-#else
-    store_packed3(p, a[0], b[0], c[0]);
-    store_packed3(p + 12, a[1], b[1], c[1]);
+    detail::v256_store_pack3(p, a, b, c);
+}
 #endif
+
+template<unsigned N>
+void store_packed3(float* p,
+                   float32<N> a, float32<N> b, float32<N> c)
+{
+    detail::v_store_pack3(p, a, b, c);
 }
 /// @}
 
@@ -353,19 +396,19 @@ inline void store_packed3(double* p, float64x2 a, float64x2 b, float64x2 c)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void store_packed3(double* p,
                           float64x4 a, float64x4 b, float64x4 c)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    detail::mem_pack3(a, b, c);
-    store(p, a);
-    store(p + 4, b);
-    store(p + 8, c);
-#else
-    store_packed3(p, a[0], b[0], c[0]);
-    store_packed3(p + 6, a[1], b[1], c[1]);
+    detail::v256_store_pack3(p, a, b, c);
+}
 #endif
+
+template<unsigned N>
+void store_packed3(double* p,
+                   float64<N> a, float64<N> b, float64<N> c)
+{
+    detail::v_store_pack3(p, a, b, c);
 }
 /// @}
 

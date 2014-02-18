@@ -45,14 +45,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-template<unsigned>
-uint8x16 shift_r(uint8x16);
-template<unsigned>
-uint8x32 shift_r(uint8x32);
-
-inline uint8x16 shift_r(uint8x16, unsigned);
-inline uint8x32 shift_r(uint8x32, unsigned);
-
 /// @{
 /** Shifts 8-bit values left by @a count bits while shifting in zeros.
 
@@ -97,9 +89,9 @@ inline gint8x16 shift_l(gint8x16 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 shift_l(gint8x32 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     uint16x16 mask, a16;
     mask = uint16x16::ones();
     mask = shift_r(mask, 16-count);
@@ -109,9 +101,13 @@ inline gint8x32 shift_l(gint8x32 a, unsigned count)
     a16 = shift_l(a16, count);
     a16 = bit_andnot(a16, mask);
     return a16;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(gint8x32, shift_l, a, count);
+}
 #endif
+
+template<unsigned N>
+gint8<N> shift_l(gint8<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(gint8<N>, shift_l, a, count);
 }
 /// @}
 
@@ -148,13 +144,17 @@ inline gint16x8 shift_l(gint16x8 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint16x16 shift_l(gint16x16 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_slli_epi16(a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(gint16x16, shift_l, a, count);
+}
 #endif
+
+template<unsigned N>
+gint16<N> shift_l(gint16<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(gint16<N>, shift_l, a, count);
 }
 /// @}
 
@@ -191,13 +191,17 @@ inline gint32x4 shift_l(gint32x4 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint32x8 shift_l(gint32x8 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_slli_epi32(a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(gint32x8, shift_l, a, count);
+}
 #endif
+
+template<unsigned N>
+gint32<N> shift_l(gint32<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(gint32<N>, shift_l, a, count);
 }
 /// @}
 
@@ -233,56 +237,28 @@ inline gint64x2 shift_l(gint64x2 a, unsigned count)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint64x4 shift_l(gint64x4 a, unsigned count)
 {
-#if SIMDPP_USE_AVX2
     return _mm256_slli_epi64(a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2S(gint64x4, shift_l, a, count);
+}
 #endif
+
+template<unsigned N>
+gint64<N> shift_l(gint64<N> a, unsigned count)
+{
+    SIMDPP_VEC_ARRAY_IMPL2S(gint64<N>, shift_l, a, count);
 }
 /// @}
 
-template<unsigned count>
-inline gint8x16 shift_l(gint8x16);
-template<unsigned count>
-inline gint16x8 shift_l(gint16x8);
-template<unsigned count>
-inline gint32x4 shift_l(gint32x4);
-template<unsigned count>
-inline gint64x2 shift_l(gint64x2);
-
 namespace detail {
 
-template<unsigned count, class V>
-V v256_shift_l(V a)
-{
-#if SIMDPP_USE_AVX2
-    return shift_l(a, count);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(V, shift_l<count>, a);
-#endif
-}
-
-template<unsigned count>
-gint8x16 shift_l_8(gint8x16 a)
+template<unsigned count, unsigned N>
+gint8<N> shift_l_8(gint8<N> a)
 {
 #if SIMDPP_USE_SSE2
-    uint8x16 mask = detail::shift_u8_mask<8-count, uint8x16>()();
-    uint16x8 a16 = bit_and(a, mask);
-    a16 = shift_l<count>(a16);
-    return a16;
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
-#endif
-}
-
-template<unsigned count>
-gint8x32 shift_l_8(gint8x32 a)
-{
-#if SIMDPP_USE_SSE2
-    uint8x32 mask = detail::shift_u8_mask<8-count, uint8x32>()();
-    uint16x16 a16 = bit_and(a, mask);
+    uint8<N> mask = detail::shift_u8_mask<8-count, uint8<N>>()();
+    uint16<N/2> a16 = bit_and(a, mask);
     a16 = shift_l<count>(a16);
     return a16;
 #else
@@ -334,6 +310,7 @@ gint8x16 shift_l(gint8x16 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 inline gint8x32 shift_l(gint8x32 a)
 {
@@ -341,7 +318,18 @@ inline gint8x32 shift_l(gint8x32 a)
     if (count == 0) return a;
     if (count == 8) return uint8x32::zero();
 
-    return detail::v256_shift_l<count>(a);
+    return shift_l(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+gint8<N> shift_l(gint8<N> a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 8) return uint8<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(gint8<N>, shift_l<count>, a);
 }
 /// @}
 
@@ -378,6 +366,7 @@ gint16x8 shift_l(gint16x8 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 inline gint16x16 shift_l(gint16x16 a)
 {
@@ -385,7 +374,18 @@ inline gint16x16 shift_l(gint16x16 a)
     if (count == 0) return a;
     if (count == 16) return uint16x16::zero();
 
-    return detail::v256_shift_l<count>(a);
+    return shift_l(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+gint16<N> shift_l(gint16<N> a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 16) return uint16<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(gint16<N>, shift_l<count>, a);
 }
 /// @}
 
@@ -422,6 +422,7 @@ gint32x4 shift_l(gint32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 inline gint32x8 shift_l(gint32x8 a)
 {
@@ -429,7 +430,18 @@ inline gint32x8 shift_l(gint32x8 a)
     if (count == 0) return a;
     if (count == 32) return uint32x8::zero();
 
-    return detail::v256_shift_l<count>(a);
+    return shift_l(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+gint32<N> shift_l(gint32<N> a)
+{
+    static_assert(count <= 32, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 32) return uint32<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(gint32<N>, shift_l<count>, a);
 }
 /// @}
 
@@ -464,6 +476,7 @@ gint64x2 shift_l(gint64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned count>
 inline gint64x4 shift_l(gint64x4 a)
 {
@@ -471,7 +484,18 @@ inline gint64x4 shift_l(gint64x4 a)
     if (count == 0) return a;
     if (count == 64) return uint64x4::zero();
 
-    return detail::v256_shift_l<count>(a);
+    return shift_l(a, count);
+}
+#endif
+
+template<unsigned count, unsigned N>
+gint64<N> shift_l(gint64<N> a)
+{
+    static_assert(count <= 64, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 64) return uint64<N>::zero();
+
+    SIMDPP_VEC_ARRAY_IMPL1(gint64<N>, shift_l<count>, a);
 }
 /// @}
 

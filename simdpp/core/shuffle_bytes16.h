@@ -118,9 +118,9 @@ inline gint8x16 shuffle_bytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint8x32 shuffle_bytes16(gint8x32 a, gint8x32 b, gint8x32 mask)
 {
-#if SIMDPP_USE_AVX2
     int16x16 sel, ai, bi, r;
     sel = mask;
     sel = _mm256_slli_epi16(sel, 3); // the top 3 bits are already clear
@@ -129,9 +129,13 @@ inline gint8x32 shuffle_bytes16(gint8x32 a, gint8x32 b, gint8x32 mask)
     bi = _mm256_shuffle_epi8(b, mask);
     r = _mm256_blendv_epi8(ai, bi, sel);
     return r;
-#else
-    SIMDPP_VEC_ARRAY_IMPL3(gint8x32, shuffle_bytes16, a, b, mask);
+}
 #endif
+
+template<unsigned N>
+gint8<N> shuffle_bytes16(gint8<N> a, gint8<N> b, gint8<N> mask)
+{
+    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, shuffle_bytes16, a, b, mask);
 }
 
 template<unsigned N>

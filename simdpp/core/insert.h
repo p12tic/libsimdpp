@@ -48,6 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @defgroup simd_insert_extract Operations: insert or extract a single element from a vector
 /// @{
 
+/// @{
 /** Inserts an element into int8x16 vector at the position identified by @a id.
 
     @code
@@ -64,6 +65,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned id>
 gint8x16 insert(gint8x16 a, uint8_t x)
 {
+    static_assert(id < 16, "Position out of range");
 #if SIMDPP_USE_NULL
     a.el(id) = x;
     return a;
@@ -327,6 +329,34 @@ inline float64x4 combine(float64x2 a, float64x2 b)
     return r;
 #endif
 }
+
+namespace detail {
+
+template<class V, class H>
+V v_combine(H a1, H a2)
+{
+    V r;
+    unsigned h = H::vec_length;
+    for (unsigned i = 0; i < h; ++i) { r[i] = a1[i]; }
+    for (unsigned i = 0; i < h; ++i) { r[i+h] = a2[i+h]; }
+    return r;
+}
+
+} // namespace detail
+
+template<unsigned N>
+gint8<N*2> combine(gint8<N>& a1, gint8<N>& a2) { return detail::v_combine<gint8<N*2>>(a1, a2); }
+template<unsigned N>
+gint16<N*2> combine(gint16<N>& a1, gint16<N>& a2) { return detail::v_combine<gint16<N*2>>(a1, a2); }
+template<unsigned N>
+gint32<N*2> combine(gint32<N>& a1, gint32<N>& a2) { return detail::v_combine<gint32<N*2>>(a1, a2); }
+template<unsigned N>
+gint64<N*2> combine(gint64<N>& a1, gint64<N>& a2) { return detail::v_combine<gint64<N*2>>(a1, a2); }
+template<unsigned N>
+float32<N*2> combine(float32<N>& a1, float32<N>& a2) { return detail::v_combine<float32<N*2>>(a1, a2); }
+template<unsigned N>
+float64<N*2> combine(float64<N>& a1, float64<N>& a2) { return detail::v_combine<float64<N*2>>(a1, a2); }
+
 /// @}
 
 /// @} -- end defgroup

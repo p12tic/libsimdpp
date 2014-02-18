@@ -77,16 +77,25 @@ inline void stream(void* p, gint8<16> a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void stream(void* p, gint8<32> a)
 {
     p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX2
     _mm256_stream_si256(reinterpret_cast<__m256i*>(p), a);
-#else
-    char* q = reinterpret_cast<char*>(p);
-    stream(q, a[0]);
-    stream(q+16, a[1]);
+}
 #endif
+
+template<unsigned N>
+void stream(void* p, gint8<N> a)
+{
+    unsigned veclen = sizeof(typename gint8<N>::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    char* q = reinterpret_cast<char*>(p);
+    for (unsigned i = 0; i < gint8<N>::vec_length; ++i) {
+        stream(q, a[i]);
+        q += veclen;
+    }
 }
 
 template<unsigned N>
@@ -110,15 +119,24 @@ inline void stream(float* p, float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void stream(float* p, float32x8 a)
 {
     p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
     _mm256_stream_ps(p, a);
-#else
-    stream(p, a[0]);
-    stream(p+4, a[1]);
+}
 #endif
+
+template<unsigned N>
+void stream(float* p, float32<N> a)
+{
+    unsigned veclen = sizeof(typename float32<N>::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < float32<N>::vec_length; ++i) {
+        stream(p, a[i]);
+        p += veclen/sizeof(float);
+    }
 }
 
 inline void stream(double* p, float64x2 a)
@@ -131,15 +149,24 @@ inline void stream(double* p, float64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void stream(double* p, float64x4 a)
 {
     p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
     _mm256_stream_pd(p, a);
-#else
-    stream(p, a[0]);
-    stream(p+2, a[1]);
+}
 #endif
+
+template<unsigned N>
+void stream(double* p, float64<N> a)
+{
+    unsigned veclen = sizeof(typename float64<N>::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < float64<N>::vec_length; ++i) {
+        stream(p, a[i]);
+        p += veclen/sizeof(double);
+    }
 }
 /// @}
 

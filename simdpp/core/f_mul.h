@@ -69,13 +69,17 @@ inline float32x4 mul(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 mul(float32x8 a, float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_mul_ps(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, mul, a, b);
+}
 #endif
+
+template<unsigned N>
+float32<N> mul(float32<N> a, float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, mul, a, b);
 }
 /// @}
 
@@ -104,13 +108,17 @@ inline float64x2 mul(float64x2 a, float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float64x4 mul(float64x4 a, float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_mul_pd(a, b);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float64x4, mul, a, b);
+}
 #endif
+
+template<unsigned N>
+float64<N> mul(float64<N> a, float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, mul, a, b);
 }
 /// @}
 

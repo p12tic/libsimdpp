@@ -137,13 +137,17 @@ inline gint32x4 to_int32(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline gint32x8 to_int32x8(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_cvttps_epi32(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(gint32x8, to_int32, a);
+}
 #endif
+
+template<unsigned N>
+gint32<N> to_int32x8(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(gint32<N>, to_int32, a);
 }
 /// @}
 
@@ -194,6 +198,8 @@ inline gint32x4 to_int32(float64x4 a)
     SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();
 #endif
 }
+
+// TODO support arbitrary length vectors
 
 /// @}
 

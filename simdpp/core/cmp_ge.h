@@ -69,13 +69,17 @@ inline mask_float32x4 cmp_ge(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float32x8 cmp_ge(float32x8 a, float32x8 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_cmp_ps(a, b, _CMP_GE_OQ);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32x8, cmp_ge, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_float32<N> cmp_ge(float32<N> a, float32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, cmp_ge, a, b);
 }
 /// @}
 
@@ -106,16 +110,19 @@ inline mask_float64x2 cmp_ge(float64x2 a, float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline mask_float64x4 cmp_ge(float64x4 a, float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_cmp_pd(a, b, _CMP_GE_OQ);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64x4, cmp_ge, a, b);
+}
 #endif
+
+template<unsigned N>
+mask_float64<N> cmp_ge(float64<N> a, float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, cmp_ge, a, b);
 }
 /// @}
-
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

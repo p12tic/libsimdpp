@@ -78,16 +78,20 @@ inline uint8x16 avg_trunc(uint8x16 a, uint8x16 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint8x32 avg_trunc(uint8x32 a, uint8x32 b)
 {
-#if SIMDPP_USE_AVX2
     // (x & y) + ((x ^ y) >> 1)
     uint8x32 x1 = bit_and(a, b);
     uint8x32 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, avg_trunc, a, b);
+}
 #endif
+
+template<unsigned N>
+uint8<N> avg_trunc(uint8<N> a, uint8<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, avg_trunc, a, b);
 }
 /// @}
 
@@ -127,9 +131,9 @@ inline int8x16 avg_trunc(int8x16 a, int8x16 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int8x32 avg_trunc(int8x32 a, int8x32 b)
 {
-#if SIMDPP_USE_AVX2
     uint8x32 a2, b2, bias, r;
     bias = uint8x32::make_const(0x80);
     a2 = bit_xor(a, bias); // add
@@ -137,9 +141,13 @@ inline int8x32 avg_trunc(int8x32 a, int8x32 b)
     r = avg_trunc(a2, b2); // unsigned
     r = bit_xor(r, bias); // sub
     return r;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(int8x32, avg_trunc, a, b);
+}
 #endif
+
+template<unsigned N>
+int8<N> avg_trunc(int8<N> a, int8<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int8<N>, avg_trunc, a, b);
 }
 /// @}
 
@@ -177,16 +185,20 @@ inline uint16x8 avg_trunc(uint16x8 a, uint16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint16x16 avg_trunc(uint16x16 a, uint16x16 b)
 {
-#if SIMDPP_USE_AVX2
     // (x & y) + ((x ^ y) >> 1)
     uint16x16 x1 = bit_and(a, b);
     uint16x16 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(uint16x16, avg_trunc, a, b);
+}
 #endif
+
+template<unsigned N>
+uint16<N> avg_trunc(uint16<N> a, uint16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, avg_trunc, a, b);
 }
 /// @}
 
@@ -227,9 +239,9 @@ inline int16x8 avg_trunc(int16x8 a, int16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int16x16 avg_trunc(int16x16 a, int16x16 b)
 {
-#if SIMDPP_USE_AVX2
     uint16x16 a2, b2, bias, r;
     bias = uint16x16::make_const(0x8000);
     a2 = bit_xor(a, bias); // add
@@ -237,9 +249,13 @@ inline int16x16 avg_trunc(int16x16 a, int16x16 b)
     r = avg_trunc(a2, b2); // unsigned
     r = bit_xor(r, bias); // sub
     return r;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(int16x16, avg_trunc, a, b);
+}
 #endif
+
+template<unsigned N>
+int16<N> avg_trunc(int16<N> a, int16<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int16<N>, avg_trunc, a, b);
 }
 /// @}
 
@@ -277,16 +293,20 @@ inline uint32x4 avg_trunc(uint32x4 a, uint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline uint32x8 avg_trunc(uint32x8 a, uint32x8 b)
 {
-#if SIMDPP_USE_AVX2
     // (x & y) + ((x ^ y) >> 1)
     uint32x8 x1 = bit_and(a, b);
     uint32x8 x2 = bit_xor(a, b);
     return add(x1, shift_r<1>(x2));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(uint32x8, avg_trunc, a, b);
+}
 #endif
+
+template<unsigned N>
+uint32<N> avg_trunc(uint32<N> a, uint32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, avg_trunc, a, b);
 }
 /// @}
 
@@ -328,9 +348,9 @@ inline int32x4 avg_trunc(int32x4 a, int32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline int32x8 avg_trunc(int32x8 a, int32x8 b)
 {
-#if SIMDPP_USE_AVX2
     uint32x8 a2, b2, bias, r;
     bias = uint32x8::make_const(0x80000000);
     a2 = bit_xor(a, bias); // add
@@ -338,9 +358,13 @@ inline int32x8 avg_trunc(int32x8 a, int32x8 b)
     r = avg_trunc(a2, b2); // unsigned
     r = bit_xor(r, bias); // sub
     return r;
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(int32x8, avg_trunc, a, b);
+}
 #endif
+
+template<unsigned N>
+int32<N> avg_trunc(int32<N> a, int32<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int32<N>, avg_trunc, a, b);
 }
 /// @}
 

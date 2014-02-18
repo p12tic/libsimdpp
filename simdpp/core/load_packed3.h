@@ -47,24 +47,28 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 // the 256-bit versions are mostly boilerplate. Collect that stuff here.
-template<class V>
-void v256_load_i_packed3(V& a, V& b, V& c, const void* p)
+template<class V, class P>
+void v256_load_packed3(V& a, V& b, V& c, const P* p)
 {
     p = detail::assume_aligned(p, 32);
-    const char* q = reinterpret_cast<const char*>(p);
-#if SIMDPP_USE_AVX2
-    load(a, q);
-    load(b, q + 32);
-    load(c, q + 64);
+    load(a, p);
+    load(b, p + 32 / sizeof(P));
+    load(c, p + 64 / sizeof(P));
     detail::mem_unpack3(a, b, c);
-#else
-    load_packed3(a[0], b[0], c[0], q);
-    load_packed3(a[1], b[1], c[1], q + 48);
-#endif
+}
+
+template<class V, class P>
+void v_load_packed3(V& a, V& b, V& c, const P* p)
+{
+    unsigned veclen = sizeof(typename V::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        load_packed3(a[i], b[i], c[i], p);
+        p += veclen*3 / sizeof(P);
+    }
 }
 } // namespace detail
-
-
 
 /// @{
 /** Loads 8-bit values packed in triplets, de-interleaves them and stores the
@@ -106,10 +110,18 @@ inline void load_packed3(gint8x16& a, gint8x16& b, gint8x16& c,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed3(gint8x32& a, gint8x32& b, gint8x32& c,
                          const void* p)
 {
-    detail::v256_load_i_packed3(a, b, c, p);
+    detail::v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed3(gint8<N>& a, gint8<N>& b, gint8<N>& c, const void* p)
+{
+    detail::v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -153,10 +165,18 @@ inline void load_packed3(gint16x8& a, gint16x8& b, gint16x8& c,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed3(gint16x16& a, gint16x16& b, gint16x16& c,
                          const void* p)
 {
-    detail::v256_load_i_packed3(a, b, c, p);
+    detail::v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed3(gint16<N>& a, gint16<N>& b, gint16<N>& c, const void* p)
+{
+    detail::v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -200,10 +220,18 @@ inline void load_packed3(gint32x4& a, gint32x4& b, gint32x4&c,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed3(gint32x8& a, gint32x8& b, gint32x8& c,
                          const void* p)
 {
-    detail::v256_load_i_packed3(a, b, c, p);
+    detail::v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed3(gint32<N>& a, gint32<N>& b, gint32<N>& c, const void* p)
+{
+    detail::v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -259,10 +287,18 @@ inline void load_packed3(gint64x2& a, gint64x2& b, gint64x2& c,
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void load_packed3(gint64x4& a, gint64x4& b, gint64x4& c,
                          const void* p)
 {
-    detail::v256_load_i_packed3(a, b, c, p);
+    detail::v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+}
+#endif
+
+template<unsigned N>
+void load_packed3(gint64<N>& a, gint64<N>& b, gint64<N>& c, const void* p)
+{
+    detail::v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 /// @}
 
@@ -305,19 +341,18 @@ inline void load_packed3(float32x4& a, float32x4& b, float32x4& c,
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void load_packed3(float32x8& a, float32x8& b, float32x8& c,
                          const float* p)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    load(a, p);
-    load(b, p + 8);
-    load(c, p + 16);
-    detail::mem_unpack3(a, b, c);
-#else
-    load_packed3(a[0], b[0], c[0], p);
-    load_packed3(a[1], b[1], c[1], p + 12);
+    detail::v256_load_packed3(a, b, c, p);
+}
 #endif
+
+template<unsigned N>
+void load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const float* p)
+{
+    detail::v_load_packed3(a, b, c, p);
 }
 /// @}
 
@@ -354,18 +389,18 @@ inline void load_packed3(float64x2& a, float64x2& b, float64x2& c, const double*
 #endif
 }
 
-inline void load_packed3(float64x4& a, float64x4& b, float64x4& c, const double* p)
-{
-    p = detail::assume_aligned(p, 32);
 #if SIMDPP_USE_AVX
-    load(a, p);
-    load(b, p + 4);
-    load(c, p + 8);
-    detail::mem_unpack3(a, b, c);
-#else
-    load_packed3(a[0], b[0], c[0], p);
-    load_packed3(a[1], b[1], c[1], p + 6);
+inline void load_packed3(float64x4& a, float64x4& b, float64x4& c,
+                         const double* p)
+{
+    detail::v256_load_packed3(a, b, c, p);
+}
 #endif
+
+template<unsigned N>
+void load_packed3(float64<N>& a, float64<N>& b, float64<N>& c, const double* p)
+{
+    detail::v_load_packed3(a, b, c, p);
 }
 /// @}
 

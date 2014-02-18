@@ -46,19 +46,25 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 // the 256-bit versions are mostly boilerplate. Collect that stuff here.
-template<class V>
-void v256_store_i_pack2(void* p, V a, V b)
+template<class P, class V>
+void v256_store_pack2(P* p, V a, V b)
 {
     p = detail::assume_aligned(p, 32);
-    char* q = reinterpret_cast<char*>(p);
-#if SIMDPP_USE_AVX2
     detail::mem_pack2(a, b);
-    store(q, a);
-    store(q + 32, b);
-#else
-    store_packed2(q, a[0], b[0]);
-    store_packed2(q + 32, a[1], b[1]);
-#endif
+    store(p, a);
+    store(p + 32 / sizeof(P), b);
+}
+
+template<class P, class V>
+void v_store_pack2(P* p, V a, V b)
+{
+    unsigned veclen = sizeof(typename V::base_vector_type);
+
+    p = detail::assume_aligned(p, veclen);
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        store_packed2(p, a[i], b[i]);
+        p += veclen*2 / sizeof(P);
+    }
 }
 } //namespace detail
 
@@ -99,9 +105,17 @@ inline void store_packed2(void* p, gint8x16 a, gint8x16 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed2(void* p, gint8x32 a, gint8x32 b)
 {
-    detail::v256_store_i_pack2(p, a, b);
+    detail::v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+}
+#endif
+
+template<unsigned N>
+void store_packed2(void* p, gint8<N> a, gint8<N> b)
+{
+    detail::v_store_pack2(reinterpret_cast<char*>(p), a, b);
 }
 /// @}
 
@@ -142,9 +156,17 @@ inline void store_packed2(void* p, gint16x8 a, gint16x8 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed2(void* p, gint16x16 a, gint16x16 b)
 {
-    detail::v256_store_i_pack2(p, a, b);
+    detail::v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+}
+#endif
+
+template<unsigned N>
+void store_packed2(void* p, gint16<N> a, gint16<N> b)
+{
+    detail::v_store_pack2(reinterpret_cast<char*>(p), a, b);
 }
 /// @}
 
@@ -185,9 +207,17 @@ inline void store_packed2(void* p, gint32x4 a, gint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed2(void* p, gint32x8 a, gint32x8 b)
 {
-    detail::v256_store_i_pack2(p, a, b);
+    detail::v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+}
+#endif
+
+template<unsigned N>
+void store_packed2(void* p, gint32<N> a, gint32<N> b)
+{
+    detail::v_store_pack2(reinterpret_cast<char*>(p), a, b);
 }
 /// @}
 
@@ -218,9 +248,17 @@ inline void store_packed2(void* p, gint64x2 a, gint64x2 b)
     store(q+16, b);
 }
 
+#if SIMDPP_USE_AVX2
 inline void store_packed2(void* p, gint64x4 a, gint64x4 b)
 {
-    detail::v256_store_i_pack2(p, a, b);
+    detail::v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+}
+#endif
+
+template<unsigned N>
+void store_packed2(void* p, gint64<N> a, gint64<N> b)
+{
+    detail::v_store_pack2(reinterpret_cast<char*>(p), a, b);
 }
 /// @}
 
@@ -259,17 +297,18 @@ inline void store_packed2(float* p, float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline void store_packed2(float* p, float32x8 a, float32x8 b)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    detail::mem_pack2(a, b);
-    store(p, a);
-    store(p + 8, b);
-#else
-    store_packed2(p, a[0], b[0]);
-    store_packed2(p + 8, a[1], b[1]);
+    detail::v256_store_pack2(p, a, b);
+}
 #endif
+
+template<unsigned N>
+void store_packed2(float* p,
+                   float32<N> a, float32<N> b)
+{
+    detail::v_store_pack2(p, a, b);
 }
 /// @}
 
@@ -299,17 +338,18 @@ inline void store_packed2(double* p, float64x2 a, float64x2 b)
     store(p+2, b);
 }
 
+#if SIMDPP_USE_AVX
 inline void store_packed2(double* p, float64x4 a, float64x4 b)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    detail::mem_pack2(a, b);
-    store(p, a);
-    store(p + 4, b);
-#else
-    store_packed2(p, a[0], b[0]);
-    store_packed2(p + 4, a[1], b[1]);
+    detail::v256_store_pack2(p, a, b);
+}
 #endif
+
+template<unsigned N>
+void store_packed2(double* p,
+                   float64<N> a, float64<N> b)
+{
+    detail::v_store_pack2(p, a, b);
 }
 /// @}
 

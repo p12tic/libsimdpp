@@ -76,13 +76,17 @@ inline float32x4 rsqrt_e(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 rsqrt_e(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_rsqrt_ps(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, rsqrt_e, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> rsqrt_e(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, rsqrt_e, a);
 }
 /// @}
 

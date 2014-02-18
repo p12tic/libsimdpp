@@ -295,12 +295,11 @@ template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
     // [a6, b6, c6, 0, a7, b7, c7, 0 ]
 
 #if SIMDPP_USE_SSSE3
-    using w_b8 = typename same_width<T>::b8;
     using w_u8 = typename same_width<T>::u8;
 
     // it's not worth to use 4 different index vectors to shuffle the vectors
     // properly and use only bit_or later
-    w_b8 idx = w_u8::make_const(0,   1,  2,  3,    4,    5,    8,    9,
+    w_b16 idx = w_u8::make_const(0,   1,  2,  3,    4,    5,    8,    9,
                                 10, 11, 12, 13, 0xff, 0xff, 0xff, 0xff);
     u0 = permute_bytes16(u0, idx);
     u1 = permute_bytes16(u1, idx);

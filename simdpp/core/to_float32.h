@@ -86,13 +86,17 @@ inline float32x4 to_float32(int32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 to_float32(int32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_cvtepi32_ps(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, to_float32, a); //FIXME
+}
 #endif
+
+template<unsigned N>
+float32<N> to_float32(int32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, to_float32, a);
 }
 /// @}
 
@@ -150,6 +154,19 @@ inline float32x4 to_float32(float64x4 a)
     return bit_or(r1, r2);
 #endif
 }
+
+#if SIMDPP_USE_AVX
+inline float32x8 to_float32(float64<8> a)
+{
+    float32x4 r1, r2;
+    r1 = to_float32(a[0]);
+    r2 = to_float32(a[1]);
+    return combine(r1, r2);
+}
+#endif
+
+// TODO support arbitrary length vectors
+
 /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

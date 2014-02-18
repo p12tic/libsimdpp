@@ -75,13 +75,17 @@ inline float32x4 rcp_e(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 rcp_e(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_rcp_ps(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, rcp_e, a);
+}
 #endif
+
+template<unsigned N>
+float32<N> rcp_e(float32<N> a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, rcp_e, a);
 }
 /// @}
 

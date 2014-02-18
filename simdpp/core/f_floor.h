@@ -98,13 +98,17 @@ inline float32x4 floor(float32x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 inline float32x8 floor(float32x8 a)
 {
-#if SIMDPP_USE_AVX
     return _mm256_floor_ps(a);
-#else
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, floor, a);
+}
 #endif
+
+template<unsigned N>
+float32x8 floor(float32x8 a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float32x8, floor, a);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

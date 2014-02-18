@@ -94,15 +94,20 @@ float32x4 shuffle2(float32x4 a, float32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 float32x8 shuffle2(float32x8 a, float32x8 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
-#if SIMDPP_USE_AVX
     return _mm256_shuffle_ps(a, b, _MM_SHUFFLE(b1, b0, a1, a0));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, (shuffle2<a0,a1,b0,b1>), a, b);
+}
 #endif
+
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N>
+float32<N> shuffle2(float32<N> a, float32<N> b)
+{
+    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    SIMDPP_VEC_ARRAY_IMPL2(float32x8, (shuffle2<a0,a1,b0,b1>), a, b);
 }
 /// @}
 
@@ -133,15 +138,8 @@ float32x8 shuffle2(float32x8 a, float32x8 b)
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1>
-float32x4 shuffle2(float32x4 a, float32x4 b)
-{
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-    return shuffle2<s0,s1,s0,s1>(a, b);
-}
-
-template<unsigned s0, unsigned s1>
-float32x8 shuffle2(float32x8 a, float32x8 b)
+template<unsigned s0, unsigned s1, unsigned N>
+float32<N> shuffle2(float32<N> a, float32<N> b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);
@@ -192,16 +190,21 @@ gint32x4 shuffle2(gint32x4 a, gint32x4 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 gint32x8 shuffle2(gint32x8 a, gint32x8 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
-#if SIMDPP_USE_AVX2
     // We can't do this in the integer execution domain. Beware of additional latency
     return int32x8(shuffle2<a0,a1,b0,b1>(float32x8(a), float32x8(b)));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint32x8, (shuffle2<a0,a1,b0,b1>), a, b);
+}
 #endif
+
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N>
+gint32<N> shuffle2(gint32<N> a, gint32<N> b)
+{
+    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, (shuffle2<a0,a1,b0,b1>), a, b);
 }
 /// @}
 
@@ -232,15 +235,8 @@ gint32x8 shuffle2(gint32x8 a, gint32x8 b)
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1>
-gint32x4 shuffle2(gint32x4 a, gint32x4 b)
-{
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-    return shuffle2<s0,s1,s0,s1>(a, b);
-}
-
-template<unsigned s0, unsigned s1>
-gint32x8 shuffle2(gint32x8 a, gint32x8 b)
+template<unsigned s0, unsigned s1, unsigned N>
+gint32<N> shuffle2(gint32<N> a, gint32<N> b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     return shuffle2<s0,s1,s0,s1>(a, b);

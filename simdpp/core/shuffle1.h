@@ -87,14 +87,18 @@ float64x2 shuffle1(float64x2 a, float64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 template<unsigned s0, unsigned s1>
 float64x4 shuffle1(float64x4 a, float64x4 b)
 {
-#if SIMDPP_USE_AVX
     return _mm256_shuffle_pd(a, b, s0 | s1<<1 | s0<<2 | s1<<3);
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(float64x4, (shuffle1<s0,s1>), a, b);
+}
 #endif
+
+template<unsigned s0, unsigned s1, unsigned N>
+float64<N> shuffle1(float64<N> a, float64<N> b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, (shuffle1<s0,s1>), a, b);
 }
 /// @}
 
@@ -137,16 +141,21 @@ gint64x2 shuffle1(gint64x2 a, gint64x2 b)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s0, unsigned s1>
 gint64x4 shuffle1(gint64x4 a, gint64x4 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_AVX2
     // We can't do this in the integer execution domain. Beware of additional latency
     return int64x4(shuffle1<s0,s1>(float64x4(a), float64x4(b)));
-#else
-    SIMDPP_VEC_ARRAY_IMPL2(gint64x4, (shuffle1<s0,s1>), a, b);
+}
 #endif
+
+template<unsigned s0, unsigned s1, unsigned N>
+gint64<N> shuffle1(gint64<N> a, gint64<N> b)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return int64<N>(shuffle1<s0,s1>(float64<N>(a), float64<N>(b)));
 }
 /// @}
 

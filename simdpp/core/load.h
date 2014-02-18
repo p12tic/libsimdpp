@@ -43,6 +43,22 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+namespace detail {
+
+// collect some boilerplate here
+template<class P, class V>
+void v_load(V& a, const P* p)
+{
+    unsigned veclen = sizeof(typename V::base_vector_type);
+
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        load(a[i], p);
+        p += veclen / sizeof(P);
+    }
+}
+
+} // namespace detail
+
 /// @{
 /** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector
     from an aligned memory location.
@@ -82,26 +98,9 @@ inline gint8x16 load(gint8x16& a, const void* p)
 #endif
 }
 
-inline gint8x32 load(gint8x32& a, const void* p)
-{
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX2
-    a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
-    return a;
-#else
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a[0], q);
-    load(a[1], q+16);
-    return a;
-#endif
-}
-
-template<unsigned N>
-gint16<N> load(gint16<N>& a, const void* p) { gint8<N*2> r; load(r, p); a = r; return a; }
-template<unsigned N>
-gint32<N> load(gint32<N>& a, const void* p) { gint8<N*4> r; load(r, p); a = r; return a; }
-template<unsigned N>
-gint64<N> load(gint64<N>& a, const void* p) { gint8<N*8> r; load(r, p); a = r; return a; }
+inline gint16x8 load(gint16x8& a, const void* p) { gint8x16 r; load(r, p); a = r; return a; }
+inline gint32x4 load(gint32x4& a, const void* p) { gint8x16 r; load(r, p); a = r; return a; }
+inline gint64x2 load(gint64x2& a, const void* p) { gint8x16 r; load(r, p); a = r; return a; }
 
 inline float32x4 load(float32x4& a, const float* p)
 {
@@ -121,19 +120,6 @@ inline float32x4 load(float32x4& a, const float* p)
 #endif
 }
 
-inline float32x8 load(float32x8& a, const float* p)
-{
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    a = _mm256_load_ps(p);
-    return a;
-#else
-    load(a[0], p),
-    load(a[1], p+4);
-    return a;
-#endif
-}
-
 inline float64x2 load(float64x2& a, const double* p)
 {
     p = detail::assume_aligned(p, 16);
@@ -146,17 +132,63 @@ inline float64x2 load(float64x2& a, const double* p)
 #endif
 }
 
+
+#if SIMDPP_USE_AVX2
+inline gint8x32  load(gint8x32& a,  const void* p)
+{
+    a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p)); return a;
+}
+inline gint16x16 load(gint16x16& a, const void* p)
+{
+    a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p)); return a;
+}
+inline gint32x8  load(gint32x8& a,  const void* p)
+{
+    a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p)); return a;
+}
+inline gint64x4  load(gint64x4& a,  const void* p)
+{
+    a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p)); return a;
+}
+inline float32x8 load(float32x8& a, const float* p)
+{
+    a = _mm256_load_ps(p); return a;
+}
 inline float64x4 load(float64x4& a, const double* p)
 {
-    p = detail::assume_aligned(p, 32);
-#if SIMDPP_USE_AVX
-    a = _mm256_load_pd(p);
-    return a;
-#else
-    load(a[0], p),
-    load(a[1], p+2);
-    return a;
+    a = _mm256_load_pd(p); return a;
+}
 #endif
+
+template<unsigned N>
+gint8<N>  load(gint8<N>& a,  const void* p)
+{
+    detail::v_load(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+gint16<N> load(gint16<N>& a, const void* p)
+{
+    detail::v_load(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+gint32<N> load(gint32<N>& a, const void* p)
+{
+    detail::v_load(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+gint64<N> load(gint64<N>& a, const void* p)
+{
+    detail::v_load(a, reinterpret_cast<const char*>(p)); return a;
+}
+template<unsigned N>
+float32<N> load(float32<N>& a, const float* p)
+{
+    detail::v_load(a, p); return a;
+}
+template<unsigned N>
+float64<N> load(float64<N>& a, const double* p)
+{
+    detail::v_load(a, p); return a;
 }
 /// @}
 

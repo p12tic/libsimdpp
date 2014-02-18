@@ -46,7 +46,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Permutes the 16-bit values within sets of two consecutive elements of the
     vector. The selector values must be in range [0; 1].
 
@@ -70,22 +69,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-4}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1>
-gint16x8 permute(gint16x8 a)
+template<unsigned s0, unsigned s1, unsigned N>
+gint16<N> permute(gint16<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 
-template<unsigned s0, unsigned s1>
-gint16x16 permute(gint16x16 a)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
-}
-/// @}
-
-/// @{
 /** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 3].
 
@@ -110,22 +100,13 @@ gint16x16 permute(gint16x16 a)
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1>
-gint32x4 permute(gint32x4 a)
+template<unsigned s0, unsigned s1, unsigned N>
+gint32<N> permute(gint32<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
 
-template<unsigned s0, unsigned s1>
-gint32x8 permute(gint32x8 a)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
-}
-/// @}
-
-/// @{
 /** Permutes the values of each set of four consecutive 32-bit floating-point
     values. The selector values must be in range [0; 3].
 
@@ -151,20 +132,12 @@ gint32x8 permute(gint32x8 a)
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1>
-float32x4 permute(float32x4 a)
+template<unsigned s0, unsigned s1, unsigned N>
+float32<N> permute(float32<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     return permute<s0,s1,s0+2,s1+2>(a);
 }
-
-template<unsigned s0, unsigned s1>
-float32x8 permute(float32x8 a)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
-}
-/// @}
 
 /// @{
 /** Permutes the values of each set of four consecutive 32-bit values. The
@@ -205,15 +178,20 @@ gint64x2 permute(gint64x2 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned s0, unsigned s1>
 gint64x4 permute(gint64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_AVX2
     return _mm256_permute4x64_epi64(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
-#else
-    return permute<s0,s1,s0+2,s1+2>(a);
+}
 #endif
+
+template<unsigned s0, unsigned s1, unsigned N>
+gint64<N> permute(gint64<N> a)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return permute<s0,s1,s0+2,s1+2>(a);
 }
 /// @}
 
@@ -247,17 +225,25 @@ float64x2 permute(float64x2 a)
     return float64x2(permute<s0,s1>(int64x2(a)));
 #endif
 }
+
+#if SIMDPP_USE_AVX
 template<unsigned s0, unsigned s1>
 float64x4 permute(float64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
     return _mm256_permute4x64_pd(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
-#elif SIMDPP_USE_AVX
+#else // SIMDPP_USE_AVX
     return _mm256_permute_pd(a, s0 | s1<<1 | s0<<2 | s1<<3);
-#else
-    return permute<s0,s1,s0+2,s1+2>(a);
 #endif
+}
+#endif
+
+template<unsigned s0, unsigned s1, unsigned N>
+float64<N> permute(float64<N> a)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return permute<s0,s1,s0+2,s1+2>(a);
 }
 /// @}
 
