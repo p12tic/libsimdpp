@@ -53,7 +53,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint8x16 bit_and(gint8x16 a, int128 b)
+inline gint8x16 bit_and(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::bit_and(uint8x16(a), uint8x16(b));
@@ -66,7 +66,7 @@ inline gint8x16 bit_and(gint8x16 a, int128 b)
 #endif
 }
 
-inline gint8x32 bit_and(gint8x32 a, int256 b)
+inline gint8x32 bit_and(gint8x32 a, gint8x32 b)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_and_si256(a, b);
@@ -76,11 +76,35 @@ inline gint8x32 bit_and(gint8x32 a, int256 b)
 }
 
 template<unsigned N>
-gint16<N> bit_and(gint16<N> a, int_bits<N*2> b) { return bit_and(uint8<N*2>(a), uint8<N*2>(b)); }
+gint8<N> bit_and(gint8<N> a, gint16<N/2> b) { return bit_and(uint8<N>(a), uint8<N>(b)); }
 template<unsigned N>
-gint32<N> bit_and(gint32<N> a, int_bits<N*4> b) { return bit_and(uint8<N*4>(a), uint8<N*4>(b)); }
+gint8<N> bit_and(gint8<N> a, gint32<N/4> b) { return bit_and(uint8<N>(a), uint8<N>(b)); }
 template<unsigned N>
-gint64<N> bit_and(gint64<N> a, int_bits<N*8> b) { return bit_and(uint8<N*8>(a), uint8<N*8>(b)); }
+gint8<N> bit_and(gint8<N> a, gint64<N/8> b) { return bit_and(uint8<N>(a), uint8<N>(b)); }
+template<unsigned N>
+gint16<N> bit_and(gint16<N> a, gint8<N*2> b) { return bit_and(uint8<N*2>(a), uint8<N*2>(b)); }
+template<unsigned N>
+gint16<N> bit_and(gint16<N> a, gint16<N> b) { return bit_and(uint8<N*2>(a), uint8<N*2>(b)); }
+template<unsigned N>
+gint16<N> bit_and(gint16<N> a, gint32<N/2> b) { return bit_and(uint8<N*2>(a), uint8<N*2>(b)); }
+template<unsigned N>
+gint16<N> bit_and(gint16<N> a, gint64<N/4> b) { return bit_and(uint8<N*2>(a), uint8<N*2>(b)); }
+template<unsigned N>
+gint32<N> bit_and(gint32<N> a, gint8<N*4> b) { return bit_and(uint8<N*4>(a), uint8<N*4>(b)); }
+template<unsigned N>
+gint32<N> bit_and(gint32<N> a, gint16<N/2> b) { return bit_and(uint8<N*4>(a), uint8<N*4>(b)); }
+template<unsigned N>
+gint32<N> bit_and(gint32<N> a, gint32<N> b) { return bit_and(uint8<N*4>(a), uint8<N*4>(b)); }
+template<unsigned N>
+gint32<N> bit_and(gint32<N> a, gint64<N*2> b) { return bit_and(uint8<N*4>(a), uint8<N*4>(b)); }
+template<unsigned N>
+gint64<N> bit_and(gint64<N> a, gint8<N*8> b) { return bit_and(uint8<N*8>(a), uint8<N*8>(b)); }
+template<unsigned N>
+gint64<N> bit_and(gint64<N> a, gint16<N/4> b) { return bit_and(uint8<N*8>(a), uint8<N*8>(b)); }
+template<unsigned N>
+gint64<N> bit_and(gint64<N> a, gint32<N/2> b) { return bit_and(uint8<N*8>(a), uint8<N*8>(b)); }
+template<unsigned N>
+gint64<N> bit_and(gint64<N> a, gint64<N> b) { return bit_and(uint8<N*8>(a), uint8<N*8>(b)); }
 
 // -----------------------------------------------------------------------------
 
@@ -268,14 +292,10 @@ inline float32x8 bit_and(float32x8 a, float32x8 b)
 #endif
 }
 
-inline float32x4 bit_and(float32x4 a, int128 b)
+template<unsigned N>
+float32<N> bit_and(float32<N> a, gint32<N> b)
 {
-    return bit_and(a, bit_cast<float32x4>(b));
-}
-
-inline float32x8 bit_and(float32x8 a, int256 b)
-{
-    return bit_and(a, bit_cast<float32x8>(b));
+    return bit_and(a, float32<N>(b));
 }
 
 inline float32x4 bit_and(float32x4 a, mask_float32x4 b)
@@ -334,14 +354,10 @@ inline float64x4 bit_and(float64x4 a, float64x4 b)
 #endif
 }
 
-inline float64x2 bit_and(float64x2 a, int128 b)
+template<unsigned N>
+float64<N> bit_and(float64<N> a, gint64<N> b)
 {
-    return bit_and(a, bit_cast<float64x2>(b));
-}
-
-inline float64x4 bit_and(float64x4 a, int256 b)
-{
-    return bit_and(a, bit_cast<float64x4>(b));
+    return bit_and(a, float64<N>(b));
 }
 
 inline float64x2 bit_and(float64x2 a, mask_float64x2 b)
