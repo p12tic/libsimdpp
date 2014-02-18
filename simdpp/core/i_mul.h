@@ -179,7 +179,7 @@ inline uint16x16 mul_hi(uint16x16 a, uint16x16 b)
     @icost{SSE4.1, AVX, NEON, 2}
     @icost{ALTIVEC, 16}
 */
-inline int128 mul_lo(gint32x4 a, gint32x4 b)
+inline gint32x4 mul_lo(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::mul(a, b);

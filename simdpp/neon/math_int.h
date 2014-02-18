@@ -50,7 +50,7 @@ namespace neon {
     r15 = low(a15 * b15)
     @endcode
 */
-inline int128 mul_lo(gint8x16 a, gint8x16 b)
+inline gint8x16 mul_lo(gint8x16 a, gint8x16 b)
 {
     return vmulq_u8(a, b);
 }
@@ -64,7 +64,7 @@ inline int128 mul_lo(gint8x16 a, gint8x16 b)
     r7 = a7 * b7
     @endcode
 */
-inline int128 mull_lo(int8x16 a, int8x16 b)
+inline int16x8 mull_lo(int8x16 a, int8x16 b)
 {
     return vmullq_s8(vget_low_s8(a), vget_low_s8(b));
 }
@@ -78,7 +78,7 @@ inline int128 mull_lo(int8x16 a, int8x16 b)
     r7 = a7 * b7
     @endcode
 */
-inline int128 mull_lo(uint8x16 a, uint8x16 b)
+inline uint16x8 mull_lo(uint8x16 a, uint8x16 b)
 {
     return vmullq_u8(vget_low_u8(a), vget_low_u8(b));
 }
@@ -92,7 +92,7 @@ inline int128 mull_lo(uint8x16 a, uint8x16 b)
     r7 = a15 * b15
     @endcode
 */
-inline int128 mull_hi(int8x16 a, int8x16 b)
+inline int16x8 mull_hi(int8x16 a, int8x16 b)
 {
     return vmullq_s8(vget_high_s8(a), vget_high_s8(b));
 }
@@ -107,7 +107,7 @@ inline int128 mull_hi(int8x16 a, int8x16 b)
     r7 = a15 * b15
     @endcode
 */
-inline int128 mull_hi(uint8x16 a, uint8x16 b)
+inline uint16x8 mull_hi(uint8x16 a, uint8x16 b)
 {
     return vmullq_u8(vget_high_u8(a), vget_high_u8(b));
 }

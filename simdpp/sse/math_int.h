@@ -52,7 +52,7 @@ namespace sse {
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 copysign(int8x16 a, int8x16 b)
+inline int8x16 copysign(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_sign_epi8(a,b);
@@ -70,7 +70,7 @@ inline int128 copysign(int8x16 a, int8x16 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 copysign(int16x8 a, int16x8 b)
+inline int16x8 copysign(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_sign_epi16(a,b);
@@ -89,7 +89,7 @@ inline int128 copysign(int16x8 a, int16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 copysign(int32x4 a, int32x4 b)
+inline int32x4 copysign(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_sign_epi32(a, b);
@@ -110,7 +110,7 @@ inline int128 copysign(int32x4 a, int32x4 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hadd2(gint16x8 a, gint16x8 b)
+inline gint16x8 hadd2(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi16(a, b);
@@ -129,7 +129,7 @@ inline int128 hadd2(gint16x8 a, gint16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hadd2(gint32x4 a, gint32x4 b)
+inline gint32x4 hadd2(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi32(a, b);
@@ -146,7 +146,7 @@ inline int128 hadd2(gint32x4 a, gint32x4 b)
     @endcode
     @icost{3}
 */
-inline int128 hadd2(gint64x2 a, gint64x2 b)
+inline gint64x2 hadd2(gint64x2 a, gint64x2 b)
 {
     gint64x2 ia, ib;
     ia = zip_lo(a, b);
@@ -167,7 +167,7 @@ inline int128 hadd2(gint64x2 a, gint64x2 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hadds2(int16x8 a, int16x8 b)
+inline int16x8 hadds2(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadds_epi16(a, b);
@@ -187,7 +187,7 @@ inline int128 hadds2(int16x8 a, int16x8 b)
     @unimp{SSE2, SSE3}
     @icost{3}
 */
-inline int128 hadd4(gint32x4 a, gint32x4 b, gint32x4 c, gint32x4 d)
+inline gint32x4 hadd4(gint32x4 a, gint32x4 b, gint32x4 c, gint32x4 d)
 {
 #if SIMDPP_USE_SSSE3
     a = hadd2(a, b);
@@ -211,7 +211,7 @@ inline int128 hadd4(gint32x4 a, gint32x4 b, gint32x4 c, gint32x4 d)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hsub2(gint16x8 a, gint16x8 b)
+inline gint16x8 hsub2(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi16(a, b);
@@ -230,7 +230,7 @@ inline int128 hsub2(gint16x8 a, gint16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hsub2(gint32x4 a, gint32x4 b)
+inline gint32x4 hsub2(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi32(a, b);
@@ -247,7 +247,7 @@ inline int128 hsub2(gint32x4 a, gint32x4 b)
     @endcode
     @icost{3}
 */
-inline int128 hsub2(gint64x2 a, gint64x2 b)
+inline gint64x2 hsub2(gint64x2 a, gint64x2 b)
 {
 #if SIMDPP_USE_SSSE3
     gint64x2 ia, ib;
@@ -272,7 +272,7 @@ inline int128 hsub2(gint64x2 a, gint64x2 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline int128 hsubs2(int16x8 a, int16x8 b)
+inline int16x8 hsubs2(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsubs_epi16(a, b);
