@@ -76,10 +76,10 @@ gint8x16 align(gint8x16 lower, gint8x16 upper)
     gint8x16 r;
     //use int to disable warnings wrt. comparison result always being true/false
     for (int i = 0; i < (int)(16-shift); i++) {
-        r[i] = lower[i + shift];
+        r.el(i) = lower.el(i + shift);
     }
     for (unsigned i = 16-shift; i < 16; i++) {
-        r[i] = upper[i - 16 + shift];
+        r.el(i) = upper.el(i - 16 + shift);
     }
     return r;
 #elif SIMDPP_USE_SSSE3

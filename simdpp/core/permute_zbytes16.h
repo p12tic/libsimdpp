@@ -73,9 +73,9 @@ inline gint8x16 permute_zbytes16(gint8x16 a, gint8x16 mask)
     uint8x16 r;
 
     for (unsigned i = 0; i < 16; i++) {
-        unsigned j = mi[i] & 0x0f;
-        bool zero = mi[i] & 0x80;
-        r[i] = zero ? 0 : ai[j];
+        unsigned j = mi.el(i) & 0x0f;
+        bool zero = mi.el(i) & 0x80;
+        r.el(i) = zero ? 0 : ai.el(j);
     }
     return r;
 #elif SIMDPP_USE_SSSE3 || SIMDPP_USE_NEON

@@ -109,8 +109,8 @@ public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
     /// For internal use only
-    const uint8_t& operator[](unsigned i) const  { return u8(i); }
-          uint8_t& operator[](unsigned i)        { return u8(i); }
+    const uint8_t& el(unsigned i) const  { return u8(i); }
+          uint8_t& el(unsigned i)        { return u8(i); }
 #endif
 #endif
 
@@ -183,8 +183,8 @@ public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
     /// For internal use only
-    const int8_t& operator[](unsigned i) const  { return i8(i); }
-          int8_t& operator[](unsigned i)        { return i8(i); }
+    const int8_t& el(unsigned i) const  { return i8(i); }
+          int8_t& el(unsigned i)        { return i8(i); }
 #endif
 #endif
 
@@ -299,8 +299,8 @@ public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
     /// For internal use only
-    const uint8_t& operator[](unsigned i) const  { return u8(i); }
-          uint8_t& operator[](unsigned i)        { return u8(i); }
+    const uint8_t& el(unsigned i) const  { return u8(i); }
+          uint8_t& el(unsigned i)        { return u8(i); }
 #endif
 #endif
 
@@ -408,8 +408,8 @@ public:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
-    bool& operator[](unsigned id) { return b_[id]; }
-    const bool& operator[](unsigned id) const { return b_[id]; }
+    bool& el(unsigned id) { return b_[id]; }
+    const bool& el(unsigned id) const { return b_[id]; }
 #endif
 #endif
 

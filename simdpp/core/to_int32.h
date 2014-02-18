@@ -59,7 +59,7 @@ inline gint32x4 to_int32x4(int16x8 a)
 #if SIMDPP_USE_NULL
     int32x4 r;
     for (unsigned i = 0; i < 4; i++) {
-        r[i] = int32_t(a[i]);
+        r.el(i) = int32_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
@@ -93,7 +93,7 @@ inline gint32x8 to_int32x8(int16x16 a)
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i/4][i%4] = int32_t(a[0][i]);
+        r[i/4].el(i%4) = int32_t(a[0].el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX2
@@ -136,7 +136,7 @@ inline gint32x4 to_int32x4(uint16x8 a)
 #if SIMDPP_USE_NULL
     int32x4 r;
     for (unsigned i = 0; i < 4; i++) {
-        r[i] = int32_t(a[i]);
+        r.el(i) = int32_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
@@ -166,7 +166,7 @@ inline gint32x8 to_int32x8(uint16x16 a)
 #if SIMDPP_USE_NULL
     uint32x8 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i/4][i%4] = uint32_t(a[0][i]);
+        r[i/4].el(i%4) = uint32_t(a[0].el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX2
@@ -277,22 +277,15 @@ inline gint32x8 to_int32x8(float32x8 a)
 */
 inline gint32x4 to_int32x4(float64x2 a)
 {
-#if SIMDPP_USE_NULL
-    int32x4 r;
-    r[0] = int32_t(a[0]);
-    r[1] = int32_t(a[1]);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<int32x4> r;
+    r[0] = int32_t(a.el(0));
+    r[1] = int32_t(a.el(1));
     r[2] = 0;
     r[3] = 0;
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvttpd_epi32(a);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int32x4> r;
-    r[0] = int32_t(a[0]);
-    r[1] = int32_t(a[1]);
-    r[2] = 0;
-    r[3] = 0;
-    return r;
 #else
     SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();
 #endif
@@ -300,12 +293,13 @@ inline gint32x4 to_int32x4(float64x2 a)
 
 inline gint32x8 to_int32x8(float64x4 a)
 {
-#if SIMDPP_USE_NULL
-    int32x8 r = int32x8::zero();
-    r[0][0] = int32_t(a[0][0]);
-    r[0][1] = int32_t(a[0][1]);
-    r[0][2] = int32_t(a[1][0]);
-    r[0][3] = int32_t(a[1][1]);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<int32x8> r;
+    r[0] = int32_t(a[0].el(0));
+    r[1] = int32_t(a[0].el(1));
+    r[2] = int32_t(a[1].el(0));
+    r[3] = int32_t(a[1].el(1));
+    r[4] = 0;  r[5] = 0;  r[6] = 0;  r[7] = 0;
     return r;
 #elif SIMDPP_USE_AVX
     return _mm256_castsi128_si256(_mm256_cvttpd_epi32(a));
@@ -313,14 +307,6 @@ inline gint32x8 to_int32x8(float64x4 a)
     int32x4 b0 = to_int32x4(a[0]);
     int32x4 b1 = to_int32x4(a[1]);
     return {zip_lo(b0, b1), int32x4::zero()};
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int32x8> r;
-    r[0] = int32_t(a[0][0]);
-    r[1] = int32_t(a[0][1]);
-    r[2] = int32_t(a[1][0]);
-    r[3] = int32_t(a[1][1]);
-    r[4] = 0;  r[5] = 0;  r[6] = 0;  r[7] = 0;
-    return r;
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif

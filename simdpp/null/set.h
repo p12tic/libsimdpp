@@ -45,7 +45,7 @@ template<class V>
 V set_broadcast(V& a, typename V::element_type x)
 {
     for (unsigned i = 0; i < V::length; i++) {
-        a[i] = x;
+        a.el(i) = x;
     }
     return a;
 }
@@ -55,7 +55,7 @@ V make_vec(E v0)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = v0;
+        r.el(i) = v0;
     }
     return r;
 }
@@ -65,8 +65,8 @@ V make_vec(E v0, E v1)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=2) {
-        r[i] = v0;
-        r[i+1] = v1;
+        r.el(i) = v0;
+        r.el(i+1) = v1;
     }
     return r;
 }
@@ -76,10 +76,10 @@ V make_vec(E v0, E v1, E v2, E v3)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=4) {
-        r[i] = v0;
-        r[i+1] = v1;
-        r[i+2] = v2;
-        r[i+3] = v3;
+        r.el(i) = v0;
+        r.el(i+1) = v1;
+        r.el(i+2) = v2;
+        r.el(i+3) = v3;
     }
     return r;
 }
@@ -89,14 +89,14 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=8) {
-        r[i] = v0;
-        r[i+1] = v1;
-        r[i+2] = v2;
-        r[i+3] = v3;
-        r[i+4] = v4;
-        r[i+5] = v5;
-        r[i+6] = v6;
-        r[i+7] = v7;
+        r.el(i) = v0;
+        r.el(i+1) = v1;
+        r.el(i+2) = v2;
+        r.el(i+3) = v3;
+        r.el(i+4) = v4;
+        r.el(i+5) = v5;
+        r.el(i+6) = v6;
+        r.el(i+7) = v7;
     }
     return r;
 }
@@ -107,22 +107,22 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7,
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=16) {
-        r[i] = v0;
-        r[i+1] = v1;
-        r[i+2] = v2;
-        r[i+3] = v3;
-        r[i+4] = v4;
-        r[i+5] = v5;
-        r[i+6] = v6;
-        r[i+7] = v7;
-        r[i+8] = v8;
-        r[i+9] = v9;
-        r[i+10] = v10;
-        r[i+11] = v11;
-        r[i+12] = v12;
-        r[i+13] = v13;
-        r[i+14] = v14;
-        r[i+15] = v15;
+        r.el(i) = v0;
+        r.el(i+1) = v1;
+        r.el(i+2) = v2;
+        r.el(i+3) = v3;
+        r.el(i+4) = v4;
+        r.el(i+5) = v5;
+        r.el(i+6) = v6;
+        r.el(i+7) = v7;
+        r.el(i+8) = v8;
+        r.el(i+9) = v9;
+        r.el(i+10) = v10;
+        r.el(i+11) = v11;
+        r.el(i+12) = v12;
+        r.el(i+13) = v13;
+        r.el(i+14) = v14;
+        r.el(i+15) = v15;
     }
     return r;
 }

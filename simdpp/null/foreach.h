@@ -46,7 +46,7 @@ R foreach(V v, C c)
 {
     detail::mem_block<R> r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = c(v[i]);
+        r[i] = c(v.el(i));
     }
     return static_cast<R>(r);
 }
@@ -56,7 +56,7 @@ R foreach(V1 v1, V2 v2, C c)
 {
     detail::mem_block<R> r;
     for (unsigned i = 0; i < V1::length; i++) {
-        r[i] = c(v1[i], v2[i]);
+        r[i] = c(v1.el(i), v2.el(i));
     }
     return static_cast<R>(r);
 }

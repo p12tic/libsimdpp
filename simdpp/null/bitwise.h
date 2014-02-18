@@ -53,9 +53,9 @@ V bit_and(V a, V b)
     using E = typename V::element_type;
     using U = typename V::uint_element_type;
     for (unsigned i = 0; i < V::length; i++) {
-        U a1 = bit_cast<U, E>(a[i]);
-        U b1 = bit_cast<U, E>(b[i]);
-        r[i] = bit_cast<E, U>(a1 & b1);
+        U a1 = bit_cast<U, E>(a.el(i));
+        U b1 = bit_cast<U, E>(b.el(i));
+        r.el(i) = bit_cast<E, U>(a1 & b1);
     }
     return r;
 }
@@ -65,7 +65,7 @@ V bit_and_vm(V a, M m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = m[i] ? a[i] : 0;
+        r.el(i) = m.el(i) ? a.el(i) : 0;
     }
     return r;
 }
@@ -75,7 +75,7 @@ M bit_and_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r[i] = a[i] && b[i];
+        r.el(i) = a.el(i) && b.el(i);
     }
     return r;
 }
@@ -88,9 +88,9 @@ V bit_andnot(V a, V b)
     using E = typename V::element_type;
     using U = typename V::uint_element_type;
     for (unsigned i = 0; i < V::length; i++) {
-        U a1 = bit_cast<U, E>(a[i]);
-        U b1 = bit_cast<U, E>(b[i]);
-        r[i] = bit_cast<E, U>(a1 & ~b1);
+        U a1 = bit_cast<U, E>(a.el(i));
+        U b1 = bit_cast<U, E>(b.el(i));
+        r.el(i) = bit_cast<E, U>(a1 & ~b1);
     }
     return r;
 }
@@ -100,7 +100,7 @@ V bit_andnot_vm(V a, M m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = !m[i] ? a[i] : 0;
+        r.el(i) = !m.el(i) ? a.el(i) : 0;
     }
     return r;
 }
@@ -110,7 +110,7 @@ M bit_andnot_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r[i] = a[i] && !b[i];
+        r.el(i) = a.el(i) && !b.el(i);
     }
     return r;
 }
@@ -123,9 +123,9 @@ V bit_or(V a, V b)
     using E = typename V::element_type;
     using U = typename V::uint_element_type;
     for (unsigned i = 0; i < V::length; i++) {
-        U a1 = bit_cast<U, E>(a[i]);
-        U b1 = bit_cast<U, E>(b[i]);
-        r[i] = bit_cast<E, U>(a1 | b1);
+        U a1 = bit_cast<U, E>(a.el(i));
+        U b1 = bit_cast<U, E>(b.el(i));
+        r.el(i) = bit_cast<E, U>(a1 | b1);
     }
     return r;
 }
@@ -135,7 +135,7 @@ M bit_or_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r[i] = a[i] || b[i];
+        r.el(i) = a.el(i) || b.el(i);
     }
     return r;
 }
@@ -147,9 +147,9 @@ V bit_xor(V a, V b)
     using E = typename V::element_type;
     using U = typename V::uint_element_type;
     for (unsigned i = 0; i < V::length; i++) {
-        U a1 = bit_cast<U, E>(a[i]);
-        U b1 = bit_cast<U, E>(b[i]);
-        r[i] = bit_cast<E, U>(a1 ^ b1);
+        U a1 = bit_cast<U, E>(a.el(i));
+        U b1 = bit_cast<U, E>(b.el(i));
+        r.el(i) = bit_cast<E, U>(a1 ^ b1);
     }
     return r;
 }
@@ -159,7 +159,7 @@ M bit_xor_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r[i] = (a[i] && !b[i]) || (!a[i] && b[i]);
+        r.el(i) = (a.el(i) && !b.el(i)) || (!a.el(i) && b.el(i));
     }
     return r;
 }
@@ -169,7 +169,7 @@ M bit_not_mm(M a)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r[i] = !a[i];
+        r.el(i) = !a.el(i);
     }
     return r;
 }

@@ -84,10 +84,10 @@ inline gint8x16 shuffle_zbytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
     uint8x16 r;
 
     for (unsigned i = 0; i < 16; i++) {
-        unsigned j = mi[i] & 0x0f;
-        unsigned which = mi[i] < 0x10;
-        bool zero = mi[i] & 0x80;
-        r[i] = zero ? 0 : (which ? ai[j] : bi[j]);
+        unsigned j = mi.el(i) & 0x0f;
+        unsigned which = mi.el(i) < 0x10;
+        bool zero = mi.el(i) & 0x80;
+        r.el(i) = zero ? 0 : (which ? ai.el(j) : bi.el(j));
     }
     return r;
 #elif SIMDPP_USE_XOP

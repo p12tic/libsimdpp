@@ -46,7 +46,7 @@ template<class V>
 void transpose2(V& a0, V& a1)
 {
     for (unsigned j = 0; j < V::length; j+=2) {
-        std::swap(a0[j+1], a1[j]);
+        std::swap(a0.el(j+1), a1.el(j));
     }
 }
 
@@ -54,12 +54,12 @@ template<class V>
 void transpose4(V& a0, V& a1, V& a2, V& a3)
 {
     for (unsigned j = 0; j < V::length; j+=4) {
-        std::swap(a0[j+1], a1[j]);
-        std::swap(a0[j+2], a2[j]);
-        std::swap(a0[j+3], a3[j]);
-        std::swap(a1[j+2], a2[j+1]);
-        std::swap(a1[j+3], a3[j+1]);
-        std::swap(a2[j+3], a3[j+2]);
+        std::swap(a0.el(j+1), a1.el(j));
+        std::swap(a0.el(j+2), a2.el(j));
+        std::swap(a0.el(j+3), a3.el(j));
+        std::swap(a1.el(j+2), a2.el(j+1));
+        std::swap(a1.el(j+3), a3.el(j+1));
+        std::swap(a2.el(j+3), a3.el(j+2));
     }
 }
 
@@ -71,10 +71,10 @@ void transpose8(V& a0, V& a1, V& a2, V& a3, V& a4, V& a5, V& a6, V& a7)
 
     for (unsigned j = 0; j < V::length; j+=8) {
         for (unsigned i = 0; i < 4; i++) {
-            std::swap(a0[j+4+i], a4[j+i]);
-            std::swap(a1[j+4+i], a5[j+i]);
-            std::swap(a2[j+4+i], a6[j+i]);
-            std::swap(a3[j+4+i], a7[j+i]);
+            std::swap(a0.el(j+4+i), a4.el(j+i));
+            std::swap(a1.el(j+4+i), a5.el(j+i));
+            std::swap(a2.el(j+4+i), a6.el(j+i));
+            std::swap(a3.el(j+4+i), a7.el(j+i));
         }
     }
 }
@@ -88,14 +88,14 @@ void transpose16(V& a0, V& a1, V& a2,  V& a3,  V& a4,  V& a5,  V& a6,  V& a7,
 
     for (unsigned j = 0; j < V::length; j+=16) {
         for (unsigned i = 0; i < 8; i++) {
-            std::swap(a0[j+8+i], a8[j+i]);
-            std::swap(a1[j+8+i], a9[j+i]);
-            std::swap(a2[j+8+i], a10[j+i]);
-            std::swap(a3[j+8+i], a11[j+i]);
-            std::swap(a4[j+8+i], a12[j+i]);
-            std::swap(a5[j+8+i], a13[j+i]);
-            std::swap(a6[j+8+i], a14[j+i]);
-            std::swap(a7[j+8+i], a15[j+i]);
+            std::swap(a0.el(j+8+i), a8.el(j+i));
+            std::swap(a1.el(j+8+i), a9.el(j+i));
+            std::swap(a2.el(j+8+i), a10.el(j+i));
+            std::swap(a3.el(j+8+i), a11.el(j+i));
+            std::swap(a4.el(j+8+i), a12.el(j+i));
+            std::swap(a5.el(j+8+i), a13.el(j+i));
+            std::swap(a6.el(j+8+i), a14.el(j+i));
+            std::swap(a7.el(j+8+i), a15.el(j+i));
         }
     }
 }

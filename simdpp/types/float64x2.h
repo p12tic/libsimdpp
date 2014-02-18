@@ -84,8 +84,8 @@ public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     /// For internal use only
-    const double& operator[](unsigned i) const { return d_[i]; }
-          double& operator[](unsigned i)       { return d_[i]; }
+    const double& el(unsigned i) const { return d_[i]; }
+          double& el(unsigned i)       { return d_[i]; }
 #endif
 #endif
 
@@ -170,8 +170,8 @@ public:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    bool& operator[](unsigned id) { return b_[id]; }
-    const bool& operator[](unsigned id) const { return b_[id]; }
+    bool& el(unsigned id) { return b_[id]; }
+    const bool& el(unsigned id) const { return b_[id]; }
 #endif
 #endif
 

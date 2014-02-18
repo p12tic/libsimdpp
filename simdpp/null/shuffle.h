@@ -49,8 +49,8 @@ V zip_lo(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length/2; i++) {
-        r[i*2] = a[i];
-        r[i*2+1] = b[i];
+        r.el(i*2) = a.el(i);
+        r.el(i*2+1) = b.el(i);
     }
     return r;
 }
@@ -61,8 +61,8 @@ V zip_hi(V a, V b)
     V r;
     constexpr unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
-        r[i*2] = a[half+i];
-        r[i*2+1] = b[half+i];
+        r.el(i*2) = a.el(half+i);
+        r.el(i*2+1) = b.el(half+i);
     }
     return r;
 }
@@ -72,7 +72,7 @@ V broadcast_w(V v)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = v[pos];
+        r.el(i) = v.el(pos);
     }
     return r;
 }
@@ -82,10 +82,10 @@ V align(V lo, V hi)
 {
     V r;
     for (unsigned i = 0; i < 16-shift; i++) {
-        r[i] = lo[i + shift];
+        r.el(i) = lo.el(i + shift);
     }
     for (unsigned i = 16-shift; i < 16; i++) {
-        r[i] = hi[i - 16 + shift];
+        r.el(i) = hi.el(i - 16 + shift);
     }
     return r;
 }
@@ -96,8 +96,8 @@ V unzip_lo(V a, V b)
     V r;
     unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
-        r[i] = a[i*2];
-        r[i + half] = b[i*2];
+        r.el(i) = a.el(i*2);
+        r.el(i + half) = b.el(i*2);
     }
     return r;
 }
@@ -108,8 +108,8 @@ V unzip_hi(V a, V b)
     V r;
     unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
-        r[i] = a[i*2+1];
-        r[i + half] = b[i*2+1];
+        r.el(i) = a.el(i*2+1);
+        r.el(i + half) = b.el(i*2+1);
     }
     return r;
 }
@@ -132,7 +132,7 @@ template<unsigned L> struct blend_mask_impl {
     {
         V r;
         for (unsigned i = 0; i < L; i++) {
-            r[i] = mask[i] ? on[i] : off[i];
+            r.el(i) = mask.el(i) ? on.el(i) : off.el(i);
         }
         return r;
     }
@@ -143,7 +143,7 @@ template<> struct blend_mask_impl<1> {
     static V run(V on, V off, M mask)
     {
         V r;
-        r[0] = mask[0] ? on[0] : off[0];
+        r.el(0) = mask.el(0) ? on.el(0) : off.el(0);
         return r;
     }
 };
@@ -152,8 +152,8 @@ template<> struct blend_mask_impl<2> {
     static V run(V on, V off, M mask)
     {
         V r;
-        r[0] = mask[0] ? on[0] : off[0];
-        r[1] = mask[1] ? on[1] : off[1];
+        r.el(0) = mask.el(0) ? on.el(0) : off.el(0);
+        r.el(1) = mask.el(1) ? on.el(1) : off.el(1);
         return r;
     }
 };
@@ -162,10 +162,10 @@ template<> struct blend_mask_impl<4> {
     static V run(V on, V off, M mask)
     {
         V r;
-        r[0] = mask[0] ? on[0] : off[0];
-        r[1] = mask[1] ? on[1] : off[1];
-        r[2] = mask[2] ? on[2] : off[2];
-        r[3] = mask[3] ? on[3] : off[3];
+        r.el(0) = mask.el(0) ? on.el(0) : off.el(0);
+        r.el(1) = mask.el(1) ? on.el(1) : off.el(1);
+        r.el(2) = mask.el(2) ? on.el(2) : off.el(2);
+        r.el(3) = mask.el(3) ? on.el(3) : off.el(3);
         return r;
     }
 };
@@ -183,8 +183,8 @@ V permute(V a)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=2) {
-        r[i] =   a[i + s0];
-        r[i+1] = a[i + s1];
+        r.el(i) =   a.el(i + s0);
+        r.el(i+1) = a.el(i + s1);
     }
     return r;
 }
@@ -194,10 +194,10 @@ V permute(V a)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=4) {
-        r[i] =   a[i + s0];
-        r[i+1] = a[i + s1];
-        r[i+2] = a[i + s2];
-        r[i+3] = a[i + s3];
+        r.el(i) =   a.el(i + s0);
+        r.el(i+1) = a.el(i + s1);
+        r.el(i+2) = a.el(i + s2);
+        r.el(i+3) = a.el(i + s3);
     }
     return r;
 }
@@ -207,8 +207,8 @@ V shuffle1(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=2) {
-        r[i] =   a[i + s0];
-        r[i+1] = b[i + s1];
+        r.el(i) =   a.el(i + s0);
+        r.el(i+1) = b.el(i + s1);
     }
     return r;
 }
@@ -218,10 +218,10 @@ V shuffle2(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=4) {
-        r[i] =   a[i + s0];
-        r[i+1] = a[i + s1];
-        r[i+2] = b[i + s2];
-        r[i+3] = b[i + s3];
+        r.el(i) =   a.el(i + s0);
+        r.el(i+1) = a.el(i + s1);
+        r.el(i+2) = b.el(i + s2);
+        r.el(i+3) = b.el(i + s3);
     }
     return r;
 }

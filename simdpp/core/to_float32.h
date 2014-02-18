@@ -133,22 +133,15 @@ inline float32x8 to_float32x8(int32x8 a)
 */
 inline float32x4 to_float32x4(float64x2 a)
 {
-#if SIMDPP_USE_NULL
-    float32x4 r;
-    r[0] = float(a[0]);
-    r[1] = float(a[1]);
-    r[2] = 0.0;
-    r[3] = 0.0;
-    return r;
-#elif SIMDPP_USE_SSE2
-    return _mm_cvtpd_ps(a);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
-    r[0] = float(a[0]);
-    r[1] = float(a[1]);
+    r[0] = float(a.el(0));
+    r[1] = float(a.el(1));
     r[2] = 0;
     r[3] = 0;
     return r;
+#elif SIMDPP_USE_SSE2
+    return _mm_cvtpd_ps(a);
 #endif
 }
 
@@ -156,10 +149,10 @@ inline float32x8 to_float32x8(float64x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
-    r[0] = float(a[0][0]);
-    r[1] = float(a[0][1]);
-    r[2] = float(a[1][0]);
-    r[3] = float(a[1][1]);
+    r[0] = float(a[0].el(0));
+    r[1] = float(a[0].el(1));
+    r[2] = float(a[1].el(0));
+    r[3] = float(a[1].el(1));
     return float32x8(r, float32x4::zero());
 #elif SIMDPP_USE_AVX
     return _mm256_castps128_ps256(_mm256_cvtpd_ps(a));

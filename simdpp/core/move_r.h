@@ -72,10 +72,10 @@ gint8x16 move_r(gint8x16 a)
     gint8x16 r;
     //use int to disable warnings wrt. comparison result always being true/false
     for (int i = 0; i < (int)shift; i++) {
-        r[i] = 0;
+        r.el(i) = 0;
     }
     for (unsigned i = shift; i < 16; i++) {
-        r[i] = a[i - shift];
+        r.el(i) = a.el(i - shift);
     }
     return r;
 #elif SIMDPP_USE_SSE2

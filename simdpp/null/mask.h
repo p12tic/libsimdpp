@@ -48,7 +48,7 @@ V convert_mask(const M& m)
 {
     detail::mem_block<V> r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = m[i] ? bit_cast<typename V::element_type>(V::all_bits) : 0;
+        r[i] = m.el(i) ? bit_cast<typename V::element_type>(V::all_bits) : 0;
     }
     return r;
 }

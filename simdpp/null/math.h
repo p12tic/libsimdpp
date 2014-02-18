@@ -52,7 +52,7 @@ typename V::mask_type isnan(V a)
 {
     typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = std::isnan(a[i]) ? 1 : 0;
+        r.el(i) = std::isnan(a.el(i)) ? 1 : 0;
     }
     return r;
 }
@@ -62,7 +62,7 @@ typename V::mask_type isnan2(V a, V b)
 {
     typename V::mask_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (std::isnan(a[i]) || std::isnan(b[i])) ? 1 : 0;
+        r.el(i) = (std::isnan(a.el(i)) || std::isnan(b.el(i))) ? 1 : 0;
     }
     return r;
 }
@@ -92,7 +92,7 @@ V add(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = a[i] + b[i];
+        r.el(i) = a.el(i) + b.el(i);
     }
     return r;
 }
@@ -102,7 +102,7 @@ V adds(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = saturate<typename V::element_type>(int32_t(a[i]) + b[i]);
+        r.el(i) = saturate<typename V::element_type>(int32_t(a.el(i)) + b.el(i));
     }
     return r;
 }
@@ -112,7 +112,7 @@ V sub(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = a[i] - b[i];
+        r.el(i) = a.el(i) - b.el(i);
     }
     return r;
 }
@@ -122,7 +122,7 @@ V subs(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = saturate<typename V::element_type>(int32_t(a[i]) - b[i]);
+        r.el(i) = saturate<typename V::element_type>(int32_t(a.el(i)) - b.el(i));
     }
     return r;
 }
@@ -132,7 +132,7 @@ V neg(V a)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = -a[i];
+        r.el(i) = -a.el(i);
     }
     return r;
 }
@@ -142,7 +142,7 @@ V mul(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = a[i] * b[i];
+        r.el(i) = a.el(i) * b.el(i);
     }
     return r;
 }
@@ -152,7 +152,7 @@ V fmadd(V a, V b, V c)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = std::fma(a[i], b[i], c[i]);
+        r.el(i) = std::fma(a.el(i), b.el(i), c.el(i));
     }
     return r;
 }
@@ -162,7 +162,7 @@ V fmsub(V a, V b, V c)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = std::fma(a[i], b[i], -c[i]);
+        r.el(i) = std::fma(a.el(i), b.el(i), -c.el(i));
     }
     return r;
 }
@@ -178,8 +178,8 @@ V div_p(V a, V b)
 
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = (a[i] & mask) / (b[i] & mask);
-        r[i] &= mask;
+        r.el(i) = (a.el(i) & mask) / (b.el(i) & mask);
+        r.el(i) &= mask;
     }
     return r;
 }
@@ -190,7 +190,7 @@ V shift_r(V a, unsigned shift)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = a[i] >> shift;
+        r.el(i) = a.el(i) >> shift;
     }
     return r;
 }
@@ -200,7 +200,7 @@ V shift_l(V a, unsigned shift)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = a[i] << shift;
+        r.el(i) = a.el(i) << shift;
     }
     return r;
 }
@@ -210,7 +210,7 @@ V min(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = a[i] <= b[i] ? a[i] : b[i];
+        r.el(i) = a.el(i) <= b.el(i) ? a.el(i) : b.el(i);
     }
     return r;
 }
@@ -220,7 +220,7 @@ V max(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = a[i] >= b[i] ? a[i] : b[i];
+        r.el(i) = a.el(i) >= b.el(i) ? a.el(i) : b.el(i);
     }
     return r;
 }

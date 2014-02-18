@@ -57,7 +57,7 @@ inline gint16x8 to_int16x8(int8x16 a)
 #if SIMDPP_USE_NULL
     int16x8 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i] = int16_t(a[i]);
+        r.el(i) = int16_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
@@ -91,7 +91,7 @@ inline gint16x16 to_int16x16(int8x32 a)
 #if SIMDPP_USE_NULL
     int16x16 r;
     for (unsigned i = 0; i < 16; i++) {
-        r[i/8][i%8] = int16_t(a[0][i]);
+        r[i/8].el(i%8) = int16_t(a[0].el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX2
@@ -135,7 +135,7 @@ inline gint16x8 to_int16x8(uint8x16 a)
 #if SIMDPP_USE_NULL
     uint16x8 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i] = int16_t(a[i]);
+        r.el(i) = int16_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
@@ -163,7 +163,7 @@ inline gint16x16 to_int16x16(uint8x32 a)
 #if SIMDPP_USE_NULL
     int16x16 r;
     for (unsigned i = 0; i < 16; i++) {
-        r[i/8][i%8] = uint16_t(a[0][i]);
+        r[i/8].el(i%8) = uint16_t(a[0].el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX2

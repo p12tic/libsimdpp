@@ -64,7 +64,7 @@ uint8_t extract(gint8x16 a)
 {
     static_assert(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
-    return a[id];
+    return a.el(id);
 #elif SIMDPP_USE_SSE4_1
     // Explicit cast is needed due to bug in Clang headers (intrinsic
     // implemented as a macro with no appropriate casts) and a bug in Clang
@@ -106,7 +106,7 @@ uint16_t extract(gint16x8 a)
 {
     static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
-    return a[id];
+    return a.el(id);
 #elif SIMDPP_USE_SSE2
     return _mm_extract_epi16(a, id);
 #elif SIMDPP_USE_NEON
@@ -142,7 +142,7 @@ uint32_t extract(gint32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
-    return a[id];
+    return a.el(id);
 #elif SIMDPP_USE_SSE4_1
     return _mm_extract_epi32(a.operator __m128i(), id);
 #elif SIMDPP_USE_SSE2
@@ -183,7 +183,7 @@ uint64_t extract(gint64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
-    return a[id];
+    return a.el(id);
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS
     gint32x4 t = a;
@@ -240,7 +240,7 @@ float extract(float32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
-    return a[id];
+    return a.el(id);
 #elif SIMDPP_USE_SSE2
     return bit_cast<float>(extract<id>(int32x4(a)));
 #elif SIMDPP_USE_NEON
@@ -267,12 +267,12 @@ double extract(float64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
-    return a[id];
+    return a.el(id);
 #elif SIMDPP_USE_SSE2
     return bit_cast<double>(extract<id>(int64x2(a)));
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float64x2> ax(a);
-    return a[id];
+    return a.el(id);
 #endif
 }
 

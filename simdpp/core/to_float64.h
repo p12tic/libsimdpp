@@ -76,43 +76,31 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 inline float64x2 to_float64x2(int32x4 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<int32x4> ax(a);
     float64x2 r;
-    r[0] = double(a[0]);
-    r[1] = double(a[1]);
+    r.el(0) = double(ax[0]);
+    r.el(1) = double(ax[1]);
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_pd(a);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int32x4> ax(a);
-    float64x2 r;
-    r[0] = double(ax[0]);
-    r[1] = double(ax[1]);
-    return r;
 #endif
 }
 
 inline float64x4 to_float64x4(int32x8 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     float64x4 r;
-    r[0][0] = double(a[0][0]);
-    r[0][1] = double(a[0][1]);
-    r[1][0] = double(a[0][2]);
-    r[1][1] = double(a[0][3]);
+    detail::mem_block<int32x8> ax(a);
+    r[0].el(0) = double(ax[0]);
+    r[0].el(1) = double(ax[1]);
+    r[1].el(0) = double(ax[2]);
+    r[1].el(1) = double(ax[3]);
     return r;
 #elif SIMDPP_USE_AVX
     return _mm256_cvtepi32_pd(sse::extract_lo(a));
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    float64x4 r;
-    detail::mem_block<int32x8> ax(a);
-    r[0][0] = double(ax[0]);
-    r[0][1] = double(ax[1]);
-    r[1][0] = double(ax[2]);
-    r[1][1] = double(ax[3]);
-    return r;
 #endif
 }
 /// @}
@@ -150,43 +138,31 @@ inline float64x4 to_float64x4(int32x8 a)
 */
 inline float64x2 to_float64x2(float32x4 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<float32x4> ax(a);
     float64x2 r;
-    r[0] = double(a[0]);
-    r[1] = double(a[1]);
+    r.el(0) = double(ax[0]);
+    r.el(1) = double(ax[1]);
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtps_pd(a);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<float32x4> ax(a);
-    float64x2 r;
-    r[0] = double(ax[0]);
-    r[1] = double(ax[1]);
-    return r;
 #endif
 }
 
 inline float64x4 to_float64x4(float32x8 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<float32x8> ax(a);
     float64x4 r;
-    r[0][0] = double(a[0][0]);
-    r[0][1] = double(a[0][1]);
-    r[1][0] = double(a[0][2]);
-    r[1][1] = double(a[0][3]);
+    r[0].el(0) = double(ax[0]);
+    r[0].el(1) = double(ax[1]);
+    r[1].el(0) = double(ax[2]);
+    r[1].el(1) = double(ax[3]);
     return r;
 #elif SIMDPP_USE_AVX
     return _mm256_cvtps_pd(sse::extract_lo(a));
 #elif SIMDPP_USE_SSE2
     return float64x4(to_float64x2(a[0]), to_float64x2(move_l<2>(a[0])));
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<float32x8> ax(a);
-    float64x4 r;
-    r[0][0] = double(ax[0]);
-    r[0][1] = double(ax[1]);
-    r[1][0] = double(ax[2]);
-    r[1][1] = double(ax[3]);
-    return r;
 #endif
 }
 /// @}

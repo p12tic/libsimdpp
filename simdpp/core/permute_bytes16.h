@@ -67,8 +67,8 @@ inline gint8x16 permute_bytes16(gint8x16 a, gint8x16 mask)
     uint8x16 r;
 
     for (unsigned i = 0; i < 16; i++) {
-        unsigned j = mi[i] & 0x0f;
-        r[i] = ai[j];
+        unsigned j = mi.el(i) & 0x0f;
+        r.el(i) = ai.el(j);
     }
     return r;
 #elif SIMDPP_USE_SSSE3

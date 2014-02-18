@@ -47,7 +47,7 @@ V load(V& a, const void* p)
     using T = typename V::element_type;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        a[i] = *pt++;
+        a.el(i) = *pt++;
     }
     return a;
 }
@@ -58,8 +58,8 @@ void load_packed2(V& a, V& b, const void* p)
     using T = typename V::element_type;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        a[i] = *pt++;
-        b[i] = *pt++;
+        a.el(i) = *pt++;
+        b.el(i) = *pt++;
     }
 }
 
@@ -69,9 +69,9 @@ void load_packed3(V& a, V& b, V& c, const void* p)
     using T = typename V::element_type;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        a[i] = *pt++;
-        b[i] = *pt++;
-        c[i] = *pt++;
+        a.el(i) = *pt++;
+        b.el(i) = *pt++;
+        c.el(i) = *pt++;
     }
 }
 
@@ -81,10 +81,10 @@ void load_packed4(V& a, V& b, V& c, V& d, const void* p)
     using T = typename V::element_type;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        a[i] = *pt++;
-        b[i] = *pt++;
-        c[i] = *pt++;
-        d[i] = *pt++;
+        a.el(i) = *pt++;
+        b.el(i) = *pt++;
+        c.el(i) = *pt++;
+        d.el(i) = *pt++;
     }
 }
 
@@ -94,7 +94,7 @@ void store(void* p, V a)
     using T = typename V::element_type;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        *pt++ = a[i];
+        *pt++ = a.el(i);
     }
 }
 
@@ -104,7 +104,7 @@ void store_first(void* p, V a, unsigned n)
     using T = typename V::element_type;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length && i < n; i++) {
-        *pt++ = a[i];
+        *pt++ = a.el(i);
     }
 }
 
@@ -115,7 +115,7 @@ void store_last(void* p, V a, unsigned n)
     T* pt = reinterpret_cast<T*>(p);
     pt += V::length - n;
     for (unsigned i = V::length - n; i < V::length; i++) {
-        *pt++ = a[i];
+        *pt++ = a.el(i);
     }
 }
 
@@ -125,8 +125,8 @@ void store_packed2(void* p, V& a, V& b)
     using T = typename V::element_type;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        *pt++ = a[i];
-        *pt++ = b[i];
+        *pt++ = a.el(i);
+        *pt++ = b.el(i);
     }
 }
 
@@ -136,9 +136,9 @@ void store_packed3(void* p, V& a, V& b, V& c)
     using T = typename V::element_type;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        *pt++ = a[i];
-        *pt++ = b[i];
-        *pt++ = c[i];
+        *pt++ = a.el(i);
+        *pt++ = b.el(i);
+        *pt++ = c.el(i);
     }
 }
 
@@ -148,10 +148,10 @@ void store_packed4(void* p, V& a, V& b, V& c, V& d)
     using T = typename V::element_type;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
-        *pt++ = a[i];
-        *pt++ = b[i];
-        *pt++ = c[i];
-        *pt++ = d[i];
+        *pt++ = a.el(i);
+        *pt++ = b.el(i);
+        *pt++ = c.el(i);
+        *pt++ = d.el(i);
     }
 }
 

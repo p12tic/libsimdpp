@@ -70,8 +70,8 @@ inline gint64x2 to_int64x2(int32x4 a)
 {
 #if SIMDPP_USE_NULL
     int64x2 r;
-    r[0] = int64_t(a[0]);
-    r[1] = int64_t(a[1]);
+    r.el(0) = int64_t(a.el(0));
+    r.el(1) = int64_t(a.el(1));
     return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_cvtepi32_epi64(a);
@@ -94,10 +94,10 @@ inline gint64x4 to_int64x4(int32x8 a)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;
-    r[0][0] = int64_t(a[0][0]);
-    r[0][1] = int64_t(a[0][1]);
-    r[1][0] = int64_t(a[0][2]);
-    r[1][1] = int64_t(a[0][3]);
+    r[0].el(0) = int64_t(a[0].el(0));
+    r[0].el(1) = int64_t(a[0].el(1));
+    r[1].el(0) = int64_t(a[0].el(2));
+    r[1].el(1) = int64_t(a[0].el(3));
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_cvtepi32_epi64(sse::extract_lo(a));
@@ -141,8 +141,8 @@ inline gint64x2 to_int64x2(uint32x4 a)
 {
 #if SIMDPP_USE_NULL
     int64x2 r;
-    r[0] = int64_t(a[0]);
-    r[1] = int64_t(a[1]);
+    r.el(0) = int64_t(a.el(0));
+    r.el(1) = int64_t(a.el(1));
     return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_cvtepu32_epi64(a);
@@ -159,10 +159,10 @@ inline gint64x4 to_int64x4(uint32x8 a)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;
-    r[0][0] = int64_t(a[0][0]);
-    r[0][1] = int64_t(a[0][1]);
-    r[1][0] = int64_t(a[0][2]);
-    r[1][1] = int64_t(a[0][3]);
+    r[0].el(0) = int64_t(a[0].el(0));
+    r[0].el(1) = int64_t(a[0].el(1));
+    r[1].el(0) = int64_t(a[0].el(2));
+    r[1].el(1) = int64_t(a[0].el(3));
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_cvtepu32_epi64(sse::extract_lo(a));

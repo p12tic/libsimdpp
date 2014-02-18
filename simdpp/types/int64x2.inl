@@ -75,8 +75,8 @@ inline gint64<2>::gint64(const float64x2& d)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<gint64x2> ax;
-    ax[0] = bit_cast<uint64_t>(d[0]);
-    ax[1] = bit_cast<uint64_t>(d[1]);
+    ax[0] = bit_cast<uint64_t>(d.el(0));
+    ax[1] = bit_cast<uint64_t>(d.el(1));
     operator=(gint64x2(ax));
 #elif SIMDPP_USE_SSE2
     operator=(_mm_castpd_si128(d));

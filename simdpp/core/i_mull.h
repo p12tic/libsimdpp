@@ -99,7 +99,7 @@ inline int32x4 mull_lo(int16x8 a, int16x8 b)
 #if SIMDPP_USE_NULL
     int32x4 r;
     for (unsigned i = 0; i < 4; i++) {
-        r[i] = int32_t(a[i]) * b[i];
+        r.el(i) = int32_t(a.el(i)) * b.el(i);
     }
     return r;
 #elif SIMDPP_USE_SSE2
@@ -154,7 +154,7 @@ inline uint32x4 mull_lo(uint16x8 a, uint16x8 b)
 #if SIMDPP_USE_NULL
     uint32x4 r;
     for (unsigned i = 0; i < 4; i++) {
-        r[i] = uint32_t(a[i]) * b[i];
+        r.el(i) = uint32_t(a.el(i)) * b.el(i);
     }
     return r;
 #elif SIMDPP_USE_SSE2
@@ -209,7 +209,7 @@ inline int32x4 mull_hi(int16x8 a, int16x8 b)
 #if SIMDPP_USE_NULL
     int32x4 r;
     for (unsigned i = 0; i < 4; i++) {
-        r[i] = int32_t(a[i+4]) * b[i+4];
+        r.el(i) = int32_t(a.el(i+4)) * b.el(i+4);
     }
     return r;
 #elif SIMDPP_USE_SSE2
@@ -264,7 +264,7 @@ inline uint32x4 mull_hi(uint16x8 a, uint16x8 b)
 #if SIMDPP_USE_NULL
     uint32x4 r;
     for (unsigned i = 0; i < 4; i++) {
-        r[i] = uint32_t(a[i+4]) * b[i+4];
+        r.el(i) = uint32_t(a.el(i+4)) * b.el(i+4);
     }
     return r;
 #elif SIMDPP_USE_SSE2
@@ -317,8 +317,8 @@ inline int64x2 mull_lo(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
     int64x2 r;
-    r[0] = int64_t(a[0]) * b[0];
-    r[1] = int64_t(a[1]) * b[1];
+    r.el(0) = int64_t(a.el(0)) * b.el(0);
+    r.el(1) = int64_t(a.el(1)) * b.el(1);
     return r;
 #elif SIMDPP_USE_SSE4_1
     a = zip_lo(a, a);
@@ -418,8 +418,8 @@ inline int64x2 mull_hi(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
     int64x2 r;
-    r[0] = int64_t(a[2]) * b[2];
-    r[1] = int64_t(a[3]) * b[3];
+    r.el(0) = int64_t(a.el(2)) * b.el(2);
+    r.el(1) = int64_t(a.el(3)) * b.el(3);
     return r;
 #elif SIMDPP_USE_SSE4_1
     a = zip_hi(a, a);

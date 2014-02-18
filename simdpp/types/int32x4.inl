@@ -72,10 +72,10 @@ inline uint32<4>& uint32<4>::operator=(const gint64x2& d) { gint32x4::operator=(
 inline gint32<4>::gint32(const float32x4& d)
 {
 #if SIMDPP_USE_NULL
-    u32(0) = bit_cast<uint32_t>(d[0]);
-    u32(1) = bit_cast<uint32_t>(d[1]);
-    u32(2) = bit_cast<uint32_t>(d[2]);
-    u32(3) = bit_cast<uint32_t>(d[3]);
+    u32(0) = bit_cast<uint32_t>(d.el(0));
+    u32(1) = bit_cast<uint32_t>(d.el(1));
+    u32(2) = bit_cast<uint32_t>(d.el(2));
+    u32(3) = bit_cast<uint32_t>(d.el(3));
 #elif SIMDPP_USE_NEON
     operator=(bit_cast<gint32x4>(d));
 #elif SIMDPP_USE_SSE2

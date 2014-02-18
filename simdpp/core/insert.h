@@ -65,7 +65,7 @@ template<unsigned id>
 gint8x16 insert(gint8x16 a, uint8_t x)
 {
 #if SIMDPP_USE_NULL
-    a[id] = x;
+    a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
     return _mm_insert_epi8(a.operator __m128i(), x, id);
@@ -104,7 +104,7 @@ template<unsigned id>
 gint16x8 insert(gint16x8 a, uint16_t x)
 {
 #if SIMDPP_USE_NULL
-    a[id] = x;
+    a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE2
     return _mm_insert_epi16(a, x, id);
@@ -136,7 +136,7 @@ template<unsigned id>
 gint32x4 insert(gint32x4 a, uint32_t x)
 {
 #if SIMDPP_USE_NULL
-    a[id] = x;
+    a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
     return _mm_insert_epi32(a.operator __m128i(), x, id);
@@ -176,7 +176,7 @@ template<unsigned id>
 gint64x2 insert(gint64x2 a, uint64_t x)
 {
 #if SIMDPP_USE_NULL
-    a[id] = x;
+    a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS

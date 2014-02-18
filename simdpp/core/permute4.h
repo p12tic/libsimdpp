@@ -235,10 +235,10 @@ gint64x4 permute(gint64x4 a)
 {
 #if SIMDPP_USE_NULL
     uint64x4 r;
-    r[0][0] = a[s0/2][s0%2];
-    r[0][1] = a[s1/2][s1%2];
-    r[1][0] = a[s2/2][s2%2];
-    r[1][1] = a[s3/2][s3%2];
+    r[0].el(0) = a[s0/2].el(s0%2);
+    r[0].el(1) = a[s1/2].el(s1%2);
+    r[1].el(0) = a[s2/2].el(s2%2);
+    r[1].el(1) = a[s3/2].el(s3%2);
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
@@ -266,10 +266,10 @@ float64x4 permute(float64x4 a)
 {
 #if SIMDPP_USE_NULL
     float64x4 r;
-    r[0][0] = a[s0/2][s0%2];
-    r[0][1] = a[s1/2][s1%2];
-    r[1][0] = a[s2/2][s2%2];
-    r[1][1] = a[s3/2][s3%2];
+    r[0].el(0) = a[s0/2].el(s0%2);
+    r[0].el(1) = a[s1/2].el(s1%2);
+    r[1].el(0) = a[s2/2].el(s2%2);
+    r[1].el(1) = a[s3/2].el(s3%2);
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
