@@ -33,10 +33,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/simd/types.h>
-#include <simdpp/functions/bit_and.h>
-#include <simdpp/functions/bit_andnot.h>
-#include <simdpp/functions/bit_or.h>
+#include <simdpp/types.h>
+#include <simdpp/core/bit_and.h>
+#include <simdpp/core/bit_andnot.h>
+#include <simdpp/core/bit_or.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

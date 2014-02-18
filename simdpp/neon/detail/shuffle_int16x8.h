@@ -29,8 +29,8 @@
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT16x8_H
 #if SIMDPP_USE_NEON
 
-#include <simdpp/simd/make_shuffle_bytes_mask.h>
-#include <simdpp/functions/permute_bytes16.h>
+#include <simdpp/core/make_shuffle_bytes_mask.h>
+#include <simdpp/core/permute_bytes16.h>
 #include <type_traits>
 
 namespace simdpp {

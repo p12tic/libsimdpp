@@ -29,7 +29,7 @@
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_H
 #if SIMDPP_USE_NEON
 
-#include <simdpp/simd/types.h>
+#include <simdpp/types.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

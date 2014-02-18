@@ -33,8 +33,8 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/simd/types.h>
-#include <simdpp/simd/cast.h>
+#include <simdpp/types.h>
+#include <simdpp/cast.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

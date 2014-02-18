@@ -33,8 +33,8 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/simd/types.h>
-#include <simdpp/simd/detail/not_implemented.h>
+#include <simdpp/types.h>
+#include <simdpp/detail/not_implemented.h>
 #include <simdpp/sse/convert.h>
 
 namespace simdpp {

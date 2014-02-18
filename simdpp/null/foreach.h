@@ -33,7 +33,7 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/simd/detail/mem_block.h>
+#include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
