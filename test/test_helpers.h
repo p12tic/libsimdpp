@@ -158,31 +158,6 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
 */
 #define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __LINE__); }
 
-// applies the same operation to 32-byte and 16-byte vectors
-// Single argument version
-#define TEST_PUSH16X2_1(TC,T,OP,Q1)                                     \
-{                                                                       \
-    test_push_internal((TC), (T)(OP)((Q1)), __LINE__);                  \
-    using H = typename T::half_vector_type;                             \
-    test_push_internal((TC), (H)((OP)((Q1)[0])), __LINE__);             \
-}
-
-// Two argument version
-#define TEST_PUSH16X2_2(TC,T,OP,Q1,Q2)                                  \
-{                                                                       \
-    test_push_internal((TC), (T)(OP)((Q1), (Q2)), __LINE__);            \
-    using H = typename T::half_vector_type;                             \
-    test_push_internal((TC), (H)((OP)((Q1)[0], (Q2)[0])), __LINE__);    \
-}
-
-// Three argument version
-#define TEST_PUSH16X2_3(TC,T,OP,Q1,Q2,Q3)                               \
-{                                                                       \
-    test_push_internal((TC), (T)(OP)((Q1), (Q2), (Q3)), __LINE__);      \
-    using H = typename T::half_vector_type;                             \
-    test_push_internal((TC), (H)((OP)((Q1)[0], (Q2)[0], (Q3)[0], __LINE__);  \
-}
-
 #define NEW_TEST_CASE(R, NAME) ((R).new_test_case((NAME), __FILE__))
 
 #define TEST_ARRAY_PUSH(TC, T, A)                                       \
