@@ -46,31 +46,30 @@ namespace detail {
 */
 class not_implemented_proxy {
 public:
-    operator int128() { return int128::zero(); }
-    operator gint8x16() { return int128::zero(); }
-    operator gint8x32() { return int256::zero(); }
-    operator int8x16() { return int128::zero(); }
-    operator int8x32() { return int256::zero(); }
-    operator uint8x16() { return int128::zero(); }
-    operator uint8x32() { return int256::zero(); }
-    operator gint16x8() { return int128::zero(); }
-    operator gint16x16() { return int256::zero(); }
-    operator int16x8() { return int128::zero(); }
-    operator int16x16() { return int256::zero(); }
-    operator uint16x8() { return int128::zero(); }
-    operator uint16x16() { return int256::zero(); }
-    operator gint32x4() { return int128::zero(); }
-    operator gint32x8() { return int256::zero(); }
-    operator int32x4() { return int128::zero(); }
-    operator int32x8() { return int256::zero(); }
-    operator uint32x4() { return int128::zero(); }
-    operator uint32x8() { return int256::zero(); }
-    operator gint64x2() { return int128::zero(); }
-    operator gint64x4() { return int256::zero(); }
-    operator int64x2() { return int128::zero(); }
-    operator int64x4() { return int256::zero(); }
-    operator uint64x2() { return int128::zero(); }
-    operator uint64x4() { return int256::zero(); }
+    operator gint8x16() { return uint8x16::zero(); }
+    operator gint8x32() { return uint8x32::zero(); }
+    operator int8x16() { return int8x16::zero(); }
+    operator int8x32() { return int8x32::zero(); }
+    operator uint8x16() { return uint8x16::zero(); }
+    operator uint8x32() { return uint8x32::zero(); }
+    operator gint16x8() { return uint16x8::zero(); }
+    operator gint16x16() { return uint16x16::zero(); }
+    operator int16x8() { return int16x8::zero(); }
+    operator int16x16() { return int16x16::zero(); }
+    operator uint16x8() { return uint16x8::zero(); }
+    operator uint16x16() { return uint16x16::zero(); }
+    operator gint32x4() { return uint32x4::zero(); }
+    operator gint32x8() { return uint32x8::zero(); }
+    operator int32x4() { return int32x4::zero(); }
+    operator int32x8() { return int32x8::zero(); }
+    operator uint32x4() { return uint32x4::zero(); }
+    operator uint32x8() { return uint32x8::zero(); }
+    operator gint64x2() { return uint64x2::zero(); }
+    operator gint64x4() { return uint64x4::zero(); }
+    operator int64x2() { return int64x2::zero(); }
+    operator int64x4() { return int64x4::zero(); }
+    operator uint64x2() { return uint64x2::zero(); }
+    operator uint64x4() { return uint64x4::zero(); }
     operator float32x4() { return float32x4::zero(); }
     operator float32x8() { return float32x8::zero(); }
     operator float64x2() { return float64x2::zero(); }
