@@ -163,11 +163,11 @@ gint16x8 broadcast(gint16x8 a)
     if (s < 4) {
         constexpr unsigned s2 = s < 4 ? s : s-4;
         b = sse::permute_lo<s2,s2,s2,s2>(a);
-        return permute<0,0>(b);
+        return permute2<0,0>(b);
     } else {
         constexpr unsigned s2 = s < 4 ? s : s-4;
         b = sse::permute_hi<s2,s2,s2,s2>(a);
-        return permute<1,1>(b);
+        return permute2<1,1>(b);
     }
 #elif SIMDPP_USE_NEON
     if (s < 4) {
@@ -190,12 +190,12 @@ gint16x16 broadcast(gint16x16 a)
     if (s < 4) {
         constexpr unsigned q = (s < 4) ? s : 0;
         gint64x4 h = _mm256_shufflelo_epi16(a, q << 6 | q << 4 | q << 2 | q);
-        h = permute<0,0>(h);
+        h = permute2<0,0>(h);
         return h;
     } else {
         constexpr unsigned q = (s < 4) ? 0 : s - 4;
         gint64x4 h = _mm256_shufflehi_epi16(a, q << 6 | q << 4 | q << 2 | q);
-        h = permute<1,1>(h);
+        h = permute2<1,1>(h);
         return h;
     }
 }
@@ -229,7 +229,7 @@ gint32x4 broadcast(gint32x4 a)
 #if SIMDPP_USE_NULL
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
-    return permute<s,s,s,s>(a);
+    return permute4<s,s,s,s>(a);
 #elif SIMDPP_USE_NEON
     if (s < 2) {
         uint32x2_t z = vget_low_u32(a);
@@ -250,7 +250,7 @@ template<unsigned s>
 gint32x8 broadcast(gint32x8 a)
 {
     static_assert(s < 4, "Access out of bounds");
-    return permute<s,s,s,s>(a);
+    return permute4<s,s,s,s>(a);
 }
 #endif
 
@@ -285,9 +285,9 @@ gint64x2 broadcast(gint64x2 a)
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
-        return permute<0,0>(a);
+        return permute2<0,0>(a);
     } else {
-        return permute<1,1>(a);
+        return permute2<1,1>(a);
     }
 #elif SIMDPP_USE_NEON
     uint64x1_t z;
@@ -308,7 +308,7 @@ template<unsigned s>
 gint64x4 broadcast(gint64x4 a)
 {
     static_assert(s < 2, "Access out of bounds");
-    return permute<s,s>(a);
+    return permute2<s,s>(a);
 }
 #endif
 
@@ -340,7 +340,7 @@ float32x4 broadcast(float32x4 a)
 #if SIMDPP_USE_NULL
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
-    return permute<s,s,s,s>(a);
+    return permute4<s,s,s,s>(a);
 #elif SIMDPP_USE_NEON
     if (s < 2) {
         float32x2_t z = vget_low_f32(a);
@@ -361,7 +361,7 @@ template<unsigned s>
 float32x8 broadcast(float32x8 a)
 {
     static_assert(s < 4, "Access out of bounds");
-    return permute<s,s,s,s>(a);
+    return permute4<s,s,s,s>(a);
 }
 #endif
 
@@ -396,9 +396,9 @@ float64x2 broadcast(float64x2 a)
     return null::broadcast_w<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
-        return permute<0,0>(a);
+        return permute2<0,0>(a);
     } else {
-        return permute<1,1>(a);
+        return permute2<1,1>(a);
     }
 #elif SIMDPP_USE_NEON
     return float64x2(broadcast<s>(int64x2(a)));
@@ -410,7 +410,7 @@ template<unsigned s>
 float64x4 broadcast(float64x4 a)
 {
     static_assert(s < 2, "Access out of bounds");
-    return permute<s,s>(a);
+    return permute2<s,s>(a);
 }
 #endif
 

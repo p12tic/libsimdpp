@@ -204,7 +204,7 @@ inline gint32x4 mul_lo(gint32x4 a, gint32x4 b)
     a = _mm_mul_epu32(a, b);
     a1 = _mm_mul_epu32(a1, b1);
     a = shuffle2<0,2,0,2>(a, a1); // additional latency unavoidable
-    a = permute<0,2,1,3>(a);
+    a = permute4<0,2,1,3>(a);
     return a;
 #elif SIMDPP_USE_NEON
     return vmulq_s32(a, b);

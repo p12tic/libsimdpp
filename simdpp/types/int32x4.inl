@@ -128,7 +128,7 @@ inline uint32x4 uint32x4::load_broadcast(const uint32_t* v0)
 #elif SIMDPP_USE_SSE2
     uint32x4 r;
     r = _mm_cvtsi32_si128(*v0);
-    r = permute<0,0,0,0>(r);
+    r = permute4<0,0,0,0>(r);
     return r;
 #elif SIMDPP_USE_NEON
     return vld1q_dup_u32(v0);
@@ -146,7 +146,7 @@ inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
 #elif SIMDPP_USE_SSE2
     uint32x4 r0;
     r0 = _mm_cvtsi32_si128(v0);
-    r0 = permute<0,0,0,0>(r0);
+    r0 = permute4<0,0,0,0>(r0);
     return uint32x4(r0);
 #elif SIMDPP_USE_NEON
     return vdupq_n_u32(v0);

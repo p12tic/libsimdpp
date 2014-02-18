@@ -120,7 +120,7 @@ inline uint64x2 uint64x2::load_broadcast(const uint64_t* v0)
 #elif SIMDPP_USE_SSE2
     uint64x2 r;
     r = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(v0));
-    r = permute<0,0>(r);
+    r = permute2<0,0>(r);
     return r;
 #elif SIMDPP_USE_NEON
     uint64x1_t r0 = vld1_dup_u64(v0);
@@ -139,12 +139,12 @@ inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
     uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
     uint64x2 vx = zip_lo(va, vb);
-    return permute<0,0>(vx);
+    return permute2<0,0>(vx);
 #else
     int32x4 ra = _mm_cvtsi32_si128(uint32_t(v0));
     int32x4 rb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
     int64x2 r0 = zip_lo(ra, rb);
-    r0 = permute<0,0>(r0);
+    r0 = permute2<0,0>(r0);
     return uint64x2(r0);
 #endif
 #elif SIMDPP_USE_NEON

@@ -331,13 +331,13 @@ void test_shuffle_bytes(TestResults& res)
     }
     {
         uint16x16 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
-        uint16x16 r1 = permute<0,1,2,3>(v.du16[0]);
+        uint16x16 r1 = permute4<0,1,2,3>(v.du16[0]);
         uint16x16 r2 = permute_bytes16(v.du16[0], mask);
         TEST_PUSH(tc, uint16x16, cmp_eq(r1, r2));
     }
     {
         uint32x8 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
-        uint32x8 r1 = permute<0,1,2,3>(v.du32[0]);
+        uint32x8 r1 = permute4<0,1,2,3>(v.du32[0]);
         uint32x8 r2 = permute_zbytes16(v.du32[0], mask);
         TEST_PUSH(tc, uint32x8, cmp_eq(r1, r2));
     }

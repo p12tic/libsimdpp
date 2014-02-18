@@ -171,7 +171,7 @@ template<unsigned s>
 gint32x8 broadcast_w(gint32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
-    a = permute<s%4,s%4,s%4,s%4>(a);
+    a = permute4<s%4,s%4,s%4,s%4>(a);
     a = detail::shuffle128<s/4, s/4>(a, a);
     return a;
 }
@@ -211,7 +211,7 @@ template<unsigned s>
 gint64x4 broadcast_w(gint64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
-    return permute<s,s,s,s>(a);
+    return permute4<s,s,s,s>(a);
 }
 #endif
 
@@ -248,7 +248,7 @@ float32x8 broadcast_w(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
     a = detail::shuffle128<s/4,s/4>(a, a);
-    return permute<s%4,s%4,s%4,s%4>(a);
+    return permute4<s%4,s%4,s%4,s%4>(a);
 }
 #endif
 
@@ -290,7 +290,7 @@ float64x4 broadcast_w(float64x4 a)
     return permute<s,s,s,s>(a);
 #else // SIMDPP_USE_AVX
     a = detail::shuffle128<s/2,s/2>(a, a);
-    a = permute<s%2,s%2>(a);
+    a = permute2<s%2,s%2>(a);
     return a;
 #endif
 }

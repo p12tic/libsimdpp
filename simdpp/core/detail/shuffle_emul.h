@@ -44,9 +44,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 // forward-declarations
 template<unsigned s0, unsigned s1>
-gint64x2 permute(gint64x2 a);
+gint64x2 permute2(gint64x2 a);
 template<unsigned s0, unsigned s1>
-float64x2 permute(float64x2 a);
+float64x2 permute2(float64x2 a);
 
 namespace detail {
 
@@ -54,22 +54,22 @@ template<class H, unsigned s0, unsigned s1, class V>
 H permute_half(V a)
 {
     switch (s0*4+s1) {
-    case 0: /* 0 0 */ return permute<0,0>(a[0]);
+    case 0: /* 0 0 */ return permute2<0,0>(a[0]);
     case 1: /* 0 1 */ return a[0];
     case 2: /* 0 2 */ return shuffle1<0,0>(a[0], a[1]);
     case 3: /* 0 3 */ return shuffle1<0,1>(a[0], a[1]);
-    case 4: /* 1 0 */ return permute<1,0>(a[0]);
-    case 5: /* 1 1 */ return permute<1,1>(a[0]);
+    case 4: /* 1 0 */ return permute2<1,0>(a[0]);
+    case 5: /* 1 1 */ return permute2<1,1>(a[0]);
     case 6: /* 1 2 */ return shuffle1<1,0>(a[0], a[1]);
     case 7: /* 1 3 */ return shuffle1<1,1>(a[0], a[1]);
     case 8: /* 2 0 */ return shuffle1<0,0>(a[1], a[0]);
     case 9: /* 2 1 */ return shuffle1<0,1>(a[1], a[0]);
-    case 10: /* 2 2 */ return permute<0,0>(a[1]);
+    case 10: /* 2 2 */ return permute2<0,0>(a[1]);
     case 11: /* 2 3 */ return a[1];
     case 12: /* 3 0 */ return shuffle1<1,0>(a[1], a[0]);
     case 13: /* 3 1 */ return shuffle1<1,1>(a[1], a[0]);
-    case 14: /* 3 2 */ return permute<1,0>(a[1]);
-    case 15: /* 3 3 */ return permute<1,1>(a[1]);
+    case 14: /* 3 2 */ return permute2<1,0>(a[1]);
+    case 15: /* 3 3 */ return permute2<1,1>(a[1]);
     }
 }
 

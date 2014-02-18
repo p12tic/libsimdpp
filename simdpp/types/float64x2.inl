@@ -61,7 +61,7 @@ inline float64x2 float64x2::load_broadcast(const double* v0)
 #elif SIMDPP_USE_SSE2
     float64x2 r;
     r = _mm_load_sd(v0);
-    r = permute<0,0>(r);
+    r = permute2<0,0>(r);
     return r;
 #endif
 }
@@ -76,7 +76,7 @@ inline float64x2 float64x2::set_broadcast(double v0)
 #else
     int64x2 r0;
     r0 = _mm_cvtsi64_si128(bit_cast<int64_t>(v0));
-    return permute<0,0>(float64x2(r0));
+    return permute2<0,0>(float64x2(r0));
 #endif
 #endif
 }

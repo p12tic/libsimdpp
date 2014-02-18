@@ -233,7 +233,7 @@ inline uint64x2 abs(int64x2 a)
 #elif SIMDPP_USE_NEON
     int32x4 z = shift_r<63>(uint64x2(a));
     z = cmp_eq(z, int32x4::zero());
-    z = permute<0,0,2,2>(z);
+    z = permute4<0,0,2,2>(z);
     z = bit_not(z);
     int64x2 t = z;
     a = bit_xor(a, t);

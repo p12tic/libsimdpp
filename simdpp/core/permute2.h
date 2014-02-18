@@ -70,10 +70,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned N>
-gint16<N> permute(gint16<N> a)
+gint16<N> permute2(gint16<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
+    return permute4<s0,s1,s0+2,s1+2>(a);
 }
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
@@ -101,10 +101,10 @@ gint16<N> permute(gint16<N> a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned N>
-gint32<N> permute(gint32<N> a)
+gint32<N> permute2(gint32<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
+    return permute4<s0,s1,s0+2,s1+2>(a);
 }
 
 /** Permutes the values of each set of four consecutive 32-bit floating-point
@@ -133,10 +133,10 @@ gint32<N> permute(gint32<N> a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned N>
-float32<N> permute(float32<N> a)
+float32<N> permute2(float32<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
+    return permute4<s0,s1,s0+2,s1+2>(a);
 }
 
 /// @{
@@ -162,13 +162,13 @@ float32<N> permute(float32<N> a)
     @icost{ALTIVEC, 2-4}
 */
 template<unsigned s0, unsigned s1>
-gint64x2 permute(gint64x2 a)
+gint64x2 permute2(gint64x2 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::permute<s0,s1>(a);
 #elif SIMDPP_USE_SSE2
-    return permute<s0*2, s0*2+1, s1*2, s1*2+1>(int32x4(a));
+    return permute4<s0*2, s0*2+1, s1*2, s1*2+1>(int32x4(a));
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int64x2::permute2<s0,s1>(a);
 #elif SIMDPP_USE_ALTIVEC
@@ -180,7 +180,7 @@ gint64x2 permute(gint64x2 a)
 
 #if SIMDPP_USE_AVX2
 template<unsigned s0, unsigned s1>
-gint64x4 permute(gint64x4 a)
+gint64x4 permute2(gint64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     return _mm256_permute4x64_epi64(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
@@ -188,10 +188,10 @@ gint64x4 permute(gint64x4 a)
 #endif
 
 template<unsigned s0, unsigned s1, unsigned N>
-gint64<N> permute(gint64<N> a)
+gint64<N> permute2(gint64<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
+    return permute4<s0,s1,s0+2,s1+2>(a);
 }
 /// @}
 
@@ -216,19 +216,19 @@ gint64<N> permute(gint64<N> a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned s0, unsigned s1>
-float64x2 permute(float64x2 a)
+float64x2 permute2(float64x2 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_SSE2
     return _mm_shuffle_pd(a, a, _MM_SHUFFLE2(s1, s0));
 #else
-    return float64x2(permute<s0,s1>(int64x2(a)));
+    return float64x2(permute2<s0,s1>(int64x2(a)));
 #endif
 }
 
 #if SIMDPP_USE_AVX
 template<unsigned s0, unsigned s1>
-float64x4 permute(float64x4 a)
+float64x4 permute2(float64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
@@ -240,10 +240,10 @@ float64x4 permute(float64x4 a)
 #endif
 
 template<unsigned s0, unsigned s1, unsigned N>
-float64<N> permute(float64<N> a)
+float64<N> permute2(float64<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute<s0,s1,s0+2,s1+2>(a);
+    return permute4<s0,s1,s0+2,s1+2>(a);
 }
 /// @}
 

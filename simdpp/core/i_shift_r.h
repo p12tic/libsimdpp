@@ -412,7 +412,7 @@ inline int64x2 shift_r(int64x2 a, unsigned count)
         s = shift_r<31>(v);
         v = shift_r(v, count - 32);
         v = shuffle2<1,3,1,3>(v, s);
-        v = permute<0,2,1,3>(v);
+        v = permute4<0,2,1,3>(v);
         return v;
     } else {
         // shift the sign bit using 32-bit shift, then combine the result with
@@ -445,7 +445,7 @@ inline int64x4 shift_r(int64x4 a, unsigned count)
         s = shift_r<31>(v);
         v = shift_r(v, count - 32);
         v = shuffle2<1,3,1,3>(v, s);
-        v = permute<0,2,1,3>(v);
+        v = permute4<0,2,1,3>(v);
         return v;
     } else {
         uint64x4 v, mask;

@@ -40,7 +40,7 @@ struct Test_permute2 {
         constexpr unsigned s0 = i / 2 % 2;
         constexpr unsigned s1 = i % 2;
 
-        a = simdpp::permute<s0,s1>(a);
+        a = simdpp::permute2<s0,s1>(a);
         TEST_PUSH(tc, V, a);
     }
 };
@@ -55,7 +55,7 @@ struct Test_permute4 {
         constexpr unsigned s2 = i / 4 % 4;
         constexpr unsigned s3 = i % 4;
 
-        a = simdpp::permute<s0,s1,s2,s3>(a);
+        a = simdpp::permute4<s0,s1,s2,s3>(a);
         TEST_PUSH(tc, V, a);
     }
 };

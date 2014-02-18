@@ -392,9 +392,9 @@ template<class T> void mem_pack3_impl32(T& a, T& b, T& c)
     // [a0,a2,b0,b2]
     // [c0,c2,a1,a3]
     // [b1,b3,c1,c3]
-    t0 = permute<0,2,1,3>(t0);
-    t1 = permute<0,2,1,3>(t1);
-    t2 = permute<0,2,1,3>(t2);
+    t0 = permute4<0,2,1,3>(t0);
+    t1 = permute4<0,2,1,3>(t1);
+    t2 = permute4<0,2,1,3>(t2);
     // [a0,b0,a2,b2]
     // [c0,a1,c2,a3]
     // [b1,c1,b3,c3]

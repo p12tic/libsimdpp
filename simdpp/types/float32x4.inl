@@ -60,7 +60,7 @@ inline float32x4 float32x4::load_broadcast(const float* v0)
 #elif SIMDPP_USE_SSE2
     float32x4 r;
     r = _mm_load_ss(v0);
-    r = permute<0,0,0,0>(r);
+    r = permute4<0,0,0,0>(r);
     return r;
 #elif SIMDPP_USE_NEON
     return vld1q_dup_f32(v0);
@@ -78,7 +78,7 @@ inline float32x4 float32x4::set_broadcast(float v0)
 #elif SIMDPP_USE_SSE2
     int32x4 r0;
     r0 = _mm_cvtsi32_si128(bit_cast<int>(v0));
-    r0 = permute<0,0,0,0>(r0);
+    r0 = permute4<0,0,0,0>(r0);
     return float32x4(r0);
 #elif SIMDPP_USE_NEON
 #ifdef __clang__
