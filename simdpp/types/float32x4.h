@@ -35,7 +35,7 @@
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/int32x4.h>
-#include <simdpp/cast.h>
+#include <simdpp/core/cast.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

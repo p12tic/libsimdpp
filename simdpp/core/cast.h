@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CAST_H
-#define LIBSIMDPP_SIMDPP_CAST_H
+#ifndef LIBSIMDPP_SIMDPP_CORE_CAST_H
+#define LIBSIMDPP_SIMDPP_CORE_CAST_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"

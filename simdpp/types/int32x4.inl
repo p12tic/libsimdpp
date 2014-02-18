@@ -34,7 +34,7 @@
 
 #include <simdpp/types/int32x4.h>
 #include <simdpp/types/float32x4.h>
-#include <simdpp/cast.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/null/mask.h>
 #include <simdpp/null/set.h>

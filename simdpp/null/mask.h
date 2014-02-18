@@ -35,7 +35,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/mem_block.h>
-#include <simdpp/cast.h>
+#include <simdpp/core/cast.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

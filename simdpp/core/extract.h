@@ -33,7 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/cast.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/null/foreach.h>

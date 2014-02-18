@@ -34,7 +34,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/cast.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/detail/mem_block.h>
 
 #include <cmath>

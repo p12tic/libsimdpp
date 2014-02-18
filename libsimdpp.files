@@ -33,7 +33,6 @@ simdpp/CMakeLists.txt
 simdpp/adv/detail/transpose.h
 simdpp/adv/transpose.h
 simdpp/altivec/load1.h
-simdpp/cast.h
 simdpp/core/align.h
 simdpp/core/aligned_allocator.h
 simdpp/core/bit_and.h
@@ -45,6 +44,7 @@ simdpp/core/blend.h
 simdpp/core/broadcast.h
 simdpp/core/broadcast_w.h
 simdpp/core/cache.h
+simdpp/core/cast.h
 simdpp/core/cmp_eq.h
 simdpp/core/cmp_ge.h
 simdpp/core/cmp_gt.h
