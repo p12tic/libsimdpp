@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/types/int32x4.h>
 #include <simdpp/cast.h>
 
@@ -41,13 +42,12 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-class basic_int32x4;
-
 /// @defgroup simd_vec_fp Types: floating-point vectors
 /// @{
 
 /// Class representing float32x4 vector
-class float32x4 {
+template<>
+class float32<4> {
 public:
 
     using element_type = float;
@@ -60,20 +60,20 @@ public:
     static constexpr unsigned num_bits = 32;
     static constexpr uint_element_type all_bits = 0xffffffff;
 
-    float32x4() = default;
-    float32x4(const float32x4&) = default;
-    float32x4& operator=(const float32x4&) = default;
+    float32<4>() = default;
+    float32<4>(const float32x4&) = default;
+    float32<4>& operator=(const float32x4&) = default;
 
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    float32x4(__m128 d) : d_(d) {}
-    float32x4& operator=(__m128 d) { d_ = d; return *this; }
+    float32<4>(__m128 d) : d_(d) {}
+    float32<4>& operator=(__m128 d) { d_ = d; return *this; }
 #elif SIMDPP_USE_NEON
-    float32x4(float32x4_t d) : d_(d) {}
-    float32x4& operator=(float32x4_t d) { d_ = d; return *this; }
+    float32<4>(float32x4_t d) : d_(d) {}
+    float32<4>& operator=(float32x4_t d) { d_ = d; return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    float32x4(__vector float d) : d_(d) {}
-    float32x4& operator=(__vector float d) { d_ = d; return *this; }
+    float32<4>(__vector float d) : d_(d) {}
+    float32<4>& operator=(__vector float d) { d_ = d; return *this; }
 #endif
 
     /// Convert to underlying vector type
@@ -88,23 +88,23 @@ public:
     /// @{
     /// Construct from compatible int32x4 integer vector type
 #if SIMDPP_USE_SSE2
-    explicit float32x4(basic_int32x4 d) : d_(_mm_castsi128_ps(d)) {}
-    float32x4& operator=(basic_int32x4 d) { d_ = _mm_castsi128_ps(d); return *this; }
+    explicit float32<4>(basic_int32x4 d) : d_(_mm_castsi128_ps(d)) {}
+    float32<4>& operator=(basic_int32x4 d) { d_ = _mm_castsi128_ps(d); return *this; }
 #elif SIMDPP_USE_NEON
-    explicit float32x4(basic_int32x4 d)  : d_(vreinterpretq_f32_s32(d)) {}
-    float32x4& operator=(basic_int32x4 d) { d_ = vreinterpretq_f32_s32(d); return *this; }
+    explicit float32<4>(basic_int32x4 d)  : d_(vreinterpretq_f32_s32(d)) {}
+    float32<4>& operator=(basic_int32x4 d) { d_ = vreinterpretq_f32_s32(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    explicit float32x4(basic_int32x4 d)  : d_((__vector float)d) {}
-    float32x4& operator=(basic_int32x4 d) { d_ = (__vector float)d; return *this; }
+    explicit float32<4>(basic_int32x4 d)  : d_((__vector float)d) {}
+    float32<4>& operator=(basic_int32x4 d) { d_ = (__vector float)d; return *this; }
 #elif SIMDPP_USE_NULL
-    explicit float32x4(basic_int32x4 d)
+    explicit float32<4>(basic_int32x4 d)
     {
         f32_[0] = bit_cast<float>(d[0]);
         f32_[1] = bit_cast<float>(d[1]);
         f32_[2] = bit_cast<float>(d[2]);
         f32_[3] = bit_cast<float>(d[3]);
     }
-    float32x4& operator=(basic_int32x4 d) { operator=(float32x4(d)); return *this; }
+    float32<4>& operator=(basic_int32x4 d) { operator=(float32x4(d)); return *this; }
 #endif
     /// @}
 
@@ -193,30 +193,31 @@ private:
 };
 
 /// Class representing a mask for 4x 32-bit floating-point vector
-class mask_float32x4 {
+template<>
+class mask_float32<4> {
 public:
     static constexpr unsigned length = 4;
 
-    mask_float32x4() = default;
-    mask_float32x4(const mask_float32x4 &) = default;
-    mask_float32x4 &operator=(const mask_float32x4 &) = default;
+    mask_float32<4>() = default;
+    mask_float32<4>(const mask_float32x4 &) = default;
+    mask_float32<4> &operator=(const mask_float32x4 &) = default;
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #if SIMDPP_USE_SSE2
-    mask_float32x4(__m128 d) : d_(d) {}
+    mask_float32<4>(__m128 d) : d_(d) {}
 #elif SIMDPP_USE_NEON
-    mask_float32x4(float32x4_t d) : d_(d) {}
-    mask_float32x4(uint32x4_t d) : d_(d) {}
+    mask_float32<4>(float32x4_t d) : d_(d) {}
+    mask_float32<4>(uint32x4_t d) : d_(d) {}
 #elif SIMDPP_USE_ALTIVEC
-    mask_float32x4(__vector float d) : d_(d) {}
-    mask_float32x4(__vector __bool int d) : d_((__vector float)d) {}
+    mask_float32<4>(__vector float d) : d_(d) {}
+    mask_float32<4>(__vector __bool int d) : d_((__vector float)d) {}
 #endif
 
 #if SIMDPP_USE_NULL
 #else
-    mask_float32x4(float32x4 d) : d_(d) {}
+    mask_float32<4>(float32x4 d) : d_(d) {}
 #endif
 #endif
 

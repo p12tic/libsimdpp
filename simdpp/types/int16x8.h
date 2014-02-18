@@ -46,7 +46,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Generic class representing 8x 16-bit integer vector.
     To be used where the signedness of the underlying element type is not important
 */
-class basic_int16x8 : public int128 {
+template<>
+class gint16<8> : public int128 {
 public:
 
     using element_type = uint16_t;
@@ -59,31 +60,31 @@ public:
     static constexpr unsigned num_bits = 16;
     static constexpr uint_element_type all_bits = 0xffff;
 
-    basic_int16x8() = default;
-    basic_int16x8(const basic_int16x8 &) = default;
-    basic_int16x8 &operator=(const basic_int16x8 &) = default;
+    gint16<8>() = default;
+    gint16<8>(const basic_int16x8 &) = default;
+    gint16<8> &operator=(const basic_int16x8 &) = default;
 
     /// @{
     /// Construct from base type
-    basic_int16x8(const int128& d) : int128(d) {}
-    basic_int16x8& operator=(int128 d) { int128::operator=(d); return *this; }
+    gint16<8>(const int128& d) : int128(d) {}
+    gint16<8>& operator=(int128 d) { int_bits<16>::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    basic_int16x8(__m128i d) : int128(d) {}
-    basic_int16x8& operator=(__m128i d) { int128::operator=(d); return *this; }
+    gint16<8>(__m128i d) : int128(d) {}
+    gint16<8>& operator=(__m128i d) { int_bits<16>::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    basic_int16x8(uint16x8_t d) : int128(d) {}
-    basic_int16x8( int16x8_t d) : int128(d) {}
-    basic_int16x8& operator=(uint16x8_t d) { int128::operator=(d); return *this; }
-    basic_int16x8& operator=( int16x8_t d) { int128::operator=(d); return *this; }
+    gint16<8>(uint16x8_t d) : int128(d) {}
+    gint16<8>( int16x8_t d) : int128(d) {}
+    gint16<8>& operator=(uint16x8_t d) { int_bits<16>::operator=(d); return *this; }
+    gint16<8>& operator=( int16x8_t d) { int_bits<16>::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    basic_int16x8(__vector uint16_t d) : int128(d) {}
-    basic_int16x8(__vector  int16_t d) : int128(d) {}
-    basic_int16x8& operator=(__vector uint16_t d) { int128::operator=(d); return *this; }
-    basic_int16x8& operator=(__vector  int16_t d) { int128::operator=(d); return *this; }
+    gint16<8>(__vector uint16_t d) : int128(d) {}
+    gint16<8>(__vector  int16_t d) : int128(d) {}
+    gint16<8>& operator=(__vector uint16_t d) { int_bits<16>::operator=(d); return *this; }
+    gint16<8>& operator=(__vector  int16_t d) { int_bits<16>::operator=(d); return *this; }
 #endif
     /// @}
 
@@ -98,35 +99,36 @@ public:
 
 /** Class representing 8x 16-bit signed integer vector
 */
-class int16x8 : public basic_int16x8 {
+template<>
+class int16<8> : public basic_int16x8 {
 public:
 
     using element_type = int16_t;
 
-    int16x8() = default;
-    int16x8(const int16x8 &) = default;
-    int16x8 &operator=(const int16x8 &) = default;
+    int16<8>() = default;
+    int16<8>(const int16x8 &) = default;
+    int16<8> &operator=(const int16x8 &) = default;
 
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    int16x8(__m128i d) : basic_int16x8(d) {}
-    int16x8& operator=(__m128i d) { basic_int16x8::operator=(d); return *this; }
+    int16<8>(__m128i d) : basic_int16x8(d) {}
+    int16<8>& operator=(__m128i d) { basic_int16x8::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    int16x8(int16x8_t d) : basic_int16x8(d) {}
-    int16x8& operator=(int16x8_t d) { basic_int16x8::operator=(d); return *this; }
+    int16<8>(int16x8_t d) : basic_int16x8(d) {}
+    int16<8>& operator=(int16x8_t d) { basic_int16x8::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    int16x8(__vector int16_t d) : basic_int16x8(d) {}
-    int16x8& operator=(__vector int16_t d) { basic_int16x8::operator=(d); return *this; }
+    int16<8>(__vector int16_t d) : basic_int16x8(d) {}
+    int16<8>& operator=(__vector int16_t d) { basic_int16x8::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    int16x8(const int128& d) : basic_int16x8(d) {}
-    int16x8(basic_int16x8 d) : basic_int16x8(d) {}
-    int16x8& operator=(int128 d) { basic_int16x8::operator=(d); return *this; }
-    int16x8& operator=(basic_int16x8 d) { basic_int16x8::operator=(d); return *this; }
+    int16<8>(const int128& d) : basic_int16x8(d) {}
+    int16<8>(basic_int16x8 d) : basic_int16x8(d) {}
+    int16<8>& operator=(int128 d) { basic_int16x8::operator=(d); return *this; }
+    int16<8>& operator=(basic_int16x8 d) { basic_int16x8::operator=(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -208,33 +210,34 @@ public:
 
 /** Class representing 8x 16-bit unsigned integer vector
 */
-class uint16x8 : public basic_int16x8 {
+template<>
+class uint16<8> : public basic_int16x8 {
 public:
 
-    uint16x8() = default;
-    uint16x8(const uint16x8 &) = default;
-    uint16x8 &operator=(const uint16x8 &) = default;
+    uint16<8>() = default;
+    uint16<8>(const uint16x8 &) = default;
+    uint16<8> &operator=(const uint16x8 &) = default;
 
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    uint16x8(__m128i d) : basic_int16x8(d) {}
-    uint16x8& operator=(__m128i d) { basic_int16x8::operator=(d); return *this; }
+    uint16<8>(__m128i d) : basic_int16x8(d) {}
+    uint16<8>& operator=(__m128i d) { basic_int16x8::operator=(d); return *this; }
 #elif SIMDPP_USE_NEON
-    uint16x8(uint16x8_t d) : basic_int16x8(d) {}
-    uint16x8& operator=(uint16x8_t d) { basic_int16x8::operator=(d); return *this; }
+    uint16<8>(uint16x8_t d) : basic_int16x8(d) {}
+    uint16<8>& operator=(uint16x8_t d) { basic_int16x8::operator=(d); return *this; }
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8(__vector uint16_t d) : basic_int16x8(d) {}
-    uint16x8& operator=(__vector uint16_t d) { basic_int16x8::operator=(d); return *this; }
+    uint16<8>(__vector uint16_t d) : basic_int16x8(d) {}
+    uint16<8>& operator=(__vector uint16_t d) { basic_int16x8::operator=(d); return *this; }
 #endif
     /// @}
 
     /// @{
     /// Construct from the base type
-    uint16x8(const int128& d) : basic_int16x8(d) {}
-    uint16x8(basic_int16x8 d) : basic_int16x8(d) {}
-    uint16x8& operator=(int128 d) { basic_int16x8::operator=(d); return *this; }
-    uint16x8& operator=(basic_int16x8 d) { basic_int16x8::operator=(d); return *this; }
+    uint16<8>(const int128& d) : basic_int16x8(d) {}
+    uint16<8>(basic_int16x8 d) : basic_int16x8(d) {}
+    uint16<8>& operator=(int128 d) { basic_int16x8::operator=(d); return *this; }
+    uint16<8>& operator=(basic_int16x8 d) { basic_int16x8::operator=(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -315,28 +318,29 @@ public:
 };
 
 /// Class representing mask for 8x 16-bit integer vector
-class mask_int16x8 {
+template<>
+class mask_int16<8> {
 public:
     static constexpr unsigned length = 8;
 
-    mask_int16x8() = default;
-    mask_int16x8(const mask_int16x8 &) = default;
-    mask_int16x8 &operator=(const mask_int16x8 &) = default;
+    mask_int16<8>() = default;
+    mask_int16<8>(const mask_int16x8 &) = default;
+    mask_int16<8> &operator=(const mask_int16x8 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_SSE2
-    mask_int16x8(__m128i d) : d_(d) {}
+    mask_int16<8>(__m128i d) : d_(d) {}
 #elif SIMDPP_USE_NEON
-    mask_int16x8(uint16x8_t d) : d_(d) {}
-    mask_int16x8( int16x8_t d) : d_(d) {}
+    mask_int16<8>(uint16x8_t d) : d_(d) {}
+    mask_int16<8>( int16x8_t d) : d_(d) {}
 #elif SIMDPP_USE_ALTIVEC
-    mask_int16x8(__vector int16_t d) : d_(d) {}
-    mask_int16x8(__vector uint16_t d) : d_(d) {}
-    mask_int16x8(__vector __bool short d) : d_(d) {}
+    mask_int16<8>(__vector int16_t d) : d_(d) {}
+    mask_int16<8>(__vector uint16_t d) : d_(d) {}
+    mask_int16<8>(__vector __bool short d) : d_(d) {}
 #endif
 #if SIMDPP_USE_NULL
 #else
-    mask_int16x8(basic_int16x8 d) : d_(d) {}
+    mask_int16<8>(basic_int16x8 d) : d_(d) {}
 #endif
 #endif
 

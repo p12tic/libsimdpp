@@ -41,7 +41,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline basic_int32x8::basic_int32x8(const float32x8& d)
+inline gint32<8>::gint32(const float32x8& d)
 {
 #if SIMDPP_USE_AVX2
     operator=(_mm256_castps_si256(d));

@@ -44,49 +44,75 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 // types
-class float32x4;
-class float64x2;
-class float32x8;
-class float64x4;
-class int128;
-class int256;
-class int8x16;
-class int16x8;
-class int32x4;
-class int64x2;
-class int8x32;
-class int16x16;
-class int32x8;
-class int64x4;
-class uint8x16;
-class uint16x8;
-class uint32x4;
-class uint64x2;
-class uint8x32;
-class uint16x16;
-class uint32x8;
-class uint64x4;
-class basic_int8x16;
-class basic_int16x8;
-class basic_int32x4;
-class basic_int64x2;
-class basic_int8x32;
-class basic_int16x16;
-class basic_int32x8;
-class basic_int64x4;
+template<unsigned N> class float32;
+template<unsigned N> class mask_float32;
+using float32x4 = float32<4>;
+using float32x8 = float32<8>;
+using mask_float32x4 = mask_float32<4>;
+using mask_float32x8 = mask_float32<8>;
 
-class mask_int8x16;
-class mask_int8x32;
-class mask_int16x8;
-class mask_int16x16;
-class mask_int32x4;
-class mask_int32x8;
-class mask_int64x2;
-class mask_int64x4;
-class mask_float32x4;
-class mask_float32x8;
-class mask_float64x2;
-class mask_float64x4;
+template<unsigned N> class float64;
+template<unsigned N> class mask_float64;
+using float64x2 = float64<2>;
+using float64x4 = float64<4>;
+using mask_float64x2 = mask_float64<2>;
+using mask_float64x4 = mask_float64<4>;
+
+template<unsigned B> class int_bits;
+using int128 = int_bits<16>;
+using int256 = int_bits<32>;
+
+template<unsigned N> class gint8;
+template<unsigned N> class int8;
+template<unsigned N> class uint8;
+template<unsigned N> class mask_int8;
+using basic_int8x16 = gint8<16>;
+using basic_int8x32 = gint8<32>;
+using int8x16 = int8<16>;
+using int8x32 = int8<32>;
+using uint8x16 = uint8<16>;
+using uint8x32 = uint8<32>;
+using mask_int8x16 = mask_int8<16>;
+using mask_int8x32 = mask_int8<32>;
+
+template<unsigned N> class gint16;
+template<unsigned N> class int16;
+template<unsigned N> class uint16;
+template<unsigned N> class mask_int16;
+using basic_int16x8 = gint16<8>;
+using basic_int16x16 = gint16<16>;
+using int16x8 = int16<8>;
+using int16x16 = int16<16>;
+using uint16x8 = uint16<8>;
+using uint16x16 = uint16<16>;
+using mask_int16x8 = mask_int16<8>;
+using mask_int16x16 = mask_int16<16>;
+
+template<unsigned N> class gint32;
+template<unsigned N> class int32;
+template<unsigned N> class uint32;
+template<unsigned N> class mask_int32;
+using basic_int32x4 = gint32<4>;
+using basic_int32x8 = gint32<8>;
+using int32x4 = int32<4>;
+using int32x8 = int32<8>;
+using uint32x4 = uint32<4>;
+using uint32x8 = uint32<8>;
+using mask_int32x4 = mask_int32<4>;
+using mask_int32x8 = mask_int32<8>;
+
+template<unsigned N> class gint64;
+template<unsigned N> class int64;
+template<unsigned N> class uint64;
+template<unsigned N> class mask_int64;
+using basic_int64x2 = gint64<2>;
+using basic_int64x4 = gint64<4>;
+using int64x2 = int64<2>;
+using int64x4 = int64<4>;
+using uint64x2 = uint64<2>;
+using uint64x4 = uint64<4>;
+using mask_int64x2 = mask_int64<2>;
+using mask_int64x4 = mask_int64<4>;
 
 // math_shift.h
 inline int16x8 shift_r(int16x8, unsigned);

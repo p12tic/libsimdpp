@@ -45,7 +45,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @{
 
 /// Base class for all 128-bit integer objects
-class int128 {
+template<>
+class int_bits<16> {
 public:
     using element_type = uint64_t;
     using uint_element_type = uint64_t;
@@ -55,33 +56,33 @@ public:
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
-    int128() = default;
-    int128(const int128 &) = default;
-    int128 &operator=(const int128 &) = default;
+    int_bits<16>() = default;
+    int_bits<16>(const int128 &) = default;
+    int_bits<16> &operator=(const int128 &) = default;
 
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    int128(__m128i d) : d_(d) {}
+    int_bits<16>(__m128i d) : d_(d) {}
 #elif SIMDPP_USE_NEON
-    int128(uint32x4_t d)  : d_(d) {}
-    int128( int32x4_t d) : d_(vreinterpretq_u32_s32(d)) {}
-    int128( int64x2_t d) : d_(vreinterpretq_u32_s64(d)) {}
-    int128(uint64x2_t d) : d_(vreinterpretq_u32_u64(d)) {}
-    int128( int16x8_t d) : d_(vreinterpretq_u32_s16(d)) {}
-    int128(uint16x8_t d) : d_(vreinterpretq_u32_u16(d)) {}
-    int128( int8x16_t d) : d_(vreinterpretq_u32_s8(d)) {}
-    int128(uint8x16_t d) : d_(vreinterpretq_u32_u8(d)) {}
+    int_bits<16>(uint32x4_t d)  : d_(d) {}
+    int_bits<16>( int32x4_t d) : d_(vreinterpretq_u32_s32(d)) {}
+    int_bits<16>( int64x2_t d) : d_(vreinterpretq_u32_s64(d)) {}
+    int_bits<16>(uint64x2_t d) : d_(vreinterpretq_u32_u64(d)) {}
+    int_bits<16>( int16x8_t d) : d_(vreinterpretq_u32_s16(d)) {}
+    int_bits<16>(uint16x8_t d) : d_(vreinterpretq_u32_u16(d)) {}
+    int_bits<16>( int8x16_t d) : d_(vreinterpretq_u32_s8(d)) {}
+    int_bits<16>(uint8x16_t d) : d_(vreinterpretq_u32_u8(d)) {}
 #elif SIMDPP_USE_ALTIVEC
-    int128(__vector uint8_t d)          : d_(d) {}
-    int128(__vector  int8_t d)          : d_((__vector uint8_t)d) {}
-    int128(__vector   __bool char d)    : d_((__vector uint8_t)d) {}
-    int128(__vector uint16_t d)         : d_((__vector uint8_t)d) {}
-    int128(__vector  int16_t d)         : d_((__vector uint8_t)d) {}
-    int128(__vector   __bool short d)   : d_((__vector uint8_t)d) {}
-    int128(__vector uint32_t d)         : d_((__vector uint8_t)d) {}
-    int128(__vector  int32_t d)         : d_((__vector uint8_t)d) {}
-    int128(__vector   __bool int d)     : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector uint8_t d)        : d_(d) {}
+    int_bits<16>(__vector  int8_t d)        : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector   __bool char d)  : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector uint16_t d)       : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector  int16_t d)       : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector   __bool short d) : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector uint32_t d)       : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector  int32_t d)       : d_((__vector uint8_t)d) {}
+    int_bits<16>(__vector   __bool int d)   : d_((__vector uint8_t)d) {}
 #endif
     /// @}
 

@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/types/int32x8.h>
 #include <simdpp/types/float32x4.h>
 
@@ -41,13 +42,12 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-class basic_int32x8;
-
 /// @ingroup simd_vec_fp
 /// @{
 
 /// Class representing a float32x8 vector
-class float32x8 {
+template<>
+class float32<8> {
 public:
 
     using element_type = float;
@@ -61,14 +61,14 @@ public:
     static constexpr unsigned num_bits = 32;
     static constexpr uint_element_type all_bits = 0xffffffff;
 
-    float32x8() = default;
-    float32x8(const float32x8&) = default;
-    float32x8& operator=(const float32x8&) = default;
+    float32<8>() = default;
+    float32<8>(const float32x8&) = default;
+    float32<8>& operator=(const float32x8&) = default;
 
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    float32x8(__m256 d) : d_(d) {}
-    float32x8& operator=(__m256 d) { d_ = d; return *this; }
+    float32<8>(__m256 d) : d_(d) {}
+    float32<8>& operator=(__m256 d) { d_ = d; return *this; }
 #endif
 
     /// Convert to underlying vector type
@@ -79,25 +79,25 @@ public:
     /// @{
     /// Construct from compatible int32x8 integer vector type
 #if SIMDPP_USE_AVX2
-    explicit float32x8(basic_int32x8 d) : d_(_mm256_castsi256_ps(d)) {}
+    explicit float32<8>(basic_int32x8 d) : d_(_mm256_castsi256_ps(d)) {}
 #elif SIMDPP_USE_AVX
-    explicit float32x8(basic_int32x8 d)
+    explicit float32<8>(basic_int32x8 d)
     {
         d_ = _mm256_castsi256_ps(_mm256_insertf128_si256(_mm256_castsi128_si256(d[0]), d[1], 1));
     }
 #else
-    explicit float32x8(basic_int32x8 d)
+    explicit float32<8>(basic_int32x8 d)
     {
         d_[0] = int32x4(d[0]);
         d_[1] = int32x4(d[1]);
     }
 #endif
-    float32x8& operator=(basic_int32x8 d) { operator=(float32x8(d)); return *this; }
+    float32<8>& operator=(basic_int32x8 d) { operator=(float32x8(d)); return *this; }
     /// @}
 
 #if SIMDPP_USE_AVX
 #else
-    float32x8(float32x4 d0, float32x4 d1) { d_[0] = d0;  d_[1] = d1; }
+    float32<8>(float32x4 d0, float32x4 d1) { d_[0] = d0;  d_[1] = d1; }
 
     const float32x4& operator[](unsigned i) const { return d_[i]; }
           float32x4& operator[](unsigned i)       { return d_[i]; }
@@ -181,20 +181,21 @@ private:
 };
 
 /// Class representing a mask for 8x 32-bit floating-point vector
-class mask_float32x8 {
+template<>
+class mask_float32<8> {
 public:
     static constexpr unsigned length = 8;
 
-    mask_float32x8() = default;
-    mask_float32x8(const mask_float32x8 &) = default;
-    mask_float32x8 &operator=(const mask_float32x8 &) = default;
+    mask_float32<8>() = default;
+    mask_float32<8>(const mask_float32x8 &) = default;
+    mask_float32<8> &operator=(const mask_float32x8 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX
-    mask_float32x8(__m256 d) : d_(d) {}
-    mask_float32x8(float32x8 d) : d_(d) {}
+    mask_float32<8>(__m256 d) : d_(d) {}
+    mask_float32<8>(float32x8 d) : d_(d) {}
 #else
-    mask_float32x8(mask_float32x4 m0, mask_float32x4 m1) { m_[0] = m0; m_[1] = m1; }
+    mask_float32<8>(mask_float32x4 m0, mask_float32x4 m1) { m_[0] = m0; m_[1] = m1; }
 #endif
 #endif
 

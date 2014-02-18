@@ -41,7 +41,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline int128 int128::zero()
+inline int_bits<16> int_bits<16>::zero()
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     basic_int32x4 r;
@@ -52,7 +52,7 @@ inline int128 int128::zero()
 #endif
 }
 
-inline int128 int128::ones()
+inline int_bits<16> int_bits<16>::ones()
 {
     basic_int32x4 r;
     r = cmp_eq(r, r);

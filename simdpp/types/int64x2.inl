@@ -46,7 +46,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline basic_int64x2::basic_int64x2(const float64x2& d)
+inline gint64<2>::gint64(const float64x2& d)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<basic_int64x2> ax;

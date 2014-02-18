@@ -47,7 +47,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** @ingroup simd_vec_int
     Base class for all 128-bit integer objects
 */
-class int256 {
+template<>
+class int_bits<32> {
 public:
 
     using element_type = uint64_t;
@@ -58,16 +59,16 @@ public:
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
-    int256() = default;
-    int256(const int256 &) = default;
-    int256 &operator=(const int256 &) = default;
+    int_bits<32>() = default;
+    int_bits<32>(const int256 &) = default;
+    int_bits<32> &operator=(const int256 &) = default;
 
     /// @{
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX2
-    int256(__m256i d) : d_(d) {}
+    int_bits<32>(__m256i d) : d_(d) {}
 #elif SIMDPP_USE_AVX
-    int256(__m256i d)
+    int_bits<32>(__m256i d)
     {
         d_[0] = _mm256_castsi256_si128(d);
         d_[1] = _mm256_extractf128_si256(d, 1);
@@ -89,7 +90,7 @@ public:
 
 #if SIMDPP_USE_AVX2
 #else
-    int256(int128 d0, int128 d1)    { d_[0] = d0;  d_[1] = d1; }
+    int_bits<32>(int128 d0, int128 d1)    { d_[0] = d0;  d_[1] = d1; }
 
     const int128& operator[](unsigned i) const { return d_[i]; }
           int128& operator[](unsigned i)       { return d_[i]; }

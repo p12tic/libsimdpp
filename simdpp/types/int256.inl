@@ -41,14 +41,14 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline int256 int256::zero()
+inline int_bits<32> int_bits<32>::zero()
 {
     basic_int32x8 r;
     r = bit_xor(r, r);
     return r;
 }
 
-inline int256 int256::ones()
+inline int_bits<32> int_bits<32>::ones()
 {
     basic_int32x8 r;
     r = cmp_eq(r, r);

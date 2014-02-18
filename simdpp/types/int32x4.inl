@@ -44,7 +44,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline basic_int32x4::basic_int32x4(const float32x4& d)
+inline gint32<4>::gint32(const float32x4& d)
 {
 #if SIMDPP_USE_NULL
     u32(0) = bit_cast<uint32_t>(d[0]);

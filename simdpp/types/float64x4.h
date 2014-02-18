@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/types/int64x4.h>
 #include <simdpp/types/float64x2.h>
 #include <simdpp/cast.h>
@@ -42,13 +43,12 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-class basic_int64x4;
-
 /// @ingroup simd_vec_fp
 /// @{
 
 /// Class representing float64x4 vector
-class float64x4 {
+template<>
+class float64<4> {
 public:
 
     using element_type = double;
@@ -62,14 +62,14 @@ public:
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
-    float64x4() = default;
-    float64x4(const float64x4&) = default;
-    float64x4& operator=(const float64x4&) = default;
+    float64<4>() = default;
+    float64<4>(const float64x4&) = default;
+    float64<4>& operator=(const float64x4&) = default;
 
     /// Construct from the underlying vector type
 #if SIMDPP_USE_AVX
-    float64x4(__m256d d) : d_(d) {}
-    float64x4& operator=(__m256d d) { d_ = d; return *this; }
+    float64<4>(__m256d d) : d_(d) {}
+    float64<4>& operator=(__m256d d) { d_ = d; return *this; }
 #endif
 
     /// Convert to underlying vector type
@@ -80,27 +80,27 @@ public:
     /// @{
     /// Construct from compatible int64x4 integer vector type
 #if SIMDPP_USE_AVX2
-    explicit float64x4(basic_int64x4 d) : d_(_mm256_castsi256_pd(d)) {}
+    explicit float64<4>(basic_int64x4 d) : d_(_mm256_castsi256_pd(d)) {}
 #elif SIMDPP_USE_AVX
-    explicit float64x4(basic_int64x4 d);
+    explicit float64<4>(basic_int64x4 d);
 #else
-    explicit float64x4(basic_int64x4 d)
+    explicit float64<4>(basic_int64x4 d)
     {
         d_[0] = float64x2(d[0]);
         d_[1] = float64x2(d[1]);
     }
 #endif
-    float64x4& operator=(basic_int64x4 d) { operator=(float64x4(d)); return *this; }
+    float64<4>& operator=(basic_int64x4 d) { operator=(float64x4(d)); return *this; }
 
     /// @}
 
 #if SIMDPP_USE_AVX
-    float64x4(float64x2 d0, float64x2 d1)
+    float64<4>(float64x2 d0, float64x2 d1)
     {
         d_ = _mm256_insertf128_pd(_mm256_castpd128_pd256(d0), d1, 1);
     }
 #else
-    float64x4(float64x2 d0, float64x2 d1) { d_[0] = d0; d_[1] = d1; }
+    float64<4>(float64x2 d0, float64x2 d1) { d_[0] = d0; d_[1] = d1; }
 
     const float64x2& operator[](unsigned i) const { return d_[i]; }
           float64x2& operator[](unsigned i)       { return d_[i]; }
@@ -173,20 +173,21 @@ private:
 };
 
 /// Class representing a mask for 4x 64-bit floating-point vector
-class mask_float64x4 {
+template<>
+class mask_float64<4> {
 public:
     static constexpr unsigned length = 4;
 
-    mask_float64x4() = default;
-    mask_float64x4(const mask_float64x4 &) = default;
-    mask_float64x4 &operator=(const mask_float64x4 &) = default;
+    mask_float64<4>() = default;
+    mask_float64<4>(const mask_float64x4 &) = default;
+    mask_float64<4> &operator=(const mask_float64x4 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_AVX
-    mask_float64x4(__m256d d) : d_(d) {}
-    mask_float64x4(float64x4 d) : d_(d) {}
+    mask_float64<4>(__m256d d) : d_(d) {}
+    mask_float64<4>(float64x4 d) : d_(d) {}
 #else
-    mask_float64x4(mask_float64x2 m0, mask_float64x2 m1) { m_[0] = m0; m_[1] = m1; }
+    mask_float64<4>(mask_float64x2 m0, mask_float64x2 m1) { m_[0] = m0; m_[1] = m1; }
 #endif
 #endif
 

@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/types/int64x2.h>
 #include <simdpp/cast.h>
 
@@ -41,13 +42,12 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-class basic_int64x2;
-
 /// @ingroup simd_vec_fp
 /// @{
 
 /// Class representing float64x2 vector
-class float64x2 {
+template<>
+class float64<2> {
 public:
 
     using element_type = double;
@@ -60,14 +60,14 @@ public:
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
-    float64x2() = default;
-    float64x2(const float64x2&) = default;
-    float64x2& operator=(const float64x2&) = default;
+    float64<2>() = default;
+    float64<2>(const float64x2&) = default;
+    float64<2>& operator=(const float64x2&) = default;
 
     /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    float64x2(__m128d d) : d_(d) {}
-    float64x2& operator=(__m128d d) { d_ = d; return *this; }
+    float64<2>(__m128d d) : d_(d) {}
+    float64<2>& operator=(__m128d d) { d_ = d; return *this; }
 #endif
 
     /// Convert to underlying vector type
@@ -77,8 +77,8 @@ public:
 
     /// @{
     /// Construct from compatible int64x2 integer vector type
-    explicit float64x2(basic_int64x2 d);
-    float64x2& operator=(basic_int64x2 d) { operator=(float64x2(d)); return *this; }
+    explicit float64<2>(basic_int64x2 d);
+    float64<2>& operator=(basic_int64x2 d) { operator=(float64x2(d)); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -146,21 +146,22 @@ private:
 
 
 /// Class representing a mask for 2x 64-bit floating-point vector
-class mask_float64x2 {
+template<>
+class mask_float64<2> {
 public:
     static constexpr unsigned length = 2;
 
-    mask_float64x2() = default;
-    mask_float64x2(const mask_float64x2 &) = default;
-    mask_float64x2 &operator=(const mask_float64x2 &) = default;
+    mask_float64<2>() = default;
+    mask_float64<2>(const mask_float64x2 &) = default;
+    mask_float64<2> &operator=(const mask_float64x2 &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_SSE2
-    mask_float64x2(__m128d d) : d_(d) {}
+    mask_float64<2>(__m128d d) : d_(d) {}
 #endif
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 #else
-    mask_float64x2(float64x2 d) : d_(d) {}
+    mask_float64<2>(float64x2 d) : d_(d) {}
 #endif
 #endif
 

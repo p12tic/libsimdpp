@@ -45,7 +45,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline float64x2::float64x2(basic_int64x2 d)
+inline float64<2>::float64(basic_int64x2 d)
 {
 #if SIMDPP_USE_SSE2
     d_ = _mm_castsi128_pd(d);
