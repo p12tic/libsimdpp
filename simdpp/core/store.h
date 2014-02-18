@@ -33,8 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/memory.h>
-#include <simdpp/detail/align.h>
+#include <simdpp/detail/insn/store.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -61,112 +60,36 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-inline void store(void* p, gint8x16 a)
+template<unsigned N, class E>
+void store(void* p, gint8<N,E> a)
 {
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store(p, a);
-#elif SIMDPP_USE_SSE2
-    _mm_store_si128(reinterpret_cast<__m128i*>(p), a);
-#elif SIMDPP_USE_NEON
-    vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u32(a));
-#elif SIMDPP_USE_ALTIVEC
-    vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
-#endif
+    detail::insn::i_store(p, a.eval());
 }
-
-#if SIMDPP_USE_AVX2
-inline void store(void* p, gint8x32 a)
+template<unsigned N, class E>
+void store(void* p, gint16<N,E> a)
 {
-    p = detail::assume_aligned(p, 32);
-    _mm256_store_si256(reinterpret_cast<__m256i*>(p), a);
+    detail::insn::i_store(p, a.eval());
 }
-#endif
-
-template<unsigned N>
-void store(void* p, gint8<N> a)
+template<unsigned N, class E>
+void store(void* p, gint32<N,E> a)
 {
-    unsigned veclen = sizeof(typename gint8<N>::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-    char* q = reinterpret_cast<char*>(p);
-    for (unsigned i = 0; i < gint8<N>::vec_length; ++i) {
-        store(q, a[i]);
-        q += veclen;
-    }
+    detail::insn::i_store(p, a.eval());
 }
-
-template<unsigned N>
-void store(void* p, gint16<N> a) { store(p, gint8<N*2>(a)); }
-template<unsigned N>
-void store(void* p, gint32<N> a) { store(p, gint8<N*4>(a)); }
-template<unsigned N>
-void store(void* p, gint64<N> a) { store(p, gint8<N*8>(a)); }
-
-inline void store(float *p, float32x4 a)
+template<unsigned N, class E>
+void store(void* p, gint64<N,E> a)
 {
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store(p, a);
-#elif SIMDPP_USE_SSE2
-    _mm_store_ps(p, a);
-#elif SIMDPP_USE_NEON
-    vst1q_f32(p, a);
-#elif SIMDPP_USE_ALTIVEC
-    vec_stl((__vector float)a, 0, p);
-#endif
+    detail::insn::i_store(p, a.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline void store(float* p, float32x8 a)
+template<unsigned N, class E>
+void store(float* p, float32<N,E> a)
 {
-    p = detail::assume_aligned(p, 32);
-    _mm256_store_ps(p, a);
+    detail::insn::i_store(p, a.eval());
 }
-#endif
-
-template<unsigned N>
-void store(float* p, float32<N> a)
+template<unsigned N, class E>
+void store(double* p, float64<N,E> a)
 {
-    unsigned veclen = sizeof(typename float32<N>::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-    for (unsigned i = 0; i < gint8<N>::vec_length; ++i) {
-        store(p, a[i]);
-        p += veclen / sizeof(float);
-    }
+    detail::insn::i_store(p, a.eval());
 }
-
-inline void store(double *p, float64x2 a)
-{
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    null::store(p, a);
-#elif SIMDPP_USE_SSE2
-    _mm_store_pd(p, a);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline void store(double* p, float64x4 a)
-{
-    p = detail::assume_aligned(p, 32);
-    _mm256_store_pd(p, a);
-}
-#endif
-
-template<unsigned N>
-void store(double* p, float64<N> a)
-{
-    unsigned veclen = sizeof(typename float64<N>::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-    for (unsigned i = 0; i < float64<N>::vec_length; ++i) {
-        store(p, a[i]);
-        p += veclen / sizeof(double);
-    }
-}
-
 /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

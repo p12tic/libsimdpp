@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_DETAIL_SHUFFLE_EMUL_H
-#define LIBSIMDPP_SIMDPP_CORE_DETAIL_SHUFFLE_EMUL_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
@@ -34,21 +34,15 @@
 #endif
 
 #include <simdpp/types.h>
-// #include <simdpp/core/permute2.h> break include cycle
+#include <simdpp/core/permute2.h>
 #include <simdpp/core/shuffle1.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
-
-// forward-declarations
-template<unsigned s0, unsigned s1>
-gint64x2 permute2(gint64x2 a);
-template<unsigned s0, unsigned s1>
-float64x2 permute2(float64x2 a);
-
 namespace detail {
+namespace insn {
 
 template<class H, unsigned s0, unsigned s1, class V>
 H permute_half(V a)
@@ -96,6 +90,7 @@ float64x4 permute_emul(float64x4 a)
 }
 /// @}
 
+} // namespace insn
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

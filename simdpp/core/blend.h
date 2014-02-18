@@ -33,10 +33,8 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_and.h>
-#include <simdpp/core/bit_andnot.h>
-#include <simdpp/core/bit_or.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/insn/blend.h>
+#include <simdpp/detail/expr/blend.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -63,63 +61,24 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
     @icost{XOP, 2}
 */
-inline gint8x16 blend(gint8x16 on, gint8x16 off, gint8x16 mask)
+template<unsigned N, class E1, class E2, class E3>
+gint8<N, expr_blend<gint8<N,E1>,
+                    gint8<N,E2>,
+                    gint8<N,E3>>> blend(gint8<N,E1> on,
+                                        gint8<N,E2> off,
+                                        gint8<N,E3> mask)
 {
-#if SIMDPP_USE_NULL
-    return null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX2
-    return _mm_blendv_epi8(off, on, mask);
-#elif SIMDPP_USE_XOP
-    return _mm_cmov_si128(on, off, mask);
-#elif SIMDPP_USE_SSE2
-    // _mm_blendv_epi8 needs xmm0 and occupies the shuffle ports, yet saves
-    // only one uop
-    int8x16 r;
-     on = bit_and(on, mask);
-    off = bit_andnot(off, mask);
-      r = bit_or(on, off);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vbslq_u8(mask, on, off);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_sel((__vector uint8_t)off, (__vector uint8_t)on,
-                   (__vector uint8_t)mask);
-#endif
+    return { { on, off, mask }, 0 };
 }
 
-inline gint8x16 blend(gint8x16 on, gint8x16 off, mask_int8x16 mask)
+template<unsigned N, class E1, class E2, class E3>
+gint8<N, expr_blend<gint8<N,E1>,
+                    gint8<N,E2>,
+                    mask_int8<N,E3>>> blend(gint8<N,E1> on,
+                                            gint8<N,E2> off,
+                                            mask_int8<N,E3> mask)
 {
-#if SIMDPP_USE_NULL
-    return null::blend_mask(on, off, mask);
-#else
-    return blend(uint8x16(on), uint8x16(off), uint8x16(mask));
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline gint8x32 blend(gint8x32 on, gint8x32 off, gint8x32 mask)
-{
-    return _mm256_blendv_epi8(off, on, mask);
-}
-#endif
-
-template<unsigned N>
-gint8<N> blend(gint8<N> on, gint8<N> off, gint8<N> mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, blend, on, off, mask)
-}
-
-#if SIMDPP_USE_AVX2
-inline gint8x32 blend(gint8x32 on, gint8x32 off, mask_int8x32 mask)
-{
-    return blend(uint8x32(on), uint8x32(off), uint8x32(mask));
-}
-#endif
-
-template<unsigned N>
-inline gint8<N> blend(gint8<N> on, gint8<N> off, mask_int8<N> mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, blend, on, off, mask)
+    return { { on, off, mask }, 0 };
 }
 /// @}
 
@@ -140,17 +99,24 @@ inline gint8<N> blend(gint8<N> on, gint8<N> off, mask_int8<N> mask)
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-template<unsigned N>
-inline gint16<N> blend(gint16<N> on, gint16<N> off, gint16<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+gint16<N, expr_blend<gint16<N,E1>,
+                     gint16<N,E2>,
+                     gint16<N,E3>>> blend(gint16<N,E1> on,
+                                          gint16<N,E2> off,
+                                          gint16<N,E3> mask)
 {
-    return blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
+    return { { on, off, mask }, 0 };
 }
 
-template<unsigned N>
-inline gint16<N> blend(gint16<N> on, gint16<N> off, mask_int16<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+gint16<N, expr_blend<gint16<N,E1>,
+                     gint16<N,E2>,
+                     mask_int16<N,E3>>> blend(gint16<N,E1> on,
+                                              gint16<N,E2> off,
+                                              mask_int16<N,E3> mask)
 {
-    // FIXME: null::blend_mask(on, off, mask);
-    return blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
+    return { { on, off, mask }, 0 };
 }
 /// @}
 
@@ -171,17 +137,24 @@ inline gint16<N> blend(gint16<N> on, gint16<N> off, mask_int16<N> mask)
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-template<unsigned N>
-inline gint32<N> blend(gint32<N> on, gint32<N> off, gint32<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+gint32<N, expr_blend<gint32<N,E1>,
+                     gint32<N,E2>,
+                     gint32<N,E3>>> blend(gint32<N,E1> on,
+                                          gint32<N,E2> off,
+                                          gint32<N,E3> mask)
 {
-    return blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
+    return { { on, off, mask }, 0 };
 }
 
-template<unsigned N>
-inline gint32<N> blend(gint32<N> on, gint32<N> off, mask_int32<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+gint32<N, expr_blend<gint32<N,E1>,
+                     gint32<N,E2>,
+                     gint32<N,E3>>> blend(gint32<N,E1> on,
+                                          gint32<N,E2> off,
+                                          mask_int32<N,E3> mask)
 {
-    // FIXME: null::blend_mask(on, off, mask);
-    return blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
+    return { { on, off, mask }, 0 };
 }
 /// @}
 
@@ -202,17 +175,24 @@ inline gint32<N> blend(gint32<N> on, gint32<N> off, mask_int32<N> mask)
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-template<unsigned N>
-inline gint64<N> blend(gint64<N> on, gint64<N> off, gint64<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+gint64<N, expr_blend<gint64<N,E1>,
+                     gint64<N,E2>,
+                     gint64<N,E3>>> blend(gint64<N,E1> on,
+                                          gint64<N,E2> off,
+                                          gint64<N,E3> mask)
 {
-    return blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
+    return { { on, off, mask }, 0 };
 }
 
-template<unsigned N>
-inline gint64<N> blend(gint64<N> on, gint64<N> off, mask_int64<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+gint64<N, expr_blend<gint64<N,E1>,
+                     gint64<N,E2>,
+                     mask_int64<N,E3>>> blend(gint64<N,E1> on,
+                                              gint64<N,E2> off,
+                                              mask_int64<N,E3> mask)
 {
-    // FIXME: null::blend_mask(on, off, mask);
-    return blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
+    return { { on, off, mask }, 0 };
 }
 /// @}
 
@@ -233,66 +213,36 @@ inline gint64<N> blend(gint64<N> on, gint64<N> off, mask_int64<N> mask)
     @icost{SSE2-SSE4.1, 6}
     @icost{NEON, ALTIVEC, 2}
 */
-inline float32x4 blend(float32x4 on, float32x4 off, float32x4 mask)
+template<unsigned N, class E1, class E2, class E3>
+float32<N, expr_blend<float32<N,E1>,
+                      float32<N,E2>,
+                      float32<N,E3>>> blend(float32<N,E1> on,
+                                            float32<N,E2> off,
+                                            float32<N,E3> mask)
 {
-#if SIMDPP_USE_NULL
-    return null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX
-    return _mm_blendv_ps(off, on, mask);
-#elif SIMDPP_USE_SSE2
-    float32x4 r;
-     on = bit_and(on, mask);
-    off = bit_andnot(off, mask);
-      r = bit_or(on, off);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vbslq_f32(uint32x4(mask), on, off);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_sel((__vector float)off, (__vector float)on,
-                   (__vector float)mask);
-#endif
+    return { { on, off, mask }, 0 };
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 blend(float32x8 on, float32x8 off, float32x8 mask)
+template<unsigned N, class E1, class E2, class E3>
+float32<N, expr_blend<float32<N,E1>,
+                      float32<N,E2>,
+                      mask_float32<N,E3>>> blend(float32<N,E1> on,
+                                                 float32<N,E2> off,
+                                                 mask_float32<N,E3> mask)
 {
-    return _mm256_blendv_ps(off, on, mask);
-}
-#endif
-
-template<unsigned N>
-float32<N> blend(float32<N> on, float32<N> off, float32<N> mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float32<N>, blend, on, off, mask);
+    return { { on, off, mask }, 0 };
 }
 
-template<unsigned N>
-inline float32<N> blend(float32<N> on, float32<N> off, gint32<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+float32<N, expr_blend<float32<N,E1>,
+                      float32<N,E2>,
+                      gint32<N,E3>>> blend(float32<N,E1> on,
+                                           float32<N,E2> off,
+                                           gint32<N,E3> mask)
 {
-    return blend(on, off, float32<N>(mask));
+    return { { on, off, mask }, 0 };
 }
 
-inline float32x4 blend(float32x4 on, float32x4 off, mask_float32x4 mask)
-{
-#if SIMDPP_USE_NULL
-    return null::blend_mask(on, off, mask);
-#else
-    return blend(on, off, uint32x4(mask));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline float32x8 blend(float32x8 on, float32x8 off, mask_float32x8 mask)
-{
-    return blend(on, off, uint32x8(mask));
-}
-#endif
-
-template<unsigned N>
-float32<N> blend(float32<N> on, float32<N> off, mask_float32<N> mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float32<N>, blend, on, off, mask);
-}
 /// @}
 
 /// @{
@@ -313,60 +263,34 @@ float32<N> blend(float32<N> on, float32<N> off, mask_float32<N> mask)
     @icost{SSE2-SSE4.1, 6}
     @novec{NEON, ALTIVEC}
 */
-inline float64x2 blend(float64x2 on, float64x2 off, float64x2 mask)
+template<unsigned N, class E1, class E2, class E3>
+float64<N, expr_blend<float64<N,E1>,
+                      float64<N,E2>,
+                      float64<N,E3>>> blend(float64<N,E1> on,
+                                            float64<N,E2> off,
+                                            float64<N,E3> mask)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX
-    return _mm_blendv_pd(off, on, mask);
-#elif SIMDPP_USE_SSE2
-    float64x2 r;
-     on = bit_and(on, mask);
-    off = bit_andnot(off, mask);
-      r = bit_or(on, off);
-    return r;
-#endif
+    return { { on, off, mask }, 0 };
 }
 
-#if SIMDPP_USE_AVX
-inline float64x4 blend(float64x4 on, float64x4 off, float64x4 mask)
+template<unsigned N, class E1, class E2, class E3>
+float64<N, expr_blend<float64<N,E1>,
+                      float64<N,E2>,
+                      gint64<N,E3>>> blend(float64<N,E1> on,
+                                           float64<N,E2> off,
+                                           gint64<N,E3> mask)
 {
-    return _mm256_blendv_pd(off, on, mask);
-}
-#endif
-
-template<unsigned N>
-float64<N> blend(float64<N> on, float64<N> off, float64<N> mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float64<N>, blend, on, off, mask);
+    return { { on, off, mask }, 0 };
 }
 
-template<unsigned N>
-inline float64<N> blend(float64<N> on, float64<N> off, gint64<N> mask)
+template<unsigned N, class E1, class E2, class E3>
+float64<N, expr_blend<float64<N,E1>,
+                      float64<N,E2>,
+                      mask_float64<N,E3>>> blend(float64<N,E1> on,
+                                                 float64<N,E2> off,
+                                                 mask_float64<N,E3> mask)
 {
-    return blend(on, off, float64<N>(mask));
-}
-
-inline float64x2 blend(float64x2 on, float64x2 off, mask_float64x2 mask)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::blend_mask(on, off, mask);
-#else
-    return blend(on, off, uint64x2(mask));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline float64x4 blend(float64x4 on, float64x4 off, mask_float64x4 mask)
-{
-    return blend(on, off, uint64x4(mask));
-}
-#endif
-
-template<unsigned N>
-float64<N> blend(float64<N> on, float64<N> off, mask_float64<N> mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float64<N>, blend, on, off, mask);
+    return { { on, off, mask }, 0 };
 }
 /// @}
 

@@ -67,7 +67,7 @@ inline gint16x16 to_int16(int8x16 a)
 #elif SIMDPP_USE_SSE4_1
     int16x8 r1, r2;
     r1 = _mm_cvtepi8_epi16(a);
-    r2 = _mm_cvtepi8_epi16(move_r<8>(a));
+    r2 = _mm_cvtepi8_epi16(move_r<8>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
@@ -110,8 +110,8 @@ inline gint16x16 to_int16(uint8x16 a)
     return r;
 #elif SIMDPP_USE_SSE4_1
     int16x8 r1, r2;
-    r1 = _mm_cvtepi8_epi16(a);
-    r2 = _mm_cvtepi8_epi16(move_r<8>(a));
+    r1 = _mm_cvtepu8_epi16(a);
+    r2 = _mm_cvtepu8_epi16(move_r<8>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;

@@ -33,15 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/i_sub.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/expr/i_neg.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Negates signed 8-bit values.
 
     @code
@@ -53,32 +51,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline int8x16 neg(int8x16 a)
+template<unsigned N, class E>
+int8<N, expr_neg<int8<N,E>>> neg(int8<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return sub(int8x16::zero(), a);
-#elif SIMDPP_USE_NEON
-    return vnegq_s8(a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline int8x32 neg(int8x32 a)
-{
-    return sub(int8x32::zero(), a);
-}
-#endif
-
-template<unsigned N>
-int8<N> neg(int8<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(int8<N>, neg, a);
-}
-/// @}
-
-/// @{
 /** Negates signed 16-bit values.
 
     @code
@@ -90,32 +68,12 @@ int8<N> neg(int8<N> a)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline int16x8 neg(int16x8 a)
+template<unsigned N, class E>
+int16<N, expr_neg<int16<N,E>>> neg(int16<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return sub(int16x8::zero(), a);
-#elif SIMDPP_USE_NEON
-    return vnegq_s16(a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline int16x16 neg(int16x16 a)
-{
-    return sub(int16x16::zero(), a);
-}
-#endif
-
-template<unsigned N>
-int16<N> neg(int16<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(int16<N>, neg, a);
-}
-/// @}
-
-/// @{
 /** Negates signed 32-bit values.
 
     @code
@@ -127,32 +85,12 @@ int16<N> neg(int16<N> a)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline int32x4 neg(int32x4 a)
+template<unsigned N, class E>
+int32<N, expr_neg<int32<N,E>>> neg(int32<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return sub(int32x4::zero(), a);
-#elif SIMDPP_USE_NEON
-    return vnegq_s32(a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline int32x8 neg(int32x8 a)
-{
-    return sub(int32x8::zero(), a);
-}
-#endif
-
-template<unsigned N>
-int32<N> neg(int32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(int32<N>, neg, a);
-}
-/// @}
-
-/// @{
 /** Negates signed 64-bit values.
 
     @code
@@ -168,28 +106,11 @@ int32<N> neg(int32<N> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 8-9}
 */
-inline int64x2 neg(int64x2 a)
+template<unsigned N, class E>
+int64<N, expr_neg<int64<N,E>>> neg(int64<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return sub(int64x2::zero(), a);
-#endif
+    return { { a }, 0 };
 }
-
-#if SIMDPP_USE_AVX2
-inline int64x4 neg(int64x4 a)
-{
-    return sub(int64x4::zero(), a);
-}
-#endif
-
-template<unsigned N>
-int64<N> neg(int64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(int64<N>, neg, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

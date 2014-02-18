@@ -33,8 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_and.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/insn/f_sign.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -57,13 +56,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, ALTIVEC, NEON, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
-template<unsigned N>
-float32<N> sign(float32<N> a)
+template<unsigned N, class E>
+float32<N, float32<N>> sign(float32<N,E> a)
 {
-    return bit_and(a, int32<N>::make_const(0x80000000));
+    return detail::insn::i_sign(a.eval());
 }
 
-/// @{
 /** Extracts sigh bit from the values in float64x2 vector.
 
     @code
@@ -81,12 +79,12 @@ float32<N> sign(float32<N> a)
     @icost{AVX-AVX2, 1-2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned N>
-float64<N> sign(float64<N> a)
+template<unsigned N, class E>
+float64<N, float64<N>> sign(float64<N,E> a)
 {
-    return bit_and(a, uint64<N>::make_const(0x8000000000000000));
+    return detail::insn::i_sign(a.eval());
 }
-/// @}
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

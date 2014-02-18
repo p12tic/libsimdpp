@@ -232,23 +232,23 @@ void test_shuffle(TestResults& res)
         simdpp::SIMDPP_ARCH_NAMESPACE::detail::mem_block<uint8x16> mu;
         mu = uint8x16::zero();
         mu[el] = 0xff;
-        TEST_PUSH(tc, uint16_t, extract_bits_any(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits_any(uint8x16(mu)));
         mu[el] = 1 << 0;
-        TEST_PUSH(tc, uint16_t, extract_bits<0>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<0>(uint8x16(mu)));
         mu[el] = 1 << 1;
-        TEST_PUSH(tc, uint16_t, extract_bits<1>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<1>(uint8x16(mu)));
         mu[el] = 1 << 2;
-        TEST_PUSH(tc, uint16_t, extract_bits<2>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<2>(uint8x16(mu)));
         mu[el] = 1 << 3;
-        TEST_PUSH(tc, uint16_t, extract_bits<3>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<3>(uint8x16(mu)));
         mu[el] = 1 << 4;
-        TEST_PUSH(tc, uint16_t, extract_bits<4>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<4>(uint8x16(mu)));
         mu[el] = 1 << 5;
-        TEST_PUSH(tc, uint16_t, extract_bits<5>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<5>(uint8x16(mu)));
         mu[el] = 1 << 6;
-        TEST_PUSH(tc, uint16_t, extract_bits<6>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<6>(uint8x16(mu)));
         mu[el] = 1 << 7;
-        TEST_PUSH(tc, uint16_t, extract_bits<7>(uint16x8(mu)));
+        TEST_PUSH(tc, uint16_t, extract_bits<7>(uint8x16(mu)));
     }
 
 }

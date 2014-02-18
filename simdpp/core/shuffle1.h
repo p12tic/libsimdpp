@@ -33,19 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/make_shuffle_bytes_mask.h>
-#include <simdpp/null/shuffle.h>
-#include <simdpp/sse/shuffle.h>
-#include <simdpp/neon/detail/shuffle_int16x8.h>
-#include <simdpp/neon/detail/shuffle_int32x4.h>
-#include <simdpp/neon/detail/shuffle_int64x2.h>
+#include <simdpp/detail/insn/shuffle1.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Selects 64-bit floating-point values from two vectors. The first value in
     each pair of values must come from @a a, the second - from @a b. The
     selector values must be in range [0; 1].
@@ -66,43 +60,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned s0, unsigned s1>
-float64x2 shuffle1(float64x2 a, float64x2 b)
+template<unsigned s0, unsigned s1, unsigned N, class E1, class E2>
+float64<N, float64<N>> shuffle1(float64<N,E1> a,
+                                float64<N,E2> b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return float64x2(shuffle1<s0,s1>(int64x2(a), int64x2(b)));
-#elif SIMDPP_USE_SSE2
-    if (s0 == 0 && s1 == 0) {
-        return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a),
-                                           _mm_castpd_ps(b)));
-    } else if (s0 == 1 && s1 == 1) {
-        return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b),
-                                           _mm_castpd_ps(a)));
-    } else if (s0 == 0 && s1 == 1) {
-        return _mm_move_sd(b, a);
-    } else if (s0 == 1 && s1 == 0) {
-        return _mm_shuffle_pd(a, b, _MM_SHUFFLE2(s1, s0));
-    }
-#endif
+    return detail::insn::i_shuffle1<s0,s1>(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX
-template<unsigned s0, unsigned s1>
-float64x4 shuffle1(float64x4 a, float64x4 b)
-{
-    return _mm256_shuffle_pd(a, b, s0 | s1<<1 | s0<<2 | s1<<3);
-}
-#endif
-
-template<unsigned s0, unsigned s1, unsigned N>
-float64<N> shuffle1(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, (shuffle1<s0,s1>), a, b);
-}
-/// @}
-
-/// @{
 /** Selects 64-bit values from two vectors. The first value in each pair of
     values must come from @a a, the second - from @a b. The selector values
     must be in range [0; 1].
@@ -124,40 +89,13 @@ float64<N> shuffle1(float64<N> a, float64<N> b)
     @icost{NEON, 1-2}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1>
-gint64x2 shuffle1(gint64x2 a, gint64x2 b)
+template<unsigned s0, unsigned s1, unsigned N, class E1, class E2>
+gint64<N, gint64<N>> shuffle1(gint64<N,E1> a,
+                              gint64<N,E2> b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL
-    return null::shuffle1<s0,s1>(a, b);
-#elif SIMDPP_USE_SSE2
-    // We can't do this in the integer execution domain. Beware of additional latency
-    return int64x2(shuffle1<s0,s1>(float64x2(a), float64x2(b)));
-#elif SIMDPP_USE_NEON
-    return neon::detail::shuffle_int64x2::shuffle1<s0,s1>(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 mask = make_shuffle_bytes16_mask<s0,s1+2>(mask);
-    return shuffle_bytes16(a, b, mask);
-#endif
+    return detail::insn::i_shuffle1<s0,s1>(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX2
-template<unsigned s0, unsigned s1>
-gint64x4 shuffle1(gint64x4 a, gint64x4 b)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    // We can't do this in the integer execution domain. Beware of additional latency
-    return int64x4(shuffle1<s0,s1>(float64x4(a), float64x4(b)));
-}
-#endif
-
-template<unsigned s0, unsigned s1, unsigned N>
-gint64<N> shuffle1(gint64<N> a, gint64<N> b)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return int64<N>(shuffle1<s0,s1>(float64<N>(a), float64<N>(b)));
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

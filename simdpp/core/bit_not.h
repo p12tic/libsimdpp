@@ -33,14 +33,14 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_xor.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/bitwise.h>
+#include <simdpp/detail/insn/bit_not.h>
+#include <simdpp/detail/expr/bit_not.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+
 
 /// @{
 /** Computes bitwise NOT of an integer vector
@@ -56,105 +56,46 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, 2-3}
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
-inline gint8x16 bit_not(gint8x16 a)
+template<unsigned N, class E>
+gint8<N, gint8<N>> bit_not(gint8<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::foreach<gint8x16>(a, [](uint64_t a){ return ~a; });
-#elif SIMDPP_USE_SSE2
-    gint8x16 ones = gint8x16::ones();
-    return bit_xor(a, ones);
-#elif SIMDPP_USE_NEON
-    return vmvnq_u8(a);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_nor((__vector uint8_t)a, (__vector uint8_t)a);
-#endif
+    return detail::insn::i_bit_not(a.eval());
+}
+template<unsigned N, class E>
+gint16<N, gint16<N>> bit_not(gint16<N,E> a)
+{
+    return detail::insn::i_bit_not(a.eval());
+}
+template<unsigned N, class E>
+gint32<N, gint32<N>> bit_not(gint32<N,E> a)
+{
+    return detail::insn::i_bit_not(a.eval());
+}
+template<unsigned N, class E>
+gint64<N, gint64<N>> bit_not(gint64<N,E> a)
+{
+    return detail::insn::i_bit_not(a.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline gint8x32 bit_not(gint8x32 a)
+template<unsigned N, class E>
+mask_int8<N, mask_int8<N>> bit_not(mask_int8<N,E> a)
 {
-    gint8x32 ones = gint8x32::ones();
-    return bit_xor(a, ones);
+    return detail::insn::i_bit_not(a.eval());
 }
-#endif
-
-template<unsigned N>
-inline gint8<N> bit_not(gint8<N> a)
+template<unsigned N, class E>
+mask_int16<N, mask_int16<N>> bit_not(mask_int16<N,E> a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(gint8<N>, bit_not, a)
+    return detail::insn::i_bit_not(a.eval());
 }
-
-template<unsigned N>
-gint16<N> bit_not(gint16<N> a) { return bit_not(uint8<N*2>(a)); }
-template<unsigned N>
-gint32<N> bit_not(gint32<N> a) { return bit_not(uint8<N*4>(a)); }
-template<unsigned N>
-gint64<N> bit_not(gint64<N> a) { return bit_not(uint8<N*8>(a)); }
-
-// -----------------------------------------------------------------------------
-
-inline mask_int8x16 bit_not(mask_int8x16 a)
+template<unsigned N, class E>
+mask_int32<N, expr_bit_not<mask_int32<N,E>>> bit_not(mask_int32<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
-#else
-    return bit_not(uint8x16(a));
-#endif
+    return { { a }, 0 };
 }
-
-inline mask_int16x8 bit_not(mask_int16x8 a)
+template<unsigned N, class E>
+mask_int64<N, expr_bit_not<mask_int64<N,E>>> bit_not(mask_int64<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
-#else
-    return bit_not(uint16x8(a));
-#endif
-}
-
-inline mask_int32x4 bit_not(mask_int32x4 a)
-{
-#if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
-#else
-    return bit_not(uint32x4(a));
-#endif
-}
-
-inline mask_int64x2 bit_not(mask_int64x2 a)
-{
-#if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
-#else
-    return bit_not(uint64x2(a));
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline mask_int8x32  bit_not(mask_int8x32 a)  { return bit_not(uint8x32(a)); }
-inline mask_int16x16 bit_not(mask_int16x16 a) { return bit_not(uint16x16(a)); }
-inline mask_int32x8  bit_not(mask_int32x8 a)  { return bit_not(uint32x8(a)); }
-inline mask_int64x4  bit_not(mask_int64x4 a)  { return bit_not(uint64x4(a)); }
-#endif
-
-template<unsigned N>
-inline mask_int8<N> bit_not(mask_int8<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int8<N>, bit_not, a)
-}
-template<unsigned N>
-inline mask_int16<N> bit_not(mask_int16<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int16<N>, bit_not, a)
-}
-template<unsigned N>
-inline mask_int32<N> bit_not(mask_int32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int32<N>, bit_not, a)
-}
-template<unsigned N>
-inline mask_int64<N> bit_not(mask_int64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int64<N>, bit_not, a)
+    return { { a }, 0 };
 }
 /// @}
 
@@ -172,102 +113,26 @@ inline mask_int64<N> bit_not(mask_int64<N> a)
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
-inline float32x4 bit_not(float32x4 a)
+template<unsigned N, class E>
+float32<N, float32<N>> bit_not(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return float32x4(bit_not(uint32x4(a)));
-#elif SIMDPP_USE_SSE2
-    uint32x4 ones = uint32x4::ones();
-    return bit_xor(a, ones);
-#elif SIMDPP_USE_NEON
-    return (float32x4) vmvnq_u32((uint32x4)a);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_nor((__vector float)a, (__vector float)a);
-#endif
+    return detail::insn::i_bit_not(a.eval());
+}
+template<unsigned N, class E>
+float64<N, float64<N>> bit_not(float64<N,E> a)
+{
+    return detail::insn::i_bit_not(a.eval());
 }
 
-inline float64x2 bit_not(float64x2 a)
+template<unsigned N, class E>
+mask_float32<N, expr_bit_not<mask_float32<N,E>>> bit_not(mask_float32<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return float64x2(bit_not(uint64x2(a)));
-#elif SIMDPP_USE_SSE2
-    uint64x2 ones = uint64x2::ones();
-    return bit_xor(a, ones);
-#endif
+    return { { a }, 0 };
 }
-
-#if SIMDPP_USE_AVX
-inline float32x8 bit_not(float32x8 a)
+template<unsigned N, class E>
+mask_float64<N, expr_bit_not<mask_float64<N,E>>> bit_not(mask_float64<N,E> a)
 {
-    uint32x8 ones = uint32x8::ones();
-    return bit_xor(a, ones);
-}
-#endif
-
-template<unsigned N>
-float32<N> bit_not(float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, bit_not, a)
-}
-
-#if SIMDPP_USE_AVX
-inline float64x4 bit_not(float64x4 a)
-{
-    uint64x4 ones = uint64x4::ones();
-    return bit_xor(a, ones);
-}
-#endif
-
-template<unsigned N>
-float64<N> bit_not(float64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, bit_not, a)
-}
-
-// -----------------------------------------------------------------------------
-
-inline mask_float32x4 bit_not(mask_float32x4 a)
-{
-#if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
-#else
-    return bit_not(float32x4(a));
-#endif
-}
-
-inline mask_float64x2 bit_not(mask_float64x2 a)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_not_mm(a);
-#else
-    return bit_not(float64x2(a));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float32x8 bit_not(mask_float32x8 a)
-{
-    return bit_not(float32x8(a));
-}
-#endif
-
-template<unsigned N>
-inline mask_float32<N> bit_not(mask_float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float32<N>, bit_not, a)
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float64x4 bit_not(mask_float64x4 a)
-{
-    return bit_not(float64x4(a));
-}
-#endif
-
-template<unsigned N>
-inline mask_float64<N> bit_not(mask_float64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float64<N>, bit_not, a)
+    return { { a }, 0 };
 }
 /// @}
 

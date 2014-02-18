@@ -42,24 +42,30 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 // types
-template<unsigned N> class float32;
-template<unsigned N> class mask_float32;
+template<unsigned N, class E = void> class float32;
+template<unsigned N, class E = void> class mask_float32;
+template<unsigned N> class maskdata_float32;
+
 using float32x4 = float32<4>;
 using float32x8 = float32<8>;
 using mask_float32x4 = mask_float32<4>;
 using mask_float32x8 = mask_float32<8>;
 
-template<unsigned N> class float64;
-template<unsigned N> class mask_float64;
+template<unsigned N, class E = void> class float64;
+template<unsigned N, class E = void> class mask_float64;
+template<unsigned N> class maskdata_float64;
+
 using float64x2 = float64<2>;
 using float64x4 = float64<4>;
 using mask_float64x2 = mask_float64<2>;
 using mask_float64x4 = mask_float64<4>;
 
-template<unsigned N> class gint8;
-template<unsigned N> class int8;
-template<unsigned N> class uint8;
-template<unsigned N> class mask_int8;
+template<unsigned N, class E = void> class gint8;
+template<unsigned N, class E = void> class int8;
+template<unsigned N, class E = void> class uint8;
+template<unsigned N, class E = void> class mask_int8;
+template<unsigned N> class maskdata_int8;
+
 using basic_int8x16 = gint8<16>;
 using basic_int8x32 = gint8<32>;
 using gint8x16 = gint8<16>;
@@ -71,10 +77,12 @@ using uint8x32 = uint8<32>;
 using mask_int8x16 = mask_int8<16>;
 using mask_int8x32 = mask_int8<32>;
 
-template<unsigned N> class gint16;
-template<unsigned N> class int16;
-template<unsigned N> class uint16;
-template<unsigned N> class mask_int16;
+template<unsigned N, class E = void> class gint16;
+template<unsigned N, class E = void> class int16;
+template<unsigned N, class E = void> class uint16;
+template<unsigned N, class E = void> class mask_int16;
+template<unsigned N> class maskdata_int16;
+
 using basic_int16x8 = gint16<8>;
 using basic_int16x16 = gint16<16>;
 using gint16x8 = gint16<8>;
@@ -86,10 +94,12 @@ using uint16x16 = uint16<16>;
 using mask_int16x8 = mask_int16<8>;
 using mask_int16x16 = mask_int16<16>;
 
-template<unsigned N> class gint32;
-template<unsigned N> class int32;
-template<unsigned N> class uint32;
-template<unsigned N> class mask_int32;
+template<unsigned N, class E = void> class gint32;
+template<unsigned N, class E = void> class int32;
+template<unsigned N, class E = void> class uint32;
+template<unsigned N, class E = void> class mask_int32;
+template<unsigned N> class maskdata_int32;
+
 using basic_int32x4 = gint32<4>;
 using basic_int32x8 = gint32<8>;
 using gint32x4 = gint32<4>;
@@ -101,10 +111,12 @@ using uint32x8 = uint32<8>;
 using mask_int32x4 = mask_int32<4>;
 using mask_int32x8 = mask_int32<8>;
 
-template<unsigned N> class gint64;
-template<unsigned N> class int64;
-template<unsigned N> class uint64;
-template<unsigned N> class mask_int64;
+template<unsigned N, class E = void> class gint64;
+template<unsigned N, class E = void> class int64;
+template<unsigned N, class E = void> class uint64;
+template<unsigned N, class E = void> class mask_int64;
+template<unsigned N> class maskdata_int64;
+
 using basic_int64x2 = gint64<2>;
 using basic_int64x4 = gint64<4>;
 using gint64x2 = gint64<2>;
@@ -137,28 +149,34 @@ using mask_int64x4 = mask_int64<4>;
 
 using float32v =           float32<SIMDPP_FAST_FLOAT32_SIZE>;
 using mask_float32v = mask_float32<SIMDPP_FAST_FLOAT32_SIZE>;
+using maskdata_float32v = maskdata_float32<SIMDPP_FAST_FLOAT32_SIZE>;
 using float64v =           float64<SIMDPP_FAST_FLOAT64_SIZE>;
 using mask_float64v = mask_float64<SIMDPP_FAST_FLOAT64_SIZE>;
+using maskdata_float64v = maskdata_float64<SIMDPP_FAST_FLOAT64_SIZE>;
 
 using gint8v =         gint8<SIMDPP_FAST_INT8_SIZE>;
 using int8v =           int8<SIMDPP_FAST_INT8_SIZE>;
 using uint8v =         uint8<SIMDPP_FAST_INT8_SIZE>;
 using mask_int8v = mask_int8<SIMDPP_FAST_INT8_SIZE>;
+using maskdata_int8v = maskdata_int8<SIMDPP_FAST_INT8_SIZE>;
 
 using gint16v =         gint16<SIMDPP_FAST_INT16_SIZE>;
 using int16v =           int16<SIMDPP_FAST_INT16_SIZE>;
 using uint16v =         uint16<SIMDPP_FAST_INT16_SIZE>;
 using mask_int16v = mask_int16<SIMDPP_FAST_INT16_SIZE>;
+using maskdata_int16v = maskdata_int16<SIMDPP_FAST_INT16_SIZE>;
 
 using gint32v =         gint32<SIMDPP_FAST_INT32_SIZE>;
 using int32v =           int32<SIMDPP_FAST_INT32_SIZE>;
 using uint32v =         uint32<SIMDPP_FAST_INT32_SIZE>;
 using mask_int32v = mask_int32<SIMDPP_FAST_INT32_SIZE>;
+using maskdata_int32v = maskdata_int32<SIMDPP_FAST_INT32_SIZE>;
 
 using gint64v =         gint64<SIMDPP_FAST_INT64_SIZE>;
 using int64v =           int64<SIMDPP_FAST_INT64_SIZE>;
 using uint64v =         uint64<SIMDPP_FAST_INT64_SIZE>;
 using mask_int64v = mask_int64<SIMDPP_FAST_INT64_SIZE>;
+using maskdata_int64v = maskdata_int64<SIMDPP_FAST_INT64_SIZE>;
 
 using float32v2 =           float32<SIMDPP_FAST_FLOAT32_SIZE*2>;
 using mask_float32v2 = mask_float32<SIMDPP_FAST_FLOAT32_SIZE*2>;

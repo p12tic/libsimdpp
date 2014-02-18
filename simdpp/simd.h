@@ -393,8 +393,8 @@
 #include <simdpp/core/unzip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/core/detail/cast.h>
-#include <simdpp/core/detail/cast.inl>
+#include <simdpp/detail/cast.h>
+#include <simdpp/detail/cast.inl>
 
 #include <simdpp/neon/math_int.h>
 #include <simdpp/neon/memory_store.h>
@@ -457,6 +457,7 @@
 #include <simdpp/types/int8x32.h>
 #include <simdpp/types/int8x32.inl>
 #include <simdpp/types/traits.h>
+#include <simdpp/expr.inl>
 
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher

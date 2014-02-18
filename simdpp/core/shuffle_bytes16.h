@@ -86,7 +86,7 @@ inline gint8x16 shuffle_bytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
 #elif SIMDPP_USE_XOP
     return _mm_perm_epi8(a, b, mask);
 #elif SIMDPP_USE_SSE4_1
-    int16x8 sel, ai, bi, r;
+    uint8x16 sel, ai, bi, r;
     sel = mask;
     sel = _mm_slli_epi16(sel, 3);
 
@@ -141,17 +141,20 @@ gint8<N> shuffle_bytes16(gint8<N> a, gint8<N> b, gint8<N> mask)
 template<unsigned N>
 gint16<N> shuffle_bytes16(gint16<N> a, gint16<N> b, gint16<N> mask)
 {
-    return shuffle_bytes16(gint8<N*2>(a), gint8<N*2>(b), gint8<N*2>(mask));
+    return (gint16<N>) shuffle_bytes16(gint8<N*2>(a), gint8<N*2>(b),
+                                       gint8<N*2>(mask));
 }
 template<unsigned N>
 gint32<N> shuffle_bytes16(gint32<N> a, gint32<N> b, gint32<N> mask)
 {
-    return shuffle_bytes16(gint8<N*4>(a), gint8<N*4>(b), gint8<N*4>(mask));
+    return (gint32<N>) shuffle_bytes16(gint8<N*4>(a), gint8<N*4>(b),
+                                       gint8<N*4>(mask));
 }
 template<unsigned N>
 gint64<N> shuffle_bytes16(gint64<N> a, gint64<N> b, gint64<N> mask)
 {
-    return shuffle_bytes16(gint8<N*8>(a), gint8<N*8>(b), gint8<N*8>(mask));
+    return (gint64<N>) shuffle_bytes16(gint8<N*8>(a), gint8<N*8>(b),
+                                       gint8<N*8>(mask));
 }
 template<unsigned N>
 float32<N> shuffle_bytes16(float32<N> a, float32<N> b, gint32<N> mask)

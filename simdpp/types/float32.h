@@ -48,7 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class float32 {
+class float32<N, void> {
 public:
 
     using element_type = float;
@@ -57,6 +57,7 @@ public:
     using uint_vector_type = uint32<N>;
     using base_vector_type = float32v;
     using mask_type = mask_float32<N>;
+    using maskdata_type = maskdata_float32<N>;
 
     static constexpr unsigned length = N;
     static constexpr unsigned vec_length = (N + SIMDPP_FAST_FLOAT32_SIZE - 1) / SIMDPP_FAST_FLOAT32_SIZE;
@@ -80,12 +81,11 @@ public:
     float32<N>& operator=(gint32<N> d)  { operator=(float32<N>(d)); return *this; }
     /// @}
 
-    const float32v* begin() const   { return d_; }
-    float32v* begin()               { return d_; }
-    const float32v* end() const     { return d_+vec_length; }
-    float32v* end()                 { return d_+vec_length; }
     const float32v& operator[](unsigned i) const { return *(d_+i); }
     float32v& operator[](unsigned i)             { return *(d_+i); }
+
+
+    float32<N> eval() const { return *this; }
 
     /** Creates a float32 vector with the contents set to zero
 
@@ -137,7 +137,7 @@ public:
     static float32<N> set_broadcast(float32v v0)
     {
         float32<N> r;
-        for (auto &v : r) v = v0;
+        for (unsigned i = 0; i < r.vec_length; i++) r[i] = v0;
         return r;
     }
 
@@ -181,38 +181,48 @@ private:
     float32v d_[vec_length];
 };
 
-/// Class representing a mask for 32-bit floating point vector of arbitrary
-/// length. The vector always contains at least one native vector.
+
+/// Class representing possibly optimized mask data for 2x 32-bit floating point
+/// vector
 template<unsigned N>
-class mask_float32 {
+class maskdata_float32 {
 public:
-    using base_vector_type = mask_float32v;
-    static constexpr unsigned length = 8;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_FLOAT32_SIZE - 1) / SIMDPP_FAST_FLOAT32_SIZE;
+    using base_vector_type = maskdata_float32<N>;
+    static constexpr unsigned length = N;
+    static constexpr unsigned vec_length = float32<N>::vec_length;
 
-    mask_float32<N>() = default;
-    mask_float32<N>(const mask_float32 &) = default;
-    mask_float32<N> &operator=(const mask_float32 &) = default;
+    maskdata_float32<N>() = default;
+    maskdata_float32<N>(const maskdata_float32<N> &) = default;
+    maskdata_float32<N> &operator=(const maskdata_float32<N> &) = default;
 
-    const mask_float32v* begin() const   { return d_; }
-    mask_float32v* begin()               { return d_; }
-    const mask_float32v* end() const     { return d_+vec_length; }
-    mask_float32v* end()                 { return d_+vec_length; }
-    const mask_float32v& operator[](unsigned i) const { return *(d_+i); }
-    mask_float32v& operator[](unsigned i)             { return *(d_+i); }
+    /// Convert to bitmask
+    operator float32<N>() const;
 
-    /// Convert to a regular vector
-    operator float32<N>() const
-    {
-        float32<N> r;
-        for (unsigned i = 0; i < vec_length; ++i) {
-            r[i] = d_[i];
-        }
-        return r;
-    }
+    const maskdata_float32v& operator[](unsigned i) const { return *(d_+i); }
+          maskdata_float32v& operator[](unsigned i)       { return *(d_+i); }
+
+    mask_float32<N> eval() const { return *this; }
 
 private:
-    mask_float32v d_[vec_length];
+    maskdata_float32v d_[vec_length];
+};
+
+
+/// Class representing a mask for 32-bit floating point vector of arbitrary
+/// length.
+template<unsigned N>
+class mask_float32<N, void> : public float32<N, void> {
+public:
+    mask_float32<N>() = default;
+    mask_float32<N>(const mask_float32<N> &) = default;
+    mask_float32<N> &operator=(const mask_float32<N> &) = default;
+    mask_float32<N>(const maskdata_float32<N>& d);
+
+    mask_float32<N> eval() const { return *this; }
+
+    maskdata_float32<N> mask() const { return mask_; }
+private:
+    maskdata_float32<N> mask_;
 };
 
 /// @} -- end ingroup

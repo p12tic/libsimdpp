@@ -1,0 +1,323 @@
+/*  libsimdpp
+    Copyright (C) 2013  Povilas Kanapickas povilas@radix.lt
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+*/
+
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_EXPR_I_MULL_H
+#define LIBSIMDPP_SIMDPP_DETAIL_EXPR_I_MULL_H
+
+#ifndef LIBSIMDPP_SIMD_H
+    #error "This file must be included through simd.h"
+#endif
+
+#include <simdpp/types.h>
+#include <simdpp/detail/mem_block.h>
+#include <simdpp/detail/not_implemented.h>
+#include <simdpp/core/detail/vec_insert.h>
+#include <simdpp/core/zip_hi.h>
+#include <simdpp/core/zip_lo.h>
+
+namespace simdpp {
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
+namespace detail {
+
+
+/*  Note: widening integer multiplication instructions are very different among
+    instruction sets. The main difference is in which half of the elements are
+    selected for multiplication. Trying to abstract this incurs definite
+    overhead.
+
+     - SSE2-SSE4.1 and AVX2 provide only instructions with interfaces similar
+        to mul_lo and mul_hi. The result vectors must be interleaved to obtain
+        contiguous result values. Multiplying 2 vectors always incurs
+        overhead of at least two interleaving instructions.
+
+     - AVX512 only provides 32-bit integer support. Widening multiplication
+        can be done only by using PMULDQ, which takes odd elements and produces
+        widened multiplication results. Multiplication of two whole vectors
+        always incurs overhead of at least two shifts or interleaving
+        instructions.
+
+     - NEON, NEONv2 provide instructions that take elements of either the lower
+        or higher halves of two 128-bit vectors and multiply them. No
+        additional overhead is incurred to obtain contiguous result values.
+
+     - ALTIVEC hav multiply odd and multiply even instructions. No additional
+        overhead is incurred to obtain contiguous result values.
+
+    The abstraction below uses the NEON model. No additional overhead is
+    incurred on SSE/AVX and NEON. On ALTIVEC, a single additional permute
+    instruction is needed for each vector multiplication on average.
+*/
+
+template<class E1, class E2>
+int32<8> expr_eval(expr_mull<int16<8,E1>,
+                             int16<8,E2>> q)
+{
+    int16<8> a = q.a.eval();
+    int16<8> b = q.b.eval();
+#if SIMDPP_USE_NULL
+    int32x8 r;
+    for (unsigned i = 0; i < 8; i++) {
+        r[i/4].el(i%4) = int32_t(a.el(i)) * b.el(i);
+    }
+    return r;
+#elif SIMDPP_USE_SSE2
+    int16x8 lo = _mm_mullo_epi16(a, b);
+    int16x8 hi = _mm_mulhi_epi16(a, b);
+    return (int32x8)combine(zip_lo(lo, hi), zip_hi(lo, hi));
+#elif SIMDPP_USE_NEON
+    int32x4 lo = vmull_s16(vget_low_s16(a), vget_low_s16(b));
+    int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
+    return combine(lo, hi);
+#elif SIMDPP_USE_ALTIVEC
+    int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
+    int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
+    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+template<class E1, class E2>
+int32<16> expr_eval(expr_mull<int16<16,E1>,
+                              int16<16,E2>> q)
+{
+    int16<16> a = q.a.eval();
+    int16<16> b = q.b.eval();
+    int16x16 lo = _mm256_mullo_epi16(a, b);
+    int16x16 hi = _mm256_mulhi_epi16(a, b);
+    return (int32<16>) combine(zip_lo(lo, hi), zip_hi(lo, hi));
+}
+#endif
+
+template<unsigned N, class E1, class E2>
+int32<N> expr_eval(expr_mull<int16<N,E1>,
+                             int16<N,E2>> q)
+{
+    int16<N> a = q.a.eval();
+    int16<N> b = q.b.eval();
+    int32<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+    }
+    return r;
+}
+
+// -----------------------------------------------------------------------------
+
+template<class E1, class E2>
+uint32<8> expr_eval(expr_mull<uint16<8,E1>,
+                              uint16<8,E2>> q)
+{
+    uint16<8> a = q.a.eval();
+    uint16<8> b = q.b.eval();
+#if SIMDPP_USE_NULL
+    int32x8 r;
+    for (unsigned i = 0; i < 8; i++) {
+        r[i/4].el(i%4) = uint32_t(a.el(i)) * b.el(i);
+    }
+    return r;
+#elif SIMDPP_USE_SSE2
+    int16x8 lo = _mm_mullo_epi16(a, b);
+    int16x8 hi = _mm_mulhi_epu16(a, b);
+    return (uint32x8) combine(zip_lo(lo, hi), zip_hi(lo, hi));
+#elif SIMDPP_USE_NEON
+    uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
+    uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
+    return combine(lo, hi);
+#elif SIMDPP_USE_ALTIVEC
+    uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
+    uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
+    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+template<class E1, class E2>
+uint32<16> expr_eval(expr_mull<uint16<16,E1>,
+                               uint16<16,E2>> q)
+{
+    uint16<16> a = q.a.eval();
+    uint16<16> b = q.b.eval();
+    int16x16 lo = _mm256_mullo_epi16(a, b);
+    int16x16 hi = _mm256_mulhi_epi16(a, b);
+    return (uint32<16>) combine(zip_lo(lo, hi), zip_hi(lo, hi));
+}
+#endif
+
+template<unsigned N, class E1, class E2>
+uint32<N> expr_eval(expr_mull<uint16<N,E1>,
+                              uint16<N,E2>> q)
+{
+    uint16<N> a = q.a.eval();
+    uint16<N> b = q.b.eval();
+    uint32<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+    }
+    return r;
+}
+
+// -----------------------------------------------------------------------------
+
+template<class E1, class E2>
+int64<4> expr_eval(expr_mull<int32<4,E1>,
+                             int32<4,E2>> q)
+{
+    int32<4> a = q.a.eval();
+    int32<4> b = q.b.eval();
+#if SIMDPP_USE_NULL
+    int64x4 r;
+    r[0].el(0) = int64_t(a.el(0)) * b.el(0);
+    r[0].el(1) = int64_t(a.el(1)) * b.el(1);
+    r[1].el(0) = int64_t(a.el(2)) * b.el(2);
+    r[1].el(1) = int64_t(a.el(3)) * b.el(3);
+    return r;
+#elif SIMDPP_USE_SSE4_1
+    int32x4 al, ah, bl, bh;
+    int64x2 rl, rh;
+    al = zip_lo(a, a);
+    bl = zip_lo(b, b);
+    ah = zip_hi(a, a);
+    bh = zip_hi(b, b);
+    rl = _mm_mul_epi32(al, bl);
+    rh = _mm_mul_epi32(ah, bh);
+    return combine(rl, rh);
+#elif SIMDPP_USE_NEON
+    int64x2 lo = vmull_s32(vget_low_s32(a), vget_low_s32(b));
+    int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
+    return combine(lo, hi);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+template<class E1, class E2>
+int64<8> expr_eval(expr_mull<int32<8,E1>,
+                             int32<8,E2>> q)
+{
+    int32<8> a = q.a.eval();
+    int32<8> b = q.b.eval();
+    int32x8 al, ah, bl, bh;
+    int64x4 rl, rh;
+    al = zip_lo(a, a);
+    bl = zip_lo(b, b);
+    ah = zip_hi(a, a);
+    bh = zip_hi(b, b);
+    rl = _mm256_mul_epi32(al, bl);
+    rh = _mm256_mul_epi32(ah, bh);
+    return combine(rl, rh);
+}
+#endif
+
+template<unsigned N, class E1, class E2>
+int64<N> expr_eval(expr_mull<int32<N,E1>,
+                             int32<N,E2>> q)
+{
+    int32<N> a = q.a.eval();
+    int32<N> b = q.b.eval();
+    int64<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+    }
+    return r;
+}
+
+// -----------------------------------------------------------------------------
+
+template<class E1, class E2>
+uint64<4> expr_eval(expr_mull<uint32<4,E1>,
+                              uint32<4,E2>> q)
+{
+    uint32<4> a = q.a.eval();
+    uint32<4> b = q.b.eval();
+#if SIMDPP_USE_NULL
+    detail::mem_block<uint64x2> r1, r2;
+    detail::mem_block<uint32x4> ax(a), bx(b);
+    r1[0] = uint64_t(ax[0]) * bx[0];
+    r1[1] = uint64_t(ax[1]) * bx[1];
+    r2[0] = uint64_t(ax[3]) * bx[3];
+    r2[1] = uint64_t(ax[4]) * bx[4];
+    return combine(r1, r2);
+#elif SIMDPP_USE_SSE2
+    uint32x4 al, ah, bl, bh;
+    uint64x2 rl, rh;
+    al = zip_lo(a, a);
+    bl = zip_lo(b, b);
+    ah = zip_hi(a, a);
+    bh = zip_hi(b, b);
+    rl = _mm_mul_epu32(al, bl);
+    rh = _mm_mul_epu32(ah, bh);
+    return combine(rl, rh);
+#elif SIMDPP_USE_NEON
+    uint64x2 lo = vmull_u32(vget_low_u32(a), vget_low_u32(b));
+    uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
+    return combine(lo, hi);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+template<class E1, class E2>
+uint64<8> expr_eval(expr_mull<uint32<8,E1>,
+                              uint32<8,E2>> q)
+{
+    uint32<8> a = q.a.eval();
+    uint32<8> b = q.b.eval();
+    uint32x8 al, ah, bl, bh;
+    uint64x4 rl, rh;
+    al = zip_lo(a, a);
+    bl = zip_lo(b, b);
+    ah = zip_hi(a, a);
+    bh = zip_hi(b, b);
+    rl = _mm256_mul_epu32(al, bl);
+    rh = _mm256_mul_epu32(ah, bh);
+    return combine(rl, rh);
+}
+#endif
+
+template<unsigned N, class E1, class E2>
+uint64<N> expr_eval(expr_mull<uint32<N,E1>,
+                              uint32<N,E2>> q)
+{
+    uint32<N> a = q.a.eval();
+    uint32<N> b = q.b.eval();
+    uint64<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+    }
+    return r;
+}
+
+} // namespace detail
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
+} // namespace simdpp
+
+#endif
+

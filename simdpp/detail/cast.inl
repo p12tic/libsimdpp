@@ -25,15 +25,15 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_DETAIL_CAST_INL
-#define LIBSIMDPP_SIMDPP_CORE_DETAIL_CAST_INL
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_DETAIL_CAST_INL
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_DETAIL_CAST_INL
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/detail/cast.h>
+#include <simdpp/detail/cast.h>
 #include <simdpp/core/insert.h>
 #include <simdpp/sse/extract_half.h>
 
@@ -332,6 +332,13 @@ template<unsigned N> float64<N> cast(float64<N>, float32<N*2> a){ SIMDPP_LOOP_BI
 
 #endif
 #endif
+
+template<unsigned N> gint8<N>   cast(gint8<N>,   gint8<N> a)    { return a; }
+template<unsigned N> gint16<N>  cast(gint16<N>,  gint16<N> a)   { return a; }
+template<unsigned N> gint32<N>  cast(gint32<N>,  gint32<N> a)   { return a; }
+template<unsigned N> gint64<N>  cast(gint64<N>,  gint64<N> a)   { return a; }
+template<unsigned N> float32<N> cast(float32<N>, float32<N> a)  { return a; }
+template<unsigned N> float64<N> cast(float64<N>, float64<N> a)  { return a; }
 
 
 } // namespace detail

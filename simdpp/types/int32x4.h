@@ -48,15 +48,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint32<4> {
+class gint32<4, void> {
 public:
 
     using element_type = uint32_t;
     using uint_element_type = uint32_t;
     using int_vector_type = gint32x4;
     using uint_vector_type = uint32x4;
-    using mask_type = mask_int32x4;
     using base_vector_type = gint32x4;
+    using mask_type = mask_int32x4;
+    using maskdata_type = maskdata_int32<4>;
 
     static constexpr unsigned length = 4;
     static constexpr unsigned vec_length = 1;
@@ -100,12 +101,14 @@ public:
 
     /// @{
     /// Construct from compatible integer type
-    gint32<4>(const gint8x16& d);
-    gint32<4>(const gint16x8& d);
-    gint32<4>(const gint64x2& d);
-    gint32<4>& operator=(const gint8x16& d);
-    gint32<4>& operator=(const gint16x8& d);
-    gint32<4>& operator=(const gint64x2& d);
+    template<class E> explicit gint32<4>(const gint8<16,E>& d);
+    template<class E> explicit gint32<4>(const gint16<8,E>& d);
+    template<class E>          gint32<4>(const gint32<4,E>& d);
+    template<class E> explicit gint32<4>(const gint64<2,E>& d);
+    template<class E> gint32<4>& operator=(const gint8<16,E>& d);
+    template<class E> gint32<4>& operator=(const gint16<8,E>& d);
+    template<class E> gint32<4>& operator=(const gint32<4,E>& d);
+    template<class E> gint32<4>& operator=(const gint64<2,E>& d);
     /// @}
 
     /// @{
@@ -115,14 +118,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const gint32x4* begin() const                { return this; }
-          gint32x4* begin()                      { return this; }
-    const gint32x4* end() const                  { return this+1; }
-          gint32x4* end()                        { return this+1; }
-    const gint32x4& operator[](unsigned i) const { return *this; }
-          gint32x4& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const gint32x4& operator[](unsigned) const { return *this; }
+          gint32x4& operator[](unsigned)       { return *this; }
     /// @}
+
+    gint32<4> eval() const { return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
@@ -165,7 +166,7 @@ private:
 /** Class representing 4x 32-bit signed integer vector
 */
 template<>
-class int32<4> : public gint32x4 {
+class int32<4, void> : public gint32x4 {
 public:
     using base_vector_type = int32x4;
     using element_type = int32_t;
@@ -190,14 +191,14 @@ public:
 
     /// @{
     /// Construct from compatible integer type
-    int32<4>(const gint8x16& d);
-    int32<4>(const gint16x8& d);
-    int32<4>(const gint32x4& d);
-    int32<4>(const gint64x2& d);
-    int32<4>& operator=(const gint8x16& d);
-    int32<4>& operator=(const gint16x8& d);
-    int32<4>& operator=(const gint32x4& d);
-    int32<4>& operator=(const gint64x2& d);
+    template<class E> explicit int32<4>(const gint8<16,E>& d);
+    template<class E> explicit int32<4>(const gint16<8,E>& d);
+    template<class E>          int32<4>(const gint32<4,E>& d);
+    template<class E> explicit int32<4>(const gint64<2,E>& d);
+    template<class E> int32<4>& operator=(const gint8<16,E>& d);
+    template<class E> int32<4>& operator=(const gint16<8,E>& d);
+    template<class E> int32<4>& operator=(const gint32<4,E>& d);
+    template<class E> int32<4>& operator=(const gint64<2,E>& d);
     /// @}
 
     /// @{
@@ -207,14 +208,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const int32x4* begin() const                { return this; }
-          int32x4* begin()                      { return this; }
-    const int32x4* end() const                  { return this+1; }
-          int32x4* end()                        { return this+1; }
-    const int32x4& operator[](unsigned i) const { return *this; }
-          int32x4& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const int32x4& operator[](unsigned) const { return *this; }
+          int32x4& operator[](unsigned)       { return *this; }
     /// @}
+
+    int32<4> eval() const { return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
@@ -223,6 +222,9 @@ public:
           int32_t& el(unsigned i)        { return i32(i); }
 #endif
 #endif
+
+    static int32<4> zero() { return gint32<4>::zero(); }
+    static int32<4> ones() { return gint32<4>::ones(); }
 
     /** Creates a signed int32x4 vector from a value loaded from memory.
 
@@ -281,7 +283,7 @@ public:
 /** Class representing 4x 32-bit unsigned integer vector
 */
 template<>
-class uint32<4> : public gint32x4 {
+class uint32<4, void> : public gint32x4 {
 public:
 
     using base_vector_type = uint32x4;
@@ -306,14 +308,14 @@ public:
 
     /// @{
     /// Construct from compatible integer type
-    uint32<4>(const gint8x16& d);
-    uint32<4>(const gint16x8& d);
-    uint32<4>(const gint32x4& d);
-    uint32<4>(const gint64x2& d);
-    uint32<4>& operator=(const gint8x16& d);
-    uint32<4>& operator=(const gint16x8& d);
-    uint32<4>& operator=(const gint32x4& d);
-    uint32<4>& operator=(const gint64x2& d);
+    template<class E> explicit uint32<4>(const gint8<16,E>& d);
+    template<class E> explicit uint32<4>(const gint16<8,E>& d);
+    template<class E>          uint32<4>(const gint32<4,E>& d);
+    template<class E> explicit uint32<4>(const gint64<2,E>& d);
+    template<class E> uint32<4>& operator=(const gint8<16,E>& d);
+    template<class E> uint32<4>& operator=(const gint16<8,E>& d);
+    template<class E> uint32<4>& operator=(const gint32<4,E>& d);
+    template<class E> uint32<4>& operator=(const gint64<2,E>& d);
     /// @}
 
     /// @{
@@ -323,14 +325,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const uint32x4* begin() const                { return this; }
-          uint32x4* begin()                      { return this; }
-    const uint32x4* end() const                  { return this+1; }
-          uint32x4* end()                        { return this+1; }
-    const uint32x4& operator[](unsigned i) const { return *this; }
-          uint32x4& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const uint32x4& operator[](unsigned) const { return *this; }
+          uint32x4& operator[](unsigned)       { return *this; }
     /// @}
+
+    uint32<4> eval() const { return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
@@ -339,6 +339,9 @@ public:
           uint32_t& el(unsigned i)        { return u32(i); }
 #endif
 #endif
+
+    static uint32<4> zero() { return gint32<4>::zero(); }
+    static uint32<4> ones() { return gint32<4>::ones(); }
 
     /** Creates an unsigned int32x4 vector from a value loaded from memory.
 
@@ -397,49 +400,27 @@ public:
     static uint32x4 make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3);
 };
 
-/// Class representing mask for 4x 32-bit integer vector
+/// Class representing possibly optimized mask data for 4x 32-bit integer
+/// vector
 template<>
-class mask_int32<4> {
+class maskdata_int32<4> {
 public:
-    using base_vector_type = mask_int32x4;
-
+    using base_vector_type = maskdata_int32<4>;
     static constexpr unsigned length = 4;
     static constexpr unsigned vec_length = 1;
 
-    mask_int32<4>() = default;
-    mask_int32<4>(const mask_int32x4 &) = default;
-    mask_int32<4> &operator=(const mask_int32x4 &) = default;
+    maskdata_int32<4>() = default;
+    maskdata_int32<4>(const maskdata_int32<4> &) = default;
+    maskdata_int32<4> &operator=(const maskdata_int32<4> &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-#if SIMDPP_USE_SSE2
-    mask_int32<4>(__m128i d) : d_(d) {}
-#elif SIMDPP_USE_NEON
-    mask_int32<4>(uint32x4_t d) : d_(d) {}
-    mask_int32<4>( int32x4_t d) : d_(d) {}
-#elif SIMDPP_USE_ALTIVEC
-    mask_int32<4>(__vector int32_t d) : d_(d) {}
-    mask_int32<4>(__vector uint32_t d) : d_(d) {}
-    mask_int32<4>(__vector __bool int d) : d_(d) {}
-#endif
-#if SIMDPP_USE_NULL
-#else
-    mask_int32<4>(gint32x4 d) : d_(d) {}
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    maskdata_int32<4>(uint32x4 d) : d_(d) {}
 #endif
 #endif
 
-    /// Access the underlying type
-    operator gint32x4() const;
-
-    /// @{
-    /// Range access
-    const mask_int32<4>* begin() const                { return this; }
-          mask_int32<4>* begin()                      { return this; }
-    const mask_int32<4>* end() const                  { return this+1; }
-          mask_int32<4>* end()                        { return this+1; }
-    const mask_int32<4>& operator[](unsigned i) const { return *this; }
-          mask_int32<4>& operator[](unsigned i)       { return *this; }
-    /// @}
+    /// Convert to bitmask
+    operator uint32x4() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
@@ -448,12 +429,53 @@ public:
 #endif
 #endif
 
+    /// @{
+    /// Access base vectors
+    const maskdata_int32<4>& operator[](unsigned) const { return *this; }
+          maskdata_int32<4>& operator[](unsigned)       { return *this; }
+    /// @}
+
 private:
 #if SIMDPP_USE_NULL
-    bool b_[4];
+    bool b_[8];
 #else
-    gint32x4 d_;
+    int32x4 d_;
 #endif
+};
+
+
+/// Class representing a mask for 4x 32-bit integer vector
+template<>
+class mask_int32<4, void> : public uint32<4, void> {
+public:
+    mask_int32<4>() = default;
+    mask_int32<4>(const mask_int32<4> &) = default;
+    mask_int32<4> &operator=(const mask_int32<4> &) = default;
+    mask_int32<4>(const maskdata_int32<4>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+#if SIMDPP_USE_SSE2
+    mask_int32<4>(__m128i d);
+    mask_int32<4>(gint32<4> d);
+#elif SIMDPP_USE_NEON
+    mask_int32<4>(uint32x4_t d);
+    mask_int32<4>(gint32<4> d);
+#elif SIMDPP_USE_ALTIVEC
+    mask_int32<4>(__vector uint32_t d);
+    mask_int32<4>(gint32<4> d);
+#endif
+    /// @}
+
+    mask_int32<4> eval() const { return *this; }
+
+    const maskdata_int32<4>& mask() const { return mask_; }
+#if !DOXYGEN_SHOULD_SKIP_THIS && SIMDPP_USE_NULL
+    maskdata_int32<4>& m_mask() { return mask_; }
+#endif
+
+private:
+    maskdata_int32<4> mask_;
 };
 
 /// @} -- end ingroup

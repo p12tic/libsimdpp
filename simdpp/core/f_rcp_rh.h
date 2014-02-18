@@ -33,13 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/f_sub.h>
-#include <simdpp/core/f_mul.h>
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    #include <cmath>
-    #include <simdpp/null/foreach.h>
-    #include <simdpp/null/math.h>
-#endif
+#include <simdpp/detail/insn/f_rcp_rh.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -47,7 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Computes one Newton-Rhapson iterations for reciprocal. @a x is the current
     estimate, @a a are the values to estimate reciprocal for.
 
@@ -80,55 +73,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 4}
     @icost{ALTIVEC, 4-5}
 */
-inline float32x4 rcp_rh(float32x4 x, float32x4 a)
+template<unsigned N, class E>
+float32<N, float32<N>> rcp_rh(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
-#elif SIMDPP_USE_SSE2
-    float32x4 c2, r;
-    c2 = float32x4::make_const(2.0f);
-
-    r = mul(a, x);
-    r = sub(c2, r);
-    x = mul(x, r);
-
-    return x;
-#elif SIMDPP_USE_NEON_FLT_SP
-    float32x4 r;
-    r = vrecpsq_f32(a, x);
-    x = mul(x, r);
-
-    return x;
-#elif SIMDPP_USE_ALTIVEC
-    float32x4 r, c2;
-    c2 = float32x4::make_const(2.0f);
-    // -(x*a-c2)
-    r = vec_nmsub((__vector float)x, (__vector float)a, (__vector float)c2);
-    x = mul(x, r);
-    return x;
-#endif
+    return detail::insn::i_rcp_rh(a.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float32x8 rcp_rh(float32x8 x, float32x8 a)
-{
-    float32x8 c2, r;
-    c2 = float32x8::make_const(2.0f);
-
-    r = mul(a, x);
-    r = sub(c2, r);
-    x = mul(x, r);
-
-    return x;
-}
-#endif
-
-template<unsigned N>
-float32<N> rcp_rh(float32<N> x, float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, rcp_rh, x, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -43,30 +43,32 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline gint8<16>::gint8(const gint16x8& d) { *this = bit_cast<gint8x16>(d); }
-inline gint8<16>::gint8(const gint32x4& d) { *this = bit_cast<gint8x16>(d); }
-inline gint8<16>::gint8(const gint64x2& d) { *this = bit_cast<gint8x16>(d); }
-inline gint8<16>& gint8<16>::operator=(const gint16x8& d) { *this = bit_cast<gint8x16>(d); return *this; }
-inline gint8<16>& gint8<16>::operator=(const gint32x4& d) { *this = bit_cast<gint8x16>(d); return *this; }
-inline gint8<16>& gint8<16>::operator=(const gint64x2& d) { *this = bit_cast<gint8x16>(d); return *this; }
+template<class E> gint8<16>::gint8(const gint8<16,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); }
+template<class E> gint8<16>::gint8(const gint16<8,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); }
+template<class E> gint8<16>::gint8(const gint32<4,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); }
+template<class E> gint8<16>::gint8(const gint64<2,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); }
+template<class E> gint8<16>& gint8<16>::operator=(const gint8<16,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); return *this; }
+template<class E> gint8<16>& gint8<16>::operator=(const gint16<8,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); return *this; }
+template<class E> gint8<16>& gint8<16>::operator=(const gint32<4,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); return *this; }
+template<class E> gint8<16>& gint8<16>::operator=(const gint64<2,E>& d) { *this = bit_cast<gint8<16>>(d.eval()); return *this; }
 
-inline int8<16>::int8(const gint8x16& d) : gint8x16(d) {}
-inline int8<16>::int8(const gint16x8& d) : gint8x16(bit_cast<gint8x16>(d)) {}
-inline int8<16>::int8(const gint32x4& d) : gint8x16(bit_cast<gint8x16>(d)) {}
-inline int8<16>::int8(const gint64x2& d) : gint8x16(bit_cast<gint8x16>(d)) {}
-inline int8<16>& int8<16>::operator=(const gint8x16& d) { gint8x16::operator=(d); return *this; }
-inline int8<16>& int8<16>::operator=(const gint16x8& d) { gint8x16::operator=(d); return *this; }
-inline int8<16>& int8<16>::operator=(const gint32x4& d) { gint8x16::operator=(d); return *this; }
-inline int8<16>& int8<16>::operator=(const gint64x2& d) { gint8x16::operator=(d); return *this; }
+template<class E> int8<16>::int8(const gint8<16,E>& d) : gint8(d) {}
+template<class E> int8<16>::int8(const gint16<8,E>& d) : gint8(d) {}
+template<class E> int8<16>::int8(const gint32<4,E>& d) : gint8(d) {}
+template<class E> int8<16>::int8(const gint64<2,E>& d) : gint8(d) {}
+template<class E> int8<16>& int8<16>::operator=(const gint8<16,E>& d) { gint8::operator=(d); return *this; }
+template<class E> int8<16>& int8<16>::operator=(const gint16<8,E>& d) { gint8::operator=(d); return *this; }
+template<class E> int8<16>& int8<16>::operator=(const gint32<4,E>& d) { gint8::operator=(d); return *this; }
+template<class E> int8<16>& int8<16>::operator=(const gint64<2,E>& d) { gint8::operator=(d); return *this; }
 
-inline uint8<16>::uint8(const gint8x16& d) : gint8x16(d) {}
-inline uint8<16>::uint8(const gint16x8& d) : gint8x16(bit_cast<gint8x16>(d)) {}
-inline uint8<16>::uint8(const gint32x4& d) : gint8x16(bit_cast<gint8x16>(d)) {}
-inline uint8<16>::uint8(const gint64x2& d) : gint8x16(bit_cast<gint8x16>(d)) {}
-inline uint8<16>& uint8<16>::operator=(const gint8x16& d) { gint8x16::operator=(d); return *this; }
-inline uint8<16>& uint8<16>::operator=(const gint16x8& d) { gint8x16::operator=(d); return *this; }
-inline uint8<16>& uint8<16>::operator=(const gint32x4& d) { gint8x16::operator=(d); return *this; }
-inline uint8<16>& uint8<16>::operator=(const gint64x2& d) { gint8x16::operator=(d); return *this; }
+template<class E> uint8<16>::uint8(const gint8<16,E>& d) : gint8(d) {}
+template<class E> uint8<16>::uint8(const gint16<8,E>& d) : gint8(d) {}
+template<class E> uint8<16>::uint8(const gint32<4,E>& d) : gint8(d) {}
+template<class E> uint8<16>::uint8(const gint64<2,E>& d) : gint8(d) {}
+template<class E> uint8<16>& uint8<16>::operator=(const gint8<16,E>& d) { gint8::operator=(d); return *this; }
+template<class E> uint8<16>& uint8<16>::operator=(const gint16<8,E>& d) { gint8::operator=(d); return *this; }
+template<class E> uint8<16>& uint8<16>::operator=(const gint32<4,E>& d) { gint8::operator=(d); return *this; }
+template<class E> uint8<16>& uint8<16>::operator=(const gint64<2,E>& d) { gint8::operator=(d); return *this; }
 
 inline gint8x16 gint8x16::zero()
 {
@@ -140,7 +142,7 @@ inline uint8x16 uint8x16::set_broadcast(uint8_t v0)
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 * 0x01010101;
-    return uint32x4::set_broadcast(u0);
+    return (uint8x16) uint32x4::set_broadcast(u0);
 #elif SIMDPP_USE_NEON
     return vdupq_n_u8(v0);
 #elif SIMDPP_USE_ALTIVEC
@@ -241,14 +243,18 @@ inline uint8x16 uint8x16::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t
 #endif
 }
 
-inline mask_int8x16::operator gint8x16() const
-{
-#if SIMDPP_USE_NULL
-    return null::convert_mask<gint8x16>(*this);
-#else
-    return d_;
+inline mask_int8<16>::mask_int8(const maskdata_int8<16>& d) : uint8<16>(d), mask_(d) {}
+
+#if SIMDPP_USE_SSE2
+inline mask_int8<16>::mask_int8(__m128i d)   : uint8<16>(d), mask_(d) {}
+inline mask_int8<16>::mask_int8(gint8<16> d) : uint8<16>(d), mask_(d) {}
+#elif SIMDPP_USE_NEON
+inline mask_int8<16>::mask_int8(uint8x16_t d) : uint8<16>(d), mask_(d) {}
+inline mask_int8<16>::mask_int8(gint8<16> d)  : uint8<16>(d), mask_(d) {}
+#elif SIMDPP_USE_ALTIVEC
+inline mask_int8<16>::mask_int8(__vector uint8_t d) : uint8<16>(d), mask_(d) {}
+inline mask_int8<16>::mask_int8(gint8<16> d)        : uint8<16>(d), mask_(d) {}
 #endif
-}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

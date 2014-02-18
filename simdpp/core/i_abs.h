@@ -33,19 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_xor.h>
-#include <simdpp/core/cmp_lt.h>
-#include <simdpp/core/cmp_neq.h>
-#include <simdpp/core/i_shift_r.h>
-#include <simdpp/core/i_sub.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/expr/i_abs.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Computes absolute value of 8-bit integer values.
 
     @code
@@ -63,41 +57,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, NEON, 2}
     @icost{ALTIVEC, 2-4}
 */
-inline uint8x16 abs(int8x16 a)
+template<unsigned N, class E>
+uint8<N, expr_abs<int8<N,E>>> abs(int8<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::abs(a);
-#elif SIMDPP_USE_SSSE3
-    return _mm_abs_epi8(a);
-#elif SIMDPP_USE_SSE2
-    int8x16 t;
-    t = cmp_lt(a, int8x16::zero());
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
-#elif SIMDPP_USE_NEON
-    return int8x16(vabsq_s8(a));
-#elif SIMDPP_USE_ALTIVEC
-    // expands to 3 instructions
-    return (__vector uint8_t) vec_abs((__vector int8_t)a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline uint8x32 abs(int8x32 a)
-{
-    return _mm256_abs_epi8(a);
-}
-#endif
 
-template<unsigned N>
-uint8<N> abs(int8<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, abs, a);
-}
-/// @}
-
-/// @{
 /** Computes absolute value of 16-bit integer values.
 
     @code
@@ -114,41 +80,12 @@ uint8<N> abs(int8<N> a)
     @icost{SSSE3-AVX, NEON, 2}
     @icost{ALTIVEC, 2-5}
 */
-inline uint16x8 abs(int16x8 a)
+template<unsigned N, class E>
+uint16<N, expr_abs<int16<N,E>>> abs(int16<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::abs(a);
-#elif SIMDPP_USE_SSSE3
-    return _mm_abs_epi16(a);
-#elif SIMDPP_USE_SSE2
-    int16x8 t;
-    t = cmp_lt(a, int16x8::zero());
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
-#elif SIMDPP_USE_NEON
-    return int16x8(vabsq_s16(a));
-#elif SIMDPP_USE_ALTIVEC
-    // expands to 3 instructions
-    return (__vector uint16_t) vec_abs((__vector int16_t)a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline uint16x16 abs(int16x16 a)
-{
-    return _mm256_abs_epi16(a);
-}
-#endif
-
-template<unsigned N>
-uint16<N> abs(int16<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, abs, a);
-}
-/// @}
-
-/// @{
 /** Computes absolute value of 32-bit integer values.
 
     @code
@@ -165,41 +102,12 @@ uint16<N> abs(int16<N> a)
     @icost{SSSE3-AVX, NEON, 2}
     @icost{ALTIVEC, 2-4}
 */
-inline uint32x4 abs(int32x4 a)
+template<unsigned N, class E>
+uint32<N, expr_abs<int32<N,E>>> abs(int32<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::abs(a);
-#elif SIMDPP_USE_SSSE3
-    return _mm_abs_epi32(a);
-#elif SIMDPP_USE_SSE2
-    int32x4 t;
-    t = cmp_lt(a, int32x4::zero());
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
-#elif SIMDPP_USE_NEON
-    return int32x4(vabsq_s32(a));
-#elif SIMDPP_USE_ALTIVEC
-    // expands to 3 instructions
-    return (__vector uint32_t) vec_abs((__vector int32_t)a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline uint32x8 abs(int32x8 a)
-{
-    return _mm256_abs_epi32(a);
-}
-#endif
-
-template<unsigned N>
-uint32<N> abs(int32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, abs, a);
-}
-/// @}
-
-/// @{
 /** Computes absolute value of 64-bit integer values.
 
     @code
@@ -218,47 +126,11 @@ uint32<N> abs(int32<N> a)
     @icost{AVX2, 4}
     @novec{ALTIVEC}
 */
-inline uint64x2 abs(int64x2 a)
+template<unsigned N, class E>
+uint64<N, expr_abs<int64<N,E>>> abs(int64<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::abs(a);
-#elif SIMDPP_USE_SSE2
-    float64x2 ta;
-    int64x2 t;
-    ta = float64x2(shift_r<63>(uint64x2(a)));
-    t = cmp_neq(ta, float64x2::zero());
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
-#elif SIMDPP_USE_NEON
-    int32x4 z = shift_r<63>(uint64x2(a));
-    z = cmp_eq(z, int32x4::zero());
-    z = permute4<0,0,2,2>(z);
-    z = bit_not(z);
-    int64x2 t = z;
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
-#endif
+    return { { a }, 0 };
 }
-
-#if SIMDPP_USE_AVX2
-inline uint64x4 abs(int64x4 a)
-{
-    int64x4 t;
-    t = _mm256_cmpgt_epi64(int64x4::zero(), a);
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
-}
-#endif
-
-template<unsigned N>
-uint64<N> abs(int64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, abs, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

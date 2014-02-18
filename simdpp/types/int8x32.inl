@@ -41,7 +41,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 #if SIMDPP_USE_AVX2
-
+/*
 inline gint8<32>::gint8(const gint16x16& d) { *this = bit_cast<gint8x32>(d); }
 inline gint8<32>::gint8(const gint32x8& d) { *this = bit_cast<gint8x32>(d); }
 inline gint8<32>::gint8(const gint64x4& d) { *this = bit_cast<gint8x32>(d); }
@@ -66,7 +66,7 @@ inline uint8<32>& uint8<32>::operator=(const gint8x32& d) { gint8x32::operator=(
 inline uint8<32>& uint8<32>::operator=(const gint16x16& d){ gint8x32::operator=(d); return *this; }
 inline uint8<32>& uint8<32>::operator=(const gint32x8& d) { gint8x32::operator=(d); return *this; }
 inline uint8<32>& uint8<32>::operator=(const gint64x4& d) { gint8x32::operator=(d); return *this; }
-
+*/
 inline gint8x32 gint8x32::zero()
 {
     return uint8x32::make_const(0);

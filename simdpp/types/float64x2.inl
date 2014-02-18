@@ -95,14 +95,12 @@ inline float64x2 float64x2::make_const(double v0, double v1)
 #endif
 }
 
-inline mask_float64x2::operator float64x2() const
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::convert_mask<float64x2>(*this);
-#else
-    return d_;
+inline mask_float64<2>::mask_float64(const maskdata_float64<2>& d) : float64<2>(d), mask_(d) {}
+
+#if SIMDPP_USE_SSE2
+inline mask_float64<2>::mask_float64(__m128d d)    : float64<2>(d), mask_(d) {}
+inline mask_float64<2>::mask_float64(float64<2> d) : float64<2>(d), mask_(d) {}
 #endif
-}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

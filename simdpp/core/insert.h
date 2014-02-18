@@ -35,7 +35,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/word_size.h>
 #include <simdpp/core/cast.h>
-#include <simdpp/core/detail/move_signed.h>
+#include <simdpp/detail/insn/move_signed.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/altivec/load1.h>
 #include <simdpp/null/set.h>
@@ -145,10 +145,10 @@ gint32x4 insert(gint32x4 a, uint32_t x)
 #elif SIMDPP_USE_SSE2
     uint16_t lo = x & 0xffff;
     uint16_t hi = x >> 16;
-    gint16x8 a1 = a;
+    gint16x8 a1 = gint16<8>(a);
     a1 = insert<id*2>(a1, lo);
     a1 = insert<id*2+1>(a1, hi);
-    return a1;
+    return gint32<4>(a1);
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u32(x, a, id);
 #elif SIMDPP_USE_ALTIVEC
@@ -289,15 +289,15 @@ inline gint8x32 combine(gint8x16 a, gint8x16 b)
 
 inline gint16x16 combine(gint16x8 a, gint16x8 b)
 {
-    return combine(uint16x8(a), uint16x8(b));
+    return gint16x16(combine(uint8x16(a), uint8x16(b)));
 }
 inline gint32x8 combine(gint32x4 a, gint32x4 b)
 {
-    return combine(uint16x8(a), uint16x8(b));
+    return gint32x8(combine(uint8x16(a), uint8x16(b)));
 }
 inline gint64x4 combine(gint64x2 a, gint64x2 b)
 {
-    return combine(uint16x8(a), uint16x8(b));
+    return gint64x4(combine(uint8x16(a), uint8x16(b)));
 }
 
 inline float32x8 combine(float32x4 a, float32x4 b)

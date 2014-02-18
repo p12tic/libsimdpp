@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_DETAIL_CAST_H
-#define LIBSIMDPP_SIMDPP_CORE_DETAIL_CAST_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_DETAIL_CAST_H
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_DETAIL_CAST_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -165,6 +165,13 @@ template<unsigned N> float64<N> cast(float64<N>, gint32<N*2>);
 template<unsigned N> float64<N> cast(float64<N>, gint64<N>);
 template<unsigned N> float64<N> cast(float64<N>, float32<N*2>);
 #endif
+
+template<unsigned N> gint8<N>   cast(gint8<N>,   gint8<N> a);
+template<unsigned N> gint16<N>  cast(gint16<N>,  gint16<N> a);
+template<unsigned N> gint32<N>  cast(gint32<N>,  gint32<N> a);
+template<unsigned N> gint64<N>  cast(gint64<N>,  gint64<N> a);
+template<unsigned N> float32<N> cast(float32<N>, float32<N> a);
+template<unsigned N> float64<N> cast(float64<N>, float64<N> a);
 
 template<bool isvector>
 struct cast_wrapper;

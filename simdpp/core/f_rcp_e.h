@@ -33,18 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    #include <cmath>
-    #include <simdpp/null/foreach.h>
-    #include <simdpp/null/math.h>
-#endif
+#include <simdpp/detail/insn/f_rcp_e.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Computes approximate reciprocal.
 
     Relative error is as follows:
@@ -62,32 +57,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 rcp_e(float32x4 a)
+template<unsigned N, class E>
+float32<N, float32<N>> rcp_e(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return 1.0f / a; });
-#elif SIMDPP_USE_SSE2
-    return _mm_rcp_ps(a);
-#elif SIMDPP_USE_NEON_FLT_SP
-    return vrecpeq_f32(a);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_re((__vector float)a);
-#endif
+    return detail::insn::i_rcp_e(a.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 rcp_e(float32x8 a)
-{
-    return _mm256_rcp_ps(a);
-}
-#endif
-
-template<unsigned N>
-float32<N> rcp_e(float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, rcp_e, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

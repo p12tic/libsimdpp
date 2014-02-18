@@ -42,6 +42,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
+// FIXME: move to insn
 /// @{
 /** Selects bytes from a vector according to a mask, optionally selecting zero.
     Each byte within the mask defines which element to select:
@@ -107,17 +108,17 @@ gint8<N> permute_zbytes16(gint8<N> a, gint8<N> mask)
 template<unsigned N>
 gint16<N> permute_zbytes16(gint16<N> a, gint16<N> mask)
 {
-    return permute_zbytes16(gint8<N*2>(a), gint8<N*2>(mask));
+    return (gint16<N>) permute_zbytes16(gint8<N*2>(a), gint8<N*2>(mask));
 }
 template<unsigned N>
 gint32<N> permute_zbytes16(gint32<N> a, gint32<N> mask)
 {
-    return permute_zbytes16(gint8<N*4>(a), gint8<N*4>(mask));
+    return (gint32<N>) permute_zbytes16(gint8<N*4>(a), gint8<N*4>(mask));
 }
 template<unsigned N>
 gint64<N> permute_zbytes16(gint64<N> a, gint64<N> mask)
 {
-    return permute_zbytes16(gint8<N*8>(a), gint8<N*8>(mask));
+    return (gint64<N>) permute_zbytes16(gint8<N*8>(a), gint8<N*8>(mask));
 }
 template<unsigned N>
 float32<N> permute_zbytes16(float32<N> a, gint32<N> mask)

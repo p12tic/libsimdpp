@@ -33,8 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/make_shuffle_bytes_mask.h>
-#include <simdpp/null/compare.h>
+#include <simdpp/detail/insn/cmp_ge.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -54,32 +53,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline mask_float32x4 cmp_ge(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+mask_float32<N, mask_float32<N>> cmp_ge(float32<N,E1> a,
+                                        float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_ge(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_ps(a, b, _CMP_GE_OQ);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpge_ps(a, b);
-#elif SIMDPP_USE_NEON
-    return vcgeq_f32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmpge((__vector float)a, (__vector float)b);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float32x8 cmp_ge(float32x8 a, float32x8 b)
-{
-    return _mm256_cmp_ps(a, b, _CMP_GE_OQ);
-}
-#endif
-
-template<unsigned N>
-mask_float32<N> cmp_ge(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, cmp_ge, a, b);
+    return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
 /// @}
 
@@ -99,28 +77,11 @@ mask_float32<N> cmp_ge(float32<N> a, float32<N> b)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-inline mask_float64x2 cmp_ge(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+mask_float64<N, mask_float64<N>> cmp_ge(float64<N,E1> a,
+                                        float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::cmp_ge(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_pd(a, b, _CMP_GE_OQ);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpge_pd(a, b);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float64x4 cmp_ge(float64x4 a, float64x4 b)
-{
-    return _mm256_cmp_pd(a, b, _CMP_GE_OQ);
-}
-#endif
-
-template<unsigned N>
-mask_float64<N> cmp_ge(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, cmp_ge, a, b);
+    return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
 /// @}
 

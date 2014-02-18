@@ -33,8 +33,8 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/bitwise.h>
+#include <simdpp/detail/insn/bit_or.h>
+#include <simdpp/detail/expr/bit_or.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -53,128 +53,139 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint8x16 bit_or(gint8x16 a, gint8x16 b)
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_or(gint8<N,E1> a, gint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_or(a, gint8x16(b));
-#elif SIMDPP_USE_SSE2
-    return _mm_or_si128(a, b);
-#elif SIMDPP_USE_NEON
-    return vorrq_u8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_or((__vector uint8_t)a, (__vector uint8_t)b);
-#endif
+    return detail::insn::i_bit_or(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_or(gint8<N,E1> a, gint16<N/2,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint8<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_or(gint8<N,E1> a, gint32<N/4,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint8<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_or(gint8<N,E1> a, gint64<N/8,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint8<N>(b.eval()));
 }
 
-#if SIMDPP_USE_AVX2
-inline gint8x32 bit_or(gint8x32 a, gint8x32 b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_or(gint16<N,E1> a, gint8<N*2,E2> b)
 {
-    return _mm256_or_si256(a, b);
+    return detail::insn::i_bit_or(a.eval(), gint16<N>(b.eval()));
 }
-#endif
-
-template<unsigned N>
-inline gint8<N> bit_or(gint8<N> a, gint8<N> b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_or(gint16<N,E1> a, gint16<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, bit_or, a, b)
+    return detail::insn::i_bit_or(a.eval(), b.eval());
 }
-
-template<unsigned N>
-gint8<N> bit_or(gint8<N> a, gint16<N/2> b) { return bit_or(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-gint8<N> bit_or(gint8<N> a, gint32<N/4> b) { return bit_or(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-gint8<N> bit_or(gint8<N> a, gint64<N/8> b) { return bit_or(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-gint16<N> bit_or(gint16<N> a, gint8<N*2> b) { return bit_or(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint16<N> bit_or(gint16<N> a, gint16<N> b) { return bit_or(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint16<N> bit_or(gint16<N> a, gint32<N/2> b) { return bit_or(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint16<N> bit_or(gint16<N> a, gint64<N/4> b) { return bit_or(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint32<N> bit_or(gint32<N> a, gint8<N*4> b) { return bit_or(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint32<N> bit_or(gint32<N> a, gint16<N/2> b) { return bit_or(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint32<N> bit_or(gint32<N> a, gint32<N> b) { return bit_or(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint32<N> bit_or(gint32<N> a, gint64<N*2> b) { return bit_or(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint64<N> bit_or(gint64<N> a, gint8<N*8> b) { return bit_or(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-gint64<N> bit_or(gint64<N> a, gint16<N/4> b) { return bit_or(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-gint64<N> bit_or(gint64<N> a, gint32<N/2> b) { return bit_or(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-gint64<N> bit_or(gint64<N> a, gint64<N> b) { return bit_or(uint8<N*8>(a), uint8<N*8>(b)); }
-
-inline mask_int8x16 bit_or(mask_int8x16 a, mask_int8x16 b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_or(gint16<N,E1> a, gint32<N/2,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
-#else
-    return bit_or(uint8x16(a), uint8x16(b));
-#endif
+    return detail::insn::i_bit_or(a.eval(), gint16<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_or(gint16<N,E1> a, gint64<N/4,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint16<N>(b.eval()));
 }
 
-inline mask_int16x8 bit_or(mask_int16x8 a, mask_int16x8 b)
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_or(gint32<N,E1> a, gint8<N*4,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
-#else
-    return bit_or(uint16x8(a), uint16x8(b));
-#endif
+    return detail::insn::i_bit_or(a.eval(), gint16<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_or(gint32<N,E1> a, gint16<N*2,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint16<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_or(gint32<N,E1> a, gint32<N,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_or(gint32<N,E1> a, gint64<N/2,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint16<N>(b.eval()));
 }
 
-inline mask_int32x4 bit_or(mask_int32x4 a, mask_int32x4 b)
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_or(gint64<N,E1> a, gint8<N*8,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
-#else
-    return bit_or(uint32x4(a), uint32x4(b));
-#endif
+    return detail::insn::i_bit_or(a.eval(), gint64<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_or(gint64<N,E1> a, gint16<N*4,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint64<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_or(gint64<N,E1> a, gint32<N*2,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), gint64<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_or(gint64<N,E1> a, gint64<N,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), b.eval());
 }
 
-inline mask_int64x2 bit_or(mask_int64x2 a, mask_int64x2 b)
+// -----------------------------------------------------------------------------
+// no point in building expression tree for 8 and 16-bit elements
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_or(gint8<N,E1> a, mask_int8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
-#else
-    return bit_or(uint64x2(a), uint64x2(b));
-#endif
+    return detail::insn::i_bit_or(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_or(gint16<N,E1> a, mask_int16<N,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint32<N, expr_bit_or<gint32<N,E1>,
+                      mask_int32<N,E2>>> bit_or(gint32<N,E1> a,
+                                                mask_int32<N,E2> b)
+{
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline mask_int8x32  bit_or(mask_int8x32 a,  mask_int8x32 b)  { return bit_or(uint8x32(a), uint8x32(b)); }
-inline mask_int16x16 bit_or(mask_int16x16 a, mask_int16x16 b) { return bit_or(uint8x32(a), uint8x32(b)); }
-inline mask_int32x8  bit_or(mask_int32x8 a,  mask_int32x8 b)  { return bit_or(uint8x32(a), uint8x32(b)); }
-inline mask_int64x4  bit_or(mask_int64x4 a,  mask_int64x4 b)  { return bit_or(uint8x32(a), uint8x32(b)); }
-#endif
-
-template<unsigned N>
-mask_int8<N> bit_or(mask_int8<N> a, mask_int8<N> b)
+template<unsigned N, class E1, class E2>
+gint64<N, expr_bit_or<gint64<N,E1>,
+                      mask_int64<N,E2>>> bit_or(gint64<N,E1> a,
+                                                mask_int64<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, bit_or, a, b)
+    return { { a, b }, 0 };
 }
 
-template<unsigned N>
-mask_int16<N> bit_or(mask_int16<N> a, mask_int16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, bit_or, a, b)
-}
+// -----------------------------------------------------------------------------
 
-template<unsigned N>
-mask_int32<N> bit_or(mask_int32<N> a, mask_int32<N> b)
+template<unsigned N, class E1, class E2>
+mask_int8<N, mask_int8<N>> bit_or(mask_int8<N,E1> a, mask_int8<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, bit_or, a, b)
+    return detail::insn::i_bit_or(a.eval(), b.eval());
 }
-
-template<unsigned N>
-mask_int64<N> bit_or(mask_int64<N> a, mask_int64<N> b)
+template<unsigned N, class E1, class E2>
+mask_int16<N, mask_int16<N>> bit_or(mask_int16<N,E1> a, mask_int16<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, bit_or, a, b)
+    return detail::insn::i_bit_or(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+mask_int32<N, mask_int32<N>> bit_or(mask_int32<N,E1> a, mask_int32<N,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+mask_int64<N, mask_int64<N>> bit_or(mask_int64<N,E1> a, mask_int64<N,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), b.eval());
 }
 /// @}
 
@@ -190,112 +201,54 @@ mask_int64<N> bit_or(mask_int64<N> a, mask_int64<N> b)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 bit_or(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> bit_or(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_or(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_or_ps(a, b);
-#elif SIMDPP_USE_NEON
-    return vreinterpretq_f32_s32(vorrq_s32(vreinterpretq_s32_f32(a), vreinterpretq_s32_f32(b)));
-#elif SIMDPP_USE_ALTIVEC
-    return vec_or((__vector float)a, (__vector float)b);
-#endif
+    return detail::insn::i_bit_or(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> bit_or(float32<N,E1> a, gint32<N,E2> b)
+{
+    return detail::insn::i_bit_or(a.eval(), float32<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+float32<N, expr_bit_or<float32<N,E1>,
+                       mask_float32<N,E2>>>
+        bit_or(float32<N,E1> a, mask_float32<N,E2> b)
+{
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 bit_or(float32x8 a, float32x8 b)
+template<unsigned N, class E1, class E2>
+mask_float32<N, mask_float32<N>> bit_or(mask_float32<N,E1> a,
+                                        mask_float32<N,E2> b)
 {
-    return _mm256_or_ps(a, b);
-}
-#endif
-
-template<unsigned N>
-float32<N> bit_or(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, bit_or, a, b)
-}
-
-template<unsigned N>
-float32<N> bit_or(float32<N> a, gint32<N> b)
-{
-    return bit_or(a, float32<N>(b));
+    return detail::insn::i_bit_or(a.eval(), b.eval());
 }
 
 // -----------------------------------------------------------------------------
 
-inline float64x2 bit_or(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> bit_or(float64<N,E1> a, float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_or(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_or_pd(a, b);
-#endif
+    return detail::insn::i_bit_or(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float64x4 bit_or(float64x4 a, float64x4 b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> bit_or(float64<N,E1> a, gint64<N,E2> b)
 {
-    return _mm256_or_pd(a, b);
+    return detail::insn::i_bit_or(a.eval(), float64<N>(b.eval()));
 }
-#endif
-
-template<unsigned N>
-float64<N> bit_or(float64<N> a, float64<N> b)
+template<unsigned N, class E1, class E2>
+float64<N, expr_bit_or<float64<N,E1>,
+                       mask_float64<N,E2>>> bit_or(float64<N,E1> a, mask_float64<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, bit_or, a, b)
+    return { { a, b }, 0 };
 }
-
-template<unsigned N>
-float64<N> bit_or(float64<N> a, gint64<N> b)
+template<unsigned N, class E1, class E2>
+mask_float64<N, mask_float64<N>> bit_or(mask_float64<N,E1> a,
+                                        mask_float64<N,E2> b)
 {
-    return bit_or(a, float64<N>(b));
-}
-
-// -----------------------------------------------------------------------------
-
-inline mask_float32x4 bit_or(mask_float32x4 a, mask_float32x4 b)
-{
-#if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
-#else
-    return bit_or(float32x4(a), float32x4(b));
-#endif
-}
-
-inline mask_float64x2 bit_or(mask_float64x2 a, mask_float64x2 b)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_or_mm(a, b);
-#else
-    return bit_or(float64x2(a), float64x2(b));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float32x8 bit_or(mask_float32x8 a, mask_float32x8 b)
-{
-    return bit_or(float32x8(a), float32x8(b));
-}
-#endif
-
-template<unsigned N>
-mask_float32<N> bit_or(mask_float32<N> a, mask_float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, bit_or, a, b)
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float64x4 bit_or(mask_float64x4 a, mask_float64x4 b)
-{
-    return bit_or(float64x4(a), float64x4(b));
-}
-#endif
-
-template<unsigned N>
-mask_float64<N> bit_or(mask_float64<N> a, mask_float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, bit_or, a, b)
+    return detail::insn::i_bit_or(a.eval(), b.eval());
 }
 /// @}
 ///

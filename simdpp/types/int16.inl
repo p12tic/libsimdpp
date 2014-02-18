@@ -40,52 +40,41 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-template<unsigned N>
-inline gint16<N>::gint16(const gint8<N*2>& d) { *this = bit_cast<gint16<N>>(d); }
-template<unsigned N>
-inline gint16<N>::gint16(const gint32<N/2>& d) { *this = bit_cast<gint16<N>>(d); }
-template<unsigned N>
-inline gint16<N>::gint16(const gint64<N/4>& d) { *this = bit_cast<gint16<N>>(d); }
-template<unsigned N>
-inline gint16<N>& gint16<N>::operator=(const gint8<N*2>& d) { *this = bit_cast<gint16<N>>(d); return *this; }
-template<unsigned N>
-inline gint16<N>& gint16<N>::operator=(const gint32<N/2>& d) { *this = bit_cast<gint16<N>>(d); return *this; }
-template<unsigned N>
-inline gint16<N>& gint16<N>::operator=(const gint64<N/4>& d) { *this = bit_cast<gint16<N>>(d); return *this; }
+template<unsigned N> template<class E> gint16<N>::gint16(const  gint8<N*2,E>& d) { *this = bit_cast<gint16<N>>(d.eval()); }
+template<unsigned N> template<class E> gint16<N>::gint16(const gint16<N,E>& d)   { *this = bit_cast<gint16<N>>(d.eval()); }
+template<unsigned N> template<class E> gint16<N>::gint16(const gint32<N/2,E>& d) { *this = bit_cast<gint16<N>>(d.eval()); }
+template<unsigned N> template<class E> gint16<N>::gint16(const gint64<N/4,E>& d) { *this = bit_cast<gint16<N>>(d.eval()); }
+template<unsigned N> template<class E> gint16<N>& gint16<N>::operator=(const  gint8<N*2,E>& d) { *this = bit_cast<gint16<N>>(d.eval()); return *this; }
+template<unsigned N> template<class E> gint16<N>& gint16<N>::operator=(const gint16<N,E>& d)   { *this = bit_cast<gint16<N>>(d.eval()); return *this; }
+template<unsigned N> template<class E> gint16<N>& gint16<N>::operator=(const gint32<N/2,E>& d) { *this = bit_cast<gint16<N>>(d.eval()); return *this; }
+template<unsigned N> template<class E> gint16<N>& gint16<N>::operator=(const gint64<N/4,E>& d) { *this = bit_cast<gint16<N>>(d.eval()); return *this; }
 
-template<unsigned N>
-inline int16<N>::int16(const gint8<N*2>& d) : gint16<N>(bit_cast<gint16<N>>(d)) {}
-template<unsigned N>
-inline int16<N>::int16(const gint16<N>& d) : gint16<N>(d) {}
-template<unsigned N>
-inline int16<N>::int16(const gint32<N/2>& d) : gint16<N>(bit_cast<gint16<N>>(d)) {}
-template<unsigned N>
-inline int16<N>::int16(const gint64<N/4>& d) : gint16<N>(bit_cast<gint16<N>>(d)) {}
-template<unsigned N>
-inline int16<N>& int16<N>::operator=(const gint8<N*2>& d) { gint16<N>::operator=(d); return *this; }
-template<unsigned N>
-inline int16<N>& int16<N>::operator=(const gint16<N>& d) { gint16<N>::operator=(d); return *this; }
-template<unsigned N>
-inline int16<N>& int16<N>::operator=(const gint32<N/2>& d) { gint16<N>::operator=(d); return *this; }
-template<unsigned N>
-inline int16<N>& int16<N>::operator=(const gint64<N/4>& d) { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> int16<N>::int16(const  gint8<N*2,E>& d) : gint16<N>(d) {}
+template<unsigned N> template<class E> int16<N>::int16(const gint16<N,E>& d)   : gint16<N>(d) {}
+template<unsigned N> template<class E> int16<N>::int16(const gint32<N/2,E>& d) : gint16<N>(d) {}
+template<unsigned N> template<class E> int16<N>::int16(const gint64<N/4,E>& d) : gint16<N>(d) {}
+template<unsigned N> template<class E> int16<N>& int16<N>::operator=(const  gint8<N*2,E>& d) { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> int16<N>& int16<N>::operator=(const gint16<N,E>& d)   { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> int16<N>& int16<N>::operator=(const gint32<N/2,E>& d) { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> int16<N>& int16<N>::operator=(const gint64<N/4,E>& d) { gint16<N>::operator=(d); return *this; }
 
-template<unsigned N>
-inline uint16<N>::uint16(const gint8<N*2>& d) : gint16<N>(bit_cast<gint16<N>>(d)) {}
-template<unsigned N>
-inline uint16<N>::uint16(const gint16<N>& d) : gint16<N>(d) {}
-template<unsigned N>
-inline uint16<N>::uint16(const gint32<N/2>& d) : gint16<N>(bit_cast<gint16<N>>(d)) {}
-template<unsigned N>
-inline uint16<N>::uint16(const gint64<N/4>& d) : gint16<N>(bit_cast<gint16<N>>(d)) {}
-template<unsigned N>
-inline uint16<N>& uint16<N>::operator=(const gint8<N*2>& d) { gint16<N>::operator=(d); return *this; }
-template<unsigned N>
-inline uint16<N>& uint16<N>::operator=(const gint16<N>& d) { gint16<N>::operator=(d); return *this; }
-template<unsigned N>
-inline uint16<N>& uint16<N>::operator=(const gint32<N/2>& d) { gint16<N>::operator=(d); return *this; }
-template<unsigned N>
-inline uint16<N>& uint16<N>::operator=(const gint64<N/4>& d) { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> uint16<N>::uint16(const  gint8<N*2,E>& d) : gint16<N>(d) {}
+template<unsigned N> template<class E> uint16<N>::uint16(const gint16<N,E>& d)   : gint16<N>(d) {}
+template<unsigned N> template<class E> uint16<N>::uint16(const gint32<N/2,E>& d) : gint16<N>(d) {}
+template<unsigned N> template<class E> uint16<N>::uint16(const gint64<N/4,E>& d) : gint16<N>(d) {}
+template<unsigned N> template<class E> uint16<N>& uint16<N>::operator=(const  gint8<N*2,E>& d) { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> uint16<N>& uint16<N>::operator=(const gint16<N,E>& d)   { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> uint16<N>& uint16<N>::operator=(const gint32<N/2,E>& d) { gint16<N>::operator=(d); return *this; }
+template<unsigned N> template<class E> uint16<N>& uint16<N>::operator=(const gint64<N/4,E>& d) { gint16<N>::operator=(d); return *this; }
+
+template<unsigned N> maskdata_int16<N>::operator uint16<N>() const
+{
+    uint16<N> r;
+    for (unsigned i = 0; i < vec_length; ++i) r[i] = d_[i];
+    return r;
+}
+
+template<unsigned N> mask_int16<N>::mask_int16(const maskdata_int16<N>& d) : uint16<N>(d), mask_(d) {}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

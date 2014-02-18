@@ -46,7 +46,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class gint32 {
+class gint32<N, void> {
 public:
 
     using element_type = int32_t;
@@ -54,6 +54,7 @@ public:
     using int_vector_type = gint32<N>;
     using uint_vector_type = uint32<N>;
     using mask_type = mask_int32<N>;
+    using maskdata_type = maskdata_int32<N>;
     using base_vector_type = gint32v;
 
     static constexpr unsigned length = N;
@@ -66,12 +67,14 @@ public:
     gint32<N>(const gint32<N>&) = default;
     gint32<N>& operator=(const gint32<N>&) = default;
 
-    gint32<N>(const gint8<N*4>& d);
-    gint32<N>(const gint16<N*2>& d);
-    gint32<N>(const gint64<N/2>& d);
-    gint32<N>& operator=(const gint8<N*4>& d);
-    gint32<N>& operator=(const gint16<N*2>& d);
-    gint32<N>& operator=(const gint64<N/2>& d);
+    template<class E> explicit gint32<N>(const  gint8<N*4,E>& d);
+    template<class E> explicit gint32<N>(const gint16<N*2,E>& d);
+    template<class E>          gint32<N>(const gint32<N,E>& d);
+    template<class E> explicit gint32<N>(const gint64<N/2,E>& d);
+    template<class E> gint32<N>& operator=(const  gint8<N*4,E>& d);
+    template<class E> gint32<N>& operator=(const gint16<N*2,E>& d);
+    template<class E> gint32<N>& operator=(const gint32<N,E>& d);
+    template<class E> gint32<N>& operator=(const gint64<N/2,E>& d);
 
     /// @{
     /// Construct from compatible float32x8 floating-point vector type
@@ -84,12 +87,10 @@ public:
     gint32<N>& operator=(const float32<N>& d) { operator=(gint32<N>(d)); return *this; }
     /// @}
 
-    const gint32v* begin() const   { return du_; }
-    gint32v* begin()               { return du_; }
-    const gint32v* end() const     { return du_+vec_length; }
-    gint32v* end()                 { return du_+vec_length; }
     const gint32v& operator[](unsigned i) const { return *(du_+i); }
     gint32v& operator[](unsigned i)             { return *(du_+i); }
+
+    gint32<N> eval() const { return *this; }
 
     /// Creates a int32 vector with the contents set to zero
     static gint32<N> zero()
@@ -125,7 +126,7 @@ protected:
     always contains at least one native vector.
 */
 template<unsigned N>
-class int32 : public gint32<N> {
+class int32<N, void> : public gint32<N, void> {
 public:
 
     using element_type = int32_t;
@@ -136,14 +137,14 @@ public:
     int32<N>(const int32<N>&) = default;
     int32<N>& operator=(const int32<N>&) = default;
 
-    int32<N>(const gint8<N*4>& d);
-    int32<N>(const gint16<N*2>& d);
-    int32<N>(const gint32<N>& d);
-    int32<N>(const gint64<N/2>& d);
-    int32<N>& operator=(const gint8<N*4>& d);
-    int32<N>& operator=(const gint16<N*2>& d);
-    int32<N>& operator=(const gint32<N>& d);
-    int32<N>& operator=(const gint64<N/2>& d);
+    template<class E> explicit int32<N>(const  gint8<N*4,E>& d);
+    template<class E> explicit int32<N>(const gint16<N*2,E>& d);
+    template<class E>          int32<N>(const gint32<N,E>& d);
+    template<class E> explicit int32<N>(const gint64<N/2,E>& d);
+    template<class E> int32<N>& operator=(const  gint8<N*4,E>& d);
+    template<class E> int32<N>& operator=(const gint16<N*2,E>& d);
+    template<class E> int32<N>& operator=(const gint32<N,E>& d);
+    template<class E> int32<N>& operator=(const gint64<N/2,E>& d);
 
     /// @{
     /// Construct from compatible float32x8 integer vector type
@@ -151,12 +152,13 @@ public:
     int32<N>& operator=(const float32<N>& d) { gint32<N>::operator=(d); return *this; }
     /// @}
 
-    const int32v* begin() const { return gint32<N>::di_; }
-    int32v* begin()             { return gint32<N>::di_; }
-    const int32v* end() const   { return gint32<N>::di_+vec_length; }
-    int32v* end()               { return gint32<N>::di_+vec_length; }
     const int32v& operator[](unsigned i) const { return *(gint32<N>::di_+i); }
     int32v& operator[](unsigned i)             { return *(gint32<N>::di_+i); }
+
+    int32<N> eval() const { return *this; }
+
+    static int32<N> zero() { return gint32<N>::zero(); }
+    static int32<N> ones() { return gint32<N>::ones(); }
 
     /** Creates a signed int32 vector from a value loaded from memory.
 
@@ -234,7 +236,7 @@ public:
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint32 : public gint32<N> {
+class uint32<N, void> : public gint32<N, void> {
 public:
 
     using element_type = uint32_t;
@@ -245,14 +247,14 @@ public:
     uint32<N>(const uint32<N>&) = default;
     uint32<N>& operator=(const uint32<N>&) = default;
 
-    uint32<N>(const gint8<N*4>& d);
-    uint32<N>(const gint16<N*2>& d);
-    uint32<N>(const gint32<N>& d);
-    uint32<N>(const gint64<N/2>& d);
-    uint32<N>& operator=(const gint8<N*4>& d);
-    uint32<N>& operator=(const gint16<N*2>& d);
-    uint32<N>& operator=(const gint32<N>& d);
-    uint32<N>& operator=(const gint64<N/2>& d);
+    template<class E> explicit uint32<N>(const  gint8<N*4,E>& d);
+    template<class E> explicit uint32<N>(const gint16<N*2,E>& d);
+    template<class E>          uint32<N>(const gint32<N,E>& d);
+    template<class E> explicit uint32<N>(const gint64<N/2,E>& d);
+    template<class E> uint32<N>& operator=(const  gint8<N*4,E>& d);
+    template<class E> uint32<N>& operator=(const gint16<N*2,E>& d);
+    template<class E> uint32<N>& operator=(const gint32<N,E>& d);
+    template<class E> uint32<N>& operator=(const gint64<N/2,E>& d);
 
     /// @{
     /// Construct from compatible float32x8 integer vector type
@@ -260,12 +262,13 @@ public:
     uint32<N>& operator=(const float32<N>& d) { gint32<N>::operator=(d); return *this; }
     /// @}
 
-    const uint32v* begin() const { return gint32<N>::du_; }
-    uint32v* begin()             { return gint32<N>::du_; }
-    const uint32v* end() const   { return gint32<N>::du_+vec_length; }
-    uint32v* end()               { return gint32<N>::du_+vec_length; }
     const uint32v& operator[](unsigned i) const { return *(gint32<N>::du_+i); }
     uint32v& operator[](unsigned i)             { return *(gint32<N>::du_+i); }
+
+    uint32<N> eval() const { return *this; }
+
+    static uint32<N> zero() { return gint32<N>::zero(); }
+    static uint32<N> ones() { return gint32<N>::ones(); }
 
     /** Creates a unsigned int32 vector from a value loaded from memory.
 
@@ -339,38 +342,48 @@ public:
     }
 };
 
-/// Class representing a mask for @a gint32 vector of arbitrary length. The
-/// vector always contains at least one native vector.
+
+/// Class representing possibly optimized mask data for arbitrary length 32-bit
+/// integer vector
 template<unsigned N>
-class mask_int32 {
+class maskdata_int32 {
 public:
-    using base_vector_type = mask_int32v;
+    using base_vector_type = maskdata_int32<N>;
     static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT32_SIZE - 1) / SIMDPP_FAST_INT32_SIZE;
+    static constexpr unsigned vec_length = int32<N>::vec_length;
 
-    mask_int32<N>() = default;
-    mask_int32<N>(const mask_int32 &) = default;
-    mask_int32<N> &operator=(const mask_int32 &) = default;
+    maskdata_int32<N>() = default;
+    maskdata_int32<N>(const maskdata_int32<N> &) = default;
+    maskdata_int32<N> &operator=(const maskdata_int32<N> &) = default;
 
-    const mask_int32v* begin() const   { return d_; }
-    mask_int32v* begin()               { return d_; }
-    const mask_int32v* end() const     { return d_+vec_length; }
-    mask_int32v* end()                 { return d_+vec_length; }
-    const mask_int32v& operator[](unsigned i) const { return *(d_+i); }
-    mask_int32v& operator[](unsigned i)             { return *(d_+i); }
+    /// Convert to bitmask
+    operator uint32<N>() const;
 
-    /// Convert to a regular vector
-    operator gint32<N>() const
-    {
-        gint32<N> r;
-        for (unsigned i = 0; i < vec_length; ++i) {
-            r[i] = d_[i];
-        }
-        return r;
-    }
+    const maskdata_int32v& operator[](unsigned i) const { return *(d_+i); }
+          maskdata_int32v& operator[](unsigned i)       { return *(d_+i); }
+
+    mask_int32<N> eval() const { return *this; }
 
 private:
-    mask_int32v d_[vec_length];
+    maskdata_int32v d_[vec_length];
+};
+
+
+/// Class representing a mask for 32-bit integer point vector of arbitrary
+/// length.
+template<unsigned N>
+class mask_int32<N, void> : public uint32<N, void> {
+public:
+    mask_int32<N>() = default;
+    mask_int32<N>(const mask_int32<N> &) = default;
+    mask_int32<N> &operator=(const mask_int32<N> &) = default;
+    mask_int32<N>(const maskdata_int32<N>& d);
+
+    mask_int32<N> eval() const { return *this; }
+
+    mask_int32<N> mask() const { return mask_; }
+private:
+    maskdata_int32<N> mask_;
 };
 
 /// @} -- end ingroup

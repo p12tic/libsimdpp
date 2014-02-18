@@ -33,49 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/align.h>
-#include <simdpp/core/blend.h>
-#include <simdpp/core/load.h>
-#include <simdpp/core/load_u.h>
-#include <simdpp/core/store.h>
-#include <simdpp/neon/memory_store.h>
-#include <simdpp/null/memory.h>
-#include <simdpp/sse/extract_half.h>
-#include <simdpp/sse/memory_store.h>
+#include <simdpp/detail/insn/store_first.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-namespace detail {
-
-// Multi-vector store_first is mostly boilerplate
-template<class P, class V>
-void v_store_first(P* p, V a, unsigned n)
-{
-    unsigned veclen = sizeof(typename V::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-
-    unsigned n_full_vec = n / V::length;
-    unsigned mid_vec_fill_count = n % V::length;
-    unsigned curr_vec = 0;
-
-    for (; curr_vec < n_full_vec; ++curr_vec) {
-        store(p, a[curr_vec]);
-        p += veclen / sizeof(P);
-    }
-
-    if (mid_vec_fill_count > 0) {
-        store_first(p, a[curr_vec], mid_vec_fill_count);
-    }
-}
-
-} // namespace defail
-
-
-/// @{
 /** Stores the first @a n elements of an 128-bit or 256-bit integer, 32-bit or
     64-bit floating point vector to memory. @a n must be in range [0..N-1]
     where @a N is the number of elements in the vector. If @a n is zero, no
@@ -98,217 +62,35 @@ void v_store_first(P* p, V a, unsigned n)
     @par 256-bit version:
     @a p must be aligned to 32 bytes.
 */
-inline void store_first(void* p, gint8x16 a, unsigned n)
+template<unsigned N, class E>
+void store_first(void* p, gint8<N,E> a, unsigned n)
 {
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    static const uint8_t mask_d[32] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
-                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
-                                       0,0,0,0,0,0,0,0,
-                                       0,0,0,0,0,0,0,0};
-
-    gint8x16 mask = load_u(mask, mask_d + 16 - n);
-    gint8x16 old = load(old, p);
-    a = blend(a, old, mask);
-    store(p, a);
-#endif
+    detail::insn::i_store_first(p, a.eval(), n);
 }
-
-#if SIMDPP_USE_AVX2
-inline void store_first(void* p, gint8x32 a, unsigned n)
+template<unsigned N, class E>
+void store_first(void* p, gint16<N,E> a, unsigned n)
 {
-    static const uint8_t mask_d[64] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
-                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
-                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
-                                       0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
-                                       0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,
-                                       0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0};
-
-    gint8x32 mask = load_u(mask, mask_d + 32 - n);
-    gint8x32 old = load(old, p);
-    a = blend(a, old, mask);
-    store(p, a);
+    detail::insn::i_store_first(p, a.eval(), n);
 }
-#endif
-
-template<unsigned N>
-void store_first(void* p, gint8<N> a, unsigned n)
+template<unsigned N, class E>
+void store_first(void* p, gint32<N,E> a, unsigned n)
 {
-    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
+    detail::insn::i_store_first(p, a.eval(), n);
 }
-
-// 16 bits
-
-inline void store_first(void* p, gint16x8 a, unsigned n)
+template<unsigned N, class E>
+void store_first(void* p, gint64<N,E> a, unsigned n)
 {
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    store_first(p, (gint8x16)a, n*2);
-#endif
+    detail::insn::i_store_first(p, a.eval(), n);
 }
-
-#if SIMDPP_USE_AVX2
-inline void store_first(void* p, gint16x16 a, unsigned n)
+template<unsigned N, class E>
+void store_first(float* p, float32<N,E> a, unsigned n)
 {
-    store_first(p, gint8x32(a), n*2);
+    detail::insn::i_store_first(p, a.eval(), n);
 }
-#endif
-
-template<unsigned N>
-void store_first(void* p, gint16<N> a, unsigned n)
+template<unsigned N, class E>
+void store_first(double* p, float64<N,E> a, unsigned n)
 {
-    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
-}
-
-// 32 bits
-
-inline void store_first(void* p, gint32x4 a, unsigned n)
-{
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    store_first(p, (gint8x16)a, n*4);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline void store_first(void* p, gint32x8 a, unsigned n)
-{
-    store_first(p, gint8x32(a), n*4);
-}
-#endif
-
-template<unsigned N>
-void store_first(void* p, gint32<N> a, unsigned n)
-{
-    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
-}
-
-// 64 bits
-
-inline void store_first(void* p, gint64x2 a, unsigned n)
-{
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2
-    if (n == 1) {
-        sse::store_lane<0,1>(p, a);
-    }
-#elif SIMDPP_USE_NEON
-    if (n == 1) {
-        neon::store_lane<0,1>(p, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-    if (n == 1) {
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(q));
-        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(q));
-    }
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline void store_first(void* p, gint64x4 a, unsigned n)
-{
-    store_first(p, gint8x32(a), n*8);
-}
-#endif
-
-template<unsigned N>
-void store_first(void* p, gint64<N> a, unsigned n)
-{
-    detail::v_store_first(reinterpret_cast<char*>(p), a, n);
-}
-
-// 32 bits float
-
-inline void store_first(float* p, float32x4 a, unsigned n)
-{
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
-    store_first(p, int32x4{a}, n);
-#elif SIMDPP_USE_SSE2
-    static const uint32_t mask_d[8] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
-                                       0x00000000, 0x00000000, 0x00000000, 0x00000000};
-
-    const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x4 mask = load_u(mask, mask_dp + 4-n);
-    float32x4 old = load(old, p);
-    a = blend(a, old, mask);
-    store(p, a);
-#elif SIMDPP_USE_NEON
-    // + VFP
-    if (n < 1) return;
-    neon::store_lane<0,1>(p, a);
-    if (n < 2) return;
-    neon::store_lane<1,1>(p, a);
-    if (n < 3) return;
-    neon::store_lane<2,1>(p, a);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline void store_first(float* p, float32x8 a, unsigned n)
-{
-    static const uint32_t mask_d[16] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
-                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
-                                        0x00000000, 0x00000000, 0x00000000, 0x00000000,
-                                        0x00000000, 0x00000000, 0x00000000, 0x00000000};
-
-    const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x8 mask = load_u(mask, mask_dp + 8-n);
-    float32x8 old = load(old, p);
-    a = blend(a, old, mask);
-    store(p, a);
-}
-#endif
-
-template<unsigned N>
-void store_first(float* p, float32<N> a, unsigned n)
-{
-    detail::v_store_first(p, a, n);
-}
-
-// 64 bit float
-
-inline void store_first(double* p, float64x2 a, unsigned n)
-{
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2
-    if (n == 1) {
-        sse::store_lane<0,1>(p, a);
-    }
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline void store_first(double* p, float64x4 a, unsigned n)
-{
-    static const uint64_t mask_d[16] = {0xffffffffffffffff, 0xffffffffffffffff,
-                                        0xffffffffffffffff, 0xffffffffffffffff,
-                                        0x0000000000000000, 0x0000000000000000,
-                                        0x0000000000000000, 0x0000000000000000};
-
-    const double* mask_dp = reinterpret_cast<const double*>(mask_d);
-    float64x4 mask = load_u(mask, mask_dp + 4-n);
-    float64x4 old = load(old, p);
-    a = blend(a, old, mask);
-    store(p, a);
-}
-#endif
-
-template<unsigned N>
-void store_first(double* p, float64<N> a, unsigned n)
-{
-    detail::v_store_first(p, a, n);
+    detail::insn::i_store_first(p, a.eval(), n);
 }
 /// @}
 

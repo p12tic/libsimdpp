@@ -48,7 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class float64 {
+class float64<N, void> {
 public:
 
     using element_type = double;
@@ -57,6 +57,7 @@ public:
     using uint_vector_type = uint64<N>;
     using base_vector_type = float64v;
     using mask_type = mask_float64<N>;
+    using maskdata_type = maskdata_float64<N>;
 
     static constexpr unsigned length = N;
     static constexpr unsigned vec_length = (N + SIMDPP_FAST_FLOAT64_SIZE - 1) / SIMDPP_FAST_FLOAT64_SIZE;
@@ -80,12 +81,10 @@ public:
     float64<N>& operator=(gint64<N> d)  { operator=(float64<N>(d)); return *this; }
     /// @}
 
-    const float64v* begin() const   { return d_; }
-    float64v* begin()               { return d_; }
-    const float64v* end() const     { return d_+vec_length; }
-    float64v* end()                 { return d_+vec_length; }
     const float64v& operator[](unsigned i) const { return *(d_+i); }
     float64v& operator[](unsigned i)             { return *(d_+i); }
+
+    float64<N> eval() const { return *this; }
 
     /** Creates a float64 vector with the contents set to zero
 
@@ -137,7 +136,7 @@ public:
     static float64<N> set_broadcast(float64v v0)
     {
         float64<N> r;
-        for (auto &v : r) v = v0;
+        for (unsigned i = 0; i < r.vec_length; i++) r[i] = v0;
         return r;
     }
 
@@ -169,39 +168,48 @@ private:
     float64v d_[vec_length];
 };
 
+/// Class representing possibly optimized mask data for 2x 64-bit floating point
+/// vector
+template<unsigned N>
+class maskdata_float64 {
+public:
+    using base_vector_type = maskdata_float64<N>;
+    static constexpr unsigned length = N;
+    static constexpr unsigned vec_length = float64<N>::vec_length;
+
+    maskdata_float64<N>() = default;
+    maskdata_float64<N>(const maskdata_float64<N> &) = default;
+    maskdata_float64<N> &operator=(const maskdata_float64<N> &) = default;
+
+    /// Convert to bitmask
+    operator float64<N>() const;
+
+    const maskdata_float64v& operator[](unsigned i) const { return *(d_+i); }
+          maskdata_float64v& operator[](unsigned i)       { return *(d_+i); }
+
+    mask_float64<N> eval() const { return *this; }
+
+private:
+    maskdata_float64v d_[vec_length];
+};
+
+
 /// Class representing a mask for 64-bit floating point vector of arbitrary
 /// length. The vector always contains at least one native vector.
 template<unsigned N>
-class mask_float64 {
+class mask_float64<N, void> : public float64<N, void> {
 public:
-    using base_vector_type = mask_float64v;
-    static constexpr unsigned length = 8;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_FLOAT64_SIZE - 1) / SIMDPP_FAST_FLOAT64_SIZE;
-
     mask_float64<N>() = default;
-    mask_float64<N>(const mask_float64 &) = default;
-    mask_float64<N> &operator=(const mask_float64 &) = default;
+    mask_float64<N>(const mask_float64<N> &) = default;
+    mask_float64<N> &operator=(const mask_float64<N> &) = default;
+    mask_float64<N>(const maskdata_float64<N>& d);
 
-    const mask_float64v* begin() const   { return d_; }
-    mask_float64v* begin()               { return d_; }
-    const mask_float64v* end() const     { return d_+vec_length; }
-    mask_float64v* end()                 { return d_+vec_length; }
-    const mask_float64v& operator[](unsigned i) const { return *(d_+i); }
-    mask_float64v& operator[](unsigned i)             { return *(d_+i); }
-
-    /// Convert to a regular vector
-    operator float64<N>() const
-    {
-        float64<N> r;
-        for (unsigned i = 0; i < vec_length; ++i) {
-            r[i] = d_[i];
-        }
-        return r;
-    }
+    mask_float64<N> eval() const { return *this; }
 
 private:
-    mask_float64v d_[vec_length];
+    maskdata_float64<N> mask_;
 };
+
 
 /// @} -- end ingroup
 

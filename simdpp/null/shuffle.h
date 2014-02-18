@@ -118,9 +118,9 @@ template<class V>
 V blend(V on, V off, V mask)
 {
     V r;
-     on = bit_and(on, mask);
-    off = bit_andnot(off, mask);
-      r = bit_or(on, off);
+     on = null::bit_and(on, mask);
+    off = null::bit_andnot(off, mask);
+      r = null::bit_or(on, off);
     return r;
 }
 

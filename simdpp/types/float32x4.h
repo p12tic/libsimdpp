@@ -47,7 +47,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float32x4 vector
 template<>
-class float32<4> {
+class float32<4, void> {
 public:
 
     using element_type = float;
@@ -56,6 +56,7 @@ public:
     using uint_vector_type = uint32x4;
     using base_vector_type = float32x4;
     using mask_type = mask_float32x4;
+    using maskdata_type = maskdata_float32<4>;
 
     static constexpr unsigned length = 4;
     static constexpr unsigned vec_length = 1;
@@ -94,14 +95,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const float32x4* begin() const   { return this; }
-    float32x4* begin()               { return this; }
-    const float32x4* end() const     { return this+1; }
-    float32x4* end()                 { return this+1; }
-    const float32x4& operator[](unsigned i) const { return *this; }
-          float32x4& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const float32x4& operator[](unsigned) const { return *this; }
+          float32x4& operator[](unsigned)       { return *this; }
     /// @}
+
+    float32<4> eval() const { return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
@@ -187,38 +186,29 @@ private:
 #endif
 };
 
-/// Class representing a mask for 4x 32-bit floating-point vector
+
+
+/// Class representing possibly optimized mask data for 4x 32-bit floating point
+/// vector
 template<>
-class mask_float32<4> {
+class maskdata_float32<4> {
 public:
-    using base_vector_type = mask_float32x4;
+    using base_vector_type = maskdata_float32<4>;
     static constexpr unsigned length = 4;
+    static constexpr unsigned vec_length = 1;
 
-    mask_float32<4>() = default;
-    mask_float32<4>(const mask_float32x4 &) = default;
-    mask_float32<4> &operator=(const mask_float32x4 &) = default;
-
+    maskdata_float32<4>() = default;
+    maskdata_float32<4>(const maskdata_float32<4> &) = default;
+    maskdata_float32<4> &operator=(const maskdata_float32<4> &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-#if SIMDPP_USE_SSE2
-    mask_float32<4>(__m128 d) : d_(d) {}
-#elif SIMDPP_USE_NEON
-    mask_float32<4>(float32x4_t d) : d_(d) {}
-    mask_float32<4>(uint32x4_t d) : d_(d) {}
-#elif SIMDPP_USE_ALTIVEC
-    mask_float32<4>(__vector float d) : d_(d) {}
-    mask_float32<4>(__vector __bool int d) : d_((__vector float)d) {}
-#endif
-
-#if SIMDPP_USE_NULL
-#else
-    mask_float32<4>(float32x4 d) : d_(d) {}
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    maskdata_float32<4>(float32x4 d) : d_(d) {}
 #endif
 #endif
 
-    /// Access the underlying type
-    operator float32x4() const;
+    /// Convert to bitmask
+    operator float32<4>() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL
@@ -228,22 +218,54 @@ public:
 #endif
 
     /// @{
-    /// Range access
-    const mask_float32x4* begin() const              { return this; }
-          mask_float32x4* begin()                    { return this; }
-    const mask_float32x4* end() const                { return this+1; }
-          mask_float32x4* end()                      { return this+1; }
-    const mask_float32x4& operator[](unsigned i) const { return *this; }
-          mask_float32x4& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const maskdata_float32<4>& operator[](unsigned) const { return *this; }
+          maskdata_float32<4>& operator[](unsigned)       { return *this; }
     /// @}
 
 private:
-#if SIMDPP_USE_NULL
-    bool b_[4];
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    bool b_[2];
 #else
     float32x4 d_;
 #endif
 };
+
+
+/// Class representing a mask for 4x 32-bit floating-point vector
+template<>
+class mask_float32<4, void> : public float32<4, void> {
+public:
+    mask_float32<4>() = default;
+    mask_float32<4>(const mask_float32x4 &) = default;
+    mask_float32<4> &operator=(const mask_float32x4 &) = default;
+    mask_float32<4>(const maskdata_float32<4>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+#if SIMDPP_USE_SSE2
+    mask_float32<4>(__m128 d);
+    mask_float32<4>(float32<4> d);
+#elif SIMDPP_USE_NEON
+    mask_float32<4>(float32x4_t d);
+    mask_float32<4>(float32<4> d);
+#elif SIMDPP_USE_ALTIVEC
+    mask_float32<4>(__vector float d);
+    mask_float32<4>(float32<4> d);
+#endif
+    /// @}
+
+    mask_float32<4> eval() const { return *this; }
+
+    const maskdata_float32<4>& mask() const { return mask_; }
+#if !DOXYGEN_SHOULD_SKIP_THIS && SIMDPP_USE_NULL
+    maskdata_float32<4>& m_mask() { return mask_; }
+#endif
+
+private:
+    maskdata_float32<4> mask_;
+};
+
 
 /// @} -- end defgroup
 

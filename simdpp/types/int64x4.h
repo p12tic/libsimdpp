@@ -50,7 +50,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint64<4> {
+class gint64<4, void> {
 public:
 
     using element_type = uint64_t;
@@ -93,14 +93,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const gint64x4* begin() const                  { return this; }
-          gint64x4* begin()                        { return this; }
-    const gint64x4* end() const                    { return this+1; }
-          gint64x4* end()                          { return this+1; }
-    const gint64x4& operator[](unsigned i) const   { return *this; }
-          gint64x4& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const gint64x4& operator[](unsigned) const   { return *this; }
+          gint64x4& operator[](unsigned)         { return *this; }
     /// @}
+
+    gint64<4> eval() const { return *this; }
 
     /// Creates a int64x4 vector with the contents set to zero
     static gint64x4 zero();
@@ -116,7 +114,7 @@ private:
 /** Class representing 2x 64-bit signed integer vector
 */
 template<>
-class int64<4> : public gint64x4 {
+class int64<4, void> : public gint64x4 {
 public:
 
     using element_type = int64_t;
@@ -152,14 +150,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const int64x4* begin() const                  { return this; }
-          int64x4* begin()                        { return this; }
-    const int64x4* end() const                    { return this+1; }
-          int64x4* end()                          { return this+1; }
-    const int64x4& operator[](unsigned i) const   { return *this; }
-          int64x4& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const int64x4& operator[](unsigned) const   { return *this; }
+          int64x4& operator[](unsigned)         { return *this; }
     /// @}
+
+    int64<4> eval() const { return *this; }
 
     /** Creates a signed int64x4 vector from a value loaded from memory.
 
@@ -215,7 +211,7 @@ public:
 /** Class representing 2x 64-bit unsigned integer vector
 */
 template<>
-class uint64<4> : public gint64x4 {
+class uint64<4, void> : public gint64x4 {
 public:
 
     using half_vector_type = uint64x2;
@@ -250,14 +246,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const uint64x4* begin() const                  { return this; }
-          uint64x4* begin()                        { return this; }
-    const uint64x4* end() const                    { return this+1; }
-          uint64x4* end()                          { return this+1; }
-    const uint64x4& operator[](unsigned i) const   { return *this; }
-          uint64x4& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const uint64x4& operator[](unsigned) const   { return *this; }
+          uint64x4& operator[](unsigned)         { return *this; }
     /// @}
+
+    uint64<4> eval() const { return *this; }
 
     /** Creates a int64x4 vector from a value loaded from memory.
 
@@ -312,39 +306,55 @@ public:
 
 };
 
-/// Class representing a mask for 4x 64-bit integer vector
+/// Class representing possibly optimized mask data for 4x 64-bit integer vector
 template<>
-class mask_int64<4> {
+class maskdata_int64<4> {
 public:
-    using base_vector_type = mask_int64x4;
-
-    static constexpr unsigned vec_length = 1;
+    using base_vector_type = maskdata_int64<4>;
     static constexpr unsigned length = 4;
+    static constexpr unsigned vec_length = 1;
 
-    mask_int64<4>() = default;
-    mask_int64<4>(const mask_int64x4 &) = default;
-    mask_int64<4> &operator=(const mask_int64x4 &) = default;
+    maskdata_int64<4>() = default;
+    maskdata_int64<4>(const maskdata_int64<4> &) = default;
+    maskdata_int64<4> &operator=(const maskdata_int64<4> &) = default;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    mask_int64<4>(__m256i d) : d_(d) {}
-#endif
-    mask_int64<4>(gint64x4 d) : d_(d) {}
+    maskdata_int64<4>(int64<4> d) : d_(d) {}
 
-    /// Access the underlying type
-    operator gint64x4() const;
+    /// Convert to bitmask
+    operator uint64<4>() const;
 
     /// @{
-    /// Range access
-    const mask_int32x8* begin() const                  { return this; }
-          mask_int32x8* begin()                        { return this; }
-    const mask_int32x8* end() const                    { return this+1; }
-          mask_int32x8* end()                          { return this+1; }
-    const mask_int32x8& operator[](unsigned i) const   { return *this; }
-          mask_int32x8& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const maskdata_int64<4>& operator[](unsigned) const { return *this; }
+          maskdata_int64<4>& operator[](unsigned)       { return *this; }
     /// @}
 
 private:
-    gint64x4 d_;
+    uint64<4> d_;
+};
+
+
+/// Class representing a mask for 4x 64-bit integer vector
+template<>
+class mask_int64<4, void> : public uint64<4, void> {
+public:
+    mask_int64<4>() = default;
+    mask_int64<4>(const mask_int64<4> &) = default;
+    mask_int64<4> &operator=(const mask_int64<4> &) = default;
+    mask_int64<4>(const maskdata_int64<4>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+    mask_int64<4>(__m256i d);
+    mask_int64<4>(uint64<4> d);
+    /// @}
+
+    mask_int64<4> eval() const { return *this; }
+
+    const maskdata_int64<4>& mask() const { return mask_; }
+
+private:
+    maskdata_int64<4> mask_;
 };
 
 /// @} -- end ingroup

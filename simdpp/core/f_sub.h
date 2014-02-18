@@ -33,14 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/expr/f_sub.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Substracts the values of two vectors
 
     @code
@@ -52,34 +51,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 sub(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+float32<N, expr_sub<float32<N,E1>,
+                    float32<N,E2>>> sub(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::sub(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_sub_ps(a,b);
-#elif SIMDPP_USE_NEON_FLT_SP
-    return vsubq_f32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_sub((__vector float)a, (__vector float)b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 sub(float32x8 a, float32x8 b)
-{
-    return _mm256_sub_ps(a, b);
-}
-#endif
-
-template<unsigned N>
-float32<N> sub(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, sub, a, b);
-}
-/// @}
-
-/// @{
 /** Subtracts the values of two vectors
 
     @code
@@ -95,28 +73,12 @@ float32<N> sub(float32<N> a, float32<N> b)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-inline float64x2 sub(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+float64<N, expr_sub<float64<N,E1>,
+                    float64<N,E2>>> sub(float64<N,E1> a, float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::sub(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_sub_pd(a, b);
-#endif
+    return { { a, b }, 0 };
 }
-
-#if SIMDPP_USE_AVX
-inline float64x4 sub(float64x4 a, float64x4 b)
-{
-    return _mm256_sub_pd(a, b);
-}
-#endif
-
-template<unsigned N>
-float64<N> sub(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, sub, a, b);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

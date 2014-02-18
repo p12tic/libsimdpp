@@ -146,7 +146,8 @@ uint32_t extract(gint32x4 a)
 #elif SIMDPP_USE_SSE4_1
     return _mm_extract_epi32(a.operator __m128i(), id);
 #elif SIMDPP_USE_SSE2
-    return _mm_cvtsi128_si32(move_l<id>(a)); // when id==0, move_l is template-specialized and does nothing
+    // when id==0, move_l is template-specialized and does nothing
+    return _mm_cvtsi128_si32(move_l<id>(a).eval());
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u32(a, id);
 #elif SIMDPP_USE_ALTIVEC

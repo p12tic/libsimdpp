@@ -33,15 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_xor.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/expr/f_neg.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Negates the values of a float32x4 vector
 
     @code
@@ -57,35 +55,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, ALTIVEC, 2-3}
     @icost{AVX-AVX2, NEON, 2}
 */
-inline float32x4 neg(float32x4 a)
+template<unsigned N, class E>
+float32<N, expr_neg<float32<N,E>>> neg(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    // reversion of the sign bit required even for NaNs and zeros
-    int32x4 zero = int32x4::make_const(0x80000000);
-    return bit_xor(a, zero);
-#elif SIMDPP_USE_NEON_FLT_SP
-    return vnegq_f32(a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 neg(float32x8 a)
-{
-    int32x8 zero = int32x8::make_const(0x80000000);
-    return bit_xor(a, zero);
-}
-#endif
-
-template<unsigned N>
-float32<N> neg(float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, neg, a);
-}
-/// @}
-
-/// @{
 /** Negates the values of a vector
 
     @code
@@ -103,30 +78,12 @@ float32<N> neg(float32<N> a)
     @icost{AVX-AVX2, 1-2}
     @novec{NEON, ALTIVEC}
 */
-inline float64x2 neg(float64x2 a)
+template<unsigned N, class E>
+float64<N, expr_neg<float64<N,E>>> neg(float64<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::neg(a);
-#elif SIMDPP_USE_SSE2
-    int64x2 zero = int64x2::make_const(0x8000000000000000);
-    return bit_xor(a, zero);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX
-inline float64x4 neg(float64x4 a)
-{
-    int64x4 zero = int64x4::make_const(0x8000000000000000);
-    return bit_xor(a, zero);
-}
-#endif
-
-template<unsigned N>
-float64<N> neg(float64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, neg, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

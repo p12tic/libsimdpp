@@ -49,7 +49,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing a float32x8 vector
 template<>
-class float32<8> {
+class float32<8, void> {
 public:
 
     using element_type = float;
@@ -82,14 +82,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const float32x8* begin() const              { return this; }
-          float32x8* begin()                    { return this; }
-    const float32x8* end() const                { return this+1; }
-          float32x8* end()                      { return this+1; }
-    const float32x8& operator[](unsigned i) const { return *this; }
-          float32x8& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const float32x8& operator[](unsigned) const { return *this; }
+          float32x8& operator[](unsigned)       { return *this; }
     /// @}
+
+    float32<8> eval() const { return *this; }
 
     /** Creates a float32x8 vector with the contents set to zero
 
@@ -164,37 +162,56 @@ private:
     __m256 d_;
 };
 
-/// Class representing a mask for 8x 32-bit floating-point vector
+/// Class representing possibly optimized mask data for 8x 32-bit floating point
+/// vector
 template<>
-class mask_float32<8> {
+class maskdata_float32<8> {
 public:
-    using base_vector_type = mask_float32x8;
+    using base_vector_type = maskdata_float32<8>;
     static constexpr unsigned length = 8;
+    static constexpr unsigned vec_length = 1;
 
-    mask_float32<8>() = default;
-    mask_float32<8>(const mask_float32x8 &) = default;
-    mask_float32<8> &operator=(const mask_float32x8 &) = default;
+    maskdata_float32<8>() = default;
+    maskdata_float32<8>(const maskdata_float32<8> &) = default;
+    maskdata_float32<8> &operator=(const maskdata_float32<8> &) = default;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    mask_float32<8>(__m256 d) : d_(d) {}
-#endif
-    mask_float32<8>(float32x8 d) : d_(d) {}
+    maskdata_float32<8>(float32<8> d) : d_(d) {}
 
-    /// Access the underlying type
-    operator float32x8() const;
+    /// Convert to bitmask
+    operator float32<8>() const;
 
     /// @{
-    /// Range access
-    const mask_float32x8* begin() const              { return this; }
-          mask_float32x8* begin()                    { return this; }
-    const mask_float32x8* end() const                { return this+1; }
-          mask_float32x8* end()                      { return this+1; }
-    const mask_float32x8& operator[](unsigned i) const { return *this; }
-          mask_float32x8& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const maskdata_float32<8>& operator[](unsigned) const { return *this; }
+          maskdata_float32<8>& operator[](unsigned)       { return *this; }
     /// @}
 
 private:
-    float32x8 d_;
+    float32<8> d_;
+};
+
+
+/// Class representing a mask for 8x 32-bit floating-point vector
+template<>
+class mask_float32<8, void> : public float32<8, void> {
+public:
+    mask_float32<8>() = default;
+    mask_float32<8>(const mask_float32<8> &) = default;
+    mask_float32<8> &operator=(const mask_float32<8> &) = default;
+    mask_float32<8>(const maskdata_float32<8>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+    mask_float32<8>(__m256 d);
+    mask_float32<8>(float32<8> d);
+    /// @}
+
+    mask_float32<8> eval() const { return *this; }
+
+    const maskdata_float32<8>& mask() const { return mask_; }
+
+private:
+    maskdata_float32<8> mask_;
 };
 
 /// @} -- end ingroup

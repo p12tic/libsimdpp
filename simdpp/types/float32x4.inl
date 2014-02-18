@@ -151,14 +151,18 @@ inline float32x4 float32x4::make_const(float v0, float v1, float v2, float v3)
 #endif
 }
 
-inline mask_float32x4::operator float32x4() const
-{
-#if SIMDPP_USE_NULL
-    return null::convert_mask<float32x4>(*this);
-#else
-    return d_;
+inline mask_float32<4>::mask_float32(const maskdata_float32<4>& d) : float32<4>(d), mask_(d) {}
+
+#if SIMDPP_USE_SSE2
+inline mask_float32<4>::mask_float32(__m128 d)     : float32<4>(d), mask_(d) {}
+inline mask_float32<4>::mask_float32(float32<4> d) : float32<4>(d), mask_(d) {}
+#elif SIMDPP_USE_NEON
+inline mask_float32<4>::mask_float32(float32x4_t d) : float32<4>(d), mask_(d) {}
+inline mask_float32<4>::mask_float32(float32<4> d)  : float32<4>(d), mask_(d) {}
+#elif SIMDPP_USE_ALTIVEC
+inline mask_float32<4>::mask_float32(__vector float d) : float32<4>(d), mask_(d) {}
+inline mask_float32<4>::mask_float32(float32<4> d)     : float32<4>(d), mask_(d) {}
 #endif
-}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -33,13 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_and.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/expr/f_abs.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+
 
 /** Computes absolute value of floating point values.
 
@@ -59,34 +59,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX-AVX2, 1-2}
     @icost{ALTIVEC, 2-3}
 */
-inline float32x4 abs(float32x4 a)
+template<unsigned N, class E>
+float32<N, expr_abs<float32<N,E>>> abs(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::abs(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return bit_and(a, int32x4::make_const(0x7fffffff));
-#elif SIMDPP_USE_NEON_FLT_SP
-    return vabsq_f32(a);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_abs((__vector float)a);
-#endif
+    return { { a }, 0 };
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 abs(float32x8 a)
-{
-    return bit_and(a, int32x8::make_const(0x7fffffff));
-}
-#endif
-
-template<unsigned N>
-float32<N> abs(float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, abs, a);
-}
-/// @}
-
-/// @{
 /** Computes absolute value of floating point values.
 
     @code
@@ -104,28 +82,11 @@ float32<N> abs(float32<N> a)
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
-inline float64x2 abs(float64x2 a)
+template<unsigned N, class E>
+float64<N, expr_abs<float64<N,E>>> abs(float64<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::abs(a);
-#elif SIMDPP_USE_SSE2
-    return bit_and(a, int64x2::make_const(0x7fffffffffffffff));
-#endif
+    return { { a }, 0 };
 }
-
-#if SIMDPP_USE_AVX
-inline float64x4 abs(float64x4 a)
-{
-    return bit_and(a, int64x4::make_const(0x7fffffffffffffff));
-}
-#endif
-
-template<unsigned N>
-float64<N> abs(float64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, abs, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

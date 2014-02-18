@@ -33,7 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/expr/i_add.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -41,7 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Adds 8-bit integer values.
 
     @code
@@ -53,34 +52,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint8x16 add(gint8x16 a, gint8x16 b)
+template<unsigned N, class E1, class E2>
+gint8<N, expr_add<gint8<N,E1>,
+                  gint8<N,E2>>> add(gint8<N,E1> a, gint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::add(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_add_epi8(a, b);
-#elif SIMDPP_USE_NEON
-    return vaddq_u8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_add((__vector uint8_t)a, (__vector uint8_t)b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline gint8x32 add(gint8x32 a, gint8x32 b)
-{
-    return _mm256_add_epi8(a, b);
-}
-#endif
-
-template<unsigned N>
-gint8<N> add(gint8<N> a, gint8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, add, a, b);
-}
-/// @}
-
-/// @{
 /** Adds 16-bit integer values.
 
     @code
@@ -92,34 +70,13 @@ gint8<N> add(gint8<N> a, gint8<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint16x8 add(gint16x8 a, gint16x8 b)
+template<unsigned N, class E1, class E2>
+gint16<N, expr_add<gint16<N,E1>,
+                   gint16<N,E2>>> add(gint16<N,E1> a, gint16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::add(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_add_epi16(a, b);
-#elif SIMDPP_USE_NEON
-    return vaddq_u16(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_add((__vector uint16_t)a, (__vector uint16_t)b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline gint16x16 add(gint16x16 a, gint16x16 b)
-{
-    return _mm256_add_epi16(a, b);
-}
-#endif
-
-template<unsigned N>
-gint16<N> add(gint16<N> a, gint16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, add, a, b);
-}
-/// @}
-
-/// @{
 /** Adds 32-bit integer values.
 
     @code
@@ -131,34 +88,13 @@ gint16<N> add(gint16<N> a, gint16<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint32x4 add(gint32x4 a, gint32x4 b)
+template<unsigned N, class E1, class E2>
+gint32<N, expr_add<gint32<N,E1>,
+                   gint32<N,E2>>> add(gint32<N,E1> a, gint32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::add(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_add_epi32(a, b);
-#elif SIMDPP_USE_NEON
-    return vaddq_u32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_add((__vector uint32_t)a, (__vector uint32_t)b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline gint32x8 add(gint32x8 a, gint32x8 b)
-{
-    return _mm256_add_epi32(a, b);
-}
-#endif
-
-template<unsigned N>
-gint32<N> add(gint32<N> a, gint32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, add, a, b);
-}
-/// @}
-
-/// @{
 /** Adds 64-bit integer values.
 
     @code
@@ -174,39 +110,13 @@ gint32<N> add(gint32<N> a, gint32<N> b)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 10-11}
 */
-inline gint64x2 add(gint64x2 a, gint64x2 b)
+template<unsigned N, class E1, class E2>
+gint64<N, expr_add<gint64<N,E1>,
+                   gint64<N,E2>>> add(gint64<N,E1> a, gint64<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::add(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_add_epi64(a, b);
-#elif SIMDPP_USE_NEON
-    return vaddq_u64(a, b);
-#else
-    uint64x2 c1 = uint64x2::make_const(1);
-    uint32x4 r, carry;
-    carry = vec_addc((__vector uint32_t) a, (__vector uint32_t) b);
-    carry = move_l<1>(carry);
-    r = add((uint32x4)a, (uint32x4)b);
-    carry = bit_and(carry, c1);
-    r = add(r, carry);
-    return r;
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline gint64x4 add(gint64x4 a, gint64x4 b)
-{
-    return _mm256_add_epi64(a, b);
-}
-#endif
-
-template<unsigned N>
-gint64<N> add(gint64<N> a, gint64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, add, a, b);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

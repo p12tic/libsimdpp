@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_DETAIL_SHUFFLE128_H
-#define LIBSIMDPP_SIMDPP_CORE_DETAIL_SHUFFLE128_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE128_H
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE128_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -39,6 +39,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
+namespace insn {
 
 /// @{
 /** Shuffles 128 bit parts within the vectors.
@@ -71,11 +72,11 @@ gint8x32 shuffle128(gint8x32 a, gint8x32 b)
 #endif
 }
 template<unsigned s0, unsigned s1>
-gint16x16 shuffle128(gint16x16 a, gint16x16 b) { return shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+gint16x16 shuffle128(gint16x16 a, gint16x16 b) { return (gint16x16)shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
 template<unsigned s0, unsigned s1>
-gint32x8 shuffle128(gint32x8 a, gint32x8 b) { return shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+gint32x8 shuffle128(gint32x8 a, gint32x8 b) { return (gint32x8)shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
 template<unsigned s0, unsigned s1>
-gint64x4 shuffle128(gint64x4 a, gint64x4 b) { return shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+gint64x4 shuffle128(gint64x4 a, gint64x4 b) { return (gint64x4)shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
 
 template<unsigned s0, unsigned s1>
 float32x8 shuffle128(float32x8 a, float32x8 b)
@@ -105,6 +106,7 @@ float64x4 shuffle128(float64x4 a, float64x4 b)
 }
 /// @}
 
+} // namespace insn
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

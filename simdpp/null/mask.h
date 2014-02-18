@@ -53,6 +53,16 @@ V convert_mask(const M& m)
     return r;
 }
 
+// refreshes the base vector of the mask
+template<class V>
+V refresh_mask(V a)
+{
+    for (unsigned i = 0; i < V::length; ++i) {
+        a.el(i) = a.mask().el(i) ? bit_cast<typename V::element_type>(a.all_bits) : 0;
+    }
+    return a;
+}
+
 } // namespace null
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

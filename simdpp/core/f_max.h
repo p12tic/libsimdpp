@@ -33,7 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/insn/f_max.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -41,7 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Computes maxima of the values of two vectors. If at least one of the values
     is NaN, or both values are zeroes, it is unspecified which value will be
     returned.
@@ -55,32 +54,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 max(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> max(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::max(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_max_ps(a, b);
-#elif SIMDPP_USE_NEON
-    return vmaxq_f32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_max((__vector float)a, (__vector float)b);
-#endif
+    return detail::insn::i_max(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float32x8 max(float32x8 a, float32x8 b)
-{
-    return _mm256_max_ps(a, b);
-}
-#endif
-
-template<unsigned N>
-float32<N> max(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, max, a, b);
-}
-/// @}
 
 /// @{
 /** Computes maxima of the values of two vectors. If at least one of the values
@@ -100,28 +78,11 @@ float32<N> max(float32<N> a, float32<N> b)
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
 */
-inline float64x2 max(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> max(float64<N,E1> a, float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::max(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_max_pd(a, b);
-#endif
+    return detail::insn::i_max(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float64x4 max(float64x4 a, float64x4 b)
-{
-    return _mm256_max_pd(a, b);
-}
-#endif
-
-template<unsigned N>
-float64<N> max(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, max, a, b);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

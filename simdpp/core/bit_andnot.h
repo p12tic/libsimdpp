@@ -33,13 +33,14 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/bitwise.h>
+#include <simdpp/detail/insn/bit_andnot.h>
+#include <simdpp/detail/expr/bit_andnot.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+
 
 /// @{
 /** Computes bitwise AND NOT of integer vectors.
@@ -53,201 +54,139 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint8x16 bit_andnot(gint8x16 a, gint8x16 b)
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_andnot(gint8<N,E1> a, gint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot(uint8x16(a), uint8x16(b));
-#elif SIMDPP_USE_SSE2
-    return _mm_andnot_si128(b, a);
-#elif SIMDPP_USE_NEON
-    return vbicq_u8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_andc((__vector uint8_t)a, (__vector uint8_t)b);
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_andnot(gint8<N,E1> a, gint16<N/2,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), gint8<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_andnot(gint8<N,E1> a, gint32<N/4,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), gint8<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_andnot(gint8<N,E1> a, gint64<N/8,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), gint8<N>(b.eval()));
 }
 
-#if SIMDPP_USE_AVX2
-inline gint8x32 bit_andnot(gint8x32 a, gint8x32 b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_andnot(gint16<N,E1> a, gint8<N*2,E2> b)
 {
-    return _mm256_andnot_si256(b, a);
+    return detail::insn::i_bit_andnot(a.eval(), gint16<N>(b.eval()));
 }
-#endif
-
-template<unsigned N>
-inline gint8<N> bit_andnot(gint8<N> a, gint8<N> b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_andnot(gint16<N,E1> a, gint16<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, bit_andnot, a, b)
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
-
-template<unsigned N>
-gint8<N> bit_andnot(gint8<N> a, gint16<N/2> b) { return bit_andnot(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-gint8<N> bit_andnot(gint8<N> a, gint32<N/4> b) { return bit_andnot(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-gint8<N> bit_andnot(gint8<N> a, gint64<N/8> b) { return bit_andnot(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-gint16<N> bit_andnot(gint16<N> a, gint8<N*2> b) { return bit_andnot(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint16<N> bit_andnot(gint16<N> a, gint16<N> b) { return bit_andnot(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint16<N> bit_andnot(gint16<N> a, gint32<N/2> b) { return bit_andnot(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint16<N> bit_andnot(gint16<N> a, gint64<N/4> b) { return bit_andnot(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-gint32<N> bit_andnot(gint32<N> a, gint8<N*4> b) { return bit_andnot(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint32<N> bit_andnot(gint32<N> a, gint16<N/2> b) { return bit_andnot(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint32<N> bit_andnot(gint32<N> a, gint32<N> b) { return bit_andnot(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint32<N> bit_andnot(gint32<N> a, gint64<N*2> b) { return bit_andnot(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-gint64<N> bit_andnot(gint64<N> a, gint8<N*8> b) { return bit_andnot(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-gint64<N> bit_andnot(gint64<N> a, gint16<N/4> b) { return bit_andnot(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-gint64<N> bit_andnot(gint64<N> a, gint32<N/2> b) { return bit_andnot(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-gint64<N> bit_andnot(gint64<N> a, gint64<N> b) { return bit_andnot(uint8<N*8>(a), uint8<N*8>(b)); }
-
-// -----------------------------------------------------------------------------
-
-inline gint8x16 bit_andnot(gint8x16 a, mask_int8x16 b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_andnot(gint16<N,E1> a, gint32<N/2,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
-#else
-    return bit_andnot(a, uint8x16(b));
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), gint16<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_andnot(gint16<N,E1> a, gint64<N/4,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), gint16<N>(b.eval()));
 }
 
-inline gint16x8 bit_andnot(gint16x8 a, mask_int16x8 b)
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_andnot(gint32<N,E1> a, gint8<N*4,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
-#else
-    return bit_andnot(uint8x16(a), uint8x16(b));
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), gint16<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_andnot(gint32<N,E1> a, gint16<N*2,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), gint16<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_andnot(gint32<N,E1> a, gint32<N,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> bit_andnot(gint32<N,E1> a, gint64<N/2,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), gint16<N>(b.eval()));
 }
 
-inline gint32x4 bit_andnot(gint32x4 a, mask_int32x4 b)
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_andnot(gint64<N,E1> a, gint8<N*8,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
-#else
-    return bit_andnot(uint8x16(a), uint8x16(b));
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), gint64<N>(b.eval()));
 }
-
-inline gint64x2 bit_andnot(gint64x2 a, mask_int64x2 b)
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_andnot(gint64<N,E1> a, gint16<N*4,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
-#else
-    return bit_andnot(uint8x16(a), uint8x16(b));
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), gint64<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_andnot(gint64<N,E1> a, gint32<N*2,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), gint64<N>(b.eval()));
+}
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> bit_andnot(gint64<N,E1> a, gint64<N,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
 
 // -----------------------------------------------------------------------------
-
-#if SIMDPP_USE_AVX2
-inline gint8x32  bit_andnot(gint8x32 a,  mask_int8x32 b)  { return bit_andnot(a, uint8x32(b)); }
-inline gint16x16 bit_andnot(gint16x16 a, mask_int16x16 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline gint32x8  bit_andnot(gint32x8 a,  mask_int32x8 b)  { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline gint64x4  bit_andnot(gint64x4 a, mask_int64x4 b)   { return bit_andnot(uint8x32(a), uint8x32(b)); }
-#endif
-
-template<unsigned N>
-gint8<N> bit_andnot(gint8<N> a, mask_int8<N> b)
+// no point in building expression tree for 8 and 16-bit elements
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> bit_andnot(gint8<N,E1> a, mask_int8<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, bit_andnot, a, b)
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> bit_andnot(gint16<N,E1> a, mask_int16<N,E2> b)
+{
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
+}
+template<unsigned N, class E1, class E2>
+gint32<N, expr_bit_andnot<gint32<N,E1>,
+                          mask_int32<N,E2>>> bit_andnot(gint32<N,E1> a,
+                                                        mask_int32<N,E2> b)
+{
+    return { { a, b }, 0 };
 }
 
-template<unsigned N>
-gint16<N> bit_andnot(gint16<N> a, mask_int16<N> b)
+template<unsigned N, class E1, class E2>
+gint64<N, expr_bit_andnot<gint64<N,E1>,
+                          mask_int64<N,E2>>> bit_andnot(gint64<N,E1> a,
+                                                        mask_int64<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, bit_andnot, a, b)
-}
-
-template<unsigned N>
-gint32<N> bit_andnot(gint32<N> a, mask_int32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, bit_andnot, a, b)
-}
-
-template<unsigned N>
-gint64<N> bit_andnot(gint64<N> a, mask_int64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, bit_andnot, a, b)
+    return { { a, b }, 0 };
 }
 
 // -----------------------------------------------------------------------------
 
-inline mask_int8x16 bit_andnot(mask_int8x16 a, mask_int8x16 b)
+template<unsigned N, class E1, class E2>
+mask_int8<N, mask_int8<N>> bit_andnot(mask_int8<N,E1> a, mask_int8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
-#else
-    return bit_andnot(uint8x16(a), uint8x16(b));
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
-
-inline mask_int16x8 bit_andnot(mask_int16x8 a, mask_int16x8 b)
+template<unsigned N, class E1, class E2>
+mask_int16<N, mask_int16<N>> bit_andnot(mask_int16<N,E1> a, mask_int16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
-#else
-    return bit_andnot(uint16x8(a), uint16x8(b));
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
-
-inline mask_int32x4 bit_andnot(mask_int32x4 a, mask_int32x4 b)
+template<unsigned N, class E1, class E2>
+mask_int32<N, mask_int32<N>> bit_andnot(mask_int32<N,E1> a, mask_int32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
-#else
-    return bit_andnot(uint32x4(a), uint32x4(b));
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
-
-inline mask_int64x2 bit_andnot(mask_int64x2 a, mask_int64x2 b)
+template<unsigned N, class E1, class E2>
+mask_int64<N, mask_int64<N>> bit_andnot(mask_int64<N,E1> a, mask_int64<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
-#else
-    return bit_andnot(uint64x2(a), uint64x2(b));
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline mask_int8x32  bit_andnot(mask_int8x32 a,  mask_int8x32 b)  { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline mask_int16x16 bit_andnot(mask_int16x16 a, mask_int16x16 b) { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline mask_int32x8  bit_andnot(mask_int32x8 a,  mask_int32x8 b)  { return bit_andnot(uint8x32(a), uint8x32(b)); }
-inline mask_int64x4  bit_andnot(mask_int64x4 a,  mask_int64x4 b)  { return bit_andnot(uint8x32(a), uint8x32(b)); }
-#endif
-
-template<unsigned N>
-mask_int8<N> bit_andnot(mask_int8<N> a, mask_int8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, bit_andnot, a, b)
-}
-
-template<unsigned N>
-mask_int16<N> bit_andnot(mask_int16<N> a, mask_int16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, bit_andnot, a, b)
-}
-
-template<unsigned N>
-mask_int32<N> bit_andnot(mask_int32<N> a, mask_int32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, bit_andnot, a, b)
-}
-
-template<unsigned N>
-mask_int64<N> bit_andnot(mask_int64<N> a, mask_int64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, bit_andnot, a, b)
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
 /// @}
 
@@ -263,155 +202,54 @@ mask_int64<N> bit_andnot(mask_int64<N> a, mask_int64<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline float32x4 bit_andnot(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> bit_andnot(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::bit_andnot(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_andnot_ps(b, a);
-#elif SIMDPP_USE_NEON
-    return vreinterpretq_f32_u32(vbicq_u32(vreinterpretq_u32_f32(a),
-                                           vreinterpretq_u32_f32(b)));
-#elif SIMDPP_USE_ALTIVEC
-    return vec_andc((__vector float)a, (__vector float)b);
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float32x8 bit_andnot(float32x8 a, float32x8 b)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> bit_andnot(float32<N,E1> a, gint32<N,E2> b)
 {
-    return _mm256_andnot_ps(b, a);
+    return detail::insn::i_bit_andnot(a.eval(), float32<N>(b.eval()));
 }
-#endif
-
-template<unsigned N>
-float32<N> bit_andnot(float32<N> a, float32<N> b)
+template<unsigned N, class E1, class E2>
+float32<N, expr_bit_andnot<float32<N,E1>,
+                           mask_float32<N,E2>>> bit_andnot(float32<N,E1> a,
+                                                           mask_float32<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, bit_andnot, a, b)
+    return { { a, b }, 0 };
 }
-
-template<unsigned N>
-float32<N> bit_andnot(float32<N> a, gint32<N> b)
+template<unsigned N, class E1, class E2>
+mask_float32<N, mask_float32<N>> bit_andnot(mask_float32<N,E1> a,
+                                            mask_float32<N,E2> b)
 {
-    return bit_andnot(a, float32<N>(b));
-}
-
-inline float32x4 bit_andnot(float32x4 a, mask_float32x4 b)
-{
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
-#else
-    return bit_andnot(a, float32x4(b));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline float32x8 bit_andnot(float32x8 a, mask_float32x8 b)
-{
-    return bit_andnot(a, float32x8(b));
-}
-#endif
-
-template<unsigned N>
-inline float32<N> bit_andnot(float32<N> a, mask_float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, bit_andnot, a, b)
-}
-
-inline mask_float32x4 bit_andnot(mask_float32x4 a, mask_float32x4 b)
-{
-#if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
-#else
-    return bit_andnot(float32x4(a), float32x4(b));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float32x8 bit_andnot(mask_float32x8 a, mask_float32x8 b)
-{
-    return bit_andnot(float32x8(a), float32x8(b));
-}
-#endif
-
-template<unsigned N>
-inline mask_float32<N> bit_andnot(mask_float32<N> a, mask_float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, bit_andnot, a, b)
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
 
 // -----------------------------------------------------------------------------
 
-inline float64x2 bit_andnot(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> bit_andnot(float64<N,E1> a, float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_andnot(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_andnot_pd(b, a);
-#endif
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float64x4 bit_andnot(float64x4 a, float64x4 b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> bit_andnot(float64<N,E1> a, gint64<N,E2> b)
 {
-    return _mm256_andnot_pd(b, a);
+    return detail::insn::i_bit_andnot(a.eval(), float64<N>(b.eval()));
 }
-#endif
-
-template<unsigned N>
-inline float64<N> bit_andnot(float64<N> a, float64<N> b)
+template<unsigned N, class E1, class E2>
+float64<N, expr_bit_andnot<float64<N,E1>,
+                           mask_float64<N,E2>>> bit_andnot(float64<N,E1> a,
+                                                           mask_float64<N,E2> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, bit_andnot, a, b)
+    return { { a, b }, 0 };
 }
-
-template<unsigned N>
-float64<N> bit_andnot(float64<N> a, gint64<N> b)
+template<unsigned N, class E1, class E2>
+mask_float64<N, mask_float64<N>> bit_andnot(mask_float64<N,E1> a,
+                                            mask_float64<N,E2> b)
 {
-    return bit_andnot(a, float64<N>(b));
-}
-
-inline float64x2 bit_andnot(float64x2 a, mask_float64x2 b)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_andnot_vm(a, b);
-#else
-    return bit_andnot(a, float64x2(b));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline float64x4 bit_andnot(float64x4 a, mask_float64x4 b)
-{
-    return bit_andnot(a, float64x4(b));
-}
-#endif
-
-template<unsigned N>
-inline float64<N> bit_andnot(float64<N> a, mask_float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, bit_andnot, a, b)
-}
-
-inline mask_float64x2 bit_andnot(mask_float64x2 a, mask_float64x2 b)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_andnot_mm(a, b);
-#else
-    return bit_andnot(float64x2(a), float64x2(b));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float64x4 bit_andnot(mask_float64x4 a, mask_float64x4 b)
-{
-    return bit_andnot(float64x4(a), float64x4(b));
-}
-#endif
-
-template<unsigned N>
-inline mask_float64<N> bit_andnot(mask_float64<N> a, mask_float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, bit_andnot, a, b)
+    return detail::insn::i_bit_andnot(a.eval(), b.eval());
 }
 /// @}
 

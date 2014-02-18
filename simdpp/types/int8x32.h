@@ -50,7 +50,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint8<32> {
+class gint8<32, void> {
 public:
 
     using element_type = uint8_t;
@@ -58,8 +58,9 @@ public:
     using int_vector_type = gint8x32;
     using uint_vector_type = uint8x32;
     using half_vector_type = gint8x16;
-    using mask_type = mask_int8x32;
     using base_vector_type = gint8x32;
+    using mask_type = mask_int8x32;
+    using maskdata_type = maskdata_int8<16>;
 
     static constexpr unsigned vec_length = 1;
     static constexpr unsigned length = 32;
@@ -78,22 +79,20 @@ public:
 
     /// @{
     /// Construct from compatible integer type
-    gint8<32>(const gint16x16& d);
-    gint8<32>(const gint32x8& d);
-    gint8<32>(const gint64x4& d);
-    gint8<32>& operator=(const gint16x16& d);
-    gint8<32>& operator=(const gint32x8& d);
-    gint8<32>& operator=(const gint64x4& d);
+    template<class E>          gint8<32>(const  gint8<32,E>& d);
+    template<class E> explicit gint8<32>(const gint16<16,E>& d);
+    template<class E> explicit gint8<32>(const gint32<8,E>& d);
+    template<class E> explicit gint8<32>(const gint64<4,E>& d);
+    template<class E> gint8<32>& operator=(const  gint8<32,E>& d);
+    template<class E> gint8<32>& operator=(const gint16<16,E>& d);
+    template<class E> gint8<32>& operator=(const gint32<8,E>& d);
+    template<class E> gint8<32>& operator=(const gint64<4,E>& d);
     /// @}
 
     /// @{
-    /// Range access
-    const gint8x32* begin() const                  { return this; }
-          gint8x32* begin()                        { return this; }
-    const gint8x32* end() const                    { return this+1; }
-          gint8x32* end()                          { return this+1; }
-    const gint8x32& operator[](unsigned i) const   { return *this; }
-          gint8x32& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const gint8x32& operator[](unsigned) const   { return *this; }
+          gint8x32& operator[](unsigned)         { return *this; }
     /// @}
 
     /// Creates a int8x32 vector with the contents set to zero
@@ -111,7 +110,7 @@ private:
     Class representing 16x 8-bit signed integer vector
 */
 template<>
-class int8<32> : public gint8x32 {
+class int8<32, void> : public gint8x32 {
 public:
 
     using element_type = int8_t;
@@ -127,24 +126,23 @@ public:
     int8<32>& operator=( __m256i d) { gint8x32::operator=(d); return *this; }
     /// @}
 
-    int8<32>(const gint8x32& d);
-    int8<32>(const gint16x16& d);
-    int8<32>(const gint32x8& d);
-    int8<32>(const gint64x4& d);
-    int8<32>& operator=(const gint8x32& d);
-    int8<32>& operator=(const gint16x16& d);
-    int8<32>& operator=(const gint32x8& d);
-    int8<32>& operator=(const gint64x4& d);
+    template<class E>          int8<32>(const  gint8<32,E>& d);
+    template<class E> explicit int8<32>(const gint16<16,E>& d);
+    template<class E> explicit int8<32>(const gint32<8,E>& d);
+    template<class E> explicit int8<32>(const gint64<4,E>& d);
+    template<class E> int8<32>& operator=(const  gint8<32,E>& d);
+    template<class E> int8<32>& operator=(const gint16<16,E>& d);
+    template<class E> int8<32>& operator=(const gint32<8,E>& d);
+    template<class E> int8<32>& operator=(const gint64<4,E>& d);
 
     /// @{
-    /// Range access
-    const int8x32* begin() const                  { return this; }
-          int8x32* begin()                        { return this; }
-    const int8x32* end() const                    { return this+1; }
-          int8x32* end()                          { return this+1; }
-    const int8x32& operator[](unsigned i) const   { return *this; }
-          int8x32& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const int8x32& operator[](unsigned) const   { return *this; }
+          int8x32& operator[](unsigned)         { return *this; }
     /// @}
+
+    static int8x32 zero() { return gint8x32::zero(); }
+    static int8x32 ones() { return gint8x32::ones(); }
 
     /** Creates a signed int8x32 vector from a value loaded from memory.
 
@@ -239,7 +237,7 @@ public:
     Class representing 16x 8-bit unsigned integer vector
 */
 template<>
-class uint8<32> : public gint8x32 {
+class uint8<32, void> : public gint8x32 {
 public:
     using base_vector_type = uint8x32;
 
@@ -253,24 +251,23 @@ public:
     uint8<32>& operator=(__m256i d) { gint8x32::operator=(d); return *this; }
     /// @}
 
-    uint8<32>(const gint8x32& d);
-    uint8<32>(const gint16x16& d);
-    uint8<32>(const gint32x8& d);
-    uint8<32>(const gint64x4& d);
-    uint8<32>& operator=(const gint8x32& d);
-    uint8<32>& operator=(const gint16x16& d);
-    uint8<32>& operator=(const gint32x8& d);
-    uint8<32>& operator=(const gint64x4& d);
+    template<class E>          uint8<32>(const  gint8<32,E>& d);
+    template<class E> explicit uint8<32>(const gint16<16,E>& d);
+    template<class E> explicit uint8<32>(const gint32<8,E>& d);
+    template<class E> explicit uint8<32>(const gint64<4,E>& d);
+    template<class E> uint8<32>& operator=(const  gint8<32,E>& d);
+    template<class E> uint8<32>& operator=(const gint16<16,E>& d);
+    template<class E> uint8<32>& operator=(const gint32<8,E>& d);
+    template<class E> uint8<32>& operator=(const gint64<4,E>& d);
 
     /// @{
-    /// Range access
-    const uint8x32* begin() const                  { return this; }
-          uint8x32* begin()                        { return this; }
-    const uint8x32* end() const                    { return this+1; }
-          uint8x32* end()                          { return this+1; }
-    const uint8x32& operator[](unsigned i) const   { return *this; }
-          uint8x32& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const uint8x32& operator[](unsigned) const   { return *this; }
+          uint8x32& operator[](unsigned)         { return *this; }
     /// @}
+
+    static uint8x32 zero() { return gint8x32::zero(); }
+    static uint8x32 ones() { return gint8x32::ones(); }
 
     /** Creates a unsigned int8x32 vector from a value loaded from memory.
 
@@ -361,38 +358,55 @@ public:
                                uint8_t v28, uint8_t v29, uint8_t v30, uint8_t v31);
 };
 
-/// Class representing a mask for 32x 8-bit integer vector
+/// Class representing possibly optimized mask data for 32x 8-bit integer vector
 template<>
-class mask_int8<32> {
+class maskdata_int8<32> {
 public:
-    using base_vector_type = mask_int8x32;
+    using base_vector_type = maskdata_int8<32>;
     static constexpr unsigned length = 32;
     static constexpr unsigned vec_length = 1;
 
-    mask_int8<32>() = default;
-    mask_int8<32>(const mask_int8x32 &) = default;
-    mask_int8<32> &operator=(const mask_int8x32 &) = default;
+    maskdata_int8<32>() = default;
+    maskdata_int8<32>(const maskdata_int8<32> &) = default;
+    maskdata_int8<32> &operator=(const maskdata_int8<32> &) = default;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    mask_int8<32>(__m256i d) : d_(d) {}
-#endif
-    mask_int8<32>(gint8x32 d) : d_(d) {}
+    maskdata_int8<32>(int8<32> d) : d_(d) {}
 
-    /// Access the underlying type
-    operator gint8x32() const;
+    /// Convert to bitmask
+    operator uint8<32>() const;
 
     /// @{
-    /// Range access
-    const mask_int8x32* begin() const                  { return this; }
-          mask_int8x32* begin()                        { return this; }
-    const mask_int8x32* end() const                    { return this+1; }
-          mask_int8x32* end()                          { return this+1; }
-    const mask_int8x32& operator[](unsigned i) const   { return *this; }
-          mask_int8x32& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const maskdata_int8<32>& operator[](unsigned) const { return *this; }
+          maskdata_int8<32>& operator[](unsigned)       { return *this; }
     /// @}
 
 private:
-    gint8x32 d_;
+    uint8<32> d_;
+};
+
+
+/// Class representing a mask for 32x 8-bit integer vector
+template<>
+class mask_int8<32, void> : public uint8<32, void> {
+public:
+    mask_int8<32>() = default;
+    mask_int8<32>(const mask_int8<32> &) = default;
+    mask_int8<32> &operator=(const mask_int8<32> &) = default;
+    mask_int8<32>(const maskdata_int8<32>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+    mask_int8<32>(__m256i d);
+    mask_int8<32>(uint8<32> d);
+    /// @}
+
+    mask_int8<32> eval() const { return *this; }
+
+    const maskdata_int8<32>& mask() const { return mask_; }
+
+private:
+    maskdata_int8<32> mask_;
 };
 
 /// @} -- end ingroup

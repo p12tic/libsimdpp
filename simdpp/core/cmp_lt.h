@@ -33,8 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_xor.h>
-#include <simdpp/null/compare.h>
+#include <simdpp/detail/insn/cmp_lt.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -53,34 +52,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int8x16 cmp_lt(int8x16 a, int8x16 b)
+template<unsigned N, class E1, class E2>
+mask_int8<N, mask_int8<N>> cmp_lt(int8<N,E1> a,
+                                  int8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmplt_epi8(a, b);
-#elif SIMDPP_USE_NEON
-    return vcltq_s8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmplt((__vector int8_t)a, (__vector int8_t)b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline mask_int8x32 cmp_lt(int8x32 a, int8x32 b)
-{
-    return _mm256_cmpgt_epi8(b, a);
-}
-#endif
-
-template<unsigned N>
-mask_int8<N> cmp_lt(int8<N> a, int8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, cmp_lt, a, b);
-}
-/// @}
-
-/// @{
 /** Compares the values of two unsigned int8x16 vectors for less-than
 
     @code
@@ -98,42 +76,13 @@ mask_int8<N> cmp_lt(int8<N> a, int8<N> b)
     @icost{AVX2, 3-4}
     @icost{XOP, NEON, ALTIVEC, 2}
 */
-inline mask_int8x16 cmp_lt(uint8x16 a, uint8x16 b)
+template<unsigned N, class E1, class E2>
+mask_int8<N, mask_int8<N>> cmp_lt(uint8<N,E1> a,
+                                  uint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP
-    return _mm_comlt_epu8(a, b);
-#elif SIMDPP_USE_SSE2
-    uint8x16 bias = uint8x16::make_const(0x80);
-    a = bit_xor(a, bias); // sub
-    b = bit_xor(b, bias); // sub
-    return _mm_cmplt_epi8(a, b);
-#elif SIMDPP_USE_NEON
-    return vcltq_u8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmplt((__vector uint8_t)a, (__vector uint8_t)b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline mask_int8x32 cmp_lt(uint8x32 a, uint8x32 b)
-{
-    uint8x32 bias = uint8x32::make_const(0x80);
-    a = bit_xor(a, bias); // sub
-    b = bit_xor(b, bias); // sub
-    return _mm256_cmpgt_epi8(b, a);
-}
-#endif
-
-template<unsigned N>
-mask_int8<N> cmp_lt(uint8<N> a, uint8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, cmp_lt, a, b);
-}
-/// @}
-
-/// @{
 /** Compares the values of two signed int16x8 vectors for less-than
 
     @code
@@ -145,34 +94,13 @@ mask_int8<N> cmp_lt(uint8<N> a, uint8<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int16x8 cmp_lt(int16x8 a, int16x8 b)
+template<unsigned N, class E1, class E2>
+mask_int16<N, mask_int16<N>> cmp_lt(int16<N,E1> a,
+                                    int16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmplt_epi16(a, b);
-#elif SIMDPP_USE_NEON
-    return vcltq_s16(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmplt((__vector int16_t)a, (__vector int16_t)b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline mask_int16x16 cmp_lt(int16x16 a, int16x16 b)
-{
-    return _mm256_cmpgt_epi16(b, a);
-}
-#endif
-
-template<unsigned N>
-mask_int16<N> cmp_lt(int16<N> a, int16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, cmp_lt, a, b);
-}
-/// @}
-
-/// @{
 /** Compares the values of two unsigned int16x8 vectors for less-than
 
     @code
@@ -190,42 +118,13 @@ mask_int16<N> cmp_lt(int16<N> a, int16<N> b)
     @icost{AVX2, 3-4}
     @icost{XOP, NEON, ALTIVEC, 2}
 */
-inline mask_int16x8 cmp_lt(uint16x8 a, uint16x8 b)
+template<unsigned N, class E1, class E2>
+mask_int16<N, mask_int16<N>> cmp_lt(uint16<N,E1> a,
+                                    uint16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP
-    return _mm_comlt_epu16(a, b);
-#elif SIMDPP_USE_SSE2
-    uint16x8 bias = uint16x8::make_const(0x8000);
-    a = bit_xor(a, bias); // sub
-    b = bit_xor(b, bias); // sub
-    return _mm_cmplt_epi16(a, b);
-#elif SIMDPP_USE_NEON
-    return vcltq_u16(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmplt((__vector uint16_t)a, (__vector uint16_t)b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline mask_int16x16 cmp_lt(uint16x16 a, uint16x16 b)
-{
-    uint16x16 bias = uint16x16::make_const(0x8000);
-    a = bit_xor(a, bias); // sub
-    b = bit_xor(b, bias); // sub
-    return _mm256_cmpgt_epi16(b, a);
-}
-#endif
-
-template<unsigned N>
-mask_int16<N> cmp_lt(uint16<N> a, uint16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, cmp_lt, a, b);
-}
-/// @}
-
-/// @{
 /** Compares the values of two signed int32x4 vectors for less-than
 
     @code
@@ -237,35 +136,13 @@ mask_int16<N> cmp_lt(uint16<N> a, uint16<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int32x4 cmp_lt(int32x4 a, int32x4 b)
+template<unsigned N, class E1, class E2>
+mask_int32<N, mask_int32<N>> cmp_lt(int32<N,E1> a,
+                                    int32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmplt_epi32(a, b);
-#elif SIMDPP_USE_NEON
-    return vcltq_s32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmplt((__vector int32_t)a, (__vector int32_t)b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline mask_int32x8 cmp_lt(int32x8 a, int32x8 b)
-{
-    return _mm256_cmpgt_epi32(b, a);
-
-}
-#endif
-
-template<unsigned N>
-mask_int32<N> cmp_lt(int32<N> a, int32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, cmp_lt, a, b);
-}
-/// @}
-
-/// @{
 /** Compares the values of two unsigned int32x4 vectors for less-than
 
     @code
@@ -283,42 +160,13 @@ mask_int32<N> cmp_lt(int32<N> a, int32<N> b)
     @icost{AVX2, 3-4}
     @icost{XOP, NEON, ALTIVEC, 2}
 */
-inline mask_int32x4 cmp_lt(uint32x4 a, uint32x4 b)
+template<unsigned N, class E1, class E2>
+mask_int32<N, mask_int32<N>> cmp_lt(uint32<N,E1> a,
+                                    uint32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP
-    return _mm_comlt_epu32(a, b);
-#elif SIMDPP_USE_SSE2
-    uint32x4 bias = uint32x4::make_const(0x80000000);
-    a = bit_xor(a, bias); // sub
-    b = bit_xor(b, bias); // sub
-    return _mm_cmplt_epi32(a, b);
-#elif SIMDPP_USE_NEON
-    return vcltq_u32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmplt((__vector uint32_t)a, (__vector uint32_t)b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline mask_int32x8 cmp_lt(uint32x8 a, uint32x8 b)
-{
-    uint32x8 bias = uint32x8::make_const(0x80000000);
-    a = bit_xor(a, bias); // sub
-    b = bit_xor(b, bias); // sub
-    return _mm256_cmpgt_epi32(b, a);
-}
-#endif
-
-template<unsigned N>
-mask_int32<N> cmp_lt(uint32<N> a, uint32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, cmp_lt, a, b);
-}
-/// @}
-
-/// @{
 /** Compares the values of two float32x4 vectors for less-than
 
     @code
@@ -330,36 +178,13 @@ mask_int32<N> cmp_lt(uint32<N> a, uint32<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_float32x4 cmp_lt(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+mask_float32<N, mask_float32<N>> cmp_lt(float32<N,E1> a,
+                                        float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_ps(a, b, _CMP_LT_OQ);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmplt_ps(a, b);
-#elif SIMDPP_USE_NEON
-    return vcltq_f32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmplt((__vector float)a, (__vector float)b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline mask_float32x8 cmp_lt(float32x8 a, float32x8 b)
-{
-    return _mm256_cmp_ps(a, b, _CMP_LT_OQ);
-}
-#endif
-
-template<unsigned N>
-mask_float32<N> cmp_lt(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, cmp_lt, a, b);
-}
-/// @}
-
-/// @{
 /** Compares the values of two float64x2 vectors for less-than
 
     @code
@@ -375,30 +200,12 @@ mask_float32<N> cmp_lt(float32<N> a, float32<N> b)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-inline mask_float64x2 cmp_lt(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+mask_float64<N, mask_float64<N>> cmp_lt(float64<N,E1> a,
+                                        float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::cmp_lt(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_pd(a, b, _CMP_LT_OQ);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmplt_pd(a, b);
-#endif
+    return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline mask_float64x4 cmp_lt(float64x4 a, float64x4 b)
-{
-    return _mm256_cmp_pd(a, b, _CMP_LT_OQ);
-}
-#endif
-
-template<unsigned N>
-mask_float64<N> cmp_lt(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, cmp_lt, a, b);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

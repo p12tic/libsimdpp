@@ -1,5 +1,5 @@
 /*  libsimdpp
-    Copyright (C) 2013  Povilas Kanapickas tir5c3@yahoo.co.uk
+    Copyright (C) 2014  Povilas Kanapickas <povilas@radix.lt>
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -25,12 +25,15 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_DETAIL_MOVE_SIGNED_H
-#define LIBSIMDPP_SIMDPP_CORE_DETAIL_MOVE_SIGNED_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_EXPR_BIT_AND_H
+#define LIBSIMDPP_SIMDPP_DETAIL_EXPR_BIT_AND_H
+
+#ifndef LIBSIMDPP_SIMD_H
+    #error "This file must be included through simd.h"
+#endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/move_l.h>
-#include <simdpp/core/move_r.h>
+#include <simdpp/detail/insn/bit_and.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -38,26 +41,40 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class V, int id, bool is_pos>
-struct move_l_signed_impl;
-
-template<class V, int id>
-struct move_l_signed_impl<V, id, true> {
-    static V run(V v) { return move_l<id>(v); }
-};
-
-template<class V, int id>
-struct move_l_signed_impl<V, id, false> {
-    static V run(V v) { return move_r<-id>(v); }
-};
-
-/** Equivalent to @c move_l<id> if @a id is positive and to @c move_r<-id> if
-    @a id is negative.
-*/
-template<int id, class V>
-V move_l_signed(V a)
+template<unsigned N, class E1, class E2>
+gint32<N> expr_eval(expr_bit_and<gint32<N,E1>,
+                                 mask_int32<N,E2>> q)
 {
-    return move_l_signed_impl<V, id, (id >= 0)>::run(a);
+    gint32<N> a = q.a.eval();
+    mask_int32<N> b = q.b.eval();
+    return insn::i_bit_and(a, b);
+}
+
+template<unsigned N, class E1, class E2>
+gint64<N> expr_eval(expr_bit_and<gint64<N,E1>,
+                                 mask_int64<N,E2>> q)
+{
+    gint64<N> a = q.a.eval();
+    mask_int64<N> b = q.b.eval();
+    return insn::i_bit_and(a, b);
+}
+
+template<unsigned N, class E1, class E2>
+float32<N> expr_eval(expr_bit_and<float32<N,E1>,
+                                  mask_float32<N,E2>> q)
+{
+    float32<N> a = q.a.eval();
+    mask_float32<N> b = q.b.eval();
+    return insn::i_bit_and(a, b);
+}
+
+template<unsigned N, class E1, class E2>
+float64<N> expr_eval(expr_bit_and<float64<N,E1>,
+                                  mask_float64<N,E2>> q)
+{
+    float64<N> a = q.a.eval();
+    mask_float64<N> b = q.b.eval();
+    return insn::i_bit_and(a, b);
 }
 
 } // namespace detail
@@ -66,6 +83,4 @@ V move_l_signed(V a)
 #endif
 } // namespace simdpp
 
-
 #endif
-

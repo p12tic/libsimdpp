@@ -33,13 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/make_shuffle_bytes_mask.h>
-#include <simdpp/core/bit_and.h>
-#include <simdpp/core/bit_or.h>
-#include <simdpp/core/i_shift_r.h>
-#include <simdpp/core/i_shift_l.h>
-#include <simdpp/adv/transpose.h>
-#include <simdpp/null/compare.h>
+#include <simdpp/detail/insn/cmp_eq.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -59,30 +53,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int8x16 cmp_eq(gint8x16 a, gint8x16 b)
+template<unsigned N, class E1, class E2>
+mask_int8<N, mask_int8<N>> cmp_eq(gint8<N,E1> a,
+                                  gint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_eq(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpeq_epi8(a, b);
-#elif SIMDPP_USE_NEON
-    return vceqq_s8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmpeq((__vector uint8_t)a, (__vector uint8_t)b);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline mask_int8x32 cmp_eq(gint8x32 a, gint8x32 b)
-{
-    return _mm256_cmpeq_epi8(a, b);
-}
-#endif
-
-template<unsigned N>
-mask_int8<N> cmp_eq(gint8<N> a, gint8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, cmp_eq, a, b);
+    return detail::insn::i_cmp_eq(a.eval(), b.eval());
 }
 /// @}
 
@@ -98,30 +73,11 @@ mask_int8<N> cmp_eq(gint8<N> a, gint8<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int16x8 cmp_eq(gint16x8 a, gint16x8 b)
+template<unsigned N, class E1, class E2>
+mask_int16<N, mask_int16<N>> cmp_eq(gint16<N,E1> a,
+                                    gint16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_eq(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpeq_epi16(a, b);
-#elif SIMDPP_USE_NEON
-    return vceqq_s16(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmpeq((__vector uint16_t)a, (__vector uint16_t)b);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline mask_int16x16 cmp_eq(gint16x16 a, gint16x16 b)
-{
-    return _mm256_cmpeq_epi16(a, b);
-}
-#endif
-
-template<unsigned N>
-mask_int16<N> cmp_eq(gint16<N> a, gint16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, cmp_eq, a, b);
+    return detail::insn::i_cmp_eq(a.eval(), b.eval());
 }
 /// @}
 
@@ -137,31 +93,11 @@ mask_int16<N> cmp_eq(gint16<N> a, gint16<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline mask_int32x4 cmp_eq(gint32x4 a, gint32x4 b)
+template<unsigned N, class E1, class E2>
+mask_int32<N, mask_int32<N>> cmp_eq(gint32<N,E1> a,
+                                    gint32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_eq(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpeq_epi32(a, b);
-#elif SIMDPP_USE_NEON
-    return vceqq_s32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmpeq((__vector uint32_t)a, (__vector uint32_t)b);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-template<unsigned N>
-mask_int32x8 cmp_eq(gint32x8 a, gint32x8 b)
-{
-    return _mm256_cmpeq_epi32(a, b);
-}
-#endif
-
-template<unsigned N>
-mask_int32<N> cmp_eq(gint32<N> a, gint32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, cmp_eq, a, b);
+    return detail::insn::i_cmp_eq(a.eval(), b.eval());
 }
 /// @}
 
@@ -186,53 +122,11 @@ mask_int32<N> cmp_eq(gint32<N> a, gint32<N> b)
     @icost{NEON, 6}
     @icost{ALTIVEC, 6-7}
 */
-inline mask_int64x2 cmp_eq(gint64x2 a, gint64x2 b)
+template<unsigned N, class E1, class E2>
+mask_int64<N, mask_int64<N>> cmp_eq(gint64<N,E1> a,
+                                    gint64<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_eq(a, b);
-#elif SIMDPP_USE_XOP
-    return _mm_comeq_epi64(a, b);
-#elif SIMDPP_USE_SSE4_1
-    return _mm_cmpeq_epi64(a, b);
-#elif SIMDPP_USE_SSE2
-    uint64x2 r32, r32s;
-    r32 = cmp_eq(uint32x4(a), uint32x4(b));
-    // swap the 32-bit halves
-    r32s = bit_or(shift_l<32>(r32), shift_r<32>(r32));
-    // combine the results. Each 32-bit half is ANDed with the neighbouring pair
-    r32 = bit_and(r32, r32s);
-    return r32;
-#elif SIMDPP_USE_NEON
-    uint32x4 r32, r32s;
-    r32 = cmp_eq(uint32x4(a), uint32x4(b));
-    r32s = r32;
-    // swap the 32-bit halves
-    transpose2(r32, r32s);
-    // combine the results. Each 32-bit half is ANDed with the neighbouring pair
-    r32 = bit_and(r32, r32s);
-    return uint64x2(r32);
-#elif SIMDPP_USE_ALTIVEC
-    uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
-    uint32x4 a0, b0, r;
-    a0 = a;  b0 = b;
-    r = cmp_eq(a, b);
-    r = permute_bytes16(uint16x8(a), mask);
-    r = cmp_eq(r, uint32x4::zero();
-    return r;
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline mask_int64x4 cmp_eq(gint64x4 a, gint64x4 b)
-{
-    return _mm256_cmpeq_epi64(a, b);
-}
-#endif
-
-template<unsigned N>
-mask_int64<N> cmp_eq(gint64<N> a, gint64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, cmp_eq, a, b);
+    return detail::insn::i_cmp_eq(a.eval(), b.eval());
 }
 /// @}
 
@@ -248,32 +142,11 @@ mask_int64<N> cmp_eq(gint64<N> a, gint64<N> b)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline mask_float32x4 cmp_eq(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+mask_float32<N, mask_float32<N>> cmp_eq(float32<N,E1> a,
+                                        float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::cmp_eq(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_ps(a, b, _CMP_EQ_OQ);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpeq_ps(a, b);
-#elif SIMDPP_USE_NEON
-    return vceqq_f32(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_cmpeq((__vector float)a, (__vector float)b);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float32x8 cmp_eq(float32x8 a, float32x8 b)
-{
-    return _mm256_cmp_ps(a, b, _CMP_EQ_OQ);
-}
-#endif
-
-template<unsigned N>
-mask_float32<N> cmp_eq(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, cmp_eq, a, b);
+    return detail::insn::i_cmp_eq(a.eval(), b.eval());
 }
 /// @}
 
@@ -293,30 +166,11 @@ mask_float32<N> cmp_eq(float32<N> a, float32<N> b)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-inline mask_float64x2 cmp_eq(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+mask_float64<N, mask_float64<N>> cmp_eq(float64<N,E1> a,
+                                        float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::cmp_eq(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_pd(a, b, _CMP_EQ_OQ);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpeq_pd(a, b);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline mask_float64x4 cmp_eq(float64x4 a, float64x4 b)
-{
-    return _mm256_cmp_pd(a, b, _CMP_EQ_OQ);
-}
-#endif
-
-template<unsigned N>
-mask_float64<N> cmp_eq(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, cmp_eq, a, b);
+    return detail::insn::i_cmp_eq(a.eval(), b.eval());
 }
 /// @}
 ///

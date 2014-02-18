@@ -33,16 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_or.h>
-#include <simdpp/core/f_isnan.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/insn/f_isnan2.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Checks whether corresponding elements in either @a a or @a b are IEEE754 NaN.
 
     @code
@@ -58,34 +55,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, ALTIVEC, 6}
 */
-inline mask_float32x4 isnan2(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+mask_float32<N, mask_float32<N>> isnan2(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::isnan2(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_ps(a, b, _CMP_UNORD_Q);
-#elif SIMDPP_USE_SSE2
-    return (mask_float32x4) _mm_cmpunord_ps(a, b);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return bit_or(isnan(a), isnan(b));
-#endif
+    return detail::insn::i_isnan2(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline mask_float32x8 isnan2(float32x8 a, float32x8 b)
-{
-    return _mm256_cmp_ps(a, b, _CMP_UNORD_Q);
-}
-#endif
-
-template<unsigned N>
-mask_float32<N> isnan2(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, isnan2, a, b);
-}
-/// @}
-
-/// @{
 /** Checks whether corresponding elements in either @a a or @a b are IEEE754
     NaN.
 
@@ -102,30 +77,12 @@ mask_float32<N> isnan2(float32<N> a, float32<N> b)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-inline mask_float64x2 isnan2(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+mask_float64<N, mask_float64<N>> isnan2(float64<N,E1> a, float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::isnan2(a, b);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_pd(a, b, _CMP_UNORD_Q);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpunord_pd(a, b);
-#endif
+    return detail::insn::i_isnan2(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline mask_float64x4 isnan2(float64x4 a, float64x4 b)
-{
-    return _mm256_cmp_pd(a, b, _CMP_UNORD_Q);
-}
-#endif
-
-template<unsigned N>
-mask_float64<N> isnan2(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, isnan2, a, b);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

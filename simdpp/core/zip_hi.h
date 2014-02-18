@@ -33,8 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/neon/shuffle.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/insn/zip_hi.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -56,115 +55,30 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint8x16 zip_hi(gint8x16 a, gint8x16 b)
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> zip_hi(gint8<N,E1> a, gint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::zip_hi(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi8(a, b);
-#elif SIMDPP_USE_NEON
-    // the compiler will optimize multiple vzip instructions if both zip_hi
-    // and zip_hi are used on the same arguments
-    return vzipq_u8(a, b).val[1];
-#elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector uint8_t)a, (__vector uint8_t)b);
-#endif
+    return detail::insn::i_zip_hi(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline gint8x32 zip_hi(gint8x32 a, gint8x32 b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> zip_hi(gint16<N,E1> a, gint16<N,E2> b)
 {
-    return _mm256_unpackhi_epi8(a, b);
-}
-#endif
-
-template<unsigned N>
-gint8<N> zip_hi(gint8<N> a, gint8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, zip_hi, a, b)
+    return detail::insn::i_zip_hi(a.eval(), b.eval());
 }
 
-inline gint16x8 zip_hi(gint16x8 a, gint16x8 b)
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> zip_hi(gint32<N,E1> a, gint32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::zip_hi(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi16(a, b);
-#elif SIMDPP_USE_NEON
-    return vzipq_u16(a, b).val[1];
-#elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector uint16_t)a, (__vector uint16_t)b);
-#endif
+    return detail::insn::i_zip_hi(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline gint16x16 zip_hi(gint16x16 a, gint16x16 b)
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> zip_hi(gint64<N,E1> a, gint64<N,E2> b)
 {
-    return _mm256_unpackhi_epi16(a, b);
-}
-#endif
-
-template<unsigned N>
-gint16<N> zip_hi(gint16<N> a, gint16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, zip_hi, a, b)
+    return detail::insn::i_zip_hi(a.eval(), b.eval());
 }
 
-inline gint32x4 zip_hi(gint32x4 a, gint32x4 b)
-{
-#if SIMDPP_USE_NULL
-    return null::zip_hi(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi32(a, b);
-#elif SIMDPP_USE_NEON
-    return vzipq_u32(a, b).val[1];
-#elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector uint32_t)a, (__vector uint32_t)b);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline gint32x8 zip_hi(gint32x8 a, gint32x8 b)
-{
-    return _mm256_unpackhi_epi32(a, b);
-}
-#endif
-
-template<unsigned N>
-gint32<N> zip_hi(gint32<N> a, gint32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, zip_hi, a, b)
-}
-
-inline gint64x2 zip_hi(gint64x2 a, gint64x2 b)
-{
-#if SIMDPP_USE_NULL
-    return null::zip_hi(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi64(a, b);
-#elif SIMDPP_USE_NEON
-    return neon::zip_hi(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 mask = make_shuffle_bytes16_mask<1, 3>(mask);
-    return shuffle_bytes16(a, b, mask);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-inline gint64x4 zip_hi(gint64x4 a, gint64x4 b)
-{
-    return _mm256_unpackhi_epi64(a, b);
-}
-#endif
-
-template<unsigned N>
-gint64<N> zip_hi(gint64<N> a, gint64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, zip_hi, a, b)
-}
-/// @}
-
-/// @{
 /** Interleaves the higher halves of two vectors.
 
     @code
@@ -178,57 +92,17 @@ gint64<N> zip_hi(gint64<N> a, gint64<N> b)
 
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 zip_hi(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> zip_hi(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::zip_hi(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_ps(a, b);
-#elif SIMDPP_USE_NEON
-    return vzipq_f32(a, b).val[1];
-#elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector float)a, (__vector float)b);
-#endif
+    return detail::insn::i_zip_hi(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 zip_hi(float32x8 a, float32x8 b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> zip_hi(float64<N,E1> a, float64<N,E2> b)
 {
-    return _mm256_unpackhi_ps(a, b);
+    return detail::insn::i_zip_hi(a.eval(), b.eval());
 }
-#endif
-
-template<unsigned N>
-float32<N> zip_hi(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, zip_hi, a, b)
-}
-
-inline float64x2 zip_hi(float64x2 a, float64x2 b)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::zip_hi(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b),
-                                       _mm_castpd_ps(a)));
-#elif SIMDPP_USE_NEON
-    return bit_cast<float64x2>(zip_hi(int64x2(a), int64x2(b)));
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline float64x4 zip_hi(float64x4 a, float64x4 b)
-{
-    return _mm256_unpackhi_pd(a, b);
-}
-#endif
-
-template<unsigned N>
-float64<N> zip_hi(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, zip_hi, a, b)
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

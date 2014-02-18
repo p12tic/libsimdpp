@@ -70,14 +70,13 @@ inline gint32x8 to_int32(int16x8 a)
 #elif SIMDPP_USE_SSE4_1
     int32x8 r;
     r[0] = _mm_cvtepi16_epi32(a);
-    r[1] = _mm_cvtepi16_epi32(move_l<4>(a));
+    r[1] = _mm_cvtepi16_epi32(move_l<4>(a).eval());
     return r;
 #elif SIMDPP_USE_SSE2
-    int16x8 b0, b1;
-    b0 = zip_lo(int16x8::zero(), a[0]);
-    b1 = zip_hi(int16x8::zero(), a[0]);
-    b0 = shift_r<16>(b0);
-    b1 = shift_r<16>(b1);
+    int16x8 b0, b1, sign;
+    sign = shift_r<16>(a);
+    b0 = zip_lo(a, sign);
+    b1 = zip_hi(a, sign);
     return gint32x8(combine(b0, b1));
 #elif SIMDPP_USE_NEON
     int32x8 r;

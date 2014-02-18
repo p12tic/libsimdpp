@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_DETAIL_MEM_UNPACK_H
-#define LIBSIMDPP_SIMDPP_CORE_DETAIL_MEM_UNPACK_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_MEM_UNPACK_H
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_MEM_UNPACK_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -34,7 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/width.h>
-#include <simdpp/core/detail/shuffle128.h>
+#include <simdpp/detail/insn/shuffle128.h>
 #include <simdpp/core/align.h>
 #include <simdpp/core/broadcast.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
@@ -51,9 +51,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
+namespace insn {
 
 template<class T>
-void mem_unpack2_impl(T& a, T& b)
+void v_mem_unpack2_impl(T& a, T& b)
 {
     T c1, c2;
     c1 = a;
@@ -63,7 +64,7 @@ void mem_unpack2_impl(T& a, T& b)
 }
 
 template<class T>
-void mem_unpack2_256_impl(T& a, T& b)
+void v256_mem_unpack2_impl(T& a, T& b)
 {
     T c1, c2;
     c1 = shuffle128<0,2>(a, b);
@@ -80,26 +81,27 @@ void mem_unpack2_256_impl(T& a, T& b)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_unpack2(gint8x16& a, gint8x16& b) { mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint16x8& a, gint16x8& b) { mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint32x4& a, gint32x4& b) { mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint64x2& a, gint64x2& b) { mem_unpack2_impl(a, b); }
-inline void mem_unpack2(float32x4& a, float32x4& b)         { mem_unpack2_impl(a, b); }
-inline void mem_unpack2(float64x2& a, float64x2& b)         { mem_unpack2_impl(a, b); }
+inline void mem_unpack2(gint8x16& a, gint8x16& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(gint16x8& a, gint16x8& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(gint32x4& a, gint32x4& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(gint64x2& a, gint64x2& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(float32x4& a, float32x4& b) { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(float64x2& a, float64x2& b) { v_mem_unpack2_impl(a, b); }
 
-inline void mem_unpack2(gint8x32& a, gint8x32& b) { mem_unpack2_256_impl(a, b); }
-inline void mem_unpack2(gint16x16& a, gint16x16& b){mem_unpack2_256_impl(a, b); }
-inline void mem_unpack2(gint32x8& a, gint32x8& b) { mem_unpack2_256_impl(a, b); }
-inline void mem_unpack2(gint64x4& a, gint64x4& b) { mem_unpack2_256_impl(a, b); }
-inline void mem_unpack2(float32x8& a, float32x8& b)         { mem_unpack2_256_impl(a, b); }
-inline void mem_unpack2(float64x4& a, float64x4& b)         { mem_unpack2_256_impl(a, b); }
+inline void mem_unpack2(gint8x32& a, gint8x32& b)   { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(gint16x16& a, gint16x16& b) { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(gint32x8& a, gint32x8& b)   { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(gint64x4& a, gint64x4& b)   { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(float32x8& a, float32x8& b) { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(float64x4& a, float64x4& b) { v256_mem_unpack2_impl(a, b); }
 /// @}
 
 /// @{
 /** Generic implementation of mem_unpack3. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
-template<class T> void mem_unpack3_impl8(T& a, T& b, T& c)
+template<class T>
+void v_mem_unpack3_impl8(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
     using U = typename T::uint_vector_type;
@@ -177,7 +179,8 @@ template<class T> void mem_unpack3_impl8(T& a, T& b, T& c)
 #endif
 }
 
-template<class T> void mem_unpack3_impl16(T& a, T& b, T& c)
+template<class T>
+void v_mem_unpack3_impl16(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
     using U = typename T::uint_vector_type;
@@ -246,7 +249,8 @@ template<class T> void mem_unpack3_impl16(T& a, T& b, T& c)
 #endif
 }
 
-template<class T> void mem_unpack3_impl32(T& a, T& b, T& c)
+template<class T>
+void v_mem_unpack3_impl32(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
     using U = typename T::uint_vector_type;
@@ -298,7 +302,8 @@ template<class T> void mem_unpack3_impl32(T& a, T& b, T& c)
 #endif
 }
 
-template<class T> void mem_unpack3_impl64(T& a, T& b, T& c)
+template<class T>
+void v_mem_unpack3_impl64(T& a, T& b, T& c)
 {
     T d0, d1, d2;
     d0 = shuffle1<0,1>(a, b);
@@ -309,7 +314,7 @@ template<class T> void mem_unpack3_impl64(T& a, T& b, T& c)
 /// @}
 
 template<class T>
-void mem_unpack3_256_shuffle(T& a, T& b, T& c)
+void v256_mem_unpack3_shuffle(T& a, T& b, T& c)
 {
     // shuffle the vectors so that the lower halves contain the first 3 128-bit
     // items (a and lower half of b) and the higher halves contain the rest
@@ -330,62 +335,62 @@ void mem_unpack3_256_shuffle(T& a, T& b, T& c)
 */
 inline void mem_unpack3(gint8x16& a, gint8x16& b, gint8x16& c)
 {
-    mem_unpack3_impl8(a, b, c);
+    v_mem_unpack3_impl8(a, b, c);
 }
 inline void mem_unpack3(gint8x32& a, gint8x32& b, gint8x32& c)
 {
-    mem_unpack3_256_shuffle(a, b, c);
-    mem_unpack3_impl8(a, b, c);
+    v256_mem_unpack3_shuffle(a, b, c);
+    v_mem_unpack3_impl8(a, b, c);
 }
 
 inline void mem_unpack3(gint16x8& a, gint16x8& b, gint16x8& c)
 {
-    mem_unpack3_impl16(a, b, c);
+    v_mem_unpack3_impl16(a, b, c);
 }
 inline void mem_unpack3(gint16x16& a, gint16x16& b, gint16x16& c)
 {
-    mem_unpack3_256_shuffle(a, b, c);
-    mem_unpack3_impl16(a, b, c);
+    v256_mem_unpack3_shuffle(a, b, c);
+    v_mem_unpack3_impl16(a, b, c);
 }
 
 inline void mem_unpack3(gint32x4& a, gint32x4& b, gint32x4& c)
 {
-    mem_unpack3_impl32(a, b, c);
+    v_mem_unpack3_impl32(a, b, c);
 }
 inline void mem_unpack3(gint32x8& a, gint32x8& b, gint32x8& c)
 {
-    mem_unpack3_256_shuffle(a, b, c);
-    mem_unpack3_impl32(a, b, c);
+    v256_mem_unpack3_shuffle(a, b, c);
+    v_mem_unpack3_impl32(a, b, c);
 }
 
 inline void mem_unpack3(gint64x2& a, gint64x2& b, gint64x2& c)
 {
-    mem_unpack3_impl64(a, b, c);
+    v_mem_unpack3_impl64(a, b, c);
 }
 inline void mem_unpack3(gint64x4& a, gint64x4& b, gint64x4& c)
 {
-    mem_unpack3_256_shuffle(a, b, c);
-    mem_unpack3_impl64(a, b, c);
+    v256_mem_unpack3_shuffle(a, b, c);
+    v_mem_unpack3_impl64(a, b, c);
 }
 
 inline void mem_unpack3(float32x4& a, float32x4& b, float32x4& c)
 {
-    mem_unpack3_impl32(a, b, c);
+    v_mem_unpack3_impl32(a, b, c);
 }
 inline void mem_unpack3(float32x8& a, float32x8& b, float32x8& c)
 {
-    mem_unpack3_256_shuffle(a, b, c);
-    mem_unpack3_impl32(a, b, c);
+    v256_mem_unpack3_shuffle(a, b, c);
+    v_mem_unpack3_impl32(a, b, c);
 }
 
 inline void mem_unpack3(float64x2& a, float64x2& b, float64x2& c)
 {
-    mem_unpack3_impl64(a, b, c);
+    v_mem_unpack3_impl64(a, b, c);
 }
 inline void mem_unpack3(float64x4& a, float64x4& b, float64x4& c)
 {
-    mem_unpack3_256_shuffle(a, b, c);
-    mem_unpack3_impl64(a, b, c);
+    v256_mem_unpack3_shuffle(a, b, c);
+    v_mem_unpack3_impl64(a, b, c);
 }
 /// @}
 
@@ -646,7 +651,7 @@ inline void mem_unpack6(gint8x16& a, gint8x16& b, gint8x16& c,
 }
 
 inline void mem_unpack6(gint16x8& a, gint16x8& b, gint16x8& c,
-                       gint16x8& d, gint16x8& e, gint16x8& f)
+                        gint16x8& d, gint16x8& e, gint16x8& f)
 {
     gint16x8 t0, t1, t2, t3, t4, t5;
     t0 = zip_lo(a, d);
@@ -673,6 +678,7 @@ inline void mem_unpack6(gint16x8& a, gint16x8& b, gint16x8& c,
 }
 /// @}
 
+} // namespace insn
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

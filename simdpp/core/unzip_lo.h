@@ -33,18 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_and.h>
-#include <simdpp/core/shuffle2.h>
-#include <simdpp/core/zip_lo.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/insn/unzip_lo.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-
-/// @{
 /** De-interleaves the odd(lower) elements of two int8x16 vectors
 
     @code
@@ -66,48 +61,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 
 */
-inline gint8x16 unzip_lo(gint8x16 a, gint8x16 b)
+template<unsigned N, class E1, class E2>
+gint8<N, gint8<N>> unzip_lo(gint8<N,E1> a, gint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
-#elif SIMDPP_USE_SSE2
-    uint16x8 mask, r;
-    mask = uint16x8::ones();
-    mask = _mm_srli_epi16(mask, 8);
-    a = bit_and(a, mask);
-    b = bit_and(b, mask);
-    r = _mm_packus_epi16(a, b);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vuzpq_u8(a, b).val[0];
-#elif SIMDPP_USE_ALTIVEC
-    uint8x16 mask = make_shuffle_bytes16_mask<0,2,4,6,8,10,12,14,
-                                              16,18,20,22,24,26,28,30>(mask);
-    return shuffle_bytes16(a, b, mask);
-#endif
+    return detail::insn::i_unzip_lo(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline gint8x32 unzip_lo(gint8x32 a, gint8x32 b)
-{
-    uint16x16 mask, r;
-    mask = uint16x16::ones();
-    mask = _mm256_srli_epi16(mask, 8);
-    a = bit_and(a, mask);
-    b = bit_and(b, mask);
-    r = _mm256_packus_epi16(a, b);
-    return r;
-}
-#endif
-
-template<unsigned N>
-gint8<N> unzip_lo(gint8<N> a, gint8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, unzip_lo, a, b);
-}
-/// @}
-
-/// @{
 /** De-interleaves the odd(lower) elements of two int16x8 vectors
 
     @code
@@ -130,55 +89,12 @@ gint8<N> unzip_lo(gint8<N> a, gint8<N> b)
     @icost{NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
-inline gint16x8 unzip_lo(gint16x8 a, gint16x8 b)
+template<unsigned N, class E1, class E2>
+gint16<N, gint16<N>> unzip_lo(gint16<N,E1> a, gint16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
-#elif SIMDPP_USE_SSE4_1
-    uint32x4 mask, r;
-    mask = uint32x4::ones();
-    mask = _mm_srli_epi32(mask, 16);
-    a = bit_and(a, mask);
-    b = bit_and(b, mask);
-    r = _mm_packus_epi32(a, b);
-    return r;
-#elif SIMDPP_USE_SSE2
-    uint32x4 r;
-    a = _mm_slli_epi32(a, 16);
-    b = _mm_slli_epi32(b, 16);
-    a = _mm_srai_epi32(a, 16);
-    b = _mm_srai_epi32(b, 16);
-    r = _mm_packs_epi32(a, b);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vuzpq_u16(a, b).val[0];
-#elif SIMDPP_USE_ALTIVEC
-    uint16x8 mask = make_shuffle_bytes16_mask<0,2,4,6,8,10,12,14>(mask);
-    return shuffle_bytes16(a, b, mask);
-#endif
+    return detail::insn::i_unzip_lo(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline gint16x16 unzip_lo(gint16x16 a, gint16x16 b)
-{
-    uint32x8 mask, r;
-    mask = uint32x8::ones();
-    mask = _mm256_srli_epi32(mask, 16);
-    a = bit_and(a, mask);
-    b = bit_and(b, mask);
-    r = _mm256_packus_epi32(a, b);
-    return r;
-}
-#endif
-
-template<unsigned N>
-gint16<N> unzip_lo(gint16<N> a, gint16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, unzip_lo, a, b);
-}
-/// @}
-
-/// @{
 /** De-interleaves the odd(lower) elements of two int32x4 vectors
 
     @code
@@ -196,35 +112,12 @@ gint16<N> unzip_lo(gint16<N> a, gint16<N> b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-inline gint32x4 unzip_lo(gint32x4 a, gint32x4 b)
+template<unsigned N, class E1, class E2>
+gint32<N, gint32<N>> unzip_lo(gint32<N,E1> a, gint32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
-#elif SIMDPP_USE_SSE2
-    return shuffle2<0,2,0,2>(a,b);
-#elif SIMDPP_USE_NEON
-    return vuzpq_u32(a, b).val[0];
-#elif SIMDPP_USE_ALTIVEC
-    uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
-    return shuffle_bytes16(a, b, mask);
-#endif
+    return detail::insn::i_unzip_lo(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline gint32x8 unzip_lo(gint32x8 a, gint32x8 b)
-{
-    return shuffle2<0,2,0,2>(a,b);
-}
-#endif
-
-template<unsigned N>
-gint32<N> unzip_lo(gint32<N> a, gint32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, unzip_lo, a, b);
-}
-/// @}
-
-/// @{
 /** De-interleaves the odd(lower) elements of two int64x2 vectors
 
     @code
@@ -238,14 +131,12 @@ gint32<N> unzip_lo(gint32<N> a, gint32<N> b)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N>
-gint64<N> unzip_lo(gint64<N> a, gint64<N> b)
+template<unsigned N, class E1, class E2>
+gint64<N, gint64<N>> unzip_lo(gint64<N,E1> a, gint64<N,E2> b)
 {
-    return zip_lo(a, b);
+    return detail::insn::i_unzip_lo(a.eval(), b.eval());
 }
-/// @}
 
-/// @{
 /** De-interleaves the odd(lower) elements of two float32x4 vectors
 
     @code
@@ -259,33 +150,11 @@ gint64<N> unzip_lo(gint64<N> a, gint64<N> b)
 
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 unzip_lo(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> unzip_lo(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
-#elif SIMDPP_USE_SSE2
-    return shuffle2<0,2,0,2>(a,b);
-#elif SIMDPP_USE_NEON
-    return vuzpq_f32(a, b).val[0];
-#elif SIMDPP_USE_ALTIVEC
-    uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
-    return shuffle_bytes16(a, b, mask);
-#endif
+    return detail::insn::i_unzip_lo(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float32x8 unzip_lo(float32x8 a, float32x8 b)
-{
-    return shuffle2<0,2,0,2>(a,b);
-}
-#endif
-
-template<unsigned N>
-float32<N> unzip_lo(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, unzip_lo, a, b);
-}
-/// @}
 
 /** De-interleaves the odd(lower) elements of two float64x2 vectors
 
@@ -304,10 +173,10 @@ float32<N> unzip_lo(float32<N> a, float32<N> b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-template<unsigned N>
-inline float64<N> unzip_lo(float64<N> a, float64<N> b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> unzip_lo(float64<N,E1> a, float64<N,E2> b)
 {
-    return zip_lo(a, b);
+    return detail::insn::i_unzip_lo(a.eval(), b.eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

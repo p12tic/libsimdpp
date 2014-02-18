@@ -73,7 +73,7 @@ add_executable(test1 EXCLUDE_FROM_ALL
     ${TEST1_ARCH_GEN_SOURCES}
 )
 
-set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
+set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall -Wextra -fstack-protector -fstack-protector-all")
 
 add_test(s_test1 test1)
 add_dependencies(check test1)

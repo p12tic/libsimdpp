@@ -45,6 +45,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+// FIXME: move to adv
 /// @{
 /** Divides one 8-bit unsigned number by another. The precision of the operation
     is configurable: only P least significant bits of both numerator and

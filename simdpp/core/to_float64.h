@@ -81,7 +81,7 @@ inline float64x4 to_float64(int32x4 a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtepi32_pd(a);
-    r2 = _mm_cvtepi32_pd(move_r<2>(a));
+    r2 = _mm_cvtepi32_pd(move_r<2>(a).eval());
     return combine(r1, r2);
 #endif
 }
@@ -139,7 +139,7 @@ inline float64x4 to_float64(float32x4 a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtps_pd(a);
-    r2 = _mm_cvtps_pd(move_r<2>(a));
+    r2 = _mm_cvtps_pd(move_r<2>(a).eval());
     return combine(r1, r2);
 #endif
 }

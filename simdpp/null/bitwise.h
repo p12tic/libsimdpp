@@ -35,6 +35,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/cast.h>
+#include <simdpp/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -65,7 +66,7 @@ V bit_and_vm(V a, M m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = m.el(i) ? a.el(i) : 0;
+        r.el(i) = m.mask().el(i) ? a.el(i) : 0;
     }
     return r;
 }
@@ -75,9 +76,9 @@ M bit_and_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = a.el(i) && b.el(i);
+        r.m_mask().el(i) = a.mask().el(i) && b.mask().el(i);
     }
-    return r;
+    return refresh_mask(r);
 }
 
 
@@ -100,7 +101,7 @@ V bit_andnot_vm(V a, M m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = !m.el(i) ? a.el(i) : 0;
+        r.el(i) = !m.mask().el(i) ? a.el(i) : 0;
     }
     return r;
 }
@@ -110,9 +111,9 @@ M bit_andnot_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = a.el(i) && !b.el(i);
+        r.m_mask().el(i) = a.mask().el(i) && !b.mask().el(i);
     }
-    return r;
+    return refresh_mask(r);
 }
 
 
@@ -135,9 +136,9 @@ M bit_or_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = a.el(i) || b.el(i);
+        r.m_mask().el(i) = a.mask().el(i) || b.mask().el(i);
     }
-    return r;
+    return refresh_mask(r);
 }
 
 template<class V>
@@ -159,9 +160,10 @@ M bit_xor_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = (a.el(i) && !b.el(i)) || (!a.el(i) && b.el(i));
+        r.el(i) = (a.mask().el(i) && !b.mask().el(i)) ||
+                  (!a.mask().el(i) && b.mask().el(i));
     }
-    return r;
+    return refresh_mask(r);
 }
 
 template<class M>
@@ -169,9 +171,9 @@ M bit_not_mm(M a)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = !a.el(i);
+        r.m_mask().el(i) = !a.mask().el(i);
     }
-    return r;
+    return refresh_mask(r);
 }
 
 } // namespace null

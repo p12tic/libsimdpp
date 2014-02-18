@@ -33,14 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/expr/i_subs.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Subtracts and saturaters signed 8-bit integer values.
 
     @code
@@ -52,34 +51,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline int8x16 subs(int8x16 a, int8x16 b)
+template<unsigned N, class E1, class E2>
+int8<N, expr_subs<int8<N,E1>,
+                  int8<N,E2>>> subs(int8<N,E1> a,
+                                    int8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::subs(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_subs_epi8(a, b);
-#elif SIMDPP_USE_NEON
-    return vqsubq_s8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector int8_t)a, (__vector int8_t)b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline int8x32 subs(int8x32 a, int8x32 b)
-{
-    return _mm256_subs_epi8(a, b);
-}
-#endif
-
-template<unsigned N>
-int8<N> subs(int8<N> a, int8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(int8<N>, subs, a, b);
-}
-/// @}
-
-/// @{
 /** Subtracts and saturaters signed 16-bit integer values.
 
     @code
@@ -91,34 +70,14 @@ int8<N> subs(int8<N> a, int8<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline int16x8 subs(int16x8 a, int16x8 b)
+template<unsigned N, class E1, class E2>
+int16<N, expr_subs<int16<N,E1>,
+                   int16<N,E2>>> subs(int16<N,E1> a,
+                                      int16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::subs(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_subs_epi16(a, b);
-#elif SIMDPP_USE_NEON
-    return vqsubq_s16(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector int16_t)a, (__vector int16_t)b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline int16x16 subs(int16x16 a, int16x16 b)
-{
-    return _mm256_subs_epi16(a, b);
-}
-#endif
-
-template<unsigned N>
-int16<N> subs(int16<N> a, int16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(int16<N>, subs, a, b);
-}
-/// @}
-
-/// @{
 /** Subtracts and saturaters unsigned 8-bit integer values.
 
     @code
@@ -130,34 +89,15 @@ int16<N> subs(int16<N> a, int16<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline uint8x16 subs(uint8x16 a, uint8x16 b)
+template<unsigned N, class E1, class E2>
+uint8<N, expr_subs<uint8<N,E1>,
+                   uint8<N,E2>>> subs(uint8<N,E1> a,
+                                      uint8<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::subs(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_subs_epu8(a, b);
-#elif SIMDPP_USE_NEON
-    return vqsubq_u8(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector uint8_t)a, (__vector uint8_t)b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline uint8x32 subs(uint8x32 a, uint8x32 b)
-{
-    return _mm256_subs_epu8(a, b);
-}
-#endif
 
-template<unsigned N>
-uint8<N> subs(uint8<N> a, uint8<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, subs, a, b);
-}
-/// @}
-
-/// @{
 /** Subtracts and saturaters unsigned 16-bit integer values.
 
     @code
@@ -169,32 +109,13 @@ uint8<N> subs(uint8<N> a, uint8<N> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline uint16x8 subs(uint16x8 a, uint16x8 b)
+template<unsigned N, class E1, class E2>
+uint16<N, expr_subs<uint16<N,E1>,
+                    uint16<N,E2>>> subs(uint16<N,E1> a,
+                                        uint16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    return null::subs(a, b);
-#elif SIMDPP_USE_SSE2
-    return _mm_subs_epu16(a, b);
-#elif SIMDPP_USE_NEON
-    return vqsubq_u16(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector uint16_t)a, (__vector uint16_t)b);
-#endif
+    return { { a, b }, 0 };
 }
-
-#if SIMDPP_USE_AVX2
-inline uint16x16 subs(uint16x16 a, uint16x16 b)
-{
-    return _mm256_subs_epu16(a, b);
-}
-#endif
-
-template<unsigned N>
-uint16<N> subs(uint16<N> a, uint16<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, subs, a, b);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

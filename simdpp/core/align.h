@@ -33,16 +33,14 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/bit_or.h>
-#include <simdpp/core/move_l.h>
-#include <simdpp/core/move_r.h>
+#include <simdpp/detail/insn/align.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
+
 /** Extracts a int8x16 vector from two concatenated int8x16 vectors
 
     @code
@@ -65,60 +63,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift>
-gint8x16 align(gint8x16 lower, gint8x16 upper)
+template<unsigned shift, unsigned N, class E1, class E2>
+gint8<N, gint8<N>> align(gint8<N,E1> lower,
+                         gint8<N,E2> upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return lower;
-    if (shift == 16) return upper;
+    if (shift == 0) return lower.eval();
+    if (shift == 16) return upper.eval();
 
-#if SIMDPP_USE_NULL
-    gint8x16 r;
-    //use int to disable warnings wrt. comparison result always being true/false
-    for (int i = 0; i < (int)(16-shift); i++) {
-        r.el(i) = lower.el(i + shift);
-    }
-    for (unsigned i = 16-shift; i < 16; i++) {
-        r.el(i) = upper.el(i - 16 + shift);
-    }
-    return r;
-#elif SIMDPP_USE_SSSE3
-    return _mm_alignr_epi8(upper, lower, shift);
-#elif SIMDPP_USE_SSE2
-    gint8x16 a;
-    lower = move_l<shift>(lower);
-    upper = move_r<16-shift>(upper);
-    a = bit_or(upper, lower);
-    return a;
-#elif SIMDPP_USE_NEON
-    return neon::detail::align<shift>(lower, upper);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, (unsigned)shift);
-#endif
+    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
 }
-
-#if SIMDPP_USE_AVX2
-template<unsigned shift>
-gint8x32 align(gint8x32 lower, gint8x32 upper)
-{
-    static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return lower;
-    if (shift == 16) return upper;
-
-    return _mm256_alignr_epi8(upper, lower, shift);
-}
-#endif
-
-template<unsigned shift, unsigned N>
-gint8<N> align(gint8<N> lower, gint8<N> upper)
-{
-    static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return lower;
-    if (shift == 16) return upper;
-
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, align<shift>, lower, upper);
-}
-/// @}
 
 /** Extracts a int16x8 vector from two concatenated int16x8 vectors
 
@@ -136,17 +90,22 @@ gint8<N> align(gint8<N> lower, gint8<N> upper)
     @icost{SSE2-SSE3, 3}
 
     @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
+
+    The all 128-bit sub-vectors are processed as if 128-bit instruction
+    was applied to each of them separately.
+
 */
-template<unsigned shift, unsigned N>
-gint16<N> align(gint16<N> lower, gint16<N> upper)
+template<unsigned shift, unsigned N, class E1, class E2>
+gint16<N, gint16<N>> align(gint16<N,E1> lower,
+                           gint16<N,E2> upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    return align<shift*2>(gint8<N*2>(lower), gint8<N*2>(upper));
+    if (shift == 0) return lower.eval();
+    if (shift == 8) return upper.eval();
+
+    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a int32x4 vector from two concatenated int32x4 vectors
@@ -170,11 +129,15 @@ gint16<N> align(gint16<N> lower, gint16<N> upper)
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N>
-gint32<N> align(gint32<N> lower, gint32<N> upper)
+template<unsigned shift, unsigned N, class E1, class E2>
+gint32<N, gint32<N>> align(gint32<N,E1> lower,
+                           gint32<N,E2> upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return align<shift*4>(gint8<N*4>(lower), gint8<N*4>(upper));
+    if (shift == 0) return lower.eval();
+    if (shift == 4) return upper.eval();
+
+    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a int64x2 vector from two concatenated int64x2 vectors
@@ -196,11 +159,15 @@ gint32<N> align(gint32<N> lower, gint32<N> upper)
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N>
-gint64<N> align(gint64<N> lower, gint64<N> upper)
+template<unsigned shift, unsigned N, class E1, class E2>
+gint64<N, gint64<N>> align(gint64<N,E1> lower,
+                           gint64<N,E2> upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return align<shift*8>(gint8<N*8>(lower), gint8<N*8>(upper));
+    if (shift == 0) return lower.eval();
+    if (shift == 2) return upper.eval();
+
+    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a float32x4 vector from two concatenated float32x4 vectors
@@ -224,12 +191,15 @@ gint64<N> align(gint64<N> lower, gint64<N> upper)
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N>
-float32<N> align(float32<N> lower, float32<N> upper)
+template<unsigned shift, unsigned N, class E1, class E2>
+float32<N, float32<N>> align(float32<N,E1> lower,
+                             float32<N,E2> upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    return float32<N>(align<shift>(gint32<N>(lower),
-                                   gint32<N>(upper)));
+    if (shift == 0) return lower.eval();
+    if (shift == 4) return upper.eval();
+
+    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a float64x2 vector from two concatenated float64x2 vectors
@@ -253,12 +223,15 @@ float32<N> align(float32<N> lower, float32<N> upper)
     @icost{SSSE3-AVX, 2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned shift, unsigned N>
-float64<N> align(float64<N> lower, float64<N> upper)
+template<unsigned shift, unsigned N, class E1, class E2>
+float64<N, float64<N>> align(float64<N,E1> lower,
+                             float64<N,E2> upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    return float64<N>(align<shift>(gint64<N>(lower),
-                                   gint64<N>(upper)));
+    if (shift == 0) return lower.eval();
+    if (shift == 2) return upper.eval();
+
+    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

@@ -33,9 +33,7 @@
 #endif
 
 #include <cmath>
-#include <simdpp/types.h>
-#include <simdpp/core/f_ceil.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/insn/f_trunc.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -43,7 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Rounds the values of a vector towards zero
     @code
     r0 = trunc(a0)
@@ -60,42 +57,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 10-11}
     @icost{SSE4.1, ALTIVEC, 2}
 */
-inline float32x4 trunc(float32x4 a)
+template<unsigned N, class E>
+float32<N, float32<N>> trunc(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
-#elif SIMDPP_USE_SSE4_1
-    return _mm_round_ps(a, 3); // 3 = truncate
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
-    //check if the value is not too large
-    float32x4 af = abs(a);
-    mask_float32x4 mask = cmp_gt(af, float32x4::make_const(8388607.0f));
-
-    //truncate
-    int32x4 ia = to_int32(a);
-    float32x4 fa = to_float32(ia);
-
-    //combine the results
-    a = blend(a, fa, mask);     // takes care of NaNs
-    return a;
-#elif SIMDPP_USE_ALTIVEC
-    return vec_trunc((__vector float)a);
-#endif
+    return detail::insn::i_trunc(a.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float32x8 trunc(float32x8 a)
-{
-    return _mm256_round_ps(a, 3); // 3 = truncate
-}
-#endif
-
-template<unsigned N>
-float32<N> trunc(float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, trunc, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

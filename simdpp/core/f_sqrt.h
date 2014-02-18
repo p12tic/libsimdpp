@@ -32,12 +32,8 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <cmath>
 #include <simdpp/types.h>
-#include <simdpp/core/f_rsqrt_e.h>
-#include <simdpp/core/f_rsqrt_rh.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/insn/f_sqrt.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -45,7 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Computes square root.
 
     @code
@@ -63,35 +58,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 10}
     @icost{ALTIVEC, 10-12}
 */
-inline float32x4 sqrt(float32x4 a)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> sqrt(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
-#elif SIMDPP_USE_SSE2
-    return _mm_sqrt_ps(a);
-#elif SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_ALTIVEC
-    float32x4 x;
-    x = rsqrt_e(a);
-    x = rsqrt_rh(x, a);
-    return mul(a, x);
-#endif
+    return detail::insn::i_sqrt(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 sqrt(float32x8 a)
-{
-    return _mm256_sqrt_ps(a);
-}
-#endif
-
-template<unsigned N>
-float32<N> sqrt(float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, sqrt, a);
-}
-/// @}
-
-/// @{
 /** Computes square root.
 
     @code
@@ -107,28 +79,11 @@ float32<N> sqrt(float32<N> a)
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
 */
-inline float64x2 sqrt(float64x2 a)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> sqrt(float64<N,E1> a, float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
-#elif SIMDPP_USE_SSE2
-    return _mm_sqrt_pd(a);
-#endif
+    return detail::insn::i_sqrt(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float64x4 sqrt(float64x4 a)
-{
-    return _mm256_sqrt_pd(a);
-}
-#endif
-
-template<unsigned N>
-float64<N> sqrt(float64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, sqrt, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -50,7 +50,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float64x4 vector
 template<>
-class float64<4> {
+class float64<4, void> {
 public:
 
     using element_type = double;
@@ -83,14 +83,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const float64x4* begin() const              { return this; }
-          float64x4* begin()                    { return this; }
-    const float64x4* end() const                { return this+1; }
-          float64x4* end()                      { return this+1; }
-    const float64x4& operator[](unsigned i) const { return *this; }
-          float64x4& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const float64x4& operator[](unsigned) const { return *this; }
+          float64x4& operator[](unsigned)       { return *this; }
     /// @}
+
+    float64<4> eval() const { return *this; }
 
     /** Creates a float64x4 vector with the contens set to zero
 
@@ -153,37 +151,55 @@ private:
     __m256d d_;
 };
 
-/// Class representing a mask for 4x 64-bit floating-point vector
+/// Class representing possibly optimized mask data for 4x 64-bit floating point
+/// vector
 template<>
-class mask_float64<4> {
+class maskdata_float64<4> {
 public:
-    using base_vector_type = mask_float64x4;
+    using base_vector_type = maskdata_float64<4>;
     static constexpr unsigned length = 4;
+    static constexpr unsigned vec_length = 1;
 
-    mask_float64<4>() = default;
-    mask_float64<4>(const mask_float64x4 &) = default;
-    mask_float64<4> &operator=(const mask_float64x4 &) = default;
+    maskdata_float64<4>() = default;
+    maskdata_float64<4>(const maskdata_float64<4> &) = default;
+    maskdata_float64<4> &operator=(const maskdata_float64<4> &) = default;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    mask_float64<4>(__m256d d) : d_(d) {}
-#endif
-    mask_float64<4>(float64x4 d) : d_(d) {}
+    maskdata_float64<4>(float64<4> d) : d_(d) {}
 
-    /// Access the underlying type
-    operator float64x4() const;
+    /// Convert to bitmask
+    operator float64<4>() const;
 
     /// @{
-    /// Range access
-    const mask_float64x4* begin() const              { return this; }
-          mask_float64x4* begin()                    { return this; }
-    const mask_float64x4* end() const                { return this+1; }
-          mask_float64x4* end()                      { return this+1; }
-    const mask_float64x4& operator[](unsigned i) const { return *this; }
-          mask_float64x4& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const maskdata_float64<4>& operator[](unsigned) const { return *this; }
+          maskdata_float64<4>& operator[](unsigned)       { return *this; }
     /// @}
 
 private:
-    float64x4 d_;
+    float64<4> d_;
+};
+
+
+/// Class representing a mask for 4x 64-bit floating-point vector
+template<>
+class mask_float64<4, void> : public float64<4, void> {
+public:
+    mask_float64<4>() = default;
+    mask_float64<4>(const mask_float64<4> &) = default;
+    mask_float64<4> &operator=(const mask_float64<4> &) = default;
+    mask_float64<4>(const maskdata_float64<4>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+    mask_float64<4>(__m256 d);
+    mask_float64<4>(float64<4> d);
+    /// @}
+
+    mask_float64<4> eval() const { return *this; }
+
+    const maskdata_float64<4>& mask() const { return mask_; }
+private:
+    maskdata_float64<4> mask_;
 };
 
 /// @} -- end ingroup

@@ -46,7 +46,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class gint16 {
+class gint16<N, void> {
 public:
 
     using element_type = int16_t;
@@ -55,6 +55,7 @@ public:
     using uint_vector_type = uint16<N>;
     using mask_type = mask_int16<N>;
     using base_vector_type = gint16v;
+    using maskdata_type = maskdata_int16<N>;
 
     static constexpr unsigned length = N;
     static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT16_SIZE - 1) / SIMDPP_FAST_INT16_SIZE;
@@ -66,19 +67,19 @@ public:
     gint16<N>(const gint16<N>&) = default;
     gint16<N>& operator=(const gint16<N>&) = default;
 
-    gint16<N>(const gint8<N*2>& d);
-    gint16<N>(const gint32<N/2>& d);
-    gint16<N>(const gint64<N/4>& d);
-    gint16<N>& operator=(const gint8<N*2>& d);
-    gint16<N>& operator=(const gint32<N/2>& d);
-    gint16<N>& operator=(const gint64<N/4>& d);
+    template<class E> explicit gint16<N>(const  gint8<N*2,E>& d);
+    template<class E>          gint16<N>(const gint16<N,E>& d);
+    template<class E> explicit gint16<N>(const gint32<N/2,E>& d);
+    template<class E> explicit gint16<N>(const gint64<N/4,E>& d);
+    template<class E> gint16<N>& operator=(const  gint8<N*2,E>& d);
+    template<class E> gint16<N>& operator=(const gint16<N,E>& d);
+    template<class E> gint16<N>& operator=(const gint32<N/2,E>& d);
+    template<class E> gint16<N>& operator=(const gint64<N/4,E>& d);
 
-    const gint16v* begin() const   { return du_; }
-    gint16v* begin()               { return du_; }
-    const gint16v* end() const     { return du_+vec_length; }
-    gint16v* end()                 { return du_+vec_length; }
     const gint16v& operator[](unsigned i) const { return *(du_+i); }
     gint16v& operator[](unsigned i)             { return *(du_+i); }
+
+    gint16<N> eval() const { return *this; }
 
     /// Creates a int16 vector with the contents set to zero
     static gint16<N> zero()
@@ -114,7 +115,7 @@ protected:
     always contains at least one native vector.
 */
 template<unsigned N>
-class int16 : public gint16<N> {
+class int16<N, void> : public gint16<N, void> {
 public:
 
     using element_type = int16_t;
@@ -125,21 +126,22 @@ public:
     int16<N>(const int16<N>&) = default;
     int16<N>& operator=(const int16<N>&) = default;
 
-    int16<N>(const gint8<N*2>& d);
-    int16<N>(const gint16<N>& d);
-    int16<N>(const gint32<N/2>& d);
-    int16<N>(const gint64<N/4>& d);
-    int16<N>& operator=(const gint8<N*2>& d);
-    int16<N>& operator=(const gint16<N>& d);
-    int16<N>& operator=(const gint32<N/2>& d);
-    int16<N>& operator=(const gint64<N/4>& d);
+    template<class E> explicit int16<N>(const  gint8<N*2,E>& d);
+    template<class E>          int16<N>(const gint16<N,E>& d);
+    template<class E> explicit int16<N>(const gint32<N/2,E>& d);
+    template<class E> explicit int16<N>(const gint64<N/4,E>& d);
+    template<class E> int16<N>& operator=(const  gint8<N*2,E>& d);
+    template<class E> int16<N>& operator=(const gint16<N,E>& d);
+    template<class E> int16<N>& operator=(const gint32<N/2,E>& d);
+    template<class E> int16<N>& operator=(const gint64<N/4,E>& d);
 
-    const int16v* begin() const { return gint16<N>::di_; }
-    int16v* begin()             { return gint16<N>::di_; }
-    const int16v* end() const   { return gint16<N>::di_+vec_length; }
-    int16v* end()               { return gint16<N>::di_+vec_length; }
     const int16v& operator[](unsigned i) const { return *(gint16<N>::di_+i); }
     int16v& operator[](unsigned i)             { return *(gint16<N>::di_+i); }
+
+    int16<N> eval() const { return *this; }
+
+    static int16<N> zero() { return gint16<N>::zero(); }
+    static int16<N> ones() { return gint16<N>::ones(); }
 
     /** Creates a signed int16 vector from a value loaded from memory.
 
@@ -230,7 +232,7 @@ public:
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint16 : public gint16<N> {
+class uint16<N, void> : public gint16<N, void> {
 public:
 
     using element_type = uint16_t;
@@ -241,21 +243,22 @@ public:
     uint16<N>(const uint16<N>&) = default;
     uint16<N>& operator=(const uint16<N>&) = default;
 
-    uint16<N>(const gint8<N*2>& d);
-    uint16<N>(const gint16<N>& d);
-    uint16<N>(const gint32<N/2>& d);
-    uint16<N>(const gint64<N/4>& d);
-    uint16<N>& operator=(const gint8<N*2>& d);
-    uint16<N>& operator=(const gint16<N>& d);
-    uint16<N>& operator=(const gint32<N/2>& d);
-    uint16<N>& operator=(const gint64<N/4>& d);
+    template<class E> explicit uint16<N>(const  gint8<N*2,E>& d);
+    template<class E>          uint16<N>(const gint16<N,E>& d);
+    template<class E> explicit uint16<N>(const gint32<N/2,E>& d);
+    template<class E> explicit uint16<N>(const gint64<N/4,E>& d);
+    template<class E> uint16<N>& operator=(const  gint8<N*2,E>& d);
+    template<class E> uint16<N>& operator=(const gint16<N,E>& d);
+    template<class E> uint16<N>& operator=(const gint32<N/2,E>& d);
+    template<class E> uint16<N>& operator=(const gint64<N/4,E>& d);
 
-    const uint16v* begin() const { return gint16<N>::du_; }
-    uint16v* begin()             { return gint16<N>::du_; }
-    const uint16v* end() const   { return gint16<N>::du_+vec_length; }
-    uint16v* end()               { return gint16<N>::du_+vec_length; }
     const uint16v& operator[](unsigned i) const { return *(gint16<N>::du_+i); }
     uint16v& operator[](unsigned i)             { return *(gint16<N>::du_+i); }
+
+    uint16<N> eval() const { return *this; }
+
+    static uint16<N> zero() { return gint16<N>::zero(); }
+    static uint16<N> ones() { return gint16<N>::ones(); }
 
     /** Creates a unsigned int16 vector from a value loaded from memory.
 
@@ -342,38 +345,47 @@ public:
     }
 };
 
-/// Class representing a mask for @a gint16 vector of arbitrary length. The
-/// vector always contains at least one native vector.
+/// Class representing possibly optimized mask data for arbitrary length 16-bit
+/// integer vector
 template<unsigned N>
-class mask_int16 {
+class maskdata_int16 {
 public:
-    using base_vector_type = mask_int16v;
+    using base_vector_type = maskdata_int16<N>;
     static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT16_SIZE - 1) / SIMDPP_FAST_INT16_SIZE;
+    static constexpr unsigned vec_length = int16<N>::vec_length;
 
-    mask_int16<N>() = default;
-    mask_int16<N>(const mask_int16 &) = default;
-    mask_int16<N> &operator=(const mask_int16 &) = default;
+    maskdata_int16<N>() = default;
+    maskdata_int16<N>(const maskdata_int16<N> &) = default;
+    maskdata_int16<N> &operator=(const maskdata_int16<N> &) = default;
 
-    const mask_int16v* begin() const   { return d_; }
-    mask_int16v* begin()               { return d_; }
-    const mask_int16v* end() const     { return d_+vec_length; }
-    mask_int16v* end()                 { return d_+vec_length; }
-    const mask_int16v& operator[](unsigned i) const { return *(d_+i); }
-    mask_int16v& operator[](unsigned i)             { return *(d_+i); }
+    /// Access the underlying type
+    operator uint16<N>() const;
 
-    /// Convert to a regular vector
-    operator gint16<N>() const
-    {
-        gint16<N> r;
-        for (unsigned i = 0; i < vec_length; ++i) {
-            r[i] = d_[i];
-        }
-        return r;
-    }
+    const maskdata_int16v& operator[](unsigned i) const { return *(d_+i); }
+          maskdata_int16v& operator[](unsigned i)       { return *(d_+i); }
+
+    mask_int16<N> eval() const { return *this; }
 
 private:
-    mask_int16v d_[vec_length];
+    maskdata_int16v d_[vec_length];
+};
+
+
+/// Class representing a mask for 16-bit integer point vector of arbitrary
+/// length.
+template<unsigned N>
+class mask_int16<N, void> : public uint16<N, void> {
+public:    
+    mask_int16<N>() = default;
+    mask_int16<N>(const mask_int16<N> &) = default;
+    mask_int16<N> &operator=(const mask_int16<N> &) = default;
+    mask_int16<N>(const maskdata_int16<N>& d);
+
+    mask_int16<N> eval() const { return *this; }
+
+    maskdata_int16<N> mask() const { return mask_; }
+private:
+    maskdata_int16<N> mask_;
 };
 
 /// @} -- end ingroup

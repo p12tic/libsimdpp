@@ -46,15 +46,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class gint8 {
+class gint8<N, void> {
 public:
 
     using element_type = int8_t;
     using uint_element_type = uint8_t;
     using int_vector_type = gint8<N>;
     using uint_vector_type = uint8<N>;
-    using mask_type = mask_int8<N>;
     using base_vector_type = gint8v;
+    using mask_type = mask_int8<N>;
+    using maskdata_type = maskdata_int8<N>;
 
     static constexpr unsigned length = N;
     static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT8_SIZE - 1) / SIMDPP_FAST_INT8_SIZE;
@@ -66,19 +67,19 @@ public:
     gint8<N>(const gint8<N>&) = default;
     gint8<N>& operator=(const gint8<N>&) = default;
 
-    gint8<N>(const gint16<N/2>& d);
-    gint8<N>(const gint32<N/4>& d);
-    gint8<N>(const gint64<N/8>& d);
-    gint8<N>& operator=(const gint16<N/2>& d);
-    gint8<N>& operator=(const gint32<N/4>& d);
-    gint8<N>& operator=(const gint64<N/8>& d);
+    template<class E>          gint8<N>(const  gint8<N,E>& d);
+    template<class E> explicit gint8<N>(const gint16<N/2,E>& d);
+    template<class E> explicit gint8<N>(const gint32<N/4,E>& d);
+    template<class E> explicit gint8<N>(const gint64<N/8,E>& d);
+    template<class E> gint8<N>& operator=(const  gint8<N,E>& d);
+    template<class E> gint8<N>& operator=(const gint16<N/2,E>& d);
+    template<class E> gint8<N>& operator=(const gint32<N/4,E>& d);
+    template<class E> gint8<N>& operator=(const gint64<N/8,E>& d);
 
-    const gint8v* begin() const   { return du_; }
-    gint8v* begin()               { return du_; }
-    const gint8v* end() const     { return du_+vec_length; }
-    gint8v* end()                 { return du_+vec_length; }
     const gint8v& operator[](unsigned i) const { return *(du_+i); }
     gint8v& operator[](unsigned i)             { return *(du_+i); }
+
+    gint8<N> eval() const { return *this; }
 
     /// Creates a int8 vector with the contents set to zero
     static gint8<N> zero()
@@ -114,7 +115,7 @@ protected:
     always contains at least one native vector.
 */
 template<unsigned N>
-class int8 : public gint8<N> {
+class int8<N, void> : public gint8<N, void> {
 public:
 
     using element_type = int8_t;
@@ -125,21 +126,22 @@ public:
     int8<N>(const int8<N>&) = default;
     int8<N>& operator=(const int8<N>&) = default;
 
-    int8<N>(const gint8<N>& d);
-    int8<N>(const gint16<N/2>& d);
-    int8<N>(const gint32<N/4>& d);
-    int8<N>(const gint64<N/8>& d);
-    int8<N>& operator=(const gint8<N>& d);
-    int8<N>& operator=(const gint16<N/2>& d);
-    int8<N>& operator=(const gint32<N/4>& d);
-    int8<N>& operator=(const gint64<N/8>& d);
+    template<class E>          int8<N>(const  gint8<N,E>& d);
+    template<class E> explicit int8<N>(const gint16<N/2,E>& d);
+    template<class E> explicit int8<N>(const gint32<N/4,E>& d);
+    template<class E> explicit int8<N>(const gint64<N/8,E>& d);
+    template<class E> int8<N>& operator=(const  gint8<N,E>& d);
+    template<class E> int8<N>& operator=(const gint16<N/2,E>& d);
+    template<class E> int8<N>& operator=(const gint32<N/4,E>& d);
+    template<class E> int8<N>& operator=(const gint64<N/8,E>& d);
 
-    const int8v* begin() const { return gint8<N>::di_; }
-    int8v* begin()             { return gint8<N>::di_; }
-    const int8v* end() const   { return gint8<N>::di_+vec_length; }
-    int8v* end()               { return gint8<N>::di_+vec_length; }
     const int8v& operator[](unsigned i) const { return *(gint8<N>::di_+i); }
     int8v& operator[](unsigned i)             { return *(gint8<N>::di_+i); }
+
+    int8<N> eval() const { return *this; }
+
+    static int8<N> zero() { return gint8<N>::zero(); }
+    static int8<N> ones() { return gint8<N>::ones(); }
 
     /** Creates a signed int8 vector from a value loaded from memory.
 
@@ -246,7 +248,7 @@ public:
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint8 : public gint8<N> {
+class uint8<N, void> : public gint8<N, void> {
 public:
 
     using element_type = uint8_t;
@@ -257,21 +259,22 @@ public:
     uint8<N>(const uint8<N>&) = default;
     uint8<N>& operator=(const uint8<N>&) = default;
 
-    uint8<N>(const gint8<N>& d);
-    uint8<N>(const gint16<N/2>& d);
-    uint8<N>(const gint32<N/4>& d);
-    uint8<N>(const gint64<N/8>& d);
-    uint8<N>& operator=(const gint8<N>& d);
-    uint8<N>& operator=(const gint16<N/2>& d);
-    uint8<N>& operator=(const gint32<N/4>& d);
-    uint8<N>& operator=(const gint64<N/8>& d);
+    template<class E>          uint8<N>(const  gint8<N,E>& d);
+    template<class E> explicit uint8<N>(const gint16<N/2,E>& d);
+    template<class E> explicit uint8<N>(const gint32<N/4,E>& d);
+    template<class E> explicit uint8<N>(const gint64<N/8,E>& d);
+    template<class E> uint8<N>& operator=(const  gint8<N,E>& d);
+    template<class E> uint8<N>& operator=(const gint16<N/2,E>& d);
+    template<class E> uint8<N>& operator=(const gint32<N/4,E>& d);
+    template<class E> uint8<N>& operator=(const gint64<N/8,E>& d);
 
-    const uint8v* begin() const { return gint8<N>::du_; }
-    uint8v* begin()             { return gint8<N>::du_; }
-    const uint8v* end() const   { return gint8<N>::du_+vec_length; }
-    uint8v* end()               { return gint8<N>::du_+vec_length; }
     const uint8v& operator[](unsigned i) const { return *(gint8<N>::du_+i); }
     uint8v& operator[](unsigned i)             { return *(gint8<N>::du_+i); }
+
+    uint8<N> eval() const { return *this; }
+
+    static uint8<N> zero() { return gint8<N>::zero(); }
+    static uint8<N> ones() { return gint8<N>::ones(); }
 
     /** Creates a unsigned int8 vector from a value loaded from memory.
 
@@ -374,38 +377,48 @@ public:
     }
 };
 
-/// Class representing a mask for @a gint8 vector of arbitrary length. The
-/// vector always contains at least one native vector.
+/// Class representing possibly optimized mask data for arbitrary length 8-bit
+/// integer vector
 template<unsigned N>
-class mask_int8 {
+class maskdata_int8 {
 public:
-    using base_vector_type = mask_int8v;
+    using base_vector_type = maskdata_int8<N>;
     static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT8_SIZE - 1) / SIMDPP_FAST_INT8_SIZE;
+    static constexpr unsigned vec_length = uint8<N>::vec_length;
 
-    mask_int8<N>() = default;
-    mask_int8<N>(const mask_int8 &) = default;
-    mask_int8<N> &operator=(const mask_int8 &) = default;
+    maskdata_int8<N>() = default;
+    maskdata_int8<N>(const maskdata_int8<N> &) = default;
+    maskdata_int8<N> &operator=(const maskdata_int8<N> &) = default;
 
-    const mask_int8v* begin() const   { return d_; }
-    mask_int8v* begin()               { return d_; }
-    const mask_int8v* end() const     { return d_+vec_length; }
-    mask_int8v* end()                 { return d_+vec_length; }
-    const mask_int8v& operator[](unsigned i) const { return *(d_+i); }
-    mask_int8v& operator[](unsigned i)             { return *(d_+i); }
+    /// Convert to bitmask
+    operator uint8<N>() const;
 
-    /// Convert to a regular vector
-    operator gint8<N>() const
-    {
-        gint8<N> r;
-        for (unsigned i = 0; i < vec_length; ++i) {
-            r[i] = d_[i];
-        }
-        return r;
-    }
+    const maskdata_int8v& operator[](unsigned i) const { return *(d_+i); }
+          maskdata_int8v& operator[](unsigned i)       { return *(d_+i); }
+
+    mask_int8<N> eval() const { return *this; }
 
 private:
-    mask_int8v d_[vec_length];
+    maskdata_int8v d_[vec_length];
+};
+
+
+/// Class representing a mask for 8-bit integer point vector of arbitrary
+/// length.
+template<unsigned N>
+class mask_int8<N, void> : public uint8<N, void> {
+public:
+    mask_int8<N>() = default;
+    mask_int8<N>(const mask_int8<N> &) = default;
+    mask_int8<N> &operator=(const mask_int8<N> &) = default;
+    mask_int8<N>(const maskdata_int8<N>& d);
+
+    mask_int8<N> eval() const { return *this; }
+
+    maskdata_int8<N> mask() const { return mask_; }
+
+private:
+    maskdata_int8<N> mask_;
 };
 
 /// @} -- end ingroup

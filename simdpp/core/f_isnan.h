@@ -33,14 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/insn/f_isnan.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Checks whether elements in @a a are IEEE754 NaN.
 
     @code
@@ -52,36 +51,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline mask_float32x4 isnan(float32x4 a)
+template<unsigned N, class E>
+mask_float32<N, mask_float32<N>> isnan(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return null::isnan(a);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_ps(a, a, _CMP_UNORD_Q);
-#elif SIMDPP_USE_SSE2
-    return (mask_float32x4) _mm_cmpunord_ps(a, a);
-#elif SIMDPP_USE_NEON
-    return vceqq_f32(a, a);
-#elif SIMDPP_USE_ALTIVEC
-    return (mask_float32x4) vec_cmpeq((__vector float)a, (__vector float)a);
-#endif
+    return detail::insn::i_isnan(a.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline mask_float32x8 isnan(float32x8 a)
-{
-    return _mm256_cmp_ps(a, a, _CMP_UNORD_Q);
-}
-#endif
-
-template<unsigned N>
-mask_float32<N> isnan(float32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float32<N>, isnan, a);
-}
-/// @}
-
-/// @{
 /** Checks whether elements in @a a are IEEE754 NaN.
 
     @code
@@ -97,30 +72,11 @@ mask_float32<N> isnan(float32<N> a)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-inline mask_float64x2 isnan(float64x2 a)
+template<unsigned N, class E>
+mask_float64<N, mask_float64<N>> isnan(float64<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::isnan(a);
-#elif SIMDPP_USE_AVX
-    return _mm_cmp_pd(a, a, _CMP_UNORD_Q);
-#elif SIMDPP_USE_SSE2
-    return _mm_cmpunord_pd(a, a);
-#endif
+    return detail::insn::i_isnan(a.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline mask_float64x4 isnan(float64x4 a)
-{
-    return _mm256_cmp_pd(a, a, _CMP_UNORD_Q);
-}
-#endif
-
-template<unsigned N>
-mask_float64<N> isnan(float64<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float64<N>, isnan, a);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

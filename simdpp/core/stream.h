@@ -33,9 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/align.h>
-#include <simdpp/core/store.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/insn/stream.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -63,110 +61,35 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-inline void stream(void* p, gint8<16> a)
+template<unsigned N, class E>
+void stream(void* p, gint8<N,E> a)
 {
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store(p, a);
-#elif SIMDPP_USE_SSE2
-    _mm_stream_si128(reinterpret_cast<__m128i*>(p), a);
-#elif SIMDPP_USE_NEON
-    store(p, a);
-#elif SIMDPP_USE_ALTIVEC
-    vec_st((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
-#endif
+    detail::insn::i_stream(p, a.eval());
 }
-
-#if SIMDPP_USE_AVX2
-inline void stream(void* p, gint8<32> a)
+template<unsigned N, class E>
+void stream(void* p, gint16<N,E> a)
 {
-    p = detail::assume_aligned(p, 32);
-    _mm256_stream_si256(reinterpret_cast<__m256i*>(p), a);
+    detail::insn::i_stream(p, a.eval());
 }
-#endif
-
-template<unsigned N>
-void stream(void* p, gint8<N> a)
+template<unsigned N, class E>
+void stream(void* p, gint32<N,E> a)
 {
-    unsigned veclen = sizeof(typename gint8<N>::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-    char* q = reinterpret_cast<char*>(p);
-    for (unsigned i = 0; i < gint8<N>::vec_length; ++i) {
-        stream(q, a[i]);
-        q += veclen;
-    }
+    detail::insn::i_stream(p, a.eval());
 }
-
-template<unsigned N>
-void stream(void* p, gint16<N> a) { stream(p, gint8<N*2>(a)); }
-template<unsigned N>
-void stream(void* p, gint32<N> a) { stream(p, gint8<N*4>(a)); }
-template<unsigned N>
-void stream(void* p, gint64<N> a) { stream(p, gint8<N*8>(a)); }
-
-inline void stream(float* p, float32x4 a)
+template<unsigned N, class E>
+void stream(void* p, gint64<N,E> a)
 {
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    null::store(p, a);
-#elif SIMDPP_USE_SSE2
-    _mm_stream_ps(p, a);
-#elif SIMDPP_USE_NEON
-    store(p, a);
-#elif SIMDPP_USE_ALTIVEC
-    vec_st((__vector float)a, 0, p);
-#endif
+    detail::insn::i_stream(p, a.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline void stream(float* p, float32x8 a)
+template<unsigned N, class E>
+void stream(float* p, float32<N,E> a)
 {
-    p = detail::assume_aligned(p, 32);
-    _mm256_stream_ps(p, a);
+    detail::insn::i_stream(p, a.eval());
 }
-#endif
-
-template<unsigned N>
-void stream(float* p, float32<N> a)
+template<unsigned N, class E>
+void stream(double* p, float64<N,E> a)
 {
-    unsigned veclen = sizeof(typename float32<N>::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-    for (unsigned i = 0; i < float32<N>::vec_length; ++i) {
-        stream(p, a[i]);
-        p += veclen/sizeof(float);
-    }
-}
-
-inline void stream(double* p, float64x2 a)
-{
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    null::store(p, a);
-#elif SIMDPP_USE_SSE2
-    _mm_stream_pd(p, a);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-inline void stream(double* p, float64x4 a)
-{
-    p = detail::assume_aligned(p, 32);
-    _mm256_stream_pd(p, a);
-}
-#endif
-
-template<unsigned N>
-void stream(double* p, float64<N> a)
-{
-    unsigned veclen = sizeof(typename float64<N>::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-    for (unsigned i = 0; i < float64<N>::vec_length; ++i) {
-        stream(p, a[i]);
-        p += veclen/sizeof(double);
-    }
+    detail::insn::i_stream(p, a.eval());
 }
 /// @}
 

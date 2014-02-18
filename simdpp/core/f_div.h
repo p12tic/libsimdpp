@@ -33,16 +33,13 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/f_rcp_e.h>
-#include <simdpp/core/f_rcp_rh.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/insn/f_div.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Divides the values of two vectors.
 
     @code
@@ -59,42 +56,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 12}
     @icost{ALTIVEC, 19}
 */
-inline float32x4 div(float32x4 a, float32x4 b)
+template<unsigned N, class E1, class E2>
+float32<N, float32<N>> div(float32<N,E1> a, float32<N,E2> b)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
-#elif SIMDPP_USE_SSE2
-    return _mm_div_ps(a, b);
-#elif SIMDPP_USE_NEON_FLT_SP
-    float32x4 x;
-    x = rcp_e(b);
-    x = rcp_rh(x, b);
-    x = rcp_rh(x, b);
-    return mul(a, x);
-#elif SIMDPP_USE_ALTIVEC
-    float32x4 x;
-    x = rcp_e(b);
-    x = rcp_rh(x, b);
-    x = rcp_rh(x, b); // TODO: check how many approximation steps are needed
-    return mul(a, x);
-#endif
+    return detail::insn::i_div(a.eval(), b.eval());
 }
 
-#if SIMDPP_USE_AVX
-inline float32x8 div(float32x8 a, float32x8 b)
-{
-    return _mm256_div_ps(a, b);
-}
-#endif
-
-template<unsigned N>
-float32<N> div(float32<N> a, float32<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, div, a, b);
-}
-/// @}
-
-/// @{
 /** Divides the values of two vectors
 
     @code
@@ -110,28 +77,11 @@ float32<N> div(float32<N> a, float32<N> b)
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
 */
-inline float64x2 div(float64x2 a, float64x2 b)
+template<unsigned N, class E1, class E2>
+float64<N, float64<N>> div(float64<N,E1> a, float64<N,E2> b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
-#elif SIMDPP_USE_SSE2
-    return _mm_div_pd(a, b);
-#endif
+    return detail::insn::i_div(a.eval(), b.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float64x4 div(float64x4 a, float64x4 b)
-{
-    return _mm256_div_pd(a, b);
-}
-#endif
-
-template<unsigned N>
-float64<N> div(float64<N> a, float64<N> b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, div, a, b);
-}
-/// @}
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

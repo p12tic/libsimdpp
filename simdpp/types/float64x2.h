@@ -47,7 +47,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float64x2 vector
 template<>
-class float64<2> {
+class float64<2, void> {
 public:
 
     using element_type = double;
@@ -56,6 +56,7 @@ public:
     using uint_vector_type = uint64x2;
     using base_vector_type = float64x2;
     using mask_type = mask_float64x2;
+    using maskdata_type = maskdata_float64<2>;
 
     static constexpr unsigned length = 2;
     static constexpr unsigned vec_length = 1;
@@ -84,14 +85,12 @@ public:
     /// @}
 
     /// @{
-    /// Range access
-    const float64x2* begin() const   { return this; }
-    float64x2* begin()               { return this; }
-    const float64x2* end() const     { return this+1; }
-    float64x2* end()                 { return this+1; }
-    const float64x2& operator[](unsigned i) const { return *this; }
-          float64x2& operator[](unsigned i)       { return *this; }
+    /// Access base vectors
+    const float64x2& operator[](unsigned) const { return *this; }
+          float64x2& operator[](unsigned)       { return *this; }
     /// @}
+
+    float64<2> eval() const { return *this; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -157,29 +156,28 @@ private:
 };
 
 
-/// Class representing a mask for 2x 64-bit floating-point vector
+/// Class representing possibly optimized mask data for 2x 64-bit floating point
+/// vector
 template<>
-class mask_float64<2> {
+class maskdata_float64<2> {
 public:
-    using base_vector_type = mask_float64x2;
+    using base_vector_type = maskdata_float64<2>;
     static constexpr unsigned length = 2;
+    static constexpr unsigned vec_length = 1;
 
-    mask_float64<2>() = default;
-    mask_float64<2>(const mask_float64x2 &) = default;
-    mask_float64<2> &operator=(const mask_float64x2 &) = default;
+    maskdata_float64<2>() = default;
+    maskdata_float64<2>(const maskdata_float64<2> &) = default;
+    maskdata_float64<2> &operator=(const maskdata_float64<2> &) = default;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_SSE2
-    mask_float64<2>(__m128d d) : d_(d) {}
-#endif
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 #else
-    mask_float64<2>(float64x2 d) : d_(d) {}
+    maskdata_float64<2>(float64x2 d) : d_(d) {}
 #endif
 #endif
 
-    /// Access the underlying type
-    operator float64x2() const;
+    /// Convert to bitmask
+    operator float64<2>() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -188,12 +186,45 @@ public:
 #endif
 #endif
 
+    const maskdata_float64<2>& operator[](unsigned) const { return *this; }
+          maskdata_float64<2>& operator[](unsigned)       { return *this; }
+
 private:
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     bool b_[2];
 #else
     float64x2 d_;
 #endif
+};
+
+
+/// Class representing a mask for 2x 64-bit floating-point vector
+template<>
+class mask_float64<2, void> : public float64<2, void> {
+public:
+
+    mask_float64<2>() = default;
+    mask_float64<2>(const mask_float64x2 &) = default;
+    mask_float64<2> &operator=(const mask_float64x2 &) = default;
+    mask_float64<2>(const maskdata_float64<2>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+#if SIMDPP_USE_SSE2
+    mask_float64<2>(__m128d d);
+    mask_float64<2>(float64<2> d);
+#endif
+    /// @}
+
+    mask_float64<2> eval() const { return *this; }
+
+    const maskdata_float64<2>& mask() const { return mask_; }
+#if !DOXYGEN_SHOULD_SKIP_THIS && SIMDPP_USE_NULL
+    maskdata_float64<2>& m_mask() { return mask_; }
+#endif
+
+private:
+    maskdata_float64<2> mask_;
 };
 
 /// @} -- end ingroup

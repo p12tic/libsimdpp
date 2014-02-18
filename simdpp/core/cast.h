@@ -33,9 +33,8 @@
 #endif
 
 #include <simdpp/setup_arch.h>
-#include <simdpp/core/detail/cast.h>
+#include <simdpp/detail/cast.h>
 #include <simdpp/types/traits.h>
-#include <type_traits>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

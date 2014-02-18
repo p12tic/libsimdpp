@@ -51,7 +51,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint16<16> {
+class gint16<16, void> {
 public:
 
     using element_type = uint16_t;
@@ -76,22 +76,22 @@ public:
     gint16<16>& operator=(__m256i d) { d_ = d; return *this; }
     /// @}
 
-    gint16<16>(const gint8x32& d);
-    gint16<16>(const gint32x8& d);
-    gint16<16>(const gint64x4& d);
-    gint16<16>& operator=(const gint8x32& d);
-    gint16<16>& operator=(const gint32x8& d);
-    gint16<16>& operator=(const gint64x4& d);
+    template<class E> explicit gint16<16>(const  gint8<32,E>& d);
+    template<class E>          gint16<16>(const gint16<16,E>& d);
+    template<class E> explicit gint16<16>(const gint32<8,E>& d);
+    template<class E> explicit gint16<16>(const gint64<4,E>& d);
+    template<class E> gint16<16>& operator=(const  gint8<32,E>& d);
+    template<class E> gint16<16>& operator=(const gint16<16,E>& d);
+    template<class E> gint16<16>& operator=(const gint32<8,E>& d);
+    template<class E> gint16<16>& operator=(const gint64<4,E>& d);
 
     /// @{
-    /// Range access
-    const gint16x16* begin() const                  { return this; }
-          gint16x16* begin()                        { return this; }
-    const gint16x16* end() const                    { return this+1; }
-          gint16x16* end()                          { return this+1; }
-    const gint16x16& operator[](unsigned i) const   { return *this; }
-          gint16x16& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const gint16x16& operator[](unsigned) const   { return *this; }
+          gint16x16& operator[](unsigned)         { return *this; }
     /// @}
+
+    gint16<16> eval() const { return *this; }
 
     /// Creates a int16x16 vector with the contents set to zero
     static gint16x16 zero();
@@ -106,7 +106,7 @@ private:
 /** Class representing 16x 16-bit signed integer vector
 */
 template<>
-class int16<16> : public gint16x16 {
+class int16<16, void> : public gint16x16 {
 public:
     using base_vector_type = int16x16;
     using element_type = int16_t;
@@ -121,24 +121,22 @@ public:
     int16<16>& operator=(__m256i d) { gint16x16::operator=(d); return *this; }
     /// @}
 
-    int16<16>(const gint8x32& d);
-    int16<16>(const gint16x16& d);
-    int16<16>(const gint32x8& d);
-    int16<16>(const gint64x4& d);
-    int16<16>& operator=(const gint8x32& d);
-    int16<16>& operator=(const gint16x16& d);
-    int16<16>& operator=(const gint32x8& d);
-    int16<16>& operator=(const gint64x4& d);
+    template<class E> explicit int16<16>(const  gint8<32,E>& d);
+    template<class E>          int16<16>(const gint16<16,E>& d);
+    template<class E> explicit int16<16>(const gint32<8,E>& d);
+    template<class E> explicit int16<16>(const gint64<4,E>& d);
+    template<class E> int16<16>& operator=(const  gint8<32,E>& d);
+    template<class E> int16<16>& operator=(const gint16<16,E>& d);
+    template<class E> int16<16>& operator=(const gint32<8,E>& d);
+    template<class E> int16<16>& operator=(const gint64<4,E>& d);
 
     /// @{
-    /// Range access
-    const int16x16* begin() const                  { return this; }
-          int16x16* begin()                        { return this; }
-    const int16x16* end() const                    { return this+1; }
-          int16x16* end()                          { return this+1; }
-    const int16x16& operator[](unsigned i) const   { return *this; }
-          int16x16& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const int16x16& operator[](unsigned) const   { return *this; }
+          int16x16& operator[](unsigned)         { return *this; }
     /// @}
+
+    int16<16> eval() const { return *this; }
 
     /** Creates a signed int16x16 vector from a value loaded from memory.
 
@@ -214,7 +212,7 @@ public:
 /** Class representing 8x 16-bit unsigned integer vector
 */
 template<>
-class uint16<16> : public gint16x16 {
+class uint16<16, void> : public gint16x16 {
 public:
     using base_vector_type = uint16x16;
 
@@ -228,24 +226,22 @@ public:
     uint16<16>& operator=(__m256i d) { gint16x16::operator=(d); return *this; }
     /// @}
 
-    uint16<16>(const gint8x32& d);
-    uint16<16>(const gint16x16& d);
-    uint16<16>(const gint32x8& d);
-    uint16<16>(const gint64x4& d);
-    uint16<16>& operator=(const gint8x32& d);
-    uint16<16>& operator=(const gint16x16& d);
-    uint16<16>& operator=(const gint32x8& d);
-    uint16<16>& operator=(const gint64x4& d);
+    template<class E> explicit uint16<16>(const  gint8<32,E>& d);
+    template<class E>          uint16<16>(const gint16<16,E>& d);
+    template<class E> explicit uint16<16>(const gint32<8,E>& d);
+    template<class E> explicit uint16<16>(const gint64<4,E>& d);
+    template<class E> uint16<16>& operator=(const  gint8<32,E>& d);
+    template<class E> uint16<16>& operator=(const gint16<16,E>& d);
+    template<class E> uint16<16>& operator=(const gint32<8,E>& d);
+    template<class E> uint16<16>& operator=(const gint64<4,E>& d);
 
     /// @{
-    /// Range access
-    const uint16x16* begin() const                  { return this; }
-          uint16x16* begin()                        { return this; }
-    const uint16x16* end() const                    { return this+1; }
-          uint16x16* end()                          { return this+1; }
-    const uint16x16& operator[](unsigned i) const   { return *this; }
-          uint16x16& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const uint16x16& operator[](unsigned) const   { return *this; }
+          uint16x16& operator[](unsigned)         { return *this; }
     /// @}
+
+    uint16<16> eval() const { return *this; }
 
     /** Creates a unsigned int16x16 vector from a value loaded from memory.
 
@@ -318,40 +314,56 @@ public:
                                 uint16_t v12, uint16_t v13, uint16_t v14, uint16_t v15);
 };
 
-/// Class representing a mask for 16x 16-bit integer vector
+/// Class representing possibly optimized mask data for 16x 16-bit integer vector
 template<>
-class mask_int16<16> {
+class maskdata_int16<16> {
 public:
-    using base_vector_type = mask_int16x16;
-
+    using base_vector_type = maskdata_int16<16>;
     static constexpr unsigned length = 16;
+    static constexpr unsigned vec_length = 1;
 
-    mask_int16<16>() = default;
-    mask_int16<16>(const mask_int16x16 &) = default;
-    mask_int16<16> &operator=(const mask_int16x16 &) = default;
+    maskdata_int16<16>() = default;
+    maskdata_int16<16>(const maskdata_int16<16> &) = default;
+    maskdata_int16<16> &operator=(const maskdata_int16<16> &) = default;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    mask_int16<16>(__m256i d) : d_(d) {}
-#endif
-    mask_int16<16>(gint16x16 d) : d_(d) {}
+    maskdata_int16<16>(int16<16> d) : d_(d) {}
 
-    /// Access the underlying type
-    operator gint16x16() const;
+    /// Convert to bitmask
+    operator uint16<16>() const;
 
     /// @{
-    /// Range access
-    const mask_int16x16* begin() const                  { return this; }
-          mask_int16x16* begin()                        { return this; }
-    const mask_int16x16* end() const                    { return this+1; }
-          mask_int16x16* end()                          { return this+1; }
-    const mask_int16x16& operator[](unsigned i) const   { return *this; }
-          mask_int16x16& operator[](unsigned i)         { return *this; }
+    /// Access base vectors
+    const maskdata_int16<16>& operator[](unsigned) const { return *this; }
+          maskdata_int16<16>& operator[](unsigned)       { return *this; }
     /// @}
 
 private:
-    gint16x16 d_;
+    uint16<16> d_;
 };
 
+
+/// Class representing a mask for 16x 16-bit integer vector
+template<>
+class mask_int16<16, void> : public uint16<16, void> {
+public:
+    mask_int16<16>() = default;
+    mask_int16<16>(const mask_int16<16> &) = default;
+    mask_int16<16> &operator=(const mask_int16<16> &) = default;
+    mask_int16<16>(const maskdata_int16<16>& d);
+
+    /// @{
+    /// Construct from the underlying vector type
+    mask_int16<16>(__m256i d);
+    mask_int16<16>(uint16<16> d);
+    /// @}
+
+    mask_int16<16> eval() const { return *this; }
+
+    const maskdata_int16<16>& mask() const { return mask_; }
+
+private:
+    maskdata_int16<16> mask_;
+};
 /// @} -- end ingroup
 
 #endif // SIMDPP_USE_AVX2 || DOXYGEN_SHOULD_READ_THIS

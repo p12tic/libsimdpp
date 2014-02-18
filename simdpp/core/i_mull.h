@@ -33,11 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/mem_block.h>
-#include <simdpp/detail/not_implemented.h>
-#include <simdpp/core/detail/vec_insert.h>
-#include <simdpp/core/zip_hi.h>
-#include <simdpp/core/zip_lo.h>
+#include <simdpp/detail/expr/i_mull.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -93,50 +89,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, NEON, 2-3}
 */
-inline int32x8 mull(int16x8 a, int16x8 b)
+template<unsigned N, class E1, class E2>
+int32<N, expr_mull<int16<N,E1>,
+                   int16<N,E2>>> mull(int16<N,E1> a, int16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    int32x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r[i/4].el(i%4) = int32_t(a.el(i)) * b.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
-    int16x8 lo = _mm_mullo_epi16(a, b);
-    int16x8 hi = _mm_mulhi_epi16(a, b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
-#elif SIMDPP_USE_NEON
-    int32x4 lo = vmull_s16(vget_low_s16(a), vget_low_s16(b));
-    int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
-    return combine(lo, hi);
-#elif SIMDPP_USE_ALTIVEC
-    int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
-    int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline int32<16> mull(int16x16 a, int16x16 b)
-{
-    int16x16 lo = _mm256_mullo_epi16(a, b);
-    int16x16 hi = _mm256_mulhi_epi16(a, b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
-}
-#endif
-
-template<unsigned N>
-int32<N> mull(int16<N> a, int16<N> b)
-{
-    int32<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]), i);
-    }
-    return r;
-}
-/// @}
-
-/// @{
 /** Multiplies unsigned 16-bit values and expands the results to 32 bits.
 
     @par 128-bit version:
@@ -157,50 +116,13 @@ int32<N> mull(int16<N> a, int16<N> b)
     @icost{NEON, 2}
     @note Use with mull_hi on the same arguments to save instructions.
 */
-inline uint32x8 mull(uint16x8 a, uint16x8 b)
+template<unsigned N, class E1, class E2>
+uint32<N, expr_mull<uint16<N,E1>,
+                    uint16<N,E2>>> mull(uint16<N,E1> a, uint16<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    int32x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r[i/4].el(i%4) = uint32_t(a.el(i)) * b.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
-    int16x8 lo = _mm_mullo_epi16(a, b);
-    int16x8 hi = _mm_mulhi_epu16(a, b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
-#elif SIMDPP_USE_NEON
-    uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
-    uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
-    return combine(lo, hi);
-#elif SIMDPP_USE_ALTIVEC
-    uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
-    uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline uint32<16> mull(uint16x16 a, uint16x16 b)
-{
-    int16x16 lo = _mm256_mullo_epi16(a, b);
-    int16x16 hi = _mm256_mulhi_epi16(a, b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
-}
-#endif
-
-template<unsigned N>
-uint32<N> mull(uint16<N> a, uint16<N> b)
-{
-    uint32<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]), i);
-    }
-    return r;
-}
-/// @}
-
-/// @{
 /** Multiplies signed 32-bit values in and expands the results to 64 bits.
 
     @code
@@ -221,61 +143,13 @@ uint32<N> mull(uint16<N> a, uint16<N> b)
     @icost{NEON, 2}
     @unimp{SSE2-SSSE3, ALTIVEC}
 */
-inline int64x4 mull(int32x4 a, int32x4 b)
+template<unsigned N, class E1, class E2>
+int64<N, expr_mull<int32<N,E1>,
+                   int32<N,E2>>> mull(int32<N,E1> a, int32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    int64x4 r;
-    r[0].el(0) = int64_t(a.el(0)) * b.el(0);
-    r[0].el(1) = int64_t(a.el(1)) * b.el(1);
-    r[1].el(0) = int64_t(a.el(2)) * b.el(2);
-    r[1].el(1) = int64_t(a.el(3)) * b.el(3);
-    return r;
-#elif SIMDPP_USE_SSE4_1
-    int32x4 al, ah, bl, bh;
-    int64x2 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
-    rl = _mm_mul_epi32(al, bl);
-    rh = _mm_mul_epi32(ah, bh);
-    return combine(rl, rh);
-#elif SIMDPP_USE_NEON
-    int64x2 lo = vmull_s32(vget_low_s32(a), vget_low_s32(b));
-    int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
-    return combine(lo, hi);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
-#endif
+    return { { a, b }, 0 };
 }
 
-#if SIMDPP_USE_AVX2
-inline int64<8> mull(int32x8 a, int32x8 b)
-{
-    int32x8 al, ah, bl, bh;
-    int64x4 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
-    rl = _mm256_mul_epi32(al, bl);
-    rh = _mm256_mul_epi32(ah, bh);
-    return combine(rl, rh);
-}
-#endif
-
-template<unsigned N>
-int64<N> mull(int32<N> a, int32<N> b)
-{
-    int64<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]), i);
-    }
-    return r;
-}
-/// @}
-
-/// @{
 /** Multiplies unsigned 32-bit values in the lower halves of the vectors and
     expands the results to 64 bits.
 
@@ -296,58 +170,12 @@ int64<N> mull(int32<N> a, int32<N> b)
     @icost{NEON, 2}
     @unimp{ALTIVEC}
 */
-inline uint64x4 mull(uint32x4 a, uint32x4 b)
+template<unsigned N, class E1, class E2>
+uint64<N, expr_mull<uint32<N,E1>,
+                    uint32<N,E2>>> mull(uint32<N,E1> a, uint32<N,E2> b)
 {
-#if SIMDPP_USE_NULL
-    detail::mem_block<uint64x2> r1, r2;
-    detail::mem_block<uint32x4> ax(a), bx(b);
-    r1[0] = uint64_t(ax[0]) * bx[0];
-    r1[1] = uint64_t(ax[1]) * bx[1];
-    r2[0] = uint64_t(ax[3]) * bx[3];
-    r2[1] = uint64_t(ax[4]) * bx[4];
-    return combine(r1, r2);
-#elif SIMDPP_USE_SSE2
-    uint32x4 al, ah, bl, bh;
-    uint64x2 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
-    rl = _mm_mul_epu32(al, bl);
-    rh = _mm_mul_epu32(ah, bh);
-    return combine(rl, rh);
-#elif SIMDPP_USE_NEON
-    uint64x2 lo = vmull_u32(vget_low_u32(a), vget_low_u32(b));
-    uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
-    return combine(lo, hi);
-#endif
+    return { { a, b }, 0 };
 }
-
-#if SIMDPP_USE_AVX2
-inline uint64<8> mull(uint32x8 a, uint32x8 b)
-{
-    uint32x8 al, ah, bl, bh;
-    uint64x4 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
-    rl = _mm256_mul_epu32(al, bl);
-    rh = _mm256_mul_epu32(ah, bh);
-    return combine(rl, rh);
-}
-#endif
-
-template<unsigned N>
-uint64<N> mull(uint32<N> a, uint32<N> b)
-{
-    uint64<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]), i);
-    }
-    return r;
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
