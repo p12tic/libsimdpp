@@ -280,8 +280,8 @@ template<class T> void mem_pack3_impl16(T& a, T& b, T& c)
     w_b32 t0, t1, t2, t3;
     t0 = zip_lo(a, b);
     t1 = zip_hi(a, b);
-    t2 = zip_lo(c, w_b32::zero());
-    t3 = zip_hi(c, w_b32::zero());
+    t2 = zip_lo(c, w_b16::zero());
+    t3 = zip_hi(c, w_b16::zero());
 
     w_b16 u0, u1, u2, u3;
     u0 = zip_lo(t0, t2);

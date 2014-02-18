@@ -58,8 +58,8 @@ inline gint32x4 to_int32x4(int8x16 a)
 #else
     int16x8 a1;
     int32x4 r;
-    a1 = zip_lo(int128::zero(), a);
-    r = zip_lo(int128::zero(), a1);
+    a1 = zip_lo(int8x16::zero(), a);
+    r = zip_lo(int16x8::zero(), a1);
     r = shift_r(r, 24);
     return r;
 #endif
@@ -79,8 +79,8 @@ inline gint32x4 to_int32x4(uint8x16 a)
 #if SIMDPP_USE_SSE4_1
     return _mm_cvtepu8_epi32(a);
 #else
-    int16x8 a1 = zip_lo(a, int128::zero());
-    int32x4 r = zip_lo(a1, int128::zero());
+    int16x8 a1 = zip_lo(a, int8x16::zero());
+    int32x4 r = zip_lo(a1, int16x8::zero());
     return r;
 #endif
 }
@@ -132,9 +132,9 @@ inline gint64x2 to_int64x2(uint8x16 a)
 #if SIMDPP_USE_SSE4_1
     return _mm_cvtepu8_epi64(a);
 #else
-    int16x8 a1 = zip_lo(a, int128::zero());
-    int32x4 a2 = zip_lo(a1, int128::zero());
-    int64x2 r = zip_lo(a2, int128::zero());
+    int16x8 a1 = zip_lo(a, uint8x16::zero());
+    int32x4 a2 = zip_lo(a1, int16x8::zero());
+    int64x2 r = zip_lo(a2, int32x4::zero());
     return r;
 #endif
 }
