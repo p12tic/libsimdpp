@@ -56,6 +56,8 @@ public:
     mem_block(const mem_block&) = default;
     mem_block(V v) { std::memcpy(d_, &v, sizeof(v)); }
 
+    mem_block& operator=(V v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
+
     operator V() const { V r; std::memcpy(&r, d_, sizeof(r)); return r; }
 
     const element_type& operator[](unsigned id) const { return d_[id]; }
