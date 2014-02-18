@@ -143,117 +143,6 @@ inline void test_push_internal(TestCase& t, simdpp::float64x4 data, unsigned lin
     t.push(TestCase::TYPE_FLOAT64x4, &data, line);
 }
 // @}
-
-/* Extracts the lower half of a vector.
-    @{
-*/
-template<class R, class T>
-inline R tst_ext_half_avx_impl(T x)
-{
-#ifdef SIMDPP_USE_AVX
-    return simdpp::sse::extract_lo(x);
-#else
-    return x[0];
-#endif
-}
-
-template<class R, class T>
-inline R tst_ext_half_avx2_impl(T x)
-{
-#ifdef SIMDPP_USE_AVX2
-    return simdpp::sse::extract_lo(x);
-#else
-    return x[0];
-#endif
-}
-
-inline simdpp::gint8x16 tst_ext_half(simdpp::gint8x32 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::gint8x16>(x);
-}
-inline simdpp::int8x16 tst_ext_half(simdpp::int8x32 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::int8x16>(x);
-}
-inline simdpp::uint8x16 tst_ext_half(simdpp::uint8x32 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::uint8x16>(x);
-}
-inline simdpp::mask_int8x16 tst_ext_half(simdpp::mask_int8x32 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::mask_int8x16>(x);
-}
-
-inline simdpp::gint16x8 tst_ext_half(simdpp::gint16x16 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::gint16x8>(x);
-}
-inline simdpp::int16x8 tst_ext_half(simdpp::int16x16 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::int16x8>(x);
-}
-inline simdpp::uint16x8 tst_ext_half(simdpp::uint16x16 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::uint16x8>(x);
-}
-inline simdpp::mask_int16x8 tst_ext_half(simdpp::mask_int16x16 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::mask_int16x8>(x);
-}
-
-inline simdpp::gint32x4 tst_ext_half(simdpp::gint32x8 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::gint32x4>(x);
-}
-inline simdpp::int32x4 tst_ext_half(simdpp::int32x8 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::int32x4>(x);
-}
-inline simdpp::uint32x4 tst_ext_half(simdpp::uint32x8 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::uint32x4>(x);
-}
-inline simdpp::mask_int32x4 tst_ext_half(simdpp::mask_int32x8 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::mask_int32x4>(x);
-}
-
-inline simdpp::gint64x2 tst_ext_half(simdpp::gint64x4 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::gint64x2>(x);
-}
-inline simdpp::int64x2 tst_ext_half(simdpp::int64x4 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::int64x2>(x);
-}
-inline simdpp::uint64x2 tst_ext_half(simdpp::uint64x4 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::uint64x2>(x);
-}
-inline simdpp::mask_int64x2 tst_ext_half(simdpp::mask_int64x4 x)
-{
-    return tst_ext_half_avx2_impl<simdpp::mask_int64x2>(x);
-}
-
-inline simdpp::float32x4 tst_ext_half(simdpp::float32x8 x)
-{
-    return tst_ext_half_avx_impl<simdpp::float32x4>(x);
-}
-inline simdpp::mask_float32x4 tst_ext_half(simdpp::mask_float32x8 x)
-{
-    return tst_ext_half_avx_impl<simdpp::mask_float32x4>(x);
-}
-
-inline simdpp::float64x2 tst_ext_half(simdpp::float64x4 x)
-{
-    return tst_ext_half_avx_impl<simdpp::float64x2>(x);
-}
-inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
-{
-    return tst_ext_half_avx_impl<simdpp::mask_float64x2>(x);
-}
-// @}
-
 } // namespace SIMDPP_ARCH_NAMESPACE
 
 // we are supposed to call this from within the test function which is in
@@ -274,8 +163,8 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
 #define TEST_PUSH16X2_1(TC,T,OP,Q1)                                     \
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1)), __LINE__);                  \
-    using H = typename T::half_vector_type;                     \
-    test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)))), __LINE__);  \
+    using H = typename T::half_vector_type;                             \
+    test_push_internal((TC), (H)((OP)((Q1)[0])), __LINE__);             \
 }
 
 // Two argument version
@@ -283,8 +172,7 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2)), __LINE__);            \
     using H = typename T::half_vector_type;                             \
-    test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)),               \
-                                      tst_ext_half((Q2)))), __LINE__);  \
+    test_push_internal((TC), (H)((OP)((Q1)[0], (Q2)[0])), __LINE__);    \
 }
 
 // Three argument version
@@ -292,9 +180,7 @@ inline simdpp::mask_float64x2 tst_ext_half(simdpp::mask_float64x4 x)
 {                                                                       \
     test_push_internal((TC), (T)(OP)((Q1), (Q2), (Q3)), __LINE__);      \
     using H = typename T::half_vector_type;                             \
-    test_push_internal((TC), (H)((OP)(tst_ext_half((Q1)),               \
-                                      tst_ext_half((Q2)),               \
-                                      tst_ext_half((Q3)))), __LINE__);  \
+    test_push_internal((TC), (H)((OP)((Q1)[0], (Q2)[0], (Q3)[0], __LINE__);  \
 }
 
 #define NEW_TEST_CASE(R, NAME) ((R).new_test_case((NAME), __FILE__))
