@@ -236,6 +236,39 @@ set(SIMDPP_POWER_ALTIVEC_TEST_CODE
 set(SIMDPP_ARCHS "${SIMDPP_ARCHS_PRI};${SIMDPP_ARCHS_SEC}")
 
 # ------------------------------------------------------------------------------
+# Given one arch, returns compilation flags and an unique identifier (internal)
+# If the given architecture does not exist, sets both result variables to ""
+#
+# Arguments:
+#
+# - CXX_FLAGS_VAR: the name of a variable to store the compilation flags to
+#
+# - UNIQUE_ID_VAR: the name of a variable to store the unique identifier to
+#
+# - ARCH: an architecture
+#
+function(simdpp_get_arch_info CXX_FLAGS_VAR UNIQUE_ID_VAR ARCH)
+    set(UNIQUE_ID "")
+    set(CXX_FLAGS "")
+
+    string(REPLACE "," ";" ARCH_IDS "${ARCH}")
+    list(SORT ARCH_IDS)
+    foreach(ID ${ARCH_IDS})
+        if(${ID} STREQUAL "NONE_NULL")
+            set(UNIQUE_ID "${UNIQUE_ID}-null")
+        else()
+            list(FIND SIMDPP_ARCHS "${ID}" FOUND)
+            if(NOT ${FOUND} EQUAL -1)
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_${ID}_CXX_FLAGS}")
+                set(UNIQUE_ID "${UNIQUE_ID}${SIMDPP_${ID}_SUFFIX}")
+            endif()
+        endif()
+    endforeach()
+    set(${CXX_FLAGS_VAR} "${CXX_FLAGS}" PARENT_SCOPE)
+    set(${UNIQUE_ID_VAR} "${UNIQUE_ID}" PARENT_SCOPE)
+endfunction()
+
+# ------------------------------------------------------------------------------
 #
 # simdpp_multiarch(FILE_LIST_VAR SRC_FILE [ARCH...])
 #
@@ -279,25 +312,11 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     list(APPEND ARCHS ${ARGV})
     list(REMOVE_AT ARCHS 0 1)
     foreach(ARCH ${ARCHS})
-        set(CXX_FLAGS "-I${CMAKE_CURRENT_SOURCE_DIR}/${SRC_PATH}")
-        set(SUFFIX "simdpp")
+        simdpp_get_arch_info(CXX_FLAGS SUFFIX ${ARCH})
 
-        string(REPLACE "," ";" ARCH_IDS "${ARCH}")
-        list(SORT ARCH_IDS)
-        foreach(ID ${ARCH_IDS})
-            if(${ID} STREQUAL "NONE_NULL")
-                set(SUFFIX "${SUFFIX}-null")
-            else()
-                list(FIND SIMDPP_ARCHS "${ID}" FOUND)
-                if(NOT ${FOUND} EQUAL -1)
-                    set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_${ID}_CXX_FLAGS}")
-                    set(SUFFIX "${SUFFIX}${SIMDPP_${ID}_SUFFIX}")
-                endif()
-            endif()
-        endforeach()
-
-        if(NOT "${SUFFIX}" STREQUAL "simdpp")
-            set(DST_ABS_FILE "${CMAKE_CURRENT_BINARY_DIR}/${SRC_PATH}/${SRC_NAME}_${SUFFIX}${SRC_EXT}")
+        set(CXX_FLAGS "-I${CMAKE_CURRENT_SOURCE_DIR}/${SRC_PATH} ${CXX_FLAGS}")
+        if(NOT "${SUFFIX}" STREQUAL "")
+            set(DST_ABS_FILE "${CMAKE_CURRENT_BINARY_DIR}/${SRC_PATH}/${SRC_NAME}_simdpp_${SUFFIX}${SRC_EXT}")
             set(SRC_ABS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
             configure_file("${SRC_ABS_FILE}" "${DST_ABS_FILE}" COPYONLY)
             list(APPEND FILE_LIST "${DST_ABS_FILE}")

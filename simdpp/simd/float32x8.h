@@ -31,6 +31,7 @@
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
+#include <simdpp/setup_arch.h>
 
 #include <simdpp/simd/int32x8.h>
 #include <simdpp/simd/float32x4.h>

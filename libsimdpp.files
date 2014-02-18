@@ -138,6 +138,7 @@ simdpp/null/memory.h
 simdpp/null/set.h
 simdpp/null/shuffle.h
 simdpp/null/transpose.h
+simdpp/setup_arch.h
 simdpp/simd.h
 simdpp/simd/bitwise.h
 simdpp/simd/cache.h
