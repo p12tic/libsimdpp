@@ -40,6 +40,16 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint16x16 gint16x16::zero()
+{
+    return uint16x16::make_const(0);
+}
+
+inline gint16x16 gint16x16::ones()
+{
+    return uint16x16::make_const(0xffff);
+}
+
 inline int16x16 int16x16::load_broadcast(const int16_t* v0)
 {
     return uint16x16::load_broadcast(reinterpret_cast<const uint16_t*>(v0));

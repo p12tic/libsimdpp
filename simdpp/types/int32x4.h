@@ -152,18 +152,6 @@ public:
 #endif
 #endif
 
-    /** Creates a signed int32x4 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        r1 = 0
-        r2 = 0
-        r3 = 0
-        @endcode
-
-    */
-    static int32x4 zero() { return int32x4::make_const(0); }
-
     /** Creates a signed int32x4 vector from a value loaded from memory.
 
         @code
@@ -263,18 +251,6 @@ public:
           uint32_t& operator[](unsigned i)        { return u32(i); }
 #endif
 #endif
-
-    /** Creates an unsigned int32x4 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        r1 = 0
-        r2 = 0
-        r3 = 0
-        @endcode
-
-    */
-    static uint32x4 zero() { return uint32x4::make_const(0); }
 
     /** Creates an unsigned int32x4 vector from a value loaded from memory.
 

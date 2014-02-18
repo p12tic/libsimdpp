@@ -55,6 +55,16 @@ inline gint64<4>::gint64(const float64x4& d)
 #endif
 }
 
+inline gint64x4 gint64x4::zero()
+{
+    return uint64x4::make_const(0);
+}
+
+inline gint64x4 gint64x4::ones()
+{
+    return uint64x4::make_const(0xffffffffffffffff);
+}
+
 inline int64x4 int64x4::load_broadcast(const int64_t* v0)
 {
     return uint64x4::load_broadcast(reinterpret_cast<const uint64_t*>(v0));

@@ -95,6 +95,12 @@ public:
           uint8_t& operator[](unsigned i)        { return u8(i); }
 #endif
 #endif
+
+    /// Creates a int8x32 vector with the contents set to zero
+    static gint8x16 zero();
+
+    /// Creates a int8x32 vector with the contents set to ones
+    static gint8x16 ones();
 };
 
 /** Class representing 16x 8-bit signed integer vector
@@ -137,16 +143,6 @@ public:
           int8_t& operator[](unsigned i)        { return i8(i); }
 #endif
 #endif
-
-    /** Creates a signed int8x16 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        ...
-        r15 = 0
-        @endcode
-    */
-    static int8x16 zero() { return int8x16::make_const(0); }
 
     /** Creates a signed int8x16 vector from a value loaded from memory.
 
@@ -259,16 +255,6 @@ public:
           uint8_t& operator[](unsigned i)        { return u8(i); }
 #endif
 #endif
-
-    /** Creates a unsigned int8x16 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        ...
-        r15 = 0
-        @endcode
-    */
-    static uint8x16 zero() { return uint8x16::make_const(0); }
 
     /** Creates a unsigned int8x16 vector from a value loaded from memory.
 

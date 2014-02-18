@@ -55,6 +55,16 @@ inline gint32<8>::gint32(const float32x8& d)
 #endif
 }
 
+inline gint32x8 gint32x8::zero()
+{
+    return uint32x8::make_const(0);
+}
+
+inline gint32x8 gint32x8::ones()
+{
+    return uint32x8::make_const(0xffffffff);
+}
+
 inline int32x8 int32x8::load_broadcast(const int32_t* v0)
 {
     return uint32x8::load_broadcast(reinterpret_cast<const uint32_t*>(v0));

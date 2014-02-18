@@ -43,6 +43,16 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+inline gint8x16 gint8x16::zero()
+{
+    return uint8x16::make_const(0);
+}
+
+inline gint8x16 gint8x16::ones()
+{
+    return uint8x16::make_const(0xff);
+}
+
 inline int8x16 int8x16::load_broadcast(const int8_t* v0)
 {
     return uint8x16::load_broadcast(reinterpret_cast<const uint8_t*>(v0));

@@ -93,6 +93,12 @@ public:
     const gint64x2& operator[](unsigned i) const { return u64(i); }
           gint64x2& operator[](unsigned i)       { return u64(i); }
 #endif
+    /// Creates a int64x4 vector with the contents set to zero
+    static gint64x4 zero();
+
+    /// Creates a int64x4 vector with the contents set to ones
+    static gint64x4 ones();
+
 };
 
 /** Class representing 2x 64-bit signed integer vector
@@ -137,15 +143,6 @@ public:
     const int64x2& operator[](unsigned i) const { return i64(i); }
           int64x2& operator[](unsigned i)       { return i64(i); }
 #endif
-
-    /** Creates a signed int64x4 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        r1 = 0
-        @endcode
-    */
-    static int64x4 zero() { return int64x4::make_const(0); }
 
     /** Creates a signed int64x4 vector from a value loaded from memory.
 
@@ -239,15 +236,6 @@ public:
     const uint64x2& operator[](unsigned i) const { return u64(i); }
           uint64x2& operator[](unsigned i)       { return u64(i); }
 #endif
-
-    /** Creates an unsigned int64x4 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        r1 = 0
-        @endcode
-    */
-    static uint64x4 zero() { return uint64x4::make_const(0); }
 
     /** Creates a int64x4 vector from a value loaded from memory.
 

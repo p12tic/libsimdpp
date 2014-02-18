@@ -87,6 +87,13 @@ public:
     const gint8x16& operator[](unsigned i) const { return u8(i); }
           gint8x16& operator[](unsigned i)       { return u8(i); }
 #endif
+
+    /// Creates a int8x32 vector with the contents set to zero
+    static gint8x32 zero();
+
+    /// Creates a int8x32 vector with the contents set to ones
+    static gint8x32 ones();
+
 };
 
 /** @ingroup simd_vec_int
@@ -126,16 +133,6 @@ public:
     const int8x16& operator[](unsigned i) const { return i8(i); }
           int8x16& operator[](unsigned i)       { return i8(i); }
 #endif
-
-    /** Creates a signed int8x32 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        ...
-        r15 = 0
-        @endcode
-    */
-    static int8x32 zero();
 
     /** Creates a signed int8x32 vector from a value loaded from memory.
 
@@ -261,16 +258,6 @@ public:
     const uint8x16& operator[](unsigned i) const { return u8(i); }
           uint8x16& operator[](unsigned i)       { return u8(i); }
 #endif
-
-    /** Creates a unsigned int8x32 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        ...
-        r15 = 0
-        @endcode
-    */
-    static uint8x32 zero();
 
     /** Creates a unsigned int8x32 vector from a value loaded from memory.
 

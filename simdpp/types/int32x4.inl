@@ -61,6 +61,16 @@ inline gint32<4>::gint32(const float32x4& d)
 #endif
 }
 
+inline gint32x4 gint32x4::zero()
+{
+    return uint32x4::make_const(0);
+}
+
+inline gint32x4 gint32x4::ones()
+{
+    return uint32x4::make_const(0xffffffff);
+}
+
 inline int32x4 int32x4::load_broadcast(const int32_t* v0)
 {
     return uint32x4::load_broadcast(reinterpret_cast<const uint32_t*>(v0));

@@ -92,6 +92,12 @@ public:
     const gint32x4& operator[](unsigned i) const { return u32(i); }
           gint32x4& operator[](unsigned i)       { return u32(i); }
 #endif
+
+    /// Creates a int32x8 vector with the contents set to zero
+    static gint32x8 zero();
+
+    /// Creates a int32x8 vector with the contents set to ones
+    static gint32x8 ones();
 };
 
 /** Class representing 4x 32-bit signed integer vector
@@ -136,17 +142,6 @@ public:
     const int32x4& operator[](unsigned i) const { return i32(i); }
           int32x4& operator[](unsigned i)       { return i32(i); }
 #endif
-
-    /** Creates a signed int32x8 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        r1 = 0
-        r2 = 0
-        r3 = 0
-        @endcode
-    */
-    static int32x8 zero() { return int32x8::make_const(0); }
 
     /** Creates a signed int32x8 vector from a value loaded from memory.
 
@@ -249,17 +244,6 @@ public:
     const uint32x4& operator[](unsigned i) const { return u32(i); }
           uint32x4& operator[](unsigned i)       { return u32(i); }
 #endif
-
-    /** Creates an unsigned int32x8 vector with the contents set to zero
-
-        @code
-        r0 = 0
-        r1 = 0
-        r2 = 0
-        r3 = 0
-        @endcode
-    */
-    static uint32x8 zero() { return uint32x8::make_const(0); }
 
     /** Creates an unsigned int32x8 vector from a value loaded from memory.
 
