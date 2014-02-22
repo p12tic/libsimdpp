@@ -36,7 +36,7 @@ set(HEADERS
     core/bit_xor.h
     core/blend.h
     core/broadcast.h
-    core/broadcast_w.h
+    core/splat.h
     core/cache.h
     core/cast.h
     core/cmp_eq.h

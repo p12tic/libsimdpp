@@ -158,7 +158,7 @@ inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
     };
     v[0] = v0;
     uint64x2 r = load(r, v);
-    r = broadcast_w<0>(r);
+    r = splat<0>(r);
     return r;
 #endif
 }

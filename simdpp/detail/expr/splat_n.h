@@ -33,7 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/insn/broadcast.h>
+#include <simdpp/detail/insn/splat_n.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -42,45 +42,45 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<unsigned N, unsigned s, class E>
-gint8<N> expr_eval(expr_broadcast<s,gint8<N,E>> q)
+gint8<N> expr_eval(expr_splat16<s,gint8<N,E>> q)
 {
     gint8<N> a = q.a.eval();
-    return insn::i_broadcast<s>(a);
+    return insn::i_splat16<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-gint16<N> expr_eval(expr_broadcast<s,gint16<N,E>> q)
+gint16<N> expr_eval(expr_splat8<s,gint16<N,E>> q)
 {
     gint16<N> a = q.a.eval();
-    return insn::i_broadcast<s>(a);
+    return insn::i_splat8<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-gint32<N> expr_eval(expr_broadcast<s,gint32<N,E>> q)
+gint32<N> expr_eval(expr_splat4<s,gint32<N,E>> q)
 {
     gint32<N> a = q.a.eval();
-    return insn::i_broadcast<s>(a);
+    return insn::i_splat4<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-gint64<N> expr_eval(expr_broadcast<s,gint64<N,E>> q)
+gint64<N> expr_eval(expr_splat2<s,gint64<N,E>> q)
 {
     gint64<N> a = q.a.eval();
-    return insn::i_broadcast<s>(a);
+    return insn::i_splat2<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-float32<N> expr_eval(expr_broadcast<s,float32<N,E>> q)
+float32<N> expr_eval(expr_splat4<s,float32<N,E>> q)
 {
     float32<N> a = q.a.eval();
-    return insn::i_broadcast<s>(a);
+    return insn::i_splat4<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-float64<N> expr_eval(expr_broadcast<s,float64<N,E>> q)
+float64<N> expr_eval(expr_splat2<s,float64<N,E>> q)
 {
     float64<N> a = q.a.eval();
-    return insn::i_broadcast<s>(a);
+    return insn::i_splat2<s>(a);
 }
 
 } // namespace detail

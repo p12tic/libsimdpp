@@ -76,7 +76,22 @@ struct expr_blend {
 };
 
 template<unsigned S, class E>
-struct expr_broadcast {
+struct expr_splat2 {
+    E a;
+};
+
+template<unsigned S, class E>
+struct expr_splat4 {
+    E a;
+};
+
+template<unsigned S, class E>
+struct expr_splat8 {
+    E a;
+};
+
+template<unsigned S, class E>
+struct expr_splat16 {
     E a;
 };
 

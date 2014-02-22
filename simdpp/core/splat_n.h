@@ -25,23 +25,25 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_BROADCAST_W_H
-#define LIBSIMDPP_SIMDPP_CORE_BROADCAST_W_H
+#ifndef LIBSIMDPP_SIMDPP_CORE_SPLAT_N_H
+#define LIBSIMDPP_SIMDPP_CORE_SPLAT_N_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/insn/broadcast_w.h>
+#include <simdpp/detail/insn/splat_n.h>
+#include <simdpp/detail/expr/splat_n.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+
 /// @{
-/** Broadcasts the specified 8-bit value to all elements within 128-bit lane
+/** Broadcasts the specified 8-bit value to all elements within 128-bit lanes.
 
     @code
     r0 = a[s]
@@ -51,23 +53,28 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 5}
+    @icost{SSE2-SSE3, 7}
+    @icost{SSSE3-AVX, 1-2}
     @icost{AVX2, 2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 6}
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 14}
+    @icost{SSSE3-AVX, 2-3}
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s, unsigned N, class E>
-gint8<N, gint8<N>> broadcast_w(gint8<N,E> a)
+gint8<N, expr_splat16<s,gint8<N,E>>> splat16(gint8<N,E> a)
 {
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_broadcast_w<s>(a.eval());
+    static_assert(s < 16, "Access out of bounds");
+    return { { a }, 0 };
 }
 /// @}
 
 /// @{
-/** Broadcasts the specified 16-bit value to all elements within a int16x8 vector
+/** Broadcasts the specified 16-bit value to all elements within 128-bit lanes.
 
     @code
     r0 = a[s]
@@ -77,23 +84,25 @@ gint8<N, gint8<N>> broadcast_w(gint8<N,E> a)
     @endcode
 
     @par 128-bit version:
-    @icost{SSE2-AVX, 5}
+    @icost{SSE2-SSE3, 3}
+    @icost{SSSE3-AVX, 1-2}
     @icost{AVX2, 2}
 
     @par 256-bit version:
-    @icost{SSE2-AVX, 6}
-    @icost{NEON, ALTIVEC, 2}
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-AVX, 2-3}
+    @icost{AVX2, NEON, ALTIVEC, 2}
 */
 template<unsigned s, unsigned N, class E>
-gint16<N, gint16<N>> broadcast_w(gint16<N,E> a)
+gint16<N, expr_splat8<s,gint16<N,E>>> splat8(gint16<N,E> a)
 {
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_broadcast_w<s>(a.eval());
+    static_assert(s < 8, "Access out of bounds");
+    return { { a }, 0 };
 }
 /// @}
 
 /// @{
-/** Broadcasts the specified 32-bit value to all elements within a int32x4 vector
+/** Broadcasts the specified 32-bit value to all elements within 128-bit lanes.
 
     @code
     r0 = a[s]
@@ -106,15 +115,15 @@ gint16<N, gint16<N>> broadcast_w(gint16<N,E> a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s, unsigned N, class E>
-gint32<N, gint32<N>> broadcast_w(gint32<N,E> a)
+gint32<N, expr_splat4<s,gint32<N,E>>> splat4(gint32<N,E> a)
 {
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_broadcast_w<s>(a.eval());
+    static_assert(s < 4, "Access out of bounds");
+    return { { a }, 0 };
 }
 /// @}
 
 /// @{
-/** Broadcasts the specified 64-bit value to all elements within a int64x2 vector
+/** Broadcasts the specified 64-bit value to all elements within 128-bit lanes.
 
     @code
     r0 = a[s]
@@ -126,18 +135,18 @@ gint32<N, gint32<N>> broadcast_w(gint32<N,E> a)
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
-    @icost{ALTIVEC, 1-2}
+    @icost{ALTIVEC, 2-3}
 */
 template<unsigned s, unsigned N, class E>
-gint64<N, gint64<N>> broadcast_w(gint64<N,E> a)
+gint64<N, expr_splat2<s,gint64<N,E>>> splat2(gint64<N,E> a)
 {
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_broadcast_w<s>(a.eval());
+    static_assert(s < 2, "Access out of bounds");
+    return { { a }, 0 };
 }
 /// @}
 
 /// @{
-/** Broadcasts the specified 32-bit value to all elements within a float32x4 vector
+/** Broadcasts the specified 32-bit value to all elements within 128-bit lanes.
 
     @code
     r0 = a[s]
@@ -150,15 +159,15 @@ gint64<N, gint64<N>> broadcast_w(gint64<N,E> a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned s, unsigned N, class E>
-float32<N, float32<N>> broadcast_w(float32<N,E> a)
+float32<N, expr_splat4<s,float32<N,E>>> splat4(float32<N,E> a)
 {
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_broadcast_w<s>(a.eval());
+    static_assert(s < 4, "Access out of bounds");
+    return { { a }, 0 };
 }
 /// @}
 
 /// @{
-/** Broadcasts the specified 64-bit value to all elements within a float64x2 vector
+/** Broadcasts the specified 64-bit value to all elements within 128-bit lanes.
 
     @code
     r0 = a[s]
@@ -173,13 +182,13 @@ float32<N, float32<N>> broadcast_w(float32<N,E> a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned s, unsigned N, class E>
-float64<N, float64<N>> broadcast_w(float64<N,E> a)
+float64<N, expr_splat2<s,float64<N,E>>> splat2(float64<N,E> a)
 {
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_broadcast_w<s>(a.eval());
+    static_assert(s < 2, "Access out of bounds");
+    return { { a }, 0 };
 }
 /// @}
-///
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

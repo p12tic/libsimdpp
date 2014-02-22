@@ -33,7 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/broadcast.h>
+#include <simdpp/core/splat_n.h>
 #include <simdpp/detail/insn/shuffle128.h>
 
 namespace simdpp {
@@ -43,14 +43,22 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
+// forward decls for v_splat
+template<unsigned s> gint8x16 i_splat(gint8x16 a);
+template<unsigned s> gint16x8 i_splat(gint16x8 a);
+template<unsigned s> gint32x4 i_splat(gint32x4 a);
+template<unsigned s> gint64x2 i_splat(gint64x2 a);
+template<unsigned s> float32x4 i_splat(float32x4 a);
+template<unsigned s> float64x2 i_splat(float64x2 a);
+
 // collect some duplicate stuff here
 template<unsigned s, class V>
-V v_broadcast_w(V a)
+V v_splat(V a)
 {
     using U = typename V::base_vector_type;
     U one = a[s / U::length];
 
-    one = broadcast<s % U::length>(one);
+    one = i_splat<s % U::length>(one);
 
     for (unsigned i = 0; i < V::vec_length; ++i) {
         a[i] = one;
@@ -61,14 +69,14 @@ V v_broadcast_w(V a)
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint8x16 i_broadcast_w(gint8x16 a)
+gint8x16 i_splat(gint8x16 a)
 {
-    return broadcast<s>(a);
+    return i_splat16<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint8x32 i_broadcast_w(gint8x32 a)
+gint8x32 i_splat(gint8x32 a)
 {
     static_assert(s < 32, "Access out of bounds");
     gint8x16 lo;
@@ -79,23 +87,23 @@ gint8x32 i_broadcast_w(gint8x32 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint8<N> i_broadcast_w(gint8<N> a)
+gint8<N> i_splat(gint8<N> a)
 {
     static_assert(s < N, "Access out of bounds");
-    return v_broadcast_w<s>(a);
+    return v_splat<s>(a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint16x8 i_broadcast_w(gint16x8 a)
+gint16x8 i_splat(gint16x8 a)
 {
-    return broadcast<s>(a);
+    return i_splat8<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint16x16 i_broadcast_w(gint16x16 a)
+gint16x16 i_splat(gint16x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
     gint16x8 lo;
@@ -106,23 +114,23 @@ gint16x16 i_broadcast_w(gint16x16 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint16<N> i_broadcast_w(gint16<N> a)
+gint16<N> i_splat(gint16<N> a)
 {
     static_assert(s < N, "Access out of bounds");
-    return v_broadcast_w<s>(a);
+    return v_splat<s>(a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint32x4 i_broadcast_w(gint32x4 a)
+gint32x4 i_splat(gint32x4 a)
 {
-    return broadcast<s>(a);
+    return i_splat4<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint32x8 i_broadcast_w(gint32x8 a)
+gint32x8 i_splat(gint32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
     a = permute4<s%4,s%4,s%4,s%4>(a);
@@ -132,23 +140,23 @@ gint32x8 i_broadcast_w(gint32x8 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint32<N> i_broadcast_w(gint32<N> a)
+gint32<N> i_splat(gint32<N> a)
 {
     static_assert(s < N, "Access out of bounds");
-    return v_broadcast_w<s>(a);
+    return v_splat<s>(a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint64x2 i_broadcast_w(gint64x2 a)
+gint64x2 i_splat(gint64x2 a)
 {
-    return broadcast<s>(a);
+    return i_splat2<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint64x4 i_broadcast_w(gint64x4 a)
+gint64x4 i_splat(gint64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
@@ -156,23 +164,23 @@ gint64x4 i_broadcast_w(gint64x4 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint64<N> i_broadcast_w(gint64<N> a)
+gint64<N> i_splat(gint64<N> a)
 {
     static_assert(s < N, "Access out of bounds");
-    return v_broadcast_w<s>(a);
+    return v_splat<s>(a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-float32x4 i_broadcast_w(float32x4 a)
+float32x4 i_splat(float32x4 a)
 {
-    return broadcast<s>(a);
+    return i_splat4<s>(a);
 }
 
 #if SIMDPP_USE_AVX
 template<unsigned s>
-float32x8 i_broadcast_w(float32x8 a)
+float32x8 i_splat(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
     a = detail::shuffle128<s/4,s/4>(a, a);
@@ -181,27 +189,27 @@ float32x8 i_broadcast_w(float32x8 a)
 #endif
 
 template<unsigned s, unsigned N>
-float32<N> i_broadcast_w(float32<N> a)
+float32<N> i_splat(float32<N> a)
 {
     static_assert(s < N, "Access out of bounds");
-    return v_broadcast_w<s>(a);
+    return v_splat<s>(a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-float64x2 i_broadcast_w(float64x2 a)
+float64x2 i_splat(float64x2 a)
 {
-    return broadcast<s>(a);
+    return i_splat2<s>(a);
 }
 
 #if SIMDPP_USE_AVX
 template<unsigned s>
-float64x4 i_broadcast_w(float64x4 a)
+float64x4 i_splat(float64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
-    return permute<s,s,s,s>(a);
+    return permute4<s,s,s,s>(a);
 #else // SIMDPP_USE_AVX
     a = detail::shuffle128<s/2,s/2>(a, a);
     a = permute2<s%2,s%2>(a);
@@ -211,10 +219,10 @@ float64x4 i_broadcast_w(float64x4 a)
 #endif
 
 template<unsigned s, unsigned N>
-float64<N> i_broadcast_w(float64<N> a)
+float64<N> i_splat(float64<N> a)
 {
     static_assert(s < N, "Access out of bounds");
-    return v_broadcast_w<s>(a);
+    return v_splat<s>(a);
 }
 
 } // namespace insn

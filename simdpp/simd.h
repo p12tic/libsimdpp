@@ -312,8 +312,6 @@
 #include <simdpp/core/bit_or.h>
 #include <simdpp/core/bit_xor.h>
 #include <simdpp/core/blend.h>
-#include <simdpp/core/broadcast.h>
-#include <simdpp/core/broadcast_w.h>
 #include <simdpp/core/cache.h>
 #include <simdpp/core/cast.h>
 #include <simdpp/core/cmp_eq.h>
@@ -376,8 +374,10 @@
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/core/shuffle_zbytes16.h>
-#include <simdpp/core/store.h>
+#include <simdpp/core/splat.h>
+#include <simdpp/core/splat_n.h>
 #include <simdpp/core/store_first.h>
+#include <simdpp/core/store.h>
 #include <simdpp/core/store_last.h>
 #include <simdpp/core/store_packed2.h>
 #include <simdpp/core/store_packed3.h>

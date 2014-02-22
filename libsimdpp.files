@@ -42,8 +42,6 @@ simdpp/core/bit_not.h
 simdpp/core/bit_or.h
 simdpp/core/bit_xor.h
 simdpp/core/blend.h
-simdpp/core/broadcast.h
-simdpp/core/broadcast_w.h
 simdpp/core/cache.h
 simdpp/core/cast.h
 simdpp/core/cmp_eq.h
@@ -108,6 +106,8 @@ simdpp/core/shuffle1.h
 simdpp/core/shuffle2.h
 simdpp/core/shuffle_bytes16.h
 simdpp/core/shuffle_zbytes16.h
+simdpp/core/splat.h
+simdpp/core/splat_n.h
 simdpp/core/store.h
 simdpp/core/store_first.h
 simdpp/core/store_last.h
@@ -133,7 +133,6 @@ simdpp/detail/expr/bit_andnot.h
 simdpp/detail/expr/bit_not.h
 simdpp/detail/expr/bit_or.h
 simdpp/detail/expr/blend.h
-simdpp/detail/expr/broadcast.h
 simdpp/detail/expr/f_abs.h
 simdpp/detail/expr/f_add.h
 simdpp/detail/expr/f_fmadd.h
@@ -149,6 +148,7 @@ simdpp/detail/expr/i_mull.h
 simdpp/detail/expr/i_neg.h
 simdpp/detail/expr/i_sub.h
 simdpp/detail/expr/i_subs.h
+simdpp/detail/expr/splat_n.h
 simdpp/detail/expr/vec.h
 simdpp/detail/insn/align.h
 simdpp/detail/insn/bit_and.h
@@ -157,8 +157,6 @@ simdpp/detail/insn/bit_not.h
 simdpp/detail/insn/bit_or.h
 simdpp/detail/insn/bit_xor.h
 simdpp/detail/insn/blend.h
-simdpp/detail/insn/broadcast.h
-simdpp/detail/insn/broadcast_w.h
 simdpp/detail/insn/cmp_eq.h
 simdpp/detail/insn/cmp_ge.h
 simdpp/detail/insn/cmp_gt.h
@@ -206,6 +204,8 @@ simdpp/detail/insn/shuffle2.h
 simdpp/detail/insn/shuffle_bytes16.h
 simdpp/detail/insn/shuffle_emul.h
 simdpp/detail/insn/shuffle_zbytes16.h
+simdpp/detail/insn/splat.h
+simdpp/detail/insn/splat_n.h
 simdpp/detail/insn/store.h
 simdpp/detail/insn/store_first.h
 simdpp/detail/insn/store_last.h

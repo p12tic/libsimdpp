@@ -35,7 +35,7 @@
 #include <simdpp/types/float32x4.h>
 #include <simdpp/core/bit_xor.h>
 #include <simdpp/core/permute4.h>
-#include <simdpp/core/broadcast_w.h>
+#include <simdpp/core/splat.h>
 #include <simdpp/null/mask.h>
 #include <simdpp/null/set.h>
 
@@ -66,7 +66,7 @@ inline float32x4 float32x4::load_broadcast(const float* v0)
     return vld1q_dup_f32(v0);
 #elif SIMDPP_USE_ALTIVEC
     float32x4 r = altivec::load1_u(r, v0);
-    r = broadcast_w<0>(r);
+    r = splat<0>(r);
     return r;
 #endif
 }
@@ -88,7 +88,7 @@ inline float32x4 float32x4::set_broadcast(float v0)
     // Yes, we know what we're doing here. The unused elements within the
     // vector are overwritten by broadcast
     float32x4 r0 = vsetq_lane_f32(v0, r0, 0);
-    r0 = broadcast_w<0>(r0);
+    r0 = splat<0>(r0);
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
@@ -100,7 +100,7 @@ inline float32x4 float32x4::set_broadcast(float v0)
     };
     v[0] = v0;
     float32x4 r = altivec::load1(r, v);
-    r = broadcast_w<0>(r);
+    r = splat<0>(r);
     return r;
 #endif
 }

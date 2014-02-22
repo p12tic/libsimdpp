@@ -36,7 +36,7 @@
 #include <simdpp/detail/width.h>
 #include <simdpp/detail/insn/shuffle128.h>
 #include <simdpp/core/align.h>
-#include <simdpp/core/broadcast.h>
+#include <simdpp/core/splat_n.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/core/shuffle2.h>
@@ -237,7 +237,7 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [b1,b3,b5,b7,c1,c3,c5,c7]
     t0 = c0;
     t1 = shuffle1<1,0>(c0, c1);
-    t2 = broadcast<1>(c1);
+    t2 = splat2<1>(c1);
     t3 = c2;
     // [a0,a2,a4,a6,b0,b2,b4,b6]
     // [b0,b2,b4,b6,c0,c2,c4,c6]

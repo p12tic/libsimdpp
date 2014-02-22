@@ -61,21 +61,51 @@ struct Test_move_l {
 };
 
 template<class V, unsigned i>
-struct Test_broadcast {
+struct Test_splat2 {
     static constexpr unsigned limit = Shuffle_width<V>::value;
     static void test(TestCase& tc, V a)
     {
-        a = simdpp::broadcast<i>(a);
+        a = simdpp::splat2<i>(a);
         TEST_PUSH(tc, V, a);
     }
 };
 
 template<class V, unsigned i>
-struct Test_broadcast_w {
+struct Test_splat4 {
+    static constexpr unsigned limit = Shuffle_width<V>::value;
+    static void test(TestCase& tc, V a)
+    {
+        a = simdpp::splat4<i>(a);
+        TEST_PUSH(tc, V, a);
+    }
+};
+
+template<class V, unsigned i>
+struct Test_splat8 {
+    static constexpr unsigned limit = Shuffle_width<V>::value;
+    static void test(TestCase& tc, V a)
+    {
+        a = simdpp::splat8<i>(a);
+        TEST_PUSH(tc, V, a);
+    }
+};
+
+template<class V, unsigned i>
+struct Test_splat16 {
+    static constexpr unsigned limit = Shuffle_width<V>::value;
+    static void test(TestCase& tc, V a)
+    {
+        a = simdpp::splat16<i>(a);
+        TEST_PUSH(tc, V, a);
+    }
+};
+
+template<class V, unsigned i>
+struct Test_splat {
     static constexpr unsigned limit = V::length;
     static void test(TestCase& tc, V a)
     {
-        a = simdpp::broadcast_w<i>(a);
+        a = simdpp::splat<i>(a);
         TEST_PUSH(tc, V, a);
     }
 };
@@ -110,8 +140,7 @@ void test_shuffle_type128(TestCase &tc, V v1, V v2)
 
     TemplateTestHelper<Test_move_r, V>::run(tc, v1);
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);
-    TemplateTestHelper<Test_broadcast, V>::run(tc, v1);
-    TemplateTestHelper<Test_broadcast_w, V>::run(tc, v1);
+    TemplateTestHelper<Test_splat, V>::run(tc, v1);
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
     TemplateTestHelper<Test_insert_extract, V>::run(tc, v1, v2);
 }
@@ -126,7 +155,7 @@ void test_shuffle_type256(TestCase &tc, V v1, V v2)
 
     TemplateTestHelper<Test_move_r, V>::run(tc, v1);
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);
-    TemplateTestHelper<Test_broadcast, V>::run(tc, v1);
+    TemplateTestHelper<Test_splat, V>::run(tc, v1);
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
 }
 
@@ -190,6 +219,13 @@ void test_shuffle(TestResults& res)
     test_shuffle_type256<uint64x4>(tc, v.du64[0], v.du64[1]);
     test_shuffle_type256<float32x8>(tc, v.df32[0], v.df32[1]);
     test_shuffle_type256<float64x4>(tc, v.df64[0], v.df64[1]);
+
+    TemplateTestHelper<Test_splat16, uint8x32>::run(tc, v.du8[0]);
+    TemplateTestHelper<Test_splat8, uint16x16>::run(tc, v.du16[0]);
+    TemplateTestHelper<Test_splat4, uint32x8>::run(tc, v.du32[0]);
+    TemplateTestHelper<Test_splat2, uint64x4>::run(tc, v.du64[0]);
+    TemplateTestHelper<Test_splat4, float32x8>::run(tc, v.df32[0]);
+    TemplateTestHelper<Test_splat2, float64x4>::run(tc, v.df64[0]);
 
     // blend
     test_blend<uint8x16>(tc, v.u8[0], v.u8[1], test_blend_make_sel_vec<uint8x16>());
