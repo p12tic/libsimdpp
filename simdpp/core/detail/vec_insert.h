@@ -56,17 +56,17 @@ void vec_insert_impl(R& a, V x, unsigned n)
 
 // Sets the elements [M*n .. M*(n+1)) of @a a to the contents of @a x
 template<unsigned N, unsigned M>
-void vec_insert(gint8<N> a, gint8<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(gint8<N>& a, gint8<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M>
-void vec_insert(gint16<N> a, gint16<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(gint16<N>& a, gint16<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M>
-void vec_insert(gint32<N> a, gint32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(gint32<N>& a, gint32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M>
-void vec_insert(gint64<N> a, gint64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(gint64<N>& a, gint64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M>
-void vec_insert(float32<N> a, float32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(float32<N>& a, float32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M>
-void vec_insert(float64<N> a, float64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(float64<N>& a, float64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
