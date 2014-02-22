@@ -56,27 +56,27 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> zip_hi(gint8<N,E1> a, gint8<N,E2> b)
+gint8<N, gint8<N>> zip16_hi(gint8<N,E1> a, gint8<N,E2> b)
 {
-    return detail::insn::i_zip_hi(a.eval(), b.eval());
+    return detail::insn::i_zip16_hi(a.eval(), b.eval());
 }
 
 template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> zip_hi(gint16<N,E1> a, gint16<N,E2> b)
+gint16<N, gint16<N>> zip8_hi(gint16<N,E1> a, gint16<N,E2> b)
 {
-    return detail::insn::i_zip_hi(a.eval(), b.eval());
+    return detail::insn::i_zip8_hi(a.eval(), b.eval());
 }
 
 template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> zip_hi(gint32<N,E1> a, gint32<N,E2> b)
+gint32<N, gint32<N>> zip4_hi(gint32<N,E1> a, gint32<N,E2> b)
 {
-    return detail::insn::i_zip_hi(a.eval(), b.eval());
+    return detail::insn::i_zip4_hi(a.eval(), b.eval());
 }
 
 template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> zip_hi(gint64<N,E1> a, gint64<N,E2> b)
+gint64<N, gint64<N>> zip2_hi(gint64<N,E1> a, gint64<N,E2> b)
 {
-    return detail::insn::i_zip_hi(a.eval(), b.eval());
+    return detail::insn::i_zip2_hi(a.eval(), b.eval());
 }
 
 /** Interleaves the higher halves of two vectors.
@@ -93,15 +93,15 @@ gint64<N, gint64<N>> zip_hi(gint64<N,E1> a, gint64<N,E2> b)
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-float32<N, float32<N>> zip_hi(float32<N,E1> a, float32<N,E2> b)
+float32<N, float32<N>> zip4_hi(float32<N,E1> a, float32<N,E2> b)
 {
-    return detail::insn::i_zip_hi(a.eval(), b.eval());
+    return detail::insn::i_zip4_hi(a.eval(), b.eval());
 }
 
 template<unsigned N, class E1, class E2>
-float64<N, float64<N>> zip_hi(float64<N,E1> a, float64<N,E2> b)
+float64<N, float64<N>> zip2_hi(float64<N,E1> a, float64<N,E2> b)
 {
-    return detail::insn::i_zip_hi(a.eval(), b.eval());
+    return detail::insn::i_zip2_hi(a.eval(), b.eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

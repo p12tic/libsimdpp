@@ -215,6 +215,7 @@ simdpp/detail/insn/store_packed4.h
 simdpp/detail/insn/stream.h
 simdpp/detail/insn/unzip_hi.h
 simdpp/detail/insn/unzip_lo.h
+simdpp/detail/insn/zip128.h
 simdpp/detail/insn/zip_hi.h
 simdpp/detail/insn/zip_lo.h
 simdpp/detail/mem_block.h

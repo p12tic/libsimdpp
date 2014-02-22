@@ -140,12 +140,12 @@ inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
 #if SIMDPP_SSE_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
     uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
-    uint64x2 vx = zip_lo(va, vb);
+    uint64x2 vx = zip4_lo(va, vb);
     return permute2<0,0>(vx);
 #else
     int32x4 ra = _mm_cvtsi32_si128(uint32_t(v0));
     int32x4 rb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
-    int64x2 r0 = (int64x2) zip_lo(ra, rb);
+    int64x2 r0 = (int64x2) zip4_lo(ra, rb);
     r0 = permute2<0,0>(r0);
     return uint64x2(r0);
 #endif

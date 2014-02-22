@@ -35,6 +35,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/width.h>
 #include <simdpp/detail/insn/shuffle128.h>
+#include <simdpp/detail/insn/zip128.h>
 #include <simdpp/core/align.h>
 #include <simdpp/core/splat_n.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
@@ -59,8 +60,8 @@ void v_mem_unpack2_impl(T& a, T& b)
     T c1, c2;
     c1 = a;
     c2 = b;
-    a = unzip_lo(c1, c2);
-    b = unzip_hi(c1, c2);
+    a = unzip128_lo(c1, c2);
+    b = unzip128_hi(c1, c2);
 }
 
 template<class T>
@@ -69,8 +70,8 @@ void v256_mem_unpack2_impl(T& a, T& b)
     T c1, c2;
     c1 = shuffle128<0,2>(a, b);
     c2 = shuffle128<1,3>(a, b);
-    a = unzip_lo(c1, c2);
-    b = unzip_hi(c1, c2);
+    a = unzip128_lo(c1, c2);
+    b = unzip128_hi(c1, c2);
 }
 
 /// @{
@@ -142,18 +143,18 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [a8, b8, c8, a9, b9, c9, a10,b10,c10,a11,b11,c11, ...]
     // [a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15, ...]
     typename same_width<T>::b16 b0, b1, b2, b3;
-    b0 = zip_lo(t0, t1);
-    b1 = zip_lo(t2, t3);
-    b2 = zip_hi(t0, t1);
-    b3 = zip_hi(t2, t3);
+    b0 = zip16_lo(t0, t1);
+    b1 = zip16_lo(t2, t3);
+    b2 = zip16_hi(t0, t1);
+    b3 = zip16_hi(t2, t3);
     // [a0, a4, b0, b4, c0, c4, a1, a5, b1, b5, c1, c5, a2, a6, b2, b6 ]
     // [a8, a12,b8, b12,c9, c13,a9, a13,b9, b13,c9, c13,a10,a14,b10,b14,]
     // [c2, c6, a3, a7, b3, b7, c3, c7, ... ]
     // [c10,c14,a11,a15,b11,b15,c11,c15,... ]
     typename same_width<T>::b8 u0, u1, u2;
-    u0 = zip_lo(b0, b1);
-    u1 = zip_hi(b0, b1);
-    u2 = zip_lo(b2, b3);
+    u0 = zip8_lo(b0, b1);
+    u1 = zip8_hi(b0, b1);
+    u2 = zip8_lo(b2, b3);
     // [a0, a4, a8, a12,b0, b4, b8, b12, c0, c4, c8, c12, a1, a5, a9, a13 ]
     // [b1, b5, b9, b13,c1, c5, c9, c13, a2, a6, a10,a14, b2, b6, b10,b14 ]
     // [c2, c6, c10,c14,a3, a7, a11,a15, b3, b7, b11,b15, c3, c7, c11,c15 ]
@@ -165,17 +166,17 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [a1, a5, a9, a13,b1, b5, b9, b13, c1, c5, c9, c13, ...]
     // [a2, a6, a10,a14,b2, b6, b10,b13, c2, c6, c10,c14, ...]
     // [a3, a7, a11,a15,b3, b7, b11,b13, c3, c7, c11,c15, ...]
-    b0 = zip_lo(t0, t1);
-    b1 = zip_lo(t2, t3);
-    b2 = zip_hi(t0, t1);
-    b3 = zip_hi(t2, t3);
+    b0 = zip16_lo(t0, t1);
+    b1 = zip16_lo(t2, t3);
+    b2 = zip16_hi(t0, t1);
+    b3 = zip16_hi(t2, t3);
     // [a0, a1, a4, a5, a8, a9, a12,a13,b0, b1, b4, b5, b8, b9, b12,b13 ]
     // [a2, a3, a6, a7, a10,a11,a14,a15,b2, b3, b6, b7, b10,b11,b14,b15 ]
     // [c0, c1, c4, c5, c8, c9, c12,c13, ... ]
     // [c2, c3, c6, c7, c10,c11,c14,c15, ... ]
-    a = zip_lo(b0, b1);
-    b = zip_hi(b0, b1);
-    c = zip_lo(b2, b3);
+    a = zip8_lo(b0, b1);
+    b = zip8_hi(b0, b1);
+    c = zip8_lo(b2, b3);
 #endif
 }
 
@@ -220,18 +221,18 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [a4,b4,c4,a5,b5,c5, ... ]
     // [a6,b6,c6,a7,b7,c7, ... ]
     typename same_width<T>::b32 b0, b1, b2, b3;
-    b0 = zip_lo(t0, t1);
-    b1 = zip_lo(t2, t3);
-    b2 = zip_hi(t0, t1);
-    b3 = zip_hi(t2, t3);
+    b0 = zip8_lo(t0, t1);
+    b1 = zip8_lo(t2, t3);
+    b2 = zip8_hi(t0, t1);
+    b3 = zip8_hi(t2, t3);
     // [a0,a2,b0,b2,c0,c2,a1,a3]
     // [a4,a6,b4,b6,c4,c6,a5,a7]
     // [b1,b3,c1,c3, ... ]
     // [b5,b7,c5,c7, ... ]
     typename same_width<T>::b64 c0, c1, c2;
-    c0 = zip_lo(b0, b1);
-    c1 = zip_hi(b0, b1);
-    c2 = zip_lo(b2, b3);
+    c0 = zip4_lo(b0, b1);
+    c1 = zip4_hi(b0, b1);
+    c2 = zip4_lo(b2, b3);
     // [a0,a2,a4,a6,b0,b2,b4,b6]
     // [c0,c2,c4,c6,a1,a3,a5,a7]
     // [b1,b3,b5,b7,c1,c3,c5,c7]
@@ -243,9 +244,9 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [b0,b2,b4,b6,c0,c2,c4,c6]
     // [a1,a3,a5,a7,a1,a3,a5,a7]
     // [b1,b3,b5,b7,c1,c3,c5,c7]
-    a = zip_lo(t0, t2);
-    b = zip_lo(t1, t3);
-    c = zip_hi(t1, t3);
+    a = zip8_lo(t0, t2);
+    b = zip8_lo(t1, t3);
+    c = zip8_hi(t1, t3);
 #endif
 }
 
@@ -416,35 +417,35 @@ template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
     // [a8, b8, c8, d8, a9, b9, c9, d9, a10,b10,c10,d10,a11,b11,c11,d11]
     // [a12,b12,c12,d12,a13,b13,c13,d13,a14,b14,c14,d14,a15,b15,c15,d15]
     T b0, b1, b2, b3, c0, c1, c2, c3;
-    b0 = zip_lo(a, b);
-    b1 = zip_hi(a, b);
-    b2 = zip_lo(c, d);
-    b3 = zip_hi(c, d);
+    b0 = zip16_lo(a, b);
+    b1 = zip16_hi(a, b);
+    b2 = zip16_lo(c, d);
+    b3 = zip16_hi(c, d);
     // [a0, a4, b0, b4, c0, c4, d0, d4, a1, a5, b1, b5, c1, c5, d1, d5 ]
     // [a2, a6, b2, b6, c2, c6, d2, d6, a3, a7, b3, b7, c3, c7, d3, d7 ]
     // [a8, a12,b8, b12,c8, c12,d8, d12,a9, a13,b9, b13,c9, c13,d9, d13]
     // [a10,a14,b10,b14,c10,c14,d10,d14,a11,a15,b11,b15,c11,c15,d11,d15]
-    c0 = zip_lo(b0, b1);
-    c1 = zip_hi(b0, b1);
-    c2 = zip_lo(b2, b3);
-    c3 = zip_hi(b2, b3);
+    c0 = zip16_lo(b0, b1);
+    c1 = zip16_hi(b0, b1);
+    c2 = zip16_lo(b2, b3);
+    c3 = zip16_hi(b2, b3);
     // [a0, a2, a4, a6, b0, b2, b4, b6, c0, c2, c4, c6, d0, d2, d4, d6 ]
     // [a1, a3, a5, a7, b1, b3, b5, b7, c1, c3, c5, c7, d1, d3, d5, d7 ]
     // [a8, a10,a12,a14,b8, b10,b12,b14,c8, c10,c12,c14,d8, d10,d12,d14]
     // [a9, a11,a13,a15,b9, b11,b13,b15,c9, c11,c13,c15,d9, d11,d13,d15]
     typename same_width<T>::b64 d0, d1, d2, d3;
-    d0 = zip_lo(c0, c1);
-    d1 = zip_hi(c0, c1);
-    d2 = zip_lo(c2, c3);
-    d3 = zip_hi(c2, c3);
+    d0 = zip16_lo(c0, c1);
+    d1 = zip16_hi(c0, c1);
+    d2 = zip16_lo(c2, c3);
+    d3 = zip16_hi(c2, c3);
     // [a0 .. a7, b0 .. b7 ]
     // [c0 .. c7, d0 .. d7 ]
     // [a8 .. a15, b8 .. b15 ]
     // [b8 .. b15, d8 .. d15 ]
-    a = zip_lo(d0, d2);
-    b = zip_hi(d0, d2);
-    c = zip_lo(d1, d3);
-    d = zip_hi(d1, d3);
+    a = zip2_lo(d0, d2);
+    b = zip2_hi(d0, d2);
+    c = zip2_lo(d1, d3);
+    d = zip2_hi(d1, d3);
 #endif
 }
 
@@ -455,27 +456,27 @@ template<class T> void mem_unpack4_impl16(T& a, T& b, T& c, T& d)
     // [a4,b4,c4,d4,a5,b5,c5,d5]
     // [a6,b6,c6,d6,a7,b7,c7,d7]
     typename same_width<T>::b16 t0, t1, t2, t3;
-    t0 = zip_lo(a, b);
-    t1 = zip_hi(a, b);
-    t2 = zip_lo(c, d);
-    t3 = zip_hi(c, d);
+    t0 = zip8_lo(a, b);
+    t1 = zip8_hi(a, b);
+    t2 = zip8_lo(c, d);
+    t3 = zip8_hi(c, d);
     // [a0,a2,b0,b2,c0,c2,d0,d2]
     // [a1,a3,b1,b3,c1,c3,d1,d3]
     // [a4,a6,b4,b6,c4,c6,d4,d6]
     // [a5,a7,b5,b7,c5,c7,d5,d7]
     typename same_width<T>::b64 u0, u1, u2, u3;
-    u0 = zip_lo(t0, t1);
-    u1 = zip_hi(t0, t1);
-    u2 = zip_lo(t2, t3);
-    u3 = zip_hi(t2, t3);
+    u0 = zip8_lo(t0, t1);
+    u1 = zip8_hi(t0, t1);
+    u2 = zip8_lo(t2, t3);
+    u3 = zip8_hi(t2, t3);
     // [a0,a1,a2,a3,b0,b1,b2,b3]
     // [c0,c1,c2,c3,d0,d1,d2,d3]
     // [a4,a5,a6,a7,b4,b5,b6,b7]
     // [c4,c5,c6,c7,d4,d5,d6,d7]
-    a = zip_lo(u0, u2);
-    b = zip_hi(u0, u2);
-    c = zip_lo(u1, u3);
-    d = zip_hi(u1, u3);
+    a = zip2_lo(u0, u2);
+    b = zip2_hi(u0, u2);
+    c = zip2_lo(u1, u3);
+    d = zip2_hi(u1, u3);
 }
 
 template<class T> void mem_unpack4_impl64(T& a, T& b, T& c, T& d)
@@ -606,75 +607,75 @@ inline void mem_unpack6(gint8x16& a, gint8x16& b, gint8x16& c,
                         gint8x16& d, gint8x16& e, gint8x16& f)
 {
     gint8x16 t0, t1, t2, t3, t4, t5;
-    t0 = zip_lo(a, d);
-    t1 = zip_hi(a, d);
-    t2 = zip_lo(b, e);
-    t3 = zip_hi(b, e);
-    t4 = zip_lo(c, f);
-    t5 = zip_hi(c, f);
+    t0 = zip16_lo(a, d);
+    t1 = zip16_hi(a, d);
+    t2 = zip16_lo(b, e);
+    t3 = zip16_hi(b, e);
+    t4 = zip16_lo(c, f);
+    t5 = zip16_hi(c, f);
 
     gint8x16 u0, u1, u2, u3, u4, u5;
-    u0 = zip_lo(t0, t3);
-    u1 = zip_hi(t0, t3);
-    u2 = zip_lo(t1, t4);
-    u3 = zip_hi(t1, t4);
-    u4 = zip_lo(t2, t5);
-    u5 = zip_hi(t2, t5);
+    u0 = zip16_lo(t0, t3);
+    u1 = zip16_hi(t0, t3);
+    u2 = zip16_lo(t1, t4);
+    u3 = zip16_hi(t1, t4);
+    u4 = zip16_lo(t2, t5);
+    u5 = zip16_hi(t2, t5);
 
-    t0 = zip_lo(u0, u3);
-    t1 = zip_hi(u0, u3);
-    t2 = zip_lo(u1, u4);
-    t3 = zip_hi(u1, u4);
-    t4 = zip_lo(u2, u5);
-    t5 = zip_hi(u2, u5);
+    t0 = zip16_lo(u0, u3);
+    t1 = zip16_hi(u0, u3);
+    t2 = zip16_lo(u1, u4);
+    t3 = zip16_hi(u1, u4);
+    t4 = zip16_lo(u2, u5);
+    t5 = zip16_hi(u2, u5);
 
-    u0 = zip_lo(t0, t3);
-    u1 = zip_hi(t0, t3);
-    u2 = zip_lo(t1, t4);
-    u3 = zip_hi(t1, t4);
-    u4 = zip_lo(t2, t5);
-    u5 = zip_hi(t2, t5);
+    u0 = zip16_lo(t0, t3);
+    u1 = zip16_hi(t0, t3);
+    u2 = zip16_lo(t1, t4);
+    u3 = zip16_hi(t1, t4);
+    u4 = zip16_lo(t2, t5);
+    u5 = zip16_hi(t2, t5);
 
-    t0 = zip_lo(u0, u3);
-    t1 = zip_hi(u0, u3);
-    t2 = zip_lo(u1, u4);
-    t3 = zip_hi(u1, u4);
-    t4 = zip_lo(u2, u5);
-    t5 = zip_hi(u2, u5);
+    t0 = zip16_lo(u0, u3);
+    t1 = zip16_hi(u0, u3);
+    t2 = zip16_lo(u1, u4);
+    t3 = zip16_hi(u1, u4);
+    t4 = zip16_lo(u2, u5);
+    t5 = zip16_hi(u2, u5);
 
-    a = zip_lo(t0, t3);
-    b = zip_hi(t0, t3);
-    c = zip_lo(t1, t4);
-    d = zip_hi(t1, t4);
-    e = zip_lo(t2, t5);
-    f = zip_hi(t2, t5);
+    a = zip16_lo(t0, t3);
+    b = zip16_hi(t0, t3);
+    c = zip16_lo(t1, t4);
+    d = zip16_hi(t1, t4);
+    e = zip16_lo(t2, t5);
+    f = zip16_hi(t2, t5);
 }
 
 inline void mem_unpack6(gint16x8& a, gint16x8& b, gint16x8& c,
                         gint16x8& d, gint16x8& e, gint16x8& f)
 {
     gint16x8 t0, t1, t2, t3, t4, t5;
-    t0 = zip_lo(a, d);
-    t1 = zip_hi(a, d);
-    t2 = zip_lo(b, e);
-    t3 = zip_hi(b, e);
-    t4 = zip_lo(c, f);
-    t5 = zip_hi(c, f);
+    t0 = zip8_lo(a, d);
+    t1 = zip8_hi(a, d);
+    t2 = zip8_lo(b, e);
+    t3 = zip8_hi(b, e);
+    t4 = zip8_lo(c, f);
+    t5 = zip8_hi(c, f);
 
     gint16x8 u0, u1, u2, u3, u4, u5;
-    u0 = zip_lo(t0, t3);
-    u1 = zip_hi(t0, t3);
-    u2 = zip_lo(t1, t4);
-    u3 = zip_hi(t1, t4);
-    u4 = zip_lo(t2, t5);
-    u5 = zip_hi(t2, t5);
+    u0 = zip8_lo(t0, t3);
+    u1 = zip8_hi(t0, t3);
+    u2 = zip8_lo(t1, t4);
+    u3 = zip8_hi(t1, t4);
+    u4 = zip8_lo(t2, t5);
+    u5 = zip8_hi(t2, t5);
 
-    a = zip_lo(u0, u3);
-    b = zip_hi(u0, u3);
-    c = zip_lo(u1, u4);
-    d = zip_hi(u1, u4);
-    e = zip_lo(u2, u5);
-    f = zip_hi(u2, u5);
+    a = zip8_lo(u0, u3);
+    b = zip8_hi(u0, u3);
+    c = zip8_lo(u1, u4);
+    d = zip8_hi(u1, u4);
+    e = zip8_lo(u2, u5);
+    f = zip8_hi(u2, u5);
 }
 /// @}
 

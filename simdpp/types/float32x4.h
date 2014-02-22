@@ -225,7 +225,7 @@ public:
 
 private:
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    bool b_[2];
+    bool b_[4];
 #else
     float32x4 d_;
 #endif

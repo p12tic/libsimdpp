@@ -96,7 +96,7 @@ template<unsigned s>
 gint8x32 i_splat16(gint8x32 a)
 {
     static_assert(s < 16, "Access out of bounds");
-    gint16x16 b = s < 8 ? zip_lo(a, a) : zip_hi(a, a);
+    gint16x16 b = s < 8 ? zip16_lo(a, a) : zip16_hi(a, a);
     return i_splat8<s%8>(b);
 }
 #endif

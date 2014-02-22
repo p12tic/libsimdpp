@@ -149,8 +149,8 @@ inline gint32x4 hadd2(gint32x4 a, gint32x4 b)
 inline gint64x2 hadd2(gint64x2 a, gint64x2 b)
 {
     gint64x2 ia, ib;
-    ia = zip_lo(a, b);
-    ib = zip_hi(a, b);
+    ia = zip2_lo(a, b);
+    ib = zip2_hi(a, b);
     ia = add(ia, ib);
     return ia;
 }
@@ -251,8 +251,8 @@ inline gint64x2 hsub2(gint64x2 a, gint64x2 b)
 {
 #if SIMDPP_USE_SSSE3
     gint64x2 ia, ib;
-    ia = zip_lo(a, b);
-    ib = zip_hi(a, b);
+    ia = zip2_lo(a, b);
+    ib = zip2_hi(a, b);
     ia = sub(ia, ib);
     return ia;
 #else

@@ -193,7 +193,7 @@ gint64x2 insert(gint64x2 a, uint64_t x)
 #if SIMDPP_SSE_32_BITS
     int32x4 va = _mm_cvtsi32_si128(uint32_t(x));
     int32x4 vb = _mm_cvtsi32_si128(uint32_t(x >> 32));
-    int64x2 vx = zip_lo(va, vb);
+    int64x2 vx = zip4_lo(va, vb);
     if (id == 0) {
         a = shuffle1<0,1>(vx, a);
     } else {

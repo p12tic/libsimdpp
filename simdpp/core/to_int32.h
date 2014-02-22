@@ -75,8 +75,8 @@ inline gint32x8 to_int32(int16x8 a)
 #elif SIMDPP_USE_SSE2
     int16x8 b0, b1, sign;
     sign = shift_r<16>(a);
-    b0 = zip_lo(a, sign);
-    b1 = zip_hi(a, sign);
+    b0 = zip8_lo(a, sign);
+    b1 = zip8_hi(a, sign);
     return gint32x8(combine(b0, b1));
 #elif SIMDPP_USE_NEON
     int32x8 r;

@@ -71,9 +71,9 @@ inline gint16x16 to_int16(int8x16 a)
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
-    r1 = zip_lo(int8x16::zero(), a);
+    r1 = zip16_lo(int8x16::zero(), a);
     r1 = shift_r(r1, 8);
-    r2 = zip_hi(int8x16::zero(), a);
+    r2 = zip16_hi(int8x16::zero(), a);
     r2 = shift_r(r2, 8);
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
@@ -115,8 +115,8 @@ inline gint16x16 to_int16(uint8x16 a)
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
-    r1 = zip_lo(a, uint8x16::zero());
-    r2 = zip_hi(a, uint8x16::zero());
+    r1 = zip16_lo(a, uint8x16::zero());
+    r2 = zip16_hi(a, uint8x16::zero());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;

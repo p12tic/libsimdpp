@@ -44,10 +44,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-inline gint8x16 i_unzip_hi(gint8x16 a, gint8x16 b)
+inline gint8x16 i_unzip16_hi(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_hi(a, b);
+    return null::unzip16_hi(a, b);
 #elif SIMDPP_USE_SSE2
     a = _mm_srai_epi16(a, 8);
     b = _mm_srai_epi16(b, 8);
@@ -61,7 +61,7 @@ inline gint8x16 i_unzip_hi(gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_unzip_hi(gint8x32 a, gint8x32 b)
+inline gint8x32 i_unzip16_hi(gint8x32 a, gint8x32 b)
 {
     a = _mm256_srai_epi16(a, 8);
     b = _mm256_srai_epi16(b, 8);
@@ -71,17 +71,17 @@ inline gint8x32 i_unzip_hi(gint8x32 a, gint8x32 b)
 #endif
 
 template<unsigned N>
-gint8<N> i_unzip_hi(gint8<N> a, gint8<N> b)
+gint8<N> i_unzip16_hi(gint8<N> a, gint8<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_unzip_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_unzip16_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint16x8 i_unzip_hi(gint16x8 a, gint16x8 b)
+inline gint16x8 i_unzip8_hi(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_hi(a, b);
+    return null::unzip8_hi(a, b);
 #elif SIMDPP_USE_SSE2
     a = _mm_srai_epi32(a, 16);
     b = _mm_srai_epi32(b, 16);
@@ -95,7 +95,7 @@ inline gint16x8 i_unzip_hi(gint16x8 a, gint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint16x16 i_unzip_hi(gint16x16 a, gint16x16 b)
+inline gint16x16 i_unzip8_hi(gint16x16 a, gint16x16 b)
 {
     a = _mm256_srai_epi32(a, 16);
     b = _mm256_srai_epi32(b, 16);
@@ -105,17 +105,17 @@ inline gint16x16 i_unzip_hi(gint16x16 a, gint16x16 b)
 #endif
 
 template<unsigned N>
-gint16<N> i_unzip_hi(gint16<N> a, gint16<N> b)
+gint16<N> i_unzip8_hi(gint16<N> a, gint16<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_unzip_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_unzip8_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint32x4 i_unzip_hi(gint32x4 a, gint32x4 b)
+inline gint32x4 i_unzip4_hi(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_hi(a, b);
+    return null::unzip4_hi(a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return shuffle2<1,3,1,3>(a, b);
 #elif SIMDPP_USE_NEON
@@ -124,60 +124,60 @@ inline gint32x4 i_unzip_hi(gint32x4 a, gint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint32x8 i_unzip_hi(gint32x8 a, gint32x8 b)
+inline gint32x8 i_unzip4_hi(gint32x8 a, gint32x8 b)
 {
     return shuffle2<1,3,1,3>(a, b);
 }
 #endif
 
 template<unsigned N>
-gint32<N> i_unzip_hi(gint32<N> a, gint32<N> b)
+gint32<N> i_unzip4_hi(gint32<N> a, gint32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_unzip_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_unzip4_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-gint64<N> i_unzip_hi(gint64<N> a, gint64<N> b)
+gint64<N> i_unzip2_hi(gint64<N> a, gint64<N> b)
 {
-    return i_zip_hi(a, b);
+    return i_zip2_hi(a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline float32x4 i_unzip_hi(float32x4 a, float32x4 b)
+inline float32x4 i_unzip4_hi(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_hi(a, b);
+    return null::unzip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return shuffle2<1,3,1,3>(a,b);
 #elif SIMDPP_USE_NEON
     return vuzpq_f32(a, b).val[1];
 #elif SIMDPP_USE_ALTIVEC
-    return float32x4(i_unzip_hi((uint32x4)a, (uint32x4)b));
+    return float32x4(i_unzip4_hi((uint32x4)a, (uint32x4)b));
 #endif
 }
 
 #if SIMDPP_USE_AVX
-inline float32x8 i_unzip_hi(float32x8 a, float32x8 b)
+inline float32x8 i_unzip4_hi(float32x8 a, float32x8 b)
 {
     return shuffle2<1,3,1,3>(a, b);
 }
 #endif
 
 template<unsigned N>
-float32<N> i_unzip_hi(float32<N> a, float32<N> b)
+float32<N> i_unzip4_hi(float32<N> a, float32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_unzip_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_unzip4_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-float64<N> i_unzip_hi(float64<N> a, float64<N> b)
+float64<N> i_unzip2_hi(float64<N> a, float64<N> b)
 {
-    return i_zip_hi(a, b);
+    return i_zip2_hi(a, b);
 }
 
 } // namespace insn

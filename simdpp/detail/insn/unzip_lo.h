@@ -46,10 +46,10 @@ namespace detail {
 namespace insn {
 
 
-inline gint8x16 i_unzip_lo(gint8x16 a, gint8x16 b)
+inline gint8x16 i_unzip16_lo(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
+    return null::unzip16_lo(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, r;
     mask = uint16x8::ones();
@@ -68,7 +68,7 @@ inline gint8x16 i_unzip_lo(gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_unzip_lo(gint8x32 a, gint8x32 b)
+inline gint8x32 i_unzip16_lo(gint8x32 a, gint8x32 b)
 {
     uint16x16 mask, r;
     mask = uint16x16::ones();
@@ -81,17 +81,17 @@ inline gint8x32 i_unzip_lo(gint8x32 a, gint8x32 b)
 #endif
 
 template<unsigned N>
-gint8<N> i_unzip_lo(gint8<N> a, gint8<N> b)
+gint8<N> i_unzip16_lo(gint8<N> a, gint8<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_unzip_lo, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_unzip16_lo, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint16x8 i_unzip_lo(gint16x8 a, gint16x8 b)
+inline gint16x8 i_unzip8_lo(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
+    return null::unzip8_lo(a, b);
 #elif SIMDPP_USE_SSE4_1
     uint32x4 mask, r;
     mask = uint32x4::ones();
@@ -117,7 +117,7 @@ inline gint16x8 i_unzip_lo(gint16x8 a, gint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint16x16 i_unzip_lo(gint16x16 a, gint16x16 b)
+inline gint16x16 i_unzip8_lo(gint16x16 a, gint16x16 b)
 {
     uint32x8 mask, r;
     mask = uint32x8::ones();
@@ -130,17 +130,17 @@ inline gint16x16 i_unzip_lo(gint16x16 a, gint16x16 b)
 #endif
 
 template<unsigned N>
-gint16<N> i_unzip_lo(gint16<N> a, gint16<N> b)
+gint16<N> i_unzip8_lo(gint16<N> a, gint16<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_unzip_lo, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_unzip8_lo, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint32x4 i_unzip_lo(gint32x4 a, gint32x4 b)
+inline gint32x4 i_unzip4_lo(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
+    return null::unzip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON
@@ -152,32 +152,32 @@ inline gint32x4 i_unzip_lo(gint32x4 a, gint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint32x8 i_unzip_lo(gint32x8 a, gint32x8 b)
+inline gint32x8 i_unzip4_lo(gint32x8 a, gint32x8 b)
 {
     return shuffle2<0,2,0,2>(a,b);
 }
 #endif
 
 template<unsigned N>
-gint32<N> i_unzip_lo(gint32<N> a, gint32<N> b)
+gint32<N> i_unzip4_lo(gint32<N> a, gint32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_unzip_lo, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_unzip4_lo, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-gint64<N> i_unzip_lo(gint64<N> a, gint64<N> b)
+gint64<N> i_unzip2_lo(gint64<N> a, gint64<N> b)
 {
-    return zip_lo(a, b);
+    return zip2_lo(a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline float32x4 i_unzip_lo(float32x4 a, float32x4 b)
+inline float32x4 i_unzip4_lo(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip_lo(a, b);
+    return null::unzip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON
@@ -189,24 +189,24 @@ inline float32x4 i_unzip_lo(float32x4 a, float32x4 b)
 }
 
 #if SIMDPP_USE_AVX
-inline float32x8 i_unzip_lo(float32x8 a, float32x8 b)
+inline float32x8 i_unzip4_lo(float32x8 a, float32x8 b)
 {
     return shuffle2<0,2,0,2>(a,b);
 }
 #endif
 
 template<unsigned N>
-float32<N> i_unzip_lo(float32<N> a, float32<N> b)
+float32<N> i_unzip4_lo(float32<N> a, float32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_unzip_lo, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_unzip4_lo, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-inline float64<N> i_unzip_lo(float64<N> a, float64<N> b)
+inline float64<N> i_unzip2_lo(float64<N> a, float64<N> b)
 {
-    return i_zip_lo(a, b);
+    return i_zip2_lo(a, b);
 }
 
 } // namespace insn

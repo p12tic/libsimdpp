@@ -99,9 +99,9 @@ int16<8> expr_eval(expr_mul_hi<int16<8,E1>,
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
-    return unzip_hi((int16x8)mull_lo(a, b), (int16x8)mull_hi(a, b));
+    return unzip8_hi((int16x8)mull_lo(a, b), (int16x8)mull_hi(a, b));
 #elif SIMDPP_USE_ALTIVEC
-    return unzip_lo(mull_lo(a, b), mull_hi(a, b));
+    return unzip8_lo((int16x8)mull_lo(a, b), (int16x8)mull_hi(a, b));
 #endif
 }
 
@@ -138,9 +138,9 @@ uint16<8> expr_eval(expr_mul_hi<uint16<8,E1>,
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epu16(a, b);
 #elif SIMDPP_USE_NEON
-    return unzip_hi((uint16x8)mull_lo(a, b), (uint16x8)mull_hi(a, b));
+    return unzip8_hi((uint16x8)mull_lo(a, b), (uint16x8)mull_hi(a, b));
 #elif SIMDPP_USE_ALTIVEC
-    return unzip_lo(mull_lo(a, b), mull_hi(a, b));
+    return unzip8_lo((uint16x8)mull_lo(a, b), (uint16x8)mull_hi(a, b));
 #endif
 }
 

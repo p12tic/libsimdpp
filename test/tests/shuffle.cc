@@ -133,10 +133,10 @@ struct Test_insert_extract {
 template<class V>
 void test_shuffle_type128(TestCase &tc, V v1, V v2)
 {
-    TEST_PUSH(tc, V, zip_lo(v1, v2));
-    TEST_PUSH(tc, V, zip_hi(v1, v2));
-    TEST_PUSH(tc, V, unzip_lo(v1, v2));
-    TEST_PUSH(tc, V, unzip_hi(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::zip128_lo(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::zip128_hi(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::unzip128_lo(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::unzip128_hi(v1, v2));
 
     TemplateTestHelper<Test_move_r, V>::run(tc, v1);
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);
@@ -148,10 +148,10 @@ void test_shuffle_type128(TestCase &tc, V v1, V v2)
 template<class V>
 void test_shuffle_type256(TestCase &tc, V v1, V v2)
 {
-    TEST_PUSH(tc, V, zip_lo(v1, v2));
-    TEST_PUSH(tc, V, zip_hi(v1, v2));
-    TEST_PUSH(tc, V, unzip_lo(v1, v2));
-    TEST_PUSH(tc, V, unzip_hi(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::zip128_lo(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::zip128_hi(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::unzip128_lo(v1, v2));
+    TEST_PUSH(tc, V, simdpp::detail::insn::unzip128_hi(v1, v2));
 
     TemplateTestHelper<Test_move_r, V>::run(tc, v1);
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);

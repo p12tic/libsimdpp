@@ -89,7 +89,7 @@ int32<8> expr_eval(expr_mull<int16<8,E1>,
 #elif SIMDPP_USE_SSE2
     int16x8 lo = _mm_mullo_epi16(a, b);
     int16x8 hi = _mm_mulhi_epi16(a, b);
-    return (int32x8)combine(zip_lo(lo, hi), zip_hi(lo, hi));
+    return (int32x8)combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 #elif SIMDPP_USE_NEON
     int32x4 lo = vmull_s16(vget_low_s16(a), vget_low_s16(b));
     int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
@@ -97,7 +97,7 @@ int32<8> expr_eval(expr_mull<int16<8,E1>,
 #elif SIMDPP_USE_ALTIVEC
     int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
     int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
+    return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
 #endif
 }
 
@@ -110,7 +110,7 @@ int32<16> expr_eval(expr_mull<int16<16,E1>,
     int16<16> b = q.b.eval();
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epi16(a, b);
-    return (int32<16>) combine(zip_lo(lo, hi), zip_hi(lo, hi));
+    return (int32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif
 
@@ -144,7 +144,7 @@ uint32<8> expr_eval(expr_mull<uint16<8,E1>,
 #elif SIMDPP_USE_SSE2
     int16x8 lo = _mm_mullo_epi16(a, b);
     int16x8 hi = _mm_mulhi_epu16(a, b);
-    return (uint32x8) combine(zip_lo(lo, hi), zip_hi(lo, hi));
+    return (uint32x8) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 #elif SIMDPP_USE_NEON
     uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
     uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
@@ -152,7 +152,7 @@ uint32<8> expr_eval(expr_mull<uint16<8,E1>,
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
     uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
-    return combine(zip_lo(lo, hi), zip_hi(lo, hi));
+    return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
 #endif
 }
 
@@ -165,7 +165,7 @@ uint32<16> expr_eval(expr_mull<uint16<16,E1>,
     uint16<16> b = q.b.eval();
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epi16(a, b);
-    return (uint32<16>) combine(zip_lo(lo, hi), zip_hi(lo, hi));
+    return (uint32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif
 
@@ -200,10 +200,10 @@ int64<4> expr_eval(expr_mull<int32<4,E1>,
 #elif SIMDPP_USE_SSE4_1
     int32x4 al, ah, bl, bh;
     int64x2 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
+    al = zip4_lo(a, a);
+    bl = zip4_lo(b, b);
+    ah = zip4_hi(a, a);
+    bh = zip4_hi(b, b);
     rl = _mm_mul_epi32(al, bl);
     rh = _mm_mul_epi32(ah, bh);
     return combine(rl, rh);
@@ -225,10 +225,10 @@ int64<8> expr_eval(expr_mull<int32<8,E1>,
     int32<8> b = q.b.eval();
     int32x8 al, ah, bl, bh;
     int64x4 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
+    al = zip4_lo(a, a);
+    bl = zip4_lo(b, b);
+    ah = zip4_hi(a, a);
+    bh = zip4_hi(b, b);
     rl = _mm256_mul_epi32(al, bl);
     rh = _mm256_mul_epi32(ah, bh);
     return combine(rl, rh);
@@ -257,20 +257,19 @@ uint64<4> expr_eval(expr_mull<uint32<4,E1>,
     uint32<4> a = q.a.eval();
     uint32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    detail::mem_block<uint64x2> r1, r2;
-    detail::mem_block<uint32x4> ax(a), bx(b);
-    r1[0] = uint64_t(ax[0]) * bx[0];
-    r1[1] = uint64_t(ax[1]) * bx[1];
-    r2[0] = uint64_t(ax[3]) * bx[3];
-    r2[1] = uint64_t(ax[4]) * bx[4];
-    return combine(r1, r2);
+    uint64x4 r;
+    r[0].el(0) = uint64_t(a.el(0)) * b.el(0);
+    r[0].el(1) = uint64_t(a.el(1)) * b.el(1);
+    r[1].el(0) = uint64_t(a.el(2)) * b.el(2);
+    r[1].el(1) = uint64_t(a.el(3)) * b.el(3);
+    return r;
 #elif SIMDPP_USE_SSE2
     uint32x4 al, ah, bl, bh;
     uint64x2 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
+    al = zip4_lo(a, a);
+    bl = zip4_lo(b, b);
+    ah = zip4_hi(a, a);
+    bh = zip4_hi(b, b);
     rl = _mm_mul_epu32(al, bl);
     rh = _mm_mul_epu32(ah, bh);
     return combine(rl, rh);
@@ -290,10 +289,10 @@ uint64<8> expr_eval(expr_mull<uint32<8,E1>,
     uint32<8> b = q.b.eval();
     uint32x8 al, ah, bl, bh;
     uint64x4 rl, rh;
-    al = zip_lo(a, a);
-    bl = zip_lo(b, b);
-    ah = zip_hi(a, a);
-    bh = zip_hi(b, b);
+    al = zip4_lo(a, a);
+    bl = zip4_lo(b, b);
+    ah = zip4_hi(a, a);
+    bh = zip4_hi(b, b);
     rl = _mm256_mul_epu32(al, bl);
     rh = _mm256_mul_epu32(ah, bh);
     return combine(rl, rh);

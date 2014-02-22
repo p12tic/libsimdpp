@@ -43,10 +43,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-inline gint8x16 i_zip_lo(gint8x16 a, gint8x16 b)
+inline gint8x16 i_zip16_lo(gint8x16 a, gint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip_lo(a, b);
+    return null::zip16_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi8(a, b);
 #elif SIMDPP_USE_NEON
@@ -59,24 +59,24 @@ inline gint8x16 i_zip_lo(gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_zip_lo(gint8x32 a, gint8x32 b)
+inline gint8x32 i_zip16_lo(gint8x32 a, gint8x32 b)
 {
     return _mm256_unpacklo_epi8(a, b);
 }
 #endif
 
 template<unsigned N>
-gint8<N> i_zip_lo(gint8<N> a, gint8<N> b)
+gint8<N> i_zip16_lo(gint8<N> a, gint8<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_zip_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_zip16_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint16x8 i_zip_lo(gint16x8 a, gint16x8 b)
+inline gint16x8 i_zip8_lo(gint16x8 a, gint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip_lo(a, b);
+    return null::zip8_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -87,24 +87,24 @@ inline gint16x8 i_zip_lo(gint16x8 a, gint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint16x16 i_zip_lo(gint16x16 a, gint16x16 b)
+inline gint16x16 i_zip8_lo(gint16x16 a, gint16x16 b)
 {
     return _mm256_unpacklo_epi16(a, b);
 }
 #endif
 
 template<unsigned N>
-gint16<N> i_zip_lo(gint16<N> a, gint16<N> b)
+gint16<N> i_zip8_lo(gint16<N> a, gint16<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_zip_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_zip8_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint32x4 i_zip_lo(gint32x4 a, gint32x4 b)
+inline gint32x4 i_zip4_lo(gint32x4 a, gint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip_lo(a, b);
+    return null::zip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi32(a, b);
 #elif SIMDPP_USE_NEON
@@ -115,28 +115,28 @@ inline gint32x4 i_zip_lo(gint32x4 a, gint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint32x8 i_zip_lo(gint32x8 a, gint32x8 b)
+inline gint32x8 i_zip4_lo(gint32x8 a, gint32x8 b)
 {
     return _mm256_unpacklo_epi32(a, b);
 }
 #endif
 
 template<unsigned N>
-gint32<N> i_zip_lo(gint32<N> a, gint32<N> b)
+gint32<N> i_zip4_lo(gint32<N> a, gint32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_zip_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_zip4_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint64x2 i_zip_lo(gint64x2 a, gint64x2 b)
+inline gint64x2 i_zip2_lo(gint64x2 a, gint64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip_lo(a, b);
+    return null::zip2_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi64(a, b);
 #elif SIMDPP_USE_NEON
-    return neon::zip_lo(a, b);
+    return neon::zip2_lo(a, b);
 #elif SIMDPP_USE_ALTIVEC
     uint64x2 mask = make_shuffle_bytes16_mask<0, 2>(mask);
     return shuffle_bytes16(a, b, mask);
@@ -144,24 +144,24 @@ inline gint64x2 i_zip_lo(gint64x2 a, gint64x2 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint64x4 i_zip_lo(gint64x4 a, gint64x4 b)
+inline gint64x4 i_zip2_lo(gint64x4 a, gint64x4 b)
 {
     return _mm256_unpacklo_epi64(a, b);
 }
 #endif
 
 template<unsigned N>
-gint64<N> i_zip_lo(gint64<N> a, gint64<N> b)
+gint64<N> i_zip2_lo(gint64<N> a, gint64<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, i_zip_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, i_zip2_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline float32x4 i_zip_lo(float32x4 a, float32x4 b)
+inline float32x4 i_zip4_lo(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip_lo(a, b);
+    return null::zip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_ps(a, b);
 #elif SIMDPP_USE_NEON
@@ -172,43 +172,43 @@ inline float32x4 i_zip_lo(float32x4 a, float32x4 b)
 }
 
 #if SIMDPP_USE_AVX
-inline float32x8 i_zip_lo(float32x8 a, float32x8 b)
+inline float32x8 i_zip4_lo(float32x8 a, float32x8 b)
 {
     return _mm256_unpacklo_ps(a, b);
 }
 #endif
 
 template<unsigned N>
-float32<N> i_zip_lo(float32<N> a, float32<N> b)
+float32<N> i_zip4_lo(float32<N> a, float32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_zip_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_zip4_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline float64x2 i_zip_lo(float64x2 a, float64x2 b)
+inline float64x2 i_zip2_lo(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::zip_lo(a, b);
+    return null::zip2_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a),
                                        _mm_castpd_ps(b)));
 #elif SIMDPP_USE_NEON
-    return bit_cast<float64x2>(zip_lo(int64x2(a), int64x2(b)));
+    return bit_cast<float64x2>(zip2_lo(int64x2(a), int64x2(b)));
 #endif
 }
 
 #if SIMDPP_USE_AVX
-inline float64x4 i_zip_lo(float64x4 a, float64x4 b)
+inline float64x4 i_zip2_lo(float64x4 a, float64x4 b)
 {
     return _mm256_unpacklo_pd(a, b);
 }
 #endif
 
 template<unsigned N>
-float64<N> i_zip_lo(float64<N> a, float64<N> b)
+float64<N> i_zip2_lo(float64<N> a, float64<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, i_zip_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, i_zip2_lo, a, b)
 }
 
 

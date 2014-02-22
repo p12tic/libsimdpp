@@ -29,6 +29,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/not_implemented.h>
+#include <simdpp/detail/width.h>
 #include <simdpp/core/permute_bytes16.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
@@ -135,10 +136,11 @@ inline gint8x32 transpose_inplace(gint8x32 a)
     @par 256-bit version:
     @icost{AVX2, 24}
 */
-inline void partial_transpose8(gint8x16& a0, gint8x16& a1,
-                               gint8x16& a2, gint8x16& a3,
-                               gint8x16& a4, gint8x16& a5,
-                               gint8x16& a6, gint8x16& a7)
+template<unsigned N>
+inline void partial_transpose8(gint8<N>& a0, gint8<N>& a1,
+                               gint8<N>& a2, gint8<N>& a3,
+                               gint8<N>& a4, gint8<N>& a5,
+                               gint8<N>& a6, gint8<N>& a7)
 {
     /*
     [a0;a1;a2;a3;a4;a5;a6;a7;...]
@@ -150,15 +152,15 @@ inline void partial_transpose8(gint8x16& a0, gint8x16& a1,
     [g0;g1;g2;g3;g4;g5;g6;g7;...]
     [h0;h1;h2;h3;h4;h5;h6;h7;...]
     */
-    gint16x8 b0, b1, b2, b3, b4, b5, b6, b7;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_lo(a2, a3);
-    b2 = zip_lo(a4, a5);
-    b3 = zip_lo(a6, a7);
-    b4 = zip_hi(a0, a1);
-    b5 = zip_hi(a2, a3);
-    b6 = zip_hi(a4, a5);
-    b7 = zip_hi(a6, a7);
+    typename detail::same_width<gint8<N>>::b16 b0, b1, b2, b3, b4, b5, b6, b7;
+    b0 = zip16_lo(a0, a1);
+    b1 = zip16_lo(a2, a3);
+    b2 = zip16_lo(a4, a5);
+    b3 = zip16_lo(a6, a7);
+    b4 = zip16_hi(a0, a1);
+    b5 = zip16_hi(a2, a3);
+    b6 = zip16_hi(a4, a5);
+    b7 = zip16_hi(a6, a7);
     /*
     [a0;b0;a1;b1;...;a7;b7]
     [c0;d0;c1;d1;...;c7;d7]
@@ -169,16 +171,16 @@ inline void partial_transpose8(gint8x16& a0, gint8x16& a1,
     [e8;f8;e9;f9;...;e15;f15]
     [g8;h8;g9;h9;...;g15;t15]
     */
-    gint32x4 c0, c1, c2, c3, c4, c5, c6, c7;
+    typename detail::same_width<gint8<N>>::b32 c0, c1, c2, c3, c4, c5, c6, c7;
 
-    c0 = zip_lo(b0, b1);
-    c1 = zip_lo(b2, b3);
-    c2 = zip_hi(b0, b1);
-    c3 = zip_hi(b2, b3);
-    c4 = zip_lo(b4, b5);
-    c5 = zip_lo(b6, b7);
-    c6 = zip_hi(b4, b5);
-    c7 = zip_hi(b6, b7);
+    c0 = zip8_lo(b0, b1);
+    c1 = zip8_lo(b2, b3);
+    c2 = zip8_hi(b0, b1);
+    c3 = zip8_hi(b2, b3);
+    c4 = zip8_lo(b4, b5);
+    c5 = zip8_lo(b6, b7);
+    c6 = zip8_hi(b4, b5);
+    c7 = zip8_hi(b6, b7);
     /*
     [a0;b0;c0;d0;...;a3;b3;c3;d3]
     [e0;f0;g0;h0;...;e3;f3;g3;h3]
@@ -189,49 +191,14 @@ inline void partial_transpose8(gint8x16& a0, gint8x16& a1,
     [a12;b12;c12;d12;...;a15;b15;c15;d15]
     [e12;f12;g12;h12;...;e15;f15;g15;h15]
     */
-    a0 = zip_lo(c0, c1);
-    a1 = zip_hi(c0, c1);
-    a2 = zip_lo(c2, c3);
-    a3 = zip_hi(c2, c3);
-    a4 = zip_lo(c4, c5);
-    a5 = zip_hi(c4, c5);
-    a6 = zip_lo(c6, c7);
-    a7 = zip_hi(c6, c7);
-}
-inline void partial_transpose8(gint8x32& a0, gint8x32& a1,
-                               gint8x32& a2, gint8x32& a3,
-                               gint8x32& a4, gint8x32& a5,
-                               gint8x32& a6, gint8x32& a7)
-{
-    gint16x16 b0, b1, b2, b3, b4, b5, b6, b7;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_lo(a2, a3);
-    b2 = zip_lo(a4, a5);
-    b3 = zip_lo(a6, a7);
-    b4 = zip_hi(a0, a1);
-    b5 = zip_hi(a2, a3);
-    b6 = zip_hi(a4, a5);
-    b7 = zip_hi(a6, a7);
-
-    gint32x8 c0, c1, c2, c3, c4, c5, c6, c7;
-
-    c0 = zip_lo(b0, b1);
-    c1 = zip_lo(b2, b3);
-    c2 = zip_hi(b0, b1);
-    c3 = zip_hi(b2, b3);
-    c4 = zip_lo(b4, b5);
-    c5 = zip_lo(b6, b7);
-    c6 = zip_hi(b4, b5);
-    c7 = zip_hi(b6, b7);
-
-    a0 = zip_lo(c0, c1);
-    a1 = zip_hi(c0, c1);
-    a2 = zip_lo(c2, c3);
-    a3 = zip_hi(c2, c3);
-    a4 = zip_lo(c4, c5);
-    a5 = zip_hi(c4, c5);
-    a6 = zip_lo(c6, c7);
-    a7 = zip_hi(c6, c7);
+    a0 = zip4_lo(c0, c1);
+    a1 = zip4_hi(c0, c1);
+    a2 = zip4_lo(c2, c3);
+    a3 = zip4_hi(c2, c3);
+    a4 = zip4_lo(c4, c5);
+    a5 = zip4_hi(c4, c5);
+    a6 = zip4_lo(c6, c7);
+    a7 = zip4_hi(c6, c7);
 }
 /// @}
 

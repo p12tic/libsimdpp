@@ -44,6 +44,7 @@
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/adv/transpose.h>
+#include <simdpp/detail/insn/zip128.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -58,16 +59,16 @@ inline void v_mem_pack2_impl(T& a, T& b)
     T c1, c2;
     c1 = a;
     c2 = b;
-    a = zip_lo(c1, c2);
-    b = zip_hi(c1, c2);
+    a = zip128_lo(c1, c2);
+    b = zip128_hi(c1, c2);
 }
 
 template<class T>
 inline void v256_mem_pack2_impl(T& a, T& b)
 {
     T c1, c2;
-    c1 = zip_lo(a, b);
-    c2 = zip_hi(a, b);
+    c1 = zip128_lo(a, b);
+    c2 = zip128_hi(a, b);
     a = shuffle128<0,2>(c1, c2);
     b = shuffle128<1,3>(c1, c2);
 }
@@ -142,16 +143,16 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     using w_b8 = T;
 
     w_b16 t0, t1, t2, t3;
-    t0 = zip_lo(a, b);
-    t1 = zip_hi(a, b);
-    t2 = zip_lo(c, w_b8::zero());
-    t3 = zip_hi(c, w_b8::zero());
+    t0 = zip16_lo(a, b);
+    t1 = zip16_hi(a, b);
+    t2 = zip16_lo(c, w_b8::zero());
+    t3 = zip16_hi(c, w_b8::zero());
 
     w_b8 u0, u1, u2, u3;
-    u0 = zip_lo(t0, t2);
-    u1 = zip_hi(t0, t2);
-    u2 = zip_lo(t1, t3);
-    u3 = zip_hi(t1, t3);
+    u0 = zip8_lo(t0, t2);
+    u1 = zip8_hi(t0, t2);
+    u2 = zip8_lo(t1, t3);
+    u3 = zip8_hi(t1, t3);
 
     // [a0, b0, c0, 0, a1, b1, c1, 0, a2, b2, c2, 0, a3, b3, c3, 0]
     // [a4, b4, c4, 0, a5, b5, c5, 0, a6, b6, c6, 0, a7, b7, c7, 0]
@@ -279,16 +280,16 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     using w_b32 = typename same_width<T>::b32;
 
     w_b32 t0, t1, t2, t3;
-    t0 = zip_lo(a, b);
-    t1 = zip_hi(a, b);
-    t2 = zip_lo(c, w_b16::zero());
-    t3 = zip_hi(c, w_b16::zero());
+    t0 = zip8_lo(a, b);
+    t1 = zip8_hi(a, b);
+    t2 = zip8_lo(c, w_b16::zero());
+    t3 = zip8_hi(c, w_b16::zero());
 
     w_b16 u0, u1, u2, u3;
-    u0 = zip_lo(t0, t2);
-    u1 = zip_hi(t0, t2);
-    u2 = zip_lo(t1, t3);
-    u3 = zip_hi(t1, t3);
+    u0 = zip4_lo(t0, t2);
+    u1 = zip4_hi(t0, t2);
+    u2 = zip4_lo(t1, t3);
+    u3 = zip4_hi(t1, t3);
 
     // [a0, b0, c0, 0, a1, b1, c1, 0 ]
     // [a2, b2, c2, 0, a3, b3, c3, 0 ]
@@ -521,27 +522,27 @@ template<class T> void v_mem_pack4_impl8(T& a, T& b, T& c, T& d)
     w_b8 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
     d0 = a;  d1 = b;  d2 = c;  d3 = d;
-    e0 = zip_lo(d0, d2);
-    e1 = zip_lo(d1, d3);
-    e2 = zip_hi(d0, d2);
-    e3 = zip_hi(d1, d3);
+    e0 = zip2_lo(d0, d2);
+    e1 = zip2_lo(d1, d3);
+    e2 = zip2_hi(d0, d2);
+    e3 = zip2_hi(d1, d3);
     // [a0 .. a7,  c0 .. c7  ]
     // [b0 .. b7,  d0 .. d7  ]
     // [a8 .. a15, c8 .. c15 ]
     // [b8 .. b15, d8 .. d15 ]
     w_b16 f0, f1, f2, f3;
-    f0 = zip_lo(e0, e1);
-    f1 = zip_hi(e0, e1);
-    f2 = zip_lo(e2, e3);
-    f3 = zip_hi(e2, e3);
+    f0 = zip16_lo(e0, e1);
+    f1 = zip16_hi(e0, e1);
+    f2 = zip16_lo(e2, e3);
+    f3 = zip16_hi(e2, e3);
     // [a0, b0, a1, b1, a2, b2, a3, b3, a4, b4, a5, b5, a6, b6, a7, b7 ]
     // [c0, d0, c1, d1, c2, d2, c3, d3, c4, d4, c5, d5, c6, d6, c7, d7 ]
     // [a8, b8, a9, b9, a10,b10,a11,b11,a12,b12,a13,b13,a14,b14,a15,b15]
     // [c8, d8, c9, d9, c10,d10,c11,d11,c12,d12,c13,d13,c14,d14,c15,d15]
-    a = zip_lo(f0, f1);
-    b = zip_hi(f0, f1);
-    c = zip_lo(f2, f3);
-    d = zip_hi(f2, f3);
+    a = zip8_lo(f0, f1);
+    b = zip8_hi(f0, f1);
+    c = zip8_lo(f2, f3);
+    d = zip8_hi(f2, f3);
 #endif
 }
 
@@ -554,27 +555,27 @@ template<class T> void v_mem_pack4_impl16(T& a, T& b, T& c, T& d)
     w_b16 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
     d0 = a;  d1 = b;  d2 = c;  d3 = d;
-    e0 = zip_lo(d0, d2);
-    e1 = zip_lo(d1, d3);
-    e2 = zip_hi(d0, d2);
-    e3 = zip_hi(d1, d3);
+    e0 = zip2_lo(d0, d2);
+    e1 = zip2_lo(d1, d3);
+    e2 = zip2_hi(d0, d2);
+    e3 = zip2_hi(d1, d3);
     // [a0,a1,a2,a3,c0,c1,c2,c3]
     // [b0,b1,b2,b3,d0,d1,d2,d3]
     // [a4,a5,a6,a7,c4,c5,c6,c7]
     // [b4,b5,b6,b7,d4,d5,d6,d7]
     w_b32 f0, f1, f2, f3;
-    f0 = zip_lo(e0, e1);
-    f1 = zip_hi(e0, e1);
-    f2 = zip_lo(e2, e3);
-    f3 = zip_hi(e2, e3);
+    f0 = zip8_lo(e0, e1);
+    f1 = zip8_hi(e0, e1);
+    f2 = zip8_lo(e2, e3);
+    f3 = zip8_hi(e2, e3);
     // [a0,b0,a1,b1,a2,b2,a3,b3]
     // [c0,d0,c1,d1,c2,d2,c3,d3]
     // [a4,b4,a5,b5,a6,b6,a7,b7]
     // [c4,d4,c5,d5,c6,d6,c7,d7]
-    a = zip_lo(f0, f1);
-    b = zip_hi(f0, f1);
-    c = zip_lo(f2, f3);
-    d = zip_hi(f2, f3);
+    a = zip4_lo(f0, f1);
+    b = zip4_hi(f0, f1);
+    c = zip4_lo(f2, f3);
+    d = zip4_hi(f2, f3);
 }
 
 template<class T> void v_mem_pack4_impl64(T& a, T& b, T& c, T& d)

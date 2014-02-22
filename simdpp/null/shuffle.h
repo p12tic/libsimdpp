@@ -44,8 +44,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace null {
 
+namespace null_detail {
+
 template<class V>
-V zip_lo(V a, V b)
+V zip_lo_impl(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length/2; i++) {
@@ -56,7 +58,7 @@ V zip_lo(V a, V b)
 }
 
 template<class V>
-V zip_hi(V a, V b)
+V zip_hi_impl(V a, V b)
 {
     V r;
     constexpr unsigned half = V::length/2;
@@ -66,6 +68,51 @@ V zip_hi(V a, V b)
     }
     return r;
 }
+
+
+template<class V>
+V unzip_lo_impl(V a, V b)
+{
+    V r;
+    unsigned half = V::length/2;
+    for (unsigned i = 0; i < half; i++) {
+        r.el(i) = a.el(i*2);
+        r.el(i + half) = b.el(i*2);
+    }
+    return r;
+}
+
+template<class V>
+V unzip_hi_impl(V a, V b)
+{
+    V r;
+    unsigned half = V::length/2;
+    for (unsigned i = 0; i < half; i++) {
+        r.el(i) = a.el(i*2+1);
+        r.el(i + half) = b.el(i*2+1);
+    }
+    return r;
+}
+
+} // namespace null_detail
+
+template<class V> V zip16_lo(V a, V b) { return null_detail::zip_lo_impl(a, b); }
+template<class V> V zip8_lo(V a, V b)  { return null_detail::zip_lo_impl(a, b); }
+template<class V> V zip4_lo(V a, V b)  { return null_detail::zip_lo_impl(a, b); }
+template<class V> V zip2_lo(V a, V b)  { return null_detail::zip_lo_impl(a, b); }
+template<class V> V zip16_hi(V a, V b) { return null_detail::zip_hi_impl(a, b); }
+template<class V> V zip8_hi(V a, V b)  { return null_detail::zip_hi_impl(a, b); }
+template<class V> V zip4_hi(V a, V b)  { return null_detail::zip_hi_impl(a, b); }
+template<class V> V zip2_hi(V a, V b)  { return null_detail::zip_hi_impl(a, b); }
+
+template<class V> V unzip16_lo(V a, V b) { return null_detail::unzip_lo_impl(a, b); }
+template<class V> V unzip8_lo(V a, V b)  { return null_detail::unzip_lo_impl(a, b); }
+template<class V> V unzip4_lo(V a, V b)  { return null_detail::unzip_lo_impl(a, b); }
+template<class V> V unzip2_lo(V a, V b)  { return null_detail::unzip_lo_impl(a, b); }
+template<class V> V unzip16_hi(V a, V b) { return null_detail::unzip_hi_impl(a, b); }
+template<class V> V unzip8_hi(V a, V b)  { return null_detail::unzip_hi_impl(a, b); }
+template<class V> V unzip4_hi(V a, V b)  { return null_detail::unzip_hi_impl(a, b); }
+template<class V> V unzip2_hi(V a, V b)  { return null_detail::unzip_hi_impl(a, b); }
 
 template<unsigned pos, class V>
 V splat(V v)
@@ -86,30 +133,6 @@ V align(V lo, V hi)
     }
     for (unsigned i = 16-shift; i < 16; i++) {
         r.el(i) = hi.el(i - 16 + shift);
-    }
-    return r;
-}
-
-template<class V>
-V unzip_lo(V a, V b)
-{
-    V r;
-    unsigned half = V::length/2;
-    for (unsigned i = 0; i < half; i++) {
-        r.el(i) = a.el(i*2);
-        r.el(i + half) = b.el(i*2);
-    }
-    return r;
-}
-
-template<class V>
-V unzip_hi(V a, V b)
-{
-    V r;
-    unsigned half = V::length/2;
-    for (unsigned i = 0; i < half; i++) {
-        r.el(i) = a.el(i*2+1);
-        r.el(i + half) = b.el(i*2+1);
     }
     return r;
 }

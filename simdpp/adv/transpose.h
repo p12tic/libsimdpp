@@ -78,8 +78,8 @@ inline void transpose2(gint16x8& a0, gint16x8& a1)
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     gint32x4 b0, b1;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
+    b0 = zip8_lo(a0, a1);
+    b1 = zip8_hi(a0, a1);
     a0 = shuffle2<0,2,0,2>(b0, b1);
     a1 = shuffle2<1,3,1,3>(b0, b1);
 #elif SIMDPP_USE_NEON
@@ -100,8 +100,8 @@ inline void transpose2(gint16x16& a0, gint16x16& a1)
 {
 #if SIMDPP_USE_AVX2
     gint32x8 b0, b1;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
+    b0 = zip8_lo(a0, a1);
+    b1 = zip8_hi(a0, a1);
     a0 = shuffle2<0,2,0,2>(b0, b1);
     a1 = shuffle2<1,3,1,3>(b0, b1);
 #else
@@ -138,10 +138,10 @@ inline void transpose2(gint32x4& a0, gint32x4& a1)
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     gint64x2 b0, b1;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
-    a0 = zip_lo(b0, b1);
-    a1 = zip_hi(b0, b1);
+    b0 = zip4_lo(a0, a1);
+    b1 = zip4_hi(a0, a1);
+    a0 = zip2_lo(b0, b1);
+    a1 = zip2_hi(b0, b1);
 #elif SIMDPP_USE_NEON
     auto r = vtrnq_u32(a0, a1);
     a0 = r.val[0];
@@ -160,10 +160,10 @@ inline void transpose2(gint32x8& a0, gint32x8& a1)
 {
 #if SIMDPP_USE_AVX2
     gint64x4 b0, b1;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
-    a0 = zip_lo(b0, b1);
-    a1 = zip_hi(b0, b1);
+    b0 = zip4_lo(a0, a1);
+    b1 = zip4_hi(a0, a1);
+    a0 = zip2_lo(b0, b1);
+    a1 = zip2_hi(b0, b1);
 #else
     transpose2(a0[0], a1[0]);
     transpose2(a0[1], a1[1]);
@@ -198,8 +198,8 @@ inline void transpose2(gint64x2& a0, gint64x2& a1)
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     gint64x2 b0;
-    b0 = zip_lo(a0, a1);
-    a1 = zip_hi(a0, a1);
+    b0 = zip2_lo(a0, a1);
+    a1 = zip2_hi(a0, a1);
     a0 = b0;
 #elif SIMDPP_USE_NEON
     neon::transpose2(a0, a1);
@@ -217,8 +217,8 @@ inline void transpose2(gint64x4& a0, gint64x4& a1)
 {
 #if SIMDPP_USE_AVX2
     gint64x4 b0;
-    b0 = zip_lo(a0, a1);
-    a1 = zip_hi(a0, a1);
+    b0 = zip2_lo(a0, a1);
+    a1 = zip2_hi(a0, a1);
     a0 = b0;
 #else
     transpose2(a0[0], a1[0]);
@@ -254,10 +254,10 @@ inline void transpose2(float32x4& a0, float32x4& a1)
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     float64x2 b0, b1;
-    b0 = bit_cast<float64x2>(zip_lo(a0, a1));
-    b1 = bit_cast<float64x2>(zip_hi(a0, a1));
-    a0 = bit_cast<float32x4>(zip_lo(b0, b1));
-    a1 = bit_cast<float32x4>(zip_hi(b0, b1));
+    b0 = bit_cast<float64x2>(zip4_lo(a0, a1));
+    b1 = bit_cast<float64x2>(zip4_hi(a0, a1));
+    a0 = bit_cast<float32x4>(zip2_lo(b0, b1));
+    a1 = bit_cast<float32x4>(zip2_hi(b0, b1));
 #elif SIMDPP_USE_NEON
     auto r = vtrnq_f32(a0, a1);
     a0 = r.val[0];
@@ -276,10 +276,10 @@ inline void transpose2(float32x8& a0, float32x8& a1)
 {
 #if SIMDPP_USE_AVX
     float64x4 b0, b1;
-    b0 = bit_cast<float64x4>(zip_lo(a0, a1));
-    b1 = bit_cast<float64x4>(zip_hi(a0, a1));
-    a0 = bit_cast<float32x8>(zip_lo(b0, b1));
-    a1 = bit_cast<float32x8>(zip_hi(b0, b1));
+    b0 = bit_cast<float64x4>(zip4_lo(a0, a1));
+    b1 = bit_cast<float64x4>(zip4_hi(a0, a1));
+    a0 = bit_cast<float32x8>(zip2_lo(b0, b1));
+    a1 = bit_cast<float32x8>(zip2_hi(b0, b1));
 #else
     transpose2(a0[0], a1[0]);
     transpose2(a0[1], a1[1]);
@@ -313,8 +313,8 @@ inline void transpose2(float64x2& a0, float64x2& a1)
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     float64x2 b0;
-    b0 = zip_lo(a0, a1);
-    a1 = zip_hi(a0, a1);
+    b0 = zip2_lo(a0, a1);
+    a1 = zip2_hi(a0, a1);
     a0 = b0;
 #elif SIMDPP_USE_NEON
     int64x2 b0, b1;
@@ -328,8 +328,8 @@ inline void transpose2(float64x4& a0, float64x4& a1)
 {
 #if SIMDPP_USE_AVX
     float64x4 b0;
-    b0 = zip_lo(a0, a1);
-    a1 = zip_hi(a0, a1);
+    b0 = zip2_lo(a0, a1);
+    a1 = zip2_hi(a0, a1);
     a0 = b0;
 #else
     transpose2(a0[0], a1[0]);
@@ -375,19 +375,19 @@ inline void transpose4(gint8x16& a0, gint8x16& a1,
     null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     gint16x8 b0, b1, b2, b3;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_lo(a2, a3);
-    b2 = zip_hi(a0, a1);
-    b3 = zip_hi(a2, a3);
+    b0 = zip16_lo(a0, a1);
+    b1 = zip16_lo(a2, a3);
+    b2 = zip16_hi(a0, a1);
+    b3 = zip16_hi(a2, a3);
     // [a0,b0,a1,b1,a2,b2,a3,b3 ... b7]
     // [c0,d0,c1,d1,c2,d2,c3,d3 ... d7]
     // [a8 ... b15]
     // [c8 ... d15]
     gint32x4 c0, c1, c2, c3;
-    c0 = zip_lo(b0, b1);
-    c1 = zip_hi(b0, b1);
-    c2 = zip_lo(b2, b3);
-    c3 = zip_hi(b2, b3);
+    c0 = zip8_lo(b0, b1);
+    c1 = zip8_hi(b0, b1);
+    c2 = zip8_lo(b2, b3);
+    c3 = zip8_hi(b2, b3);
     // [a0,b0,c0,d0,[a..d]1, [a..d]2,  [a..d]3]
     // [[a..d]4,    [a..d]5, [a..d]6,  [a..d]7]
     // [[a..d]8,    [a..d]9, [a..d]10, [a..d]11]
@@ -416,15 +416,15 @@ inline void transpose4(gint8x32& a0, gint8x32& a1,
 {
 #if SIMDPP_USE_AVX2
     gint16x16 b0, b1, b2, b3;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_lo(a2, a3);
-    b2 = zip_hi(a0, a1);
-    b3 = zip_hi(a2, a3);
+    b0 = zip16_lo(a0, a1);
+    b1 = zip16_lo(a2, a3);
+    b2 = zip16_hi(a0, a1);
+    b3 = zip16_hi(a2, a3);
     gint32x8 c0, c1, c2, c3;
-    c0 = zip_lo(b0, b1);
-    c1 = zip_hi(b0, b1);
-    c2 = zip_lo(b2, b3);
-    c3 = zip_hi(b2, b3);
+    c0 = zip8_lo(b0, b1);
+    c1 = zip8_hi(b0, b1);
+    c2 = zip8_lo(b2, b3);
+    c3 = zip8_hi(b2, b3);
     transpose4(c0, c1, c2, c3);
     a0 = c0;
     a1 = c1;
@@ -469,26 +469,26 @@ inline void transpose4(gint16x8& a0, gint16x8& a1,
 #elif SIMDPP_USE_SSE2
     gint32x4 b0, b1, b2, b3;
     gint64x2 c0, c1, c2, c3;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
-    b2 = zip_lo(a2, a3);
-    b3 = zip_hi(a2, a3);
+    b0 = zip8_lo(a0, a1);
+    b1 = zip8_hi(a0, a1);
+    b2 = zip8_lo(a2, a3);
+    b3 = zip8_hi(a2, a3);
     // [a0,b0,a1,b1,a2,b2,a3,b3]
     // [a4,b4,a5,b5,a6,b6,a7,b7]
     // [c0,d0,c1,d1,c2,d2,c3,d3]
     // [c4,d4,c5,d5,c6,d6,c7,d7]
-    c0 = zip_lo(b0, b2);
-    c1 = zip_hi(b0, b2);
-    c2 = zip_lo(b1, b3);
-    c3 = zip_hi(b1, b3);
+    c0 = zip4_lo(b0, b2);
+    c1 = zip4_hi(b0, b2);
+    c2 = zip4_lo(b1, b3);
+    c3 = zip4_hi(b1, b3);
     // [a0,b0,c0,d0,a1,b1,c1,d1]
     // [a2,b2,c2,d2,a3,b3,c3,d3]
     // [a4,b4,c4,d4,a5,b5,c5,d5]
     // [a6,b6,c6,d6,a7,b7,c7,d7]
-    a0 = zip_lo(c0, c2);
-    a1 = zip_hi(c0, c2);
-    a2 = zip_lo(c1, c3);
-    a3 = zip_hi(c1, c3);
+    a0 = zip2_lo(c0, c2);
+    a1 = zip2_hi(c0, c2);
+    a2 = zip2_lo(c1, c3);
+    a3 = zip2_hi(c1, c3);
     // [a0,b0,c0,d0,a4,b4,c4,d4]
     // [a1,b1,c1,d1,a5,b5,c5,d5]
     // [a2,b2,c2,d2,a6,b6,c6,d6]
@@ -510,20 +510,20 @@ inline void transpose4(gint16x16& a0, gint16x16& a1,
 #if SIMDPP_USE_AVX2
     gint32x8 b0, b1, b2, b3;
     gint64x4 c0, c1, c2, c3;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
-    b2 = zip_lo(a2, a3);
-    b3 = zip_hi(a2, a3);
+    b0 = zip8_lo(a0, a1);
+    b1 = zip8_hi(a0, a1);
+    b2 = zip8_lo(a2, a3);
+    b3 = zip8_hi(a2, a3);
 
-    c0 = zip_lo(b0, b2);
-    c1 = zip_hi(b0, b2);
-    c2 = zip_lo(b1, b3);
-    c3 = zip_hi(b1, b3);
+    c0 = zip4_lo(b0, b2);
+    c1 = zip4_hi(b0, b2);
+    c2 = zip4_lo(b1, b3);
+    c3 = zip4_hi(b1, b3);
 
-    a0 = zip_lo(c0, c2);
-    a1 = zip_hi(c0, c2);
-    a2 = zip_lo(c1, c3);
-    a3 = zip_hi(c1, c3);
+    a0 = zip2_lo(c0, c2);
+    a1 = zip2_hi(c0, c2);
+    a2 = zip2_lo(c1, c3);
+    a3 = zip2_hi(c1, c3);
 #else
     transpose4(a0[0], a1[0], a2[0], a3[0]);
     transpose4(a0[1], a1[1], a2[1], a3[1]);
@@ -550,18 +550,18 @@ void sse_transpose4x32_impl(V& a0, V& a1, V& a2, V& a3)
     // [c0,c1,c2,c3]
     // [d0,d1,d2,d3]
     // bit_cast needed for float versions
-    b0 = bit_cast<Z>(zip_lo(a0, a1));
-    b1 = bit_cast<Z>(zip_hi(a0, a1));
-    b2 = bit_cast<Z>(zip_lo(a2, a3));
-    b3 = bit_cast<Z>(zip_hi(a2, a3));
+    b0 = bit_cast<Z>(zip4_lo(a0, a1));
+    b1 = bit_cast<Z>(zip4_hi(a0, a1));
+    b2 = bit_cast<Z>(zip4_lo(a2, a3));
+    b3 = bit_cast<Z>(zip4_hi(a2, a3));
     // [a0,b0,a1,b1]
     // [a2,b2,a3,b3]
     // [c0,d0,c1,d1]
     // [c2,d2,c3,d3]
-    a0 = bit_cast<V>(zip_lo(b0, b2));
-    a1 = bit_cast<V>(zip_hi(b0, b2));
-    a2 = bit_cast<V>(zip_lo(b1, b3));
-    a3 = bit_cast<V>(zip_hi(b1, b3));
+    a0 = bit_cast<V>(zip2_lo(b0, b2));
+    a1 = bit_cast<V>(zip2_hi(b0, b2));
+    a2 = bit_cast<V>(zip2_lo(b1, b3));
+    a3 = bit_cast<V>(zip2_hi(b1, b3));
 }
 } // namespace detail
 
@@ -715,14 +715,14 @@ inline void transpose8(gint8x16& a0, gint8x16& a1,
     [a12,...,h12,a13,...,h13]
     [a14,...,h14,a15,...,h15]
     */
-    a0 = zip_lo(d0, d4);
-    a1 = zip_hi(d0, d4);
-    a2 = zip_lo(d1, d5);
-    a3 = zip_hi(d1, d5);
-    a4 = zip_lo(d2, d6);
-    a5 = zip_hi(d2, d6);
-    a6 = zip_lo(d3, d7);
-    a7 = zip_hi(d3, d7);
+    a0 = zip2_lo(d0, d4);
+    a1 = zip2_hi(d0, d4);
+    a2 = zip2_lo(d1, d5);
+    a3 = zip2_hi(d1, d5);
+    a4 = zip2_lo(d2, d6);
+    a5 = zip2_hi(d2, d6);
+    a6 = zip2_lo(d3, d7);
+    a7 = zip2_hi(d3, d7);
 
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     gint16x8 b0, b1, b2, b3, b4, b5, b6, b7;
@@ -792,14 +792,14 @@ inline void transpose8(gint8x32& a0, gint8x32& a1,
     d0 = a0;  d1 = a1;  d2 = a2;  d3 = a3;
     d4 = a4;  d5 = a5;  d6 = a6;  d7 = a7;
 
-    a0 = zip_lo(d0, d4);
-    a1 = zip_hi(d0, d4);
-    a2 = zip_lo(d1, d5);
-    a3 = zip_hi(d1, d5);
-    a4 = zip_lo(d2, d6);
-    a5 = zip_hi(d2, d6);
-    a6 = zip_lo(d3, d7);
-    a7 = zip_hi(d3, d7);
+    a0 = zip2_lo(d0, d4);
+    a1 = zip2_hi(d0, d4);
+    a2 = zip2_lo(d1, d5);
+    a3 = zip2_hi(d1, d5);
+    a4 = zip2_lo(d2, d6);
+    a5 = zip2_hi(d2, d6);
+    a6 = zip2_lo(d3, d7);
+    a7 = zip2_hi(d3, d7);
 #else
     transpose8(a0[0], a1[0], a2[0], a3[0], a4[0], a5[0], a6[0], a7[0]);
     transpose8(a0[1], a1[1], a2[1], a3[1], a4[1], a5[1], a6[1], a7[1]);
@@ -847,14 +847,14 @@ inline void transpose8(gint16x8& a0, gint16x8& a1,
     null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 #elif SIMDPP_USE_SSE2
     gint32x4 b0, b1, b2, b3, b4, b5, b6, b7;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
-    b2 = zip_lo(a2, a3);
-    b3 = zip_hi(a2, a3);
-    b4 = zip_lo(a4, a5);
-    b5 = zip_hi(a4, a5);
-    b6 = zip_lo(a6, a7);
-    b7 = zip_hi(a6, a7);
+    b0 = zip8_lo(a0, a1);
+    b1 = zip8_hi(a0, a1);
+    b2 = zip8_lo(a2, a3);
+    b3 = zip8_hi(a2, a3);
+    b4 = zip8_lo(a4, a5);
+    b5 = zip8_hi(a4, a5);
+    b6 = zip8_lo(a6, a7);
+    b7 = zip8_hi(a6, a7);
     /*
     [a0,b0,a1,b1,a2,b2,a3,b3]
     [a4,b4,a5,b5,a6,b6,a7,b7]
@@ -866,14 +866,14 @@ inline void transpose8(gint16x8& a0, gint16x8& a1,
     [g4,h4,g5,h5,g6,h6,g7,h7]
     */
     gint64x2 c0, c1, c2, c3, c4, c5, c6, c7;
-    c0 = zip_lo(b0, b2);
-    c1 = zip_lo(b4, b6);
-    c2 = zip_hi(b0, b2);
-    c3 = zip_hi(b4, b6);
-    c4 = zip_lo(b1, b3);
-    c5 = zip_lo(b5, b7);
-    c6 = zip_hi(b1, b3);
-    c7 = zip_hi(b5, b7);
+    c0 = zip4_lo(b0, b2);
+    c1 = zip4_lo(b4, b6);
+    c2 = zip4_hi(b0, b2);
+    c3 = zip4_hi(b4, b6);
+    c4 = zip4_lo(b1, b3);
+    c5 = zip4_lo(b5, b7);
+    c6 = zip4_hi(b1, b3);
+    c7 = zip4_hi(b5, b7);
     /*
     [a0,b0,c0,d0,a1,b1,c1,d1]
     [e0,f0,g0,h0,e1,f1,g1,h1]
@@ -884,14 +884,14 @@ inline void transpose8(gint16x8& a0, gint16x8& a1,
     [a6,b6,c6,d6,a7,b7,c7,d7]
     [e6,f6,g6,h6,e7,f7,g7,h7]
     */
-    a0 = zip_lo(c0, c1);
-    a1 = zip_hi(c0, c1);
-    a2 = zip_lo(c2, c3);
-    a3 = zip_hi(c2, c3);
-    a4 = zip_lo(c4, c5);
-    a5 = zip_hi(c4, c5);
-    a6 = zip_lo(c6, c7);
-    a7 = zip_hi(c6, c7);
+    a0 = zip2_lo(c0, c1);
+    a1 = zip2_hi(c0, c1);
+    a2 = zip2_lo(c2, c3);
+    a3 = zip2_hi(c2, c3);
+    a4 = zip2_lo(c4, c5);
+    a5 = zip2_hi(c4, c5);
+    a6 = zip2_lo(c6, c7);
+    a7 = zip2_hi(c6, c7);
 
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
@@ -938,33 +938,33 @@ inline void transpose8(gint16x16& a0, gint16x16& a1,
 {
 #if SIMDPP_USE_AVX2
     gint32x8 b0, b1, b2, b3, b4, b5, b6, b7;
-    b0 = zip_lo(a0, a1);
-    b1 = zip_hi(a0, a1);
-    b2 = zip_lo(a2, a3);
-    b3 = zip_hi(a2, a3);
-    b4 = zip_lo(a4, a5);
-    b5 = zip_hi(a4, a5);
-    b6 = zip_lo(a6, a7);
-    b7 = zip_hi(a6, a7);
+    b0 = zip8_lo(a0, a1);
+    b1 = zip8_hi(a0, a1);
+    b2 = zip8_lo(a2, a3);
+    b3 = zip8_hi(a2, a3);
+    b4 = zip8_lo(a4, a5);
+    b5 = zip8_hi(a4, a5);
+    b6 = zip8_lo(a6, a7);
+    b7 = zip8_hi(a6, a7);
 
     gint64x4 c0, c1, c2, c3, c4, c5, c6, c7;
-    c0 = zip_lo(b0, b2);
-    c1 = zip_lo(b4, b6);
-    c2 = zip_hi(b0, b2);
-    c3 = zip_hi(b4, b6);
-    c4 = zip_lo(b1, b3);
-    c5 = zip_lo(b5, b7);
-    c6 = zip_hi(b1, b3);
-    c7 = zip_hi(b5, b7);
+    c0 = zip4_lo(b0, b2);
+    c1 = zip4_lo(b4, b6);
+    c2 = zip4_hi(b0, b2);
+    c3 = zip4_hi(b4, b6);
+    c4 = zip4_lo(b1, b3);
+    c5 = zip4_lo(b5, b7);
+    c6 = zip4_hi(b1, b3);
+    c7 = zip4_hi(b5, b7);
 
-    a0 = zip_lo(c0, c1);
-    a1 = zip_hi(c0, c1);
-    a2 = zip_lo(c2, c3);
-    a3 = zip_hi(c2, c3);
-    a4 = zip_lo(c4, c5);
-    a5 = zip_hi(c4, c5);
-    a6 = zip_lo(c6, c7);
-    a7 = zip_hi(c6, c7);
+    a0 = zip2_lo(c0, c1);
+    a1 = zip2_hi(c0, c1);
+    a2 = zip2_lo(c2, c3);
+    a3 = zip2_hi(c2, c3);
+    a4 = zip2_lo(c4, c5);
+    a5 = zip2_hi(c4, c5);
+    a6 = zip2_lo(c6, c7);
+    a7 = zip2_hi(c6, c7);
 
 #else
     transpose8(a0[0], a1[0], a2[0], a3[0], a4[0], a5[0], a6[0], a7[0]);

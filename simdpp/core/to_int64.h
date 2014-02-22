@@ -75,7 +75,7 @@ inline gint64x4 to_int64(int32x4 a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     int32x4 u;
     u = shift_r(a, 31);
-    return (gint64x4) combine(zip_lo(a, u), zip_hi(a, u));
+    return (gint64x4) combine(zip4_lo(a, u), zip4_hi(a, u));
 #elif SIMDPP_USE_NEON
     int64x2 r1, r2;
     r1 = vmovl_s32(vget_low_s32(a));
@@ -115,8 +115,8 @@ inline gint64x4 to_int64(uint32x4 a)
     r2 = _mm_cvtepu32_epi64(move_r<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return (gint64x4) combine(zip_lo(a, uint32x4::zero()),
-                              zip_hi(a, uint32x4::zero()));
+    return (gint64x4) combine(zip4_lo(a, uint32x4::zero()),
+                              zip4_hi(a, uint32x4::zero()));
 #elif SIMDPP_USE_NEON
     int64x2 r1, r2;
     r1 = vmovl_u32(vget_low_u32(a));

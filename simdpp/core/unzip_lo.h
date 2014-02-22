@@ -62,9 +62,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 */
 template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> unzip_lo(gint8<N,E1> a, gint8<N,E2> b)
+gint8<N, gint8<N>> unzip16_lo(gint8<N,E1> a, gint8<N,E2> b)
 {
-    return detail::insn::i_unzip_lo(a.eval(), b.eval());
+    return detail::insn::i_unzip16_lo(a.eval(), b.eval());
 }
 
 /** De-interleaves the odd(lower) elements of two int16x8 vectors
@@ -90,9 +90,9 @@ gint8<N, gint8<N>> unzip_lo(gint8<N,E1> a, gint8<N,E2> b)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> unzip_lo(gint16<N,E1> a, gint16<N,E2> b)
+gint16<N, gint16<N>> unzip8_lo(gint16<N,E1> a, gint16<N,E2> b)
 {
-    return detail::insn::i_unzip_lo(a.eval(), b.eval());
+    return detail::insn::i_unzip8_lo(a.eval(), b.eval());
 }
 
 /** De-interleaves the odd(lower) elements of two int32x4 vectors
@@ -113,9 +113,9 @@ gint16<N, gint16<N>> unzip_lo(gint16<N,E1> a, gint16<N,E2> b)
     was applied to each of them separately.
 */
 template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> unzip_lo(gint32<N,E1> a, gint32<N,E2> b)
+gint32<N, gint32<N>> unzip4_lo(gint32<N,E1> a, gint32<N,E2> b)
 {
-    return detail::insn::i_unzip_lo(a.eval(), b.eval());
+    return detail::insn::i_unzip4_lo(a.eval(), b.eval());
 }
 
 /** De-interleaves the odd(lower) elements of two int64x2 vectors
@@ -132,9 +132,9 @@ gint32<N, gint32<N>> unzip_lo(gint32<N,E1> a, gint32<N,E2> b)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> unzip_lo(gint64<N,E1> a, gint64<N,E2> b)
+gint64<N, gint64<N>> unzip2_lo(gint64<N,E1> a, gint64<N,E2> b)
 {
-    return detail::insn::i_unzip_lo(a.eval(), b.eval());
+    return detail::insn::i_unzip2_lo(a.eval(), b.eval());
 }
 
 /** De-interleaves the odd(lower) elements of two float32x4 vectors
@@ -151,9 +151,9 @@ gint64<N, gint64<N>> unzip_lo(gint64<N,E1> a, gint64<N,E2> b)
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-float32<N, float32<N>> unzip_lo(float32<N,E1> a, float32<N,E2> b)
+float32<N, float32<N>> unzip4_lo(float32<N,E1> a, float32<N,E2> b)
 {
-    return detail::insn::i_unzip_lo(a.eval(), b.eval());
+    return detail::insn::i_unzip4_lo(a.eval(), b.eval());
 }
 
 /** De-interleaves the odd(lower) elements of two float64x2 vectors
@@ -174,9 +174,9 @@ float32<N, float32<N>> unzip_lo(float32<N,E1> a, float32<N,E2> b)
     was applied to each of them separately.
 */
 template<unsigned N, class E1, class E2>
-float64<N, float64<N>> unzip_lo(float64<N,E1> a, float64<N,E2> b)
+float64<N, float64<N>> unzip2_lo(float64<N,E1> a, float64<N,E2> b)
 {
-    return detail::insn::i_unzip_lo(a.eval(), b.eval());
+    return detail::insn::i_unzip2_lo(a.eval(), b.eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
