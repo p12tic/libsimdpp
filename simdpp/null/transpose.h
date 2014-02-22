@@ -79,27 +79,6 @@ void transpose8(V& a0, V& a1, V& a2, V& a3, V& a4, V& a5, V& a6, V& a7)
     }
 }
 
-template<class V>
-void transpose16(V& a0, V& a1, V& a2,  V& a3,  V& a4,  V& a5,  V& a6,  V& a7,
-                 V& a8, V& a9, V& a10, V& a11, V& a12, V& a13, V& a14, V& a15)
-{
-    transpose8(a0, a1, a2,  a3,  a4,  a5,  a6,  a7 );
-    transpose8(a8, a9, a10, a11, a12, a13, a14, a15);
-
-    for (unsigned j = 0; j < V::length; j+=16) {
-        for (unsigned i = 0; i < 8; i++) {
-            std::swap(a0.el(j+8+i), a8.el(j+i));
-            std::swap(a1.el(j+8+i), a9.el(j+i));
-            std::swap(a2.el(j+8+i), a10.el(j+i));
-            std::swap(a3.el(j+8+i), a11.el(j+i));
-            std::swap(a4.el(j+8+i), a12.el(j+i));
-            std::swap(a5.el(j+8+i), a13.el(j+i));
-            std::swap(a6.el(j+8+i), a14.el(j+i));
-            std::swap(a7.el(j+8+i), a15.el(j+i));
-        }
-    }
-}
-
 } // namespace null
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

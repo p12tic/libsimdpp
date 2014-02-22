@@ -40,14 +40,7 @@ void test_transpose(TestResults& res)
 
     // int8x16
     {
-        Vectors<16*16> v;
-        transpose16(v.u8[0], v.u8[1], v.u8[2], v.u8[3],
-                    v.u8[4], v.u8[5], v.u8[6], v.u8[7],
-                    v.u8[8], v.u8[9], v.u8[10], v.u8[11],
-                    v.u8[12], v.u8[13], v.u8[14], v.u8[15]);
-        TEST_ARRAY_PUSH(tc, uint8x16, v.u8);
-
-        v.reset();
+        Vectors<16*8> v;
         transpose8(v.u8[0], v.u8[1], v.u8[2], v.u8[3],
                    v.u8[4], v.u8[5], v.u8[6], v.u8[7]);
         TEST_ARRAY_PUSH(tc, uint8x16, v.u8);
@@ -112,14 +105,7 @@ void test_transpose(TestResults& res)
 
     // int8x32
     {
-        Vectors<32*16> v;
-        transpose16(v.du8[0], v.du8[1], v.du8[2], v.du8[3],
-                    v.du8[4], v.du8[5], v.du8[6], v.du8[7],
-                    v.du8[8], v.du8[9], v.du8[10], v.du8[11],
-                    v.du8[12], v.du8[13], v.du8[14], v.du8[15]);
-        TEST_ARRAY_PUSH(tc, uint8x32, v.du8);
-
-        v.reset();
+        Vectors<32*8> v;
         transpose8(v.du8[0], v.du8[1], v.du8[2], v.du8[3],
                    v.du8[4], v.du8[5], v.du8[6], v.du8[7]);
         TEST_ARRAY_PUSH(tc, uint8x32, v.du8);
