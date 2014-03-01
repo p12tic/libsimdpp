@@ -43,14 +43,25 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /** @ingroup simd_convert
     Casts between unrelated types. No changes to the stored values are
-    performed. Conversions between vector and non-vector types are disallowed.
+    performed.
+
+    Conversions between vector and non-vector types are not allowed.
+
+    Conversion from non-mask type to mask type is not allowed.
+ 
+    Conversion from mask type to a non-mask type is not a costless operation 
+    because masks may have different logical and physical layout (e.g., in
+    some implementations one bit represents entire element in a vector).
+
+    Conversions between mask types is only allowed if the element size is the
+    same.
 */
 template<class R, class T>
 R bit_cast(T t)
 {
-    static_assert(is_vector<T>::value == is_vector<T>::value,
+    static_assert(is_vector<R>::value == is_vector<T>::value,
                   "bit_cast can't convert between vector and non-vector types");
-    return detail::cast_wrapper<is_vector<T>::value>::template run<R>(t);
+    return detail::cast_wrapper<is_mask<R>::value, is_mask<T>::value>::template run<R>(t);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

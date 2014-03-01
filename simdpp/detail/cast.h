@@ -44,7 +44,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 // defined in cast.inl
-template<bool isvector> struct cast_wrapper;
+template<bool IsRMask, bool IsLMask> struct cast_wrapper;
 
 
 } // namespace detail
