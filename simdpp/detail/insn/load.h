@@ -49,7 +49,7 @@ namespace insn {
 template<class V>
 void v_load(V& a, const char* p);
 
-inline void i_load(gint8x16& a, const void* p)
+inline void i_load(gint8x16& a, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -63,11 +63,11 @@ inline void i_load(gint8x16& a, const void* p)
 #endif
 }
 
-inline void i_load(gint16x8& a, const void* p) { gint8x16 r; i_load(r, p); a = r;  }
-inline void i_load(gint32x4& a, const void* p) { gint8x16 r; i_load(r, p); a = r;  }
-inline void i_load(gint64x2& a, const void* p) { gint8x16 r; i_load(r, p); a = r;  }
+inline void i_load(gint16x8& a, const char* p) { gint8x16 r; i_load(r, p); a = r;  }
+inline void i_load(gint32x4& a, const char* p) { gint8x16 r; i_load(r, p); a = r;  }
+inline void i_load(gint64x2& a, const char* p) { gint8x16 r; i_load(r, p); a = r;  }
 
-inline void i_load(float32x4& a, const void* p)
+inline void i_load(float32x4& a, const char* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
     q = detail::assume_aligned(q, 16);
@@ -82,74 +82,56 @@ inline void i_load(float32x4& a, const void* p)
 #endif
 }
 
-inline void i_load(float64x2& a, const void* p)
+inline void i_load(float64x2& a, const char* p)
 {
     const double* q = reinterpret_cast<const double*>(p);
     q = detail::assume_aligned(q, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
-    null::load(a, q);
+    null::load(a, p);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_pd(q);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load(gint8x32& a,  const void* p)
+inline void i_load(gint8x32& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-inline void i_load(gint16x16& a, const void* p)
+inline void i_load(gint16x16& a, const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-inline void i_load(gint32x8& a,  const void* p)
+inline void i_load(gint32x8& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-inline void i_load(gint64x4& a,  const void* p)
+inline void i_load(gint64x4& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-inline void i_load(float32x8& a, const void* p)
+inline void i_load(float32x8& a, const char* p)
 {
-    a = _mm256_load_ps(p);
+    a = _mm256_load_ps(reinterpret_cast<const float*>(p));
 }
-inline void i_load(float64x4& a, const void* p)
+inline void i_load(float64x4& a, const char* p)
 {
-    a = _mm256_load_pd(p);
+    a = _mm256_load_pd(reinterpret_cast<const double*>(p));
 }
 #endif
 
 template<unsigned N>
-void i_load(gint8<N>& a,  const void* p)
-{
-    v_load(a, reinterpret_cast<const char*>(p));
-}
+void i_load(gint8<N>& a,  const char* p) { v_load(a, p); }
 template<unsigned N>
-void i_load(gint16<N>& a, const void* p)
-{
-    v_load(a, reinterpret_cast<const char*>(p));
-}
+void i_load(gint16<N>& a, const char* p) { v_load(a, p); }
 template<unsigned N>
-void i_load(gint32<N>& a, const void* p)
-{
-    v_load(a, reinterpret_cast<const char*>(p));
-}
+void i_load(gint32<N>& a, const char* p) { v_load(a, p); }
 template<unsigned N>
-void i_load(gint64<N>& a, const void* p)
-{
-    v_load(a, reinterpret_cast<const char*>(p));
-}
+void i_load(gint64<N>& a, const char* p) { v_load(a, p); }
 template<unsigned N>
-void i_load(float32<N>& a, const void* p)
-{
-    v_load(a, reinterpret_cast<const char*>(p));
-}
+void i_load(float32<N>& a, const char* p){ v_load(a, p); }
 template<unsigned N>
-void i_load(float64<N>& a, const void* p)
-{
-    v_load(a, reinterpret_cast<const char*>(p));
-}
+void i_load(float64<N>& a, const char* p){ v_load(a, p); }
 
 template<class V>
 void v_load(V& a, const char* p)

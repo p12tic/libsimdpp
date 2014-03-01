@@ -64,32 +64,32 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 void stream(void* p, gint8<N,E> a)
 {
-    detail::insn::i_stream(p, a.eval());
+    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void stream(void* p, gint16<N,E> a)
 {
-    detail::insn::i_stream(p, a.eval());
+    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void stream(void* p, gint32<N,E> a)
 {
-    detail::insn::i_stream(p, a.eval());
+    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void stream(void* p, gint64<N,E> a)
 {
-    detail::insn::i_stream(p, a.eval());
+    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void stream(void* p, float32<N,E> a)
 {
-    detail::insn::i_stream(p, a.eval());
+    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void stream(void* p, float64<N,E> a)
 {
-    detail::insn::i_stream(p, a.eval());
+    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
 }
 /// @}
 

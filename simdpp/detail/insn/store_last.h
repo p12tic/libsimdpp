@@ -56,7 +56,7 @@ void v_store_last(char* p, V a, unsigned n);
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_last(void* p, gint8x16 a, unsigned n)
+inline void i_store_last(char* p, gint8x16 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -75,7 +75,7 @@ inline void i_store_last(void* p, gint8x16 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(void* p, gint8x32 a, unsigned n)
+inline void i_store_last(char* p, gint8x32 a, unsigned n)
 {
     p = detail::assume_aligned(p, 32);
     static const uint8_t mask_d[64] = {0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,
@@ -92,15 +92,15 @@ inline void i_store_last(void* p, gint8x32 a, unsigned n)
 #endif
 
 template<unsigned N>
-void i_store_last(void* p, gint8<N> a, unsigned n)
+void i_store_last(char* p, gint8<N> a, unsigned n)
 {
-    v_store_last(reinterpret_cast<char*>(p), a, n);
+    v_store_last(p, a, n);
 }
 
 // -----------------------------------------------------------------------------
 // 16 bits
 
-inline void i_store_last(void* p, gint16x8 a, unsigned n)
+inline void i_store_last(char* p, gint16x8 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -111,22 +111,22 @@ inline void i_store_last(void* p, gint16x8 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(void* p, gint16x16 a, unsigned n)
+inline void i_store_last(char* p, gint16x16 a, unsigned n)
 {
     i_store_last(p, gint8x32(a), n*2);
 }
 #endif
 
 template<unsigned N>
-void i_store_last(void* p, gint16<N> a, unsigned n)
+void i_store_last(char* p, gint16<N> a, unsigned n)
 {
-    v_store_last(reinterpret_cast<char*>(p), a, n);
+    v_store_last(p, a, n);
 }
 
 // -----------------------------------------------------------------------------
 // 32 bits
 
-inline void i_store_last(void* p, gint32x4 a, unsigned n)
+inline void i_store_last(char* p, gint32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -137,47 +137,44 @@ inline void i_store_last(void* p, gint32x4 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(void* p, gint32x8 a, unsigned n)
+inline void i_store_last(char* p, gint32x8 a, unsigned n)
 {
     i_store_last(p, gint8x32(a), n*4);
 }
 #endif
 
 template<unsigned N>
-void i_store_last(void* p, gint32<N> a, unsigned n)
+void i_store_last(char* p, gint32<N> a, unsigned n)
 {
-    v_store_last(reinterpret_cast<char*>(p), a, n);
+    v_store_last(p, a, n);
 }
 
 // -----------------------------------------------------------------------------
 // 64 bits
 
-inline void i_store_last(void* p, gint64x2 a, unsigned n)
+inline void i_store_last(char* p, gint64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
-    char* q = reinterpret_cast<char*>(p);
     if (n == 1) {
-        sse::store_lane<1,1>(q+8, a);
+        sse::store_lane<1,1>(p+8, a);
     }
 #elif SIMDPP_USE_NEON
-    char* q = reinterpret_cast<char*>(p);
     if (n == 1) {
-        neon::store_lane<1,1>(q+8, a);
+        neon::store_lane<1,1>(p+8, a);
     }
 #elif SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
     if (n == 1) {
-        vec_ste((__vector uint32_t)a, 8, reinterpret_cast<uint32_t*>(q));
-        vec_ste((__vector uint32_t)a, 12, reinterpret_cast<uint32_t*>(q));
+        vec_ste((__vector uint32_t)a, 8, reinterpret_cast<uint32_t*>(p));
+        vec_ste((__vector uint32_t)a, 12, reinterpret_cast<uint32_t*>(p));
     }
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(void* p, gint64x4 a, unsigned n)
+inline void i_store_last(char* p, gint64x4 a, unsigned n)
 {
     i_store_last(p, gint8x32(a), n*2);
 }
@@ -185,20 +182,20 @@ inline void i_store_last(void* p, gint64x4 a, unsigned n)
 
 
 template<unsigned N>
-void i_store_last(void* p, gint64<N> a, unsigned n)
+void i_store_last(char* p, gint64<N> a, unsigned n)
 {
-    v_store_last(reinterpret_cast<char*>(p), a, n);
+    v_store_last(p, a, n);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_last(void* p, float32x4 a, unsigned n)
+inline void i_store_last(char* p, float32x4 a, unsigned n)
 {
-    float* q = reinterpret_cast<float*>(p);
-    q = detail::assume_aligned(q, 16);
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
-    i_store_last(q, int32x4(a), n);
+    i_store_last(p, int32x4(a), n);
 #elif SIMDPP_USE_SSE2
+    float* q = reinterpret_cast<float*>(p);
     static const uint32_t mask_d[8] = {0x00000000, 0x00000000, 0x00000000, 0x00000000,
                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
 
@@ -209,6 +206,7 @@ inline void i_store_last(void* p, float32x4 a, unsigned n)
     store(q, a);
 #elif SIMDPP_USE_NEON
     // + VFP
+    float* q = reinterpret_cast<float*>(p);
     if (n < 1) return;
     neon::store_lane<3,1>(q+3, a);
     if (n < 2) return;
@@ -219,7 +217,7 @@ inline void i_store_last(void* p, float32x4 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_last(void* p, float32x8 a, unsigned n)
+inline void i_store_last(char* p, float32x8 a, unsigned n)
 {
     float* v = reinterpret_cast<float*>(p);
     static const uint32_t mask_d[16] = {0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -236,14 +234,14 @@ inline void i_store_last(void* p, float32x8 a, unsigned n)
 #endif
 
 template<unsigned N>
-void i_store_last(void* p, float32<N> a, unsigned n)
+void i_store_last(char* p, float32<N> a, unsigned n)
 {
-    v_store_last(reinterpret_cast<char*>(p), a, n);
+    v_store_last(p, a, n);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_last(void* p, float64x2 a, unsigned n)
+inline void i_store_last(char* p, float64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -257,7 +255,7 @@ inline void i_store_last(void* p, float64x2 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_last(void* p, float64x4 a, unsigned n)
+inline void i_store_last(char* p, float64x4 a, unsigned n)
 {
     double* q = reinterpret_cast<double*>(p);
     static const uint64_t mask_d[16] = {0x0000000000000000, 0x0000000000000000,
@@ -274,9 +272,9 @@ inline void i_store_last(void* p, float64x4 a, unsigned n)
 #endif
 
 template<unsigned N>
-void i_store_last(void* p, float64<N> a, unsigned n)
+void i_store_last(char* p, float64<N> a, unsigned n)
 {
-    v_store_last(reinterpret_cast<char*>(p), a, n);
+    v_store_last(p, a, n);
 }
 
 // -----------------------------------------------------------------------------

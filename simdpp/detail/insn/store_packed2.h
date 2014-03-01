@@ -53,17 +53,15 @@ void v_store_pack2(char* p, V a, V b);
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(void* p, gint8x16 a, gint8x16 b)
+inline void i_store_packed2(char* p, gint8x16 a, gint8x16 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack2(a, b);
-    i_store(q, a);
-    i_store(q+16, b);
+    i_store(p, a);
+    i_store(p+16, b);
 #elif SIMDPP_USE_NEON
     uint8x16x2_t t;
     t.val[0] = a;
@@ -73,31 +71,29 @@ inline void i_store_packed2(void* p, gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(void* p, gint8x32 a, gint8x32 b)
+inline void i_store_packed2(char* p, gint8x32 a, gint8x32 b)
 {
-    v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(void* p, gint8<N> a, gint8<N> b)
+void i_store_packed2(char* p, gint8<N> a, gint8<N> b)
 {
-    v_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(void* p, gint16x8 a, gint16x8 b)
+inline void i_store_packed2(char* p, gint16x8 a, gint16x8 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack2(a, b);
-    i_store(q, a);
-    i_store(q+16, b);
+    i_store(p, a);
+    i_store(p+16, b);
 #elif SIMDPP_USE_NEON
     uint16x8x2_t t;
     t.val[0] = a;
@@ -107,31 +103,29 @@ inline void i_store_packed2(void* p, gint16x8 a, gint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(void* p, gint16x16 a, gint16x16 b)
+inline void i_store_packed2(char* p, gint16x16 a, gint16x16 b)
 {
-    v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(void* p, gint16<N> a, gint16<N> b)
+void i_store_packed2(char* p, gint16<N> a, gint16<N> b)
 {
-    v_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(void* p, gint32x4 a, gint32x4 b)
+inline void i_store_packed2(char* p, gint32x4 a, gint32x4 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack2(a, b);
-    i_store(q, a);
-    i_store(q+16, b);
+    i_store(p, a);
+    i_store(p+16, b);
 #elif SIMDPP_USE_NEON
     uint32x4x2_t t;
     t.val[0] = a;
@@ -141,55 +135,52 @@ inline void i_store_packed2(void* p, gint32x4 a, gint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(void* p, gint32x8 a, gint32x8 b)
+inline void i_store_packed2(char* p, gint32x8 a, gint32x8 b)
 {
-    v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(void* p, gint32<N> a, gint32<N> b)
+void i_store_packed2(char* p, gint32<N> a, gint32<N> b)
 {
-    v_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(void* p, gint64x2 a, gint64x2 b)
+inline void i_store_packed2(char* p, gint64x2 a, gint64x2 b)
 {
     p = detail::assume_aligned(p, 16);
-    char* q = reinterpret_cast<char*>(p);
     transpose2(a, b);
-    i_store(q, a);
-    i_store(q+16, b);
+    i_store(p, a);
+    i_store(p+16, b);
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(void* p, gint64x4 a, gint64x4 b)
+inline void i_store_packed2(char* p, gint64x4 a, gint64x4 b)
 {
-    v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(void* p, gint64<N> a, gint64<N> b)
+void i_store_packed2(char* p, gint64<N> a, gint64<N> b)
 {
-    v_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(void* p, float32x4 a, float32x4 b)
+inline void i_store_packed2(char* p, float32x4 a, float32x4 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack2(a, b);
-    i_store(q, a);
-    i_store(q+16, b);
+    i_store(p, a);
+    i_store(p+16, b);
 #elif SIMDPP_USE_NEON
     float32x4x2_t t;
     t.val[0] = a;
@@ -199,40 +190,39 @@ inline void i_store_packed2(void* p, float32x4 a, float32x4 b)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_packed2(void* p, float32x8 a, float32x8 b)
+inline void i_store_packed2(char* p, float32x8 a, float32x8 b)
 {
-    v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(void* p, float32<N> a, float32<N> b)
+void i_store_packed2(char* p, float32<N> a, float32<N> b)
 {
-    v_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(void* p, float64x2 a, float64x2 b)
+inline void i_store_packed2(char* p, float64x2 a, float64x2 b)
 {
-    char* q = reinterpret_cast<char*>(p);
-    q = detail::assume_aligned(q, 16);
+    p = detail::assume_aligned(p, 16);
     transpose2(a, b);
-    i_store(q, a);
-    i_store(q+16, b);
+    i_store(p, a);
+    i_store(p+16, b);
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_packed2(void* p, float64x4 a, float64x4 b)
+inline void i_store_packed2(char* p, float64x4 a, float64x4 b)
 {
-    v256_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(void* p, float64<N> a, float64<N> b)
+void i_store_packed2(char* p, float64<N> a, float64<N> b)
 {
-    v_store_pack2(reinterpret_cast<char*>(p), a, b);
+    v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------

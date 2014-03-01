@@ -53,19 +53,17 @@ void v_store_pack3(char* p, V a, V b, V c);
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint8x16 a, gint8x16 b, gint8x16 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack3(a, b, c);
-    i_store(q, a);
-    i_store(q+16, b);
-    i_store(q+32, c);
+    i_store(p, a);
+    i_store(p+16, b);
+    i_store(p+32, c);
 #elif SIMDPP_USE_NEON
     uint8x16x3_t t;
     t.val[0] = a;
@@ -76,35 +74,33 @@ inline void i_store_packed3(void* p,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint8x32 a, gint8x32 b, gint8x32 c)
 {
-    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v256_store_pack3(p, a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(void* p,
+void i_store_packed3(char* p,
                      gint8<N> a, gint8<N> b, gint8<N> c)
 {
-    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v_store_pack3(p, a, b, c);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint16x8 a, gint16x8 b, gint16x8 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack3(a, b, c);
-    i_store(q, a);
-    i_store(q+16, b);
-    i_store(q+32, c);
+    i_store(p, a);
+    i_store(p+16, b);
+    i_store(p+32, c);
 #elif SIMDPP_USE_NEON
     uint16x8x3_t t;
     t.val[0] = a;
@@ -115,35 +111,33 @@ inline void i_store_packed3(void* p,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint16x16 a, gint16x16 b, gint16x16 c)
 {
-    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v256_store_pack3(p, a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(void* p,
+void i_store_packed3(char* p,
                      gint16<N> a, gint16<N> b, gint16<N> c)
 {
-    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v_store_pack3(p, a, b, c);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint32x4 a, gint32x4 b, gint32x4 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack3(a, b, c);
-    i_store(q, a);
-    i_store(q+16, b);
-    i_store(q+32, c);
+    i_store(p, a);
+    i_store(p+16, b);
+    i_store(p+32, c);
 #elif SIMDPP_USE_NEON
     uint32x4x3_t t;
     t.val[0] = a;
@@ -154,35 +148,33 @@ inline void i_store_packed3(void* p,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint32x8 a, gint32x8 b, gint32x8 c)
 {
-    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v256_store_pack3(p, a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(void* p,
+void i_store_packed3(char* p,
                      gint32<N> a, gint32<N> b, gint32<N> c)
 {
-    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v_store_pack3(p, a, b, c);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint64x2 a, gint64x2 b, gint64x2 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
-
     mem_pack3(a, b, c);
-    i_store(q, a);
-    i_store(q+16, b);
-    i_store(q+32, c);
+    i_store(p, a);
+    i_store(p+16, b);
+    i_store(p+32, c);
 #elif SIMDPP_USE_NEON
     uint64_t* q = reinterpret_cast<uint64_t*>(p);
     uint64x1x2_t t1, t2, t3;
@@ -197,33 +189,32 @@ inline void i_store_packed3(void* p,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             gint64x4 a, gint64x4 b, gint64x4 c)
 {
-    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v256_store_pack3(p, a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(void* p,
+void i_store_packed3(char* p,
                      gint64<N> a, gint64<N> b, gint64<N> c)
 {
-    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v_store_pack3(p, a, b, c);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(void* p, float32x4 a, float32x4 b, float32x4 c)
+inline void i_store_packed3(char* p, float32x4 a, float32x4 b, float32x4 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    char* q = reinterpret_cast<char*>(p);
     mem_pack3(a, b, c);
-    i_store(q, a);
-    i_store(q+16, b);
-    i_store(q+32, c);
+    i_store(p, a);
+    i_store(p+16, b);
+    i_store(p+32, c);
 #elif SIMDPP_USE_NEON
     float32x4x3_t t;
     t.val[0] = a;
@@ -234,49 +225,48 @@ inline void i_store_packed3(void* p, float32x4 a, float32x4 b, float32x4 c)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             float32x8 a, float32x8 b, float32x8 c)
 {
-    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v256_store_pack3(p, a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(void* p,
+void i_store_packed3(char* p,
                      float32<N> a, float32<N> b, float32<N> c)
 {
-    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v_store_pack3(p, a, b, c);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(void* p, float64x2 a, float64x2 b, float64x2 c)
+inline void i_store_packed3(char* p, float64x2 a, float64x2 b, float64x2 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2
-    char* q = reinterpret_cast<char*>(p);
     mem_pack3(a, b, c);
-    i_store(q, a);
-    i_store(q+16, b);
-    i_store(q+32, c);
+    i_store(p, a);
+    i_store(p+16, b);
+    i_store(p+32, c);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_packed3(void* p,
+inline void i_store_packed3(char* p,
                             float64x4 a, float64x4 b, float64x4 c)
 {
-    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v256_store_pack3(p, a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(void* p,
+void i_store_packed3(char* p,
                      float64<N> a, float64<N> b, float64<N> c)
 {
-    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
+    v_store_pack3(p, a, b, c);
 }
 
 // -----------------------------------------------------------------------------

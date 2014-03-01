@@ -47,7 +47,7 @@ namespace insn {
 template<class V>
 void v_store(char* p, V a);
 
-inline void i_store(void* p, gint8x16 a)
+inline void i_store(char* p, gint8x16 a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -62,7 +62,7 @@ inline void i_store(void* p, gint8x16 a)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store(void* p, gint8x32 a)
+inline void i_store(char* p, gint8x32 a)
 {
     p = detail::assume_aligned(p, 32);
     _mm256_store_si256(reinterpret_cast<__m256i*>(p), a);
@@ -70,19 +70,19 @@ inline void i_store(void* p, gint8x32 a)
 #endif
 
 template<unsigned N>
-void i_store(void* p, gint8<N> a)
+void i_store(char* p, gint8<N> a)
 {
-    v_store(reinterpret_cast<char*>(p), a);
+    v_store(p, a);
 }
 
 template<unsigned N>
-void i_store(void* p, gint16<N> a) { i_store(p, gint8<N*2>(a)); }
+void i_store(char* p, gint16<N> a) { i_store(p, gint8<N*2>(a)); }
 template<unsigned N>
-void i_store(void* p, gint32<N> a) { i_store(p, gint8<N*4>(a)); }
+void i_store(char* p, gint32<N> a) { i_store(p, gint8<N*4>(a)); }
 template<unsigned N>
-void i_store(void* p, gint64<N> a) { i_store(p, gint8<N*8>(a)); }
+void i_store(char* p, gint64<N> a) { i_store(p, gint8<N*8>(a)); }
 
-inline void i_store(void* p, float32x4 a)
+inline void i_store(char* p, float32x4 a)
 {
     float* q = reinterpret_cast<float*>(p);
     q = detail::assume_aligned(q, 16);
@@ -98,7 +98,7 @@ inline void i_store(void* p, float32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store(void* p, float32x8 a)
+inline void i_store(char* p, float32x8 a)
 {
     float* q = reinterpret_cast<float*>(p);
     q = detail::assume_aligned(q, 32);
@@ -107,12 +107,12 @@ inline void i_store(void* p, float32x8 a)
 #endif
 
 template<unsigned N>
-void i_store(void* p, float32<N> a)
+void i_store(char* p, float32<N> a)
 {
-    v_store(reinterpret_cast<char*>(p), a);
+    v_store(p, a);
 }
 
-inline void i_store(void* p, float64x2 a)
+inline void i_store(char* p, float64x2 a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -123,7 +123,7 @@ inline void i_store(void* p, float64x2 a)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store(void* p, float64x4 a)
+inline void i_store(char* p, float64x4 a)
 {
     p = detail::assume_aligned(p, 32);
     _mm256_store_pd(reinterpret_cast<double*>(p), a);
@@ -131,9 +131,9 @@ inline void i_store(void* p, float64x4 a)
 #endif
 
 template<unsigned N>
-void i_store(void* p, float64<N> a)
+void i_store(char* p, float64<N> a)
 {
-    v_store(reinterpret_cast<char*>(p), a);
+    v_store(p, a);
 }
 
 template<class V>

@@ -66,7 +66,7 @@ template<unsigned N>
 void load_packed4(gint8<N>& a, gint8<N>& b, gint8<N>& c, gint8<N>& d,
                   const void* p)
 {
-    detail::insn::i_load_packed4(a, b, c, d, p);
+    detail::insn::i_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 16-bit values packed in quartets, de-interleaves them and stores the
@@ -94,7 +94,7 @@ template<unsigned N>
 void load_packed4(gint16<N>& a, gint16<N>& b, gint16<N>& c, gint16<N>& d,
                   const void* p)
 {
-    detail::insn::i_load_packed4(a, b, c, d, p);
+    detail::insn::i_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 32-bit values packed in quartets, de-interleaves them and stores the
@@ -122,7 +122,7 @@ template<unsigned N>
 void load_packed4(gint32<N>& a, gint32<N>& b, gint32<N>& c, gint32<N>& d,
                   const void* p)
 {
-    detail::insn::i_load_packed4(a, b, c, d, p);
+    detail::insn::i_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 64-bit values packed in quartets, de-interleaves them and stores the
@@ -150,7 +150,7 @@ template<unsigned N>
 void load_packed4(gint64<N>& a, gint64<N>& b, gint64<N>& c, gint64<N>& d,
                   const void* p)
 {
-    detail::insn::i_load_packed4(a, b, c, d, p);
+    detail::insn::i_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 32-bit floating-point values packed in quartets, de-interleaves them
@@ -178,7 +178,7 @@ template<unsigned N>
 void load_packed4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d,
                   const void* p)
 {
-    detail::insn::i_load_packed4(a, b, c, d, p);
+    detail::insn::i_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 64-bit floating-point values packed in quartets, de-interleaves them
@@ -206,7 +206,7 @@ template<unsigned N>
 void load_packed4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d,
                   const void* p)
 {
-    detail::insn::i_load_packed4(a, b, c, d, p);
+    detail::insn::i_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

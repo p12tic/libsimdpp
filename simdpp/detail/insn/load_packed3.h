@@ -55,17 +55,15 @@ void v_load_packed3(V& a, V& b, V& c, const char* p);
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(gint8x16& a, gint8x16& b, gint8x16& c,
-                         const void* p)
+inline void i_load_packed3(gint8x16& a, gint8x16& b, gint8x16& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
     mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_u8(reinterpret_cast<const uint8_t*>(p));
@@ -76,32 +74,30 @@ inline void i_load_packed3(gint8x16& a, gint8x16& b, gint8x16& c,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_packed3(gint8x32& a, gint8x32& b, gint8x32& c,
-                         const void* p)
+inline void i_load_packed3(gint8x32& a, gint8x32& b, gint8x32& c, const char* p)
 {
-    v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v256_load_packed3(a, b, c, p);
 }
 #endif
 
 template<unsigned N>
-void i_load_packed3(gint8<N>& a, gint8<N>& b, gint8<N>& c, const void* p)
+void i_load_packed3(gint8<N>& a, gint8<N>& b, gint8<N>& c, const char* p)
 {
-    v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v_load_packed3(a, b, c, p);
 }
 
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed3(gint16x8& a, gint16x8& b, gint16x8& c,
-                         const void* p)
+                         const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
     mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_u16(reinterpret_cast<const uint16_t*>(p));
@@ -113,31 +109,29 @@ inline void i_load_packed3(gint16x8& a, gint16x8& b, gint16x8& c,
 
 #if SIMDPP_USE_AVX2
 inline void i_load_packed3(gint16x16& a, gint16x16& b, gint16x16& c,
-                         const void* p)
+                           const char* p)
 {
-    v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v256_load_packed3(a, b, c, p);
 }
 #endif
 
 template<unsigned N>
-void i_load_packed3(gint16<N>& a, gint16<N>& b, gint16<N>& c, const void* p)
+void i_load_packed3(gint16<N>& a, gint16<N>& b, gint16<N>& c, const char* p)
 {
-    v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v_load_packed3(a, b, c, p);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(gint32x4& a, gint32x4& b, gint32x4&c,
-                         const void* p)
+inline void i_load_packed3(gint32x4& a, gint32x4& b, gint32x4&c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
     mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_u32(reinterpret_cast<const uint32_t*>(p));
@@ -148,39 +142,35 @@ inline void i_load_packed3(gint32x4& a, gint32x4& b, gint32x4&c,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_packed3(gint32x8& a, gint32x8& b, gint32x8& c,
-                         const void* p)
+inline void i_load_packed3(gint32x8& a, gint32x8& b, gint32x8& c, const char* p)
 {
-    v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v256_load_packed3(a, b, c, p);
 }
 #endif
 
 template<unsigned N>
-void i_load_packed3(gint32<N>& a, gint32<N>& b, gint32<N>& c, const void* p)
+void i_load_packed3(gint32<N>& a, gint32<N>& b, gint32<N>& c, const char* p)
 {
-    v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v_load_packed3(a, b, c, p);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(gint64x2& a, gint64x2& b, gint64x2& c,
-                         const void* p)
+inline void i_load_packed3(gint64x2& a, gint64x2& b, gint64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
     mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
-    const char* q = reinterpret_cast<const char*>(p);
     uint64x2 a0, b0, c0;
-    a0 = load(a0, q);
-    b0 = load(b0, q+16);
-    c0 = load(c0, q+32);
+    a0 = load(a0, p);
+    b0 = load(b0, p+16);
+    c0 = load(c0, p+32);
 
     int64x1_t al, bl, cl, ah, bh, ch;
     al = vget_low_u64(a0);
@@ -196,32 +186,29 @@ inline void i_load_packed3(gint64x2& a, gint64x2& b, gint64x2& c,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_packed3(gint64x4& a, gint64x4& b, gint64x4& c,
-                           const void* p)
+inline void i_load_packed3(gint64x4& a, gint64x4& b, gint64x4& c, const char* p)
 {
-    v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v256_load_packed3(a, b, c, p);
 }
 #endif
 
 template<unsigned N>
-void i_load_packed3(gint64<N>& a, gint64<N>& b, gint64<N>& c, const void* p)
+void i_load_packed3(gint64<N>& a, gint64<N>& b, gint64<N>& c, const char* p)
 {
-    v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v_load_packed3(a, b, c, p);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(float32x4& a, float32x4& b, float32x4& c,
-                           const void* p)
+inline void i_load_packed3(float32x4& a, float32x4& b, float32x4& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
     mem_unpack3(a, b, c);
 #elif SIMDPP_USE_NEON
     auto r = vld3q_f32(p);
@@ -232,47 +219,45 @@ inline void i_load_packed3(float32x4& a, float32x4& b, float32x4& c,
 }
 
 #if SIMDPP_USE_AVX
-inline void i_load_packed3(float32x8& a, float32x8& b, float32x8& c,
-                           const void* p)
+inline void i_load_packed3(float32x8& a, float32x8& b, float32x8& c, const char* p)
 {
-    v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v256_load_packed3(a, b, c, p);
 }
 #endif
 
 template<unsigned N>
-void i_load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const void* p)
+void i_load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const char* p)
 {
-    v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v_load_packed3(a, b, c, p);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const void* p)
+inline void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
     mem_unpack3(a, b, c);
 #endif
 }
 
 #if SIMDPP_USE_AVX
 inline void i_load_packed3(float64x4& a, float64x4& b, float64x4& c,
-                           const void* p)
+                           const char* p)
 {
-    v256_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v256_load_packed3(a, b, c, p);
 }
 #endif
 
 template<unsigned N>
-void i_load_packed3(float64<N>& a, float64<N>& b, float64<N>& c, const void* p)
+void i_load_packed3(float64<N>& a, float64<N>& b, float64<N>& c, const char* p)
 {
-    v_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    v_load_packed3(a, b, c, p);
 }
 
 // -----------------------------------------------------------------------------

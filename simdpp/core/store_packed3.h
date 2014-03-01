@@ -63,7 +63,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N>
 void store_packed3(void* p, gint8<N> a, gint8<N> b, gint8<N> c)
 {
-    detail::insn::i_store_packed3(p, a, b, c);
+    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 /** Interleaves 16-bit values from three vectors and stores the result into
@@ -88,7 +88,7 @@ void store_packed3(void* p, gint8<N> a, gint8<N> b, gint8<N> c)
 template<unsigned N>
 void store_packed3(void* p, gint16<N> a, gint16<N> b, gint16<N> c)
 {
-    detail::insn::i_store_packed3(p, a, b, c);
+    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 /** Interleaves 32-bit values from three vectors and stores the result into
@@ -113,7 +113,7 @@ void store_packed3(void* p, gint16<N> a, gint16<N> b, gint16<N> c)
 template<unsigned N>
 void store_packed3(void* p, gint32<N> a, gint32<N> b, gint32<N> c)
 {
-    detail::insn::i_store_packed3(p, a, b, c);
+    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 /** Interleaves 64-bit values from three vectors and stores the result into
@@ -138,7 +138,7 @@ void store_packed3(void* p, gint32<N> a, gint32<N> b, gint32<N> c)
 template<unsigned N>
 void store_packed3(void* p, gint64<N> a, gint64<N> b, gint64<N> c)
 {
-    detail::insn::i_store_packed3(p, a, b, c);
+    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 /** Interleaves 32-bit floating-point values from three vectors and stores
@@ -163,7 +163,7 @@ void store_packed3(void* p, gint64<N> a, gint64<N> b, gint64<N> c)
 template<unsigned N>
 void store_packed3(void* p, float32<N> a, float32<N> b, float32<N> c)
 {
-    detail::insn::i_store_packed3(p, a, b, c);
+    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 /** Interleaves 64-bit floating-point values from three vectors and stores
@@ -191,7 +191,7 @@ void store_packed3(void* p, float32<N> a, float32<N> b, float32<N> c)
 template<unsigned N>
 void store_packed3(void* p, float64<N> a, float64<N> b, float64<N> c)
 {
-    detail::insn::i_store_packed3(p, a, b, c);
+    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

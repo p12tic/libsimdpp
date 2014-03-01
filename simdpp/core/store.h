@@ -63,32 +63,32 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 void store(void* p, gint8<N,E> a)
 {
-    detail::insn::i_store(p, a.eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void store(void* p, gint16<N,E> a)
 {
-    detail::insn::i_store(p, a.eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void store(void* p, gint32<N,E> a)
 {
-    detail::insn::i_store(p, a.eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void store(void* p, gint64<N,E> a)
 {
-    detail::insn::i_store(p, a.eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void store(void* p, float32<N,E> a)
 {
-    detail::insn::i_store(p, a.eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
 }
 template<unsigned N, class E>
 void store(void* p, float64<N,E> a)
 {
-    detail::insn::i_store(p, a.eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
 }
 /// @}
 

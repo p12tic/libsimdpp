@@ -66,32 +66,32 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 void store_last(void* p, gint8<N,E> a, unsigned n)
 {
-    detail::insn::i_store_last(p, a.eval(), n);
+    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
 }
 template<unsigned N, class E>
 void store_last(void* p, gint16<N,E> a, unsigned n)
 {
-    detail::insn::i_store_last(p, a.eval(), n);
+    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
 }
 template<unsigned N, class E>
 void store_last(void* p, gint32<N,E> a, unsigned n)
 {
-    detail::insn::i_store_last(p, a.eval(), n);
+    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
 }
 template<unsigned N, class E>
 void store_last(void* p, gint64<N,E> a, unsigned n)
 {
-    detail::insn::i_store_last(p, a.eval(), n);
+    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
 }
 template<unsigned N, class E>
 void store_last(void* p, float32<N,E> a, unsigned n)
 {
-    detail::insn::i_store_last(p, a.eval(), n);
+    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
 }
 template<unsigned N, class E>
 void store_last(void* p, float64<N,E> a, unsigned n)
 {
-    detail::insn::i_store_last(p, a.eval(), n);
+    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
 }
 /// @}
 

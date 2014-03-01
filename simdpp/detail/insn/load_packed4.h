@@ -55,17 +55,16 @@ void v_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(gint8x16& a, gint8x16& b,
-                           gint8x16& c, gint8x16& d, const void* p)
+                           gint8x16& c, gint8x16& d, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
-    load(d, q+48);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
+    load(d, p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u8(reinterpret_cast<const uint8_t*>(p));
@@ -78,33 +77,32 @@ inline void i_load_packed4(gint8x16& a, gint8x16& b,
 
 #if SIMDPP_USE_AVX2
 inline void i_load_packed4(gint8x32& a, gint8x32& b, gint8x32& c, gint8x32& d,
-                           const void* p)
+                           const char* p)
 {
-    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v256_load_packed4(a, b, c, d, p);
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(gint8<N>& a, gint8<N>& b, gint8<N>& c, gint8<N>& d,
-                    const void* p)
+                    const char* p)
 {
-    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v_load_packed4(a, b, c, d, p);
 }
 
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(gint16x8& a, gint16x8& b,
-                           gint16x8& c, gint16x8& d, const void* p)
+                           gint16x8& c, gint16x8& d, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
-    load(d, q+48);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
+    load(d, p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u16(reinterpret_cast<const uint16_t*>(p));
@@ -117,33 +115,32 @@ inline void i_load_packed4(gint16x8& a, gint16x8& b,
 
 #if SIMDPP_USE_AVX2
 inline void i_load_packed4(gint16x16& a, gint16x16& b, gint16x16& c, gint16x16& d,
-                           const void* p)
+                           const char* p)
 {
-    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v256_load_packed4(a, b, c, d, p);
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(gint16<N>& a, gint16<N>& b, gint16<N>& c, gint16<N>& d,
-                    const void* p)
+                    const char* p)
 {
-    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v_load_packed4(a, b, c, d, p);
 }
 
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(gint32x4& a, gint32x4& b,
-                           gint32x4& c, gint32x4& d, const void* p)
+                           gint32x4& c, gint32x4& d, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
-    load(d, q+48);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
+    load(d, p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u32(reinterpret_cast<const uint32_t*>(p));
@@ -156,64 +153,61 @@ inline void i_load_packed4(gint32x4& a, gint32x4& b,
 
 #if SIMDPP_USE_AVX2
 inline void i_load_packed4(gint32x8& a, gint32x8& b, gint32x8& c, gint32x8& d,
-                           const void* p)
+                           const char* p)
 {
-    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v256_load_packed4(a, b, c, d, p);
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(gint32<N>& a, gint32<N>& b, gint32<N>& c, gint32<N>& d,
-                    const void* p)
+                    const char* p)
 {
-    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v_load_packed4(a, b, c, d, p);
 }
 
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(gint64x2& a, gint64x2& b,
-                           gint64x2& c, gint64x2& d, const void* p)
+                           gint64x2& c, gint64x2& d, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-    const char* q = reinterpret_cast<const char*>(p);
-    a = load(a, q);
-    c = load(c, q+16);
-    b = load(b, q+32);
-    d = load(d, q+48);
+    a = load(a, p);
+    c = load(c, p+16);
+    b = load(b, p+32);
+    d = load(d, p+48);
     transpose2(a, b);
     transpose2(c, d);
 }
 
 #if SIMDPP_USE_AVX2
 inline void i_load_packed4(gint64x4& a, gint64x4& b, gint64x4& c, gint64x4& d,
-                         const void* p)
+                         const char* p)
 {
-    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v256_load_packed4(a, b, c, d, p);
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(gint64<N>& a, gint64<N>& b, gint64<N>& c, gint64<N>& d,
-                  const void* p)
+                  const char* p)
 {
-    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v_load_packed4(a, b, c, d, p);
 }
 
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& d,
-                           const void* p)
+                           const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    const char* q = reinterpret_cast<const char*>(p);
-
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
-    load(d, q+48);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
+    load(d, p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_f32(p);
@@ -226,50 +220,49 @@ inline void i_load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& 
 
 #if SIMDPP_USE_AVX
 inline void i_load_packed4(float32x8& a, float32x8& b, float32x8& c, float32x8& d,
-                           const void* p)
+                           const char* p)
 {
-    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v256_load_packed4(a, b, c, d, p);
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d,
-                  const void* p)
+                  const char* p)
 {
-    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v_load_packed4(a, b, c, d, p);
 }
 
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
-                           const void* p)
+                           const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2
-    const char* q = reinterpret_cast<const char*>(p);
-    load(a, q);
-    load(b, q+16);
-    load(c, q+32);
-    load(d, q+48);
+    load(a, p);
+    load(b, p+16);
+    load(c, p+32);
+    load(d, p+48);
     mem_unpack4(a, b, c, d);
 #endif
 }
 
 #if SIMDPP_USE_AVX
 inline void i_load_packed4(float64x4& a, float64x4& b, float64x4& c, float64x4& d,
-                           const void* p)
+                           const char* p)
 {
-    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v256_load_packed4(a, b, c, d, p);
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d,
-                    const void* p)
+                    const char* p)
 {
-    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
+    v_load_packed4(a, b, c, d, p);
 }
 
 // -----------------------------------------------------------------------------

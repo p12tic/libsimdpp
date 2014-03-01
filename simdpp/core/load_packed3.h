@@ -62,7 +62,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N>
 void load_packed3(gint8<N>& a, gint8<N>& b, gint8<N>& c, const void* p)
 {
-    detail::insn::i_load_packed3(a, b, c, p);
+    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 16-bit values packed in triplets, de-interleaves them and stores the
@@ -87,7 +87,7 @@ void load_packed3(gint8<N>& a, gint8<N>& b, gint8<N>& c, const void* p)
 template<unsigned N>
 void load_packed3(gint16<N>& a, gint16<N>& b, gint16<N>& c, const void* p)
 {
-    detail::insn::i_load_packed3(a, b, c, p);
+    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 32-bit values packed in triplets, de-interleaves them and stores the
@@ -112,7 +112,7 @@ void load_packed3(gint16<N>& a, gint16<N>& b, gint16<N>& c, const void* p)
 template<unsigned N>
 void load_packed3(gint32<N>& a, gint32<N>& b, gint32<N>& c, const void* p)
 {
-    detail::insn::i_load_packed3(a, b, c, p);
+    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 64-bit values packed in triplets, de-interleaves them and stores the
@@ -137,7 +137,7 @@ void load_packed3(gint32<N>& a, gint32<N>& b, gint32<N>& c, const void* p)
 template<unsigned N>
 void load_packed3(gint64<N>& a, gint64<N>& b, gint64<N>& c, const void* p)
 {
-    detail::insn::i_load_packed3(a, b, c, p);
+    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 32-bit floating point values packed in triplets, de-interleaves them
@@ -162,7 +162,7 @@ void load_packed3(gint64<N>& a, gint64<N>& b, gint64<N>& c, const void* p)
 template<unsigned N>
 void load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const void* p)
 {
-    detail::insn::i_load_packed3(a, b, c, p);
+    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 64-bit floating point values packed in triplets, de-interleaves them
@@ -187,7 +187,7 @@ void load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const void* p)
 template<unsigned N>
 void load_packed3(float64<N>& a, float64<N>& b, float64<N>& c, const void* p)
 {
-    detail::insn::i_load_packed3(a, b, c, p);
+    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

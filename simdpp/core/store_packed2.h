@@ -61,7 +61,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N>
 void store_packed2(void* p, gint8<N> a, gint8<N> b)
 {
-    detail::insn::i_store_packed2(p, a, b);
+    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
 }
 
 /** Interleaves 16-bit values from two vectors and stores the result into
@@ -84,7 +84,7 @@ void store_packed2(void* p, gint8<N> a, gint8<N> b)
 template<unsigned N>
 void store_packed2(void* p, gint16<N> a, gint16<N> b)
 {
-    detail::insn::i_store_packed2(p, a, b);
+    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
 }
 
 /** Interleaves 32-bit values from two vectors and stores the result into
@@ -107,7 +107,7 @@ void store_packed2(void* p, gint16<N> a, gint16<N> b)
 template<unsigned N>
 void store_packed2(void* p, gint32<N> a, gint32<N> b)
 {
-    detail::insn::i_store_packed2(p, a, b);
+    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
 }
 
 /** Interleaves 64-bit values from two vectors and stores the result into
@@ -130,7 +130,7 @@ void store_packed2(void* p, gint32<N> a, gint32<N> b)
 template<unsigned N>
 void store_packed2(void* p, gint64<N> a, gint64<N> b)
 {
-    detail::insn::i_store_packed2(p, a, b);
+    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
 }
 
 /** Interleaves 32-bit floating-point values from two vectors and stores
@@ -153,7 +153,7 @@ void store_packed2(void* p, gint64<N> a, gint64<N> b)
 template<unsigned N>
 void store_packed2(void* p, float32<N> a, float32<N> b)
 {
-    detail::insn::i_store_packed2(p, a, b);
+    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
 }
 
 /** Interleaves 64-bit floating-point values from two vectors and stores
@@ -176,7 +176,7 @@ void store_packed2(void* p, float32<N> a, float32<N> b)
 template<unsigned N>
 void store_packed2(void* p, float64<N> a, float64<N> b)
 {
-    detail::insn::i_store_packed2(p, a, b);
+    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

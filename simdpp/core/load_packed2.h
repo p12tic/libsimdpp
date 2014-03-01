@@ -60,7 +60,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N>
 void load_packed2(gint8<N>& a, gint8<N>& b, const void* p)
 {
-    detail::insn::i_load_packed2(a, b, p);
+    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 16-bit values packed in pairs, de-interleaves them and stores the
@@ -83,7 +83,7 @@ void load_packed2(gint8<N>& a, gint8<N>& b, const void* p)
 template<unsigned N>
 void load_packed2(gint16<N>& a, gint16<N>& b, const void* p)
 {
-    detail::insn::i_load_packed2(a, b, p);
+    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 32-bit values packed in pairs, de-interleaves them and stores the
@@ -106,7 +106,7 @@ void load_packed2(gint16<N>& a, gint16<N>& b, const void* p)
 template<unsigned N>
 void load_packed2(gint32<N>& a, gint32<N>& b, const void* p)
 {
-    detail::insn::i_load_packed2(a, b, p);
+    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 64-bit values packed in pairs, de-interleaves them and stores the
@@ -129,7 +129,7 @@ void load_packed2(gint32<N>& a, gint32<N>& b, const void* p)
 template<unsigned N>
 void load_packed2(gint64<N>& a, gint64<N>& b, const void* p)
 {
-    detail::insn::i_load_packed2(a, b, p);
+    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 32-bit float values packed in pairs, de-interleaves them and stores
@@ -152,7 +152,7 @@ void load_packed2(gint64<N>& a, gint64<N>& b, const void* p)
 template<unsigned N>
 void load_packed2(float32<N>& a, float32<N>& b, const void* p)
 {
-    detail::insn::i_load_packed2(a, b, p);
+    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 /** Loads 64-bit float values packed in pairs, de-interleaves them and stores
@@ -175,7 +175,7 @@ void load_packed2(float32<N>& a, float32<N>& b, const void* p)
 template<unsigned N>
 void load_packed2(float64<N>& a, float64<N>& b, const void* p)
 {
-    detail::insn::i_load_packed2(a, b, p);
+    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 

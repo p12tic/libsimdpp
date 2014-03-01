@@ -65,32 +65,32 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N>
 gint8<N>  load(gint8<N>& a,  const void* p)
 {
-    detail::insn::i_load(a, p); return a;
+    detail::insn::i_load(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
 gint16<N> load(gint16<N>& a, const void* p)
 {
-    detail::insn::i_load(a, p); return a;
+    detail::insn::i_load(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
 gint32<N> load(gint32<N>& a, const void* p)
 {
-    detail::insn::i_load(a, p); return a;
+    detail::insn::i_load(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
 gint64<N> load(gint64<N>& a, const void* p)
 {
-    detail::insn::i_load(a, p); return a;
+    detail::insn::i_load(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
 float32<N> load(float32<N>& a, const void* p)
 {
-    detail::insn::i_load(a, p); return a;
+    detail::insn::i_load(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
 float64<N> load(float64<N>& a, const void* p)
 {
-    detail::insn::i_load(a, p); return a;
+    detail::insn::i_load(a, reinterpret_cast<const char*>(p)); return a;
 }
 /// @}
 

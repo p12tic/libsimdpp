@@ -65,7 +65,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N>
 void store_packed4(void* p, gint8<N> a, gint8<N> b, gint8<N> c, gint8<N> d)
 {
-    detail::insn::i_store_packed4(p, a, b, c, d);
+    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
 }
 
 /** Interleaves 16-bit values from four vectors and stores the result into
@@ -92,7 +92,7 @@ void store_packed4(void* p, gint8<N> a, gint8<N> b, gint8<N> c, gint8<N> d)
 template<unsigned N>
 void store_packed4(void* p, gint16<N> a, gint16<N> b, gint16<N> c, gint16<N> d)
 {
-    detail::insn::i_store_packed4(p, a, b, c, d);
+    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
 }
 
 /** Interleaves 32-bit values from four vectors and stores the result into
@@ -119,7 +119,7 @@ void store_packed4(void* p, gint16<N> a, gint16<N> b, gint16<N> c, gint16<N> d)
 template<unsigned N>
 void store_packed4(void* p, gint32<N> a, gint32<N> b, gint32<N> c, gint32<N> d)
 {
-    detail::insn::i_store_packed4(p, a, b, c, d);
+    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
 }
 
 /** Interleaves 64-bit values from four vectors and stores the result into
@@ -146,7 +146,7 @@ void store_packed4(void* p, gint32<N> a, gint32<N> b, gint32<N> c, gint32<N> d)
 template<unsigned N>
 void store_packed4(void* p, gint64<N> a, gint64<N> b, gint64<N> c, gint64<N> d)
 {
-    detail::insn::i_store_packed4(p, a, b, c, d);
+    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
 }
 
 /** Interleaves 32-bit floating-point values from four vectors and stores
@@ -174,7 +174,7 @@ template<unsigned N>
 void store_packed4(void* p,
                    float32<N> a, float32<N> b, float32<N> c, float32<N> d)
 {
-    detail::insn::i_store_packed4(p, a, b, c, d);
+    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
 }
 
 /** Interleaves 64-bit floating-point values from four vectors and stores
@@ -202,7 +202,7 @@ template<unsigned N>
 void store_packed4(void* p,
                    float64<N> a, float64<N> b, float64<N> c, float64<N> d)
 {
-    detail::insn::i_store_packed4(p, a, b, c, d);
+    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
 }
 
 
