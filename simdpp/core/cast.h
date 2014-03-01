@@ -43,11 +43,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /** @ingroup simd_convert
     Casts between unrelated types. No changes to the stored values are
-    performed.
+    performed. Conversions between vector and non-vector types are disallowed.
 */
 template<class R, class T>
 R bit_cast(T t)
 {
+    static_assert(is_vector<T>::value == is_vector<T>::value,
+                  "bit_cast can't convert between vector and non-vector types");
     return detail::cast_wrapper<is_vector<T>::value>::template run<R>(t);
 }
 
