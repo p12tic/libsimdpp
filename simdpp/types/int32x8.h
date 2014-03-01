@@ -34,6 +34,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/detail/construct_eval.h>
 #include <cstdint>
 
 namespace simdpp {
@@ -93,12 +94,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    gint32<8>(const expr_vec_set_splat<VE>& e);
-    gint32<8>(const expr_vec_load_splat& e);
-    template<class VE>
-    gint32<8>& operator=(const expr_vec_set_splat<VE>& e);
-    gint32<8>& operator=(const expr_vec_load_splat& e);
+    template<class E> gint32<8>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> gint32<8>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{
@@ -179,12 +182,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    int32<8>(const expr_vec_set_splat<VE>& e);
-    int32<8>(const expr_vec_load_splat& e);
-    template<class VE>
-    int32<8>& operator=(const expr_vec_set_splat<VE>& e);
-    int32<8>& operator=(const expr_vec_load_splat& e);
+    template<class E> int32<8>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> int32<8>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{
@@ -272,12 +277,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    uint32<8>(const expr_vec_set_splat<VE>& e);
-    uint32<8>(const expr_vec_load_splat& e);
-    template<class VE>
-    uint32<8>& operator=(const expr_vec_set_splat<VE>& e);
-    uint32<8>& operator=(const expr_vec_load_splat& e);
+    template<class E> uint32<8>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> uint32<8>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{

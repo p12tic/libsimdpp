@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -89,12 +90,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    gint64<N>(const expr_vec_set_splat<VE>& e);
-    gint64<N>(const expr_vec_load_splat& e);
-    template<class VE>
-    gint64<N>& operator=(const expr_vec_set_splat<VE>& e);
-    gint64<N>& operator=(const expr_vec_load_splat& e);
+    template<class E> gint64<N>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> gint64<N>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     const gint64v& operator[](unsigned i) const { return *(du_+i); }
@@ -164,12 +167,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    int64<N>(const expr_vec_set_splat<VE>& e);
-    int64<N>(const expr_vec_load_splat& e);
-    template<class VE>
-    int64<N>& operator=(const expr_vec_set_splat<VE>& e);
-    int64<N>& operator=(const expr_vec_load_splat& e);
+    template<class E> int64<N>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> int64<N>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     const int64v& operator[](unsigned i) const { return *(gint64<N>::di_+i); }
@@ -249,12 +254,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    uint64<N>(const expr_vec_set_splat<VE>& e);
-    uint64<N>(const expr_vec_load_splat& e);
-    template<class VE>
-    uint64<N>& operator=(const expr_vec_set_splat<VE>& e);
-    uint64<N>& operator=(const expr_vec_load_splat& e);
+    template<class E> uint64<N>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> uint64<N>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     const uint64v& operator[](unsigned i) const { return *(gint64<N>::du_+i); }

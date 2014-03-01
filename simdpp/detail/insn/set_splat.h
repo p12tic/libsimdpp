@@ -306,11 +306,20 @@ struct i_set_splat_dispatch<expr_vec_set_splat<VE>>
 {
     static expr_vec_set_splat<VE> run(VE v)
     {
-        return { v };
+        expr_vec_set_splat<VE> r;
+        r.a = v;
+        return r;
     }
 };
 
 } // namespace insn
+
+template<class V, class VE>
+void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
+{
+    insn::i_set_splat(v, e.a);
+}
+
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

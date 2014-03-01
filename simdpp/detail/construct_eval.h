@@ -25,42 +25,38 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_LOAD_SPLAT_H
-#define LIBSIMDPP_SIMDPP_CORE_LOAD_SPLAT_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_CONSTRUCT_EVAL_H
+#define LIBSIMDPP_SIMDPP_DETAIL_CONSTRUCT_EVAL_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/types.h>
-#include <simdpp/detail/insn/load_splat.h>
+#include <simdpp/setup_arch.h>
+#include <simdpp/expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+namespace detail {
 
-/** Loads a value from a memory location and broadcasts it to all elements of a
-    vector.
+// put forward declarations of all construct_eval functions here. Definitions
+// are needed only if the corresponding expression is used
 
-    @code
-    r0 = *p
-    ...
-    rN = *p
-    @endcode
+template<class V>
+void construct_eval(V& v, const expr_vec_load_splat& e);
 
-    @a p must have the alignment of the element of the target vector.
-*/
-// FIXME: return empty expression
-template<class V = expr_vec_load_splat>
-V load_splat(const void* p)
+template<class V, class VE>
+void construct_eval(V& v, const expr_vec_set_splat<VE>& e);
+
+template<class V, class E>
+void construct_eval_wrapper(V& v, const E& e)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_load_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_load_splat_dispatch<V>::run(p);
+    construct_eval(v, e);
 }
 
+} // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

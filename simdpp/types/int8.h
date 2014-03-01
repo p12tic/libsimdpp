@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -77,12 +78,14 @@ public:
     template<class E> gint8<N>& operator=(const gint64<N/8,E>& d);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    gint8<N>(const expr_vec_set_splat<VE>& e);
-    gint8<N>(const expr_vec_load_splat& e);
-    template<class VE>
-    gint8<N>& operator=(const expr_vec_set_splat<VE>& e);
-    gint8<N>& operator=(const expr_vec_load_splat& e);
+    template<class E> gint8<N>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> gint8<N>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     const gint8v& operator[](unsigned i) const { return *(du_+i); }
@@ -146,12 +149,14 @@ public:
     template<class E> int8<N>& operator=(const gint64<N/8,E>& d);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    int8<N>(const expr_vec_set_splat<VE>& e);
-    int8<N>(const expr_vec_load_splat& e);
-    template<class VE>
-    int8<N>& operator=(const expr_vec_set_splat<VE>& e);
-    int8<N>& operator=(const expr_vec_load_splat& e);
+    template<class E> int8<N>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> int8<N>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     const int8v& operator[](unsigned i) const { return *(gint8<N>::di_+i); }
@@ -265,12 +270,14 @@ public:
     template<class E> uint8<N>& operator=(const gint64<N/8,E>& d);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    uint8<N>(const expr_vec_set_splat<VE>& e);
-    uint8<N>(const expr_vec_load_splat& e);
-    template<class VE>
-    uint8<N>& operator=(const expr_vec_set_splat<VE>& e);
-    uint8<N>& operator=(const expr_vec_load_splat& e);
+    template<class E> uint8<N>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> uint8<N>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     const uint8v& operator[](unsigned i) const { return *(gint8<N>::du_+i); }

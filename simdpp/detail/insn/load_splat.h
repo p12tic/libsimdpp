@@ -286,11 +286,21 @@ struct i_load_splat_dispatch<expr_vec_load_splat>
 {
     static expr_vec_load_splat run(const void* v)
     {
-        return { v };
+        expr_vec_load_splat r;
+        r.a = v;
+        return r;
     }
 };
 
+// -----------------------------------------------------------------------------
 } // namespace insn
+
+template<class V>
+void construct_eval(V& v, const expr_vec_load_splat& e)
+{
+    insn::i_load_splat(v, e.a);
+}
+
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

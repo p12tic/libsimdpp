@@ -41,6 +41,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+namespace detail {
+//template<int> void construct_eval();
+} // namespace detail
+
 // types
 template<unsigned N, class E = void> class float32;
 template<unsigned N, class E = void> class mask_float32;

@@ -29,8 +29,6 @@
 #define LIBSIMDPP_SIMD_EXPR_H
 
 #include <simdpp/setup_arch.h>
-#include <simdpp/types/fwd.h>
-#include <type_traits>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -95,21 +93,27 @@ struct expr_splat16 {
     E a;
 };
 
-struct expr_vec_load_splat {
+template<class E>
+struct expr_vec_construct {
+    E& expr() { return static_cast<E&>(*this); }
+    const E& expr() const { return static_cast<const E&>(*this); }
+};
+
+struct expr_vec_load_splat : expr_vec_construct<expr_vec_load_splat> {
     const void* a;
 };
 
 template<class VE>
-struct expr_vec_set_splat {
+struct expr_vec_set_splat : expr_vec_construct<expr_vec_set_splat<VE>> {
     VE a;
 };
 
 template<class VE, unsigned N>
-struct expr_vec_make_const {
+struct expr_vec_make_const : expr_vec_construct<expr_vec_make_const<VE,N>> {
     VE a[N];
 };
 
-struct expr_vec_load {
+struct expr_vec_load : expr_vec_construct<expr_vec_load> {
     const void* ptr;
 };
 

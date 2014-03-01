@@ -34,7 +34,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/set_splat.h>
-#include <simdpp/detail/insn/set_splat_mem_impl.inl>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

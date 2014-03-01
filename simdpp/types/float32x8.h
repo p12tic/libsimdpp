@@ -36,6 +36,7 @@
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/int32x8.h>
 #include <simdpp/types/float32x4.h>
+#include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -82,12 +83,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    float32<8>(const expr_vec_set_splat<VE>& e);
-    float32<8>(const expr_vec_load_splat& e);
-    template<class VE>
-    float32<8>& operator=(const expr_vec_set_splat<VE>& e);
-    float32<8>& operator=(const expr_vec_load_splat& e);
+    template<class E> float32<N>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> float32<N>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{

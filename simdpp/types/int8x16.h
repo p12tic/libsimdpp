@@ -35,6 +35,7 @@
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
 #include <cstdint>
+#include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -112,12 +113,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    gint8<16>(const expr_vec_set_splat<VE>& e);
-    gint8<16>(const expr_vec_load_splat& e);
-    template<class VE>
-    gint8<16>& operator=(const expr_vec_set_splat<VE>& e);
-    gint8<16>& operator=(const expr_vec_load_splat& e);
+    template<class E> gint8<16>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> gint8<16>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{
@@ -204,12 +207,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    int8<16>(const expr_vec_set_splat<VE>& e);
-    int8<16>(const expr_vec_load_splat& e);
-    template<class VE>
-    int8<16>& operator=(const expr_vec_set_splat<VE>& e);
-    int8<16>& operator=(const expr_vec_load_splat& e);
+    template<class E> int8<16>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> int8<16>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{
@@ -322,12 +327,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    uint8<16>(const expr_vec_set_splat<VE>& e);
-    uint8<16>(const expr_vec_load_splat& e);
-    template<class VE>
-    uint8<16>& operator=(const expr_vec_set_splat<VE>& e);
-    uint8<16>& operator=(const expr_vec_load_splat& e);
+    template<class E> uint8<16>(const expr_vec_construct<E>& e)
+    {
+        using namespace detail; construct_eval(*this, e.expr());
+    }
+    template<class E> uint8<16>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{

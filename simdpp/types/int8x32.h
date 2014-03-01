@@ -34,6 +34,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/detail/construct_eval.h>
 #include <cstdint>
 
 namespace simdpp {
@@ -90,12 +91,14 @@ public:
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    gint8<32>(const expr_vec_set_splat<VE>& e);
-    gint8<32>(const expr_vec_load_splat& e);
-    template<class VE>
-    gint8<32>& operator=(const expr_vec_set_splat<VE>& e);
-    gint8<32>& operator=(const expr_vec_load_splat& e);
+    template<class E> gint8<32>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> gint8<32>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{
@@ -145,12 +148,14 @@ public:
     template<class E> int8<32>& operator=(const gint64<4,E>& d);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    int8<32>(const expr_vec_set_splat<VE>& e);
-    int8<32>(const expr_vec_load_splat& e);
-    template<class VE>
-    int8<32>& operator=(const expr_vec_set_splat<VE>& e);
-    int8<32>& operator=(const expr_vec_load_splat& e);
+    template<class E> int8<32>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> int8<32>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{
@@ -258,12 +263,14 @@ public:
     template<class E> uint8<32>& operator=(const gint64<4,E>& d);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class VE>
-    uint8<32>(const expr_vec_set_splat<VE>& e);
-    uint8<32>(const expr_vec_load_splat& e);
-    template<class VE>
-    uint8<32>& operator=(const expr_vec_set_splat<VE>& e);
-    uint8<32>& operator=(const expr_vec_load_splat& e);
+    template<class E> uint8<32>(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr());
+    }
+    template<class E> uint8<32>& operator=(const expr_vec_construct<E>& e)
+    {
+        detail::construct_eval_wrapper(*this, e.expr()); return *this;
+    }
 #endif
 
     /// @{
