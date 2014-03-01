@@ -105,9 +105,9 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     using U = typename T::uint_vector_type;
 
     T a1, b1, c1;
-    a1 = align<11>(a, a);
+    a1 = align16<11>(a, a);
     b1 = b;
-    c1 = align<6>(c, c);
+    c1 = align16<6>(c, c);
 
     // [a11..a15,a0..a10]
     // [b0..b15]
@@ -246,8 +246,8 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     // [c0..c7]
     T a1, b1, c1;
     a1 = a;
-    b1 = align<5>(b, b);
-    c1 = align<2>(c, c);
+    b1 = align8<5>(b, b);
+    c1 = align8<2>(c, c);
 
     // [a0..a7]
     // [b5..b7,b0..b4]
@@ -360,8 +360,8 @@ template<class T> void v_mem_pack3_impl32(T& a, T& b, T& c)
     // [c0,c1,c2,c3]
     T a1, b1, c1;
     a1 = a;
-    b1 = align<1>(b, b);
-    c1 = align<2>(c, c);
+    b1 = align4<1>(b, b);
+    c1 = align4<2>(c, c);
 
     // [a0,a1,a2,a3]
     // [b1,b2,b3,b0]

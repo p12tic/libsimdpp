@@ -64,14 +64,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E1, class E2>
-gint8<N, gint8<N>> align(gint8<N,E1> lower,
-                         gint8<N,E2> upper)
+gint8<N, gint8<N>> align16(gint8<N,E1> lower,
+                           gint8<N,E2> upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
     if (shift == 0) return lower.eval();
     if (shift == 16) return upper.eval();
 
-    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
+    return detail::insn::i_align16<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a int16x8 vector from two concatenated int16x8 vectors
@@ -98,14 +98,14 @@ gint8<N, gint8<N>> align(gint8<N,E1> lower,
 
 */
 template<unsigned shift, unsigned N, class E1, class E2>
-gint16<N, gint16<N>> align(gint16<N,E1> lower,
-                           gint16<N,E2> upper)
+gint16<N, gint16<N>> align8(gint16<N,E1> lower,
+                            gint16<N,E2> upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
     if (shift == 0) return lower.eval();
     if (shift == 8) return upper.eval();
 
-    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
+    return detail::insn::i_align8<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a int32x4 vector from two concatenated int32x4 vectors
@@ -130,14 +130,14 @@ gint16<N, gint16<N>> align(gint16<N,E1> lower,
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E1, class E2>
-gint32<N, gint32<N>> align(gint32<N,E1> lower,
-                           gint32<N,E2> upper)
+gint32<N, gint32<N>> align4(gint32<N,E1> lower,
+                            gint32<N,E2> upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
     if (shift == 0) return lower.eval();
     if (shift == 4) return upper.eval();
 
-    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
+    return detail::insn::i_align4<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a int64x2 vector from two concatenated int64x2 vectors
@@ -160,14 +160,14 @@ gint32<N, gint32<N>> align(gint32<N,E1> lower,
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E1, class E2>
-gint64<N, gint64<N>> align(gint64<N,E1> lower,
-                           gint64<N,E2> upper)
+gint64<N, gint64<N>> align2(gint64<N,E1> lower,
+                            gint64<N,E2> upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
     if (shift == 0) return lower.eval();
     if (shift == 2) return upper.eval();
 
-    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
+    return detail::insn::i_align2<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a float32x4 vector from two concatenated float32x4 vectors
@@ -192,14 +192,14 @@ gint64<N, gint64<N>> align(gint64<N,E1> lower,
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E1, class E2>
-float32<N, float32<N>> align(float32<N,E1> lower,
-                             float32<N,E2> upper)
+float32<N, float32<N>> align4(float32<N,E1> lower,
+                              float32<N,E2> upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
     if (shift == 0) return lower.eval();
     if (shift == 4) return upper.eval();
 
-    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
+    return detail::insn::i_align4<shift>(lower.eval(), upper.eval());
 }
 
 /** Extracts a float64x2 vector from two concatenated float64x2 vectors
@@ -224,14 +224,14 @@ float32<N, float32<N>> align(float32<N,E1> lower,
     @novec{NEON, ALTIVEC}
 */
 template<unsigned shift, unsigned N, class E1, class E2>
-float64<N, float64<N>> align(float64<N,E1> lower,
-                             float64<N,E2> upper)
+float64<N, float64<N>> align2(float64<N,E1> lower,
+                              float64<N,E2> upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
     if (shift == 0) return lower.eval();
     if (shift == 2) return upper.eval();
 
-    return detail::insn::i_align<shift>(lower.eval(), upper.eval());
+    return detail::insn::i_align2<shift>(lower.eval(), upper.eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

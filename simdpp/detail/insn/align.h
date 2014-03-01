@@ -47,7 +47,7 @@ namespace insn {
 
 // base 8x16 implementation
 template<unsigned shift>
-gint8x16 i_align(gint8x16 lower, gint8x16 upper)
+gint8x16 i_align16(gint8x16 lower, gint8x16 upper)
 {
 #if SIMDPP_USE_NULL
     gint8x16 r;
@@ -76,53 +76,53 @@ gint8x16 i_align(gint8x16 lower, gint8x16 upper)
 
 #if SIMDPP_USE_AVX2
 template<unsigned shift>
-gint8x32 i_align(gint8x32 lower, gint8x32 upper)
+gint8x32 i_align16(gint8x32 lower, gint8x32 upper)
 {
     return _mm256_alignr_epi8(upper, lower, shift);
 }
 #endif
 
 template<unsigned shift, unsigned N>
-gint8<N> i_align(gint8<N> lower, gint8<N> upper)
+gint8<N> i_align16(gint8<N> lower, gint8<N> upper)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_align<shift>, lower, upper);
+    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_align16<shift>, lower, upper);
 }
 
 // generic implementations
 
 template<unsigned shift, unsigned N>
-gint16<N> i_align(gint16<N> lower, gint16<N> upper)
+gint16<N> i_align8(gint16<N> lower, gint16<N> upper)
 {
-    return gint16<N>(i_align<shift*2>(gint8<N*2>(lower),
-                                      gint8<N*2>(upper)));
+    return gint16<N>(i_align16<shift*2>(gint8<N*2>(lower),
+                                        gint8<N*2>(upper)));
 }
 
 template<unsigned shift, unsigned N>
-gint32<N> i_align(gint32<N> lower, gint32<N> upper)
+gint32<N> i_align4(gint32<N> lower, gint32<N> upper)
 {
-    return gint32<N>(i_align<shift*4>(gint8<N*4>(lower),
-                                      gint8<N*4>(upper)));
+    return gint32<N>(i_align16<shift*4>(gint8<N*4>(lower),
+                                        gint8<N*4>(upper)));
 }
 
 template<unsigned shift, unsigned N>
-gint64<N> i_align(gint64<N> lower, gint64<N> upper)
+gint64<N> i_align2(gint64<N> lower, gint64<N> upper)
 {
-    return gint64<N>(i_align<shift*8>(gint8<N*8>(lower),
-                                      gint8<N*8>(upper)));
+    return gint64<N>(i_align16<shift*8>(gint8<N*8>(lower),
+                                        gint8<N*8>(upper)));
 }
 
 template<unsigned shift, unsigned N>
-float32<N> i_align(float32<N> lower, float32<N> upper)
+float32<N> i_align4(float32<N> lower, float32<N> upper)
 {
-    return float32<N>(i_align<shift>(gint32<N>(lower),
-                                     gint32<N>(upper)));
+    return float32<N>(i_align4<shift>(gint32<N>(lower),
+                                      gint32<N>(upper)));
 }
 
 template<unsigned shift, unsigned N>
-float64<N> i_align(float64<N> lower, float64<N> upper)
+float64<N> i_align2(float64<N> lower, float64<N> upper)
 {
-    return float64<N>(i_align<shift>(gint64<N>(lower),
-                                     gint64<N>(upper)));
+    return float64<N>(i_align2<shift>(gint64<N>(lower),
+                                      gint64<N>(upper)));
 }
 
 } // namespace insn

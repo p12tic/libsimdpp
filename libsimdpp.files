@@ -126,6 +126,7 @@ simdpp/core/unzip_lo.h
 simdpp/core/zip_hi.h
 simdpp/core/zip_lo.h
 simdpp/detail/align.h
+simdpp/detail/align_v128.h
 simdpp/detail/cast.h
 simdpp/detail/cast.inl
 simdpp/detail/expr/bit_and.h

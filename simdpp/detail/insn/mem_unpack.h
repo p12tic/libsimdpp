@@ -129,14 +129,14 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [a11..a15,a0..a10]
     // [b0..b15]
     // [c5..c15,c0..c5]
-    a = align<5>(a2, a2);
+    a = align16<5>(a2, a2);
     b = b2;
-    c = align<11>(c2, c2);
+    c = align16<11>(c2, c2);
 #else
     typename same_width<T>::b8 t0, t1, t2, t3;
     t0 = a;
-    t1 = align<12>(a, b);
-    t2 = align<8>(b, c);
+    t1 = align16<12>(a, b);
+    t2 = align16<8>(b, c);
     t3 = move16_l<4>(c);
     // [a0, b0, c0, a1, b1, c1, a2, b2, c2, a3, b3, c3, ...]
     // [a4, b4, c4, a5, b5, c5, a6, b6, c6, a7, b7, c7, ...]
@@ -159,8 +159,8 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [b1, b5, b9, b13,c1, c5, c9, c13, a2, a6, a10,a14, b2, b6, b10,b14 ]
     // [c2, c6, c10,c14,a3, a7, a11,a15, b3, b7, b11,b15, c3, c7, c11,c15 ]
     t0 = u0;
-    t1 = align<12>(u0, u1);
-    t2 = align<8>(u1, u2);
+    t1 = align16<12>(u0, u1);
+    t2 = align16<8>(u1, u2);
     t3 = move16_l<4>(u2);
     // [a0, a4, a8, a12,b0, b4, b8, b12, c0, c4, c8, c12, ...]
     // [a1, a5, a9, a13,b1, b5, b9, b13, c1, c5, c9, c13, ...]
@@ -208,13 +208,13 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [b5..b7,b0..b4]
     // [c2..c7,c0,c1]
     a = a2;
-    b = align<3>(b2, b2);
-    c = align<6>(c2, c2);
+    b = align8<3>(b2, b2);
+    c = align8<6>(c2, c2);
 #else
     T t0, t1, t2, t3;
     t0 = a;
-    t1 = align<6>(a, b);
-    t2 = align<4>(b, c);
+    t1 = align8<6>(a, b);
+    t2 = align8<4>(b, c);
     t3 = move8_l<2>(c);
     // [a0,b0,c0,a1,b1,c1, ... ]
     // [a2,b2,c2,a3,b3,c3, ... ]
@@ -278,8 +278,8 @@ void v_mem_unpack3_impl32(T& a, T& b, T& c)
     // [b1,b2,b3,b0]
     // [c2,c3,c0,c1]
     a = a2;
-    b = align<3>(b2, b2);
-    c = align<2>(c2, c2);
+    b = align4<3>(b2, b2);
+    c = align4<2>(c2, c2);
 #else
     T t11, t12, t21, t22, t31, t32;
     // [a0,b0,c0,a1]

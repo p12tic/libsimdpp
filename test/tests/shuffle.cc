@@ -29,6 +29,7 @@
 #include "../test_results.h"
 #include "../common/vectors.h"
 #include <simdpp/simd.h>
+#include <simdpp/detail/align_v128.h>
 #include <vector>
 
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -128,7 +129,7 @@ struct Test_align {
     static constexpr unsigned limit = Shuffle_width<V>::value + 1;
     static void test(TestCase& tc, V a, V b)
     {
-        a = simdpp::align<i>(a, b);
+        a = simdpp::detail::align_v128<i>(a, b);
         TEST_PUSH(tc, V, a);
     }
 };

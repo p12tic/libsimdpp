@@ -29,6 +29,7 @@
 #define LIBSIMDPP_TEST_TEST_HELPERS_H
 
 #include <simdpp/simd.h>
+#include <simdpp/detail/align_v128.h>
 #include "test_case.h"
 
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -177,7 +178,7 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
             T l = *lp; T r = *rp;                                       \
             for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
                 TEST_PUSH(TC, T, OP(l, r));                             \
-                l = simdpp::align<1>(l, l);                             \
+                l = simdpp::detail::align_v128<1>(l, l);                \
             }                                                           \
         }                                                               \
     }                                                                   \
@@ -193,7 +194,7 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
             T l = *lp; T r = *rp;                                       \
             for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
                 TEST_PUSH(TC, R, OP(l, r));                             \
-                l = simdpp::align<1>(l, l);                             \
+                l = simdpp::detail::align_v128<1>(l, l);                \
             }                                                           \
         }                                                               \
     }                                                                   \
@@ -209,7 +210,7 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
             T l = *lp; T r = *rp;                                       \
             for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
                 TEST_PUSH(TC, T, OP(l, r));                             \
-                l = simdpp::align<1>(l, l);                             \
+                l = simdpp::detail::align_v128<1>(l, l);                \
             }                                                           \
         }                                                               \
     }                                                                   \
@@ -224,8 +225,8 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
             const T* rp = reinterpret_cast<const T*>((A) + j);          \
             T l = *lp; T r = *rp;                                       \
             for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
-                TEST_PUSH(TC, R, OP(l, r));                       \
-                l = simdpp::align<1>(l, l);                             \
+                TEST_PUSH(TC, R, OP(l, r));                             \
+                l = simdpp::detail::align_v128<1>(l, l);                \
             }                                                           \
         }                                                               \
     }                                                                   \
