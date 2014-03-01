@@ -193,7 +193,6 @@ simdpp/detail/insn/mem_pack.h
 simdpp/detail/insn/mem_unpack.h
 simdpp/detail/insn/move_l.h
 simdpp/detail/insn/move_r.h
-simdpp/detail/insn/move_signed.h
 simdpp/detail/insn/permute2.h
 simdpp/detail/insn/permute4.h
 simdpp/detail/insn/permute_bytes16.h

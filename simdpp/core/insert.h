@@ -35,7 +35,6 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/word_size.h>
 #include <simdpp/core/cast.h>
-#include <simdpp/detail/insn/move_signed.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/altivec/load1.h>
 #include <simdpp/null/set.h>
