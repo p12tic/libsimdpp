@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMD_EXPR_EXPR_INL
-#define LIBSIMDPP_SIMD_EXPR_EXPR_INL
+#ifndef LIBSIMDPP_SIMD_TYPES_GENERIC_INL
+#define LIBSIMDPP_SIMD_TYPES_GENERIC_INL
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/expr.h>

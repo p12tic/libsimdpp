@@ -33,6 +33,7 @@
 #endif
 #include <simdpp/setup_arch.h>
 
+#include <simdpp/expr.h>
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int16x8.h>
@@ -52,7 +53,7 @@
 #include <simdpp/types/int64.h>
 #include <simdpp/types/float32.h>
 #include <simdpp/types/float64.h>
-#include <simdpp/expr.h>
+#include <simdpp/types/generic.h>
 
 #define SIMDPP_VEC_ARRAY_IMPL1(RTYPE, OP, V1)                   \
     RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \

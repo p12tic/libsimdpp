@@ -421,6 +421,7 @@
 #include <simdpp/sse/shuffle.h>
 
 #include <simdpp/types.h>
+#include <simdpp/types/generic.h>
 #include <simdpp/types/float32.h>
 #include <simdpp/types/float32x4.h>
 #include <simdpp/types/float32x4.inl>
@@ -457,7 +458,7 @@
 #include <simdpp/types/int8x32.h>
 #include <simdpp/types/int8x32.inl>
 #include <simdpp/types/traits.h>
-#include <simdpp/expr.inl>
+#include <simdpp/types/generic.inl>
 
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher
