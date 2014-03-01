@@ -58,13 +58,13 @@ void load_lane(gint8x16& a, const void* p)
     static_assert(P==0 || (N==8 && P==8), "Position not supported");
     switch (N) {
     case 4:
-        a = _mm_castps_si128(_mm_load_ss(reinterpret_cast<float*>(p)));
+        a = _mm_castps_si128(_mm_load_ss(reinterpret_cast<const float*>(p)));
         break;
     case 8:
         if (P == 0) {
-            a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+            a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
         } else {
-            a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+            a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
         }
         break;
     }
@@ -78,13 +78,13 @@ void load_lane(gint16x8& a, const void* p)
     static_assert(P==0 || (N==4 && P==4), "Position not supported");
     switch (N) {
     case 2:
-        a = _mm_castps_si128(_mm_load_ss(reinterpret_cast<float*>(p)));
+        a = _mm_castps_si128(_mm_load_ss(reinterpret_cast<const float*>(p)));
         break;
     case 4:
         if (P == 0) {
-            a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+            a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
         } else {
-            a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+            a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
         }
         break;
     }
@@ -102,9 +102,9 @@ void load_lane(gint32x4& a, const void* p)
         break;
     case 2:
         if (P == 0) {
-            a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+            a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
         } else {
-            a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+            a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
         }
         break;
     }
@@ -117,9 +117,9 @@ void load_lane(gint64x2& a, const void* p)
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");
     if (P == 0) {
-        a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+        a = _mm_castps_si128(_mm_loadl_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
     } else {
-        a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<__m64*>(p)));
+        a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
     }
     return a;
 }
@@ -135,9 +135,9 @@ void load_lane(float32x4& a, const float* p)
         return a;
     case 2:
         if (P == 0) {
-            a = _mm_loadl_pi(a, reinterpret_cast<__m64*>(p));
+            a = _mm_loadl_pi(a, reinterpret_cast<const __m64*>(p));
         } else {
-            a = _mm_loadh_pi(a, reinterpret_cast<__m64*>(p));
+            a = _mm_loadh_pi(a, reinterpret_cast<const __m64*>(p));
         }
         return a;
     }
