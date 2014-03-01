@@ -56,8 +56,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V = expr_vec_load_splat>
 V load_splat(const void* p)
 {
-    static_assert(is_vector<V>::value || detail::is_expr_vec_load_splat<V>::value,
-                  "V must be a vector");
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_load_splat<V>::value,
+                  "V must be a non-mask vector");
     return detail::insn::i_load_splat_dispatch<V>::run(p);
 }
 

@@ -56,48 +56,54 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V = expr_vec_set_splat<int>>
 V splat(int x)
 {
-    static_assert(is_vector<V>::value || detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a vector");
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_set_splat<V>::value,
+                  "V must be a non-mask vector");
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
 template<class V = expr_vec_set_splat<unsigned>>
 V splat(unsigned x)
 {
-    static_assert(is_vector<V>::value || detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a vector");
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_set_splat<V>::value,
+                  "V must be a non-mask vector");
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
 template<class V = expr_vec_set_splat<int64_t>>
 V splat(int64_t x)
 {
-    static_assert(is_vector<V>::value || detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a vector");
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_set_splat<V>::value,
+                  "V must be a non-mask vector");
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
 template<class V = expr_vec_set_splat<uint64_t>>
 V splat(uint64_t x)
 {
-    static_assert(is_vector<V>::value || detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a vector");
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_set_splat<V>::value,
+                  "V must be a non-mask vector");
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
 template<class V = expr_vec_set_splat<float>>
 V splat(float x)
 {
-    static_assert(is_vector<V>::value || detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a vector");
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_set_splat<V>::value,
+                  "V must be a non-mask vector");
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
 template<class V = expr_vec_set_splat<double>>
 V splat(double x)
 {
-    static_assert(is_vector<V>::value || detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a vector");
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_set_splat<V>::value,
+                  "V must be a non-mask vector");
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 /// @}
