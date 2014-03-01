@@ -176,7 +176,7 @@ void load_packed4(gint64<N>& a, gint64<N>& b, gint64<N>& c, gint64<N>& d,
 */
 template<unsigned N>
 void load_packed4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d,
-                  const float* p)
+                  const void* p)
 {
     detail::insn::i_load_packed4(a, b, c, d, p);
 }
@@ -204,7 +204,7 @@ void load_packed4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d,
 */
 template<unsigned N>
 void load_packed4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d,
-                  const double* p)
+                  const void* p)
 {
     detail::insn::i_load_packed4(a, b, c, d, p);
 }

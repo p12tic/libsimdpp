@@ -117,13 +117,13 @@ void store_lane(void* p, gint64x2 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(float* p, float32x4 a)
+void store_lane(void* p, float32x4 a)
 {
     static_assert(N==1 || N==2, "Size not supported");
     static_assert(P==0 || (N==2 && P==2), "Position not supported");
     switch (N) {
     case 1:
-        _mm_store_ss(p, a);
+        _mm_store_ss(reinterpret_cast<float*>(p), a);
         return;
     case 2:
         if (P == 0) {
@@ -136,7 +136,7 @@ void store_lane(float* p, float32x4 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(double* p, float64x2 a)
+void store_lane(void* p, float64x2 a)
 {
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");

@@ -81,12 +81,12 @@ void store(void* p, gint64<N,E> a)
     detail::insn::i_store(p, a.eval());
 }
 template<unsigned N, class E>
-void store(float* p, float32<N,E> a)
+void store(void* p, float32<N,E> a)
 {
     detail::insn::i_store(p, a.eval());
 }
 template<unsigned N, class E>
-void store(double* p, float64<N,E> a)
+void store(void* p, float64<N,E> a)
 {
     detail::insn::i_store(p, a.eval());
 }

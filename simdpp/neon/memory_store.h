@@ -115,7 +115,7 @@ void store_lane(void* p, gint64x2 a)
 }
 
 template<unsigned pos, unsigned n>
-void store_lane(float* p, float32x4 a)
+void store_lane(void* p, float32x4 a)
 {
     store_lane<pos,n>(p, gint32x4(a));
 }

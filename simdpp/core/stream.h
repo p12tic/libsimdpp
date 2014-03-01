@@ -82,12 +82,12 @@ void stream(void* p, gint64<N,E> a)
     detail::insn::i_stream(p, a.eval());
 }
 template<unsigned N, class E>
-void stream(float* p, float32<N,E> a)
+void stream(void* p, float32<N,E> a)
 {
     detail::insn::i_stream(p, a.eval());
 }
 template<unsigned N, class E>
-void stream(double* p, float64<N,E> a)
+void stream(void* p, float64<N,E> a)
 {
     detail::insn::i_stream(p, a.eval());
 }

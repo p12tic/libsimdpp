@@ -150,7 +150,7 @@ void load_packed2(gint64<N>& a, gint64<N>& b, const void* p)
     @a p must be aligned to 32 bytes.
 */
 template<unsigned N>
-void load_packed2(float32<N>& a, float32<N>& b, const float* p)
+void load_packed2(float32<N>& a, float32<N>& b, const void* p)
 {
     detail::insn::i_load_packed2(a, b, p);
 }
@@ -173,7 +173,7 @@ void load_packed2(float32<N>& a, float32<N>& b, const float* p)
     @a p must be aligned to 32 bytes.
 */
 template<unsigned N>
-void load_packed2(float64<N>& a, float64<N>& b, const double* p)
+void load_packed2(float64<N>& a, float64<N>& b, const void* p)
 {
     detail::insn::i_load_packed2(a, b, p);
 }

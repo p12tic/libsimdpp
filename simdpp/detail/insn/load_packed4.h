@@ -47,10 +47,10 @@ namespace insn {
 
 
 // the 256-bit versions are mostly boilerplate. Collect that stuff here.
-template<class V, class P>
-void v256_load_packed4(V& a, V& b, V& c, V& d, const P* p);
-template<class V, class P>
-void v_load_packed4(V& a, V& b, V& c, V& d, const P* p);
+template<class V>
+void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p);
+template<class V>
+void v_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 
 // -----------------------------------------------------------------------------
 
@@ -202,16 +202,18 @@ void i_load_packed4(gint64<N>& a, gint64<N>& b, gint64<N>& c, gint64<N>& d,
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& d,
-                           const float* p)
+                           const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    load(a, p);
-    load(b, p+4);
-    load(c, p+8);
-    load(d, p+12);
+    const char* q = reinterpret_cast<const char*>(p);
+
+    load(a, q);
+    load(b, q+16);
+    load(c, q+32);
+    load(d, q+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_f32(p);
@@ -224,73 +226,74 @@ inline void i_load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& 
 
 #if SIMDPP_USE_AVX
 inline void i_load_packed4(float32x8& a, float32x8& b, float32x8& c, float32x8& d,
-                           const float* p)
+                           const void* p)
 {
-    v256_load_packed4(a, b, c, d, p);
+    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d,
-                  const float* p)
+                  const void* p)
 {
-    v_load_packed4(a, b, c, d, p);
+    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 // -----------------------------------------------------------------------------
 
 inline void i_load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
-                           const double* p)
+                           const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2
-    load(a, p);
-    load(b, p+2);
-    load(c, p+4);
-    load(d, p+6);
+    const char* q = reinterpret_cast<const char*>(p);
+    load(a, q);
+    load(b, q+16);
+    load(c, q+32);
+    load(d, q+48);
     mem_unpack4(a, b, c, d);
 #endif
 }
 
 #if SIMDPP_USE_AVX
 inline void i_load_packed4(float64x4& a, float64x4& b, float64x4& c, float64x4& d,
-                           const double* p)
+                           const void* p)
 {
-    v256_load_packed4(a, b, c, d, p);
+    v256_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 #endif
 
 template<unsigned N>
 void i_load_packed4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d,
-                    const double* p)
+                    const void* p)
 {
-    v_load_packed4(a, b, c, d, p);
+    v_load_packed4(a, b, c, d, reinterpret_cast<const char*>(p));
 }
 
 // -----------------------------------------------------------------------------
 
-template<class V, class P>
-void v256_load_packed4(V& a, V& b, V& c, V& d, const P* p)
+template<class V>
+void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 {
     p = detail::assume_aligned(p, 32);
     load(a, p);
-    load(b, p + 32 / sizeof(P));
-    load(c, p + 64 / sizeof(P));
-    load(d, p + 96 / sizeof(P));
+    load(b, p + 32);
+    load(c, p + 64);
+    load(d, p + 96);
     mem_unpack4(a, b, c, d);
 }
 
-template<class V, class P>
-void v_load_packed4(V& a, V& b, V& c, V& d, const P* p)
+template<class V>
+void v_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
         i_load_packed4(a[i], b[i], c[i], d[i], p);
-        p += veclen*4 / sizeof(P);
+        p += veclen*4;
     }
 }
 

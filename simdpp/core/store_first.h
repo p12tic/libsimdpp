@@ -83,12 +83,12 @@ void store_first(void* p, gint64<N,E> a, unsigned n)
     detail::insn::i_store_first(p, a.eval(), n);
 }
 template<unsigned N, class E>
-void store_first(float* p, float32<N,E> a, unsigned n)
+void store_first(void* p, float32<N,E> a, unsigned n)
 {
     detail::insn::i_store_first(p, a.eval(), n);
 }
 template<unsigned N, class E>
-void store_first(double* p, float64<N,E> a, unsigned n)
+void store_first(void* p, float64<N,E> a, unsigned n)
 {
     detail::insn::i_store_first(p, a.eval(), n);
 }

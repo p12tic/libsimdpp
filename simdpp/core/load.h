@@ -83,12 +83,12 @@ gint64<N> load(gint64<N>& a, const void* p)
     detail::insn::i_load(a, p); return a;
 }
 template<unsigned N>
-float32<N> load(float32<N>& a, const float* p)
+float32<N> load(float32<N>& a, const void* p)
 {
     detail::insn::i_load(a, p); return a;
 }
 template<unsigned N>
-float64<N> load(float64<N>& a, const double* p)
+float64<N> load(float64<N>& a, const void* p)
 {
     detail::insn::i_load(a, p); return a;
 }

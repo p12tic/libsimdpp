@@ -46,10 +46,10 @@ namespace detail {
 namespace insn {
 
 // the 256-bit versions are mostly boilerplate. Collect that stuff here.
-template<class V, class P>
-void v256_load_packed2(V& a, V& b, const P* p);
-template<class V, class P>
-void v_load_packed2(V& a, V& b, const P* p);
+template<class V>
+void v256_load_packed2(V& a, V& b, const char* p);
+template<class V>
+void v_load_packed2(V& a, V& b, const char* p);
 
 // -----------------------------------------------------------------------------
 
@@ -176,14 +176,15 @@ void i_load_packed2(gint64<N>& a, gint64<N>& b, const void* p)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed2(float32x4& a, float32x4& b, const float* p)
+inline void i_load_packed2(float32x4& a, float32x4& b, const void* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    load(a, p);
-    load(b, p+4);
+    const char* q = reinterpret_cast<const char*>(p);
+    load(a, q);
+    load(b, q+16);
     mem_unpack2(a, b);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_f32(p);
@@ -193,61 +194,62 @@ inline void i_load_packed2(float32x4& a, float32x4& b, const float* p)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_load_packed2(float32x8& a, float32x8& b, const float* p)
+inline void i_load_packed2(float32x8& a, float32x8& b, const void* p)
 {
-    v256_load_packed2(a, b, p);
+    v256_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 #endif
 
 template<unsigned N>
-void i_load_packed2(float32<N>& a, float32<N>& b, const float* p)
+void i_load_packed2(float32<N>& a, float32<N>& b, const void* p)
 {
-    v_load_packed2(a, b, p);
+    v_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed2(float64x2& a, float64x2& b, const double* p)
+inline void i_load_packed2(float64x2& a, float64x2& b, const void* p)
 {
-    p = detail::assume_aligned(p, 16);
-    a = load(a, p);
-    b = load(b, p+2);
+    const double* q = reinterpret_cast<const double*>(p);
+    q = detail::assume_aligned(q, 16);
+    a = load(a, q);
+    b = load(b, q+16);
     transpose2(a, b);
 }
 
 #if SIMDPP_USE_AVX
-inline void i_load_packed2(float64x4& a, float64x4& b, const double* p)
+inline void i_load_packed2(float64x4& a, float64x4& b, const void* p)
 {
-    v256_load_packed2(a, b, p);
+    v256_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 #endif
 
 template<unsigned N>
-void i_load_packed2(float64<N>& a, float64<N>& b, const double* p)
+void i_load_packed2(float64<N>& a, float64<N>& b, const void* p)
 {
-    v_load_packed2(a, b, p);
+    v_load_packed2(a, b, reinterpret_cast<const char*>(p));
 }
 
 // -----------------------------------------------------------------------------
 
 template<class V, class P>
-void v256_load_packed2(V& a, V& b, const P* p)
+void v256_load_packed2(V& a, V& b, const char* p)
 {
     p = detail::assume_aligned(p, 32);
     load(a, p);
-    load(b, p + 32 / sizeof(P));
+    load(b, p + 32);
     mem_unpack2(a, b);
 }
 
-template<class V, class P>
-void v_load_packed2(V& a, V& b, const P* p)
+template<class V>
+void v_load_packed2(V& a, V& b, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
         i_load_packed2(a[i], b[i], p);
-        p += veclen*2 / sizeof(P);
+        p += veclen*2;
     }
 }
 

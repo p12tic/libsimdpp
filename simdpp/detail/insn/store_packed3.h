@@ -46,10 +46,10 @@ namespace detail {
 namespace insn {
 
 // the 256-bit versions are mostly boilerplate. Collect that stuff here.
-template<class P, class V>
-void v256_store_pack3(P* p, V a, V b, V c);
-template<class P, class V>
-void v_store_pack3(P* p, V a, V b, V c);
+template<class V>
+void v256_store_pack3(char* p, V a, V b, V c);
+template<class V>
+void v_store_pack3(char* p, V a, V b, V c);
 
 // -----------------------------------------------------------------------------
 
@@ -213,16 +213,17 @@ void i_store_packed3(void* p,
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
+inline void i_store_packed3(void* p, float32x4 a, float32x4 b, float32x4 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    char* q = reinterpret_cast<char*>(p);
     mem_pack3(a, b, c);
-    i_store(p, a);
-    i_store(p+4, b);
-    i_store(p+8, c);
+    i_store(q, a);
+    i_store(q+16, b);
+    i_store(q+32, c);
 #elif SIMDPP_USE_NEON
     float32x4x3_t t;
     t.val[0] = a;
@@ -233,71 +234,72 @@ inline void i_store_packed3(float* p, float32x4 a, float32x4 b, float32x4 c)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_packed3(float* p,
+inline void i_store_packed3(void* p,
                             float32x8 a, float32x8 b, float32x8 c)
 {
-    v256_store_pack3(p, a, b, c);
+    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(float* p,
+void i_store_packed3(void* p,
                      float32<N> a, float32<N> b, float32<N> c)
 {
-    v_store_pack3(p, a, b, c);
+    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed3(double* p, float64x2 a, float64x2 b, float64x2 c)
+inline void i_store_packed3(void* p, float64x2 a, float64x2 b, float64x2 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2
+    char* q = reinterpret_cast<char*>(p);
     mem_pack3(a, b, c);
-    i_store(p, a);
-    i_store(p+2, b);
-    i_store(p+4, c);
+    i_store(q, a);
+    i_store(q+16, b);
+    i_store(q+32, c);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_packed3(double* p,
+inline void i_store_packed3(void* p,
                             float64x4 a, float64x4 b, float64x4 c)
 {
-    v256_store_pack3(p, a, b, c);
+    v256_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed3(double* p,
+void i_store_packed3(void* p,
                      float64<N> a, float64<N> b, float64<N> c)
 {
-    v_store_pack3(p, a, b, c);
+    v_store_pack3(reinterpret_cast<char*>(p), a, b, c);
 }
 
 // -----------------------------------------------------------------------------
 
-template<class P, class V>
-void v256_store_pack3(P* p, V a, V b, V c)
+template<class V>
+void v256_store_pack3(char* p, V a, V b, V c)
 {
     p = detail::assume_aligned(p, 32);
     mem_pack3(a, b, c);
     i_store(p, a);
-    i_store(p + 32 / sizeof(P), b);
-    i_store(p + 64 / sizeof(P), c);
+    i_store(p + 32, b);
+    i_store(p + 64, c);
 }
 
-template<class P, class V>
-void v_store_pack3(P* p, V a, V b, V c)
+template<class V>
+void v_store_pack3(char* p, V a, V b, V c)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
         i_store_packed3(p, a[i], b[i], c[i]);
-        p += veclen*3 / sizeof(P);
+        p += veclen*3;
     }
 }
 

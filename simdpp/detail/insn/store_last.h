@@ -51,8 +51,8 @@ namespace detail {
 namespace insn {
 
 // Multi-vector i_store_last is mostly boilerplate
-template<class P, class V>
-void v_store_last(P* p, V a, unsigned n);
+template<class V>
+void v_store_last(char* p, V a, unsigned n);
 
 // -----------------------------------------------------------------------------
 
@@ -183,7 +183,6 @@ inline void i_store_last(void* p, gint64x4 a, unsigned n)
 }
 #endif
 
-// -----------------------------------------------------------------------------
 
 template<unsigned N>
 void i_store_last(void* p, gint64<N> a, unsigned n)
@@ -191,34 +190,38 @@ void i_store_last(void* p, gint64<N> a, unsigned n)
     v_store_last(reinterpret_cast<char*>(p), a, n);
 }
 
-inline void i_store_last(float* p, float32x4 a, unsigned n)
+// -----------------------------------------------------------------------------
+
+inline void i_store_last(void* p, float32x4 a, unsigned n)
 {
-    p = detail::assume_aligned(p, 16);
+    float* q = reinterpret_cast<float*>(p);
+    q = detail::assume_aligned(q, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
-    i_store_last(p, int32x4{a}, n);
+    i_store_last(q, int32x4(a), n);
 #elif SIMDPP_USE_SSE2
     static const uint32_t mask_d[8] = {0x00000000, 0x00000000, 0x00000000, 0x00000000,
                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x4 mask = load_u(mask, mask_dp + n);
-    float32x4 old = load(old, p);
+    float32x4 old = load(old, q);
     a = blend(a, old, mask);
-    store(p, a);
+    store(q, a);
 #elif SIMDPP_USE_NEON
     // + VFP
     if (n < 1) return;
-    neon::store_lane<3,1>(p+3, a);
+    neon::store_lane<3,1>(q+3, a);
     if (n < 2) return;
-    neon::store_lane<2,1>(p+2, a);
+    neon::store_lane<2,1>(q+2, a);
     if (n < 3) return;
-    neon::store_lane<1,1>(p+1, a);
+    neon::store_lane<1,1>(q+1, a);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_last(float* p, float32x8 a, unsigned n)
+inline void i_store_last(void* p, float32x8 a, unsigned n)
 {
+    float* v = reinterpret_cast<float*>(p);
     static const uint32_t mask_d[16] = {0x00000000, 0x00000000, 0x00000000, 0x00000000,
                                         0x00000000, 0x00000000, 0x00000000, 0x00000000,
                                         0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
@@ -226,35 +229,37 @@ inline void i_store_last(float* p, float32x8 a, unsigned n)
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x8 mask = load_u(mask, mask_dp + n);
-    float32x8 old = load(old, p);
+    float32x8 old = load(old, v);
     a = blend(a, old, mask);
-    store(p, a);
+    store(v, a);
 }
 #endif
 
 template<unsigned N>
-void i_store_last(float* p, float32<N> a, unsigned n)
+void i_store_last(void* p, float32<N> a, unsigned n)
 {
-    v_store_last(p, a, n);
+    v_store_last(reinterpret_cast<char*>(p), a, n);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_last(double* p, float64x2 a, unsigned n)
+inline void i_store_last(void* p, float64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
+    double* q = reinterpret_cast<double*>(p);
     if (n == 1) {
-        sse::store_lane<1,1>(p+1, a);
+        sse::store_lane<1,1>(q+1, a);
     }
 #endif
 }
 
 #if SIMDPP_USE_AVX
-inline void i_store_last(double* p, float64x4 a, unsigned n)
+inline void i_store_last(void* p, float64x4 a, unsigned n)
 {
+    double* q = reinterpret_cast<double*>(p);
     static const uint64_t mask_d[16] = {0x0000000000000000, 0x0000000000000000,
                                         0x0000000000000000, 0x0000000000000000,
                                         0xffffffffffffffff, 0xffffffffffffffff,
@@ -262,22 +267,22 @@ inline void i_store_last(double* p, float64x4 a, unsigned n)
 
     const double* mask_dp = reinterpret_cast<const double*>(mask_d);
     float64x4 mask = load_u(mask, mask_dp + n);
-    float64x4 old = load(old, p);
+    float64x4 old = load(old, q);
     a = blend(a, old, mask);
-    store(p, a);
+    store(q, a);
 }
 #endif
 
 template<unsigned N>
-void i_store_last(double* p, float64<N> a, unsigned n)
+void i_store_last(void* p, float64<N> a, unsigned n)
 {
-    v_store_last(p, a, n);
+    v_store_last(reinterpret_cast<char*>(p), a, n);
 }
 
 // -----------------------------------------------------------------------------
 
-template<class P, class V>
-void v_store_last(P* p, V a, unsigned n)
+template<class V>
+void v_store_last(char* p, V a, unsigned n)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
@@ -288,17 +293,17 @@ void v_store_last(P* p, V a, unsigned n)
     unsigned mid_vec_skip_count = n % V::base_vector_type::length;
     unsigned curr_vec = 0;
 
-    p += n_empty_vec * veclen / sizeof(P);
+    p += n_empty_vec * veclen;
     curr_vec += n_empty_vec;
     if (mid_vec_skip_count > 0) {
         i_store_last(p, a[curr_vec], mid_vec_skip_count);
-        p += veclen / sizeof(P);
+        p += veclen;
         curr_vec++;
     }
 
     for (; curr_vec < V::vec_length; ++curr_vec) {
         i_store(p, a[curr_vec]);
-        p += veclen / sizeof(P);
+        p += veclen;
     }
 }
 

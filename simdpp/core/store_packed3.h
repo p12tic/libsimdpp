@@ -161,7 +161,7 @@ void store_packed3(void* p, gint64<N> a, gint64<N> b, gint64<N> c)
     @a p must be aligned to 32 bytes.
 */
 template<unsigned N>
-void store_packed3(float* p, float32<N> a, float32<N> b, float32<N> c)
+void store_packed3(void* p, float32<N> a, float32<N> b, float32<N> c)
 {
     detail::insn::i_store_packed3(p, a, b, c);
 }
@@ -189,7 +189,7 @@ void store_packed3(float* p, float32<N> a, float32<N> b, float32<N> c)
     @a p must be aligned to 32 bytes.
 */
 template<unsigned N>
-void store_packed3(double* p, float64<N> a, float64<N> b, float64<N> c)
+void store_packed3(void* p, float64<N> a, float64<N> b, float64<N> c)
 {
     detail::insn::i_store_packed3(p, a, b, c);
 }

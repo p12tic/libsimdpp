@@ -51,8 +51,8 @@ namespace detail {
 namespace insn {
 
 // Multi-vector i_store_first is mostly boilerplate
-template<class P, class V>
-void v_store_first(P* p, V a, unsigned n);
+template<class V>
+void v_store_first(char* p, V a, unsigned n);
 
 
 inline void i_store_first(void* p, gint8x16 a, unsigned n)
@@ -185,20 +185,21 @@ void i_store_first(void* p, gint64<N> a, unsigned n)
 
 // 32 bits float
 
-inline void i_store_first(float* p, float32x4 a, unsigned n)
+inline void i_store_first(void* p, float32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
-    i_store_first(p, int32x4{a}, n);
+    i_store_first(p, int32x4(a), n);
 #elif SIMDPP_USE_SSE2
+    float* q = reinterpret_cast<float*>(p);
     static const uint32_t mask_d[8] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
                                        0x00000000, 0x00000000, 0x00000000, 0x00000000};
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x4 mask = load_u(mask, mask_dp + 4-n);
-    float32x4 old = load(old, p);
+    float32x4 old = load(old, q);
     a = blend(a, old, mask);
-    store(p, a);
+    store(q, a);
 #elif SIMDPP_USE_NEON
     // + VFP
     if (n < 1) return;
@@ -211,8 +212,9 @@ inline void i_store_first(float* p, float32x4 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_first(float* p, float32x8 a, unsigned n)
+inline void i_store_first(void* p, float32x8 a, unsigned n)
 {
+    float* q = reinterpret_cast<float*>(p);
     static const uint32_t mask_d[16] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
                                         0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
                                         0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -220,21 +222,21 @@ inline void i_store_first(float* p, float32x8 a, unsigned n)
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x8 mask = load_u(mask, mask_dp + 8-n);
-    float32x8 old = load(old, p);
+    float32x8 old = load(old, q);
     a = blend(a, old, mask);
-    store(p, a);
+    store(q, a);
 }
 #endif
 
 template<unsigned N>
-void i_store_first(float* p, float32<N> a, unsigned n)
+void i_store_first(void* p, float32<N> a, unsigned n)
 {
-    v_store_first(p, a, n);
+    v_store_first(reinterpret_cast<char*>(p), a, n);
 }
 
 // 64 bit float
 
-inline void i_store_first(double* p, float64x2 a, unsigned n)
+inline void i_store_first(void* p, float64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -247,8 +249,9 @@ inline void i_store_first(double* p, float64x2 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_first(double* p, float64x4 a, unsigned n)
+inline void i_store_first(void* p, float64x4 a, unsigned n)
 {
+    double* q = reinterpret_cast<double*>(p);
     static const uint64_t mask_d[16] = {0xffffffffffffffff, 0xffffffffffffffff,
                                         0xffffffffffffffff, 0xffffffffffffffff,
                                         0x0000000000000000, 0x0000000000000000,
@@ -256,22 +259,22 @@ inline void i_store_first(double* p, float64x4 a, unsigned n)
 
     const double* mask_dp = reinterpret_cast<const double*>(mask_d);
     float64x4 mask = load_u(mask, mask_dp + 4-n);
-    float64x4 old = load(old, p);
+    float64x4 old = load(old, q);
     a = blend(a, old, mask);
-    store(p, a);
+    store(q, a);
 }
 #endif
 
 template<unsigned N>
-void i_store_first(double* p, float64<N> a, unsigned n)
+void i_store_first(void* p, float64<N> a, unsigned n)
 {
-    v_store_first(p, a, n);
+    v_store_first(reinterpret_cast<char*>(p), a, n);
 }
 
 // -----------------------------------------------------------------------------
 
-template<class P, class V>
-void v_store_first(P* p, V a, unsigned n)
+template<class V>
+void v_store_first(char* p, V a, unsigned n)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
@@ -283,7 +286,7 @@ void v_store_first(P* p, V a, unsigned n)
 
     for (; curr_vec < n_full_vec; ++curr_vec) {
         store(p, a[curr_vec]);
-        p += veclen / sizeof(P);
+        p += veclen;
     }
 
     if (mid_vec_fill_count > 0) {

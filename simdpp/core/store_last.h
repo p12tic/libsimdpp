@@ -116,12 +116,12 @@ void store_last(void* p, gint64<N,E> a, unsigned n)
     detail::insn::i_store_last(p, a.eval(), n);
 }
 template<unsigned N, class E>
-void store_last(float* p, float32<N,E> a, unsigned n)
+void store_last(void* p, float32<N,E> a, unsigned n)
 {
     detail::insn::i_store_last(p, a.eval(), n);
 }
 template<unsigned N, class E>
-void store_last(double* p, float64<N,E> a, unsigned n)
+void store_last(void* p, float64<N,E> a, unsigned n)
 {
     detail::insn::i_store_last(p, a.eval(), n);
 }
