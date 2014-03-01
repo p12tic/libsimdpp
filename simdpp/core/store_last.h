@@ -40,38 +40,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-namespace detail {
-
-// Multi-vector store_last is mostly boilerplate
-template<class P, class V>
-void v_store_last(P* p, V a, unsigned n)
-{
-    unsigned veclen = sizeof(typename V::base_vector_type);
-
-    p = detail::assume_aligned(p, veclen);
-    unsigned total_len = V::length * V::vec_length;
-    unsigned el_to_skip = total_len - n;
-
-    unsigned n_empty_vec = el_to_skip / V::length;
-    unsigned mid_vec_skip_count = n % V::length;
-    unsigned curr_vec = 0;
-
-    p += n_empty_vec * veclen / sizeof(P);
-    curr_vec += n_empty_vec;
-    if (mid_vec_skip_count > 0) {
-        store_last(p, a[curr_vec], mid_vec_skip_count);
-        p += veclen / sizeof(P);
-        curr_vec++;
-    }
-
-    for (; curr_vec < V::vec_length; ++curr_vec) {
-        store(p, a[curr_vec]);
-        p += veclen / sizeof(P);
-    }
-}
-
-} // namespace detail
-
 /// @{
 /** Stores the last @a n elements of an 128-bit or 256-bit integer, 32-bit or
     64-bit floating point vector to memory. @a n must be in range [0..N-1]
