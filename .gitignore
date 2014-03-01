@@ -12,3 +12,7 @@ missing
 *~
 !*.pc.in
 !Doxyfile.in
+libsimdpp.config
+libsimdpp.creator
+libsimdpp.includes
+libsimdpp.files
