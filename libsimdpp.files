@@ -230,7 +230,6 @@ simdpp/dispatch/macros.h
 simdpp/expr.h
 simdpp/expr.inl
 simdpp/neon/detail/math_shift.h
-simdpp/neon/detail/shuffle.h
 simdpp/neon/detail/shuffle_int16x8.h
 simdpp/neon/detail/shuffle_int32x4.h
 simdpp/neon/detail/shuffle_int64x2.h

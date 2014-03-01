@@ -33,7 +33,6 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/neon/detail/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -61,8 +60,8 @@ gint8x16 i_move16_r(gint8x16 a)
 #elif SIMDPP_USE_SSE2
     return _mm_slli_si128(a, shift);
 #elif SIMDPP_USE_NEON
-    int8x16 z = int8x16::zero();
-    return neon::detail::align<16-shift>(z, a);
+    uint8x16 z = uint8x16::zero();
+    return vextq_u8(z, a, 16-shift);
 #elif SIMDPP_USE_ALTIVEC
     // return align<16-shift>(uint8x16::zero(), a);
     return vec_sld((__vector uint8_t)uint8x16::zero(), (__vector uint8_t)a, 16-shift);
