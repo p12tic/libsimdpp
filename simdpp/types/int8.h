@@ -76,6 +76,15 @@ public:
     template<class E> gint8<N>& operator=(const gint32<N/4,E>& d);
     template<class E> gint8<N>& operator=(const gint64<N/8,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint8<N>(const expr_vec_set_splat<VE>& e);
+    gint8<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint8<N>& operator=(const expr_vec_set_splat<VE>& e);
+    gint8<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const gint8v& operator[](unsigned i) const { return *(du_+i); }
     gint8v& operator[](unsigned i)             { return *(du_+i); }
 
@@ -84,17 +93,18 @@ public:
     /// Creates a int8 vector with the contents set to zero
     static gint8<N> zero()
     {
-        return set_broadcast(gint8v::zero());
+        return set_vec(gint8v::zero());
     }
 
     /// Creates a int8 vector with the contents set to ones
     static gint8<N> ones()
     {
-        return set_broadcast(gint8v::ones());
+        return set_vec(gint8v::ones());
     }
 
+private:
     /// Creates a int8 vector with the contents set to copy of native register
-    static gint8<N> set_broadcast(gint8v a)
+    static gint8<N> set_vec(gint8v a)
     {
         gint8<N> r;
         for (auto& v : r.du_) {
@@ -135,6 +145,15 @@ public:
     template<class E> int8<N>& operator=(const gint32<N/4,E>& d);
     template<class E> int8<N>& operator=(const gint64<N/8,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int8<N>(const expr_vec_set_splat<VE>& e);
+    int8<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    int8<N>& operator=(const expr_vec_set_splat<VE>& e);
+    int8<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const int8v& operator[](unsigned i) const { return *(gint8<N>::di_+i); }
     int8v& operator[](unsigned i)             { return *(gint8<N>::di_+i); }
 
@@ -142,30 +161,6 @@ public:
 
     static int8<N> zero() { return gint8<N>::zero(); }
     static int8<N> ones() { return gint8<N>::ones(); }
-
-    /** Creates a signed int8 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  ... 15  | ... |
-        r = [ v0 v0 v0 ... v0   ... ]
-        @endcode
-    */
-    static int8<N> load_broadcast(const int8_t* v0)
-    {
-        return set_broadcast(int8v::load_broadcast(v0));
-    }
-
-    /** Creates a signed int8 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  ...  15  | ... |
-        r = [ v0 v0 v0 ...  v0   ... ]
-        @endcode
-    */
-    static int8<N> set_broadcast(int8_t v0)
-    {
-        return set_broadcast(int8v::set_broadcast(v0));
-    }
 
     /** Creates a signed int8 vector from a value known at compile-time
 
@@ -176,7 +171,7 @@ public:
     */
     static int8<N> make_const(int8_t v0)
     {
-        return set_broadcast(int8v::make_const(v0));
+        return set_vec(int8v::make_const(v0));
     }
 
     /** Creates a signed int8 vector from two values known at compile-time
@@ -188,7 +183,7 @@ public:
     */
     static int8<N> make_const(int8_t v0, int8_t v1)
     {
-        return set_broadcast(int8v::make_const(v0, v1));
+        return set_vec(int8v::make_const(v0, v1));
     }
 
     /** Creates a signed int8 vector from four values known at compile-time
@@ -200,7 +195,7 @@ public:
     */
     static int8<N> make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3)
     {
-        return set_broadcast(int8v::make_const(v0, v1, v2, v3));
+        return set_vec(int8v::make_const(v0, v1, v2, v3));
     }
 
     /** Creates a signed int8 vector from eight values known at compile-time
@@ -211,9 +206,9 @@ public:
         @endcode
     */
     static int8<N> make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
-                               int8_t v4, int8_t v5, int8_t v6, int8_t v7)
+                              int8_t v4, int8_t v5, int8_t v6, int8_t v7)
     {
-        return set_broadcast(int8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
+        return set_vec(int8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
     }
 
     /** Creates a signed int8 vector from sixteen values known at compile-time
@@ -228,13 +223,14 @@ public:
                                int8_t v8, int8_t v9, int8_t v10, int8_t v11,
                                int8_t v12, int8_t v13, int8_t v14, int8_t v15)
     {
-        return set_broadcast(int8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                                v8, v9, v10,v11,v12,v13,v14,v15));
+        return set_vec(int8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
+                                         v8, v9, v10,v11,v12,v13,v14,v15));
     }
 
+private:
     /// Creates a signed int8 vector with the contents set to copy of native
     /// register
-    static int8<N> set_broadcast(int8v a)
+    static int8<N> set_vec(int8v a)
     {
         int8<N> r;
         for (auto& v : r.di_) {
@@ -268,6 +264,15 @@ public:
     template<class E> uint8<N>& operator=(const gint32<N/4,E>& d);
     template<class E> uint8<N>& operator=(const gint64<N/8,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint8<N>(const expr_vec_set_splat<VE>& e);
+    uint8<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint8<N>& operator=(const expr_vec_set_splat<VE>& e);
+    uint8<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const uint8v& operator[](unsigned i) const { return *(gint8<N>::du_+i); }
     uint8v& operator[](unsigned i)             { return *(gint8<N>::du_+i); }
 
@@ -275,30 +280,6 @@ public:
 
     static uint8<N> zero() { return gint8<N>::zero(); }
     static uint8<N> ones() { return gint8<N>::ones(); }
-
-    /** Creates a unsigned int8 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  ... 15  | ... |
-        r = [ v0 v0 v0 ... v0   ... ]
-        @endcode
-    */
-    static uint8<N> load_broadcast(const uint8_t* v0)
-    {
-        return set_broadcast(uint8v::load_broadcast(v0));
-    }
-
-    /** Creates a unsigned int8 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  ...  15  | ... |
-        r = [ v0 v0 v0 ...  v0   ... ]
-        @endcode
-    */
-    static uint8<N> set_broadcast(uint8_t v0)
-    {
-        return set_broadcast(uint8v::set_broadcast(v0));
-    }
 
     /** Creates a unsigned int8 vector from a value known at compile-time
 
@@ -309,7 +290,7 @@ public:
     */
     static uint8<N> make_const(uint8_t v0)
     {
-        return set_broadcast(uint8v::make_const(v0));
+        return set_vec(uint8v::make_const(v0));
     }
 
     /** Creates a unsigned int8 vector from two values known at compile-time
@@ -321,7 +302,7 @@ public:
     */
     static uint8<N> make_const(uint8_t v0, uint8_t v1)
     {
-        return set_broadcast(uint8v::make_const(v0, v1));
+        return set_vec(uint8v::make_const(v0, v1));
     }
 
     /** Creates a unsigned int8 vector from four values known at compile-time
@@ -333,7 +314,7 @@ public:
     */
     static uint8<N> make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3)
     {
-        return set_broadcast(uint8v::make_const(v0, v1, v2, v3));
+        return set_vec(uint8v::make_const(v0, v1, v2, v3));
     }
 
     /** Creates a unsigned int8 vector from eight values known at compile-time
@@ -346,7 +327,7 @@ public:
     static uint8<N> make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
                                uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7)
     {
-        return set_broadcast(uint8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
+        return set_vec(uint8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
     }
 
     /** Creates a unsigned int8 vector from sixteen values known at compile-time
@@ -361,13 +342,14 @@ public:
                                uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11,
                                uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15)
     {
-        return set_broadcast(uint8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                                v8, v9, v10,v11,v12,v13,v14,v15));
+        return set_vec(uint8v::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
+                                          v8, v9, v10,v11,v12,v13,v14,v15));
     }
 
+private:
     /// Creates a unsigned int8 vector with the contents set to copy of native
     /// register
-    static uint8<N> set_broadcast(uint8v a)
+    static uint8<N> set_vec(uint8v a)
     {
         uint8<N> r;
         for (auto& v : r.du_) {

@@ -109,6 +109,15 @@ public:
     template<class E> gint16<8>& operator=(const gint32<4,E>& d);
     template<class E> gint16<8>& operator=(const gint64<2,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint16<8>(const expr_vec_set_splat<VE>& e);
+    gint16<8>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint16<8>& operator=(const expr_vec_set_splat<VE>& e);
+    gint16<8>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const gint16x8& operator[](unsigned) const { return *this; }
@@ -189,6 +198,15 @@ public:
     template<class E> int16<8>& operator=(const gint32<4,E>& d);
     template<class E> int16<8>& operator=(const gint64<2,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int16<8>(const expr_vec_set_splat<VE>& e);
+    int16<8>(const expr_vec_load_splat& e);
+    template<class VE>
+    int16<8>& operator=(const expr_vec_set_splat<VE>& e);
+    int16<8>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const int16x8& operator[](unsigned) const { return *this; }
@@ -207,27 +225,6 @@ public:
 
     static int16<8> zero() { return gint16<8>::zero(); }
     static int16<8> ones() { return gint16<8>::ones(); }
-
-    /** Creates a signed int16x8 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 3}
-        @icost{NEON, 1}
-    */
-    static int16x8 load_broadcast(const int16_t* v0);
-
-    /** Creates a signed int16x8 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-        @icost{NEON, SSE2-SSE4.1, NEON, 2}
-    */
-    static int16x8 set_broadcast(int16_t v0);
 
     /** Creates a signed int16x8 vector from a value known at compile-time
 
@@ -301,6 +298,15 @@ public:
     template<class E> uint16<8>& operator=(const gint32<4,E>& d);
     template<class E> uint16<8>& operator=(const gint64<2,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint16<8>(const expr_vec_set_splat<VE>& e);
+    uint16<8>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint16<8>& operator=(const expr_vec_set_splat<VE>& e);
+    uint16<8>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const uint16x8& operator[](unsigned) const { return *this; }
@@ -319,27 +325,6 @@ public:
 
     static uint16<8> zero() { return gint16<8>::zero(); }
     static uint16<8> ones() { return gint16<8>::ones(); }
-
-    /** Creates a unsigned int16x8 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 3}
-        @icost{NEON, 1}
-    */
-    static uint16x8 load_broadcast(const uint16_t* v0);
-
-    /** Creates a unsigned int16x8 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static uint16x8 set_broadcast(uint16_t v0);
 
     /** Creates a unsigned int16x8 vector from a value known at compile-time
 

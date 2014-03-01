@@ -1,5 +1,5 @@
 /*  libsimdpp
-    Copyright (C) 2012-2012  Povilas Kanapickas tir5c3@yahoo.co.uk
+    Copyright (C) 2014  Povilas Kanapickas <povilas@radix.lt>
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -25,57 +25,41 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_TYPES_FLOAT64X4_INL
-#define LIBSIMDPP_SIMDPP_TYPES_FLOAT64X4_INL
+#ifndef LIBSIMDPP_SIMDPP_CORE_LOAD_SPLAT_H
+#define LIBSIMDPP_SIMDPP_CORE_LOAD_SPLAT_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/types/float64x4.h>
-#include <simdpp/core/bit_xor.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/types.h>
+#include <simdpp/detail/insn/load_splat.h>
+#include <simdpp/detail/insn/load_splat_mem_impl.inl>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-#if SIMDPP_USE_AVX
+/** Loads a value from a memory location and broadcasts it to all elements of a
+    vector.
 
-inline float64x4 float64x4::zero()
+    @code
+    r0 = *p
+    ...
+    rN = *p
+    @endcode
+
+    @a p must have the alignment of the element of the target vector.
+*/
+// FIXME: return empty expression
+template<class V = expr_vec_load_splat>
+V load_splat(const void* p)
 {
-    float64x4 r;
-    r = bit_xor(r, r);
-    return r;
+    static_assert(is_vector<V>::value || detail::is_expr_vec_load_splat<V>::value,
+                  "V must be a vector");
+    return detail::insn::i_load_splat_dispatch<V>::run(p);
 }
-
-inline float64x4::float64x4(gint64x4 d)
-{
-    *this = bit_cast<float64x4(d);
-}
-
-inline float64x4 float64x4::make_const(double v0)
-{
-    return float64x4::make_const(v0, v0, v0, v0);
-}
-
-inline float64x4 float64x4::make_const(double v0, double v1)
-{
-    return float64x4::make_const(v0, v1, v0, v1);
-}
-
-inline float64x4 float64x4::make_const(double v0, double v1, double v2, double v3)
-{
-    return _mm256_set_pd(v3, v2, v1, v0);
-}
-
-inline mask_float64x4::operator float64x4() const
-{
-    return d_;
-}
-
-#endif // SIMDPP_USE_AVX
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
@@ -83,3 +67,4 @@ inline mask_float64x4::operator float64x4() const
 } // namespace simdpp
 
 #endif
+

@@ -81,6 +81,15 @@ public:
     float64<N>& operator=(gint64<N> d)  { operator=(float64<N>(d)); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    float64<N>(const expr_vec_set_splat<VE>& e);
+    float64<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    float64<N>& operator=(const expr_vec_set_splat<VE>& e);
+    float64<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const float64v& operator[](unsigned i) const { return *(d_+i); }
     float64v& operator[](unsigned i)             { return *(d_+i); }
 
@@ -96,48 +105,7 @@ public:
     */
     static float64<N> zero()
     {
-        return float64<N>::set_broadcast(float64v::zero());
-    }
-
-    /** Creates a double vector from a value loaded from memory.
-
-        @code
-        r0 = v0
-        ...
-        rN = v0
-        @endcode
-    */
-    static float64<N> load_broadcast(const double* v0)
-    {
-        return float64<N>::set_broadcast(float64v::load_broadcast(v0));
-    }
-
-    /** Creates a float vector from a value stored in a core register.
-
-        @code
-        r0 = v0
-        ...
-        rN = v0
-        @endcode
-    */
-    static float64<N> set_broadcast(double v0)
-    {
-        return float64<N>::set_broadcast(float64v::set_broadcast(v0));
-    }
-
-    /** Creates a float vector from a native vector
-
-        @code
-        r0 = v0
-        ...
-        rN = v0
-        @endcode
-    */
-    static float64<N> set_broadcast(float64v v0)
-    {
-        float64<N> r;
-        for (unsigned i = 0; i < r.vec_length; i++) r[i] = v0;
-        return r;
+        return set_vec(float64v::zero());
     }
 
     /** Creates a float64 vector from a value known at compile-time
@@ -149,7 +117,7 @@ public:
     */
     static float64x4 make_const(double v0)
     {
-        return float64<N>::set_broadcast(float64v::make_const(v0));
+        return set_vec(float64v::make_const(v0));
     }
 
     /** Creates a float64 vector from two values known at compile-time
@@ -161,10 +129,25 @@ public:
     */
     static float64x4 make_const(double v0, double v1)
     {
-        return float64<N>::set_broadcast(float64v::make_const(v0, v1));
+        return set_vec(float64v::make_const(v0, v1));
     }
 
 private:
+    /** Creates a float vector from a native vector
+
+        @code
+        r0 = v0
+        ...
+        rN = v0
+        @endcode
+    */
+    static float64<N> set_vec(float64v v0)
+    {
+        float64<N> r;
+        for (unsigned i = 0; i < r.vec_length; i++) r[i] = v0;
+        return r;
+    }
+
     float64v d_[vec_length];
 };
 

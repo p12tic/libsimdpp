@@ -117,6 +117,15 @@ public:
     gint32<4>& operator=(const float32x4& d) { operator=(gint32x4(d)); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint32<4>(const expr_vec_set_splat<VE>& e);
+    gint32<4>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint32<4>& operator=(const expr_vec_set_splat<VE>& e);
+    gint32<4>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const gint32x4& operator[](unsigned) const { return *this; }
@@ -207,6 +216,15 @@ public:
     int32<4>& operator=(const float32x4& d) { gint32x4::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int32<4>(const expr_vec_set_splat<VE>& e);
+    int32<4>(const expr_vec_load_splat& e);
+    template<class VE>
+    int32<4>& operator=(const expr_vec_set_splat<VE>& e);
+    int32<4>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const int32x4& operator[](unsigned) const { return *this; }
@@ -225,29 +243,6 @@ public:
 
     static int32<4> zero() { return gint32<4>::zero(); }
     static int32<4> ones() { return gint32<4>::ones(); }
-
-    /** Creates a signed int32x4 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-
-        @icost{SSE2-SSE4.1, 2}
-        @icost{NEON, 1}
-    */
-    static int32x4 load_broadcast(const int32_t* v0);
-
-    /** Creates a signed int32x4 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static int32x4 set_broadcast(int32_t v0);
 
     /** Creates a signed int32x4 vector from a value known at compile-time
 
@@ -324,6 +319,15 @@ public:
     uint32<4>& operator=(const float32x4& d) { gint32x4::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint32<4>(const expr_vec_set_splat<VE>& e);
+    uint32<4>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint32<4>& operator=(const expr_vec_set_splat<VE>& e);
+    uint32<4>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const uint32x4& operator[](unsigned) const { return *this; }
@@ -342,30 +346,6 @@ public:
 
     static uint32<4> zero() { return gint32<4>::zero(); }
     static uint32<4> ones() { return gint32<4>::ones(); }
-
-    /** Creates an unsigned int32x4 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-
-        @icost{SSE2-SSE4.1, 2}
-        @icost{NEON, 1}
-    */
-    static uint32x4 load_broadcast(const uint32_t* v0);
-
-    /** Creates an unsigned int32x4 vector from a value stored in a core
-        register.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static uint32x4 set_broadcast(uint32_t v0);
 
     /** Creates an unsigned int32x4 vector from a value known at compile-time
 

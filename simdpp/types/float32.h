@@ -81,9 +81,17 @@ public:
     float32<N>& operator=(gint32<N> d)  { operator=(float32<N>(d)); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    float32<N>(const expr_vec_set_splat<VE>& e);
+    float32<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    float32<N>& operator=(const expr_vec_set_splat<VE>& e);
+    float32<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const float32v& operator[](unsigned i) const { return *(d_+i); }
     float32v& operator[](unsigned i)             { return *(d_+i); }
-
 
     float32<N> eval() const { return *this; }
 
@@ -97,48 +105,7 @@ public:
     */
     static float32<N> zero()
     {
-        return float32<N>::set_broadcast(float32v::zero());
-    }
-
-    /** Creates a float vector from a value loaded from memory.
-
-        @code
-        r0 = v0
-        ...
-        rN = v0
-        @endcode
-    */
-    static float32<N> load_broadcast(const float* v0)
-    {
-        return float32<N>::set_broadcast(float32v::load_broadcast(v0));
-    }
-
-    /** Creates a float vector from a value stored in a core register.
-
-        @code
-        r0 = v0
-        ...
-        rN = v0
-        @endcode
-    */
-    static float32<N> set_broadcast(float v0)
-    {
-        return float32<N>::set_broadcast(float32v::set_broadcast(v0));
-    }
-
-    /** Creates a float vector from a native vector
-
-        @code
-        r0 = v0
-        ...
-        rN = v0
-        @endcode
-    */
-    static float32<N> set_broadcast(float32v v0)
-    {
-        float32<N> r;
-        for (unsigned i = 0; i < r.vec_length; i++) r[i] = v0;
-        return r;
+        return set_vec(float32v::zero());
     }
 
     /** Creates a float32 vector from a value known at compile-time
@@ -150,7 +117,7 @@ public:
     */
     static float32<N> make_const(float v0)
     {
-        return float32<N>::set_broadcast(float32v::make_const(v0));
+        return set_vec(float32v::make_const(v0));
     }
 
     /** Creates a float32 vector from two values known at compile-time
@@ -162,7 +129,7 @@ public:
     */
     static float32<N> make_const(float v0, float v1)
     {
-        return float32<N>::set_broadcast(float32v::make_const(v0, v1));
+        return set_vec(float32v::make_const(v0, v1));
     }
 
     /** Creates a float32 vector from four values known at compile-time
@@ -174,10 +141,25 @@ public:
     */
     static float32<N> make_const(float v0, float v1, float v2, float v3)
     {
-        return float32<N>::set_broadcast(float32v::make_const(v0, v1, v2, v3));
+        return set_vec(float32v::make_const(v0, v1, v2, v3));
     }
 
 private:
+    /** Creates a float vector from a native vector
+
+        @code
+        r0 = v0
+        ...
+        rN = v0
+        @endcode
+    */
+    static float32<N> set_vec(float32v v0)
+    {
+        float32<N> r;
+        for (unsigned i = 0; i < r.vec_length; i++) r[i] = v0;
+        return r;
+    }
+
     float32v d_[vec_length];
 };
 

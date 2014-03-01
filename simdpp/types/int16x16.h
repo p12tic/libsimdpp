@@ -85,6 +85,15 @@ public:
     template<class E> gint16<16>& operator=(const gint32<8,E>& d);
     template<class E> gint16<16>& operator=(const gint64<4,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint16<16>(const expr_vec_set_splat<VE>& e);
+    gint16<16>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint16<16>& operator=(const expr_vec_set_splat<VE>& e);
+    gint16<16>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const gint16x16& operator[](unsigned) const   { return *this; }
@@ -130,6 +139,15 @@ public:
     template<class E> int16<16>& operator=(const gint32<8,E>& d);
     template<class E> int16<16>& operator=(const gint64<4,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int16<16>(const expr_vec_set_splat<VE>& e);
+    int16<16>(const expr_vec_load_splat& e);
+    template<class VE>
+    int16<16>& operator=(const expr_vec_set_splat<VE>& e);
+    int16<16>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const int16x16& operator[](unsigned) const   { return *this; }
@@ -137,27 +155,6 @@ public:
     /// @}
 
     int16<16> eval() const { return *this; }
-
-    /** Creates a signed int16x16 vector from a value loaded from memory.
-
-        @code
-            | 0  1  ... 15 |
-        r = [ v0 v0 ... v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 3}
-        @icost{NEON, 1}
-    */
-    static int16x16 load_broadcast(const int16_t* v0);
-
-    /** Creates a signed int16x16 vector from a value stored in a core register.
-
-        @code
-            | 0  1  ... 15 |
-        r = [ v0 v0 ... v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static int16x16 set_broadcast(int16_t v0);
 
     /** Creates a signed int16x16 vector from a value known at compile-time
 
@@ -235,6 +232,15 @@ public:
     template<class E> uint16<16>& operator=(const gint32<8,E>& d);
     template<class E> uint16<16>& operator=(const gint64<4,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint16<16>(const expr_vec_set_splat<VE>& e);
+    uint16<16>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint16<16>& operator=(const expr_vec_set_splat<VE>& e);
+    uint16<16>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const uint16x16& operator[](unsigned) const   { return *this; }
@@ -242,27 +248,6 @@ public:
     /// @}
 
     uint16<16> eval() const { return *this; }
-
-    /** Creates a unsigned int16x16 vector from a value loaded from memory.
-
-        @code
-            | 0  1  ... 15 |
-        r = [ v0 v0 ... v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 3}
-        @icost{NEON, 1}
-    */
-    static uint16x16 load_broadcast(const uint16_t* v0);
-
-    /** Creates a unsigned int16x16 vector from a value stored in a core register.
-
-        @code
-            | 0  1  ... 15 |
-        r = [ v0 v0 ... v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static uint16x16 set_broadcast(uint16_t v0);
 
     /** Creates a unsigned int16x16 vector from a value known at compile-time
 

@@ -81,6 +81,15 @@ public:
     float32<8>& operator=(gint32x8 d)   { *this = bit_cast<float32x8>(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    float32<8>(const expr_vec_set_splat<VE>& e);
+    float32<8>(const expr_vec_load_splat& e);
+    template<class VE>
+    float32<8>& operator=(const expr_vec_set_splat<VE>& e);
+    float32<8>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const float32x8& operator[](unsigned) const { return *this; }
@@ -99,27 +108,6 @@ public:
         @endcode
     */
     static float32x8 zero();
-
-    /** Creates a float32x8 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-    */
-    static float32x8 load_broadcast(const float* v0);
-
-    /** Creates a float32x8 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-        @icost{NEON, 2}
-    */
-    static float32x8 set_broadcast(float v0);
 
     /** Creates a float32x8 vector from a value known at compile-time
 

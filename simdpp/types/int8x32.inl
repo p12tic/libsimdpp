@@ -77,16 +77,6 @@ inline gint8x32 gint8x32::ones()
     return uint8x32::make_const(0xff);
 }
 
-inline int8x32 int8x32::load_broadcast(const int8_t* v0)
-{
-    return uint8x32::load_broadcast(reinterpret_cast<const uint8_t*>(v0));
-}
-
-inline int8x32 int8x32::set_broadcast(int8_t v0)
-{
-    return uint8x32::set_broadcast(v0);
-}
-
 inline int8x32 int8x32::make_const(int8_t v0)
 {
     return uint8x32::make_const(v0);
@@ -130,17 +120,6 @@ inline int8x32 int8x32::make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
                                 v8, v9, v10, v11, v12, v13, v14, v15,
                                 v16, v17, v18, v19, v20, v21, v22, v23,
                                 v24, v25, v26, v27, v28, v29, v30, v31);
-}
-
-inline uint8x32 uint8x32::load_broadcast(const uint8_t* v0)
-{
-    return uint8x32::set_broadcast(*v0);
-}
-
-inline uint8x32 uint8x32::set_broadcast(uint8_t v0)
-{
-    uint8x16 a = _mm_cvtsi32_si128(v0);
-    return _mm256_broadcastb_epi8(a);
 }
 
 inline uint8x32 uint8x32::make_const(uint8_t v0)

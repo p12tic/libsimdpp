@@ -117,6 +117,15 @@ public:
     gint64<2>& operator=(const float64x2& d) { operator=(gint64x2(d)); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint64<2>(const expr_vec_set_splat<VE>& e);
+    gint64<2>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint64<2>& operator=(const expr_vec_set_splat<VE>& e);
+    gint64<2>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const gint64x2& operator[](unsigned) const { return *this; }
@@ -208,6 +217,15 @@ public:
     int64<2>& operator=(const float64x2& d) { gint64x2::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int64<2>(const expr_vec_set_splat<VE>& e);
+    int64<2>(const expr_vec_load_splat& e);
+    template<class VE>
+    int64<2>& operator=(const expr_vec_set_splat<VE>& e);
+    int64<2>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const int64x2& operator[](unsigned) const { return *this; }
@@ -226,27 +244,6 @@ public:
 
     static int64x2 zero() { return gint64x2::zero(); }
     static int64x2 ones() { return gint64x2::ones(); }
-
-    /** Creates a signed int64x4 vector from a value loaded from memory.
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-        @icost{NEON, 1}
-    */
-    static int64x2 load_broadcast(const int64_t* v0);
-
-    /** Creates a signed int64x4 vector from a value stored in a core register.
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static int64x2 set_broadcast(int64_t v0);
 
     /** Creates a signed int64x4 vector from a value known at compile-time
 
@@ -311,6 +308,15 @@ public:
     uint64<2>& operator=(const float64x2& d) { gint64x2::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint64<2>(const expr_vec_set_splat<VE>& e);
+    uint64<2>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint64<2>& operator=(const expr_vec_set_splat<VE>& e);
+    uint64<2>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const uint64x2& operator[](unsigned) const { return *this; }
@@ -329,28 +335,6 @@ public:
 
     static uint64x2 zero() { return gint64x2::zero(); }
     static uint64x2 ones() { return gint64x2::ones(); }
-
-    /** Creates a int64x4 vector from a value loaded from memory.
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-        @icost{NEON, 1}
-    */
-    static uint64x2 load_broadcast(const uint64_t* v0);
-
-    /** Creates an unsigned int64x4 vector from a value stored in a core
-        register.
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static uint64x2 set_broadcast(uint64_t v0);
 
     /** Creates an unsigned int64x4 vector from a value known at compile-time
 

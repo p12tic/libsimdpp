@@ -82,16 +82,6 @@ inline gint64x4 gint64x4::ones()
     return uint64x4::make_const(0xffffffffffffffff);
 }
 
-inline int64x4 int64x4::load_broadcast(const int64_t* v0)
-{
-    return uint64x4::load_broadcast(reinterpret_cast<const uint64_t*>(v0));
-}
-
-inline int64x4 int64x4::set_broadcast(int64_t v0)
-{
-    return uint64x4::set_broadcast(v0);
-}
-
 inline int64x4 int64x4::make_const(int64_t v0)
 {
     return uint64x4::make_const(v0);
@@ -105,17 +95,6 @@ inline int64x4 int64x4::make_const(int64_t v0, int64_t v1)
 inline int64x4 int64x4::make_const(int64_t v0, int64_t v1, int64_t v2, int64_t v3)
 {
     return uint64x4::make_const(v0, v1, v2, v3);
-}
-
-inline uint64x4 uint64x4::load_broadcast(const uint64_t* v0)
-{
-    return uint64x4::set_broadcast(*v0);
-}
-
-inline uint64x4 uint64x4::set_broadcast(uint64_t v0)
-{
-    uint64x2 a = _mm_cvtsi64_si128(v0);
-    return _mm256_broadcastq_epi64(a);
 }
 
 inline uint64x4 uint64x4::make_const(uint64_t v0)

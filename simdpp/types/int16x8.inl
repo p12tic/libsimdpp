@@ -79,16 +79,6 @@ inline gint16x8 gint16x8::ones()
     return uint16x8::make_const(0xffff);
 }
 
-inline int16x8 int16x8::load_broadcast(const int16_t* v0)
-{
-    return uint16x8::load_broadcast(reinterpret_cast<const uint16_t*>(v0));
-}
-
-inline int16x8 int16x8::set_broadcast(int16_t v0)
-{
-    return uint16x8::set_broadcast(v0);
-}
-
 inline int16x8 int16x8::make_const(int16_t v0)
 {
     return uint16x8::make_const(v0);
@@ -108,44 +98,6 @@ inline int16x8 int16x8::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v
                                    int16_t v4, int16_t v5, int16_t v6, int16_t v7)
 {
     return uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-
-inline uint16x8 uint16x8::load_broadcast(const uint16_t* v0)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint16x8>(*v0);
-#elif SIMDPP_USE_SSE2
-    return uint16x8::set_broadcast(*v0);
-#elif SIMDPP_USE_NEON
-    return vld1q_dup_u16(v0);
-#elif SIMDPP_USE_ALTIVEC
-    uint16x8 r = altivec::load1_u(r, v0);
-    r = splat<0>(r);
-    return r;
-#endif
-}
-
-inline uint16x8 uint16x8::set_broadcast(uint16_t v0)
-{
-#if SIMDPP_USE_NULL
-    return uint16x8::load_broadcast(&v0);
-#elif SIMDPP_USE_SSE2
-    uint32_t u0;
-    u0 = v0 | v0 << 16;
-    return (uint16x8) uint32x4::set_broadcast(u0);
-#elif SIMDPP_USE_NEON
-    return vdupq_n_u16(v0);
-#elif SIMDPP_USE_ALTIVEC
-    union {
-        uint16_t v[8];
-        uint16x8 align;
-    };
-    v[0] = v0;
-    uint16x8 r = altivec::load1(r, v);
-    r = splat<0>(r);
-    return r;
-#endif
 }
 
 inline uint16x8 uint16x8::make_const(uint16_t v0)

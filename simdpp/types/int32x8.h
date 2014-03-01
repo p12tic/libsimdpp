@@ -92,6 +92,15 @@ public:
     gint32<8>& operator=(const float32x8& d) { operator=(gint32x8(d)); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint32<8>(const expr_vec_set_splat<VE>& e);
+    gint32<8>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint32<8>& operator=(const expr_vec_set_splat<VE>& e);
+    gint32<8>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const gint32x8& operator[](unsigned) const   { return *this; }
@@ -169,6 +178,15 @@ public:
     int32<8>& operator=(const float32x8& d) { gint32x8::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int32<8>(const expr_vec_set_splat<VE>& e);
+    int32<8>(const expr_vec_load_splat& e);
+    template<class VE>
+    int32<8>& operator=(const expr_vec_set_splat<VE>& e);
+    int32<8>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const int32x8& operator[](unsigned) const   { return *this; }
@@ -176,27 +194,6 @@ public:
     /// @}
 
     int32<8> eval() const { return *this; }
-
-    /** Creates a signed int32x8 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-        @icost{NEON, 1}
-    */
-    static int32x8 load_broadcast(const int32_t* v0);
-
-    /** Creates a signed int32x8 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static int32x8 set_broadcast(int32_t v0);
 
     /** Creates a signed int32x8 vector from a value known at compile-time
 
@@ -274,6 +271,15 @@ public:
     uint32<8>& operator=(const float32x8& d) { gint32x8::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint32<8>(const expr_vec_set_splat<VE>& e);
+    uint32<8>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint32<8>& operator=(const expr_vec_set_splat<VE>& e);
+    uint32<8>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const uint32x8& operator[](unsigned) const   { return *this; }
@@ -281,28 +287,6 @@ public:
     /// @}
 
     uint32<8> eval() const { return *this; }
-
-    /** Creates an unsigned int32x8 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-        @icost{NEON, 1}
-    */
-    static uint32x8 load_broadcast(const uint32_t* v0);
-
-    /** Creates an unsigned int32x8 vector from a value stored in a core
-        register.
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, NEON, 2}
-    */
-    static uint32x8 set_broadcast(uint32_t v0);
 
     /** Creates an unsigned int32x8 vector from a value known at compile-time
 

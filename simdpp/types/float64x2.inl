@@ -52,35 +52,6 @@ inline float64x2 float64x2::zero()
     return r;
 }
 
-inline float64x2 float64x2::load_broadcast(const double* v0)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::make_vec<float64x2>(*v0);
-#elif SIMDPP_USE_SSE3
-    return _mm_loaddup_pd(v0);
-#elif SIMDPP_USE_SSE2
-    float64x2 r;
-    r = _mm_load_sd(v0);
-    r = permute2<0,0>(r);
-    return r;
-#endif
-}
-
-inline float64x2 float64x2::set_broadcast(double v0)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::make_vec<float64x2>(v0);
-#elif SIMDPP_USE_SSE2
-#if SIMDPP_SSE_32_BITS
-    return float64x2::load_broadcast(&v0);
-#else
-    int64x2 r0;
-    r0 = _mm_cvtsi64_si128(bit_cast<int64_t>(v0));
-    return permute2<0,0>(float64x2(r0));
-#endif
-#endif
-}
-
 inline float64x2 float64x2::make_const(double v0)
 {
     return float64x2::make_const(v0, v0);

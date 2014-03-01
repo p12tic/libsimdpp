@@ -50,16 +50,6 @@ inline float32x8 float32x8::zero()
     return r;
 }
 
-inline float32x8 float32x8::load_broadcast(const float* v0)
-{
-    return _mm256_broadcast_ss(v0);
-}
-
-inline float32x8 float32x8::set_broadcast(float v0)
-{
-    return _mm256_broadcast_ss(&v0);
-}
-
 inline float32x8 float32x8::make_const(float v0)
 {
     return float32x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);

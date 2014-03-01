@@ -50,6 +50,7 @@ simdpp/core/cmp_gt.h
 simdpp/core/cmp_le.h
 simdpp/core/cmp_lt.h
 simdpp/core/cmp_neq.h
+simdpp/core/detail/result_of_any.h
 simdpp/core/detail/vec_extract.h
 simdpp/core/detail/vec_insert.h
 simdpp/core/extract.h
@@ -94,6 +95,7 @@ simdpp/core/load.h
 simdpp/core/load_packed2.h
 simdpp/core/load_packed3.h
 simdpp/core/load_packed4.h
+simdpp/core/load_splat.h
 simdpp/core/load_u.h
 simdpp/core/make_shuffle_bytes_mask.h
 simdpp/core/move_l.h
@@ -102,6 +104,7 @@ simdpp/core/permute2.h
 simdpp/core/permute4.h
 simdpp/core/permute_bytes16.h
 simdpp/core/permute_zbytes16.h
+simdpp/core/set_splat.h
 simdpp/core/shuffle1.h
 simdpp/core/shuffle2.h
 simdpp/core/shuffle_bytes16.h
@@ -189,6 +192,8 @@ simdpp/detail/insn/load.h
 simdpp/detail/insn/load_packed2.h
 simdpp/detail/insn/load_packed3.h
 simdpp/detail/insn/load_packed4.h
+simdpp/detail/insn/load_splat.h
+simdpp/detail/insn/load_splat_mem_impl.inl
 simdpp/detail/insn/load_u.h
 simdpp/detail/insn/mem_pack.h
 simdpp/detail/insn/mem_unpack.h
@@ -198,6 +203,8 @@ simdpp/detail/insn/permute2.h
 simdpp/detail/insn/permute4.h
 simdpp/detail/insn/permute_bytes16.h
 simdpp/detail/insn/permute_zbytes16.h
+simdpp/detail/insn/set_splat.h
+simdpp/detail/insn/set_splat_mem_impl.inl
 simdpp/detail/insn/shuffle1.h
 simdpp/detail/insn/shuffle128.h
 simdpp/detail/insn/shuffle2.h

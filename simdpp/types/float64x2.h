@@ -84,6 +84,15 @@ public:
     float64<2>& operator=(gint64x2 d)   { *this = bit_cast<float64x2>(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    float64<2>(const expr_vec_set_splat<VE>& e);
+    float64<2>(const expr_vec_load_splat& e);
+    template<class VE>
+    float64<2>& operator=(const expr_vec_set_splat<VE>& e);
+    float64<2>& operator=(const expr_vec_load_splat& e);
+#endif
+
     /// @{
     /// Access base vectors
     const float64x2& operator[](unsigned) const { return *this; }
@@ -108,26 +117,6 @@ public:
         @endcode
     */
     static float64x2 zero();
-
-    /** Creates a float64x2 vector from a value loaded from memory.
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-    */
-    static float64x2 load_broadcast(const double* v0);
-
-    /** Creates a float64x2 vector from a value stored in a core register.
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-        @icost{SSE2-SSE4.1, 2}
-    */
-    static float64x2 set_broadcast(double v0);
 
     /** Creates a float64x2 vector from a value known at compile-time
 

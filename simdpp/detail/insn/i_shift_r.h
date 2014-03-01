@@ -68,10 +68,10 @@ inline int8x16 i_shift_r(int8x16 a, unsigned count)
     a = bit_or(lo, hi);    //higher part of lo is already clear
     return a;
 #elif SIMDPP_USE_NEON
-    int8x16 shift = int8x16::set_broadcast(-int(count));
+    int8x16 shift = splat(-int(count));
     return vshlq_s8(a, shift);
 #elif SIMDPP_USE_ALTIVEC
-    uint8x16 shift = uint8x16::set_broadcast(count);
+    uint8x16 shift = splat(count);
     return vec_sra((__vector int8_t)a, (__vector uint8_t)shift);
 #endif
 }
@@ -116,10 +116,10 @@ inline uint8x16 i_shift_r(uint8x16 a, unsigned count)
     a16 = bit_andnot(a16, mask);
     return uint8x16(a16);
 #elif SIMDPP_USE_NEON
-    int8x16 shift = int8x16::set_broadcast(-int(count));
+    int8x16 shift = splat(-int(count));
     return vshlq_u8(a, shift);
 #elif SIMDPP_USE_ALTIVEC
-    uint8x16 shift = uint8x16::set_broadcast(count);
+    uint8x16 shift = splat(count);
     return vec_sr((__vector uint8_t)a, (__vector uint8_t)shift);
 #endif
 }
@@ -154,10 +154,10 @@ inline int16x8 i_shift_r(int16x8 a, unsigned count)
 #elif SIMDPP_USE_SSE2
     return _mm_srai_epi16(a, count);
 #elif SIMDPP_USE_NEON
-    int16x8 shift = int16x8::set_broadcast(-int(count));
+    int16x8 shift = splat(-int(count));
     return vshlq_s16(a, shift);
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 shift = uint16x8::set_broadcast(count);
+    uint16x8 shift = splat(count);
     return vec_sra((__vector int16_t)a, (__vector uint16_t)shift);
 #endif
 }
@@ -184,10 +184,10 @@ inline uint16x8 i_shift_r(uint16x8 a, unsigned count)
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi16(a, count);
 #elif SIMDPP_USE_NEON
-    int16x8 shift = int16x8::set_broadcast(-int(count));
+    int16x8 shift = splat(-int(count));
     return vshlq_u16(a, shift);
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 shift = uint16x8::set_broadcast(count);
+    uint16x8 shift = splat(count);
     return vec_sr((__vector uint16_t)a, (__vector uint16_t)shift);
 #endif
 }
@@ -214,10 +214,10 @@ inline int32x4 i_shift_r(int32x4 a, unsigned count)
 #elif SIMDPP_USE_SSE2
     return _mm_srai_epi32(a, count);
 #elif SIMDPP_USE_NEON
-    int32x4 shift = int32x4::set_broadcast(-int(count));
+    int32x4 shift = splat(-int(count));
     return vshlq_s32(a, shift);
 #elif SIMDPP_USE_ALTIVEC
-    uint32x4 shift = uint32x4::set_broadcast(count);
+    uint32x4 shift = splat(count);
     return vec_sra((__vector int32_t)a, (__vector uint32_t)shift);
 #endif
 }
@@ -244,10 +244,10 @@ inline uint32x4 i_shift_r(uint32x4 a, unsigned count)
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi32(a, count);
 #elif SIMDPP_USE_NEON
-    int32x4 shift = int32x4::set_broadcast(-int(count));
+    int32x4 shift = splat(-int(count));
     return vshlq_u32(a, shift);
 #elif SIMDPP_USE_ALTIVEC
-    uint32x4 shift = uint32x4::set_broadcast(count);
+    uint32x4 shift = splat(count);
     return vec_sr((__vector uint32_t)a, (__vector uint32_t)shift);
 #endif
 }
@@ -294,7 +294,7 @@ inline int64x2 i_shift_r(int64x2 a, unsigned count)
         return int64x2(v);
     }
 #elif SIMDPP_USE_NEON
-    int64x2 shift = int64x2::set_broadcast(-int(count));
+    int64x2 shift = splat(-int(count));
     return vshlq_s64(a, shift);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
@@ -343,7 +343,7 @@ inline uint64x2 i_shift_r(uint64x2 a, unsigned count)
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi64(a, count);
 #elif SIMDPP_USE_NEON
-    int64x2 shift = int64x2::set_broadcast(-int(count));
+    int64x2 shift = splat(-int(count));
     return vshlq_u64(a, shift);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);

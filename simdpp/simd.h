@@ -362,6 +362,7 @@
 #include <simdpp/core/load_packed2.h>
 #include <simdpp/core/load_packed3.h>
 #include <simdpp/core/load_packed4.h>
+#include <simdpp/core/load_splat.h>
 #include <simdpp/core/load_u.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/move_l.h>
@@ -370,6 +371,7 @@
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/permute_bytes16.h>
 #include <simdpp/core/permute_zbytes16.h>
+#include <simdpp/core/set_splat.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/core/shuffle_bytes16.h>

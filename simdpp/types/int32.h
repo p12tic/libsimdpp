@@ -87,6 +87,15 @@ public:
     gint32<N>& operator=(const float32<N>& d) { operator=(gint32<N>(d)); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint32<N>(const expr_vec_set_splat<VE>& e);
+    gint32<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint32<N>& operator=(const expr_vec_set_splat<VE>& e);
+    gint32<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const gint32v& operator[](unsigned i) const { return *(du_+i); }
     gint32v& operator[](unsigned i)             { return *(du_+i); }
 
@@ -95,17 +104,18 @@ public:
     /// Creates a int32 vector with the contents set to zero
     static gint32<N> zero()
     {
-        return set_broadcast(gint32v::zero());
+        return set_vec(gint32v::zero());
     }
 
     /// Creates a int32 vector with the contents set to ones
     static gint32<N> ones()
     {
-        return set_broadcast(gint32v::ones());
+        return set_vec(gint32v::ones());
     }
 
+private:
     /// Creates a int32 vector with the contents set to copy of native register
-    static gint32<N> set_broadcast(gint32v a)
+    static gint32<N> set_vec(gint32v a)
     {
         gint32<N> r;
         for (auto& v : r.du_) {
@@ -152,6 +162,15 @@ public:
     int32<N>& operator=(const float32<N>& d) { gint32<N>::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int32<N>(const expr_vec_set_splat<VE>& e);
+    int32<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    int32<N>& operator=(const expr_vec_set_splat<VE>& e);
+    int32<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const int32v& operator[](unsigned i) const { return *(gint32<N>::di_+i); }
     int32v& operator[](unsigned i)             { return *(gint32<N>::di_+i); }
 
@@ -159,30 +178,6 @@ public:
 
     static int32<N> zero() { return gint32<N>::zero(); }
     static int32<N> ones() { return gint32<N>::ones(); }
-
-    /** Creates a signed int32 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  | ... |
-        r = [ v0 v0 v0 v0   ... ]
-        @endcode
-    */
-    static int32<N> load_broadcast(const int32_t* v0)
-    {
-        return set_broadcast(int32v::load_broadcast(v0));
-    }
-
-    /** Creates a signed int32 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  3  | ... |
-        r = [ v0 v0 v0 v0   ... ]
-        @endcode
-    */
-    static int32<N> set_broadcast(int32_t v0)
-    {
-        return set_broadcast(int32v::set_broadcast(v0));
-    }
 
     /** Creates a signed int32 vector from a value known at compile-time
 
@@ -193,7 +188,7 @@ public:
     */
     static int32<N> make_const(int32_t v0)
     {
-        return set_broadcast(int32v::make_const(v0));
+        return set_vec(int32v::make_const(v0));
     }
 
     /** Creates a signed int32 vector from two values known at compile-time
@@ -205,7 +200,7 @@ public:
     */
     static int32<N> make_const(int32_t v0, int32_t v1)
     {
-        return set_broadcast(int32v::make_const(v0, v1));
+        return set_vec(int32v::make_const(v0, v1));
     }
 
     /** Creates a signed int32 vector from four values known at compile-time
@@ -217,12 +212,13 @@ public:
     */
     static int32<N> make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3)
     {
-        return set_broadcast(int32v::make_const(v0, v1, v2, v3));
+        return set_vec(int32v::make_const(v0, v1, v2, v3));
     }
 
+private:
     /// Creates a signed int32 vector with the contents set to copy of native
     /// register
-    static int32<N> set_broadcast(int32v a)
+    static int32<N> set_vec(int32v a)
     {
         int32<N> r;
         for (auto& v : r.di_) {
@@ -262,6 +258,15 @@ public:
     uint32<N>& operator=(const float32<N>& d) { gint32<N>::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint32<N>(const expr_vec_set_splat<VE>& e);
+    uint32<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint32<N>& operator=(const expr_vec_set_splat<VE>& e);
+    uint32<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const uint32v& operator[](unsigned i) const { return *(gint32<N>::du_+i); }
     uint32v& operator[](unsigned i)             { return *(gint32<N>::du_+i); }
 
@@ -269,30 +274,6 @@ public:
 
     static uint32<N> zero() { return gint32<N>::zero(); }
     static uint32<N> ones() { return gint32<N>::ones(); }
-
-    /** Creates a unsigned int32 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  3  | ... |
-        r = [ v0 v0 v0 v0   ... ]
-        @endcode
-    */
-    static uint32<N> load_broadcast(const uint32_t* v0)
-    {
-        return set_broadcast(uint32v::load_broadcast(v0));
-    }
-
-    /** Creates a unsigned int32 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  3  | ... |
-        r = [ v0 v0 v0 v0   ... ]
-        @endcode
-    */
-    static uint32<N> set_broadcast(uint32_t v0)
-    {
-        return set_broadcast(uint32v::set_broadcast(v0));
-    }
 
     /** Creates a unsigned int32 vector from a value known at compile-time
 
@@ -303,7 +284,7 @@ public:
     */
     static uint32<N> make_const(uint32_t v0)
     {
-        return set_broadcast(uint32v::make_const(v0));
+        return set_vec(uint32v::make_const(v0));
     }
 
     /** Creates a unsigned int32 vector from two values known at compile-time
@@ -315,7 +296,7 @@ public:
     */
     static uint32<N> make_const(uint32_t v0, uint32_t v1)
     {
-        return set_broadcast(uint32v::make_const(v0, v1));
+        return set_vec(uint32v::make_const(v0, v1));
     }
 
     /** Creates a unsigned int32 vector from four values known at compile-time
@@ -327,12 +308,13 @@ public:
     */
     static uint32<N> make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3)
     {
-        return set_broadcast(uint32v::make_const(v0, v1, v2, v3));
+        return set_vec(uint32v::make_const(v0, v1, v2, v3));
     }
 
+private:
     /// Creates a unsigned int32 vector with the contents set to copy of native
     /// register
-    static uint32<N> set_broadcast(uint32v a)
+    static uint32<N> set_vec(uint32v a)
     {
         uint32<N> r;
         for (auto& v : r.du_) {

@@ -88,6 +88,15 @@ public:
     gint64<N>& operator=(const float64<N>& d) { operator=(gint64<N>(d)); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint64<N>(const expr_vec_set_splat<VE>& e);
+    gint64<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint64<N>& operator=(const expr_vec_set_splat<VE>& e);
+    gint64<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const gint64v& operator[](unsigned i) const { return *(du_+i); }
     gint64v& operator[](unsigned i)             { return *(du_+i); }
 
@@ -96,17 +105,18 @@ public:
     /// Creates a int64 vector with the contents set to zero
     static gint64<N> zero()
     {
-        return set_broadcast(gint64v::zero());
+        return set_vec(gint64v::zero());
     }
 
     /// Creates a int64 vector with the contents set to ones
     static gint64<N> ones()
     {
-        return set_broadcast(gint64v::ones());
+        return set_vec(gint64v::ones());
     }
 
+private:
     /// Creates a int64 vector with the contents set to copy of native register
-    static gint64<N> set_broadcast(gint64v a)
+    static gint64<N> set_vec(gint64v a)
     {
         gint64<N> r;
         for (auto& v : r.du_) {
@@ -153,6 +163,15 @@ public:
     int64<N>& operator=(const float64<N>& d) { gint64<N>::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int64<N>(const expr_vec_set_splat<VE>& e);
+    int64<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    int64<N>& operator=(const expr_vec_set_splat<VE>& e);
+    int64<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const int64v& operator[](unsigned i) const { return *(gint64<N>::di_+i); }
     int64v& operator[](unsigned i)             { return *(gint64<N>::di_+i); }
 
@@ -160,30 +179,6 @@ public:
 
     static int64<N> zero() { return gint64<N>::zero(); }
     static int64<N> ones() { return gint64<N>::ones(); }
-
-    /** Creates a signed int64 vector from a value loaded from memory.
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v0   ... ]
-        @endcode
-    */
-    static int64<N> load_broadcast(const int64_t* v0)
-    {
-        return set_broadcast(int64v::load_broadcast(v0));
-    }
-
-    /** Creates a signed int64 vector from a value stored in a core register.
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v0   ... ]
-        @endcode
-    */
-    static int64<N> set_broadcast(int64_t v0)
-    {
-        return set_broadcast(int64v::set_broadcast(v0));
-    }
 
     /** Creates a signed int64 vector from a value known at compile-time
 
@@ -194,7 +189,7 @@ public:
     */
     static int64<N> make_const(int64_t v0)
     {
-        return set_broadcast(int64v::make_const(v0));
+        return set_vec(int64v::make_const(v0));
     }
 
     /** Creates a signed int64 vector from two values known at compile-time
@@ -206,12 +201,14 @@ public:
     */
     static int64<N> make_const(int64_t v0, int64_t v1)
     {
-        return set_broadcast(int64v::make_const(v0, v1));
+        return set_vec(int64v::make_const(v0, v1));
     }
+
+private:
 
     /// Creates a signed int64 vector with the contents set to copy of native
     /// register
-    static int64<N> set_broadcast(int64v a)
+    static int64<N> set_vec(int64v a)
     {
         int64<N> r;
         for (auto& v : r.di_) {
@@ -251,6 +248,15 @@ public:
     uint64<N>& operator=(const float64<N>& d) { gint64<N>::operator=(d); return *this; }
     /// @}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint64<N>(const expr_vec_set_splat<VE>& e);
+    uint64<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint64<N>& operator=(const expr_vec_set_splat<VE>& e);
+    uint64<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const uint64v& operator[](unsigned i) const { return *(gint64<N>::du_+i); }
     uint64v& operator[](unsigned i)             { return *(gint64<N>::du_+i); }
 
@@ -258,30 +264,6 @@ public:
 
     static uint64<N> zero() { return gint64<N>::zero(); }
     static uint64<N> ones() { return gint64<N>::ones(); }
-
-    /** Creates a unsigned int64 vector from a value loaded from memory.
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v0   ... ]
-        @endcode
-    */
-    static uint64<N> load_broadcast(const uint64_t* v0)
-    {
-        return set_broadcast(uint64v::load_broadcast(v0));
-    }
-
-    /** Creates a unsigned int64 vector from a value stored in a core register.
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v0   ... ]
-        @endcode
-    */
-    static uint64<N> set_broadcast(uint64_t v0)
-    {
-        return set_broadcast(uint64v::set_broadcast(v0));
-    }
 
     /** Creates a unsigned int64 vector from a value known at compile-time
 
@@ -292,7 +274,7 @@ public:
     */
     static uint64<N> make_const(uint64_t v0)
     {
-        return set_broadcast(uint64v::make_const(v0));
+        return set_vec(uint64v::make_const(v0));
     }
 
     /** Creates a unsigned int64 vector from two values known at compile-time
@@ -304,12 +286,13 @@ public:
     */
     static uint64<N> make_const(uint64_t v0, uint64_t v1)
     {
-        return set_broadcast(uint64v::make_const(v0, v1));
+        return set_vec(uint64v::make_const(v0, v1));
     }
 
+private:
     /// Creates a unsigned int64 vector with the contents set to copy of native
     /// register
-    static uint64<N> set_broadcast(uint64v a)
+    static uint64<N> set_vec(uint64v a)
     {
         uint64<N> r;
         for (auto& v : r.du_) {

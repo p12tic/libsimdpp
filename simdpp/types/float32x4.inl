@@ -51,60 +51,6 @@ inline float32x4 float32x4::zero()
     return r;
 }
 
-inline float32x4 float32x4::load_broadcast(const float* v0)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<float32x4>(*v0);
-#elif SIMDPP_USE_AVX
-    return _mm_broadcast_ss(v0);
-#elif SIMDPP_USE_SSE2
-    float32x4 r;
-    r = _mm_load_ss(v0);
-    r = permute4<0,0,0,0>(r);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vld1q_dup_f32(v0);
-#elif SIMDPP_USE_ALTIVEC
-    float32x4 r = altivec::load1_u(r, v0);
-    r = splat<0>(r);
-    return r;
-#endif
-}
-
-inline float32x4 float32x4::set_broadcast(float v0)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<float32x4>(v0);
-#elif SIMDPP_USE_SSE2
-    int32x4 r0;
-    r0 = _mm_cvtsi32_si128(bit_cast<int>(v0));
-    r0 = permute4<0,0,0,0>(r0);
-    return float32x4(r0);
-#elif SIMDPP_USE_NEON
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wuninitialized"
-#endif
-    // Yes, we know what we're doing here. The unused elements within the
-    // vector are overwritten by broadcast
-    float32x4 r0 = vsetq_lane_f32(v0, r0, 0);
-    r0 = splat<0>(r0);
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-    return r0;
-#elif SIMDPP_USE_ALTIVEC
-    union {
-        float v[4];
-        float32x4 align;
-    };
-    v[0] = v0;
-    float32x4 r = altivec::load1(r, v);
-    r = splat<0>(r);
-    return r;
-#endif
-}
-
 inline float32x4 float32x4::make_const(float v0)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC

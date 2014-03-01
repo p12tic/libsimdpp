@@ -95,16 +95,6 @@ inline gint64x2 gint64x2::ones()
     return uint64x2::make_const(0xffffffffffffffff);
 }
 
-inline int64x2 int64x2::load_broadcast(const int64_t* v0)
-{
-    return uint64x2::load_broadcast(reinterpret_cast<const uint64_t*>(v0));
-}
-
-inline int64x2 int64x2::set_broadcast(int64_t v0)
-{
-    return uint64x2::set_broadcast(v0);
-}
-
 inline int64x2 int64x2::make_const(int64_t v0)
 {
     return uint64x2::make_const(v0);
@@ -113,54 +103,6 @@ inline int64x2 int64x2::make_const(int64_t v0)
 inline int64x2 int64x2::make_const(int64_t v0, int64_t v1)
 {
     return uint64x2::make_const(v0, v1);
-}
-
-inline uint64x2 uint64x2::load_broadcast(const uint64_t* v0)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint64x2>(*v0);
-#elif SIMDPP_USE_SSE2
-    uint64x2 r;
-    r = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(v0));
-    r = permute2<0,0>(r);
-    return r;
-#elif SIMDPP_USE_NEON
-    uint64x1_t r0 = vld1_dup_u64(v0);
-    return vcombine_u64(r0, r0);
-#elif SIMDPP_USE_ALTIVEC
-    return uint64x2::set_broadcast(*v0);
-#endif
-}
-
-inline uint64x2 uint64x2::set_broadcast(uint64_t v0)
-{
-#if SIMDPP_USE_NULL
-    return uint64x2::load_broadcast(&v0);
-#elif SIMDPP_USE_SSE2
-#if SIMDPP_SSE_32_BITS
-    uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
-    uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
-    uint64x2 vx = zip4_lo(va, vb);
-    return permute2<0,0>(vx);
-#else
-    int32x4 ra = _mm_cvtsi32_si128(uint32_t(v0));
-    int32x4 rb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
-    int64x2 r0 = (int64x2) zip4_lo(ra, rb);
-    r0 = permute2<0,0>(r0);
-    return uint64x2(r0);
-#endif
-#elif SIMDPP_USE_NEON
-    return vdupq_n_u64(v0);
-#elif SIMDPP_USE_ALTIVEC
-    union {
-        uint64_t v[2];
-        uint64x2 align;
-    };
-    v[0] = v0;
-    uint64x2 r = load(r, v);
-    r = splat<0>(r);
-    return r;
-#endif
 }
 
 inline uint64x2 uint64x2::make_const(uint64_t v0)

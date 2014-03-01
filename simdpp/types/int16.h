@@ -76,6 +76,15 @@ public:
     template<class E> gint16<N>& operator=(const gint32<N/2,E>& d);
     template<class E> gint16<N>& operator=(const gint64<N/4,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    gint16<N>(const expr_vec_set_splat<VE>& e);
+    gint16<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    gint16<N>& operator=(const expr_vec_set_splat<VE>& e);
+    gint16<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const gint16v& operator[](unsigned i) const { return *(du_+i); }
     gint16v& operator[](unsigned i)             { return *(du_+i); }
 
@@ -84,17 +93,19 @@ public:
     /// Creates a int16 vector with the contents set to zero
     static gint16<N> zero()
     {
-        return set_broadcast(gint16v::zero());
+        return set_vec(gint16v::zero());
     }
 
     /// Creates a int16 vector with the contents set to ones
     static gint16<N> ones()
     {
-        return set_broadcast(gint16v::ones());
+        return set_vec(gint16v::ones());
     }
 
+protected:
+
     /// Creates a int16 vector with the contents set to copy of native register
-    static gint16<N> set_broadcast(gint16v a)
+    static gint16<N> set_vec(gint16v a)
     {
         gint16<N> r;
         for (auto& v : r.du_) {
@@ -103,7 +114,6 @@ public:
         return r;
     }
 
-protected:
     union {
         uint16v du_[vec_length];
         int16v di_[vec_length];
@@ -135,6 +145,15 @@ public:
     template<class E> int16<N>& operator=(const gint32<N/2,E>& d);
     template<class E> int16<N>& operator=(const gint64<N/4,E>& d);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    int16<N>(const expr_vec_set_splat<VE>& e);
+    int16<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    int16<N>& operator=(const expr_vec_set_splat<VE>& e);
+    int16<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     const int16v& operator[](unsigned i) const { return *(gint16<N>::di_+i); }
     int16v& operator[](unsigned i)             { return *(gint16<N>::di_+i); }
 
@@ -142,30 +161,6 @@ public:
 
     static int16<N> zero() { return gint16<N>::zero(); }
     static int16<N> ones() { return gint16<N>::ones(); }
-
-    /** Creates a signed int16 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  ... 7  | ... |
-        r = [ v0 v0 v0 ... v0   ... ]
-        @endcode
-    */
-    static int16<N> load_broadcast(const int16_t* v0)
-    {
-        return set_broadcast(int16v::load_broadcast(v0));
-    }
-
-    /** Creates a signed int16 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  ...  7  | ... |
-        r = [ v0 v0 v0 ...  v0   ... ]
-        @endcode
-    */
-    static int16<N> set_broadcast(int16_t v0)
-    {
-        return set_broadcast(int16v::set_broadcast(v0));
-    }
 
     /** Creates a signed int16 vector from a value known at compile-time
 
@@ -176,7 +171,7 @@ public:
     */
     static int16<N> make_const(int16_t v0)
     {
-        return set_broadcast(int16v::make_const(v0));
+        return set_vec(int16v::make_const(v0));
     }
 
     /** Creates a signed int16 vector from two values known at compile-time
@@ -188,7 +183,7 @@ public:
     */
     static int16<N> make_const(int16_t v0, int16_t v1)
     {
-        return set_broadcast(int16v::make_const(v0, v1));
+        return set_vec(int16v::make_const(v0, v1));
     }
 
     /** Creates a signed int16 vector from four values known at compile-time
@@ -200,7 +195,7 @@ public:
     */
     static int16<N> make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3)
     {
-        return set_broadcast(int16v::make_const(v0, v1, v2, v3));
+        return set_vec(int16v::make_const(v0, v1, v2, v3));
     }
 
     /** Creates a signed int16 vector from eight values known at compile-time
@@ -213,12 +208,13 @@ public:
     static int16<N> make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
                                int16_t v4, int16_t v5, int16_t v6, int16_t v7)
     {
-        return set_broadcast(int16v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
+        return set_vec(int16v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
     }
 
+private:
     /// Creates a signed int16 vector with the contents set to copy of native
     /// register
-    static int16<N> set_broadcast(int16v a)
+    static int16<N> set_vec(int16v a)
     {
         int16<N> r;
         for (auto& v : r.di_) {
@@ -255,34 +251,19 @@ public:
     const uint16v& operator[](unsigned i) const { return *(gint16<N>::du_+i); }
     uint16v& operator[](unsigned i)             { return *(gint16<N>::du_+i); }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    template<class VE>
+    uint16<N>(const expr_vec_set_splat<VE>& e);
+    uint16<N>(const expr_vec_load_splat& e);
+    template<class VE>
+    uint16<N>& operator=(const expr_vec_set_splat<VE>& e);
+    uint16<N>& operator=(const expr_vec_load_splat& e);
+#endif
+
     uint16<N> eval() const { return *this; }
 
     static uint16<N> zero() { return gint16<N>::zero(); }
     static uint16<N> ones() { return gint16<N>::ones(); }
-
-    /** Creates a unsigned int16 vector from a value loaded from memory.
-
-        @code
-            | 0  1  2  ... 7  | ... |
-        r = [ v0 v0 v0 ... v0   ... ]
-        @endcode
-    */
-    static uint16<N> load_broadcast(const uint16_t* v0)
-    {
-        return set_broadcast(uint16v::load_broadcast(v0));
-    }
-
-    /** Creates a unsigned int16 vector from a value stored in a core register.
-
-        @code
-            | 0  1  2  ...  7  | ... |
-        r = [ v0 v0 v0 ...  v0   ... ]
-        @endcode
-    */
-    static uint16<N> set_broadcast(uint16_t v0)
-    {
-        return set_broadcast(uint16v::set_broadcast(v0));
-    }
 
     /** Creates a unsigned int16 vector from a value known at compile-time
 
@@ -293,7 +274,7 @@ public:
     */
     static uint16<N> make_const(uint16_t v0)
     {
-        return set_broadcast(uint16v::make_const(v0));
+        return set_vec(uint16v::make_const(v0));
     }
 
     /** Creates a unsigned int16 vector from two values known at compile-time
@@ -305,7 +286,7 @@ public:
     */
     static uint16<N> make_const(uint16_t v0, uint16_t v1)
     {
-        return set_broadcast(uint16v::make_const(v0, v1));
+        return set_vec(uint16v::make_const(v0, v1));
     }
 
     /** Creates a unsigned int16 vector from four values known at compile-time
@@ -317,7 +298,7 @@ public:
     */
     static uint16<N> make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3)
     {
-        return set_broadcast(uint16v::make_const(v0, v1, v2, v3));
+        return set_vec(uint16v::make_const(v0, v1, v2, v3));
     }
 
     /** Creates a unsigned int16 vector from eight values known at compile-time
@@ -330,12 +311,13 @@ public:
     static uint16<N> make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
                                 uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7)
     {
-        return set_broadcast(uint16v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
+        return set_vec(uint16v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
     }
 
+private:
     /// Creates a unsigned int16 vector with the contents set to copy of native
     /// register
-    static uint16<N> set_broadcast(uint16v a)
+    static uint16<N> set_vec(uint16v a)
     {
         uint16<N> r;
         for (auto& v : r.du_) {

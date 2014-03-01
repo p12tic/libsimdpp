@@ -95,6 +95,24 @@ struct expr_splat16 {
     E a;
 };
 
+struct expr_vec_load_splat {
+    const void* a;
+};
+
+template<class VE>
+struct expr_vec_set_splat {
+    VE a;
+};
+
+template<class VE, unsigned N>
+struct expr_vec_make_const {
+    VE a[N];
+};
+
+struct expr_vec_load {
+    const void* ptr;
+};
+
 template<class E1, class E2>
 struct expr_add {
     E1 a;

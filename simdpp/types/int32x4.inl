@@ -98,16 +98,6 @@ inline gint32x4 gint32x4::ones()
     return uint32x4::make_const(0xffffffff);
 }
 
-inline int32x4 int32x4::load_broadcast(const int32_t* v0)
-{
-    return uint32x4::load_broadcast(reinterpret_cast<const uint32_t*>(v0));
-}
-
-inline int32x4 int32x4::set_broadcast(int32_t v0)
-{
-    return uint32x4::set_broadcast(v0);
-}
-
 inline int32x4 int32x4::make_const(int32_t v0)
 {
     return uint32x4::make_const(v0);
@@ -121,47 +111,6 @@ inline int32x4 int32x4::make_const(int32_t v0, int32_t v1)
 inline int32x4 int32x4::make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3)
 {
     return uint32x4::make_const(v0, v1, v2, v3);
-}
-
-inline uint32x4 uint32x4::load_broadcast(const uint32_t* v0)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint32x4>(*v0);
-#elif SIMDPP_USE_SSE2
-    uint32x4 r;
-    r = _mm_cvtsi32_si128(*v0);
-    r = permute4<0,0,0,0>(r);
-    return r;
-#elif SIMDPP_USE_NEON
-    return vld1q_dup_u32(v0);
-#elif SIMDPP_USE_ALTIVEC
-    uint32x4 r = altivec::load1_u(r, v0);
-    r = splat<0>(r);
-    return r;
-#endif
-}
-
-inline uint32x4 uint32x4::set_broadcast(uint32_t v0)
-{
-#if SIMDPP_USE_NULL
-    return uint32x4::load_broadcast(&v0);
-#elif SIMDPP_USE_SSE2
-    uint32x4 r0;
-    r0 = _mm_cvtsi32_si128(v0);
-    r0 = permute4<0,0,0,0>(r0);
-    return uint32x4(r0);
-#elif SIMDPP_USE_NEON
-    return vdupq_n_u32(v0);
-#elif SIMDPP_USE_ALTIVEC
-    union {
-        uint32_t v[4];
-        uint32x4 align;
-    };
-    v[0] = v0;
-    uint32x4 r = altivec::load1(r, v);
-    r = splat<0>(r);
-    return r;
-#endif
 }
 
 inline uint32x4 uint32x4::make_const(uint32_t v0)

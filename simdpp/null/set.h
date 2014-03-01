@@ -41,15 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace null {
 
-template<class V>
-V set_broadcast(V& a, typename V::element_type x)
-{
-    for (unsigned i = 0; i < V::length; i++) {
-        a.el(i) = x;
-    }
-    return a;
-}
-
 template<class V, class E = typename V::element_type>
 V make_vec(E v0)
 {
