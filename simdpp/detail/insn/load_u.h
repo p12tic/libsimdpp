@@ -44,6 +44,12 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
+
+template<class V>
+struct is_expr_vec_load_u { static const bool value = false; };
+template<>
+struct is_expr_vec_load_u<expr_vec_load_u> { static const bool value = true; };
+
 namespace insn {
 
 
@@ -219,7 +225,34 @@ void v_load_u(V& a, const char* p)
     }
 }
 
+template<class V>
+struct i_load_u_dispatch {
+    static V run(const char* p)
+    {
+        V r;
+        i_load_u(r, p);
+        return r;
+    }
+};
+
+template<>
+struct i_load_u_dispatch<expr_vec_load_u> {
+    static expr_vec_load_u run(const char* p)
+    {
+        expr_vec_load_u r;
+        r.a = p;
+        return r;
+    }
+};
+
 } // namespace insn
+
+template<class V>
+void construct_eval(V& v, const expr_vec_load_u& e)
+{
+    insn::i_load_u(v, e.a);
+}
+
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

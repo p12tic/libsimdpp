@@ -46,13 +46,38 @@ void test_load_helper(TestCase& tc, void* sv_p)
         }
     };
 
+    // calls constructor that accepts expr_construct
     for (unsigned i = 0; i < vnum; i++) {
-        V r = load(r, sdata + i*V::length);
+        V r = simdpp::load(sdata + i*V::length);
         TEST_PUSH(tc, V, r);
     }
 
     for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
-        V r = load_u(r, sdata+i);
+        V r = simdpp::load_u(sdata+i);
+        TEST_PUSH(tc, V, r);
+    }
+
+    // calls operator= that accepts expr_construct
+    for (unsigned i = 0; i < vnum; i++) {
+        V r;
+        r = simdpp::load(sdata + i*V::length);
+        TEST_PUSH(tc, V, r);
+    }
+
+    for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
+        V r;
+        r = simdpp::load_u(sdata+i);
+        TEST_PUSH(tc, V, r);
+    }
+
+    // initializes the vector directly
+    for (unsigned i = 0; i < vnum; i++) {
+        V r = simdpp::load<V>(sdata + i*V::length);
+        TEST_PUSH(tc, V, r);
+    }
+
+    for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
+        V r = simdpp::load_u<V>(sdata+i);
         TEST_PUSH(tc, V, r);
     }
 

@@ -61,10 +61,10 @@ inline void i_load_packed4(gint8x16& a, gint8x16& b,
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    load(a, p);
-    load(b, p+16);
-    load(c, p+32);
-    load(d, p+48);
+    a = load(p);
+    b = load(p+16);
+    c = load(p+32);
+    d = load(p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u8(reinterpret_cast<const uint8_t*>(p));
@@ -99,10 +99,10 @@ inline void i_load_packed4(gint16x8& a, gint16x8& b,
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    load(a, p);
-    load(b, p+16);
-    load(c, p+32);
-    load(d, p+48);
+    a = load(p);
+    b = load(p+16);
+    c = load(p+32);
+    d = load(p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u16(reinterpret_cast<const uint16_t*>(p));
@@ -137,10 +137,10 @@ inline void i_load_packed4(gint32x4& a, gint32x4& b,
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    load(a, p);
-    load(b, p+16);
-    load(c, p+32);
-    load(d, p+48);
+    a = load(p);
+    b = load(p+16);
+    c = load(p+32);
+    d = load(p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u32(reinterpret_cast<const uint32_t*>(p));
@@ -172,10 +172,10 @@ inline void i_load_packed4(gint64x2& a, gint64x2& b,
                            gint64x2& c, gint64x2& d, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-    a = load(a, p);
-    c = load(c, p+16);
-    b = load(b, p+32);
-    d = load(d, p+48);
+    a = load(p);
+    c = load(p+16);
+    b = load(p+32);
+    d = load(p+48);
     transpose2(a, b);
     transpose2(c, d);
 }
@@ -204,10 +204,10 @@ inline void i_load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& 
 #if SIMDPP_USE_NULL
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    load(a, p);
-    load(b, p+16);
-    load(c, p+32);
-    load(d, p+48);
+    a = load(p);
+    b = load(p+16);
+    c = load(p+32);
+    d = load(p+48);
     mem_unpack4(a, b, c, d);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_f32(p);
@@ -242,10 +242,10 @@ inline void i_load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2
-    load(a, p);
-    load(b, p+16);
-    load(c, p+32);
-    load(d, p+48);
+    a = load(p);
+    b = load(p+16);
+    c = load(p+32);
+    d = load(p+48);
     mem_unpack4(a, b, c, d);
 #endif
 }
@@ -271,10 +271,10 @@ template<class V>
 void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 {
     p = detail::assume_aligned(p, 32);
-    load(a, p);
-    load(b, p + 32);
-    load(c, p + 64);
-    load(d, p + 96);
+    a = load(p);
+    b = load(p + 32);
+    c = load(p + 64);
+    d = load(p + 96);
     mem_unpack4(a, b, c, d);
 }
 

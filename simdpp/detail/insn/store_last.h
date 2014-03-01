@@ -67,8 +67,8 @@ inline void i_store_last(char* p, gint8x16 a, unsigned n)
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
 
-    gint8x16 mask = load_u(mask, mask_d + n);
-    gint8x16 old = load(old, p);
+    gint8x16 mask = load_u(mask_d + n);
+    gint8x16 old = load(p);
     a = blend(a, old, mask);
     store(p, a);
 #endif
@@ -200,11 +200,12 @@ inline void i_store_last(char* p, float32x4 a, unsigned n)
                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x4 mask = load_u(mask, mask_dp + n);
-    float32x4 old = load(old, q);
+    float32x4 mask = load_u(mask_dp + n);
+    float32x4 old = load(q);
     a = blend(a, old, mask);
     store(q, a);
 #elif SIMDPP_USE_NEON
+    float* q = reinterpret_cast<float*>(p);
     // + VFP
     float* q = reinterpret_cast<float*>(p);
     if (n < 1) return;

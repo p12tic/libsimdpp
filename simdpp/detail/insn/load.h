@@ -33,6 +33,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/types/traits.h>
 #include <simdpp/detail/align.h>
 #include <simdpp/detail/insn/mem_unpack.h>
 #include <simdpp/adv/transpose.h>
@@ -43,6 +44,12 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
+
+template<class V>
+struct is_expr_vec_load { static const bool value = false; };
+template<>
+struct is_expr_vec_load<expr_vec_load> { static const bool value = true; };
+
 namespace insn {
 
 // collect some boilerplate here
@@ -87,7 +94,7 @@ inline void i_load(float64x2& a, const char* p)
     const double* q = reinterpret_cast<const double*>(p);
     q = detail::assume_aligned(q, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
-    null::load(a, p);
+    null::load(a, q);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_pd(q);
 #endif
@@ -144,7 +151,34 @@ void v_load(V& a, const char* p)
     }
 }
 
+template<class V>
+struct i_load_dispatch {
+    static V run(const char* p)
+    {
+        V r;
+        i_load(r, p);
+        return r;
+    }
+};
+
+template<>
+struct i_load_dispatch<expr_vec_load> {
+    static expr_vec_load run(const char* p)
+    {
+        expr_vec_load r;
+        r.a = p;
+        return r;
+    }
+};
+
 } // namespace insn
+
+template<class V>
+void construct_eval(V& v, const expr_vec_load& e)
+{
+    insn::i_load(v, e.a);
+}
+
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

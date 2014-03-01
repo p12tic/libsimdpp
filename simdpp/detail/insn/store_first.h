@@ -66,8 +66,8 @@ inline void i_store_first(char* p, gint8x16 a, unsigned n)
                                        0,0,0,0,0,0,0,0,
                                        0,0,0,0,0,0,0,0};
 
-    gint8x16 mask = load_u(mask, mask_d + 16 - n);
-    gint8x16 old = load(old, p);
+    gint8x16 mask = load_u(mask_d + 16 - n);
+    gint8x16 old = load(p);
     a = blend(a, old, mask);
     store(p, a);
 #endif
@@ -195,8 +195,8 @@ inline void i_store_first(char* p, float32x4 a, unsigned n)
                                        0x00000000, 0x00000000, 0x00000000, 0x00000000};
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x4 mask = load_u(mask, mask_dp + 4-n);
-    float32x4 old = load(old, q);
+    float32x4 mask = load_u(mask_dp + 4-n);
+    float32x4 old = load(q);
     a = blend(a, old, mask);
     store(q, a);
 #elif SIMDPP_USE_NEON

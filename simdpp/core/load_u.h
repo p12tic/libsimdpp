@@ -40,7 +40,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector from an
     unaligned memory location.
 
@@ -69,41 +68,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     only the referenced 16 byte block is accessed. Otherwise, memory within the
     smallest 32-byte aligned 64-byte block may be accessed.
 */
-// Each integer type is handled separately because higher aligment guarantees
-// offer better performance on e.g. ARM. Note, we don't use LDDQU on SSE,
-// because it has usage restrictions and offers improved performance only on
-// Pentium 4 era processors.
-template<unsigned N>
-gint8<N>  load_u(gint8<N>& a,  const void* p)
+// Fixme return empty expression
+template<class V = expr_vec_load_u>
+V load_u(const void* p)
 {
-    detail::insn::i_load_u(a, reinterpret_cast<const char*>(p)); return a;
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_load_u<V>::value,
+                  "V must be a non-mask vector");
+    return detail::insn::i_load_u_dispatch<V>::run(reinterpret_cast<const char*>(p));
 }
-template<unsigned N>
-gint16<N> load_u(gint16<N>& a, const void* p)
-{
-    detail::insn::i_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N>
-gint32<N> load_u(gint32<N>& a, const void* p)
-{
-    detail::insn::i_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N>
-gint64<N> load_u(gint64<N>& a, const void* p)
-{
-    detail::insn::i_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N>
-float32<N> load_u(float32<N>& a, const void* p)
-{
-    detail::insn::i_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N>
-float64<N> load_u(float64<N>& a, const void* p)
-{
-    detail::insn::i_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

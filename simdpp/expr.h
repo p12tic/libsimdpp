@@ -114,7 +114,11 @@ struct expr_vec_make_const : expr_vec_construct<expr_vec_make_const<VE,N>> {
 };
 
 struct expr_vec_load : expr_vec_construct<expr_vec_load> {
-    const void* ptr;
+    const char* a;
+};
+
+struct expr_vec_load_u : expr_vec_construct<expr_vec_load_u> {
+    const char* a;
 };
 
 template<class E1, class E2>
