@@ -46,6 +46,7 @@ namespace detail {
 template<class R, class T>
 R cast_memcpy(T t)
 {
+    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
     R r;
     std::memcpy(&r, &t, sizeof(R));
     return r;
@@ -194,6 +195,7 @@ struct cast_wrapper<false> {
     template<class R, class T>
     static R run(T t)
     {
+        static_assert(sizeof(R) == sizeof(T), "Size mismatch");
         R r;
         std::memcpy(&r, &t, sizeof(R));
         return r;

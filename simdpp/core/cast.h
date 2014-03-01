@@ -48,10 +48,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class R, class T>
 R bit_cast(T t)
 {
-    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
     return detail::cast_wrapper<is_vector<T>::value>::template run<R>(t);
 }
-
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
