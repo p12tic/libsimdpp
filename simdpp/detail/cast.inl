@@ -43,6 +43,20 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
+template<class R, class T>
+R cast_memcpy(T t)
+{
+    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+    R r;
+    std::memcpy(&r, &t, sizeof(R));
+    return r;
+}
+
+// Depending on vector types the compiler may not optimize the above memcpy
+// to proper register moves and merges (yes, that indeed happens). In order to
+// make sure this never happens we must overload the above function for all
+// vector combinations. That's unfortunate
+
 // The duplication below can be reduced a lot via use of templates.
 // Let's prefer clarity.
 
@@ -340,6 +354,31 @@ template<unsigned N> gint64<N>  cast(gint64<N>,  gint64<N> a)   { return a; }
 template<unsigned N> float32<N> cast(float32<N>, float32<N> a)  { return a; }
 template<unsigned N> float64<N> cast(float64<N>, float64<N> a)  { return a; }
 
+
+template<>
+struct cast_wrapper<true> {
+    template<class R, class T>
+    static R run(T t)
+    {
+#if SIMDPP_USE_NULL
+        return cast_memcpy<R>(t);
+#else
+        return cast(R(), t);
+#endif
+    }
+};
+
+template<>
+struct cast_wrapper<false> {
+    template<class R, class T>
+    static R run(T t)
+    {
+        static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+        R r;
+        std::memcpy(&r, &t, sizeof(R));
+        return r;
+    }
+};
 
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
