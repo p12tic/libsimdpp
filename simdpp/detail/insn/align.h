@@ -63,8 +63,8 @@ gint8x16 i_align(gint8x16 lower, gint8x16 upper)
     return _mm_alignr_epi8(upper, lower, shift);
 #elif SIMDPP_USE_SSE2
     gint8x16 a;
-    lower = move_l<shift>(lower);
-    upper = move_r<16-shift>(upper);
+    lower = move16_l<shift>(lower);
+    upper = move16_r<16-shift>(upper);
     a = bit_or(upper, lower);
     return a;
 #elif SIMDPP_USE_NEON

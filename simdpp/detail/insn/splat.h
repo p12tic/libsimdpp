@@ -81,7 +81,7 @@ gint8x32 i_splat(gint8x32 a)
     static_assert(s < 32, "Access out of bounds");
     gint8x16 lo;
     lo = s < 16 ? sse::extract_lo(a) : sse::extract_hi(a);
-    lo = move_l<s % 16>(lo);
+    lo = move16_l<s % 16>(lo);
     return _mm256_broadcastb_epi8(lo);
 }
 #endif
@@ -108,7 +108,7 @@ gint16x16 i_splat(gint16x16 a)
     static_assert(s < 16, "Access out of bounds");
     gint16x8 lo;
     lo = s < 8 ? sse::extract_lo(a) : sse::extract_hi(a);
-    lo = move_l<s % 8>(lo);
+    lo = move8_l<s % 8>(lo);
     return _mm256_broadcastw_epi16(lo);
 }
 #endif

@@ -70,7 +70,7 @@ inline gint32x8 to_int32(int16x8 a)
 #elif SIMDPP_USE_SSE4_1
     int32x8 r;
     r[0] = _mm_cvtepi16_epi32(a);
-    r[1] = _mm_cvtepi16_epi32(move_l<4>(a).eval());
+    r[1] = _mm_cvtepi16_epi32(move8_l<4>(a).eval());
     return r;
 #elif SIMDPP_USE_SSE2
     int16x8 b0, b1, sign;
@@ -191,7 +191,7 @@ inline gint32x4 to_int32(float64x4 a)
     split(a, a1, a2);
     r1 = _mm_cvttpd_epi32(a1);
     r2 = _mm_cvttpd_epi32(a2);
-    r2 = move_l<2>(r2);
+    r2 = move4_l<2>(r2);
     return bit_or(r1, r2);
 #else
     SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();

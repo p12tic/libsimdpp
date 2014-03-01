@@ -150,7 +150,7 @@ inline float32x4 to_float32(float64x4 a)
     float32x4 r1, r2;
     r1 = _mm_cvtpd_ps(a[0]);
     r2 = _mm_cvtpd_ps(a[1]);
-    r2 = move_l<2>(r2);
+    r2 = move4_l<2>(r2);
     return bit_or(r1, r2);
 #endif
 }

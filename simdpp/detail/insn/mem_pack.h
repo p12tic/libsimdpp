@@ -113,7 +113,7 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     // [b0..b15]
     // [c5..c15,c0..c5]
     U mask1 = U::make_const(0xff);
-    mask1 = move_l<5>(mask1);
+    mask1 = move16_l<5>(mask1);
 
     T a2, b2, c2;
     a2 = blend(a1, b1, mask1);
@@ -198,10 +198,10 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     w_b8 mask2 = w_u8::make_const(0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0);
     w_b8 x0, x1, x2, x3;
-    x0 = move_l<2>(u0);
-    x1 = move_l<2>(u1);
-    x2 = move_l<2>(u2);
-    x3 = move_l<2>(u3);
+    x0 = move16_l<2>(u0);
+    x1 = move16_l<2>(u1);
+    x2 = move16_l<2>(u2);
+    x3 = move16_l<2>(u3);
 
     u0 = bit_and(u0, mask2);
     u1 = bit_and(u1, mask2);
@@ -227,9 +227,9 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     k1 = u1;
     k2 = u2;
     k3 = u3;
-    l0 = move_r<3>(k1);
-    l3 = move_l<2>(k2);
-    k3 = move_r<1>(k3);
+    l0 = move4_r<3>(k1);
+    l3 = move4_l<2>(k2);
+    k3 = move4_r<1>(k3);
     a = bit_or(k0, l0);
     b = shuffle2<1,2,0,1>(k1, k2);
     c = bit_or(k3, l3);
@@ -254,7 +254,7 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     // [c2..c7,c0,c1]
     T a2, b2, c2;
     U mask2 = U::make_const(0xffff);
-    mask2 = move_l<2>(mask2);
+    mask2 = move8_l<2>(mask2);
 
     a2 = blend(a1, b1, mask2);
     b2 = blend(b1, c1, mask2);
@@ -312,10 +312,10 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     w_b16 mask2 = w_u16::make_const(0xffff, 0xffff, 0xffff, 0,
                                     0, 0, 0, 0);
     w_b16 x0, x1, x2, x3;
-    x0 = move_l<1>(u0);
-    x1 = move_l<1>(u1);
-    x2 = move_l<1>(u2);
-    x3 = move_l<1>(u3);
+    x0 = move8_l<1>(u0);
+    x1 = move8_l<1>(u1);
+    x2 = move8_l<1>(u2);
+    x3 = move8_l<1>(u3);
 
     u0 = bit_and(u0, mask2);
     u1 = bit_and(u1, mask2);
@@ -341,9 +341,9 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     k1 = u1;
     k2 = u2;
     k3 = u3;
-    l0 = move_r<3>(k1);
-    l3 = move_l<2>(k2);
-    k3 = move_r<1>(k3);
+    l0 = move4_r<3>(k1);
+    l3 = move4_l<2>(k2);
+    k3 = move4_r<1>(k3);
     a = bit_or(k0, l0);
     b = shuffle2<1,2,0,1>(k1, k2);
     c = bit_or(k3, l3);
@@ -368,7 +368,7 @@ template<class T> void v_mem_pack3_impl32(T& a, T& b, T& c)
     // [c2,c3,c0,c1]
     T a2, b2, c2;
     U mask2 = U::make_const(0xffffffff);
-    mask2 = move_l<1>(mask2);
+    mask2 = move4_l<1>(mask2);
 
     a2 = blend(a1, c1, mask2);
     b2 = blend(b1, a1, mask2);

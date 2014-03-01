@@ -121,7 +121,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [c5, c6, c7, c8, c9, c10,c11,c12,c13,c14,c15,a6, a7, a8, a9, a10]
     T a2, b2, c2;
     T mask2 = U::make_const(0xff);
-    mask2 = move_l<5>(mask2);
+    mask2 = move16_l<5>(mask2);
 
     a2 = blend(a1, c1, mask2);
     b2 = blend(b1, a1, mask2);
@@ -137,7 +137,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     t0 = a;
     t1 = align<12>(a, b);
     t2 = align<8>(b, c);
-    t3 = move_l<4>(c);
+    t3 = move16_l<4>(c);
     // [a0, b0, c0, a1, b1, c1, a2, b2, c2, a3, b3, c3, ...]
     // [a4, b4, c4, a5, b5, c5, a6, b6, c6, a7, b7, c7, ...]
     // [a8, b8, c8, a9, b9, c9, a10,b10,c10,a11,b11,c11, ...]
@@ -161,7 +161,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     t0 = u0;
     t1 = align<12>(u0, u1);
     t2 = align<8>(u1, u2);
-    t3 = move_l<4>(u2);
+    t3 = move16_l<4>(u2);
     // [a0, a4, a8, a12,b0, b4, b8, b12, c0, c4, c8, c12, ...]
     // [a1, a5, a9, a13,b1, b5, b9, b13, c1, c5, c9, c13, ...]
     // [a2, a6, a10,a14,b2, b6, b10,b13, c2, c6, c10,c14, ...]
@@ -199,7 +199,7 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [b5,b6,b7,b0,b1,b2,c0,c1]
     T a2, b2, c2;
     T mask2 = U::make_const(0xffff);
-    mask2 = move_l<2>(mask2);
+    mask2 = move8_l<2>(mask2);
 
     a2 = blend(a1, c1, mask2);
     b2 = blend(b1, a1, mask2);
@@ -215,7 +215,7 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     t0 = a;
     t1 = align<6>(a, b);
     t2 = align<4>(b, c);
-    t3 = move_l<2>(c);
+    t3 = move8_l<2>(c);
     // [a0,b0,c0,a1,b1,c1, ... ]
     // [a2,b2,c2,a3,b3,c3, ... ]
     // [a4,b4,c4,a5,b5,c5, ... ]
@@ -269,7 +269,7 @@ void v_mem_unpack3_impl32(T& a, T& b, T& c)
     // [c2,c3,c0,b0]
     T a2, b2, c2;
     U mask2 = U::make_const(0xffffffff);
-    mask2 = move_l<1>(mask2);
+    mask2 = move4_l<1>(mask2);
 
     a2 = blend(a1, b1, mask2);
     b2 = blend(b1, c1, mask2);

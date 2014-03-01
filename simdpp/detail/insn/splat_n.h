@@ -60,7 +60,7 @@ gint8x16 i_splat16(gint8x16 a)
 #if SIMDPP_USE_NULL
     return null::splat<s>(a);
 #elif SIMDPP_USE_AVX2
-    a = move_l<s>(a);
+    a = move16_l<s>(a);
     return _mm_broadcastb_epi8(a);
 #elif SIMDPP_USE_SSSE3
     uint8x16 mask = make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
@@ -117,7 +117,7 @@ gint16x8 i_splat8(gint16x8 a)
 #if SIMDPP_USE_NULL
     return null::splat<s>(a);
 #elif SIMDPP_USE_AVX2
-    a = move_l<s>(a);
+    a = move8_l<s>(a);
     return _mm_broadcastw_epi16(a);
 #elif SIMDPP_USE_SSSE3
     uint16x8 mask = make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);

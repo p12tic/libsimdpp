@@ -178,8 +178,8 @@ gint32<4> expr_eval(expr_mul_lo<gint32<4,E1>,
     return _mm_mullo_epi32(a, b);
 #elif SIMDPP_USE_SSE2
     gint32x4 a1, b1;
-    a1 = move_l<1>(a);
-    b1 = move_l<1>(b);
+    a1 = move4_l<1>(a);
+    b1 = move4_l<1>(b);
     a = _mm_mul_epu32(a, b);
     a1 = _mm_mul_epu32(a1, b1);
     a = shuffle2<0,2,0,2>(a, a1); // additional latency unavoidable
@@ -192,8 +192,8 @@ gint32<4> expr_eval(expr_mul_lo<gint32<4,E1>,
     uint16x8 la, lb, ha, hb;
     uint32x4 rl, rh1, rh2;
     la = a;  lb = b;
-    ha = move_r<1>(la);
-    hb = move_r<1>(lb);
+    ha = move8_r<1>(la);
+    hb = move8_r<1>(lb);
 
     rl = mull_lo(la, lb);
     rh1 = mull_lo(la, hb);

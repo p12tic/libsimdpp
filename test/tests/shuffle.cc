@@ -33,6 +33,19 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+template<unsigned S, unsigned N> simdpp::gint8<N> move_v128_l(simdpp::gint8<N> a) { return simdpp::move16_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::gint16<N> move_v128_l(simdpp::gint16<N> a) { return simdpp::move8_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::gint32<N> move_v128_l(simdpp::gint32<N> a) { return simdpp::move4_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::gint64<N> move_v128_l(simdpp::gint64<N> a) { return simdpp::move2_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::float32<N> move_v128_l(simdpp::float32<N> a) { return simdpp::move4_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::float64<N> move_v128_l(simdpp::float64<N> a) { return simdpp::move2_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::gint8<N> move_v128_r(simdpp::gint8<N> a) { return simdpp::move16_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::gint16<N> move_v128_r(simdpp::gint16<N> a) { return simdpp::move8_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::gint32<N> move_v128_r(simdpp::gint32<N> a) { return simdpp::move4_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::gint64<N> move_v128_r(simdpp::gint64<N> a) { return simdpp::move2_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::float32<N> move_v128_r(simdpp::float32<N> a) { return simdpp::move4_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::float64<N> move_v128_r(simdpp::float64<N> a) { return simdpp::move2_r<S>(a); }
+
 // shuffles within 256-bit vectors are limited to 128-bit halves
 template<class V>
 struct Shuffle_width {
@@ -45,7 +58,7 @@ struct Test_move_r {
     static constexpr unsigned limit = Shuffle_width<V>::value + 1;
     static void test(TestCase& tc, V a)
     {
-        a = simdpp::move_r<i>(a);
+        a = move_v128_r<i>(a);
         TEST_PUSH(tc, V, a);
     }
 };
@@ -55,7 +68,7 @@ struct Test_move_l {
     static constexpr unsigned limit = Shuffle_width<V>::value + 1;
     static void test(TestCase& tc, V a)
     {
-        a = simdpp::move_l<i>(a);
+        a = move_v128_l<i>(a);
         TEST_PUSH(tc, V, a);
     }
 };

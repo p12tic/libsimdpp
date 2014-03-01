@@ -62,13 +62,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E>
-gint8<N, gint8<N>> move_l(gint8<N,E> a)
+gint8<N, gint8<N>> move16_l(gint8<N,E> a)
 {
     static_assert(shift <= 16, "Shift out of bounds");
     if (shift == 0) return a.eval();
     if (shift == 16) return uint8<N>::zero();
 
-    return detail::insn::i_move_l<shift>(a.eval());
+    return detail::insn::i_move16_l<shift>(a.eval());
 }
 
 /** Moves the 16-bit elements in a vector to the left by @a shift positions.
@@ -91,13 +91,13 @@ gint8<N, gint8<N>> move_l(gint8<N,E> a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E>
-gint16<N, gint16<N>> move_l(gint16<N,E> a)
+gint16<N, gint16<N>> move8_l(gint16<N,E> a)
 {
     static_assert(shift <= 8, "Shift out of bounds");
     if (shift == 0) return a.eval();
     if (shift == 8) return uint16<N>::zero();
 
-    return detail::insn::i_move_l<shift>(a.eval());
+    return detail::insn::i_move8_l<shift>(a.eval());
 }
 
 /// @{
@@ -119,13 +119,13 @@ gint16<N, gint16<N>> move_l(gint16<N,E> a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E>
-gint32<N, gint32<N>> move_l(gint32<N,E> a)
+gint32<N, gint32<N>> move4_l(gint32<N,E> a)
 {
     static_assert(shift <= 4, "Shift out of bounds");
     if (shift == 0) return a.eval();
     if (shift == 4) return uint32<N>::zero();
 
-    return detail::insn::i_move_l<shift>(a.eval());
+    return detail::insn::i_move4_l<shift>(a.eval());
 }
 
 /** Moves the 64-bit elements in a vector to the left by @a shift positions.
@@ -144,13 +144,13 @@ gint32<N, gint32<N>> move_l(gint32<N,E> a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E>
-gint64<N, gint64<N>> move_l(gint64<N,E> a)
+gint64<N, gint64<N>> move2_l(gint64<N,E> a)
 {
     static_assert(shift <= 2, "Shift out of bounds");
     if (shift == 0) return a.eval();
     if (shift == 2) return uint64<N>::zero();
 
-    return detail::insn::i_move_l<shift>(a.eval());
+    return detail::insn::i_move2_l<shift>(a.eval());
 }
 
 /** Moves the 32-bit elements in a vector to the left by @a shift positions.
@@ -171,13 +171,13 @@ gint64<N, gint64<N>> move_l(gint64<N,E> a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E>
-float32<N, float32<N>> move_l(float32<N,E> a)
+float32<N, float32<N>> move4_l(float32<N,E> a)
 {
     static_assert(shift <= 4, "Shift out of bounds");
     if (shift == 0) return a.eval();
     if (shift == 4) return float32<N>::zero();
 
-    return detail::insn::i_move_l<shift>(a.eval());
+    return detail::insn::i_move4_l<shift>(a.eval());
 }
 
 
@@ -197,13 +197,13 @@ float32<N, float32<N>> move_l(float32<N,E> a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class E>
-float64<N, float64<N>> move_l(float64<N,E> a)
+float64<N, float64<N>> move2_l(float64<N,E> a)
 {
     static_assert(shift <= 2, "Shift out of bounds");
     if (shift == 0) return a.eval();
     if (shift == 2) return float64<N>::zero();
 
-    return detail::insn::i_move_l<shift>(a.eval());
+    return detail::insn::i_move2_l<shift>(a.eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
