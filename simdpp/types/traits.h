@@ -41,39 +41,39 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Allows detection whether specific type is a simdpp vector
 template<class T>
-struct is_vector { static constexpr bool value = false; };
+struct is_vector : std::false_type {};
 
-template<unsigned N, class E> struct is_vector<float32<N,E>>   { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<float64<N,E>>   { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<int8<N,E>>      { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<int16<N,E>>     { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<int32<N,E>>     { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<int64<N,E>>     { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<uint8<N,E>>     { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<uint16<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<uint32<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<uint64<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<gint8<N,E>>     { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<gint16<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<gint32<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<gint64<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<mask_int8<N,E>> { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<mask_int16<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<mask_int32<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<mask_int64<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<mask_float32<N,E>>  { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_vector<mask_float64<N,E>>  { static constexpr bool value = true; };
+template<unsigned N, class E> struct is_vector<float32<N,E>>   : std::true_type {};
+template<unsigned N, class E> struct is_vector<float64<N,E>>   : std::true_type {};
+template<unsigned N, class E> struct is_vector<int8<N,E>>      : std::true_type {};
+template<unsigned N, class E> struct is_vector<int16<N,E>>     : std::true_type {};
+template<unsigned N, class E> struct is_vector<int32<N,E>>     : std::true_type {};
+template<unsigned N, class E> struct is_vector<int64<N,E>>     : std::true_type {};
+template<unsigned N, class E> struct is_vector<uint8<N,E>>     : std::true_type {};
+template<unsigned N, class E> struct is_vector<uint16<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<uint32<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<uint64<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<gint8<N,E>>     : std::true_type {};
+template<unsigned N, class E> struct is_vector<gint16<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<gint32<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<gint64<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<mask_int8<N,E>> : std::true_type {};
+template<unsigned N, class E> struct is_vector<mask_int16<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<mask_int32<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<mask_int64<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_vector<mask_float32<N,E>>  : std::true_type {};
+template<unsigned N, class E> struct is_vector<mask_float64<N,E>>  : std::true_type {};
 
 /// Allows detection whether specific type is a simdpp mask
 template<class T>
-struct is_mask { static constexpr bool value = false; };
+struct is_mask : std::false_type {};
 
-template<unsigned N, class E> struct is_mask<mask_int8<N,E>>    { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_mask<mask_int16<N,E>>   { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_mask<mask_int32<N,E>>   { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_mask<mask_int64<N,E>>   { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_mask<mask_float32<N,E>> { static constexpr bool value = true; };
-template<unsigned N, class E> struct is_mask<mask_float64<N,E>> { static constexpr bool value = true; };
+template<unsigned N, class E> struct is_mask<mask_int8<N,E>>    : std::true_type {};
+template<unsigned N, class E> struct is_mask<mask_int16<N,E>>   : std::true_type {};
+template<unsigned N, class E> struct is_mask<mask_int32<N,E>>   : std::true_type {};
+template<unsigned N, class E> struct is_mask<mask_int64<N,E>>   : std::true_type {};
+template<unsigned N, class E> struct is_mask<mask_float32<N,E>> : std::true_type {};
+template<unsigned N, class E> struct is_mask<mask_float64<N,E>> : std::true_type {};
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
