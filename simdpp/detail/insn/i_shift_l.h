@@ -210,7 +210,7 @@ gint8x16 i_shift_l(gint8x16 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_l<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint8x16 shift = uint8x16::make_const(count);
+    uint8x16 shift = make_uint(count);
     return vec_sl((__vector uint8_t)a, (__vector uint8_t)shift);
 #endif
 }
@@ -242,7 +242,7 @@ gint16x8 i_shift_l(gint16x8 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_l<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 shift = uint16x8::make_const(count);
+    uint16x8 shift = make_uint(count);
     return vec_sl((__vector uint16_t)a, (__vector uint16_t)shift);
 #endif
 }
@@ -274,7 +274,7 @@ gint32x4 i_shift_l(gint32x4 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_l<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint32x4 shift = uint32x4::make_const(count);
+    uint32x4 shift = make_uint(count);
     return vec_sl((__vector uint32_t)a, (__vector uint32_t)shift);
 #endif
 }

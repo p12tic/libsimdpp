@@ -79,8 +79,8 @@ inline gint8x16 shuffle_zbytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
 #elif SIMDPP_USE_SSSE3
     int8x16 r, m, m1, m2, set_zero, ai, bi;
     m = mask;
-    m1 = add(m, int8x16::make_const(0x70));
-    m2 = add(m, int8x16::make_const(0xf0));
+    m1 = add(m, (int8<16>) make_uint(0x70));
+    m2 = add(m, (int8<16>) make_uint(0xf0));
     set_zero = cmp_lt(m, int8x16::zero());
 
     ai = _mm_shuffle_epi8(a, m1);

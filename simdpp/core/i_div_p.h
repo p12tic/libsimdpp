@@ -72,7 +72,7 @@ uint8x16 div_p(uint8x16 num, uint8x16 den)
     static_assert(P <= 8, "Precision too large");
     uint8x16 r, q, bit_mask;
     r = q = uint8x16::zero();
-    bit_mask = uint8x16::make_const(1 << (P-1));
+    bit_mask = make_uint(1 << (P-1));
 
     for (unsigned i = P; i > 0; i--) {
         unsigned bit = i-1;
@@ -122,7 +122,7 @@ uint16x8 div_p(uint16x8 num, uint16x8 den)
     uint16x8 r, q, bit_mask;
 
     r = q = uint16x8::zero();
-    bit_mask = uint16x8::make_const(1 << (P-1));
+    bit_mask = make_uint(1 << (P-1));
 
     for (unsigned i = P; i > 0; i--) {
         unsigned bit = i-1; // TODO precision

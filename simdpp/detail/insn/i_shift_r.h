@@ -379,7 +379,7 @@ int8x16 i_shift_r(int8x16 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint8x16 shift = uint8x16::make_const(count);
+    uint8x16 shift = make_uint(count);
     return vec_sra((__vector int8_t)a, (__vector uint8_t)shift);
 #endif
 }
@@ -416,7 +416,7 @@ uint8x16 i_shift_r(uint8x16 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint8x16 shift = uint8x16::make_const(count);
+    uint8x16 shift = make_uint(count);
     return vec_sr((__vector uint8_t)a, (__vector uint8_t)shift);
 #endif
 }
@@ -450,7 +450,7 @@ int16x8 i_shift_r(int16x8 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 shift = uint16x8::make_const(count);
+    uint16x8 shift = make_uint(count);
     return vec_sra((__vector int16_t)a, (__vector uint16_t)shift);
 #endif
 }
@@ -482,7 +482,7 @@ uint16x8 i_shift_r(uint16x8 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint16x8 shift = uint16x8::make_const(count);
+    uint16x8 shift = make_uint(count);
     return vec_sr((__vector uint16_t)a, (__vector uint16_t)shift);
 #endif
 }
@@ -514,7 +514,7 @@ int32x4 i_shift_r(int32x4 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint32x4 shift = uint32x4::make_const(count);
+    uint32x4 shift = make_uint(count);
     return vec_sra((__vector int32_t)a, (__vector uint32_t)shift);
 #endif
 }
@@ -546,7 +546,7 @@ uint32x4 i_shift_r(uint32x4 a)
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint32x4 shift = uint32x4::make_const(count);
+    uint32x4 shift = make_uint(count);
     return vec_sr((__vector uint32_t)a, (__vector uint32_t)shift);
 #endif
 }

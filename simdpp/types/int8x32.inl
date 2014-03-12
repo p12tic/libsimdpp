@@ -69,116 +69,12 @@ inline uint8<32>& uint8<32>::operator=(const gint64x4& d) { gint8x32::operator=(
 */
 inline gint8x32 gint8x32::zero()
 {
-    return uint8x32::make_const(0);
+    return (uint8<32>) make_uint(0);
 }
 
 inline gint8x32 gint8x32::ones()
 {
-    return uint8x32::make_const(0xff);
-}
-
-inline int8x32 int8x32::make_const(int8_t v0)
-{
-    return uint8x32::make_const(v0);
-}
-
-inline int8x32 int8x32::make_const(int8_t v0, int8_t v1)
-{
-    return uint8x32::make_const(v0, v1);
-}
-
-inline int8x32 int8x32::make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3)
-{
-    return uint8x32::make_const(v0, v1, v2, v3);
-}
-
-inline int8x32 int8x32::make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
-                                   int8_t v4, int8_t v5, int8_t v6, int8_t v7)
-{
-    return uint8x32::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-inline int8x32 int8x32::make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
-                                   int8_t v4, int8_t v5, int8_t v6, int8_t v7,
-                                   int8_t v8, int8_t v9, int8_t v10, int8_t v11,
-                                   int8_t v12, int8_t v13, int8_t v14, int8_t v15)
-{
-    return uint8x32::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                v8, v9, v10, v11, v12, v13, v14, v15);
-}
-
-inline int8x32 int8x32::make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
-                                   int8_t v4, int8_t v5, int8_t v6, int8_t v7,
-                                   int8_t v8, int8_t v9, int8_t v10, int8_t v11,
-                                   int8_t v12, int8_t v13, int8_t v14, int8_t v15,
-                                   int8_t v16, int8_t v17, int8_t v18, int8_t v19,
-                                   int8_t v20, int8_t v21, int8_t v22, int8_t v23,
-                                   int8_t v24, int8_t v25, int8_t v26, int8_t v27,
-                                   int8_t v28, int8_t v29, int8_t v30, int8_t v31)
-{
-    return uint8x32::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                v8, v9, v10, v11, v12, v13, v14, v15,
-                                v16, v17, v18, v19, v20, v21, v22, v23,
-                                v24, v25, v26, v27, v28, v29, v30, v31);
-}
-
-inline uint8x32 uint8x32::make_const(uint8_t v0)
-{
-    return uint8x32::make_const(v0, v0, v0, v0, v0, v0, v0, v0,
-                                v0, v0, v0, v0, v0, v0, v0, v0,
-                                v0, v0, v0, v0, v0, v0, v0, v0,
-                                v0, v0, v0, v0, v0, v0, v0, v0);
-}
-
-inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1)
-{
-    return uint8x32::make_const(v0, v1, v0, v1, v0, v1, v0, v1,
-                                v0, v1, v0, v1, v0, v1, v0, v1,
-                                v0, v1, v0, v1, v0, v1, v0, v1,
-                                v0, v1, v0, v1, v0, v1, v0, v1);
-}
-
-inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3)
-{
-    return uint8x32::make_const(v0, v1, v2, v3, v0, v1, v2, v3,
-                                v0, v1, v2, v3, v0, v1, v2, v3,
-                                v0, v1, v2, v3, v0, v1, v2, v3,
-                                v0, v1, v2, v3, v0, v1, v2, v3);
-}
-
-inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
-                                     uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7)
-{
-    return uint8x32::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                v0, v1, v2, v3, v4, v5, v6, v7,
-                                v0, v1, v2, v3, v4, v5, v6, v7,
-                                v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
-                                     uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7,
-                                     uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11,
-                                     uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15)
-{
-    return uint8x32::make_const(v0, v1, v2,  v3,  v4,  v5,  v6,  v7,
-                                v8, v9, v10, v11, v12, v13, v14, v15,
-                                v0, v1, v2,  v3,  v4,  v5,  v6,  v7,
-                                v8, v9, v10, v11, v12, v13, v14, v15);
-}
-
-inline uint8x32 uint8x32::make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
-                                     uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7,
-                                     uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11,
-                                     uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15,
-                                     uint8_t v16, uint8_t v17, uint8_t v18, uint8_t v19,
-                                     uint8_t v20, uint8_t v21, uint8_t v22, uint8_t v23,
-                                     uint8_t v24, uint8_t v25, uint8_t v26, uint8_t v27,
-                                     uint8_t v28, uint8_t v29, uint8_t v30, uint8_t v31)
-{
-    return _mm256_set_epi8(v31, v30, v29, v28, v27, v26, v25, v24,
-                           v23, v22, v21, v20, v19, v18, v17, v16,
-                           v15, v14, v13, v12, v11, v10, v9, v8,
-                           v7, v6, v5, v4, v3, v2, v1, v0);
+    return (uint8<32>) make_uint(0xff);
 }
 
 inline mask_int8x32::operator gint8x32() const

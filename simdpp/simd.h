@@ -364,6 +364,9 @@
 #include <simdpp/core/load_packed4.h>
 #include <simdpp/core/load_splat.h>
 #include <simdpp/core/load_u.h>
+#include <simdpp/core/make_float.h>
+#include <simdpp/core/make_int.h>
+#include <simdpp/core/make_uint.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/move_r.h>

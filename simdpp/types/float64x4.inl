@@ -55,21 +55,6 @@ inline float64x4::float64x4(gint64x4 d)
     *this = bit_cast<float64x4(d);
 }
 
-inline float64x4 float64x4::make_const(double v0)
-{
-    return float64x4::make_const(v0, v0, v0, v0);
-}
-
-inline float64x4 float64x4::make_const(double v0, double v1)
-{
-    return float64x4::make_const(v0, v1, v0, v1);
-}
-
-inline float64x4 float64x4::make_const(double v0, double v1, double v2, double v3)
-{
-    return _mm256_set_pd(v3, v2, v1, v0);
-}
-
 inline mask_float64x4::operator float64x4() const
 {
     return d_;

@@ -160,55 +160,6 @@ public:
     /// @}
 
     int16<16> eval() const { return *this; }
-
-    /** Creates a signed int16x16 vector from a value known at compile-time
-
-        @code
-            | 0  1  ... 15 |
-        r = [ v0 v0 ... v0 ]
-        @endcode
-    */
-    static int16x16 make_const(int16_t v0);
-
-    /** Creates a signed int16x16 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  4  ... 15 |
-        r = [ v0 v1 v0 v1 v0 ... v1 ]
-        @endcode
-    */
-    static int16x16 make_const(int16_t v0, int16_t v1);
-
-    /** Creates a signed int16x16 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  ... 15 |
-        r = [ v0 v1 v2 v3 v0 v1 ... v3 ]
-        @endcode
-    */
-    static int16x16 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3);
-
-    /** Creates a signed int16x16 vector from eight values known at compile-time
-
-        @code
-            | 0  ... 7   8  ... 15 |
-        r = [ v0 ... v7, v0 ... v7 ]
-        @endcode
-    */
-    static int16x16 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                               int16_t v4, int16_t v5, int16_t v6, int16_t v7);
-
-    /** Creates a signed int16x16 vector from eight values known at compile-time
-
-        @code
-            | 0  1  ... 15  |
-        r = [ v0 v1 ... v15 ]
-        @endcode
-    */
-    static int16x16 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                               int16_t v4, int16_t v5, int16_t v6, int16_t v7,
-                               int16_t v8, int16_t v9, int16_t v10, int16_t v11,
-                               int16_t v12, int16_t v13, int16_t v14, int16_t v15);
 };
 
 /** Class representing 8x 16-bit unsigned integer vector
@@ -255,55 +206,6 @@ public:
     /// @}
 
     uint16<16> eval() const { return *this; }
-
-    /** Creates a unsigned int16x16 vector from a value known at compile-time
-
-        @code
-            | 0  1  ... 15 |
-        r = [ v0 v0 ... v0 ]
-        @endcode
-    */
-    static uint16x16 make_const(uint16_t v0);
-
-    /** Creates a unsigned int16x16 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  4  ... 15 |
-        r = [ v0 v1 v0 v1 v0 ... v1 ]
-        @endcode
-    */
-    static uint16x16 make_const(uint16_t v0, uint16_t v1);
-
-    /** Creates a unsigned int16x16 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  ... 15 |
-        r = [ v0 v1 v2 v3 v0 v1 ... v3 ]
-        @endcode
-    */
-    static uint16x16 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3);
-
-    /** Creates a unsigned int16x16 vector from eight values known at compile-time
-
-        @code
-            | 0  ... 7   8  ... 15 |
-        r = [ v0 ... v7, v0 ... v7 ]
-        @endcode
-    */
-    static uint16x16 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                                uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
-
-    /** Creates a unsigned int16x16 vector from eight values known at compile-time
-
-        @code
-            | 0  1  ... 15  |
-        r = [ v0 v1 ... v15 ]
-        @endcode
-    */
-    static uint16x16 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                                uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7,
-                                uint16_t v8, uint16_t v9, uint16_t v10, uint16_t v11,
-                                uint16_t v12, uint16_t v13, uint16_t v14, uint16_t v15);
 };
 
 /// Class representing possibly optimized mask data for 16x 16-bit integer vector

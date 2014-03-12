@@ -112,7 +112,7 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     // [a11..a15,a0..a10]
     // [b0..b15]
     // [c5..c15,c0..c5]
-    U mask1 = U::make_const(0xff);
+    U mask1 = make_uint(0xff);
     mask1 = move16_l<5>(mask1);
 
     T a2, b2, c2;
@@ -139,7 +139,6 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     // either gint16x8 or gint16x16, other entries likewise
     using w_b16 = typename same_width<T>::b16;
     using w_b32 = typename same_width<T>::b32;
-    using w_u8 = typename same_width<T>::u8;
     using w_b8 = T;
 
     w_b16 t0, t1, t2, t3;
@@ -161,8 +160,8 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
 #if SIMDPP_USE_SSSE3
     // it's not worth to use 4 different index vectors to shuffle the vectors
     // properly and use only bit_or later
-    w_b8 idx = w_u8::make_const(0,   1,  2,  4,    5,    6,    8,    9,
-                               10, 12, 13, 14, 0xff, 0xff, 0xff, 0xff);
+    w_b8 idx = make_uint(0,   1,  2,  4,    5,    6,    8,    9,
+                         10, 12, 13, 14, 0xff, 0xff, 0xff, 0xff);
     u0 = permute_bytes16(u0, idx);
     u1 = permute_bytes16(u1, idx);
     u2 = permute_bytes16(u2, idx);
@@ -171,8 +170,8 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     using w_u64 = typename same_width<T>::u64;
 
     // the following is still faster than non-SIMD implementation
-    w_b8 mask1 = w_u8::make_const(0xff, 0xff, 0xff, 0, 0, 0, 0, 0,
-                                  0xff, 0xff, 0xff, 0, 0, 0, 0, 0);
+    w_b8 mask1 = make_uint(0xff, 0xff, 0xff, 0, 0, 0, 0, 0,
+                           0xff, 0xff, 0xff, 0, 0, 0, 0, 0);
     w_u64 w0, w1, w2, w3;
     w0 = u0;  w1 = u1;  w2 = u2;  w3 = u3;
     w0 = shift_r(w0, 8);
@@ -195,8 +194,8 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     u2 = bit_or(u2, w2);
     u3 = bit_or(u3, w3);
 
-    w_b8 mask2 = w_u8::make_const(0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0, 0,
-                                  0, 0, 0, 0, 0, 0, 0, 0);
+    w_b8 mask2 = make_uint(0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0, 0,
+                           0, 0, 0, 0, 0, 0, 0, 0);
     w_b8 x0, x1, x2, x3;
     x0 = move16_l<2>(u0);
     x1 = move16_l<2>(u1);
@@ -253,7 +252,7 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     // [b5..b7,b0..b4]
     // [c2..c7,c0,c1]
     T a2, b2, c2;
-    U mask2 = U::make_const(0xffff);
+    U mask2 = make_uint(0xffff);
     mask2 = move8_l<2>(mask2);
 
     a2 = blend(a1, b1, mask2);
@@ -306,11 +305,9 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     u3 = permute_bytes16(u3, idx);
 
 #else
-    using w_u16 = typename same_width<T>::u16;
-
     // the following is still faster than non-SIMD implementation
-    w_b16 mask2 = w_u16::make_const(0xffff, 0xffff, 0xffff, 0,
-                                    0, 0, 0, 0);
+    w_b16 mask2 = make_uint(0xffff, 0xffff, 0xffff, 0,
+                            0, 0, 0, 0);
     w_b16 x0, x1, x2, x3;
     x0 = move8_l<1>(u0);
     x1 = move8_l<1>(u1);
@@ -367,7 +364,7 @@ template<class T> void v_mem_pack3_impl32(T& a, T& b, T& c)
     // [b1,b2,b3,b0]
     // [c2,c3,c0,c1]
     T a2, b2, c2;
-    U mask2 = U::make_const(0xffffffff);
+    U mask2 = make_uint(0xffffffff);
     mask2 = move4_l<1>(mask2);
 
     a2 = blend(a1, c1, mask2);

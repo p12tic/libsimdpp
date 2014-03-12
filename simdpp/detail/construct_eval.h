@@ -56,6 +56,9 @@ void construct_eval(V& v, const expr_vec_load& e);
 template<class V>
 void construct_eval(V& v, const expr_vec_load_u& e);
 
+template<class V, class VE, unsigned N>
+void construct_eval(V& v, const expr_vec_make_const<VE, N>& e);
+
 template<class V, class E>
 void construct_eval_wrapper(V& v, const E& e)
 {

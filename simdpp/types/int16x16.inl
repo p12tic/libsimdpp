@@ -71,76 +71,12 @@ template<class E> uint16<16>& uint16<16>::operator=(const gint64<4,E>& d)  { gin
 
 inline gint16x16 gint16x16::zero()
 {
-    return uint16x16::make_const(0);
+    return (uint16x16) make_uint(0);
 }
 
 inline gint16x16 gint16x16::ones()
 {
-    return uint16x16::make_const(0xffff);
-}
-
-inline int16x16 int16x16::make_const(int16_t v0)
-{
-    return uint16x16::make_const(v0);
-}
-
-inline int16x16 int16x16::make_const(int16_t v0, int16_t v1)
-{
-    return uint16x16::make_const(v0, v1);
-}
-
-inline int16x16 int16x16::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3)
-{
-    return uint16x16::make_const(v0, v1, v2, v3);
-}
-
-inline int16x16 int16x16::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                                     int16_t v4, int16_t v5, int16_t v6, int16_t v7)
-{
-    return uint16x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-inline int16x16 int16x16::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                                     int16_t v4, int16_t v5, int16_t v6, int16_t v7,
-                                     int16_t v8, int16_t v9, int16_t v10, int16_t v11,
-                                     int16_t v12, int16_t v13, int16_t v14, int16_t v15)
-{
-    return uint16x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                 v8, v9, v10, v11, v12, v13, v14, v15);
-}
-
-inline uint16x16 uint16x16::make_const(uint16_t v0)
-{
-    return uint16x16::make_const(v0, v0, v0, v0, v0, v0, v0, v0,
-                                 v0, v0, v0, v0, v0, v0, v0, v0);
-}
-
-inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1)
-{
-    return uint16x16::make_const(v0, v1, v0, v1, v0, v1, v0, v1,
-                                 v0, v1, v0, v1, v0, v1, v0, v1);
-}
-
-inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3)
-{
-    return uint16x16::make_const(v0, v1, v2, v3, v0, v1, v2, v3,
-                                 v0, v1, v2, v3, v0, v1, v2, v3);
-}
-
-inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                                       uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7)
-{
-    return uint16x16::make_const(v0, v1, v2, v3, v4, v5, v6, v7,
-                                 v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-inline uint16x16 uint16x16::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                                       uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7,
-                                       uint16_t v8, uint16_t v9, uint16_t v10, uint16_t v11,
-                                       uint16_t v12, uint16_t v13, uint16_t v14, uint16_t v15)
-{
-    return _mm256_set_epi16(v15, v14, v13, v12, v11, v10, v9, v8,
-                            v7, v6, v5, v4, v3, v2, v1, v0);
+    return (uint16x16) make_uint(0xffff);
 }
 
 inline mask_int16x16::operator gint16x16() const

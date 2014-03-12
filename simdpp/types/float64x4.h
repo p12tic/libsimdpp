@@ -112,33 +112,6 @@ public:
     */
     static float64x4 zero();
 
-    /** Creates a float64x4 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-    */
-    static float64x4 make_const(double v0);
-
-    /** Creates a float64x4 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v0 v1 ]
-        @endcode
-    */
-    static float64x4 make_const(double v0, double v1);
-
-    /** Creates a float64x4 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-    */
-    static float64x4 make_const(double v0, double v1, double v2, double v3);
-
 private:
     __m256d d_;
 };

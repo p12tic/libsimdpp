@@ -85,7 +85,7 @@ inline int8x16 i_avg(int8x16 a, int8x16 b)
     });
 #elif SIMDPP_USE_SSE2
     uint8x16 a2, b2, bias, r;
-    bias = uint8x16::make_const(0x80);
+    bias = make_uint(0x80);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg(a2, b2); // unsigned
@@ -102,7 +102,7 @@ inline int8x16 i_avg(int8x16 a, int8x16 b)
 inline int8x32 i_avg(int8x32 a, int8x32 b)
 {
     uint8x32 a2, b2, bias, r;
-    bias = uint8x32::make_const(0x80);
+    bias = make_uint(0x80);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg(a2, b2); // unsigned
@@ -157,7 +157,7 @@ inline int16x8 i_avg(int16x8 a, int16x8 b)
     });
 #elif SIMDPP_USE_SSE2
     uint16x8 a2, b2, bias, r;
-    bias = uint16x8::make_const(0x8000);
+    bias = make_uint(0x8000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg(a2, b2); // unsigned
@@ -174,7 +174,7 @@ inline int16x8 i_avg(int16x8 a, int16x8 b)
 inline int16x16 i_avg(int16x16 a, int16x16 b)
 {
     uint16x16 a2, b2, bias, r;
-    bias = uint16x16::make_const(0x8000);
+    bias = make_uint(0x8000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg(a2, b2); // unsigned
@@ -202,7 +202,7 @@ inline uint32x4 i_avg(uint32x4 a, uint32x4 b)
     uint32x4 x1, x2, round;
     x1 = bit_and(a, b);
     x2 = bit_xor(a, b);
-    round = bit_and(x2, uint32x4::make_const(1));
+    round = bit_and(x2, (uint32<4>) make_uint(1));
     x1 = add(x1, shift_r<1>(x2));
     x1 = add(x1, round);
     return x1;
@@ -220,7 +220,7 @@ inline uint32x8 i_avg(uint32x8 a, uint32x8 b)
     uint32x8 x1, x2, round;
     x1 = bit_and(a, b);
     x2 = bit_xor(a, b);
-    round = bit_and(x2, uint32x8::make_const(1));
+    round = bit_and(x2, (uint32<8>) make_uint(1));
     x1 = add(x1, shift_r<1>(x2));
     x1 = add(x1, round);
     return x1;
@@ -241,7 +241,7 @@ inline int32x4 i_avg(int32x4 a, int32x4 b)
     });
 #elif SIMDPP_USE_SSE2
     uint32x4 a2, b2, bias, r;
-    bias = uint32x4::make_const(0x80000000);
+    bias = make_uint(0x80000000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg(a2, b2); // unsigned
@@ -258,7 +258,7 @@ inline int32x4 i_avg(int32x4 a, int32x4 b)
 inline int32x8 i_avg(int32x8 a, int32x8 b)
 {
     uint32x8 a2, b2, bias, r;
-    bias = uint32x8::make_const(0x80000000);
+    bias = make_uint(0x80000000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg(a2, b2); // unsigned

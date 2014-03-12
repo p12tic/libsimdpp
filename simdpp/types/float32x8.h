@@ -112,43 +112,6 @@ public:
     */
     static float32x8 zero();
 
-    /** Creates a float32x8 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-    */
-    static float32x8 make_const(float v0);
-
-    /** Creates a float32x8 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v0 v1 ]
-        @endcode
-    */
-    static float32x8 make_const(float v0, float v1);
-
-    /** Creates a float32x8 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-    */
-    static float32x8 make_const(float v0, float v1, float v2, float v3);
-
-    /** Creates a float32x8 vector from four values known at compile-time
-
-        @code
-            | 0  1  ... 7  |
-        r = [ v0 v1 ... v7 ]
-        @endcode
-    */
-    static float32x8 make_const(float v0, float v1, float v2, float v3,
-                                float v4, float v5, float v6, float v7);
-
 private:
     __m256 d_;
 };

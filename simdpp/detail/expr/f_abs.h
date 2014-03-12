@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/bit_and.h>
+#include <simdpp/core/make_int.h>
 #include <simdpp/null/math.h>
 
 namespace simdpp {
@@ -49,7 +50,8 @@ float32<4> expr_eval(expr_abs<float32<4,E>> q)
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
     return null::abs(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return bit_and(a, int32x4::make_const(0x7fffffff));
+    int32<4> mask = make_int(0x7fffffff);
+    return bit_and(a, mask);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vabsq_f32(a);
 #elif SIMDPP_USE_ALTIVEC
@@ -62,7 +64,8 @@ template<class E>
 float32<8> expr_eval(expr_abs<float32<8,E>> q)
 {
     float32<8> a = q.a.eval();
-    return bit_and(a, int32x8::make_const(0x7fffffff));
+    int32<8> mask = make_int(0x7fffffff);
+    return bit_and(a, mask);
 }
 #endif
 
@@ -82,7 +85,8 @@ float64x2 expr_eval(expr_abs<float64<2,E>> q)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::abs(a);
 #elif SIMDPP_USE_SSE2
-    return bit_and(a, int64x2::make_const(0x7fffffffffffffff));
+    int64<2> mask = make_int(0x7fffffffffffffff);
+    return bit_and(a, mask);
 #endif
 }
 
@@ -91,7 +95,8 @@ template<class E>
 float64x4 expr_eval(expr_abs<float64<4,E>> q)
 {
     float64x4 a = q.a.eval();
-    return bit_and(a, int64x4::make_const(0x7fffffffffffffff));
+    int64<4> mask = make_int(0x7fffffffffffffff);
+    return bit_and(a, mask);
 }
 #endif
 

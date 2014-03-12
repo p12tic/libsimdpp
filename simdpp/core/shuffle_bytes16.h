@@ -98,8 +98,8 @@ inline gint8x16 shuffle_bytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
     uint8x16 m, m1, m2, ai, bi;
     m = mask;
     // sets the 7-th bit if we want an element from the other vector
-    m1 = add(m, uint8x16::make_const(0x70));
-    m2 = add(m, uint8x16::make_const(0xf0));
+    m1 = add(m, (uint8x16) make_uint(0x70));
+    m2 = add(m, (uint8x16) make_uint(0xf0));
 
     ai = _mm_shuffle_epi8(a, m1);
     bi = _mm_shuffle_epi8(b, m2);

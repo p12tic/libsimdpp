@@ -50,7 +50,7 @@ float32<4> expr_eval(expr_neg<float32<4,E>> q)
     return null::neg(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     // reversion of the sign bit required even for NaNs and zeros
-    int32x4 zero = int32x4::make_const(0x80000000);
+    int32x4 zero = make_int(0x80000000);
     return bit_xor(a, zero);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vnegq_f32(a);
@@ -62,7 +62,7 @@ template<class E>
 float32<8> expr_eval(expr_neg<float32<8,E>> q)
 {
     float32<8> a = q.a.eval();
-    int32x8 zero = int32x8::make_const(0x80000000);
+    int32x8 zero = make_int(0x80000000);
     return bit_xor(a, zero);
 }
 #endif
@@ -83,7 +83,7 @@ float64x2 expr_eval(expr_neg<float64<2,E>> q)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::neg(a);
 #elif SIMDPP_USE_SSE2
-    int64x2 zero = int64x2::make_const(0x8000000000000000);
+    int64x2 zero = make_int(0x8000000000000000);
     return bit_xor(a, zero);
 #endif
 }
@@ -93,7 +93,7 @@ template<class E>
 float64x4 expr_eval(expr_neg<float64<4,E>> q)
 {
     float64x4 a = q.a.eval();
-    int64x4 zero = int64x4::make_const(0x8000000000000000);
+    int64x4 zero = make_int(0x8000000000000000);
     return bit_xor(a, zero);
 }
 #endif

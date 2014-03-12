@@ -75,54 +75,12 @@ inline gint32<8>::gint32(const float32x8& d)
 
 inline gint32x8 gint32x8::zero()
 {
-    return uint32x8::make_const(0);
+    return (uint32<8>) make_uint(0);
 }
 
 inline gint32x8 gint32x8::ones()
 {
-    return uint32x8::make_const(0xffffffff);
-}
-
-inline int32x8 int32x8::make_const(int32_t v0)
-{
-    return uint32x8::make_const(v0);
-}
-
-inline int32x8 int32x8::make_const(int32_t v0, int32_t v1)
-{
-    return uint32x8::make_const(v0, v1);
-}
-
-inline int32x8 int32x8::make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3)
-{
-    return uint32x8::make_const(v0, v1, v2, v3);
-}
-
-inline int32x8 int32x8::make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3,
-                                   int32_t v4, int32_t v5, int32_t v6, int32_t v7)
-{
-    return uint32x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-inline uint32x8 uint32x8::make_const(uint32_t v0)
-{
-    return uint32x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);
-}
-
-inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1)
-{
-    return uint32x8::make_const(v0, v1, v0, v1, v0, v1, v0, v1);
-}
-
-inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3)
-{
-    return uint32x8::make_const(v0, v1, v2, v3, v0, v1, v2, v3);
-}
-
-inline uint32x8 uint32x8::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3,
-                                     uint32_t v4, uint32_t v5, uint32_t v6, uint32_t v7)
-{
-    return _mm256_set_epi32(v7, v6, v5, v4, v3, v2, v1, v0);
+    return (uint32<8>) make_uint(0xffffffff);
 }
 
 inline mask_int32x8::operator gint32x8() const

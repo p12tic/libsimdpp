@@ -306,7 +306,7 @@ inline uint16_t extract_bits_any(uint8x16 a)
 #elif SIMDPP_USE_SSE2
     return _mm_movemask_epi8(a);
 #elif SIMDPP_USE_NEON
-    uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+    uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
 
     a = bit_and(a, mask);
     a = vpaddlq_u8(a);
@@ -315,7 +315,7 @@ inline uint16_t extract_bits_any(uint8x16 a)
     uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
     return vget_lane_u16(vreinterpret_u16_u8(r), 0);
 #elif SIMDPP_USE_ALTIVEC
-    uint8x16 mask = uint8x16::make_const(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+    uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
     a = bit_and(a, mask);
     uint32x4 s = vec_sum4s((__vector uint8_t)a,
                            (__vector uint32_t)uint32x4::zero());
@@ -357,14 +357,14 @@ uint16_t extract_bits(uint8x16 a)
     a = shift_l<7-id>((uint16x8) a);
     return extract_bits_any(a);
 #elif SIMDPP_USE_NEON
-    int8x16 shift_mask = int8x16::make_const(0-int(id), 1-int(id), 2-int(id), 3-int(id),
-                                             4-int(id), 5-int(id), 6-int(id), 7-int(id));
+    int8x16 shift_mask = make_int(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                                  4-int(id), 5-int(id), 6-int(id), 7-int(id));
 
     a = vshlq_u8(a, shift_mask);
     return extract_bits_any(a);
 #elif SIMDPP_USE_ALTIVEC
-    uint8x16 rot_mask = int8x16::make_const(0-int(id), 1-int(id), 2-int(id), 3-int(id),
-                                            4-int(id), 5-int(id), 6-int(id), 7-int(id));
+    uint8x16 rot_mask = make_int(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                                 4-int(id), 5-int(id), 6-int(id), 7-int(id));
     a = vec_rl((__vector uint8_t)a, (__vector uint8_t)rot_mask);
     return extract_bits_any(a);
 #endif

@@ -214,7 +214,7 @@ inline float64x2 floor(float64x2 a)
 #elif SIMDPP_USE_SSE2
     //check if the value is not too large, or is zero
     float64x2 ba = abs(a);
-    mask_float64x2 large_mask = cmp_gt(ba, float64x2::make_const(4503599627370495.0));
+    mask_float64x2 large_mask = cmp_gt(ba, (float64<2>) make_float(4503599627370495.0));
     mask_float64x2 zero_mask = cmp_eq(ba, float64x2::zero());
     mask_float64x2 mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
 
@@ -248,13 +248,13 @@ inline float64x2 ceil(float64x2 a)
 #elif SIMDPP_USE_SSE2
     //check if the value is not too large, or is zero
     float64x2 ba = abs(a);
-    mask_float64x2 large_mask = cmp_gt(ba, float64x2::make_const(4503599627370495.0));
+    mask_float64x2 large_mask = cmp_gt(ba, (float64<2>) make_float(4503599627370495.0));
     mask_float64x2 zero_mask = cmp_eq(ba, float64x2::zero());
     mask_float64x2 mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
 
     //calculate the ceil using trunc
     int64x2 s = shift_r((uint64x2)a, 63);
-            s = bit_xor(s, int64x2::make_const(0x0000000000000001)); //=1 if a>0
+            s = bit_xor(s, (int64<2>) make_int(0x0000000000000001)); //=1 if a>0
     float64x2 at = (float64x2) sub((int64x2)a, s); //=nextafter towards -inf if a>0
     int64x2 ia = to_int64x2(at);
             ia = add(ia, s);
@@ -289,7 +289,7 @@ inline float64x2 trunc(float64x2 a)
 #elif SIMDPP_USE_SSE2
     //check if the value is not too large
     float64x2 af = abs(a);
-    mask_float64x2 mask = cmp_gt(af, float64x2::make_const(4503599627370495.0));
+    mask_float64x2 mask = cmp_gt(af, (float64<2>) make_float(4503599627370495.0));
 
     //truncate
     int64x2 ia = sse::to_int64x2(a);

@@ -51,52 +51,6 @@ inline float32x4 float32x4::zero()
     return r;
 }
 
-inline float32x4 float32x4::make_const(float v0)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return float32x4::make_const(v0, v0, v0, v0);
-#elif SIMDPP_USE_NEON
-    return vld1q_dup_f32(&v0);
-#endif
-}
-
-inline float32x4 float32x4::make_const(float v0, float v1)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return float32x4::make_const(v0, v1, v0, v1);
-#elif SIMDPP_USE_NEON
-    union {
-        gint32x4 align;
-        float v[2];
-    };
-    v[0] = v0;
-    v[1] = v1;
-    float32x2_t r0 = vld1_f32(v);
-    return vcombine_f32(r0, r0);
-#endif
-}
-
-inline float32x4 float32x4::make_const(float v0, float v1, float v2, float v3)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<float32x4>(v0, v1, v2, v3);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_ps(v3, v2, v1, v0);
-#elif SIMDPP_USE_NEON
-    union {
-        gint32x4 align;
-        float v[4];
-    };
-    v[0] = v0;
-    v[1] = v1;
-    v[2] = v2;
-    v[3] = v3;
-    return vld1q_f32(v);
-#elif SIMDPP_USE_ALTIVEC
-    return (__vector float){v0, v1, v2, v3};
-#endif
-}
-
 inline mask_float32<4>::mask_float32(const maskdata_float32<4>& d) : float32<4>(d), mask_(d) {}
 
 #if SIMDPP_USE_SSE2

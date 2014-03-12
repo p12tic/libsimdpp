@@ -87,51 +87,12 @@ inline gint64<2>::gint64(const float64x2& d)
 
 inline gint64x2 gint64x2::zero()
 {
-    return uint64x2::make_const(0);
+    return (uint64<2>) make_uint(0);
 }
 
 inline gint64x2 gint64x2::ones()
 {
-    return uint64x2::make_const(0xffffffffffffffff);
-}
-
-inline int64x2 int64x2::make_const(int64_t v0)
-{
-    return uint64x2::make_const(v0);
-}
-
-inline int64x2 int64x2::make_const(int64_t v0, int64_t v1)
-{
-    return uint64x2::make_const(v0, v1);
-}
-
-inline uint64x2 uint64x2::make_const(uint64_t v0)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return uint64x2::make_const(v0, v0);
-#elif SIMDPP_USE_NEON
-    uint64x1_t r0 = vcreate_u64(v0);
-    return vcombine_u64(r0, r0);
-#endif
-}
-
-inline uint64x2 uint64x2::make_const(uint64_t v0, uint64_t v1)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint64x2>(v0, v1);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi64x(v1, v0);
-#elif SIMDPP_USE_NEON
-    union {
-        uint64x2 align;
-        uint64_t v[2];
-    };
-    v[0] = v0;
-    v[1] = v1;
-    return vld1q_u64(v);
-#elif SIMDPP_USE_ALTIVEC
-    return uint32x4::make_const(v0 >> 32, v0, v1 >> 32, v1); // big endian
-#endif
+    return (uint64<2>) make_uint(0xffffffffffffffff);
 }
 
 inline mask_int64<2>::mask_int64(const maskdata_int64<2>& d) : uint64<2>(d), mask_(d) {}

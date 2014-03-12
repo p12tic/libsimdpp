@@ -52,20 +52,6 @@ inline float64x2 float64x2::zero()
     return r;
 }
 
-inline float64x2 float64x2::make_const(double v0)
-{
-    return float64x2::make_const(v0, v0);
-}
-
-inline float64x2 float64x2::make_const(double v0, double v1)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::make_vec<float64x2>(v0, v1);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_pd(v1, v0);
-#endif
-}
-
 inline mask_float64<2>::mask_float64(const maskdata_float64<2>& d) : float64<2>(d), mask_(d) {}
 
 #if SIMDPP_USE_SSE2

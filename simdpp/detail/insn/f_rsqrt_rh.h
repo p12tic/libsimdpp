@@ -55,8 +55,8 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 #elif SIMDPP_USE_SSE2
     float32x4 x2, c3, c0p5, r;
 
-    c3 = float32x4::make_const(3.0f);
-    c0p5 = float32x4::make_const(0.5f);
+    c3 = make_float(3.0f);
+    c0p5 = make_float(0.5f);
 
     x2 = mul(x, x);
     r = mul(a, x2);
@@ -76,8 +76,8 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 #elif SIMDPP_USE_ALTIVEC
     float32x4 c3, c0p5, x2, r, xp5;
 
-    c3 = float32x4::make_const(3.0f);
-    c0p5 = float32x4::make_const(0.5f);
+    c3 = make_float(3.0f);
+    c0p5 = make_float(0.5f);
 
     x2 = mul(x, x);
     // r = (c3 - a*x2)
@@ -94,8 +94,8 @@ inline float32x8 i_rsqrt_rh(float32x8 x, float32x8 a)
 {
     float32x8 x2, c3, c0p5, r;
 
-    c3 = float32x8::make_const(3.0f);
-    c0p5 = float32x8::make_const(0.5f);
+    c3 = make_float(3.0f);
+    c0p5 = make_float(0.5f);
 
     x2 = mul(x, x);
     r = mul(a, x2);

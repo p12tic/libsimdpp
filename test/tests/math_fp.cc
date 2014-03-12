@@ -47,14 +47,14 @@ void test_math_fp(TestResults& res)
     // Vectors with 32-bit floating-point elements
     {
         float32x8 s[] = {
-            float32x8::make_const(0.0f, -0.0f, 0.0f, -0.0f),
-            float32x8::make_const(1.0f, 2.0f, 3.0f, 4.0f),
-            float32x8::make_const(-1.0f, -2.0f, -3.0f, -4.0f),
-            float32x8::make_const(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
-            float32x8::make_const(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
-            float32x8::make_const(nanf, nanf, nanf, nanf),
-            float32x8::make_const(inff, inff, inff, inff),
-            float32x8::make_const(-inff, -inff, -inff, -inff),
+            (float32<8>) make_float(0.0f, -0.0f, 0.0f, -0.0f),
+            (float32<8>) make_float(1.0f, 2.0f, 3.0f, 4.0f),
+            (float32<8>) make_float(-1.0f, -2.0f, -3.0f, -4.0f),
+            (float32<8>) make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
+            (float32<8>) make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
+            (float32<8>) make_float(nanf, nanf, nanf, nanf),
+            (float32<8>) make_float(inff, inff, inff, inff),
+            (float32<8>) make_float(-inff, -inff, -inff, -inff),
         };
 
         TEST_ALL_COMB_HELPER2(tc, float32x8, add, s, 4);
@@ -73,12 +73,12 @@ void test_math_fp(TestResults& res)
         TEST_ALL_COMB_HELPER16X2_3(tc, float32x8, fmsub, s, 4);
 #endif
         float32x8 snan[] = {
-            float32x8::make_const(1.0f, 2.0f, 3.0f, 4.0f),
-            float32x8::make_const(-1.0f, -2.0f, -3.0f, -4.0f),
-            float32x8::make_const(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
-            float32x8::make_const(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
-            float32x8::make_const(inff, inff, inff, inff),
-            float32x8::make_const(-inff, -inff, -inff, -inff),
+            (float32<8>) make_float(1.0f, 2.0f, 3.0f, 4.0f),
+            (float32<8>) make_float(-1.0f, -2.0f, -3.0f, -4.0f),
+            (float32<8>) make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
+            (float32<8>) make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
+            (float32<8>) make_float(inff, inff, inff, inff),
+            (float32<8>) make_float(-inff, -inff, -inff, -inff),
         };
         TEST_ALL_COMB_HELPER2(tc, float32x8, min, snan, 4);
         TEST_ALL_COMB_HELPER2(tc, float32x8, max, snan, 4);
@@ -89,18 +89,18 @@ void test_math_fp(TestResults& res)
     // Vectors with 64-bit floating-point elements
     {
         float64x4 s[] = {
-            float64x4::make_const(0.0, -0.0),
-            float64x4::make_const(1.0, 2.0),
-            float64x4::make_const(3.0, 4.0),
-            float64x4::make_const(-1.0, -2.0),
-            float64x4::make_const(-3.0, -4.0),
-            float64x4::make_const(63100000000000000.0, 63100000000000004.0),
-            float64x4::make_const(63100000000000008.0, 63100000000000012.0),
-            float64x4::make_const(-63100000000000000.0, -63100000000000004.0),
-            float64x4::make_const(-63100000000000008.0, -63100000000000012.0),
-            float64x4::make_const(nan, nan),
-            float64x4::make_const(inf, inf),
-            float64x4::make_const(-inf, -inf),
+            (float64<4>) make_float(0.0, -0.0),
+            (float64<4>) make_float(1.0, 2.0),
+            (float64<4>) make_float(3.0, 4.0),
+            (float64<4>) make_float(-1.0, -2.0),
+            (float64<4>) make_float(-3.0, -4.0),
+            (float64<4>) make_float(63100000000000000.0, 63100000000000004.0),
+            (float64<4>) make_float(63100000000000008.0, 63100000000000012.0),
+            (float64<4>) make_float(-63100000000000000.0, -63100000000000004.0),
+            (float64<4>) make_float(-63100000000000008.0, -63100000000000012.0),
+            (float64<4>) make_float(nan, nan),
+            (float64<4>) make_float(inf, inf),
+            (float64<4>) make_float(-inf, -inf),
         };
 
         TEST_ALL_COMB_HELPER2(tc, float64x4, add, s, 8);
@@ -118,16 +118,16 @@ void test_math_fp(TestResults& res)
 #endif
 
         float64x4 snan[] = {
-            float64x4::make_const(1.0, 2.0),
-            float64x4::make_const(3.0, 4.0),
-            float64x4::make_const(-1.0, -2.0),
-            float64x4::make_const(-3.0, -4.0),
-            float64x4::make_const(63100000000000000.0, 63100000000000004.0),
-            float64x4::make_const(63100000000000008.0, 63100000000000012.0),
-            float64x4::make_const(-63100000000000000.0, -63100000000000004.0),
-            float64x4::make_const(-63100000000000008.0, -63100000000000012.0),
-            float64x4::make_const(inf, inf),
-            float64x4::make_const(-inf, -inf),
+            (float64<4>) make_float(1.0, 2.0),
+            (float64<4>) make_float(3.0, 4.0),
+            (float64<4>) make_float(-1.0, -2.0),
+            (float64<4>) make_float(-3.0, -4.0),
+            (float64<4>) make_float(63100000000000000.0, 63100000000000004.0),
+            (float64<4>) make_float(63100000000000008.0, 63100000000000012.0),
+            (float64<4>) make_float(-63100000000000000.0, -63100000000000004.0),
+            (float64<4>) make_float(-63100000000000008.0, -63100000000000012.0),
+            (float64<4>) make_float(inf, inf),
+            (float64<4>) make_float(-inf, -inf),
         };
         TEST_ALL_COMB_HELPER2(tc, float64x4, min, snan, 8);
         TEST_ALL_COMB_HELPER2(tc, float64x4, max, snan, 8);

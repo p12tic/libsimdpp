@@ -249,24 +249,6 @@ public:
 
     static int64x2 zero() { return gint64x2::zero(); }
     static int64x2 ones() { return gint64x2::ones(); }
-
-    /** Creates a signed int64x4 vector from a value known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-    */
-    static int64x2 make_const(int64_t v0);
-
-    /** Creates a signed int64x4 vector from two values known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v1 ]
-        @endcode
-    */
-    static int64x2 make_const(int64_t v0, int64_t v1);
 };
 
 /** Class representing 2x 64-bit unsigned integer vector
@@ -342,26 +324,6 @@ public:
 
     static uint64x2 zero() { return gint64x2::zero(); }
     static uint64x2 ones() { return gint64x2::ones(); }
-
-    /** Creates an unsigned int64x4 vector from a value known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-    */
-    static uint64x2 make_const(uint64_t v0);
-
-    /** Creates an unsigned int64x4 vector from two values known at
-        compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v1 ]
-        @endcode
-    */
-    static uint64x2 make_const(uint64_t v0, uint64_t v1);
-
 };
 
 

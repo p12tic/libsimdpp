@@ -179,16 +179,13 @@ using AlignedVector = std::vector<T, simdpp::aligned_allocator<T, 32>>;
 template<class V>
 AlignedVector<V> test_blend_make_sel_vec()
 {
-    using U = typename V::uint_element_type;
-    using T = typename V::element_type;
     AlignedVector<V> r;
 
-    T z = simdpp::bit_cast<T, U>(U(0));
-    T o = simdpp::bit_cast<T, U>(~U(0));
-    r.push_back(V::make_const(z, z));
-    r.push_back(V::make_const(z, o));
-    r.push_back(V::make_const(o, z));
-    r.push_back(V::make_const(o, o));
+    using simdpp::make_uint;
+    r.push_back(make_uint(0, 0));
+    r.push_back(make_uint(0, -1));
+    r.push_back(make_uint(-1, 0));
+    r.push_back(make_uint(-1, -1));
 
     return r;
 }
@@ -197,10 +194,11 @@ template<class V, class M>
 AlignedVector<M> test_blend_make_sel_mask()
 {
     AlignedVector<M> r;
-    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(0, 0)));
-    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(0, 1)));
-    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(1, 0)));
-    r.push_back(cmp_eq(V::make_const(0, 0), V::make_const(1, 1)));
+    using simdpp::make_uint;
+    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(0, 0)));
+    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(0, 1)));
+    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(1, 0)));
+    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(1, 1)));
     return r;
 }
 

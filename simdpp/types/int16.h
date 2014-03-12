@@ -166,67 +166,6 @@ public:
 
     static int16<N> zero() { return gint16<N>::zero(); }
     static int16<N> ones() { return gint16<N>::ones(); }
-
-    /** Creates a signed int16 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  ...  7  | ... |
-        r = [ v0 v0 v0 ...  v0   ... ]
-        @endcode
-    */
-    static int16<N> make_const(int16_t v0)
-    {
-        return set_vec(int16v::make_const(v0));
-    }
-
-    /** Creates a signed int16 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  ... 7  | ... |
-        r = [ v0 v1 v0 v1 ... v1   ... ]
-        @endcode
-    */
-    static int16<N> make_const(int16_t v0, int16_t v1)
-    {
-        return set_vec(int16v::make_const(v0, v1));
-    }
-
-    /** Creates a signed int16 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  ... 7  | ... |
-        r = [ v0 v1 v2 v3 v0 ... v3   ... ]
-        @endcode
-    */
-    static int16<N> make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3)
-    {
-        return set_vec(int16v::make_const(v0, v1, v2, v3));
-    }
-
-    /** Creates a signed int16 vector from eight values known at compile-time
-
-        @code
-            | 0  1  2  ... 7  | ... |
-        r = [ v0 v1 v2 ... v7   ... ]
-        @endcode
-    */
-    static int16<N> make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                               int16_t v4, int16_t v5, int16_t v6, int16_t v7)
-    {
-        return set_vec(int16v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
-    }
-
-private:
-    /// Creates a signed int16 vector with the contents set to copy of native
-    /// register
-    static int16<N> set_vec(int16v a)
-    {
-        int16<N> r;
-        for (auto& v : r.di_) {
-            v = a;
-        }
-        return r;
-    }
 };
 
 /** Class representing an unsigned @a int16 vector of arbitrary length. The vector
@@ -271,67 +210,6 @@ public:
 
     static uint16<N> zero() { return gint16<N>::zero(); }
     static uint16<N> ones() { return gint16<N>::ones(); }
-
-    /** Creates a unsigned int16 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  ...  7  | ... |
-        r = [ v0 v0 v0 ...  v0   ... ]
-        @endcode
-    */
-    static uint16<N> make_const(uint16_t v0)
-    {
-        return set_vec(uint16v::make_const(v0));
-    }
-
-    /** Creates a unsigned int16 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  ... 7  | ... |
-        r = [ v0 v1 v0 v1 ... v1   ... ]
-        @endcode
-    */
-    static uint16<N> make_const(uint16_t v0, uint16_t v1)
-    {
-        return set_vec(uint16v::make_const(v0, v1));
-    }
-
-    /** Creates a unsigned int16 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  ... 7  | ... |
-        r = [ v0 v1 v2 v3 v0 ... v3   ... ]
-        @endcode
-    */
-    static uint16<N> make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3)
-    {
-        return set_vec(uint16v::make_const(v0, v1, v2, v3));
-    }
-
-    /** Creates a unsigned int16 vector from eight values known at compile-time
-
-        @code
-            | 0  1  2  ... 7  | ... |
-        r = [ v0 v1 v2 ... v7   ... ]
-        @endcode
-    */
-    static uint16<N> make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                                uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7)
-    {
-        return set_vec(uint16v::make_const(v0, v1, v2, v3, v4, v5, v6, v7));
-    }
-
-private:
-    /// Creates a unsigned int16 vector with the contents set to copy of native
-    /// register
-    static uint16<N> set_vec(uint16v a)
-    {
-        uint16<N> r;
-        for (auto& v : r.du_) {
-            v = a;
-        }
-        return r;
-    }
 };
 
 /// Class representing possibly optimized mask data for arbitrary length 16-bit

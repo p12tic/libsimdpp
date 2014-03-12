@@ -179,35 +179,6 @@ public:
     /// @}
 
     int64<4> eval() const { return *this; }
-
-    /** Creates a signed int64x4 vector from a value known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-    */
-    static int64x4 make_const(int64_t v0);
-
-    /** Creates a signed int64x4 vector from two values known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v1 ]
-        @endcode
-    */
-    static int64x4 make_const(int64_t v0, int64_t v1);
-
-    /** Creates an signed int64x4 vector from four values known at
-        compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-    */
-    static int64x4 make_const(int64_t v0, int64_t v1, int64_t v2, int64_t v3);
-
 };
 
 /** Class representing 2x 64-bit unsigned integer vector
@@ -265,35 +236,6 @@ public:
     /// @}
 
     uint64<4> eval() const { return *this; }
-
-    /** Creates an unsigned int64x4 vector from a value known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-    */
-    static uint64x4 make_const(uint64_t v0);
-
-    /** Creates an unsigned int64x4 vector from two values known at
-        compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v1 ]
-        @endcode
-    */
-    static uint64x4 make_const(uint64_t v0, uint64_t v1);
-
-    /** Creates an unsigned int64x4 vector from four values known at
-        compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-    */
-    static uint64x4 make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint64_t v3);
 
 };
 

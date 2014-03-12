@@ -89,7 +89,7 @@ inline int8x16 i_avg_trunc(int8x16 a, int8x16 b)
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 a2, b2, bias, r;
-    bias = uint8x16::make_const(0x80);
+    bias = make_uint(0x80);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg_trunc(a2, b2); // unsigned
@@ -104,7 +104,7 @@ inline int8x16 i_avg_trunc(int8x16 a, int8x16 b)
 inline int8x32 i_avg_trunc(int8x32 a, int8x32 b)
 {
     uint8x32 a2, b2, bias, r;
-    bias = uint8x32::make_const(0x80);
+    bias = make_uint(0x80);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg_trunc(a2, b2); // unsigned
@@ -163,7 +163,7 @@ inline int16x8 i_avg_trunc(int16x8 a, int16x8 b)
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint16x8 a2, b2, bias, r;
-    bias = uint16x8::make_const(0x8000);
+    bias = make_uint(0x8000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg_trunc(a2, b2); // unsigned
@@ -178,7 +178,7 @@ inline int16x8 i_avg_trunc(int16x8 a, int16x8 b)
 inline int16x16 i_avg_trunc(int16x16 a, int16x16 b)
 {
     uint16x16 a2, b2, bias, r;
-    bias = uint16x16::make_const(0x8000);
+    bias = make_uint(0x8000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg_trunc(a2, b2); // unsigned
@@ -237,7 +237,7 @@ inline int32x4 i_avg_trunc(int32x4 a, int32x4 b)
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint32x4 a2, b2, bias, r;
-    bias = uint32x4::make_const(0x80000000);
+    bias = make_uint(0x80000000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg_trunc(a2, b2); // unsigned
@@ -252,7 +252,7 @@ inline int32x4 i_avg_trunc(int32x4 a, int32x4 b)
 inline int32x8 i_avg_trunc(int32x8 a, int32x8 b)
 {
     uint32x8 a2, b2, bias, r;
-    bias = uint32x8::make_const(0x80000000);
+    bias = make_uint(0x80000000);
     a2 = bit_xor(a, bias); // add
     b2 = bit_xor(b, bias); // add
     r = i_avg_trunc(a2, b2); // unsigned

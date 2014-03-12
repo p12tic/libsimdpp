@@ -74,42 +74,12 @@ inline gint64<4>::gint64(const float64x4& d)
 
 inline gint64x4 gint64x4::zero()
 {
-    return uint64x4::make_const(0);
+    return make_uint(0);
 }
 
 inline gint64x4 gint64x4::ones()
 {
-    return uint64x4::make_const(0xffffffffffffffff);
-}
-
-inline int64x4 int64x4::make_const(int64_t v0)
-{
-    return uint64x4::make_const(v0);
-}
-
-inline int64x4 int64x4::make_const(int64_t v0, int64_t v1)
-{
-    return uint64x4::make_const(v0, v1);
-}
-
-inline int64x4 int64x4::make_const(int64_t v0, int64_t v1, int64_t v2, int64_t v3)
-{
-    return uint64x4::make_const(v0, v1, v2, v3);
-}
-
-inline uint64x4 uint64x4::make_const(uint64_t v0)
-{
-    return uint64x4::make_const(v0, v0, v0, v0);
-}
-
-inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1)
-{
-    return uint64x4::make_const(v0, v1, v0, v1);
-}
-
-inline uint64x4 uint64x4::make_const(uint64_t v0, uint64_t v1, uint64_t v2, uint64_t v3)
-{
-    return _mm256_set_epi64x(v3, v2, v1, v0);
+    return make_uint(0xffffffffffffffff);
 }
 
 inline mask_int64x4::operator gint64x4() const

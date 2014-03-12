@@ -184,43 +184,6 @@ public:
 
     static int64<N> zero() { return gint64<N>::zero(); }
     static int64<N> ones() { return gint64<N>::ones(); }
-
-    /** Creates a signed int64 vector from a value known at compile-time
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v0   ... ]
-        @endcode
-    */
-    static int64<N> make_const(int64_t v0)
-    {
-        return set_vec(int64v::make_const(v0));
-    }
-
-    /** Creates a signed int64 vector from two values known at compile-time
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v1   ... ]
-        @endcode
-    */
-    static int64<N> make_const(int64_t v0, int64_t v1)
-    {
-        return set_vec(int64v::make_const(v0, v1));
-    }
-
-private:
-
-    /// Creates a signed int64 vector with the contents set to copy of native
-    /// register
-    static int64<N> set_vec(int64v a)
-    {
-        int64<N> r;
-        for (auto& v : r.di_) {
-            v = a;
-        }
-        return r;
-    }
 };
 
 /** Class representing an unsigned @a int64 vector of arbitrary length. The vector
@@ -271,42 +234,6 @@ public:
 
     static uint64<N> zero() { return gint64<N>::zero(); }
     static uint64<N> ones() { return gint64<N>::ones(); }
-
-    /** Creates a unsigned int64 vector from a value known at compile-time
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v0   ... ]
-        @endcode
-    */
-    static uint64<N> make_const(uint64_t v0)
-    {
-        return set_vec(uint64v::make_const(v0));
-    }
-
-    /** Creates a unsigned int64 vector from two values known at compile-time
-
-        @code
-            | 0  1  | ... |
-        r = [ v0 v1   ... ]
-        @endcode
-    */
-    static uint64<N> make_const(uint64_t v0, uint64_t v1)
-    {
-        return set_vec(uint64v::make_const(v0, v1));
-    }
-
-private:
-    /// Creates a unsigned int64 vector with the contents set to copy of native
-    /// register
-    static uint64<N> set_vec(uint64v a)
-    {
-        uint64<N> r;
-        for (auto& v : r.du_) {
-            v = a;
-        }
-        return r;
-    }
 };
 
 

@@ -172,7 +172,7 @@ gint64<2> expr_eval(expr_sub<gint64<2,E1>,
 #elif SIMDPP_USE_NEON
     return vsubq_u64(a, b);
 #else
-    uint64x2 c1 = uint64x2::make_const(1);
+    uint64x2 c1 = make_uint(1);
     uint32x4 r, carry;
     carry = vec_subc((__vector uint32_t) a, (__vector uint32_t) b);
     carry = move_l<1>(carry);

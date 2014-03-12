@@ -235,56 +235,6 @@ public:
 
     static int8x16 zero() { return gint8x16::zero(); }
     static int8x16 ones() { return gint8x16::ones(); }
-
-    /** Creates a signed int8x16 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-    */
-    static int8x16 make_const(int8_t v0);
-
-    /** Creates a signed int8x16 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 ]
-        @endcode
-    */
-    static int8x16 make_const(int8_t v0, int8_t v1);
-
-    /** Creates a signed int8x16 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v1 v2 v3 v0 v1 v2 v3 v0 v1 v2 v3 v0 v1 v2 v3 ]
-        @endcode
-    */
-    static int8x16 make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3);
-
-    /** Creates a signed int8x16 vector from eight values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v1 v2 v3 v4 v5 v6 v7 v0 v1 v2 v3 v4 v5 v6 v7 ]
-        @endcode
-    */
-    static int8x16 make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
-                              int8_t v4, int8_t v5, int8_t v6, int8_t v7);
-
-    /** Creates a signed int8x16 vector from sixteen values known at
-        compile-time.
-
-        @code
-            | 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  |
-        r = [ v0  v1  v2  v3  v4  v5  v6  v7  v8  v9  v10 v11 v12 v13 v14 v15 ]
-        @endcode
-    */
-    static int8x16 make_const(int8_t v0, int8_t v1, int8_t v2, int8_t v3,
-                              int8_t v4, int8_t v5, int8_t v6, int8_t v7,
-                              int8_t v8, int8_t v9, int8_t v10, int8_t v11,
-                              int8_t v12, int8_t v13, int8_t v14, int8_t v15);
 };
 
 /** Class representing 16x 8-bit unsigned integer vector
@@ -329,7 +279,7 @@ public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> uint8<16>(const expr_vec_construct<E>& e)
     {
-        using namespace detail; construct_eval(*this, e.expr());
+        detail::construct_eval_wrapper(*this, e.expr());
     }
     template<class E> uint8<16>& operator=(const expr_vec_construct<E>& e)
     {
@@ -355,56 +305,6 @@ public:
 
     static uint8x16 zero() { return gint8x16::zero(); }
     static uint8x16 ones() { return gint8x16::ones(); }
-
-    /** Creates a unsigned int8x16 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-    */
-    static uint8x16 make_const(uint8_t v0);
-
-    /** Creates a unsigned int8x16 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 v0 v1 ]
-        @endcode
-    */
-    static uint8x16 make_const(uint8_t v0, uint8_t v1);
-
-    /** Creates a unsigned int8x16 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v1 v2 v3 v0 v1 v2 v3 v0 v1 v2 v3 v0 v1 v2 v3 ]
-        @endcode
-    */
-    static uint8x16 make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3);
-
-    /** Creates a unsigned int8x16 vector from eight values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 |
-        r = [ v0 v1 v2 v3 v4 v5 v6 v7 v0 v1 v2 v3 v4 v5 v6 v7 ]
-        @endcode
-    */
-    static uint8x16 make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
-                               uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7);
-
-    /** Creates a unsigned int8x16 vector from sixteen values known at
-        compile-time.
-
-        @code
-            | 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  |
-        r = [ v0  v1  v2  v3  v4  v5  v6  v7  v8  v9  v10 v11 v12 v13 v14 v15 ]
-        @endcode
-    */
-    static uint8x16 make_const(uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3,
-                               uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7,
-                               uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11,
-                               uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15);
 };
 
 /// Class representing possibly optimized mask data for 16x 8-bit integer

@@ -90,73 +90,12 @@ inline gint32<4>::gint32(const float32x4& d)
 
 inline gint32x4 gint32x4::zero()
 {
-    return uint32x4::make_const(0);
+    return (uint32<4>) make_uint(0);
 }
 
 inline gint32x4 gint32x4::ones()
 {
-    return uint32x4::make_const(0xffffffff);
-}
-
-inline int32x4 int32x4::make_const(int32_t v0)
-{
-    return uint32x4::make_const(v0);
-}
-
-inline int32x4 int32x4::make_const(int32_t v0, int32_t v1)
-{
-    return uint32x4::make_const(v0, v1);
-}
-
-inline int32x4 int32x4::make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3)
-{
-    return uint32x4::make_const(v0, v1, v2, v3);
-}
-
-inline uint32x4 uint32x4::make_const(uint32_t v0)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return uint32x4::make_const(v0, v0, v0, v0);
-#elif SIMDPP_USE_NEON
-    return vld1q_dup_u32(&v0);
-#endif
-}
-
-inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return uint32x4::make_const(v0, v1, v0, v1);
-#elif SIMDPP_USE_NEON
-    union {
-        uint32x4 align;
-        uint32_t v[2];
-    };
-    v[0] = v0;
-    v[1] = v1;
-    uint32x2_t r0 = vld1_u32(v);
-    return vcombine_u32(r0, r0);
-#endif
-}
-
-inline uint32x4 uint32x4::make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint32x4>(v0, v1, v2, v3);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi32(v3, v2, v1, v0);
-#elif SIMDPP_USE_NEON
-    union {
-        uint32x4 align;
-        uint32_t v[4];
-    };
-    v[0] = v0;
-    v[1] = v1;
-    v[2] = v2;
-    v[3] = v3;
-    return vld1q_u32(v);
-#elif SIMDPP_USE_ALTIVEC
-    return (__vector uint32_t){v0, v1, v2, v3};
-#endif
+    return (uint32<4>) make_uint(0xffffffff);
 }
 
 inline mask_int32<4>::mask_int32(const maskdata_int32<4>& d) : uint32<4>(d), mask_(d) {}

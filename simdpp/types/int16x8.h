@@ -230,43 +230,6 @@ public:
 
     static int16<8> zero() { return gint16<8>::zero(); }
     static int16<8> ones() { return gint16<8>::ones(); }
-
-    /** Creates a signed int16x8 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-    */
-    static int16x8 make_const(int16_t v0);
-
-    /** Creates a signed int16x8 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v1 v0 v1 v0 v1 v0 v1 ]
-        @endcode
-    */
-    static int16x8 make_const(int16_t v0, int16_t v1);
-
-    /** Creates a signed int16x8 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v1 v2 v3 v0 v1 v2 v3 ]
-        @endcode
-    */
-    static int16x8 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3);
-
-    /** Creates a signed int16x8 vector from eight values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v1 v2 v3 v4 v5 v6 v7 ]
-        @endcode
-    */
-    static int16x8 make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                              int16_t v4, int16_t v5, int16_t v6, int16_t v7);
 };
 
 /** Class representing 8x 16-bit unsigned integer vector
@@ -332,43 +295,6 @@ public:
 
     static uint16<8> zero() { return gint16<8>::zero(); }
     static uint16<8> ones() { return gint16<8>::ones(); }
-
-    /** Creates a unsigned int16x8 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v0 v0 v0 v0 v0 v0 v0 ]
-        @endcode
-    */
-    static uint16x8 make_const(uint16_t v0);
-
-    /** Creates a unsigned int16x8 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v1 v0 v1 v0 v1 v0 v1 ]
-        @endcode
-    */
-    static uint16x8 make_const(uint16_t v0, uint16_t v1);
-
-    /** Creates a unsigned int16x8 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v1 v2 v3 v0 v1 v2 v3 ]
-        @endcode
-    */
-    static uint16x8 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3);
-
-    /** Creates a unsigned int16x8 vector from eight values known at compile-time
-
-        @code
-            | 0  1  2  3  4  5  6  7  |
-        r = [ v0 v1 v2 v3 v4 v5 v6 v7 ]
-        @endcode
-    */
-    static uint16x8 make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                               uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7);
 };
 
 /// Class representing possibly optimized mask data for 8x 16-bit integer

@@ -47,13 +47,13 @@ namespace insn {
 template<unsigned N>
 float32<N> i_sign(float32<N> a)
 {
-    return bit_and(a, int32<N>::make_const(0x80000000));
+    return bit_and(a, (uint32<N>) make_uint(0x80000000));
 }
 
 template<unsigned N>
 float64<N> i_sign(float64<N> a)
 {
-    return bit_and(a, uint64<N>::make_const(0x8000000000000000));
+    return bit_and(a, (uint64<N>) make_uint(0x8000000000000000));
 }
 
 

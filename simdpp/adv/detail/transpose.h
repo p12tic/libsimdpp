@@ -98,8 +98,8 @@ inline gint8x16 transpose_inplace(gint8x16 a)
 {
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // the compiler will take this out of any loops automatically
-    uint8x16 idx = uint8x16::make_const(0, 4, 8, 12, 1, 5, 9, 13,
-                                        2, 6, 10,14, 3, 7, 11,15);
+    uint8x16 idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,
+                            2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
@@ -109,8 +109,8 @@ inline gint8x16 transpose_inplace(gint8x16 a)
 inline gint8x32 transpose_inplace(gint8x32 a)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_ALTIVEC
-    uint8x32 idx = uint8x32::make_const(0, 4, 8, 12, 1, 5, 9, 13,
-                                        2, 6, 10,14, 3, 7, 11,15);
+    uint8x32 idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,
+                             2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);
 #elif SIMDPP_USE_SSSE3
     SIMDPP_VEC_ARRAY_IMPL1(gint8x32, transpose_inplace, a);

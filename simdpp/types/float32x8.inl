@@ -50,27 +50,6 @@ inline float32x8 float32x8::zero()
     return r;
 }
 
-inline float32x8 float32x8::make_const(float v0)
-{
-    return float32x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);
-}
-
-inline float32x8 float32x8::make_const(float v0, float v1)
-{
-    return float32x8::make_const(v0, v1, v0, v1, v0, v1, v0, v1);
-}
-
-inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3)
-{
-    return float32x8::make_const(v0, v1, v2, v3, v0, v1, v2, v3);
-}
-
-inline float32x8 float32x8::make_const(float v0, float v1, float v2, float v3,
-                                       float v4, float v5, float v6, float v7)
-{
-    return _mm256_set_ps(v7, v6, v5, v4, v3, v2, v1, v0);
-}
-
 inline mask_float32x8::operator float32x8() const
 {
     return d_;

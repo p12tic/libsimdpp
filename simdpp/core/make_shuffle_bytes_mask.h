@@ -34,6 +34,7 @@
 
 #include <cstdint>
 #include <simdpp/types.h>
+#include <simdpp/core/make_uint.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -169,10 +170,10 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
     detail::assert_selector_range<s0,s1,2>();
     uint8_t b0 = detail::get_shuffle_bytex1_16<s0,2>();
     uint8_t b1 = detail::get_shuffle_bytex1_16<s1,2>();
-    mask = uint8<N>::make_const(b0,   b1,   b0+2, b1+2,
-                                b0+4, b1+4, b0+6, b1+6,
-                                b0+8, b1+8, b0+10,b1+10,
-                                b0+12,b1+12,b0+14,b1+14);
+    mask = make_uint(b0,   b1,   b0+2, b1+2,
+                     b0+4, b1+4, b0+6, b1+6,
+                     b0+8, b1+8, b0+10,b1+10,
+                     b0+12,b1+12,b0+14,b1+14);
     return mask;
 }
 
@@ -219,10 +220,10 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
     uint8_t b1 = detail::get_shuffle_bytex1_16<s1,4>();
     uint8_t b2 = detail::get_shuffle_bytex1_16<s2,4>();
     uint8_t b3 = detail::get_shuffle_bytex1_16<s3,4>();
-    mask = uint8<N>::make_const(b0,   b1,   b2,   b3,
-                                b0+4, b1+4, b2+4, b3+4,
-                                b0+8, b1+8, b2+8, b3+8,
-                                b0+12,b1+12,b2+12,b3+12);
+    mask = make_uint(b0,   b1,   b2,   b3,
+                     b0+4, b1+4, b2+4, b3+4,
+                     b0+8, b1+8, b2+8, b3+8,
+                     b0+12,b1+12,b2+12,b3+12);
     return mask;
 }
 
@@ -271,10 +272,10 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
     uint8_t b5 = detail::get_shuffle_bytex1_16<s5,8>();
     uint8_t b6 = detail::get_shuffle_bytex1_16<s6,8>();
     uint8_t b7 = detail::get_shuffle_bytex1_16<s7,8>();
-    mask = uint8<N>::make_const(b0,   b1,   b2,   b3,
-                                b4,   b5,   b6,   b7,
-                                b0+8, b1+8, b2+8, b3+8,
-                                b4+8, b5+8, b6+8, b7+8);
+    mask = make_uint(b0,   b1,   b2,   b3,
+                     b4,   b5,   b6,   b7,
+                     b0+8, b1+8, b2+8, b3+8,
+                     b4+8, b5+8, b6+8, b7+8);
     return mask;
 }
 
@@ -328,10 +329,10 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
     uint8_t b13 = detail::get_shuffle_bytex1_16<s13,16>();
     uint8_t b14 = detail::get_shuffle_bytex1_16<s14,16>();
     uint8_t b15 = detail::get_shuffle_bytex1_16<s15,16>();
-    mask = uint8<N>::make_const(b0,  b1,  b2,  b3,
-                                b4,  b5,  b6,  b7,
-                                b8,  b9,  b10, b11,
-                                b12, b13, b14, b15);
+    mask = make_uint(b0,  b1,  b2,  b3,
+                     b4,  b5,  b6,  b7,
+                     b8,  b9,  b10, b11,
+                     b12, b13, b14, b15);
     return mask;
 }
 
@@ -374,7 +375,7 @@ gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
     detail::assert_selector_range<s0,s1,2>();
     detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,2>();
     detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,2>();
-    mask = uint8<N*2>::make_const(b0[0],   b0[1],   b1[0],   b1[1],
+    mask = (uint8<N*2>) make_uint(b0[0],   b0[1],   b1[0],   b1[1],
                                   b0[0]+4, b0[1]+4, b1[0]+4, b1[1]+4,
                                   b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
                                   b0[0]+12,b0[1]+12,b1[0]+12,b1[1]+12);
@@ -424,7 +425,7 @@ gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
     detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,4>();
     detail::uint8x2 b2 = detail::get_shuffle_bytex2_16<s2,4>();
     detail::uint8x2 b3 = detail::get_shuffle_bytex2_16<s3,4>();
-    mask = uint8<N*2>::make_const(b0[0],   b0[1],   b1[0],   b1[1],
+    mask = (uint8<N*2>) make_uint(b0[0],   b0[1],   b1[0],   b1[1],
                                   b2[0],   b2[1],   b3[0],   b3[1],
                                   b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
                                   b2[0]+8, b2[1]+8, b3[0]+8, b3[1]+8);
@@ -474,7 +475,7 @@ gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
     detail::uint8x2 b5 = detail::get_shuffle_bytex2_16<s5,8>();
     detail::uint8x2 b6 = detail::get_shuffle_bytex2_16<s6,8>();
     detail::uint8x2 b7 = detail::get_shuffle_bytex2_16<s7,8>();
-    mask = uint8<N*2>::make_const(b0[0], b0[1], b1[0], b1[1],
+    mask = (uint8<N*2>) make_uint(b0[0], b0[1], b1[0], b1[1],
                                   b2[0], b2[1], b3[0], b3[1],
                                   b4[0], b4[1], b5[0], b5[1],
                                   b6[0], b6[1], b7[0], b7[1]);
@@ -517,7 +518,7 @@ gint32<N> make_shuffle_bytes16_mask(gint32<N> &mask)
     detail::assert_selector_range<s0,s1,2>();
     detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,2>();
     detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,2>();
-    mask = uint8<N*4>::make_const(b0[0],   b0[1],   b0[2],   b0[3],
+    mask = (uint8<N*4>) make_uint(b0[0],   b0[1],   b0[2],   b0[3],
                                   b1[0],   b1[1],   b1[2],   b1[3],
                                   b0[0]+8, b0[1]+8, b0[2]+8, b0[3]+8,
                                   b1[0]+8, b1[1]+8, b1[2]+8, b1[3]+8);
@@ -558,7 +559,7 @@ gint32<N> make_shuffle_bytes16_mask(gint32<N> &mask)
     detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,4>();
     detail::uint8x4 b2 = detail::get_shuffle_bytex4_16<s2,4>();
     detail::uint8x4 b3 = detail::get_shuffle_bytex4_16<s3,4>();
-    mask = uint8<N*4>::make_const(b0[0], b0[1], b0[2], b0[3],
+    mask = (uint8<N*4>) make_uint(b0[0], b0[1], b0[2], b0[3],
                                   b1[0], b1[1], b1[2], b1[3],
                                   b2[0], b2[1], b2[2], b2[3],
                                   b3[0], b3[1], b3[2], b3[3]);
@@ -595,7 +596,7 @@ gint64<N> make_shuffle_bytes16_mask(gint64<N> &mask)
     detail::assert_selector_range<s0,s1,2>();
     detail::uint8x8 b0 = detail::get_shuffle_bytex8_16<s0,2>();
     detail::uint8x8 b1 = detail::get_shuffle_bytex8_16<s1,2>();
-    mask = uint8<N*8>::make_const(b0[0], b0[1], b0[2], b0[3],
+    mask = (uint8<N*8>) make_uint(b0[0], b0[1], b0[2], b0[3],
                                   b0[4], b0[5], b0[6], b0[7],
                                   b1[0], b1[1], b1[2], b1[3],
                                   b1[4], b1[5], b1[6], b1[7]);

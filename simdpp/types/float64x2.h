@@ -121,24 +121,6 @@ public:
     */
     static float64x2 zero();
 
-    /** Creates a float64x2 vector from a value known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v0 ]
-        @endcode
-    */
-    static float64x2 make_const(double v0);
-
-    /** Creates a float64x2 vector from two values known at compile-time
-
-        @code
-            | 0  1  |
-        r = [ v0 v1 ]
-        @endcode
-    */
-    static float64x2 make_const(double v0, double v1);
-
 private:
 #if SIMDPP_USE_SSE2
     __m128d d_;

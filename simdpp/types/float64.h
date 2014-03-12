@@ -111,30 +111,6 @@ public:
         return set_vec(float64v::zero());
     }
 
-    /** Creates a float64 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  | ... |
-        r = [ v0 v0 v0 v0   ... ]
-        @endcode
-    */
-    static float64x4 make_const(double v0)
-    {
-        return set_vec(float64v::make_const(v0));
-    }
-
-    /** Creates a float64 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  | ... |
-        r = [ v0 v1 v0 v1   ... ]
-        @endcode
-    */
-    static float64x4 make_const(double v0, double v1)
-    {
-        return set_vec(float64v::make_const(v0, v1));
-    }
-
 private:
     /** Creates a float vector from a native vector
 

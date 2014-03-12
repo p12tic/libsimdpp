@@ -248,36 +248,6 @@ public:
 
     static int32<4> zero() { return gint32<4>::zero(); }
     static int32<4> ones() { return gint32<4>::ones(); }
-
-    /** Creates a signed int32x4 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-
-    */
-    static int32x4 make_const(int32_t v0);
-
-    /** Creates a signed int32x4 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v0 v1 ]
-        @endcode
-
-    */
-    static int32x4 make_const(int32_t v0, int32_t v1);
-
-    /** Creates a signed int32x4 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-
-    */
-    static int32x4 make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3);
 };
 
 /** Class representing 4x 32-bit unsigned integer vector
@@ -353,38 +323,6 @@ public:
 
     static uint32<4> zero() { return gint32<4>::zero(); }
     static uint32<4> ones() { return gint32<4>::ones(); }
-
-    /** Creates an unsigned int32x4 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-
-    */
-    static uint32x4 make_const(uint32_t v0);
-
-    /** Creates an unsigned int32x4 vector from two values known at
-        compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v0 v1 ]
-        @endcode
-
-    */
-    static uint32x4 make_const(uint32_t v0, uint32_t v1);
-
-    /** Creates an unsigned int32x4 vector from four values known at
-        compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-
-    */
-    static uint32x4 make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3);
 };
 
 /// Class representing possibly optimized mask data for 4x 32-bit integer

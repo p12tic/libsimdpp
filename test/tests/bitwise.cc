@@ -39,8 +39,8 @@ void test_bitwise(TestResults& res)
 
     using namespace simdpp;
 
-    uint64x4 a11 = uint64x4::make_const(0x0f0ff0f0ffff0000, 0x0f0ff0f0ffff0000);
-    uint64x4 a12 = uint64x4::make_const(0xffffffffffffffff, 0x0000000000000000);
+    uint64x4 a11 = make_uint(0x0f0ff0f0ffff0000, 0x0f0ff0f0ffff0000);
+    uint64x4 a12 = make_uint(0xffffffffffffffff, 0x0000000000000000);
 
     float64x4 b11(a11);
     float64x4 b12(a12);

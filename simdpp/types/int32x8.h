@@ -199,44 +199,6 @@ public:
     /// @}
 
     int32<8> eval() const { return *this; }
-
-    /** Creates a signed int32x8 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-    */
-    static int32x8 make_const(int32_t v0);
-
-    /** Creates a signed int32x8 vector from two values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v0 v1 ]
-        @endcode
-    */
-    static int32x8 make_const(int32_t v0, int32_t v1);
-
-    /** Creates a signed int32x8 vector from four values known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-    */
-    static int32x8 make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3);
-
-    /** Creates an signed int32x8 vector from eight values known at
-        compile-time
-
-        @code
-            | 0  1  ... 7  |
-        r = [ v0 v1 ... v7 ]
-        @endcode
-    */
-    static int32x8 make_const(int32_t v0, int32_t v1, int32_t v2, int32_t v3,
-                              int32_t v4, int32_t v5, int32_t v6, int32_t v7);
 };
 
 /** Class representing 4x 32-bit unsigned integer vector
@@ -294,46 +256,6 @@ public:
     /// @}
 
     uint32<8> eval() const { return *this; }
-
-    /** Creates an unsigned int32x8 vector from a value known at compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v0 v0 v0 ]
-        @endcode
-    */
-    static uint32x8 make_const(uint32_t v0);
-
-    /** Creates an unsigned int32x8 vector from two values known at
-        compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v0 v1 ]
-        @endcode
-    */
-    static uint32x8 make_const(uint32_t v0, uint32_t v1);
-
-    /** Creates an unsigned int32x8 vector from four values known at
-        compile-time
-
-        @code
-            | 0  1  2  3  |
-        r = [ v0 v1 v2 v3 ]
-        @endcode
-    */
-    static uint32x8 make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3);
-
-    /** Creates an unsigned int32x8 vector from eight values known at
-        compile-time
-
-        @code
-            | 0  1  ... 7  |
-        r = [ v0 v1 ... v7 ]
-        @endcode
-    */
-    static uint32x8 make_const(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3,
-                               uint32_t v4, uint32_t v5, uint32_t v6, uint32_t v7);
 };
 
 /// Class representing possibly optimized mask data for 8x 32-bit integer vector

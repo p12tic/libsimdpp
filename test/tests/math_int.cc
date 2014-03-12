@@ -40,17 +40,17 @@ void test_math_int(TestResults& res)
     // Vectors with 8-bit integer elements
     {
         uint8x32 s[] = {
-            uint8x32::make_const(0x11, 0x22, 0x33, 0x44),
-            uint8x32::make_const(0xcc, 0xdd, 0xee, 0xff),
-            uint8x32::make_const(0x00, 0x01, 0x02, 0x03),
-            uint8x32::make_const(0xfc, 0xfd, 0xfe, 0xff),
-            uint8x32::make_const(0x7e, 0x7f, 0x80, 0x81),
+            (uint8<32>) make_uint(0x11, 0x22, 0x33, 0x44),
+            (uint8<32>) make_uint(0xcc, 0xdd, 0xee, 0xff),
+            (uint8<32>) make_uint(0x00, 0x01, 0x02, 0x03),
+            (uint8<32>) make_uint(0xfc, 0xfd, 0xfe, 0xff),
+            (uint8<32>) make_uint(0x7e, 0x7f, 0x80, 0x81),
 
-            uint8x32::make_const(0x11, 0x22, 0x33, 0x44),
-            uint8x32::make_const(0xcc, 0xdd, 0xee, 0xff),
-            uint8x32::make_const(0x00, 0x01, 0x02, 0x03),
-            uint8x32::make_const(0xfc, 0xfd, 0xfe, 0xff),
-            uint8x32::make_const(0x7e, 0x7f, 0x80, 0x81),
+            (uint8<32>) make_uint(0x11, 0x22, 0x33, 0x44),
+            (uint8<32>) make_uint(0xcc, 0xdd, 0xee, 0xff),
+            (uint8<32>) make_uint(0x00, 0x01, 0x02, 0x03),
+            (uint8<32>) make_uint(0xfc, 0xfd, 0xfe, 0xff),
+            (uint8<32>) make_uint(0x7e, 0x7f, 0x80, 0x81),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int8x32, add, s, 1);
@@ -77,26 +77,26 @@ void test_math_int(TestResults& res)
         // this one can't contain zeros
         // NOTE: no support for 32-byte vectors yet
         uint8x16 s2[] = {
-            uint8x16::make_const(0x01, 0x02, 0x03, 0x04),
-            uint8x16::make_const(0x07, 0x0a, 0x0d, 0x12),
-            uint8x16::make_const(0x13, 0x15, 0x1d, 0x22),
-            uint8x16::make_const(0x27, 0x34, 0x46, 0x68),
-            uint8x16::make_const(0x7e, 0x7f, 0x80, 0x81),
+            (uint8x16) make_uint(0x01, 0x02, 0x03, 0x04),
+            (uint8x16) make_uint(0x07, 0x0a, 0x0d, 0x12),
+            (uint8x16) make_uint(0x13, 0x15, 0x1d, 0x22),
+            (uint8x16) make_uint(0x27, 0x34, 0x46, 0x68),
+            (uint8x16) make_uint(0x7e, 0x7f, 0x80, 0x81),
 
-            uint8x16::make_const(0x91, 0x9a, 0xa1, 0xa4),
-            uint8x16::make_const(0xa6, 0xaa, 0xb2, 0xb7),
-            uint8x16::make_const(0xb8, 0xbf, 0xc1, 0xc3),
-            uint8x16::make_const(0xc6, 0xce, 0xd2, 0xd5),
-            uint8x16::make_const(0xda, 0xf2, 0xfa, 0xff),
+            (uint8x16) make_uint(0x91, 0x9a, 0xa1, 0xa4),
+            (uint8x16) make_uint(0xa6, 0xaa, 0xb2, 0xb7),
+            (uint8x16) make_uint(0xb8, 0xbf, 0xc1, 0xc3),
+            (uint8x16) make_uint(0xc6, 0xce, 0xd2, 0xd5),
+            (uint8x16) make_uint(0xda, 0xf2, 0xfa, 0xff),
         };
 
         TEST_ALL_COMB_HELPER1(tc, uint8x16, div_p<8>, s2, 1);
 
         uint8x16 s3[] = {
-            uint8x16::make_const(0x01, 0x02, 0x03, 0x04),
-            uint8x16::make_const(0x05, 0x06, 0x07, 0x08),
-            uint8x16::make_const(0x09, 0x0a, 0x0b, 0x0c),
-            uint8x16::make_const(0x0d, 0x0e, 0x0f, 0x0f),
+            (uint8x16) make_uint(0x01, 0x02, 0x03, 0x04),
+            (uint8x16) make_uint(0x05, 0x06, 0x07, 0x08),
+            (uint8x16) make_uint(0x09, 0x0a, 0x0b, 0x0c),
+            (uint8x16) make_uint(0x0d, 0x0e, 0x0f, 0x0f),
         };
         TEST_ALL_COMB_HELPER1(tc, uint8x16, div_p<4>, s3, 1);
     }
@@ -104,17 +104,17 @@ void test_math_int(TestResults& res)
     // Vectors with 16-bit integer elements
     {
         uint16x16 s[] = {
-            uint16x16::make_const(0x1111, 0x2222, 0x3333, 0x4444),
-            uint16x16::make_const(0xcccc, 0xdddd, 0xeeee, 0xffff),
-            uint16x16::make_const(0x0000, 0x0001, 0x0002, 0x0003),
-            uint16x16::make_const(0xfffc, 0xfffd, 0xfffe, 0xffff),
-            uint16x16::make_const(0x7ffe, 0x7fff, 0x8000, 0x8001),
+            (uint16x16) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
+            (uint16x16) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
+            (uint16x16) make_uint(0x0000, 0x0001, 0x0002, 0x0003),
+            (uint16x16) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
+            (uint16x16) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
 
-            uint16x16::make_const(0x1111, 0x2222, 0x3333, 0x4444),
-            uint16x16::make_const(0xcccc, 0xdddd, 0xeeee, 0xffff),
-            uint16x16::make_const(0x0000, 0x0001, 0x0002, 0x0003),
-            uint16x16::make_const(0xfffc, 0xfffd, 0xfffe, 0xffff),
-            uint16x16::make_const(0x7ffe, 0x7fff, 0x8000, 0x8001),
+            (uint16x16) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
+            (uint16x16) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
+            (uint16x16) make_uint(0x0000, 0x0001, 0x0002, 0x0003),
+            (uint16x16) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
+            (uint16x16) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int16x16, add, s, 2);
@@ -148,41 +148,41 @@ void test_math_int(TestResults& res)
         // this one can't contain zeros
         // NOTE: no support for 32-byte vectors yet
         uint16x8 s2[] = {
-            uint16x8::make_const(0x1111, 0x2222, 0x3333, 0x4444),
-            uint16x8::make_const(0xcccc, 0xdddd, 0xeeee, 0xffff),
-            uint16x8::make_const(0x0510, 0x0001, 0x0002, 0x0003),
-            uint16x8::make_const(0xfffc, 0xfffd, 0xfffe, 0xffff),
-            uint16x8::make_const(0x7ffe, 0x7fff, 0x8000, 0x8001),
+            (uint16<8>) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
+            (uint16<8>) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
+            (uint16<8>) make_uint(0x0510, 0x0001, 0x0002, 0x0003),
+            (uint16<8>) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
+            (uint16<8>) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
 
-            uint16x8::make_const(0x1111, 0x2222, 0x3333, 0x4444),
-            uint16x8::make_const(0xcccc, 0xdddd, 0xeeee, 0xffff),
-            uint16x8::make_const(0x0230, 0x0001, 0x0002, 0x0003),
-            uint16x8::make_const(0xfffc, 0xfffd, 0xfffe, 0xffff),
-            uint16x8::make_const(0x7ffe, 0x7fff, 0x8000, 0x8001),
+            (uint16<8>) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
+            (uint16<8>) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
+            (uint16<8>) make_uint(0x0230, 0x0001, 0x0002, 0x0003),
+            (uint16<8>) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
+            (uint16<8>) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
         };
 
         TEST_ALL_COMB_HELPER1(tc, uint16x8, div_p<16>, s2, 2);
 
         uint16x8 s3[] = {
-            uint16x8::make_const(0x01, 0x02, 0x03, 0x04),
-            uint16x8::make_const(0x07, 0x0a, 0x0d, 0x12),
-            uint16x8::make_const(0x13, 0x15, 0x1d, 0x22),
-            uint16x8::make_const(0x27, 0x34, 0x46, 0x68),
-            uint16x8::make_const(0x7e, 0x7f, 0x80, 0x81),
+            (uint16<8>) make_uint(0x01, 0x02, 0x03, 0x04),
+            (uint16<8>) make_uint(0x07, 0x0a, 0x0d, 0x12),
+            (uint16<8>) make_uint(0x13, 0x15, 0x1d, 0x22),
+            (uint16<8>) make_uint(0x27, 0x34, 0x46, 0x68),
+            (uint16<8>) make_uint(0x7e, 0x7f, 0x80, 0x81),
 
-            uint16x8::make_const(0x91, 0x9a, 0xa1, 0xa4),
-            uint16x8::make_const(0xa6, 0xaa, 0xb2, 0xb7),
-            uint16x8::make_const(0xb8, 0xbf, 0xc1, 0xc3),
-            uint16x8::make_const(0xc6, 0xce, 0xd2, 0xd5),
-            uint16x8::make_const(0xda, 0xf2, 0xfa, 0xff),
+            (uint16<8>) make_uint(0x91, 0x9a, 0xa1, 0xa4),
+            (uint16<8>) make_uint(0xa6, 0xaa, 0xb2, 0xb7),
+            (uint16<8>) make_uint(0xb8, 0xbf, 0xc1, 0xc3),
+            (uint16<8>) make_uint(0xc6, 0xce, 0xd2, 0xd5),
+            (uint16<8>) make_uint(0xda, 0xf2, 0xfa, 0xff),
         };
         TEST_ALL_COMB_HELPER1(tc, uint16x8, div_p<8>, s3, 2);
 
         uint16x8 s4[] = {
-            uint16x8::make_const(0x01, 0x02, 0x03, 0x04),
-            uint16x8::make_const(0x05, 0x06, 0x07, 0x08),
-            uint16x8::make_const(0x09, 0x0a, 0x0b, 0x0c),
-            uint16x8::make_const(0x0d, 0x0e, 0x0f, 0x0f),
+            (uint16<8>) make_uint(0x01, 0x02, 0x03, 0x04),
+            (uint16<8>) make_uint(0x05, 0x06, 0x07, 0x08),
+            (uint16<8>) make_uint(0x09, 0x0a, 0x0b, 0x0c),
+            (uint16<8>) make_uint(0x0d, 0x0e, 0x0f, 0x0f),
         };
         TEST_ALL_COMB_HELPER1(tc, uint16x8, div_p<8>, s4, 2);
     }
@@ -190,17 +190,17 @@ void test_math_int(TestResults& res)
     // Vectors with 32-bit integer elements
     {
         uint32x8 s[] = {
-            uint32x8::make_const(0x11111111, 0x22222222, 0x33333333, 0x44444444),
-            uint32x8::make_const(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
-            uint32x8::make_const(0x00000000, 0x00000001, 0x00000002, 0x00000003),
-            uint32x8::make_const(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
-            uint32x8::make_const(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
+            (uint32<8>) make_uint(0x11111111, 0x22222222, 0x33333333, 0x44444444),
+            (uint32<8>) make_uint(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
+            (uint32<8>) make_uint(0x00000000, 0x00000001, 0x00000002, 0x00000003),
+            (uint32<8>) make_uint(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
+            (uint32<8>) make_uint(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
 
-            uint32x8::make_const(0x11111111, 0x22222222, 0x33333333, 0x44444444),
-            uint32x8::make_const(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
-            uint32x8::make_const(0x00000000, 0x00000001, 0x00000002, 0x00000003),
-            uint32x8::make_const(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
-            uint32x8::make_const(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
+            (uint32<8>) make_uint(0x11111111, 0x22222222, 0x33333333, 0x44444444),
+            (uint32<8>) make_uint(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
+            (uint32<8>) make_uint(0x00000000, 0x00000001, 0x00000002, 0x00000003),
+            (uint32<8>) make_uint(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
+            (uint32<8>) make_uint(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int32x8, add, s, 4);
@@ -229,29 +229,29 @@ void test_math_int(TestResults& res)
     // Vectors with 64-bit integer elements
     {
         uint64x4 s[] = {
-            uint64x4::make_const(0x1111111111111111, 0x2222222222222222),
-            uint64x4::make_const(0x3333333333333333, 0x4444444444444444),
-            uint64x4::make_const(0xcccccccccccccccc, 0xdddddddddddddddd),
-            uint64x4::make_const(0xeeeeeeeeeeeeeeee, 0xffffffffffffffff),
-            uint64x4::make_const(0x0000000000000000, 0x0000000000000001),
+            (uint64<4>) make_uint(0x1111111111111111, 0x2222222222222222),
+            (uint64<4>) make_uint(0x3333333333333333, 0x4444444444444444),
+            (uint64<4>) make_uint(0xcccccccccccccccc, 0xdddddddddddddddd),
+            (uint64<4>) make_uint(0xeeeeeeeeeeeeeeee, 0xffffffffffffffff),
+            (uint64<4>) make_uint(0x0000000000000000, 0x0000000000000001),
 
-            uint64x4::make_const(0x0000000000000002, 0x0000000000000003),
-            uint64x4::make_const(0xfffffffffffffffc, 0xfffffffffffffffd),
-            uint64x4::make_const(0xfffffffffffffffe, 0xffffffffffffffff),
-            uint64x4::make_const(0x7ffffffffffffffe, 0x7fffffffffffffff),
-            uint64x4::make_const(0x8000000000000000, 0x8000000000000001),
+            (uint64<4>) make_uint(0x0000000000000002, 0x0000000000000003),
+            (uint64<4>) make_uint(0xfffffffffffffffc, 0xfffffffffffffffd),
+            (uint64<4>) make_uint(0xfffffffffffffffe, 0xffffffffffffffff),
+            (uint64<4>) make_uint(0x7ffffffffffffffe, 0x7fffffffffffffff),
+            (uint64<4>) make_uint(0x8000000000000000, 0x8000000000000001),
 
-            uint64x4::make_const(0x1111111111111111, 0x2222222222222222),
-            uint64x4::make_const(0x3333333333333333, 0x4444444444444444),
-            uint64x4::make_const(0xcccccccccccccccc, 0xdddddddddddddddd),
-            uint64x4::make_const(0xeeeeeeeeeeeeeeee, 0xffffffffffffffff),
-            uint64x4::make_const(0x0000000000000000, 0x0000000000000001),
+            (uint64<4>) make_uint(0x1111111111111111, 0x2222222222222222),
+            (uint64<4>) make_uint(0x3333333333333333, 0x4444444444444444),
+            (uint64<4>) make_uint(0xcccccccccccccccc, 0xdddddddddddddddd),
+            (uint64<4>) make_uint(0xeeeeeeeeeeeeeeee, 0xffffffffffffffff),
+            (uint64<4>) make_uint(0x0000000000000000, 0x0000000000000001),
 
-            uint64x4::make_const(0x0000000000000002, 0x0000000000000003),
-            uint64x4::make_const(0xfffffffffffffffc, 0xfffffffffffffffd),
-            uint64x4::make_const(0xfffffffffffffffe, 0xffffffffffffffff),
-            uint64x4::make_const(0x7ffffffffffffffe, 0x7fffffffffffffff),
-            uint64x4::make_const(0x8000000000000000, 0x8000000000000001),
+            (uint64<4>) make_uint(0x0000000000000002, 0x0000000000000003),
+            (uint64<4>) make_uint(0xfffffffffffffffc, 0xfffffffffffffffd),
+            (uint64<4>) make_uint(0xfffffffffffffffe, 0xffffffffffffffff),
+            (uint64<4>) make_uint(0x7ffffffffffffffe, 0x7fffffffffffffff),
+            (uint64<4>) make_uint(0x8000000000000000, 0x8000000000000001),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int64x4, add, s, 2);

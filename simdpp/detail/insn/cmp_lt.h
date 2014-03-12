@@ -79,7 +79,7 @@ inline mask_int8x16 i_cmp_lt(uint8x16 a, uint8x16 b)
 #elif SIMDPP_USE_XOP
     return _mm_comlt_epu8(a, b);
 #elif SIMDPP_USE_SSE2
-    uint8x16 bias = uint8x16::make_const(0x80);
+    uint8x16 bias = make_uint(0x80);
     a = bit_xor(a, bias); // sub
     b = bit_xor(b, bias); // sub
     return _mm_cmplt_epi8(a, b);
@@ -93,7 +93,7 @@ inline mask_int8x16 i_cmp_lt(uint8x16 a, uint8x16 b)
 #if SIMDPP_USE_AVX2
 inline mask_int8x32 i_cmp_lt(uint8x32 a, uint8x32 b)
 {
-    uint8x32 bias = uint8x32::make_const(0x80);
+    uint8x32 bias = make_uint(0x80);
     a = bit_xor(a, bias); // sub
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi8(b, a);
@@ -143,7 +143,7 @@ inline mask_int16x8 i_cmp_lt(uint16x8 a, uint16x8 b)
 #elif SIMDPP_USE_XOP
     return _mm_comlt_epu16(a, b);
 #elif SIMDPP_USE_SSE2
-    uint16x8 bias = uint16x8::make_const(0x8000);
+    uint16x8 bias = make_uint(0x8000);
     a = bit_xor(a, bias); // sub
     b = bit_xor(b, bias); // sub
     return _mm_cmplt_epi16(a, b);
@@ -157,7 +157,7 @@ inline mask_int16x8 i_cmp_lt(uint16x8 a, uint16x8 b)
 #if SIMDPP_USE_AVX2
 inline mask_int16x16 i_cmp_lt(uint16x16 a, uint16x16 b)
 {
-    uint16x16 bias = uint16x16::make_const(0x8000);
+    uint16x16 bias = make_uint(0x8000);
     a = bit_xor(a, bias); // sub
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi16(b, a);
@@ -208,7 +208,7 @@ inline mask_int32x4 i_cmp_lt(uint32x4 a, uint32x4 b)
 #elif SIMDPP_USE_XOP
     return _mm_comlt_epu32(a, b);
 #elif SIMDPP_USE_SSE2
-    uint32x4 bias = uint32x4::make_const(0x80000000);
+    uint32x4 bias = make_uint(0x80000000);
     a = bit_xor(a, bias); // sub
     b = bit_xor(b, bias); // sub
     return _mm_cmplt_epi32(a, b);
@@ -222,7 +222,7 @@ inline mask_int32x4 i_cmp_lt(uint32x4 a, uint32x4 b)
 #if SIMDPP_USE_AVX2
 inline mask_int32x8 i_cmp_lt(uint32x8 a, uint32x8 b)
 {
-    uint32x8 bias = uint32x8::make_const(0x80000000);
+    uint32x8 bias = make_uint(0x80000000);
     a = bit_xor(a, bias); // sub
     b = bit_xor(b, bias); // sub
     return _mm256_cmpgt_epi32(b, a);

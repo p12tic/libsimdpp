@@ -71,95 +71,12 @@ template<class E> uint16<8>& uint16<8>::operator=(const gint64<2,E>& d) { gint16
 
 inline gint16x8 gint16x8::zero()
 {
-    return uint16x8::make_const(0);
+    return (uint16x8) make_uint(0);
 }
 
 inline gint16x8 gint16x8::ones()
 {
-    return uint16x8::make_const(0xffff);
-}
-
-inline int16x8 int16x8::make_const(int16_t v0)
-{
-    return uint16x8::make_const(v0);
-}
-
-inline int16x8 int16x8::make_const(int16_t v0, int16_t v1)
-{
-    return uint16x8::make_const(v0, v1);
-}
-
-inline int16x8 int16x8::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3)
-{
-    return uint16x8::make_const(v0, v1, v2, v3);
-}
-
-inline int16x8 int16x8::make_const(int16_t v0, int16_t v1, int16_t v2, int16_t v3,
-                                   int16_t v4, int16_t v5, int16_t v6, int16_t v7)
-{
-    return uint16x8::make_const(v0, v1, v2, v3, v4, v5, v6, v7);
-}
-
-inline uint16x8 uint16x8::make_const(uint16_t v0)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return uint16x8::make_const(v0, v0, v0, v0, v0, v0, v0, v0);
-#elif SIMDPP_USE_NEON
-    return vld1q_dup_u16(&v0);
-#endif
-}
-
-inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return uint16x8::make_const(v0, v1, v0, v1, v0, v1, v0, v1);
-#elif SIMDPP_USE_NEON
-    union {
-        uint16_t v[2];
-        uint32_t vi[1];
-    };
-    v[0] = v0;
-    v[1] = v1;
-    return uint16x8(vld1q_dup_u32(vi));
-#endif
-}
-
-inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3)
-{
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return uint16x8::make_const(v0, v1, v2, v3, v0, v1, v2, v3);
-#elif SIMDPP_USE_NEON
-    union {
-        uint64_t align;
-        uint16_t v[4];
-    };
-    v[0] = v0;
-    v[1] = v1;
-    v[2] = v2;
-    v[3] = v3;
-    uint16x4_t r0 = vld1_u16(v);
-    return vcombine_u16(r0, r0);
-#endif
-}
-
-inline uint16x8 uint16x8::make_const(uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3,
-                                     uint16_t v4, uint16_t v5, uint16_t v6, uint16_t v7)
-{
-#if SIMDPP_USE_NULL
-    return null::make_vec<uint16x8>(v0, v1, v2, v3, v4, v5, v6, v7);
-#elif SIMDPP_USE_SSE2
-    return _mm_set_epi16(v7, v6, v5, v4, v3, v2, v1, v0);
-#elif SIMDPP_USE_NEON
-    union {
-        uint16x8 align;
-        uint16_t v[8];
-    };
-    v[0] = v0;  v[1] = v1;  v[2] = v2;  v[3] = v3;
-    v[4] = v4;  v[5] = v5;  v[6] = v6;  v[7] = v7;
-    return vld1q_u16(v);
-#elif SIMDPP_USE_ALTIVEC
-    return (__vector uint16_t){v0, v1, v2, v3, v4, v5, v6, v7};
-#endif
+    return (uint16x8) make_uint(0xffff);
 }
 
 inline mask_int16<8>::mask_int16(const maskdata_int16<8>& d) : uint16<8>(d), mask_(d) {}

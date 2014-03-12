@@ -120,7 +120,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10,c0, c1, c2, c3, c4 ]
     // [c5, c6, c7, c8, c9, c10,c11,c12,c13,c14,c15,a6, a7, a8, a9, a10]
     T a2, b2, c2;
-    T mask2 = U::make_const(0xff);
+    T mask2 = make_uint(0xff);
     mask2 = move16_l<5>(mask2);
 
     a2 = blend(a1, c1, mask2);
@@ -198,7 +198,7 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [c2,c3,c4,c5,c6,c7,a6,a7]
     // [b5,b6,b7,b0,b1,b2,c0,c1]
     T a2, b2, c2;
-    T mask2 = U::make_const(0xffff);
+    T mask2 = make_uint(0xffff);
     mask2 = move8_l<2>(mask2);
 
     a2 = blend(a1, c1, mask2);
@@ -268,7 +268,7 @@ void v_mem_unpack3_impl32(T& a, T& b, T& c)
     // [b1,b2,b3,a3]
     // [c2,c3,c0,b0]
     T a2, b2, c2;
-    U mask2 = U::make_const(0xffffffff);
+    U mask2 = make_uint(0xffffffff);
     mask2 = move4_l<1>(mask2);
 
     a2 = blend(a1, b1, mask2);
