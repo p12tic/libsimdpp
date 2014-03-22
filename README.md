@@ -24,6 +24,10 @@ the compiler will generate.
 Compiler and instruction set support
 ------------------------------------
 
+  - This describes the current branch only which may be unstable or otherwise
+  unfit for use. For available releases please see the
+  [libsimdpp wiki](https://github.com/p12tic/libsimdpp/wiki).
+
 The library supports SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, XOP and
 NEON instruction sets.
 
