@@ -309,7 +309,7 @@ inline mask_float32x4 i_bit_and(mask_float32x4 a, mask_float32x4 b)
 #if SIMDPP_USE_AVX
 inline mask_float32x8 i_bit_and(mask_float32x8 a, mask_float32x8 b)
 {
-    return (mask_float32x8)bit_and(float32x8(a), float32x8(b));
+    return (mask_float32x8)i_bit_and(float32x8(a), float32x8(b));
 }
 #endif
 

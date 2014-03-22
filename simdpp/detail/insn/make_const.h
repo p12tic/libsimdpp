@@ -131,7 +131,7 @@ void i_make_const(float64<2>& v, const expr_vec_make_const<VE,N>& e)
 template<class VE, unsigned N>
 void i_make_const(float64<4>& v, const expr_vec_make_const<VE,N>& e)
 {
-    v = _mm256_set_pd(v3, v2, v1, v0);
+    v = _mm256_set_pd(e.val(3), e.val(2), e.val(1), e.val(0));
 }
 #endif
 

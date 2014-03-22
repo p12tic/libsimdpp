@@ -402,7 +402,7 @@ inline void split(gint64x4 a, gint64x2& r1, gint64x2& r2)  { detail::v256_split(
 
 inline void split(float32x8 a, float32x4& r1, float32x4& r2)
 {
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
     r1 = _mm256_extractf128_ps(a, 0);
     r2 = _mm256_extractf128_ps(a, 1);
 #else
@@ -413,7 +413,7 @@ inline void split(float32x8 a, float32x4& r1, float32x4& r2)
 
 inline void split(float64x4 a, float64x2& r1, float64x2& r2)
 {
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
     r1 = _mm256_extractf128_pd(a, 0);
     r2 = _mm256_extractf128_pd(a, 1);
 #else
