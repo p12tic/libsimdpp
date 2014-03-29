@@ -146,7 +146,7 @@ set(SIMDPP_X86_AVX2_TEST_CODE
         };
         __m256i one = _mm256_load_si256((__m256i*)(a));
         one = _mm256_or_si256(one, one);
-        _mm_store_si256((__m256i*)(a), one);
+        _mm256_store_si256((__m256i*)(a), one);
     }"
 )
 
@@ -161,9 +161,9 @@ set(SIMDPP_X86_FMA3_TEST_CODE
             volatile float a[4];
             __m128 align;
         };
-        __m128 one = _mm_load_ps((__m128*)(a));
+        __m128 one = _mm_load_ps((float*)(a));
         one = _mm_fmadd_ps(one, one, one);
-        _mm_store_ps((__m128*)(a), one);
+        _mm_store_ps((float*)(a), one);
     }"
 )
 
@@ -178,9 +178,9 @@ set(SIMDPP_X86_FMA4_TEST_CODE
             volatile float a[4];
             __m128 align;
         };
-        __m128 one = _mm_load_ps((__m128*)(a));
+        __m128 one = _mm_load_ps((float*)(a));
         one = _mm_fmacc_ps(one, one, one);
-        _mm_store_ps((__m128*)(a), one);
+        _mm_store_ps((float*)(a), one);
     }"
 )
 
