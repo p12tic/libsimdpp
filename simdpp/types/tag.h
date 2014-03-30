@@ -41,19 +41,40 @@
     The only exception is operation on masks with masks with different size
     tags. In that case the type tag of the result type is always TAG_UINT.
 
-    Several examples:
+    The following list illustrates the conversion rules. The first two items
+    are the argument types and the third item is the result type.
 
-    mask_int32 | mask_float32 -> mask_float32
-    mask_int32 | uint32 -> uint32
-    int32 | int32 -> int32
-    int32 | uint32 -> uint32
+    [ Same element sizes ]
 
-    int8 | uint32 -> uint32
-    int8 | float32 -> float32
-    int8 | mask_int32 -> int32
+           intXX |        intXX ->        intXX
+           intXX |       uintXX ->       uintXX
+          uintXX |       uintXX ->       uintXX
+         floatXX |        intXX ->      floatXX
+         floatXX |       uintXX ->      floatXX
+         floatXX |      floatXX ->      floatXX
+      mask_intXX |        intXX ->       uintXX
+      mask_intXX |       uintXX ->       uintXX
+      mask_intXX |   mask_intXX ->   mask_intXX
+      mask_intXX |      floatXX ->      floatXX
+      mask_intXX | mask_floatXX -> mask_floatXX
+    mask_floatXX |      floatXX ->      floatXX
+    mask_floatXX | mask_floatXX -> mask_floatXX
 
-    mask_int8 | mask_int32 -> uint32
-    mask_int8 | mask_float32 -> uint32
+    [ Different element sizes ]
+
+           intXX |        intYY ->        int{ max(XX, YY) }
+           intXX |       uintYY ->       uint{ max(XX, YY) }
+          uintXX |       uintYY ->       uint{ max(XX, YY) }
+         floatXX |        intYY ->      float{ max(XX, YY) }
+         floatXX |       uintYY ->      float{ max(XX, YY) }
+         floatXX |      floatYY ->      float{ max(XX, YY) }
+      mask_intXX |        intYY ->       uint{ max(XX, YY) }
+      mask_intXX |       uintYY ->       uint{ max(XX, YY) }
+      mask_intXX |   mask_intYY ->       uint{ max(XX, YY) }
+      mask_intXX |      floatYY ->      float{ max(XX, YY) }
+      mask_intXX | mask_floatYY ->       uint{ max(XX, YY) }
+    mask_floatXX |      floatYY ->      float{ max(XX, YY) }
+    mask_floatXX | mask_floatYY ->       uint{ max(XX, YY) }
 
     See also simdpp/detail/get_expr.h
 
