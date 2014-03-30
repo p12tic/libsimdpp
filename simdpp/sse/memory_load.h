@@ -68,7 +68,6 @@ void load_lane(uint8x16& a, const void* p)
         }
         break;
     }
-    return a;
 }
 
 template<unsigned P, unsigned N>
@@ -88,7 +87,6 @@ void load_lane(uint16x8& a, const void* p)
         }
         break;
     }
-    return a;
 }
 
 template<unsigned P, unsigned N>
@@ -98,7 +96,7 @@ void load_lane(uint32x4& a, const void* p)
     static_assert(P==0 || (N==2 && P==2), "Position not supported");
     switch (N) {
     case 1:
-        a = _mm_castps_si128(_mm_load_ss(reinterpret_cast<float*>(p)));
+        a = _mm_castps_si128(_mm_load_ss(reinterpret_cast<const float*>(p)));
         break;
     case 2:
         if (P == 0) {
@@ -108,7 +106,6 @@ void load_lane(uint32x4& a, const void* p)
         }
         break;
     }
-    return a;
 }
 
 template<unsigned P, unsigned N>
@@ -121,7 +118,6 @@ void load_lane(uint64x2& a, const void* p)
     } else {
         a = _mm_castps_si128(_mm_loadh_pi(_mm_castsi128_ps(a), reinterpret_cast<const __m64*>(p)));
     }
-    return a;
 }
 
 template<unsigned P, unsigned N>
@@ -132,19 +128,17 @@ void load_lane(float32x4& a, const void* p)
     switch (N) {
     case 1:
         a = _mm_load_ss(reinterpret_cast<const float*>(p));
-        return a;
     case 2:
         if (P == 0) {
             a = _mm_loadl_pi(a, reinterpret_cast<const __m64*>(p));
         } else {
             a = _mm_loadh_pi(a, reinterpret_cast<const __m64*>(p));
         }
-        return a;
     }
 }
 
 template<unsigned P, unsigned N>
-float64x2 load_lane(float64x2& a, const void* p)
+void load_lane(float64x2& a, const void* p)
 {
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");
@@ -155,7 +149,6 @@ float64x2 load_lane(float64x2& a, const void* p)
     } else {
         a = _mm_loadh_pd(a, q);
     }
-    return a;
 }
 /// @}
 
