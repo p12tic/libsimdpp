@@ -35,6 +35,7 @@
 #include <cstdint>
 #include <simdpp/types.h>
 #include <simdpp/core/make_uint.h>
+#include <simdpp/detail/array.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -72,21 +73,9 @@ uint8_t get_shuffle_bytex1_16()
     return (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
 }
 
-/*  This reduces diff with the C++03 branch. We can use std::array as a standard
-    alternative.
-*/
-template<unsigned N>
-class uint8_array {
-public:
-    uint8_t&       operator[](unsigned id) { return d[id]; }
-    const uint8_t& operator[](unsigned id) const { return d[id]; }
-private:
-    uint8_t d[N];
-};
-
-using uint8x2 = uint8_array<2>;
-using uint8x4 = uint8_array<4>;
-using uint8x8 = uint8_array<8>;
+using uint8x2 = array<uint8_t, 2>;
+using uint8x4 = array<uint8_t, 4>;
+using uint8x8 = array<uint8_t, 8>;
 
 /// s - selector, u - the number of elements per group
 template<int s, int u>
