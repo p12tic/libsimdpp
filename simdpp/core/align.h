@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/align.h>
+#include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -63,15 +64,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N, class E1, class E2>
-gint8<N, gint8<N>> align16(gint8<N,E1> lower,
-                           gint8<N,E2> upper)
+template<unsigned shift, unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+    align16(const any_vec8<N,V1>& lower,
+            const any_vec8<N,V2>& upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return lower.eval();
-    if (shift == 16) return upper.eval();
+    if (shift == 0) return lower.vec().eval();
+    if (shift == 16) return upper.vec().eval();
 
-    return detail::insn::i_align16<shift>(lower.eval(), upper.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
+    qlower = lower.vec().eval();
+    qupper = upper.vec().eval();
+    return detail::insn::i_align16<shift>(qlower, qupper);
 }
 
 /** Extracts a int16x8 vector from two concatenated int16x8 vectors
@@ -97,15 +102,19 @@ gint8<N, gint8<N>> align16(gint8<N,E1> lower,
     was applied to each of them separately.
 
 */
-template<unsigned shift, unsigned N, class E1, class E2>
-gint16<N, gint16<N>> align8(gint16<N,E1> lower,
-                            gint16<N,E2> upper)
+template<unsigned shift, unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+    align8(const any_vec16<N,V1>& lower,
+           const any_vec16<N,V2>& upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    if (shift == 0) return lower.eval();
-    if (shift == 8) return upper.eval();
+    if (shift == 0) return lower.vec().eval();
+    if (shift == 8) return upper.vec().eval();
 
-    return detail::insn::i_align8<shift>(lower.eval(), upper.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
+    qlower = lower.vec().eval();
+    qupper = upper.vec().eval();
+    return detail::insn::i_align8<shift>(qlower, qupper);
 }
 
 /** Extracts a int32x4 vector from two concatenated int32x4 vectors
@@ -119,35 +128,7 @@ gint16<N, gint16<N>> align8(gint16<N,E1> lower,
      4      r = [ u0 u1 u2 u3 ]
     @endcode
 
-   @par 128-bit version:
-    @icost{SSE2-SSE3, 3}
-
-    @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
-    @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
-*/
-template<unsigned shift, unsigned N, class E1, class E2>
-gint32<N, gint32<N>> align4(gint32<N,E1> lower,
-                            gint32<N,E2> upper)
-{
-    static_assert(shift <= 4, "Shift out of bounds");
-    if (shift == 0) return lower.eval();
-    if (shift == 4) return upper.eval();
-
-    return detail::insn::i_align4<shift>(lower.eval(), upper.eval());
-}
-
-/** Extracts a int64x2 vector from two concatenated int64x2 vectors
-
-    @code
-    shift:  pos:| 0  1  |
-     0      r = [ l0 l1 ]
-     1      r = [ l1 u0 ]
-     2      r = [ u0 u1 ]
-    @endcode
+    @par int32
 
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
@@ -158,28 +139,8 @@ gint32<N, gint32<N>> align4(gint32<N,E1> lower,
 
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
-*/
-template<unsigned shift, unsigned N, class E1, class E2>
-gint64<N, gint64<N>> align2(gint64<N,E1> lower,
-                            gint64<N,E2> upper)
-{
-    static_assert(shift <= 2, "Shift out of bounds");
-    if (shift == 0) return lower.eval();
-    if (shift == 2) return upper.eval();
 
-    return detail::insn::i_align2<shift>(lower.eval(), upper.eval());
-}
-
-/** Extracts a float32x4 vector from two concatenated float32x4 vectors
-
-    @code
-    shift:  pos:| 0  1  2  3  |
-     0      r = [ l0 l1 l2 l3 ]
-     1      r = [ l1 l2 l3 u0 ]
-     2      r = [ l2 l3 u0 u1 ]
-     3      r = [ l3 u0 u1 u2 ]
-     4      r = [ u0 u1 u2 u3 ]
-    @endcode
+    @par float32
 
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
@@ -191,18 +152,22 @@ gint64<N, gint64<N>> align2(gint64<N,E1> lower,
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N, class E1, class E2>
-float32<N, float32<N>> align4(float32<N,E1> lower,
-                              float32<N,E2> upper)
+template<unsigned shift, unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+    align4(const any_vec32<N,V1>& lower,
+           const any_vec32<N,V2>& upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    if (shift == 0) return lower.eval();
-    if (shift == 4) return upper.eval();
+    if (shift == 0) return lower.vec().eval();
+    if (shift == 4) return upper.vec().eval();
 
-    return detail::insn::i_align4<shift>(lower.eval(), upper.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
+    qlower = lower.vec().eval();
+    qupper = upper.vec().eval();
+    return detail::insn::i_align4<shift>(qlower, qupper);
 }
 
-/** Extracts a float64x2 vector from two concatenated float64x2 vectors
+/** Extracts a int64x2 vector from two concatenated int64x2 vectors
 
     @code
     shift:  pos:| 0  1  |
@@ -211,27 +176,43 @@ float32<N, float32<N>> align4(float32<N,E1> lower,
      2      r = [ u0 u1 ]
     @endcode
 
+    @par int64
+
     @par 128-bit version:
     @icost{SSE2-SSE3, 3}
-    @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
     @icost{SSE2-SSE3, 6}
-    @icost{SSSE3-AVX, 2}
-    @novec{NEON, ALTIVEC}
+    @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
+
+    @par float64
+
+    @par 128-bit version:
+    @icost{SSE2-SSE3, 3}
+
+    @par 256-bit version:
+    The lower and higher 128-bit halves are processed as if 128-bit instruction
+    was applied to each of them separately.
+
+    @icost{SSE2-SSE3, 6}
+    @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N, class E1, class E2>
-float64<N, float64<N>> align2(float64<N,E1> lower,
-                              float64<N,E2> upper)
+template<unsigned shift, unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+    align2(const any_vec64<N,V1>& lower,
+           const any_vec64<N,V2>& upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    if (shift == 0) return lower.eval();
-    if (shift == 2) return upper.eval();
+    if (shift == 0) return lower.vec().eval();
+    if (shift == 2) return upper.vec().eval();
 
-    return detail::insn::i_align2<shift>(lower.eval(), upper.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
+    qlower = lower.vec().eval();
+    qupper = upper.vec().eval();
+    return detail::insn::i_align2<shift>(qlower, qupper);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

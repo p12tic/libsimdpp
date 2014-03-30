@@ -48,7 +48,7 @@ namespace sse {
     elements within vector. @a P must be 0 or @a M/2 if @a N == M/2.
 */
 template<unsigned P, unsigned N>
-void store_lane(void* p, gint8x16 a)
+void store_lane(void* p, uint8x16 a)
 {
     static_assert(N==4 || N==8, "Size not supported");
     static_assert(P==0 || (N==8 && P==8), "Position not supported");
@@ -67,7 +67,7 @@ void store_lane(void* p, gint8x16 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(void* p, gint16x8 a)
+void store_lane(void* p, uint16x8 a)
 {
     static_assert(N==2 || N==4, "Size not supported");
     static_assert(P==0 || (N==4 && P==4), "Position not supported");
@@ -86,7 +86,7 @@ void store_lane(void* p, gint16x8 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(void* p, gint32x4 a)
+void store_lane(void* p, uint32x4 a)
 {
     static_assert(N==1 || N==2, "Size not supported");
     static_assert(P==0 || (N==2 && P==2), "Position not supported");
@@ -105,7 +105,7 @@ void store_lane(void* p, gint32x4 a)
 }
 
 template<unsigned P, unsigned N>
-void store_lane(void* p, gint64x2 a)
+void store_lane(void* p, uint64x2 a)
 {
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");
@@ -152,14 +152,14 @@ void store_lane(void* p, float64x2 a)
     bit in the corresponding byte in the mask defines whether the byte will
     be saved. @a p does not need to be aligned to 16 bytes.
 */
-inline void store_masked(void* p, gint8x16 a, gint8x16 mask)
+inline void store_masked(void* p, uint8x16 a, uint8x16 mask)
 {
     _mm_maskmoveu_si128(a, mask, reinterpret_cast<char*>(p));
 }
 
-inline void store_masked(void* p, gint16x8 a, gint16x8 mask) { store_masked(p, gint8x16(a), gint8x16(mask)); }
-inline void store_masked(void* p, gint32x4 a, gint32x4 mask) { store_masked(p, gint8x16(a), gint8x16(mask)); }
-inline void store_masked(void* p, gint64x2 a, gint64x2 mask) { store_masked(p, gint8x16(a), gint8x16(mask)); }
+inline void store_masked(void* p, uint16x8 a, uint16x8 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+inline void store_masked(void* p, uint32x4 a, uint32x4 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+inline void store_masked(void* p, uint64x2 a, uint64x2 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
 
 
 } // namespace sse

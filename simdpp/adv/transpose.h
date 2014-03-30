@@ -72,12 +72,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2}
     @icost{ALTIVEC, 4-6}
 */
-inline void transpose2(gint16x8& a0, gint16x8& a1)
+inline void transpose2(uint16x8& a0, uint16x8& a1)
 {
 #if SIMDPP_USE_NULL
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
-    gint32x4 b0, b1;
+    uint32x4 b0, b1;
     b0 = zip8_lo(a0, a1);
     b1 = zip8_hi(a0, a1);
     a0 = shuffle2<0,2,0,2>(b0, b1);
@@ -96,10 +96,18 @@ inline void transpose2(gint16x8& a0, gint16x8& a1)
 #endif
 }
 
-inline void transpose2(gint16x16& a0, gint16x16& a1)
+inline void transpose2(int16x8& a0, int16x8& a1)
+{
+    uint16x8 b0, b1;
+    b0 = a0; b1 = a1;
+    transpose2(b0, b1);
+    a0 = b0; a1 = b1;
+}
+
+inline void transpose2(uint16x16& a0, uint16x16& a1)
 {
 #if SIMDPP_USE_AVX2
-    gint32x8 b0, b1;
+    uint32x8 b0, b1;
     b0 = zip8_lo(a0, a1);
     b1 = zip8_hi(a0, a1);
     a0 = shuffle2<0,2,0,2>(b0, b1);
@@ -108,6 +116,14 @@ inline void transpose2(gint16x16& a0, gint16x16& a1)
     transpose2(a0[0], a1[0]);
     transpose2(a0[1], a1[1]);
 #endif
+}
+
+inline void transpose2(int16x16& a0, int16x16& a1)
+{
+    uint16x16 b0, b1;
+    b0 = a0; b1 = a1;
+    transpose2(b0, b1);
+    a0 = b0; a1 = b1;
 }
 /// @}
 
@@ -132,12 +148,12 @@ inline void transpose2(gint16x16& a0, gint16x16& a1)
     @icost{NEON, 2}
     @icost{ALTIVEC, 4-6}
 */
-inline void transpose2(gint32x4& a0, gint32x4& a1)
+inline void transpose2(uint32x4& a0, uint32x4& a1)
 {
 #if SIMDPP_USE_NULL
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
-    gint64x2 b0, b1;
+    uint64x2 b0, b1;
     b0 = zip4_lo(a0, a1);
     b1 = zip4_hi(a0, a1);
     a0 = zip2_lo(b0, b1);
@@ -156,10 +172,18 @@ inline void transpose2(gint32x4& a0, gint32x4& a1)
 #endif
 }
 
-inline void transpose2(gint32x8& a0, gint32x8& a1)
+inline void transpose2(int32x4& a0, int32x4& a1)
+{
+    uint32x4 b0, b1;
+    b0 = a0; b1 = a1;
+    transpose2(b0, b1);
+    a0 = b0; a1 = b1;
+}
+
+inline void transpose2(uint32x8& a0, uint32x8& a1)
 {
 #if SIMDPP_USE_AVX2
-    gint64x4 b0, b1;
+    uint64x4 b0, b1;
     b0 = zip4_lo(a0, a1);
     b1 = zip4_hi(a0, a1);
     a0 = zip2_lo(b0, b1);
@@ -168,6 +192,14 @@ inline void transpose2(gint32x8& a0, gint32x8& a1)
     transpose2(a0[0], a1[0]);
     transpose2(a0[1], a1[1]);
 #endif
+}
+
+inline void transpose2(int32x8& a0, int32x8& a1)
+{
+    uint32x8 b0, b1;
+    b0 = a0; b1 = a1;
+    transpose2(b0, b1);
+    a0 = b0; a1 = b1;
 }
 /// @}
 
@@ -192,12 +224,12 @@ inline void transpose2(gint32x8& a0, gint32x8& a1)
     @icost{NEON, 2}
     @icost{ALTIVEC, 4-6}
 */
-inline void transpose2(gint64x2& a0, gint64x2& a1)
+inline void transpose2(uint64x2& a0, uint64x2& a1)
 {
 #if SIMDPP_USE_NULL
     null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
-    gint64x2 b0;
+    uint64x2 b0;
     b0 = zip2_lo(a0, a1);
     a1 = zip2_hi(a0, a1);
     a0 = b0;
@@ -213,10 +245,18 @@ inline void transpose2(gint64x2& a0, gint64x2& a1)
 #endif
 }
 
-inline void transpose2(gint64x4& a0, gint64x4& a1)
+inline void transpose2(int64x2& a0, int64x2& a1)
+{
+    uint64x2 b0, b1;
+    b0 = a0; b1 = a1;
+    transpose2(b0, b1);
+    a0 = b0; a1 = b1;
+}
+
+inline void transpose2(uint64x4& a0, uint64x4& a1)
 {
 #if SIMDPP_USE_AVX2
-    gint64x4 b0;
+    uint64x4 b0;
     b0 = zip2_lo(a0, a1);
     a1 = zip2_hi(a0, a1);
     a0 = b0;
@@ -224,6 +264,14 @@ inline void transpose2(gint64x4& a0, gint64x4& a1)
     transpose2(a0[0], a1[0]);
     transpose2(a0[1], a1[1]);
 #endif
+}
+
+inline void transpose2(int64x4& a0, int64x4& a1)
+{
+    uint64x4 b0, b1;
+    b0 = a0; b1 = a1;
+    transpose2(b0, b1);
+    a0 = b0; a1 = b1;
 }
 /// @}
 
@@ -338,8 +386,8 @@ inline void transpose2(float64x4& a0, float64x4& a1)
 }
 /// @}
 
-void transpose4(gint32x4& a0, gint32x4& a1,
-                gint32x4& a2, gint32x4& a3);
+void transpose4(uint32x4& a0, uint32x4& a1,
+                uint32x4& a2, uint32x4& a3);
 /// @{
 /** Transposes four 4x4 8-bit matrix within four int8x16 vectors
 
@@ -364,8 +412,8 @@ void transpose4(gint32x4& a0, gint32x4& a1,
     @icost{NEON, 8}
     @icost{ALTIVEC, 16-20}
 */
-inline void transpose4(gint8x16& a0, gint8x16& a1,
-                       gint8x16& a2, gint8x16& a3)
+inline void transpose4(uint8x16& a0, uint8x16& a1,
+                       uint8x16& a2, uint8x16& a3)
 {
     // [a0,a1,a2,a3 ... ]
     // [b0,b1,b2,b3 ... ]
@@ -374,7 +422,7 @@ inline void transpose4(gint8x16& a0, gint8x16& a1,
 #if SIMDPP_USE_NULL
     null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
-    gint16x8 b0, b1, b2, b3;
+    uint16x8 b0, b1, b2, b3;
     b0 = zip16_lo(a0, a1);
     b1 = zip16_lo(a2, a3);
     b2 = zip16_hi(a0, a1);
@@ -383,7 +431,7 @@ inline void transpose4(gint8x16& a0, gint8x16& a1,
     // [c0,d0,c1,d1,c2,d2,c3,d3 ... d7]
     // [a8 ... b15]
     // [c8 ... d15]
-    gint32x4 c0, c1, c2, c3;
+    uint32x4 c0, c1, c2, c3;
     c0 = zip8_lo(b0, b1);
     c1 = zip8_hi(b0, b1);
     c2 = zip8_lo(b2, b3);
@@ -398,7 +446,7 @@ inline void transpose4(gint8x16& a0, gint8x16& a1,
     a2 = c2;
     a3 = c3;
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    gint16x8 b0, b1, b2, b3;
+    uint16x8 b0, b1, b2, b3;
     detail::transpose2(a0, a1);  // 8-bit transpose
     detail::transpose2(a2, a3);
     b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
@@ -408,19 +456,28 @@ inline void transpose4(gint8x16& a0, gint8x16& a1,
 #endif
 }
 
-inline void transpose4(gint32x8& a0, gint32x8& a1,
-                       gint32x8& a2, gint32x8& a3);
+inline void transpose4(int8x16& a0, int8x16& a1,
+                       int8x16& a2, int8x16& a3)
+{
+    uint8x16 b0, b1, b2, b3;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3;
+    transpose4(b0, b1, b2, b3);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3;
+}
 
-inline void transpose4(gint8x32& a0, gint8x32& a1,
-                       gint8x32& a2, gint8x32& a3)
+inline void transpose4(uint32x8& a0, uint32x8& a1,
+                       uint32x8& a2, uint32x8& a3);
+
+inline void transpose4(uint8x32& a0, uint8x32& a1,
+                       uint8x32& a2, uint8x32& a3)
 {
 #if SIMDPP_USE_AVX2
-    gint16x16 b0, b1, b2, b3;
+    uint16x16 b0, b1, b2, b3;
     b0 = zip16_lo(a0, a1);
     b1 = zip16_lo(a2, a3);
     b2 = zip16_hi(a0, a1);
     b3 = zip16_hi(a2, a3);
-    gint32x8 c0, c1, c2, c3;
+    uint32x8 c0, c1, c2, c3;
     c0 = zip8_lo(b0, b1);
     c1 = zip8_hi(b0, b1);
     c2 = zip8_lo(b2, b3);
@@ -434,6 +491,15 @@ inline void transpose4(gint8x32& a0, gint8x32& a1,
     transpose4(a0[0], a1[0], a2[0], a3[0]);
     transpose4(a0[1], a1[1], a2[1], a3[1]);
 #endif
+}
+
+inline void transpose4(int8x32& a0, int8x32& a1,
+                       int8x32& a2, int8x32& a3)
+{
+    uint8x32 b0, b1, b2, b3;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3;
+    transpose4(b0, b1, b2, b3);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3;
 }
 /// @}
 
@@ -461,14 +527,14 @@ inline void transpose4(gint8x32& a0, gint8x32& a1,
     @icost{NEON, 8}
     @icost{ALTIVEC, 16-20}
 */
-inline void transpose4(gint16x8& a0, gint16x8& a1,
-                       gint16x8& a2, gint16x8& a3)
+inline void transpose4(uint16x8& a0, uint16x8& a1,
+                       uint16x8& a2, uint16x8& a3)
 {
 #if SIMDPP_USE_NULL
     null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
-    gint32x4 b0, b1, b2, b3;
-    gint64x2 c0, c1, c2, c3;
+    uint32x4 b0, b1, b2, b3;
+    uint64x2 c0, c1, c2, c3;
     b0 = zip8_lo(a0, a1);
     b1 = zip8_hi(a0, a1);
     b2 = zip8_lo(a2, a3);
@@ -494,7 +560,7 @@ inline void transpose4(gint16x8& a0, gint16x8& a1,
     // [a2,b2,c2,d2,a6,b6,c6,d6]
     // [a3,b3,c3,d3,a7,b7,c7,d7]
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    gint32x4 b0, b1, b2, b3;
+    uint32x4 b0, b1, b2, b3;
     transpose2(a0, a1);  // 16-bit transpose
     transpose2(a2, a3);
     b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
@@ -504,12 +570,22 @@ inline void transpose4(gint16x8& a0, gint16x8& a1,
 #endif
 }
 
-inline void transpose4(gint16x16& a0, gint16x16& a1,
-                       gint16x16& a2, gint16x16& a3)
+inline void transpose4(int16x8& a0, int16x8& a1,
+                       int16x8& a2, int16x8& a3)
+{
+    uint16x8 b0, b1, b2, b3;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3;
+    transpose4(b0, b1, b2, b3);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3;
+}
+
+
+inline void transpose4(uint16x16& a0, uint16x16& a1,
+                       uint16x16& a2, uint16x16& a3)
 {
 #if SIMDPP_USE_AVX2
-    gint32x8 b0, b1, b2, b3;
-    gint64x4 c0, c1, c2, c3;
+    uint32x8 b0, b1, b2, b3;
+    uint64x4 c0, c1, c2, c3;
     b0 = zip8_lo(a0, a1);
     b1 = zip8_hi(a0, a1);
     b2 = zip8_lo(a2, a3);
@@ -529,14 +605,23 @@ inline void transpose4(gint16x16& a0, gint16x16& a1,
     transpose4(a0[1], a1[1], a2[1], a3[1]);
 #endif
 }
+
+inline void transpose4(int16x16& a0, int16x16& a1,
+                       int16x16& a2, int16x16& a3)
+{
+    uint16x16 b0, b1, b2, b3;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3;
+    transpose4(b0, b1, b2, b3);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3;
+}
 /// @}
 
 
 namespace detail {
 
 template<class V> struct dbl_length_vector;
-template<> struct dbl_length_vector<gint32x4> { using type = gint64x2; };
-template<> struct dbl_length_vector<gint32x8> { using type = gint64x4; };
+template<> struct dbl_length_vector<uint32x4> { using type = uint64x2; };
+template<> struct dbl_length_vector<uint32x8> { using type = uint64x4; };
 template<> struct dbl_length_vector<float32x4> { using type = float64x2; };
 template<> struct dbl_length_vector<float32x8> { using type = float64x4; };
 
@@ -589,15 +674,15 @@ void sse_transpose4x32_impl(V& a0, V& a1, V& a2, V& a3)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-inline void transpose4(gint32x4& a0, gint32x4& a1,
-                       gint32x4& a2, gint32x4& a3)
+inline void transpose4(uint32x4& a0, uint32x4& a1,
+                       uint32x4& a2, uint32x4& a3)
 {
 #if SIMDPP_USE_NULL
     null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     detail::sse_transpose4x32_impl(a0, a1, a2, a3);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    gint64x2 b0, b1, b2, b3;
+    uint64x2 b0, b1, b2, b3;
     transpose2(a0, a1);  // 32-bit transpose
     transpose2(a2, a3);
     b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
@@ -607,8 +692,17 @@ inline void transpose4(gint32x4& a0, gint32x4& a1,
 #endif
 }
 
-inline void transpose4(gint32x8& a0, gint32x8& a1,
-                       gint32x8& a2, gint32x8& a3)
+inline void transpose4(int32x4& a0, int32x4& a1,
+                       int32x4& a2, int32x4& a3)
+{
+    uint32x4 b0, b1, b2, b3;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3;
+    transpose4(b0, b1, b2, b3);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3;
+}
+
+inline void transpose4(uint32x8& a0, uint32x8& a1,
+                       uint32x8& a2, uint32x8& a3)
 {
 #if SIMDPP_USE_AVX2
     detail::sse_transpose4x32_impl(a0, a1, a2, a3);
@@ -616,6 +710,15 @@ inline void transpose4(gint32x8& a0, gint32x8& a1,
     transpose4(a0[0], a1[0], a2[0], a3[0]);
     transpose4(a0[1], a1[1], a2[1], a3[1]);
 #endif
+}
+
+inline void transpose4(int32x8& a0, int32x8& a1,
+                       int32x8& a2, int32x8& a3)
+{
+    uint32x8 b0, b1, b2, b3;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3;
+    transpose4(b0, b1, b2, b3);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3;
 }
 /// @}
 
@@ -649,7 +752,7 @@ inline void transpose4(float32x4& a0, float32x4& a1,
 #if SIMDPP_USE_SSE2
     detail::sse_transpose4x32_impl(a0, a1, a2, a3);
 #else
-    gint32x4 b0, b1, b2, b3;
+    uint32x4 b0, b1, b2, b3;
     b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
     transpose4(b0, b1, b2, b3);
     a0 = b0;  a1 = b1;  a2 = b2;  a3 = b3;
@@ -691,10 +794,10 @@ inline void transpose4(float32x8& a0, float32x8& a1,
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-inline void transpose8(gint8x16& a0, gint8x16& a1,
-                       gint8x16& a2, gint8x16& a3,
-                       gint8x16& a4, gint8x16& a5,
-                       gint8x16& a6, gint8x16& a7)
+inline void transpose8(uint8x16& a0, uint8x16& a1,
+                       uint8x16& a2, uint8x16& a3,
+                       uint8x16& a4, uint8x16& a5,
+                       uint8x16& a6, uint8x16& a7)
 {
 #if SIMDPP_USE_NULL
     null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
@@ -702,7 +805,7 @@ inline void transpose8(gint8x16& a0, gint8x16& a1,
 
     detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 
-    gint64x2 d0, d1, d2, d3, d4, d5, d6, d7;
+    uint64x2 d0, d1, d2, d3, d4, d5, d6, d7;
     d0 = a0;  d1 = a1;  d2 = a2;  d3 = a3;
     d4 = a4;  d5 = a5;  d6 = a6;  d7 = a7;
     /*
@@ -725,7 +828,7 @@ inline void transpose8(gint8x16& a0, gint8x16& a1,
     a7 = zip2_hi(d3, d7);
 
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    gint16x8 b0, b1, b2, b3, b4, b5, b6, b7;
+    uint16x8 b0, b1, b2, b3, b4, b5, b6, b7;
     detail::transpose2(a0, a1); // 8-bit transpose
     detail::transpose2(a2, a3);
     detail::transpose2(a4, a5);
@@ -743,7 +846,7 @@ inline void transpose8(gint8x16& a0, gint8x16& a1,
     [g0,h0,g2,h2,...,g14,h14]
     [g1,h1,g3,h3,...,g15,h15]
     */
-    gint32x4 c0, c1, c2, c3, c4, c5, c6, c7;
+    uint32x4 c0, c1, c2, c3, c4, c5, c6, c7;
     transpose2(b0, b2); // 16-bit transpose
     transpose2(b1, b3);
     transpose2(b4, b6);
@@ -780,15 +883,27 @@ inline void transpose8(gint8x16& a0, gint8x16& a1,
     */
 }
 
-inline void transpose8(gint8x32& a0, gint8x32& a1,
-                       gint8x32& a2, gint8x32& a3,
-                       gint8x32& a4, gint8x32& a5,
-                       gint8x32& a6, gint8x32& a7)
+inline void transpose8(int8x16& a0, int8x16& a1,
+                       int8x16& a2, int8x16& a3,
+                       int8x16& a4, int8x16& a5,
+                       int8x16& a6, int8x16& a7)
+{
+    uint8x16 b0, b1, b2, b3, b4, b5, b6, b7;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3; b4 = a4; b5 = a5; b6 = a6; b7 = a7;
+    transpose8(b0, b1, b2, b3, b4, b5, b6, b7);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3; a4 = b4; a5 = b5; a6 = b6; a7 = b7;
+}
+
+
+inline void transpose8(uint8x32& a0, uint8x32& a1,
+                       uint8x32& a2, uint8x32& a3,
+                       uint8x32& a4, uint8x32& a5,
+                       uint8x32& a6, uint8x32& a7)
 {
 #if SIMDPP_USE_AVX2
     detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 
-    gint64x4 d0, d1, d2, d3, d4, d5, d6, d7;
+    uint64x4 d0, d1, d2, d3, d4, d5, d6, d7;
     d0 = a0;  d1 = a1;  d2 = a2;  d3 = a3;
     d4 = a4;  d5 = a5;  d6 = a6;  d7 = a7;
 
@@ -805,6 +920,18 @@ inline void transpose8(gint8x32& a0, gint8x32& a1,
     transpose8(a0[1], a1[1], a2[1], a3[1], a4[1], a5[1], a6[1], a7[1]);
 #endif
 }
+
+inline void transpose8(int8x32& a0, int8x32& a1,
+                       int8x32& a2, int8x32& a3,
+                       int8x32& a4, int8x32& a5,
+                       int8x32& a6, int8x32& a7)
+{
+    uint8x32 b0, b1, b2, b3, b4, b5, b6, b7;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3; b4 = a4; b5 = a5; b6 = a6; b7 = a7;
+    transpose8(b0, b1, b2, b3, b4, b5, b6, b7);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3; a4 = b4; a5 = b5; a6 = b6; a7 = b7;
+}
+
 /// @}
 
 /** Transposes a 8x8 16-bit matrix within eight int16x8 vectors
@@ -828,10 +955,10 @@ inline void transpose8(gint8x32& a0, gint8x32& a1,
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-inline void transpose8(gint16x8& a0, gint16x8& a1,
-                       gint16x8& a2, gint16x8& a3,
-                       gint16x8& a4, gint16x8& a5,
-                       gint16x8& a6, gint16x8& a7)
+inline void transpose8(uint16x8& a0, uint16x8& a1,
+                       uint16x8& a2, uint16x8& a3,
+                       uint16x8& a4, uint16x8& a5,
+                       uint16x8& a6, uint16x8& a7)
 {
     /*
     [a0,a1,a2,a3,a4,a5,a6,a7]
@@ -846,7 +973,7 @@ inline void transpose8(gint16x8& a0, gint16x8& a1,
 #if SIMDPP_USE_NULL
     null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 #elif SIMDPP_USE_SSE2
-    gint32x4 b0, b1, b2, b3, b4, b5, b6, b7;
+    uint32x4 b0, b1, b2, b3, b4, b5, b6, b7;
     b0 = zip8_lo(a0, a1);
     b1 = zip8_hi(a0, a1);
     b2 = zip8_lo(a2, a3);
@@ -865,7 +992,7 @@ inline void transpose8(gint16x8& a0, gint16x8& a1,
     [g0,h0,g1,h1,g2,h2,g3,h3]
     [g4,h4,g5,h5,g6,h6,g7,h7]
     */
-    gint64x2 c0, c1, c2, c3, c4, c5, c6, c7;
+    uint64x2 c0, c1, c2, c3, c4, c5, c6, c7;
     c0 = zip4_lo(b0, b2);
     c1 = zip4_lo(b4, b6);
     c2 = zip4_hi(b0, b2);
@@ -898,7 +1025,7 @@ inline void transpose8(gint16x8& a0, gint16x8& a1,
     transpose4(a0, a1, a2, a3);
     transpose4(a4, a5, a6, a7);
 
-    gint64x2 b0, b1, b2, b3, b4, b5, b6, b7;
+    uint64x2 b0, b1, b2, b3, b4, b5, b6, b7;
     b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
     b4 = a4;  b5 = a5;  b6 = a6;  b7 = a7;
     /*
@@ -931,13 +1058,24 @@ inline void transpose8(gint16x8& a0, gint16x8& a1,
     */
 }
 
-inline void transpose8(gint16x16& a0, gint16x16& a1,
-                       gint16x16& a2, gint16x16& a3,
-                       gint16x16& a4, gint16x16& a5,
-                       gint16x16& a6, gint16x16& a7)
+inline void transpose8(int16x8& a0, int16x8& a1,
+                       int16x8& a2, int16x8& a3,
+                       int16x8& a4, int16x8& a5,
+                       int16x8& a6, int16x8& a7)
+{
+    uint16x8 b0, b1, b2, b3, b4, b5, b6, b7;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3; b4 = a4; b5 = a5; b6 = a6; b7 = a7;
+    transpose8(b0, b1, b2, b3, b4, b5, b6, b7);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3; a4 = b4; a5 = b5; a6 = b6; a7 = b7;
+}
+
+inline void transpose8(uint16x16& a0, uint16x16& a1,
+                       uint16x16& a2, uint16x16& a3,
+                       uint16x16& a4, uint16x16& a5,
+                       uint16x16& a6, uint16x16& a7)
 {
 #if SIMDPP_USE_AVX2
-    gint32x8 b0, b1, b2, b3, b4, b5, b6, b7;
+    uint32x8 b0, b1, b2, b3, b4, b5, b6, b7;
     b0 = zip8_lo(a0, a1);
     b1 = zip8_hi(a0, a1);
     b2 = zip8_lo(a2, a3);
@@ -947,7 +1085,7 @@ inline void transpose8(gint16x16& a0, gint16x16& a1,
     b6 = zip8_lo(a6, a7);
     b7 = zip8_hi(a6, a7);
 
-    gint64x4 c0, c1, c2, c3, c4, c5, c6, c7;
+    uint64x4 c0, c1, c2, c3, c4, c5, c6, c7;
     c0 = zip4_lo(b0, b2);
     c1 = zip4_lo(b4, b6);
     c2 = zip4_hi(b0, b2);
@@ -970,6 +1108,17 @@ inline void transpose8(gint16x16& a0, gint16x16& a1,
     transpose8(a0[0], a1[0], a2[0], a3[0], a4[0], a5[0], a6[0], a7[0]);
     transpose8(a0[1], a1[1], a2[1], a3[1], a4[1], a5[1], a6[1], a7[1]);
 #endif
+}
+
+inline void transpose8(int16x16& a0, int16x16& a1,
+                       int16x16& a2, int16x16& a3,
+                       int16x16& a4, int16x16& a5,
+                       int16x16& a6, int16x16& a7)
+{
+    uint16x16 b0, b1, b2, b3, b4, b5, b6, b7;
+    b0 = a0; b1 = a1; b2 = a2; b3 = a3; b4 = a4; b5 = a5; b6 = a6; b7 = a7;
+    transpose8(b0, b1, b2, b3, b4, b5, b6, b7);
+    a0 = b0; a1 = b1; a2 = b2; a3 = b3; a4 = b4; a5 = b5; a6 = b6; a7 = b7;
 }
 
 /// @} -- end defgroup

@@ -43,12 +43,12 @@ namespace insn {
 
 
 template<unsigned shift>
-gint8x16 i_move16_r(gint8x16 a)
+uint8x16 i_move16_r(uint8x16 a)
 {
     static_assert(shift <= 16, "Selector out of range");
 
 #if SIMDPP_USE_NULL
-    gint8x16 r;
+    uint8x16 r;
     //use int to disable warnings wrt. comparison result always being true/false
     for (int i = 0; i < (int)shift; i++) {
         r.el(i) = 0;
@@ -70,7 +70,7 @@ gint8x16 i_move16_r(gint8x16 a)
 
 #if SIMDPP_USE_AVX2
 template<unsigned shift>
-gint8x32 i_move16_r(gint8x32 a)
+uint8x32 i_move16_r(uint8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
     return _mm256_slli_si256(a, shift);
@@ -78,40 +78,40 @@ gint8x32 i_move16_r(gint8x32 a)
 #endif
 
 template<unsigned shift, unsigned N>
-gint8<N> i_move16_r(gint8<N> a)
+uint8<N> i_move16_r(uint8<N> a)
 {
     static_assert(shift <= 16, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(gint8<N>, i_move16_r<shift>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_move16_r<shift>, a);
 }
 
 template<unsigned shift, unsigned N>
-gint16<N> i_move8_r(gint16<N> a)
+uint16<N> i_move8_r(uint16<N> a)
 {
-    return gint16<N>(i_move16_r<shift*2>(gint8<N*2>(a)));
+    return uint16<N>(i_move16_r<shift*2>(uint8<N*2>(a)));
 }
 
 template<unsigned shift, unsigned N>
-gint32<N> i_move4_r(gint32<N> a)
+uint32<N> i_move4_r(uint32<N> a)
 {
-    return gint32<N>(i_move16_r<shift*4>(gint8<N*4>(a)));
+    return uint32<N>(i_move16_r<shift*4>(uint8<N*4>(a)));
 }
 
 template<unsigned shift, unsigned N>
-gint64<N> i_move2_r(gint64<N> a)
+uint64<N> i_move2_r(uint64<N> a)
 {
-    return gint64<N>(i_move16_r<shift*8>(gint8<N*8>(a)));
+    return uint64<N>(i_move16_r<shift*8>(uint8<N*8>(a)));
 }
 
 template<unsigned shift, unsigned N>
 float32<N> i_move4_r(float32<N> a)
 {
-    return float32<N>(i_move4_r<shift>(gint32<N>(a)));
+    return float32<N>(i_move4_r<shift>(uint32<N>(a)));
 }
 
 template<unsigned shift, unsigned N>
 float64<N> i_move2_r(float64<N> a)
 {
-    return float64<N>(i_move2_r<shift>(gint64<N>(a)));
+    return float64<N>(i_move2_r<shift>(uint64<N>(a)));
 }
 
 } // namespace insn

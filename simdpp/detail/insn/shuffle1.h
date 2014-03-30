@@ -49,7 +49,7 @@ namespace insn {
 
 // fwd declarations
 template<unsigned s0, unsigned s1>
-gint64x2 i_shuffle1(gint64x2 a, gint64x2 b);
+uint64x2 i_shuffle1(uint64x2 a, uint64x2 b);
 
 // -----------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ float64<N> i_shuffle1(float64<N> a, float64<N> b)
 // -----------------------------------------------------------------------------
 
 template<unsigned s0, unsigned s1>
-gint64x2 i_shuffle1(gint64x2 a, gint64x2 b)
+uint64x2 i_shuffle1(uint64x2 a, uint64x2 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -109,7 +109,7 @@ gint64x2 i_shuffle1(gint64x2 a, gint64x2 b)
 
 #if SIMDPP_USE_AVX2
 template<unsigned s0, unsigned s1>
-gint64x4 i_shuffle1(gint64x4 a, gint64x4 b)
+uint64x4 i_shuffle1(uint64x4 a, uint64x4 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     // We can't do this in the integer execution domain. Beware of additional latency
@@ -118,7 +118,7 @@ gint64x4 i_shuffle1(gint64x4 a, gint64x4 b)
 #endif
 
 template<unsigned s0, unsigned s1, unsigned N>
-gint64<N> i_shuffle1(gint64<N> a, gint64<N> b)
+uint64<N> i_shuffle1(uint64<N> a, uint64<N> b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     return int64<N>(i_shuffle1<s0,s1>(float64<N>(a), float64<N>(b)));

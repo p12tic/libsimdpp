@@ -34,7 +34,10 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/detail/construct_eval.h>
+#include <simdpp/detail/array.h>
 #include <cstdint>
 
 namespace simdpp {
@@ -45,180 +48,49 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @ingroup simd_vec_int
 /// @{
 
-/** Generic class representing 2x 64-bit integer vector.
-    To be used where the signedness of the underlying element type is not important
-*/
-template<>
-class gint64<2, void> {
-public:
-
-    using element_type = uint64_t;
-    using uint_element_type = uint64_t;
-    using int_vector_type = gint64x2;
-    using uint_vector_type = uint64x2;
-    using base_vector_type = gint64x2;
-    using mask_type = mask_int64x2;
-    using maskdata_type = maskdata_int64<2>;
-
-    static constexpr unsigned length = 2;
-    static constexpr unsigned vec_length = 1;
-    static constexpr unsigned num_bits = 64;
-    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
-
-    gint64<2>() = default;
-    gint64<2>(const gint64x2 &) = default;
-    gint64<2> &operator=(const gint64x2 &) = default;
-
-    /// @{
-    /// Construct from the underlying vector type
-#if SIMDPP_USE_SSE2
-    gint64<2>(__m128i d) : d_(d) {}
-    gint64<2>& operator=(__m128i d) { d_ = d; return *this; }
-#elif SIMDPP_USE_NEON
-    gint64<2>(uint64x2_t d) : d_(d) {}
-    gint64<2>( int64x2_t d) : d_(d) {}
-    gint64<2>& operator=(uint64x2_t d) { d_ = d; return *this; }
-    gint64<2>& operator=( int64x2_t d) { d_ = d; return *this; }
-#elif SIMDPP_USE_ALTIVEC
-    gint64<2>(__vector uint32_t d) : d_(d) {}
-    gint64<2>(__vector  int32_t d) : d_(d) {}
-    gint64<2>& operator=(__vector uint32_t d) { d_ = d; return *this; }
-    gint64<2>& operator=(__vector  int32_t d) { d_ = d; return *this; }
-#endif
-    /// @}
-
-    /// @{
-    /// Convert to underlying vector type
-#if SIMDPP_USE_SSE2
-    operator __m128i() const        { return d_; }
-#elif SIMDPP_USE_NEON
-    operator int64x2_t() const      { return vreinterpretq_s64_u64(d_); }
-    operator uint64x2_t() const     { return d_; }
-#elif SIMDPP_USE_ALTIVEC
-    operator __vector uint32_t() const       { return (__vector uint32_t)d_; }
-    operator __vector  int32_t() const       { return (__vector int32_t)d_; }
-#endif
-    /// @}
-    ///
-    /// @{
-    /// Construct from compatible integer type
-    template<class E> explicit gint64<2>(const gint8<16,E>& d);
-    template<class E> explicit gint64<2>(const gint16<8,E>& d);
-    template<class E> explicit gint64<2>(const gint32<4,E>& d);
-    template<class E>          gint64<2>(const gint64<2,E>& d);
-    template<class E> gint64<2>& operator=(const gint8<16,E>& d);
-    template<class E> gint64<2>& operator=(const gint16<8,E>& d);
-    template<class E> gint64<2>& operator=(const gint32<4,E>& d);
-    template<class E> gint64<2>& operator=(const gint64<2,E>& d);
-    /// @}
-
-    /// @{
-    /// Construct from compatible float32x4 integer vector type
-    explicit gint64<2>(const float64x2& d);
-    gint64<2>& operator=(const float64x2& d) { operator=(gint64x2(d)); return *this; }
-    /// @}
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> gint64<2>(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr());
-    }
-    template<class E> gint64<2>& operator=(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr()); return *this;
-    }
-#endif
-
-    /// @{
-    /// Access base vectors
-    const gint64x2& operator[](unsigned) const { return *this; }
-          gint64x2& operator[](unsigned)       { return *this; }
-    /// @}
-
-    gint64<2> eval() const { return *this; }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL
-    /// For internal use only
-    const uint64_t& el(unsigned i) const  { return u64(i); }
-          uint64_t& el(unsigned i)        { return u64(i); }
-#endif
-#endif
-
-    /// Creates a int64x2 vector with the contents set to zero
-    static gint64x2 zero();
-
-    /// Creates a int64x2 vector with the contents set to ones
-    static gint64x2 ones();
-
-protected:
-
-#if SIMDPP_USE_NULL
-    const uint64_t& u64(unsigned i) const   { return du_[i]; }
-          uint64_t& u64(unsigned i)         { return du_[i]; }
-    const int64_t& i64(unsigned i) const   { return di_[i]; }
-          int64_t& i64(unsigned i)         { return di_[i]; }
-#endif
-
-private:
-#if SIMDPP_USE_SSE2
-    __m128i d_;
-#elif SIMDPP_USE_NEON
-    uint64x2_t d_;
-#elif SIMDPP_USE_ALTIVEC
-    __vector uint32_t d_;
-#elif SIMDPP_USE_NULL
-    union {
-        uint64_t du_[2];
-        int64_t di_[2];
-    };
-#endif
-};
-
 /** Class representing 2x 64-bit signed integer vector
 */
 template<>
-class int64<2, void> : public gint64x2 {
+class int64<2, void> : public any_int64<2, int64<2,void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int64_t;
-    using base_vector_type = int64x2;
+    using base_vector_type = int64<2,void>;
+    using expr_type = void;
+
+#if SIMDPP_USE_SSE2
+    using native_type = __m128i;
+#elif SIMDPP_USE_NEON
+    using native_type = int64x2_t;
+#elif SIMDPP_USE_ALTIVEC
+    using native_type = __vector int64_t;
+#else
+    using native_type = detail::array<int64_t, 2>;
+#endif
 
     int64<2>() = default;
-    int64<2>(const int64x2 &) = default;
-    int64<2> &operator=(const int64x2 &) = default;
+    int64<2>(const int64<2> &) = default;
+    int64<2> &operator=(const int64<2> &) = default;
+
+    template<class E> int64<2>(const int64<2,E>& d) { *this = d.eval(); }
+    template<class E> int64<2>(const uint64<2,E>& d) { *this = d.eval(); }
+    template<class V> explicit int64<2>(const any_vec<16,V>& d)
+    {
+        *this = bit_cast<int64<2>>(d.vec().eval());
+    }
+    template<class V> int64<2>& operator=(const any_vec<16,V>& d)
+    {
+        *this = bit_cast<int64<2>>(d.vec().eval()); return *this;
+    }
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_SSE2
-    int64<2>(__m128i d) : gint64x2(d) {}
-    int64<2>& operator=(__m128i d) { gint64x2::operator=(d); return *this; }
-#elif SIMDPP_USE_NEON
-    int64<2>(int64x2_t d) : gint64x2(d) {}
-    int64<2>& operator=(int64x2_t d) { gint64x2::operator=(d); return *this; }
-#elif SIMDPP_USE_ALTIVEC
-    int64<2>(__vector  int32_t d) : gint64x2(d) {}
-    int64<2>& operator=(__vector  int32_t d) { gint64x2::operator=(d); return *this; }
-#endif
+    int64<2>(const native_type& d) : d_(d) {}
+    int64<2>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
-    /// @{
-    /// Construct from compatible integer type
-    template<class E> explicit int64<2>(const gint8<16,E>& d);
-    template<class E> explicit int64<2>(const gint16<8,E>& d);
-    template<class E> explicit int64<2>(const gint32<4,E>& d);
-    template<class E>          int64<2>(const gint64<2,E>& d);
-    template<class E> int64<2>& operator=(const gint8<16,E>& d);
-    template<class E> int64<2>& operator=(const gint16<8,E>& d);
-    template<class E> int64<2>& operator=(const gint32<4,E>& d);
-    template<class E> int64<2>& operator=(const gint64<2,E>& d);
-    /// @}
-
-    /// @{
-    /// Construct from compatible float64x4 integer vector type
-    explicit int64<2>(const float64x2& d) : gint64x2(d) {}
-    int64<2>& operator=(const float64x2& d) { gint64x2::operator=(d); return *this; }
-    /// @}
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> int64<2>(const expr_vec_construct<E>& e)
@@ -233,67 +105,68 @@ public:
 
     /// @{
     /// Access base vectors
-    const int64x2& operator[](unsigned) const { return *this; }
-          int64x2& operator[](unsigned)       { return *this; }
+    const int64<2>& operator[](unsigned) const { return *this; }
+          int64<2>& operator[](unsigned)       { return *this; }
     /// @}
 
     int64<2> eval() const { return *this; }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
     /// For internal use only
-    const int64_t& el(unsigned i) const  { return i64(i); }
-          int64_t& el(unsigned i)        { return i64(i); }
-#endif
+    const int64_t& el(unsigned i) const  { return d_[i]; }
+          int64_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static int64x2 zero() { return gint64x2::zero(); }
-    static int64x2 ones() { return gint64x2::ones(); }
+    static int64<2> zero();
+    static int64<2> ones();
+
+private:
+    native_type d_;
 };
 
 /** Class representing 2x 64-bit unsigned integer vector
 */
 template<>
-class uint64<2, void> : public gint64x2 {
+class uint64<2, void> : public any_int64<2, uint64<2,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
+    using element_type = uint64_t;
+    using base_vector_type = uint64<2,void>;
+    using expr_type = void;
 
-    using base_vector_type = uint64x2;
+#if SIMDPP_USE_SSE2
+    using native_type = __m128i;
+#elif SIMDPP_USE_NEON
+    using native_type = uint64x2_t;
+#elif SIMDPP_USE_ALTIVEC
+    using native_type = __vector uint64_t;
+#else
+    using native_type = detail::array<uint64_t, 2>;
+#endif
 
     uint64<2>() = default;
-    uint64<2>(const uint64x2 &) = default;
-    uint64<2> &operator=(const uint64x2 &) = default;
+    uint64<2>(const uint64<2> &) = default;
+    uint64<2> &operator=(const uint64<2> &) = default;
+
+    template<class E> uint64<2>(const uint64<2,E>& d) { *this = d.eval(); }
+    template<class E> uint64<2>(const int64<2,E>& d) { *this = d.eval(); }
+    template<class V> explicit uint64<2>(const any_vec<16,V>& d)
+    {
+        *this = bit_cast<uint64<2>>(d.vec().eval());
+    }
+    template<class V> uint64<2>& operator=(const any_vec<16,V>& d)
+    {
+        *this = bit_cast<uint64<2>>(d.vec().eval()); return *this;
+    }
 
     /// @{
     /// Construct from the underlying vector type
-#if SIMDPP_USE_SSE2
-    uint64<2>(__m128i d) : gint64x2(d) {}
-    uint64<2>& operator=(__m128i d) { gint64x2::operator=(d); return *this; }
-#elif SIMDPP_USE_NEON
-    uint64<2>(uint64x2_t d) : gint64x2(d) {}
-    uint64<2>& operator=(uint64x2_t d) { gint64x2::operator=(d); return *this; }
-#elif SIMDPP_USE_ALTIVEC
-    uint64<2>(__vector uint32_t d) : gint64x2(d) {}
-    uint64<2>& operator=(__vector uint32_t d) { gint64x2::operator=(d); return *this; }
-#endif
+    uint64<2>(const native_type& d) : d_(d) {}
+    uint64<2>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
-    /// @{
-    /// Construct from compatible integer type
-    template<class E> explicit uint64<2>(const gint8<16,E>& d);
-    template<class E> explicit uint64<2>(const gint16<8,E>& d);
-    template<class E> explicit uint64<2>(const gint32<4,E>& d);
-    template<class E>          uint64<2>(const gint64<2,E>& d);
-    template<class E> uint64<2>& operator=(const gint8<16,E>& d);
-    template<class E> uint64<2>& operator=(const gint16<8,E>& d);
-    template<class E> uint64<2>& operator=(const gint32<4,E>& d);
-    template<class E> uint64<2>& operator=(const gint64<2,E>& d);
-    /// @}
-
-    /// @{
-    /// Construct from compatible float64x4 integer vector type
-    explicit uint64<2>(const float64x2& d) : gint64x2(d) {}
-    uint64<2>& operator=(const float64x2& d) { gint64x2::operator=(d); return *this; }
-    /// @}
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> uint64<2>(const expr_vec_construct<E>& e)
@@ -308,101 +181,70 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint64x2& operator[](unsigned) const { return *this; }
-          uint64x2& operator[](unsigned)       { return *this; }
+    const uint64<2>& operator[](unsigned) const { return *this; }
+          uint64<2>& operator[](unsigned)       { return *this; }
     /// @}
 
     uint64<2> eval() const { return *this; }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL
-    /// For internal use only
-    const uint64_t& el(unsigned i) const  { return u64(i); }
-          uint64_t& el(unsigned i)        { return u64(i); }
-#endif
+#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
+    /// For uinternal use only
+    const uint64_t& el(unsigned i) const  { return d_[i]; }
+          uint64_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static uint64x2 zero() { return gint64x2::zero(); }
-    static uint64x2 ones() { return gint64x2::ones(); }
+    static uint64<2> zero();
+    static uint64<2> ones();
+
+private:
+    native_type d_;
 };
 
 
 /// Class representing possibly optimized mask data for 2x 64-bit integer
 /// vector
 template<>
-class maskdata_int64<2> {
+class mask_int64<2, void> : public any_int64<2, mask_int64<2,void>> {
 public:
-    using base_vector_type = maskdata_int64<2>;
-    static constexpr unsigned length = 2;
-    static constexpr unsigned vec_length = 1;
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using base_vector_type = mask_int64<2,void>;
+    using expr_type = void;
 
-    maskdata_int64<2>() = default;
-    maskdata_int64<2>(const maskdata_int64<2> &) = default;
-    maskdata_int64<2> &operator=(const maskdata_int64<2> &) = default;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    maskdata_int64<2>(uint64x2 d) : d_(d) {}
-#endif
-#endif
-
-    /// Convert to bitmask
-    operator uint64x2() const;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL
-    bool& el(unsigned id) { return b_[id]; }
-    const bool& el(unsigned id) const { return b_[id]; }
-#endif
+#if SIMDPP_USE_SSE2
+    using native_type = __m128i;
+#elif SIMDPP_USE_NEON
+    using native_type = uint64x2_t;
+#elif SIMDPP_USE_ALTIVEC
+    using native_type = uint64<2>;
+#else // NULL
+    using native_type = detail::array<bool, 2>;
 #endif
 
-    /// @{
-    /// Access base vectors
-    const maskdata_int64<2>& operator[](unsigned) const { return *this; }
-          maskdata_int64<2>& operator[](unsigned)       { return *this; }
-    /// @}
-
-private:
-#if SIMDPP_USE_NULL
-    bool b_[2];
-#else
-    int64x2 d_;
-#endif
-};
-
-
-/// Class representing a mask for 2x 64-bit integer vector
-template<>
-class mask_int64<2, void> : public uint64<2, void> {
-public:
     mask_int64<2>() = default;
     mask_int64<2>(const mask_int64<2> &) = default;
     mask_int64<2> &operator=(const mask_int64<2> &) = default;
-    mask_int64<2>(const maskdata_int64<2>& d);
 
-    /// @{
-    /// Construct from the underlying vector type
-#if SIMDPP_USE_SSE2
-    mask_int64<2>(__m128i d);
-    mask_int64<2>(gint64<2> d);
-#elif SIMDPP_USE_NEON
-    mask_int64<2>(uint64x2_t d);
-    mask_int64<2>(gint64<2> d);
-#elif SIMDPP_USE_ALTIVEC
-    mask_int64<2>(__vector uint64_t d);
-    mask_int64<2>(gint64<2> d);
+    mask_int64<2>(const native_type& d) : d_(d) {}
+
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+    mask_int64<2>(const uint64<2>& d) : d_(d) {}
 #endif
-    /// @}
+
+    /// Access the underlying type
+    uint64<2> unmask() const;
+
+#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
+    bool& el(unsigned id) { return d_[id]; }
+    const bool& el(unsigned id) const { return d_[id]; }
+#endif
+
+    const mask_int64<2>& operator[](unsigned) const { return *this; }
+          mask_int64<2>& operator[](unsigned)       { return *this; }
 
     mask_int64<2> eval() const { return *this; }
 
-    const maskdata_int64<2>& mask() const { return mask_; }
-#if !DOXYGEN_SHOULD_SKIP_THIS && SIMDPP_USE_NULL
-    maskdata_int64<2>& m_mask() { return mask_; }
-#endif
-
 private:
-    maskdata_int64<2> mask_;
+    native_type d_;
 };
 
 /// @} -- end ingroup

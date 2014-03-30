@@ -48,7 +48,7 @@ struct is_expr_vec_load_splat<expr_vec_load_splat> { static const bool value = t
 
 namespace insn {
 
-inline void i_load_splat(gint8x16& v, const void* p0)
+inline void i_load_splat(uint8x16& v, const void* p0)
 {
     const uint8_t* v0 = reinterpret_cast<const uint8_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -64,17 +64,17 @@ inline void i_load_splat(gint8x16& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(gint8x32& v, const void* p0)
+inline void i_load_splat(uint8x32& v, const void* p0)
 {
     i_set_splat(v, *reinterpret_cast<const uint8_t*>(p0));
 }
 #endif
 
 template<unsigned N>
-void i_load_splat(gint8<N>& v, const void* p0)
+void i_load_splat(uint8<N>& v, const void* p0)
 {
     const uint8_t* v0 = reinterpret_cast<const uint8_t*>(p0);
-    gint8v tv;
+    uint8v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -83,7 +83,7 @@ void i_load_splat(gint8<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(gint16x8& v, const void* p0)
+inline void i_load_splat(uint16x8& v, const void* p0)
 {
     const uint16_t* v0 = reinterpret_cast<const uint16_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -99,17 +99,17 @@ inline void i_load_splat(gint16x8& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(gint16x16& v, const void* p0)
+inline void i_load_splat(uint16x16& v, const void* p0)
 {
     i_set_splat(v, *reinterpret_cast<const uint16_t*>(p0));
 }
 #endif
 
 template<unsigned N>
-void i_load_splat(gint16<N>& v, const void* p0)
+void i_load_splat(uint16<N>& v, const void* p0)
 {
     const uint16_t* v0 = reinterpret_cast<const uint16_t*>(p0);
-    gint16v tv;
+    uint16v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -118,7 +118,7 @@ void i_load_splat(gint16<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(gint32x4& v, const void* p0)
+inline void i_load_splat(uint32x4& v, const void* p0)
 {
     const uint32_t* v0 = reinterpret_cast<const uint32_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -135,17 +135,17 @@ inline void i_load_splat(gint32x4& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(gint32x8& v, const void* p0)
+inline void i_load_splat(uint32x8& v, const void* p0)
 {
     i_set_splat(v, *reinterpret_cast<const uint32_t*>(p0));
 }
 #endif
 
 template<unsigned N>
-void i_load_splat(gint32<N>& v, const void* p0)
+void i_load_splat(uint32<N>& v, const void* p0)
 {
     const uint32_t* v0 = reinterpret_cast<const uint32_t*>(p0);
-    gint32v tv;
+    uint32v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -154,7 +154,7 @@ void i_load_splat(gint32<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(gint64x2& v, const void* p0)
+inline void i_load_splat(uint64x2& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -177,7 +177,7 @@ inline void i_load_splat(gint64x2& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(gint64x4& v, const void* p0)
+inline void i_load_splat(uint64x4& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
     uint64x2 a = _mm_cvtsi64_si128(v0);
@@ -186,10 +186,10 @@ inline void i_load_splat(gint64x4& v, const void* p0)
 #endif
 
 template<unsigned N>
-void i_load_splat(gint64<N>& v, const void* p0)
+void i_load_splat(uint64<N>& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
-    gint64v tv;
+    uint64v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -298,7 +298,9 @@ struct i_load_splat_dispatch<expr_vec_load_splat>
 template<class V>
 void construct_eval(V& v, const expr_vec_load_splat& e)
 {
-    insn::i_load_splat(v, e.a);
+    typename detail::remove_sign<V>::type r;
+    insn::i_load_splat(r, e.a);
+    v = r;
 }
 
 } // namespace detail

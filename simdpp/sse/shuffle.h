@@ -67,7 +67,7 @@ namespace sse {
     @icost{SSE2-AVX, 2}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint16x8 permute_lo(gint16x8 a)
+uint16x8 permute_lo(uint16x8 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     a = _mm_shufflelo_epi16(a, _MM_SHUFFLE(s3, s2, s1, s0));
@@ -75,7 +75,7 @@ gint16x8 permute_lo(gint16x8 a)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint16x16 permute_lo(gint16x16 a)
+uint16x16 permute_lo(uint16x16 a)
 {
 #if SIMDPP_USE_AVX2
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
@@ -113,7 +113,7 @@ gint16x16 permute_lo(gint16x16 a)
     @icost{SSE2-AVX, 2}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint16x8 permute_hi(gint16x8 a)
+uint16x8 permute_hi(uint16x8 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     a = _mm_shufflehi_epi16(a, _MM_SHUFFLE(s3, s2, s1, s0));
@@ -121,7 +121,7 @@ gint16x8 permute_hi(gint16x8 a)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint16x16 permute_hi(gint16x16 a)
+uint16x16 permute_hi(uint16x16 a)
 {
 #if SIMDPP_USE_AVX2
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");

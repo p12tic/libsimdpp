@@ -45,19 +45,16 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline float64x2 float64x2::zero()
+inline float64<2> float64<2>::zero() { return make_uint(0); }
+
+inline float64<2> mask_float64<2>::unmask() const
 {
-    float64x2 r;
-    r = bit_xor(r, r);
-    return r;
-}
-
-inline mask_float64<2>::mask_float64(const maskdata_float64<2>& d) : float64<2>(d), mask_(d) {}
-
-#if SIMDPP_USE_SSE2
-inline mask_float64<2>::mask_float64(__m128d d)    : float64<2>(d), mask_(d) {}
-inline mask_float64<2>::mask_float64(float64<2> d) : float64<2>(d), mask_(d) {}
+#if SIMDPP_USE_NULL
+    return null::convert_mask<float64<2>>(*this);
+#else
+    return float64<2>(d_);
 #endif
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

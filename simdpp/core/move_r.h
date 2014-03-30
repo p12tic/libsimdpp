@@ -61,14 +61,17 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N, class E>
-gint8<N, gint8<N>> move16_r(gint8<N,E> a)
+template<unsigned shift, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        move16_r(const any_vec8<N,V>& a)
 {
     static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return a.eval();
-    if (shift == 16) return uint8<N>::zero();
+    if (shift == 0) return a.vec().eval();
+    if (shift == 16) return V::zero();
 
-    return detail::insn::i_move16_r<shift>(a.eval());
+    typename detail::get_expr_nomask_nosign<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_move16_r<shift>(ra);
 }
 
 /** Moves the 16-bit elements in a vector to the right by @a shift positions.
@@ -90,14 +93,17 @@ gint8<N, gint8<N>> move16_r(gint8<N,E> a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N, class E>
-gint16<N, gint16<N>> move8_r(gint16<N,E> a)
+template<unsigned shift, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        move8_r(const any_vec16<N,V>& a)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    if (shift == 0) return a.eval();
-    if (shift == 8) return uint16<N>::zero();
+    if (shift == 0) return a.vec().eval();
+    if (shift == 8) return V::zero();
 
-    return detail::insn::i_move8_r<shift>(a.eval());
+    typename detail::get_expr_nomask_nosign<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_move8_r<shift>(ra);
 }
 
 /** Moves the 32-bit elements in a vector to the right by @a shift positions.
@@ -117,66 +123,17 @@ gint16<N, gint16<N>> move8_r(gint16<N,E> a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N, class E>
-gint32<N, gint32<N>> move4_r(gint32<N,E> a)
+template<unsigned shift, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        move4_r(const any_vec32<N,V>& a)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    if (shift == 0) return a.eval();
-    if (shift == 4) return uint32<N>::zero();
+    if (shift == 0) return a.vec().eval();
+    if (shift == 4) return V::zero();
 
-    return detail::insn::i_move4_r<shift>(a.eval());
-}
-
-/** Moves the 64-bit elements in a vector to the right by @a shift positions.
-
-    @code
-    shift:  pos:| 0  1  |
-     0      r = [ a0 a1 ]
-     1      r = [  0 a0 ]
-     2      r = [  0  0 ]
-    @endcode
-
-    @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
-    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
-*/
-template<unsigned shift, unsigned N, class E>
-gint64<N, gint64<N>> move2_r(gint64<N,E> a)
-{
-    static_assert(shift <= 2, "Shift out of bounds");
-    if (shift == 0) return a.eval();
-    if (shift == 2) return uint64<N>::zero();
-
-    return detail::insn::i_move2_r<shift>(a.eval());
-}
-
-/** Moves the 32-bit elements in a vector to the right by @a shift positions.
-
-    @code
-    shift:  pos:| 0  1  2  3  |
-     0      r = [ a0 a1 a2 a3 ]
-     1      r = [  0 a0 a1 a2 ]
-     2      r = [  0  0 a0 a1 ]
-     3      r = [  0  0  0 a0 ]
-     4      r = [  0  0  0  0 ]
-    @endcode
-
-    @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
-    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
-*/
-template<unsigned shift, unsigned N, class E>
-float32<N, float32<N>> move4_r(float32<N,E> a)
-{
-    static_assert(shift <= 4, "Shift out of bounds");
-    if (shift == 0) return a.eval();
-    if (shift == 4) return float32<N>::zero();
-
-    return detail::insn::i_move4_r<shift>(a.eval());
+    typename detail::get_expr_nomask_nosign<V,  void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_move4_r<shift>(ra);
 }
 
 
@@ -195,15 +152,19 @@ float32<N, float32<N>> move4_r(float32<N,E> a)
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned shift, unsigned N, class E>
-float64<N, float64<N>> move2_r(float64<N,E> a)
+template<unsigned shift, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        move2_r(const any_vec64<N,V>& a)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    if (shift == 0) return a.eval();
-    if (shift == 2) return float64<N>::zero();
+    if (shift == 0) return a.vec().eval();
+    if (shift == 2) return V::zero();
 
-    return detail::insn::i_move2_r<shift>(a.eval());
+    typename detail::get_expr_nomask_nosign<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_move2_r<shift>(ra);
 }
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

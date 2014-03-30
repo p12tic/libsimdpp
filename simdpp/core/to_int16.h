@@ -56,7 +56,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSSE3, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint16x16 to_int16(int8x16 a)
+inline uint16x16 to_int16(int8x16 a)
 {
 #if SIMDPP_USE_NULL
     int16x16 r;
@@ -100,7 +100,7 @@ inline gint16x16 to_int16(int8x16 a)
     @endcode
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-inline gint16x16 to_int16(uint8x16 a)
+inline uint16x16 to_int16(uint8x16 a)
 {
 #if SIMDPP_USE_NULL
     uint16x16 r;

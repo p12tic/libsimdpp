@@ -57,7 +57,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSSE3, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint32x8 to_int32(int16x8 a)
+inline int32x8 to_int32(int16x8 a)
 {
 #if SIMDPP_USE_NULL
     int32x8 r;
@@ -77,7 +77,7 @@ inline gint32x8 to_int32(int16x8 a)
     sign = shift_r<16>(a);
     b0 = zip8_lo(a, sign);
     b1 = zip8_hi(a, sign);
-    return gint32x8(combine(b0, b1));
+    return uint32x8(combine(b0, b1));
 #elif SIMDPP_USE_NEON
     int32x8 r;
     r[0] = vmovl_s16(vget_low_s16(a[0]));
@@ -115,7 +115,7 @@ inline gint32x8 to_int32(int16x8 a)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline gint32x4 to_int32(float32x4 a)
+inline int32x4 to_int32(float32x4 a)
 {
 #if SIMDPP_USE_NULL
     return null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
@@ -137,16 +137,16 @@ inline gint32x4 to_int32(float32x4 a)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint32x8 to_int32x8(float32x8 a)
+inline uint32x8 to_int32x8(float32x8 a)
 {
     return _mm256_cvttps_epi32(a);
 }
 #endif
 
 template<unsigned N>
-gint32<N> to_int32x8(float32<N> a)
+uint32<N> to_int32x8(float32<N> a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(gint32<N>, to_int32, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, to_int32, a);
 }
 /// @}
 
@@ -176,7 +176,7 @@ gint32<N> to_int32x8(float32<N> a)
 
     @icost{SSE2-SSE4.1, 3}
 */
-inline gint32x4 to_int32(float64x4 a)
+inline int32x4 to_int32(float64x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
@@ -186,7 +186,7 @@ inline gint32x4 to_int32(float64x4 a)
     r[3] = int32_t(a[1].el(1));
     return r;
 #elif SIMDPP_USE_SSE2
-    gint32x4 r1, r2;
+    int32x4 r1, r2;
     float64x2 a1, a2;
     split(a, a1, a2);
     r1 = _mm_cvttpd_epi32(a1);

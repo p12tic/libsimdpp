@@ -50,31 +50,44 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     TODO: explain better
     TODO: investigate whether conversions are still needed.
+
+    Note: the name of the expression vector type only identifies the target
+    type. In various cases we want to change the target type, thus the arbitrary
+    conversions have been added.
+
+    Expression types are not meant to be used by the user, thus all constructors
+    are implicit.
 */
 
 // -----------------------------------------------------------------------------
 // float32
 
 template<unsigned N, class E>
-class float32 {
+class float32 : public any_float32<N, float32<N,E>>{
 public:
+    static const unsigned type_tag = SIMDPP_TAG_FLOAT;
+    using expr_type = E;
     E e;
 
     float32(const E& a, int /* dummy */) : e(a) {}
-    float32(const float32<N>& a) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    float32(const any_vec<N*4,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    float32(const any_vec<N*4,V<N2,void>>& a) : e(a.vec()) {}
 
     operator float32<N>() const { return eval(); }
     float32<N> eval() const;
 };
 
 template<unsigned N, class E>
-class mask_float32 : public float32<N,E> {
-private:
-    using super = float32<N,E>;
+class mask_float32 : public any_float32<N, mask_float32<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
+    using expr_type = E;
+    E e;
 
-    mask_float32(const E& a, int dummy) : super(a, dummy) {}
-    mask_float32(const mask_float32<N>& a) : super(a, 0) {}
+    mask_float32(const E& a, int /* dummy */) : e(a) {}
+    mask_float32(const mask_float32<N>& a) : e(a) {}
 
     operator mask_float32<N>() const { return eval(); }
     operator float32<N>() const { return eval(); }
@@ -85,25 +98,31 @@ public:
 // float64
 
 template<unsigned N, class E>
-class float64 {
+class float64 : public any_float64<N, float64<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_FLOAT;
+    using expr_type = E;
     E e;
 
     float64(const E& a, int /* dummy */) : e(a) {}
-    float64(const float64<N>& a) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    float64(const any_vec<N*8,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    float64(const any_vec<N*8,V<N2,void>>& a) : e(a.vec()) {}
 
     operator float64<N>() const { return eval(); }
     float64<N> eval() const;
 };
 
 template<unsigned N, class E>
-class mask_float64 : public float64<N,E> {
-private:
-    using super = float64<N,E>;
+class mask_float64 : public any_float64<N, mask_float64<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
+    using expr_type = E;
+    E e;
 
-    mask_float64(const E& a, int dummy) : super(a, dummy) {}
-    mask_float64(const mask_float64<N>& a) : super(a, 0) {}
+    mask_float64(const E& a, int /* dummy */) : e(a) {}
+    mask_float64(const mask_float64<N>& a) : e(a) {}
 
     operator mask_float64<N>() const { return eval(); }
     operator float64<N>() const { return eval(); }
@@ -111,45 +130,20 @@ public:
 };
 
 // -----------------------------------------------------------------------------
-// gint8<N>
-
+// uint8<N>
 template<unsigned N, class E>
-class gint8 {
+class int8 : public any_int8<N, int8<N,E>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_INT;
+    using expr_type = E;
     E e;
 
-    gint8(const E& a, int /* dummy */) : e(a) {}
-    gint8(const gint8<N>& a)     : e(a) {}
-    gint8(const gint16<N/2>& a)  : e(a) {}
-    gint8(const gint32<N/4>& a)  : e(a) {}
-    gint8(const gint64<N/8>& a)  : e(a) {}
+    int8(const E& a, int /* dummy */) : e(a) {}
 
-    gint8(const gint8<N,E>& a)     : e(a.e) {}
-    gint8(const gint16<N/2,E>& a)  : e(a.e) {}
-    gint8(const gint32<N/4,E>& a)  : e(a.e) {}
-    gint8(const gint64<N/8,E>& a)  : e(a.e) {}
-
-    operator gint8<N>() const { return eval(); }
-    gint8<N> eval() const;
-};
-
-template<unsigned N, class E>
-class int8 : public gint8<N,E> {
-private:
-    using super = gint8<N,E>;
-public:
-
-    int8(const E& a, int dummy) : super(a, dummy) {}
-    int8(const gint8<N>& a)     : super(a) {}
-    int8(const gint16<N/2>& a)  : super(a) {}
-    int8(const gint32<N/4>& a)  : super(a) {}
-    int8(const gint64<N/8>& a)  : super(a) {}
-
-    int8(const gint8<N,E>& a)     : super(a.e) {}
-    int8(const gint16<N/2,E>& a)  : super(a.e) {}
-    int8(const gint32<N/4,E>& a)  : super(a.e) {}
-    int8(const gint64<N/8,E>& a)  : super(a.e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int8(const any_vec<N,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int8(const any_vec<N,V<N2,void>>& a) : e(a.vec()) {}
 
     operator int8<N>() const { return eval(); }
     int8<N> eval() const;
@@ -157,80 +151,52 @@ public:
 
 
 template<unsigned N, class E>
-class uint8 : public gint8<N,E> {
-private:
-    using super = gint8<N,E>;
+class uint8 : public any_int8<N, uint8<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
+    using expr_type = E;
+    E e;
 
-    uint8(const E& a, int dummy) : super(a, dummy) {}
-    uint8(const gint8<N>& a)     : super(a) {}
-    uint8(const gint16<N/2>& a)  : super(a) {}
-    uint8(const gint32<N/4>& a)  : super(a) {}
-    uint8(const gint64<N/8>& a)  : super(a) {}
+    uint8(const E& a, int /* dummy */) : e(a) {}
 
-    uint8(const gint8<N,E>& a)     : super(a.e) {}
-    uint8(const gint16<N/2,E>& a)  : super(a.e) {}
-    uint8(const gint32<N/4,E>& a)  : super(a.e) {}
-    uint8(const gint64<N/8,E>& a)  : super(a.e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint8(const any_vec<N,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint8(const any_vec<N,V<N2,void>>& a) : e(a.vec()) {}
 
     operator uint8<N>() const { return eval(); }
     uint8<N> eval() const;
 };
 
 template<unsigned N, class E>
-class mask_int8 : public uint8<N,E> {
-private:
-    using super = uint8<N,E>;
+class mask_int8 : public any_int8<N, mask_int8<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using expr_type = E;
+    E e;
 
-    mask_int8(const E& a, int dummy) : super(a, dummy) {}
-    mask_int8(const mask_int8<N>& a) : super(a, 0) {}
+    mask_int8(const E& a, int /* dummy */) : e(a) {}
+    mask_int8(const mask_int8<N>& a) : e(a) {}
 
     operator mask_int8<N>() const { return eval(); }
-    operator int8<N>() const { return eval(); }
+    operator uint8<N>() const { return eval(); }
     mask_int8<N> eval() const;
 };
 
 // -----------------------------------------------------------------------------
-// gint16<N>
-
+// uint16<N>
 template<unsigned N, class E>
-class gint16 {
+class int16 : public any_int16<N, int16<N,E>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_INT;
+    using expr_type = E;
     E e;
 
-    gint16(const E& a, int /* dummy */) : e(a) {}
-    gint16(const gint8<N*2>& a)   : e(a) {}
-    gint16(const gint16<N>& a)    : e(a) {}
-    gint16(const gint32<N/2>& a)  : e(a) {}
-    gint16(const gint64<N/4>& a)  : e(a) {}
-
-    gint16(const gint8<N*2,E>& a)   : e(a.e) {}
-    gint16(const gint16<N,E>& a)    : e(a.e) {}
-    gint16(const gint32<N/2,E>& a)  : e(a.e) {}
-    gint16(const gint64<N/4,E>& a)  : e(a.e) {}
-
-    operator gint16<N>() const { return eval(); }
-    gint16<N> eval() const;
-};
-
-template<unsigned N, class E>
-class int16 : public gint16<N,E> {
-private:
-    using super = gint16<N,E>;
-public:
-
-    int16(const E& a, int dummy) : super(a, dummy) {}
-    int16(const gint8<N*2>& a)   : super(a) {}
-    int16(const gint16<N>& a)    : super(a) {}
-    int16(const gint32<N/2>& a)  : super(a) {}
-    int16(const gint64<N/4>& a)  : super(a) {}
-
-    int16(const gint8<N*2,E>& a)   : super(a.e) {}
-    int16(const gint16<N,E>& a)    : super(a.e) {}
-    int16(const gint32<N/2,E>& a)  : super(a.e) {}
-    int16(const gint64<N/4,E>& a)  : super(a.e) {}
+    int16(const E& a, int /* dummy */) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int16(const any_vec<N*2,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int16(const any_vec<N*2,V<N2,void>>& a) : e(a.vec()) {}
 
     operator int16<N>() const { return eval(); }
     int16<N> eval() const;
@@ -238,80 +204,51 @@ public:
 
 
 template<unsigned N, class E>
-class uint16 : public gint16<N,E> {
-private:
-    using super = gint16<N,E>;
+class uint16 : public any_int16<N, uint16<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
+    using expr_type = E;
+    E e;
 
-    uint16(const E& a, int dummy) : super(a, dummy) {}
-    uint16(const gint8<N*2>& a)   : super(a) {}
-    uint16(const gint16<N>& a)    : super(a) {}
-    uint16(const gint32<N/2>& a)  : super(a) {}
-    uint16(const gint64<N/4>& a)  : super(a) {}
-
-    uint16(const gint8<N*2,E>& a)   : super(a.e) {}
-    uint16(const gint16<N,E>& a)    : super(a.e) {}
-    uint16(const gint32<N/2,E>& a)  : super(a.e) {}
-    uint16(const gint64<N/4,E>& a)  : super(a.e) {}
+    uint16(const E& a, int /* dummy */) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint16(const any_vec<N*2,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint16(const any_vec<N*2,V<N2,void>>& a) : e(a.vec()) {}
 
     operator uint16<N>() const { return eval(); }
     uint16<N> eval() const;
 };
 
 template<unsigned N, class E>
-class mask_int16 : public uint16<N,E> {
-private:
-    using super = uint16<N,E>;
+class mask_int16 : public any_int16<N, mask_int16<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using expr_type = E;
+    E e;
 
-    mask_int16(const E& a, int dummy) : super(a, dummy) {}
-    mask_int16(const mask_int16<N>& a) : super(a, 0) {}
+    mask_int16(const E& a, int /* dummy */) : e(a) {}
+    mask_int16(const mask_int16<N>& a) : e(a) {}
 
     operator mask_int16<N>() const { return eval(); }
-    operator int16<N>() const { return eval(); }
+    operator uint16<N>() const { return eval(); }
     mask_int16<N> eval() const;
 };
 
 // -----------------------------------------------------------------------------
-// gint32<N>
-
+// uint32<N>
 template<unsigned N, class E>
-class gint32 {
+class int32 : public any_int32<N, int32<N,E>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_INT;
+    using expr_type = E;
     E e;
 
-    gint32(const E& a, int /* dummy */) : e(a) {}
-    gint32(const gint8<N*4>& a)   : e(a) {}
-    gint32(const gint16<N*2>& a)  : e(a) {}
-    gint32(const gint32<N>& a)    : e(a) {}
-    gint32(const gint64<N/2>& a)  : e(a) {}
-
-    gint32(const gint8<N*4,E>& a)   : e(a.e) {}
-    gint32(const gint16<N*2,E>& a)  : e(a.e) {}
-    gint32(const gint32<N,E>& a)    : e(a.e) {}
-    gint32(const gint64<N/2,E>& a)  : e(a.e) {}
-
-    operator gint32<N>() const { return eval(); }
-    gint32<N> eval() const;
-};
-
-template<unsigned N, class E>
-class int32 : public gint32<N,E> {
-private:
-    using super = gint32<N,E>;
-public:
-
-    int32(const E& a, int dummy) : super(a, dummy) {}
-    int32(const gint8<N*4>& a)   : super(a) {}
-    int32(const gint16<N*2>& a)  : super(a) {}
-    int32(const gint32<N>& a)    : super(a) {}
-    int32(const gint64<N/2>& a)  : super(a) {}
-
-    int32(const gint8<N*4,E>& a)   : super(a.e) {}
-    int32(const gint16<N*2,E>& a)  : super(a.e) {}
-    int32(const gint32<N,E>& a)    : super(a.e) {}
-    int32(const gint64<N/2,E>& a)  : super(a.e) {}
+    int32(const E& a, int /* dummy */) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int32(const any_vec<N*4,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int32(const any_vec<N*4,V<N2,void>>& a) : e(a.vec()) {}
 
     operator int32<N>() const { return eval(); }
     int32<N> eval() const;
@@ -319,79 +256,52 @@ public:
 
 
 template<unsigned N, class E>
-class uint32 : public gint32<N,E> {
-private:
-    using super = gint32<N,E>;
+class uint32 : public any_int32<N, uint32<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
+    using expr_type = E;
+    E e;
 
-    uint32(const E& a, int dummy) : super(a, dummy) {}
-    uint32(const gint8<N*4>& a)   : super(a) {}
-    uint32(const gint16<N*2>& a)  : super(a) {}
-    uint32(const gint32<N>& a)    : super(a) {}
-    uint32(const gint64<N/2>& a)  : super(a) {}
-
-    uint32(const gint8<N*4,E>& a)   : super(a.e) {}
-    uint32(const gint16<N*2,E>& a)  : super(a.e) {}
-    uint32(const gint32<N,E>& a)    : super(a.e) {}
-    uint32(const gint64<N/2,E>& a)  : super(a.e) {}
+    uint32(const E& a, int /* dummy */) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint32(const any_vec<N*4,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint32(const any_vec<N*4,V<N2,void>>& a) : e(a.vec()) {}
 
     operator uint32<N>() const { return eval(); }
     uint32<N> eval() const;
 };
 
 template<unsigned N, class E>
-class mask_int32 : public uint32<N,E> {
-private:
-    using super = uint32<N,E>;
+class mask_int32 : public any_int32<N, mask_int32<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using expr_type = E;
+    E e;
 
-    mask_int32(const E& a, int dummy) : super(a, dummy) {}
-    mask_int32(const mask_int32<N>& a) : super(a, 0) {}
+    mask_int32(const E& a, int /* dummy */) : e(a) {}
+    mask_int32(const mask_int32<N>& a) : e(a) {}
 
     operator mask_int32<N>() const { return eval(); }
-    operator int32<N>() const { return eval(); }
+    operator uint32<N>() const { return eval(); }
     mask_int32<N> eval() const;
 };
 
 // -----------------------------------------------------------------------------
-// gint64<N>
+// int64<N>
 
 template<unsigned N, class E>
-class gint64 {
+class int64 : public any_int64<N, int64<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_INT;
+    using expr_type = E;
     E e;
 
-    gint64(const E& a, int /* dummy */) : e(a) {}
-    gint64(const gint8<N*8>& a)   : e(a) {}
-    gint64(const gint16<N*4>& a)  : e(a) {}
-    gint64(const gint32<N*2>& a)  : e(a) {}
-    gint64(const gint64<N>& a)    : e(a) {}
-
-    gint64(const gint8<N*8,E>& a)   : e(a.e) {}
-    gint64(const gint16<N*4,E>& a)  : e(a.e) {}
-    gint64(const gint32<N*2,E>& a)  : e(a.e) {}
-    gint64(const gint64<N,E>& a)    : e(a.e) {}
-
-    operator gint64<N>() const { return eval(); }
-    gint64<N> eval() const;
-};
-
-template<unsigned N, class E>
-class int64 : public gint64<N,E> {
-private:
-    using super = gint64<N,E>;
-public:
-
-    int64(const E& a, int dummy) : super(a, dummy) {}
-    int64(const gint8<N*8>& a)   : super(a) {}
-    int64(const gint16<N*4>& a)  : super(a) {}
-    int64(const gint32<N*2>& a)  : super(a) {}
-    int64(const gint64<N>& a)    : super(a) {}
-
-    int64(const gint8<N*8,E>& a)   : super(a.e) {}
-    int64(const gint16<N*4,E>& a)  : super(a.e) {}
-    int64(const gint32<N*2,E>& a)  : super(a.e) {}
-    int64(const gint64<N,E>& a)    : super(a.e) {}
+    int64(const E& a, int /* dummy */) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int64(const any_vec<N*8,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    int64(const any_vec<N*8,V<N2,void>>& a) : e(a.vec()) {}
 
     operator int64<N>() const { return eval(); }
     int64<N> eval() const;
@@ -399,21 +309,17 @@ public:
 
 
 template<unsigned N, class E>
-class uint64 : public gint64<N,E> {
-private:
-    using super = gint64<N,E>;
+class uint64 : public any_int64<N, uint64<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
+    using expr_type = E;
+    E e;
 
-    uint64(const E& a, int dummy) : super(a, dummy) {}
-    uint64(const gint8<N*8>& a)   : super(a) {}
-    uint64(const gint16<N*4>& a)  : super(a) {}
-    uint64(const gint32<N*2>& a)  : super(a) {}
-    uint64(const gint64<N>& a)    : super(a) {}
-
-    uint64(const gint8<N*8,E>& a)   : super(a.e) {}
-    uint64(const gint16<N*4,E>& a)  : super(a.e) {}
-    uint64(const gint32<N*2,E>& a)  : super(a.e) {}
-    uint64(const gint64<N,E>& a)    : super(a.e) {}
+    uint64(const E& a, int /* dummy */) : e(a) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint64(const any_vec<N*8,V<N2,E>>& a) : e(a.vec().e) {}
+    template<template<unsigned, class> class V, unsigned N2>
+    uint64(const any_vec<N*8,V<N2,void>>& a) : e(a.vec()) {}
 
     operator uint64<N>() const { return eval(); }
     uint64<N> eval() const;
@@ -421,16 +327,17 @@ public:
 
 
 template<unsigned N, class E>
-class mask_int64 : public uint64<N,E> {
-private:
-    using super = uint64<N,E>;
+class mask_int64 : public any_int64<N, mask_int64<N,E>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using expr_type = E;
+    E e;
 
-    mask_int64(const E& a, int dummy) : super(a, dummy) {}
-    mask_int64(const mask_int64<N>& a) : super(a, 0) {}
+    mask_int64(const E& a, int /* dummy */) : e(a) {}
+    mask_int64(const mask_int64<N>& a) : e(a) {}
 
     operator mask_int64<N>() const { return eval(); }
-    operator int64<N>() const { return eval(); }
+    operator uint64<N>() const { return eval(); }
     mask_int64<N> eval() const;
 };
 

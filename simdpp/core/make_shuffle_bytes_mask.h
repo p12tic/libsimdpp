@@ -154,7 +154,7 @@ uint8x8 get_shuffle_bytex8_16()
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, unsigned N>
-gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
+uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
     uint8_t b0 = detail::get_shuffle_bytex1_16<s0,2>();
@@ -202,7 +202,7 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, int s2, int s3, unsigned N>
-gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
+uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
     uint8_t b0 = detail::get_shuffle_bytex1_16<s0,4>();
@@ -249,7 +249,7 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, unsigned N>
-gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
+uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
@@ -296,7 +296,7 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
 */
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7,
          int s8, int s9, int s10, int s11, int s12, int s13, int s14, int s15, unsigned N>
-gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
+uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,16>();
     detail::assert_selector_range<s4,s5,s6,s7,16>();
@@ -359,7 +359,7 @@ gint8<N> make_shuffle_bytes16_mask(gint8<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, unsigned N>
-gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
+uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
     detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,2>();
@@ -407,7 +407,7 @@ gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, int s2, int s3, unsigned N>
-gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
+uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
     detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,4>();
@@ -451,7 +451,7 @@ gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
 */
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7,
          unsigned N>
-gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
+uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
@@ -502,7 +502,7 @@ gint16<N> make_shuffle_bytes16_mask(gint16<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, unsigned N>
-gint32<N> make_shuffle_bytes16_mask(gint32<N> &mask)
+uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
     detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,2>();
@@ -541,7 +541,7 @@ gint32<N> make_shuffle_bytes16_mask(gint32<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, int s2, int s3, unsigned N>
-gint32<N> make_shuffle_bytes16_mask(gint32<N> &mask)
+uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
     detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,4>();
@@ -580,7 +580,7 @@ gint32<N> make_shuffle_bytes16_mask(gint32<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, unsigned N>
-gint64<N> make_shuffle_bytes16_mask(gint64<N> &mask)
+uint64<N> make_shuffle_bytes16_mask(uint64<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
     detail::uint8x8 b0 = detail::get_shuffle_bytex8_16<s0,2>();

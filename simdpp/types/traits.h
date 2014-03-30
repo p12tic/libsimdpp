@@ -53,10 +53,6 @@ template<unsigned N, class E> struct is_vector<uint8<N,E>>     : std::true_type 
 template<unsigned N, class E> struct is_vector<uint16<N,E>>    : std::true_type {};
 template<unsigned N, class E> struct is_vector<uint32<N,E>>    : std::true_type {};
 template<unsigned N, class E> struct is_vector<uint64<N,E>>    : std::true_type {};
-template<unsigned N, class E> struct is_vector<gint8<N,E>>     : std::true_type {};
-template<unsigned N, class E> struct is_vector<gint16<N,E>>    : std::true_type {};
-template<unsigned N, class E> struct is_vector<gint32<N,E>>    : std::true_type {};
-template<unsigned N, class E> struct is_vector<gint64<N,E>>    : std::true_type {};
 template<unsigned N, class E> struct is_vector<mask_int8<N,E>> : std::true_type {};
 template<unsigned N, class E> struct is_vector<mask_int16<N,E>>    : std::true_type {};
 template<unsigned N, class E> struct is_vector<mask_int32<N,E>>    : std::true_type {};

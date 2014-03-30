@@ -41,168 +41,36 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/** Interleaves 8-bit values from four vectors and stores the result into
-    successive locations starting from @a p.
+/** Interleaves values from four vectors and stores the result into successive
+    locations starting from @a p.
 
     @par 128-bit version:
     @code
-    [ *(p),   *(p+4), *(p+8),  ... , *(p+60) ] = a
-    [ *(p+1), *(p+5), *(p+9),  ... , *(p+61) ] = b
-    [ *(p+2), *(p+6), *(p+10), ... , *(p+62) ] = c
-    [ *(p+3), *(p+7), *(p+11), ... , *(p+63) ] = d
+    [ *(p),   *(p+4), *(p+8),  ... , *(p+M*4-4) ] = a
+    [ *(p+1), *(p+5), *(p+9),  ... , *(p+M*4-3) ] = b
+    [ *(p+2), *(p+6), *(p+10), ... , *(p+M*4-2) ] = c
+    [ *(p+3), *(p+7), *(p+11), ... , *(p+M*4-1) ] = d
     @endcode
-    @a p must be aligned to 16 bytes.
 
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  ... , *(p+124) ] = a
-    [ *(p+1), *(p+5), *(p+9),  ... , *(p+125) ] = b
-    [ *(p+2), *(p+6), *(p+10), ... , *(p+126) ] = c
-    [ *(p+3), *(p+7), *(p+11), ... , *(p+127) ] = d
-    @endcode
-    @a p must be aligned to 32 bytes.
+    Here M is the number of elements in the vector
+
+    @a p must be aligned to the vector size in bytes
 */
-template<unsigned N>
-void store_packed4(void* p, gint8<N> a, gint8<N> b, gint8<N> c, gint8<N> d)
-{
-    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
-}
-
-/** Interleaves 16-bit values from four vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  ... , *(p+28) ] = a
-    [ *(p+1), *(p+5), *(p+9),  ... , *(p+29) ] = b
-    [ *(p+2), *(p+6), *(p+10), ... , *(p+30) ] = c
-    [ *(p+3), *(p+7), *(p+11), ... , *(p+31) ] = d
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  ... , *(p+60) ] = a
-    [ *(p+1), *(p+5), *(p+9),  ... , *(p+61) ] = b
-    [ *(p+2), *(p+6), *(p+10), ... , *(p+62) ] = c
-    [ *(p+3), *(p+7), *(p+11), ... , *(p+63) ] = d
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed4(void* p, gint16<N> a, gint16<N> b, gint16<N> c, gint16<N> d)
-{
-    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
-}
-
-/** Interleaves 32-bit values from four vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  *(p+12) ] = a
-    [ *(p+1), *(p+5), *(p+9),  *(p+13) ] = b
-    [ *(p+2), *(p+6), *(p+10), *(p+14) ] = c
-    [ *(p+3), *(p+7), *(p+11), *(p+15) ] = d
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  ... , *(p+28) ] = a
-    [ *(p+1), *(p+5), *(p+9),  ... , *(p+29) ] = b
-    [ *(p+2), *(p+6), *(p+10), ... , *(p+30) ] = c
-    [ *(p+3), *(p+7), *(p+11), ... , *(p+31) ] = d
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed4(void* p, gint32<N> a, gint32<N> b, gint32<N> c, gint32<N> d)
-{
-    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
-}
-
-/** Interleaves 64-bit values from four vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+4) ] = a
-    [ *(p+1), *(p+5) ] = b
-    [ *(p+2), *(p+6) ] = c
-    [ *(p+3), *(p+7) ] = d
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  *(p+12) ] = a
-    [ *(p+1), *(p+5), *(p+9),  *(p+13) ] = b
-    [ *(p+2), *(p+6), *(p+10), *(p+14) ] = c
-    [ *(p+3), *(p+7), *(p+11), *(p+15) ] = d
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed4(void* p, gint64<N> a, gint64<N> b, gint64<N> c, gint64<N> d)
-{
-    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
-}
-
-/** Interleaves 32-bit floating-point values from four vectors and stores
-    the result into successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  *(p+12) ] = a
-    [ *(p+1), *(p+5), *(p+9),  *(p+13) ] = b
-    [ *(p+2), *(p+6), *(p+10), *(p+14) ] = c
-    [ *(p+3), *(p+7), *(p+11), *(p+15) ] = d
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  ... , *(p+28) ] = a
-    [ *(p+1), *(p+5), *(p+9),  ... , *(p+29) ] = b
-    [ *(p+2), *(p+6), *(p+10), ... , *(p+30) ] = c
-    [ *(p+3), *(p+7), *(p+11), ... , *(p+31) ] = d
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
+template<unsigned N, class V1, class V2, class V3, class V4>
 void store_packed4(void* p,
-                   float32<N> a, float32<N> b, float32<N> c, float32<N> d)
+                   const any_vec<N,V1>& a, const any_vec<N,V2>& b,
+                   const any_vec<N,V3>& c, const any_vec<N,V4>& d)
 {
-    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
-}
-
-/** Interleaves 64-bit floating-point values from four vectors and stores
-    the result into successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+4) ] = a
-    [ *(p+1), *(p+5) ] = b
-    [ *(p+2), *(p+6) ] = c
-    [ *(p+3), *(p+7) ] = d
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+4), *(p+8),  *(p+12) ] = a
-    [ *(p+1), *(p+5), *(p+9),  *(p+13) ] = b
-    [ *(p+2), *(p+6), *(p+10), *(p+14) ] = c
-    [ *(p+3), *(p+7), *(p+11), *(p+15) ] = d
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed4(void* p,
-                   float64<N> a, float64<N> b, float64<N> c, float64<N> d)
-{
-    detail::insn::i_store_packed4(reinterpret_cast<char*>(p), a, b, c, d);
+    static_assert(!is_mask<V1>::value && !is_mask<V2>::value &&
+                  !is_mask<V3>::value && !is_mask<V4>::value,
+                  "Mask types can not be stored"); // FIXME
+    static_assert(V1::size_tag == V2::size_tag &&
+                  V1::size_tag == V3::size_tag &&
+                  V1::size_tag == V4::size_tag,
+                  "Vector elements must have the same size");
+    detail::insn::i_store_packed4(reinterpret_cast<char*>(p),
+                                  a.vec().eval(), b.vec().eval(),
+                                  c.vec().eval(), d.vec().eval());
 }
 
 

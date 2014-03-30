@@ -50,12 +50,12 @@ inline float64x4 float64x4::zero()
     return r;
 }
 
-inline float64x4::float64x4(gint64x4 d)
+inline float64x4::float64x4(uint64x4 d)
 {
     *this = bit_cast<float64x4(d);
 }
 
-inline mask_float64x4::operator float64x4() const
+inline maskdata_float64x4::operator float64x4() const
 {
     return d_;
 }

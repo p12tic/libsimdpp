@@ -62,11 +62,20 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E>
-gint8<N, gint8<N>> shift_l(gint8<N,E> a, unsigned count)
+int8<N, int8<N>> shift_l(int8<N,E> a, unsigned count)
+{
+    uint8<N> qa = a.eval();
+    return detail::insn::i_shift_l(qa, count);
+}
+
+template<unsigned N, class E>
+uint8<N, uint8<N>> shift_l(uint8<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+/// @}
 
+/// @{
 /** Shifts 16-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -85,11 +94,20 @@ gint8<N, gint8<N>> shift_l(gint8<N,E> a, unsigned count)
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E>
-gint16<N, gint16<N>> shift_l(gint16<N,E> a, unsigned count)
+int16<N, int16<N>> shift_l(int16<N,E> a, unsigned count)
+{
+    uint16<N> qa = a.eval();
+    return detail::insn::i_shift_l(qa, count);
+}
+
+template<unsigned N, class E>
+uint16<N, uint16<N>> shift_l(uint16<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+/// @}
 
+/// @{
 /** Shifts 32-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -108,12 +126,20 @@ gint16<N, gint16<N>> shift_l(gint16<N,E> a, unsigned count)
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E>
-gint32<N, gint32<N>> shift_l(gint32<N,E> a, unsigned count)
+int32<N, int32<N>> shift_l(int32<N,E> a, unsigned count)
+{
+    uint32<N> qa = a.eval();
+    return detail::insn::i_shift_l(qa, count);
+}
+
+template<unsigned N, class E>
+uint32<N, uint32<N>> shift_l(uint32<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+/// @}
 
-
+/// @{
 /** Shifts 64-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -132,10 +158,18 @@ gint32<N, gint32<N>> shift_l(gint32<N,E> a, unsigned count)
     @unimp{ALTIVEC}
 */
 template<unsigned N, class E>
-gint64<N, gint64<N>> shift_l(gint64<N,E> a, unsigned count)
+int64<N, int64<N>> shift_l(int64<N,E> a, unsigned count)
+{
+    uint64<N> qa = a.eval();
+    return detail::insn::i_shift_l(qa, count);
+}
+
+template<unsigned N, class E>
+uint64<N, uint64<N>> shift_l(uint64<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+/// @}
 
 /// @{
 /** Shifts 8-bit values left by @a count bits while shifting in zeros.
@@ -156,13 +190,25 @@ gint64<N, gint64<N>> shift_l(gint64<N,E> a, unsigned count)
     @icost{AVX2,NEON, 2-3}
 */
 template<unsigned count, unsigned N, class E>
-gint8<N, gint8<N>> shift_l(gint8<N,E> a)
+int8<N, int8<N>> shift_l(int8<N,E> a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     if (count == 0) return a;
-    if (count == 8) return gint8<N>::zero();
+    if (count == 8) return int8<N>::zero();
+
+    uint8<N> qa = a.eval();
+    return detail::insn::i_shift_l<count>(qa);
+}
+
+template<unsigned count, unsigned N, class E>
+uint8<N, uint8<N>> shift_l(uint8<N,E> a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 8) return uint8<N>::zero();
     return detail::insn::i_shift_l<count>(a.eval());
 }
+/// @}
 
 /// @{
 /** Shifts 16-bit values left by @a count bits while shifting in zeros.
@@ -181,14 +227,27 @@ gint8<N, gint8<N>> shift_l(gint8<N,E> a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E>
-gint16<N, gint16<N>> shift_l(gint16<N,E> a)
+int16<N, int16<N>> shift_l(int16<N,E> a)
 {
     static_assert(count <= 16, "Shift out of bounds");
     if (count == 0) return a;
-    if (count == 16) return gint16<N>::zero();
-    return detail::insn::i_shift_l<count>(a.eval());
+    if (count == 16) return int16<N>::zero();
+
+    uint16<N> qa = a.eval();
+    return detail::insn::i_shift_l<count>(qa);
 }
 
+template<unsigned count, unsigned N, class E>
+uint16<N, uint16<N>> shift_l(uint16<N,E> a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 16) return uint16<N>::zero();
+    return detail::insn::i_shift_l<count>(a.eval());
+}
+/// @}
+
+/// @{
 /** Shifts 32-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -205,14 +264,27 @@ gint16<N, gint16<N>> shift_l(gint16<N,E> a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E>
-gint32<N, gint32<N>> shift_l(gint32<N,E> a)
+int32<N, int32<N>> shift_l(int32<N,E> a)
 {
     static_assert(count <= 32, "Shift out of bounds");
     if (count == 0) return a;
-    if (count == 32) return gint32<N>::zero();
-    return detail::insn::i_shift_l<count>(a.eval());
+    if (count == 32) return int32<N>::zero();
+
+    uint32<N> qa = a.eval();
+    return detail::insn::i_shift_l<count>(qa);
 }
 
+template<unsigned count, unsigned N, class E>
+uint32<N, uint32<N>> shift_l(uint32<N,E> a)
+{
+    static_assert(count <= 32, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 32) return uint32<N>::zero();
+    return detail::insn::i_shift_l<count>(a.eval());
+}
+/// @}
+
+/// @{
 /** Shifts 64-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -228,13 +300,25 @@ gint32<N, gint32<N>> shift_l(gint32<N,E> a)
     @unimp{ALTIVEC}
 */
 template<unsigned count, unsigned N, class E>
-gint64<N, gint64<N>> shift_l(gint64<N,E> a)
+int64<N, int64<N>> shift_l(int64<N,E> a)
 {
     static_assert(count <= 64, "Shift out of bounds");
     if (count == 0) return a;
-    if (count == 64) return gint64<N>::zero();
+    if (count == 64) return int64<N>::zero();
+
+    uint64<N> qa = a.eval();
+    return detail::insn::i_shift_l<count>(qa);
+}
+
+template<unsigned count, unsigned N, class E>
+uint64<N, uint64<N>> shift_l(uint64<N,E> a)
+{
+    static_assert(count <= 64, "Shift out of bounds");
+    if (count == 0) return a;
+    if (count == 64) return uint64<N>::zero();
     return detail::insn::i_shift_l<count>(a.eval());
 }
+/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

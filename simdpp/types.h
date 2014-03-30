@@ -35,6 +35,7 @@
 
 #include <simdpp/expr.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int16x8.h>
 #include <simdpp/types/int32x4.h>

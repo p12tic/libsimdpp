@@ -43,13 +43,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class T> struct base_mask_type { using type = T; };
-template<unsigned N> struct base_mask_type<mask_int8<N>> { using type = uint8<N>; };
-template<unsigned N> struct base_mask_type<mask_int16<N>> { using type = uint16<N>; };
-template<unsigned N> struct base_mask_type<mask_int32<N>> { using type = uint32<N>; };
-template<unsigned N> struct base_mask_type<mask_int64<N>> { using type = uint64<N>; };
-template<unsigned N> struct base_mask_type<mask_float32<N>> { using type = float32<N>; };
-template<unsigned N> struct base_mask_type<mask_float64<N>> { using type = float64<N>; };
+template<class T> struct base_mask_vector_type { using type = T; };
+template<unsigned N> struct base_mask_vector_type<mask_int8<N>> { using type = uint8<N>; };
+template<unsigned N> struct base_mask_vector_type<mask_int16<N>> { using type = uint16<N>; };
+template<unsigned N> struct base_mask_vector_type<mask_int32<N>> { using type = uint32<N>; };
+template<unsigned N> struct base_mask_vector_type<mask_int64<N>> { using type = uint64<N>; };
+template<unsigned N> struct base_mask_vector_type<mask_float32<N>> { using type = float32<N>; };
+template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type = float64<N>; };
 
 template<class R, class T>
 R cast_memcpy(T t)
@@ -63,8 +63,8 @@ R cast_memcpy(T t)
 template<class R, class T>
 R cast_memcpy_mask(T t)
 {
-    using TT = typename base_mask_type<T>::type;
-    TT tt = (TT) t;
+    using TT = typename base_mask_vector_type<T>::type;
+    TT tt = t.unmask();
     return cast_memcpy<R>(tt);
 }
 

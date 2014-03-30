@@ -44,25 +44,16 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-inline float32x4 float32x4::zero()
+inline float32<4> float32<4>::zero() { return make_uint(0); }
+
+inline float32<4> mask_float32<4>::unmask() const
 {
-    float32x4 r;
-    r = bit_xor(r, r);
-    return r;
-}
-
-inline mask_float32<4>::mask_float32(const maskdata_float32<4>& d) : float32<4>(d), mask_(d) {}
-
-#if SIMDPP_USE_SSE2
-inline mask_float32<4>::mask_float32(__m128 d)     : float32<4>(d), mask_(d) {}
-inline mask_float32<4>::mask_float32(float32<4> d) : float32<4>(d), mask_(d) {}
-#elif SIMDPP_USE_NEON
-inline mask_float32<4>::mask_float32(float32x4_t d) : float32<4>(d), mask_(d) {}
-inline mask_float32<4>::mask_float32(float32<4> d)  : float32<4>(d), mask_(d) {}
-#elif SIMDPP_USE_ALTIVEC
-inline mask_float32<4>::mask_float32(__vector float d) : float32<4>(d), mask_(d) {}
-inline mask_float32<4>::mask_float32(float32<4> d)     : float32<4>(d), mask_(d) {}
+#if SIMDPP_USE_NULL
+    return null::convert_mask<float32<4>>(*this);
+#else
+    return float32<4>(d_);
 #endif
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

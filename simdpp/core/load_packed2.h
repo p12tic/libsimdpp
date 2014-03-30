@@ -34,148 +34,33 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/load_packed2.h>
+#include <simdpp/detail/traits.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** Loads 8-bit values packed in pairs, de-interleaves them and stores the
-    result into two vectors.
+/** Loads values packed in pairs, de-interleaves them and stores the result
+    into two vectors.
 
-    @par 128-bit version:
     @code
-    a = [ *(p),   *(p+2), *(p+4), ... , *(p+30) ]
-    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+31) ]
+    a = [ *(p),   *(p+2), *(p+4), ... , *(p+M*2-2) ]
+    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+M*2-1) ]
     @endcode
-    @a p must be aligned to 16 bytes.
 
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), ... , *(p+62) ]
-    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+63) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
+    Here M is the number of elements in the vector
+
+    @a p must be aligned to the vector size in bytes
 */
-template<unsigned N>
-void load_packed2(gint8<N>& a, gint8<N>& b, const void* p)
+template<unsigned N, class V>
+void load_packed2(any_vec<N,V>& a, any_vec<N,V>& b, const void* p)
 {
-    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 16-bit values packed in pairs, de-interleaves them and stores the
-    result into two vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), ... , *(p+14) ]
-    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+15) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), ... , *(p+30) ]
-    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+31) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed2(gint16<N>& a, gint16<N>& b, const void* p)
-{
-    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 32-bit values packed in pairs, de-interleaves them and stores the
-    result into two vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), *(p+6) ]
-    b = [ *(p+1), *(p+3), *(p+5), *(p+7) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), ... , *(p+14) ]
-    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+15) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed2(gint32<N>& a, gint32<N>& b, const void* p)
-{
-    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 64-bit values packed in pairs, de-interleaves them and stores the
-    result into two vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+2) ]
-    b = [ *(p+1), *(p+3) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), *(p+14) ]
-    b = [ *(p+1), *(p+3), *(p+5), *(p+15) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed2(gint64<N>& a, gint64<N>& b, const void* p)
-{
-    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 32-bit float values packed in pairs, de-interleaves them and stores
-    the result into two vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), ... , *(p+6) ]
-    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+7) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), ... , *(p+14) ]
-    b = [ *(p+1), *(p+3), *(p+5), ... , *(p+15) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed2(float32<N>& a, float32<N>& b, const void* p)
-{
-    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 64-bit float values packed in pairs, de-interleaves them and stores
-    the result into two vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+2) ]
-    b = [ *(p+1), *(p+3) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+2), *(p+4), *(p+14) ]
-    b = [ *(p+1), *(p+3), *(p+5), *(p+15) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed2(float64<N>& a, float64<N>& b, const void* p)
-{
-    detail::insn::i_load_packed2(a, b, reinterpret_cast<const char*>(p));
+    static_assert(!is_mask<V>::value, "Mask types can not be loaded");
+    typename detail::get_expr_nosign<V, void>::type ra, rb;
+    detail::insn::i_load_packed2(ra, rb, reinterpret_cast<const char*>(p));
+    a.vec() = ra;
+    b.vec() = rb;
 }
 
 

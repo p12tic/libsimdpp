@@ -61,7 +61,7 @@ namespace detail {
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-inline void transpose2(gint8x16& a0, gint8x16& a1)
+inline void transpose2(uint8x16& a0, uint8x16& a1)
 {
 #if SIMDPP_USE_NULL
     null::transpose2(a0, a1);
@@ -94,7 +94,7 @@ inline void transpose2(gint8x16& a0, gint8x16& a1)
 
     Needs SSSE3
 */
-inline gint8x16 transpose_inplace(gint8x16 a)
+inline uint8x16 transpose_inplace(uint8x16 a)
 {
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // the compiler will take this out of any loops automatically
@@ -106,14 +106,14 @@ inline gint8x16 transpose_inplace(gint8x16 a)
 #endif
 }
 
-inline gint8x32 transpose_inplace(gint8x32 a)
+inline uint8x32 transpose_inplace(uint8x32 a)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_ALTIVEC
     uint8x32 idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,
                              2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);
 #elif SIMDPP_USE_SSSE3
-    SIMDPP_VEC_ARRAY_IMPL1(gint8x32, transpose_inplace, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint8x32, transpose_inplace, a);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
@@ -137,10 +137,10 @@ inline gint8x32 transpose_inplace(gint8x32 a)
     @icost{AVX2, 24}
 */
 template<unsigned N>
-inline void partial_transpose8(gint8<N>& a0, gint8<N>& a1,
-                               gint8<N>& a2, gint8<N>& a3,
-                               gint8<N>& a4, gint8<N>& a5,
-                               gint8<N>& a6, gint8<N>& a7)
+inline void partial_transpose8(uint8<N>& a0, uint8<N>& a1,
+                               uint8<N>& a2, uint8<N>& a3,
+                               uint8<N>& a4, uint8<N>& a5,
+                               uint8<N>& a6, uint8<N>& a7)
 {
     /*
     [a0;a1;a2;a3;a4;a5;a6;a7;...]
@@ -152,7 +152,7 @@ inline void partial_transpose8(gint8<N>& a0, gint8<N>& a1,
     [g0;g1;g2;g3;g4;g5;g6;g7;...]
     [h0;h1;h2;h3;h4;h5;h6;h7;...]
     */
-    typename detail::same_width<gint8<N>>::b16 b0, b1, b2, b3, b4, b5, b6, b7;
+    typename detail::same_width<uint8<N>>::u16 b0, b1, b2, b3, b4, b5, b6, b7;
     b0 = zip16_lo(a0, a1);
     b1 = zip16_lo(a2, a3);
     b2 = zip16_lo(a4, a5);
@@ -171,7 +171,7 @@ inline void partial_transpose8(gint8<N>& a0, gint8<N>& a1,
     [e8;f8;e9;f9;...;e15;f15]
     [g8;h8;g9;h9;...;g15;t15]
     */
-    typename detail::same_width<gint8<N>>::b32 c0, c1, c2, c3, c4, c5, c6, c7;
+    typename detail::same_width<uint8<N>>::u32 c0, c1, c2, c3, c4, c5, c6, c7;
 
     c0 = zip8_lo(b0, b1);
     c1 = zip8_lo(b2, b3);

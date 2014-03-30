@@ -82,17 +82,17 @@ void v256_mem_unpack2_impl(T& a, T& b)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_unpack2(gint8x16& a, gint8x16& b)   { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint16x8& a, gint16x8& b)   { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint32x4& a, gint32x4& b)   { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint64x2& a, gint64x2& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint8x16& a, uint8x16& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint16x8& a, uint16x8& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint32x4& a, uint32x4& b)   { v_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint64x2& a, uint64x2& b)   { v_mem_unpack2_impl(a, b); }
 inline void mem_unpack2(float32x4& a, float32x4& b) { v_mem_unpack2_impl(a, b); }
 inline void mem_unpack2(float64x2& a, float64x2& b) { v_mem_unpack2_impl(a, b); }
 
-inline void mem_unpack2(gint8x32& a, gint8x32& b)   { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint16x16& a, gint16x16& b) { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint32x8& a, gint32x8& b)   { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(gint64x4& a, gint64x4& b)   { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint8x32& a, uint8x32& b)   { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint16x16& a, uint16x16& b) { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint32x8& a, uint32x8& b)   { v256_mem_unpack2_impl(a, b); }
+inline void mem_unpack2(uint64x4& a, uint64x4& b)   { v256_mem_unpack2_impl(a, b); }
 inline void mem_unpack2(float32x8& a, float32x8& b) { v256_mem_unpack2_impl(a, b); }
 inline void mem_unpack2(float64x4& a, float64x4& b) { v256_mem_unpack2_impl(a, b); }
 /// @}
@@ -133,7 +133,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     b = b2;
     c = align16<11>(c2, c2);
 #else
-    typename same_width<T>::b8 t0, t1, t2, t3;
+    typename same_width<T>::u8 t0, t1, t2, t3;
     t0 = a;
     t1 = align16<12>(a, b);
     t2 = align16<8>(b, c);
@@ -142,7 +142,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [a4, b4, c4, a5, b5, c5, a6, b6, c6, a7, b7, c7, ...]
     // [a8, b8, c8, a9, b9, c9, a10,b10,c10,a11,b11,c11, ...]
     // [a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15, ...]
-    typename same_width<T>::b16 b0, b1, b2, b3;
+    typename same_width<T>::u16 b0, b1, b2, b3;
     b0 = zip16_lo(t0, t1);
     b1 = zip16_lo(t2, t3);
     b2 = zip16_hi(t0, t1);
@@ -151,7 +151,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
     // [a8, a12,b8, b12,c9, c13,a9, a13,b9, b13,c9, c13,a10,a14,b10,b14,]
     // [c2, c6, a3, a7, b3, b7, c3, c7, ... ]
     // [c10,c14,a11,a15,b11,b15,c11,c15,... ]
-    typename same_width<T>::b8 u0, u1, u2;
+    typename same_width<T>::u8 u0, u1, u2;
     u0 = zip8_lo(b0, b1);
     u1 = zip8_hi(b0, b1);
     u2 = zip8_lo(b2, b3);
@@ -220,7 +220,7 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [a2,b2,c2,a3,b3,c3, ... ]
     // [a4,b4,c4,a5,b5,c5, ... ]
     // [a6,b6,c6,a7,b7,c7, ... ]
-    typename same_width<T>::b32 b0, b1, b2, b3;
+    typename same_width<T>::u32 b0, b1, b2, b3;
     b0 = zip8_lo(t0, t1);
     b1 = zip8_lo(t2, t3);
     b2 = zip8_hi(t0, t1);
@@ -229,7 +229,7 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
     // [a4,a6,b4,b6,c4,c6,a5,a7]
     // [b1,b3,c1,c3, ... ]
     // [b5,b7,c5,c7, ... ]
-    typename same_width<T>::b64 c0, c1, c2;
+    typename same_width<T>::u64 c0, c1, c2;
     c0 = zip4_lo(b0, b1);
     c1 = zip4_hi(b0, b1);
     c2 = zip4_lo(b2, b3);
@@ -334,41 +334,41 @@ void v256_mem_unpack3_shuffle(T& a, T& b, T& c)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_unpack3(gint8x16& a, gint8x16& b, gint8x16& c)
+inline void mem_unpack3(uint8x16& a, uint8x16& b, uint8x16& c)
 {
     v_mem_unpack3_impl8(a, b, c);
 }
-inline void mem_unpack3(gint8x32& a, gint8x32& b, gint8x32& c)
+inline void mem_unpack3(uint8x32& a, uint8x32& b, uint8x32& c)
 {
     v256_mem_unpack3_shuffle(a, b, c);
     v_mem_unpack3_impl8(a, b, c);
 }
 
-inline void mem_unpack3(gint16x8& a, gint16x8& b, gint16x8& c)
+inline void mem_unpack3(uint16x8& a, uint16x8& b, uint16x8& c)
 {
     v_mem_unpack3_impl16(a, b, c);
 }
-inline void mem_unpack3(gint16x16& a, gint16x16& b, gint16x16& c)
+inline void mem_unpack3(uint16x16& a, uint16x16& b, uint16x16& c)
 {
     v256_mem_unpack3_shuffle(a, b, c);
     v_mem_unpack3_impl16(a, b, c);
 }
 
-inline void mem_unpack3(gint32x4& a, gint32x4& b, gint32x4& c)
+inline void mem_unpack3(uint32x4& a, uint32x4& b, uint32x4& c)
 {
     v_mem_unpack3_impl32(a, b, c);
 }
-inline void mem_unpack3(gint32x8& a, gint32x8& b, gint32x8& c)
+inline void mem_unpack3(uint32x8& a, uint32x8& b, uint32x8& c)
 {
     v256_mem_unpack3_shuffle(a, b, c);
     v_mem_unpack3_impl32(a, b, c);
 }
 
-inline void mem_unpack3(gint64x2& a, gint64x2& b, gint64x2& c)
+inline void mem_unpack3(uint64x2& a, uint64x2& b, uint64x2& c)
 {
     v_mem_unpack3_impl64(a, b, c);
 }
-inline void mem_unpack3(gint64x4& a, gint64x4& b, gint64x4& c)
+inline void mem_unpack3(uint64x4& a, uint64x4& b, uint64x4& c)
 {
     v256_mem_unpack3_shuffle(a, b, c);
     v_mem_unpack3_impl64(a, b, c);
@@ -403,7 +403,7 @@ template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
 {
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // TODO: optimize for altivec
-    typename same_width<T>::b32 b0, b1, b2, b3;
+    typename same_width<T>::u32 b0, b1, b2, b3;
     b0 = transpose_inplace(a);
     b1 = transpose_inplace(b);
     b2 = transpose_inplace(c);
@@ -433,7 +433,7 @@ template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
     // [a1, a3, a5, a7, b1, b3, b5, b7, c1, c3, c5, c7, d1, d3, d5, d7 ]
     // [a8, a10,a12,a14,b8, b10,b12,b14,c8, c10,c12,c14,d8, d10,d12,d14]
     // [a9, a11,a13,a15,b9, b11,b13,b15,c9, c11,c13,c15,d9, d11,d13,d15]
-    typename same_width<T>::b64 d0, d1, d2, d3;
+    typename same_width<T>::u64 d0, d1, d2, d3;
     d0 = zip16_lo(c0, c1);
     d1 = zip16_hi(c0, c1);
     d2 = zip16_lo(c2, c3);
@@ -455,7 +455,7 @@ template<class T> void mem_unpack4_impl16(T& a, T& b, T& c, T& d)
     // [a2,b2,c2,d2,a3,b3,c3,d3]
     // [a4,b4,c4,d4,a5,b5,c5,d5]
     // [a6,b6,c6,d6,a7,b7,c7,d7]
-    typename same_width<T>::b16 t0, t1, t2, t3;
+    typename same_width<T>::u16 t0, t1, t2, t3;
     t0 = zip8_lo(a, b);
     t1 = zip8_hi(a, b);
     t2 = zip8_lo(c, d);
@@ -464,7 +464,7 @@ template<class T> void mem_unpack4_impl16(T& a, T& b, T& c, T& d)
     // [a1,a3,b1,b3,c1,c3,d1,d3]
     // [a4,a6,b4,b6,c4,c6,d4,d6]
     // [a5,a7,b5,b7,c5,c7,d5,d7]
-    typename same_width<T>::b64 u0, u1, u2, u3;
+    typename same_width<T>::u64 u0, u1, u2, u3;
     u0 = zip8_lo(t0, t1);
     u1 = zip8_hi(t0, t1);
     u2 = zip8_lo(t2, t3);
@@ -516,53 +516,53 @@ void mem_unpack4_256_shuffle(T& a, T& b, T& c, T& d)
 */
 // @icost{SSE2, SSE3, 16}
 // @icost{SSSE3, SSE4.1, 12}
-inline void mem_unpack4(gint8x16& a, gint8x16& b,
-                       gint8x16& c, gint8x16& d)
+inline void mem_unpack4(uint8x16& a, uint8x16& b,
+                       uint8x16& c, uint8x16& d)
 {
     mem_unpack4_impl8(a, b, c, d);
 }
 
-inline void mem_unpack4(gint8x32& a, gint8x32& b,
-                       gint8x32& c, gint8x32& d)
+inline void mem_unpack4(uint8x32& a, uint8x32& b,
+                       uint8x32& c, uint8x32& d)
 {
     mem_unpack4_256_shuffle(a, b, c, d);
     mem_unpack4_impl8(a, b, c, d);
 }
 
-inline void mem_unpack4(gint16x8& a, gint16x8& b,
-                       gint16x8& c, gint16x8& d)
+inline void mem_unpack4(uint16x8& a, uint16x8& b,
+                       uint16x8& c, uint16x8& d)
 {
     mem_unpack4_impl16(a, b, c, d);
 }
 
-inline void mem_unpack4(gint16x16& a, gint16x16& b,
-                       gint16x16& c, gint16x16& d)
+inline void mem_unpack4(uint16x16& a, uint16x16& b,
+                       uint16x16& c, uint16x16& d)
 {
     mem_unpack4_256_shuffle(a, b, c, d);
     mem_unpack4_impl16(a, b, c, d);
 }
 
-inline void mem_unpack4(gint32x4& a, gint32x4& b,
-                       gint32x4& c, gint32x4& d)
+inline void mem_unpack4(uint32x4& a, uint32x4& b,
+                       uint32x4& c, uint32x4& d)
 {
     transpose4(a, b, c, d);
 }
 
-inline void mem_unpack4(gint32x8& a, gint32x8& b,
-                       gint32x8& c, gint32x8& d)
+inline void mem_unpack4(uint32x8& a, uint32x8& b,
+                       uint32x8& c, uint32x8& d)
 {
     mem_unpack4_256_shuffle(a, b, c, d);
     transpose4(a, b, c, d);
 }
 
-inline void mem_unpack4(gint64x2& a, gint64x2& b,
-                       gint64x2& c, gint64x2& d)
+inline void mem_unpack4(uint64x2& a, uint64x2& b,
+                       uint64x2& c, uint64x2& d)
 {
     mem_unpack4_impl64(a, b, c, d);
 }
 
-inline void mem_unpack4(gint64x4& a, gint64x4& b,
-                       gint64x4& c, gint64x4& d)
+inline void mem_unpack4(uint64x4& a, uint64x4& b,
+                       uint64x4& c, uint64x4& d)
 {
     mem_unpack4_256_shuffle(a, b, c, d);
     mem_unpack4_impl64(a, b, c, d);
@@ -603,10 +603,10 @@ inline void mem_unpack4(float64x4& a, float64x4& b, float64x4& c, float64x4& d)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_unpack6(gint8x16& a, gint8x16& b, gint8x16& c,
-                        gint8x16& d, gint8x16& e, gint8x16& f)
+inline void mem_unpack6(uint8x16& a, uint8x16& b, uint8x16& c,
+                        uint8x16& d, uint8x16& e, uint8x16& f)
 {
-    gint8x16 t0, t1, t2, t3, t4, t5;
+    uint8x16 t0, t1, t2, t3, t4, t5;
     t0 = zip16_lo(a, d);
     t1 = zip16_hi(a, d);
     t2 = zip16_lo(b, e);
@@ -614,7 +614,7 @@ inline void mem_unpack6(gint8x16& a, gint8x16& b, gint8x16& c,
     t4 = zip16_lo(c, f);
     t5 = zip16_hi(c, f);
 
-    gint8x16 u0, u1, u2, u3, u4, u5;
+    uint8x16 u0, u1, u2, u3, u4, u5;
     u0 = zip16_lo(t0, t3);
     u1 = zip16_hi(t0, t3);
     u2 = zip16_lo(t1, t4);
@@ -651,10 +651,10 @@ inline void mem_unpack6(gint8x16& a, gint8x16& b, gint8x16& c,
     f = zip16_hi(t2, t5);
 }
 
-inline void mem_unpack6(gint16x8& a, gint16x8& b, gint16x8& c,
-                        gint16x8& d, gint16x8& e, gint16x8& f)
+inline void mem_unpack6(uint16x8& a, uint16x8& b, uint16x8& c,
+                        uint16x8& d, uint16x8& e, uint16x8& f)
 {
-    gint16x8 t0, t1, t2, t3, t4, t5;
+    uint16x8 t0, t1, t2, t3, t4, t5;
     t0 = zip8_lo(a, d);
     t1 = zip8_hi(a, d);
     t2 = zip8_lo(b, e);
@@ -662,7 +662,7 @@ inline void mem_unpack6(gint16x8& a, gint16x8& b, gint16x8& c,
     t4 = zip8_lo(c, f);
     t5 = zip8_hi(c, f);
 
-    gint16x8 u0, u1, u2, u3, u4, u5;
+    uint16x8 u0, u1, u2, u3, u4, u5;
     u0 = zip8_lo(t0, t3);
     u1 = zip8_hi(t0, t3);
     u2 = zip8_lo(t1, t4);

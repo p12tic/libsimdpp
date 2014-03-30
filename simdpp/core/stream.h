@@ -41,7 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Stores a 128-bit or 256-bit integer, 32-bit or 64-bit floating point vector
     to memory without polluting the caches, if possible.
 
@@ -61,37 +60,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-template<unsigned N, class E>
-void stream(void* p, gint8<N,E> a)
+template<unsigned N, class V>
+void stream(void* p, const any_vec<N,V>& a)
 {
-    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
+    static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: convert automatically
+    detail::insn::i_stream(reinterpret_cast<char*>(p), a.vec().eval());
 }
-template<unsigned N, class E>
-void stream(void* p, gint16<N,E> a)
-{
-    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void stream(void* p, gint32<N,E> a)
-{
-    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void stream(void* p, gint64<N,E> a)
-{
-    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void stream(void* p, float32<N,E> a)
-{
-    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void stream(void* p, float64<N,E> a)
-{
-    detail::insn::i_stream(reinterpret_cast<char*>(p), a.eval());
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

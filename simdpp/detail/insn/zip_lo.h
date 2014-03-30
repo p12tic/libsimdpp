@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-inline gint8x16 i_zip16_lo(gint8x16 a, gint8x16 b)
+inline uint8x16 i_zip16_lo(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip16_lo(a, b);
@@ -59,21 +59,21 @@ inline gint8x16 i_zip16_lo(gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_zip16_lo(gint8x32 a, gint8x32 b)
+inline uint8x32 i_zip16_lo(uint8x32 a, uint8x32 b)
 {
     return _mm256_unpacklo_epi8(a, b);
 }
 #endif
 
 template<unsigned N>
-gint8<N> i_zip16_lo(gint8<N> a, gint8<N> b)
+uint8<N> i_zip16_lo(uint8<N> a, uint8<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_zip16_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_zip16_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint16x8 i_zip8_lo(gint16x8 a, gint16x8 b)
+inline uint16x8 i_zip8_lo(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip8_lo(a, b);
@@ -87,21 +87,21 @@ inline gint16x8 i_zip8_lo(gint16x8 a, gint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint16x16 i_zip8_lo(gint16x16 a, gint16x16 b)
+inline uint16x16 i_zip8_lo(uint16x16 a, uint16x16 b)
 {
     return _mm256_unpacklo_epi16(a, b);
 }
 #endif
 
 template<unsigned N>
-gint16<N> i_zip8_lo(gint16<N> a, gint16<N> b)
+uint16<N> i_zip8_lo(uint16<N> a, uint16<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_zip8_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_zip8_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint32x4 i_zip4_lo(gint32x4 a, gint32x4 b)
+inline uint32x4 i_zip4_lo(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip4_lo(a, b);
@@ -115,21 +115,21 @@ inline gint32x4 i_zip4_lo(gint32x4 a, gint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint32x8 i_zip4_lo(gint32x8 a, gint32x8 b)
+inline uint32x8 i_zip4_lo(uint32x8 a, uint32x8 b)
 {
     return _mm256_unpacklo_epi32(a, b);
 }
 #endif
 
 template<unsigned N>
-gint32<N> i_zip4_lo(gint32<N> a, gint32<N> b)
+uint32<N> i_zip4_lo(uint32<N> a, uint32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_zip4_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_zip4_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint64x2 i_zip2_lo(gint64x2 a, gint64x2 b)
+inline uint64x2 i_zip2_lo(uint64x2 a, uint64x2 b)
 {
 #if SIMDPP_USE_NULL
     return null::zip2_lo(a, b);
@@ -144,16 +144,16 @@ inline gint64x2 i_zip2_lo(gint64x2 a, gint64x2 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint64x4 i_zip2_lo(gint64x4 a, gint64x4 b)
+inline uint64x4 i_zip2_lo(uint64x4 a, uint64x4 b)
 {
     return _mm256_unpacklo_epi64(a, b);
 }
 #endif
 
 template<unsigned N>
-gint64<N> i_zip2_lo(gint64<N> a, gint64<N> b)
+uint64<N> i_zip2_lo(uint64<N> a, uint64<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, i_zip2_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, i_zip2_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------

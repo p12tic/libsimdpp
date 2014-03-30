@@ -42,19 +42,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<unsigned N, class E1, class E2>
-gint32<N> expr_eval(expr_bit_and<gint32<N,E1>,
+uint32<N> expr_eval(expr_bit_and<uint32<N,E1>,
                                  mask_int32<N,E2>> q)
 {
-    gint32<N> a = q.a.eval();
+    uint32<N> a = q.a.eval();
     mask_int32<N> b = q.b.eval();
     return insn::i_bit_and(a, b);
 }
 
 template<unsigned N, class E1, class E2>
-gint64<N> expr_eval(expr_bit_and<gint64<N,E1>,
+uint64<N> expr_eval(expr_bit_and<uint64<N,E1>,
                                  mask_int64<N,E2>> q)
 {
-    gint64<N> a = q.a.eval();
+    uint64<N> a = q.a.eval();
     mask_int64<N> b = q.b.eval();
     return insn::i_bit_and(a, b);
 }

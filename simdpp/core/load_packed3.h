@@ -40,155 +40,32 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** Loads 8-bit values packed in triplets, de-interleaves them and stores the
-    result into three vectors.
 
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), ... , *(p+45) ]
-    b = [ *(p+1), *(p+4), *(p+7), ... , *(p+46) ]
-    c = [ *(p+2), *(p+5), *(p+8), ... , *(p+47) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
+/** Loads values packed in triplets, de-interleaves them and stores the result
+    into three vectors.
 
-    @par 256-bit version:
     @code
-    a = [ *(p),   *(p+3), *(p+6), ... , *(p+93) ]
-    b = [ *(p+1), *(p+4), *(p+7), ... , *(p+94) ]
-    c = [ *(p+2), *(p+5), *(p+8), ... , *(p+95) ]
+    a = [ *(p),   *(p+3), *(p+6), ... , *(p+M*3-3) ]
+    b = [ *(p+1), *(p+4), *(p+7), ... , *(p+M*3-2) ]
+    c = [ *(p+2), *(p+5), *(p+8), ... , *(p+M*3-1) ]
     @endcode
-    @a p must be aligned to 32 bytes.
+
+    Here M is the number of elements in the vector
+
+    @a p must be aligned to the vector size in bytes
 */
-template<unsigned N>
-void load_packed3(gint8<N>& a, gint8<N>& b, gint8<N>& c, const void* p)
+template<unsigned N, class V>
+void load_packed3(any_vec<N,V>& a, any_vec<N,V>& b, any_vec<N,V>& c,
+                  const void* p)
 {
-    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
+    static_assert(!is_mask<V>::value, "Mask types can not be loaded");
+    typename detail::get_expr_nosign<V,void>::type ra, rb, rc;
+    detail::insn::i_load_packed3(ra, rb, rc, reinterpret_cast<const char*>(p));
+    a.vec() = ra;
+    b.vec() = rb;
+    c.vec() = rc;
 }
 
-/** Loads 16-bit values packed in triplets, de-interleaves them and stores the
-    result into three vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), ... , *(p+21) ]
-    b = [ *(p+1), *(p+4), *(p+7), ... , *(p+22) ]
-    c = [ *(p+2), *(p+5), *(p+8), ... , *(p+23) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), ... , *(p+45) ]
-    b = [ *(p+1), *(p+4), *(p+7), ... , *(p+46) ]
-    c = [ *(p+2), *(p+5), *(p+8), ... , *(p+47) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed3(gint16<N>& a, gint16<N>& b, gint16<N>& c, const void* p)
-{
-    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 32-bit values packed in triplets, de-interleaves them and stores the
-    result into three vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), *(p+9)  ]
-    b = [ *(p+1), *(p+4), *(p+7), *(p+10) ]
-    c = [ *(p+2), *(p+5), *(p+8), *(p+11) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), ... , *(p+21) ]
-    b = [ *(p+1), *(p+4), *(p+7), ... , *(p+22) ]
-    c = [ *(p+2), *(p+5), *(p+8), ... , *(p+23) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed3(gint32<N>& a, gint32<N>& b, gint32<N>& c, const void* p)
-{
-    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 64-bit values packed in triplets, de-interleaves them and stores the
-    result into three vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+3) ]
-    b = [ *(p+1), *(p+4) ]
-    c = [ *(p+2), *(p+5) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), *(p+9)  ]
-    b = [ *(p+1), *(p+4), *(p+7), *(p+10) ]
-    c = [ *(p+2), *(p+5), *(p+8), *(p+11) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed3(gint64<N>& a, gint64<N>& b, gint64<N>& c, const void* p)
-{
-    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 32-bit floating point values packed in triplets, de-interleaves them
-    and stores the result into three vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), *(p+9)  ]
-    b = [ *(p+1), *(p+4), *(p+7), *(p+10) ]
-    c = [ *(p+2), *(p+5), *(p+8), *(p+11) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), ... , *(p+21) ]
-    b = [ *(p+1), *(p+4), *(p+7), ... , *(p+22) ]
-    c = [ *(p+2), *(p+5), *(p+8), ... , *(p+23) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const void* p)
-{
-    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
-}
-
-/** Loads 64-bit floating point values packed in triplets, de-interleaves them
-    and stores the result into three vectors.
-
-    @par 128-bit version:
-    @code
-    a = [ *(p),   *(p+3) ]
-    b = [ *(p+1), *(p+4) ]
-    c = [ *(p+2), *(p+5) ]
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    a = [ *(p),   *(p+3), *(p+6), *(p+9)  ]
-    b = [ *(p+1), *(p+4), *(p+7), *(p+10) ]
-    c = [ *(p+2), *(p+5), *(p+8), *(p+11) ]
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void load_packed3(float64<N>& a, float64<N>& b, float64<N>& c, const void* p)
-{
-    detail::insn::i_load_packed3(a, b, c, reinterpret_cast<const char*>(p));
-}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

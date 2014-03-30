@@ -32,7 +32,9 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/types.h>
+#include <simdpp/setup_arch.h>
+#include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
@@ -43,128 +45,31 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @ingroup simd_vec_int
 /// @{
 
-/** Class representing a @a gint64 vector of arbitrary length. The vector
-    always contains at least one native vector.
-*/
-template<unsigned N>
-class gint64<N, void> {
-public:
-
-    using element_type = int64_t;
-    using uint_element_type = uint64_t;
-    using int_vector_type = gint64<N>;
-    using uint_vector_type = uint64<N>;
-    using base_vector_type = gint64v;
-    using mask_type = mask_int64<N>;
-    using maskdata_type = maskdata_int64<N>;
-
-    static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT64_SIZE - 1) / SIMDPP_FAST_INT64_SIZE;
-
-    static constexpr unsigned num_bits = 64;
-    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
-
-    gint64<N>() = default;
-    gint64<N>(const gint64<N>&) = default;
-    gint64<N>& operator=(const gint64<N>&) = default;
-
-    template<class E> explicit gint64<N>(const  gint8<N*8,E>& d);
-    template<class E> explicit gint64<N>(const gint16<N*4,E>& d);
-    template<class E> explicit gint64<N>(const gint32<N*2,E>& d);
-    template<class E>          gint64<N>(const gint64<N,E>& d);
-    template<class E> gint64<N>& operator=(const  gint8<N*8,E>& d);
-    template<class E> gint64<N>& operator=(const gint16<N*4,E>& d);
-    template<class E> gint64<N>& operator=(const gint32<N*2,E>& d);
-    template<class E> gint64<N>& operator=(const gint64<N,E>& d);
-
-
-    /// @{
-    /// Construct from compatible float64 floating-point vector type
-    explicit gint64<N>(const float64<N>& d)
-    {
-        for (unsigned i = 0; i < vec_length; ++i) {
-            (*this)[i] = d[i];
-        }
-    }
-    gint64<N>& operator=(const float64<N>& d) { operator=(gint64<N>(d)); return *this; }
-    /// @}
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> gint64<N>(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr());
-    }
-    template<class E> gint64<N>& operator=(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr()); return *this;
-    }
-#endif
-
-    const gint64v& operator[](unsigned i) const { return *(du_+i); }
-    gint64v& operator[](unsigned i)             { return *(du_+i); }
-
-    gint64<N> eval() const { return *this; }
-
-    /// Creates a int64 vector with the contents set to zero
-    static gint64<N> zero()
-    {
-        return set_vec(gint64v::zero());
-    }
-
-    /// Creates a int64 vector with the contents set to ones
-    static gint64<N> ones()
-    {
-        return set_vec(gint64v::ones());
-    }
-
-private:
-    /// Creates a int64 vector with the contents set to copy of native register
-    static gint64<N> set_vec(gint64v a)
-    {
-        gint64<N> r;
-        for (auto& v : r.du_) {
-            v = a;
-        }
-        return r;
-    }
-
-protected:
-    union {
-        uint64v du_[vec_length];
-        int64v di_[vec_length];
-    };
-};
-
-
 /** Class representing an signed @a int64 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
 template<unsigned N>
-class int64<N, void> : public gint64<N, void> {
+class int64<N, void> : public any_int64<N, int64<N,void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int64_t;
-    using gint64<N>::vec_length;
     using base_vector_type = int64v;
+    using expr_type = void;
 
     int64<N>() = default;
     int64<N>(const int64<N>&) = default;
     int64<N>& operator=(const int64<N>&) = default;
 
-    template<class E> explicit int64<N>(const  gint8<N*8,E>& d);
-    template<class E> explicit int64<N>(const gint16<N*4,E>& d);
-    template<class E> explicit int64<N>(const gint32<N*2,E>& d);
-    template<class E>          int64<N>(const gint64<N,E>& d);
-    template<class E> int64<N>& operator=(const  gint8<N*8,E>& d);
-    template<class E> int64<N>& operator=(const gint16<N*4,E>& d);
-    template<class E> int64<N>& operator=(const gint32<N*2,E>& d);
-    template<class E> int64<N>& operator=(const gint64<N,E>& d);
-
-    /// @{
-    /// Construct from compatible float64 vector type
-    explicit int64<N>(const float64<N>& d) : gint64<N>(d) {}
-    int64<N>& operator=(const float64<N>& d) { gint64<N>::operator=(d); return *this; }
-    /// @}
+    template<class E> int64<N>(const int64<N,E>& d) { *this = d.eval(); }
+    template<class E> int64<N>(const uint64<N,E>& d) { *this = d.eval(); }
+    template<class V> explicit int64<N>(const any_vec<N*8,V>& d)
+    {
+        *this = bit_cast<int64<N>>(d.vec().eval());
+    }
+    template<class V> int64<N>& operator=(const any_vec<N*8,V>& d)
+    {
+        *this = bit_cast<int64<N>>(d.vec().eval()); return *this;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> int64<N>(const expr_vec_construct<E>& e)
@@ -177,44 +82,56 @@ public:
     }
 #endif
 
-    const int64v& operator[](unsigned i) const { return *(gint64<N>::di_+i); }
-    int64v& operator[](unsigned i)             { return *(gint64<N>::di_+i); }
+    const int64v& operator[](unsigned i) const { return d_[i]; }
+    int64v& operator[](unsigned i)             { return d_[i]; }
 
     int64<N> eval() const { return *this; }
 
-    static int64<N> zero() { return gint64<N>::zero(); }
-    static int64<N> ones() { return gint64<N>::ones(); }
+    static int64<N> zero() { return set_vec(int64v::zero()); }
+    static int64<N> ones() { return set_vec(int64v::ones()); }
+
+private:
+
+    /// Creates a signed int64 vector with the contents set to copy of native
+    /// register
+    static int64<N> set_vec(int64v a)
+    {
+        int64<N> r;
+        for (auto& v : r.d_) {
+            v = a;
+        }
+        return r;
+    }
+
+private:
+    int64v d_[int64::vec_length];
 };
 
 /** Class representing an unsigned @a int64 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint64<N, void> : public gint64<N, void> {
+class uint64<N, void> : public any_int64<N, uint64<N,void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint64_t;
-    using gint64<N>::vec_length;
     using base_vector_type = uint64v;
+    using expr_type = void;
 
     uint64<N>() = default;
     uint64<N>(const uint64<N>&) = default;
     uint64<N>& operator=(const uint64<N>&) = default;
 
-    template<class E> explicit uint64<N>(const  gint8<N*8,E>& d);
-    template<class E> explicit uint64<N>(const gint16<N*4,E>& d);
-    template<class E> explicit uint64<N>(const gint32<N*2,E>& d);
-    template<class E>          uint64<N>(const gint64<N,E>& d);
-    template<class E> uint64<N>& operator=(const  gint8<N*8,E>& d);
-    template<class E> uint64<N>& operator=(const gint16<N*4,E>& d);
-    template<class E> uint64<N>& operator=(const gint32<N*2,E>& d);
-    template<class E> uint64<N>& operator=(const gint64<N,E>& d);
-
-    /// @{
-    /// Construct from compatible float64 vector type
-    explicit uint64<N>(const float64<N>& d) : gint64<N>(d) {}
-    uint64<N>& operator=(const float64<N>& d) { gint64<N>::operator=(d); return *this; }
-    /// @}
+    template<class E> uint64<N>(const uint64<N,E>& d) { *this = d.eval(); }
+    template<class E> uint64<N>(const int64<N,E>& d) { *this = d.eval(); }
+    template<class V> explicit uint64<N>(const any_vec<N*8,V>& d)
+    {
+        *this = bit_cast<uint64<N>>(d.vec().eval());
+    }
+    template<class V> uint64<N>& operator=(const any_vec<N*8,V>& d)
+    {
+        *this = bit_cast<uint64<N>>(d.vec().eval()); return *this;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> uint64<N>(const expr_vec_construct<E>& e)
@@ -227,59 +144,60 @@ public:
     }
 #endif
 
-    const uint64v& operator[](unsigned i) const { return *(gint64<N>::du_+i); }
-    uint64v& operator[](unsigned i)             { return *(gint64<N>::du_+i); }
+    const uint64v& operator[](unsigned i) const { return d_[i]; }
+    uint64v& operator[](unsigned i)             { return d_[i]; }
 
     uint64<N> eval() const { return *this; }
 
-    static uint64<N> zero() { return gint64<N>::zero(); }
-    static uint64<N> ones() { return gint64<N>::ones(); }
-};
-
-
-/// Class representing possibly optimized mask data for arbitrary length 64-bit
-/// integer vector
-template<unsigned N>
-class maskdata_int64 {
-public:
-    using base_vector_type = maskdata_int64<N>;
-    static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = int64<N>::vec_length;
-
-    maskdata_int64<N>() = default;
-    maskdata_int64<N>(const maskdata_int64<N> &) = default;
-    maskdata_int64<N> &operator=(const maskdata_int64<N> &) = default;
-
-    /// Convert to bitmask
-    operator uint64<N>() const;
-
-    const maskdata_int64v& operator[](unsigned i) const { return *(d_+i); }
-          maskdata_int64v& operator[](unsigned i)       { return *(d_+i); }
-
-    mask_int64<N> eval() const { return *this; }
+    static uint64<N> zero() { return set_vec(uint64v::zero()); }
+    static uint64<N> ones() { return set_vec(uint64v::ones()); }
 
 private:
-    maskdata_int64v d_[vec_length];
+    /// Creates a unsigned int64 vector with the contents set to copy of native
+    /// register
+    static uint64<N> set_vec(uint64v a)
+    {
+        uint64<N> r;
+        for (auto& v : r.d_) {
+            v = a;
+        }
+        return r;
+    }
+private:
+    uint64v d_[uint64::vec_length];
 };
 
-/// Class representing a mask for 64-bit integer point vector of arbitrary
+/// Class representing a mask for 64-bit integer vector of arbitrary
 /// length.
 template<unsigned N>
-class mask_int64<N, void> : public uint64<N, void> {
+class mask_int64<N, void> : public any_int64<N, mask_int64<N,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using base_vector_type = mask_int64v;
+    using expr_type = void;
+
     mask_int64<N>() = default;
     mask_int64<N>(const mask_int64<N> &) = default;
     mask_int64<N> &operator=(const mask_int64<N> &) = default;
-    mask_int64<N>(const maskdata_int64<N>& d);
+
+    /// Access the underlying type
+    uint64<N> unmask() const
+    {
+        uint64<N> r;
+        for (unsigned i = 0; i < mask_int64::vec_length; ++i) {
+            r[i] = d_[i].unmask();
+        }
+        return r;
+    }
+
+    const mask_int64v& operator[](unsigned i) const { return d_[i]; }
+          mask_int64v& operator[](unsigned i)       { return d_[i]; }
 
     mask_int64<N> eval() const { return *this; }
 
-    maskdata_int64<N> mask() const { return mask_; }
-
 private:
-    maskdata_int64<N> mask_;
+    mask_int64v d_[mask_int64::vec_length];
 };
-
 
 /// @} -- end ingroup
 

@@ -80,17 +80,17 @@ inline void v256_mem_pack2_impl(T& a, T& b)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_pack2(gint8x16& a, gint8x16& b)     { v_mem_pack2_impl(a, b); }
-inline void mem_pack2(gint16x8& a, gint16x8& b)     { v_mem_pack2_impl(a, b); }
-inline void mem_pack2(gint32x4& a, gint32x4& b)     { v_mem_pack2_impl(a, b); }
-inline void mem_pack2(gint64x2& a, gint64x2& b)     { v_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint8x16& a, uint8x16& b)     { v_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint16x8& a, uint16x8& b)     { v_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint32x4& a, uint32x4& b)     { v_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint64x2& a, uint64x2& b)     { v_mem_pack2_impl(a, b); }
 inline void mem_pack2(float32x4& a, float32x4& b)   { v_mem_pack2_impl(a, b); }
 inline void mem_pack2(float64x2& a, float64x2& b)   { v_mem_pack2_impl(a, b); }
 
-inline void mem_pack2(gint8x32& a, gint8x32& b)     { v256_mem_pack2_impl(a, b); }
-inline void mem_pack2(gint16x16& a, gint16x16& b)   { v256_mem_pack2_impl(a, b); }
-inline void mem_pack2(gint32x8& a, gint32x8& b)     { v256_mem_pack2_impl(a, b); }
-inline void mem_pack2(gint64x4& a, gint64x4& b)     { v256_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint8x32& a, uint8x32& b)     { v256_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint16x16& a, uint16x16& b)   { v256_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint32x8& a, uint32x8& b)     { v256_mem_pack2_impl(a, b); }
+inline void mem_pack2(uint64x4& a, uint64x4& b)     { v256_mem_pack2_impl(a, b); }
 inline void mem_pack2(float32x8& a, float32x8& b)   { v256_mem_pack2_impl(a, b); }
 inline void mem_pack2(float64x4& a, float64x4& b)   { v256_mem_pack2_impl(a, b); }
 /// @}
@@ -136,9 +136,9 @@ template<class T> void v_mem_pack3_impl8(T& a, T& b, T& c)
     // [b5, c5, a6, b6, c6, a7, b7, c7, a8, b8, c8, a9, b9, c9, a10,b10]
     // [c10,a11,b11,c11,a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15]
 #else
-    // either gint16x8 or gint16x16, other entries likewise
-    using w_b16 = typename same_width<T>::b16;
-    using w_b32 = typename same_width<T>::b32;
+    // either uint16x8 or uint16x16, other entries likewise
+    using w_b16 = typename same_width<T>::u16;
+    using w_b32 = typename same_width<T>::u32;
     using w_b8 = T;
 
     w_b16 t0, t1, t2, t3;
@@ -274,9 +274,9 @@ template<class T> void v_mem_pack3_impl16(T& a, T& b, T& c)
     // [b5,c5,a6,b6,c6,a7,b7,c7]
 
 #else
-    // either gint8x16 or gint8x32, other entries likewise
+    // either uint8x16 or uint8x32, other entries likewise
     using w_b16 = T;
-    using w_b32 = typename same_width<T>::b32;
+    using w_b32 = typename same_width<T>::u32;
 
     w_b32 t0, t1, t2, t3;
     t0 = zip8_lo(a, b);
@@ -430,41 +430,41 @@ void mem_pack3_256_shuffle(T& a, T& b, T& c)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_pack3(gint8x16& a, gint8x16& b, gint8x16& c)
+inline void mem_pack3(uint8x16& a, uint8x16& b, uint8x16& c)
 {
     v_mem_pack3_impl8(a, b, c);
 }
-inline void mem_pack3(gint8x32& a, gint8x32& b, gint8x32& c)
+inline void mem_pack3(uint8x32& a, uint8x32& b, uint8x32& c)
 {
     v_mem_pack3_impl8(a, b, c);
     mem_pack3_256_shuffle(a, b, c);
 }
 
-inline void mem_pack3(gint16x8& a, gint16x8& b, gint16x8& c)
+inline void mem_pack3(uint16x8& a, uint16x8& b, uint16x8& c)
 {
     v_mem_pack3_impl16(a, b, c);
 }
-inline void mem_pack3(gint16x16& a, gint16x16& b, gint16x16& c)
+inline void mem_pack3(uint16x16& a, uint16x16& b, uint16x16& c)
 {
     v_mem_pack3_impl16(a, b, c);
     mem_pack3_256_shuffle(a, b, c);
 }
 
-inline void mem_pack3(gint32x4& a, gint32x4& b, gint32x4& c)
+inline void mem_pack3(uint32x4& a, uint32x4& b, uint32x4& c)
 {
     v_mem_pack3_impl32(a, b, c);
 }
-inline void mem_pack3(gint32x8& a, gint32x8& b, gint32x8& c)
+inline void mem_pack3(uint32x8& a, uint32x8& b, uint32x8& c)
 {
     v_mem_pack3_impl32(a, b, c);
     mem_pack3_256_shuffle(a, b, c);
 }
 
-inline void mem_pack3(gint64x2& a, gint64x2& b, gint64x2& c)
+inline void mem_pack3(uint64x2& a, uint64x2& b, uint64x2& c)
 {
     v_mem_pack3_impl64(a, b, c);
 }
-inline void mem_pack3(gint64x4& a, gint64x4& b, gint64x4& c)
+inline void mem_pack3(uint64x4& a, uint64x4& b, uint64x4& c)
 {
     v_mem_pack3_impl64(a, b, c);
     mem_pack3_256_shuffle(a, b, c);
@@ -497,10 +497,10 @@ inline void mem_pack3(float64x4& a, float64x4& b, float64x4& c)
 */
 template<class T> void v_mem_pack4_impl8(T& a, T& b, T& c, T& d)
 {
-    // either gint16x8 or gint16x16, other entries likewise
+    // either uint16x8 or uint16x16, other entries likewise
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // TODO: optimize for altivec
-    using w_b32 = typename same_width<T>::b32;
+    using w_b32 = typename same_width<T>::u32;
 
     w_b32 b0, b1, b2, b3;
     b0 = a;  b1 = b;  b2 = c;  b3 = d;
@@ -513,8 +513,8 @@ template<class T> void v_mem_pack4_impl8(T& a, T& b, T& c, T& d)
     d = transpose_inplace(d);
 #else
     using w_b8 = T;
-    using w_b16 = typename same_width<T>::b16;
-    using w_b64 = typename same_width<T>::b64;
+    using w_b16 = typename same_width<T>::u16;
+    using w_b64 = typename same_width<T>::u64;
 
     w_b8 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
@@ -546,8 +546,8 @@ template<class T> void v_mem_pack4_impl8(T& a, T& b, T& c, T& d)
 template<class T> void v_mem_pack4_impl16(T& a, T& b, T& c, T& d)
 {
     using w_b16 = T;
-    using w_b32 = typename same_width<T>::b32;
-    using w_b64 = typename same_width<T>::b64;
+    using w_b32 = typename same_width<T>::u32;
+    using w_b64 = typename same_width<T>::u64;
 
     w_b16 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
@@ -609,49 +609,49 @@ void v256_mem_pack4_shuffle(T& a, T& b, T& c, T& d)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_pack4(gint8x16& a, gint8x16& b,
-                      gint8x16& c, gint8x16& d)
+inline void mem_pack4(uint8x16& a, uint8x16& b,
+                      uint8x16& c, uint8x16& d)
 {
     v_mem_pack4_impl8(a, b, c, d);
 }
-inline void mem_pack4(gint8x32& a, gint8x32& b,
-                      gint8x32& c, gint8x32& d)
+inline void mem_pack4(uint8x32& a, uint8x32& b,
+                      uint8x32& c, uint8x32& d)
 {
     v_mem_pack4_impl8(a, b, c, d);
     v256_mem_pack4_shuffle(a, b, c, d);
 }
 
-inline void mem_pack4(gint16x8& a, gint16x8& b,
-                      gint16x8& c, gint16x8& d)
+inline void mem_pack4(uint16x8& a, uint16x8& b,
+                      uint16x8& c, uint16x8& d)
 {
     v_mem_pack4_impl16(a, b, c, d);
 }
-inline void mem_pack4(gint16x16& a, gint16x16& b,
-                      gint16x16& c, gint16x16& d)
+inline void mem_pack4(uint16x16& a, uint16x16& b,
+                      uint16x16& c, uint16x16& d)
 {
     v_mem_pack4_impl16(a, b, c, d);
     v256_mem_pack4_shuffle(a, b, c, d);
 }
 
-inline void mem_pack4(gint32x4& a, gint32x4& b,
-                      gint32x4& c, gint32x4& d)
+inline void mem_pack4(uint32x4& a, uint32x4& b,
+                      uint32x4& c, uint32x4& d)
 {
     transpose4(a, b, c, d);
 }
-inline void mem_pack4(gint32x8& a, gint32x8& b,
-                      gint32x8& c, gint32x8& d)
+inline void mem_pack4(uint32x8& a, uint32x8& b,
+                      uint32x8& c, uint32x8& d)
 {
     transpose4(a, b, c, d);
     v256_mem_pack4_shuffle(a, b, c, d);
 }
 
-inline void mem_pack4(gint64x2& a, gint64x2& b,
-                      gint64x2& c, gint64x2& d)
+inline void mem_pack4(uint64x2& a, uint64x2& b,
+                      uint64x2& c, uint64x2& d)
 {
     v_mem_pack4_impl64(a, b, c, d);
 }
-inline void mem_pack4(gint64x4& a, gint64x4& b,
-                      gint64x4& c, gint64x4& d)
+inline void mem_pack4(uint64x4& a, uint64x4& b,
+                      uint64x4& c, uint64x4& d)
 {
     v_mem_pack4_impl64(a, b, c, d);
     v256_mem_pack4_shuffle(a, b, c, d);

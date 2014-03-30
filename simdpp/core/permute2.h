@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/permute2.h>
+#include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -63,11 +64,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-4}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1, unsigned N, class E>
-gint16<N, gint16<N>> permute2(gint16<N,E> a)
+template<unsigned s0, unsigned s1, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        permute2(const any_vec16<N,V>& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return detail::insn::i_permute2<s0,s1>(a.eval());
+    typename detail::get_expr_nomask<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_permute2<s0,s1>(ra);
 }
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
@@ -85,6 +89,17 @@ gint16<N, gint16<N>> permute2(gint16<N,E> a)
     r7 = a[s1+6]
     @endcode
 
+    @par integer
+    @par 128-bit version:
+    @icost{NEON, 2-4}
+    @icost{ALTIVEC, 1-2}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 4-8}
+    @icost{ALTIVEC, 2-3}
+
+    @par floating-point
     @par 128-bit version:
     @icost{NEON, 2-4}
     @icost{ALTIVEC, 1-2}
@@ -94,43 +109,14 @@ gint16<N, gint16<N>> permute2(gint16<N,E> a)
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1, unsigned N, class E>
-gint32<N, gint32<N>> permute2(gint32<N,E> a)
+template<unsigned s0, unsigned s1, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        permute2(const any_vec32<N,V>& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return detail::insn::i_permute2<s0,s1>(a.eval());
-}
-
-/** Permutes the values of each set of four consecutive 32-bit floating-point
-    values. The selector values must be in range [0; 3].
-
-    @code
-    r0 = a[s0]
-    r1 = a[s1]
-    r2 = a[s0+2]
-    r3 = a[s1+2]
-
-    256-bit version:
-    r4 = a[s0+4]
-    r5 = a[s1+4]
-    r6 = a[s0+6]
-    r7 = a[s1+6]
-    @endcode
-
-    @par 128-bit version:
-    @icost{NEON, 2-4}
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 4-8}
-    @icost{ALTIVEC, 2-3}
-*/
-template<unsigned s0, unsigned s1, unsigned N, class E>
-float32<N, float32<N>> permute2(float32<N,E> a)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return detail::insn::i_permute2<s0,s1>(a.eval());
+    typename detail::get_expr_nomask<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_permute2<s0,s1>(ra);
 }
 
 /// @{
@@ -155,37 +141,14 @@ float32<N, float32<N>> permute2(float32<N,E> a)
     @icost{NEON, 2-4}
     @icost{ALTIVEC, 2-4}
 */
-template<unsigned s0, unsigned s1, unsigned N, class E>
-gint64<N, gint64<N>> permute2(gint64<N,E> a)
+template<unsigned s0, unsigned s1, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        permute2(const any_vec64<N,V>& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return detail::insn::i_permute2<s0,s1>(a.eval());
-}
-
-/** Permutes the values of each set of two consecutive 64-bit values. The
-    selector values must be in range [0; 1].
-
-    @code
-    r0 = a[s0]
-    r1 = a[s1]
-
-    256-bit version:
-    r2 = a[s0+2]
-    r3 = a[s1+2]
-    @endcode
-
-    @par 128-bit version:
-    @novec{NEON, ALTIVEC}
-
-    @par 256-bit version:
-    @icost{SSE2-SSE4.1, 2}
-    @novec{NEON, ALTIVEC}
-*/
-template<unsigned s0, unsigned s1, unsigned N, class E>
-float64<N, float64<N>> permute2(float64<N,E> a)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return detail::insn::i_permute2<s0,s1>(a.eval());
+    typename detail::get_expr_nomask<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_permute2<s0,s1>(ra);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

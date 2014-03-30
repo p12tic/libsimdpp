@@ -62,7 +62,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-gint8x16 insert(gint8x16 a, uint8_t x)
+uint8x16 insert(uint8x16 a, uint8_t x)
 {
     static_assert(id < 16, "Position out of range");
 #if SIMDPP_USE_NULL
@@ -102,7 +102,7 @@ gint8x16 insert(gint8x16 a, uint8_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-gint16x8 insert(gint16x8 a, uint16_t x)
+uint16x8 insert(uint16x8 a, uint16_t x)
 {
 #if SIMDPP_USE_NULL
     a.el(id) = x;
@@ -134,7 +134,7 @@ gint16x8 insert(gint16x8 a, uint16_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-gint32x4 insert(gint32x4 a, uint32_t x)
+uint32x4 insert(uint32x4 a, uint32_t x)
 {
 #if SIMDPP_USE_NULL
     a.el(id) = x;
@@ -144,10 +144,10 @@ gint32x4 insert(gint32x4 a, uint32_t x)
 #elif SIMDPP_USE_SSE2
     uint16_t lo = x & 0xffff;
     uint16_t hi = x >> 16;
-    gint16x8 a1 = gint16<8>(a);
+    uint16x8 a1 = uint16<8>(a);
     a1 = insert<id*2>(a1, lo);
     a1 = insert<id*2+1>(a1, hi);
-    return gint32<4>(a1);
+    return uint32<4>(a1);
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u32(x, a, id);
 #elif SIMDPP_USE_ALTIVEC
@@ -174,14 +174,14 @@ gint32x4 insert(gint32x4 a, uint32_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id>
-gint64x2 insert(gint64x2 a, uint64_t x)
+uint64x2 insert(uint64x2 a, uint64_t x)
 {
 #if SIMDPP_USE_NULL
     a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS
-    gint32x4 a0 = a;
+    uint32x4 a0 = a;
     a0 = insert<id*2>(a0, uint32_t(x));
     a0 = insert<id*2+1>(a0, uint32_t(x >> 32));
     return a0;
@@ -271,32 +271,32 @@ float64x2 insert(float64x2 a, double x)
     @icost{AVX2, 1}
     @icost{SSE2-AVX, NEON, ALTIVEC, 0}
 */
-inline gint8x32 combine(gint8x16 a, gint8x16 b)
+inline uint8x32 combine(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_AVX2
-    gint8x32 r;
+    uint8x32 r;
     r = _mm256_castsi128_si256(a);
     r = _mm256_inserti128_si256(r, b, 1);
     return r;
 #else
-    gint8x32 r;
+    uint8x32 r;
     r[0] = a;
     r[1] = b;
     return r;
 #endif
 }
 
-inline gint16x16 combine(gint16x8 a, gint16x8 b)
+inline uint16x16 combine(uint16x8 a, uint16x8 b)
 {
-    return gint16x16(combine(uint8x16(a), uint8x16(b)));
+    return uint16x16(combine(uint8x16(a), uint8x16(b)));
 }
-inline gint32x8 combine(gint32x4 a, gint32x4 b)
+inline uint32x8 combine(uint32x4 a, uint32x4 b)
 {
-    return gint32x8(combine(uint8x16(a), uint8x16(b)));
+    return uint32x8(combine(uint8x16(a), uint8x16(b)));
 }
-inline gint64x4 combine(gint64x2 a, gint64x2 b)
+inline uint64x4 combine(uint64x2 a, uint64x2 b)
 {
-    return gint64x4(combine(uint8x16(a), uint8x16(b)));
+    return uint64x4(combine(uint8x16(a), uint8x16(b)));
 }
 
 inline float32x8 combine(float32x4 a, float32x4 b)
@@ -344,13 +344,13 @@ V v_combine(H a1, H a2)
 } // namespace detail
 
 template<unsigned N>
-gint8<N*2> combine(gint8<N>& a1, gint8<N>& a2) { return detail::v_combine<gint8<N*2>>(a1, a2); }
+uint8<N*2> combine(uint8<N>& a1, uint8<N>& a2) { return detail::v_combine<uint8<N*2>>(a1, a2); }
 template<unsigned N>
-gint16<N*2> combine(gint16<N>& a1, gint16<N>& a2) { return detail::v_combine<gint16<N*2>>(a1, a2); }
+uint16<N*2> combine(uint16<N>& a1, uint16<N>& a2) { return detail::v_combine<uint16<N*2>>(a1, a2); }
 template<unsigned N>
-gint32<N*2> combine(gint32<N>& a1, gint32<N>& a2) { return detail::v_combine<gint32<N*2>>(a1, a2); }
+uint32<N*2> combine(uint32<N>& a1, uint32<N>& a2) { return detail::v_combine<uint32<N*2>>(a1, a2); }
 template<unsigned N>
-gint64<N*2> combine(gint64<N>& a1, gint64<N>& a2) { return detail::v_combine<gint64<N*2>>(a1, a2); }
+uint64<N*2> combine(uint64<N>& a1, uint64<N>& a2) { return detail::v_combine<uint64<N*2>>(a1, a2); }
 template<unsigned N>
 float32<N*2> combine(float32<N>& a1, float32<N>& a2) { return detail::v_combine<float32<N*2>>(a1, a2); }
 template<unsigned N>

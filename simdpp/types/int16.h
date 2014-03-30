@@ -32,7 +32,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/types.h>
+#include <simdpp/setup_arch.h>
+#include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
@@ -43,110 +46,31 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @ingroup simd_vec_int
 /// @{
 
-/** Class representing a @a gint16 vector of arbitrary length. The vector
-    always contains at least one native vector.
-*/
-template<unsigned N>
-class gint16<N, void> {
-public:
-
-    using element_type = int16_t;
-    using uint_element_type = uint16_t;
-    using int_vector_type = gint16<N>;
-    using uint_vector_type = uint16<N>;
-    using mask_type = mask_int16<N>;
-    using base_vector_type = gint16v;
-    using maskdata_type = maskdata_int16<N>;
-
-    static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT16_SIZE - 1) / SIMDPP_FAST_INT16_SIZE;
-
-    static constexpr unsigned num_bits = 16;
-    static constexpr uint_element_type all_bits = 0xffff;
-
-    gint16<N>() = default;
-    gint16<N>(const gint16<N>&) = default;
-    gint16<N>& operator=(const gint16<N>&) = default;
-
-    template<class E> explicit gint16<N>(const  gint8<N*2,E>& d);
-    template<class E>          gint16<N>(const gint16<N,E>& d);
-    template<class E> explicit gint16<N>(const gint32<N/2,E>& d);
-    template<class E> explicit gint16<N>(const gint64<N/4,E>& d);
-    template<class E> gint16<N>& operator=(const  gint8<N*2,E>& d);
-    template<class E> gint16<N>& operator=(const gint16<N,E>& d);
-    template<class E> gint16<N>& operator=(const gint32<N/2,E>& d);
-    template<class E> gint16<N>& operator=(const gint64<N/4,E>& d);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> gint16<N>(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr());
-    }
-    template<class E> gint16<N>& operator=(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr()); return *this;
-    }
-#endif
-
-    const gint16v& operator[](unsigned i) const { return *(du_+i); }
-    gint16v& operator[](unsigned i)             { return *(du_+i); }
-
-    gint16<N> eval() const { return *this; }
-
-    /// Creates a int16 vector with the contents set to zero
-    static gint16<N> zero()
-    {
-        return set_vec(gint16v::zero());
-    }
-
-    /// Creates a int16 vector with the contents set to ones
-    static gint16<N> ones()
-    {
-        return set_vec(gint16v::ones());
-    }
-
-protected:
-
-    /// Creates a int16 vector with the contents set to copy of native register
-    static gint16<N> set_vec(gint16v a)
-    {
-        gint16<N> r;
-        for (auto& v : r.du_) {
-            v = a;
-        }
-        return r;
-    }
-
-    union {
-        uint16v du_[vec_length];
-        int16v di_[vec_length];
-    };
-};
-
-
 /** Class representing an signed @a int16 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
 template<unsigned N>
-class int16<N, void> : public gint16<N, void> {
+class int16<N, void> : public any_int16<N, int16<N,void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int16_t;
-    using gint16<N>::vec_length;
     using base_vector_type = int16v;
+    using expr_type = void;
 
     int16<N>() = default;
     int16<N>(const int16<N>&) = default;
     int16<N>& operator=(const int16<N>&) = default;
 
-    template<class E> explicit int16<N>(const  gint8<N*2,E>& d);
-    template<class E>          int16<N>(const gint16<N,E>& d);
-    template<class E> explicit int16<N>(const gint32<N/2,E>& d);
-    template<class E> explicit int16<N>(const gint64<N/4,E>& d);
-    template<class E> int16<N>& operator=(const  gint8<N*2,E>& d);
-    template<class E> int16<N>& operator=(const gint16<N,E>& d);
-    template<class E> int16<N>& operator=(const gint32<N/2,E>& d);
-    template<class E> int16<N>& operator=(const gint64<N/4,E>& d);
+    template<class E> int16<N>(const int16<N,E>& d) { *this = d.eval(); }
+    template<class E> int16<N>(const uint16<N,E>& d) { *this = d.eval(); }
+    template<class V> explicit int16<N>(const any_vec<N*2,V>& d)
+    {
+        *this = bit_cast<int16<N>>(d.vec().eval());
+    }
+    template<class V> int16<N>& operator=(const any_vec<N*2,V>& d)
+    {
+        *this = bit_cast<int16<N>>(d.vec().eval()); return *this;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> int16<N>(const expr_vec_construct<E>& e)
@@ -159,41 +83,57 @@ public:
     }
 #endif
 
-    const int16v& operator[](unsigned i) const { return *(gint16<N>::di_+i); }
-    int16v& operator[](unsigned i)             { return *(gint16<N>::di_+i); }
+    const int16v& operator[](unsigned i) const { return d_[i]; }
+    int16v& operator[](unsigned i)             { return d_[i]; }
 
     int16<N> eval() const { return *this; }
 
-    static int16<N> zero() { return gint16<N>::zero(); }
-    static int16<N> ones() { return gint16<N>::ones(); }
+    static int16<N> zero() { return set_vec(int16v::zero()); }
+    static int16<N> ones() { return set_vec(int16v::ones()); }
+
+private:
+    /// Creates a signed int16 vector with the contents set to copy of native
+    /// register
+    static int16<N> set_vec(int16v a)
+    {
+        int16<N> r;
+        for (auto& v : r.d_) {
+            v = a;
+        }
+        return r;
+    }
+
+    int16v d_[int16::vec_length];
 };
 
 /** Class representing an unsigned @a int16 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint16<N, void> : public gint16<N, void> {
+class uint16<N, void> : public any_int16<N, uint16<N,void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint16_t;
-    using gint16<N>::vec_length;
     using base_vector_type = uint16v;
+    using expr_type = void;
 
     uint16<N>() = default;
     uint16<N>(const uint16<N>&) = default;
     uint16<N>& operator=(const uint16<N>&) = default;
 
-    template<class E> explicit uint16<N>(const  gint8<N*2,E>& d);
-    template<class E>          uint16<N>(const gint16<N,E>& d);
-    template<class E> explicit uint16<N>(const gint32<N/2,E>& d);
-    template<class E> explicit uint16<N>(const gint64<N/4,E>& d);
-    template<class E> uint16<N>& operator=(const  gint8<N*2,E>& d);
-    template<class E> uint16<N>& operator=(const gint16<N,E>& d);
-    template<class E> uint16<N>& operator=(const gint32<N/2,E>& d);
-    template<class E> uint16<N>& operator=(const gint64<N/4,E>& d);
+    template<class E> uint16<N>(const uint16<N,E>& d) { *this = d.eval(); }
+    template<class E> uint16<N>(const int16<N,E>& d) { *this = d.eval(); }
+    template<class V> explicit uint16<N>(const any_vec<N*2,V>& d)
+    {
+        *this = bit_cast<uint16<N>>(d.vec().eval());
+    }
+    template<class V> uint16<N>& operator=(const any_vec<N*2,V>& d)
+    {
+        *this = bit_cast<uint16<N>>(d.vec().eval()); return *this;
+    }
 
-    const uint16v& operator[](unsigned i) const { return *(gint16<N>::du_+i); }
-    uint16v& operator[](unsigned i)             { return *(gint16<N>::du_+i); }
+    const uint16v& operator[](unsigned i) const { return d_[i]; }
+    uint16v& operator[](unsigned i)             { return d_[i]; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> uint16<N>(const expr_vec_construct<E>& e)
@@ -208,51 +148,54 @@ public:
 
     uint16<N> eval() const { return *this; }
 
-    static uint16<N> zero() { return gint16<N>::zero(); }
-    static uint16<N> ones() { return gint16<N>::ones(); }
-};
-
-/// Class representing possibly optimized mask data for arbitrary length 16-bit
-/// integer vector
-template<unsigned N>
-class maskdata_int16 {
-public:
-    using base_vector_type = maskdata_int16<N>;
-    static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = int16<N>::vec_length;
-
-    maskdata_int16<N>() = default;
-    maskdata_int16<N>(const maskdata_int16<N> &) = default;
-    maskdata_int16<N> &operator=(const maskdata_int16<N> &) = default;
-
-    /// Access the underlying type
-    operator uint16<N>() const;
-
-    const maskdata_int16v& operator[](unsigned i) const { return *(d_+i); }
-          maskdata_int16v& operator[](unsigned i)       { return *(d_+i); }
-
-    mask_int16<N> eval() const { return *this; }
+    static uint16<N> zero() { return set_vec(uint16v::zero()); }
+    static uint16<N> ones() { return set_vec(uint16v::ones()); }
 
 private:
-    maskdata_int16v d_[vec_length];
+    /// Creates a unsigned int16 vector with the contents set to copy of native
+    /// register
+    static uint16<N> set_vec(uint16v a)
+    {
+        uint16<N> r;
+        for (auto& v : r.d_) {
+            v = a;
+        }
+        return r;
+    }
+
+    uint16v d_[uint16::vec_length];
 };
 
-
-/// Class representing a mask for 16-bit integer point vector of arbitrary
+/// Class representing a mask for 16-bit integer vector of arbitrary
 /// length.
 template<unsigned N>
-class mask_int16<N, void> : public uint16<N, void> {
+class mask_int16<N, void> : public any_int16<N, mask_int16<N,void>> {
 public:    
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using base_vector_type = mask_int16v;
+    using expr_type = void;
+
     mask_int16<N>() = default;
     mask_int16<N>(const mask_int16<N> &) = default;
     mask_int16<N> &operator=(const mask_int16<N> &) = default;
-    mask_int16<N>(const maskdata_int16<N>& d);
+
+    /// Access the underlying type
+    uint16<N> unmask() const
+    {
+        uint16<N> r;
+        for (unsigned i = 0; i < mask_int16::vec_length; ++i) {
+            r[i] = d_[i].unmask();
+        }
+        return r;
+    }
+
+    const mask_int16v& operator[](unsigned i) const { return d_[i]; }
+          mask_int16v& operator[](unsigned i)       { return d_[i]; }
 
     mask_int16<N> eval() const { return *this; }
 
-    maskdata_int16<N> mask() const { return mask_; }
 private:
-    maskdata_int16<N> mask_;
+    mask_int16v d_[mask_int16::vec_length];
 };
 
 /// @} -- end ingroup

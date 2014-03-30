@@ -75,7 +75,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 
 */
-inline gint8x16 shuffle_zbytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
+inline uint8x16 shuffle_zbytes16(uint8x16 a, uint8x16 b, uint8x16 mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -130,7 +130,7 @@ inline gint8x16 shuffle_zbytes16(gint8x16 a, gint8x16 b, gint8x16 mask)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 shuffle_zbytes16(gint8x32 a, gint8x32 b, gint8x32 mask)
+inline uint8x32 shuffle_zbytes16(uint8x32 a, uint8x32 b, uint8x32 mask)
 {
     int8x32 sel, set_zero, ai, bi, r;
     sel = mask;
@@ -146,35 +146,35 @@ inline gint8x32 shuffle_zbytes16(gint8x32 a, gint8x32 b, gint8x32 mask)
 #endif
 
 template<unsigned N>
-gint8<N> shuffle_zbytes16(gint8<N> a, gint8<N> b, gint8<N> mask)
+uint8<N> shuffle_zbytes16(uint8<N> a, uint8<N> b, uint8<N> mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, shuffle_zbytes16, a, b, mask);
+    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, shuffle_zbytes16, a, b, mask);
 }
 
 template<unsigned N>
-gint16<N> shuffle_zbytes16(gint16<N> a, gint16<N> b, gint16<N> mask)
+uint16<N> shuffle_zbytes16(uint16<N> a, uint16<N> b, uint16<N> mask)
 {
-    return (gint16<N>) shuffle_zbytes16(gint8<N*2>(a), gint8<N*2>(b), gint8<N*2>(mask));
+    return (uint16<N>) shuffle_zbytes16(uint8<N*2>(a), uint8<N*2>(b), uint8<N*2>(mask));
 }
 template<unsigned N>
-gint32<N> shuffle_zbytes16(gint32<N> a, gint32<N> b, gint32<N> mask)
+uint32<N> shuffle_zbytes16(uint32<N> a, uint32<N> b, uint32<N> mask)
 {
-    return (gint32<N>) shuffle_zbytes16(gint8<N*4>(a), gint8<N*4>(b), gint8<N*4>(mask));
+    return (uint32<N>) shuffle_zbytes16(uint8<N*4>(a), uint8<N*4>(b), uint8<N*4>(mask));
 }
 template<unsigned N>
-gint64<N> shuffle_zbytes16(gint64<N> a, gint64<N> b, gint64<N> mask)
+uint64<N> shuffle_zbytes16(uint64<N> a, uint64<N> b, uint64<N> mask)
 {
-    return (gint64<N>) shuffle_zbytes16(gint8<N*8>(a), gint8<N*8>(b), gint8<N*8>(mask));
+    return (uint64<N>) shuffle_zbytes16(uint8<N*8>(a), uint8<N*8>(b), uint8<N*8>(mask));
 }
 template<unsigned N>
-float32<N> shuffle_zbytes16(float32<N> a, float32<N> b, gint32<N> mask)
+float32<N> shuffle_zbytes16(float32<N> a, float32<N> b, uint32<N> mask)
 {
-    return float32<N>(shuffle_zbytes16(gint32<N>(a), gint32<N>(b), mask));
+    return float32<N>(shuffle_zbytes16(uint32<N>(a), uint32<N>(b), mask));
 }
 template<unsigned N>
-float64<N> shuffle_zbytes16(float64<N> a, float64<N> b, gint64<N> mask)
+float64<N> shuffle_zbytes16(float64<N> a, float64<N> b, uint64<N> mask)
 {
-    return float64<N>(shuffle_zbytes16(gint64<N>(a), gint64<N>(b), mask));
+    return float64<N>(shuffle_zbytes16(uint64<N>(a), uint64<N>(b), mask));
 }
 /// @}
 

@@ -56,7 +56,7 @@ void v_store_last(char* p, V a, unsigned n);
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_last(char* p, gint8x16 a, unsigned n)
+inline void i_store_last(char* p, uint8x16 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -67,15 +67,15 @@ inline void i_store_last(char* p, gint8x16 a, unsigned n)
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
 
-    gint8x16 mask = load_u(mask_d + n);
-    gint8x16 old = load(p);
+    uint8x16 mask = load_u(mask_d + n);
+    uint8x16 old = load(p);
     a = blend(a, old, mask);
     store(p, a);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(char* p, gint8x32 a, unsigned n)
+inline void i_store_last(char* p, uint8x32 a, unsigned n)
 {
     p = detail::assume_aligned(p, 32);
     static const uint8_t mask_d[64] = {0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,
@@ -84,15 +84,15 @@ inline void i_store_last(char* p, gint8x32 a, unsigned n)
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
-    gint8x32 mask = load_u(mask, mask_d + n);
-    gint8x32 old = load(old, p);
+    uint8x32 mask = load_u(mask, mask_d + n);
+    uint8x32 old = load(old, p);
     a = blend(a, old, mask);
     store(p, a);
 }
 #endif
 
 template<unsigned N>
-void i_store_last(char* p, gint8<N> a, unsigned n)
+void i_store_last(char* p, uint8<N> a, unsigned n)
 {
     v_store_last(p, a, n);
 }
@@ -100,25 +100,25 @@ void i_store_last(char* p, gint8<N> a, unsigned n)
 // -----------------------------------------------------------------------------
 // 16 bits
 
-inline void i_store_last(char* p, gint16x8 a, unsigned n)
+inline void i_store_last(char* p, uint16x8 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    i_store_last(p, (gint8x16)a, n*2);
+    i_store_last(p, (uint8x16)a, n*2);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(char* p, gint16x16 a, unsigned n)
+inline void i_store_last(char* p, uint16x16 a, unsigned n)
 {
-    i_store_last(p, gint8x32(a), n*2);
+    i_store_last(p, uint8x32(a), n*2);
 }
 #endif
 
 template<unsigned N>
-void i_store_last(char* p, gint16<N> a, unsigned n)
+void i_store_last(char* p, uint16<N> a, unsigned n)
 {
     v_store_last(p, a, n);
 }
@@ -126,25 +126,25 @@ void i_store_last(char* p, gint16<N> a, unsigned n)
 // -----------------------------------------------------------------------------
 // 32 bits
 
-inline void i_store_last(char* p, gint32x4 a, unsigned n)
+inline void i_store_last(char* p, uint32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    i_store_last(p, (gint8x16)a, n*4);
+    i_store_last(p, (uint8x16)a, n*4);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(char* p, gint32x8 a, unsigned n)
+inline void i_store_last(char* p, uint32x8 a, unsigned n)
 {
-    i_store_last(p, gint8x32(a), n*4);
+    i_store_last(p, uint8x32(a), n*4);
 }
 #endif
 
 template<unsigned N>
-void i_store_last(char* p, gint32<N> a, unsigned n)
+void i_store_last(char* p, uint32<N> a, unsigned n)
 {
     v_store_last(p, a, n);
 }
@@ -152,7 +152,7 @@ void i_store_last(char* p, gint32<N> a, unsigned n)
 // -----------------------------------------------------------------------------
 // 64 bits
 
-inline void i_store_last(char* p, gint64x2 a, unsigned n)
+inline void i_store_last(char* p, uint64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -174,15 +174,15 @@ inline void i_store_last(char* p, gint64x2 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_last(char* p, gint64x4 a, unsigned n)
+inline void i_store_last(char* p, uint64x4 a, unsigned n)
 {
-    i_store_last(p, gint8x32(a), n*2);
+    i_store_last(p, uint8x32(a), n*2);
 }
 #endif
 
 
 template<unsigned N>
-void i_store_last(char* p, gint64<N> a, unsigned n)
+void i_store_last(char* p, uint64<N> a, unsigned n)
 {
     v_store_last(p, a, n);
 }

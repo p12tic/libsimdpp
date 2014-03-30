@@ -50,14 +50,14 @@ namespace insn {
 
 // forward declarations due to circular dependencies
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint64x4 permute_emul(gint64x4 a);
+uint64x4 permute_emul(uint64x4 a);
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float64x4 permute_emul(float64x4 a);
 
 // ----
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint16x8 i_permute4(gint16x8 a)
+uint16x8 i_permute4(uint16x8 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -77,7 +77,7 @@ gint16x8 i_permute4(gint16x8 a)
 
 #if SIMDPP_USE_AVX2
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint16x16 i_permute4(gint16x16 a)
+uint16x16 i_permute4(uint16x16 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     a = sse::permute_lo<s0,s1,s2,s3>(a);
@@ -87,16 +87,16 @@ gint16x16 i_permute4(gint16x16 a)
 #endif
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
-gint16<N> i_permute4(gint16<N> a)
+uint16<N> i_permute4(uint16<N> a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(gint16<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, (i_permute4<s0,s1,s2,s3>), a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint32x4 i_permute4(gint32x4 a)
+uint32x4 i_permute4(uint32x4 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -114,7 +114,7 @@ gint32x4 i_permute4(gint32x4 a)
 
 #if SIMDPP_USE_AVX2
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint32x8 i_permute4(gint32x8 a)
+uint32x8 i_permute4(uint32x8 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     return _mm256_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
@@ -122,10 +122,10 @@ gint32x8 i_permute4(gint32x8 a)
 #endif
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
-gint32<N> i_permute4(gint32<N> a)
+uint32<N> i_permute4(uint32<N> a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(gint32<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, (i_permute4<s0,s1,s2,s3>), a);
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ float32<N> i_permute4(float32<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint64x4 i_permute4(gint64x4 a)
+uint64x4 i_permute4(uint64x4 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
@@ -184,10 +184,10 @@ gint64x4 i_permute4(gint64x4 a)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
-gint64<N> i_permute4(gint64<N> a)
+uint64<N> i_permute4(uint64<N> a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(gint64<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, (i_permute4<s0,s1,s2,s3>), a);
 }
 
 // -----------------------------------------------------------------------------

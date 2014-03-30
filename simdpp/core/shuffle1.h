@@ -25,8 +25,8 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_SHUFFLE1_H
-#define LIBSIMDPP_SIMDPP_CORE_SHUFFLE1_H
+#ifndef LIBSIMDPP_SIMDPP_CORE_SHUFFLV1_H
+#define LIBSIMDPP_SIMDPP_CORE_SHUFFLV1_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -40,7 +40,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** Selects 64-bit floating-point values from two vectors. The first value in
+/** Selects 64-bit values from two vectors. The first value in
     each pair of values must come from @a a, the second - from @a b. The
     selector values must be in range [0; 1].
 
@@ -53,34 +53,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     r3 = b[s1+2]
     @endcode
 
+    @par floating-point
     @par 128-bit version:
     @novec{NEON, ALTIVEC}
 
     @par 256-bit version:
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
-*/
-template<unsigned s0, unsigned s1, unsigned N, class E1, class E2>
-float64<N, float64<N>> shuffle1(float64<N,E1> a,
-                                float64<N,E2> b)
-{
-    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return detail::insn::i_shuffle1<s0,s1>(a.eval(), b.eval());
-}
 
-/** Selects 64-bit values from two vectors. The first value in each pair of
-    values must come from @a a, the second - from @a b. The selector values
-    must be in range [0; 1].
-
-    @code
-    r0 = a[s0]
-    r1 = b[s1]
-
-    256-bit version:
-    r2 = a[s0+2]
-    r3 = b[s1+2]
-    @endcode
-
+    @par integer
     @par 128-bit version:
     @icost{ALTIVEC, 1-2}
 
@@ -89,12 +70,14 @@ float64<N, float64<N>> shuffle1(float64<N,E1> a,
     @icost{NEON, 1-2}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s0, unsigned s1, unsigned N, class E1, class E2>
-gint64<N, gint64<N>> shuffle1(gint64<N,E1> a,
-                              gint64<N,E2> b)
+template<unsigned s0, unsigned s1, unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        shuffle1(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return detail::insn::i_shuffle1<s0,s1>(a.eval(), b.eval());
+    typename detail::get_expr2_nomask<V1, V2, void>::type ra = a.vec().eval(),
+                                                               rb = b.vec().eval();
+    return detail::insn::i_shuffle1<s0,s1>(ra, rb);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

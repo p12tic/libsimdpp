@@ -66,7 +66,7 @@ V bit_and_vm(V a, M m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = m.mask().el(i) ? a.el(i) : 0;
+        r.el(i) = m.el(i) ? a.el(i) : 0;
     }
     return r;
 }
@@ -76,9 +76,9 @@ M bit_and_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.m_mask().el(i) = a.mask().el(i) && b.mask().el(i);
+        r.el(i) = a.el(i) && b.el(i);
     }
-    return refresh_mask(r);
+    return r;
 }
 
 
@@ -101,7 +101,7 @@ V bit_andnot_vm(V a, M m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = !m.mask().el(i) ? a.el(i) : 0;
+        r.el(i) = !m.el(i) ? a.el(i) : 0;
     }
     return r;
 }
@@ -111,9 +111,9 @@ M bit_andnot_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.m_mask().el(i) = a.mask().el(i) && !b.mask().el(i);
+        r.el(i) = a.el(i) && !b.el(i);
     }
-    return refresh_mask(r);
+    return r;
 }
 
 
@@ -136,9 +136,9 @@ M bit_or_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.m_mask().el(i) = a.mask().el(i) || b.mask().el(i);
+        r.el(i) = a.el(i) || b.el(i);
     }
-    return refresh_mask(r);
+    return r;
 }
 
 template<class V>
@@ -160,10 +160,10 @@ M bit_xor_mm(M a, M b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = (a.mask().el(i) && !b.mask().el(i)) ||
-                  (!a.mask().el(i) && b.mask().el(i));
+        r.el(i) = (a.el(i) && !b.el(i)) ||
+                  (!a.el(i) && b.el(i));
     }
-    return refresh_mask(r);
+    return r;
 }
 
 template<class M>
@@ -171,9 +171,9 @@ M bit_not_mm(M a)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.m_mask().el(i) = !a.mask().el(i);
+        r.el(i) = !a.el(i);
     }
-    return refresh_mask(r);
+    return r;
 }
 
 } // namespace null

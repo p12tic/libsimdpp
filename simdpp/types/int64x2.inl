@@ -46,69 +46,19 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-template<class E> gint64<2>::gint64(const gint8<16,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); }
-template<class E> gint64<2>::gint64(const gint16<8,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); }
-template<class E> gint64<2>::gint64(const gint32<4,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); }
-template<class E> gint64<2>::gint64(const gint64<2,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); }
-template<class E> gint64<2>& gint64<2>::operator=(const gint8<16,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); return *this; }
-template<class E> gint64<2>& gint64<2>::operator=(const gint16<8,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); return *this; }
-template<class E> gint64<2>& gint64<2>::operator=(const gint32<4,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); return *this; }
-template<class E> gint64<2>& gint64<2>::operator=(const gint64<2,E>& d) { *this = bit_cast<gint64<2>>(d.eval()); return *this; }
+inline int64<2>   int64<2>::zero() { return make_uint(0); }
+inline uint64<2> uint64<2>::zero() { return make_uint(0); }
+inline int64<2>   int64<2>::ones() { return make_uint(0xffffffffffffffff); }
+inline uint64<2> uint64<2>::ones() { return make_uint(0xffffffffffffffff); }
 
-template<class E> int64<2>::int64(const gint8<16,E>& d) : gint64(d) {}
-template<class E> int64<2>::int64(const gint16<8,E>& d) : gint64(d) {}
-template<class E> int64<2>::int64(const gint32<4,E>& d) : gint64(d) {}
-template<class E> int64<2>::int64(const gint64<2,E>& d) : gint64(d) {}
-template<class E> int64<2>& int64<2>::operator=(const gint8<16,E>& d) { gint64::operator=(d); return *this; }
-template<class E> int64<2>& int64<2>::operator=(const gint16<8,E>& d) { gint64::operator=(d); return *this; }
-template<class E> int64<2>& int64<2>::operator=(const gint32<4,E>& d) { gint64::operator=(d); return *this; }
-template<class E> int64<2>& int64<2>::operator=(const gint64<2,E>& d) { gint64::operator=(d); return *this; }
-
-template<class E> uint64<2>::uint64(const gint8<16,E>& d) : gint64(d) {}
-template<class E> uint64<2>::uint64(const gint16<8,E>& d) : gint64(d) {}
-template<class E> uint64<2>::uint64(const gint32<4,E>& d) : gint64(d) {}
-template<class E> uint64<2>::uint64(const gint64<2,E>& d) : gint64(d) {}
-template<class E> uint64<2>& uint64<2>::operator=(const gint8<16,E>& d) { gint64::operator=(d); return *this; }
-template<class E> uint64<2>& uint64<2>::operator=(const gint16<8,E>& d) { gint64::operator=(d); return *this; }
-template<class E> uint64<2>& uint64<2>::operator=(const gint32<4,E>& d) { gint64::operator=(d); return *this; }
-template<class E> uint64<2>& uint64<2>::operator=(const gint64<2,E>& d) { gint64::operator=(d); return *this; }
-
-inline gint64<2>::gint64(const float64x2& d)
+inline uint64<2> mask_int64<2>::unmask() const
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<gint64x2> ax;
-    ax[0] = bit_cast<uint64_t>(d.el(0));
-    ax[1] = bit_cast<uint64_t>(d.el(1));
-    operator=(gint64x2(ax));
-#elif SIMDPP_USE_SSE2
-    operator=(_mm_castpd_si128(d));
+#if SIMDPP_USE_NULL
+    return null::convert_mask<uint64<2>>(*this);
+#else
+    return uint64<2>(d_);
 #endif
 }
-
-inline gint64x2 gint64x2::zero()
-{
-    return (uint64<2>) make_uint(0);
-}
-
-inline gint64x2 gint64x2::ones()
-{
-    return (uint64<2>) make_uint(0xffffffffffffffff);
-}
-
-inline mask_int64<2>::mask_int64(const maskdata_int64<2>& d) : uint64<2>(d), mask_(d) {}
-
-#if SIMDPP_USE_SSE2
-inline mask_int64<2>::mask_int64(__m128i d)   : uint64<2>(d), mask_(d) {}
-inline mask_int64<2>::mask_int64(gint64<2> d) : uint64<2>(d), mask_(d) {}
-#elif SIMDPP_USE_NEON
-inline mask_int64<2>::mask_int64(uint64x2_t d) : uint64<2>(d), mask_(d) {}
-inline mask_int64<2>::mask_int64(gint64<2> d)  : uint64<2>(d),  mask_(d) {}
-#elif SIMDPP_USE_ALTIVEC
-inline mask_int64<2>::mask_int64(__vector uint64_t d) : uint64<2>(d), mask_(d) {}
-inline mask_int64<2>::mask_int64(gint64<2> d)         : uint64<2>(d), mask_(d) {}
-#endif
-
-
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

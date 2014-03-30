@@ -40,8 +40,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-
-/// @{
 /** Stores a 128-bit or 256-bit integer vector to an aligned memory location.
 
     @par 128-bit version:
@@ -60,37 +58,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-template<unsigned N, class E>
-void store(void* p, gint8<N,E> a)
+template<unsigned N, class V>
+void store(void* p, const any_vec<N,V>& a)
 {
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
+    static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.vec().eval());
 }
-template<unsigned N, class E>
-void store(void* p, gint16<N,E> a)
-{
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void store(void* p, gint32<N,E> a)
-{
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void store(void* p, gint64<N,E> a)
-{
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void store(void* p, float32<N,E> a)
-{
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
-}
-template<unsigned N, class E>
-void store(void* p, float64<N,E> a)
-{
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.eval());
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

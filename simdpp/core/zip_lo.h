@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/zip_lo.h>
+#include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -54,54 +55,47 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> zip16_lo(gint8<N,E1> a, gint8<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        zip16_lo(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
-    return detail::insn::i_zip16_lo(a.eval(), b.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_zip16_lo(ra, rb);
 }
 
-template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> zip8_lo(gint16<N,E1> a, gint16<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        zip8_lo(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
 {
-    return detail::insn::i_zip8_lo(a.eval(), b.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_zip8_lo(ra, rb);
 }
 
-template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> zip4_lo(gint32<N,E1> a, gint32<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        zip4_lo(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
-    return detail::insn::i_zip4_lo(a.eval(), b.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_zip4_lo(ra, rb);
 }
 
-template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> zip2_lo(gint64<N,E1> a, gint64<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        zip2_lo(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
-    return detail::insn::i_zip2_lo(a.eval(), b.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_zip2_lo(ra, rb);
 }
+/// @}
 
-/** Interleaves the lower halves of two vectors.
-
-    @code
-        | 0  1  2  3  4  5  ... N-2      N-1      |
-    r = [ a0 b0 a1 b1 a2 b2 ... a(N/2-1) b(N/2-1) ]
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
-
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-*/
-template<unsigned N, class E1, class E2>
-float32<N, float32<N>> zip4_lo(float32<N,E1> a, float32<N,E2> b)
-{
-    return detail::insn::i_zip4_lo(a.eval(), b.eval());
-}
-
-template<unsigned N, class E1, class E2>
-float64<N, float64<N>> zip2_lo(float64<N,E1> a, float64<N,E2> b)
-{
-    return detail::insn::i_zip2_lo(a.eval(), b.eval());
-}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

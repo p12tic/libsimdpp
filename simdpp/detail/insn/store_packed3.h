@@ -54,7 +54,7 @@ void v_store_pack3(char* p, V a, V b, V c);
 // -----------------------------------------------------------------------------
 
 inline void i_store_packed3(char* p,
-                            gint8x16 a, gint8x16 b, gint8x16 c)
+                            uint8x16 a, uint8x16 b, uint8x16 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -75,7 +75,7 @@ inline void i_store_packed3(char* p,
 
 #if SIMDPP_USE_AVX2
 inline void i_store_packed3(char* p,
-                            gint8x32 a, gint8x32 b, gint8x32 c)
+                            uint8x32 a, uint8x32 b, uint8x32 c)
 {
     v256_store_pack3(p, a, b, c);
 }
@@ -83,7 +83,7 @@ inline void i_store_packed3(char* p,
 
 template<unsigned N>
 void i_store_packed3(char* p,
-                     gint8<N> a, gint8<N> b, gint8<N> c)
+                     uint8<N> a, uint8<N> b, uint8<N> c)
 {
     v_store_pack3(p, a, b, c);
 }
@@ -91,7 +91,7 @@ void i_store_packed3(char* p,
 // -----------------------------------------------------------------------------
 
 inline void i_store_packed3(char* p,
-                            gint16x8 a, gint16x8 b, gint16x8 c)
+                            uint16x8 a, uint16x8 b, uint16x8 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -112,7 +112,7 @@ inline void i_store_packed3(char* p,
 
 #if SIMDPP_USE_AVX2
 inline void i_store_packed3(char* p,
-                            gint16x16 a, gint16x16 b, gint16x16 c)
+                            uint16x16 a, uint16x16 b, uint16x16 c)
 {
     v256_store_pack3(p, a, b, c);
 }
@@ -120,7 +120,7 @@ inline void i_store_packed3(char* p,
 
 template<unsigned N>
 void i_store_packed3(char* p,
-                     gint16<N> a, gint16<N> b, gint16<N> c)
+                     uint16<N> a, uint16<N> b, uint16<N> c)
 {
     v_store_pack3(p, a, b, c);
 }
@@ -128,7 +128,7 @@ void i_store_packed3(char* p,
 // -----------------------------------------------------------------------------
 
 inline void i_store_packed3(char* p,
-                            gint32x4 a, gint32x4 b, gint32x4 c)
+                            uint32x4 a, uint32x4 b, uint32x4 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -149,7 +149,7 @@ inline void i_store_packed3(char* p,
 
 #if SIMDPP_USE_AVX2
 inline void i_store_packed3(char* p,
-                            gint32x8 a, gint32x8 b, gint32x8 c)
+                            uint32x8 a, uint32x8 b, uint32x8 c)
 {
     v256_store_pack3(p, a, b, c);
 }
@@ -157,7 +157,7 @@ inline void i_store_packed3(char* p,
 
 template<unsigned N>
 void i_store_packed3(char* p,
-                     gint32<N> a, gint32<N> b, gint32<N> c)
+                     uint32<N> a, uint32<N> b, uint32<N> c)
 {
     v_store_pack3(p, a, b, c);
 }
@@ -165,7 +165,7 @@ void i_store_packed3(char* p,
 // -----------------------------------------------------------------------------
 
 inline void i_store_packed3(char* p,
-                            gint64x2 a, gint64x2 b, gint64x2 c)
+                            uint64x2 a, uint64x2 b, uint64x2 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -190,7 +190,7 @@ inline void i_store_packed3(char* p,
 
 #if SIMDPP_USE_AVX2
 inline void i_store_packed3(char* p,
-                            gint64x4 a, gint64x4 b, gint64x4 c)
+                            uint64x4 a, uint64x4 b, uint64x4 c)
 {
     v256_store_pack3(p, a, b, c);
 }
@@ -198,7 +198,7 @@ inline void i_store_packed3(char* p,
 
 template<unsigned N>
 void i_store_packed3(char* p,
-                     gint64<N> a, gint64<N> b, gint64<N> c)
+                     uint64<N> a, uint64<N> b, uint64<N> c)
 {
     v_store_pack3(p, a, b, c);
 }

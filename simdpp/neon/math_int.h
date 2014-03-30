@@ -50,7 +50,7 @@ namespace neon {
     r15 = low(a15 * b15)
     @endcode
 */
-inline gint8x16 mul_lo(gint8x16 a, gint8x16 b)
+inline uint8x16 mul_lo(uint8x16 a, uint8x16 b)
 {
     return vmulq_u8(a, b);
 }

@@ -75,11 +75,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class E>
-gint16<N, gint16<N>> permute4(gint16<N,E> a)
+         unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        permute4(const any_vec16<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    return detail::insn::i_permute4<s0,s1,s2,s3>(a.eval());
+    typename detail::get_expr_nomask<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
@@ -96,6 +99,7 @@ gint16<N, gint16<N>> permute4(gint16<N,E> a)
     r7 = a[s3+4]
     @endcode
 
+    @par integer
     @par 128-bit version:
     @icost{NEON, 1-4}
     @icost{ALTIVEC, 1-2}
@@ -104,29 +108,8 @@ gint16<N, gint16<N>> permute4(gint16<N,E> a)
     @icost{SSE2-AVX, 2}
     @icost{NEON, 2-8}
     @icost{ALTIVEC, 2-3}
-*/
-template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class E>
-gint32<N, gint32<N>> permute4(gint32<N,E> a)
-{
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    return detail::insn::i_permute4<s0,s1,s2,s3>(a.eval());
-}
 
-/** Permutes the values of each set of four consecutive 32-bit floating point
-    values. The selector values must be in range [0; 3].
-
-    @code
-    r0 = a[s0]
-    ...
-    r3 = a[s3]
-
-    256-bit version:
-    r4 = a[s0+4]
-    ...
-    r7 = a[s3+4]
-    @endcode
-
+    @par floating-point
     @par 128-bit version:
     @icost{NEON, 1-4}
     @icost{ALTIVEC, 1-2}
@@ -137,11 +120,14 @@ gint32<N, gint32<N>> permute4(gint32<N,E> a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class E>
-float32<N, float32<N>> permute4(float32<N,E> a)
+         unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        permute4(const any_vec32<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    return detail::insn::i_permute4<s0,s1,s2,s3>(a.eval());
+    typename detail::get_expr_nomask<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 
 /** Permutes the values of each set of four consecutive 64-bit values. The
@@ -153,36 +139,24 @@ float32<N, float32<N>> permute4(float32<N,E> a)
     r2 = a[s2]
     r3 = a[s3]
     @endcode
+
+    @par integer
     @icost{SSE2-AVX, 2}
-*/
-template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class E>
-gint64<N, gint64<N>> permute4(gint64<N,E> a)
-{
-    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    return detail::insn::i_permute4<s0,s1,s2,s3>(a.eval());
-}
 
-/** Permutes the values of each set of four consecutive 64-bit floating-point
-    values. The selector values must be in range [0; 3].
-
-    @code
-    r0 = a[s0]
-    r1 = a[s1]
-    r2 = a[s2]
-    r3 = a[s3]
-    @endcode
-
+    @par floating-point
     @icost{SSE2-AVX, 1-2}
     @icost{NEON, 1-4}
     @icost{ALTIVEC, 1-4}
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class E>
-float64<N, float64<N>> permute4(float64<N,E> a)
+         unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        permute4(const any_vec64<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    return detail::insn::i_permute4<s0,s1,s2,s3>(a.eval());
+    typename detail::get_expr_nomask<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

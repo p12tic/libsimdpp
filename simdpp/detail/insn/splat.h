@@ -44,10 +44,10 @@ namespace detail {
 namespace insn {
 
 // forward decls for v_splat
-template<unsigned s> gint8x16 i_splat(gint8x16 a);
-template<unsigned s> gint16x8 i_splat(gint16x8 a);
-template<unsigned s> gint32x4 i_splat(gint32x4 a);
-template<unsigned s> gint64x2 i_splat(gint64x2 a);
+template<unsigned s> uint8x16 i_splat(uint8x16 a);
+template<unsigned s> uint16x8 i_splat(uint16x8 a);
+template<unsigned s> uint32x4 i_splat(uint32x4 a);
+template<unsigned s> uint64x2 i_splat(uint64x2 a);
 template<unsigned s> float32x4 i_splat(float32x4 a);
 template<unsigned s> float64x2 i_splat(float64x2 a);
 
@@ -69,17 +69,17 @@ V v_splat(V a)
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint8x16 i_splat(gint8x16 a)
+uint8x16 i_splat(uint8x16 a)
 {
     return i_splat16<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint8x32 i_splat(gint8x32 a)
+uint8x32 i_splat(uint8x32 a)
 {
     static_assert(s < 32, "Access out of bounds");
-    gint8x16 lo;
+    uint8x16 lo;
     lo = s < 16 ? sse::extract_lo(a) : sse::extract_hi(a);
     lo = move16_l<s % 16>(lo);
     return _mm256_broadcastb_epi8(lo);
@@ -87,7 +87,7 @@ gint8x32 i_splat(gint8x32 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint8<N> i_splat(gint8<N> a)
+uint8<N> i_splat(uint8<N> a)
 {
     static_assert(s < N, "Access out of bounds");
     return v_splat<s>(a);
@@ -96,17 +96,17 @@ gint8<N> i_splat(gint8<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint16x8 i_splat(gint16x8 a)
+uint16x8 i_splat(uint16x8 a)
 {
     return i_splat8<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint16x16 i_splat(gint16x16 a)
+uint16x16 i_splat(uint16x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
-    gint16x8 lo;
+    uint16x8 lo;
     lo = s < 8 ? sse::extract_lo(a) : sse::extract_hi(a);
     lo = move8_l<s % 8>(lo);
     return _mm256_broadcastw_epi16(lo);
@@ -114,7 +114,7 @@ gint16x16 i_splat(gint16x16 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint16<N> i_splat(gint16<N> a)
+uint16<N> i_splat(uint16<N> a)
 {
     static_assert(s < N, "Access out of bounds");
     return v_splat<s>(a);
@@ -123,14 +123,14 @@ gint16<N> i_splat(gint16<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint32x4 i_splat(gint32x4 a)
+uint32x4 i_splat(uint32x4 a)
 {
     return i_splat4<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint32x8 i_splat(gint32x8 a)
+uint32x8 i_splat(uint32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
     a = permute4<s%4,s%4,s%4,s%4>(a);
@@ -140,7 +140,7 @@ gint32x8 i_splat(gint32x8 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint32<N> i_splat(gint32<N> a)
+uint32<N> i_splat(uint32<N> a)
 {
     static_assert(s < N, "Access out of bounds");
     return v_splat<s>(a);
@@ -149,14 +149,14 @@ gint32<N> i_splat(gint32<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned s>
-gint64x2 i_splat(gint64x2 a)
+uint64x2 i_splat(uint64x2 a)
 {
     return i_splat2<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned s>
-gint64x4 i_splat(gint64x4 a)
+uint64x4 i_splat(uint64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
@@ -164,7 +164,7 @@ gint64x4 i_splat(gint64x4 a)
 #endif
 
 template<unsigned s, unsigned N>
-gint64<N> i_splat(gint64<N> a)
+uint64<N> i_splat(uint64<N> a)
 {
     static_assert(s < N, "Access out of bounds");
     return v_splat<s>(a);

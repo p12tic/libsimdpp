@@ -34,9 +34,11 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
 #include <simdpp/types/int32x4.h>
 #include <simdpp/core/cast.h>
 #include <simdpp/detail/construct_eval.h>
+#include <simdpp/detail/array.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -48,52 +50,49 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float32x4 vector
 template<>
-class float32<4, void> {
+class float32<4, void> : public any_float32<4, float32<4,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_FLOAT;
+    using base_vector_type = float32<4,void>;
+    using expr_type = void;
 
-    using element_type = float;
-    using uint_element_type = uint32_t;
-    using int_vector_type = gint32x4;
-    using uint_vector_type = uint32x4;
-    using base_vector_type = float32x4;
-    using mask_type = mask_float32x4;
-    using maskdata_type = maskdata_float32<4>;
-
-    static constexpr unsigned length = 4;
-    static constexpr unsigned vec_length = 1;
-    static constexpr unsigned num_bits = 32;
-    static constexpr uint_element_type all_bits = 0xffffffff;
+#if SIMDPP_USE_SSE2
+    using native_type = __m128;
+#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+    using native_type = float32x4_t;
+#elif SIMDPP_USE_ALTIVEC
+    using native_type = __vector float;
+#else // NULL
+    using native_type = detail::array<float, 4>;
+#endif
 
     float32<4>() = default;
-    float32<4>(const float32x4&) = default;
-    float32<4>& operator=(const float32x4&) = default;
+    float32<4>(const float32<4> &) = default;
+    float32<4> &operator=(const float32<4> &) = default;
 
-    /// Construct from the underlying vector type
-#if SIMDPP_USE_SSE2
-    float32<4>(__m128 d) : d_(d) {}
-    float32<4>& operator=(__m128 d) { d_ = d; return *this; }
-#elif SIMDPP_USE_NEON
-    float32<4>(float32x4_t d) : d_(d) {}
-    float32<4>& operator=(float32x4_t d) { d_ = d; return *this; }
-#elif SIMDPP_USE_ALTIVEC
-    float32<4>(__vector float d) : d_(d) {}
-    float32<4>& operator=(__vector float d) { d_ = d; return *this; }
-#endif
-
-    /// Convert to underlying vector type
-#if SIMDPP_USE_SSE2
-    operator __m128() const { return d_; }
-#elif SIMDPP_USE_NEON
-    operator float32x4_t() const { return d_; }
-#elif SIMDPP_USE_ALTIVEC
-    operator __vector float() const { return d_; }
-#endif
+    template<class E> float32<4>(const float32<4,E>& d) { *this = d.eval(); }
+    template<class V> explicit float32<4>(const any_vec<16,V>& d)
+    {
+        *this = bit_cast<float32<4>>(d.vec().eval());
+    }
+    template<class V> float32<4>& operator=(const any_vec<16,V>& d)
+    {
+        *this = bit_cast<float32<4>>(d.vec().eval()); return *this;
+    }
 
     /// @{
-    /// Construct from compatible int32x4 integer vector type
-    explicit float32<4>(gint32x4 d)     { *this = bit_cast<float32x4>(d); }
-    float32<4>& operator=(gint32x4 d)   { *this = bit_cast<float32x4>(d); return *this; }
+    /// Construct from the underlying vector type
+    float32<4>(const native_type& d) : d_(d) {}
+    float32<4>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
+
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
+
+#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
+    float& el(unsigned id) { return d_[id]; }
+    const float& el(unsigned id) const { return d_[id]; }
+#endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> float32<4>(const expr_vec_construct<E>& e)
@@ -108,19 +107,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const float32x4& operator[](unsigned) const { return *this; }
-          float32x4& operator[](unsigned)       { return *this; }
+    const float32<4>& operator[](unsigned) const { return *this; }
+          float32<4>& operator[](unsigned)       { return *this; }
     /// @}
 
     float32<4> eval() const { return *this; }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    /// For internal use only
-    const float& el(unsigned i) const { return f32_[i]; }
-          float& el(unsigned i)       { return f32_[i]; }
-#endif
-#endif
 
     /** Creates a float32x4 vector with the contents set to zero
 
@@ -134,100 +125,52 @@ public:
     static float32x4 zero();
 
 private:
-#if SIMDPP_USE_SSE2
-    __m128 d_;
-#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
-    union {
-        float f32_[4];
-        float32x4_t d_;
-    };
-#elif SIMDPP_USE_NEON
-    float32x4_t d_;
-#elif SIMDPP_USE_ALTIVEC
-    __vector float d_;
-#elif SIMDPP_USE_NULL
-    float f32_[4];
-#endif
+    native_type d_;
 };
 
-
-
-/// Class representing possibly optimized mask data for 4x 32-bit floating point
+/// Class representing possibly optimized mask data for 4x 32-bit floating-point
 /// vector
 template<>
-class maskdata_float32<4> {
+class mask_float32<4, void> : public any_float32<4, mask_float32<4,void>> {
 public:
-    using base_vector_type = maskdata_float32<4>;
-    static constexpr unsigned length = 4;
-    static constexpr unsigned vec_length = 1;
+    static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
+    using base_vector_type = mask_float32<4,void>;
+    using expr_type = void;
 
-    maskdata_float32<4>() = default;
-    maskdata_float32<4>(const maskdata_float32<4> &) = default;
-    maskdata_float32<4> &operator=(const maskdata_float32<4> &) = default;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    maskdata_float32<4>(float32x4 d) : d_(d) {}
-#endif
-#endif
-
-    /// Convert to bitmask
-    operator float32<4>() const;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#if SIMDPP_USE_NULL
-    bool& el(unsigned id) { return b_[id]; }
-    const bool& el(unsigned id) const { return b_[id]; }
-#endif
-#endif
-
-    /// @{
-    /// Access base vectors
-    const maskdata_float32<4>& operator[](unsigned) const { return *this; }
-          maskdata_float32<4>& operator[](unsigned)       { return *this; }
-    /// @}
-
-private:
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    bool b_[4];
-#else
-    float32x4 d_;
-#endif
-};
-
-
-/// Class representing a mask for 4x 32-bit floating-point vector
-template<>
-class mask_float32<4, void> : public float32<4, void> {
-public:
-    mask_float32<4>() = default;
-    mask_float32<4>(const mask_float32x4 &) = default;
-    mask_float32<4> &operator=(const mask_float32x4 &) = default;
-    mask_float32<4>(const maskdata_float32<4>& d);
-
-    /// @{
-    /// Construct from the underlying vector type
 #if SIMDPP_USE_SSE2
-    mask_float32<4>(__m128 d);
-    mask_float32<4>(float32<4> d);
-#elif SIMDPP_USE_NEON
-    mask_float32<4>(float32x4_t d);
-    mask_float32<4>(float32<4> d);
+    using native_type = __m128;
+#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+    using native_type = float32x4_t;
 #elif SIMDPP_USE_ALTIVEC
-    mask_float32<4>(__vector float d);
-    mask_float32<4>(float32<4> d);
+    using native_type = __vector float;
+#else // NULL
+    using native_type = detail::array<bool, 4>;
 #endif
-    /// @}
+    mask_float32<4>() = default;
+    mask_float32<4>(const mask_float32<4> &) = default;
+    mask_float32<4> &operator=(const mask_float32<4> &) = default;
+
+    mask_float32<4>(const native_type& d) : d_(d) {}
+
+#if SIMDPP_USE_SSE2
+    mask_float32<4>(const float32<4>& d) : d_(d) {}
+#endif
+
+    /// Access the underlying type
+    float32<4> unmask() const;
+
+#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
+    bool& el(unsigned id) { return d_[id]; }
+    const bool& el(unsigned id) const { return d_[id]; }
+#endif
+
+    const mask_float32<4>& operator[](unsigned) const { return *this; }
+          mask_float32<4>& operator[](unsigned)       { return *this; }
 
     mask_float32<4> eval() const { return *this; }
 
-    const maskdata_float32<4>& mask() const { return mask_; }
-#if !DOXYGEN_SHOULD_SKIP_THIS && SIMDPP_USE_NULL
-    maskdata_float32<4>& m_mask() { return mask_; }
-#endif
-
 private:
-    maskdata_float32<4> mask_;
+    native_type d_;
 };
 
 /// @} -- end defgroup

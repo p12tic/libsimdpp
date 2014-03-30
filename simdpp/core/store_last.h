@@ -40,7 +40,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Stores the last @a n elements of an 128-bit or 256-bit integer, 32-bit or
     64-bit floating point vector to memory. @a n must be in range [0..N-1]
     where @a N is the number of elements in the vector. If @a n is zero, no
@@ -63,37 +62,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @a p must be aligned to 32 bytes.
 */
-template<unsigned N, class E>
-void store_last(void* p, gint8<N,E> a, unsigned n)
+template<unsigned N, class V>
+void store_last(void* p, const any_vec<N,V>& a, unsigned n)
 {
-    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
+    static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
+    detail::insn::i_store_last(reinterpret_cast<char*>(p),
+                                a.vec().eval(), n);
 }
-template<unsigned N, class E>
-void store_last(void* p, gint16<N,E> a, unsigned n)
-{
-    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_last(void* p, gint32<N,E> a, unsigned n)
-{
-    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_last(void* p, gint64<N,E> a, unsigned n)
-{
-    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_last(void* p, float32<N,E> a, unsigned n)
-{
-    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_last(void* p, float64<N,E> a, unsigned n)
-{
-    detail::insn::i_store_last(reinterpret_cast<char*>(p), a.eval(), n);
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

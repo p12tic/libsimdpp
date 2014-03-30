@@ -53,7 +53,7 @@ void v_store_pack2(char* p, V a, V b);
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(char* p, gint8x16 a, gint8x16 b)
+inline void i_store_packed2(char* p, uint8x16 a, uint8x16 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -71,21 +71,21 @@ inline void i_store_packed2(char* p, gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(char* p, gint8x32 a, gint8x32 b)
+inline void i_store_packed2(char* p, uint8x32 a, uint8x32 b)
 {
     v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(char* p, gint8<N> a, gint8<N> b)
+void i_store_packed2(char* p, uint8<N> a, uint8<N> b)
 {
     v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(char* p, gint16x8 a, gint16x8 b)
+inline void i_store_packed2(char* p, uint16x8 a, uint16x8 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -103,21 +103,21 @@ inline void i_store_packed2(char* p, gint16x8 a, gint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(char* p, gint16x16 a, gint16x16 b)
+inline void i_store_packed2(char* p, uint16x16 a, uint16x16 b)
 {
     v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(char* p, gint16<N> a, gint16<N> b)
+void i_store_packed2(char* p, uint16<N> a, uint16<N> b)
 {
     v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(char* p, gint32x4 a, gint32x4 b)
+inline void i_store_packed2(char* p, uint32x4 a, uint32x4 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -135,21 +135,21 @@ inline void i_store_packed2(char* p, gint32x4 a, gint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(char* p, gint32x8 a, gint32x8 b)
+inline void i_store_packed2(char* p, uint32x8 a, uint32x8 b)
 {
     v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(char* p, gint32<N> a, gint32<N> b)
+void i_store_packed2(char* p, uint32<N> a, uint32<N> b)
 {
     v_store_pack2(p, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void i_store_packed2(char* p, gint64x2 a, gint64x2 b)
+inline void i_store_packed2(char* p, uint64x2 a, uint64x2 b)
 {
     p = detail::assume_aligned(p, 16);
     transpose2(a, b);
@@ -158,14 +158,14 @@ inline void i_store_packed2(char* p, gint64x2 a, gint64x2 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store_packed2(char* p, gint64x4 a, gint64x4 b)
+inline void i_store_packed2(char* p, uint64x4 a, uint64x4 b)
 {
     v256_store_pack2(p, a, b);
 }
 #endif
 
 template<unsigned N>
-void i_store_packed2(char* p, gint64<N> a, gint64<N> b)
+void i_store_packed2(char* p, uint64<N> a, uint64<N> b)
 {
     v_store_pack2(p, a, b);
 }

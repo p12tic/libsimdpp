@@ -48,7 +48,7 @@ namespace neon {
     b1 = b1
     @endcode
 */
-inline void swap_lo(gint64x2& a, gint64x2& b)
+inline void swap_lo(uint64x2& a, uint64x2& b)
 {
     int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
@@ -66,7 +66,7 @@ inline void swap_lo(gint64x2& a, gint64x2& b)
     b1 = a1
     @endcode
 */
-inline void swap_hi(gint64x2& a, gint64x2& b)
+inline void swap_hi(uint64x2& a, uint64x2& b)
 {
     int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
@@ -77,7 +77,7 @@ inline void swap_hi(gint64x2& a, gint64x2& b)
     b = vcombine_u64(bl, ah);
 }
 
-inline void transpose2(gint64x2& a, gint64x2& b)
+inline void transpose2(uint64x2& a, uint64x2& b)
 {
     int64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
@@ -88,13 +88,13 @@ inline void transpose2(gint64x2& a, gint64x2& b)
     b = vcombine_u64(ah, bh);
 }
 
-inline gint64x2 zip2_lo(gint64x2 a, gint64x2 b)
+inline uint64x2 zip2_lo(uint64x2 a, uint64x2 b)
 {
     transpose2(a, b);
     return a;
 }
 
-inline gint64x2 zip2_hi(gint64x2 a, gint64x2 b)
+inline uint64x2 zip2_hi(uint64x2 a, uint64x2 b)
 {
     transpose2(a, b);
     return b;

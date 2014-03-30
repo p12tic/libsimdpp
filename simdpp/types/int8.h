@@ -32,7 +32,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/types.h>
+#include <simdpp/setup_arch.h>
+#include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
+#include <simdpp/core/cast.h>
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
@@ -43,110 +46,31 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @ingroup simd_vec_int
 /// @{
 
-/** Class representing a @a gint8 vector of arbitrary length. The vector
-    always contains at least one native vector.
-*/
-template<unsigned N>
-class gint8<N, void> {
-public:
-
-    using element_type = int8_t;
-    using uint_element_type = uint8_t;
-    using int_vector_type = gint8<N>;
-    using uint_vector_type = uint8<N>;
-    using base_vector_type = gint8v;
-    using mask_type = mask_int8<N>;
-    using maskdata_type = maskdata_int8<N>;
-
-    static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = (N + SIMDPP_FAST_INT8_SIZE - 1) / SIMDPP_FAST_INT8_SIZE;
-
-    static constexpr unsigned num_bits = 8;
-    static constexpr uint_element_type all_bits = 0xff;
-
-    gint8<N>() = default;
-    gint8<N>(const gint8<N>&) = default;
-    gint8<N>& operator=(const gint8<N>&) = default;
-
-    template<class E>          gint8<N>(const  gint8<N,E>& d);
-    template<class E> explicit gint8<N>(const gint16<N/2,E>& d);
-    template<class E> explicit gint8<N>(const gint32<N/4,E>& d);
-    template<class E> explicit gint8<N>(const gint64<N/8,E>& d);
-    template<class E> gint8<N>& operator=(const  gint8<N,E>& d);
-    template<class E> gint8<N>& operator=(const gint16<N/2,E>& d);
-    template<class E> gint8<N>& operator=(const gint32<N/4,E>& d);
-    template<class E> gint8<N>& operator=(const gint64<N/8,E>& d);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> gint8<N>(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr());
-    }
-    template<class E> gint8<N>& operator=(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr()); return *this;
-    }
-#endif
-
-    const gint8v& operator[](unsigned i) const { return *(du_+i); }
-    gint8v& operator[](unsigned i)             { return *(du_+i); }
-
-    gint8<N> eval() const { return *this; }
-
-    /// Creates a int8 vector with the contents set to zero
-    static gint8<N> zero()
-    {
-        return set_vec(gint8v::zero());
-    }
-
-    /// Creates a int8 vector with the contents set to ones
-    static gint8<N> ones()
-    {
-        return set_vec(gint8v::ones());
-    }
-
-private:
-    /// Creates a int8 vector with the contents set to copy of native register
-    static gint8<N> set_vec(gint8v a)
-    {
-        gint8<N> r;
-        for (auto& v : r.du_) {
-            v = a;
-        }
-        return r;
-    }
-
-protected:
-    union {
-        uint8v du_[vec_length];
-        int8v di_[vec_length];
-    };
-};
-
-
 /** Class representing an signed @a int8 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
 template<unsigned N>
-class int8<N, void> : public gint8<N, void> {
+class int8<N, void> : public any_int8<N, int8<N, void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int8_t;
-    using gint8<N>::vec_length;
     using base_vector_type = int8v;
+    using expr_type = void;
 
     int8<N>() = default;
     int8<N>(const int8<N>&) = default;
     int8<N>& operator=(const int8<N>&) = default;
 
-    template<class E>          int8<N>(const  gint8<N,E>& d);
-    template<class E> explicit int8<N>(const gint16<N/2,E>& d);
-    template<class E> explicit int8<N>(const gint32<N/4,E>& d);
-    template<class E> explicit int8<N>(const gint64<N/8,E>& d);
-    template<class E> int8<N>& operator=(const  gint8<N,E>& d);
-    template<class E> int8<N>& operator=(const gint16<N/2,E>& d);
-    template<class E> int8<N>& operator=(const gint32<N/4,E>& d);
-    template<class E> int8<N>& operator=(const gint64<N/8,E>& d);
+    template<class E> int8<N>(const int8<N,E>& d) { *this = d.eval(); }
+    template<class E> int8<N>(const uint8<N,E>& d) { *this = d.eval(); }
+    template<class V> explicit int8<N>(const any_vec<N,V>& d)
+    {
+        *this = bit_cast<int8<N>>(d.vec().eval());
+    }
+    template<class V> int8<N>& operator=(const any_vec<N,V>& d)
+    {
+        *this = bit_cast<int8<N>>(d.vec().eval()); return *this;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> int8<N>(const expr_vec_construct<E>& e)
@@ -159,38 +83,55 @@ public:
     }
 #endif
 
-    const int8v& operator[](unsigned i) const { return *(gint8<N>::di_+i); }
-    int8v& operator[](unsigned i)             { return *(gint8<N>::di_+i); }
+    const int8v& operator[](unsigned i) const { return d_[i]; }
+    int8v& operator[](unsigned i)             { return d_[i]; }
 
     int8<N> eval() const { return *this; }
 
-    static int8<N> zero() { return gint8<N>::zero(); }
-    static int8<N> ones() { return gint8<N>::ones(); }
+    static int8<N> zero() { return set_vec(int8v::zero()); }
+    static int8<N> ones() { return set_vec(int8v::ones()); }
+
+private:
+    /// Creates a signed int8 vector with the contents set to copy of native
+    /// register
+    static int8<N> set_vec(int8v a)
+    {
+        int8<N> r;
+        for (auto& v : r.d_) {
+            v = a;
+        }
+        return r;
+    }
+
+private:
+    int8v d_[int8::vec_length];
 };
 
 /** Class representing an unsigned @a int8 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint8<N, void> : public gint8<N, void> {
+class uint8<N, void> : public any_int8<N, uint8<N, void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint8_t;
-    using gint8<N>::vec_length;
     using base_vector_type = uint8v;
+    using expr_type = void;
 
     uint8<N>() = default;
     uint8<N>(const uint8<N>&) = default;
     uint8<N>& operator=(const uint8<N>&) = default;
 
-    template<class E>          uint8<N>(const  gint8<N,E>& d);
-    template<class E> explicit uint8<N>(const gint16<N/2,E>& d);
-    template<class E> explicit uint8<N>(const gint32<N/4,E>& d);
-    template<class E> explicit uint8<N>(const gint64<N/8,E>& d);
-    template<class E> uint8<N>& operator=(const  gint8<N,E>& d);
-    template<class E> uint8<N>& operator=(const gint16<N/2,E>& d);
-    template<class E> uint8<N>& operator=(const gint32<N/4,E>& d);
-    template<class E> uint8<N>& operator=(const gint64<N/8,E>& d);
+    template<class E> uint8<N>(const uint8<N,E>& d) { *this = d.eval(); }
+    template<class E> uint8<N>(const int8<N,E>& d) { *this = d.eval(); }
+    template<class V> explicit uint8<N>(const any_vec<N,V>& d)
+    {
+        *this = bit_cast<uint8<N>>(d.vec().eval());
+    }
+    template<class V> uint8<N>& operator=(const any_vec<N,V>& d)
+    {
+        *this = bit_cast<uint8<N>>(d.vec().eval()); return *this;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> uint8<N>(const expr_vec_construct<E>& e)
@@ -203,57 +144,60 @@ public:
     }
 #endif
 
-    const uint8v& operator[](unsigned i) const { return *(gint8<N>::du_+i); }
-    uint8v& operator[](unsigned i)             { return *(gint8<N>::du_+i); }
+    const uint8v& operator[](unsigned i) const { return d_[i]; }
+    uint8v& operator[](unsigned i)             { return d_[i]; }
 
     uint8<N> eval() const { return *this; }
 
-    static uint8<N> zero() { return gint8<N>::zero(); }
-    static uint8<N> ones() { return gint8<N>::ones(); }
-};
-
-/// Class representing possibly optimized mask data for arbitrary length 8-bit
-/// integer vector
-template<unsigned N>
-class maskdata_int8 {
-public:
-    using base_vector_type = maskdata_int8<N>;
-    static constexpr unsigned length = N;
-    static constexpr unsigned vec_length = uint8<N>::vec_length;
-
-    maskdata_int8<N>() = default;
-    maskdata_int8<N>(const maskdata_int8<N> &) = default;
-    maskdata_int8<N> &operator=(const maskdata_int8<N> &) = default;
-
-    /// Convert to bitmask
-    operator uint8<N>() const;
-
-    const maskdata_int8v& operator[](unsigned i) const { return *(d_+i); }
-          maskdata_int8v& operator[](unsigned i)       { return *(d_+i); }
-
-    mask_int8<N> eval() const { return *this; }
+    static uint8<N> zero() { return set_vec(uint8v::zero()); }
+    static uint8<N> ones() { return set_vec(uint8v::ones()); }
 
 private:
-    maskdata_int8v d_[vec_length];
+    /// Creates a unsigned int8 vector with the contents set to copy of native
+    /// register
+    static uint8<N> set_vec(uint8v a)
+    {
+        uint8<N> r;
+        for (auto& v : r.d_) {
+            v = a;
+        }
+        return r;
+    }
+
+private:
+    uint8v d_[uint8::vec_length];
 };
 
-
-/// Class representing a mask for 8-bit integer point vector of arbitrary
+/// Class representing a mask for 8-bit integer vector of arbitrary
 /// length.
 template<unsigned N>
-class mask_int8<N, void> : public uint8<N, void> {
+class mask_int8<N, void> : public any_int8<N, mask_int8<N,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using base_vector_type = mask_int8v;
+    using expr_type = void;
+
     mask_int8<N>() = default;
     mask_int8<N>(const mask_int8<N> &) = default;
     mask_int8<N> &operator=(const mask_int8<N> &) = default;
-    mask_int8<N>(const maskdata_int8<N>& d);
+
+    /// Access the underlying type
+    uint8<N> unmask() const
+    {
+        uint8<N> r;
+        for (unsigned i = 0; i < mask_int8::vec_length; ++i) {
+            r[i] = d_[i].unmask();
+        }
+        return r;
+    }
+
+    const mask_int8v& operator[](unsigned i) const { return d_[i]; }
+          mask_int8v& operator[](unsigned i)       { return d_[i]; }
 
     mask_int8<N> eval() const { return *this; }
 
-    maskdata_int8<N> mask() const { return mask_; }
-
 private:
-    maskdata_int8<N> mask_;
+    mask_int8v d_[mask_int8::vec_length];
 };
 
 /// @} -- end ingroup

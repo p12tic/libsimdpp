@@ -40,9 +40,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-
-/// @{
-/** Computes bitwise XOR of integer vectors.
+/** Computes bitwise XOR of integer or floating-point vectors.
 
     @code
     r0 = a0 ^ b0
@@ -53,99 +51,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> bit_xor(gint8<N,E1> a, gint8<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2<V1, V2, void>::empty
+    bit_xor(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_bit_xor(ra, rb);
 }
-template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> bit_xor(gint16<N,E1> a, gint16<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> bit_xor(gint32<N,E1> a, gint32<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> bit_xor(gint64<N,E1> a, gint64<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N, class E1, class E2>
-mask_int8<N, mask_int8<N>> bit_xor(mask_int8<N,E1> a, mask_int8<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-mask_int16<N, mask_int16<N>> bit_xor(mask_int16<N,E1> a, mask_int16<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-mask_int32<N, mask_int32<N>> bit_xor(mask_int32<N,E1> a, mask_int32<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-mask_int64<N, mask_int64<N>> bit_xor(mask_int64<N,E1> a, mask_int64<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-/// @}
-
-/// @{
-/** Computes bitwise XOR of floating-point vectors
-
-    @code
-    r0 = a0 ^ b0
-    ...
-    rN = aN ^ bN
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
-*/
-template<unsigned N, class E1, class E2>
-float32<N, float32<N>> bit_xor(float32<N,E1> a, float32<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-float32<N, float32<N>> bit_xor(float32<N,E1> a, gint32<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), float32<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-mask_float32<N, mask_float32<N>> bit_xor(mask_float32<N,E1> a,
-                                         mask_float32<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N, class E1, class E2>
-float64<N, float64<N>> bit_xor(float64<N,E1> a, float64<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-float64<N, float64<N>> bit_xor(float64<N,E1> a, gint64<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), float64<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-mask_float64<N, mask_float64<N>> bit_xor(mask_float64<N,E1> a,
-                                         mask_float64<N,E2> b)
-{
-    return detail::insn::i_bit_xor(a.eval(), b.eval());
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

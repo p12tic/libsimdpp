@@ -43,47 +43,47 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX2
 
-inline gint32<8>::gint32(const gint8x32& d) { *this = bit_cast<gint32x8>(d); }
-inline gint32<8>::gint32(const gint16x16& d){ *this = bit_cast<gint32x8>(d); }
-inline gint32<8>::gint32(const gint64x4& d) { *this = bit_cast<gint32x8>(d); }
-inline gint32<8>& gint32<8>::operator=(const gint8x32& d) { *this = bit_cast<gint32x8>(d); return *this; }
-inline gint32<8>& gint32<8>::operator=(const gint16x16& d){ *this = bit_cast<gint32x8>(d); return *this; }
-inline gint32<8>& gint32<8>::operator=(const gint64x4& d) { *this = bit_cast<gint32x8>(d); return *this; }
+inline uint32<8>::uint32(const uint8x32& d) { *this = bit_cast<uint32x8>(d); }
+inline uint32<8>::uint32(const uint16x16& d){ *this = bit_cast<uint32x8>(d); }
+inline uint32<8>::uint32(const uint64x4& d) { *this = bit_cast<uint32x8>(d); }
+inline uint32<8>& uint32<8>::operator=(const uint8x32& d) { *this = bit_cast<uint32x8>(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const uint16x16& d){ *this = bit_cast<uint32x8>(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const uint64x4& d) { *this = bit_cast<uint32x8>(d); return *this; }
 
-inline int32<8>::int32(const gint8x32& d) : gint32x8(bit_cast<gint32x8>(d)) {}
-inline int32<8>::int32(const gint16x16& d): gint32x8(bit_cast<gint32x8>(d)) {}
-inline int32<8>::int32(const gint32x8& d) : gint32x8(d) {}
-inline int32<8>::int32(const gint64x4& d) : gint32x8(bit_cast<gint32x8>(d)) {}
-inline int32<8>& int32<8>::operator=(const gint8x32& d) { gint32x8::operator=(d); return *this; }
-inline int32<8>& int32<8>::operator=(const gint16x16& d){ gint32x8::operator=(d); return *this; }
-inline int32<8>& int32<8>::operator=(const gint32x8& d) { gint32x8::operator=(d); return *this; }
-inline int32<8>& int32<8>::operator=(const gint64x4& d) { gint32x8::operator=(d); return *this; }
+inline int32<8>::int32(const uint8x32& d) : uint32x8(bit_cast<uint32x8>(d)) {}
+inline int32<8>::int32(const uint16x16& d): uint32x8(bit_cast<uint32x8>(d)) {}
+inline int32<8>::int32(const uint32x8& d) : uint32x8(d) {}
+inline int32<8>::int32(const uint64x4& d) : uint32x8(bit_cast<uint32x8>(d)) {}
+inline int32<8>& int32<8>::operator=(const uint8x32& d) { uint32x8::operator=(d); return *this; }
+inline int32<8>& int32<8>::operator=(const uint16x16& d){ uint32x8::operator=(d); return *this; }
+inline int32<8>& int32<8>::operator=(const uint32x8& d) { uint32x8::operator=(d); return *this; }
+inline int32<8>& int32<8>::operator=(const uint64x4& d) { uint32x8::operator=(d); return *this; }
 
-inline uint32<8>::uint32(const gint8x32& d) : gint32x8(bit_cast<gint32x8>(d)) {}
-inline uint32<8>::uint32(const gint16x16& d): gint32x8(bit_cast<gint32x8>(d)) {}
-inline uint32<8>::uint32(const gint32x8& d) : gint32x8(d) {}
-inline uint32<8>::uint32(const gint64x4& d) : gint32x8(bit_cast<gint32x8>(d)) {}
-inline uint32<8>& uint32<8>::operator=(const gint8x32& d) { gint32x8::operator=(d); return *this; }
-inline uint32<8>& uint32<8>::operator=(const gint16x16& d){ gint32x8::operator=(d); return *this; }
-inline uint32<8>& uint32<8>::operator=(const gint32x8& d) { gint32x8::operator=(d); return *this; }
-inline uint32<8>& uint32<8>::operator=(const gint64x4& d) { gint32x8::operator=(d); return *this; }
+inline uint32<8>::uint32(const uint8x32& d) : uint32x8(bit_cast<uint32x8>(d)) {}
+inline uint32<8>::uint32(const uint16x16& d): uint32x8(bit_cast<uint32x8>(d)) {}
+inline uint32<8>::uint32(const uint32x8& d) : uint32x8(d) {}
+inline uint32<8>::uint32(const uint64x4& d) : uint32x8(bit_cast<uint32x8>(d)) {}
+inline uint32<8>& uint32<8>::operator=(const uint8x32& d) { uint32x8::operator=(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const uint16x16& d){ uint32x8::operator=(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const uint32x8& d) { uint32x8::operator=(d); return *this; }
+inline uint32<8>& uint32<8>::operator=(const uint64x4& d) { uint32x8::operator=(d); return *this; }
 
-inline gint32<8>::gint32(const float32x8& d)
+inline uint32<8>::uint32(const float32x8& d)
 {
-    *this = bit_cast<gint32x8>(d);
+    *this = bit_cast<uint32x8>(d);
 }
 
-inline gint32x8 gint32x8::zero()
+inline uint32x8 uint32x8::zero()
 {
     return (uint32<8>) make_uint(0);
 }
 
-inline gint32x8 gint32x8::ones()
+inline uint32x8 uint32x8::ones()
 {
     return (uint32<8>) make_uint(0xffffffff);
 }
 
-inline mask_int32x8::operator gint32x8() const
+inline mask_int32x8::operator uint32x8() const
 {
     return d_;
 }

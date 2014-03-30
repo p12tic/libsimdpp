@@ -43,11 +43,11 @@ namespace detail {
 
 
 template<class E1, class E2>
-gint8<16> expr_eval(expr_sub<gint8<16,E1>,
-                             gint8<16,E2>> q)
+uint8<16> expr_eval(expr_sub<uint8<16,E1>,
+                             uint8<16,E2>> q)
 {
-    gint8<16> a = q.a.eval();
-    gint8<16> b = q.b.eval();
+    uint8<16> a = q.a.eval();
+    uint8<16> b = q.b.eval();
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
 #elif SIMDPP_USE_SSE2
@@ -61,32 +61,32 @@ gint8<16> expr_eval(expr_sub<gint8<16,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2>
-gint8<32> expr_eval(expr_sub<gint8<32,E1>,
-                             gint8<32,E2>> q)
+uint8<32> expr_eval(expr_sub<uint8<32,E1>,
+                             uint8<32,E2>> q)
 {
-    gint8<32> a = q.a.eval();
-    gint8<32> b = q.b.eval();
+    uint8<32> a = q.a.eval();
+    uint8<32> b = q.b.eval();
     return _mm256_sub_epi8(a, b);
 }
 #endif
 
 template<unsigned N, class E1, class E2>
-gint8<N> expr_eval(expr_sub<gint8<N,E1>,
-                            gint8<N,E2>> q)
+uint8<N> expr_eval(expr_sub<uint8<N,E1>,
+                            uint8<N,E2>> q)
 {
-    gint8<N> a = q.a.eval();
-    gint8<N> b = q.b.eval();
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, sub, a, b);
+    uint8<N> a = q.a.eval();
+    uint8<N> b = q.b.eval();
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, sub, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2>
-gint16<8> expr_eval(expr_sub<gint16<8,E1>,
-                             gint16<8,E2>> q)
+uint16<8> expr_eval(expr_sub<uint16<8,E1>,
+                             uint16<8,E2>> q)
 {
-    gint16<8> a = q.a.eval();
-    gint16<8> b = q.b.eval();
+    uint16<8> a = q.a.eval();
+    uint16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
 #elif SIMDPP_USE_SSE2
@@ -100,32 +100,32 @@ gint16<8> expr_eval(expr_sub<gint16<8,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2>
-gint16<16> expr_eval(expr_sub<gint16<16,E1>,
-                              gint16<16,E2>> q)
+uint16<16> expr_eval(expr_sub<uint16<16,E1>,
+                              uint16<16,E2>> q)
 {
-    gint16<16> a = q.a.eval();
-    gint16<16> b = q.b.eval();
+    uint16<16> a = q.a.eval();
+    uint16<16> b = q.b.eval();
     return _mm256_sub_epi16(a, b);
 }
 #endif
 
 template<unsigned N, class E1, class E2>
-gint16<N> expr_eval(expr_sub<gint16<N,E1>,
-                             gint16<N,E2>> q)
+uint16<N> expr_eval(expr_sub<uint16<N,E1>,
+                             uint16<N,E2>> q)
 {
-    gint16<N> a = q.a.eval();
-    gint16<N> b = q.b.eval();
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, sub, a, b);
+    uint16<N> a = q.a.eval();
+    uint16<N> b = q.b.eval();
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, sub, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2>
-gint32<4> expr_eval(expr_sub<gint32<4,E1>,
-                             gint32<4,E2>> q)
+uint32<4> expr_eval(expr_sub<uint32<4,E1>,
+                             uint32<4,E2>> q)
 {
-    gint32<4> a = q.a.eval();
-    gint32<4> b = q.b.eval();
+    uint32<4> a = q.a.eval();
+    uint32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
 #elif SIMDPP_USE_SSE2
@@ -139,32 +139,32 @@ gint32<4> expr_eval(expr_sub<gint32<4,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2>
-gint32<8> expr_eval(expr_sub<gint32<8,E1>,
-                             gint32<8,E2>> q)
+uint32<8> expr_eval(expr_sub<uint32<8,E1>,
+                             uint32<8,E2>> q)
 {
-    gint32<8> a = q.a.eval();
-    gint32<8> b = q.b.eval();
+    uint32<8> a = q.a.eval();
+    uint32<8> b = q.b.eval();
     return _mm256_sub_epi32(a, b);
 }
 #endif
 
 template<unsigned N, class E1, class E2>
-gint32<N> expr_eval(expr_sub<gint32<N,E1>,
-                             gint32<N,E2>> q)
+uint32<N> expr_eval(expr_sub<uint32<N,E1>,
+                             uint32<N,E2>> q)
 {
-    gint32<N> a = q.a.eval();
-    gint32<N> b = q.b.eval();
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, sub, a, b);
+    uint32<N> a = q.a.eval();
+    uint32<N> b = q.b.eval();
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, sub, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2>
-gint64<2> expr_eval(expr_sub<gint64<2,E1>,
-                             gint64<2,E2>> q)
+uint64<2> expr_eval(expr_sub<uint64<2,E1>,
+                             uint64<2,E2>> q)
 {
-    gint64<2> a = q.a.eval();
-    gint64<2> b = q.b.eval();
+    uint64<2> a = q.a.eval();
+    uint64<2> b = q.b.eval();
 #if SIMDPP_USE_NULL
     return null::sub(a, b);
 #elif SIMDPP_USE_SSE2
@@ -185,22 +185,22 @@ gint64<2> expr_eval(expr_sub<gint64<2,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2>
-gint64<4> expr_eval(expr_sub<gint64<4,E1>,
-                             gint64<4,E2>> q)
+uint64<4> expr_eval(expr_sub<uint64<4,E1>,
+                             uint64<4,E2>> q)
 {
-    gint64<4> a = q.a.eval();
-    gint64<4> b = q.b.eval();
+    uint64<4> a = q.a.eval();
+    uint64<4> b = q.b.eval();
     return _mm256_sub_epi64(a, b);
 }
 #endif
 
 template<unsigned N, class E1, class E2>
-gint64<N> expr_eval(expr_sub<gint64<N,E1>,
-                             gint64<N,E2>> q)
+uint64<N> expr_eval(expr_sub<uint64<N,E1>,
+                             uint64<N,E2>> q)
 {
-    gint64<N> a = q.a.eval();
-    gint64<N> b = q.b.eval();
-    SIMDPP_VEC_ARRAY_IMPL2(gint64<N>, sub, a, b);
+    uint64<N> a = q.a.eval();
+    uint64<N> b = q.b.eval();
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, sub, a, b);
 }
 
 } // namespace detail

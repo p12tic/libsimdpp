@@ -35,6 +35,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/bit_not.h>
 #include <simdpp/detail/expr/bit_not.h>
+#include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -43,50 +44,24 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 /// @{
-/** Computes bitwise NOT of an integer vector
+/** Computes bitwise NOT of an integer or floating-point vector
 
     @code
     r = ~a
     @endcode
 
-    @par 128-bit version:
-    @icost{SSE2-AVX, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2-3}
-    @icost{AVX2, NEON, ALTIVEC, 2}
+    @todo icost
 */
-template<unsigned N, class E>
-gint8<N, gint8<N>> bit_not(gint8<N,E> a)
+template<unsigned N, class V>
+typename detail::get_expr<V, void>::empty
+    bit_not(const any_vec<N,V>& a)
 {
-    return detail::insn::i_bit_not(a.eval());
-}
-template<unsigned N, class E>
-gint16<N, gint16<N>> bit_not(gint16<N,E> a)
-{
-    return detail::insn::i_bit_not(a.eval());
-}
-template<unsigned N, class E>
-gint32<N, gint32<N>> bit_not(gint32<N,E> a)
-{
-    return detail::insn::i_bit_not(a.eval());
-}
-template<unsigned N, class E>
-gint64<N, gint64<N>> bit_not(gint64<N,E> a)
-{
-    return detail::insn::i_bit_not(a.eval());
+    typename detail::get_expr_nosign<V, void>::type ra;
+    ra = a.vec().eval();
+    return detail::insn::i_bit_not(ra);
 }
 
-template<unsigned N, class E>
-mask_int8<N, mask_int8<N>> bit_not(mask_int8<N,E> a)
-{
-    return detail::insn::i_bit_not(a.eval());
-}
-template<unsigned N, class E>
-mask_int16<N, mask_int16<N>> bit_not(mask_int16<N,E> a)
-{
-    return detail::insn::i_bit_not(a.eval());
-}
+/* FIXME
 template<unsigned N, class E>
 mask_int32<N, expr_bit_not<mask_int32<N,E>>> bit_not(mask_int32<N,E> a)
 {
@@ -99,30 +74,6 @@ mask_int64<N, expr_bit_not<mask_int64<N,E>>> bit_not(mask_int64<N,E> a)
 }
 /// @}
 
-/// @{
-/** Computes bitwise NOT of a floating-point vector
-
-    @code
-    r = ~a
-    @endcode
-
-    @par 128-bit version:
-    @icost{SSE2-SSE4.1, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-SSE4.1, 2-3}
-    @icost{AVX2, NEON, ALTIVEC, 2}
-*/
-template<unsigned N, class E>
-float32<N, float32<N>> bit_not(float32<N,E> a)
-{
-    return detail::insn::i_bit_not(a.eval());
-}
-template<unsigned N, class E>
-float64<N, float64<N>> bit_not(float64<N,E> a)
-{
-    return detail::insn::i_bit_not(a.eval());
-}
 
 template<unsigned N, class E>
 mask_float32<N, expr_bit_not<mask_float32<N,E>>> bit_not(mask_float32<N,E> a)
@@ -134,7 +85,7 @@ mask_float64<N, expr_bit_not<mask_float64<N,E>>> bit_not(mask_float64<N,E> a)
 {
     return { { a }, 0 };
 }
-/// @}
+/// @}*/
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

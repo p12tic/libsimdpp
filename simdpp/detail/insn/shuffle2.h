@@ -50,7 +50,7 @@ namespace insn {
 
 // fwd decl
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
-gint32x4 i_shuffle2(gint32x4 a, gint32x4 b);
+uint32x4 i_shuffle2(uint32x4 a, uint32x4 b);
 
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
 float32x4 i_shuffle2(float32x4 a, float32x4 b)
@@ -101,14 +101,14 @@ float32<N> i_shuffle2(float32<N> a, float32<N> b)
 // -----------------------------------------------------------------------------
 
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
-gint32x4 i_shuffle2(gint32x4 a, gint32x4 b)
+uint32x4 i_shuffle2(uint32x4 a, uint32x4 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
     return null::shuffle2<a0,a1,b0,b1>(a, b);
 #elif SIMDPP_USE_SSE2
     // We can't do this in the integer execution domain. Beware of additional latency
-    return int32x4(i_shuffle2<a0,a1,b0,b1>(float32x4(a), float32x4(b)));
+    return uint32x4(i_shuffle2<a0,a1,b0,b1>(float32x4(a), float32x4(b)));
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int32x4::shuffle2<a0,a1,b0,b1>(a, b);
 #elif SIMDPP_USE_ALTIVEC
@@ -119,7 +119,7 @@ gint32x4 i_shuffle2(gint32x4 a, gint32x4 b)
 
 #if SIMDPP_USE_AVX2
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
-gint32x8 i_shuffle2(gint32x8 a, gint32x8 b)
+uint32x8 i_shuffle2(uint32x8 a, uint32x8 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
     // We can't do this in the integer execution domain. Beware of additional latency
@@ -128,16 +128,16 @@ gint32x8 i_shuffle2(gint32x8 a, gint32x8 b)
 #endif
 
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N>
-gint32<N> i_shuffle2(gint32<N> a, gint32<N> b)
+uint32<N> i_shuffle2(uint32<N> a, uint32<N> b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, (i_shuffle2<a0,a1,b0,b1>), a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, (i_shuffle2<a0,a1,b0,b1>), a, b);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned s0, unsigned s1, unsigned N>
-gint32<N> i_shuffle2(gint32<N> a, gint32<N> b)
+uint32<N> i_shuffle2(uint32<N> a, uint32<N> b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     return i_shuffle2<s0,s1,s0,s1>(a, b);

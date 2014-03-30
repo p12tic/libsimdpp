@@ -50,7 +50,7 @@ inline float32x8 float32x8::zero()
     return r;
 }
 
-inline mask_float32x8::operator float32x8() const
+inline maskdata_float32x8::operator float32x8() const
 {
     return d_;
 }

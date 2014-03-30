@@ -43,16 +43,12 @@ namespace detail {
 struct vec128_impl {
     using i8  =  int8x16;
     using u8  = uint8x16;
-    using b8  = gint8x16;
     using i16 =  int16x8;
     using u16 = uint16x8;
-    using b16 = gint16x8;
     using i32 =  int32x4;
     using u32 = uint32x4;
-    using b32 = gint32x4;
     using i64 =  int64x2;
     using u64 = uint64x2;
-    using b64 = gint64x2;
     using f32 = float32x4;
     using f64 = float64x2;
 };
@@ -60,16 +56,12 @@ struct vec128_impl {
 struct vec256_impl {
     using i8  =  int8x32;
     using u8  = uint8x32;
-    using b8  = gint8x32;
     using i16 =  int16x16;
     using u16 = uint16x16;
-    using b16 = gint16x16;
     using i32 = int32x8;
     using u32 = uint32x8;
-    using b32 = gint32x8;
     using i64 = int64x4;
     using u64 = uint64x4;
-    using b64 = gint64x4;
     using f32 = float32x8;
     using f64 = float64x4;
 };
@@ -77,31 +69,23 @@ struct vec256_impl {
 template<class T> struct same_width;
 template<> struct same_width<int8x16  > : vec128_impl {};
 template<> struct same_width<uint8x16 > : vec128_impl {};
-template<> struct same_width<gint8x16 > : vec128_impl {};
 template<> struct same_width<int16x8  > : vec128_impl {};
 template<> struct same_width<uint16x8 > : vec128_impl {};
-template<> struct same_width<gint16x8 > : vec128_impl {};
 template<> struct same_width<int32x4  > : vec128_impl {};
 template<> struct same_width<uint32x4 > : vec128_impl {};
-template<> struct same_width<gint32x4 > : vec128_impl {};
 template<> struct same_width<int64x2  > : vec128_impl {};
 template<> struct same_width<uint64x2 > : vec128_impl {};
-template<> struct same_width<gint64x2 > : vec128_impl {};
 template<> struct same_width<float32x4> : vec128_impl {};
 template<> struct same_width<float64x2> : vec128_impl {};
 
 template<> struct same_width< int8x32 > : vec256_impl {};
 template<> struct same_width<uint8x32 > : vec256_impl {};
-template<> struct same_width<gint8x32 > : vec256_impl {};
 template<> struct same_width< int16x16> : vec256_impl {};
 template<> struct same_width<uint16x16> : vec256_impl {};
-template<> struct same_width<gint16x16> : vec256_impl {};
 template<> struct same_width< int32x8 > : vec256_impl {};
 template<> struct same_width<uint32x8 > : vec256_impl {};
-template<> struct same_width<gint32x8 > : vec256_impl {};
 template<> struct same_width< int64x4 > : vec256_impl {};
 template<> struct same_width<uint64x4 > : vec256_impl {};
-template<> struct same_width<gint64x4 > : vec256_impl {};
 template<> struct same_width<float32x8> : vec256_impl {};
 template<> struct same_width<float64x4> : vec256_impl {};
 

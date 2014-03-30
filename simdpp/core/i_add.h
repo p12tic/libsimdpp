@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_add.h>
+#include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -52,11 +53,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-gint8<N, expr_add<gint8<N,E1>,
-                  gint8<N,E2>>> add(gint8<N,E1> a, gint8<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2,
+                                  expr_add<uint8<N, typename V1::expr_type>,
+                                           uint8<N, typename V2::expr_type>>
+                                 >::type
+        add(const any_int8<N,V1>& a,
+            const any_int8<N,V2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a.vec(), b.vec() }, 0 };
 }
 
 /** Adds 16-bit integer values.
@@ -70,11 +75,15 @@ gint8<N, expr_add<gint8<N,E1>,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-gint16<N, expr_add<gint16<N,E1>,
-                   gint16<N,E2>>> add(gint16<N,E1> a, gint16<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2,
+                                  expr_add<uint16<N, typename V1::expr_type>,
+                                           uint16<N, typename V2::expr_type>>
+                                 >::type
+        add(const any_int16<N,V1>& a,
+            const any_int16<N,V2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a.vec(), b.vec() }, 0 };
 }
 
 /** Adds 32-bit integer values.
@@ -88,11 +97,15 @@ gint16<N, expr_add<gint16<N,E1>,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-gint32<N, expr_add<gint32<N,E1>,
-                   gint32<N,E2>>> add(gint32<N,E1> a, gint32<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2,
+                                  expr_add<uint32<N, typename V1::expr_type>,
+                                           uint32<N, typename V2::expr_type>>
+                                 >::type
+        add(const any_int32<N,V1>& a,
+            const any_int32<N,V2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a.vec(), b.vec() }, 0 };
 }
 
 /** Adds 64-bit integer values.
@@ -110,11 +123,15 @@ gint32<N, expr_add<gint32<N,E1>,
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 10-11}
 */
-template<unsigned N, class E1, class E2>
-gint64<N, expr_add<gint64<N,E1>,
-                   gint64<N,E2>>> add(gint64<N,E1> a, gint64<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2,
+                                  expr_add<uint64<N, typename V1::expr_type>,
+                                           uint64<N, typename V2::expr_type>>
+                                 >::type
+        add(const any_int64<N,V1>& a,
+            const any_int64<N,V2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a.vec(), b.vec() }, 0 };
 }
 
 

@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/null/set.h>
+#include <simdpp/detail/traits.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -149,14 +150,14 @@ void i_make_const(float64<N>& v, const expr_vec_make_const<VE,NE>& e)
 
 #if SIMDPP_USE_NEON
 template<class VE>
-void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,1>& e)
+void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,1>& e)
 {
     uint8_t rv = e.val(0);
     v = vld1q_dup_u8(&rv);
 }
 
 template<class VE>
-void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,2>& e)
+void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,2>& e)
 {
     union {
         uint16_t rv[1];
@@ -168,7 +169,7 @@ void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,2>& e)
 }
 
 template<class VE>
-void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,4>& e)
+void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,4>& e)
 {
     union {
         uint32_t rv[1];
@@ -179,7 +180,7 @@ void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,4>& e)
 }
 
 template<class VE>
-void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,8>& e)
+void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,8>& e)
 {
     union {
         uint8_t rvv[8];
@@ -193,7 +194,7 @@ void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,8>& e)
 #endif
 
 template<class VE, unsigned N>
-void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint8<16>, uint8_t>(e.val(0), e.val(1), e.val(2), e.val(3),
@@ -227,7 +228,7 @@ void i_make_const(gint8<16>& v, const expr_vec_make_const<VE,N>& e)
 
 #if SIMDPP_USE_AVX2
 template<class VE, unsigned N>
-void i_make_const(gint8<32>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint8<32>& v, const expr_vec_make_const<VE,N>& e)
 {
     v = _mm256_set_epi8(e.val(31), e.val(30), e.val(29), e.val(28),
                         e.val(27), e.val(26), e.val(25), e.val(24),
@@ -241,9 +242,9 @@ void i_make_const(gint8<32>& v, const expr_vec_make_const<VE,N>& e)
 #endif
 
 template<unsigned N, class VE, unsigned NE>
-void i_make_const(gint8<N>& v, const expr_vec_make_const<VE,NE>& e)
+void i_make_const(uint8<N>& v, const expr_vec_make_const<VE,NE>& e)
 {
-    gint8v tv;
+    uint8v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -254,14 +255,14 @@ void i_make_const(gint8<N>& v, const expr_vec_make_const<VE,NE>& e)
 
 #if SIMDPP_USE_NEON
 template<class VE>
-void i_make_const(gint16<8>& v, const expr_vec_make_const<VE,1>& e)
+void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,1>& e)
 {
     uint16_t rv = e.val(0);
     v = vld1q_dup_u16(&rv);
 }
 
 template<class VE>
-void i_make_const(gint16<8>& v, const expr_vec_make_const<VE,2>& e)
+void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,2>& e)
 {
     union {
         uint32_t rv[1];
@@ -273,7 +274,7 @@ void i_make_const(gint16<8>& v, const expr_vec_make_const<VE,2>& e)
 }
 
 template<class VE>
-void i_make_const(gint16<8>& v, const expr_vec_make_const<VE,4>& e)
+void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,4>& e)
 {
     union {
         uint64_t align;
@@ -288,7 +289,7 @@ void i_make_const(gint16<8>& v, const expr_vec_make_const<VE,4>& e)
 
 
 template<class VE, unsigned N>
-void i_make_const(gint16<8>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint16<8>, uint16_t>(e.val(0), e.val(1), e.val(2), e.val(3),
@@ -314,7 +315,7 @@ void i_make_const(gint16<8>& v, const expr_vec_make_const<VE,N>& e)
 
 #if SIMDPP_USE_AVX2
 template<class VE, unsigned N>
-void i_make_const(gint16<16>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint16<16>& v, const expr_vec_make_const<VE,N>& e)
 {
     v = _mm256_set_epi16(e.val(15), e.val(14), e.val(13), e.val(12),
                          e.val(11), e.val(10), e.val(9),  e.val(8),
@@ -325,9 +326,9 @@ void i_make_const(gint16<16>& v, const expr_vec_make_const<VE,N>& e)
 
 
 template<unsigned N, class VE, unsigned NE>
-void i_make_const(gint16<N>& v, const expr_vec_make_const<VE,NE>& e)
+void i_make_const(uint16<N>& v, const expr_vec_make_const<VE,NE>& e)
 {
-    gint16v tv;
+    uint16v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -338,14 +339,14 @@ void i_make_const(gint16<N>& v, const expr_vec_make_const<VE,NE>& e)
 
 #if SIMDPP_USE_NEON
 template<class VE>
-void i_make_const(gint32<4>& v, const expr_vec_make_const<VE,1>& e)
+void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,1>& e)
 {
     uint32_t rv = e.val(0);
     v = vld1q_dup_u32(&rv);
 }
 
 template<class VE>
-void i_make_const(gint32<4>& v, const expr_vec_make_const<VE,2>& e)
+void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,2>& e)
 {
     union {
         uint64_t align;
@@ -359,7 +360,7 @@ void i_make_const(gint32<4>& v, const expr_vec_make_const<VE,2>& e)
 #endif
 
 template<class VE, unsigned N>
-void i_make_const(gint32<4>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint32<4>, uint32_t>(e.val(0), e.val(1), e.val(2), e.val(3));
@@ -381,7 +382,7 @@ void i_make_const(gint32<4>& v, const expr_vec_make_const<VE,N>& e)
 
 #if SIMDPP_USE_AVX2
 template<class VE, unsigned N>
-void i_make_const(gint32<8>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint32<8>& v, const expr_vec_make_const<VE,N>& e)
 {
     v = _mm256_set_epi32(e.val(7), e.val(6), e.val(5), e.val(4),
                          e.val(3), e.val(2), e.val(1), e.val(0));
@@ -389,9 +390,9 @@ void i_make_const(gint32<8>& v, const expr_vec_make_const<VE,N>& e)
 #endif
 
 template<unsigned N, class VE, unsigned NE>
-void i_make_const(gint32<N>& v, const expr_vec_make_const<VE,NE>& e)
+void i_make_const(uint32<N>& v, const expr_vec_make_const<VE,NE>& e)
 {
-    gint32v tv;
+    uint32v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -403,7 +404,7 @@ void i_make_const(gint32<N>& v, const expr_vec_make_const<VE,NE>& e)
 
 #if SIMDPP_USE_NEON
 template<class VE>
-void i_make_const(gint64<2>& v, const expr_vec_make_const<VE,1>& e)
+void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,1>& e)
 {
     uint64x1_t r0 = vcreate_u64(uint64_t(e.val(0)));
     return vcombine_u64(r0, r0);
@@ -411,7 +412,7 @@ void i_make_const(gint64<2>& v, const expr_vec_make_const<VE,1>& e)
 #endif
 
 template<class VE, unsigned N>
-void i_make_const(gint64<2>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint64<2>, uint64_t>(e.val(0), e.val(1));
@@ -438,16 +439,16 @@ void i_make_const(gint64<2>& v, const expr_vec_make_const<VE,N>& e)
 
 #if SIMDPP_USE_AVX2
 template<class VE, unsigned N>
-void i_make_const(gint64<4>& v, const expr_vec_make_const<VE,N>& e)
+void i_make_const(uint64<4>& v, const expr_vec_make_const<VE,N>& e)
 {
     v = _mm256_set_epi64x(e.val(3), e.val(2), e.val(1), e.val(0));
 }
 #endif
 
 template<unsigned N, class VE, unsigned NE>
-void i_make_const(gint64<N>& v, const expr_vec_make_const<VE,NE>& e)
+void i_make_const(uint64<N>& v, const expr_vec_make_const<VE,NE>& e)
 {
-    gint64v tv;
+    uint64v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -462,9 +463,9 @@ struct i_make_const_dispatch
     template<class VE, unsigned N>
     static V run(const expr_vec_make_const<VE,N>& e)
     {
-        V r;
+        typename detail::remove_sign<V>::type r;
         i_make_const(r, e);
-        return r;
+        return V(r);
     }
 };
 
@@ -483,7 +484,9 @@ struct i_make_const_dispatch<expr_vec_make_const<VE,N>>
 template<class V, class VE, unsigned N>
 void construct_eval(V& v, const expr_vec_make_const<VE, N>& e)
 {
-    insn::i_make_const(v, e);
+    typename detail::remove_sign<V>::type r;
+    insn::i_make_const(r, e);
+    v = r;
 }
 
 } // namespace detail

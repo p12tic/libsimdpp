@@ -34,7 +34,6 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/mem_block.h>
 #include <simdpp/core/cast.h>
 
 namespace simdpp {
@@ -46,22 +45,13 @@ namespace null {
 template<class V, class M>
 V convert_mask(const M& m)
 {
-    detail::mem_block<V> r;
+    V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r[i] = m.el(i) ? bit_cast<typename V::element_type>(V::all_bits) : 0;
+        r.el(i) = m.el(i) ? bit_cast<typename V::element_type>(V::all_bits) : 0;
     }
     return r;
 }
 
-// refreshes the base vector of the mask
-template<class V>
-V refresh_mask(V a)
-{
-    for (unsigned i = 0; i < V::length; ++i) {
-        a.el(i) = a.mask().el(i) ? bit_cast<typename V::element_type>(a.all_bits) : 0;
-    }
-    return a;
-}
 
 } // namespace null
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

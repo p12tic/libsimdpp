@@ -41,142 +41,28 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/** Interleaves 8-bit values from two vectors and stores the result into
-    successive locations starting from @a p.
+/** Interleaves values from two vectors and stores the result into successive
+    locations starting from @a p.
 
     @par 128-bit version:
     @code
-    [ *(p),   *(p+2), *(p+4), ... , *(p+30) ] = a
-    [ *(p+1), *(p+3), *(p+5), ... , *(p+31) ] = b
+    [ *(p),   *(p+2), *(p+4), ... , *(p+M*2-2) ] = a
+    [ *(p+1), *(p+3), *(p+5), ... , *(p+M*2-1) ] = b
     @endcode
-    @a p must be aligned to 16 bytes.
 
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), ... , *(p+62) ] = a
-    [ *(p+1), *(p+3), *(p+5), ... , *(p+63) ] = b
-    @endcode
-    @a p must be aligned to 32 bytes.
+    Here M is the number of elements in the vector
+
+    @a p must be aligned to the vector size in bytes
 */
-template<unsigned N>
-void store_packed2(void* p, gint8<N> a, gint8<N> b)
+template<unsigned N, class V1, class V2>
+void store_packed2(void* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
-    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
-}
-
-/** Interleaves 16-bit values from two vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), ... , *(p+14) ] = a
-    [ *(p+1), *(p+3), *(p+5), ... , *(p+15) ] = b
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), ... , *(p+30) ] = a
-    [ *(p+1), *(p+3), *(p+5), ... , *(p+31) ] = b
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed2(void* p, gint16<N> a, gint16<N> b)
-{
-    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
-}
-
-/** Interleaves 32-bit values from two vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), *(p+6) ] = a
-    [ *(p+1), *(p+3), *(p+5), *(p+7) ] = b
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), ... , *(p+14) ] = a
-    [ *(p+1), *(p+3), *(p+5), ... , *(p+15) ] = b
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed2(void* p, gint32<N> a, gint32<N> b)
-{
-    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
-}
-
-/** Interleaves 64-bit values from two vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+2) ] = a
-    [ *(p+1), *(p+3) ] = b
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), *(p+14) ] = a
-    [ *(p+1), *(p+3), *(p+5), *(p+15) ] = b
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed2(void* p, gint64<N> a, gint64<N> b)
-{
-    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
-}
-
-/** Interleaves 32-bit floating-point values from two vectors and stores
-    the result into successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), ... , *(p+6) ] = a
-    [ *(p+1), *(p+3), *(p+5), ... , *(p+7) ] = b
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), ... , *(p+14) ] = a
-    [ *(p+1), *(p+3), *(p+5), ... , *(p+15) ] = b
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed2(void* p, float32<N> a, float32<N> b)
-{
-    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
-}
-
-/** Interleaves 64-bit floating-point values from two vectors and stores
-    the result into successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+2) ] = a
-    [ *(p+1), *(p+3) ] = b
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+2), *(p+4), *(p+14) ] = a
-    [ *(p+1), *(p+3), *(p+5), *(p+15) ] = b
-    @endcode
-    @a p must be aligned to 32 bytes
-*/
-template<unsigned N>
-void store_packed2(void* p, float64<N> a, float64<N> b)
-{
-    detail::insn::i_store_packed2(reinterpret_cast<char*>(p), a, b);
+    static_assert(!is_mask<V1>::value && !is_mask<V2>::value,
+                  "Mask types can not be stored"); // FIXME
+    static_assert(V1::size_tag == V2::size_tag,
+                  "Vector elements must have the same size");
+    detail::insn::i_store_packed2(reinterpret_cast<char*>(p),
+                                  a.vec().eval(), b.vec().eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

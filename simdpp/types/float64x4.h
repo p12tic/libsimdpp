@@ -34,6 +34,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
 #include <simdpp/types/int64x4.h>
 #include <simdpp/types/float64x2.h>
 #include <simdpp/core/cast.h>
@@ -51,15 +52,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float64x4 vector
 template<>
-class float64<4, void> {
+class float64<4, void> : public any_float64<4, float64<4,void>> {
 public:
 
     using element_type = double;
     using uint_element_type = uint64_t;
-    using int_vector_type = gint64x4;
+    using int_vector_type = uint64x4;
     using uint_vector_type = uint64x4;
     using base_vector_type = float64x4;
-    using mask_type = mask_float64x4;
+    using mask_vector_type = mask_float64x4;
 
     static constexpr unsigned vec_length = 1;
     static constexpr unsigned length = 4;
@@ -79,8 +80,8 @@ public:
 
     /// @{
     /// Construct from compatible int64x4 integer vector type
-    explicit float64<4>(gint64x4 d)     { *this = bit_cast<float64x4>(d); }
-    float64<4>& operator=(gint64x4 d)   { *this = bit_cast<float64x4>(d); return *this; }
+    explicit float64<4>(uint64x4 d)     { *this = bit_cast<float64x4>(d); }
+    float64<4>& operator=(uint64x4 d)   { *this = bit_cast<float64x4>(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -147,7 +148,7 @@ private:
 
 /// Class representing a mask for 4x 64-bit floating-point vector
 template<>
-class mask_float64<4, void> : public float64<4, void> {
+class mask_float64<4, void> : public any_float64<N, mask_float64<N,void>> {
 public:
     mask_float64<4>() = default;
     mask_float64<4>(const mask_float64<4> &) = default;

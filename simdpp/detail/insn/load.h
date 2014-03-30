@@ -56,7 +56,7 @@ namespace insn {
 template<class V>
 void v_load(V& a, const char* p);
 
-inline void i_load(gint8x16& a, const char* p)
+inline void i_load(uint8x16& a, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -70,9 +70,9 @@ inline void i_load(gint8x16& a, const char* p)
 #endif
 }
 
-inline void i_load(gint16x8& a, const char* p) { gint8x16 r; i_load(r, p); a = r;  }
-inline void i_load(gint32x4& a, const char* p) { gint8x16 r; i_load(r, p); a = r;  }
-inline void i_load(gint64x2& a, const char* p) { gint8x16 r; i_load(r, p); a = r;  }
+inline void i_load(uint16x8& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
+inline void i_load(uint32x4& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
+inline void i_load(uint64x2& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
 
 inline void i_load(float32x4& a, const char* p)
 {
@@ -101,19 +101,19 @@ inline void i_load(float64x2& a, const char* p)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load(gint8x32& a,  const char* p)
+inline void i_load(uint8x32& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-inline void i_load(gint16x16& a, const char* p)
+inline void i_load(uint16x16& a, const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-inline void i_load(gint32x8& a,  const char* p)
+inline void i_load(uint32x8& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-inline void i_load(gint64x4& a,  const char* p)
+inline void i_load(uint64x4& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
@@ -128,13 +128,13 @@ inline void i_load(float64x4& a, const char* p)
 #endif
 
 template<unsigned N>
-void i_load(gint8<N>& a,  const char* p) { v_load(a, p); }
+void i_load(uint8<N>& a,  const char* p) { v_load(a, p); }
 template<unsigned N>
-void i_load(gint16<N>& a, const char* p) { v_load(a, p); }
+void i_load(uint16<N>& a, const char* p) { v_load(a, p); }
 template<unsigned N>
-void i_load(gint32<N>& a, const char* p) { v_load(a, p); }
+void i_load(uint32<N>& a, const char* p) { v_load(a, p); }
 template<unsigned N>
-void i_load(gint64<N>& a, const char* p) { v_load(a, p); }
+void i_load(uint64<N>& a, const char* p) { v_load(a, p); }
 template<unsigned N>
 void i_load(float32<N>& a, const char* p){ v_load(a, p); }
 template<unsigned N>
@@ -176,7 +176,9 @@ struct i_load_dispatch<expr_vec_load> {
 template<class V>
 void construct_eval(V& v, const expr_vec_load& e)
 {
-    insn::i_load(v, e.a);
+    typename detail::remove_sign<V>::type r;
+    insn::i_load(r, e.a);
+    v = r;
 }
 
 } // namespace detail

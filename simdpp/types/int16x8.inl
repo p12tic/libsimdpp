@@ -42,55 +42,19 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-template<class E> gint16<8>::gint16(const gint8<16,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); }
-template<class E> gint16<8>::gint16(const gint16<8,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); }
-template<class E> gint16<8>::gint16(const gint32<4,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); }
-template<class E> gint16<8>::gint16(const gint64<2,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); }
-template<class E> gint16<8>& gint16<8>::operator=(const gint8<16,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); return *this; }
-template<class E> gint16<8>& gint16<8>::operator=(const gint16<8,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); return *this; }
-template<class E> gint16<8>& gint16<8>::operator=(const gint32<4,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); return *this; }
-template<class E> gint16<8>& gint16<8>::operator=(const gint64<2,E>& d) { *this = bit_cast<gint16<8>>(d.eval()); return *this; }
+inline int16<8>   int16<8>::zero() { return make_uint(0); }
+inline uint16<8> uint16<8>::zero() { return make_uint(0); }
+inline int16<8>   int16<8>::ones() { return make_uint(0xffff); }
+inline uint16<8> uint16<8>::ones() { return make_uint(0xffff); }
 
-template<class E> int16<8>::int16(const gint8<16,E>& d) : gint16(d) {}
-template<class E> int16<8>::int16(const gint16<8,E>& d) : gint16(d) {}
-template<class E> int16<8>::int16(const gint32<4,E>& d) : gint16(d) {}
-template<class E> int16<8>::int16(const gint64<2,E>& d) : gint16(d) {}
-template<class E> int16<8>& int16<8>::operator=(const gint8<16,E>& d) { gint16::operator=(d); return *this; }
-template<class E> int16<8>& int16<8>::operator=(const gint16<8,E>& d) { gint16::operator=(d); return *this; }
-template<class E> int16<8>& int16<8>::operator=(const gint32<4,E>& d) { gint16::operator=(d); return *this; }
-template<class E> int16<8>& int16<8>::operator=(const gint64<2,E>& d) { gint16::operator=(d); return *this; }
-
-template<class E> uint16<8>::uint16(const gint8<16,E>& d) : gint16(d) {}
-template<class E> uint16<8>::uint16(const gint16<8,E>& d) : gint16(d) {}
-template<class E> uint16<8>::uint16(const gint32<4,E>& d) : gint16(d) {}
-template<class E> uint16<8>::uint16(const gint64<2,E>& d) : gint16(d) {}
-template<class E> uint16<8>& uint16<8>::operator=(const gint8<16,E>& d) { gint16::operator=(d); return *this; }
-template<class E> uint16<8>& uint16<8>::operator=(const gint16<8,E>& d) { gint16::operator=(d); return *this; }
-template<class E> uint16<8>& uint16<8>::operator=(const gint32<4,E>& d) { gint16::operator=(d); return *this; }
-template<class E> uint16<8>& uint16<8>::operator=(const gint64<2,E>& d) { gint16::operator=(d); return *this; }
-
-inline gint16x8 gint16x8::zero()
+inline uint16<8> mask_int16<8>::unmask() const
 {
-    return (uint16x8) make_uint(0);
-}
-
-inline gint16x8 gint16x8::ones()
-{
-    return (uint16x8) make_uint(0xffff);
-}
-
-inline mask_int16<8>::mask_int16(const maskdata_int16<8>& d) : uint16<8>(d), mask_(d) {}
-
-#if SIMDPP_USE_SSE2
-inline mask_int16<8>::mask_int16(__m128i d)   : uint16<8>(d), mask_(d) {}
-inline mask_int16<8>::mask_int16(gint16<8> d) : uint16<8>(d), mask_(d) {}
-#elif SIMDPP_USE_NEON
-inline mask_int16<8>::mask_int16(uint16x8_t d) : uint16<8>(d), mask_(d) {}
-inline mask_int16<8>::mask_int16(gint16<8> d)  : uint16<8>(d), mask_(d) {}
-#elif SIMDPP_USE_ALTIVEC
-inline mask_int16<8>::mask_int16(__vector uint16_t d) : uint16<8>(d), mask_(d) {}
-inline mask_int16<8>::mask_int16(gint16<8> d)         : uint16<8>(d), mask_(d) {}
+#if SIMDPP_USE_NULL
+    return null::convert_mask<uint16<8>>(*this);
+#else
+    return uint16<8>(d_);
 #endif
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

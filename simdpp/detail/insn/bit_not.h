@@ -45,12 +45,12 @@ namespace detail {
 namespace insn {
 
 
-inline gint8x16 i_bit_not(gint8x16 a)
+inline uint8x16 i_bit_not(uint8x16 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<gint8x16>(a, [](uint64_t a){ return ~a; });
+    return null::foreach<uint8x16>(a, [](uint64_t a){ return ~a; });
 #elif SIMDPP_USE_SSE2
-    gint8x16 ones = gint8x16::ones();
+    uint8x16 ones = uint8x16::ones();
     return bit_xor(a, ones);
 #elif SIMDPP_USE_NEON
     return vmvnq_u8(a);
@@ -60,25 +60,25 @@ inline gint8x16 i_bit_not(gint8x16 a)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_bit_not(gint8x32 a)
+inline uint8x32 i_bit_not(uint8x32 a)
 {
-    gint8x32 ones = gint8x32::ones();
+    uint8x32 ones = uint8x32::ones();
     return bit_xor(a, ones);
 }
 #endif
 
 template<unsigned N>
-inline gint8<N> i_bit_not(gint8<N> a)
+inline uint8<N> i_bit_not(uint8<N> a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(gint8<N>, i_bit_not, a)
+    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_bit_not, a)
 }
 
 template<unsigned N>
-gint16<N> i_bit_not(gint16<N> a) { return gint16<N>(i_bit_not(uint8<N*2>(a))); }
+uint16<N> i_bit_not(uint16<N> a) { return uint16<N>(i_bit_not(uint8<N*2>(a))); }
 template<unsigned N>
-gint32<N> i_bit_not(gint32<N> a) { return gint32<N>(i_bit_not(uint8<N*4>(a))); }
+uint32<N> i_bit_not(uint32<N> a) { return uint32<N>(i_bit_not(uint8<N*4>(a))); }
 template<unsigned N>
-gint64<N> i_bit_not(gint64<N> a) { return gint64<N>(i_bit_not(uint8<N*8>(a))); }
+uint64<N> i_bit_not(uint64<N> a) { return uint64<N>(i_bit_not(uint8<N*8>(a))); }
 
 // -----------------------------------------------------------------------------
 
@@ -207,7 +207,7 @@ inline mask_float32x4 i_bit_not(mask_float32x4 a)
 #if SIMDPP_USE_NULL
     return null::bit_not_mm(a);
 #else
-    return i_bit_not(float32x4(a));
+    return (mask_float32x4) i_bit_not(float32x4(a));
 #endif
 }
 
@@ -216,7 +216,7 @@ inline mask_float64x2 i_bit_not(mask_float64x2 a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_not_mm(a);
 #else
-    return i_bit_not(float64x2(a));
+    return (mask_float64x2) i_bit_not(float64x2(a));
 #endif
 }
 

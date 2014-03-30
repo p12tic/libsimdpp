@@ -72,11 +72,11 @@ H permute_half(V a)
     functions.
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
-gint64x4 permute_emul(gint64x4 a)
+uint64x4 permute_emul(uint64x4 a)
 {
-    gint64x4 r;
-    r[0] = permute_half<gint64x2,s0,s1>(a);
-    r[1] = permute_half<gint64x2,s2,s3>(a);
+    uint64x4 r;
+    r[0] = permute_half<uint64x2,s0,s1>(a);
+    r[1] = permute_half<uint64x2,s2,s3>(a);
     return r;
 }
 

@@ -46,7 +46,7 @@ namespace detail {
 namespace insn {
 
 
-inline gint8x16 i_blend(gint8x16 on, gint8x16 off, gint8x16 mask)
+inline uint8x16 i_blend(uint8x16 on, uint8x16 off, uint8x16 mask)
 {
 #if SIMDPP_USE_NULL
     return null::blend(on, off, mask);
@@ -57,7 +57,7 @@ inline gint8x16 i_blend(gint8x16 on, gint8x16 off, gint8x16 mask)
 #elif SIMDPP_USE_SSE2
     // _mm_blendv_epi8 needs xmm0 and occupies the shuffle ports, yet saves
     // only one uop
-    int8x16 r;
+    uint8x16 r;
      on = bit_and(on, mask);
     off = bit_andnot(off, mask);
       r = bit_or(on, off);
@@ -70,7 +70,7 @@ inline gint8x16 i_blend(gint8x16 on, gint8x16 off, gint8x16 mask)
 #endif
 }
 
-inline gint8x16 i_blend(gint8x16 on, gint8x16 off, mask_int8x16 mask)
+inline uint8x16 i_blend(uint8x16 on, uint8x16 off, mask_int8x16 mask)
 {
 #if SIMDPP_USE_NULL
     return null::blend_mask(on, off, mask);
@@ -80,74 +80,74 @@ inline gint8x16 i_blend(gint8x16 on, gint8x16 off, mask_int8x16 mask)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_blend(gint8x32 on, gint8x32 off, gint8x32 mask)
+inline uint8x32 i_blend(uint8x32 on, uint8x32 off, uint8x32 mask)
 {
     return _mm256_blendv_epi8(off, on, mask);
 }
 #endif
 
 template<unsigned N>
-gint8<N> i_blend(gint8<N> on, gint8<N> off, gint8<N> mask)
+uint8<N> i_blend(uint8<N> on, uint8<N> off, uint8<N> mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, i_blend, on, off, mask)
+    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, i_blend, on, off, mask)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_blend(gint8x32 on, gint8x32 off, mask_int8x32 mask)
+inline uint8x32 i_blend(uint8x32 on, uint8x32 off, mask_int8x32 mask)
 {
     return i_blend(uint8x32(on), uint8x32(off), uint8x32(mask));
 }
 #endif
 
 template<unsigned N>
-inline gint8<N> i_blend(gint8<N> on, gint8<N> off, mask_int8<N> mask)
+inline uint8<N> i_blend(uint8<N> on, uint8<N> off, mask_int8<N> mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(gint8<N>, i_blend, on, off, mask)
+    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, i_blend, on, off, mask)
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-inline gint16<N> i_blend(gint16<N> on, gint16<N> off, gint16<N> mask)
+inline uint16<N> i_blend(uint16<N> on, uint16<N> off, uint16<N> mask)
 {
-    return (gint16<N>) i_blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
+    return (uint16<N>) i_blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
 }
 
 template<unsigned N>
-inline gint16<N> i_blend(gint16<N> on, gint16<N> off, mask_int16<N> mask)
+inline uint16<N> i_blend(uint16<N> on, uint16<N> off, mask_int16<N> mask)
 {
     // FIXME: null::blend_mask(on, off, mask);
-    return (gint16<N>) i_blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
+    return (uint16<N>) i_blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-inline gint32<N> i_blend(gint32<N> on, gint32<N> off, gint32<N> mask)
+inline uint32<N> i_blend(uint32<N> on, uint32<N> off, uint32<N> mask)
 {
-    return (gint32<N>) i_blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
+    return (uint32<N>) i_blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
 }
 
 template<unsigned N>
-inline gint32<N> i_blend(gint32<N> on, gint32<N> off, mask_int32<N> mask)
+inline uint32<N> i_blend(uint32<N> on, uint32<N> off, mask_int32<N> mask)
 {
     // FIXME: null::blend_mask(on, off, mask);
-    return (gint32<N>) i_blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
+    return (uint32<N>) i_blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-inline gint64<N> i_blend(gint64<N> on, gint64<N> off, gint64<N> mask)
+inline uint64<N> i_blend(uint64<N> on, uint64<N> off, uint64<N> mask)
 {
-    return (gint64<N>) i_blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
+    return (uint64<N>) i_blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
 }
 
 template<unsigned N>
-inline gint64<N> i_blend(gint64<N> on, gint64<N> off, mask_int64<N> mask)
+inline uint64<N> i_blend(uint64<N> on, uint64<N> off, mask_int64<N> mask)
 {
     // FIXME: null::blend_mask(on, off, mask);
-    return (gint64<N>) i_blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
+    return (uint64<N>) i_blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ float32<N> i_blend(float32<N> on, float32<N> off, float32<N> mask)
 }
 
 template<unsigned N>
-inline float32<N> i_blend(float32<N> on, float32<N> off, gint32<N> mask)
+inline float32<N> i_blend(float32<N> on, float32<N> off, uint32<N> mask)
 {
     return i_blend(on, off, float32<N>(mask));
 }
@@ -244,7 +244,7 @@ float64<N> i_blend(float64<N> on, float64<N> off, float64<N> mask)
 }
 
 template<unsigned N>
-inline float64<N> i_blend(float64<N> on, float64<N> off, gint64<N> mask)
+inline float64<N> i_blend(float64<N> on, float64<N> off, uint64<N> mask)
 {
     return i_blend(on, off, float64<N>(mask));
 }

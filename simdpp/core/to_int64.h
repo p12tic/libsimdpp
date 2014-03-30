@@ -56,7 +56,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2}
     @icost{ALTIVEC, 3-4}
 */
-inline gint64x4 to_int64(int32x4 a)
+inline uint64x4 to_int64(int32x4 a)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;
@@ -68,14 +68,14 @@ inline gint64x4 to_int64(int32x4 a)
 #elif SIMDPP_USE_AVX2
     return _mm256_cvtepi32_epi64(a);
 #elif SIMDPP_USE_SSE4_1
-    gint64x2 r1, r2;
+    uint64x2 r1, r2;
     r1 = _mm_cvtepi32_epi64(a);
     r2 = _mm_cvtepi32_epi64(move4_r<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     int32x4 u;
     u = shift_r(a, 31);
-    return (gint64x4) combine(zip4_lo(a, u), zip4_hi(a, u));
+    return (uint64x4) combine(zip4_lo(a, u), zip4_hi(a, u));
 #elif SIMDPP_USE_NEON
     int64x2 r1, r2;
     r1 = vmovl_s32(vget_low_s32(a));
@@ -98,7 +98,7 @@ inline gint64x4 to_int64(int32x4 a)
     @icost{SSE2-AVX, 3}
     @icost{NEON, ALTIVEC, 2}
 */
-inline gint64x4 to_int64(uint32x4 a)
+inline uint64x4 to_int64(uint32x4 a)
 {
 #if SIMDPP_USE_NULL
     uint64x4 r;
@@ -110,12 +110,12 @@ inline gint64x4 to_int64(uint32x4 a)
 #elif SIMDPP_USE_AVX2
     return _mm256_cvtepu32_epi64(a);
 #elif SIMDPP_USE_SSE4_1
-    gint64x2 r1, r2;
+    uint64x2 r1, r2;
     r1 = _mm_cvtepu32_epi64(a);
     r2 = _mm_cvtepu32_epi64(move4_r<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return (gint64x4) combine(zip4_lo(a, uint32x4::zero()),
+    return (uint64x4) combine(zip4_lo(a, uint32x4::zero()),
                               zip4_hi(a, uint32x4::zero()));
 #elif SIMDPP_USE_NEON
     int64x2 r1, r2;

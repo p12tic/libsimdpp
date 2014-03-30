@@ -49,11 +49,11 @@ namespace detail {
 
 
 template<class E1, class E2>
-gint16<8> expr_eval(expr_mul_lo<gint16<8,E1>,
-                                gint16<8,E2>> q)
+uint16<8> expr_eval(expr_mul_lo<uint16<8,E1>,
+                                uint16<8,E2>> q)
 {
-    gint16<8> a = q.a.eval();
-    gint16<8> b = q.b.eval();
+    uint16<8> a = q.a.eval();
+    uint16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
     return null::mul(a, b);
 #elif SIMDPP_USE_SSE2
@@ -68,22 +68,22 @@ gint16<8> expr_eval(expr_mul_lo<gint16<8,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2>
-gint16<16> expr_eval(expr_mul_lo<gint16<16,E1>,
-                                 gint16<16,E2>> q)
+uint16<16> expr_eval(expr_mul_lo<uint16<16,E1>,
+                                 uint16<16,E2>> q)
 {
-    gint16<16> a = q.a.eval();
-    gint16<16> b = q.b.eval();
+    uint16<16> a = q.a.eval();
+    uint16<16> b = q.b.eval();
     return _mm256_mullo_epi16(a, b);
 }
 #endif
 
 template<unsigned N, class E1, class E2>
-gint16<N> expr_eval(expr_mul_lo<gint16<N,E1>,
-                                gint16<N,E2>> q)
+uint16<N> expr_eval(expr_mul_lo<uint16<N,E1>,
+                                uint16<N,E2>> q)
 {
-    gint16<N> a = q.a.eval();
-    gint16<N> b = q.b.eval();
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, mul_lo, a, b);
+    uint16<N> a = q.a.eval();
+    uint16<N> b = q.b.eval();
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, mul_lo, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -167,17 +167,17 @@ uint16<N> expr_eval(expr_mul_hi<uint16<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2>
-gint32<4> expr_eval(expr_mul_lo<gint32<4,E1>,
-                                gint32<4,E2>> q)
+uint32<4> expr_eval(expr_mul_lo<uint32<4,E1>,
+                                uint32<4,E2>> q)
 {
-    gint32<4> a = q.a.eval();
-    gint32<4> b = q.b.eval();
+    uint32<4> a = q.a.eval();
+    uint32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL
     return null::mul(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_mullo_epi32(a, b);
 #elif SIMDPP_USE_SSE2
-    gint32x4 a1, b1;
+    uint32x4 a1, b1;
     a1 = move4_l<1>(a);
     b1 = move4_l<1>(b);
     a = _mm_mul_epu32(a, b);
@@ -207,22 +207,22 @@ gint32<4> expr_eval(expr_mul_lo<gint32<4,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2>
-gint32<8> expr_eval(expr_mul_lo<gint32<8,E1>,
-                                gint32<8,E2>> q)
+uint32<8> expr_eval(expr_mul_lo<uint32<8,E1>,
+                                uint32<8,E2>> q)
 {
-    gint32<8> a = q.a.eval();
-    gint32<8> b = q.b.eval();
+    uint32<8> a = q.a.eval();
+    uint32<8> b = q.b.eval();
     return _mm256_mullo_epi32(a, b);
 }
 #endif
 
 template<unsigned N, class E1, class E2>
-gint32<N> expr_eval(expr_mul_lo<gint32<N,E1>,
-                                gint32<N,E2>> q)
+uint32<N> expr_eval(expr_mul_lo<uint32<N,E1>,
+                                uint32<N,E2>> q)
 {
-    gint32<N> a = q.a.eval();
-    gint32<N> b = q.b.eval();
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, mul_lo, a, b);
+    uint32<N> a = q.a.eval();
+    uint32<N> b = q.b.eval();
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, mul_lo, a, b);
 }
 
 } // namespace detail

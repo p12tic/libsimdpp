@@ -59,13 +59,13 @@ R vec_extract_impl(V a, unsigned n)
 
 // extract a sub-vector consisting of [M*n .. M*(n+1)) elements
 template<unsigned M, unsigned N>
-gint8<M> vec_extract(gint8<N> a, unsigned n) { return vec_extract_impl<gint8<M>>(a, n); }
+uint8<M> vec_extract(uint8<N> a, unsigned n) { return vec_extract_impl<uint8<M>>(a, n); }
 template<unsigned M, unsigned N>
-gint16<M> vec_extract(gint16<N> a, unsigned n) { return vec_extract_impl<gint16<M>>(a, n); }
+uint16<M> vec_extract(uint16<N> a, unsigned n) { return vec_extract_impl<uint16<M>>(a, n); }
 template<unsigned M, unsigned N>
-gint32<M> vec_extract(gint32<N> a, unsigned n) { return vec_extract_impl<gint32<M>>(a, n); }
+uint32<M> vec_extract(uint32<N> a, unsigned n) { return vec_extract_impl<uint32<M>>(a, n); }
 template<unsigned M, unsigned N>
-gint64<M> vec_extract(gint64<N> a, unsigned n) { return vec_extract_impl<gint64<M>>(a, n); }
+uint64<M> vec_extract(uint64<N> a, unsigned n) { return vec_extract_impl<uint64<M>>(a, n); }
 template<unsigned M, unsigned N>
 float32<M> vec_extract(float32<N> a, unsigned n) { return vec_extract_impl<float32<M>>(a, n); }
 template<unsigned M, unsigned N>

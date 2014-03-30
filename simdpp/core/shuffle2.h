@@ -58,6 +58,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     r7 = b[b1+4]
     @endcode
 
+    @par floating-point
     @par 128-bit version:
     @icost{ALTIVEC, 1-2}
     @icost{NEON, 1-4}
@@ -66,13 +67,26 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 2-8}
     @icost{ALTIVEC, 2-3}
+
+    @par integer
+     @par 128-bit version:
+    @icost{NEON, 1-4}
+    @icost{ALTIVEC, 1-2}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 2-8}
+    @icost{ALTIVEC, 2-3}
 */
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N,
-         class E1, class E2>
-float32<N, float32<N>> shuffle2(float32<N,E1> a, float32<N,E2> b)
+template<unsigned sa0, unsigned sa1, unsigned sb0, unsigned sb1, unsigned N,
+         class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+    shuffle2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
-    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
-    return detail::insn::i_shuffle2<a0,a1,b0,b1>(a.eval(), b.eval());
+    static_assert(sa0 < 4 && sa1 < 4 && sb0 < 4 && sb1 < 4, "Selector out of range");
+    typename detail::get_expr2_nomask<V1,V2,void>::type a0 = a.vec().eval(),
+                                                        b0 = b.vec().eval();
+    return detail::insn::i_shuffle2<sa0,sa1,sb0,sb1>(a0, b0);
 }
 
 /** Selects 32-bit values from two vectors. The first two values in each four
@@ -92,6 +106,7 @@ float32<N, float32<N>> shuffle2(float32<N,E1> a, float32<N,E2> b)
     r7 = b[s1+4]
     @endcode
 
+    @par floating-point
     @par 128-bit version:
     @icost{ALTIVEC, 1-2}
     @icost{NEON, 2-4}
@@ -100,66 +115,8 @@ float32<N, float32<N>> shuffle2(float32<N,E1> a, float32<N,E2> b)
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
-*/
-template<unsigned s0, unsigned s1, unsigned N,
-         class E1, class E2>
-float32<N, float32<N>> shuffle2(float32<N,E1> a, float32<N,E2> b)
-{
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-    return detail::insn::i_shuffle2<s0,s1,s0,s1>(a.eval(), b.eval());
-}
 
-/** Selects 32-bit values from two vectors. The first two values in each four
-    consecutive values must come from @a a, the last two - from @a b. The
-    selector values must be in range [0; 3].
-
-    @code
-    r0 = a[a0]
-    r1 = a[a1]
-    r2 = b[b0]
-    r3 = b[b1]
-
-    256-bit version:
-    r4 = a[a0+4]
-    r5 = a[a1+4]
-    r6 = b[b0+4]
-    r7 = b[b1+4]
-    @endcode
-
-    @par 128-bit version:
-    @icost{NEON, 1-4}
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 2-8}
-    @icost{ALTIVEC, 2-3}
-*/
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N,
-         class E1, class E2>
-gint32<N, gint32<N>> shuffle2(gint32<N,E1> a, gint32<N,E2> b)
-{
-    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
-    return detail::insn::i_shuffle2<a0,a1,b0,b1>(a.eval(), b.eval());
-}
-
-/** Selects 32-bit values from two vectors. The first two values in each four
-    consecutive values must come from @a a, the last two - from @a b. The
-    selector values must be in range [0; 3].
-
-    @code
-    r0 = a[s0]
-    r1 = a[s1]
-    r2 = b[s0]
-    r3 = b[s1]
-
-    256-bit version:
-    r4 = a[s0+4]
-    r5 = a[s1+4]
-    r6 = b[s0+4]
-    r7 = b[s1+4]
-    @endcode
-
+    @par integer
     @par 128-bit version:
     @icost{NEON, 2-4}
     @icost{ALTIVEC, 1-2}
@@ -170,12 +127,16 @@ gint32<N, gint32<N>> shuffle2(gint32<N,E1> a, gint32<N,E2> b)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned N,
-         class E1, class E2>
-gint32<N, gint32<N>> shuffle2(gint32<N,E1> a, gint32<N,E2> b)
+         class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+    shuffle2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-    return detail::insn::i_shuffle2<s0,s1,s0,s1>(a.eval(), b.eval());
+    typename detail::get_expr2_nomask<V1,V2,void>::type a0 = a.vec().eval(),
+                                                        b0 = b.vec().eval();
+    return detail::insn::i_shuffle2<s0,s1,s0,s1>(a0, b0);
 }
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

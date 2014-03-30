@@ -63,7 +63,7 @@ void v_load_u(V& a, const char* p);
 // offer better performance on e.g. ARM. Note, we don't use LDDQU on SSE,
 // because it has usage restrictions and offers improved performance only on
 // Pentium 4 era processors.
-inline gint8x16 i_load_u(gint8x16& a, const void* p)
+inline uint8x16 i_load_u(uint8x16& a, const void* p)
 {
 #if SIMDPP_USE_NULL
     null::load(a, p);
@@ -86,7 +86,7 @@ inline gint8x16 i_load_u(gint8x16& a, const void* p)
 #endif
 }
 
-inline gint16x8 i_load_u(gint16x8& a, const void* p)
+inline uint16x8 i_load_u(uint16x8& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
@@ -98,7 +98,7 @@ inline gint16x8 i_load_u(gint16x8& a, const void* p)
 #endif
 }
 
-inline gint32x4 i_load_u(gint32x4& a, const void* p)
+inline uint32x4 i_load_u(uint32x4& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
@@ -110,7 +110,7 @@ inline gint32x4 i_load_u(gint32x4& a, const void* p)
 #endif
 }
 
-inline gint64x2 i_load_u(gint64x2& a, const void* p)
+inline uint64x2 i_load_u(uint64x2& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
@@ -155,19 +155,19 @@ inline float64x2 i_load_u(float64x2& a, const void* p)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32  i_load_u(gint8x32& a,  const void* p)
+inline uint8x32  i_load_u(uint8x32& a,  const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-inline gint16x16 i_load_u(gint16x16& a, const void* p)
+inline uint16x16 i_load_u(uint16x16& a, const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-inline gint32x8  i_load_u(gint32x8& a,  const void* p)
+inline uint32x8  i_load_u(uint32x8& a,  const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-inline gint64x4  i_load_u(gint64x4& a,  const void* p)
+inline uint64x4  i_load_u(uint64x4& a,  const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
@@ -182,22 +182,22 @@ inline float64x4 i_load_u(float64x4& a, const void* p)
 #endif
 
 template<unsigned N>
-gint8<N>  i_load_u(gint8<N>& a,  const void* p)
+uint8<N>  i_load_u(uint8<N>& a,  const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
-gint16<N> i_load_u(gint16<N>& a, const void* p)
+uint16<N> i_load_u(uint16<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
-gint32<N> i_load_u(gint32<N>& a, const void* p)
+uint32<N> i_load_u(uint32<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
 template<unsigned N>
-gint64<N> i_load_u(gint64<N>& a, const void* p)
+uint64<N> i_load_u(uint64<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
@@ -250,7 +250,9 @@ struct i_load_u_dispatch<expr_vec_load_u> {
 template<class V>
 void construct_eval(V& v, const expr_vec_load_u& e)
 {
-    insn::i_load_u(v, e.a);
+    typename detail::remove_sign<V>::type r;
+    insn::i_load_u(r, e.a);
+    v = r;
 }
 
 } // namespace detail

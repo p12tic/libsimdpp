@@ -60,7 +60,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint8_t extract(gint8x16 a)
+uint8_t extract(uint8x16 a)
 {
     static_assert(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -86,7 +86,7 @@ uint8_t extract(gint8x16 a)
 template<unsigned id>
 int8_t extract(int8x16 a)
 {
-    return extract<id>(gint8x16(a));
+    return extract<id>(uint8x16(a));
 }
 /// @}
 
@@ -102,7 +102,7 @@ int8_t extract(int8x16 a)
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint16_t extract(gint16x8 a)
+uint16_t extract(uint16x8 a)
 {
     static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -121,7 +121,7 @@ uint16_t extract(gint16x8 a)
 template<unsigned id>
 int16_t extract(int16x8 a)
 {
-    return extract<id>(gint16x8(a));
+    return extract<id>(uint16x8(a));
 }
 /// @}
 
@@ -138,7 +138,7 @@ int16_t extract(int16x8 a)
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint32_t extract(gint32x4 a)
+uint32_t extract(uint32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
@@ -160,7 +160,7 @@ uint32_t extract(gint32x4 a)
 template<unsigned id>
 int32_t extract(int32x4 a)
 {
-    return extract<id>(gint32x4(a));
+    return extract<id>(uint32x4(a));
 }
 /// @}
 
@@ -180,14 +180,14 @@ int32_t extract(int32x4 a)
     @icost{ALTIVEC, 2}
 */
 template<unsigned id>
-uint64_t extract(gint64x2 a)
+uint64_t extract(uint64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS
-    gint32x4 t = a;
+    uint32x4 t = a;
     uint64_t r = extract<id*2>(t);
     r |= uint64_t(extract<id*2+1>(t)) << 32;
     return r;
@@ -196,7 +196,7 @@ uint64_t extract(gint64x2 a)
 #endif
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
-    gint32x4 t = a;
+    uint32x4 t = a;
     uint64_t r = 0;
     t = move4_l<id*2>(t); // when id==0, move_l is template-specialized and does nothing
     r = extract<0>(t);
@@ -221,7 +221,7 @@ uint64_t extract(gint64x2 a)
 template<unsigned id>
 int64_t extract(int64x2 a)
 {
-    return extract<id>(gint64x2(a));
+    return extract<id>(uint64x2(a));
 }
 /// @}
 
@@ -395,10 +395,10 @@ void v256_split(A a, R& r1, R& r2)
     @icost{AVX2, 1}
     @icost{SSE2-AVX, NEON, ALTIVEC, 0}
 */
-inline void split(gint8x32 a, gint8x16& r1, gint8x16& r2)  { detail::v256_split(a, r1, r2); }
-inline void split(gint16x16 a, gint16x8& r1, gint16x8& r2) { detail::v256_split(a, r1, r2); }
-inline void split(gint32x8 a, gint32x4& r1, gint32x4& r2)  { detail::v256_split(a, r1, r2); }
-inline void split(gint64x4 a, gint64x2& r1, gint64x2& r2)  { detail::v256_split(a, r1, r2); }
+inline void split(uint8x32 a, uint8x16& r1, uint8x16& r2)  { detail::v256_split(a, r1, r2); }
+inline void split(uint16x16 a, uint16x8& r1, uint16x8& r2) { detail::v256_split(a, r1, r2); }
+inline void split(uint32x8 a, uint32x4& r1, uint32x4& r2)  { detail::v256_split(a, r1, r2); }
+inline void split(uint64x4 a, uint64x2& r1, uint64x2& r2)  { detail::v256_split(a, r1, r2); }
 
 inline void split(float32x8 a, float32x4& r1, float32x4& r2)
 {
@@ -435,13 +435,13 @@ void v_split(V a, H& r1, H& r2)
 } // namespace detail
 
 template<unsigned N>
-void split(gint8<N> a, gint8<N/2>& r1, gint8<N/2>& r2) { detail::v_split(a, r1, r2); }
+void split(uint8<N> a, uint8<N/2>& r1, uint8<N/2>& r2) { detail::v_split(a, r1, r2); }
 template<unsigned N>
-void split(gint16<N> a, gint16<N/2>& r1, gint16<N/2>& r2) { detail::v_split(a, r1, r2); }
+void split(uint16<N> a, uint16<N/2>& r1, uint16<N/2>& r2) { detail::v_split(a, r1, r2); }
 template<unsigned N>
-void split(gint32<N> a, gint32<N/2>& r1, gint32<N/2>& r2) { detail::v_split(a, r1, r2); }
+void split(uint32<N> a, uint32<N/2>& r1, uint32<N/2>& r2) { detail::v_split(a, r1, r2); }
 template<unsigned N>
-void split(gint64<N> a, gint64<N/2>& r1, gint64<N/2>& r2) { detail::v_split(a, r1, r2); }
+void split(uint64<N> a, uint64<N/2>& r1, uint64<N/2>& r2) { detail::v_split(a, r1, r2); }
 template<unsigned N>
 void split(float32<N> a, float32<N/2>& r1, float32<N/2>& r2) { detail::v_split(a, r1, r2); }
 template<unsigned N>

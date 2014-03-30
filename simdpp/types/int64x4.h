@@ -34,6 +34,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
 #include <simdpp/detail/construct_eval.h>
 #include <cstdint>
 
@@ -51,54 +52,54 @@ namespace SIMDPP_ARCH_NAMESPACE {
     To be used where the signedness of the underlying element type is not important
 */
 template<>
-class gint64<4, void> {
+class uint64<4, void> {
 public:
 
     using element_type = uint64_t;
     using uint_element_type = uint64_t;
-    using int_vector_type = gint64x4;
+    using int_vector_type = uint64x4;
     using uint_vector_type = uint64x4;
-    using half_vector_type = gint64x2;
-    using mask_type = mask_int64x4;
-    using base_vector_type = gint64x4;
+    using half_vector_type = uint64x2;
+    using mask_vector_type = mask_int64x4;
+    using base_vector_type = uint64x4;
 
     static constexpr unsigned length = 4;
     static constexpr unsigned vec_length = 1;
     static constexpr unsigned num_bits = 64;
     static constexpr uint_element_type all_bits = 0xffffffffffffffff;
 
-    gint64<4>() = default;
-    gint64<4>(const gint64x4 &) = default;
-    gint64<4> &operator=(const gint64x4 &) = default;
+    uint64<4>() = default;
+    uint64<4>(const uint64x4 &) = default;
+    uint64<4> &operator=(const uint64x4 &) = default;
 
     /// @{
     /// Construct from the underlying vector type
-    gint64<4>(__m256i d) : d_(d) {}
-    gint64<4>& operator=(__m256i d) { d_ = d; return *this; }
+    uint64<4>(__m256i d) : d_(d) {}
+    uint64<4>& operator=(__m256i d) { d_ = d; return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible integer type
-    gint64<4>(const gint8x32& d);
-    gint64<4>(const gint16x16& d);
-    gint64<4>(const gint32x8& d);
-    gint64<4>& operator=(const gint8x32& d);
-    gint64<4>& operator=(const gint16x16& d);
-    gint64<4>& operator=(const gint32x8& d);
+    uint64<4>(const uint8x32& d);
+    uint64<4>(const uint16x16& d);
+    uint64<4>(const uint32x8& d);
+    uint64<4>& operator=(const uint8x32& d);
+    uint64<4>& operator=(const uint16x16& d);
+    uint64<4>& operator=(const uint32x8& d);
     /// @}
 
     /// @{
     /// Construct from compatible float32x8 integer vector type
-    explicit gint64<4>(const float64x4& d);
-    gint64<4>& operator=(const float64x4& d) { operator=(gint64x4(d)); return *this; }
+    explicit uint64<4>(const float64x4& d);
+    uint64<4>& operator=(const float64x4& d) { operator=(uint64x4(d)); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> gint64<4>(const expr_vec_construct<E>& e)
+    template<class E> uint64<4>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
     }
-    template<class E> gint64<4>& operator=(const expr_vec_construct<E>& e)
+    template<class E> uint64<4>& operator=(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
@@ -106,17 +107,17 @@ public:
 
     /// @{
     /// Access base vectors
-    const gint64x4& operator[](unsigned) const   { return *this; }
-          gint64x4& operator[](unsigned)         { return *this; }
+    const uint64x4& operator[](unsigned) const   { return *this; }
+          uint64x4& operator[](unsigned)         { return *this; }
     /// @}
 
-    gint64<4> eval() const { return *this; }
+    uint64<4> eval() const { return *this; }
 
     /// Creates a int64x4 vector with the contents set to zero
-    static gint64x4 zero();
+    static uint64x4 zero();
 
     /// Creates a int64x4 vector with the contents set to ones
-    static gint64x4 ones();
+    static uint64x4 ones();
 
 private:
 
@@ -126,7 +127,7 @@ private:
 /** Class representing 2x 64-bit signed integer vector
 */
 template<>
-class int64<4, void> : public gint64x4 {
+class int64<4, void> : public uint64x4 {
 public:
 
     using element_type = int64_t;
@@ -139,26 +140,26 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    int64<4>(__m256i d) : gint64x4(d) {}
-    int64<4>& operator=(__m256i d) { gint64x4::operator=(d); return *this; }
+    int64<4>(__m256i d) : uint64x4(d) {}
+    int64<4>& operator=(__m256i d) { uint64x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible integer type
-    int64<4>(const gint8x32& d);
-    int64<4>(const gint16x16& d);
-    int64<4>(const gint32x8& d);
-    int64<4>(const gint64x4& d);
-    int64<4>& operator=(const gint8x32& d);
-    int64<4>& operator=(const gint16x16& d);
-    int64<4>& operator=(const gint32x8& d);
-    int64<4>& operator=(const gint64x4& d);
+    int64<4>(const uint8x32& d);
+    int64<4>(const uint16x16& d);
+    int64<4>(const uint32x8& d);
+    int64<4>(const uint64x4& d);
+    int64<4>& operator=(const uint8x32& d);
+    int64<4>& operator=(const uint16x16& d);
+    int64<4>& operator=(const uint32x8& d);
+    int64<4>& operator=(const uint64x4& d);
     /// @}
 
     /// @{
     /// Construct from compatible float64x4 integer vector type
-    explicit int64<4>(const float64x4& d) : gint64x4(d) {}
-    int64<4>& operator=(const float64x4& d) { gint64x4::operator=(d); return *this; }
+    explicit int64<4>(const float64x4& d) : uint64x4(d) {}
+    int64<4>& operator=(const float64x4& d) { uint64x4::operator=(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -184,7 +185,7 @@ public:
 /** Class representing 2x 64-bit unsigned integer vector
 */
 template<>
-class uint64<4, void> : public gint64x4 {
+class uint64<4, void> : public uint64x4 {
 public:
 
     using half_vector_type = uint64x2;
@@ -196,26 +197,26 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    uint64<4>(__m256i d) : gint64x4(d) {}
-    uint64<4>& operator=(__m256i d) { gint64x4::operator=(d); return *this; }
+    uint64<4>(__m256i d) : uint64x4(d) {}
+    uint64<4>& operator=(__m256i d) { uint64x4::operator=(d); return *this; }
     /// @}
 
     /// @{
     /// Construct from compatible integer type
-    uint64<4>(const gint8x32& d);
-    uint64<4>(const gint16x16& d);
-    uint64<4>(const gint32x8& d);
-    uint64<4>(const gint64x4& d);
-    uint64<4>& operator=(const gint8x32& d);
-    uint64<4>& operator=(const gint16x16& d);
-    uint64<4>& operator=(const gint32x8& d);
-    uint64<4>& operator=(const gint64x4& d);
+    uint64<4>(const uint8x32& d);
+    uint64<4>(const uint16x16& d);
+    uint64<4>(const uint32x8& d);
+    uint64<4>(const uint64x4& d);
+    uint64<4>& operator=(const uint8x32& d);
+    uint64<4>& operator=(const uint16x16& d);
+    uint64<4>& operator=(const uint32x8& d);
+    uint64<4>& operator=(const uint64x4& d);
     /// @}
 
     /// @{
     /// Construct from compatible float64x4 integer vector type
-    explicit uint64<4>(const float64x4& d) : gint64x4(d) {}
-    uint64<4>& operator=(const float64x4& d) { gint64x4::operator=(d); return *this; }
+    explicit uint64<4>(const float64x4& d) : uint64x4(d) {}
+    uint64<4>& operator=(const float64x4& d) { uint64x4::operator=(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

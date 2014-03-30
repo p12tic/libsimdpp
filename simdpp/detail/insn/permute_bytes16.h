@@ -42,7 +42,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-inline gint8x16 permute_bytes16(gint8x16 a, gint8x16 mask)
+inline uint8x16 permute_bytes16(uint8x16 a, uint8x16 mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -70,41 +70,41 @@ inline gint8x16 permute_bytes16(gint8x16 a, gint8x16 mask)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 permute_bytes16(gint8x32 a, gint8x32 mask)
+inline uint8x32 permute_bytes16(uint8x32 a, uint8x32 mask)
 {
     return _mm256_shuffle_epi8(a, mask);
 }
 #endif
 
 template<unsigned N>
-gint8<N> permute_bytes16(gint8<N> a, gint8<N> mask)
+uint8<N> permute_bytes16(uint8<N> a, uint8<N> mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, permute_bytes16, a, mask)
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, permute_bytes16, a, mask)
 }
 template<unsigned N>
-gint16<N> permute_bytes16(gint16<N> a, gint16<N> mask)
+uint16<N> permute_bytes16(uint16<N> a, uint16<N> mask)
 {
-    return permute_bytes16(gint8<N*2>(a), gint8<N*2>(mask));
+    return permute_bytes16(uint8<N*2>(a), uint8<N*2>(mask));
 }
 template<unsigned N>
-gint32<N> permute_bytes16(gint32<N> a, gint32<N> mask)
+uint32<N> permute_bytes16(uint32<N> a, uint32<N> mask)
 {
-    return permute_bytes16(gint8<N*4>(a), gint8<N*4>(mask));
+    return permute_bytes16(uint8<N*4>(a), uint8<N*4>(mask));
 }
 template<unsigned N>
-gint64<N> permute_bytes16(gint64<N> a, gint64<N> mask)
+uint64<N> permute_bytes16(uint64<N> a, uint64<N> mask)
 {
-    return permute_bytes16(gint8<N*8>(a), gint8<N*8>(mask));
+    return permute_bytes16(uint8<N*8>(a), uint8<N*8>(mask));
 }
 template<unsigned N>
-float32<N> permute_bytes16(float32<N> a, gint32<N> mask)
+float32<N> permute_bytes16(float32<N> a, uint32<N> mask)
 {
-    return float32<N>(permute_bytes16(gint32<N>(a), mask));
+    return float32<N>(permute_bytes16(uint32<N>(a), mask));
 }
 template<unsigned N>
-float64<N> permute_bytes16(float64<N> a, gint64<N> mask)
+float64<N> permute_bytes16(float64<N> a, uint64<N> mask)
 {
-    return float64<N>(permute_bytes16(gint64<N>(a), mask));
+    return float64<N>(permute_bytes16(uint64<N>(a), mask));
 }
 
 

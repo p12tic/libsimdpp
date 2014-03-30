@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/splat.h>
+#include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -41,7 +42,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 /// @{
-/** Broadcasts the specified 8-bit value to all elements within 128-bit lane
+/** Broadcasts the specified element to all elements.
 
     @code
     r0 = a[s]
@@ -50,31 +51,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     rN = a[s]
     @endcode
 
-    @par 128-bit version:
-    @icost{SSE2-AVX, 5}
-    @icost{AVX2, 2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 6}
-    @icost{NEON, ALTIVEC, 2}
-*/
-template<unsigned s, unsigned N, class E>
-gint8<N, gint8<N>> splat(gint8<N,E> a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_splat<s>(a.eval());
-}
-/// @}
-
-/// @{
-/** Broadcasts the specified 16-bit value to all elements within a int16x8 vector
-
-    @code
-    r0 = a[s]
-    r1 = a[s]
-    ...
-    r7 = a[s]
-    @endcode
+    @par int8
 
     @par 128-bit version:
     @icost{SSE2-AVX, 5}
@@ -83,43 +60,23 @@ gint8<N, gint8<N>> splat(gint8<N,E> a)
     @par 256-bit version:
     @icost{SSE2-AVX, 6}
     @icost{NEON, ALTIVEC, 2}
-*/
-template<unsigned s, unsigned N, class E>
-gint16<N, gint16<N>> splat(gint16<N,E> a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_splat<s>(a.eval());
-}
-/// @}
 
-/// @{
-/** Broadcasts the specified 32-bit value to all elements within a int32x4 vector
+    @par int16
 
-    @code
-    r0 = a[s]
-    r1 = a[s]
-    r2 = a[s]
-    r3 = a[s]
-    @endcode
+    @par 128-bit version:
+    @icost{SSE2-AVX, 5}
+    @icost{AVX2, 2}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 6}
+    @icost{NEON, ALTIVEC, 2}
+
+    @par int32
 
     @par 256-bit version:
     @icost{NEON, ALTIVEC, 2}
-*/
-template<unsigned s, unsigned N, class E>
-gint32<N, gint32<N>> splat(gint32<N,E> a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_splat<s>(a.eval());
-}
-/// @}
 
-/// @{
-/** Broadcasts the specified 64-bit value to all elements within a int64x2 vector
-
-    @code
-    r0 = a[s]
-    r1 = a[s]
-    @endcode
+    @par int64
 
     @par 128-bit version:
     @icost{ALTIVEC, 1-2}
@@ -127,43 +84,13 @@ gint32<N, gint32<N>> splat(gint32<N,E> a)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 1-2}
-*/
-template<unsigned s, unsigned N, class E>
-gint64<N, gint64<N>> splat(gint64<N,E> a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_splat<s>(a.eval());
-}
-/// @}
 
-/// @{
-/** Broadcasts the specified 32-bit value to all elements within a float32x4 vector
-
-    @code
-    r0 = a[s]
-    r1 = a[s]
-    r2 = a[s]
-    r3 = a[s]
-    @endcode
+    @par float32
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
-*/
-template<unsigned s, unsigned N, class E>
-float32<N, float32<N>> splat(float32<N,E> a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_splat<s>(a.eval());
-}
-/// @}
 
-/// @{
-/** Broadcasts the specified 64-bit value to all elements within a float64x2 vector
-
-    @code
-    r0 = a[s]
-    r1 = a[s]
-    @endcode
+    @par float64
 
     @par 128-bit version:
     @novec{NEON, ALTIVEC}
@@ -172,14 +99,16 @@ float32<N, float32<N>> splat(float32<N,E> a)
     @icost{SSE2-AVX, 2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned s, unsigned N, class E>
-float64<N, float64<N>> splat(float64<N,E> a)
+template<unsigned s, unsigned N, class V>
+typename detail::get_expr_nomask<V, void>::empty
+        splat(const any_vec<N,V>& a)
 {
     static_assert(s < N, "Access out of bounds");
-    return detail::insn::i_splat<s>(a.eval());
+    typename detail::get_expr_nomask<V, void>::type ra = a.vec().eval();
+    return detail::insn::i_splat<s>(ra);
 }
 /// @}
-///
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

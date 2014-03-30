@@ -42,44 +42,44 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX2
 
-template<class E> gint16<16>::gint16(const  gint8<32,E>& d) { *this = bit_cast<gint16<16>>(d.eval()); }
-template<class E> gint16<16>::gint16(const gint16<16,E>& d) { *this = bit_cast<gint16<16>>(d.eval()); }
-template<class E> gint16<16>::gint16(const gint32<8,E>& d)  { *this = bit_cast<gint16<16>>(d.eval()); }
-template<class E> gint16<16>::gint16(const gint64<4,E>& d)  { *this = bit_cast<gint16<16>>(d.eval()); }
-template<class E> gint16<16>& gint16<16>::operator=(const  gint8<32,E>& d) { *this = bit_cast<gint16<16>>(d.eval()); return *this; }
-template<class E> gint16<16>& gint16<16>::operator=(const gint16<16,E>& d) { *this = bit_cast<gint16<16>>(d.eval()); return *this; }
-template<class E> gint16<16>& gint16<16>::operator=(const gint32<8,E>& d)  { *this = bit_cast<gint16<16>>(d.eval()); return *this; }
-template<class E> gint16<16>& gint16<16>::operator=(const gint64<4,E>& d)  { *this = bit_cast<gint16<16>>(d.eval()); return *this; }
+template<class E> uint16<16>::uint16(const  uint8<32,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); }
+template<class E> uint16<16>::uint16(const uint16<16,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); }
+template<class E> uint16<16>::uint16(const uint32<8,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); }
+template<class E> uint16<16>::uint16(const uint64<4,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); }
+template<class E> uint16<16>& uint16<16>::operator=(const  uint8<32,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
+template<class E> uint16<16>& uint16<16>::operator=(const uint16<16,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
+template<class E> uint16<16>& uint16<16>::operator=(const uint32<8,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
+template<class E> uint16<16>& uint16<16>::operator=(const uint64<4,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
 
-template<class E> int16<16>::int16(const  gint8<32,E>& d) : gint16(d) {}
-template<class E> int16<16>::int16(const gint16<16,E>& d) : gint16(d) {}
-template<class E> int16<16>::int16(const gint32<8,E>& d)  : gint16(d) {}
-template<class E> int16<16>::int16(const gint64<4,E>& d)  : gint16(d) {}
-template<class E> int16<16>& int16<16>::operator=(const  gint8<32,E>& d) { gint16::operator=(d); return *this; }
-template<class E> int16<16>& int16<16>::operator=(const gint16<16,E>& d) { gint16::operator=(d); return *this; }
-template<class E> int16<16>& int16<16>::operator=(const gint32<8,E>& d)  { gint16::operator=(d); return *this; }
-template<class E> int16<16>& int16<16>::operator=(const gint64<4,E>& d)  { gint16::operator=(d); return *this; }
+template<class E> int16<16>::int16(const  uint8<32,E>& d) : uint16(d) {}
+template<class E> int16<16>::int16(const uint16<16,E>& d) : uint16(d) {}
+template<class E> int16<16>::int16(const uint32<8,E>& d)  : uint16(d) {}
+template<class E> int16<16>::int16(const uint64<4,E>& d)  : uint16(d) {}
+template<class E> int16<16>& int16<16>::operator=(const  uint8<32,E>& d) { uint16::operator=(d); return *this; }
+template<class E> int16<16>& int16<16>::operator=(const uint16<16,E>& d) { uint16::operator=(d); return *this; }
+template<class E> int16<16>& int16<16>::operator=(const uint32<8,E>& d)  { uint16::operator=(d); return *this; }
+template<class E> int16<16>& int16<16>::operator=(const uint64<4,E>& d)  { uint16::operator=(d); return *this; }
 
-template<class E> uint16<16>::uint16(const  gint8<32,E>& d) : gint16(d) {}
-template<class E> uint16<16>::uint16(const gint16<16,E>& d) : gint16(d) {}
-template<class E> uint16<16>::uint16(const gint32<8,E>& d)  : gint16(d) {}
-template<class E> uint16<16>::uint16(const gint64<4,E>& d)  : gint16(d) {}
-template<class E> uint16<16>& uint16<16>::operator=(const  gint8<32,E>& d) { gint16::operator=(d); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const gint16<16,E>& d) { gint16::operator=(d); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const gint32<8,E>& d)  { gint16::operator=(d); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const gint64<4,E>& d)  { gint16::operator=(d); return *this; }
+template<class E> uint16<16>::uint16(const  uint8<32,E>& d) : uint16(d) {}
+template<class E> uint16<16>::uint16(const uint16<16,E>& d) : uint16(d) {}
+template<class E> uint16<16>::uint16(const uint32<8,E>& d)  : uint16(d) {}
+template<class E> uint16<16>::uint16(const uint64<4,E>& d)  : uint16(d) {}
+template<class E> uint16<16>& uint16<16>::operator=(const  uint8<32,E>& d) { uint16::operator=(d); return *this; }
+template<class E> uint16<16>& uint16<16>::operator=(const uint16<16,E>& d) { uint16::operator=(d); return *this; }
+template<class E> uint16<16>& uint16<16>::operator=(const uint32<8,E>& d)  { uint16::operator=(d); return *this; }
+template<class E> uint16<16>& uint16<16>::operator=(const uint64<4,E>& d)  { uint16::operator=(d); return *this; }
 
-inline gint16x16 gint16x16::zero()
+inline uint16x16 uint16x16::zero()
 {
     return (uint16x16) make_uint(0);
 }
 
-inline gint16x16 gint16x16::ones()
+inline uint16x16 uint16x16::ones()
 {
     return (uint16x16) make_uint(0xffff);
 }
 
-inline mask_int16x16::operator gint16x16() const
+inline mask_int16x16::operator uint16x16() const
 {
     return d_;
 }

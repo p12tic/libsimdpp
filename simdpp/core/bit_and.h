@@ -35,6 +35,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/bit_and.h>
 #include <simdpp/detail/expr/bit_and.h>
+#include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -43,7 +44,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 /// @{
-/** Computes bitwise AND of integer vectors.
+/** Computes bitwise AND of integer or floating-point vectors.
 
     @code
     r0 = a0 & b0
@@ -51,207 +52,18 @@ namespace SIMDPP_ARCH_NAMESPACE {
     rN = aN & bN
     @endcode
 
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, ALTIVEC, 2}
+    @todo: icost
 */
-template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> bit_and(gint8<N,E1> a, gint8<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2<V1, V2, void>::empty
+    bit_and(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> bit_and(gint8<N,E1> a, gint16<N/2,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint8<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> bit_and(gint8<N,E1> a, gint32<N/4,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint8<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> bit_and(gint8<N,E1> a, gint64<N/8,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint8<N>(b.eval()));
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_bit_and(ra, rb);
 }
 
-template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> bit_and(gint16<N,E1> a, gint8<N*2,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint16<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> bit_and(gint16<N,E1> a, gint16<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> bit_and(gint16<N,E1> a, gint32<N/2,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint16<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> bit_and(gint16<N,E1> a, gint64<N/4,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint16<N>(b.eval()));
-}
-
-template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> bit_and(gint32<N,E1> a, gint8<N*4,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint16<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> bit_and(gint32<N,E1> a, gint16<N*2,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint16<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> bit_and(gint32<N,E1> a, gint32<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> bit_and(gint32<N,E1> a, gint64<N/2,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint16<N>(b.eval()));
-}
-
-template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> bit_and(gint64<N,E1> a, gint8<N*8,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint64<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> bit_and(gint64<N,E1> a, gint16<N*4,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint64<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> bit_and(gint64<N,E1> a, gint32<N*2,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), gint64<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> bit_and(gint64<N,E1> a, gint64<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-
-// -----------------------------------------------------------------------------
-// no point in building expression tree for 8 and 16-bit elements
-template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> bit_and(gint8<N,E1> a, mask_int8<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> bit_and(gint16<N,E1> a, mask_int16<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-gint32<N, expr_bit_and<gint32<N,E1>,
-                       mask_int32<N,E2>>> bit_and(gint32<N,E1> a,
-                                                  mask_int32<N,E2> b)
-{
-    return { { a, b }, 0 };
-}
-
-template<unsigned N, class E1, class E2>
-gint64<N, expr_bit_and<gint64<N,E1>,
-                       mask_int64<N,E2>>> bit_and(gint64<N,E1> a,
-                                                  mask_int64<N,E2> b)
-{
-    return { { a, b }, 0 };
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N, class E1, class E2>
-mask_int8<N, mask_int8<N>> bit_and(mask_int8<N,E1> a, mask_int8<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-mask_int16<N, mask_int16<N>> bit_and(mask_int16<N,E1> a, mask_int16<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-mask_int32<N, mask_int32<N>> bit_and(mask_int32<N,E1> a, mask_int32<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-mask_int64<N, mask_int64<N>> bit_and(mask_int64<N,E1> a, mask_int64<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-/// @}
-
-/// @{
-/** Computes bitwise AND of floating-point vectors.
-
-    @code
-    r0 = a0 & b0
-    ...
-    rN = aN & bN
-    @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
-*/
-template<unsigned N, class E1, class E2>
-float32<N, float32<N>> bit_and(float32<N,E1> a, float32<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-float32<N, float32<N>> bit_and(float32<N,E1> a, gint32<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), float32<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-float32<N, expr_bit_and<float32<N,E1>,
-                        mask_float32<N,E2>>> bit_and(float32<N,E1> a,
-                                                     mask_float32<N,E2> b)
-{
-    return { { a, b }, 0 };
-}
-template<unsigned N, class E1, class E2>
-mask_float32<N, mask_float32<N>> bit_and(mask_float32<N,E1> a,
-                                         mask_float32<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N, class E1, class E2>
-float64<N, float64<N>> bit_and(float64<N,E1> a, float64<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-template<unsigned N, class E1, class E2>
-float64<N, float64<N>> bit_and(float64<N,E1> a, gint64<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), float64<N>(b.eval()));
-}
-template<unsigned N, class E1, class E2>
-float64<N, expr_bit_and<float64<N,E1>,
-                        mask_float64<N,E2>>> bit_and(float64<N,E1> a,
-                                                     mask_float64<N,E2> b)
-{
-    return { { a, b }, 0 };
-}
-template<unsigned N, class E1, class E2>
-mask_float64<N, mask_float64<N>> bit_and(mask_float64<N,E1> a,
-                                         mask_float64<N,E2> b)
-{
-    return detail::insn::i_bit_and(a.eval(), b.eval());
-}
-/// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

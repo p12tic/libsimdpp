@@ -110,7 +110,7 @@ inline int32x4 copysign(int32x4 a, int32x4 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline gint16x8 hadd2(gint16x8 a, gint16x8 b)
+inline uint16x8 hadd2(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi16(a, b);
@@ -129,7 +129,7 @@ inline gint16x8 hadd2(gint16x8 a, gint16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline gint32x4 hadd2(gint32x4 a, gint32x4 b)
+inline uint32x4 hadd2(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi32(a, b);
@@ -146,9 +146,9 @@ inline gint32x4 hadd2(gint32x4 a, gint32x4 b)
     @endcode
     @icost{3}
 */
-inline gint64x2 hadd2(gint64x2 a, gint64x2 b)
+inline uint64x2 hadd2(uint64x2 a, uint64x2 b)
 {
-    gint64x2 ia, ib;
+    uint64x2 ia, ib;
     ia = zip2_lo(a, b);
     ib = zip2_hi(a, b);
     ia = add(ia, ib);
@@ -187,7 +187,7 @@ inline int16x8 hadds2(int16x8 a, int16x8 b)
     @unimp{SSE2, SSE3}
     @icost{3}
 */
-inline gint32x4 hadd4(gint32x4 a, gint32x4 b, gint32x4 c, gint32x4 d)
+inline uint32x4 hadd4(uint32x4 a, uint32x4 b, uint32x4 c, uint32x4 d)
 {
 #if SIMDPP_USE_SSSE3
     a = hadd2(a, b);
@@ -211,7 +211,7 @@ inline gint32x4 hadd4(gint32x4 a, gint32x4 b, gint32x4 c, gint32x4 d)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline gint16x8 hsub2(gint16x8 a, gint16x8 b)
+inline uint16x8 hsub2(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi16(a, b);
@@ -230,7 +230,7 @@ inline gint16x8 hsub2(gint16x8 a, gint16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-inline gint32x4 hsub2(gint32x4 a, gint32x4 b)
+inline uint32x4 hsub2(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi32(a, b);
@@ -247,10 +247,10 @@ inline gint32x4 hsub2(gint32x4 a, gint32x4 b)
     @endcode
     @icost{3}
 */
-inline gint64x2 hsub2(gint64x2 a, gint64x2 b)
+inline uint64x2 hsub2(uint64x2 a, uint64x2 b)
 {
 #if SIMDPP_USE_SSSE3
-    gint64x2 ia, ib;
+    uint64x2 ia, ib;
     ia = zip2_lo(a, b);
     ib = zip2_hi(a, b);
     ia = sub(ia, ib);

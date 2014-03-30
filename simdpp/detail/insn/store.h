@@ -47,7 +47,7 @@ namespace insn {
 template<class V>
 void v_store(char* p, V a);
 
-inline void i_store(char* p, gint8x16 a)
+inline void i_store(char* p, uint8x16 a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -62,7 +62,7 @@ inline void i_store(char* p, gint8x16 a)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_store(char* p, gint8x32 a)
+inline void i_store(char* p, uint8x32 a)
 {
     p = detail::assume_aligned(p, 32);
     _mm256_store_si256(reinterpret_cast<__m256i*>(p), a);
@@ -70,17 +70,17 @@ inline void i_store(char* p, gint8x32 a)
 #endif
 
 template<unsigned N>
-void i_store(char* p, gint8<N> a)
+void i_store(char* p, uint8<N> a)
 {
     v_store(p, a);
 }
 
 template<unsigned N>
-void i_store(char* p, gint16<N> a) { i_store(p, gint8<N*2>(a)); }
+void i_store(char* p, uint16<N> a) { i_store(p, uint8<N*2>(a)); }
 template<unsigned N>
-void i_store(char* p, gint32<N> a) { i_store(p, gint8<N*4>(a)); }
+void i_store(char* p, uint32<N> a) { i_store(p, uint8<N*4>(a)); }
 template<unsigned N>
-void i_store(char* p, gint64<N> a) { i_store(p, gint8<N*8>(a)); }
+void i_store(char* p, uint64<N> a) { i_store(p, uint8<N*8>(a)); }
 
 inline void i_store(char* p, float32x4 a)
 {

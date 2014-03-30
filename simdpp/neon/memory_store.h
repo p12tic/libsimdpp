@@ -49,7 +49,7 @@ namespace neon {
     undefined if @a pos+n exceeds the number of elements in the specified vector.
 */
 template<unsigned pos, unsigned n>
-void store_lane(void* p, gint8x16 a)
+void store_lane(void* p, uint8x16 a)
 {
     static_assert(n == 1 || n == 2 || n == 4 || n == 8, "Size not supported");
     static_assert(pos%n == 0, "pos must be a multiple of n");
@@ -71,7 +71,7 @@ void store_lane(void* p, gint8x16 a)
 }
 
 template<unsigned pos, unsigned n>
-void store_lane(void* p, gint16x8 a)
+void store_lane(void* p, uint16x8 a)
 {
     static_assert(n == 1 || n == 2 || n == 4, "Size not supported");
     static_assert(pos%n == 0, "pos must be a multiple of n");
@@ -90,7 +90,7 @@ void store_lane(void* p, gint16x8 a)
 }
 
 template<unsigned pos, unsigned n>
-void store_lane(void* p, gint32x4 a)
+void store_lane(void* p, uint32x4 a)
 {
     static_assert(n == 1 || n == 2, "Size not supported");
     static_assert(pos%n == 0, "pos must be a multiple of n");
@@ -106,7 +106,7 @@ void store_lane(void* p, gint32x4 a)
 }
 
 template<unsigned pos, unsigned n>
-void store_lane(void* p, gint64x2 a)
+void store_lane(void* p, uint64x2 a)
 {
     static_assert(n == 1, "Size not supported");
     static_assert(pos%n == 0, "pos must be a multiple of n");
@@ -117,7 +117,7 @@ void store_lane(void* p, gint64x2 a)
 template<unsigned pos, unsigned n>
 void store_lane(void* p, float32x4 a)
 {
-    store_lane<pos,n>(p, gint32x4(a));
+    store_lane<pos,n>(p, uint32x4(a));
 }
 /// @}
 

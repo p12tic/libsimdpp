@@ -66,7 +66,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s, unsigned N, class E>
-gint8<N, expr_splat16<s,gint8<N,E>>> splat16(gint8<N,E> a)
+int8<N, expr_splat16<s,int8<N,E>>> splat16(int8<N,E> a)
+{
+    static_assert(s < 16, "Access out of bounds");
+    return { { a }, 0 };
+}
+
+template<unsigned s, unsigned N, class E>
+uint8<N, expr_splat16<s,uint8<N,E>>> splat16(uint8<N,E> a)
 {
     static_assert(s < 16, "Access out of bounds");
     return { { a }, 0 };
@@ -94,7 +101,14 @@ gint8<N, expr_splat16<s,gint8<N,E>>> splat16(gint8<N,E> a)
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
 template<unsigned s, unsigned N, class E>
-gint16<N, expr_splat8<s,gint16<N,E>>> splat8(gint16<N,E> a)
+int16<N, expr_splat8<s,int16<N,E>>> splat8(int16<N,E> a)
+{
+    static_assert(s < 8, "Access out of bounds");
+    return { { a }, 0 };
+}
+
+template<unsigned s, unsigned N, class E>
+uint16<N, expr_splat8<s,uint16<N,E>>> splat8(uint16<N,E> a)
 {
     static_assert(s < 8, "Access out of bounds");
     return { { a }, 0 };
@@ -115,7 +129,14 @@ gint16<N, expr_splat8<s,gint16<N,E>>> splat8(gint16<N,E> a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned s, unsigned N, class E>
-gint32<N, expr_splat4<s,gint32<N,E>>> splat4(gint32<N,E> a)
+int32<N, expr_splat4<s,int32<N,E>>> splat4(int32<N,E> a)
+{
+    static_assert(s < 4, "Access out of bounds");
+    return { { a }, 0 };
+}
+
+template<unsigned s, unsigned N, class E>
+uint32<N, expr_splat4<s,uint32<N,E>>> splat4(uint32<N,E> a)
 {
     static_assert(s < 4, "Access out of bounds");
     return { { a }, 0 };
@@ -138,7 +159,14 @@ gint32<N, expr_splat4<s,gint32<N,E>>> splat4(gint32<N,E> a)
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s, unsigned N, class E>
-gint64<N, expr_splat2<s,gint64<N,E>>> splat2(gint64<N,E> a)
+int64<N, expr_splat2<s,int64<N,E>>> splat2(int64<N,E> a)
+{
+    static_assert(s < 2, "Access out of bounds");
+    return { { a }, 0 };
+}
+
+template<unsigned s, unsigned N, class E>
+uint64<N, expr_splat2<s,uint64<N,E>>> splat2(uint64<N,E> a)
 {
     static_assert(s < 2, "Access out of bounds");
     return { { a }, 0 };

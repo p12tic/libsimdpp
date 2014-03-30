@@ -55,13 +55,13 @@ int64x2 shift_r(int64x2 a)      { return vshrq_n_s64(a, count); }
 template<unsigned count>
 uint64x2 shift_r(uint64x2 a)    { return vshrq_n_u64(a, count); }
 template<unsigned count>
-gint8x16 shift_l(gint8x16 a)  { return vshlq_n_u8(a, count); }
+uint8x16 shift_l(uint8x16 a)  { return vshlq_n_u8(a, count); }
 template<unsigned count>
-gint16x8 shift_l(gint16x8 a)  { return vshlq_n_u16(a, count); }
+uint16x8 shift_l(uint16x8 a)  { return vshlq_n_u16(a, count); }
 template<unsigned count>
-gint32x4 shift_l(gint32x4 a)  { return vshlq_n_u32(a, count); }
+uint32x4 shift_l(uint32x4 a)  { return vshlq_n_u32(a, count); }
 template<unsigned count>
-gint64x2 shift_l(gint64x2 a)  { return vshlq_n_u64(a, count); }
+uint64x2 shift_l(uint64x2 a)  { return vshlq_n_u64(a, count); }
 
 template<>
 inline int8x16 shift_r<0>(int8x16 a)      { return a; }
@@ -80,13 +80,13 @@ inline int64x2 shift_r<0>(int64x2 a)      { return a; }
 template<>
 inline uint64x2 shift_r<0>(uint64x2 a)    { return a; }
 template<>
-inline gint8x16 shift_l<0>(gint8x16 a)  { return a; }
+inline uint8x16 shift_l<0>(uint8x16 a)  { return a; }
 template<>
-inline gint16x8 shift_l<0>(gint16x8 a)  { return a; }
+inline uint16x8 shift_l<0>(uint16x8 a)  { return a; }
 template<>
-inline gint32x4 shift_l<0>(gint32x4 a)  { return a; }
+inline uint32x4 shift_l<0>(uint32x4 a)  { return a; }
 template<>
-inline gint64x2 shift_l<0>(gint64x2 a)  { return a; }
+inline uint64x2 shift_l<0>(uint64x2 a)  { return a; }
 
 } // namespace detail
 } // namespace neon

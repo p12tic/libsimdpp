@@ -48,7 +48,7 @@ namespace insn {
 template<class V>
 void v_stream(char* p, V a);
 
-inline void i_stream(char* p, gint8<16> a)
+inline void i_stream(char* p, uint8<16> a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -63,7 +63,7 @@ inline void i_stream(char* p, gint8<16> a)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_stream(char* p, gint8<32> a)
+inline void i_stream(char* p, uint8<32> a)
 {
     p = detail::assume_aligned(p, 32);
     _mm256_stream_si256(reinterpret_cast<__m256i*>(p), a);
@@ -71,17 +71,17 @@ inline void i_stream(char* p, gint8<32> a)
 #endif
 
 template<unsigned N>
-void i_stream(char* p, gint8<N> a)
+void i_stream(char* p, uint8<N> a)
 {
     v_stream(p, a);
 }
 
 template<unsigned N>
-void i_stream(char* p, gint16<N> a) { i_stream(p, gint8<N*2>(a)); }
+void i_stream(char* p, uint16<N> a) { i_stream(p, uint8<N*2>(a)); }
 template<unsigned N>
-void i_stream(char* p, gint32<N> a) { i_stream(p, gint8<N*4>(a)); }
+void i_stream(char* p, uint32<N> a) { i_stream(p, uint8<N*4>(a)); }
 template<unsigned N>
-void i_stream(char* p, gint64<N> a) { i_stream(p, gint8<N*8>(a)); }
+void i_stream(char* p, uint64<N> a) { i_stream(p, uint8<N*8>(a)); }
 
 // -----------------------------------------------------------------------------
 

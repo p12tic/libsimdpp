@@ -61,7 +61,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 */
 template<unsigned N, class E1, class E2>
-gint8<N, gint8<N>> unzip16_hi(gint8<N,E1> a, gint8<N,E2> b)
+uint8<N, uint8<N>> unzip16_hi(uint8<N,E1> a, uint8<N,E2> b)
 {
     return detail::insn::i_unzip16_hi(a.eval(), b.eval());
 }
@@ -85,7 +85,7 @@ gint8<N, gint8<N>> unzip16_hi(gint8<N,E1> a, gint8<N,E2> b)
     @icost{AVX2, 3}
 */
 template<unsigned N, class E1, class E2>
-gint16<N, gint16<N>> unzip8_hi(gint16<N,E1> a, gint16<N,E2> b)
+uint16<N, uint16<N>> unzip8_hi(uint16<N,E1> a, uint16<N,E2> b)
 {
     return detail::insn::i_unzip8_hi(a.eval(), b.eval());
 }
@@ -108,7 +108,7 @@ gint16<N, gint16<N>> unzip8_hi(gint16<N,E1> a, gint16<N,E2> b)
     @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned N, class E1, class E2>
-gint32<N, gint32<N>> unzip4_hi(gint32<N,E1> a, gint32<N,E2> b)
+uint32<N, uint32<N>> unzip4_hi(uint32<N,E1> a, uint32<N,E2> b)
 {
     return detail::insn::i_unzip4_hi(a.eval(), b.eval());
 }
@@ -131,7 +131,7 @@ gint32<N, gint32<N>> unzip4_hi(gint32<N,E1> a, gint32<N,E2> b)
     @icost{SSE2-AVX, NEON, 2}
 */
 template<unsigned N, class E1, class E2>
-gint64<N, gint64<N>> unzip2_hi(gint64<N,E1> a, gint64<N,E2> b)
+uint64<N, uint64<N>> unzip2_hi(uint64<N,E1> a, uint64<N,E2> b)
 {
     return detail::insn::i_unzip2_hi(a.eval(), b.eval());
 }

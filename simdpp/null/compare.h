@@ -43,63 +43,63 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace null {
 
 template<class V>
-typename V::mask_type cmp_eq(V a, V b)
+typename V::mask_vector_type cmp_eq(V a, V b)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.m_mask().el(i) = (a.el(i) == b.el(i)) ? 1 : 0;
+        r.el(i) = (a.el(i) == b.el(i)) ? 1 : 0;
     }
-    return refresh_mask(r);
+    return r;
 }
 
 template<class V>
-typename V::mask_type cmp_neq(V a, V b)
+typename V::mask_vector_type cmp_neq(V a, V b)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.m_mask().el(i) = (a.el(i) != b.el(i)) ? 1 : 0;
+        r.el(i) = (a.el(i) != b.el(i)) ? 1 : 0;
     }
-    return refresh_mask(r);
+    return r;
 }
 
 template<class V>
-typename V::mask_type cmp_lt(V a, V b)
+typename V::mask_vector_type cmp_lt(V a, V b)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.m_mask().el(i) = (a.el(i) < b.el(i)) ? 1 : 0;
+        r.el(i) = (a.el(i) < b.el(i)) ? 1 : 0;
     }
-    return refresh_mask(r);
+    return r;
 }
 
 template<class V>
-typename V::mask_type cmp_le(V a, V b)
+typename V::mask_vector_type cmp_le(V a, V b)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.m_mask().el(i) = (a.el(i) <= b.el(i)) ? 1 : 0;
+        r.el(i) = (a.el(i) <= b.el(i)) ? 1 : 0;
     }
-    return refresh_mask(r);
+    return r;
 }
 
 template<class V>
-typename V::mask_type cmp_gt(V a, V b)
+typename V::mask_vector_type cmp_gt(V a, V b)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.m_mask().el(i) = (a.el(i) > b.el(i)) ? 1 : 0;
+        r.el(i) = (a.el(i) > b.el(i)) ? 1 : 0;
     }
-    return refresh_mask(r);
+    return r;
 }
 
 template<class V>
-typename V::mask_type cmp_ge(V a, V b)
+typename V::mask_vector_type cmp_ge(V a, V b)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.m_mask().el(i) = (a.el(i) >= b.el(i)) ? 1 : 0;
+        r.el(i) = (a.el(i) >= b.el(i)) ? 1 : 0;
     }
-    return refresh_mask(r);
+    return r;
 }
 
 } // namespace null

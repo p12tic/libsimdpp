@@ -42,13 +42,23 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<unsigned shift, unsigned N>
-gint8<N> align_v128(gint8<N> a, gint8<N> b) { return align16<shift>(a, b); }
+uint8<N> align_v128(uint8<N> a, uint8<N> b) { return align16<shift>(a, b); }
 template<unsigned shift, unsigned N>
-gint16<N> align_v128(gint16<N> a, gint16<N> b) { return align8<shift>(a, b); }
+uint16<N> align_v128(uint16<N> a, uint16<N> b) { return align8<shift>(a, b); }
 template<unsigned shift, unsigned N>
-gint32<N> align_v128(gint32<N> a, gint32<N> b) { return align4<shift>(a, b); }
+uint32<N> align_v128(uint32<N> a, uint32<N> b) { return align4<shift>(a, b); }
 template<unsigned shift, unsigned N>
-gint64<N> align_v128(gint64<N> a, gint64<N> b) { return align2<shift>(a, b); }
+uint64<N> align_v128(uint64<N> a, uint64<N> b) { return align2<shift>(a, b); }
+
+template<unsigned shift, unsigned N>
+int8<N> align_v128(int8<N> a, int8<N> b) { return align16<shift>(a, b); }
+template<unsigned shift, unsigned N>
+int16<N> align_v128(int16<N> a, int16<N> b) { return align8<shift>(a, b); }
+template<unsigned shift, unsigned N>
+int32<N> align_v128(int32<N> a, int32<N> b) { return align4<shift>(a, b); }
+template<unsigned shift, unsigned N>
+int64<N> align_v128(int64<N> a, int64<N> b) { return align2<shift>(a, b); }
+
 template<unsigned shift, unsigned N>
 float32<N> align_v128(float32<N> a, float32<N> b) { return align4<shift>(a, b); }
 template<unsigned shift, unsigned N>

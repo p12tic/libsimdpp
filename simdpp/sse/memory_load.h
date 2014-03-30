@@ -52,7 +52,7 @@ namespace sse {
     otherwise, they are set to zero.
 */
 template<unsigned P, unsigned N>
-void load_lane(gint8x16& a, const void* p)
+void load_lane(uint8x16& a, const void* p)
 {
     static_assert(N==4 || N==8, "Size not supported");
     static_assert(P==0 || (N==8 && P==8), "Position not supported");
@@ -72,7 +72,7 @@ void load_lane(gint8x16& a, const void* p)
 }
 
 template<unsigned P, unsigned N>
-void load_lane(gint16x8& a, const void* p)
+void load_lane(uint16x8& a, const void* p)
 {
     static_assert(N==2 || N==4, "Size not supported");
     static_assert(P==0 || (N==4 && P==4), "Position not supported");
@@ -92,7 +92,7 @@ void load_lane(gint16x8& a, const void* p)
 }
 
 template<unsigned P, unsigned N>
-void load_lane(gint32x4& a, const void* p)
+void load_lane(uint32x4& a, const void* p)
 {
     static_assert(N==1 || N==2, "Size not supported");
     static_assert(P==0 || (N==2 && P==2), "Position not supported");
@@ -112,7 +112,7 @@ void load_lane(gint32x4& a, const void* p)
 }
 
 template<unsigned P, unsigned N>
-void load_lane(gint64x2& a, const void* p)
+void load_lane(uint64x2& a, const void* p)
 {
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");

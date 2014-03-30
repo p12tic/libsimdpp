@@ -42,64 +42,64 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<unsigned N, class E1, class E2, class E3>
-gint8<N> expr_eval(expr_blend<gint8<N,E1>,
-                              gint8<N,E2>,
-                              gint8<N,E3>> q)
+uint8<N> expr_eval(expr_blend<uint8<N,E1>,
+                              uint8<N,E2>,
+                              uint8<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3>
-gint8<N> expr_eval(expr_blend<gint8<N,E1>,
-                              gint8<N,E2>,
+uint8<N> expr_eval(expr_blend<uint8<N,E1>,
+                              uint8<N,E2>,
                               mask_int8<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3>
-gint16<N> expr_eval(expr_blend<gint16<N,E1>,
-                               gint16<N,E2>,
-                               gint16<N,E3>> q)
+uint16<N> expr_eval(expr_blend<uint16<N,E1>,
+                               uint16<N,E2>,
+                               uint16<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3>
-gint16<N> expr_eval(expr_blend<gint16<N,E1>,
-                               gint16<N,E2>,
+uint16<N> expr_eval(expr_blend<uint16<N,E1>,
+                               uint16<N,E2>,
                                mask_int16<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3>
-gint32<N> expr_eval(expr_blend<gint32<N,E1>,
-                               gint32<N,E2>,
-                               gint32<N,E3>> q)
+uint32<N> expr_eval(expr_blend<uint32<N,E1>,
+                               uint32<N,E2>,
+                               uint32<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3>
-gint32<N> expr_eval(expr_blend<gint32<N,E1>,
-                               gint32<N,E2>,
+uint32<N> expr_eval(expr_blend<uint32<N,E1>,
+                               uint32<N,E2>,
                                mask_int32<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3>
-gint64<N> expr_eval(expr_blend<gint64<N,E1>,
-                               gint64<N,E2>,
-                               gint64<N,E3>> q)
+uint64<N> expr_eval(expr_blend<uint64<N,E1>,
+                               uint64<N,E2>,
+                               uint64<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3>
-gint64<N> expr_eval(expr_blend<gint64<N,E1>,
-                               gint64<N,E2>,
+uint64<N> expr_eval(expr_blend<uint64<N,E1>,
+                               uint64<N,E2>,
                                mask_int64<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
@@ -116,7 +116,7 @@ float32<N> expr_eval(expr_blend<float32<N,E1>,
 template<unsigned N, class E1, class E2, class E3>
 float32<N> expr_eval(expr_blend<float32<N,E1>,
                                 float32<N,E2>,
-                                gint32<N,E3>> q)
+                                uint32<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
@@ -140,7 +140,7 @@ float64<N> expr_eval(expr_blend<float64<N,E1>,
 template<unsigned N, class E1, class E2, class E3>
 float64<N> expr_eval(expr_blend<float64<N,E1>,
                                 float64<N,E2>,
-                                gint64<N,E3>> q)
+                                uint64<N,E3>> q)
 {
     return insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }

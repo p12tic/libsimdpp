@@ -58,11 +58,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_int8<N, mask_int8<N>> cmp_neq(gint8<N,E1> a,
-                                   gint8<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int8<N, mask_int8<N>> cmp_neq(const any_int8<N,V1>& a,
+                                   const any_int8<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_neq(ra, rb);
 }
 
 /** Compares the values of two int16x8 vectors for inequality
@@ -82,11 +85,14 @@ mask_int8<N, mask_int8<N>> cmp_neq(gint8<N,E1> a,
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_int16<N, mask_int16<N>> cmp_neq(gint16<N,E1> a,
-                                     gint16<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int16<N, mask_int16<N>> cmp_neq(const any_int16<N,V1>& a,
+                                     const any_int16<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_neq(ra, rb);
 }
 
 /** Compares the values of two int32x4 vectors for inequality
@@ -106,11 +112,14 @@ mask_int16<N, mask_int16<N>> cmp_neq(gint16<N,E1> a,
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_int32<N, mask_int32<N>> cmp_neq(gint32<N,E1> a,
-                                     gint32<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int32<N, mask_int32<N>> cmp_neq(const any_int32<N,V1>& a,
+                                     const any_int32<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_neq(ra, rb);
 }
 
 /** Compares the values of two int64x2 vectors for inequality
@@ -135,11 +144,14 @@ mask_int32<N, mask_int32<N>> cmp_neq(gint32<N,E1> a,
     @icost{NEON, 8}
     @icost{ALTIVEC, 6-8}
 */
-template<unsigned N, class E1, class E2>
-mask_int64<N, mask_int64<N>> cmp_neq(gint64<N,E1> a,
-                                     gint64<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int64<N, mask_int64<N>> cmp_neq(const any_int64<N,V1>& a,
+                                     const any_int64<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_neq(ra, rb);
 }
 
 /** Compares the values of two float32x4 vectors for inequality
@@ -157,11 +169,11 @@ mask_int64<N, mask_int64<N>> cmp_neq(gint64<N,E1> a,
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, ALTIVEC, 4}
 */
-template<unsigned N, class E1, class E2>
-mask_float32<N, mask_float32<N>> cmp_neq(float32<N,E1> a,
-                                         float32<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_float32<N, mask_float32<N>> cmp_neq(const any_float32<N,V1>& a,
+                                         const any_float32<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.eval(), b.eval());
+    return detail::insn::i_cmp_neq(a.vec().eval(), b.vec().eval());
 }
 
 /** Compares the values of two float64x2 vectors for inequality
@@ -179,13 +191,12 @@ mask_float32<N, mask_float32<N>> cmp_neq(float32<N,E1> a,
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_float64<N, mask_float64<N>> cmp_neq(float64<N,E1> a,
-                                         float64<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_float64<N, mask_float64<N>> cmp_neq(const any_float64<N,V1>& a,
+                                         const any_float64<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.eval(), b.eval());
+    return detail::insn::i_cmp_neq(a.vec().eval(), b.vec().eval());
 }
-
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

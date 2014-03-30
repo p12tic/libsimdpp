@@ -62,37 +62,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @a p must be aligned to 32 bytes.
 */
-template<unsigned N, class E>
-void store_first(void* p, gint8<N,E> a, unsigned n)
+template<unsigned N, class V>
+void store_first(void* p, const any_vec<N,V>& a, unsigned n)
 {
-    detail::insn::i_store_first(reinterpret_cast<char*>(p), a.eval(), n);
+    static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
+    detail::insn::i_store_first(reinterpret_cast<char*>(p),
+                                a.vec().eval(), n);
 }
-template<unsigned N, class E>
-void store_first(void* p, gint16<N,E> a, unsigned n)
-{
-    detail::insn::i_store_first(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_first(void* p, gint32<N,E> a, unsigned n)
-{
-    detail::insn::i_store_first(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_first(void* p, gint64<N,E> a, unsigned n)
-{
-    detail::insn::i_store_first(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_first(void* p, float32<N,E> a, unsigned n)
-{
-    detail::insn::i_store_first(reinterpret_cast<char*>(p), a.eval(), n);
-}
-template<unsigned N, class E>
-void store_first(void* p, float64<N,E> a, unsigned n)
-{
-    detail::insn::i_store_first(reinterpret_cast<char*>(p), a.eval(), n);
-}
-/// @}
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -41,157 +41,30 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/** Interleaves 8-bit values from three vectors and stores the result into
-    successive locations starting from @a p.
+/** Interleaves values from three vectors and stores the result into successive
+    locations starting from @a p.
 
     @par 128-bit version:
     @code
-    [ *(p),   *(p+3), *(p+6), ... , *(p+45) ] = a
-    [ *(p+1), *(p+4), *(p+7), ... , *(p+46) ] = b
-    [ *(p+2), *(p+5), *(p+8), ... , *(p+47) ] = c
+    [ *(p),   *(p+3), *(p+6), ... , *(p+M*3-3) ] = a
+    [ *(p+1), *(p+4), *(p+7), ... , *(p+M*3-2) ] = b
+    [ *(p+2), *(p+5), *(p+8), ... , *(p+M*3-1) ] = c
     @endcode
-    @a p must be aligned to 16 bytes.
 
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), ... , *(p+93) ] = a
-    [ *(p+1), *(p+4), *(p+7), ... , *(p+94) ] = b
-    [ *(p+2), *(p+5), *(p+8), ... , *(p+95) ] = c
-    @endcode
-    @a p must be aligned to 32 bytes.
+    Here M is the number of elements in the vector
+
+    @a p must be aligned to the vector size in bytes
 */
-template<unsigned N>
-void store_packed3(void* p, gint8<N> a, gint8<N> b, gint8<N> c)
+template<unsigned N, class V1, class V2, class V3>
+void store_packed3(void* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b,
+                   const any_vec<N,V3>& c)
 {
-    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
-}
-
-/** Interleaves 16-bit values from three vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), ... , *(p+21) ] = a
-    [ *(p+1), *(p+4), *(p+7), ... , *(p+22) ] = b
-    [ *(p+2), *(p+5), *(p+8), ... , *(p+23) ] = c
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), ... , *(p+45) ] = a
-    [ *(p+1), *(p+4), *(p+7), ... , *(p+46) ] = b
-    [ *(p+2), *(p+5), *(p+8), ... , *(p+47) ] = c
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed3(void* p, gint16<N> a, gint16<N> b, gint16<N> c)
-{
-    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
-}
-
-/** Interleaves 32-bit values from three vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), *(p+9)  ] = a
-    [ *(p+1), *(p+4), *(p+7), *(p+10) ] = b
-    [ *(p+2), *(p+5), *(p+8), *(p+11) ] = c
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), ... , *(p+21) ] = a
-    [ *(p+1), *(p+4), *(p+7), ... , *(p+22) ] = b
-    [ *(p+2), *(p+5), *(p+8), ... , *(p+23) ] = c
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed3(void* p, gint32<N> a, gint32<N> b, gint32<N> c)
-{
-    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
-}
-
-/** Interleaves 64-bit values from three vectors and stores the result into
-    successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+3) ] = a
-    [ *(p+1), *(p+4) ] = b
-    [ *(p+2), *(p+5) ] = c
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), *(p+9)  ] = a
-    [ *(p+1), *(p+4), *(p+7), *(p+10) ] = b
-    [ *(p+2), *(p+5), *(p+8), *(p+11) ] = c
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed3(void* p, gint64<N> a, gint64<N> b, gint64<N> c)
-{
-    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
-}
-
-/** Interleaves 32-bit floating-point values from three vectors and stores
-    the result into successive locations starting from @a p.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), *(p+9)  ] = a
-    [ *(p+1), *(p+4), *(p+7), *(p+10) ] = b
-    [ *(p+2), *(p+5), *(p+8), *(p+11) ] = c
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), ... , *(p+21) ] = a
-    [ *(p+1), *(p+4), *(p+7), ... , *(p+22) ] = b
-    [ *(p+2), *(p+5), *(p+8), ... , *(p+23) ] = c
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed3(void* p, float32<N> a, float32<N> b, float32<N> c)
-{
-    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
-}
-
-/** Interleaves 64-bit floating-point values from three vectors and stores
-    the result into successive locations starting from @a p.
-
-    Loads 64-bit floating point values packed in triplets, de-interleaves them
-    and stores the result into three vectors.
-
-    @par 128-bit version:
-    @code
-    [ *(p),   *(p+3) ] = a
-    [ *(p+1), *(p+4) ] = b
-    [ *(p+2), *(p+5) ] = c
-    @endcode
-    @a p must be aligned to 16 bytes.
-
-    @par 256-bit version:
-    @code
-    [ *(p),   *(p+3), *(p+6), *(p+9)  ] = a
-    [ *(p+1), *(p+4), *(p+7), *(p+10) ] = b
-    [ *(p+2), *(p+5), *(p+8), *(p+11) ] = c
-    @endcode
-    @a p must be aligned to 32 bytes.
-*/
-template<unsigned N>
-void store_packed3(void* p, float64<N> a, float64<N> b, float64<N> c)
-{
-    detail::insn::i_store_packed3(reinterpret_cast<char*>(p), a, b, c);
+    static_assert(!is_mask<V1>::value && !is_mask<V2>::value && !is_mask<V3>::value,
+                  "Mask types can not be stored"); // FIXME
+    static_assert(V1::size_tag == V2::size_tag && V1::size_tag == V3::size_tag,
+                  "Vector elements must have the same size");
+    detail::insn::i_store_packed3(reinterpret_cast<char*>(p),
+                                  a.vec().eval(), b.vec().eval(), c.vec().eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

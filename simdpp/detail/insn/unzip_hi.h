@@ -44,7 +44,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-inline gint8x16 i_unzip16_hi(gint8x16 a, gint8x16 b)
+inline uint8x16 i_unzip16_hi(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return null::unzip16_hi(a, b);
@@ -61,7 +61,7 @@ inline gint8x16 i_unzip16_hi(gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_unzip16_hi(gint8x32 a, gint8x32 b)
+inline uint8x32 i_unzip16_hi(uint8x32 a, uint8x32 b)
 {
     a = _mm256_srai_epi16(a, 8);
     b = _mm256_srai_epi16(b, 8);
@@ -71,14 +71,14 @@ inline gint8x32 i_unzip16_hi(gint8x32 a, gint8x32 b)
 #endif
 
 template<unsigned N>
-gint8<N> i_unzip16_hi(gint8<N> a, gint8<N> b)
+uint8<N> i_unzip16_hi(uint8<N> a, uint8<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8<N>, i_unzip16_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_unzip16_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint16x8 i_unzip8_hi(gint16x8 a, gint16x8 b)
+inline uint16x8 i_unzip8_hi(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return null::unzip8_hi(a, b);
@@ -95,7 +95,7 @@ inline gint16x8 i_unzip8_hi(gint16x8 a, gint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint16x16 i_unzip8_hi(gint16x16 a, gint16x16 b)
+inline uint16x16 i_unzip8_hi(uint16x16 a, uint16x16 b)
 {
     a = _mm256_srai_epi32(a, 16);
     b = _mm256_srai_epi32(b, 16);
@@ -105,14 +105,14 @@ inline gint16x16 i_unzip8_hi(gint16x16 a, gint16x16 b)
 #endif
 
 template<unsigned N>
-gint16<N> i_unzip8_hi(gint16<N> a, gint16<N> b)
+uint16<N> i_unzip8_hi(uint16<N> a, uint16<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint16<N>, i_unzip8_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_unzip8_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
-inline gint32x4 i_unzip4_hi(gint32x4 a, gint32x4 b)
+inline uint32x4 i_unzip4_hi(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return null::unzip4_hi(a, b);
@@ -124,22 +124,22 @@ inline gint32x4 i_unzip4_hi(gint32x4 a, gint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint32x8 i_unzip4_hi(gint32x8 a, gint32x8 b)
+inline uint32x8 i_unzip4_hi(uint32x8 a, uint32x8 b)
 {
     return shuffle2<1,3,1,3>(a, b);
 }
 #endif
 
 template<unsigned N>
-gint32<N> i_unzip4_hi(gint32<N> a, gint32<N> b)
+uint32<N> i_unzip4_hi(uint32<N> a, uint32<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint32<N>, i_unzip4_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_unzip4_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
 
 template<unsigned N>
-gint64<N> i_unzip2_hi(gint64<N> a, gint64<N> b)
+uint64<N> i_unzip2_hi(uint64<N> a, uint64<N> b)
 {
     return i_zip2_hi(a, b);
 }

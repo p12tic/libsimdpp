@@ -34,16 +34,16 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-template<unsigned S, unsigned N> simdpp::gint8<N> move_v128_l(simdpp::gint8<N> a) { return simdpp::move16_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::gint16<N> move_v128_l(simdpp::gint16<N> a) { return simdpp::move8_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::gint32<N> move_v128_l(simdpp::gint32<N> a) { return simdpp::move4_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::gint64<N> move_v128_l(simdpp::gint64<N> a) { return simdpp::move2_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint8<N> move_v128_l(simdpp::uint8<N> a) { return simdpp::move16_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint16<N> move_v128_l(simdpp::uint16<N> a) { return simdpp::move8_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint32<N> move_v128_l(simdpp::uint32<N> a) { return simdpp::move4_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint64<N> move_v128_l(simdpp::uint64<N> a) { return simdpp::move2_l<S>(a); }
 template<unsigned S, unsigned N> simdpp::float32<N> move_v128_l(simdpp::float32<N> a) { return simdpp::move4_l<S>(a); }
 template<unsigned S, unsigned N> simdpp::float64<N> move_v128_l(simdpp::float64<N> a) { return simdpp::move2_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::gint8<N> move_v128_r(simdpp::gint8<N> a) { return simdpp::move16_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::gint16<N> move_v128_r(simdpp::gint16<N> a) { return simdpp::move8_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::gint32<N> move_v128_r(simdpp::gint32<N> a) { return simdpp::move4_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::gint64<N> move_v128_r(simdpp::gint64<N> a) { return simdpp::move2_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint8<N> move_v128_r(simdpp::uint8<N> a) { return simdpp::move16_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint16<N> move_v128_r(simdpp::uint16<N> a) { return simdpp::move8_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint32<N> move_v128_r(simdpp::uint32<N> a) { return simdpp::move4_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint64<N> move_v128_r(simdpp::uint64<N> a) { return simdpp::move2_r<S>(a); }
 template<unsigned S, unsigned N> simdpp::float32<N> move_v128_r(simdpp::float32<N> a) { return simdpp::move4_r<S>(a); }
 template<unsigned S, unsigned N> simdpp::float64<N> move_v128_r(simdpp::float64<N> a) { return simdpp::move2_r<S>(a); }
 

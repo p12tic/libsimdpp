@@ -40,22 +40,22 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 template<unsigned N, class E>
-gint8<N, gint8<N>> shift_l(gint8<N,E> a, unsigned count);
+uint8<N, uint8<N>> shift_l(uint8<N,E> a, unsigned count);
 template<unsigned N, class E>
-gint16<N, gint16<N>> shift_l(gint16<N,E> a, unsigned count);
+uint16<N, uint16<N>> shift_l(uint16<N,E> a, unsigned count);
 template<unsigned N, class E>
-gint32<N, gint32<N>> shift_l(gint32<N,E> a, unsigned count);
+uint32<N, uint32<N>> shift_l(uint32<N,E> a, unsigned count);
 template<unsigned N, class E>
-gint64<N, gint64<N>> shift_l(gint64<N,E> a, unsigned count);
+uint64<N, uint64<N>> shift_l(uint64<N,E> a, unsigned count);
 
 template<unsigned count, unsigned N, class E>
-gint8<N, gint8<N>> shift_l(gint8<N,E> a);
+uint8<N, uint8<N>> shift_l(uint8<N,E> a);
 template<unsigned count, unsigned N, class E>
-gint16<N, gint16<N>> shift_l(gint16<N,E> a);
+uint16<N, uint16<N>> shift_l(uint16<N,E> a);
 template<unsigned count, unsigned N, class E>
-gint32<N, gint32<N>> shift_l(gint32<N,E> a);
+uint32<N, uint32<N>> shift_l(uint32<N,E> a);
 template<unsigned count, unsigned N, class E>
-gint64<N, gint64<N>> shift_l(gint64<N,E> a);
+uint64<N, uint64<N>> shift_l(uint64<N,E> a);
 
 template<unsigned N, class E>
 int8<N, int8<N>> shift_r(int8<N,E> a, unsigned count);

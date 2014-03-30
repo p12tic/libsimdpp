@@ -42,30 +42,30 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<unsigned N, unsigned s, class E>
-gint8<N> expr_eval(expr_splat16<s,gint8<N,E>> q)
+uint8<N> expr_eval(expr_splat16<s,uint8<N,E>> q)
 {
-    gint8<N> a = q.a.eval();
+    uint8<N> a = q.a.eval();
     return insn::i_splat16<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-gint16<N> expr_eval(expr_splat8<s,gint16<N,E>> q)
+uint16<N> expr_eval(expr_splat8<s,uint16<N,E>> q)
 {
-    gint16<N> a = q.a.eval();
+    uint16<N> a = q.a.eval();
     return insn::i_splat8<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-gint32<N> expr_eval(expr_splat4<s,gint32<N,E>> q)
+uint32<N> expr_eval(expr_splat4<s,uint32<N,E>> q)
 {
-    gint32<N> a = q.a.eval();
+    uint32<N> a = q.a.eval();
     return insn::i_splat4<s>(a);
 }
 
 template<unsigned N, unsigned s, class E>
-gint64<N> expr_eval(expr_splat2<s,gint64<N,E>> q)
+uint64<N> expr_eval(expr_splat2<s,uint64<N,E>> q)
 {
-    gint64<N> a = q.a.eval();
+    uint64<N> a = q.a.eval();
     return insn::i_splat2<s>(a);
 }
 

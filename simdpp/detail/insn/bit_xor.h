@@ -44,10 +44,10 @@ namespace detail {
 namespace insn {
 
 
-inline gint8x16 i_bit_xor(gint8x16 a, gint8x16 b)
+inline uint8x16 i_bit_xor(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_xor(a, gint8x16(b));
+    return null::bit_xor(a, uint8x16(b));
 #elif SIMDPP_USE_SSE2
     return _mm_xor_si128(a, b);
 #elif SIMDPP_USE_NEON
@@ -58,48 +58,48 @@ inline gint8x16 i_bit_xor(gint8x16 a, gint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline gint8x32 i_bit_xor(gint8x32 a, gint8x32 b)
+inline uint8x32 i_bit_xor(uint8x32 a, uint8x32 b)
 {
     return _mm256_xor_si256(a, b);
 }
 #endif
 
 template<unsigned N>
-inline gint8<N> i_bit_xor(gint8<N> a, gint8<N> b)
+inline uint8<N> i_bit_xor(uint8<N> a, uint8<N> b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(gint8x32, i_bit_xor, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint8x32, i_bit_xor, a, b)
 }
 
 template<unsigned N>
-gint8<N> i_bit_xor(gint8<N> a, gint16<N/2> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
+uint8<N> i_bit_xor(uint8<N> a, uint16<N/2> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
 template<unsigned N>
-gint8<N> i_bit_xor(gint8<N> a, gint32<N/4> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
+uint8<N> i_bit_xor(uint8<N> a, uint32<N/4> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
 template<unsigned N>
-gint8<N> i_bit_xor(gint8<N> a, gint64<N/8> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
+uint8<N> i_bit_xor(uint8<N> a, uint64<N/8> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
 template<unsigned N>
-gint16<N> i_bit_xor(gint16<N> a, gint8<N*2> b) { return (gint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
+uint16<N> i_bit_xor(uint16<N> a, uint8<N*2> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
 template<unsigned N>
-gint16<N> i_bit_xor(gint16<N> a, gint16<N> b) { return (gint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
+uint16<N> i_bit_xor(uint16<N> a, uint16<N> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
 template<unsigned N>
-gint16<N> i_bit_xor(gint16<N> a, gint32<N/2> b) { return (gint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
+uint16<N> i_bit_xor(uint16<N> a, uint32<N/2> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
 template<unsigned N>
-gint16<N> i_bit_xor(gint16<N> a, gint64<N/4> b) { return (gint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
+uint16<N> i_bit_xor(uint16<N> a, uint64<N/4> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
 template<unsigned N>
-gint32<N> i_bit_xor(gint32<N> a, gint8<N*4> b) { return (gint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
+uint32<N> i_bit_xor(uint32<N> a, uint8<N*4> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
 template<unsigned N>
-gint32<N> i_bit_xor(gint32<N> a, gint16<N/2> b) { return (gint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
+uint32<N> i_bit_xor(uint32<N> a, uint16<N/2> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
 template<unsigned N>
-gint32<N> i_bit_xor(gint32<N> a, gint32<N> b) { return (gint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
+uint32<N> i_bit_xor(uint32<N> a, uint32<N> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
 template<unsigned N>
-gint32<N> i_bit_xor(gint32<N> a, gint64<N*2> b) { return (gint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
+uint32<N> i_bit_xor(uint32<N> a, uint64<N*2> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
 template<unsigned N>
-gint64<N> i_bit_xor(gint64<N> a, gint8<N*8> b) { return (gint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
+uint64<N> i_bit_xor(uint64<N> a, uint8<N*8> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
 template<unsigned N>
-gint64<N> i_bit_xor(gint64<N> a, gint16<N/4> b) { return (gint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
+uint64<N> i_bit_xor(uint64<N> a, uint16<N/4> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
 template<unsigned N>
-gint64<N> i_bit_xor(gint64<N> a, gint32<N/2> b) { return (gint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
+uint64<N> i_bit_xor(uint64<N> a, uint32<N/2> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
 template<unsigned N>
-gint64<N> i_bit_xor(gint64<N> a, gint64<N> b) { return (gint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
+uint64<N> i_bit_xor(uint64<N> a, uint64<N> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
 
 // -----------------------------------------------------------------------------
 
@@ -199,7 +199,7 @@ float32<N> i_bit_xor(float32<N> a, float32<N> b)
 }
 
 template<unsigned N>
-float32<N> i_bit_xor(float32<N> a, gint32<N> b)
+float32<N> i_bit_xor(float32<N> a, uint32<N> b)
 {
     return i_bit_xor(a, float32<N>(b));
 }
@@ -229,7 +229,7 @@ float64<N> i_bit_xor(float64<N> a, float64<N> b)
 }
 
 template<unsigned N>
-float64<N> i_bit_xor(float64<N> a, gint64<N> b)
+float64<N> i_bit_xor(float64<N> a, uint64<N> b)
 {
     return i_bit_xor(a, float64<N>(b));
 }
@@ -241,7 +241,7 @@ inline mask_float32x4 i_bit_xor(mask_float32x4 a, mask_float32x4 b)
 #if SIMDPP_USE_NULL
     return null::bit_xor_mm(a, b);
 #else
-    return i_bit_xor(float32x4(a), float32x4(b));
+    return (mask_float32x4) i_bit_xor(float32x4(a), float32x4(b));
 #endif
 }
 
@@ -250,7 +250,7 @@ inline mask_float64x2 i_bit_xor(mask_float64x2 a, mask_float64x2 b)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return null::bit_xor_mm(a, b);
 #else
-    return i_bit_xor(float64x2(a), float64x2(b));
+    return (mask_float64x2) i_bit_xor(float64x2(a), float64x2(b));
 #endif
 }
 

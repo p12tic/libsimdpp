@@ -47,9 +47,9 @@ struct is_expr_vec_set_splat<expr_vec_set_splat<VE>> { static const bool value =
 
 namespace insn {
 
-inline void i_set_splat(gint32x4&, uint32_t);
+inline void i_set_splat(uint32x4&, uint32_t);
 
-inline void i_set_splat(gint8x16& v, uint8_t v0)
+inline void i_set_splat(uint8x16& v, uint8_t v0)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint8x16>(v0);
@@ -73,7 +73,7 @@ inline void i_set_splat(gint8x16& v, uint8_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(gint8x32& v, uint8_t v0)
+inline void i_set_splat(uint8x32& v, uint8_t v0)
 {
     uint8x16 a = _mm_cvtsi32_si128(v0);
     v = _mm256_broadcastb_epi8(a);
@@ -81,9 +81,9 @@ inline void i_set_splat(gint8x32& v, uint8_t v0)
 #endif
 
 template<unsigned N>
-void i_set_splat(gint8<N>& v, uint8_t v0)
+void i_set_splat(uint8<N>& v, uint8_t v0)
 {
-    gint8v tv;
+    uint8v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -92,14 +92,14 @@ void i_set_splat(gint8<N>& v, uint8_t v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(gint16x8& v, uint16_t v0)
+inline void i_set_splat(uint16x8& v, uint16_t v0)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint16x8>(v0);
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 | v0 << 16;
-    gint32x4 u;
+    uint32x4 u;
     i_set_splat(u, u0);
     v = u;
 #elif SIMDPP_USE_NEON
@@ -116,17 +116,17 @@ inline void i_set_splat(gint16x8& v, uint16_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(gint16x16& v, uint16_t v0)
+inline void i_set_splat(uint16x16& v, uint16_t v0)
 {
-    gint16x8 a = _mm_cvtsi32_si128(v0);
+    uint16x8 a = _mm_cvtsi32_si128(v0);
     v = _mm256_broadcastw_epi16(a);
 }
 #endif
 
 template<unsigned N>
-void i_set_splat(gint16<N>& v, uint16_t v0)
+void i_set_splat(uint16<N>& v, uint16_t v0)
 {
-    gint16v tv;
+    uint16v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -135,7 +135,7 @@ void i_set_splat(gint16<N>& v, uint16_t v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(gint32x4& v, uint32_t v0)
+inline void i_set_splat(uint32x4& v, uint32_t v0)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint32x4>(v0);
@@ -156,7 +156,7 @@ inline void i_set_splat(gint32x4& v, uint32_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(gint32x8& v, uint32_t v0)
+inline void i_set_splat(uint32x8& v, uint32_t v0)
 {
     uint32x4 a = _mm_cvtsi32_si128(v0);
     v = _mm256_broadcastd_epi32(a);
@@ -164,9 +164,9 @@ inline void i_set_splat(gint32x8& v, uint32_t v0)
 #endif
 
 template<unsigned N>
-void i_set_splat(gint32<N>& v, uint32_t v0)
+void i_set_splat(uint32<N>& v, uint32_t v0)
 {
-    gint32v tv;
+    uint32v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -175,7 +175,7 @@ void i_set_splat(gint32<N>& v, uint32_t v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(gint64x2& v, uint64_t v0)
+inline void i_set_splat(uint64x2& v, uint64_t v0)
 {
 #if SIMDPP_USE_NULL
     v = null::make_vec<uint64x2>(v0);
@@ -203,7 +203,7 @@ inline void i_set_splat(gint64x2& v, uint64_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(gint64x4& v, uint64_t v0)
+inline void i_set_splat(uint64x4& v, uint64_t v0)
 {
     uint64x2 a = _mm_cvtsi64_si128(v0);
     v = _mm256_broadcastq_epi64(a);
@@ -211,9 +211,9 @@ inline void i_set_splat(gint64x4& v, uint64_t v0)
 #endif
 
 template<unsigned N>
-void i_set_splat(gint64<N>& v, uint64_t v0)
+void i_set_splat(uint64<N>& v, uint64_t v0)
 {
-    gint64v tv;
+    uint64v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v[i] = tv;
@@ -317,7 +317,9 @@ struct i_set_splat_dispatch<expr_vec_set_splat<VE>>
 template<class V, class VE>
 void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
 {
-    insn::i_set_splat(v, e.a);
+    typename detail::remove_sign<V>::type r;
+    insn::i_set_splat(r, e.a);
+    v = r;
 }
 
 } // namespace detail

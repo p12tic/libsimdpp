@@ -41,7 +41,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Compares 8-bit values for equality.
 
     @code
@@ -53,15 +52,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_int8<N, mask_int8<N>> cmp_eq(gint8<N,E1> a,
-                                  gint8<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int8<N, mask_int8<N>> cmp_eq(const any_int8<N,V1>& a,
+                                  const any_int8<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_eq(ra, rb);
 }
-/// @}
 
-/// @{
 /** Compares 16-bit values for equality.
 
     @code
@@ -73,15 +73,16 @@ mask_int8<N, mask_int8<N>> cmp_eq(gint8<N,E1> a,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_int16<N, mask_int16<N>> cmp_eq(gint16<N,E1> a,
-                                    gint16<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int16<N, mask_int16<N>> cmp_eq(const any_int16<N,V1>& a,
+                                    const any_int16<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_eq(ra, rb);
 }
-/// @}
 
-/// @{
 /** Compares the values of two int32x4 vectors for equality
 
     @code
@@ -93,15 +94,16 @@ mask_int16<N, mask_int16<N>> cmp_eq(gint16<N,E1> a,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_int32<N, mask_int32<N>> cmp_eq(gint32<N,E1> a,
-                                    gint32<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int32<N, mask_int32<N>> cmp_eq(const any_int32<N,V1>& a,
+                                    const any_int32<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_eq(ra, rb);
 }
-/// @}
 
-/// @{
 /** Compares the values of two int64x2 vectors for equality
 
     @code
@@ -122,15 +124,16 @@ mask_int32<N, mask_int32<N>> cmp_eq(gint32<N,E1> a,
     @icost{NEON, 6}
     @icost{ALTIVEC, 6-7}
 */
-template<unsigned N, class E1, class E2>
-mask_int64<N, mask_int64<N>> cmp_eq(gint64<N,E1> a,
-                                    gint64<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_int64<N, mask_int64<N>> cmp_eq(const any_int64<N,V1>& a,
+                                    const any_int64<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.eval(), b.eval());
+    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_cmp_eq(ra, rb);
 }
-/// @}
 
-/// @{
 /** Compares the values of two float32x4 vectors for equality
 
     @code
@@ -142,15 +145,13 @@ mask_int64<N, mask_int64<N>> cmp_eq(gint64<N,E1> a,
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_float32<N, mask_float32<N>> cmp_eq(float32<N,E1> a,
-                                        float32<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_float32<N, mask_float32<N>> cmp_eq(const any_float32<N,V1>& a,
+                                        const any_float32<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.eval(), b.eval());
+    return detail::insn::i_cmp_eq(a.vec().eval(), b.vec().eval());
 }
-/// @}
 
-/// @{
 /** Compares the values of two float64x2 vectors for equality
 
     @code
@@ -166,14 +167,13 @@ mask_float32<N, mask_float32<N>> cmp_eq(float32<N,E1> a,
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-template<unsigned N, class E1, class E2>
-mask_float64<N, mask_float64<N>> cmp_eq(float64<N,E1> a,
-                                        float64<N,E2> b)
+template<unsigned N, class V1, class V2>
+mask_float64<N, mask_float64<N>> cmp_eq(const any_float64<N,V1>& a,
+                                        const any_float64<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.eval(), b.eval());
+    return detail::insn::i_cmp_eq(a.vec().eval(), b.vec().eval());
 }
-/// @}
-///
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

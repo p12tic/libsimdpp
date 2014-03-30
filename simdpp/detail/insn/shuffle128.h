@@ -59,24 +59,24 @@ namespace insn {
 @endcode
 */
 template<unsigned s0, unsigned s1>
-gint8x32 shuffle128(gint8x32 a, gint8x32 b)
+uint8x32 shuffle128(uint8x32 a, uint8x32 b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
     return _mm256_permute2x128_si256(a, b, s1*0x10 + s0);
 #else
-    gint8x32 r;
+    uint8x32 r;
     r[0] = a[s0];
     r[1] = b[s1];
     return r;
 #endif
 }
 template<unsigned s0, unsigned s1>
-gint16x16 shuffle128(gint16x16 a, gint16x16 b) { return (gint16x16)shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+uint16x16 shuffle128(uint16x16 a, uint16x16 b) { return (uint16x16)shuffle128<s0,s1>(uint8x32(a), uint8x32(b)); }
 template<unsigned s0, unsigned s1>
-gint32x8 shuffle128(gint32x8 a, gint32x8 b) { return (gint32x8)shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+uint32x8 shuffle128(uint32x8 a, uint32x8 b) { return (uint32x8)shuffle128<s0,s1>(uint8x32(a), uint8x32(b)); }
 template<unsigned s0, unsigned s1>
-gint64x4 shuffle128(gint64x4 a, gint64x4 b) { return (gint64x4)shuffle128<s0,s1>(gint8x32(a), gint8x32(b)); }
+uint64x4 shuffle128(uint64x4 a, uint64x4 b) { return (uint64x4)shuffle128<s0,s1>(uint8x32(a), uint8x32(b)); }
 
 template<unsigned s0, unsigned s1>
 float32x8 shuffle128(float32x8 a, float32x8 b)

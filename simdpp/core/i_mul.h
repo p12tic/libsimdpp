@@ -52,12 +52,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2>
-gint16<N, expr_mul_lo<gint16<N,E1>,
-                      gint16<N,E2>>> mul_lo(gint16<N,E1> a,
-                                            gint16<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2,
+                                  expr_mul_lo<uint16<N, typename V1::expr_type>,
+                                              uint16<N, typename V2::expr_type>>
+                                 >::type
+        mul_lo(const any_int16<N,V1>& a,
+               const any_int16<N,V2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a.vec(), b.vec() }, 0 };
 }
 
 /** Multiplies signed 16-bit values and returns the higher half of the result.
@@ -123,12 +126,15 @@ uint16<N, expr_mul_hi<uint16<N,E1>,
     @icost{SSE4.1, AVX, NEON, 2}
     @icost{ALTIVEC, 16}
 */
-template<unsigned N, class E1, class E2>
-gint32<N, expr_mul_lo<gint32<N,E1>,
-                      gint32<N,E2>>> mul_lo(gint32<N,E1> a,
-                                            gint32<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2,
+                                  expr_mul_lo<uint32<N, typename V1::expr_type>,
+                                              uint32<N, typename V2::expr_type>>
+                                 >::type
+        mul_lo(const any_int32<N,V1>& a,
+               const any_int32<N,V2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a.vec(), b.vec() }, 0 };
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

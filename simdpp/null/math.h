@@ -48,9 +48,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace null {
 
 template<class V>
-typename V::mask_type isnan(V a)
+typename V::mask_vector_type isnan(V a)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
         r.el(i) = std::isnan(a.el(i)) ? 1 : 0;
     }
@@ -58,9 +58,9 @@ typename V::mask_type isnan(V a)
 }
 
 template<class V>
-typename V::mask_type isnan2(V a, V b)
+typename V::mask_vector_type isnan2(V a, V b)
 {
-    typename V::mask_type r;
+    typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
         r.el(i) = (std::isnan(a.el(i)) || std::isnan(b.el(i))) ? 1 : 0;
     }

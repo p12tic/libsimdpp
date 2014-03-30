@@ -34,6 +34,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types/fwd.h>
+#include <simdpp/types/any.h>
 #include <simdpp/types/int32x8.h>
 #include <simdpp/types/float32x4.h>
 #include <simdpp/detail/construct_eval.h>
@@ -50,15 +51,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing a float32x8 vector
 template<>
-class float32<8, void> {
+class float32<8, void> : public any_float32<8, float32<8,void>> {
 public:
 
     using element_type = float;
     using uint_element_type = uint32_t;
-    using int_vector_type = gint32x8;
+    using int_vector_type = uint32x8;
     using uint_vector_type = uint32x8;
     using base_vector_type = float32x8;
-    using mask_type = mask_float32x8;
+    using mask_vector_type = mask_float32x8;
 
     static constexpr unsigned vec_length = 1;
     static constexpr unsigned length = 8;
@@ -78,16 +79,16 @@ public:
 
     /// @{
     /// Construct from compatible int32x8 integer vector type
-    float32<8>(gint32x8 d)              { *this = bit_cast<float32x8>(d); }
-    float32<8>& operator=(gint32x8 d)   { *this = bit_cast<float32x8>(d); return *this; }
+    float32<8>(uint32<8> d)              { *this = bit_cast<float32<8>>(d); }
+    float32<8>& operator=(uint32<8> d)   { *this = bit_cast<float32<8>>(d); return *this; }
     /// @}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> float32<N>(const expr_vec_construct<E>& e)
+    template<class E> float32<8>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
     }
-    template<class E> float32<N>& operator=(const expr_vec_construct<E>& e)
+    template<class E> float32<8>& operator=(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
@@ -147,7 +148,7 @@ private:
 
 /// Class representing a mask for 8x 32-bit floating-point vector
 template<>
-class mask_float32<8, void> : public float32<8, void> {
+class mask_float32<8, void> : public any_float32<8, float32<8,void>> {
 public:
     mask_float32<8>() = default;
     mask_float32<8>(const mask_float32<8> &) = default;
