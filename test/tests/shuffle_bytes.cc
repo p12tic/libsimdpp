@@ -42,7 +42,7 @@ struct Test_permute_bytes16_x2 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
@@ -56,7 +56,7 @@ struct Test_permute_bytes16_x4 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
@@ -70,7 +70,7 @@ struct Test_permute_bytes16_x8 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
         TEST_PUSH(tc, V, a);
@@ -84,7 +84,7 @@ struct Test_permute_bytes16_x16 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_bytes16(a, mask);
@@ -98,7 +98,7 @@ struct Test_shuffle_bytes16_x2 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
@@ -112,7 +112,7 @@ struct Test_shuffle_bytes16_x4 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
@@ -126,7 +126,7 @@ struct Test_shuffle_bytes16_x8 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
@@ -140,7 +140,7 @@ struct Test_shuffle_bytes16_x16 {
     {
         constexpr int s = i;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_bytes16(a, b, mask);
@@ -154,7 +154,7 @@ struct Test_permute_zbytes16_x2 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
@@ -168,7 +168,7 @@ struct Test_permute_zbytes16_x4 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
@@ -182,7 +182,7 @@ struct Test_permute_zbytes16_x8 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, a);
@@ -196,7 +196,7 @@ struct Test_permute_zbytes16_x16 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::permute_zbytes16(a, mask);
@@ -210,7 +210,7 @@ struct Test_shuffle_zbytes16_x2 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
@@ -224,7 +224,7 @@ struct Test_shuffle_zbytes16_x4 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
@@ -238,7 +238,7 @@ struct Test_shuffle_zbytes16_x8 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, a);
@@ -252,7 +252,7 @@ struct Test_shuffle_zbytes16_x16 {
     {
         constexpr int s = (int) i - 1;
 
-        typename V::int_vector_type mask;
+        typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
                                                  s,s,s,s,s,s,s,s>(mask);
         a = simdpp::shuffle_zbytes16(a, b, mask);
