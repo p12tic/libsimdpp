@@ -182,10 +182,10 @@ AlignedVector<V> test_blend_make_sel_vec()
     AlignedVector<V> r;
 
     using simdpp::make_uint;
-    r.push_back(make_uint(0, 0));
-    r.push_back(make_uint(0, -1));
-    r.push_back(make_uint(-1, 0));
-    r.push_back(make_uint(-1, -1));
+    r.push_back((V) (typename V::uint_vector_type) make_uint(0, 0));
+    r.push_back((V) (typename V::uint_vector_type) make_uint(0, -1));
+    r.push_back((V) (typename V::uint_vector_type) make_uint(-1, 0));
+    r.push_back((V) (typename V::uint_vector_type) make_uint(-1, -1));
 
     return r;
 }
