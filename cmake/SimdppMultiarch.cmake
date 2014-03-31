@@ -179,7 +179,7 @@ set(SIMDPP_X86_FMA4_TEST_CODE
             __m128 align;
         };
         __m128 one = _mm_load_ps((float*)(a));
-        one = _mm_fmacc_ps(one, one, one);
+        one = _mm_macc_ps(one, one, one);
         _mm_store_ps((float*)(a), one);
     }"
 )
