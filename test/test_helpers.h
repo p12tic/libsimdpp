@@ -168,18 +168,15 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
 }
 
 // tests OP on all pairs of elements within array A
-#define TEST_ALL_COMB_HELPER1(TC, T, OP, A, EL_SIZE)                     \
+#define TEST_ALL_COMB_HELPER1(TC, T, OP, A, EL_SIZE)                    \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
-        for (unsigned j = 0; j < sizeof(A) / sizeof(T); j++) {          \
-            const T* lp = reinterpret_cast<const T*>((A) + i);          \
-            const T* rp = reinterpret_cast<const T*>((A) + j);          \
-            T l = *lp; T r = *rp;                                       \
-            for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
-                TEST_PUSH(TC, T, OP(l, r));                             \
-                l = simdpp::detail::align_v128<1>(l, l);                \
-            }                                                           \
+        const T* lp = reinterpret_cast<const T*>((A) + i);              \
+        T l = *lp;                                                      \
+        for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {        \
+            TEST_PUSH(TC, T, OP(l));                                    \
+            l = simdpp::detail::align_v128<1>(l, l);                    \
         }                                                               \
     }                                                                   \
 }
@@ -188,14 +185,11 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
-        for (unsigned j = 0; j < sizeof(A) / sizeof(T); j++) {          \
-            const T* lp = reinterpret_cast<const T*>((A) + i);          \
-            const T* rp = reinterpret_cast<const T*>((A) + j);          \
-            T l = *lp; T r = *rp;                                       \
-            for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
-                TEST_PUSH(TC, R, OP(l, r));                             \
-                l = simdpp::detail::align_v128<1>(l, l);                \
-            }                                                           \
+        const T* lp = reinterpret_cast<const T*>((A) + i);              \
+        T l = *lp;                                                      \
+        for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {        \
+            TEST_PUSH(TC, R, OP(l));                                    \
+            l = simdpp::detail::align_v128<1>(l, l);                    \
         }                                                               \
     }                                                                   \
 }

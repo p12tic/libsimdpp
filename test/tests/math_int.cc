@@ -90,7 +90,7 @@ void test_math_int(TestResults& res)
             (uint8x16) make_uint(0xda, 0xf2, 0xfa, 0xff),
         };
 
-        TEST_ALL_COMB_HELPER1(tc, uint8x16, div_p<8>, s2, 1);
+        TEST_ALL_COMB_HELPER2(tc, uint8x16, div_p<8>, s2, 1);
 
         uint8x16 s3[] = {
             (uint8x16) make_uint(0x01, 0x02, 0x03, 0x04),
@@ -98,7 +98,7 @@ void test_math_int(TestResults& res)
             (uint8x16) make_uint(0x09, 0x0a, 0x0b, 0x0c),
             (uint8x16) make_uint(0x0d, 0x0e, 0x0f, 0x0f),
         };
-        TEST_ALL_COMB_HELPER1(tc, uint8x16, div_p<4>, s3, 1);
+        TEST_ALL_COMB_HELPER2(tc, uint8x16, div_p<4>, s3, 1);
     }
 
     // Vectors with 16-bit integer elements
@@ -139,8 +139,8 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER2(tc, uint16x16, avg, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint16x16, avg_trunc, s, 2);
 
-        TEST_ALL_COMB_HELPER1_T(tc, int32<16>, int16x16, mull, s, 2);
-        TEST_ALL_COMB_HELPER1_T(tc, uint32<16>, uint16x16, mull, s, 2);
+        TEST_ALL_COMB_HELPER2_T(tc, int32<16>, int16x16, mull, s, 2);
+        TEST_ALL_COMB_HELPER2_T(tc, uint32<16>, uint16x16, mull, s, 2);
 
         TEST_ARRAY_HELPER1(tc, int16x16, neg, s);
         TEST_ARRAY_HELPER1(tc, int16x16, abs, s);
@@ -161,7 +161,7 @@ void test_math_int(TestResults& res)
             (uint16<8>) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
         };
 
-        TEST_ALL_COMB_HELPER1(tc, uint16x8, div_p<16>, s2, 2);
+        TEST_ALL_COMB_HELPER2(tc, uint16x8, div_p<16>, s2, 2);
 
         uint16x8 s3[] = {
             (uint16<8>) make_uint(0x01, 0x02, 0x03, 0x04),
@@ -176,7 +176,7 @@ void test_math_int(TestResults& res)
             (uint16<8>) make_uint(0xc6, 0xce, 0xd2, 0xd5),
             (uint16<8>) make_uint(0xda, 0xf2, 0xfa, 0xff),
         };
-        TEST_ALL_COMB_HELPER1(tc, uint16x8, div_p<8>, s3, 2);
+        TEST_ALL_COMB_HELPER2(tc, uint16x8, div_p<8>, s3, 2);
 
         uint16x8 s4[] = {
             (uint16<8>) make_uint(0x01, 0x02, 0x03, 0x04),
@@ -184,7 +184,7 @@ void test_math_int(TestResults& res)
             (uint16<8>) make_uint(0x09, 0x0a, 0x0b, 0x0c),
             (uint16<8>) make_uint(0x0d, 0x0e, 0x0f, 0x0f),
         };
-        TEST_ALL_COMB_HELPER1(tc, uint16x8, div_p<8>, s4, 2);
+        TEST_ALL_COMB_HELPER2(tc, uint16x8, div_p<8>, s4, 2);
     }
 
     // Vectors with 32-bit integer elements
@@ -218,8 +218,8 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER2(tc, uint32x8, avg_trunc, s, 4);
 
 #if !(SIMDPP_USE_ALTIVEC)
-        TEST_ALL_COMB_HELPER1_T(tc, uint64<8>, uint32x8, mull, s, 4);
-        TEST_ALL_COMB_HELPER1_T(tc, uint32x8, uint32x8, mul_lo, s, 4);
+        TEST_ALL_COMB_HELPER2_T(tc, uint64<8>, uint32x8, mull, s, 4);
+        TEST_ALL_COMB_HELPER2_T(tc, uint32x8, uint32x8, mul_lo, s, 4);
 #endif
 
         TEST_ARRAY_HELPER1(tc, int32x8, neg, s);
