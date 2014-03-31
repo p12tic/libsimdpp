@@ -52,7 +52,7 @@ inline uint32<4> uint32<4>::ones() { return make_uint(0xffffffff); }
 inline uint32<4> mask_int32<4>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<uint32<4>>(*this);
+    return null::unmask_mask<uint32<4>>(*this);
 #else
     return uint32<4>(d_);
 #endif

@@ -51,7 +51,7 @@ inline uint8<16> uint8<16>::ones() { return make_uint(0xff); }
 inline uint8<16> mask_int8<16>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<uint8<16>>(*this);
+    return null::unmask_mask<uint8<16>>(*this);
 #else
     return uint8<16>(d_);
 #endif

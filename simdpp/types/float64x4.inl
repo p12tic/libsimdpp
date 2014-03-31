@@ -48,7 +48,7 @@ inline float64<4> float64<4>::zero() { return make_uint(0); }
 inline float64<4> mask_float64<4>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<float64<4>>(*this);
+    return null::unmask_mask<float64<4>>(*this);
 #else
     return float64<4>(d_);
 #endif

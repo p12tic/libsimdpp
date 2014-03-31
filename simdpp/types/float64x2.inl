@@ -50,7 +50,7 @@ inline float64<2> float64<2>::zero() { return make_uint(0); }
 inline float64<2> mask_float64<2>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<float64<2>>(*this);
+    return null::unmask_mask<float64<2>>(*this);
 #else
     return float64<2>(d_);
 #endif

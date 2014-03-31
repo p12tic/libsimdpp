@@ -48,7 +48,7 @@ inline float32<8> float32<8>::zero() { return make_uint(0); }
 inline float32<8> mask_float32<8>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<float32<8>>(*this);
+    return null::unmask_mask<float32<8>>(*this);
 #else
     return float32<8>(d_);
 #endif

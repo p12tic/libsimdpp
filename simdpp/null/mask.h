@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace null {
 
 template<class V, class M>
-V convert_mask(const M& m)
+V unmask_mask(const M& m)
 {
     static_assert(V::length == M::length && V::size_tag == M::size_tag,
                   "Can't convert mask to different type");

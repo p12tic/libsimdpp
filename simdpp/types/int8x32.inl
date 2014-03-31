@@ -50,7 +50,7 @@ inline uint8<32> uint8<32>::ones() { return make_uint(0xff); }
 inline uint8<32> mask_int8<32>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<uint8<32>>(*this);
+    return null::unmask_mask<uint8<32>>(*this);
 #else
     return uint8<32>(d_);
 #endif

@@ -49,7 +49,7 @@ inline float32<4> float32<4>::zero() { return make_uint(0); }
 inline float32<4> mask_float32<4>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::convert_mask<float32<4>>(*this);
+    return null::unmask_mask<float32<4>>(*this);
 #else
     return float32<4>(d_);
 #endif
