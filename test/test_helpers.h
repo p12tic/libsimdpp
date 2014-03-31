@@ -245,9 +245,9 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
         for (unsigned rot0 = 0; rot0 < sizeof(T)/EL_SIZE % 4; rot0++) { \
             for (unsigned rot1 = 0; rot1 < sizeof(T)/EL_SIZE % 4; rot1++) { \
                 TEST_PUSH(TC, T, OP(v0, v1, v2));                       \
-                v0 = simdpp::align<1>(v0, v0);                          \
+                v0 = simdpp::detail::align_v128<1>(v0, v0);             \
             }                                                           \
-            v1 = simdpp::align<1>(v1, v1);                              \
+            v1 = simdpp::detail::align_v128<1>(v1, v1);                 \
         }                                                               \
     }}}                                                                 \
 }

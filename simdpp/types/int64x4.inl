@@ -42,19 +42,18 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX2
 
-inline uint64x4 uint64x4::zero()
-{
-    return make_uint(0);
-}
+inline int64<4>   int64<4>::zero() { return make_uint(0); }
+inline uint64<4> uint64<4>::zero() { return make_uint(0); }
+inline int64<4>   int64<4>::ones() { return make_uint(0xffffffffffffffff); }
+inline uint64<4> uint64<4>::ones() { return make_uint(0xffffffffffffffff); }
 
-inline uint64x4 uint64x4::ones()
+inline uint64<4> mask_int64<4>::unmask() const
 {
-    return make_uint(0xffffffffffffffff);
-}
-
-inline mask_int64x4::operator uint64x4() const
-{
-    return d_;
+#if SIMDPP_USE_NULL
+    return null::convert_mask<uint64<4>>(*this);
+#else
+    return uint64<4>(d_);
+#endif
 }
 
 #endif // SIMDPP_USE_AVX2

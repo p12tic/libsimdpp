@@ -36,6 +36,7 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
+#include <simdpp/core/insert.h>
 #include <simdpp/null/foreach.h>
 
 namespace simdpp {
@@ -86,7 +87,7 @@ inline float32x4 to_float32(int32x4 a)
 #endif
 }
 
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX2
 inline float32x8 to_float32(int32x8 a)
 {
     return _mm256_cvtepi32_ps(a);

@@ -69,8 +69,8 @@ void test_math_fp(TestResults& res)
         TEST_ARRAY_HELPER1(tc, float32x8, neg, s);
 
 #if SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4
-        TEST_ALL_COMB_HELPER16X2_3(tc, float32x8, fmadd, s, 4);
-        TEST_ALL_COMB_HELPER16X2_3(tc, float32x8, fmsub, s, 4);
+        TEST_ALL_COMB_HELPER3(tc, float32x8, fmadd, s, 4);
+        TEST_ALL_COMB_HELPER3(tc, float32x8, fmsub, s, 4);
 #endif
         float32x8 snan[] = {
             (float32<8>) make_float(1.0f, 2.0f, 3.0f, 4.0f),
@@ -113,8 +113,8 @@ void test_math_fp(TestResults& res)
         TEST_ARRAY_HELPER1(tc, float64x4, neg, s);
 
 #if SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4
-        TEST_ALL_COMB_HELPER16X2_3(tc, float64x4, fmadd, s, 8);
-        TEST_ALL_COMB_HELPER16X2_3(tc, float64x4, fmsub, s, 8);
+        TEST_ALL_COMB_HELPER3(tc, float64x4, fmadd, s, 8);
+        TEST_ALL_COMB_HELPER3(tc, float64x4, fmsub, s, 8);
 #endif
 
         float64x4 snan[] = {

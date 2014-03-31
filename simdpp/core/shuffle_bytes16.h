@@ -128,7 +128,7 @@ inline uint8x32 shuffle_bytes16(uint8x32 a, uint8x32 b, uint8x32 mask)
     ai = _mm256_shuffle_epi8(a, mask);
     bi = _mm256_shuffle_epi8(b, mask);
     r = _mm256_blendv_epi8(ai, bi, sel);
-    return r;
+    return int8x32(r);
 }
 #endif
 

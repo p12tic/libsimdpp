@@ -224,7 +224,7 @@ void i_load_packed2(float64<N>& a, float64<N>& b, const char* p)
 
 // -----------------------------------------------------------------------------
 
-template<class V, class P>
+template<class V>
 void v256_load_packed2(V& a, V& b, const char* p)
 {
     p = detail::assume_aligned(p, 32);

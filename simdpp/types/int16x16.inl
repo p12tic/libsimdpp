@@ -42,46 +42,18 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX2
 
-template<class E> uint16<16>::uint16(const  uint8<32,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); }
-template<class E> uint16<16>::uint16(const uint16<16,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); }
-template<class E> uint16<16>::uint16(const uint32<8,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); }
-template<class E> uint16<16>::uint16(const uint64<4,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); }
-template<class E> uint16<16>& uint16<16>::operator=(const  uint8<32,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const uint16<16,E>& d) { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const uint32<8,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const uint64<4,E>& d)  { *this = bit_cast<uint16<16>>(d.eval()); return *this; }
+inline int16<16>   int16<16>::zero() { return make_uint(0); }
+inline uint16<16> uint16<16>::zero() { return make_uint(0); }
+inline int16<16>   int16<16>::ones() { return make_uint(0xffff); }
+inline uint16<16> uint16<16>::ones() { return make_uint(0xffff); }
 
-template<class E> int16<16>::int16(const  uint8<32,E>& d) : uint16(d) {}
-template<class E> int16<16>::int16(const uint16<16,E>& d) : uint16(d) {}
-template<class E> int16<16>::int16(const uint32<8,E>& d)  : uint16(d) {}
-template<class E> int16<16>::int16(const uint64<4,E>& d)  : uint16(d) {}
-template<class E> int16<16>& int16<16>::operator=(const  uint8<32,E>& d) { uint16::operator=(d); return *this; }
-template<class E> int16<16>& int16<16>::operator=(const uint16<16,E>& d) { uint16::operator=(d); return *this; }
-template<class E> int16<16>& int16<16>::operator=(const uint32<8,E>& d)  { uint16::operator=(d); return *this; }
-template<class E> int16<16>& int16<16>::operator=(const uint64<4,E>& d)  { uint16::operator=(d); return *this; }
-
-template<class E> uint16<16>::uint16(const  uint8<32,E>& d) : uint16(d) {}
-template<class E> uint16<16>::uint16(const uint16<16,E>& d) : uint16(d) {}
-template<class E> uint16<16>::uint16(const uint32<8,E>& d)  : uint16(d) {}
-template<class E> uint16<16>::uint16(const uint64<4,E>& d)  : uint16(d) {}
-template<class E> uint16<16>& uint16<16>::operator=(const  uint8<32,E>& d) { uint16::operator=(d); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const uint16<16,E>& d) { uint16::operator=(d); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const uint32<8,E>& d)  { uint16::operator=(d); return *this; }
-template<class E> uint16<16>& uint16<16>::operator=(const uint64<4,E>& d)  { uint16::operator=(d); return *this; }
-
-inline uint16x16 uint16x16::zero()
+inline uint16<16> mask_int16<16>::unmask() const
 {
-    return (uint16x16) make_uint(0);
-}
-
-inline uint16x16 uint16x16::ones()
-{
-    return (uint16x16) make_uint(0xffff);
-}
-
-inline mask_int16x16::operator uint16x16() const
-{
-    return d_;
+#if SIMDPP_USE_NULL
+    return null::convert_mask<uint16<16>>(*this);
+#else
+    return uint16<16>(d_);
+#endif
 }
 
 #endif // SIMDPP_USE_AVX2

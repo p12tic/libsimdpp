@@ -113,7 +113,7 @@ uint64x4 i_shuffle1(uint64x4 a, uint64x4 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     // We can't do this in the integer execution domain. Beware of additional latency
-    return int64x4(shuffle1<s0,s1>(float64x4(a), float64x4(b)));
+    return int64x4(i_shuffle1<s0,s1>(float64x4(a), float64x4(b)));
 }
 #endif
 

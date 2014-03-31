@@ -48,94 +48,43 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @ingroup simd_vec_int
 /// @{
 
-/** Generic class representing 16x 8-bit integer vector.
-    To be used where the signedness of the underlying element type is not important
+/** Class representing 32x 8-bit signed integer vector
 */
 template<>
-class uint8<32, void> {
+class int8<32, void> : public any_int8<32, int8<32,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_INT;
+    using element_type = int8_t;
+    using base_vector_type = int8<32>;
+    using expr_type = void;
 
-    using element_type = uint8_t;
-    using base_vector_type = uint8x32;
-
-    uint8<32>() = default;
-    uint8<32>(const uint8x32 &) = default;
-    uint8<32> &operator=(const uint8x32 &) = default;
-
-    /// @{
-    /// Construct from the underlying vector type
-    uint8<32>(__m256i d) : d_(d) {}
-    uint8<32>& operator=(__m256i d) { d_ = d; return *this; }
-    /// @}
-
-    /// @{
-    /// Construct from compatible integer type
-    template<class E>          uint8<32>(const  uint8<32,E>& d);
-    template<class E> explicit uint8<32>(const uint16<16,E>& d);
-    template<class E> explicit uint8<32>(const uint32<8,E>& d);
-    template<class E> explicit uint8<32>(const uint64<4,E>& d);
-    template<class E> uint8<32>& operator=(const  uint8<32,E>& d);
-    template<class E> uint8<32>& operator=(const uint16<16,E>& d);
-    template<class E> uint8<32>& operator=(const uint32<8,E>& d);
-    template<class E> uint8<32>& operator=(const uint64<4,E>& d);
-    /// @}
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> uint8<32>(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr());
-    }
-    template<class E> uint8<32>& operator=(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr()); return *this;
-    }
+#if SIMDPP_USE_AVX2
+    using native_type = __m256i;
 #endif
 
-    /// @{
-    /// Access base vectors
-    const uint8x32& operator[](unsigned) const   { return *this; }
-          uint8x32& operator[](unsigned)         { return *this; }
-    /// @}
-
-    /// Creates a int8x32 vector with the contents set to zero
-    static uint8x32 zero();
-
-    /// Creates a int8x32 vector with the contents set to ones
-    static uint8x32 ones();
-
-private:
-
-    __m256i d_;
-};
-
-/** @ingroup simd_vec_int
-    Class representing 16x 8-bit signed integer vector
-*/
-template<>
-class int8<32, void> : public uint8x32 {
-public:
-
-    using element_type = int8_t;
-    using base_vector_type = int8x32;
-
     int8<32>() = default;
-    int8<32>(const int8x32 &) = default;
-    int8<32> &operator=(const int8x32 &) = default;
+    int8<32>(const int8<32> &) = default;
+    int8<32> &operator=(const int8<32> &) = default;
+
+    template<class E> int8<32>(const int8<32,E>& d) { *this = d.eval(); }
+    template<class E> int8<32>(const uint8<32,E>& d) { *this = d.eval(); }
+    template<class V> explicit int8<32>(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<int8<32>>(d.vec().eval());
+    }
+    template<class V> int8<32>& operator=(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<int8<32>>(d.vec().eval()); return *this;
+    }
 
     /// @{
     /// Construct from the underlying vector type
-    int8<32>(__m256i d) : uint8x32(d) {}
-    int8<32>& operator=( __m256i d) { uint8x32::operator=(d); return *this; }
+    int8<32>(const native_type& d) : d_(d) {}
+    int8<32>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
-    template<class E>          int8<32>(const  uint8<32,E>& d);
-    template<class E> explicit int8<32>(const uint16<16,E>& d);
-    template<class E> explicit int8<32>(const uint32<8,E>& d);
-    template<class E> explicit int8<32>(const uint64<4,E>& d);
-    template<class E> int8<32>& operator=(const  uint8<32,E>& d);
-    template<class E> int8<32>& operator=(const uint16<16,E>& d);
-    template<class E> int8<32>& operator=(const uint32<8,E>& d);
-    template<class E> int8<32>& operator=(const uint64<4,E>& d);
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> int8<32>(const expr_vec_construct<E>& e)
@@ -150,40 +99,56 @@ public:
 
     /// @{
     /// Access base vectors
-    const int8x32& operator[](unsigned) const   { return *this; }
-          int8x32& operator[](unsigned)         { return *this; }
+    const int8<32>& operator[](unsigned) const { return *this; }
+          int8<32>& operator[](unsigned)       { return *this; }
     /// @}
 
-    static int8x32 zero() { return uint8x32::zero(); }
-    static int8x32 ones() { return uint8x32::ones(); }
+    int8<32> eval() const { return *this; }
+
+    static int8<32> zero();
+    static int8<32> ones();
+
+private:
+    native_type d_;
 };
 
-/** @ingroup simd_vec_int
-    Class representing 16x 8-bit unsigned integer vector
+/** Class representing 32x 8-bit unsigned integer vector
 */
 template<>
-class uint8<32, void> : public uint8x32 {
+class uint8<32, void> : public any_int8<32, uint8<32,void>> {
 public:
-    using base_vector_type = uint8x32;
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
+    using element_type = uint8_t;
+    using base_vector_type = uint8<32>;
+    using expr_type = void;
+
+#if SIMDPP_USE_AVX2
+    using native_type = __m256i;
+#endif
 
     uint8<32>() = default;
-    uint8<32>(const uint8x32 &) = default;
-    uint8<32>& operator=(const uint8x32 &) = default;
+    uint8<32>(const uint8<32> &) = default;
+    uint8<32> &operator=(const uint8<32> &) = default;
+
+    template<class E> uint8<32>(const uint8<32,E>& d) { *this = d.eval(); }
+    template<class E> uint8<32>(const int8<32,E>& d) { *this = d.eval(); }
+    template<class V> explicit uint8<32>(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<uint8<32>>(d.vec().eval());
+    }
+    template<class V> uint8<32>& operator=(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<uint8<32>>(d.vec().eval()); return *this;
+    }
 
     /// @{
     /// Construct from the underlying vector type
-    uint8<32>(__m256i d) : uint8x32(d) {}
-    uint8<32>& operator=(__m256i d) { uint8x32::operator=(d); return *this; }
+    uint8<32>(const native_type& d) : d_(d) {}
+    uint8<32>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
-    template<class E>          uint8<32>(const  uint8<32,E>& d);
-    template<class E> explicit uint8<32>(const uint16<16,E>& d);
-    template<class E> explicit uint8<32>(const uint32<8,E>& d);
-    template<class E> explicit uint8<32>(const uint64<4,E>& d);
-    template<class E> uint8<32>& operator=(const  uint8<32,E>& d);
-    template<class E> uint8<32>& operator=(const uint16<16,E>& d);
-    template<class E> uint8<32>& operator=(const uint32<8,E>& d);
-    template<class E> uint8<32>& operator=(const uint64<4,E>& d);
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> uint8<32>(const expr_vec_construct<E>& e)
@@ -198,63 +163,52 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint8x32& operator[](unsigned) const   { return *this; }
-          uint8x32& operator[](unsigned)         { return *this; }
+    const uint8<32>& operator[](unsigned) const { return *this; }
+          uint8<32>& operator[](unsigned)       { return *this; }
     /// @}
 
-    static uint8x32 zero() { return uint8x32::zero(); }
-    static uint8x32 ones() { return uint8x32::ones(); }
-};
+    uint8<32> eval() const { return *this; }
 
-/// Class representing possibly optimized mask data for 32x 8-bit integer vector
-template<>
-class maskdata_int8<32> {
-public:
-    using base_vector_type = maskdata_int8<32>;
-
-    maskdata_int8<32>() = default;
-    maskdata_int8<32>(const maskdata_int8<32> &) = default;
-    maskdata_int8<32> &operator=(const maskdata_int8<32> &) = default;
-
-    maskdata_int8<32>(int8<32> d) : d_(d) {}
-
-    /// Convert to bitmask
-    operator uint8<32>() const;
-
-    /// @{
-    /// Access base vectors
-    const maskdata_int8<32>& operator[](unsigned) const { return *this; }
-          maskdata_int8<32>& operator[](unsigned)       { return *this; }
-    /// @}
+    static uint8<32> zero();
+    static uint8<32> ones();
 
 private:
-    uint8<32> d_;
+    native_type d_;
 };
 
-
-/// Class representing a mask for 32x 8-bit integer vector
+/// Class representing possibly optimized mask data for 16x 8-bit integer
+/// vector
 template<>
-class mask_int8<32, void> : public uint8<32, void> {
+class mask_int8<32, void> : public any_int8<32, mask_int8<32,void>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using base_vector_type = mask_int16v;
+    using expr_type = void;
+
+#if SIMDPP_USE_AVX2
+    using native_type = __m256i;
+#endif
 
     mask_int8<32>() = default;
     mask_int8<32>(const mask_int8<32> &) = default;
     mask_int8<32> &operator=(const mask_int8<32> &) = default;
-    mask_int8<32>(const maskdata_int8<32>& d);
 
-    /// @{
-    /// Construct from the underlying vector type
-    mask_int8<32>(__m256i d);
-    mask_int8<32>(uint8<32> d);
-    /// @}
+    mask_int8<32>(const native_type& d) : d_(d) {}
+
+#if SIMDPP_USE_AVX2
+    mask_int8<32>(const uint8<32>& d) : d_(d) {}
+#endif
+
+    /// Access the underlying type
+    uint8<32> unmask() const;
+
+    const mask_int8<32>& operator[](unsigned) const { return *this; }
+          mask_int8<32>& operator[](unsigned)       { return *this; }
 
     mask_int8<32> eval() const { return *this; }
 
-    const maskdata_int8<32>& mask() const { return mask_; }
-
 private:
-    maskdata_int8<32> mask_;
+    native_type d_;
 };
 
 /// @} -- end ingroup

@@ -143,9 +143,9 @@ inline uint64x2 i_bit_andnot(uint64x2 a, mask_int64x2 b)
 
 #if SIMDPP_USE_AVX2
 inline uint8x32  i_bit_andnot(uint8x32 a,  mask_int8x32 b)  { return i_bit_andnot(a, uint8x32(b)); }
-inline uint16x16 i_bit_andnot(uint16x16 a, mask_int16x16 b) { return i_bit_andnot(uint8x32(a), uint8x32(b)); }
-inline uint32x8  i_bit_andnot(uint32x8 a,  mask_int32x8 b)  { return i_bit_andnot(uint8x32(a), uint8x32(b)); }
-inline uint64x4  i_bit_andnot(uint64x4 a, mask_int64x4 b)   { return i_bit_andnot(uint8x32(a), uint8x32(b)); }
+inline uint16x16 i_bit_andnot(uint16x16 a, mask_int16x16 b) { return (uint16x16) i_bit_andnot(uint8x32(a), uint8x32(b)); }
+inline uint32x8  i_bit_andnot(uint32x8 a,  mask_int32x8 b)  { return (uint32x8)  i_bit_andnot(uint8x32(a), uint8x32(b)); }
+inline uint64x4  i_bit_andnot(uint64x4 a, mask_int64x4 b)   { return (uint64x4)  i_bit_andnot(uint8x32(a), uint8x32(b)); }
 #endif
 
 template<unsigned N>
@@ -212,9 +212,9 @@ inline mask_int64x2 i_bit_andnot(mask_int64x2 a, mask_int64x2 b)
 
 #if SIMDPP_USE_AVX2
 inline mask_int8x32  i_bit_andnot(mask_int8x32 a,  mask_int8x32 b)  { return i_bit_andnot(uint8x32(a), uint8x32(b)); }
-inline mask_int16x16 i_bit_andnot(mask_int16x16 a, mask_int16x16 b) { return i_bit_andnot(uint8x32(a), uint8x32(b)); }
-inline mask_int32x8  i_bit_andnot(mask_int32x8 a,  mask_int32x8 b)  { return i_bit_andnot(uint8x32(a), uint8x32(b)); }
-inline mask_int64x4  i_bit_andnot(mask_int64x4 a,  mask_int64x4 b)  { return i_bit_andnot(uint8x32(a), uint8x32(b)); }
+inline mask_int16x16 i_bit_andnot(mask_int16x16 a, mask_int16x16 b) { return (uint16x16) i_bit_andnot(uint8x32(a), uint8x32(b)); }
+inline mask_int32x8  i_bit_andnot(mask_int32x8 a,  mask_int32x8 b)  { return (uint32x8)  i_bit_andnot(uint8x32(a), uint8x32(b)); }
+inline mask_int64x4  i_bit_andnot(mask_int64x4 a,  mask_int64x4 b)  { return (uint64x4)  i_bit_andnot(uint8x32(a), uint8x32(b)); }
 #endif
 
 template<unsigned N>

@@ -83,8 +83,8 @@ inline void i_store_first(char* p, uint8x32 a, unsigned n)
                                        0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,
                                        0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0};
 
-    uint8x32 mask = load_u(mask, mask_d + 32 - n);
-    uint8x32 old = load(old, p);
+    uint8x32 mask = load_u(mask_d + 32 - n);
+    uint8x32 old = load(p);
     a = blend(a, old, mask);
     store(p, a);
 }
@@ -210,7 +210,7 @@ inline void i_store_first(char* p, float32x4 a, unsigned n)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 inline void i_store_first(char* p, float32x8 a, unsigned n)
 {
     float* q = reinterpret_cast<float*>(p);
@@ -220,8 +220,8 @@ inline void i_store_first(char* p, float32x8 a, unsigned n)
                                         0x00000000, 0x00000000, 0x00000000, 0x00000000};
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x8 mask = load_u(mask, mask_dp + 8-n);
-    float32x8 old = load(old, q);
+    float32x8 mask = load_u(mask_dp + 8-n);
+    float32x8 old = load(q);
     a = blend(a, old, mask);
     store(q, a);
 }
@@ -247,7 +247,7 @@ inline void i_store_first(char* p, float64x2 a, unsigned n)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 inline void i_store_first(char* p, float64x4 a, unsigned n)
 {
     double* q = reinterpret_cast<double*>(p);
@@ -257,8 +257,8 @@ inline void i_store_first(char* p, float64x4 a, unsigned n)
                                         0x0000000000000000, 0x0000000000000000};
 
     const double* mask_dp = reinterpret_cast<const double*>(mask_d);
-    float64x4 mask = load_u(mask, mask_dp + 4-n);
-    float64x4 old = load(old, q);
+    float64x4 mask = load_u(mask_dp + 4-n);
+    float64x4 old = load(q);
     a = blend(a, old, mask);
     store(q, a);
 }

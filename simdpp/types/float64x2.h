@@ -99,8 +99,8 @@ public:
 
     /// @{
     /// Access base vectors
-    const float64x2& operator[](unsigned) const { return *this; }
-          float64x2& operator[](unsigned)       { return *this; }
+    const float64<2>& operator[](unsigned) const { return *this; }
+          float64<2>& operator[](unsigned)       { return *this; }
     /// @}
 
     float64<2> eval() const { return *this; }
@@ -120,7 +120,7 @@ public:
         r1 = 0.0
         @endcode
     */
-    static float64x2 zero();
+    static float64<2> zero();
 
 private:
     native_type d_;
@@ -147,6 +147,10 @@ public:
     mask_float64<2> &operator=(const mask_float64<2> &) = default;
 
     mask_float64<2>(const native_type& d) : d_(d) {}
+
+#if SIMDPP_USE_SSE2
+    mask_float64<2>(const float64<2>& d) : d_(d) {}
+#endif
 
     /// Access the underlying type
     float64<2> unmask() const;

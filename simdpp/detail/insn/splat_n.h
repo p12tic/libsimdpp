@@ -50,6 +50,10 @@ namespace insn {
 // forward declarations
 template<unsigned s>
 uint16x8 i_splat8(uint16x8 a);
+#if SIMDPP_USE_AVX2
+template<unsigned s>
+uint16x16 i_splat8(uint16x16 a);
+#endif
 
 // -----------------------------------------------------------------------------
 
@@ -96,8 +100,8 @@ template<unsigned s>
 uint8x32 i_splat16(uint8x32 a)
 {
     static_assert(s < 16, "Access out of bounds");
-    uint16x16 b = s < 8 ? zip16_lo(a, a) : zip16_hi(a, a);
-    return i_splat8<s%8>(b);
+    uint16x16 b; b = s < 8 ? zip16_lo(a, a) : zip16_hi(a, a);
+    return (uint8x32) i_splat8<s%8>(b);
 }
 #endif
 
@@ -156,12 +160,12 @@ uint16x16 i_splat8(uint16x16 a)
         constexpr unsigned q = (s < 4) ? s : 0;
         uint64x4 h = _mm256_shufflelo_epi16(a, q << 6 | q << 4 | q << 2 | q);
         h = permute2<0,0>(h);
-        return h;
+        return uint16x16(h);
     } else {
         constexpr unsigned q = (s < 4) ? 0 : s - 4;
         uint64x4 h = _mm256_shufflehi_epi16(a, q << 6 | q << 4 | q << 2 | q);
         h = permute2<1,1>(h);
-        return h;
+        return uint16x16(h);
     }
 }
 #endif

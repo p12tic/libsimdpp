@@ -54,35 +54,37 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<>
 class float64<4, void> : public any_float64<4, float64<4,void>> {
 public:
-
+    static const unsigned type_tag = SIMDPP_TAG_FLOAT;
     using element_type = double;
-    using uint_element_type = uint64_t;
-    using int_vector_type = uint64x4;
-    using uint_vector_type = uint64x4;
-    using base_vector_type = float64x4;
-    using mask_vector_type = mask_float64x4;
+    using base_vector_type = float64<4,void>;
+    using expr_type = void;
 
-    static constexpr unsigned vec_length = 1;
-    static constexpr unsigned length = 4;
-    static constexpr unsigned num_bits = 64;
-    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
+#if SIMDPP_USE_AVX
+    using native_type = __m256d;
+#endif
 
     float64<4>() = default;
-    float64<4>(const float64x4&) = default;
-    float64<4>& operator=(const float64x4&) = default;
+    float64<4>(const float64<4> &) = default;
+    float64<4> &operator=(const float64<4> &) = default;
 
-    /// Construct from the underlying vector type
-    float64<4>(__m256d d) : d_(d) {}
-    float64<4>& operator=(__m256d d) { d_ = d; return *this; }
-
-    /// Convert to underlying vector type
-    operator __m256d() const { return d_; }
+    template<class E> float64<4>(const float64<4,E>& d) { *this = d.eval(); }
+    template<class V> explicit float64<4>(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<float64<4>>(d.vec().eval());
+    }
+    template<class V> float64<4>& operator=(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<float64<4>>(d.vec().eval()); return *this;
+    }
 
     /// @{
-    /// Construct from compatible int64x4 integer vector type
-    explicit float64<4>(uint64x4 d)     { *this = bit_cast<float64x4>(d); }
-    float64<4>& operator=(uint64x4 d)   { *this = bit_cast<float64x4>(d); return *this; }
+    /// Construct from the underlying vector type
+    float64<4>(const native_type& d) : d_(d) {}
+    float64<4>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
+
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> float64<4>(const expr_vec_construct<E>& e)
@@ -97,77 +99,60 @@ public:
 
     /// @{
     /// Access base vectors
-    const float64x4& operator[](unsigned) const { return *this; }
-          float64x4& operator[](unsigned)       { return *this; }
+    const float64<4>& operator[](unsigned) const { return *this; }
+          float64<4>& operator[](unsigned)       { return *this; }
     /// @}
 
     float64<4> eval() const { return *this; }
 
-    /** Creates a float64x4 vector with the contens set to zero
+    /** Creates a float64x2 vector with the contens set to zero
 
         @code
         r0 = 0.0
-        ...
-        r7 = 0.0
+        r1 = 0.0
         @endcode
     */
-    static float64x4 zero();
+    static float64<4> zero();
 
 private:
-    __m256d d_;
+    native_type d_;
 };
 
-/// Class representing possibly optimized mask data for 4x 64-bit floating point
+
+/// Class representing possibly optimized mask data for 2x 64-bit floating point
 /// vector
 template<>
-class maskdata_float64<4> {
+class mask_float64<4, void> : public any_float64<4, mask_float64<4,void>> {
 public:
-    using base_vector_type = maskdata_float64<4>;
-    static constexpr unsigned length = 4;
-    static constexpr unsigned vec_length = 1;
+    static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
+    using base_vector_type = mask_float64<4,void>;
+    using expr_type = void;
 
-    maskdata_float64<4>() = default;
-    maskdata_float64<4>(const maskdata_float64<4> &) = default;
-    maskdata_float64<4> &operator=(const maskdata_float64<4> &) = default;
+#if SIMDPP_USE_AVX
+    using native_type = __m256d;
+#endif
 
-    maskdata_float64<4>(float64<4> d) : d_(d) {}
-
-    /// Convert to bitmask
-    operator float64<4>() const;
-
-    /// @{
-    /// Access base vectors
-    const maskdata_float64<4>& operator[](unsigned) const { return *this; }
-          maskdata_float64<4>& operator[](unsigned)       { return *this; }
-    /// @}
-
-private:
-    float64<4> d_;
-};
-
-
-/// Class representing a mask for 4x 64-bit floating-point vector
-template<>
-class mask_float64<4, void> : public any_float64<N, mask_float64<N,void>> {
-public:
     mask_float64<4>() = default;
     mask_float64<4>(const mask_float64<4> &) = default;
     mask_float64<4> &operator=(const mask_float64<4> &) = default;
-    mask_float64<4>(const maskdata_float64<4>& d);
 
-    /// @{
-    /// Construct from the underlying vector type
-    mask_float64<4>(__m256 d);
-    mask_float64<4>(float64<4> d);
-    /// @}
+    mask_float64<4>(const native_type& d) : d_(d) {}
+
+#if SIMDPP_USE_AVX
+    mask_float64<4>(const float64<4>& d) : d_(d) {}
+#endif
+
+    /// Access the underlying type
+    float64<4> unmask() const;
+
+    const mask_float64<4>& operator[](unsigned) const { return *this; }
+          mask_float64<4>& operator[](unsigned)       { return *this; }
 
     mask_float64<4> eval() const { return *this; }
 
-    const maskdata_float64<4>& mask() const { return mask_; }
 private:
-    maskdata_float64<4> mask_;
+    native_type d_;
 };
-
 /// @} -- end ingroup
 
 #endif // SIMDPP_USE_AVX || DOXYGEN_SHOULD_READ_THIS

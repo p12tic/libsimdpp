@@ -43,16 +43,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX
 
-inline float32x8 float32x8::zero()
-{
-    float32x8 r;
-    r = bit_xor(r, r);
-    return r;
-}
+inline float32<8> float32<8>::zero() { return make_uint(0); }
 
-inline maskdata_float32x8::operator float32x8() const
+inline float32<8> mask_float32<8>::unmask() const
 {
-    return d_;
+#if SIMDPP_USE_NULL
+    return null::convert_mask<float32<8>>(*this);
+#else
+    return float32<8>(d_);
+#endif
 }
 
 #endif // SIMDPP_USE_AVX

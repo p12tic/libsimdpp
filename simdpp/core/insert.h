@@ -271,60 +271,87 @@ float64x2 insert(float64x2 a, double x)
     @icost{AVX2, 1}
     @icost{SSE2-AVX, NEON, ALTIVEC, 0}
 */
-inline uint8x32 combine(uint8x16 a, uint8x16 b)
+template<class E1, class E2>
+uint8x32 combine(uint8<16,E1> a, uint8<16,E2> b)
 {
 #if SIMDPP_USE_AVX2
     uint8x32 r;
-    r = _mm256_castsi128_si256(a);
-    r = _mm256_inserti128_si256(r, b, 1);
+    r = _mm256_castsi128_si256(a.eval());
+    r = _mm256_inserti128_si256(r, b.eval(), 1);
     return r;
 #else
     uint8x32 r;
-    r[0] = a;
-    r[1] = b;
+    r[0] = a.eval();
+    r[1] = b.eval();
     return r;
 #endif
 }
 
-inline uint16x16 combine(uint16x8 a, uint16x8 b)
+
+template<class E1, class E2>
+uint16x16 combine(uint16<8,E1> a, uint16<8,E2> b)
 {
-    return uint16x16(combine(uint8x16(a), uint8x16(b)));
-}
-inline uint32x8 combine(uint32x4 a, uint32x4 b)
-{
-    return uint32x8(combine(uint8x16(a), uint8x16(b)));
-}
-inline uint64x4 combine(uint64x2 a, uint64x2 b)
-{
-    return uint64x4(combine(uint8x16(a), uint8x16(b)));
+    return uint16x16(combine(uint8x16(a.eval()), uint8x16(b.eval())));
 }
 
-inline float32x8 combine(float32x4 a, float32x4 b)
+template<class E1, class E2>
+uint32x8 combine(uint32<4,E1> a, uint32<4,E2> b)
+{
+    return uint32x8(combine(uint8x16(a.eval()), uint8x16(b.eval())));
+}
+
+template<class E1, class E2>
+uint64x4 combine(uint64<2,E1> a, uint64<2,E2> b)
+{
+    return uint64x4(combine(uint8x16(a.eval()), uint8x16(b.eval())));
+}
+
+template<class E1, class E2>
+int16x16 combine(int16<8,E1> a, int16<8,E2> b)
+{
+    return int16x16(combine(uint8x16(a.eval()), uint8x16(b.eval())));
+}
+
+template<class E1, class E2>
+int32x8 combine(int32<4,E1> a, int32<4,E2> b)
+{
+    return int32x8(combine(uint8x16(a.eval()), uint8x16(b.eval())));
+}
+
+template<class E1, class E2>
+int64x4 combine(int64<2,E1> a, int64<2,E2> b)
+{
+    return int64x4(combine(uint8x16(a.eval()), uint8x16(b.eval())));
+}
+
+template<class E1, class E2>
+float32x8 combine(float32<4,E1> a, float32<4,E2> b)
 {
 #if SIMDPP_USE_AVX
     float32x8 r;
-    r = _mm256_castps128_ps256(a);
-    r = _mm256_insertf128_ps(r, b, 1);
+    r = _mm256_castps128_ps256(a.eval());
+    r = _mm256_insertf128_ps(r, b.eval(), 1);
     return r;
 #else
     float32x8 r;
-    r[0] = a;
-    r[1] = b;
+    r[0] = a.eval();
+    r[1] = b.eval();
     return r;
 #endif
 }
 
-inline float64x4 combine(float64x2 a, float64x2 b)
+template<class E1, class E2>
+float64x4 combine(float64<2,E1> a, float64<2,E2> b)
 {
 #if SIMDPP_USE_AVX
     float64x4 r;
-    r = _mm256_castpd128_pd256(a);
-    r = _mm256_insertf128_pd(r, b, 1);
+    r = _mm256_castpd128_pd256(a.eval());
+    r = _mm256_insertf128_pd(r, b.eval(), 1);
     return r;
 #else
     float64x4 r;
-    r[0] = a;
-    r[1] = b;
+    r[0] = a.eval();
+    r[1] = b.eval();
     return r;
 #endif
 }
@@ -343,18 +370,28 @@ V v_combine(H a1, H a2)
 
 } // namespace detail
 
-template<unsigned N>
-uint8<N*2> combine(uint8<N>& a1, uint8<N>& a2) { return detail::v_combine<uint8<N*2>>(a1, a2); }
-template<unsigned N>
-uint16<N*2> combine(uint16<N>& a1, uint16<N>& a2) { return detail::v_combine<uint16<N*2>>(a1, a2); }
-template<unsigned N>
-uint32<N*2> combine(uint32<N>& a1, uint32<N>& a2) { return detail::v_combine<uint32<N*2>>(a1, a2); }
-template<unsigned N>
-uint64<N*2> combine(uint64<N>& a1, uint64<N>& a2) { return detail::v_combine<uint64<N*2>>(a1, a2); }
-template<unsigned N>
-float32<N*2> combine(float32<N>& a1, float32<N>& a2) { return detail::v_combine<float32<N*2>>(a1, a2); }
-template<unsigned N>
-float64<N*2> combine(float64<N>& a1, float64<N>& a2) { return detail::v_combine<float64<N*2>>(a1, a2); }
+template<unsigned N, class E1, class E2>
+uint8<N*2> combine(uint8<N,E1> a1, uint8<N,E2> a2) { return detail::v_combine<uint8<N*2>>(a1.eval(), a2.eval()); }
+template<unsigned N, class E1, class E2>
+uint16<N*2> combine(uint16<N,E1> a1, uint16<N,E2> a2) { return detail::v_combine<uint16<N*2>>(a1.eval(), a2.eval()); }
+template<unsigned N, class E1, class E2>
+uint32<N*2> combine(uint32<N,E1> a1, uint32<N,E2> a2) { return detail::v_combine<uint32<N*2>>(a1.eval(), a2.eval()); }
+template<unsigned N, class E1, class E2>
+uint64<N*2> combine(uint64<N,E1> a1, uint64<N,E2> a2) { return detail::v_combine<uint64<N*2>>(a1.eval(), a2.eval()); }
+
+template<unsigned N, class E1, class E2>
+int8<N*2> combine(int8<N,E1> a1, int8<N,E2> a2) { return detail::v_combine<int8<N*2>>(a1.eval(), a2.eval()); }
+template<unsigned N, class E1, class E2>
+int16<N*2> combine(int16<N,E1> a1, int16<N,E2> a2) { return detail::v_combine<int16<N*2>>(a1.eval(), a2.eval()); }
+template<unsigned N, class E1, class E2>
+int32<N*2> combine(int32<N,E1> a1, int32<N,E2> a2) { return detail::v_combine<int32<N*2>>(a1.eval(), a2.eval()); }
+template<unsigned N, class E1, class E2>
+int64<N*2> combine(int64<N,E1> a1, int64<N,E2> a2) { return detail::v_combine<int64<N*2>>(a1.eval(), a2.eval()); }
+
+template<unsigned N, class E1, class E2>
+float32<N*2> combine(float32<N,E1> a1, float32<N,E2> a2) { return detail::v_combine<float32<N*2>>(a1.eval(), a2.eval()); }
+template<unsigned N, class E1, class E2>
+float64<N*2> combine(float64<N,E1> a1, float64<N,E2> a2) { return detail::v_combine<float64<N*2>>(a1.eval(), a2.eval()); }
 
 /// @}
 

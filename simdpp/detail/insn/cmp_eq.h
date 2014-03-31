@@ -119,8 +119,7 @@ inline mask_int32x4 i_cmp_eq(uint32x4 a, uint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned N>
-mask_int32x8 i_cmp_eq(uint32x8 a, uint32x8 b)
+inline mask_int32x8 i_cmp_eq(uint32x8 a, uint32x8 b)
 {
     return _mm256_cmpeq_epi32(a, b);
 }

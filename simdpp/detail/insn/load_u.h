@@ -171,6 +171,8 @@ inline uint64x4  i_load_u(uint64x4& a,  const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
+#endif
+#if SIMDPP_USE_AVX
 inline float32x8 i_load_u(float32x8& a, const void* p)
 {
     a = _mm256_loadu_ps(reinterpret_cast<const float*>(p)); return a;

@@ -242,7 +242,7 @@ inline void i_set_splat(float32x4& v, float v0)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 inline void i_set_splat(float32x8& v, float v0)
 {
     v = _mm256_broadcast_ss(&v0);
@@ -270,7 +270,7 @@ inline void i_set_splat(float64x2& v, double v0)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 inline void i_set_splat(float64x4& v, double v0)
 {
     v = _mm256_broadcast_sd(&v0);

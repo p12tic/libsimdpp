@@ -34,6 +34,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/splat_n.h>
+#include <simdpp/sse/extract_half.h>
 #include <simdpp/detail/insn/shuffle128.h>
 
 namespace simdpp {

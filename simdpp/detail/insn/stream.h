@@ -104,7 +104,7 @@ inline void i_stream(char* p, float32x4 a)
 inline void i_stream(char* p, float32x8 a)
 {
     p = detail::assume_aligned(p, 32);
-    _mm256_stream_ps(reinterpret_cast<double*>(p), a);
+    _mm256_stream_ps(reinterpret_cast<float*>(p), a);
 }
 #endif
 

@@ -45,9 +45,13 @@ namespace null {
 template<class V, class M>
 V convert_mask(const M& m)
 {
+    static_assert(V::length == M::length && V::size_tag == M::size_tag,
+                  "Can't convert mask to different type");
     V r;
-    for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = m.el(i) ? bit_cast<typename V::element_type>(V::all_bits) : 0;
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        for (unsigned j = 0; j < V::base_vector_type::length; j++) {
+            r[i].el(j) = m[i].el(j) ? bit_cast<typename V::element_type>(V::all_bits) : 0;
+        }
     }
     return r;
 }

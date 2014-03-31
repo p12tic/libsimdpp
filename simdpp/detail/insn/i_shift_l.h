@@ -77,12 +77,12 @@ inline uint8x32 i_shift_l(uint8x32 a, unsigned count)
     uint16x16 mask, a16;
     mask = uint16x16::ones();
     mask = shift_r(mask, 16-count);
-    mask = i_shift_l(mask, 8);
+    mask = shift_l(mask, 8);
 
     a16 = a;
-    a16 = i_shift_l(a16, count);
+    a16 = shift_l(a16, count);
     a16 = bit_andnot(a16, mask);
-    return a16;
+    return uint8x32(a16);
 }
 #endif
 

@@ -400,6 +400,11 @@ inline void split(uint16x16 a, uint16x8& r1, uint16x8& r2) { detail::v256_split(
 inline void split(uint32x8 a, uint32x4& r1, uint32x4& r2)  { detail::v256_split(a, r1, r2); }
 inline void split(uint64x4 a, uint64x2& r1, uint64x2& r2)  { detail::v256_split(a, r1, r2); }
 
+inline void split(int8x32 a, int8x16& r1, int8x16& r2)  { detail::v256_split(a, r1, r2); }
+inline void split(int16x16 a, int16x8& r1, int16x8& r2) { detail::v256_split(a, r1, r2); }
+inline void split(int32x8 a, int32x4& r1, int32x4& r2)  { detail::v256_split(a, r1, r2); }
+inline void split(int64x4 a, int64x2& r1, int64x2& r2)  { detail::v256_split(a, r1, r2); }
+
 inline void split(float32x8 a, float32x4& r1, float32x4& r2)
 {
 #if SIMDPP_USE_AVX
@@ -442,6 +447,16 @@ template<unsigned N>
 void split(uint32<N> a, uint32<N/2>& r1, uint32<N/2>& r2) { detail::v_split(a, r1, r2); }
 template<unsigned N>
 void split(uint64<N> a, uint64<N/2>& r1, uint64<N/2>& r2) { detail::v_split(a, r1, r2); }
+
+template<unsigned N>
+void split(int8<N> a, int8<N/2>& r1, int8<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(int16<N> a, int16<N/2>& r1, int16<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(int32<N> a, int32<N/2>& r1, int32<N/2>& r2) { detail::v_split(a, r1, r2); }
+template<unsigned N>
+void split(int64<N> a, int64<N/2>& r1, int64<N/2>& r2) { detail::v_split(a, r1, r2); }
+
 template<unsigned N>
 void split(float32<N> a, float32<N/2>& r1, float32<N/2>& r2) { detail::v_split(a, r1, r2); }
 template<unsigned N>

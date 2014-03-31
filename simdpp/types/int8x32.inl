@@ -41,45 +41,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 #if SIMDPP_USE_AVX2
-/*
-inline uint8<32>::uint8(const uint16x16& d) { *this = bit_cast<uint8x32>(d); }
-inline uint8<32>::uint8(const uint32x8& d) { *this = bit_cast<uint8x32>(d); }
-inline uint8<32>::uint8(const uint64x4& d) { *this = bit_cast<uint8x32>(d); }
-inline uint8<32>& uint8<32>::operator=(const uint16x16& d) { *this = bit_cast<uint8x32>(d); return *this; }
-inline uint8<32>& uint8<32>::operator=(const uint32x8& d) { *this = bit_cast<uint8x32>(d); return *this; }
-inline uint8<32>& uint8<32>::operator=(const uint64x4& d) { *this = bit_cast<uint8x32>(d); return *this; }
 
-inline int8<32>::int8(const uint8x32& d) : uint8x32(d) {}
-inline int8<32>::int8(const uint16x16& d): uint8x32(bit_cast<uint8x32>(d)) {}
-inline int8<32>::int8(const uint32x8& d) : uint8x32(bit_cast<uint8x32>(d)) {}
-inline int8<32>::int8(const uint64x4& d) : uint8x32(bit_cast<uint8x32>(d)) {}
-inline int8<32>& int8<32>::operator=(const uint8x32& d) { uint8x32::operator=(d); return *this; }
-inline int8<32>& int8<32>::operator=(const uint16x16& d){ uint8x32::operator=(d); return *this; }
-inline int8<32>& int8<32>::operator=(const uint32x8& d) { uint8x32::operator=(d); return *this; }
-inline int8<32>& int8<32>::operator=(const uint64x4& d) { uint8x32::operator=(d); return *this; }
+inline int8<32>   int8<32>::zero() { return make_uint(0); }
+inline uint8<32> uint8<32>::zero() { return make_uint(0); }
+inline int8<32>   int8<32>::ones() { return make_uint(0xff); }
+inline uint8<32> uint8<32>::ones() { return make_uint(0xff); }
 
-inline uint8<32>::uint8(const uint8x32& d) : uint8x32(d) {}
-inline uint8<32>::uint8(const uint16x16& d): uint8x32(bit_cast<uint8x32>(d)) {}
-inline uint8<32>::uint8(const uint32x8& d) : uint8x32(bit_cast<uint8x32>(d)) {}
-inline uint8<32>::uint8(const uint64x4& d) : uint8x32(bit_cast<uint8x32>(d)) {}
-inline uint8<32>& uint8<32>::operator=(const uint8x32& d) { uint8x32::operator=(d); return *this; }
-inline uint8<32>& uint8<32>::operator=(const uint16x16& d){ uint8x32::operator=(d); return *this; }
-inline uint8<32>& uint8<32>::operator=(const uint32x8& d) { uint8x32::operator=(d); return *this; }
-inline uint8<32>& uint8<32>::operator=(const uint64x4& d) { uint8x32::operator=(d); return *this; }
-*/
-inline uint8x32 uint8x32::zero()
+inline uint8<32> mask_int8<32>::unmask() const
 {
-    return (uint8<32>) make_uint(0);
-}
-
-inline uint8x32 uint8x32::ones()
-{
-    return (uint8<32>) make_uint(0xff);
-}
-
-inline mask_int8x32::operator uint8x32() const
-{
-    return d_;
+#if SIMDPP_USE_NULL
+    return null::convert_mask<uint8<32>>(*this);
+#else
+    return uint8<32>(d_);
+#endif
 }
 
 #endif // SIMDPP_USE_AVX2

@@ -225,6 +225,10 @@ public:
 
     mask_int16<8>(const native_type& d) : d_(d) {}
 
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    mask_int16<8>(const uint16<8>& d) : d_(d) {}
+#endif
+
     /// Access the underlying type
     uint16<8> unmask() const;
 

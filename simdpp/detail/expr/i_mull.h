@@ -164,7 +164,7 @@ uint32<16> expr_eval(expr_mull<uint16<16,E1>,
     uint16<16> a = q.a.eval();
     uint16<16> b = q.b.eval();
     int16x16 lo = _mm256_mullo_epi16(a, b);
-    int16x16 hi = _mm256_mulhi_epi16(a, b);
+    int16x16 hi = _mm256_mulhi_epu16(a, b);
     return (uint32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif

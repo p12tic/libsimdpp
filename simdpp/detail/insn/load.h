@@ -117,6 +117,8 @@ inline void i_load(uint64x4& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
+#endif
+#if SIMDPP_USE_AVX
 inline void i_load(float32x8& a, const char* p)
 {
     a = _mm256_load_ps(reinterpret_cast<const float*>(p));

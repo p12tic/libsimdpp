@@ -76,7 +76,7 @@ inline uint8x32 i_unzip16_lo(uint8x32 a, uint8x32 b)
     a = bit_and(a, mask);
     b = bit_and(b, mask);
     r = _mm256_packus_epi16(a, b);
-    return r;
+    return uint8x32(r);
 }
 #endif
 
@@ -125,7 +125,7 @@ inline uint16x16 i_unzip8_lo(uint16x16 a, uint16x16 b)
     a = bit_and(a, mask);
     b = bit_and(b, mask);
     r = _mm256_packus_epi32(a, b);
-    return r;
+    return uint16x16(r);
 }
 #endif
 

@@ -48,119 +48,43 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @ingroup simd_vec_int
 /// @{
 
-/** Generic class representing 4x 64-bit integer vector.
-    To be used where the signedness of the underlying element type is not important
+/** Class representing 4x 64-bit signed integer vector
 */
 template<>
-class uint64<4, void> {
+class int64<4, void> : public any_int64<4, int64<4,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_INT;
+    using element_type = int64_t;
+    using base_vector_type = int64<4,void>;
+    using expr_type = void;
 
-    using element_type = uint64_t;
-    using uint_element_type = uint64_t;
-    using int_vector_type = uint64x4;
-    using uint_vector_type = uint64x4;
-    using half_vector_type = uint64x2;
-    using mask_vector_type = mask_int64x4;
-    using base_vector_type = uint64x4;
-
-    static constexpr unsigned length = 4;
-    static constexpr unsigned vec_length = 1;
-    static constexpr unsigned num_bits = 64;
-    static constexpr uint_element_type all_bits = 0xffffffffffffffff;
-
-    uint64<4>() = default;
-    uint64<4>(const uint64x4 &) = default;
-    uint64<4> &operator=(const uint64x4 &) = default;
-
-    /// @{
-    /// Construct from the underlying vector type
-    uint64<4>(__m256i d) : d_(d) {}
-    uint64<4>& operator=(__m256i d) { d_ = d; return *this; }
-    /// @}
-
-    /// @{
-    /// Construct from compatible integer type
-    uint64<4>(const uint8x32& d);
-    uint64<4>(const uint16x16& d);
-    uint64<4>(const uint32x8& d);
-    uint64<4>& operator=(const uint8x32& d);
-    uint64<4>& operator=(const uint16x16& d);
-    uint64<4>& operator=(const uint32x8& d);
-    /// @}
-
-    /// @{
-    /// Construct from compatible float32x8 integer vector type
-    explicit uint64<4>(const float64x4& d);
-    uint64<4>& operator=(const float64x4& d) { operator=(uint64x4(d)); return *this; }
-    /// @}
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    template<class E> uint64<4>(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr());
-    }
-    template<class E> uint64<4>& operator=(const expr_vec_construct<E>& e)
-    {
-        detail::construct_eval_wrapper(*this, e.expr()); return *this;
-    }
+#if SIMDPP_USE_AVX2
+    using native_type = __m256i;
 #endif
 
-    /// @{
-    /// Access base vectors
-    const uint64x4& operator[](unsigned) const   { return *this; }
-          uint64x4& operator[](unsigned)         { return *this; }
-    /// @}
-
-    uint64<4> eval() const { return *this; }
-
-    /// Creates a int64x4 vector with the contents set to zero
-    static uint64x4 zero();
-
-    /// Creates a int64x4 vector with the contents set to ones
-    static uint64x4 ones();
-
-private:
-
-    __m256i d_;
-};
-
-/** Class representing 2x 64-bit signed integer vector
-*/
-template<>
-class int64<4, void> : public uint64x4 {
-public:
-
-    using element_type = int64_t;
-    using half_vector_type = int64x2;
-    using base_vector_type = int64x4;
-
     int64<4>() = default;
-    int64<4>(const int64x4 &) = default;
-    int64<4> &operator=(const int64x4 &) = default;
+    int64<4>(const int64<4> &) = default;
+    int64<4> &operator=(const int64<4> &) = default;
+
+    template<class E> int64<4>(const int64<4,E>& d) { *this = d.eval(); }
+    template<class E> int64<4>(const uint64<4,E>& d) { *this = d.eval(); }
+    template<class V> explicit int64<4>(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<int64<4>>(d.vec().eval());
+    }
+    template<class V> int64<4>& operator=(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<int64<4>>(d.vec().eval()); return *this;
+    }
 
     /// @{
     /// Construct from the underlying vector type
-    int64<4>(__m256i d) : uint64x4(d) {}
-    int64<4>& operator=(__m256i d) { uint64x4::operator=(d); return *this; }
+    int64<4>(const native_type& d) : d_(d) {}
+    int64<4>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
-    /// @{
-    /// Construct from compatible integer type
-    int64<4>(const uint8x32& d);
-    int64<4>(const uint16x16& d);
-    int64<4>(const uint32x8& d);
-    int64<4>(const uint64x4& d);
-    int64<4>& operator=(const uint8x32& d);
-    int64<4>& operator=(const uint16x16& d);
-    int64<4>& operator=(const uint32x8& d);
-    int64<4>& operator=(const uint64x4& d);
-    /// @}
-
-    /// @{
-    /// Construct from compatible float64x4 integer vector type
-    explicit int64<4>(const float64x4& d) : uint64x4(d) {}
-    int64<4>& operator=(const float64x4& d) { uint64x4::operator=(d); return *this; }
-    /// @}
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> int64<4>(const expr_vec_construct<E>& e)
@@ -175,49 +99,56 @@ public:
 
     /// @{
     /// Access base vectors
-    const int64x4& operator[](unsigned) const   { return *this; }
-          int64x4& operator[](unsigned)         { return *this; }
+    const int64<4>& operator[](unsigned) const { return *this; }
+          int64<4>& operator[](unsigned)       { return *this; }
     /// @}
 
     int64<4> eval() const { return *this; }
+
+    static int64<4> zero();
+    static int64<4> ones();
+
+private:
+    native_type d_;
 };
 
-/** Class representing 2x 64-bit unsigned integer vector
+/** Class representing 4x 64-bit unsigned integer vector
 */
 template<>
-class uint64<4, void> : public uint64x4 {
+class uint64<4, void> : public any_int64<4, uint64<4,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_UINT;
+    using element_type = uint64_t;
+    using base_vector_type = uint64<4,void>;
+    using expr_type = void;
 
-    using half_vector_type = uint64x2;
-    using base_vector_type = uint64x4;
+#if SIMDPP_USE_AVX2
+    using native_type = __m256i;
+#endif
 
     uint64<4>() = default;
-    uint64<4>(const uint64x4 &) = default;
-    uint64<4> &operator=(const uint64x4 &) = default;
+    uint64<4>(const uint64<4> &) = default;
+    uint64<4> &operator=(const uint64<4> &) = default;
+
+    template<class E> uint64<4>(const uint64<4,E>& d) { *this = d.eval(); }
+    template<class E> uint64<4>(const int64<4,E>& d) { *this = d.eval(); }
+    template<class V> explicit uint64<4>(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<uint64<4>>(d.vec().eval());
+    }
+    template<class V> uint64<4>& operator=(const any_vec<32,V>& d)
+    {
+        *this = bit_cast<uint64<4>>(d.vec().eval()); return *this;
+    }
 
     /// @{
     /// Construct from the underlying vector type
-    uint64<4>(__m256i d) : uint64x4(d) {}
-    uint64<4>& operator=(__m256i d) { uint64x4::operator=(d); return *this; }
+    uint64<4>(const native_type& d) : d_(d) {}
+    uint64<4>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
-    /// @{
-    /// Construct from compatible integer type
-    uint64<4>(const uint8x32& d);
-    uint64<4>(const uint16x16& d);
-    uint64<4>(const uint32x8& d);
-    uint64<4>(const uint64x4& d);
-    uint64<4>& operator=(const uint8x32& d);
-    uint64<4>& operator=(const uint16x16& d);
-    uint64<4>& operator=(const uint32x8& d);
-    uint64<4>& operator=(const uint64x4& d);
-    /// @}
-
-    /// @{
-    /// Construct from compatible float64x4 integer vector type
-    explicit uint64<4>(const float64x4& d) : uint64x4(d) {}
-    uint64<4>& operator=(const float64x4& d) { uint64x4::operator=(d); return *this; }
-    /// @}
+    /// Convert to the underlying vector type
+    operator native_type() const { return d_; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     template<class E> uint64<4>(const expr_vec_construct<E>& e)
@@ -232,63 +163,53 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint64x4& operator[](unsigned) const   { return *this; }
-          uint64x4& operator[](unsigned)         { return *this; }
+    const uint64<4>& operator[](unsigned) const { return *this; }
+          uint64<4>& operator[](unsigned)       { return *this; }
     /// @}
 
     uint64<4> eval() const { return *this; }
 
-};
-
-/// Class representing possibly optimized mask data for 4x 64-bit integer vector
-template<>
-class maskdata_int64<4> {
-public:
-    using base_vector_type = maskdata_int64<4>;
-    static constexpr unsigned length = 4;
-    static constexpr unsigned vec_length = 1;
-
-    maskdata_int64<4>() = default;
-    maskdata_int64<4>(const maskdata_int64<4> &) = default;
-    maskdata_int64<4> &operator=(const maskdata_int64<4> &) = default;
-
-    maskdata_int64<4>(int64<4> d) : d_(d) {}
-
-    /// Convert to bitmask
-    operator uint64<4>() const;
-
-    /// @{
-    /// Access base vectors
-    const maskdata_int64<4>& operator[](unsigned) const { return *this; }
-          maskdata_int64<4>& operator[](unsigned)       { return *this; }
-    /// @}
+    static uint64<4> zero();
+    static uint64<4> ones();
 
 private:
-    uint64<4> d_;
+    native_type d_;
 };
 
 
-/// Class representing a mask for 4x 64-bit integer vector
+/// Class representing possibly optimized mask data for 4x 64-bit integer
+/// vector
 template<>
-class mask_int64<4, void> : public uint64<4, void> {
+class mask_int64<4, void> : public any_int64<4, mask_int64<4,void>> {
 public:
+    static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
+    using base_vector_type = mask_int64<4,void>;
+    using expr_type = void;
+
+#if SIMDPP_USE_AVX2
+    using native_type = __m256i;
+#endif
+
     mask_int64<4>() = default;
     mask_int64<4>(const mask_int64<4> &) = default;
     mask_int64<4> &operator=(const mask_int64<4> &) = default;
-    mask_int64<4>(const maskdata_int64<4>& d);
 
-    /// @{
-    /// Construct from the underlying vector type
-    mask_int64<4>(__m256i d);
-    mask_int64<4>(uint64<4> d);
-    /// @}
+    mask_int64<4>(const native_type& d) : d_(d) {}
+
+#if SIMDPP_USE_AVX2
+    mask_int64<4>(const uint64<4>& d) : d_(d) {}
+#endif
+
+    /// Access the underlying type
+    uint64<4> unmask() const;
+
+    const mask_int64<4>& operator[](unsigned) const { return *this; }
+          mask_int64<4>& operator[](unsigned)       { return *this; }
 
     mask_int64<4> eval() const { return *this; }
 
-    const maskdata_int64<4>& mask() const { return mask_; }
-
 private:
-    maskdata_int64<4> mask_;
+    native_type d_;
 };
 
 /// @} -- end ingroup

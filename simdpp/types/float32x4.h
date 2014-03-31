@@ -122,7 +122,7 @@ public:
         r3 = 0.0f
         @endcode
     */
-    static float32x4 zero();
+    static float32<4> zero();
 
 private:
     native_type d_;

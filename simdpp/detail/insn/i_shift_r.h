@@ -135,7 +135,7 @@ inline uint8x32 i_shift_r(uint8x32 a, unsigned count)
     a16 = a;
     a16 = shift_r(a16, count);
     a16 = bit_andnot(a16, mask);
-    return a16;
+    return uint8x32(a16);
 }
 #endif
 
@@ -312,7 +312,7 @@ inline int64x4 i_shift_r(int64x4 a, unsigned count)
         v = shift_r(v, count - 32);
         v = shuffle2<1,3,1,3>(v, s);
         v = permute4<0,2,1,3>(v);
-        return v;
+        return int64x4(v);
     } else {
         uint64x4 v, mask;
         int32x8 sgn;
@@ -323,7 +323,7 @@ inline int64x4 i_shift_r(int64x4 a, unsigned count)
         mask = shift_l(mask, 64 - count);
         sgn = bit_and(sgn, mask);
         v = bit_or(v, sgn);
-        return v;
+        return int64x4(v);
     }
 }
 #endif

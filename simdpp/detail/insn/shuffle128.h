@@ -39,7 +39,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
-namespace insn {
 
 /// @{
 /** Shuffles 128 bit parts within the vectors.
@@ -106,7 +105,6 @@ float64x4 shuffle128(float64x4 a, float64x4 b)
 }
 /// @}
 
-} // namespace insn
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE

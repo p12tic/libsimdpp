@@ -180,7 +180,7 @@ inline void i_load_splat(uint64x2& v, const void* p0)
 inline void i_load_splat(uint64x4& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
-    uint64x2 a = _mm_cvtsi64_si128(v0);
+    uint64x2 a = _mm_cvtsi64_si128(*v0);
     v = _mm256_broadcastq_epi64(a);
 }
 #endif

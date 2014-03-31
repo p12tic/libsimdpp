@@ -84,8 +84,8 @@ inline void i_store_last(char* p, uint8x32 a, unsigned n)
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
-    uint8x32 mask = load_u(mask, mask_d + n);
-    uint8x32 old = load(old, p);
+    uint8x32 mask = load_u(mask_d + n);
+    uint8x32 old = load(p);
     a = blend(a, old, mask);
     store(p, a);
 }
@@ -227,8 +227,8 @@ inline void i_store_last(char* p, float32x8 a, unsigned n)
                                         0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x8 mask = load_u(mask, mask_dp + n);
-    float32x8 old = load(old, v);
+    float32x8 mask = load_u(mask_dp + n);
+    float32x8 old = load(v);
     a = blend(a, old, mask);
     store(v, a);
 }
@@ -265,8 +265,8 @@ inline void i_store_last(char* p, float64x4 a, unsigned n)
                                         0xffffffffffffffff, 0xffffffffffffffff};
 
     const double* mask_dp = reinterpret_cast<const double*>(mask_d);
-    float64x4 mask = load_u(mask, mask_dp + n);
-    float64x4 old = load(old, q);
+    float64x4 mask = load_u(mask_dp + n);
+    float64x4 old = load(q);
     a = blend(a, old, mask);
     store(q, a);
 }
