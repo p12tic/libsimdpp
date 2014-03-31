@@ -129,7 +129,7 @@ struct expr_add {
 };
 
 template<class E1, class E2>
-struct expr_adds {
+struct expr_add_sat {
     E1 a;
     E2 b;
 };
@@ -141,7 +141,7 @@ struct expr_sub {
 };
 
 template<class E1, class E2>
-struct expr_subs {
+struct expr_sub_sat {
     E1 a;
     E2 b;
 };

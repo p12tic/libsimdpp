@@ -54,18 +54,18 @@ void test_math_int(TestResults& res)
         };
 
         TEST_ALL_COMB_HELPER2(tc, int8x32, add, s, 1);
-        TEST_ALL_COMB_HELPER2(tc, int8x32, adds, s, 1);
+        TEST_ALL_COMB_HELPER2(tc, int8x32, add_sat, s, 1);
         TEST_ALL_COMB_HELPER2(tc, int8x32, sub, s, 1);
-        TEST_ALL_COMB_HELPER2(tc, int8x32, subs, s, 1);
+        TEST_ALL_COMB_HELPER2(tc, int8x32, sub_sat, s, 1);
         TEST_ALL_COMB_HELPER2(tc, int8x32, min, s, 1);
         TEST_ALL_COMB_HELPER2(tc, int8x32, max, s, 1);
         TEST_ALL_COMB_HELPER2(tc, int8x32, avg, s, 1);
         TEST_ALL_COMB_HELPER2(tc, int8x32, avg_trunc, s, 1);
 
         TEST_ALL_COMB_HELPER2(tc, uint8x32, add, s, 1);
-        TEST_ALL_COMB_HELPER2(tc, uint8x32, adds, s, 1);
+        TEST_ALL_COMB_HELPER2(tc, uint8x32, add_sat, s, 1);
         TEST_ALL_COMB_HELPER2(tc, uint8x32, sub, s, 1);
-        TEST_ALL_COMB_HELPER2(tc, uint8x32, subs, s, 1);
+        TEST_ALL_COMB_HELPER2(tc, uint8x32, sub_sat, s, 1);
         TEST_ALL_COMB_HELPER2(tc, uint8x32, min, s, 1);
         TEST_ALL_COMB_HELPER2(tc, uint8x32, max, s, 1);
         TEST_ALL_COMB_HELPER2(tc, uint8x32, avg, s, 1);
@@ -118,9 +118,9 @@ void test_math_int(TestResults& res)
         };
 
         TEST_ALL_COMB_HELPER2(tc, int16x16, add, s, 2);
-        TEST_ALL_COMB_HELPER2(tc, int16x16, adds, s, 2);
+        TEST_ALL_COMB_HELPER2(tc, int16x16, add_sat, s, 2);
         TEST_ALL_COMB_HELPER2(tc, int16x16, sub, s, 2);
-        TEST_ALL_COMB_HELPER2(tc, int16x16, subs, s, 2);
+        TEST_ALL_COMB_HELPER2(tc, int16x16, sub_sat, s, 2);
         TEST_ALL_COMB_HELPER2(tc, int16x16, mul_lo, s, 2);
         TEST_ALL_COMB_HELPER2(tc, int16x16, mul_hi, s, 2);
         TEST_ALL_COMB_HELPER2(tc, int16x16, min, s, 2);
@@ -129,9 +129,9 @@ void test_math_int(TestResults& res)
         TEST_ALL_COMB_HELPER2(tc, int16x16, avg_trunc, s, 2);
 
         TEST_ALL_COMB_HELPER2(tc, uint16x16, add, s, 2);
-        TEST_ALL_COMB_HELPER2(tc, uint16x16, adds, s, 2);
+        TEST_ALL_COMB_HELPER2(tc, uint16x16, add_sat, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint16x16, sub, s, 2);
-        TEST_ALL_COMB_HELPER2(tc, uint16x16, subs, s, 2);
+        TEST_ALL_COMB_HELPER2(tc, uint16x16, sub_sat, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint16x16, mul_lo, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint16x16, mul_hi, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint16x16, min, s, 2);

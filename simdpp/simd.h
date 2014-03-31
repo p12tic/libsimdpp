@@ -344,7 +344,7 @@
 #include <simdpp/core/f_trunc.h>
 #include <simdpp/core/i_abs.h>
 #include <simdpp/core/i_add.h>
-#include <simdpp/core/i_adds.h>
+#include <simdpp/core/i_add_sat.h>
 #include <simdpp/core/i_avg.h>
 #include <simdpp/core/i_avg_trunc.h>
 #include <simdpp/core/i_div_p.h>
@@ -356,7 +356,7 @@
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_sub.h>
-#include <simdpp/core/i_subs.h>
+#include <simdpp/core/i_sub_sat.h>
 #include <simdpp/core/insert.h>
 #include <simdpp/core/load.h>
 #include <simdpp/core/load_packed2.h>

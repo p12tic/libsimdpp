@@ -98,7 +98,7 @@ V add(V a, V b)
 }
 
 template<class V>
-V adds(V a, V b)
+V add_sat(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -118,7 +118,7 @@ V sub(V a, V b)
 }
 
 template<class V>
-V subs(V a, V b)
+V sub_sat(V a, V b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {

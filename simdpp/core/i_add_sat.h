@@ -25,94 +25,94 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LIBSIMDPP_SIMDPP_CORE_I_SUBS_H
-#define LIBSIMDPP_SIMDPP_CORE_I_SUBS_H
+#ifndef LIBSIMDPP_SIMDPP_CORE_I_ADD_SAT_H
+#define LIBSIMDPP_SIMDPP_CORE_I_ADD_SAT_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/i_subs.h>
+#include <simdpp/detail/expr/i_add_sat.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/** Subtracts and saturaters signed 8-bit integer values.
+
+/** Adds and saturates signed 8-bit integer values.
 
     @code
-    r0 = saturated(a0 - b0)
+    r0 = signed_saturate(a0 + b0)
     ...
-    rN = saturated(aN - bN)
+    rN = signed_saturate(aN + bN)
     @endcode
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-int8<N, expr_subs<int8<N,E1>,
-                  int8<N,E2>>> subs(int8<N,E1> a,
-                                    int8<N,E2> b)
+int8<N, expr_add_sat<int8<N,E1>,
+                     int8<N,E2>>> add_sat(int8<N,E1> a,
+                                          int8<N,E2> b)
 {
     return { { a, b }, 0 };
 }
 
-/** Subtracts and saturaters signed 16-bit integer values.
+/** Adds and saturates signed 16-bit integer values.
 
     @code
-    r0 = saturated(a0 - b0)
+    r0 = signed_saturate(a0 + b0)
     ...
-    rN = saturated(aN - bN)
+    rN = signed_saturate(aN + bN)
     @endcode
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-int16<N, expr_subs<int16<N,E1>,
-                   int16<N,E2>>> subs(int16<N,E1> a,
-                                      int16<N,E2> b)
+int16<N, expr_add_sat<int16<N,E1>,
+                      int16<N,E2>>> add_sat(int16<N,E1> a,
+                                            int16<N,E2> b)
 {
     return { { a, b }, 0 };
 }
 
-/** Subtracts and saturaters unsigned 8-bit integer values.
+/** Adds and saturates unsigned 8-bit integer values.
 
     @code
-    r0 = saturated(a0 - b0)
+    r0 = unsigned_saturate(a0 + b0)
     ...
-    rN = saturated(aN - bN)
+    rN = unsigned_saturate(aN + bN)
     @endcode
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-uint8<N, expr_subs<uint8<N,E1>,
-                   uint8<N,E2>>> subs(uint8<N,E1> a,
-                                      uint8<N,E2> b)
+uint8<N, expr_add_sat<uint8<N,E1>,
+                      uint8<N,E2>>> add_sat(uint8<N,E1> a,
+                                            uint8<N,E2> b)
 {
     return { { a, b }, 0 };
 }
 
-
-/** Subtracts and saturaters unsigned 16-bit integer values.
+/** Adds and saturates unsigned 16-bit integer values.
 
     @code
-    r0 = saturated(a0 - b0)
+    r0 = unsigned_saturate(a0 + b0)
     ...
-    rN = saturated(aN - bN)
+    rN = unsigned_saturate(aN + bN)
     @endcode
 
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2>
-uint16<N, expr_subs<uint16<N,E1>,
-                    uint16<N,E2>>> subs(uint16<N,E1> a,
-                                        uint16<N,E2> b)
+uint16<N, expr_add_sat<uint16<N,E1>,
+                       uint16<N,E2>>> add_sat(uint16<N,E1> a,
+                                              uint16<N,E2> b)
 {
     return { { a, b }, 0 };
 }
