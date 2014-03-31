@@ -65,15 +65,6 @@ Due to [bug #28831] (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=28831), GCC
 produces non-optimal code for double precision floating point math on ARM.
 Clang does not have this problem.
 
-Roadmap
--------
-
- - Implement an interface that would allow the library to seamlessly choose the
-   vector type that is most optimal for the target instruction set. Currently
-   the vector width is selected explicitly, which doesn't produce optimal code
-   when the same code is compiled to an architecture with wider or narrower
-   vector unit.
-
 License
 -------
 
