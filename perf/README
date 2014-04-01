@@ -1,8 +1,0 @@
-
-This directory contains several programs for measuring the number of cycles
-each implemented function takes. Not all functions are benchmarked.
-
-Be aware that the results should be taken with a grain of salt. The tests are
-very simple and many things that may affect their timing are not accounted for.
-Generally, the results should be within 1/number_of_simd_execution_ports clocks
-per instruction of the real value.
