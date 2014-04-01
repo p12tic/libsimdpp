@@ -38,10 +38,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 10}
     @icost{ALTIVEC, 10-12}
 */
-template<unsigned N, class E1, class E2>
-float32<N, float32<N>> sqrt(float32<N,E1> a, float32<N,E2> b)
+template<unsigned N, class E1>
+float32<N, float32<N>> sqrt(float32<N,E1> a)
 {
-    return detail::insn::i_sqrt(a.eval(), b.eval());
+    return detail::insn::i_sqrt(a.eval());
 }
 
 /** Computes square root.
@@ -59,10 +59,10 @@ float32<N, float32<N>> sqrt(float32<N,E1> a, float32<N,E2> b)
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned N, class E1, class E2>
-float64<N, float64<N>> sqrt(float64<N,E1> a, float64<N,E2> b)
+template<unsigned N, class E1>
+float64<N, float64<N>> sqrt(float64<N,E1> a)
 {
-    return detail::insn::i_sqrt(a.eval(), b.eval());
+    return detail::insn::i_sqrt(a.eval());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
