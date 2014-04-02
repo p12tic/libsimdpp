@@ -15,7 +15,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/cast.h>
-#include <simdpp/detail/mem_block.h>
 
 #include <cmath>
 #include <cstdlib>
@@ -51,11 +50,10 @@ typename V::mask_vector_type isnan2(V a, V b)
 template<class V>
 V abs(V a)
 {
-    detail::mem_block<V> ax(a);
     for (unsigned i = 0; i < V::length; i++) {
-        ax[i] = std::abs(ax[i]);
+        a.el(i) = std::abs(a.el(i));
     }
-    return ax;
+    return a;
 }
 
 template<class T, class U>

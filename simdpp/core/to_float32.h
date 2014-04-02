@@ -18,6 +18,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
 #include <simdpp/detail/null/foreach.h>
+#include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

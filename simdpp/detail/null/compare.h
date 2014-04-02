@@ -13,7 +13,6 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
