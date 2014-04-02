@@ -43,6 +43,29 @@ inline float32x4 hadd2(float32x4 a, float32x4 b)
 #endif
 }
 
+/** Adds the values in adjacent pairs of two float32x8 vectors
+
+    @code
+    r0 = a0 + a1
+    r1 = a2 + a3
+    r2 = b0 + b1
+    r3 = b2 + b3
+    r4 = a4 + a5
+    r5 = a6 + a7
+    r6 = b4 + b5
+    r7 = b6 + b7    
+    @endcode
+    @unimp{SSE2,SSE3}
+*/
+inline float32x8 hadd2(float32x8 a, float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return _mm256_hadd_ps(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
 /** Adds the values in adjacent pairs of two float64x2 vectors
 
     @code
@@ -122,6 +145,30 @@ inline float32x4 hsub2(float32x4 a, float32x4 b)
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
 }
+
+/** Subtracts the values in adjacent pairs of two float32x8 vectors
+
+    @code
+    r0 = a0 - a1
+    r1 = a2 - a3
+    r2 = b0 - b1
+    r3 = b2 - b3
+    r4 = a4 - a5
+    r5 = a6 - a7
+    r6 = b4 - b5
+    r7 = b6 - b7
+    @endcode
+    @unimp{SSE2,SSE3}
+*/
+inline float32x8 hsub2(float32x8 a, float32x8 b)
+{
+#if SIMDPP_USE_AVX
+    return _mm256_hsub_ps(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
 
 /** Subtracts the values in adjacent pairs of two float64x2 vectors
 
