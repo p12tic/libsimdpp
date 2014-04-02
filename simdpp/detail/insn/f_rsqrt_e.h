@@ -15,8 +15,8 @@
 #include <simdpp/types.h>
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     #include <cmath>
-    #include <simdpp/null/foreach.h>
-    #include <simdpp/null/math.h>
+    #include <simdpp/detail/null/foreach.h>
+    #include <simdpp/detail/null/math.h>
 #endif
 
 namespace simdpp {
@@ -30,7 +30,7 @@ namespace insn {
 inline float32x4 i_rsqrt_e(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float a){ return 1.0f / std::sqrt(a); });
+    return detail::null::foreach<float32x4>(a, [](float a){ return 1.0f / std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_rsqrt_ps(a);
 #elif SIMDPP_USE_NEON_FLT_SP

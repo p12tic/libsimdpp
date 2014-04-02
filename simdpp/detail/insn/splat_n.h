@@ -17,7 +17,7 @@
 #include <simdpp/core/permute2.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/permute_bytes16.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 #include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
@@ -42,7 +42,7 @@ uint8x16 i_splat16(uint8x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::splat<s>(a);
+    return detail::null::splat<s>(a);
 #elif SIMDPP_USE_AVX2
     a = move16_l<s>(a);
     return _mm_broadcastb_epi8(a);
@@ -99,7 +99,7 @@ uint16x8 i_splat8(uint16x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::splat<s>(a);
+    return detail::null::splat<s>(a);
 #elif SIMDPP_USE_AVX2
     a = move8_l<s>(a);
     return _mm_broadcastw_epi16(a);
@@ -164,7 +164,7 @@ uint32x4 i_splat4(uint32x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::splat<s>(a);
+    return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     return permute4<s,s,s,s>(a);
 #elif SIMDPP_USE_NEON
@@ -205,7 +205,7 @@ uint64x2 i_splat2(uint64x2 a)
 {
     static_assert(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::splat<s>(a);
+    return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
         return permute2<0,0>(a);
@@ -249,7 +249,7 @@ float32x4 i_splat4(float32x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
-    return null::splat<s>(a);
+    return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     return permute4<s,s,s,s>(a);
 #elif SIMDPP_USE_NEON
@@ -290,7 +290,7 @@ float64x2 i_splat2(float64x2 a)
 {
     static_assert(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::splat<s>(a);
+    return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
         return permute2<0,0>(a);

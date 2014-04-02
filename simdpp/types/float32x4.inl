@@ -16,8 +16,8 @@
 #include <simdpp/core/bit_xor.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/splat.h>
-#include <simdpp/null/mask.h>
-#include <simdpp/null/set.h>
+#include <simdpp/detail/null/mask.h>
+#include <simdpp/detail/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -29,7 +29,7 @@ inline float32<4> float32<4>::zero() { return make_uint(0); }
 inline float32<4> mask_float32<4>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<float32<4>>(*this);
+    return detail::null::unmask_mask<float32<4>>(*this);
 #else
     return float32<4>(d_);
 #endif

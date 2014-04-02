@@ -14,8 +14,8 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/bit_xor.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/bitwise.h>
+#include <simdpp/detail/null/foreach.h>
+#include <simdpp/detail/null/bitwise.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ namespace insn {
 inline uint8x16 i_bit_not(uint8x16 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint8x16>(a, [](uint64_t a){ return ~a; });
+    return detail::null::foreach<uint8x16>(a, [](uint64_t a){ return ~a; });
 #elif SIMDPP_USE_SSE2
     uint8x16 ones = uint8x16::ones();
     return bit_xor(a, ones);
@@ -65,7 +65,7 @@ uint64<N> i_bit_not(uint64<N> a) { return uint64<N>(i_bit_not(uint8<N*8>(a))); }
 inline mask_int8x16 i_bit_not(mask_int8x16 a)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
+    return detail::null::bit_not_mm(a);
 #else
     return (mask_int8x16)i_bit_not(uint8x16(a));
 #endif
@@ -74,7 +74,7 @@ inline mask_int8x16 i_bit_not(mask_int8x16 a)
 inline mask_int16x8 i_bit_not(mask_int16x8 a)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
+    return detail::null::bit_not_mm(a);
 #else
     return (mask_int16x8)i_bit_not(uint16x8(a));
 #endif
@@ -83,7 +83,7 @@ inline mask_int16x8 i_bit_not(mask_int16x8 a)
 inline mask_int32x4 i_bit_not(mask_int32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
+    return detail::null::bit_not_mm(a);
 #else
     return (mask_int32x4)i_bit_not(uint32x4(a));
 #endif
@@ -92,7 +92,7 @@ inline mask_int32x4 i_bit_not(mask_int32x4 a)
 inline mask_int64x2 i_bit_not(mask_int64x2 a)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
+    return detail::null::bit_not_mm(a);
 #else
     return (mask_int64x2)i_bit_not(uint64x2(a));
 #endif
@@ -185,7 +185,7 @@ float64<N> i_bit_not(float64<N> a)
 inline mask_float32x4 i_bit_not(mask_float32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_not_mm(a);
+    return detail::null::bit_not_mm(a);
 #else
     return (mask_float32x4) i_bit_not(float32x4(a));
 #endif
@@ -194,7 +194,7 @@ inline mask_float32x4 i_bit_not(mask_float32x4 a)
 inline mask_float64x2 i_bit_not(mask_float64x2 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_not_mm(a);
+    return detail::null::bit_not_mm(a);
 #else
     return (mask_float64x2) i_bit_not(float64x2(a));
 #endif

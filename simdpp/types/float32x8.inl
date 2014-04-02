@@ -14,7 +14,7 @@
 
 #include <simdpp/types/float32x8.h>
 #include <simdpp/core/bit_xor.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ inline float32<8> float32<8>::zero() { return make_uint(0); }
 inline float32<8> mask_float32<8>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<float32<8>>(*this);
+    return detail::null::unmask_mask<float32<8>>(*this);
 #else
     return float32<8>(d_);
 #endif

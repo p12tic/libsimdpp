@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NULL_SHUFFLE_H
-#define LIBSIMDPP_NULL_SHUFFLE_H
+#ifndef LIBSIMDPP_DETAIL_NULL_SHUFFLE_H
+#define LIBSIMDPP_DETAIL_NULL_SHUFFLE_H
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
@@ -22,9 +22,8 @@ namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+namespace detail {
 namespace null {
-
-namespace null_detail {
 
 template<class V>
 V zip_lo_impl(V a, V b)
@@ -74,25 +73,23 @@ V unzip_hi_impl(V a, V b)
     return r;
 }
 
-} // namespace null_detail
+template<class V> V zip16_lo(V a, V b) { return zip_lo_impl(a, b); }
+template<class V> V zip8_lo(V a, V b)  { return zip_lo_impl(a, b); }
+template<class V> V zip4_lo(V a, V b)  { return zip_lo_impl(a, b); }
+template<class V> V zip2_lo(V a, V b)  { return zip_lo_impl(a, b); }
+template<class V> V zip16_hi(V a, V b) { return zip_hi_impl(a, b); }
+template<class V> V zip8_hi(V a, V b)  { return zip_hi_impl(a, b); }
+template<class V> V zip4_hi(V a, V b)  { return zip_hi_impl(a, b); }
+template<class V> V zip2_hi(V a, V b)  { return zip_hi_impl(a, b); }
 
-template<class V> V zip16_lo(V a, V b) { return null_detail::zip_lo_impl(a, b); }
-template<class V> V zip8_lo(V a, V b)  { return null_detail::zip_lo_impl(a, b); }
-template<class V> V zip4_lo(V a, V b)  { return null_detail::zip_lo_impl(a, b); }
-template<class V> V zip2_lo(V a, V b)  { return null_detail::zip_lo_impl(a, b); }
-template<class V> V zip16_hi(V a, V b) { return null_detail::zip_hi_impl(a, b); }
-template<class V> V zip8_hi(V a, V b)  { return null_detail::zip_hi_impl(a, b); }
-template<class V> V zip4_hi(V a, V b)  { return null_detail::zip_hi_impl(a, b); }
-template<class V> V zip2_hi(V a, V b)  { return null_detail::zip_hi_impl(a, b); }
-
-template<class V> V unzip16_lo(V a, V b) { return null_detail::unzip_lo_impl(a, b); }
-template<class V> V unzip8_lo(V a, V b)  { return null_detail::unzip_lo_impl(a, b); }
-template<class V> V unzip4_lo(V a, V b)  { return null_detail::unzip_lo_impl(a, b); }
-template<class V> V unzip2_lo(V a, V b)  { return null_detail::unzip_lo_impl(a, b); }
-template<class V> V unzip16_hi(V a, V b) { return null_detail::unzip_hi_impl(a, b); }
-template<class V> V unzip8_hi(V a, V b)  { return null_detail::unzip_hi_impl(a, b); }
-template<class V> V unzip4_hi(V a, V b)  { return null_detail::unzip_hi_impl(a, b); }
-template<class V> V unzip2_hi(V a, V b)  { return null_detail::unzip_hi_impl(a, b); }
+template<class V> V unzip16_lo(V a, V b) { return unzip_lo_impl(a, b); }
+template<class V> V unzip8_lo(V a, V b)  { return unzip_lo_impl(a, b); }
+template<class V> V unzip4_lo(V a, V b)  { return unzip_lo_impl(a, b); }
+template<class V> V unzip2_lo(V a, V b)  { return unzip_lo_impl(a, b); }
+template<class V> V unzip16_hi(V a, V b) { return unzip_hi_impl(a, b); }
+template<class V> V unzip8_hi(V a, V b)  { return unzip_hi_impl(a, b); }
+template<class V> V unzip4_hi(V a, V b)  { return unzip_hi_impl(a, b); }
+template<class V> V unzip2_hi(V a, V b)  { return unzip_hi_impl(a, b); }
 
 template<unsigned pos, class V>
 V splat(V v)
@@ -121,13 +118,11 @@ template<class V>
 V blend(V on, V off, V mask)
 {
     V r;
-     on = null::bit_and(on, mask);
-    off = null::bit_andnot(off, mask);
-      r = null::bit_or(on, off);
+     on = detail::null::bit_and(on, mask);
+    off = detail::null::bit_andnot(off, mask);
+      r = detail::null::bit_or(on, off);
     return r;
 }
-
-namespace detail_null {
 
 template<unsigned L> struct blend_mask_impl {
     template<class V, class M>
@@ -173,12 +168,10 @@ template<> struct blend_mask_impl<4> {
     }
 };
 
-} // namespace detail_null
-
 template<class V, class M>
 V blend_mask(V on, V off, M mask)
 {
-    return detail_null::blend_mask_impl<V::length>::run(on, off, mask);
+    return blend_mask_impl<V::length>::run(on, off, mask);
 }
 
 template<unsigned s0, unsigned s1, class V>
@@ -230,6 +223,7 @@ V shuffle2(V a, V b)
 }
 
 } // namespace null
+} // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

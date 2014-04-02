@@ -385,15 +385,15 @@
 #include <simdpp/neon/memory_store.h>
 #include <simdpp/neon/shuffle.h>
 
-#include <simdpp/null/bitwise.h>
-#include <simdpp/null/compare.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/mask.h>
-#include <simdpp/null/math.h>
-#include <simdpp/null/memory.h>
-#include <simdpp/null/set.h>
-#include <simdpp/null/shuffle.h>
-#include <simdpp/null/transpose.h>
+#include <simdpp/detail/null/bitwise.h>
+#include <simdpp/detail/null/compare.h>
+#include <simdpp/detail/null/foreach.h>
+#include <simdpp/detail/null/mask.h>
+#include <simdpp/detail/null/math.h>
+#include <simdpp/detail/null/memory.h>
+#include <simdpp/detail/null/set.h>
+#include <simdpp/detail/null/shuffle.h>
+#include <simdpp/detail/null/transpose.h>
 
 #include <simdpp/sse/cache.h>
 #include <simdpp/sse/compare.h>

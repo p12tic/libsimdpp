@@ -17,7 +17,7 @@
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/detail/insn/mem_unpack.h>
 #include <simdpp/adv/transpose.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -46,7 +46,7 @@ void v_load_u(V& a, const char* p);
 inline uint8x16 i_load_u(uint8x16& a, const void* p)
 {
 #if SIMDPP_USE_NULL
-    null::load(a, p);
+    detail::null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
     a = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
@@ -106,7 +106,7 @@ inline float32x4 i_load_u(float32x4& a, const void* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
 #if SIMDPP_USE_NULL
-    null::load(a, q);
+    detail::null::load(a, q);
     return a;
 #elif SIMDPP_USE_SSE2
     a = _mm_loadu_ps(q);
@@ -124,7 +124,7 @@ inline float32x4 i_load_u(float32x4& a, const void* p)
 inline float64x2 i_load_u(float64x2& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
-    null::load(a, p);
+    detail::null::load(a, p);
     return a;
 #elif SIMDPP_USE_SSE2
     a = _mm_loadu_pd(reinterpret_cast<const double*>(p));

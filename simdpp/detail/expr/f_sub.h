@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ float32<4> expr_eval(expr_sub<float32<4,E1>,
     float32<4> a = q.a.eval();
     float32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::sub(a, b);
+    return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_sub_ps(a,b);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -67,7 +67,7 @@ float64<2> expr_eval(expr_sub<float64<2,E1>,
     float64<2> a = q.a.eval();
     float64<2> b = q.b.eval();
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::sub(a, b);
+    return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_sub_pd(a, b);
 #endif

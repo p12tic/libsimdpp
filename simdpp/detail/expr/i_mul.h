@@ -18,8 +18,8 @@
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/core/unzip_hi.h>
-#include <simdpp/null/math.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/math.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -35,7 +35,7 @@ uint16<8> expr_eval(expr_mul_lo<uint16<8,E1>,
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::mul(a, b);
+    return detail::null::mul(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_mullo_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -75,7 +75,7 @@ int16<8> expr_eval(expr_mul_hi<int16<8,E1>,
     int16<8> a = q.a.eval();
     int16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){ return (int32_t(a) * b) >> 16; });
+    return detail::null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){ return (int32_t(a) * b) >> 16; });
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -114,7 +114,7 @@ uint16<8> expr_eval(expr_mul_hi<uint16<8,E1>,
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){ return (int64_t(a) * b) >> 16; });
+    return detail::null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){ return (int64_t(a) * b) >> 16; });
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epu16(a, b);
 #elif SIMDPP_USE_NEON
@@ -153,7 +153,7 @@ uint32<4> expr_eval(expr_mul_lo<uint32<4,E1>,
     uint32<4> a = q.a.eval();
     uint32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::mul(a, b);
+    return detail::null::mul(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_mullo_epi32(a, b);
 #elif SIMDPP_USE_SSE2

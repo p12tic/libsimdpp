@@ -23,7 +23,7 @@
 #include <simdpp/core/i_sub.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_int32.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -36,7 +36,7 @@ namespace insn {
 inline float32x4 i_floor(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::floor(x); });
+    return detail::null::foreach<float32x4>(a, [](float x){ return std::floor(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_floor_ps(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP

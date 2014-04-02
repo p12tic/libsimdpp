@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NULL_SET_H
-#define LIBSIMDPP_NULL_SET_H
+#ifndef LIBSIMDPP_DETAIL_NULL_SET_H
+#define LIBSIMDPP_DETAIL_NULL_SET_H
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
@@ -19,6 +19,7 @@ namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+namespace detail {
 namespace null {
 
 template<class V, class E = typename V::element_type>
@@ -99,6 +100,7 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7,
 }
 
 } // namespace null
+} // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/i_sub.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ int8<16> expr_eval(expr_neg<int8<16,E>> q)
 {
     int8<16> a = q.a.eval();
 #if SIMDPP_USE_NULL
-    return null::neg(a);
+    return detail::null::neg(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(int8x16::zero(), a);
 #elif SIMDPP_USE_NEON
@@ -59,7 +59,7 @@ int16<8> expr_eval(expr_neg<int16<8,E>> q)
 {
     int16<8> a = q.a.eval();
 #if SIMDPP_USE_NULL
-    return null::neg(a);
+    return detail::null::neg(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(int16x8::zero(), a);
 #elif SIMDPP_USE_NEON
@@ -90,7 +90,7 @@ int32<4> expr_eval(expr_neg<int32<4,E>> q)
 {
     int32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL
-    return null::neg(a);
+    return detail::null::neg(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(int32x4::zero(), a);
 #elif SIMDPP_USE_NEON
@@ -121,7 +121,7 @@ int64<2> expr_eval(expr_neg<int64<2,E>> q)
 {
     int64<2> a = q.a.eval();
 #if SIMDPP_USE_NULL
-    return null::neg(a);
+    return detail::null::neg(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return sub(int64x2::zero(), a);
 #endif

@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NULL_COMPARE_H
-#define LIBSIMDPP_NULL_COMPARE_H
+#ifndef LIBSIMDPP_DETAIL_NULL_COMPARE_H
+#define LIBSIMDPP_DETAIL_NULL_COMPARE_H
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
@@ -14,12 +14,13 @@
 #endif
 
 #include <simdpp/detail/mem_block.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+namespace detail {
 namespace null {
 
 template<class V>
@@ -83,6 +84,7 @@ typename V::mask_vector_type cmp_ge(V a, V b)
 }
 
 } // namespace null
+} // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

@@ -15,8 +15,8 @@
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int32x4.h>
 #include <simdpp/altivec/load1.h>
-#include <simdpp/null/mask.h>
-#include <simdpp/null/set.h>
+#include <simdpp/detail/null/mask.h>
+#include <simdpp/detail/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -31,7 +31,7 @@ inline uint8<16> uint8<16>::ones() { return make_uint(0xff); }
 inline uint8<16> mask_int8<16>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<uint8<16>>(*this);
+    return detail::null::unmask_mask<uint8<16>>(*this);
 #else
     return uint8<16>(d_);
 #endif

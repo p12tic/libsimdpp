@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
-    #include <simdpp/null/math.h>
+    #include <simdpp/detail/null/math.h>
 #endif
 
 namespace simdpp {
@@ -30,7 +30,7 @@ float32<4> expr_eval(expr_mul<float32<4,E1>,
     float32<4> a = q.a.eval();
     float32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::mul(a, b);
+    return detail::null::mul(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_mul_ps(a,b);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -70,7 +70,7 @@ float64<2> expr_eval(expr_mul<float64<2,E1>,
     float64<2> a = q.a.eval();
     float64<2> b = q.b.eval();
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::mul(a, b);
+    return detail::null::mul(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_mul_pd(a, b);
 #endif

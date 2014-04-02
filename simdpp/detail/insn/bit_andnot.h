@@ -13,8 +13,8 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/bitwise.h>
+#include <simdpp/detail/null/foreach.h>
+#include <simdpp/detail/null/bitwise.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -27,7 +27,7 @@ namespace insn {
 inline uint8x16 i_bit_andnot(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot(uint8x16(a), uint8x16(b));
+    return detail::null::bit_andnot(uint8x16(a), uint8x16(b));
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_si128(b, a);
 #elif SIMDPP_USE_NEON
@@ -86,7 +86,7 @@ uint64<N> i_bit_andnot(uint64<N> a, uint64<N> b) { return (uint64<N>) i_bit_andn
 inline uint8x16 i_bit_andnot(uint8x16 a, mask_int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
+    return detail::null::bit_andnot_vm(a, b);
 #else
     return i_bit_andnot(a, uint8x16(b));
 #endif
@@ -95,7 +95,7 @@ inline uint8x16 i_bit_andnot(uint8x16 a, mask_int8x16 b)
 inline uint16x8 i_bit_andnot(uint16x8 a, mask_int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
+    return detail::null::bit_andnot_vm(a, b);
 #else
     return (uint16x8)i_bit_andnot(uint8x16(a), uint8x16(b));
 #endif
@@ -104,7 +104,7 @@ inline uint16x8 i_bit_andnot(uint16x8 a, mask_int16x8 b)
 inline uint32x4 i_bit_andnot(uint32x4 a, mask_int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
+    return detail::null::bit_andnot_vm(a, b);
 #else
     return (uint32x4)i_bit_andnot(uint8x16(a), uint8x16(b));
 #endif
@@ -113,7 +113,7 @@ inline uint32x4 i_bit_andnot(uint32x4 a, mask_int32x4 b)
 inline uint64x2 i_bit_andnot(uint64x2 a, mask_int64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
+    return detail::null::bit_andnot_vm(a, b);
 #else
     return (uint64x2)i_bit_andnot(uint8x16(a), uint8x16(b));
 #endif
@@ -157,7 +157,7 @@ uint64<N> i_bit_andnot(uint64<N> a, mask_int64<N> b)
 inline mask_int8x16 i_bit_andnot(mask_int8x16 a, mask_int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
+    return detail::null::bit_andnot_mm(a, b);
 #else
     return (mask_int8x16)i_bit_andnot(uint8x16(a), uint8x16(b));
 #endif
@@ -166,7 +166,7 @@ inline mask_int8x16 i_bit_andnot(mask_int8x16 a, mask_int8x16 b)
 inline mask_int16x8 i_bit_andnot(mask_int16x8 a, mask_int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
+    return detail::null::bit_andnot_mm(a, b);
 #else
     return (mask_int16x8)i_bit_andnot(uint16x8(a), uint16x8(b));
 #endif
@@ -175,7 +175,7 @@ inline mask_int16x8 i_bit_andnot(mask_int16x8 a, mask_int16x8 b)
 inline mask_int32x4 i_bit_andnot(mask_int32x4 a, mask_int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
+    return detail::null::bit_andnot_mm(a, b);
 #else
     return (mask_int32x4)i_bit_andnot(uint32x4(a), uint32x4(b));
 #endif
@@ -184,7 +184,7 @@ inline mask_int32x4 i_bit_andnot(mask_int32x4 a, mask_int32x4 b)
 inline mask_int64x2 i_bit_andnot(mask_int64x2 a, mask_int64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
+    return detail::null::bit_andnot_mm(a, b);
 #else
     return (mask_int64x2)i_bit_andnot(uint64x2(a), uint64x2(b));
 #endif
@@ -224,7 +224,7 @@ mask_int64<N> i_bit_andnot(mask_int64<N> a, mask_int64<N> b)
 inline float32x4 i_bit_andnot(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot(a, b);
+    return detail::null::bit_andnot(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_ps(b, a);
 #elif SIMDPP_USE_NEON
@@ -257,7 +257,7 @@ float32<N> i_bit_andnot(float32<N> a, uint32<N> b)
 inline float32x4 i_bit_andnot(float32x4 a, mask_float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_vm(a, b);
+    return detail::null::bit_andnot_vm(a, b);
 #else
     return i_bit_andnot(a, float32x4(b));
 #endif
@@ -279,7 +279,7 @@ inline float32<N> i_bit_andnot(float32<N> a, mask_float32<N> b)
 inline mask_float32x4 i_bit_andnot(mask_float32x4 a, mask_float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_andnot_mm(a, b);
+    return detail::null::bit_andnot_mm(a, b);
 #else
     return (mask_float32x4) i_bit_andnot(float32x4(a), float32x4(b));
 #endif
@@ -303,7 +303,7 @@ inline mask_float32<N> i_bit_andnot(mask_float32<N> a, mask_float32<N> b)
 inline float64x2 i_bit_andnot(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_andnot(a, b);
+    return detail::null::bit_andnot(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_pd(b, a);
 #endif
@@ -331,7 +331,7 @@ float64<N> i_bit_andnot(float64<N> a, uint64<N> b)
 inline float64x2 i_bit_andnot(float64x2 a, mask_float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_andnot_vm(a, b);
+    return detail::null::bit_andnot_vm(a, b);
 #else
     return i_bit_andnot(a, float64x2(b));
 #endif
@@ -353,7 +353,7 @@ inline float64<N> i_bit_andnot(float64<N> a, mask_float64<N> b)
 inline mask_float64x2 i_bit_andnot(mask_float64x2 a, mask_float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_andnot_mm(a, b);
+    return detail::null::bit_andnot_mm(a, b);
 #else
     return (mask_float64x2) i_bit_andnot(float64x2(a), float64x2(b));
 #endif

@@ -16,7 +16,7 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/core/bit_or.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -29,7 +29,7 @@ namespace insn {
 inline uint8x16 i_blend(uint8x16 on, uint8x16 off, uint8x16 mask)
 {
 #if SIMDPP_USE_NULL
-    return null::blend(on, off, mask);
+    return detail::null::blend(on, off, mask);
 #elif SIMDPP_USE_AVX2
     return _mm_blendv_epi8(off, on, mask);
 #elif SIMDPP_USE_XOP
@@ -53,7 +53,7 @@ inline uint8x16 i_blend(uint8x16 on, uint8x16 off, uint8x16 mask)
 inline uint8x16 i_blend(uint8x16 on, uint8x16 off, mask_int8x16 mask)
 {
 #if SIMDPP_USE_NULL
-    return null::blend_mask(on, off, mask);
+    return detail::null::blend_mask(on, off, mask);
 #else
     return i_blend(uint8x16(on), uint8x16(off), uint8x16(mask));
 #endif
@@ -96,7 +96,7 @@ inline uint16<N> i_blend(uint16<N> on, uint16<N> off, uint16<N> mask)
 template<unsigned N>
 inline uint16<N> i_blend(uint16<N> on, uint16<N> off, mask_int16<N> mask)
 {
-    // FIXME: null::blend_mask(on, off, mask);
+    // FIXME: detail::null::blend_mask(on, off, mask);
     return (uint16<N>) i_blend((uint8<N*2>)on, (uint8<N*2>)off, (uint8<N*2>)mask);
 }
 
@@ -111,7 +111,7 @@ inline uint32<N> i_blend(uint32<N> on, uint32<N> off, uint32<N> mask)
 template<unsigned N>
 inline uint32<N> i_blend(uint32<N> on, uint32<N> off, mask_int32<N> mask)
 {
-    // FIXME: null::blend_mask(on, off, mask);
+    // FIXME: detail::null::blend_mask(on, off, mask);
     return (uint32<N>) i_blend((uint8<N*4>)on, (uint8<N*4>)off, (uint8<N*4>)mask);
 }
 
@@ -126,7 +126,7 @@ inline uint64<N> i_blend(uint64<N> on, uint64<N> off, uint64<N> mask)
 template<unsigned N>
 inline uint64<N> i_blend(uint64<N> on, uint64<N> off, mask_int64<N> mask)
 {
-    // FIXME: null::blend_mask(on, off, mask);
+    // FIXME: detail::null::blend_mask(on, off, mask);
     return (uint64<N>) i_blend((uint8<N*8>)on, (uint8<N*8>)off, (uint8<N*8>)mask);
 }
 
@@ -135,7 +135,7 @@ inline uint64<N> i_blend(uint64<N> on, uint64<N> off, mask_int64<N> mask)
 inline float32x4 i_blend(float32x4 on, float32x4 off, float32x4 mask)
 {
 #if SIMDPP_USE_NULL
-    return null::blend(on, off, mask);
+    return detail::null::blend(on, off, mask);
 #elif SIMDPP_USE_AVX
     return _mm_blendv_ps(off, on, mask);
 #elif SIMDPP_USE_SSE2
@@ -174,7 +174,7 @@ inline float32<N> i_blend(float32<N> on, float32<N> off, uint32<N> mask)
 inline float32x4 i_blend(float32x4 on, float32x4 off, mask_float32x4 mask)
 {
 #if SIMDPP_USE_NULL
-    return null::blend_mask(on, off, mask);
+    return detail::null::blend_mask(on, off, mask);
 #else
     return i_blend(on, off, uint32x4(mask));
 #endif
@@ -198,7 +198,7 @@ float32<N> i_blend(float32<N> on, float32<N> off, mask_float32<N> mask)
 inline float64x2 i_blend(float64x2 on, float64x2 off, float64x2 mask)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::blend(on, off, mask);
+    return detail::null::blend(on, off, mask);
 #elif SIMDPP_USE_AVX
     return _mm_blendv_pd(off, on, mask);
 #elif SIMDPP_USE_SSE2
@@ -232,7 +232,7 @@ inline float64<N> i_blend(float64<N> on, float64<N> off, uint64<N> mask)
 inline float64x2 i_blend(float64x2 on, float64x2 off, mask_float64x2 mask)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::blend_mask(on, off, mask);
+    return detail::null::blend_mask(on, off, mask);
 #else
     return i_blend(on, off, uint64x2(mask));
 #endif

@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ int8<16> expr_eval(expr_sub_sat<int8<16,E1>,
     int8<16> a = q.a.eval();
     int8<16> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::sub_sat(a, b);
+    return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_subs_epi8(a, b);
 #elif SIMDPP_USE_NEON
@@ -67,7 +67,7 @@ int16<8> expr_eval(expr_sub_sat<int16<8,E1>,
     int16<8> a = q.a.eval();
     int16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::sub_sat(a, b);
+    return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_subs_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -106,7 +106,7 @@ uint8<16> expr_eval(expr_sub_sat<uint8<16,E1>,
     uint8<16> a = q.a.eval();
     uint8<16> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::sub_sat(a, b);
+    return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_subs_epu8(a, b);
 #elif SIMDPP_USE_NEON
@@ -145,7 +145,7 @@ uint16<8> expr_eval(expr_sub_sat<uint16<8,E1>,
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::sub_sat(a, b);
+    return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_subs_epu16(a, b);
 #elif SIMDPP_USE_NEON

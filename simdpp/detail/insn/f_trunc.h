@@ -15,7 +15,7 @@
 #include <cmath>
 #include <simdpp/types.h>
 #include <simdpp/core/f_ceil.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ namespace insn {
 inline float32x4 i_trunc(float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
+    return detail::null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_round_ps(a, 3); // 3 = i_truncate
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP

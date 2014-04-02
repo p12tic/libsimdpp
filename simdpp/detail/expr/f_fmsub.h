@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 #include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
@@ -31,7 +31,7 @@ float32<4> expr_eval(expr_fmsub<float32<4,E1>,
     float32<4> b = q.b.eval();
     float32<4> c = q.c.eval();
 #if SIMDPP_USE_NULL
-    return null::fmsub(a, b, c);
+    return detail::null::fmsub(a, b, c);
 #elif SIMDPP_USE_FMA3
     return _mm_fmsub_ps(a, b, c);
 #elif SIMDPP_USE_FMA4
@@ -82,7 +82,7 @@ float64<2> expr_eval(expr_fmsub<float64<2,E1>,
     float64<2> b = q.b.eval();
     float64<2> c = q.c.eval();
 #if SIMDPP_USE_NULL
-    return null::fmsub(a, b, c);
+    return detail::null::fmsub(a, b, c);
 #elif SIMDPP_USE_FMA3
     return _mm_fmsub_pd(a, b, c);
 #elif SIMDPP_USE_FMA4

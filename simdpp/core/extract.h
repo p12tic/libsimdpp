@@ -16,7 +16,7 @@
 #include <simdpp/core/cast.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/i_shift_l.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -277,7 +277,7 @@ inline uint16_t extract_bits_any(uint8x16 a)
     // extract_bits_impl depends on the exact implementation of this function
 #if SIMDPP_USE_NULL
     uint16_t r = 0;
-    null::foreach<uint8x16>(a, [&r](uint8_t x){
+    detail::null::foreach<uint8x16>(a, [&r](uint8_t x){
         x = x & 1;
         r = (r >> 1) | (uint16_t(x) << 15);
         return 0; // dummy
@@ -327,7 +327,7 @@ uint16_t extract_bits(uint8x16 a)
     static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
     uint16_t r = 0;
-    null::foreach<uint8x16>(a, [&r](uint8_t x){
+    detail::null::foreach<uint8x16>(a, [&r](uint8_t x){
         x = (x >> id) & 1;
         r = (r >> 1) | (uint16_t(x) << 15);
         return 0; // dummy

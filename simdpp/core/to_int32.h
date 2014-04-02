@@ -19,7 +19,7 @@
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -98,7 +98,7 @@ inline int32x8 to_int32(int16x8 a)
 inline int32x4 to_int32(float32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
+    return detail::null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
 #elif SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP

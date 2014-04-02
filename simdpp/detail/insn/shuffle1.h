@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 #include <simdpp/sse/shuffle.h>
 #include <simdpp/neon/detail/shuffle_int16x8.h>
 #include <simdpp/neon/detail/shuffle_int32x4.h>
@@ -75,7 +75,7 @@ uint64x2 i_shuffle1(uint64x2 a, uint64x2 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_NULL
-    return null::shuffle1<s0,s1>(a, b);
+    return detail::null::shuffle1<s0,s1>(a, b);
 #elif SIMDPP_USE_SSE2
     // We can't do this in the integer execution domain. Beware of additional latency
     return int64x2(i_shuffle1<s0,s1>(float64x2(a), float64x2(b)));

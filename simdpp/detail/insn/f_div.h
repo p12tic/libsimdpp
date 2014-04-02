@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/f_rcp_e.h>
 #include <simdpp/core/f_rcp_rh.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ namespace insn {
 inline float32x4 i_div(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
+    return detail::null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_ps(a, b);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -64,7 +64,7 @@ float32<N> i_div(float32<N> a, float32<N> b)
 inline float64x2 i_div(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
+    return detail::null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
 #endif

@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/blend.h>
 #include <simdpp/core/cmp_lt.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ namespace insn {
 inline int8x16 i_min(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epi8(a, b);
 #elif SIMDPP_USE_SSE2
@@ -59,7 +59,7 @@ int8<N> i_min(int8<N> a, int8<N> b)
 inline uint8x16 i_min(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_min_epu8(a, b);
 #elif SIMDPP_USE_NEON
@@ -87,7 +87,7 @@ uint8<N> i_min(uint8<N> a, uint8<N> b)
 inline int16x8 i_min(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_min_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -115,7 +115,7 @@ int16<N> i_min(int16<N> a, int16<N> b)
 inline uint16x8 i_min(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epu16(a, b);
 #elif SIMDPP_USE_SSE2
@@ -146,7 +146,7 @@ uint16<N> i_min(uint16<N> a, uint16<N> b)
 inline int32x4 i_min(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epi32(a, b);
 #elif SIMDPP_USE_SSE2
@@ -177,7 +177,7 @@ int32<N> i_min(int32<N> a, int32<N> b)
 inline uint32x4 i_min(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epu32(a, b);
 #elif SIMDPP_USE_SSE2

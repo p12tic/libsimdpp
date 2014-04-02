@@ -188,7 +188,7 @@ inline float64x2 sub_add(float64x2 a, float64x2 b)
 inline float64x2 floor(float64x2 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<float64x2>(a, [](double x){ return std::floor(x); });
+    return detail::null::foreach<float64x2>(a, [](double x){ return std::floor(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_floor_pd(a);
 #elif SIMDPP_USE_SSE2
@@ -222,7 +222,7 @@ inline float64x2 floor(float64x2 a)
 inline float64x2 ceil(float64x2 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<float64x2>(a, [](float x){ return std::ceil(x); });
+    return detail::null::foreach<float64x2>(a, [](float x){ return std::ceil(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_ceil_pd(a);
 #elif SIMDPP_USE_SSE2
@@ -258,7 +258,7 @@ inline float64x2 ceil(float64x2 a)
 inline float64x2 trunc(float64x2 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<float64x2>(a, [](double x){ return std::trunc(x); });
+    return detail::null::foreach<float64x2>(a, [](double x){ return std::trunc(x); });
 #elif SIMDPP_USE_SSE4_1
     //use floor to implement trunc
     float64x2 s = sign(a);

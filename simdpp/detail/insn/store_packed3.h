@@ -16,7 +16,7 @@
 #include <simdpp/detail/align.h>
 #include <simdpp/detail/insn/mem_pack.h>
 #include <simdpp/core/store.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -38,7 +38,7 @@ inline void i_store_packed3(char* p,
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed3(p, a, b, c);
+    detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack3(a, b, c);
     i_store(p, a);
@@ -75,7 +75,7 @@ inline void i_store_packed3(char* p,
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed3(p, a, b, c);
+    detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack3(a, b, c);
     i_store(p, a);
@@ -112,7 +112,7 @@ inline void i_store_packed3(char* p,
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed3(p, a, b, c);
+    detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack3(a, b, c);
     i_store(p, a);
@@ -149,7 +149,7 @@ inline void i_store_packed3(char* p,
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed3(p, a, b, c);
+    detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack3(a, b, c);
     i_store(p, a);
@@ -189,7 +189,7 @@ inline void i_store_packed3(char* p, float32x4 a, float32x4 b, float32x4 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed3(p, a, b, c);
+    detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack3(a, b, c);
     i_store(p, a);
@@ -225,7 +225,7 @@ inline void i_store_packed3(char* p, float64x2 a, float64x2 b, float64x2 c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
-    null::store_packed3(p, a, b, c);
+    detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2
     mem_pack3(a, b, c);
     i_store(p, a);

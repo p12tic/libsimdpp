@@ -18,7 +18,7 @@
 #include <simdpp/core/cmp_neq.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_sub.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -31,7 +31,7 @@ uint8<16> expr_eval(expr_abs<int8<16,E>> q)
 {
     int8<16> a = q.a.eval();
 #if SIMDPP_USE_NULL
-    return null::abs(a);
+    return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
     return _mm_abs_epi8(a);
 #elif SIMDPP_USE_SSE2
@@ -71,7 +71,7 @@ uint16<8> expr_eval(expr_abs<int16<8,E>> q)
 {
     int16<8> a = q.a.eval();
 #if SIMDPP_USE_NULL
-    return null::abs(a);
+    return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
     return _mm_abs_epi16(a);
 #elif SIMDPP_USE_SSE2
@@ -111,7 +111,7 @@ uint32<4> expr_eval(expr_abs<int32<4,E>> q)
 {
     int32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL
-    return null::abs(a);
+    return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
     return _mm_abs_epi32(a);
 #elif SIMDPP_USE_SSE2
@@ -151,7 +151,7 @@ uint64<2> expr_eval(expr_abs<int64<2,E>> q)
 {
     int64<2> a = q.a.eval();
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::abs(a);
+    return detail::null::abs(a);
 #elif SIMDPP_USE_SSE2
     float64x2 ta;
     int64x2 t;

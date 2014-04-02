@@ -18,8 +18,8 @@
 #include <simdpp/core/make_float.h>
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     #include <cmath>
-    #include <simdpp/null/foreach.h>
-    #include <simdpp/null/math.h>
+    #include <simdpp/detail/null/foreach.h>
+    #include <simdpp/detail/null/math.h>
 #endif
 
 namespace simdpp {
@@ -33,7 +33,7 @@ namespace insn {
 inline float32x4 i_rcp_rh(float32x4 x, float32x4 a)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
+    return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
 #elif SIMDPP_USE_SSE2
     float32x4 c2, r;
     c2 = make_float(2.0f);

@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/detail/insn/shuffle_emul.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 #include <simdpp/sse/shuffle.h>
 #include <simdpp/neon/detail/shuffle_int16x8.h>
 #include <simdpp/neon/detail/shuffle_int32x4.h>
@@ -41,7 +41,7 @@ uint16x8 i_permute4(uint16x8 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
-    return null::permute<s0,s1,s2,s3>(a);
+    return detail::null::permute<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_SSE2
     a = sse::permute_lo<s0,s1,s2,s3>(a);
     a = sse::permute_hi<s0,s1,s2,s3>(a);
@@ -80,7 +80,7 @@ uint32x4 i_permute4(uint32x4 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
-    return null::permute<s0,s1,s2,s3>(a);
+    return detail::null::permute<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_SSE2
     return _mm_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
@@ -115,7 +115,7 @@ float32x4 i_permute4(float32x4 a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
-    return null::permute<s0,s1,s2,s3>(a);
+    return detail::null::permute<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_SSE2
     return _mm_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON

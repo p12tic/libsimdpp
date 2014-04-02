@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/neon/shuffle.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -27,7 +27,7 @@ namespace insn {
 inline uint8x16 i_zip16_hi(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip16_hi(a, b);
+    return detail::null::zip16_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpackhi_epi8(a, b);
 #elif SIMDPP_USE_NEON
@@ -57,7 +57,7 @@ uint8<N> i_zip16_hi(uint8<N> a, uint8<N> b)
 inline uint16x8 i_zip8_hi(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip8_hi(a, b);
+    return detail::null::zip8_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpackhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -85,7 +85,7 @@ uint16<N> i_zip8_hi(uint16<N> a, uint16<N> b)
 inline uint32x4 i_zip4_hi(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip4_hi(a, b);
+    return detail::null::zip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpackhi_epi32(a, b);
 #elif SIMDPP_USE_NEON
@@ -113,7 +113,7 @@ uint32<N> i_zip4_hi(uint32<N> a, uint32<N> b)
 inline uint64x2 i_zip2_hi(uint64x2 a, uint64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip2_hi(a, b);
+    return detail::null::zip2_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpackhi_epi64(a, b);
 #elif SIMDPP_USE_NEON
@@ -142,7 +142,7 @@ uint64<N> i_zip2_hi(uint64<N> a, uint64<N> b)
 inline float32x4 i_zip4_hi(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip4_hi(a, b);
+    return detail::null::zip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpackhi_ps(a, b);
 #elif SIMDPP_USE_NEON
@@ -170,7 +170,7 @@ float32<N> i_zip4_hi(float32<N> a, float32<N> b)
 inline float64x2 i_zip2_hi(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::zip2_hi(a, b);
+    return detail::null::zip2_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b),
                                        _mm_castpd_ps(a)));

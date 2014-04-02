@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NULL_BITWISE_H
-#define LIBSIMDPP_NULL_BITWISE_H
+#ifndef LIBSIMDPP_DETAIL_NULL_BITWISE_H
+#define LIBSIMDPP_DETAIL_NULL_BITWISE_H
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
@@ -15,12 +15,13 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/cast.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+namespace detail {
 namespace null {
 
 /* *_vm variants accept a vector as the first argument and a mask as the second
@@ -157,6 +158,7 @@ M bit_not_mm(M a)
 }
 
 } // namespace null
+} // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

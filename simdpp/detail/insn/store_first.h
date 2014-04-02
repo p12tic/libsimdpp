@@ -19,7 +19,7 @@
 #include <simdpp/core/load_u.h>
 #include <simdpp/core/store.h>
 #include <simdpp/neon/memory_store.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 #include <simdpp/sse/extract_half.h>
 #include <simdpp/sse/memory_store.h>
 
@@ -39,7 +39,7 @@ inline void i_store_first(char* p, uint8x16 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
+    detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     static const uint8_t mask_d[32] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
@@ -82,7 +82,7 @@ inline void i_store_first(char* p, uint16x8 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
+    detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     i_store_first(p, (uint8x16)a, n*2);
 #endif
@@ -107,7 +107,7 @@ inline void i_store_first(char* p, uint32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
+    detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     i_store_first(p, (uint8x16)a, n*4);
 #endif
@@ -132,7 +132,7 @@ inline void i_store_first(char* p, uint64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_first(p, a, n);
+    detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
         sse::store_lane<0,1>(p, a);
@@ -219,7 +219,7 @@ inline void i_store_first(char* p, float64x2 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    null::store_first(p, a, n);
+    detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
         sse::store_lane<0,1>(p, a);

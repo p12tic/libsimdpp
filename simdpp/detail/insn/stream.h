@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/align.h>
 #include <simdpp/core/store.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -32,7 +32,7 @@ inline void i_stream(char* p, uint8<16> a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store(p, a);
+    detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
@@ -70,7 +70,7 @@ inline void i_stream(char* p, float32x4 a)
     float* q = reinterpret_cast<float*>(p);
     q = detail::assume_aligned(q, 16);
 #if SIMDPP_USE_NULL
-    null::store(q, a);
+    detail::null::store(q, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_ps(q, a);
 #elif SIMDPP_USE_NEON
@@ -100,7 +100,7 @@ inline void i_stream(char* p, float64x2 a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    null::store(p, a);
+    detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_pd(reinterpret_cast<double*>(p), a);
 #endif

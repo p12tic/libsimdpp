@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/bit_and.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

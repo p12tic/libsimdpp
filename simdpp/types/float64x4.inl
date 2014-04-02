@@ -14,7 +14,7 @@
 
 #include <simdpp/types/float64x4.h>
 #include <simdpp/core/bit_xor.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ inline float64<4> float64<4>::zero() { return make_uint(0); }
 inline float64<4> mask_float64<4>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<float64<4>>(*this);
+    return detail::null::unmask_mask<float64<4>>(*this);
 #else
     return float64<4>(d_);
 #endif

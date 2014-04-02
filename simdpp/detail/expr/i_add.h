@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ uint8<16> expr_eval(expr_add<uint8<16,E1>,
     uint8<16> a = q.a.eval();
     uint8<16> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::add(a, b);
+    return detail::null::add(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_add_epi8(a, b);
 #elif SIMDPP_USE_NEON
@@ -67,7 +67,7 @@ uint16<8> expr_eval(expr_add<uint16<8,E1>,
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::add(a, b);
+    return detail::null::add(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_add_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -106,7 +106,7 @@ uint32<4> expr_eval(expr_add<uint32<4,E1>,
     uint32<4> a = q.a.eval();
     uint32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::add(a, b);
+    return detail::null::add(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_add_epi32(a, b);
 #elif SIMDPP_USE_NEON
@@ -145,7 +145,7 @@ uint64<2> expr_eval(expr_add<uint64<2,E1>,
     uint64<2> a = q.a.eval();
     uint64<2> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return null::add(a, b);
+    return detail::null::add(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_add_epi64(a, b);
 #elif SIMDPP_USE_NEON

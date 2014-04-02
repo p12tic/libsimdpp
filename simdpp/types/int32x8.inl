@@ -14,7 +14,7 @@
 
 #include <simdpp/types/int32x8.h>
 #include <simdpp/types/float32x8.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -31,7 +31,7 @@ inline uint32<8> uint32<8>::ones() { return make_uint(0xffffffff); }
 inline uint32<8> mask_int32<8>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<uint32<8>>(*this);
+    return detail::null::unmask_mask<uint32<8>>(*this);
 #else
     return uint32<8>(d_);
 #endif

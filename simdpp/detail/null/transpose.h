@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NULL_TRANSPOSE_H
-#define LIBSIMDPP_NULL_TRANSPOSE_H
+#ifndef LIBSIMDPP_DETAIL_NULL_TRANSPOSE_H
+#define LIBSIMDPP_DETAIL_NULL_TRANSPOSE_H
 #if SIMDPP_USE_NULL || defined(DOXYGEN_SHOULD_READ_THIS)
 
 #ifndef LIBSIMDPP_SIMD_H
@@ -20,6 +20,7 @@ namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
+namespace detail {
 namespace null {
 
 template<class V>
@@ -60,6 +61,7 @@ void transpose8(V& a0, V& a1, V& a2, V& a3, V& a4, V& a5, V& a6, V& a7)
 }
 
 } // namespace null
+} // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

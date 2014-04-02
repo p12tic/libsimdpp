@@ -16,7 +16,7 @@
 #include <simdpp/core/bit_not.h>
 #include <simdpp/core/cmp_eq.h>
 #include <simdpp/detail/not_implemented.h>
-#include <simdpp/null/compare.h>
+#include <simdpp/detail/null/compare.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -29,7 +29,7 @@ namespace insn {
 inline mask_int8x16 i_cmp_neq(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_neq(a, b);
+    return detail::null::cmp_neq(a, b);
 #elif SIMDPP_USE_XOP
     return _mm_comneq_epi8(a, b);
 #else
@@ -55,7 +55,7 @@ mask_int8<N> i_cmp_neq(uint8<N> a, uint8<N> b)
 inline mask_int16x8 i_cmp_neq(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_neq(a, b);
+    return detail::null::cmp_neq(a, b);
 #elif SIMDPP_USE_XOP
     return _mm_comneq_epi16(a, b);
 #else
@@ -81,7 +81,7 @@ mask_int16<N> i_cmp_neq(uint16<N> a, uint16<N> b)
 inline mask_int32x4 i_cmp_neq(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_neq(a, b);
+    return detail::null::cmp_neq(a, b);
 #elif SIMDPP_USE_XOP
     return _mm_comneq_epi32(a, b);
 #else
@@ -107,7 +107,7 @@ mask_int32<N> i_cmp_neq(uint32<N> a, uint32<N> b)
 inline mask_int64x2 i_cmp_neq(uint64x2 a, uint64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_neq(a, b);
+    return detail::null::cmp_neq(a, b);
 #elif SIMDPP_USE_XOP
     return _mm_comneq_epi64(a, b);
 #elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON
@@ -151,7 +151,7 @@ mask_int64<N> i_cmp_neq(uint64<N> a, uint64<N> b)
 inline mask_float32x4 i_cmp_neq(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_neq(a, b);
+    return detail::null::cmp_neq(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_NEQ_UQ);
 #elif SIMDPP_USE_SSE2
@@ -179,7 +179,7 @@ mask_float32<N> i_cmp_neq(float32<N> a, float32<N> b)
 inline mask_float64x2 i_cmp_neq(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::cmp_neq(a, b);
+    return detail::null::cmp_neq(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_NEQ_UQ);
 #elif SIMDPP_USE_SSE2

@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types/int16x16.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -30,7 +30,7 @@ inline uint16<16> uint16<16>::ones() { return make_uint(0xffff); }
 inline uint16<16> mask_int16<16>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<uint16<16>>(*this);
+    return detail::null::unmask_mask<uint16<16>>(*this);
 #else
     return uint16<16>(d_);
 #endif

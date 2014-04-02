@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/bit_xor.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -27,7 +27,7 @@ float32<4> expr_eval(expr_neg<float32<4,E>> q)
 {
     float32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::neg(a);
+    return detail::null::neg(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     // reversion of the sign bit required even for NaNs and zeros
     int32x4 zero = make_int(0x80000000);
@@ -61,7 +61,7 @@ float64x2 expr_eval(expr_neg<float64<2,E>> q)
 {
     float64x2 a = q.a.eval();
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::neg(a);
+    return detail::null::neg(a);
 #elif SIMDPP_USE_SSE2
     int64x2 zero = make_int(0x8000000000000000);
     return bit_xor(a, zero);

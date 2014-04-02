@@ -18,7 +18,7 @@
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/adv/detail/transpose.h>
 #include <simdpp/neon/shuffle.h>
-#include <simdpp/null/transpose.h>
+#include <simdpp/detail/null/transpose.h>
 #include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
@@ -55,7 +55,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 inline void transpose2(uint16x8& a0, uint16x8& a1)
 {
 #if SIMDPP_USE_NULL
-    null::transpose2(a0, a1);
+    detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     uint32x4 b0, b1;
     b0 = zip8_lo(a0, a1);
@@ -131,7 +131,7 @@ inline void transpose2(int16x16& a0, int16x16& a1)
 inline void transpose2(uint32x4& a0, uint32x4& a1)
 {
 #if SIMDPP_USE_NULL
-    null::transpose2(a0, a1);
+    detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     uint64x2 b0, b1;
     b0 = zip4_lo(a0, a1);
@@ -207,7 +207,7 @@ inline void transpose2(int32x8& a0, int32x8& a1)
 inline void transpose2(uint64x2& a0, uint64x2& a1)
 {
 #if SIMDPP_USE_NULL
-    null::transpose2(a0, a1);
+    detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     uint64x2 b0;
     b0 = zip2_lo(a0, a1);
@@ -279,7 +279,7 @@ inline void transpose2(int64x4& a0, int64x4& a1)
 inline void transpose2(float32x4& a0, float32x4& a1)
 {
 #if SIMDPP_USE_NULL
-    null::transpose2(a0, a1);
+    detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     float64x2 b0, b1;
     b0 = bit_cast<float64x2>(zip4_lo(a0, a1));
@@ -338,7 +338,7 @@ inline void transpose2(float32x8& a0, float32x8& a1)
 inline void transpose2(float64x2& a0, float64x2& a1)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    null::transpose2(a0, a1);
+    detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     float64x2 b0;
     b0 = zip2_lo(a0, a1);
@@ -400,7 +400,7 @@ inline void transpose4(uint8x16& a0, uint8x16& a1,
     // [c0,c1,c2,c3 ... ]
     // [d0,d1,d2,d3 ... ]
 #if SIMDPP_USE_NULL
-    null::transpose4(a0, a1, a2, a3);
+    detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     uint16x8 b0, b1, b2, b3;
     b0 = zip16_lo(a0, a1);
@@ -511,7 +511,7 @@ inline void transpose4(uint16x8& a0, uint16x8& a1,
                        uint16x8& a2, uint16x8& a3)
 {
 #if SIMDPP_USE_NULL
-    null::transpose4(a0, a1, a2, a3);
+    detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     uint32x4 b0, b1, b2, b3;
     uint64x2 c0, c1, c2, c3;
@@ -658,7 +658,7 @@ inline void transpose4(uint32x4& a0, uint32x4& a1,
                        uint32x4& a2, uint32x4& a3)
 {
 #if SIMDPP_USE_NULL
-    null::transpose4(a0, a1, a2, a3);
+    detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     detail::sse_transpose4x32_impl(a0, a1, a2, a3);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -780,7 +780,7 @@ inline void transpose8(uint8x16& a0, uint8x16& a1,
                        uint8x16& a6, uint8x16& a7)
 {
 #if SIMDPP_USE_NULL
-    null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
+    detail::null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 #elif SIMDPP_USE_SSE2
 
     detail::partial_transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
@@ -951,7 +951,7 @@ inline void transpose8(uint16x8& a0, uint16x8& a1,
     [h0,h1,h2,h3,h4,h5,h6,h7]
     */
 #if SIMDPP_USE_NULL
-    null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
+    detail::null::transpose8(a0, a1, a2, a3, a4, a5, a6, a7);
 #elif SIMDPP_USE_SSE2
     uint32x4 b0, b1, b2, b3, b4, b5, b6, b7;
     b0 = zip8_lo(a0, a1);

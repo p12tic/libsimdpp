@@ -16,8 +16,8 @@
 #include <simdpp/types/float32x4.h>
 #include <simdpp/core/cast.h>
 #include <simdpp/core/permute4.h>
-#include <simdpp/null/mask.h>
-#include <simdpp/null/set.h>
+#include <simdpp/detail/null/mask.h>
+#include <simdpp/detail/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -32,7 +32,7 @@ inline uint32<4> uint32<4>::ones() { return make_uint(0xffffffff); }
 inline uint32<4> mask_int32<4>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<uint32<4>>(*this);
+    return detail::null::unmask_mask<uint32<4>>(*this);
 #else
     return uint32<4>(d_);
 #endif

@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types/int8x32.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -30,7 +30,7 @@ inline uint8<32> uint8<32>::ones() { return make_uint(0xff); }
 inline uint8<32> mask_int8<32>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<uint8<32>>(*this);
+    return detail::null::unmask_mask<uint8<32>>(*this);
 #else
     return uint8<32>(d_);
 #endif

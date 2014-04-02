@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 #include <simdpp/neon/shuffle.h>
 
 namespace simdpp {
@@ -26,7 +26,7 @@ namespace insn {
 inline uint8x16 i_zip16_lo(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip16_lo(a, b);
+    return detail::null::zip16_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi8(a, b);
 #elif SIMDPP_USE_NEON
@@ -56,7 +56,7 @@ uint8<N> i_zip16_lo(uint8<N> a, uint8<N> b)
 inline uint16x8 i_zip8_lo(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip8_lo(a, b);
+    return detail::null::zip8_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -84,7 +84,7 @@ uint16<N> i_zip8_lo(uint16<N> a, uint16<N> b)
 inline uint32x4 i_zip4_lo(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip4_lo(a, b);
+    return detail::null::zip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi32(a, b);
 #elif SIMDPP_USE_NEON
@@ -112,7 +112,7 @@ uint32<N> i_zip4_lo(uint32<N> a, uint32<N> b)
 inline uint64x2 i_zip2_lo(uint64x2 a, uint64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip2_lo(a, b);
+    return detail::null::zip2_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi64(a, b);
 #elif SIMDPP_USE_NEON
@@ -141,7 +141,7 @@ uint64<N> i_zip2_lo(uint64<N> a, uint64<N> b)
 inline float32x4 i_zip4_lo(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::zip4_lo(a, b);
+    return detail::null::zip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_ps(a, b);
 #elif SIMDPP_USE_NEON
@@ -169,7 +169,7 @@ float32<N> i_zip4_lo(float32<N> a, float32<N> b)
 inline float64x2 i_zip2_lo(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return null::zip2_lo(a, b);
+    return detail::null::zip2_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a),
                                        _mm_castpd_ps(b)));

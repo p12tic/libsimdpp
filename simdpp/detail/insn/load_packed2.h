@@ -16,7 +16,7 @@
 #include <simdpp/detail/align.h>
 #include <simdpp/detail/insn/mem_unpack.h>
 #include <simdpp/core/load.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -37,7 +37,7 @@ inline void i_load_packed2(uint8x16& a, uint8x16& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed2(a, b, p);
+    detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -68,7 +68,7 @@ inline void i_load_packed2(uint16x8& a, uint16x8& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed2(a, b, p);
+    detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -99,7 +99,7 @@ inline void i_load_packed2(uint32x4& a, uint32x4& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed2(a, b, p);
+    detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -153,7 +153,7 @@ inline void i_load_packed2(float32x4& a, float32x4& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed2(a, b, p);
+    detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);

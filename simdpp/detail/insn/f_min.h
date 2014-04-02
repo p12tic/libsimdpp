@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -26,7 +26,7 @@ namespace insn {
 inline float32x4 i_min(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_min_ps(a, b);
 #elif SIMDPP_USE_NEON
@@ -54,7 +54,7 @@ float32<N> i_min(float32<N> a, float32<N> b)
 inline float64x2 i_min(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::min(a, b);
+    return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_min_pd(a, b);
 #endif

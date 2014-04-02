@@ -13,8 +13,8 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/bitwise.h>
+#include <simdpp/detail/null/foreach.h>
+#include <simdpp/detail/null/bitwise.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -27,7 +27,7 @@ namespace insn {
 inline uint8x16 i_bit_or(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_or(a, uint8x16(b));
+    return detail::null::bit_or(a, uint8x16(b));
 #elif SIMDPP_USE_SSE2
     return _mm_or_si128(a, b);
 #elif SIMDPP_USE_NEON
@@ -84,7 +84,7 @@ uint64<N> i_bit_or(uint64<N> a, uint64<N> b) { return (uint64<N>) i_bit_or(uint8
 inline mask_int8x16 i_bit_or(mask_int8x16 a, mask_int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
+    return detail::null::bit_or_mm(a, b);
 #else
     return (mask_int8x16)i_bit_or(uint8x16(a), uint8x16(b));
 #endif
@@ -93,7 +93,7 @@ inline mask_int8x16 i_bit_or(mask_int8x16 a, mask_int8x16 b)
 inline mask_int16x8 i_bit_or(mask_int16x8 a, mask_int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
+    return detail::null::bit_or_mm(a, b);
 #else
     return (mask_int16x8)i_bit_or(uint16x8(a), uint16x8(b));
 #endif
@@ -102,7 +102,7 @@ inline mask_int16x8 i_bit_or(mask_int16x8 a, mask_int16x8 b)
 inline mask_int32x4 i_bit_or(mask_int32x4 a, mask_int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
+    return detail::null::bit_or_mm(a, b);
 #else
     return (mask_int32x4)i_bit_or(uint32x4(a), uint32x4(b));
 #endif
@@ -111,7 +111,7 @@ inline mask_int32x4 i_bit_or(mask_int32x4 a, mask_int32x4 b)
 inline mask_int64x2 i_bit_or(mask_int64x2 a, mask_int64x2 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
+    return detail::null::bit_or_mm(a, b);
 #else
     return (mask_int64x2)i_bit_or(uint64x2(a), uint64x2(b));
 #endif
@@ -153,7 +153,7 @@ mask_int64<N> i_bit_or(mask_int64<N> a, mask_int64<N> b)
 inline float32x4 i_bit_or(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_or(a, b);
+    return detail::null::bit_or(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_or_ps(a, b);
 #elif SIMDPP_USE_NEON
@@ -187,7 +187,7 @@ float32<N> i_bit_or(float32<N> a, uint32<N> b)
 inline float64x2 i_bit_or(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_or(a, b);
+    return detail::null::bit_or(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_or_pd(a, b);
 #endif
@@ -217,7 +217,7 @@ float64<N> i_bit_or(float64<N> a, uint64<N> b)
 inline mask_float32x4 i_bit_or(mask_float32x4 a, mask_float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::bit_or_mm(a, b);
+    return detail::null::bit_or_mm(a, b);
 #else
     return (mask_float32x4)i_bit_or(float32x4(a), float32x4(b));
 #endif
@@ -226,7 +226,7 @@ inline mask_float32x4 i_bit_or(mask_float32x4 a, mask_float32x4 b)
 inline mask_float64x2 i_bit_or(mask_float64x2 a, mask_float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::bit_or_mm(a, b);
+    return detail::null::bit_or_mm(a, b);
 #else
     return (mask_float64x2) i_bit_or(float64x2(a), float64x2(b));
 #endif

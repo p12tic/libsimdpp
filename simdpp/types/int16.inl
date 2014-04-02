@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types/int16.h>
-#include <simdpp/null/mask.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

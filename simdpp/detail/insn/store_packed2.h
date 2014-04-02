@@ -16,7 +16,7 @@
 #include <simdpp/detail/align.h>
 #include <simdpp/detail/insn/mem_pack.h>
 #include <simdpp/core/store.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -37,7 +37,7 @@ inline void i_store_packed2(char* p, uint8x16 a, uint8x16 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed2(p, a, b);
+    detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack2(a, b);
     i_store(p, a);
@@ -69,7 +69,7 @@ inline void i_store_packed2(char* p, uint16x8 a, uint16x8 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed2(p, a, b);
+    detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack2(a, b);
     i_store(p, a);
@@ -101,7 +101,7 @@ inline void i_store_packed2(char* p, uint32x4 a, uint32x4 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed2(p, a, b);
+    detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack2(a, b);
     i_store(p, a);
@@ -156,7 +156,7 @@ inline void i_store_packed2(char* p, float32x4 a, float32x4 b)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store_packed2(p, a, b);
+    detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     mem_pack2(a, b);
     i_store(p, a);

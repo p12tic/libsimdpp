@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/core/zip_hi.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -27,7 +27,7 @@ namespace insn {
 inline uint8x16 i_unzip16_hi(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip16_hi(a, b);
+    return detail::null::unzip16_hi(a, b);
 #elif SIMDPP_USE_SSE2
     a = _mm_srai_epi16(a, 8);
     b = _mm_srai_epi16(b, 8);
@@ -61,7 +61,7 @@ uint8<N> i_unzip16_hi(uint8<N> a, uint8<N> b)
 inline uint16x8 i_unzip8_hi(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip8_hi(a, b);
+    return detail::null::unzip8_hi(a, b);
 #elif SIMDPP_USE_SSE2
     a = _mm_srai_epi32(a, 16);
     b = _mm_srai_epi32(b, 16);
@@ -95,7 +95,7 @@ uint16<N> i_unzip8_hi(uint16<N> a, uint16<N> b)
 inline uint32x4 i_unzip4_hi(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip4_hi(a, b);
+    return detail::null::unzip4_hi(a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return shuffle2<1,3,1,3>(a, b);
 #elif SIMDPP_USE_NEON
@@ -129,7 +129,7 @@ uint64<N> i_unzip2_hi(uint64<N> a, uint64<N> b)
 inline float32x4 i_unzip4_hi(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip4_hi(a, b);
+    return detail::null::unzip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return shuffle2<1,3,1,3>(a,b);
 #elif SIMDPP_USE_NEON

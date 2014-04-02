@@ -14,7 +14,7 @@
 #include <simdpp/core/permute_bytes16.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
-#include <simdpp/null/transpose.h>
+#include <simdpp/detail/null/transpose.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

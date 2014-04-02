@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 #include <simdpp/detail/align.h>
 
 namespace simdpp {
@@ -31,7 +31,7 @@ inline void i_store(char* p, uint8x16 a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::store(p, a);
+    detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
@@ -67,7 +67,7 @@ inline void i_store(char* p, float32x4 a)
     float* q = reinterpret_cast<float*>(p);
     q = detail::assume_aligned(q, 16);
 #if SIMDPP_USE_NULL
-    null::store(q, a);
+    detail::null::store(q, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_ps(q, a);
 #elif SIMDPP_USE_NEON
@@ -96,7 +96,7 @@ inline void i_store(char* p, float64x2 a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    null::store(p, a);
+    detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_pd(reinterpret_cast<double*>(p), a);
 #endif

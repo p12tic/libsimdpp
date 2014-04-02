@@ -17,7 +17,7 @@
 #include <simdpp/core/make_uint.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/bit_xor.h>
-#include <simdpp/null/compare.h>
+#include <simdpp/detail/null/compare.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -30,7 +30,7 @@ namespace insn {
 inline mask_int8x16 i_cmp_gt(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpgt_epi8(a, b);
 #elif SIMDPP_USE_NEON
@@ -58,7 +58,7 @@ mask_int8<N> i_cmp_gt(int8<N> a, int8<N> b)
 inline mask_int8x16 i_cmp_gt(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_XOP
     return _mm_comgt_epu8(a, b);
 #elif SIMDPP_USE_SSE2
@@ -94,7 +94,7 @@ mask_int8<N> i_cmp_gt(uint8<N> a, uint8<N> b)
 inline mask_int16x8 i_cmp_gt(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpgt_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -122,7 +122,7 @@ mask_int16<N> i_cmp_gt(int16<N> a, int16<N> b)
 inline mask_int16x8 i_cmp_gt(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_XOP
     return _mm_comgt_epu16(a, b);
 #elif SIMDPP_USE_SSE2
@@ -158,7 +158,7 @@ mask_int16<N> i_cmp_gt(uint16<N> a, uint16<N> b)
 inline mask_int32x4 i_cmp_gt(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpgt_epi32(a, b);
 #elif SIMDPP_USE_NEON
@@ -186,7 +186,7 @@ mask_int32<N> i_cmp_gt(int32<N> a, int32<N> b)
 inline mask_int32x4 i_cmp_gt(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_XOP
     return _mm_comgt_epu32(a, b);
 #elif SIMDPP_USE_SSE2
@@ -222,7 +222,7 @@ mask_int32<N> i_cmp_gt(uint32<N> a, uint32<N> b)
 inline mask_float32x4 i_cmp_gt(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_GT_OQ);
 #elif SIMDPP_USE_SSE2
@@ -252,7 +252,7 @@ mask_float32<N> i_cmp_gt(float32<N> a, float32<N> b)
 inline mask_float64x2 i_cmp_gt(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::cmp_gt(a, b);
+    return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_GT_OQ);
 #elif SIMDPP_USE_SSE2

@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/permute4.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 #include <simdpp/sse/shuffle.h>
 #include <simdpp/neon/detail/shuffle_int16x8.h>
 #include <simdpp/neon/detail/shuffle_int32x4.h>
@@ -58,7 +58,7 @@ uint64x2 i_permute2(uint64x2 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_NULL
-    return null::permute<s0,s1>(a);
+    return detail::null::permute<s0,s1>(a);
 #elif SIMDPP_USE_SSE2
     return (uint64x2) i_permute4<s0*2, s0*2+1, s1*2, s1*2+1>(int32x4(a));
 #elif SIMDPP_USE_NEON

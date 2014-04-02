@@ -18,8 +18,8 @@
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/core/permute2.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/null/mask.h>
-#include <simdpp/null/set.h>
+#include <simdpp/detail/null/mask.h>
+#include <simdpp/detail/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -34,7 +34,7 @@ inline uint64<2> uint64<2>::ones() { return make_uint(0xffffffffffffffff); }
 inline uint64<2> mask_int64<2>::unmask() const
 {
 #if SIMDPP_USE_NULL
-    return null::unmask_mask<uint64<2>>(*this);
+    return detail::null::unmask_mask<uint64<2>>(*this);
 #else
     return uint64<2>(d_);
 #endif

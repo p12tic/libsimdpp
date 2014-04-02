@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
-#include <simdpp/null/compare.h>
+#include <simdpp/detail/null/compare.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -27,7 +27,7 @@ namespace insn {
 inline mask_float32x4 i_cmp_le(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::cmp_le(a, b);
+    return detail::null::cmp_le(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_LE_OQ);
 #elif SIMDPP_USE_SSE2
@@ -57,7 +57,7 @@ mask_float32<N> i_cmp_le(float32<N> a, float32<N> b)
 inline mask_float64x2 i_cmp_le(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::cmp_le(a, b);
+    return detail::null::cmp_le(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_LE_OQ);
 #elif SIMDPP_USE_SSE2

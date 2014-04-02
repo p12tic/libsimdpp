@@ -17,7 +17,7 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/detail/insn/i_shift.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 #include <simdpp/neon/detail/math_shift.h>
 
 namespace simdpp {
@@ -31,7 +31,7 @@ namespace insn {
 inline uint8x16 i_shift_l(uint8x16 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_l(a, count);
+    return detail::null::shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
     mask = uint16x8::ones();
@@ -77,7 +77,7 @@ uint8<N> i_shift_l(uint8<N> a, unsigned count)
 inline uint16x8 i_shift_l(uint16x8 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_l(a, count);
+    return detail::null::shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_slli_epi16(a, count);
 #elif SIMDPP_USE_NEON
@@ -107,7 +107,7 @@ uint16<N> i_shift_l(uint16<N> a, unsigned count)
 inline uint32x4 i_shift_l(uint32x4 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_l(a, count);
+    return detail::null::shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_slli_epi32(a, count);
 #elif SIMDPP_USE_NEON
@@ -137,7 +137,7 @@ uint32<N> i_shift_l(uint32<N> a, unsigned count)
 inline uint64x2 i_shift_l(uint64x2 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_l(a, count);
+    return detail::null::shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_slli_epi64(a, count);
 #elif SIMDPP_USE_NEON

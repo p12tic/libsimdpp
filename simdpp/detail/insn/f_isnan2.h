@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/bit_or.h>
 #include <simdpp/core/f_isnan.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ namespace insn {
 inline mask_float32x4 i_isnan2(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::isnan2(a, b);
+    return detail::null::isnan2(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
@@ -56,7 +56,7 @@ mask_float32<N> i_isnan2(float32<N> a, float32<N> b)
 inline mask_float64x2 i_isnan2(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::isnan2(a, b);
+    return detail::null::isnan2(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2

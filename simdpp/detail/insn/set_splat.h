@@ -32,7 +32,7 @@ inline void i_set_splat(uint32x4&, uint32_t);
 inline void i_set_splat(uint8x16& v, uint8_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint8x16>(v0);
+    v = detail::null::make_vec<uint8x16>(v0);
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 * 0x01010101;
@@ -75,7 +75,7 @@ void i_set_splat(uint8<N>& v, uint8_t v0)
 inline void i_set_splat(uint16x8& v, uint16_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint16x8>(v0);
+    v = detail::null::make_vec<uint16x8>(v0);
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 | v0 << 16;
@@ -118,7 +118,7 @@ void i_set_splat(uint16<N>& v, uint16_t v0)
 inline void i_set_splat(uint32x4& v, uint32_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint32x4>(v0);
+    v = detail::null::make_vec<uint32x4>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_cvtsi32_si128(v0);
     v = permute4<0,0,0,0>(v);
@@ -158,7 +158,7 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
 inline void i_set_splat(uint64x2& v, uint64_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint64x2>(v0);
+    v = detail::null::make_vec<uint64x2>(v0);
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
@@ -205,7 +205,7 @@ void i_set_splat(uint64<N>& v, uint64_t v0)
 inline void i_set_splat(float32x4& v, float v0)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<float32x4>(v0);
+    v = detail::null::make_vec<float32x4>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_ps(v0);        // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON
@@ -244,7 +244,7 @@ void i_set_splat(float32<N>& v, float v0)
 inline void i_set_splat(float64x2& v, double v0)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    v = null::make_vec<float64x2>(v0);
+    v = detail::null::make_vec<float64x2>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_pd(v0);            // likely in a SSE register anyway
 #endif

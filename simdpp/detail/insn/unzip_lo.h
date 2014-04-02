@@ -16,7 +16,7 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/detail/insn/zip_lo.h>
-#include <simdpp/null/shuffle.h>
+#include <simdpp/detail/null/shuffle.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -29,7 +29,7 @@ namespace insn {
 inline uint8x16 i_unzip16_lo(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip16_lo(a, b);
+    return detail::null::unzip16_lo(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, r;
     mask = uint16x8::ones();
@@ -71,7 +71,7 @@ uint8<N> i_unzip16_lo(uint8<N> a, uint8<N> b)
 inline uint16x8 i_unzip8_lo(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip8_lo(a, b);
+    return detail::null::unzip8_lo(a, b);
 #elif SIMDPP_USE_SSE4_1
     uint32x4 mask, r;
     mask = uint32x4::ones();
@@ -120,7 +120,7 @@ uint16<N> i_unzip8_lo(uint16<N> a, uint16<N> b)
 inline uint32x4 i_unzip4_lo(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip4_lo(a, b);
+    return detail::null::unzip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON
@@ -157,7 +157,7 @@ uint64<N> i_unzip2_lo(uint64<N> a, uint64<N> b)
 inline float32x4 i_unzip4_lo(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::unzip4_lo(a, b);
+    return detail::null::unzip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON

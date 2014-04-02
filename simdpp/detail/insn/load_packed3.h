@@ -17,7 +17,7 @@
 #include <simdpp/detail/insn/mem_unpack.h>
 #include <simdpp/core/load.h>
 #include <simdpp/adv/transpose.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -39,7 +39,7 @@ inline void i_load_packed3(uint8x16& a, uint8x16& b, uint8x16& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed3(a, b, c, p);
+    detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -73,7 +73,7 @@ inline void i_load_packed3(uint16x8& a, uint16x8& b, uint16x8& c,
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed3(a, b, c, p);
+    detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -107,7 +107,7 @@ inline void i_load_packed3(uint32x4& a, uint32x4& b, uint32x4&c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed3(a, b, c, p);
+    detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -140,7 +140,7 @@ inline void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed3(a, b, c, p);
+    detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -184,7 +184,7 @@ inline void i_load_packed3(float32x4& a, float32x4& b, float32x4& c, const char*
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load_packed3(a, b, c, p);
+    detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     a = load(p);
     b = load(p+16);
@@ -217,7 +217,7 @@ inline void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const char*
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    null::load_packed3(a, b, c, p);
+    detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2
     a = load(p);
     b = load(p+16);

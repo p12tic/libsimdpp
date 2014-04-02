@@ -20,7 +20,7 @@
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/detail/insn/i_shift.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 #include <simdpp/neon/detail/math_shift.h>
 
 namespace simdpp {
@@ -34,7 +34,7 @@ namespace insn {
 inline int8x16 i_shift_r(int8x16 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 hi, lo;
     lo = hi = a;
@@ -84,7 +84,7 @@ int8<N> i_shift_r(int8<N> a, unsigned count)
 inline uint8x16 i_shift_r(uint8x16 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
     mask = uint16x8::ones();
@@ -130,7 +130,7 @@ uint8<N> i_shift_r(uint8<N> a, unsigned count)
 inline int16x8 i_shift_r(int16x8 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srai_epi16(a, count);
 #elif SIMDPP_USE_NEON
@@ -160,7 +160,7 @@ int16<N> i_shift_r(int16<N> a, unsigned count)
 inline uint16x8 i_shift_r(uint16x8 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi16(a, count);
 #elif SIMDPP_USE_NEON
@@ -190,7 +190,7 @@ uint16<N> i_shift_r(uint16<N> a, unsigned count)
 inline int32x4 i_shift_r(int32x4 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srai_epi32(a, count);
 #elif SIMDPP_USE_NEON
@@ -220,7 +220,7 @@ int32<N> i_shift_r(int32<N> a, unsigned count)
 inline uint32x4 i_shift_r(uint32x4 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi32(a, count);
 #elif SIMDPP_USE_NEON
@@ -250,7 +250,7 @@ uint32<N> i_shift_r(uint32<N> a, unsigned count)
 inline int64x2 i_shift_r(int64x2 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     if (count > 31) {
         int32x4 s, v;
@@ -319,7 +319,7 @@ int64<N> i_shift_r(int64<N> a, unsigned count)
 inline uint64x2 i_shift_r(uint64x2 a, unsigned count)
 {
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi64(a, count);
 #elif SIMDPP_USE_NEON
@@ -424,7 +424,7 @@ int16x8 i_shift_r(int16x8 a)
 {
     static_assert(count <= 16, "Shift out of bounds");
 #if SIMDPP_USE_NULL
-    return null::shift_r(a, count);
+    return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srai_epi16(a, count);
 #elif SIMDPP_USE_NEON

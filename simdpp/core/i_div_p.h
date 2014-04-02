@@ -18,7 +18,7 @@
 #include <simdpp/core/bit_or.h>
 #include <simdpp/core/cmp_lt.h>
 #include <simdpp/core/i_sub.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -47,7 +47,7 @@ template<unsigned P>
 uint8x16 div_p(uint8x16 num, uint8x16 den)
 {
 #if SIMDPP_USE_NULL
-    return null::div_p<P>(num, den);
+    return detail::null::div_p<P>(num, den);
 #else
     static_assert(P <= 8, "Precision too large");
     uint8x16 r, q, bit_mask;
@@ -96,7 +96,7 @@ template<unsigned P>
 uint16x8 div_p(uint16x8 num, uint16x8 den)
 {
 #if SIMDPP_USE_NULL
-    return null::div_p<P>(num, den);
+    return detail::null::div_p<P>(num, den);
 #else
     static_assert(P <= 16, "Precision too large");
     uint16x8 r, q, bit_mask;

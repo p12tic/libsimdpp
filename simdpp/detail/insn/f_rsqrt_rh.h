@@ -16,8 +16,8 @@
 #include <simdpp/types.h>
 #include <simdpp/core/f_mul.h>
 #include <simdpp/core/f_sub.h>
-#include <simdpp/null/foreach.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/foreach.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -31,7 +31,7 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 {
     // x_n = x*(3-d*x*x)/2
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
+    return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
 #elif SIMDPP_USE_SSE2
     float32x4 x2, c3, c0p5, r;
 

@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/make_int.h>
-#include <simdpp/null/math.h>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -28,7 +28,7 @@ float32<4> expr_eval(expr_abs<float32<4,E>> q)
 {
     float32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return null::abs(a);
+    return detail::null::abs(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     int32<4> mask = make_int(0x7fffffff);
     return bit_and(a, mask);
@@ -63,7 +63,7 @@ float64x2 expr_eval(expr_abs<float64<2,E>> q)
 {
     float64x2 a = q.a.eval();
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    return null::abs(a);
+    return detail::null::abs(a);
 #elif SIMDPP_USE_SSE2
     int64<2> mask = make_int(0x7fffffffffffffff);
     return bit_and(a, mask);

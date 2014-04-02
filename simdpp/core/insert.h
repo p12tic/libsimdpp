@@ -17,7 +17,7 @@
 #include <simdpp/core/cast.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/altivec/load1.h>
-#include <simdpp/null/set.h>
+#include <simdpp/detail/null/set.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

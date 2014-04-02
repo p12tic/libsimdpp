@@ -17,7 +17,7 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/core/i_shift_r.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -30,7 +30,7 @@ namespace insn {
 inline uint8x16 i_avg(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint8x16>(a, b, [](uint8_t a, uint8_t b){
+    return detail::null::foreach<uint8x16>(a, b, [](uint8_t a, uint8_t b){
         return (uint16_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2
@@ -60,7 +60,7 @@ uint8<N> i_avg(uint8<N> a, uint8<N> b)
 inline int8x16 i_avg(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int8x16>(a, b, [](int8_t a, int8_t b){
+    return detail::null::foreach<int8x16>(a, b, [](int8_t a, int8_t b){
         return (int16_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2
@@ -102,7 +102,7 @@ int8<N> i_avg(int8<N> a, int8<N> b)
 inline uint16x8 i_avg(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){
+    return detail::null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){
         return (uint32_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2
@@ -132,7 +132,7 @@ uint16<N> i_avg(uint16<N> a, uint16<N> b)
 inline int16x8 i_avg(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){
+    return detail::null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){
         return (int32_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2
@@ -174,7 +174,7 @@ int16<N> i_avg(int16<N> a, int16<N> b)
 inline uint32x4 i_avg(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<uint32x4>(a, b, [](uint32_t a, uint32_t b){
+    return detail::null::foreach<uint32x4>(a, b, [](uint32_t a, uint32_t b){
         return (uint64_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2
@@ -216,7 +216,7 @@ uint32<N> i_avg(uint32<N> a, uint32<N> b)
 inline int32x4 i_avg(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<int32x4>(a, b, [](int32_t a, int32_t b){
+    return detail::null::foreach<int32x4>(a, b, [](int32_t a, int32_t b){
         return (int64_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2

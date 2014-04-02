@@ -17,7 +17,7 @@
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
-#include <simdpp/null/foreach.h>
+#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -49,7 +49,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 inline float32x4 to_float32(int32x4 a)
 {
 #if SIMDPP_USE_NULL
-    return null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
+    return detail::null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_ps(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP

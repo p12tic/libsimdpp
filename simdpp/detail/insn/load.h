@@ -17,7 +17,7 @@
 #include <simdpp/detail/align.h>
 #include <simdpp/detail/insn/mem_unpack.h>
 #include <simdpp/adv/transpose.h>
-#include <simdpp/null/memory.h>
+#include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -40,7 +40,7 @@ inline void i_load(uint8x16& a, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
-    null::load(a, p);
+    detail::null::load(a, p);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_si128(reinterpret_cast<const __m128i*>(p));
 #elif SIMDPP_USE_NEON
@@ -59,7 +59,7 @@ inline void i_load(float32x4& a, const char* p)
     const float* q = reinterpret_cast<const float*>(p);
     q = detail::assume_aligned(q, 16);
 #if SIMDPP_USE_NULL
-    null::load(a, q);
+    detail::null::load(a, q);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_ps(q);
 #elif SIMDPP_USE_NEON
@@ -74,7 +74,7 @@ inline void i_load(float64x2& a, const char* p)
     const double* q = reinterpret_cast<const double*>(p);
     q = detail::assume_aligned(q, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
-    null::load(a, q);
+    detail::null::load(a, q);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_pd(q);
 #endif

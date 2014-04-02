@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/null/set.h>
+#include <simdpp/detail/null/set.h>
 #include <simdpp/detail/traits.h>
 
 namespace simdpp {
@@ -55,7 +55,7 @@ template<class VE, unsigned N>
 void i_make_const(float32<4>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<float32<4>, float>(e.val(0), e.val(1),
+    v = detail::null::make_vec<float32<4>, float>(e.val(0), e.val(1),
                                           e.val(2), e.val(3));
 #elif SIMDPP_USE_SSE2
     v = _mm_set_ps(e.val(3), e.val(2), e.val(1), e.val(0));
@@ -102,7 +102,7 @@ template<class VE, unsigned N>
 void i_make_const(float64<2>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    v = null::make_vec<float64<2>, double>(e.val(0), e.val(1));
+    v = detail::null::make_vec<float64<2>, double>(e.val(0), e.val(1));
 #elif SIMDPP_USE_SSE2
     v = _mm_set_pd(e.val(1), e.val(0));
 #endif
@@ -177,7 +177,7 @@ template<class VE, unsigned N>
 void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint8<16>, uint8_t>(e.val(0), e.val(1), e.val(2), e.val(3),
+    v = detail::null::make_vec<uint8<16>, uint8_t>(e.val(0), e.val(1), e.val(2), e.val(3),
                                            e.val(4), e.val(5), e.val(6), e.val(7),
                                            e.val(8), e.val(9), e.val(10), e.val(11),
                                            e.val(12), e.val(13), e.val(14), e.val(15));
@@ -272,7 +272,7 @@ template<class VE, unsigned N>
 void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint16<8>, uint16_t>(e.val(0), e.val(1), e.val(2), e.val(3),
+    v = detail::null::make_vec<uint16<8>, uint16_t>(e.val(0), e.val(1), e.val(2), e.val(3),
                                             e.val(4), e.val(5), e.val(6), e.val(7));
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi16(e.val(7), e.val(6), e.val(5), e.val(4),
@@ -343,7 +343,7 @@ template<class VE, unsigned N>
 void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint32<4>, uint32_t>(e.val(0), e.val(1), e.val(2), e.val(3));
+    v = detail::null::make_vec<uint32<4>, uint32_t>(e.val(0), e.val(1), e.val(2), e.val(3));
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi32(e.val(3), e.val(2), e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
@@ -395,7 +395,7 @@ template<class VE, unsigned N>
 void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL
-    v = null::make_vec<uint64<2>, uint64_t>(e.val(0), e.val(1));
+    v = detail::null::make_vec<uint64<2>, uint64_t>(e.val(0), e.val(1));
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi64x(e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
