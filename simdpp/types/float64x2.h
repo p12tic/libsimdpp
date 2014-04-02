@@ -132,6 +132,15 @@ public:
     mask_float64<2>(const float64<2>& d) : d_(d) {}
 #endif
 
+    template<class E> explicit mask_float64<2>(const mask_int64<2,E>& d)
+    {
+        *this = bit_cast<mask_float64<2>>(d.eval());
+    }
+    template<class E> mask_float64<2>& operator=(const mask_int64<2,E>& d)
+    {
+        *this = bit_cast<mask_float64<2>>(d.eval()); return *this;
+    }
+
     /// Access the underlying type
     float64<2> unmask() const;
 

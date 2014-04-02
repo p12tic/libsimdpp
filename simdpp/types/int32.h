@@ -160,6 +160,15 @@ public:
     mask_int32<N>(const mask_int32<N> &) = default;
     mask_int32<N> &operator=(const mask_int32<N> &) = default;
 
+    template<class E> explicit mask_int32<N>(const mask_float32<N,E>& d)
+    {
+        *this = bit_cast<mask_int32<N>>(d.eval());
+    }
+    template<class E> mask_int32<N>& operator=(const mask_float32<N,E>& d)
+    {
+        *this = bit_cast<mask_int32<N>>(d.eval()); return *this;
+    }
+
     /// Access the underlying type
     uint32<N> unmask() const
     {

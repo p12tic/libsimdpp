@@ -121,6 +121,15 @@ public:
     mask_float32<8>(const float32<8>& d) : d_(d) {}
 #endif
 
+    template<class E> explicit mask_float32<8>(const mask_int32<8,E>& d)
+    {
+        *this = bit_cast<mask_float32<8>>(d.eval());
+    }
+    template<class E> mask_float32<8>& operator=(const mask_int32<8,E>& d)
+    {
+        *this = bit_cast<mask_float32<8>>(d.eval()); return *this;
+    }
+
     /// Access the underlying type
     float32<8> unmask() const;
 
