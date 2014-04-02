@@ -52,6 +52,18 @@ struct Vectors {
 
     Vectors() { reset(); }
 
+    template<class V>
+    V get(unsigned n) const
+    {
+        return *(reinterpret_cast<const V*>(c) + n);
+    }
+
+    template<class V>
+    const V* get_ptr() const
+    {
+        return reinterpret_cast<const V*>(c);
+    }
+
     void reset()
     {
         for (unsigned i = 0; i < L; i++) {

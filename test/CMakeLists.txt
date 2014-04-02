@@ -28,6 +28,7 @@ set(TEST1_HEADERS
 
 set(TEST1_ARCH_SOURCES
     tests/bitwise.cc
+    tests/blend.cc
     tests/compare.cc
     tests/construct.cc
     tests/convert.cc
