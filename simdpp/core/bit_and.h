@@ -16,6 +16,7 @@
 #include <simdpp/detail/insn/bit_and.h>
 #include <simdpp/detail/expr/bit_and.h>
 #include <simdpp/detail/get_expr.h>
+#include <simdpp/core/detail/get_expr_bitwise.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -35,13 +36,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @todo: icost
 */
 template<unsigned N, class V1, class V2>
-typename detail::get_expr2<V1, V2, void>::empty
+typename detail::get_expr_bitwise2_and<expr_bit_and, V1, V2>::type
     bit_and(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
-    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
-    return detail::insn::i_bit_and(ra, rb);
+    using expr = detail::get_expr_bitwise2_and<expr_bit_and, V1, V2>;
+    return { { typename expr::v1_type(a.vec()),
+               typename expr::v2_type(b.vec()) }, 0 };
 }
 
 

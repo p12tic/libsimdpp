@@ -23,13 +23,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-/*  The tag values are selected specifically to make this function simpler.
+/*  The tag values are selected specifically to make this class template
+    simpler.
+
     See simdpp/types/tag.h
 
-    Note that B refers to the number of elements in the resulting emptytor. Since
-    the get_expr2 always selects elements with smaller number of (wider)
-    elements, one only needs to ensure that B refers to the emptytor with the
-    wider elements in the function arguments.
+    Note that B refers to the number of elements in the resulting vector. Since
+    get_expr2 always selects elements with smaller number of (wider) elements,
+    one only needs to ensure that B refers to the function argument with widest
+    elements among the function arguments.
 */
 
 template<unsigned Tag, unsigned B, class E> struct type_of_tag;

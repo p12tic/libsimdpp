@@ -21,40 +21,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<unsigned N, class E1, class E2>
-uint32<N> expr_eval(expr_bit_and<uint32<N,E1>,
-                                 mask_int32<N,E2>> q)
+template<unsigned N,
+         template<unsigned, class> class V1, class E1,
+         template<unsigned, class> class V2, class E2>
+V1<N,void> expr_eval(expr_bit_and<V1<N,E1>, V2<N,E2>> q)
 {
-    uint32<N> a = q.a.eval();
-    mask_int32<N> b = q.b.eval();
-    return insn::i_bit_and(a, b);
-}
-
-template<unsigned N, class E1, class E2>
-uint64<N> expr_eval(expr_bit_and<uint64<N,E1>,
-                                 mask_int64<N,E2>> q)
-{
-    uint64<N> a = q.a.eval();
-    mask_int64<N> b = q.b.eval();
-    return insn::i_bit_and(a, b);
-}
-
-template<unsigned N, class E1, class E2>
-float32<N> expr_eval(expr_bit_and<float32<N,E1>,
-                                  mask_float32<N,E2>> q)
-{
-    float32<N> a = q.a.eval();
-    mask_float32<N> b = q.b.eval();
-    return insn::i_bit_and(a, b);
-}
-
-template<unsigned N, class E1, class E2>
-float64<N> expr_eval(expr_bit_and<float64<N,E1>,
-                                  mask_float64<N,E2>> q)
-{
-    float64<N> a = q.a.eval();
-    mask_float64<N> b = q.b.eval();
-    return insn::i_bit_and(a, b);
+    return (V1<N,void>) insn::i_bit_and(q.a.eval(), q.b.eval());
 }
 
 } // namespace detail

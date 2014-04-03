@@ -10,7 +10,7 @@ template<unsigned N, class V1, class V2>
 typename get_expr2_nomask<V1, V2, expr_add<V1, V2>>::type
         add(const any_int8<N,V1>&, const any_int8<N,V2>&);
 
-Unfortunaty, this function returns different type for each combinations of V1
+Unfortunately, this function returns different type for each combinations of V1
 and V2. Given that V1 and V2 each may one of `int8`, `uint8` and `mask_int8`,
 we will need to implement 9 different cases in the expression evaluator when
 ideally only one case should be needed as the implementation is the same in
@@ -23,13 +23,48 @@ expression tree. Then in the expression evaluator we only need to match that
 reduced set of vector/expression types. Most of the time that set only needs to
 be as large as there are different type combinations we want different behavious
 for. For example, in the `add` case we can convert both V1 and V2 to `uint8`
-without losing information, whereas in the case of `blend` we need 18 cases.
+without losing usable information, whereas in the case of `blend` we need 18
+cases.
 
 The following list documents the types that may be returned by different
 functions. Only functions that return non-empty expression are documented.
 
-bit_and (TODO, not implemented yet)
-bit_or (TODO, not implemented yet)
+bit_and, bit_andnot:
+        expr_bit_{and,andnot}<V1,V2>, where V1,V2 is one of:
+        * uint8, uint8
+        * uint8, mask_int8
+        * mask_int8, mask_int8
+        * uint16, uint16
+        * uint16, mask_int16
+        * mask_int16, mask_int16
+        * uint32, uint32
+        * uint32, mask_int32
+        * mask_int32, mask_int32
+        * uint64, uint64
+        * uint64, mask_int64
+        * mask_int64, mask_int64
+        * float32, float32
+        * float32, mask_float32
+        * mask_float32, mask_float32
+        * float64, float64
+        * float64, mask_float64
+        * mask_float64, mask_float64
+
+bit_or:
+        expr_bit_or<V1,V2>, where V1,V2 is one of:
+        * mask_int8, mask_int8
+        * uint8, uint8
+        * mask_int16, mask_int16
+        * uint16, uint16
+        * mask_int32, mask_int32
+        * uint32, uint32
+        * mask_int64, mask_int64
+        * uint64, uint64
+        * mask_float32, mask_float32
+        * float32, float32
+        * mask_float64, mask_float64
+        * float64, float64
+
 bit_xor (TODO, not implemented yet)
 bit_not (TODO, not implemented yet)
 
