@@ -69,32 +69,29 @@ void test_store_helper(TestCase& tc, V* sv)
     TEST_ARRAY_PUSH(tc, V, rv);
 }
 
+template<unsigned B>
+void test_memory_store_n(TestCase& tc)
+{
+    using namespace simdpp;
+
+    // vnum must be at least 4
+    constexpr unsigned vnum = 4;
+    Vectors<B,vnum> v;
+
+    test_store_helper<uint8<B>, vnum>(tc, v.u8);
+    test_store_helper<uint16<B/2>, vnum>(tc, v.u16);
+    test_store_helper<uint32<B/4>, vnum>(tc, v.u32);
+    test_store_helper<uint64<B/8>, vnum>(tc, v.u64);
+    test_store_helper<float32<B/4>, vnum>(tc, v.f32);
+    test_store_helper<float64<B/8>, vnum>(tc, v.f64);
+}
+
 void test_memory_store(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "memory_store");
 
-    using namespace simdpp;
-
-    constexpr unsigned vnum = 4;
-    constexpr unsigned size = 32*vnum;
-
-    Vectors<size> v;
-
-    // 16-byte vectors
-    test_store_helper<uint8x16, 4>(tc, v.u8);
-    test_store_helper<uint16x8, 4>(tc, v.u16);
-    test_store_helper<uint32x4, 4>(tc, v.u32);
-    test_store_helper<uint64x2, 4>(tc, v.u64);
-    test_store_helper<float32x4, 4>(tc, v.f32);
-    test_store_helper<float64x2, 4>(tc, v.f64);
-
-    // 32-byte vectors
-    test_store_helper<uint8x32, 4>(tc, v.du8);
-    test_store_helper<uint16x16, 4>(tc, v.du16);
-    test_store_helper<uint32x8, 4>(tc, v.du32);
-    test_store_helper<uint64x4, 4>(tc, v.du64);
-    test_store_helper<float32x8, 4>(tc, v.df32);
-    test_store_helper<float64x4, 4>(tc, v.df64);
+    test_memory_store_n<16>(tc);
+    test_memory_store_n<32>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

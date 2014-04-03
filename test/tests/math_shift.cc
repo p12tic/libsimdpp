@@ -36,40 +36,47 @@ struct Test_shift_r {
     }
 };
 
+template<unsigned B>
+void test_math_shift_n(TestCase& tc)
+{
+    using namespace simdpp;
+
+    const unsigned vnum = 8;
+    Vectors<B,vnum> v;
+
+    // Vectors with 8-bit integer elements
+    TemplateTestArrayHelper<Test_shift_l, uint8<B>>::run(tc, v.u8, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int8<B>>::run(tc, v.i8, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint8<B>>::run(tc, v.u8, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int8<B>>::run(tc, v.i8, vnum);
+
+    // Vectors with 16-bit integer elements
+    TemplateTestArrayHelper<Test_shift_l, uint16<B/2>>::run(tc, v.u16, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int16<B/2>>::run(tc, v.i16, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint16<B/2>>::run(tc, v.u16, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int16<B/2>>::run(tc, v.i16, vnum);
+
+    // Vectors with 32-bit integer elements
+    TemplateTestArrayHelper<Test_shift_l, uint32<B/4>>::run(tc, v.u32, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int32<B/4>>::run(tc, v.i32, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint32<B/4>>::run(tc, v.u32, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int32<B/4>>::run(tc, v.i32, vnum);
+
+#if !(SIMDPP_USE_ALTIVEC)
+    // Vectors with 64-bit integer elements
+    TemplateTestArrayHelper<Test_shift_l, uint64<B/8>>::run(tc, v.u64, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int64<B/8>>::run(tc, v.i64, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint64<B/8>>::run(tc, v.u64, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int64<B/8>>::run(tc, v.i64, vnum);
+#endif
+}
+
 void test_math_shift(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "math_shift");
 
-    using namespace simdpp;
-
-    unsigned vnum = 8;
-    Vectors<16*16> v;
-
-    // Vectors with 8-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint8x32>::run(tc, v.du8, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int8x32>::run(tc, v.di8, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint8x32>::run(tc, v.du8, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int8x32>::run(tc, v.di8, vnum);
-
-    // Vectors with 16-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint16x16>::run(tc, v.du16, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int16x16>::run(tc, v.di16, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint16x16>::run(tc, v.du16, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int16x16>::run(tc, v.di16, vnum);
-
-    // Vectors with 32-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint32x8>::run(tc, v.du32, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int32x8>::run(tc, v.di32, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint32x8>::run(tc, v.du32, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int32x8>::run(tc, v.di32, vnum);
-
-#if !(SIMDPP_USE_ALTIVEC)
-    // Vectors with 64-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint64x4>::run(tc, v.du64, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int64x4>::run(tc, v.di64, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint64x4>::run(tc, v.du64, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int64x4>::run(tc, v.di64, vnum);
-#endif
+    test_math_shift_n<16>(tc);
+    test_math_shift_n<32>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -7,6 +7,7 @@
 
 #include "../test_helpers.h"
 #include "../test_results.h"
+#include "../common/vectors.h"
 #include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -74,41 +75,29 @@ void test_load_helper(TestCase& tc, void* sv_p)
     TEST_ARRAY_PUSH(tc, V, rv);
 }
 
+template<unsigned B>
+void test_memory_load_n(TestCase& tc)
+{
+    using namespace simdpp;
+
+    // vnum must be at least 4
+    constexpr unsigned vnum = 4;
+    Vectors<B,vnum> v;
+
+    test_load_helper<uint8<B>, vnum>(tc, v.u8);
+    test_load_helper<uint16<B/2>, vnum>(tc, v.u16);
+    test_load_helper<uint32<B/4>, vnum>(tc, v.u32);
+    test_load_helper<uint64<B/8>, vnum>(tc, v.u64);
+    test_load_helper<float32<B/4>, vnum>(tc, v.f32);
+    test_load_helper<float64<B/8>, vnum>(tc, v.f64);
+}
 
 void test_memory_load(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "memory_load");
 
-    using namespace simdpp;
-
-    constexpr unsigned vnum = 4;
-    constexpr unsigned size = 32*vnum;
-
-    union {
-        uint8_t sdata[size];
-        uint8x32 align1;
-        float32x8 align2;
-    };
-
-    for (unsigned i = 0; i < size; i++) {
-        sdata[i] = i;
-    }
-
-    // 16-byte vectors
-    test_load_helper<uint8x16, 4>(tc, sdata);
-    test_load_helper<uint16x8, 4>(tc, sdata);
-    test_load_helper<uint32x4, 4>(tc, sdata);
-    test_load_helper<uint64x2, 4>(tc, sdata);
-    test_load_helper<float32x4, 4>(tc, sdata);
-    test_load_helper<float64x2, 4>(tc, sdata);
-
-    // 32-byte vectors
-    test_load_helper<uint8x32, 4>(tc, sdata);
-    test_load_helper<uint16x16, 4>(tc, sdata);
-    test_load_helper<uint32x8, 4>(tc, sdata);
-    test_load_helper<uint64x4, 4>(tc, sdata);
-    test_load_helper<float32x8, 4>(tc, sdata);
-    test_load_helper<float64x4, 4>(tc, sdata);
+    test_memory_load_n<16>(tc);
+    test_memory_load_n<32>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

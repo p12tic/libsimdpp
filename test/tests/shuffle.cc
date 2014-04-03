@@ -153,50 +153,14 @@ void test_shuffle_type256(TestCase &tc, V v1, V v2)
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
 }
 
-template<class T>
-using AlignedVector = std::vector<T, simdpp::aligned_allocator<T, 32>>;
-
-template<class V>
-AlignedVector<V> test_blend_make_sel_vec()
-{
-    AlignedVector<V> r;
-
-    using simdpp::make_uint;
-    r.push_back((V) (typename V::uint_vector_type) make_uint(0, 0));
-    r.push_back((V) (typename V::uint_vector_type) make_uint(0, -1));
-    r.push_back((V) (typename V::uint_vector_type) make_uint(-1, 0));
-    r.push_back((V) (typename V::uint_vector_type) make_uint(-1, -1));
-
-    return r;
-}
-
-template<class V, class M>
-AlignedVector<M> test_blend_make_sel_mask()
-{
-    AlignedVector<M> r;
-    using simdpp::make_uint;
-    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(0, 0)));
-    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(0, 1)));
-    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(1, 0)));
-    r.push_back(cmp_eq((V) make_uint(0, 0), (V) make_uint(1, 1)));
-    return r;
-}
-
-template<class V, class VM>
-void test_blend(TestCase &tc, V v1, V v2, const AlignedVector<VM>& masks)
-{
-    for (const auto& v: masks) {
-        TEST_PUSH(tc, V, blend(v1, v2, v));
-    }
-}
-
 void test_shuffle(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "shuffle");
 
     using namespace simdpp;
 
-    Vectors<16*4> v;
+    Vectors<16,4> v;
+    Vectors<32,4> v2;
 
     test_shuffle_type128<uint8x16>(tc, v.u8[0], v.u8[1]);
     test_shuffle_type128<uint16x8>(tc, v.u16[0], v.u16[1]);
@@ -205,53 +169,19 @@ void test_shuffle(TestResults& res)
     test_shuffle_type128<float32x4>(tc, v.f32[0], v.f32[1]);
     test_shuffle_type128<float64x2>(tc, v.f64[0], v.f64[1]);
 
-    test_shuffle_type256<uint8x32>(tc, v.du8[0], v.du8[1]);
-    test_shuffle_type256<uint16x16>(tc, v.du16[0], v.du16[1]);
-    test_shuffle_type256<uint32x8>(tc, v.du32[0], v.du32[1]);
-    test_shuffle_type256<uint64x4>(tc, v.du64[0], v.du64[1]);
-    test_shuffle_type256<float32x8>(tc, v.df32[0], v.df32[1]);
-    test_shuffle_type256<float64x4>(tc, v.df64[0], v.df64[1]);
+    test_shuffle_type256<uint8x32>(tc, v2.u8[0], v2.u8[1]);
+    test_shuffle_type256<uint16x16>(tc, v2.u16[0], v2.u16[1]);
+    test_shuffle_type256<uint32x8>(tc, v2.u32[0], v2.u32[1]);
+    test_shuffle_type256<uint64x4>(tc, v2.u64[0], v2.u64[1]);
+    test_shuffle_type256<float32x8>(tc, v2.f32[0], v2.f32[1]);
+    test_shuffle_type256<float64x4>(tc, v2.f64[0], v2.f64[1]);
 
-    TemplateTestHelper<Test_splat16, uint8x32>::run(tc, v.du8[0]);
-    TemplateTestHelper<Test_splat8, uint16x16>::run(tc, v.du16[0]);
-    TemplateTestHelper<Test_splat4, uint32x8>::run(tc, v.du32[0]);
-    TemplateTestHelper<Test_splat2, uint64x4>::run(tc, v.du64[0]);
-    TemplateTestHelper<Test_splat4, float32x8>::run(tc, v.df32[0]);
-    TemplateTestHelper<Test_splat2, float64x4>::run(tc, v.df64[0]);
-
-    // blend
-    test_blend<uint8x16>(tc, v.u8[0], v.u8[1], test_blend_make_sel_vec<uint8x16>());
-    test_blend<uint16x8>(tc, v.u16[0], v.u16[1], test_blend_make_sel_vec<uint16x8>());
-    test_blend<uint32x4>(tc, v.u32[0], v.u32[1], test_blend_make_sel_vec<uint32x4>());
-    test_blend<uint64x2>(tc, v.u64[0], v.u64[1], test_blend_make_sel_vec<uint64x2>());
-    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_sel_vec<uint32x4>());
-    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_sel_vec<float32x4>());
-    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_sel_vec<uint64x2>());
-    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_sel_vec<float64x2>());
-
-    test_blend<uint8x32>(tc, v.du8[0], v.du8[1], test_blend_make_sel_vec<uint8x32>());
-    test_blend<uint16x16>(tc, v.du16[0], v.du16[1], test_blend_make_sel_vec<uint16x16>());
-    test_blend<uint32x8>(tc, v.du32[0], v.du32[1], test_blend_make_sel_vec<uint32x8>());
-    test_blend<uint64x4>(tc, v.du64[0], v.du64[1], test_blend_make_sel_vec<uint64x4>());
-    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_sel_vec<uint32x8>());
-    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_sel_vec<float32x8>());
-    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_sel_vec<uint64x4>());
-    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_sel_vec<float64x4>());
-
-    // blend
-    test_blend<uint8x16>(tc, v.u8[0], v.u8[1], test_blend_make_sel_mask<uint8x16, mask_int8x16>());
-    test_blend<uint16x8>(tc, v.u16[0], v.u16[1], test_blend_make_sel_mask<uint16x8, mask_int16x8>());
-    test_blend<uint32x4>(tc, v.u32[0], v.u32[1], test_blend_make_sel_mask<uint32x4, mask_int32x4>());
-    //test_blend<uint64x2>(tc, v.u64[0], v.u64[1], test_blend_make_sel_mask<uint64x2, mask_int64x2>());
-    test_blend<float32x4>(tc, v.f32[0], v.f32[1], test_blend_make_sel_mask<float32x4, mask_float32x4>());
-    test_blend<float64x2>(tc, v.f64[0], v.f64[1], test_blend_make_sel_mask<float64x2, mask_float64x2>());
-
-    test_blend<uint8x32>(tc, v.du8[0], v.du8[1], test_blend_make_sel_mask<uint8x32, mask_int8x32>());
-    test_blend<uint16x16>(tc, v.du16[0], v.du16[1], test_blend_make_sel_mask<uint16x16, mask_int16x16>());
-    test_blend<uint32x8>(tc, v.du32[0], v.du32[1], test_blend_make_sel_mask<uint32x8, mask_int32x8>());
-    //test_blend<uint64x4>(tc, v.du64[0], v.du64[1], test_blend_make_sel_mask<uint64x4, mask_int64x4>());
-    test_blend<float32x8>(tc, v.df32[0], v.df32[1], test_blend_make_sel_mask<float32x8, mask_float32x8>());
-    test_blend<float64x4>(tc, v.df64[0], v.df64[1], test_blend_make_sel_mask<float64x4, mask_float64x4>());
+    TemplateTestHelper<Test_splat16, uint8x32>::run(tc, v2.u8[0]);
+    TemplateTestHelper<Test_splat8, uint16x16>::run(tc, v2.u16[0]);
+    TemplateTestHelper<Test_splat4, uint32x8>::run(tc, v2.u32[0]);
+    TemplateTestHelper<Test_splat2, uint64x4>::run(tc, v2.u64[0]);
+    TemplateTestHelper<Test_splat4, float32x8>::run(tc, v2.f32[0]);
+    TemplateTestHelper<Test_splat2, float64x4>::run(tc, v2.f64[0]);
 
     // extract bits
     v.reset();

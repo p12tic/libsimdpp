@@ -68,59 +68,44 @@ struct Test_shuffle42 {
     }
 };
 
+template<unsigned B>
+void test_shuffle_generic_n(TestCase& tc)
+{
+    using namespace simdpp;
+
+    Vectors<B,2> v;
+
+    // There are no permute instructions for int8<N>
+
+    // int16
+    TemplateTestHelper<Test_permute2, uint16<B/2>>::run(tc, v.u16[0]);
+    TemplateTestHelper<Test_permute4, uint16<B/2>>::run(tc, v.u16[0]);
+
+    // int32
+    TemplateTestHelper<Test_permute2, uint32<B/4>>::run(tc, v.u32[0]);
+    TemplateTestHelper<Test_permute4, uint32<B/4>>::run(tc, v.u32[0]);
+    TemplateTestHelper<Test_shuffle42, uint32<B/4>>::run(tc, v.u32[0], v.u32[1]);
+
+    // int64
+    TemplateTestHelper<Test_permute2, uint64<B/8>>::run(tc, v.u64[0]);
+    TemplateTestHelper<Test_shuffle21, uint64<B/8>>::run(tc, v.u64[0], v.u64[1]);
+
+    // float32
+    TemplateTestHelper<Test_permute2, float32<B/4>>::run(tc, v.f32[0]);
+    TemplateTestHelper<Test_permute4, float32<B/4>>::run(tc, v.f32[0]);
+    TemplateTestHelper<Test_shuffle42, float32<B/4>>::run(tc, v.f32[0], v.f32[1]);
+
+    // float64
+    TemplateTestHelper<Test_permute2, float64<B/8>>::run(tc, v.f64[0]);
+    TemplateTestHelper<Test_shuffle21, float64<B/8>>::run(tc, v.f64[0], v.f64[1]);
+}
+
 void test_shuffle_generic(TestResults& res)
 {
     TestCase& tc = NEW_TEST_CASE(res, "shuffle_generic");
 
-    using namespace simdpp;
-
-    Vectors<16*4> v;
-
-    // There are no permute instructions for int8x16
-
-    // int16x8
-    TemplateTestHelper<Test_permute2, uint16x8>::run(tc, v.u16[0]);
-    TemplateTestHelper<Test_permute4, uint16x8>::run(tc, v.u16[0]);
-
-    // int32x4
-    TemplateTestHelper<Test_permute2, uint32x4>::run(tc, v.u32[0]);
-    TemplateTestHelper<Test_permute4, uint32x4>::run(tc, v.u32[0]);
-    TemplateTestHelper<Test_shuffle42, uint32x4>::run(tc, v.u32[0], v.u32[1]);
-
-    // int64x2
-    TemplateTestHelper<Test_permute2, uint64x2>::run(tc, v.u64[0]);
-    TemplateTestHelper<Test_shuffle21, uint64x2>::run(tc, v.u64[0], v.u64[1]);
-
-    // float32x4
-    TemplateTestHelper<Test_permute2, float32x4>::run(tc, v.f32[0]);
-    TemplateTestHelper<Test_permute4, float32x4>::run(tc, v.f32[0]);
-    TemplateTestHelper<Test_shuffle42, float32x4>::run(tc, v.f32[0], v.f32[1]);
-
-    // float64x2
-    TemplateTestHelper<Test_permute2, float64x2>::run(tc, v.f64[0]);
-    TemplateTestHelper<Test_shuffle21, float64x2>::run(tc, v.f64[0], v.f64[1]);
-
-    // int16x16
-    TemplateTestHelper<Test_permute2, uint16x16>::run(tc, v.du16[0]);
-    TemplateTestHelper<Test_permute4, uint16x16>::run(tc, v.du16[0]);
-
-    // int32x8
-    TemplateTestHelper<Test_permute2, uint32x8>::run(tc, v.du32[0]);
-    TemplateTestHelper<Test_permute4, uint32x8>::run(tc, v.du32[0]);
-    TemplateTestHelper<Test_shuffle42, uint32x8>::run(tc, v.du32[0], v.du32[1]);
-
-    // int64x4
-    TemplateTestHelper<Test_permute2, uint64x4>::run(tc, v.du64[0]);
-    TemplateTestHelper<Test_shuffle21, uint64x4>::run(tc, v.du64[0], v.du64[1]);
-
-    // float32x8
-    TemplateTestHelper<Test_permute2, float32x8>::run(tc, v.df32[0]);
-    TemplateTestHelper<Test_permute4, float32x8>::run(tc, v.df32[0]);
-    TemplateTestHelper<Test_shuffle42, float32x8>::run(tc, v.df32[0], v.df32[1]);
-
-    // float64x4
-    TemplateTestHelper<Test_permute2, float64x4>::run(tc, v.df64[0]);
-    TemplateTestHelper<Test_shuffle21, float64x4>::run(tc, v.df64[0], v.df64[1]);
+    test_shuffle_generic_n<16>(tc);
+    test_shuffle_generic_n<32>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

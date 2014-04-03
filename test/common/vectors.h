@@ -12,68 +12,51 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-template<unsigned L>
+/** A class that contains some dummy vectors with test data.
+
+    BE - bytes per vector element
+    N - number of vectors
+*/
+template<unsigned BE, unsigned N>
 struct Vectors {
-    static constexpr unsigned length = L;
 
     union {
-        uint8_t c[L];
-        uint8_t pu8[L];
-        uint16_t pu16[L/2];
-        uint32_t pu32[L/4];
-        uint64_t pu64[L/8];
-        int8_t pi8[L];
-        int16_t pi16[L/2];
-        int32_t pi32[L/4];
-        int64_t pi64[L/8];
-        float pf32[L/4];
-        double pf64[L/8];
-        simdpp::uint8x16 u8[L/16];
-        simdpp::uint16x8 u16[L/16];
-        simdpp::uint32x4 u32[L/16];
-        simdpp::uint64x2 u64[L/16];
-        simdpp::int8x16 i8[L/16];
-        simdpp::int16x8 i16[L/16];
-        simdpp::int32x4 i32[L/16];
-        simdpp::int64x2 i64[L/16];
-        simdpp::float32x4 f32[L/16];
-        simdpp::float64x2 f64[L/16];
-        simdpp::uint8x32 du8[L/32];
-        simdpp::uint16x16 du16[L/32];
-        simdpp::uint32x8 du32[L/32];
-        simdpp::uint64x4 du64[L/32];
-        simdpp::int8x32 di8[L/32];
-        simdpp::int16x16 di16[L/32];
-        simdpp::int32x8 di32[L/32];
-        simdpp::int64x4 di64[L/32];
-        simdpp::float32x8 df32[L/32];
-        simdpp::float64x4 df64[L/32];
+        uint8_t c[BE*N];
+        uint8_t pu8[BE*N];
+        uint16_t pu16[BE*N/2];
+        uint32_t pu32[BE*N/4];
+        uint64_t pu64[BE*N/8];
+        int8_t pi8[BE*N];
+        int16_t pi16[BE*N/2];
+        int32_t pi32[BE*N/4];
+        int64_t pi64[BE*N/8];
+        float pf32[BE*N/4];
+        double pf64[BE*N/8];
+
+        simdpp::uint8<BE> u8[N];
+        simdpp::uint16<BE/2> u16[N];
+        simdpp::uint32<BE/4> u32[N];
+        simdpp::uint64<BE/8> u64[N];
+        simdpp::int8<BE> i8[N];
+        simdpp::int16<BE/2> i16[N];
+        simdpp::int32<BE/4> i32[N];
+        simdpp::int64<BE/8> i64[N];
+        simdpp::float32<BE/4> f32[N];
+        simdpp::float64<BE/8> f64[N];
     };
 
     Vectors() { reset(); }
 
-    template<class V>
-    V get(unsigned n) const
-    {
-        return *(reinterpret_cast<const V*>(c) + n);
-    }
-
-    template<class V>
-    const V* get_ptr() const
-    {
-        return reinterpret_cast<const V*>(c);
-    }
-
     void reset()
     {
-        for (unsigned i = 0; i < L; i++) {
+        for (unsigned i = 0; i < BE*N; i++) {
             c[i] = i%256;
         }
     }
 
     void zero()
     {
-        for (unsigned i = 0; i < L; i++) {
+        for (unsigned i = 0; i < BE*N; i++) {
             c[i] = 0;
         }
     }
