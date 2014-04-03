@@ -37,6 +37,7 @@ namespace detail {
      * the third type is the same as the expression itself, except when it is
         a mask. In that case it is converted to floating-point mask if the
         expression is floating-point expression and to integer mask otherwise
+     * TODO
 
      So, as a result, the following tuples of types will appear as the arguments
      of the returned expression:
@@ -66,26 +67,42 @@ namespace detail {
 
 template<class V1, class V2, class V3>
 class get_expr_blend {
+
+    // (size_tag) get the size tag of the resulting expression
     static const unsigned size_tag_t1 = V1::size_tag > V2::size_tag ? V1::size_tag : V2::size_tag;
     static const unsigned size_tag = size_tag_t1 > V3::size_tag ? size_tag_t1 : V3::size_tag;
 
+    // (type_tag_t2) get the type tag of the first pair of parameters. We
+    // compute it by applying the promotion rules to the first two parameters,
+    // i.e. type_tag_t2 == get_expr2<V1,V2,void>::type::type_tag
     static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
     static const bool is_mask_op1 = type_tag_t1 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t1 == SIMDPP_TAG_MASK_FLOAT;
     static const unsigned type_tag_t2 = (is_mask_op1 && V1::size_tag != V2::size_tag)
                                     ? SIMDPP_TAG_UINT : type_tag_t1;
 
+    // (type_tag) get the type tag of the expression. We compute it by applying
+    // the promotion rules to the pair that includes the third parameter and
+    // the result of the first promotion.
+    // I.e. type_tag == get_expr2<get_expr2<V1,V2,void>::type, V3>::type::type_tag
     static const unsigned type_tag_t3 = type_tag_t2 > V3::type_tag ? type_tag_t2 : V3::type_tag;
     static const bool is_mask_op2 = type_tag_t3 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t3 == SIMDPP_TAG_MASK_FLOAT;
     static const unsigned type_tag = (is_mask_op2 && V3::size_tag != size_tag_t1)
                                     ? SIMDPP_TAG_UINT : type_tag_t3;
 
+    // strip signed types
     static const unsigned v12_type_tag = type_tag == SIMDPP_TAG_INT ? SIMDPP_TAG_UINT : type_tag;
+
+
     static const bool is_v3_mask = V3::type_tag == SIMDPP_TAG_MASK_INT ||
                                    V3::type_tag == SIMDPP_TAG_MASK_FLOAT;
     static const bool is_v12_float = v12_type_tag == SIMDPP_TAG_FLOAT ||
                                      v12_type_tag == SIMDPP_TAG_MASK_FLOAT;
+
+    // if third parameter is a mask and its size tag matches the size tag of the
+    // first two parameters, then convert the mask to float mask if the
+    // expression is float and to integer mask otherwise
     static const unsigned v3_type_tag = (!is_v3_mask || size_tag != V3::size_tag) ? v12_type_tag :
                                         is_v12_float ? SIMDPP_TAG_MASK_FLOAT :
                                         SIMDPP_TAG_MASK_INT;
