@@ -139,23 +139,6 @@ public:
     using empty = typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::empty;
 };
 
-template<class V1, class V2, class V3, class E>
-class get_expr3 {
-    static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
-    static const unsigned type_tag_t2 = V3::type_tag > type_tag_t1 ? V3::type_tag : type_tag_t1;
-
-    static const bool is_mask_op = type_tag_t2 == SIMDPP_TAG_MASK_FLOAT || type_tag_t2 == SIMDPP_TAG_MASK_INT;
-
-    static const unsigned size_tag_t1 = V1::size_tag > V2::size_tag ? V1::size_tag : V2::size_tag;
-    static const unsigned size_tag = V3::size_tag > size_tag_t1 ? V3::size_tag : size_tag_t1;
-    static const unsigned type_tag = (is_mask_op && (V1::size_tag != V2::size_tag || V2::size_tag != V3::size_tag))
-                                        ? SIMDPP_TAG_UINT : type_tag_t2;
-
-public:
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::type;
-    using empty = typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::empty;
-};
-
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
