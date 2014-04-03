@@ -17,6 +17,7 @@ void main_test_function(TestResults& res)
 {
     test_construct(res);
     test_convert(res);
+    test_blend(res);
     test_bitwise(res);
     test_math_fp(res);
     test_math_int(res);
