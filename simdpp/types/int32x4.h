@@ -18,6 +18,7 @@
 #include <simdpp/core/cast.h>
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
+#include <simdpp/detail/null/mask.h>
 #include <cstdint>
 
 namespace simdpp {
@@ -97,8 +98,8 @@ public:
           int32_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static int32<4> zero();
-    static int32<4> ones();
+    static int32<4> zero() { return detail::make_zero(); }
+    static int32<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -173,8 +174,8 @@ public:
           uint32_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static uint32<4> zero();
-    static uint32<4> ones();
+    static uint32<4> zero() { return detail::make_zero(); }
+    static uint32<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -219,7 +220,14 @@ public:
     }
 
     /// Access the underlying type
-    uint32<4> unmask() const;
+    uint32<4> unmask() const
+    {
+    #if SIMDPP_USE_NULL
+        return detail::null::unmask_mask<uint32<4>>(*this);
+    #else
+        return uint32<4>(d_);
+    #endif
+    }
 
 #if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
     bool& el(unsigned id) { return d_[id]; }

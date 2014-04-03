@@ -92,7 +92,7 @@ public:
         r1 = 0.0
         @endcode
     */
-    static float64<4> zero();
+    static float64<4> zero() { return detail::make_zero(); }
 
 private:
     native_type d_;
@@ -132,7 +132,12 @@ public:
     }
 
     /// Access the underlying type
-    float64<4> unmask() const;
+    float64<4> unmask() const
+    {
+    #if SIMDPP_USE_AVX
+        return float64<4>(d_);
+    #endif
+    }
 
     const mask_float64<4>& operator[](unsigned) const { return *this; }
           mask_float64<4>& operator[](unsigned)       { return *this; }

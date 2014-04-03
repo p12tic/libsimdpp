@@ -85,8 +85,8 @@ public:
 
     int64<4> eval() const { return *this; }
 
-    static int64<4> zero();
-    static int64<4> ones();
+    static int64<4> zero() { return detail::make_zero(); }
+    static int64<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -149,8 +149,8 @@ public:
 
     uint64<4> eval() const { return *this; }
 
-    static uint64<4> zero();
-    static uint64<4> ones();
+    static uint64<4> zero() { return detail::make_zero(); }
+    static uint64<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -190,7 +190,12 @@ public:
     }
 
     /// Access the underlying type
-    uint64<4> unmask() const;
+    uint64<4> unmask() const
+    {
+    #if SIMDPP_USE_AVX2
+        return uint64<4>(d_);
+    #endif
+    }
 
     const mask_int64<4>& operator[](unsigned) const { return *this; }
           mask_int64<4>& operator[](unsigned)       { return *this; }

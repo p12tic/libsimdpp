@@ -92,7 +92,7 @@ public:
         r3 = 0.0f
         @endcode
     */
-    static float32<8> zero();
+    static float32<8> zero() { return detail::make_zero(); }
 
 private:
     native_type d_;
@@ -131,7 +131,14 @@ public:
     }
 
     /// Access the underlying type
-    float32<8> unmask() const;
+    float32<8> unmask() const
+    {
+    #if SIMDPP_USE_NULL
+        return detail::null::unmask_mask<float32<8>>(*this);
+    #else
+        return float32<8>(d_);
+    #endif
+    }
 
     const mask_float32<8>& operator[](unsigned) const { return *this; }
           mask_float32<8>& operator[](unsigned)       { return *this; }

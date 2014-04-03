@@ -19,6 +19,7 @@
 #include <cstdint>
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -97,8 +98,8 @@ public:
           int8_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static int8<16> zero();
-    static int8<16> ones();
+    static int8<16> zero() { return detail::make_zero(); }
+    static int8<16> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -173,8 +174,8 @@ public:
           uint8_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static uint8<16> zero();
-    static uint8<16> ones();
+    static uint8<16> zero() { return detail::make_zero(); }
+    static uint8<16> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -210,7 +211,14 @@ public:
 #endif
 
     /// Access the underlying type
-    uint8<16> unmask() const;
+    uint8<16> unmask() const
+    {
+    #if SIMDPP_USE_NULL
+        return detail::null::unmask_mask<uint8<16>>(*this);
+    #else
+        return uint8<16>(d_);
+    #endif
+    }
 
 #if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
     bool& el(unsigned id) { return d_[id]; }

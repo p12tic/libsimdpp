@@ -19,6 +19,7 @@
 #include <simdpp/core/cast.h>
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
+#include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -102,7 +103,7 @@ public:
         r3 = 0.0f
         @endcode
     */
-    static float32<4> zero();
+    static float32<4> zero() { return detail::make_zero(); }
 
 private:
     native_type d_;
@@ -146,7 +147,14 @@ public:
     }
 
     /// Access the underlying type
-    float32<4> unmask() const;
+    float32<4> unmask() const
+    {
+    #if SIMDPP_USE_NULL
+        return detail::null::unmask_mask<float32<4>>(*this);
+    #else
+        return float32<4>(d_);
+    #endif
+    }
 
 #if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
     bool& el(unsigned id) { return d_[id]; }

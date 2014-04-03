@@ -146,35 +146,23 @@ set(HEADERS
     types.h
     types/float32.h
     types/float32x4.h
-    types/float32x4.inl
     types/float32x8.h
-    types/float32x8.inl
     types/float64.h
     types/float64x2.h
-    types/float64x2.inl
     types/float64x4.h
-    types/float64x4.inl
     types/fwd.h
     types/int16.h
     types/int16x16.h
-    types/int16x16.inl
     types/int16x8.h
-    types/int16x8.inl
     types/int32.h
     types/int32x4.h
-    types/int32x4.inl
     types/int32x8.h
-    types/int32x8.inl
     types/int64.h
     types/int64x2.h
-    types/int64x2.inl
     types/int64x4.h
-    types/int64x4.inl
     types/int8.h
     types/int8x16.h
-    types/int8x16.inl
     types/int8x32.h
-    types/int8x32.inl
     types/traits.h
 )
 

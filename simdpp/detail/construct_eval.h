@@ -45,6 +45,20 @@ void construct_eval_wrapper(V& v, const E& e)
     construct_eval(v, e);
 }
 
+inline expr_vec_make_const<uint64_t,1> make_zero()
+{
+    expr_vec_make_const<uint64_t,1> r;
+    r.a[0] = 0;
+    return r;
+}
+
+inline expr_vec_make_const<uint64_t,1> make_ones()
+{
+    expr_vec_make_const<uint64_t,1> r;
+    r.a[0] = -1;
+    return r;
+}
+
 } // namespace detail
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 } // namespace SIMDPP_ARCH_NAMESPACE
