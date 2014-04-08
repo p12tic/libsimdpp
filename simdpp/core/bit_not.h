@@ -22,6 +22,10 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+namespace detail {
+
+
+} // namespace detail
 
 /// @{
 /** Computes bitwise NOT of an integer or floating-point vector
@@ -33,7 +37,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @todo icost
 */
 template<unsigned N, class V>
-typename detail::get_expr<V, void>::empty
+typename detail::get_expr<V, expr_bit_not<V>>::empty
     bit_not(const any_vec<N,V>& a)
 {
     typename detail::get_expr_nosign<V, void>::type ra;

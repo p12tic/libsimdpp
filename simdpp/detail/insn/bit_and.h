@@ -23,7 +23,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-// see doc/expressions.txt for the list of types we must cover
+// see doc/src/expressions.md for the list of types we must cover
 
 // -----------------------------------------------------------------------------
 // uint8, uint8

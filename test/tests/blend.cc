@@ -26,7 +26,7 @@ void test_blend_n(TestCase& tc)
     SelVectors<N,4> s;
 
     // this tests correctness, no need to test all combinations
-    // see doc/expressions.txt
+    // see doc/src/expressions.md
     for (unsigned i = 0; i < 4; ++i) {
         TEST_PUSH(tc, uint8<N>, blend(m.u8[0], m.u8[1], m.u8[i]));
         TEST_PUSH(tc, uint8<N>, blend(v.u8[0], v.u8[1], s.u8[i]));

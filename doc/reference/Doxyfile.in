@@ -113,9 +113,13 @@ WARN_LOGFILE           = reference/doxygen.log
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = "@PROJECT_SOURCE_DIR@/simdpp/"
+
+INPUT                  = "@PROJECT_SOURCE_DIR@/simdpp/" \
+                         "@PROJECT_SOURCE_DIR@/doc/src/"
 INPUT_ENCODING         = UTF-8
-FILE_PATTERNS          = *.h
+
+FILE_PATTERNS          = *.h \
+                         *.md
 RECURSIVE              = YES
 EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO
