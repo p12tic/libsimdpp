@@ -38,7 +38,7 @@ public:
 
     // Holds one result vector
     struct Result {
-        static constexpr unsigned num_bytes = 32;
+        static const unsigned num_bytes = 32;
 
         Result(Type atype, unsigned alength, unsigned ael_size, unsigned aline,
                unsigned aseq, unsigned aprec_ulp)

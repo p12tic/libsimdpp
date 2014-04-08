@@ -81,7 +81,7 @@ void test_memory_load_n(TestCase& tc)
     using namespace simdpp;
 
     // vnum must be at least 4
-    constexpr unsigned vnum = 4;
+    const unsigned vnum = 4;
     Vectors<B,vnum> v;
 
     test_load_helper<uint8<B>, vnum>(tc, v.u8);

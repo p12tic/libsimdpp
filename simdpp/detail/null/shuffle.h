@@ -40,7 +40,7 @@ template<class V>
 V zip_hi_impl(V a, V b)
 {
     V r;
-    constexpr unsigned half = V::length/2;
+    unsigned half = V::length/2;
     for (unsigned i = 0; i < half; i++) {
         r.el(i*2) = a.el(half+i);
         r.el(i*2+1) = b.el(half+i);

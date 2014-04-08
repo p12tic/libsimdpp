@@ -14,11 +14,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned i>
 struct Test_permute2 {
-    static constexpr unsigned limit = 4;
+    static const unsigned limit = 4;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s0 = i / 2 % 2;
-        constexpr unsigned s1 = i % 2;
+        const unsigned s0 = i / 2 % 2;
+        const unsigned s1 = i % 2;
 
         a = simdpp::permute2<s0,s1>(a);
         TEST_PUSH(tc, V, a);
@@ -27,13 +27,13 @@ struct Test_permute2 {
 
 template<class V, unsigned i>
 struct Test_permute4 {
-    static constexpr unsigned limit = 256;
+    static const unsigned limit = 256;
     static void test(TestCase& tc, V a)
     {
-        constexpr unsigned s0 = i / 64 % 4;
-        constexpr unsigned s1 = i / 16 % 4;
-        constexpr unsigned s2 = i / 4 % 4;
-        constexpr unsigned s3 = i % 4;
+        const unsigned s0 = i / 64 % 4;
+        const unsigned s1 = i / 16 % 4;
+        const unsigned s2 = i / 4 % 4;
+        const unsigned s3 = i % 4;
 
         a = simdpp::permute4<s0,s1,s2,s3>(a);
         TEST_PUSH(tc, V, a);
@@ -42,11 +42,11 @@ struct Test_permute4 {
 
 template<class V, unsigned i>
 struct Test_shuffle21 {
-    static constexpr unsigned limit = 4;
+    static const unsigned limit = 4;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s0 = i / 2 % 2;
-        constexpr unsigned s1 = i % 2;
+        const unsigned s0 = i / 2 % 2;
+        const unsigned s1 = i % 2;
 
         a = simdpp::shuffle1<s0,s1>(a, b);
         TEST_PUSH(tc, V, a);
@@ -55,13 +55,13 @@ struct Test_shuffle21 {
 
 template<class V, unsigned i>
 struct Test_shuffle42 {
-    static constexpr unsigned limit = 256;
+    static const unsigned limit = 256;
     static void test(TestCase& tc, V a, V b)
     {
-        constexpr unsigned s0 = i / 64 % 4;
-        constexpr unsigned s1 = i / 16 % 4;
-        constexpr unsigned s2 = i / 4 % 4;
-        constexpr unsigned s3 = i % 4;
+        const unsigned s0 = i / 64 % 4;
+        const unsigned s1 = i / 16 % 4;
+        const unsigned s2 = i / 4 % 4;
+        const unsigned s3 = i % 4;
 
         a = simdpp::shuffle2<s0,s1,s2,s3>(a, b);
         TEST_PUSH(tc, V, a);

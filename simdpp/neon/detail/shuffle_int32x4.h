@@ -60,7 +60,7 @@ inline H dup_hi(H a)   { return vdup_lane_u32(a, 1); }
 template<unsigned s0, unsigned s1>
 H shf(H a, H b)
 {
-    constexpr unsigned sel = s0*4 + s1;
+    const unsigned sel = s0*4 + s1;
     switch (sel) {
     case 0:  /*00*/ return dup_lo(a);
     case 1:  /*01*/ return a;

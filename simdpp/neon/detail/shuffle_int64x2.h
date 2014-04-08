@@ -42,7 +42,7 @@ inline T co(H lo, H hi) { return vcombine_u64(lo, hi); }
 template<unsigned s0, unsigned s1>
 T permute2(T a)
 {
-    constexpr unsigned sel = s0*2 + s1;
+    const unsigned sel = s0*2 + s1;
     switch (sel) {
     case 0:  /*00*/ return co(lo(a), lo(a));
     case 1:  /*01*/ return a;
@@ -55,7 +55,7 @@ T permute2(T a)
 template<unsigned s0, unsigned s1>
 T shuffle1(T a, T b)
 {
-    constexpr unsigned sel = s0*2 + s1;
+    const unsigned sel = s0*2 + s1;
     switch (sel) {
     case 0:  /*00*/ return co(lo(a), lo(b));
     case 1:  /*01*/ return co(lo(a), hi(b));
