@@ -19,21 +19,11 @@ void test_transpose_n(TestCase& tc)
     Vectors<B,8> v;
 
     // int8x16
-    transpose8(v.u8[0], v.u8[1], v.u8[2], v.u8[3],
-               v.u8[4], v.u8[5], v.u8[6], v.u8[7]);
-    TEST_ARRAY_PUSH(tc, uint8<B>, v.u8);
-    v.reset();
-
     transpose4(v.u8[0], v.u8[1], v.u8[2], v.u8[3]);
     TEST_ARRAY_PUSH(tc, uint8<B>, v.u8);
     v.reset();
 
     // int16
-    transpose8(v.u16[0], v.u16[1], v.u16[2], v.u16[3],
-               v.u16[4], v.u16[5], v.u16[6], v.u16[7]);
-    TEST_ARRAY_PUSH(tc, uint16<B/2>, v.u16);
-    v.reset();
-
     transpose4(v.u16[0], v.u16[1], v.u16[2], v.u16[3]);
     TEST_ARRAY_PUSH(tc, uint16<B/2>, v.u16);
     v.reset();
