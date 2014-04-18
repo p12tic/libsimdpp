@@ -45,6 +45,16 @@ template<unsigned M, unsigned N>
 uint32<M> vec_extract(uint32<N> a, unsigned n) { return vec_extract_impl<uint32<M>>(a, n); }
 template<unsigned M, unsigned N>
 uint64<M> vec_extract(uint64<N> a, unsigned n) { return vec_extract_impl<uint64<M>>(a, n); }
+
+template<unsigned M, unsigned N>
+int8<M> vec_extract(int8<N> a, unsigned n) { return vec_extract_impl<int8<M>>(a, n); }
+template<unsigned M, unsigned N>
+int16<M> vec_extract(int16<N> a, unsigned n) { return vec_extract_impl<int16<M>>(a, n); }
+template<unsigned M, unsigned N>
+int32<M> vec_extract(int32<N> a, unsigned n) { return vec_extract_impl<int32<M>>(a, n); }
+template<unsigned M, unsigned N>
+int64<M> vec_extract(int64<N> a, unsigned n) { return vec_extract_impl<int64<M>>(a, n); }
+
 template<unsigned M, unsigned N>
 float32<M> vec_extract(float32<N> a, unsigned n) { return vec_extract_impl<float32<M>>(a, n); }
 template<unsigned M, unsigned N>
