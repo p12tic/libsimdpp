@@ -17,6 +17,7 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/detail/null/foreach.h>
+#include <simdpp/detail/insn/split.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -365,8 +366,13 @@ void v256_split(A a, R& r1, R& r2)
 }
 
 } // namespcae detail
+
 /// @{
-/** Splits a 256-bit vector into two 128-bit vectors.
+/** Splits a vector into two vectors half as wide. This function is useful when
+    the ISA supports multiple vector sizes and the user does some operations
+    with vectors that are narrower than the widest native vector.
+
+    For example, on AVX, a __m256 vector can be split into two __m128 vectors.
 
     @code
     [ r1, r2 ] = a
@@ -375,73 +381,73 @@ void v256_split(A a, R& r1, R& r2)
     @icost{AVX2, 1}
     @icost{SSE2-AVX, NEON, ALTIVEC, 0}
 */
-inline void split(uint8x32 a, uint8x16& r1, uint8x16& r2)  { detail::v256_split(a, r1, r2); }
-inline void split(uint16x16 a, uint16x8& r1, uint16x8& r2) { detail::v256_split(a, r1, r2); }
-inline void split(uint32x8 a, uint32x4& r1, uint32x4& r2)  { detail::v256_split(a, r1, r2); }
-inline void split(uint64x4 a, uint64x2& r1, uint64x2& r2)  { detail::v256_split(a, r1, r2); }
-
-inline void split(int8x32 a, int8x16& r1, int8x16& r2)  { detail::v256_split(a, r1, r2); }
-inline void split(int16x16 a, int16x8& r1, int16x8& r2) { detail::v256_split(a, r1, r2); }
-inline void split(int32x8 a, int32x4& r1, int32x4& r2)  { detail::v256_split(a, r1, r2); }
-inline void split(int64x4 a, int64x2& r1, int64x2& r2)  { detail::v256_split(a, r1, r2); }
-
-inline void split(float32x8 a, float32x4& r1, float32x4& r2)
+template<unsigned N>
+void split(uint8<N> a, uint8<N/2>& r1, uint8<N/2>& r2)
 {
-#if SIMDPP_USE_AVX
-    r1 = _mm256_extractf128_ps(a, 0);
-    r2 = _mm256_extractf128_ps(a, 1);
-#else
-    r1 = a[0];
-    r2 = a[1];
-#endif
+    detail::insn::i_split(a, r1, r2);
 }
 
-inline void split(float64x4 a, float64x2& r1, float64x2& r2)
+template<unsigned N>
+void split(uint16<N> a, uint16<N/2>& r1, uint16<N/2>& r2)
 {
-#if SIMDPP_USE_AVX
-    r1 = _mm256_extractf128_pd(a, 0);
-    r2 = _mm256_extractf128_pd(a, 1);
-#else
-    r1 = a[0];
-    r2 = a[1];
-#endif
+    detail::insn::i_split(a, r1, r2);
 }
 
-namespace detail {
-
-template<class V, class H>
-void v_split(V a, H& r1, H& r2)
+template<unsigned N>
+void split(uint32<N> a, uint32<N/2>& r1, uint32<N/2>& r2)
 {
-    unsigned h = H::vec_length;
-    for (unsigned i = 0; i < h; ++i) { r1[i] = a[i]; }
-    for (unsigned i = 0; i < h; ++i) { r2[i] = a[i+h]; }
+    detail::insn::i_split(a, r1, r2);
 }
 
-} // namespace detail
+template<unsigned N>
+void split(uint64<N> a, uint64<N/2>& r1, uint64<N/2>& r2)
+{
+    detail::insn::i_split(a, r1, r2);
+}
 
 template<unsigned N>
-void split(uint8<N> a, uint8<N/2>& r1, uint8<N/2>& r2) { detail::v_split(a, r1, r2); }
-template<unsigned N>
-void split(uint16<N> a, uint16<N/2>& r1, uint16<N/2>& r2) { detail::v_split(a, r1, r2); }
-template<unsigned N>
-void split(uint32<N> a, uint32<N/2>& r1, uint32<N/2>& r2) { detail::v_split(a, r1, r2); }
-template<unsigned N>
-void split(uint64<N> a, uint64<N/2>& r1, uint64<N/2>& r2) { detail::v_split(a, r1, r2); }
+void split(int8<N> a, int8<N/2>& r1, int8<N/2>& r2)
+{
+    uint8<N/2> q1, q2;  q1 = r1;  q2 = r2;
+    detail::insn::i_split(uint8<N>(a), q1, q2);
+    r1 = q1;  r2 = q2;
+}
 
 template<unsigned N>
-void split(int8<N> a, int8<N/2>& r1, int8<N/2>& r2) { detail::v_split(a, r1, r2); }
-template<unsigned N>
-void split(int16<N> a, int16<N/2>& r1, int16<N/2>& r2) { detail::v_split(a, r1, r2); }
-template<unsigned N>
-void split(int32<N> a, int32<N/2>& r1, int32<N/2>& r2) { detail::v_split(a, r1, r2); }
-template<unsigned N>
-void split(int64<N> a, int64<N/2>& r1, int64<N/2>& r2) { detail::v_split(a, r1, r2); }
+void split(int16<N> a, int16<N/2>& r1, int16<N/2>& r2)
+{
+    uint16<N/2> q1, q2;  q1 = r1;  q2 = r2;
+    detail::insn::i_split(uint16<N>(a), q1, q2);
+    r1 = q1;  r2 = q2;
+}
 
 template<unsigned N>
-void split(float32<N> a, float32<N/2>& r1, float32<N/2>& r2) { detail::v_split(a, r1, r2); }
-template<unsigned N>
-void split(float64<N> a, float64<N/2>& r1, float64<N/2>& r2) { detail::v_split(a, r1, r2); }
+void split(int32<N> a, int32<N/2>& r1, int32<N/2>& r2)
+{
+    uint32<N/2> q1, q2;  q1 = r1;  q2 = r2;
+    detail::insn::i_split(uint32<N>(a), q1, q2);
+    r1 = q1;  r2 = q2;
+}
 
+template<unsigned N>
+void split(int64<N> a, int64<N/2>& r1, int64<N/2>& r2)
+{
+    uint64<N/2> q1, q2;  q1 = r1;  q2 = r2;
+    detail::insn::i_split(uint64<N>(a), q1, q2);
+    r1 = q1;  r2 = q2;
+}
+
+template<unsigned N>
+void split(float32<N> a, float32<N/2>& r1, float32<N/2>& r2)
+{
+    detail::insn::i_split(a, r1, r2);
+}
+
+template<unsigned N>
+void split(float64<N> a, float64<N/2>& r1, float64<N/2>& r2)
+{
+    detail::insn::i_split(a, r1, r2);
+}
 /// @}
 
 /// @} -- end ingroup
