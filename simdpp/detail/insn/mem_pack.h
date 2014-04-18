@@ -149,20 +149,10 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     w2 = shift_r(w2, 8);
     w3 = shift_r(w3, 8);
 
-    u0 = bit_and(u0, mask1);
-    u1 = bit_and(u1, mask1);
-    u2 = bit_and(u2, mask1);
-    u3 = bit_and(u3, mask1);
-
-    w0 = bit_andnot(w0, mask1);
-    w1 = bit_andnot(w1, mask1);
-    w2 = bit_andnot(w2, mask1);
-    w3 = bit_andnot(w3, mask1);
-
-    u0 = bit_or(u0, w0);
-    u1 = bit_or(u1, w1);
-    u2 = bit_or(u2, w2);
-    u3 = bit_or(u3, w3);
+    u0 = blend(u0, w0, mask1);
+    u1 = blend(u1, w1, mask1);
+    u2 = blend(u2, w2, mask1);
+    u3 = blend(u3, w3, mask1);
 
     w_b8 mask2 = make_uint(0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0, 0,
                            0, 0, 0, 0, 0, 0, 0, 0);
@@ -172,20 +162,10 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     x2 = move16_l<2>(u2);
     x3 = move16_l<2>(u3);
 
-    u0 = bit_and(u0, mask2);
-    u1 = bit_and(u1, mask2);
-    u2 = bit_and(u2, mask2);
-    u3 = bit_and(u3, mask2);
-
-    x0 = bit_andnot(x0, mask2);
-    x1 = bit_andnot(x1, mask2);
-    x2 = bit_andnot(x2, mask2);
-    x3 = bit_andnot(x3, mask2);
-
-    u0 = bit_or(u0, x0);
-    u1 = bit_or(u1, x1);
-    u2 = bit_or(u2, x2);
-    u3 = bit_or(u3, x3);
+    u0 = blend(u0, x0, mask2);
+    u1 = blend(u1, x1, mask2);
+    u2 = blend(u2, x2, mask2);
+    u3 = blend(u3, x3, mask2);
 #endif
     // [a0, b0, c0, a1, b1, c1, a2, b2, c2, a3, b3, c3, 0,0,0,0]
     // [a4, b4, c4, a5, b5, c5, a6, b6, c6, a7, b7, c7, 0,0,0,0]
@@ -279,26 +259,10 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
     // the following is still faster than non-SIMD implementation
     w_b16 mask2 = make_uint(0xffff, 0xffff, 0xffff, 0,
                             0, 0, 0, 0);
-    w_b16 x0, x1, x2, x3;
-    x0 = move8_l<1>(u0);
-    x1 = move8_l<1>(u1);
-    x2 = move8_l<1>(u2);
-    x3 = move8_l<1>(u3);
-
-    u0 = bit_and(u0, mask2);
-    u1 = bit_and(u1, mask2);
-    u2 = bit_and(u2, mask2);
-    u3 = bit_and(u3, mask2);
-
-    x0 = bit_andnot(x0, mask2);
-    x1 = bit_andnot(x1, mask2);
-    x2 = bit_andnot(x2, mask2);
-    x3 = bit_andnot(x3, mask2);
-
-    u0 = bit_or(u0, x0);
-    u1 = bit_or(u1, x1);
-    u2 = bit_or(u2, x2);
-    u3 = bit_or(u3, x3);
+    u0 = blend(u0, move8_l<1>(u0), mask2);
+    u1 = blend(u1, move8_l<1>(u1), mask2);
+    u2 = blend(u2, move8_l<1>(u2), mask2);
+    u3 = blend(u3, move8_l<1>(u3), mask2);
 #endif
     // [a0, b0, c0, a1, b1, c1, 0, 0]
     // [a2, b2, c2, a3, b3, c3, 0, 0]
