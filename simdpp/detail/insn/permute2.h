@@ -83,7 +83,7 @@ template<unsigned s0, unsigned s1, unsigned N>
 uint64<N> i_permute2(uint64<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return i_permute4<s0,s1,s0+2,s1+2>(a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, (i_permute2<s0,s1>), a);
 }
 
 
@@ -115,7 +115,7 @@ template<unsigned s0, unsigned s1, unsigned N>
 float64<N> i_permute2(float64<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return permute4<s0,s1,s0+2,s1+2>(a);
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, (i_permute2<s0,s1>), a);
 }
 /// @}
 

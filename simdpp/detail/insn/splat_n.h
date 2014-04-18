@@ -195,7 +195,7 @@ template<unsigned s, unsigned N>
 uint32<N> i_splat4(uint32<N> a)
 {
     static_assert(s < 4, "Access out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint32x8, i_splat4<s>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_splat4<s>, a);
 }
 
 // -----------------------------------------------------------------------------

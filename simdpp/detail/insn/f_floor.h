@@ -70,9 +70,9 @@ inline float32x8 i_floor(float32x8 a)
 #endif
 
 template<unsigned N>
-float32x8 i_floor(float32x8 a)
+float32<N> i_floor(float32<N> a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float32x8, i_floor, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_floor, a);
 }
 
 } // namespace insn

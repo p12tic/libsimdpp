@@ -66,7 +66,7 @@ template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N>
 float32<N> i_shuffle2(float32<N> a, float32<N> b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL2(float32x8, (i_shuffle2<a0,a1,b0,b1>), a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, (i_shuffle2<a0,a1,b0,b1>), a, b);
 }
 
 // -----------------------------------------------------------------------------
