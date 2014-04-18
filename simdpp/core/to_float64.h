@@ -13,9 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/mem_block.h>
-#include <simdpp/core/move_l.h>
-#include <simdpp/sse/extract_half.h>
+#include <simdpp/detail/insn/to_float64.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -46,42 +44,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, 3}
     @novec{NEON, ALTIVEC}
 */
-inline float64x4 to_float64(int32x4 a)
+template<unsigned N, class E>
+float64<N> to_float64(int32<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int32x4> ax(a);
-    float64x4 r;
-    r[0].el(0) = double(ax[0]);
-    r[0].el(1) = double(ax[1]);
-    r[1].el(0) = double(ax[2]);
-    r[1].el(1) = double(ax[3]);
-    return r;
-#elif SIMDPP_USE_AVX
-    return _mm256_cvtepi32_pd(a);
-#elif SIMDPP_USE_SSE2
-    float64x2 r1, r2;
-    r1 = _mm_cvtepi32_pd(a);
-    r2 = _mm_cvtepi32_pd(move4_r<2>(a).eval());
-    return combine(r1, r2);
-#endif
+    return detail::insn::i_to_float64(a.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline float64<8> to_float64(int32x8 a)
-{
-    float64x4 r1, r2;
-    int32x4 a1, a2;
-    split(a, a1, a2);
-    r1 = _mm256_cvtepi32_pd(a1);
-    r2 = _mm256_cvtepi32_pd(a2);
-    return combine(r1, r2);
-}
-#endif
-/// @}
-
-// TODO support arbitrary length vectors
-
-/// @{
 /** Converts the 32-bit float values to 64-bit float values.
 
     SSE specific:
@@ -104,41 +72,11 @@ inline float64<8> to_float64(int32x8 a)
     @icost{SSE2-SSE4.1, 3}
     @novec{NEON, ALTIVEC}
 */
-inline float64x4 to_float64(float32x4 a)
+template<unsigned N, class E>
+float64<N> to_float64(float32<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<float32x4> ax(a);
-    float64x4 r;
-    r[0].el(0) = double(ax[0]);
-    r[0].el(1) = double(ax[1]);
-    r[1].el(0) = double(ax[2]);
-    r[1].el(1) = double(ax[3]);
-    return r;
-#elif SIMDPP_USE_AVX
-    return _mm256_cvtps_pd(a);
-#elif SIMDPP_USE_SSE2
-    float64x2 r1, r2;
-    r1 = _mm_cvtps_pd(a);
-    r2 = _mm_cvtps_pd(move4_r<2>(a).eval());
-    return combine(r1, r2);
-#endif
+    return detail::insn::i_to_float64(a.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float64<8> to_float64(float32x8 a)
-{
-    float64x4 r1, r2;
-    float32x4 a1, a2;
-    split(a, a1, a2);
-    r1 = _mm256_cvtps_pd(a1);
-    r2 = _mm256_cvtps_pd(a2);
-    return combine(r1, r2);
-}
-#endif
-
-// TODO support arbitrary length vectors
-
-/// @}
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

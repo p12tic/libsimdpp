@@ -13,12 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/move_l.h>
-#include <simdpp/core/zip_hi.h>
-#include <simdpp/core/zip_lo.h>
-#include <simdpp/core/insert.h>
-#include <simdpp/detail/null/foreach.h>
-#include <simdpp/detail/mem_block.h>
+#include <simdpp/detail/insn/to_float32.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -47,42 +42,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-inline float32x4 to_float32(int32x4 a)
+template<unsigned N, class E>
+float32<N> to_float32(int32<N,E> a)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
-#elif SIMDPP_USE_SSE2
-    return _mm_cvtepi32_ps(a);
-#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
-    detail::mem_block<int32x4> mi(a);
-    detail::mem_block<float32x4> mf;
-    mf[0] = float(mi[0]);
-    mf[1] = float(mi[1]);
-    mf[2] = float(mi[2]);
-    mf[3] = float(mi[3]);
-    return mf;
-#elif SIMDPP_USE_NEON_FLT_SP
-    return vcvtq_f32_s32(a);
-#elif SIMDPP_USE_ALTIVEC
-    return vec_ctf((__vector int32_t)a, 0);
-#endif
+    return detail::insn::i_to_float32(a.eval());
 }
 
-#if SIMDPP_USE_AVX2
-inline float32x8 to_float32(int32x8 a)
-{
-    return _mm256_cvtepi32_ps(a);
-}
-#endif
-
-template<unsigned N>
-float32<N> to_float32(int32<N> a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, to_float32, a);
-}
-/// @}
-
-/// @{
 /** Converts 64-bit float values to 32-bit float values.
 
     SSE specific:
@@ -117,39 +82,11 @@ float32<N> to_float32(int32<N> a)
     @icost{SSE2-SSE4.1, 3}
     @novec{NEON, ALTIVEC}
 */
-inline float32x4 to_float32(float64x4 a)
+template<unsigned N, class E>
+float32<N> to_float32(float64<N,E> a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<float32x4> r;
-    r[0] = float(a[0].el(0));
-    r[1] = float(a[0].el(1));
-    r[2] = float(a[1].el(0));
-    r[3] = float(a[1].el(1));
-    return r;
-#elif SIMDPP_USE_AVX
-    return _mm256_cvtpd_ps(a);
-#elif SIMDPP_USE_SSE2
-    float32x4 r1, r2;
-    r1 = _mm_cvtpd_ps(a[0]);
-    r2 = _mm_cvtpd_ps(a[1]);
-    r2 = move4_l<2>(r2);
-    return bit_or(r1, r2);
-#endif
+    return detail::insn::i_to_float32(a.eval());
 }
-
-#if SIMDPP_USE_AVX
-inline float32x8 to_float32(float64<8> a)
-{
-    float32x4 r1, r2;
-    r1 = to_float32(a[0]);
-    r2 = to_float32(a[1]);
-    return combine(r1, r2);
-}
-#endif
-
-// TODO support arbitrary length vectors
-
-/// @}
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
