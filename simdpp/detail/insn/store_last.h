@@ -111,6 +111,10 @@ inline void i_store_last(char* p, uint32x4 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_last(p, a, n);
+#elif SIMDPP_USE_AVX2
+    static const int32_t mask_d[8] = {0, 0, 0, 0, -1, -1, -1, -1};
+    uint32x4 mask = load_u(mask_d + n);
+    _mm_maskstore_epi32(reinterpret_cast<int*>(p), mask, a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     i_store_last(p, (uint8x16)a, n*4);
 #endif
@@ -119,7 +123,10 @@ inline void i_store_last(char* p, uint32x4 a, unsigned n)
 #if SIMDPP_USE_AVX2
 inline void i_store_last(char* p, uint32x8 a, unsigned n)
 {
-    i_store_last(p, uint8x32(a), n*4);
+    static const int32_t mask_d[16] = {0, 0, 0, 0, 0, 0, 0, 0,
+                                      -1, -1, -1, -1, -1, -1, -1, -1};
+    uint32<8> mask = load_u(mask_d + n);
+    _mm256_maskstore_epi32(reinterpret_cast<int*>(p), mask, a);
 }
 #endif
 
@@ -156,7 +163,9 @@ inline void i_store_last(char* p, uint64x2 a, unsigned n)
 #if SIMDPP_USE_AVX2
 inline void i_store_last(char* p, uint64x4 a, unsigned n)
 {
-    i_store_last(p, uint8x32(a), n*2);
+    static const int64_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
+    uint64<4> mask = load_u(mask_d + n);
+    _mm256_maskstore_epi64(reinterpret_cast<long long*>(p), mask, a);
 }
 #endif
 
@@ -174,9 +183,12 @@ inline void i_store_last(char* p, float32x4 a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
     i_store_last(p, int32x4(a), n);
+#elif SIMDPP_USE_AVX && !SIMDPP_USE_AMD
+    static const int32_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
+    float32x4 mask = load_u(mask_d + n);
+    _mm_maskstore_ps(reinterpret_cast<float*>(p), _mm_castps_si128(mask), a);
 #elif SIMDPP_USE_SSE2
     static const int32_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
-
     float32x4 mask = load_u(mask_d + n);
     float32x4 old = load(p);
     a = blend(a, old, mask);
@@ -201,9 +213,13 @@ inline void i_store_last(char* p, float32x8 a, unsigned n)
                                         -1, -1, -1, -1, -1, -1, -1, -1 };
 
     float32x8 mask = load_u(mask_d + n);
+#if !SIMDPP_USE_AMD
+    _mm256_maskstore_ps(reinterpret_cast<float*>(p), _mm256_castps_si256(mask), a);
+#else
     float32x8 old = load(p);
     a = blend(a, old, mask);
     store(v, a);
+#endif
 }
 #endif
 
@@ -232,11 +248,15 @@ inline void i_store_last(char* p, float64x2 a, unsigned n)
 inline void i_store_last(char* p, float64x4 a, unsigned n)
 {
     static const int64_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
-
     float64x4 mask = load_u(mask_d + n);
+
+#if !SIMDPP_USE_AMD
+    _mm256_maskstore_pd(reinterpret_cast<double*>(p), _mm256_castpd_si256(mask), a);
+#else
     float64x4 old = load(p);
     a = blend(a, old, mask);
-    store(p, a);
+    store(v, a);
+#endif
 }
 #endif
 

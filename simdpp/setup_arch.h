@@ -311,4 +311,7 @@
 #define SIMDPP_STRINGIFY(x) SIMDPP_STRINGIFY2(x)
 #define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
 
+// FIXME: unused (workarounds for AMD CPUs)
+// #define SIMDPP_USE_AMD
+
 #endif
