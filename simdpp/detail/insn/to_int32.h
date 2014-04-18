@@ -145,13 +145,13 @@ inline int32x4 i_to_int32(float64x4 a)
     r[3] = int32_t(a[1].el(1));
     return r;
 #elif SIMDPP_USE_SSE2
-    int32x4 r1, r2;
+    int32x4 r, r1, r2;
     float64x2 a1, a2;
     split(a, a1, a2);
     r1 = _mm_cvttpd_epi32(a1);
     r2 = _mm_cvttpd_epi32(a2);
-    r2 = move4_l<2>(r2);
-    return bit_or(r1, r2);
+    r = zip2_lo(int64<2>(r1), int64<2>(r2));
+    return r;
 #else
     SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();
 #endif
