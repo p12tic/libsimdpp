@@ -40,6 +40,27 @@ template<unsigned N, class E> struct is_vector<mask_int64<N,E>>    : std::true_t
 template<unsigned N, class E> struct is_vector<mask_float32<N,E>>  : std::true_type {};
 template<unsigned N, class E> struct is_vector<mask_float64<N,E>>  : std::true_type {};
 
+/// Allows detection whether specific type is a simdpp value vector
+template<class V>
+struct is_value_vector : std::false_type {};
+
+template<unsigned N> struct is_value_vector<float32<N>>         : std::true_type {};
+template<unsigned N> struct is_value_vector<float64<N>>         : std::true_type {};
+template<unsigned N> struct is_value_vector<int8<N>>            : std::true_type {};
+template<unsigned N> struct is_value_vector<int16<N>>           : std::true_type {};
+template<unsigned N> struct is_value_vector<int32<N>>           : std::true_type {};
+template<unsigned N> struct is_value_vector<int64<N>>           : std::true_type {};
+template<unsigned N> struct is_value_vector<uint8<N>>           : std::true_type {};
+template<unsigned N> struct is_value_vector<uint16<N>>          : std::true_type {};
+template<unsigned N> struct is_value_vector<uint32<N>>          : std::true_type {};
+template<unsigned N> struct is_value_vector<uint64<N>>          : std::true_type {};
+template<unsigned N> struct is_value_vector<mask_int8<N>>       : std::true_type {};
+template<unsigned N> struct is_value_vector<mask_int16<N>>      : std::true_type {};
+template<unsigned N> struct is_value_vector<mask_int32<N>>      : std::true_type {};
+template<unsigned N> struct is_value_vector<mask_int64<N>>      : std::true_type {};
+template<unsigned N> struct is_value_vector<mask_float32<N>>    : std::true_type {};
+template<unsigned N> struct is_value_vector<mask_float64<N>>    : std::true_type {};
+
 /// Allows detection whether specific type is a simdpp mask
 template<class T>
 struct is_mask : std::false_type {};
