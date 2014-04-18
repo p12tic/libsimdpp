@@ -280,6 +280,9 @@ bool test_equal(const TestSuite& a, const char* a_arch,
     }
 
     if (a.results_.size() != b.results_.size()) {
+        if (a.results_.size() == 0 || b.results_.size() == 0) {
+            return true; // Ignore empty sections
+        }
         fmt_separator();
         fmt_file();
         fmt_test_case();
