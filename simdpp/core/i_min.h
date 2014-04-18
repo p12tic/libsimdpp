@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/i_min.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -139,7 +139,7 @@ uint32<N, uint32<N>> min(uint32<N,E1> a, uint32<N,E2> b)
     return detail::insn::i_min(a.eval(), b.eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

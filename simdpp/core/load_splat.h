@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/load_splat.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -41,7 +41,7 @@ V load_splat(const void* p)
     return detail::insn::i_load_splat_dispatch<V>::run(p);
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

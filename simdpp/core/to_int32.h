@@ -22,7 +22,7 @@
 #include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -183,7 +183,7 @@ inline int32x4 to_int32(float64x4 a)
 /// @}
 
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

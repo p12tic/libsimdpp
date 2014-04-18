@@ -18,7 +18,7 @@
 #include <simdpp/core/zip_lo.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -108,7 +108,7 @@ inline uint64x4 to_int64(uint32x4 a)
 
 // TODO support arbitrary length vectors
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

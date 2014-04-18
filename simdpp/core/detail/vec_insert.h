@@ -18,7 +18,7 @@
 #include <cstring>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
@@ -59,7 +59,7 @@ template<unsigned N, unsigned M>
 void vec_insert(float64<N>& a, float64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 
 } // namespace detail
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

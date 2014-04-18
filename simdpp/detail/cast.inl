@@ -18,7 +18,7 @@
 #include <simdpp/sse/extract_half.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
@@ -89,7 +89,7 @@ struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/> {
 };
 
 } // namespace detail
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

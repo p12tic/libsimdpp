@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
 #define LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -18,7 +18,7 @@
 #include <simdpp/core/shuffle1.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
@@ -72,10 +72,10 @@ float64x4 permute_emul(float64x4 a)
 
 } // namespace insn
 } // namespace detail
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp
 
-#endif // SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(DOXYGEN_SHOULD_READ_THIS)
+#endif // SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(SIMDPP_DOXYGEN)
 #endif

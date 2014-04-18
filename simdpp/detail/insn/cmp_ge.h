@@ -17,7 +17,7 @@
 #include <simdpp/detail/null/compare.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
@@ -81,7 +81,7 @@ mask_float64<N> i_cmp_ge(float64<N> a, float64<N> b)
 
 } // namespace insn
 } // namespace detail
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

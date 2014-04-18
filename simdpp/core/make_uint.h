@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/make_const.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -127,7 +127,7 @@ V make_uint(uint64_t v0,  uint64_t v1,  uint64_t v2,  uint64_t v3,
 }
 /// @}
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

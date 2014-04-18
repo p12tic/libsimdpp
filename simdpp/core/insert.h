@@ -20,7 +20,7 @@
 #include <simdpp/detail/null/set.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -377,7 +377,7 @@ float64<N*2> combine(float64<N,E1> a1, float64<N,E2> a2) { return detail::v_comb
 
 /// @} -- end defgroup
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

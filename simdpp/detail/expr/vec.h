@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
@@ -43,7 +43,7 @@ template<unsigned N>      int64<N> expr_eval(const  int64<N>& a) { return a; }
 template<unsigned N> mask_int64<N> expr_eval(const mask_int64<N>& a) { return a; }
 
 } // namespace detail
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

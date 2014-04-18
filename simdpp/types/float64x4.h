@@ -21,11 +21,11 @@
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-#if SIMDPP_USE_AVX || DOXYGEN_SHOULD_READ_THIS
+#if SIMDPP_USE_AVX || SIMDPP_DOXYGEN
 
 /// @ingroup simd_vec_fp
 /// @{
@@ -66,7 +66,7 @@ public:
     /// Convert to the underlying vector type
     operator native_type() const { return d_; }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
     template<class E> float64<4>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -149,9 +149,9 @@ private:
 };
 /// @} -- end ingroup
 
-#endif // SIMDPP_USE_AVX || DOXYGEN_SHOULD_READ_THIS
+#endif // SIMDPP_USE_AVX || SIMDPP_DOXYGEN
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

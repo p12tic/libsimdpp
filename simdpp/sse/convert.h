@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_SSE_CONVERT_H
 #define LIBSIMDPP_SSE_CONVERT_H
-#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_SSE2 || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -17,7 +17,7 @@
 #include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace sse {
@@ -172,7 +172,7 @@ inline uint32x4 to_int32x4_r(float64x2 a)
 }
 
 } // namespace sse
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

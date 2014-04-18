@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <type_traits>
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -51,7 +51,7 @@ template<unsigned N, class E> struct is_mask<mask_int64<N,E>>   : std::true_type
 template<unsigned N, class E> struct is_mask<mask_float32<N,E>> : std::true_type {};
 template<unsigned N, class E> struct is_mask<mask_float64<N,E>> : std::true_type {};
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

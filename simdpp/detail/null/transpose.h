@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_DETAIL_NULL_TRANSPOSE_H
 #define LIBSIMDPP_DETAIL_NULL_TRANSPOSE_H
-#if SIMDPP_USE_NULL || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_NULL || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -17,7 +17,7 @@
 #include <utility>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
@@ -62,7 +62,7 @@ void transpose8(V& a0, V& a1, V& a2, V& a3, V& a4, V& a5, V& a6, V& a7)
 
 } // namespace null
 } // namespace detail
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

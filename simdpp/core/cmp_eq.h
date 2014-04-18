@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/cmp_eq.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -154,7 +154,7 @@ mask_float64<N, mask_float64<N>> cmp_eq(const any_float64<N,V1>& a,
     return detail::insn::i_cmp_eq(a.vec().eval(), b.vec().eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

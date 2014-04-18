@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -100,7 +100,7 @@ struct shift_u8_mask<8,V> { V operator()() { return make_uint(0xff); } };
 
 } // namespace detail
 } // namespace insn
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/cmp_ge.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -65,7 +65,7 @@ mask_float64<N, mask_float64<N>> cmp_ge(float64<N,E1> a,
 }
 /// @}
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

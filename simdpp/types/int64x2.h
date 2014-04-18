@@ -22,7 +22,7 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -73,7 +73,7 @@ public:
     /// Convert to the underlying vector type
     operator native_type() const { return d_; }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
     template<class E> int64<2>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -92,7 +92,7 @@ public:
 
     int64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
     /// For internal use only
     const int64_t& el(unsigned i) const  { return d_[i]; }
           int64_t& el(unsigned i)        { return d_[i]; }
@@ -149,7 +149,7 @@ public:
     /// Convert to the underlying vector type
     operator native_type() const { return d_; }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
     template<class E> uint64<2>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -168,7 +168,7 @@ public:
 
     uint64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
     /// For uinternal use only
     const uint64_t& el(unsigned i) const  { return d_[i]; }
           uint64_t& el(unsigned i)        { return d_[i]; }
@@ -230,7 +230,7 @@ public:
     #endif
     }
 
-#if SIMDPP_USE_NULL && !DOXYGEN_SHOULD_SKIP_THIS
+#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
@@ -246,7 +246,7 @@ private:
 
 /// @} -- end ingroup
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

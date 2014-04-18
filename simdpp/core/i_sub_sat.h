@@ -16,7 +16,7 @@
 #include <simdpp/detail/expr/i_sub_sat.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -97,7 +97,7 @@ uint16<N, expr_sub_sat<uint16<N,E1>,
     return { { a, b }, 0 };
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

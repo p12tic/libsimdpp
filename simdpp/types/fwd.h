@@ -18,7 +18,7 @@
     vector templates and typedefs of specific vector types urcoah
 */
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -169,7 +169,7 @@ using int64v4 =           int64<SIMDPP_FAST_INT64_SIZE*4>;
 using uint64v4 =         uint64<SIMDPP_FAST_INT64_SIZE*4>;
 using mask_int64v4 = mask_int64<SIMDPP_FAST_INT64_SIZE*4>;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

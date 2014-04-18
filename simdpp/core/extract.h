@@ -19,7 +19,7 @@
 #include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -446,7 +446,7 @@ void split(float64<N> a, float64<N/2>& r1, float64<N/2>& r2) { detail::v_split(a
 
 /// @} -- end ingroup
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

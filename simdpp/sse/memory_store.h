@@ -8,7 +8,7 @@
 
 #ifndef LIBSIMDPP_SSE_MEMORY_STORE_H
 #define LIBSIMDPP_SSE_MEMORY_STORE_H
-#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_SSE2 || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -17,7 +17,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace sse {
@@ -144,7 +144,7 @@ inline void store_masked(void* p, uint64x2 a, uint64x2 mask) { store_masked(p, u
 
 
 } // namespace sse
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_SSE_EXTRACT_HALF_H
 #define LIBSIMDPP_SSE_EXTRACT_HALF_H
-#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_SSE2 || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -16,7 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace sse {
@@ -94,7 +94,7 @@ inline float64x2 extract_hi(float64x4 a)
 /// @}
 
 } // namespace sse
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

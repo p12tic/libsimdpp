@@ -19,7 +19,7 @@
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -52,7 +52,7 @@ public:
         *this = bit_cast<int32<N>>(d.vec().eval()); return *this;
     }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
     template<class E> int32<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -112,7 +112,7 @@ public:
         *this = bit_cast<uint32<N>>(d.vec().eval()); return *this;
     }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
     template<class E> uint32<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -190,7 +190,7 @@ private:
 
 /// @} -- end ingroup
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

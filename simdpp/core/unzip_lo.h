@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/unzip_lo.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -159,7 +159,7 @@ float64<N, float64<N>> unzip2_lo(float64<N,E1> a, float64<N,E2> b)
     return detail::insn::i_unzip2_lo(a.eval(), b.eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

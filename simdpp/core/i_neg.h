@@ -16,7 +16,7 @@
 #include <simdpp/detail/expr/i_neg.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -92,7 +92,7 @@ int64<N, expr_neg<int64<N,E>>> neg(int64<N,E> a)
     return { { a }, 0 };
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

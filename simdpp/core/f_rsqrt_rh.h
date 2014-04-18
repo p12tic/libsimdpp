@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/f_rsqrt_rh.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -48,7 +48,7 @@ float32<N, float32<N>> rsqrt_rh(float32<N,E> a)
     return detail::insn::i_rcp_rh(a.eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

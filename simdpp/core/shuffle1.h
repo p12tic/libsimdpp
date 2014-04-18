@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/shuffle1.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -60,7 +60,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     return detail::insn::i_shuffle1<s0,s1>(ra, rb);
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

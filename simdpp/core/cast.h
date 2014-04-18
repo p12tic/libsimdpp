@@ -17,7 +17,7 @@
 #include <simdpp/types/traits.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -44,7 +44,7 @@ R bit_cast(T t)
     return detail::cast_wrapper<is_mask<R>::value, is_mask<T>::value>::template run<R>(t);
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_NEON_MEMORY_STORE_H
 #define LIBSIMDPP_NEON_MEMORY_STORE_H
-#if SIMDPP_USE_NEON || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_NEON || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -16,7 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace neon {
@@ -102,7 +102,7 @@ void store_lane(void* p, float32x4 a)
 /// @}
 
 } // namespace neon
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

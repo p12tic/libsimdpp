@@ -17,7 +17,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -131,7 +131,7 @@ typename detail::get_expr_nomask<V, void>::empty
     return detail::insn::i_permute2<s0,s1>(ra);
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

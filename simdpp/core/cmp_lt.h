@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/cmp_lt.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -187,7 +187,7 @@ mask_float64<N, mask_float64<N>> cmp_lt(float64<N,E1> a,
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

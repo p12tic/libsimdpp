@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/load_u.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -58,7 +58,7 @@ V load_u(const void* p)
     return detail::insn::i_load_u_dispatch<V>::run(reinterpret_cast<const char*>(p));
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_SSE_COMPARE_H
 #define LIBSIMDPP_SSE_COMPARE_H
-#if SIMDPP_USE_SSE2 || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_SSE2 || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -18,7 +18,7 @@
 #include <simdpp/core/cmp_eq.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace sse {
@@ -129,7 +129,7 @@ template<class = void>
 bool test_ones(uint64x2 a, uint64x2 mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
 
 } // namespace sse
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/store.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -45,7 +45,7 @@ void store(void* p, const any_vec<N,V>& a)
     detail::insn::i_store(reinterpret_cast<char*>(p), a.vec().eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

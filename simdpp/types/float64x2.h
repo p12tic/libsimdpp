@@ -22,7 +22,7 @@
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -67,7 +67,7 @@ public:
     /// Convert to the underlying vector type
     operator native_type() const { return d_; }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
     template<class E> float64<2>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -86,7 +86,7 @@ public:
 
     float64<2> eval() const { return *this; }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     /// For internal use only
     const double& el(unsigned i) const { return d_[i]; }
@@ -152,7 +152,7 @@ public:
     #endif
     }
 
-#if !SIMDPP_USE_SSE2 && !DOXYGEN_SHOULD_SKIP_THIS
+#if !SIMDPP_USE_SSE2 && !SIMDPP_DOXYGEN
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
@@ -167,7 +167,7 @@ private:
 };
 /// @} -- end ingroup
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/bit_xor.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -41,7 +41,7 @@ typename detail::get_expr2<V1, V2, void>::empty
     return detail::insn::i_bit_xor(ra, rb);
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

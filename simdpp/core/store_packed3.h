@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/store_packed3.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -47,7 +47,7 @@ void store_packed3(void* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b,
                                   a.vec().eval(), b.vec().eval(), c.vec().eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

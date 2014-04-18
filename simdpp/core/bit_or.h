@@ -18,7 +18,7 @@
 #include <simdpp/core/detail/get_expr_bitwise.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -44,7 +44,7 @@ typename detail::get_expr_bit_or<V1, V2>::type
 
 /// @}
 ///
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

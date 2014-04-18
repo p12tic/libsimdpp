@@ -12,7 +12,7 @@
 #include <type_traits>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace neon {
@@ -67,7 +67,7 @@ T shuffle1(T a, T b)
 } // namespace shuffle_int64x2
 } // namespace detail
 } // namespace neon
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -21,7 +21,7 @@
 #include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -158,7 +158,7 @@ float64<N> shuffle_zbytes16(float64<N> a, float64<N> b, uint64<N> mask)
 }
 /// @}
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

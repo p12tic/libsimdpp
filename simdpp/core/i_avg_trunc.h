@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/i_avg_trunc.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -159,7 +159,7 @@ int32<N, int32<N>> avg_trunc(int32<N,E1> a, int32<N,E2> b)
 }
 
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

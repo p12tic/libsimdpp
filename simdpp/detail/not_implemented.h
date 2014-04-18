@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -50,7 +50,7 @@ public:
 
 } // namespace detail
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 /** Causes linker error whenever unimplemented functionality is used.
 */
 void libsimdpp_instruction_not_available();
@@ -83,7 +83,7 @@ void libsimdpp_instruction_not_available();
     ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
     )
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

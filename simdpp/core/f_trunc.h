@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/f_trunc.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -43,7 +43,7 @@ float32<N, float32<N>> trunc(float32<N,E> a)
     return detail::insn::i_trunc(a.eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

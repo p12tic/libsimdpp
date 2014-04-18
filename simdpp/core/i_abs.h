@@ -16,7 +16,7 @@
 #include <simdpp/detail/expr/i_abs.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -112,7 +112,7 @@ uint64<N, expr_abs<int64<N,E>>> abs(int64<N,E> a)
     return { { a }, 0 };
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

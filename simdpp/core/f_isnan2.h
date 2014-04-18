@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/f_isnan2.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -64,7 +64,7 @@ mask_float64<N, mask_float64<N>> isnan2(float64<N,E1> a, float64<N,E2> b)
 }
 
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_ALTIVEC_LOAD1_H
 #define LIBSIMDPP_ALTIVEC_LOAD1_H
-#if SIMDPP_USE_ALTIVEC || defined(DOXYGEN_SHOULD_READ_THIS)
+#if SIMDPP_USE_ALTIVEC || defined(SIMDPP_DOXYGEN)
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -16,7 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace altivec {
@@ -103,7 +103,7 @@ inline float32x4 load1(float32x4& a, const float* p)
 /// @}
 
 } // namespace altivec
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

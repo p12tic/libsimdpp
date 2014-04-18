@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/store_last.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -50,7 +50,7 @@ void store_last(void* p, const any_vec<N,V>& a, unsigned n)
                                 a.vec().eval(), n);
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

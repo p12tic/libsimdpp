@@ -13,7 +13,7 @@
 #include <simdpp/detail/expr/vec.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -39,7 +39,7 @@ template<unsigned N, class E> int64<N>           int64<N,E>::eval() const { retu
 template<unsigned N, class E> uint64<N>         uint64<N,E>::eval() const { return (uint64<N>)     detail::expr_eval(e); }
 template<unsigned N, class E> mask_int64<N> mask_int64<N,E>::eval() const { return (mask_int64<N>) detail::expr_eval(e); }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp

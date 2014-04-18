@@ -16,7 +16,7 @@
 #include <simdpp/detail/insn/i_avg.h>
 
 namespace simdpp {
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
@@ -144,7 +144,7 @@ int32<N, int32<N>> avg(int32<N,E1> a, int32<N,E2> b)
     return detail::insn::i_avg(a.eval(), b.eval());
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp
