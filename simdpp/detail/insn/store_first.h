@@ -171,8 +171,7 @@ inline void i_store_first(char* p, float32x4 a, unsigned n)
     i_store_first(p, int32x4(a), n);
 #elif SIMDPP_USE_SSE2
     float* q = reinterpret_cast<float*>(p);
-    static const uint32_t mask_d[8] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
-                                       0x00000000, 0x00000000, 0x00000000, 0x00000000};
+    static const int32_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x4 mask = load_u(mask_dp + 4-n);
@@ -194,10 +193,8 @@ inline void i_store_first(char* p, float32x4 a, unsigned n)
 inline void i_store_first(char* p, float32x8 a, unsigned n)
 {
     float* q = reinterpret_cast<float*>(p);
-    static const uint32_t mask_d[16] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
-                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
-                                        0x00000000, 0x00000000, 0x00000000, 0x00000000,
-                                        0x00000000, 0x00000000, 0x00000000, 0x00000000};
+    static const int32_t mask_d[16] = { -1, -1, -1, -1, -1, -1, -1, -1,
+                                         0, 0, 0, 0, 0, 0, 0, 0 };
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x8 mask = load_u(mask_dp + 8-n);
@@ -231,10 +228,7 @@ inline void i_store_first(char* p, float64x2 a, unsigned n)
 inline void i_store_first(char* p, float64x4 a, unsigned n)
 {
     double* q = reinterpret_cast<double*>(p);
-    static const uint64_t mask_d[16] = {0xffffffffffffffff, 0xffffffffffffffff,
-                                        0xffffffffffffffff, 0xffffffffffffffff,
-                                        0x0000000000000000, 0x0000000000000000,
-                                        0x0000000000000000, 0x0000000000000000};
+    static const int64_t mask_d[16] = { -1, -1, -1, -1, 0, 0, 0, 0 };
 
     const double* mask_dp = reinterpret_cast<const double*>(mask_d);
     float64x4 mask = load_u(mask_dp + 4-n);

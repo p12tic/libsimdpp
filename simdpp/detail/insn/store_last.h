@@ -176,8 +176,7 @@ inline void i_store_last(char* p, float32x4 a, unsigned n)
     i_store_last(p, int32x4(a), n);
 #elif SIMDPP_USE_SSE2
     float* q = reinterpret_cast<float*>(p);
-    static const uint32_t mask_d[8] = {0x00000000, 0x00000000, 0x00000000, 0x00000000,
-                                       0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
+    static const int32_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x4 mask = load_u(mask_dp + n);
@@ -201,10 +200,8 @@ inline void i_store_last(char* p, float32x4 a, unsigned n)
 inline void i_store_last(char* p, float32x8 a, unsigned n)
 {
     float* v = reinterpret_cast<float*>(p);
-    static const uint32_t mask_d[16] = {0x00000000, 0x00000000, 0x00000000, 0x00000000,
-                                        0x00000000, 0x00000000, 0x00000000, 0x00000000,
-                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
-                                        0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
+    static const int32_t mask_d[16] = { 0, 0, 0, 0, 0, 0, 0, 0,
+                                        -1, -1, -1, -1, -1, -1, -1, -1 };
 
     const float* mask_dp = reinterpret_cast<const float*>(mask_d);
     float32x8 mask = load_u(mask_dp + n);
@@ -239,10 +236,7 @@ inline void i_store_last(char* p, float64x2 a, unsigned n)
 inline void i_store_last(char* p, float64x4 a, unsigned n)
 {
     double* q = reinterpret_cast<double*>(p);
-    static const uint64_t mask_d[16] = {0x0000000000000000, 0x0000000000000000,
-                                        0x0000000000000000, 0x0000000000000000,
-                                        0xffffffffffffffff, 0xffffffffffffffff,
-                                        0xffffffffffffffff, 0xffffffffffffffff};
+    static const int64_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
 
     const double* mask_dp = reinterpret_cast<const double*>(mask_d);
     float64x4 mask = load_u(mask_dp + n);
