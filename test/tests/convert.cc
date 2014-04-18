@@ -120,6 +120,7 @@ void test_convert(TestResults& res)
     TestSuite& ts = NEW_TEST_SUITE(res, "convert");
     test_convert_n<16>(ts);
     test_convert_n<32>(ts);
+    test_convert_n<64>(ts);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

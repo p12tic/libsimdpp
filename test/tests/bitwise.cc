@@ -118,6 +118,7 @@ void test_bitwise(TestResults& res)
     TestSuite& tc = NEW_TEST_SUITE(res, "bitwise");
     test_bitwise_n<16>(tc);
     test_bitwise_n<32>(tc);
+    test_bitwise_n<64>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

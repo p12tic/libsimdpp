@@ -190,6 +190,7 @@ void test_math_int(TestResults& res)
     TestSuite& tc = NEW_TEST_SUITE(res, "math_int");
     test_math_int_n<16>(tc);
     test_math_int_n<32>(tc);
+    test_math_int_n<64>(tc);
 
     using namespace simdpp;
     { // uint16

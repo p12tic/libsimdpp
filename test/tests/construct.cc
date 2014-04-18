@@ -104,6 +104,7 @@ void test_construct(TestResults& res)
     TestSuite& tc = NEW_TEST_SUITE(res, "construct");
     test_construct_n<16>(tc);
     test_construct_n<32>(tc);
+    test_construct_n<64>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

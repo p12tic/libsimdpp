@@ -124,6 +124,7 @@ void test_math_fp(TestResults& res)
     TestSuite& ts_fma = NEW_TEST_SUITE(res, "math_fp.fma");
     test_math_fp_n<16>(ts, ts_fma);
     test_math_fp_n<32>(ts, ts_fma);
+    test_math_fp_n<64>(ts, ts_fma);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

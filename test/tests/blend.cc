@@ -124,6 +124,7 @@ void test_blend(TestResults& res)
     TestSuite& tc = NEW_TEST_SUITE(res, "blend");
     test_blend_n<16>(tc);
     test_blend_n<32>(tc);
+    test_blend_n<64>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

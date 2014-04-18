@@ -98,6 +98,7 @@ void test_memory_load(TestResults& res)
 
     test_memory_load_n<16>(tc);
     test_memory_load_n<32>(tc);
+    test_memory_load_n<64>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

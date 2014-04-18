@@ -77,6 +77,7 @@ void test_math_shift(TestResults& res)
 
     test_math_shift_n<16>(tc);
     test_math_shift_n<32>(tc);
+    test_math_shift_n<64>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -106,6 +106,7 @@ void test_shuffle_generic(TestResults& res)
 
     test_shuffle_generic_n<16>(tc);
     test_shuffle_generic_n<32>(tc);
+    test_shuffle_generic_n<64>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

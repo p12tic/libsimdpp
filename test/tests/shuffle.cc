@@ -173,6 +173,7 @@ void test_shuffle(TestResults& res)
 
     test_shuffle_n<16>(tc);
     test_shuffle_n<32>(tc);
+    test_shuffle_n<64>(tc);
 
     using namespace simdpp;
 
