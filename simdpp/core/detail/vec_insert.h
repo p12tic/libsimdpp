@@ -26,7 +26,7 @@ namespace detail {
 template<class R, class V>
 void vec_insert_impl(R& a, V x, unsigned n)
 {
-    static_assert(x.length > a.base_length, "Too small vector to insert");
+    static_assert(x.length >= a.base_length, "Too small vector to insert");
 
     for (unsigned i = 0; i < x.vec_length; ++i) {
         a[n*x.vec_length + i] = x[i]; //TODO combine or split as needed
