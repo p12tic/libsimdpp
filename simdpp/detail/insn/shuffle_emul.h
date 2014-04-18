@@ -16,6 +16,8 @@
 #include <simdpp/types.h>
 #include <simdpp/core/permute2.h>
 #include <simdpp/core/shuffle1.h>
+#include <simdpp/core/insert.h>
+#include <simdpp/core/extract.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -24,26 +26,26 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<class H, unsigned s0, unsigned s1, class V>
-H permute_half(V a)
+template<unsigned s0, unsigned s1, class V>
+V permute_half(V a0, V a1)
 {
     switch (s0*4+s1) {
-    case 0: /* 0 0 */ return permute2<0,0>(a[0]);
-    case 1: /* 0 1 */ return a[0];
-    case 2: /* 0 2 */ return shuffle1<0,0>(a[0], a[1]);
-    case 3: /* 0 3 */ return shuffle1<0,1>(a[0], a[1]);
-    case 4: /* 1 0 */ return permute2<1,0>(a[0]);
-    case 5: /* 1 1 */ return permute2<1,1>(a[0]);
-    case 6: /* 1 2 */ return shuffle1<1,0>(a[0], a[1]);
-    case 7: /* 1 3 */ return shuffle1<1,1>(a[0], a[1]);
-    case 8: /* 2 0 */ return shuffle1<0,0>(a[1], a[0]);
-    case 9: /* 2 1 */ return shuffle1<0,1>(a[1], a[0]);
-    case 10: /* 2 2 */ return permute2<0,0>(a[1]);
-    case 11: /* 2 3 */ return a[1];
-    case 12: /* 3 0 */ return shuffle1<1,0>(a[1], a[0]);
-    case 13: /* 3 1 */ return shuffle1<1,1>(a[1], a[0]);
-    case 14: /* 3 2 */ return permute2<1,0>(a[1]);
-    case 15: /* 3 3 */ return permute2<1,1>(a[1]);
+    case 0: /* 0 0 */ return permute2<0,0>(a0);
+    case 1: /* 0 1 */ return a0;
+    case 2: /* 0 2 */ return shuffle1<0,0>(a0, a1);
+    case 3: /* 0 3 */ return shuffle1<0,1>(a0, a1);
+    case 4: /* 1 0 */ return permute2<1,0>(a0);
+    case 5: /* 1 1 */ return permute2<1,1>(a0);
+    case 6: /* 1 2 */ return shuffle1<1,0>(a0, a1);
+    case 7: /* 1 3 */ return shuffle1<1,1>(a0, a1);
+    case 8: /* 2 0 */ return shuffle1<0,0>(a1, a0);
+    case 9: /* 2 1 */ return shuffle1<0,1>(a1, a0);
+    case 10: /* 2 2 */ return permute2<0,0>(a1);
+    case 11: /* 2 3 */ return a1;
+    case 12: /* 3 0 */ return shuffle1<1,0>(a1, a0);
+    case 13: /* 3 1 */ return shuffle1<1,1>(a1, a0);
+    case 14: /* 3 2 */ return permute2<1,0>(a1);
+    case 15: /* 3 3 */ return permute2<1,1>(a1);
     }
 }
 
@@ -54,19 +56,21 @@ H permute_half(V a)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 uint64x4 permute_emul(uint64x4 a)
 {
-    uint64x4 r;
-    r[0] = permute_half<uint64x2,s0,s1>(a);
-    r[1] = permute_half<uint64x2,s2,s3>(a);
-    return r;
+    uint64x2 r0, r1, a0, a1;
+    split(a, a0, a1);
+    r0 = permute_half<s0,s1>(a0, a1);
+    r1 = permute_half<s2,s3>(a0, a1);
+    return combine(r0, r1);
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
 float64x4 permute_emul(float64x4 a)
 {
-    float64x4 r;
-    r[0] = permute_half<float64x2,s0,s1>(a);
-    r[1] = permute_half<float64x2,s2,s3>(a);
-    return r;
+    float64x2 r0, r1, a0, a1;
+    split(a, a0, a1);
+    r0 = permute_half<s0,s1>(a0, a1);
+    r1 = permute_half<s2,s3>(a0, a1);
+    return combine(r0, r1);
 }
 /// @}
 
