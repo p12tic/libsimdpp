@@ -58,6 +58,7 @@ template<unsigned N, class V>
 struct any_float32 : any_vec32<N, V>
 {
     static const unsigned length = N;
+    static const unsigned base_length = SIMDPP_FAST_FLOAT32_SIZE;
     static const unsigned vec_length = (N + SIMDPP_FAST_FLOAT32_SIZE - 1) / SIMDPP_FAST_FLOAT32_SIZE;
     using element_type = float;
     using uint_element_type = uint32_t;
@@ -72,6 +73,7 @@ template<unsigned N, class V>
 struct any_float64 : any_vec64<N, V>
 {
     static const unsigned length = N;
+    static const unsigned base_length = SIMDPP_FAST_FLOAT64_SIZE;
     static const unsigned vec_length = (N + SIMDPP_FAST_FLOAT64_SIZE - 1) / SIMDPP_FAST_FLOAT64_SIZE;
     using element_type = double;
     using uint_element_type = uint64_t;
@@ -86,6 +88,7 @@ template<unsigned N, class V>
 struct any_int8 : any_vec8<N, V>
 {
     static const unsigned length = N;
+    static const unsigned base_length = SIMDPP_FAST_INT8_SIZE;
     static const unsigned vec_length = (N + SIMDPP_FAST_INT8_SIZE - 1) / SIMDPP_FAST_INT8_SIZE;
     using uint_element_type = uint8_t;
     using int_vector_type = int8<N>;
@@ -100,6 +103,7 @@ template<unsigned N, class V>
 struct any_int16 : any_vec16<N, V>
 {
     static const unsigned length = N;
+    static const unsigned base_length = SIMDPP_FAST_INT16_SIZE;
     static const unsigned vec_length = (N + SIMDPP_FAST_INT16_SIZE - 1) / SIMDPP_FAST_INT16_SIZE;
     using uint_element_type = uint16_t;
     using int_vector_type = int16<N>;
@@ -114,6 +118,7 @@ template<unsigned N, class V>
 struct any_int32 : any_vec32<N, V>
 {
     static const unsigned length = N;
+    static const unsigned base_length = SIMDPP_FAST_INT32_SIZE;
     static const unsigned vec_length = (N + SIMDPP_FAST_INT32_SIZE - 1) / SIMDPP_FAST_INT32_SIZE;
     using uint_element_type = uint32_t;
     using int_vector_type = int32<N>;
@@ -128,6 +133,7 @@ template<unsigned N, class V>
 struct any_int64 : any_vec64<N, V>
 {
     static const unsigned length = N;
+    static const unsigned base_length = SIMDPP_FAST_INT64_SIZE;
     static const unsigned vec_length = (N + SIMDPP_FAST_INT64_SIZE - 1) / SIMDPP_FAST_INT64_SIZE;
     using uint_element_type = uint64_t;
     using int_vector_type = int64<N>;

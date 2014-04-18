@@ -14,8 +14,8 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types.h>
-
-#include <cstring>
+#include <simdpp/core/insert.h>
+#include <simdpp/core/extract.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -26,8 +26,7 @@ namespace detail {
 template<class R, class V>
 R vec_extract_impl(V a, unsigned n)
 {
-    static_assert(R::length >= a.length / a.vec_length,
-                  "Too small vector to extract");
+    static_assert(R::length >= a.base_length, "Too small vector to extract");
 
     R r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
