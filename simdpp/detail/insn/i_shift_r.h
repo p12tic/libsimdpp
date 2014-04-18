@@ -132,7 +132,7 @@ inline int16x8 i_shift_r(int16x8 a, unsigned count)
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
-    return _mm_srai_epi16(a, count);
+    return _mm_sra_epi16(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int16x8 shift = splat(-int(count));
     return vshlq_s16(a, shift);
@@ -145,7 +145,7 @@ inline int16x8 i_shift_r(int16x8 a, unsigned count)
 #if SIMDPP_USE_AVX2
 inline int16x16 i_shift_r(int16x16 a, unsigned count)
 {
-    return _mm256_srai_epi16(a, count);
+    return _mm256_sra_epi16(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -175,7 +175,7 @@ inline uint16x8 i_shift_r(uint16x8 a, unsigned count)
 #if SIMDPP_USE_AVX2
 inline uint16x16 i_shift_r(uint16x16 a, unsigned count)
 {
-    return _mm256_srli_epi16(a, count);
+    return _mm256_srl_epi16(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -192,7 +192,7 @@ inline int32x4 i_shift_r(int32x4 a, unsigned count)
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
-    return _mm_srai_epi32(a, count);
+    return _mm_sra_epi32(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int32x4 shift = splat(-int(count));
     return vshlq_s32(a, shift);
@@ -205,7 +205,7 @@ inline int32x4 i_shift_r(int32x4 a, unsigned count)
 #if SIMDPP_USE_AVX2
 inline int32x8 i_shift_r(int32x8 a, unsigned count)
 {
-    return _mm256_srai_epi32(a, count);
+    return _mm256_sra_epi32(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -222,7 +222,7 @@ inline uint32x4 i_shift_r(uint32x4 a, unsigned count)
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
-    return _mm_srli_epi32(a, count);
+    return _mm_srl_epi32(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int32x4 shift = splat(-int(count));
     return vshlq_u32(a, shift);
@@ -235,7 +235,7 @@ inline uint32x4 i_shift_r(uint32x4 a, unsigned count)
 #if SIMDPP_USE_AVX2
 inline uint32x8 i_shift_r(uint32x8 a, unsigned count)
 {
-    return _mm256_srli_epi32(a, count);
+    return _mm256_srl_epi32(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -321,7 +321,7 @@ inline uint64x2 i_shift_r(uint64x2 a, unsigned count)
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
-    return _mm_srli_epi64(a, count);
+    return _mm_srl_epi64(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(-int(count));
     return vshlq_u64(a, shift);
@@ -333,7 +333,7 @@ inline uint64x2 i_shift_r(uint64x2 a, unsigned count)
 #if SIMDPP_USE_AVX2
 inline uint64x4 i_shift_r(uint64x4 a, unsigned count)
 {
-    return _mm256_srli_epi64(a, count);
+    return _mm256_srl_epi64(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -354,8 +354,20 @@ template<unsigned count>
 int8x16 i_shift_r(int8x16 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL
     return i_shift_r(a, count);
+#elif SIMDPP_USE_SSE2
+    uint16<8> hi, lo;
+    lo = hi = a;
+
+    lo = shift_l<8>(lo);
+    lo = shift_r<count>(int16<8>(lo));
+    lo = shift_r<8>(lo);
+
+    hi = shift_r<8+count>(int16<8>(hi));
+    hi = shift_l<8>(hi);
+    a = bit_or(lo, hi);    //higher part of lo is already clear
+    return a;
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
@@ -369,7 +381,17 @@ template<unsigned count>
 int8x32 i_shift_r(int8x32 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-    return i_shift_r(a, count);
+    uint16<16> hi, lo;
+    lo = hi = a;
+
+    lo = shift_l<8>(lo);
+    lo = shift_r<count>(int16<16>(lo));
+    lo = shift_r<8>(lo);
+
+    hi = shift_r<8+count>(int16<16>(hi));
+    hi = shift_l<8>(hi);
+    a = bit_or(lo, hi);    //higher part of lo is already clear
+    return a;
 }
 #endif
 
@@ -406,7 +428,15 @@ template<unsigned count>
 uint8x32 i_shift_r(uint8x32 a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-    return i_shift_r(a, count);
+    uint16<16> mask, a16;
+    mask = uint16<16>::ones();
+    mask = shift_l<16-count>(mask);
+    mask = shift_r<8>(mask);
+
+    a16 = a;
+    a16 = shift_r<count>(a16);
+    a16 = bit_andnot(a16, mask);
+    return uint8x32(a16);
 }
 #endif
 
@@ -440,7 +470,7 @@ template<unsigned count>
 int16x16 i_shift_r(int16x16 a)
 {
     static_assert(count <= 16, "Shift out of bounds");
-    return i_shift_r(a, count);
+    return _mm256_srai_epi16(a, count);
 }
 #endif
 
@@ -457,8 +487,10 @@ template<unsigned count>
 uint16x8 i_shift_r(uint16x8 a)
 {
     static_assert(count <= 16, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL
     return i_shift_r(a, count);
+#elif SIMDPP_USE_SSE2
+    return _mm_srli_epi16(a, count);
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
@@ -472,7 +504,7 @@ template<unsigned count>
 uint16x16 i_shift_r(uint16x16 a)
 {
     static_assert(count <= 16, "Shift out of bounds");
-    return i_shift_r(a, count);
+    return _mm256_srli_epi16(a, count);
 }
 #endif
 
@@ -489,8 +521,10 @@ template<unsigned count>
 int32x4 i_shift_r(int32x4 a)
 {
     static_assert(count <= 32, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL
     return i_shift_r(a, count);
+#elif SIMDPP_USE_SSE2
+    return _mm_srai_epi32(a, count);
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
@@ -504,7 +538,7 @@ template<unsigned count>
 int32x8 i_shift_r(int32x8 a)
 {
     static_assert(count <= 32, "Shift out of bounds");
-    return i_shift_r(a, count);
+    return _mm256_srai_epi32(a, count);
 }
 #endif
 
@@ -521,8 +555,10 @@ template<unsigned count>
 uint32x4 i_shift_r(uint32x4 a)
 {
     static_assert(count <= 32, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL
     return i_shift_r(a, count);
+#elif SIMDPP_USE_SSE2
+    return _mm_srli_epi32(a, count);
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #elif SIMDPP_USE_ALTIVEC
@@ -536,7 +572,7 @@ template<unsigned count>
 uint32x8 i_shift_r(uint32x8 a)
 {
     static_assert(count <= 32, "Shift out of bounds");
-    return i_shift_r(a, count);
+    return _mm256_srli_epi32(a, count);
 }
 #endif
 
@@ -553,7 +589,6 @@ template<unsigned count>
 int64x2 i_shift_r(int64x2 a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return i_shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -585,8 +620,10 @@ template<unsigned count>
 uint64x2 i_shift_r(uint64x2 a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL
     return i_shift_r(a, count);
+#elif SIMDPP_USE_SSE2
+    return _mm_srli_epi64(a, count);
 #elif SIMDPP_USE_NEON
     return neon::detail::shift_r<count>(a);
 #else
@@ -599,7 +636,7 @@ template<unsigned count>
 uint64x4 i_shift_r(uint64x4 a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-    return i_shift_r(a, count);
+    return _mm256_srli_epi64(a, count);
 }
 #endif
 
