@@ -256,10 +256,10 @@ inline void i_transpose2(float32x4& a0, float32x4& a1)
 inline void i_transpose2(float32x8& a0, float32x8& a1)
 {
     float64x4 b0, b1;
-    b0 = bit_cast<float64x4>(zip4_lo(a0, a1));
-    b1 = bit_cast<float64x4>(zip4_hi(a0, a1));
-    a0 = bit_cast<float32x8>(zip2_lo(b0, b1));
-    a1 = bit_cast<float32x8>(zip2_hi(b0, b1));
+    b0 = zip4_lo(a0, a1);
+    b1 = zip4_hi(a0, a1);
+    a0 = zip2_lo(b0, b1);
+    a1 = zip2_hi(b0, b1);
 }
 #endif
 
@@ -463,34 +463,26 @@ void i_transpose4(uint16<N>& a0, uint16<N>& a1, uint16<N>& a2, uint16<N>& a3)
 
 // -----------------------------------------------------------------------------
 
-template<class V> struct dbl_length_vector;
-template<> struct dbl_length_vector<uint32x4> { using type = uint64x2; };
-template<> struct dbl_length_vector<uint32x8> { using type = uint64x4; };
-template<> struct dbl_length_vector<float32x4> { using type = float64x2; };
-template<> struct dbl_length_vector<float32x8> { using type = float64x4; };
-
-template<class V>
+template<class V, class D>
 void sse_i_transpose4x32_impl(V& a0, V& a1, V& a2, V& a3)
 {
-    using Z = typename dbl_length_vector<V>::type;
-    Z b0, b1, b2, b3;
+    D b0, b1, b2, b3;
     // [a0,a1,a2,a3]
     // [b0,b1,b2,b3]
     // [c0,c1,c2,c3]
     // [d0,d1,d2,d3]
-    // bit_cast needed for float versions
-    b0 = bit_cast<Z>(zip4_lo(a0, a1));
-    b1 = bit_cast<Z>(zip4_hi(a0, a1));
-    b2 = bit_cast<Z>(zip4_lo(a2, a3));
-    b3 = bit_cast<Z>(zip4_hi(a2, a3));
+    b0 = zip4_lo(a0, a1);
+    b1 = zip4_hi(a0, a1);
+    b2 = zip4_lo(a2, a3);
+    b3 = zip4_hi(a2, a3);
     // [a0,b0,a1,b1]
     // [a2,b2,a3,b3]
     // [c0,d0,c1,d1]
     // [c2,d2,c3,d3]
-    a0 = bit_cast<V>(zip2_lo(b0, b2));
-    a1 = bit_cast<V>(zip2_hi(b0, b2));
-    a2 = bit_cast<V>(zip2_lo(b1, b3));
-    a3 = bit_cast<V>(zip2_hi(b1, b3));
+    a0 = zip2_lo(b0, b2);
+    a1 = zip2_hi(b0, b2);
+    a2 = zip2_lo(b1, b3);
+    a3 = zip2_hi(b1, b3);
 }
 
 
@@ -500,7 +492,7 @@ inline void i_transpose4(uint32x4& a0, uint32x4& a1,
 #if SIMDPP_USE_NULL
     detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
-    sse_i_transpose4x32_impl(a0, a1, a2, a3);
+    sse_i_transpose4x32_impl<uint32<4>, uint64<2>>(a0, a1, a2, a3);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     uint64x2 b0, b1, b2, b3;
     i_transpose2(a0, a1);  // 32-bit transpose
@@ -516,7 +508,7 @@ inline void i_transpose4(uint32x4& a0, uint32x4& a1,
 inline void i_transpose4(uint32x8& a0, uint32x8& a1,
                          uint32x8& a2, uint32x8& a3)
 {
-    sse_i_transpose4x32_impl(a0, a1, a2, a3);
+    sse_i_transpose4x32_impl<uint32<8>, uint64<4>>(a0, a1, a2, a3);
 }
 #endif
 
@@ -532,7 +524,7 @@ inline void i_transpose4(float32x4& a0, float32x4& a1,
                          float32x4& a2, float32x4& a3)
 {
 #if SIMDPP_USE_SSE2
-    sse_i_transpose4x32_impl(a0, a1, a2, a3);
+    sse_i_transpose4x32_impl<float32<4>, float64<2>>(a0, a1, a2, a3);
 #else
     uint32x4 b0, b1, b2, b3;
     b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
@@ -545,7 +537,7 @@ inline void i_transpose4(float32x4& a0, float32x4& a1,
 inline void i_transpose4(float32x8& a0, float32x8& a1,
                          float32x8& a2, float32x8& a3)
 {
-    sse_i_transpose4x32_impl(a0, a1, a2, a3);
+    sse_i_transpose4x32_impl<float32<8>, float64<4>>(a0, a1, a2, a3);
 }
 #endif
 
