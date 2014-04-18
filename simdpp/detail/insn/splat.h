@@ -115,7 +115,7 @@ uint32x8 i_splat(uint32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
     a = permute4<s%4,s%4,s%4,s%4>(a);
-    a = detail::shuffle128<s/4, s/4>(a, a);
+    a = detail::shuffle1_128<s/4, s/4>(a, a);
     return a;
 }
 #endif
@@ -164,7 +164,8 @@ template<unsigned s>
 float32x8 i_splat(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
-    a = detail::shuffle128<s/4,s/4>(a, a);
+
+    a = shuffle1_128<s/4,s/4>(a, a);
     return permute4<s%4,s%4,s%4,s%4>(a);
 }
 #endif
@@ -192,7 +193,7 @@ float64x4 i_splat(float64x4 a)
 #if SIMDPP_USE_AVX2
     return permute4<s,s,s,s>(a);
 #else // SIMDPP_USE_AVX
-    a = detail::shuffle128<s/2,s/2>(a, a);
+    a = detail::shuffle1_128<s/2,s/2>(a, a);
     a = permute2<s%2,s%2>(a);
     return a;
 #endif

@@ -48,8 +48,8 @@ template<class T>
 void v256_mem_unpack2_impl(T& a, T& b)
 {
     T c1, c2;
-    c1 = shuffle128<0,2>(a, b);
-    c2 = shuffle128<1,3>(a, b);
+    c1 = shuffle1_128<0,0>(a, b);
+    c2 = shuffle1_128<1,1>(a, b);
     a = unzip128_lo(c1, c2);
     b = unzip128_hi(c1, c2);
 }
@@ -301,9 +301,9 @@ void v256_mem_unpack3_shuffle(T& a, T& b, T& c)
     // items (a and lower half of b) and the higher halves contain the rest
     T t0, t1, t2;
     t0 = a;  t1 = b;  t2 = c;
-    a = shuffle128<0,3>(t0, t1);
-    b = shuffle128<1,2>(t0, t2);
-    c = shuffle128<0,3>(t1, t2);
+    a = shuffle1_128<0,1>(t0, t1);
+    b = shuffle1_128<1,0>(t0, t2);
+    c = shuffle1_128<0,1>(t1, t2);
 }
 /// @{
 /** Concatenates @a a, @a b and @a c and stores the elements of the resulting
@@ -478,10 +478,10 @@ void mem_unpack4_256_shuffle(T& a, T& b, T& c, T& d)
     // items (a and lower half of b) and the higher halves contain the rest
     T t0, t1, t2, t3;
     t0 = a;  t1 = b;  t2 = c;  t3 = d;
-    a = shuffle128<0,2>(t0, t2);
-    b = shuffle128<1,3>(t0, t2);
-    c = shuffle128<0,2>(t1, t3);
-    d = shuffle128<1,3>(t1, t3);
+    a = shuffle1_128<0,0>(t0, t2);
+    b = shuffle1_128<1,1>(t0, t2);
+    c = shuffle1_128<0,0>(t1, t3);
+    d = shuffle1_128<1,1>(t1, t3);
 }
 
 /// @{

@@ -49,8 +49,8 @@ inline void v256_mem_pack2_impl(T& a, T& b)
     T c1, c2;
     c1 = zip128_lo(a, b);
     c2 = zip128_hi(a, b);
-    a = shuffle128<0,2>(c1, c2);
-    b = shuffle128<1,3>(c1, c2);
+    a = shuffle1_128<0,0>(c1, c2);
+    b = shuffle1_128<1,1>(c1, c2);
 }
 
 /// @{
@@ -397,9 +397,9 @@ void mem_pack3_256_shuffle(T& a, T& b, T& c)
     // items and the higher halves contain the rest
     T t0, t1, t2;
     t0 = a;  t1 = b;  t2 = c;
-    a = shuffle128<0,2>(t0, t1);
-    b = shuffle128<0,3>(t2, t0);
-    c = shuffle128<1,3>(t1, t2);
+    a = shuffle1_128<0,0>(t0, t1);
+    b = shuffle1_128<0,1>(t2, t0);
+    c = shuffle1_128<1,1>(t1, t2);
 }
 
 /// @{
@@ -574,10 +574,10 @@ void v256_mem_pack4_shuffle(T& a, T& b, T& c, T& d)
     // items and the higher halves contain the rest
     T t0, t1, t2, t3;
     t0 = a;  t1 = b;  t2 = c;  t3 = d;
-    a = shuffle128<0,2>(t0, t1);
-    b = shuffle128<0,2>(t2, t3);
-    c = shuffle128<1,3>(t0, t1);
-    d = shuffle128<1,3>(t2, t3);
+    a = shuffle1_128<0,0>(t0, t1);
+    b = shuffle1_128<0,0>(t2, t3);
+    c = shuffle1_128<1,1>(t0, t1);
+    d = shuffle1_128<1,1>(t2, t3);
 }
 
 /// @{
