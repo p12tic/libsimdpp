@@ -18,6 +18,7 @@
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/altivec/load1.h>
 #include <simdpp/detail/null/set.h>
+#include <simdpp/detail/insn/combine.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -241,138 +242,85 @@ float64x2 insert(float64x2 a, double x)
     return float64x2(insert<id>(int64x2(a), bit_cast<int64_t>(x)));
 }
 
-/// @{
-/** Combines two 128-bit vectors into a 256-bit vector
-
-    @code
-    r = [ a, b ]
-    @endcode
-
-    @icost{AVX2, 1}
-    @icost{SSE2-AVX, NEON, ALTIVEC, 0}
-*/
-template<class E1, class E2>
-uint8x32 combine(uint8<16,E1> a, uint8<16,E2> b)
-{
-#if SIMDPP_USE_AVX2
-    uint8x32 r;
-    r = _mm256_castsi128_si256(a.eval());
-    r = _mm256_inserti128_si256(r, b.eval(), 1);
-    return r;
-#else
-    uint8x32 r;
-    r[0] = a.eval();
-    r[1] = b.eval();
-    return r;
-#endif
-}
-
-
-template<class E1, class E2>
-uint16x16 combine(uint16<8,E1> a, uint16<8,E2> b)
-{
-    return uint16x16(combine(uint8x16(a.eval()), uint8x16(b.eval())));
-}
-
-template<class E1, class E2>
-uint32x8 combine(uint32<4,E1> a, uint32<4,E2> b)
-{
-    return uint32x8(combine(uint8x16(a.eval()), uint8x16(b.eval())));
-}
-
-template<class E1, class E2>
-uint64x4 combine(uint64<2,E1> a, uint64<2,E2> b)
-{
-    return uint64x4(combine(uint8x16(a.eval()), uint8x16(b.eval())));
-}
-
-template<class E1, class E2>
-int16x16 combine(int16<8,E1> a, int16<8,E2> b)
-{
-    return int16x16(combine(uint8x16(a.eval()), uint8x16(b.eval())));
-}
-
-template<class E1, class E2>
-int32x8 combine(int32<4,E1> a, int32<4,E2> b)
-{
-    return int32x8(combine(uint8x16(a.eval()), uint8x16(b.eval())));
-}
-
-template<class E1, class E2>
-int64x4 combine(int64<2,E1> a, int64<2,E2> b)
-{
-    return int64x4(combine(uint8x16(a.eval()), uint8x16(b.eval())));
-}
-
-template<class E1, class E2>
-float32x8 combine(float32<4,E1> a, float32<4,E2> b)
-{
-#if SIMDPP_USE_AVX
-    float32x8 r;
-    r = _mm256_castps128_ps256(a.eval());
-    r = _mm256_insertf128_ps(r, b.eval(), 1);
-    return r;
-#else
-    float32x8 r;
-    r[0] = a.eval();
-    r[1] = b.eval();
-    return r;
-#endif
-}
-
-template<class E1, class E2>
-float64x4 combine(float64<2,E1> a, float64<2,E2> b)
-{
-#if SIMDPP_USE_AVX
-    float64x4 r;
-    r = _mm256_castpd128_pd256(a.eval());
-    r = _mm256_insertf128_pd(r, b.eval(), 1);
-    return r;
-#else
-    float64x4 r;
-    r[0] = a.eval();
-    r[1] = b.eval();
-    return r;
-#endif
-}
-
 namespace detail {
 
-template<class V, class H>
-V v_combine(H a1, H a2)
-{
-    V r;
-    unsigned h = H::vec_length;
-    for (unsigned i = 0; i < h; ++i) { r[i] = a1[i]; }
-    for (unsigned i = 0; i < h; ++i) { r[i+h] = a2[i]; }
-    return r;
-}
+
 
 } // namespace detail
 
+/// @{
+/** Combines two vectors into one twice as large. This function is useful when
+    the ISA supports multiple vector sizes and the user does some operations
+    with vectors that are narrower than the widest native vector.
+
+    For example, on AVX, two __m128 vectors can be combined into a __m256
+    vector.
+
+    @todo icost
+*/
 template<unsigned N, class E1, class E2>
-uint8<N*2> combine(uint8<N,E1> a1, uint8<N,E2> a2) { return detail::v_combine<uint8<N*2>>(a1.eval(), a2.eval()); }
-template<unsigned N, class E1, class E2>
-uint16<N*2> combine(uint16<N,E1> a1, uint16<N,E2> a2) { return detail::v_combine<uint16<N*2>>(a1.eval(), a2.eval()); }
-template<unsigned N, class E1, class E2>
-uint32<N*2> combine(uint32<N,E1> a1, uint32<N,E2> a2) { return detail::v_combine<uint32<N*2>>(a1.eval(), a2.eval()); }
-template<unsigned N, class E1, class E2>
-uint64<N*2> combine(uint64<N,E1> a1, uint64<N,E2> a2) { return detail::v_combine<uint64<N*2>>(a1.eval(), a2.eval()); }
+uint8<N*2> combine(uint8<N,E1> a1, uint8<N,E2> a2)
+{
+    return detail::insn::i_combine<uint8<N*2>>(a1.eval(), a2.eval());
+}
 
 template<unsigned N, class E1, class E2>
-int8<N*2> combine(int8<N,E1> a1, int8<N,E2> a2) { return detail::v_combine<int8<N*2>>(a1.eval(), a2.eval()); }
-template<unsigned N, class E1, class E2>
-int16<N*2> combine(int16<N,E1> a1, int16<N,E2> a2) { return detail::v_combine<int16<N*2>>(a1.eval(), a2.eval()); }
-template<unsigned N, class E1, class E2>
-int32<N*2> combine(int32<N,E1> a1, int32<N,E2> a2) { return detail::v_combine<int32<N*2>>(a1.eval(), a2.eval()); }
-template<unsigned N, class E1, class E2>
-int64<N*2> combine(int64<N,E1> a1, int64<N,E2> a2) { return detail::v_combine<int64<N*2>>(a1.eval(), a2.eval()); }
+uint16<N*2> combine(uint16<N,E1> a1, uint16<N,E2> a2)
+{
+    return detail::insn::i_combine<uint16<N*2>>(a1.eval(), a2.eval());
+}
 
 template<unsigned N, class E1, class E2>
-float32<N*2> combine(float32<N,E1> a1, float32<N,E2> a2) { return detail::v_combine<float32<N*2>>(a1.eval(), a2.eval()); }
-template<unsigned N, class E1, class E2>
-float64<N*2> combine(float64<N,E1> a1, float64<N,E2> a2) { return detail::v_combine<float64<N*2>>(a1.eval(), a2.eval()); }
+uint32<N*2> combine(uint32<N,E1> a1, uint32<N,E2> a2)
+{
+    return detail::insn::i_combine<uint32<N*2>>(a1.eval(), a2.eval());
+}
 
+template<unsigned N, class E1, class E2>
+uint64<N*2> combine(uint64<N,E1> a1, uint64<N,E2> a2)
+{
+    return detail::insn::i_combine<uint64<N*2>>(a1.eval(), a2.eval());
+}
+
+template<unsigned N, class E1, class E2>
+int8<N*2> combine(int8<N,E1> a1, int8<N,E2> a2)
+{
+    return detail::insn::i_combine<uint8<N*2>>(uint8<N>(a1.eval()),
+                                               uint8<N>(a2.eval()));
+}
+
+template<unsigned N, class E1, class E2>
+int16<N*2> combine(int16<N,E1> a1, int16<N,E2> a2)
+{
+    return detail::insn::i_combine<uint16<N*2>>(uint16<N>(a1.eval()),
+                                                uint16<N>(a2.eval()));
+}
+
+template<unsigned N, class E1, class E2>
+int32<N*2> combine(int32<N,E1> a1, int32<N,E2> a2)
+{
+    return detail::insn::i_combine<uint32<N*2>>(uint32<N>(a1.eval()),
+                                                uint32<N>(a2.eval()));
+}
+
+template<unsigned N, class E1, class E2>
+int64<N*2> combine(int64<N,E1> a1, int64<N,E2> a2)
+{
+    return detail::insn::i_combine<uint64<N*2>>(uint64<N>(a1.eval()),
+                                                uint64<N>(a2.eval()));
+}
+
+template<unsigned N, class E1, class E2>
+float32<N*2> combine(float32<N,E1> a1, float32<N,E2> a2)
+{
+    return detail::insn::i_combine<float32<N*2>>(a1.eval(), a2.eval());
+}
+
+template<unsigned N, class E1, class E2>
+float64<N*2> combine(float64<N,E1> a1, float64<N,E2> a2)
+{
+    return detail::insn::i_combine<float64<N*2>>(a1.eval(), a2.eval());
+}
 /// @}
 
 /// @} -- end defgroup
