@@ -30,8 +30,8 @@ template<unsigned S, unsigned N> simdpp::float64<N> move_v128_r(simdpp::float64<
 // shuffles within 256-bit vectors are limited to 128-bit halves
 template<class V>
 struct Shuffle_width {
-    static const bool is_256 = (V::length * V::num_bits) == 256 ? true : false;
-    static const unsigned value = is_256 ? V::length / 2 : V::length;
+    static const unsigned div = V::length * V::num_bits / 128;
+    static const unsigned value = V::length / div;
 };
 
 template<class V, unsigned i>
