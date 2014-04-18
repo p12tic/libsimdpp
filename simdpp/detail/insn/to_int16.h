@@ -29,7 +29,62 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-inline uint16x16 i_to_int16(int8x16 a)
+inline uint16x16 i_to_uint16(uint8x16 a)
+{
+#if SIMDPP_USE_NULL
+    uint16x16 r;
+    for (unsigned i = 0; i < 8; i++) {
+        r[i/8].el(i%8) = uint16_t(a.el(i));
+    }
+    return r;
+#elif SIMDPP_USE_SSE4_1
+    int16x8 r1, r2;
+    r1 = _mm_cvtepu8_epi16(a);
+    r2 = _mm_cvtepu8_epi16(move16_r<8>(a).eval());
+    return combine(r1, r2);
+#elif SIMDPP_USE_SSE2
+    int16x8 r1, r2;
+    r1 = zip16_lo(a, uint8x16::zero());
+    r2 = zip16_hi(a, uint8x16::zero());
+    return combine(r1, r2);
+#elif SIMDPP_USE_NEON
+    int16x16 r;
+    r[0] = vmovl_u8(vget_low_u8(a));
+    r[1] = vmovl_u8(vget_high_u8(a));
+    return r;
+#elif SIMDPP_USE_ALTIVEC
+    int16x16 r;
+    r[0] = vmovl_u8(vget_low_u8(a[0]));
+    r[1] = vmovl_u8(vget_high_u8(a[1]));
+    return r;
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+inline uint16<32> i_to_uint16(uint8<32> a)
+{
+    uint16<16> r0, r1;
+    uint8<16> a0, a1;
+    split(a, a0, a1);
+    r0 = _mm256_cvtepu8_epi16(a0);
+    r1 = _mm256_cvtepu8_epi16(a1);
+    return combine(r0, r1);
+}
+#endif
+
+template<unsigned N>
+uint16<N> i_to_uint16(uint8<N> a)
+{
+    uint16<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_uint16(a[i]), i);
+    }
+    return r;
+}
+
+// -----------------------------------------------------------------------------
+
+inline int16x16 i_to_int16(int8x16 a)
 {
 #if SIMDPP_USE_NULL
     int16x16 r;
@@ -62,43 +117,27 @@ inline uint16x16 i_to_int16(int8x16 a)
 #endif
 }
 
-// TODO support arbitrary length vectors
-
-// -----------------------------------------------------------------------------
-
-inline uint16x16 i_to_int16(uint8x16 a)
+#if SIMDPP_USE_AVX2
+inline int16<32> i_to_int16(int8<32> a)
 {
-#if SIMDPP_USE_NULL
-    uint16x16 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r[i/8].el(i%8) = uint16_t(a.el(i));
+    int16<16> r0, r1;
+    int8<16> a0, a1;
+    split(a, a0, a1);
+    r0 = _mm256_cvtepi8_epi16(a0);
+    r1 = _mm256_cvtepi8_epi16(a1);
+    return combine(r0, r1);
+}
+#endif
+
+template<unsigned N>
+int16<N> i_to_int16(int8<N> a)
+{
+    int16<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_int16(a[i]), i);
     }
     return r;
-#elif SIMDPP_USE_SSE4_1
-    int16x8 r1, r2;
-    r1 = _mm_cvtepu8_epi16(a);
-    r2 = _mm_cvtepu8_epi16(move16_r<8>(a).eval());
-    return combine(r1, r2);
-#elif SIMDPP_USE_SSE2
-    int16x8 r1, r2;
-    r1 = zip16_lo(a, uint8x16::zero());
-    r2 = zip16_hi(a, uint8x16::zero());
-    return combine(r1, r2);
-#elif SIMDPP_USE_NEON
-    int16x16 r;
-    r[0] = vmovl_u8(vget_low_u8(a));
-    r[1] = vmovl_u8(vget_high_u8(a));
-    return r;
-#elif SIMDPP_USE_ALTIVEC
-    int16x16 r;
-    r[0] = vmovl_u8(vget_low_u8(a[0]));
-    r[1] = vmovl_u8(vget_high_u8(a[1]));
-    return r;
-#endif
 }
-
-// TODO support arbitrary length vectors
-
 
 } // namespace insn
 } // namespace detail

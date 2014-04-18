@@ -20,6 +20,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
 #include <simdpp/detail/null/foreach.h>
+#include <simdpp/core/detail/vec_insert.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -62,7 +63,27 @@ inline int32x8 i_to_int32(int16x8 a)
 #endif
 }
 
-// TODO support arbitrary length vectors
+#if SIMDPP_USE_AVX2
+inline int32<16> i_to_int32(int16<16> a)
+{
+    int32<8> r0, r1;
+    int16<8> a0, a1;
+    split(a, a0, a1);
+    r0 = _mm256_cvtepi16_epi32(a0);
+    r1 = _mm256_cvtepi16_epi32(a1);
+    return combine(r0, r1);
+}
+#endif
+
+template<unsigned N>
+int32<N> i_to_int32(int16<N> a)
+{
+    int32<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_int32(a[i]), i);
+    }
+    return r;
+}
 
 // -----------------------------------------------------------------------------
 
@@ -87,17 +108,29 @@ inline int32x4 i_to_int32(float32x4 a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
-inline uint32x8 i_to_int32(float32x8 a)
+#if SIMDPP_USE_AVX
+inline int32x8 i_to_int32(float32x8 a)
 {
+#if SIMDPP_USE_AVX2
     return _mm256_cvttps_epi32(a);
+#else
+    __m256i r = _mm256_cvttps_epi32(a);
+    uint32<4> r1, r2;
+    r1 = _mm256_castsi256_si128(r);
+    r2 = _mm256_extractf128_si256(r, 1);
+    return combine(r1, r2);
+#endif
 }
 #endif
 
 template<unsigned N>
-uint32<N> i_to_int32(float32<N> a)
+int32<N> i_to_int32(float32<N> a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_to_int32, a);
+    int32<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_int32(a[i]), i);
+    }
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,8 +157,25 @@ inline int32x4 i_to_int32(float64x4 a)
 #endif
 }
 
-// TODO support arbitrary length vectors
+#if SIMDPP_USE_AVX
+inline int32<8> i_to_int32(float64<8> a)
+{
+    int32<4> r1, r2;
+    r1 = _mm256_cvtpd_epi32(a[0]);
+    r2 = _mm256_cvtpd_epi32(a[1]);
+    return combine(r1, r2);
+}
+#endif
 
+template<unsigned N>
+int32<N> i_to_int32(float64<N> a)
+{
+    int32<N> r;
+    for (unsigned i = 0; i < r.vec_length; ++i) {
+        r[i] = i_to_int32(detail::vec_extract<r.base_length>(a, i));
+    }
+    return r;
+}
 
 } // namespace insn
 } // namespace detail

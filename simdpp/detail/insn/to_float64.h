@@ -16,6 +16,7 @@
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/sse/extract_half.h>
+#include <simdpp/core/detail/vec_insert.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -57,7 +58,15 @@ inline float64<8> i_to_float64(int32x8 a)
 }
 #endif
 
-// TODO support arbitrary length vectors
+template<unsigned N>
+float64<N> i_to_float64(int32<N> a)
+{
+    float64<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_float64(a[i]), i);
+    }
+    return r;
+}
 
 // -----------------------------------------------------------------------------
 
@@ -93,7 +102,15 @@ inline float64<8> i_to_float64(float32x8 a)
 }
 #endif
 
-// TODO support arbitrary length vectors
+template<unsigned N>
+float64<N> i_to_float64(float32<N> a)
+{
+    float64<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_float64(a[i]), i);
+    }
+    return r;
+}
 
 
 } // namespace insn

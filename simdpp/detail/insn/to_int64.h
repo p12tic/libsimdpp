@@ -53,7 +53,27 @@ inline int64x4 i_to_int64(int32x4 a)
 #endif
 }
 
-// TODO support arbitrary length vectors
+#if SIMDPP_USE_AVX2
+inline int64<8> i_to_int64(int32<8> a)
+{
+    int32<4> a1, a2;
+    int64<4> r1, r2;
+    split(a, a1, a2);
+    r1 = _mm256_cvtepi32_epi64(a1);
+    r2 = _mm256_cvtepi32_epi64(a2);
+    return combine(r1, r2);
+}
+#endif
+
+template<unsigned N>
+int64<N> i_to_int64(int32<N> a)
+{
+    int64<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_int64(a[i]), i);
+    }
+    return r;
+}
 
 // -----------------------------------------------------------------------------
 
@@ -84,7 +104,27 @@ inline uint64x4 i_to_uint64(uint32x4 a)
 #endif
 }
 
-// TODO support arbitrary length vectors
+#if SIMDPP_USE_AVX2
+inline uint64<8> i_to_uint64(uint32<8> a)
+{
+    uint32<4> a1, a2;
+    uint64<4> r1, r2;
+    split(a, a1, a2);
+    r1 = _mm256_cvtepu32_epi64(a1);
+    r2 = _mm256_cvtepu32_epi64(a2);
+    return combine(r1, r2);
+}
+#endif
+
+template<unsigned N>
+uint64<N> i_to_uint64(uint32<N> a)
+{
+    uint64<N> r;
+    for (unsigned i = 0; i < a.vec_length; ++i) {
+        detail::vec_insert(r, i_to_uint64(a[i]), i);
+    }
+    return r;
+}
 
 
 } // namespace insn

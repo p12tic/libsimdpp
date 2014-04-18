@@ -19,6 +19,7 @@
 #include <simdpp/core/insert.h>
 #include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/mem_block.h>
+#include <simdpp/core/detail/vec_extract.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -49,17 +50,28 @@ inline float32x4 i_to_float32(int32x4 a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 inline float32x8 i_to_float32(int32x8 a)
 {
+#if SIMDPP_USE_AVX2
     return _mm256_cvtepi32_ps(a);
+#else
+    __m256i a1;
+    a1 = _mm256_castsi128_si256(a[0]);
+    a1 = _mm256_insertf128_si256(a1, a[1], 1);
+    return _mm256_cvtepi32_ps(a1);
+#endif
 }
 #endif
 
 template<unsigned N>
 float32<N> i_to_float32(int32<N> a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_to_float32, a);
+    float32<N> r;
+    for (unsigned i = 0; i < r.vec_length; ++i) {
+        r[i] = i_to_float32(detail::vec_extract<r.base_length>(a, i));
+    }
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,9 +106,15 @@ inline float32x8 i_to_float32(float64<8> a)
 }
 #endif
 
-// TODO support arbitrary length vectors
-
-/// @}
+template<unsigned N>
+float32<N> i_to_float32(float64<N> a)
+{
+    float32<N> r;
+    for (unsigned i = 0; i < r.vec_length; ++i) {
+        r[i] = i_to_float32(detail::vec_extract<r.base_length>(a, i));
+    }
+    return r;
+}
 
 } // namespace insn
 } // namespace detail
