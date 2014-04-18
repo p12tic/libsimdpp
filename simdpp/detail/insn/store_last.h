@@ -175,14 +175,12 @@ inline void i_store_last(char* p, float32x4 a, unsigned n)
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
     i_store_last(p, int32x4(a), n);
 #elif SIMDPP_USE_SSE2
-    float* q = reinterpret_cast<float*>(p);
     static const int32_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
 
-    const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x4 mask = load_u(mask_dp + n);
-    float32x4 old = load(q);
+    float32x4 mask = load_u(mask_d + n);
+    float32x4 old = load(p);
     a = blend(a, old, mask);
-    store(q, a);
+    store(p, a);
 #elif SIMDPP_USE_NEON
     float* q = reinterpret_cast<float*>(p);
     // + VFP
@@ -199,13 +197,11 @@ inline void i_store_last(char* p, float32x4 a, unsigned n)
 #if SIMDPP_USE_AVX
 inline void i_store_last(char* p, float32x8 a, unsigned n)
 {
-    float* v = reinterpret_cast<float*>(p);
     static const int32_t mask_d[16] = { 0, 0, 0, 0, 0, 0, 0, 0,
                                         -1, -1, -1, -1, -1, -1, -1, -1 };
 
-    const float* mask_dp = reinterpret_cast<const float*>(mask_d);
-    float32x8 mask = load_u(mask_dp + n);
-    float32x8 old = load(v);
+    float32x8 mask = load_u(mask_d + n);
+    float32x8 old = load(p);
     a = blend(a, old, mask);
     store(v, a);
 }
@@ -235,14 +231,12 @@ inline void i_store_last(char* p, float64x2 a, unsigned n)
 #if SIMDPP_USE_AVX
 inline void i_store_last(char* p, float64x4 a, unsigned n)
 {
-    double* q = reinterpret_cast<double*>(p);
     static const int64_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
 
-    const double* mask_dp = reinterpret_cast<const double*>(mask_d);
-    float64x4 mask = load_u(mask_dp + n);
-    float64x4 old = load(q);
+    float64x4 mask = load_u(mask_d + n);
+    float64x4 old = load(p);
     a = blend(a, old, mask);
-    store(q, a);
+    store(p, a);
 }
 #endif
 
