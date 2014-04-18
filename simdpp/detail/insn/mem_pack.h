@@ -21,9 +21,9 @@
 #include <simdpp/core/move_r.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/shuffle2.h>
+#include <simdpp/core/transpose.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/adv/transpose.h>
 #include <simdpp/detail/insn/zip128.h>
 
 namespace simdpp {

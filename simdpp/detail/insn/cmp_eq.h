@@ -18,7 +18,7 @@
 #include <simdpp/core/bit_or.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_shift_l.h>
-#include <simdpp/adv/transpose.h>
+#include <simdpp/core/transpose.h>
 #include <simdpp/detail/null/compare.h>
 
 namespace simdpp {

@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/mem_unpack.h>
 #include <simdpp/core/load.h>
-#include <simdpp/adv/transpose.h>
+#include <simdpp/core/transpose.h>
 #include <simdpp/detail/null/memory.h>
 
 namespace simdpp {

@@ -21,11 +21,11 @@
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/core/shuffle2.h>
+#include <simdpp/core/transpose.h>
 #include <simdpp/core/unzip_hi.h>
 #include <simdpp/core/unzip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/adv/transpose.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN

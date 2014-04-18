@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_SIMDPP_ADV_TRANSPOSE_H
-#define LIBSIMDPP_SIMDPP_ADV_TRANSPOSE_H
+#ifndef LIBSIMDPP_SIMDPP_CORE_TRANSPOSE_H
+#define LIBSIMDPP_SIMDPP_CORE_TRANSPOSE_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -16,7 +16,7 @@
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/shuffle2.h>
-#include <simdpp/adv/detail/transpose.h>
+#include <simdpp/detail/insn/transpose.h>
 #include <simdpp/neon/shuffle.h>
 #include <simdpp/detail/null/transpose.h>
 #include <simdpp/sse/shuffle.h>

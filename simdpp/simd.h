@@ -19,7 +19,6 @@
 #include <cstdlib>
 
 
-#include <simdpp/adv/transpose.h>
 #include <simdpp/altivec/load1.h>
 #include <simdpp/core/align.h>
 #include <simdpp/core/aligned_allocator.h>
@@ -111,6 +110,7 @@
 #include <simdpp/core/to_int32.h>
 #include <simdpp/core/to_int64.h>
 #include <simdpp/core/to_int8.h>
+#include <simdpp/core/transpose.h>
 #include <simdpp/core/unzip_hi.h>
 #include <simdpp/core/unzip_lo.h>
 #include <simdpp/core/zip_hi.h>

@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_SIMDPP_ADV_DETAIL_TRANSPOSE_H
-#define LIBSIMDPP_SIMDPP_ADV_DETAIL_TRANSPOSE_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_TRANSPOSE_H
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_TRANSPOSE_H
 
 #include <simdpp/types.h>
 #include <simdpp/detail/not_implemented.h>
@@ -21,6 +21,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
+namespace insn {
 
 /// @{
 /** Transposes eight 2x2 8-bit matrices within two int8x16 vectors
@@ -101,6 +102,7 @@ inline uint8x32 transpose_inplace(uint8x32 a)
 }
 /// @}
 
+} // namespace insn
 } // namespace detail
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

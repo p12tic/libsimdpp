@@ -13,10 +13,10 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/transpose.h>
 #include <simdpp/detail/align.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/detail/insn/mem_unpack.h>
-#include <simdpp/adv/transpose.h>
 #include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
