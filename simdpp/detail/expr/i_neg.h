@@ -107,6 +107,15 @@ int32<8> expr_eval(expr_neg<int32<8,E>> q)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class E>
+int32<16> expr_eval(expr_neg<int32<16,E>> q)
+{
+    int32<16> a = q.a.eval();
+    return sub(int32<16>::zero(), a);
+}
+#endif
+
 template<unsigned N, class E>
 int32<N> expr_eval(expr_neg<int32<N,E>> q)
 {
@@ -133,6 +142,15 @@ uint64<4> expr_eval(expr_neg<int64<4,E>> q)
 {
     int64<4> a = q.a.eval();
     return sub(int64x4::zero(), a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E>
+uint64<8> expr_eval(expr_neg<int64<8,E>> q)
+{
+    int64<8> a = q.a.eval();
+    return sub(int64<8>::zero(), a);
 }
 #endif
 

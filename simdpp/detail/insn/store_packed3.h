@@ -31,6 +31,8 @@ void v128_store_pack3(char* p, V a, V b, V c);
 template<class V>
 void v256_store_pack3(char* p, V a, V b, V c);
 template<class V>
+void v512_store_pack3(char* p, V a, V b, V c);
+template<class V>
 void v_store_pack3(char* p, V a, V b, V c);
 
 // -----------------------------------------------------------------------------
@@ -128,6 +130,14 @@ inline void i_store_packed3(char* p,
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_store_packed3(char* p,
+                            uint32<16> a, uint32<16> b, uint32<16> c)
+{
+    v512_store_pack3(p, a, b, c);
+}
+#endif
+
 template<unsigned N>
 void i_store_packed3(char* p,
                      uint32<N> a, uint32<N> b, uint32<N> c)
@@ -166,6 +176,14 @@ inline void i_store_packed3(char* p,
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_store_packed3(char* p,
+                            uint64<8> a, uint64<8> b, uint64<8> c)
+{
+    v512_store_pack3(p, a, b, c);
+}
+#endif
+
 template<unsigned N>
 void i_store_packed3(char* p,
                      uint64<N> a, uint64<N> b, uint64<N> c)
@@ -199,6 +217,14 @@ inline void i_store_packed3(char* p,
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_store_packed3(char* p,
+                            float32<16> a, float32<16> b, float32<16> c)
+{
+    v512_store_pack3(p, a, b, c);
+}
+#endif
+
 template<unsigned N>
 void i_store_packed3(char* p,
                      float32<N> a, float32<N> b, float32<N> c)
@@ -223,6 +249,14 @@ inline void i_store_packed3(char* p,
                             float64x4 a, float64x4 b, float64x4 c)
 {
     v256_store_pack3(p, a, b, c);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_store_packed3(char* p,
+                            float64<8> a, float64<8> b, float64<8> c)
+{
+    v512_store_pack3(p, a, b, c);
 }
 #endif
 
@@ -253,6 +287,16 @@ void v256_store_pack3(char* p, V a, V b, V c)
     i_store(p, a);
     i_store(p + 32, b);
     i_store(p + 64, c);
+}
+
+template<class V>
+void v512_store_pack3(char* p, V a, V b, V c)
+{
+    p = detail::assume_aligned(p, 64);
+    mem_pack3(a, b, c);
+    i_store(p, a);
+    i_store(p + 64, b);
+    i_store(p + 128, c);
 }
 
 template<class V>

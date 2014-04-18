@@ -109,6 +109,25 @@ inline void i_load(float64x4& a, const char* p)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load(uint32<16>& a,  const char* p)
+{
+    a = _mm512_load_epi32(p);
+}
+inline void i_load(uint64<8>& a,  const char* p)
+{
+    a = _mm512_load_epi64(p);
+}
+inline void i_load(float32<16>& a, const char* p)
+{
+    a = _mm512_load_ps(p);
+}
+inline void i_load(float64<8>& a, const char* p)
+{
+    a = _mm512_load_pd(p);
+}
+#endif
+
 template<unsigned N>
 void i_load(uint8<N>& a,  const char* p) { v_load(a, p); }
 template<unsigned N>

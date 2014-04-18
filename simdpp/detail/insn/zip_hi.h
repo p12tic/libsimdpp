@@ -102,6 +102,13 @@ inline uint32x8 i_zip4_hi(uint32x8 a, uint32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_zip4_hi(uint32<16> a, uint32<16> b)
+{
+    return _mm512_unpackhi_epi32(a, b);
+}
+#endif
+
 template<unsigned N>
 uint32<N> i_zip4_hi(uint32<N> a, uint32<N> b)
 {
@@ -128,6 +135,13 @@ inline uint64x2 i_zip2_hi(uint64x2 a, uint64x2 b)
 inline uint64x4 i_zip2_hi(uint64x4 a, uint64x4 b)
 {
     return _mm256_unpackhi_epi64(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint64<8> i_zip2_hi(uint64<8> a, uint64<8> b)
+{
+    return _mm512_unpackhi_epi64(a, b);
 }
 #endif
 
@@ -159,6 +173,13 @@ inline float32x8 i_zip4_hi(float32x8 a, float32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_zip4_hi(float32<16> a, float32<16> b)
+{
+    return _mm512_unpackhi_ps(a, b);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_zip4_hi(float32<N> a, float32<N> b)
 {
@@ -183,6 +204,13 @@ inline float64x2 i_zip2_hi(float64x2 a, float64x2 b)
 inline float64x4 i_zip2_hi(float64x4 a, float64x4 b)
 {
     return _mm256_unpackhi_pd(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline float64<8> i_zip2_hi(float64<8> a, float64<8> b)
+{
+    return _mm512_unpackhi_pd(a, b);
 }
 #endif
 

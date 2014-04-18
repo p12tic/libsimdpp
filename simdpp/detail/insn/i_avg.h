@@ -26,6 +26,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
+template<class V> V v_emul_avg_u32(V a, V b);
+template<class V> V v_emul_avg_i32(V a, V b);
+
 
 inline uint8x16 i_avg(uint8x16 a, uint8x16 b)
 {
@@ -178,14 +181,7 @@ inline uint32x4 i_avg(uint32x4 a, uint32x4 b)
         return (uint64_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2
-    // (x & y) + ((x ^ y) >> 1) + (x ^ y) & 1
-    uint32x4 x1, x2, round;
-    x1 = bit_and(a, b);
-    x2 = bit_xor(a, b);
-    round = bit_and(x2, (uint32<4>) make_uint(1));
-    x1 = add(x1, shift_r<1>(x2));
-    x1 = add(x1, round);
-    return x1;
+    return v_emul_avg_u32(a, b);
 #elif SIMDPP_USE_NEON
     return vrhaddq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
@@ -196,14 +192,14 @@ inline uint32x4 i_avg(uint32x4 a, uint32x4 b)
 #if SIMDPP_USE_AVX2
 inline uint32x8 i_avg(uint32x8 a, uint32x8 b)
 {
-    // (x & y) + ((x ^ y) >> 1) + (x ^ y) & 1
-    uint32x8 x1, x2, round;
-    x1 = bit_and(a, b);
-    x2 = bit_xor(a, b);
-    round = bit_and(x2, (uint32<8>) make_uint(1));
-    x1 = add(x1, shift_r<1>(x2));
-    x1 = add(x1, round);
-    return x1;
+    return v_emul_avg_u32(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_avg(uint32<16> a, uint32<16> b)
+{
+    return v_emul_avg_u32(a, b);
 }
 #endif
 
@@ -220,13 +216,8 @@ inline int32x4 i_avg(int32x4 a, int32x4 b)
         return (int64_t(a) + b + 1) >> 1;
     });
 #elif SIMDPP_USE_SSE2
-    uint32x4 a2, b2, bias, r;
-    bias = make_uint(0x80000000);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
-    r = i_avg(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
-    return r;
+    return v_emul_avg_i32(a, b);
+
 #elif SIMDPP_USE_NEON
     return vrhaddq_s32(a, b);
 #elif SIMDPP_USE_ALTIVEC
@@ -237,13 +228,14 @@ inline int32x4 i_avg(int32x4 a, int32x4 b)
 #if SIMDPP_USE_AVX2
 inline int32x8 i_avg(int32x8 a, int32x8 b)
 {
-    uint32x8 a2, b2, bias, r;
-    bias = make_uint(0x80000000);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
-    r = i_avg(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
-    return r;
+    return v_emul_avg_i32(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline int32<16> i_avg(int32<16> a, int32<16> b)
+{
+    return v_emul_avg_i32(a, b);
 }
 #endif
 
@@ -251,6 +243,34 @@ template<unsigned N>
 int32<N> i_avg(int32<N> a, int32<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(int32<N>, i_avg, a, b);
+}
+
+// generic implementations
+
+template<class V>
+V v_emul_avg_u32(V a, V b)
+{
+    // (x & y) + ((x ^ y) >> 1) + (x ^ y) & 1
+    V x1, x2, round;
+    x1 = bit_and(a, b);
+    x2 = bit_xor(a, b);
+    round = bit_and(x2, (V) make_uint(1));
+    x1 = add(x1, shift_r<1>(x2));
+    x1 = add(x1, round);
+    return x1;
+}
+
+template<class V>
+V v_emul_avg_i32(V a, V b)
+{
+    using VI = typename V::uint_vector_type;
+    VI a2, b2, bias, r;
+    bias = make_uint(0x80000000);
+    a2 = bit_xor(a, bias); // add
+    b2 = bit_xor(b, bias); // add
+    r = v_emul_avg_u32(a2, b2); // unsigned
+    r = bit_xor(r, bias); // sub
+    return r;
 }
 
 } // namespace insn

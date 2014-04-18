@@ -45,6 +45,13 @@ inline mask_float32x8 i_isnan(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_float32<16> i_isnan(float32<16> a)
+{
+    return _mm512_cmp_ps_mask(a, a, _CMP_UNORD_Q);
+}
+#endif
+
 template<unsigned N>
 mask_float32<N> i_isnan(float32<N> a)
 {
@@ -68,6 +75,13 @@ inline mask_float64x2 i_isnan(float64x2 a)
 inline mask_float64x4 i_isnan(float64x4 a)
 {
     return _mm256_cmp_pd(a, a, _CMP_UNORD_Q);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float64<8> i_isnan(float64<8> a)
+{
+    return _mm512_cmp_pd_mask(a, a, _CMP_UNORD_Q);
 }
 #endif
 

@@ -62,6 +62,15 @@ float32x8 i_shuffle2(float32x8 a, float32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+float32<16> i_shuffle2(float32<16> a, float32<16> b)
+{
+    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    return _mm512_shuffle_ps(a, b, _MM_SHUFFLE(b1, b0, a1, a0));
+}
+#endif
+
 template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N>
 float32<N> i_shuffle2(float32<N> a, float32<N> b)
 {
@@ -104,6 +113,16 @@ uint32x8 i_shuffle2(uint32x8 a, uint32x8 b)
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
     // We can't do this in the integer execution domain. Beware of additional latency
     return int32x8(i_shuffle2<a0,a1,b0,b1>(float32x8(a), float32x8(b)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+uint32<16> i_shuffle2(uint32<16> a, uint32<16> b)
+{
+    static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
+    // We can't do this in the integer execution domain. Beware of additional latency
+    return (uint32<16>) i_shuffle2<a0,a1,b0,b1>(float32<16>(a), float32<16>(b));
 }
 #endif
 

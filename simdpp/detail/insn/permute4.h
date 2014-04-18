@@ -100,6 +100,15 @@ uint32x8 i_permute4(uint32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+uint32<16> i_permute4(uint32<16> a)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
+}
+#endif
+
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
 uint32<N> i_permute4(uint32<N> a)
 {
@@ -135,6 +144,15 @@ float32x8 i_permute4(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+float32<16> i_permute4(float32<16> a)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
+}
+#endif
+
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
 float32<N> i_permute4(float32<N> a)
 {
@@ -162,6 +180,15 @@ uint64x4 i_permute4(uint64x4 a)
 #endif
 }
 
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+uint64<8> i_permute4(uint64<8> a)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_permutex_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
+}
+#endif
+
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
 uint64<N> i_permute4(uint64<N> a)
 {
@@ -188,6 +215,15 @@ float64x4 i_permute4(float64x4 a)
     return permute_emul<s0,s1,s2,s3>(a);
 #endif
 }
+
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+float64<8> i_permute4(float64<8> a)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_permutex_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
+}
+#endif
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
 float64<N> i_permute4(float64<N> a)

@@ -26,6 +26,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
+template<class V> V v_emul_avg_trunc(V a, V b);
+template<class V> V v_emul_avg_trunc_i32(V a, V b);
+
 
 inline uint8x16 i_avg_trunc(uint8x16 a, uint8x16 b)
 {
@@ -34,10 +37,7 @@ inline uint8x16 i_avg_trunc(uint8x16 a, uint8x16 b)
         return (uint16_t(a) + b) >> 1;
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    // (x & y) + ((x ^ y) >> 1)
-    uint8x16 x1 = bit_and(a, b);
-    uint8x16 x2 = bit_xor(a, b);
-    return add(x1, shift_r<1>(x2));
+    return v_emul_avg_trunc(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_u8(a, b);
 #endif
@@ -46,10 +46,7 @@ inline uint8x16 i_avg_trunc(uint8x16 a, uint8x16 b)
 #if SIMDPP_USE_AVX2
 inline uint8x32 i_avg_trunc(uint8x32 a, uint8x32 b)
 {
-    // (x & y) + ((x ^ y) >> 1)
-    uint8x32 x1 = bit_and(a, b);
-    uint8x32 x2 = bit_xor(a, b);
-    return add(x1, shift_r<1>(x2));
+    return v_emul_avg_trunc(a, b);
 }
 #endif
 
@@ -108,10 +105,7 @@ inline uint16x8 i_avg_trunc(uint16x8 a, uint16x8 b)
         return (uint32_t(a) + b) >> 1;
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    // (x & y) + ((x ^ y) >> 1)
-    uint16x8 x1 = bit_and(a, b);
-    uint16x8 x2 = bit_xor(a, b);
-    return add(x1, shift_r<1>(x2));
+    return v_emul_avg_trunc(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_u16(a, b);
 #endif
@@ -120,10 +114,7 @@ inline uint16x8 i_avg_trunc(uint16x8 a, uint16x8 b)
 #if SIMDPP_USE_AVX2
 inline uint16x16 i_avg_trunc(uint16x16 a, uint16x16 b)
 {
-    // (x & y) + ((x ^ y) >> 1)
-    uint16x16 x1 = bit_and(a, b);
-    uint16x16 x2 = bit_xor(a, b);
-    return add(x1, shift_r<1>(x2));
+    return v_emul_avg_trunc(a, b);
 }
 #endif
 
@@ -182,10 +173,7 @@ inline uint32x4 i_avg_trunc(uint32x4 a, uint32x4 b)
         return (uint64_t(a) + b) >> 1;
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    // (x & y) + ((x ^ y) >> 1)
-    uint32x4 x1 = bit_and(a, b);
-    uint32x4 x2 = bit_xor(a, b);
-    return add(x1, shift_r<1>(x2));
+    return v_emul_avg_trunc(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_u32(a, b);
 #endif
@@ -194,10 +182,14 @@ inline uint32x4 i_avg_trunc(uint32x4 a, uint32x4 b)
 #if SIMDPP_USE_AVX2
 inline uint32x8 i_avg_trunc(uint32x8 a, uint32x8 b)
 {
-    // (x & y) + ((x ^ y) >> 1)
-    uint32x8 x1 = bit_and(a, b);
-    uint32x8 x2 = bit_xor(a, b);
-    return add(x1, shift_r<1>(x2));
+    return v_emul_avg_trunc(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_avg_trunc(uint32<16> a, uint32<16> b)
+{
+    return v_emul_avg_trunc(a, b);
 }
 #endif
 
@@ -216,13 +208,7 @@ inline int32x4 i_avg_trunc(int32x4 a, int32x4 b)
         return (int64_t(a) + b) >> 1;
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    uint32x4 a2, b2, bias, r;
-    bias = make_uint(0x80000000);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
-    r = i_avg_trunc(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
-    return r;
+    return v_emul_avg_trunc_i32(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_s32(a, b);
 #endif
@@ -231,13 +217,14 @@ inline int32x4 i_avg_trunc(int32x4 a, int32x4 b)
 #if SIMDPP_USE_AVX2
 inline int32x8 i_avg_trunc(int32x8 a, int32x8 b)
 {
-    uint32x8 a2, b2, bias, r;
-    bias = make_uint(0x80000000);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
-    r = i_avg_trunc(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
-    return r;
+    return v_emul_avg_trunc_i32(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline int32<16> i_avg_trunc(int32<16> a, int32<16> b)
+{
+    return v_emul_avg_trunc_i32(a, b);
 }
 #endif
 
@@ -247,6 +234,26 @@ int32<N> i_avg_trunc(int32<N> a, int32<N> b)
     SIMDPP_VEC_ARRAY_IMPL2(int32<N>, i_avg_trunc, a, b);
 }
 
+template<class V>
+V v_emul_avg_trunc(V a, V b)
+{
+    // (x & y) + ((x ^ y) >> 1)
+    V x1 = bit_and(a, b);
+    V x2 = bit_xor(a, b);
+    return add(x1, shift_r<1>(x2));
+}
+
+template<class V>
+V v_emul_avg_trunc_i32(V a, V b)
+{
+    typename V::uint_vector_type a2, b2, bias, r;
+    bias = make_uint(0x80000000);
+    a2 = bit_xor(a, bias); // add
+    b2 = bit_xor(b, bias); // add
+    r = v_emul_avg_trunc(a2, b2); // unsigned
+    r = bit_xor(r, bias); // sub
+    return r;
+}
 
 } // namespace insn
 } // namespace detail

@@ -85,6 +85,17 @@ void i_make_const(float32<8>& v, const expr_vec_make_const<VE,N>& e)
 
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class VE, unsigned N>
+void i_make_const(float32<16>& v, const expr_vec_make_const<VE,N>& e)
+{
+    v = _mm512_set_ps(e.val(15), e.val(14), e.val(13), e.val(12),
+                      e.val(11), e.val(10), e.val(9), e.val(8),
+                      e.val(7), e.val(6), e.val(5), e.val(4),
+                      e.val(3), e.val(2), e.val(1), e.val(0));
+}
+#endif
+
 
 template<unsigned N, class VE, unsigned NE>
 void i_make_const(float32<N>& v, const expr_vec_make_const<VE,NE>& e)
@@ -113,6 +124,15 @@ template<class VE, unsigned N>
 void i_make_const(float64<4>& v, const expr_vec_make_const<VE,N>& e)
 {
     v = _mm256_set_pd(e.val(3), e.val(2), e.val(1), e.val(0));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class VE, unsigned N>
+void i_make_const(float64<8>& v, const expr_vec_make_const<VE,N>& e)
+{
+    v = _mm512_set_pd(e.val(7), e.val(6), e.val(5), e.val(4),
+                      e.val(3), e.val(2), e.val(1), e.val(0));
 }
 #endif
 
@@ -369,6 +389,17 @@ void i_make_const(uint32<8>& v, const expr_vec_make_const<VE,N>& e)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class VE, unsigned N>
+void i_make_const(uint32<16>& v, const expr_vec_make_const<VE,N>& e)
+{
+    v = _mm512_set_epi32(e.val(15), e.val(14), e.val(13), e.val(12),
+                         e.val(11), e.val(10), e.val(9), e.val(8),
+                         e.val(7), e.val(6), e.val(5), e.val(4),
+                         e.val(3), e.val(2), e.val(1), e.val(0));
+}
+#endif
+
 template<unsigned N, class VE, unsigned NE>
 void i_make_const(uint32<N>& v, const expr_vec_make_const<VE,NE>& e)
 {
@@ -422,6 +453,15 @@ template<class VE, unsigned N>
 void i_make_const(uint64<4>& v, const expr_vec_make_const<VE,N>& e)
 {
     v = _mm256_set_epi64x(e.val(3), e.val(2), e.val(1), e.val(0));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class VE, unsigned N>
+void i_make_const(uint64<8>& v, const expr_vec_make_const<VE,N>& e)
+{
+    v = _mm512_set_epi64(e.val(7), e.val(6), e.val(5), e.val(4),
+                         e.val(3), e.val(2), e.val(1), e.val(0));
 }
 #endif
 

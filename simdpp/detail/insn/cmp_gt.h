@@ -175,6 +175,13 @@ inline mask_int32x8 i_cmp_gt(int32x8 a, int32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_int32<16> i_cmp_gt(int32<16> a, int32<16> b)
+{
+    return _mm512_cmpgt_epi32_mask(a, b);
+}
+#endif
+
 template<unsigned N>
 mask_int32<N> i_cmp_gt(int32<N> a, int32<N> b)
 {
@@ -211,6 +218,14 @@ inline mask_int32x8 i_cmp_gt(uint32x8 a, uint32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_int32<16> i_cmp_gt(uint32<16> a, uint32<16> b)
+{
+    // FIXME: BUG: GCC does not have _mm512_cmpgt_epu32_mask
+    return _mm512_cmp_epu32_mask(a, b, _MM_CMPINT_NLE);
+}
+#endif
+
 template<unsigned N>
 mask_int32<N> i_cmp_gt(uint32<N> a, uint32<N> b)
 {
@@ -241,6 +256,13 @@ inline mask_float32x8 i_cmp_gt(float32x8 a, float32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_float32<16> i_cmp_gt(float32<16> a, float32<16> b)
+{
+    return _mm512_cmp_ps_mask(a, b, _CMP_GT_OQ);
+}
+#endif
+
 template<unsigned N>
 mask_float32<N> i_cmp_gt(float32<N> a, float32<N> b)
 {
@@ -266,6 +288,13 @@ inline mask_float64x2 i_cmp_gt(float64x2 a, float64x2 b)
 inline mask_float64x4 i_cmp_gt(float64x4 a, float64x4 b)
 {
     return _mm256_cmp_pd(a, b, _CMP_GT_OQ);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float64<8> i_cmp_gt(float64<8> a, float64<8> b)
+{
+    return _mm512_cmp_pd_mask(a, b, _CMP_GT_OQ);
 }
 #endif
 

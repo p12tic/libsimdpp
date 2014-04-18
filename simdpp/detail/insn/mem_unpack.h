@@ -64,6 +64,19 @@ void mem_unpack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
     qb.vec() = unzip128_hi(c1, c2);
 }
 
+#if SIMDPP_USE_AVX512
+template<class V>
+void mem_unpack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
+{
+    V a = qa.vec();
+    V b = qb.vec();
+
+    V c1 = shuffle2_128<0,2,0,2>(a, b);
+    V c2 = shuffle2_128<1,3,1,3>(a, b);
+    qa.vec() = unzip128_lo(c1, c2);
+    qb.vec() = unzip128_hi(c1, c2);
+}
+#endif
 /// @}
 
 /// @{
@@ -305,7 +318,38 @@ void v_mem_unpack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V
 
     qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;
 }
+
+#if SIMDPP_USE_AVX512
+template<class V>
+void v_mem_unpack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>& qc)
+{
+    V a, b, c; // TODO: optimize. Using full-vector shuffle may be faster
+    a = qa.vec();  b = qb.vec();  c = qc.vec();
+
+    V t11, t12, t21, t22, t31, t32;
+    // [a0,b0,c0,a1]
+    // [b1,c1,a2,b2]
+    // [c2,a3,b3,c3]
+    t11 = a;
+    t12 = shuffle2_128<0,1,2,3>(c, b);
+    t21 = shuffle2_128<0,1,0,1>(a, b);
+    t22 = shuffle2_128<2,3,2,3>(b, c);
+    t31 = shuffle2_128<2,3,0,1>(a, b);
+    t32 = c;
+    // [a0,b0,c0,a1]
+    // [c2,a3,a2,b2]
+    // [a0,b0,b1,c1]
+    // [a2,b2,b3,c3]
+    // [c0,a1,b1,c1]
+    // [c2,a3,b3,c3]
+    a = shuffle2_128<0,3,2,1>(t11, t12);
+    b = shuffle2_128<1,2,1,2>(t21, t22);
+    c = shuffle2_128<0,3,0,3>(t31, t32);
+
+    qa.vec() = a;  qb.vec() = b;  qc.vec() = c;
 }
+#endif
+
 /// @{
 /** Concatenates @a a, @a b and @a c and stores the elements of the resulting
     array as follows:
@@ -488,7 +532,40 @@ void v_mem_unpack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
 
     qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;  qd.vec() = d1;
 }
+
+#if SIMDPP_USE_AVX512
+template<class V>
+void v_mem_unpack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
+                              any_vec<64,V>& qc, any_vec<64,V>& qd)
+{
+    V a, b, c, d; // TODO: optimize. Using full-vector shuffle/permute will be faster
+
+
+    a = qa.vec();  b = qb.vec();  c = qc.vec();  d = qd.vec();
+
+    V t11, t12, t21, t22, t31, t32;
+    // [a0,b0,c0,a1]
+    // [b1,c1,a2,b2]
+    // [c2,a3,b3,c3]
+    t11 = a;
+    t12 = shuffle2_128<0,1,2,3>(c, b);
+    t21 = shuffle2_128<0,1,0,1>(a, b);
+    t22 = shuffle2_128<2,3,2,3>(b, c);
+    t31 = shuffle2_128<2,3,0,1>(a, b);
+    t32 = c;
+    // [a0,b0,c0,a1]
+    // [c2,a3,a2,b2]
+    // [a0,b0,b1,c1]
+    // [a2,b2,b3,c3]
+    // [c0,a1,b1,c1]
+    // [c2,a3,b3,c3]
+    a = shuffle2_128<0,3,2,1>(t11, t12);
+    b = shuffle2_128<1,2,1,2>(t21, t22);
+    c = shuffle2_128<0,3,0,3>(t31, t32);
+
+    qa.vec() = a;  qb.vec() = b;  qc.vec() = c;  qd.vec() = d;
 }
+#endif
 
 /// @{
 /** Concatenates @a a, @a b, @a c and @a d and stores the elements of the

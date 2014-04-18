@@ -189,6 +189,15 @@ uint32x8 i_splat4(uint32x8 a)
     static_assert(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
 }
+#endif\
+
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+uint32<16> i_splat4(uint32<16> a)
+{
+    static_assert(s < 4, "Access out of bounds");
+    return permute4<s,s,s,s>(a);
+}
 #endif
 
 template<unsigned s, unsigned N>
@@ -229,6 +238,15 @@ uint64x2 i_splat2(uint64x2 a)
 #if SIMDPP_USE_AVX2
 template<unsigned s>
 uint64x4 i_splat2(uint64x4 a)
+{
+    static_assert(s < 2, "Access out of bounds");
+    return permute2<s,s>(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+uint64<8> i_splat2(uint64<8> a)
 {
     static_assert(s < 2, "Access out of bounds");
     return permute2<s,s>(a);
@@ -276,6 +294,15 @@ float32x8 i_splat4(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+float32<16> i_splat4(float32<16> a)
+{
+    static_assert(s < 4, "Access out of bounds");
+    return permute4<s,s,s,s>(a);
+}
+#endif
+
 template<unsigned s, unsigned N>
 float32<N> i_splat4(float32<N> a)
 {
@@ -292,11 +319,7 @@ float64x2 i_splat2(float64x2 a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
-    if (s == 0) {
-        return permute2<0,0>(a);
-    } else {
-        return permute2<1,1>(a);
-    }
+    return permute2<s,s>(a);
 #elif SIMDPP_USE_NEON
     return float64x2(i_splat2<s>(int64x2(a)));
 #endif
@@ -305,6 +328,15 @@ float64x2 i_splat2(float64x2 a)
 #if SIMDPP_USE_AVX
 template<unsigned s>
 float64x4 i_splat2(float64x4 a)
+{
+    static_assert(s < 2, "Access out of bounds");
+    return permute2<s,s>(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+float64<8> i_splat2(float64<8> a)
 {
     static_assert(s < 2, "Access out of bounds");
     return permute2<s,s>(a);

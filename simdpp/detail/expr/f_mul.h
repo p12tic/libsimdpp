@@ -52,6 +52,17 @@ float32<8> expr_eval(expr_mul<float32<8,E1>,
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class E1, class E2>
+float32<16> expr_eval(expr_mul<float32<16,E1>,
+                               float32<16,E2>> q)
+{
+    float32<16> a = q.a.eval();
+    float32<16> b = q.b.eval();
+    return _mm512_mul_ps(a, b);
+}
+#endif
+
 template<unsigned N, class E1, class E2>
 float32<N> expr_eval(expr_mul<float32<N,E1>,
                               float32<N,E2>> q)
@@ -84,6 +95,17 @@ float64<4> expr_eval(expr_mul<float64<4,E1>,
     float64<4> a = q.a.eval();
     float64<4> b = q.b.eval();
     return _mm256_mul_pd(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E1, class E2>
+float64<8> expr_eval(expr_mul<float64<8,E1>,
+                              float64<8,E2>> q)
+{
+    float64<8> a = q.a.eval();
+    float64<8> b = q.b.eval();
+    return _mm512_mul_pd(a, b);
 }
 #endif
 

@@ -66,12 +66,16 @@ inline int32x8 i_to_int32(int16x8 a)
 #if SIMDPP_USE_AVX2
 inline int32<16> i_to_int32(int16<16> a)
 {
+#if SIMDPP_USE_AVX512
+    return _mm512_cvtepi16_epi32(a);
+#else
     int32<8> r0, r1;
     int16<8> a0, a1;
     split(a, a0, a1);
     r0 = _mm256_cvtepi16_epi32(a0);
     r1 = _mm256_cvtepi16_epi32(a1);
     return combine(r0, r1);
+#endif
 }
 #endif
 
@@ -123,6 +127,13 @@ inline int32x8 i_to_int32(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_to_int32(float32<16> a)
+{
+    return _mm512_cvttps_epi32(a);
+}
+#endif
+
 template<unsigned N>
 int32<N> i_to_int32(float32<N> a)
 {
@@ -160,10 +171,24 @@ inline int32x4 i_to_int32(float64x4 a)
 #if SIMDPP_USE_AVX
 inline int32<8> i_to_int32(float64<8> a)
 {
+#if SIMDPP_USE_AVX512
+    return _mm512_cvtpd_epi32(a);
+#else
     int32<4> r1, r2;
     r1 = _mm256_cvtpd_epi32(a[0]);
     r2 = _mm256_cvtpd_epi32(a[1]);
     return combine(r1, r2);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline int32<16> i_to_int32(float64<16> a)
+{
+    int32<8> r0, r1;
+    r0 = _mm512_cvtpd_epi32(a[0]);
+    r1 = _mm512_cvtpd_epi32(a[1]);
+    return combine(r0, r1);
 }
 #endif
 

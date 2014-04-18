@@ -121,6 +121,14 @@ inline void i_load_splat(uint32x8& v, const void* p0)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_splat(uint32<16>& v, const void* p0)
+{
+    __m128 x = _mm_load_ss(reinterpret_cast<const float*>(p0));
+    v = _mm512_broadcastd_epi32(_mm_castps_si128(x));
+}
+#endif
+
 template<unsigned N>
 void i_load_splat(uint32<N>& v, const void* p0)
 {
@@ -165,6 +173,14 @@ inline void i_load_splat(uint64x4& v, const void* p0)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_splat(uint64<8>& v, const void* p0)
+{
+    __m128i x = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(p0));
+    v = _mm512_broadcastq_epi64(x);
+}
+#endif
+
 template<unsigned N>
 void i_load_splat(uint64<N>& v, const void* p0)
 {
@@ -203,6 +219,14 @@ inline void i_load_splat(float32x8& v, const void* p0)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_splat(float32<16>& v, const void* p0)
+{
+    __m128 x = _mm_load_ss(reinterpret_cast<const float*>(p0));
+    v = _mm512_broadcastss_ps(x);
+}
+#endif
+
 template<unsigned N>
 void i_load_splat(float32<N>& v, const void* p0)
 {
@@ -234,6 +258,14 @@ inline void i_load_splat(float64x2& v, const void* p0)
 inline void i_load_splat(float64x4& v, const void* p0)
 {
     v = _mm256_broadcast_sd(reinterpret_cast<const double*>(p0));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_load_splat(float64<8>& v, const void* p0)
+{
+    __m128d x = _mm_load_sd(reinterpret_cast<const double*>(p0));
+    v = _mm512_broadcastsd_pd(x);
 }
 #endif
 

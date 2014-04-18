@@ -58,6 +58,18 @@ uint32<8> i_combine(uint32<4> a, uint32<4> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class V = void>
+uint32<16> i_combine(uint32<8> a, uint32<8> b)
+{
+    uint32<16> r;
+    // r = _mm512_castsi256_si512(a); GCC BUG
+    r = _mm512_inserti64x4(r, a, 0);
+    r = _mm512_inserti64x4(r, b, 1);
+    return r;
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
@@ -69,6 +81,17 @@ uint64<4> i_combine(uint64<2> a, uint64<2> b)
     r = _mm256_inserti128_si256(r, b, 1);
     return r;
 }
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class V = void>
+uint64<8> i_combine(uint64<4> a, uint64<4> b)
+{
+    uint64<8> r;
+    // r = _mm512_castsi256_si512(a); GCC BUG
+    r = _mm512_inserti64x4(r, a, 0);
+    r = _mm512_inserti64x4(r, b, 1);
+    return r;}
 #endif
 
 // -----------------------------------------------------------------------------
@@ -84,6 +107,18 @@ float32<8> i_combine(float32<4> a, float32<4> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class V = void>
+float32<16> i_combine(float32<8> a, float32<8> b)
+{
+    float64<8> r;
+    // r = _mm512_castpd256_pd512(a); GCC BUG
+    r = _mm512_insertf64x4(r, float64<4>(a), 0);
+    r = _mm512_insertf64x4(r, float64<4>(b), 1);
+    return float32<16>(r);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX
@@ -93,6 +128,18 @@ float64<4> i_combine(float64<2> a, float64<2> b)
     float64<4> r;
     r = _mm256_castpd128_pd256(a);
     r = _mm256_insertf128_pd(r, b, 1);
+    return r;
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class V = void>
+float64<8> i_combine(float64<4> a, float64<4> b)
+{
+    float64<8> r;
+    // r = _mm512_castpd256_pd512(a); GCC BUG
+    r = _mm512_insertf64x4(r, a, 0);
+    r = _mm512_insertf64x4(r, b, 1);
     return r;
 }
 #endif

@@ -55,6 +55,13 @@ inline float32x8 i_trunc(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_trunc(float32<16> a)
+{
+    return _mm512_roundscale_ps(a, 0x13); // scale by 1, truncate
+}
+#endif
+
 template<unsigned N>
 float32<N> i_trunc(float32<N> a)
 {

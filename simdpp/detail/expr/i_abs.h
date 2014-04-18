@@ -137,6 +137,15 @@ uint32<8> expr_eval(expr_abs<int32<8,E>> q)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class E>
+uint32<16> expr_eval(expr_abs<int32<16,E>> q)
+{
+    int32<16> a = q.a.eval();
+    return _mm512_abs_epi32(a);
+}
+#endif
+
 template<unsigned N, class E>
 uint32<N> expr_eval(expr_abs<int32<N,E>> q)
 {
@@ -182,6 +191,15 @@ uint64<4> expr_eval(expr_abs<int64<4,E>> q)
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E>
+uint64<8> expr_eval(expr_abs<int64<8,E>> q)
+{
+    int64<8> a = q.a.eval();
+    return _mm512_abs_epi64(a);
 }
 #endif
 

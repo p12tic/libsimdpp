@@ -96,6 +96,13 @@ inline mask_int32x8 i_cmp_neq(uint32x8 a, uint32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_int32<16> i_cmp_neq(uint32<16> a, uint32<16> b)
+{
+    return _mm512_cmpneq_epu32_mask(a, b);
+}
+#endif
+
 template<unsigned N>
 mask_int32<N> i_cmp_neq(uint32<N> a, uint32<N> b)
 {
@@ -140,6 +147,13 @@ inline mask_int64x4 i_cmp_neq(uint64x4 a, uint64x4 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_int64<8> i_cmp_neq(uint64<8> a, uint64<8> b)
+{
+    return _mm512_cmpneq_epi64_mask(a, b);
+}
+#endif
+
 template<unsigned N>
 mask_int64<N> i_cmp_neq(uint64<N> a, uint64<N> b)
 {
@@ -168,6 +182,13 @@ inline mask_float32x8 i_cmp_neq(float32x8 a, float32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_float32<16> i_cmp_neq(float32<16> a, float32<16> b)
+{
+    return _mm512_cmp_ps_mask(a, b, _CMP_NEQ_UQ);
+}
+#endif
+
 template<unsigned N>
 mask_float32<N> i_cmp_neq(float32<N> a, float32<N> b)
 {
@@ -193,6 +214,13 @@ inline mask_float64x2 i_cmp_neq(float64x2 a, float64x2 b)
 inline mask_float64x4 i_cmp_neq(float64x4 a, float64x4 b)
 {
     return _mm256_cmp_pd(a, b, _CMP_NEQ_UQ);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float64<8> i_cmp_neq(float64<8> a, float64<8> b)
+{
+    return _mm512_cmp_pd_mask(a, b, _CMP_NEQ_UQ);
 }
 #endif
 

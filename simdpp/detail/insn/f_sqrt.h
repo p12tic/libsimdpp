@@ -48,6 +48,13 @@ inline float32x8 i_sqrt(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_sqrt(float32<16> a)
+{
+    return _mm512_sqrt_ps(a);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_sqrt(float32<N> a)
 {
@@ -69,6 +76,13 @@ inline float64x2 i_sqrt(float64x2 a)
 inline float64x4 i_sqrt(float64x4 a)
 {
     return _mm256_sqrt_pd(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline float64<8> i_sqrt(float64<8> a)
+{
+    return _mm512_sqrt_pd(a);
 }
 #endif
 

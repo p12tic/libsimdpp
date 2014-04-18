@@ -65,6 +65,18 @@ inline int64<8> i_to_int64(int32<8> a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline int64<16> i_to_int64(int32<16> a)
+{
+    int32<8> a1, a2;
+    int64<8> r1, r2;
+    split(a, a1, a2);
+    r1 = _mm512_cvtepi32_epi64(a1);
+    r2 = _mm512_cvtepi32_epi64(a2);
+    return combine(r1, r2);
+}
+#endif
+
 template<unsigned N>
 int64<N> i_to_int64(int32<N> a)
 {
@@ -112,6 +124,18 @@ inline uint64<8> i_to_uint64(uint32<8> a)
     split(a, a1, a2);
     r1 = _mm256_cvtepu32_epi64(a1);
     r2 = _mm256_cvtepu32_epi64(a2);
+    return combine(r1, r2);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint64<16> i_to_uint64(uint32<16> a)
+{
+    uint32<8> a1, a2;
+    uint64<8> r1, r2;
+    split(a, a1, a2);
+    r1 = _mm512_cvtepu32_epi64(a1);
+    r2 = _mm512_cvtepu32_epi64(a2);
     return combine(r1, r2);
 }
 #endif

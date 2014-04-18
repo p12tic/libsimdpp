@@ -138,6 +138,13 @@ inline uint32x8 i_unzip4_lo(uint32x8 a, uint32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_unzip4_lo(uint32<16> a, uint32<16> b)
+{
+    return shuffle2<0,2,0,2>(a,b);
+}
+#endif
+
 template<unsigned N>
 uint32<N> i_unzip4_lo(uint32<N> a, uint32<N> b)
 {
@@ -170,6 +177,13 @@ inline float32x4 i_unzip4_lo(float32x4 a, float32x4 b)
 
 #if SIMDPP_USE_AVX
 inline float32x8 i_unzip4_lo(float32x8 a, float32x8 b)
+{
+    return shuffle2<0,2,0,2>(a,b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline float32<16> i_unzip4_lo(float32<16> a, float32<16> b)
 {
     return shuffle2<0,2,0,2>(a,b);
 }

@@ -64,6 +64,13 @@ inline float32x8 i_to_float32(int32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_to_float32(int32<16> a)
+{
+    return _mm512_cvtepi32_ps(a);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_to_float32(int32<N> a)
 {
@@ -99,7 +106,21 @@ inline float32x4 i_to_float32(float64x4 a)
 #if SIMDPP_USE_AVX
 inline float32x8 i_to_float32(float64<8> a)
 {
+#if SIMDPP_USE_AVX512
+    return _mm512_cvt_roundpd_ps(a, (_MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC));
+#else
     float32x4 r1, r2;
+    r1 = i_to_float32(a[0]);
+    r2 = i_to_float32(a[1]);
+    return combine(r1, r2);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline float32<16> i_to_float32(float64<16> a)
+{
+    float32<8> r1, r2;
     r1 = i_to_float32(a[0]);
     r2 = i_to_float32(a[1]);
     return combine(r1, r2);

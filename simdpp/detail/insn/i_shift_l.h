@@ -126,6 +126,13 @@ inline uint32x8 i_shift_l(uint32x8 a, unsigned count)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_shift_l(uint32<16> a, unsigned count)
+{
+    return _mm512_sll_epi32(a, _mm_cvtsi32_si128(count));
+}
+#endif
+
 template<unsigned N>
 uint32<N> i_shift_l(uint32<N> a, unsigned count)
 {
@@ -152,6 +159,13 @@ inline uint64x2 i_shift_l(uint64x2 a, unsigned count)
 inline uint64x4 i_shift_l(uint64x4 a, unsigned count)
 {
     return _mm256_sll_epi64(a, _mm_cvtsi32_si128(count));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint64<8> i_shift_l(uint64<8> a, unsigned count)
+{
+    return _mm512_sll_epi64(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -280,6 +294,15 @@ inline uint32x8 i_shift_l(uint32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned count>
+inline uint32<16> i_shift_l(uint32<16> a)
+{
+    static_assert(count <= 32, "Shift out of bounds");
+    return _mm512_slli_epi32(a, count);
+}
+#endif
+
 template<unsigned count, unsigned N>
 uint32<N> i_shift_l(uint32<N> a)
 {
@@ -310,6 +333,15 @@ inline uint64x4 i_shift_l(uint64x4 a)
 {
     static_assert(count <= 64, "Shift out of bounds");
     return _mm256_slli_epi64(a, count);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned count>
+inline uint64<8> i_shift_l(uint64<8> a)
+{
+    static_assert(count <= 64, "Shift out of bounds");
+    return _mm512_slli_epi64(a, count);
 }
 #endif
 

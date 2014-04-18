@@ -47,6 +47,13 @@ inline float32x8 i_rsqrt_e(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_rsqrt_e(float32<16> a)
+{
+    return _mm512_rsqrt14_ps(a);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_rsqrt_e(float32<N> a)
 {

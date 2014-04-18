@@ -16,6 +16,7 @@
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/detail/vec_insert.h>
+#include <simdpp/core/to_int64.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 
@@ -269,12 +270,32 @@ uint64<8> expr_eval(expr_mull<uint32<8,E1>,
     uint32<8> b = q.b.eval();
     uint32x8 al, ah, bl, bh;
     uint64x4 rl, rh;
-    al = zip4_lo(a, a);
+    al = zip4_lo(a, a); // FIXME; extract halves and use cvtepu32_epi64
     bl = zip4_lo(b, b);
     ah = zip4_hi(a, a);
     bh = zip4_hi(b, b);
     rl = _mm256_mul_epu32(al, bl);
     rh = _mm256_mul_epu32(ah, bh);
+    return combine(rl, rh);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E1, class E2>
+uint64<16> expr_eval(expr_mull<uint32<16,E1>,
+                               uint32<16,E2>> q)
+{
+    uint32<16> a = q.a.eval();
+    uint32<16> b = q.b.eval();
+    uint32<8> al, ah, bl, bh;
+    uint64<8> rl, rh;
+
+    split(a, al, ah);
+    split(b, bl, bh);
+
+    rl = _mm512_mul_epu32(to_int64(al).eval(), to_int64(bl).eval());
+    rh = _mm512_mul_epu32(to_int64(ah).eval(), to_int64(bh).eval());
+
     return combine(rl, rh);
 }
 #endif

@@ -26,14 +26,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-
-inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
+template<class V>
+V v_rsqrt_rh(V x, V a)
 {
-    // x_n = x*(3-d*x*x)/2
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
-    return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
-#elif SIMDPP_USE_SSE2
-    float32x4 x2, c3, c0p5, r;
+    V x2, c3, c0p5, r;
 
     c3 = make_float(3.0f);
     c0p5 = make_float(0.5f);
@@ -45,6 +41,15 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
     r = mul(x, r);
 
     return r;
+}
+
+inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
+{
+    // x_n = x*(3-d*x*x)/2
+#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
+    return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
+#elif SIMDPP_USE_SSE2
+    return v_rsqrt_rh(x, a);
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x2, r;
 
@@ -72,20 +77,17 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 #if SIMDPP_USE_AVX
 inline float32x8 i_rsqrt_rh(float32x8 x, float32x8 a)
 {
-    float32x8 x2, c3, c0p5, r;
-
-    c3 = make_float(3.0f);
-    c0p5 = make_float(0.5f);
-
-    x2 = mul(x, x);
-    r = mul(a, x2);
-    r = sub(c3, r);
-    x = mul(x, c0p5);
-    r = mul(x, r);
-
-    return r;
+    return v_rsqrt_rh(x, a);
 }
 #endif
+
+#if SIMDPP_USE_AVX512
+inline float32<16> i_rsqrt_rh(float32<16> x, float32<16> a)
+{
+    return v_rsqrt_rh(x, a);
+}
+#endif
+
 
 template<unsigned N>
 float32<N> i_rsqrt_rh(float32<N> x, float32<N> a)

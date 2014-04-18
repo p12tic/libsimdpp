@@ -135,11 +135,7 @@ public:
     /// Access the underlying type
     float32<8> unmask() const
     {
-    #if SIMDPP_USE_NULL
-        return detail::null::unmask_mask<float32<8>>(*this);
-    #else
         return float32<8>(d_);
-    #endif
     }
 
     const mask_float32<8>& operator[](unsigned) const { return *this; }

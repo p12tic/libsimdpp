@@ -162,6 +162,24 @@ inline float64x4 i_load_u(float64x4& a, const void* p)
     a = _mm256_loadu_pd(reinterpret_cast<const double*>(p)); return a;
 }
 #endif
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_load_u(uint32<16>& a, const void* p)
+{
+    a = _mm512_loadu_si512(p); return a;
+}
+inline uint64<8> i_load_u(uint64<8>& a,  const void* p)
+{
+    a = _mm512_loadu_si512(p); return a;
+}
+inline float32<16> i_load_u(float32<16>& a, const void* p)
+{
+    a = _mm512_loadu_ps(p); return a;
+}
+inline float64<8> i_load_u(float64<8>& a, const void* p)
+{
+    a = _mm512_loadu_pd(p); return a;
+}
+#endif
 
 template<unsigned N>
 uint8<N>  i_load_u(uint8<N>& a,  const void* p)

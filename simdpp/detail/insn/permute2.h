@@ -75,7 +75,16 @@ template<unsigned s0, unsigned s1>
 uint64x4 i_permute2(uint64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return _mm256_permute4x64_epi64(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
+    return i_permute4<s0,s1,s0+2,s1+2>(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1>
+uint64<8> i_permute2(uint64<8> a)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return i_permute4<s0,s1,s0+2,s1+2>(a);
 }
 #endif
 
@@ -86,6 +95,7 @@ uint64<N> i_permute2(uint64<N> a)
     SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, (i_permute2<s0,s1>), a);
 }
 
+// -----------------------------------------------------------------------------
 
 template<unsigned s0, unsigned s1>
 float64x2 i_permute2(float64x2 a)
@@ -108,6 +118,15 @@ float64x4 i_permute2(float64x4 a)
 #else // SIMDPP_USE_AVX
     return _mm256_permute_pd(a, s0 | s1<<1 | s0<<2 | s1<<3);
 #endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1>
+float64<8> i_permute2(float64<8> a)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return _mm512_permute_pd(a, s0 | s1<<1 | s0<<2 | s1<<3 | s0<<4 | s1<<5 | s0<<6 | s1<<7);
 }
 #endif
 

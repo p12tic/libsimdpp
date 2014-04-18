@@ -25,6 +25,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     Relative error is as follows:
      - 1/2 ULP for NULL and NEON
      - ~1/2730 for SSE2
+     - 1/16376 for AVX512
      - 1/4096 for ALTIVEC
      - 1/256 for NEON_FLT_SP
 

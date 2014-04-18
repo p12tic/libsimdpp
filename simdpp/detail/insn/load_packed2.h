@@ -32,6 +32,8 @@ void v128_load_packed2(V& a, V& b, const char* p);
 template<class V>
 void v256_load_packed2(V& a, V& b, const char* p);
 template<class V>
+void v512_load_packed2(V& a, V& b, const char* p);
+template<class V>
 void v_load_packed2(V& a, V& b, const char* p);
 
 // -----------------------------------------------------------------------------
@@ -115,6 +117,13 @@ inline void i_load_packed2(uint32x8& a, uint32x8& b, const char* p)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed2(uint32<16>& a, uint32<16>& b, const char* p)
+{
+    v512_load_packed2(a, b, p);
+}
+#endif
+
 template<unsigned N>
 void i_load_packed2(uint32<N>& a, uint32<N>& b, const char* p)
 {
@@ -132,6 +141,13 @@ inline void i_load_packed2(uint64x2& a, uint64x2& b, const char* p)
 inline void i_load_packed2(uint64x4& a, uint64x4& b, const char* p)
 {
     v256_load_packed2(a, b, p);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_load_packed2(uint64<8>& a, uint64<8>& b, const char* p)
+{
+    v512_load_packed2(a, b, p);
 }
 #endif
 
@@ -164,6 +180,14 @@ inline void i_load_packed2(float32x8& a, float32x8& b, const char* p)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed2(float32<16>& a, float32<16>& b, const char* p)
+{
+    v512_load_packed2(a, b, p);
+}
+#endif
+
+
 template<unsigned N>
 void i_load_packed2(float32<N>& a, float32<N>& b, const char* p)
 {
@@ -181,6 +205,13 @@ inline void i_load_packed2(float64x2& a, float64x2& b, const char* p)
 inline void i_load_packed2(float64x4& a, float64x4& b, const char* p)
 {
     v256_load_packed2(a, b, p);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_load_packed2(float64<8>& a, float64<8>& b, const char* p)
+{
+    v512_load_packed2(a, b, p);
 }
 #endif
 
@@ -207,6 +238,15 @@ void v256_load_packed2(V& a, V& b, const char* p)
     p = detail::assume_aligned(p, 32);
     a = load(p);
     b = load(p + 32);
+    mem_unpack2(a, b);
+}
+
+template<class V>
+void v512_load_packed2(V& a, V& b, const char* p)
+{
+    p = detail::assume_aligned(p, 64);
+    a = load(p);
+    b = load(p + 64);
     mem_unpack2(a, b);
 }
 

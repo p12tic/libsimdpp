@@ -53,6 +53,13 @@ inline float32x8 i_div(float32x8 a, float32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_div(float32<16> a, float32<16> b)
+{
+    return _mm512_div_ps(a, b);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_div(float32<N> a, float32<N> b)
 {
@@ -74,6 +81,13 @@ inline float64x2 i_div(float64x2 a, float64x2 b)
 inline float64x4 i_div(float64x4 a, float64x4 b)
 {
     return _mm256_div_pd(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline float64<8> i_div(float64<8> a, float64<8> b)
+{
+    return _mm512_div_pd(a, b);
 }
 #endif
 

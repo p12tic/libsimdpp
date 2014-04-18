@@ -23,10 +23,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-
-template<class V>
-void v_store(char* p, V a);
-
 inline void i_store(char* p, uint8x16 a)
 {
     p = detail::assume_aligned(p, 16);
@@ -49,18 +45,65 @@ inline void i_store(char* p, uint8x32 a)
 }
 #endif
 
-template<unsigned N>
-void i_store(char* p, uint8<N> a)
+// -----------------------------------------------------------------------------
+
+inline void i_store(char* p, uint16<8> a)
 {
-    v_store(p, a);
+    i_store(p, uint8<16>(a));
 }
 
-template<unsigned N>
-void i_store(char* p, uint16<N> a) { i_store(p, uint8<N*2>(a)); }
-template<unsigned N>
-void i_store(char* p, uint32<N> a) { i_store(p, uint8<N*4>(a)); }
-template<unsigned N>
-void i_store(char* p, uint64<N> a) { i_store(p, uint8<N*8>(a)); }
+#if SIMDPP_USE_AVX2
+inline void i_store(char* p, uint16<16> a)
+{
+    i_store(p, uint8<32>(a));
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+inline void i_store(char* p, uint32<4> a)
+{
+    i_store(p, uint8<16>(a));
+}
+
+#if SIMDPP_USE_AVX2
+inline void i_store(char* p, uint32<8> a)
+{
+    i_store(p, uint8<32>(a));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_store(char* p, uint32<16> a)
+{
+    p = detail::assume_aligned(p, 64);
+    _mm512_store_epi32(p, a);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+inline void i_store(char* p, uint64<2> a)
+{
+    i_store(p, uint8<16>(a));
+}
+
+#if SIMDPP_USE_AVX2
+inline void i_store(char* p, uint64<4> a)
+{
+    i_store(p, uint8<32>(a));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_store(char* p, uint64<8> a)
+{
+    p = detail::assume_aligned(p, 64);
+    _mm512_store_epi64(p, a);
+}
+#endif
+
+// -----------------------------------------------------------------------------
 
 inline void i_store(char* p, float32x4 a)
 {
@@ -86,11 +129,15 @@ inline void i_store(char* p, float32x8 a)
 }
 #endif
 
-template<unsigned N>
-void i_store(char* p, float32<N> a)
+#if SIMDPP_USE_AVX512
+inline void i_store(char* p, float32<16> a)
 {
-    v_store(p, a);
+    p = detail::assume_aligned(p, 64);
+    _mm512_store_ps(p, a);
 }
+#endif
+
+// -----------------------------------------------------------------------------
 
 inline void i_store(char* p, float64x2 a)
 {
@@ -110,11 +157,15 @@ inline void i_store(char* p, float64x4 a)
 }
 #endif
 
-template<unsigned N>
-void i_store(char* p, float64<N> a)
+#if SIMDPP_USE_AVX512
+inline void i_store(char* p, float64<8> a)
 {
-    v_store(p, a);
+    p = detail::assume_aligned(p, 64);
+    _mm512_store_pd(p, a);
 }
+#endif
+
+// -----------------------------------------------------------------------------
 
 template<class V>
 void v_store(char* p, V a)
@@ -127,6 +178,20 @@ void v_store(char* p, V a)
         p += veclen;
     }
 }
+
+template<unsigned N>
+void i_store(char* p, uint8<N> a) { v_store(p, a); }
+template<unsigned N>
+void i_store(char* p, uint16<N> a) { v_store(p, a); }
+template<unsigned N>
+void i_store(char* p, uint32<N> a) { v_store(p, a); }
+template<unsigned N>
+void i_store(char* p, uint64<N> a) { v_store(p, a); }
+template<unsigned N>
+void i_store(char* p, float32<N> a){ v_store(p, a); }
+template<unsigned N>
+void i_store(char* p, float64<N> a){ v_store(p, a); }
+
 
 } // namespace insn
 } // namespace detail

@@ -53,7 +53,6 @@ template<unsigned N> uint64<N> zip128_hi(uint64<N> a, uint64<N> b) { return zip2
 template<unsigned N> float32<N> zip128_hi(float32<N> a, float32<N> b) { return zip4_hi(a, b); }
 template<unsigned N> float64<N> zip128_hi(float64<N> a, float64<N> b) { return zip2_hi(a, b); }
 
-
 } // namespace insn
 } // namespace detail
 #ifndef SIMDPP_DOXYGEN

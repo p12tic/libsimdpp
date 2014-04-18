@@ -47,6 +47,14 @@ inline float32x8 i_rcp_e(float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_rcp_e(float32<16> a)
+{
+    // TODO: document precision
+    return _mm512_rcp14_ps(a);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_rcp_e(float32<N> a)
 {

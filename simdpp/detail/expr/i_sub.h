@@ -128,6 +128,17 @@ uint32<8> expr_eval(expr_sub<uint32<8,E1>,
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class E1, class E2>
+uint32<16> expr_eval(expr_sub<uint32<16,E1>,
+                              uint32<16,E2>> q)
+{
+    uint32<16> a = q.a.eval();
+    uint32<16> b = q.b.eval();
+    return _mm512_sub_epi32(a, b);
+}
+#endif
+
 template<unsigned N, class E1, class E2>
 uint32<N> expr_eval(expr_sub<uint32<N,E1>,
                              uint32<N,E2>> q)
@@ -171,6 +182,17 @@ uint64<4> expr_eval(expr_sub<uint64<4,E1>,
     uint64<4> a = q.a.eval();
     uint64<4> b = q.b.eval();
     return _mm256_sub_epi64(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E1, class E2>
+uint64<8> expr_eval(expr_sub<uint64<8,E1>,
+                             uint64<8,E2>> q)
+{
+    uint64<8> a = q.a.eval();
+    uint64<8> b = q.b.eval();
+    return _mm512_sub_epi64(a, b);
 }
 #endif
 

@@ -20,6 +20,64 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
+
+/// @{
+/** Shuffles 128 bit parts within the vectors.
+
+@code
+    switch(s0):
+        case 0: r[0..127] = a[0..127]
+        case 1: r[0..127] = a[128..255]
+        case 2: r[0..127] = a[256..383]
+        case 3: r[0..127] = a[384..511]
+
+    switch(s1):
+        case 0: r[128..255] = a[0..127]
+        case 1: r[128..255] = a[128..255]
+        case 2: r[128..255] = a[256..383]
+        case 3: r[128..255] = a[384..511]
+
+    switch(s2):
+        case 0: r[256..383] = b[0..127]
+        case 1: r[256..383] = b[128..255]
+        case 2: r[256..383] = b[256..383]
+        case 3: r[256..383] = b[384..511]
+
+    switch(s3):
+        case 0: r[384..511] = b[0..127]
+        case 1: r[384..511] = b[128..255]
+        case 2: r[384..511] = b[256..383]
+        case 3: r[384..511] = b[384..511]
+@endcode
+*/
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+uint32<16> shuffle2_128(uint32<16> a, uint32<16> b)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_i32x4(a, b, (s3<<6) + (s2<<4) + (s1<<2) + s0);
+}
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+uint64<8> shuffle2_128(uint64<8> a, uint64<8> b)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_i64x2(a, b, (s3<<6) + (s2<<4) + (s1<<2) + s0);
+}
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+float32<16> shuffle2_128(float32<16> a, float32<16> b)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_f32x4(a, b, (s3<<6) + (s2<<4) + (s1<<2) + s0);
+}
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+float64<8> shuffle2_128(float64<8> a, float64<8> b)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_f64x2(a, b, (s3<<6) + (s2<<4) + (s1<<2) + s0);
+}
+#endif
+/// @}
+
 /// @{
 /** Shuffles 128 bit parts within the vectors.
 
@@ -82,7 +140,45 @@ float64x4 shuffle1_128(float64x4 a, float64x4 b)
     return r;
 #endif
 }
+
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1>
+uint32<16> shuffle1_128(uint32<16> a, uint32<16> b)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return shuffle2_128<s0,s1,s0+2,s1+2>(a, b);
+}
+
+template<unsigned s0, unsigned s1>
+uint64<8> shuffle1_128(uint64<8> a, uint64<8> b)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return shuffle2_128<s0,s1,s0+2,s1+2>(a, b);
+}
+
+template<unsigned s0, unsigned s1>
+float32<16> shuffle1_128(float32<16> a, float32<16> b)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return shuffle2_128<s0,s1,s0+2,s1+2>(a, b);
+}
+
+template<unsigned s0, unsigned s1>
+float64<8> shuffle1_128(float64<8> a, float64<8> b)
+{
+    static_assert(s0 < 2 && s1 < 2, "Selector out of range");
+    return shuffle2_128<s0,s1,s0+2,s1+2>(a, b);
+}
+#endif
 /// @}
+
+#if SIMDPP_USE_AVX512
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V>
+V permute4_128(V a)
+{
+    return shuffle2_128<s0,s1,s2,s3>(a, a);
+}
+#endif
 
 } // namespace detail
 #ifndef SIMDPP_DOXYGEN

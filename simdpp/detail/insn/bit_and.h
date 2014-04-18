@@ -183,6 +183,13 @@ inline uint32<8> i_bit_and(uint32<8> a, uint32<8> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_bit_and(uint32<16> a, uint32<16> b)
+{
+    return _mm512_and_epi32(a, b);
+}
+#endif
+
 template<unsigned N>
 uint32<N> i_bit_and(uint32<N> a, uint32<N> b)
 {
@@ -204,6 +211,13 @@ inline uint32<4> i_bit_and(uint32<4> a, mask_int32<4> b)
 inline uint32<8> i_bit_and(uint32<8> a, mask_int32<8> b)
 {
     return i_bit_and(a, uint32<8>(b));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_bit_and(uint32<16> a, mask_int32<16> b)
+{
+    return _mm512_maskz_mov_epi32(b, a);
 }
 #endif
 
@@ -231,6 +245,13 @@ inline mask_int32<8> i_bit_and(mask_int32<8> a, mask_int32<8> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_int32<16> i_bit_and(mask_int32<16> a, mask_int32<16> b)
+{
+    return _mm512_kand(a, b);
+}
+#endif
+
 template<unsigned N>
 mask_int32<N> i_bit_and(mask_int32<N> a, mask_int32<N> b)
 {
@@ -249,6 +270,13 @@ inline uint64<2> i_bit_and(uint64<2> a, uint64<2> b)
 inline uint64<4> i_bit_and(uint64<4> a, uint64<4> b)
 {
     return _mm256_and_si256(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint64<8> i_bit_and(uint64<8> a, uint64<8> b)
+{
+    return _mm512_and_epi64(a, b);
 }
 #endif
 
@@ -276,6 +304,13 @@ inline uint64<4> i_bit_and(uint64<4> a, mask_int64<4> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint64<8> i_bit_and(uint64<8> a, mask_int64<8> b)
+{
+    return _mm512_maskz_mov_epi64(b, a);
+}
+#endif
+
 template<unsigned N>
 uint64<N> i_bit_and(uint64<N> a, mask_int64<N> b)
 {
@@ -297,6 +332,13 @@ inline mask_int64<2> i_bit_and(mask_int64<2> a, mask_int64<2> b)
 inline mask_int64<4> i_bit_and(mask_int64<4> a, mask_int64<4> b)
 {
     return mask_int64<4>(i_bit_and(uint64<4>(a), uint64<4>(b)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_int64<8> i_bit_and(mask_int64<8> a, mask_int64<8> b)
+{
+    return __mmask16(_mm512_kand(__mmask8(a), __mmask8(b)));
 }
 #endif
 
@@ -330,6 +372,13 @@ inline float32<8> i_bit_and(float32<8> a, float32<8> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_bit_and(float32<16> a, float32<16> b)
+{
+    return float32<16>(i_bit_and(uint32<16>(a), uint32<16>(b)));
+}
+#endif
+
 template<unsigned N>
 float32<N> i_bit_and(float32<N> a, float32<N> b)
 {
@@ -354,6 +403,13 @@ inline float32<8> i_bit_and(float32<8> a, mask_float32<8> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_bit_and(float32<16> a, mask_float32<16> b)
+{
+    return _mm512_maskz_mov_ps(b, a);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_bit_and(float32<N> a, mask_float32<N> b)
 {
@@ -375,6 +431,13 @@ inline mask_float32<4> i_bit_and(mask_float32<4> a, mask_float32<4> b)
 inline mask_float32<8> i_bit_and(mask_float32<8> a, mask_float32<8> b)
 {
     return mask_float32<8>(i_bit_and(float32<8>(a), float32<8>(b)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float32<16> i_bit_and(mask_float32<16> a, mask_float32<16> b)
+{
+    return _mm512_kand(a, b);
 }
 #endif
 
@@ -403,6 +466,13 @@ inline float64<4> i_bit_and(float64<4> a, float64<4> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float64<8> i_bit_and(float64<8> a, float64<8> b)
+{
+    return float64<8>(i_bit_and(uint64<8>(a), uint64<8>(b)));
+}
+#endif
+
 template<unsigned N>
 float64<N> i_bit_and(float64<N> a, float64<N> b)
 {
@@ -427,6 +497,13 @@ inline float64<4> i_bit_and(float64<4> a, mask_float64<4> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float64<8> i_bit_and(float64<8> a, mask_float64<8> b)
+{
+    return _mm512_maskz_mov_pd(b, a);
+}
+#endif
+
 template<unsigned N>
 float64<N> i_bit_and(float64<N> a, mask_float64<N> b)
 {
@@ -448,6 +525,13 @@ inline mask_float64<2> i_bit_and(mask_float64<2> a, mask_float64<2> b)
 inline mask_float64<4> i_bit_and(mask_float64<4> a, mask_float64<4> b)
 {
     return mask_float64<4>(i_bit_and(float64<4>(a), float64<4>(b)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float64<8> i_bit_and(mask_float64<8> a, mask_float64<8> b)
+{
+    return __mmask16(_mm512_kand(__mmask8(a), __mmask8(b)));
 }
 #endif
 

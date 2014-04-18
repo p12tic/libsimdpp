@@ -24,28 +24,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-// forward decls for v_splat
-template<unsigned s> uint8x16 i_splat(uint8x16 a);
-template<unsigned s> uint16x8 i_splat(uint16x8 a);
-template<unsigned s> uint32x4 i_splat(uint32x4 a);
-template<unsigned s> uint64x2 i_splat(uint64x2 a);
-template<unsigned s> float32x4 i_splat(float32x4 a);
-template<unsigned s> float64x2 i_splat(float64x2 a);
-
-// collect some duplicate stuff here
 template<unsigned s, class V>
-V v_splat(V a)
-{
-    using U = typename V::base_vector_type;
-    U one = a[s / U::length];
-
-    one = i_splat<s % U::length>(one);
-
-    for (unsigned i = 0; i < V::vec_length; ++i) {
-        a[i] = one;
-    }
-    return a;
-}
+V v_splat(V a);
 
 // -----------------------------------------------------------------------------
 
@@ -120,6 +100,17 @@ uint32x8 i_splat(uint32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+uint32<16> i_splat(uint32<16> a)
+{
+    static_assert(s < 16, "Access out of bounds");
+    a = permute4<s%4,s%4,s%4,s%4>(a);
+    a = detail::shuffle2_128<s/4, s/4, s/4, s/4>(a, a);
+    return a;
+}
+#endif
+
 template<unsigned s, unsigned N>
 uint32<N> i_splat(uint32<N> a)
 {
@@ -144,6 +135,17 @@ uint64x4 i_splat(uint64x4 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+uint64<8> i_splat(uint64<8> a)
+{
+    static_assert(s < 8, "Access out of bounds");
+    a = permute2<s%2,s%2>(a);
+    a = _mm512_shuffle_i64x2(a, a, ((s/2) << 6) + ((s/2) << 4) + ((s/2) << 2) + (s/2)); // TODO extract
+    return a;
+}
+#endif
+
 template<unsigned s, unsigned N>
 uint64<N> i_splat(uint64<N> a)
 {
@@ -164,9 +166,19 @@ template<unsigned s>
 float32x8 i_splat(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
-
     a = shuffle1_128<s/4,s/4>(a, a);
     return permute4<s%4,s%4,s%4,s%4>(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+float32<16> i_splat(float32<16> a)
+{
+    static_assert(s < 16, "Access out of bounds");
+    a = permute4<s%4,s%4,s%4,s%4>(a);
+    a = _mm512_shuffle_f32x4(a, a, s/4);
+    return a;
 }
 #endif
 
@@ -200,11 +212,39 @@ float64x4 i_splat(float64x4 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<unsigned s>
+float64<8> i_splat(float64<8> a)
+{
+    static_assert(s < 8, "Access out of bounds");
+    a = permute2<s%2,s%2>(a);
+    a = _mm512_shuffle_f64x2(a, a, ((s/2) << 6) + ((s/2) << 4) + ((s/2) << 2) + (s/2)); // TODO extract
+    return a;
+}
+#endif
+
 template<unsigned s, unsigned N>
 float64<N> i_splat(float64<N> a)
 {
     static_assert(s < N, "Access out of bounds");
     return v_splat<s>(a);
+}
+
+// -----------------------------------------------------------------------------
+
+// collect some duplicate stuff here
+template<unsigned s, class V>
+V v_splat(V a)
+{
+    using U = typename V::base_vector_type;
+    U one = a[s / U::length];
+
+    one = i_splat<s % U::length>(one);
+
+    for (unsigned i = 0; i < V::vec_length; ++i) {
+        a[i] = one;
+    }
+    return a;
 }
 
 } // namespace insn

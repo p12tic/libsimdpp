@@ -28,8 +28,8 @@ Compiler and instruction set support
   unfit for use. For available releases please see the
   [libsimdpp wiki](https://github.com/p12tic/libsimdpp/wiki).
 
-The library supports SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, XOP and
-NEON instruction sets.
+The library supports SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
+XOP and NEON instruction sets.
 
 Code for ALTIVEC instruction set has been added, but it has not been tested
 on actual hardware, thus definitely contains bugs.

@@ -47,6 +47,17 @@ float32<8> expr_eval(expr_neg<float32<8,E>> q)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class E>
+float32<16> expr_eval(expr_neg<float32<16,E>> q)
+{
+    // FIXME: check whether we can simply use sub
+    float32<16> a = q.a.eval();
+    int32<16> zero = make_int(0x80000000);
+    return bit_xor(a, zero);
+}
+#endif
+
 template<unsigned N, class E>
 float32<N> expr_eval(expr_neg<float32<N,E>> q)
 {
@@ -74,6 +85,17 @@ float64x4 expr_eval(expr_neg<float64<4,E>> q)
 {
     float64x4 a = q.a.eval();
     int64x4 zero = make_int(0x8000000000000000);
+    return bit_xor(a, zero);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E>
+float64<8> expr_eval(expr_neg<float64<8,E>> q)
+{
+    // FIXME: check whether we can simply use sub
+    float64<8> a = q.a.eval();
+    int64<8> zero = make_int(0x8000000000000000);
     return bit_xor(a, zero);
 }
 #endif

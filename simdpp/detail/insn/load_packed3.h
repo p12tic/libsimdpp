@@ -33,6 +33,8 @@ void v128_load_packed3(V& a, V& b, V& c, const char* p);
 template<class V>
 void v256_load_packed3(V& a, V& b, V& c, const char* p);
 template<class V>
+void v512_load_packed3(V& a, V& b, V& c, const char* p);
+template<class V>
 void v_load_packed3(V& a, V& b, V& c, const char* p);
 
 // -----------------------------------------------------------------------------
@@ -121,6 +123,13 @@ inline void i_load_packed3(uint32x8& a, uint32x8& b, uint32x8& c, const char* p)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed3(uint32<16>& a, uint32<16>& b, uint32<16>& c, const char* p)
+{
+    v512_load_packed3(a, b, c, p);
+}
+#endif
+
 template<unsigned N>
 void i_load_packed3(uint32<N>& a, uint32<N>& b, uint32<N>& c, const char* p)
 {
@@ -162,6 +171,14 @@ inline void i_load_packed3(uint64x4& a, uint64x4& b, uint64x4& c, const char* p)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed3(uint64<8>& a, uint64<8>& b, uint64<8>& c,
+                           const char* p)
+{
+    v512_load_packed3(a, b, c, p);
+}
+#endif
+
 template<unsigned N>
 void i_load_packed3(uint64<N>& a, uint64<N>& b, uint64<N>& c, const char* p)
 {
@@ -192,6 +209,14 @@ inline void i_load_packed3(float32x8& a, float32x8& b, float32x8& c, const char*
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed3(float32<16>& a, float32<16>& b, float32<16>& c,
+                           const char* p)
+{
+    v512_load_packed3(a, b, c, p);
+}
+#endif
+
 template<unsigned N>
 void i_load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const char* p)
 {
@@ -215,6 +240,14 @@ inline void i_load_packed3(float64x4& a, float64x4& b, float64x4& c,
                            const char* p)
 {
     v256_load_packed3(a, b, c, p);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_load_packed3(float64<8>& a, float64<8>& b, float64<8>& c,
+                           const char* p)
+{
+    v512_load_packed3(a, b, c, p);
 }
 #endif
 
@@ -245,6 +278,17 @@ void v256_load_packed3(V& a, V& b, V& c, const char* p)
     c = load(p + 64);
     mem_unpack3(a, b, c);
 }
+
+template<class V>
+void v512_load_packed3(V& a, V& b, V& c, const char* p)
+{
+    p = detail::assume_aligned(p, 64);
+    a = load(p);
+    b = load(p + 64);
+    c = load(p + 128);
+    mem_unpack3(a, b, c);
+}
+
 
 template<class V>
 void v_load_packed3(V& a, V& b, V& c, const char* p)

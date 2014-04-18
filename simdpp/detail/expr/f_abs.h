@@ -49,6 +49,17 @@ float32<8> expr_eval(expr_abs<float32<8,E>> q)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class E>
+float32<16> expr_eval(expr_abs<float32<16,E>> q)
+{
+    // TODO: maybe cmp_lt is better, but what to do with negative zero?
+    float32<16> a = q.a.eval();
+    int32<16> mask = make_int(0x7fffffff);
+    return bit_and(a, mask);
+}
+#endif
+
 template<unsigned N, class E>
 float32<N> expr_eval(expr_abs<float32<N,E>> q)
 {
@@ -76,6 +87,17 @@ float64x4 expr_eval(expr_abs<float64<4,E>> q)
 {
     float64x4 a = q.a.eval();
     int64<4> mask = make_int(0x7fffffffffffffff);
+    return bit_and(a, mask);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E>
+float64<8> expr_eval(expr_abs<float64<8,E>> q)
+{
+    // TODO: maybe cmp_lt is better, but what to do with negative zero?
+    float64<8> a = q.a.eval();
+    int64<8> mask = make_int(0x7fffffffffffffff);
     return bit_and(a, mask);
 }
 #endif

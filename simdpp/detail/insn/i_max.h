@@ -166,6 +166,13 @@ inline int32x8 i_max(int32x8 a, int32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline int32<16> i_max(int32<16> a, int32<16> b)
+{
+    return _mm512_max_epi32(a, b);
+}
+#endif
+
 template<unsigned N>
 int32<N> i_max(int32<N> a, int32<N> b)
 {
@@ -194,6 +201,13 @@ inline uint32x4 i_max(uint32x4 a, uint32x4 b)
 inline uint32x8 i_max(uint32x8 a, uint32x8 b)
 {
     return _mm256_max_epu32(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_max(uint32<16> a, uint32<16> b)
+{
+    return _mm512_max_epu32(a, b);
 }
 #endif
 

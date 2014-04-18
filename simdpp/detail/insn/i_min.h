@@ -166,6 +166,13 @@ inline int32x8 i_min(int32x8 a, int32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline int32<16> i_min(int32<16> a, int32<16> b)
+{
+    return _mm512_min_epi32(a, b);
+}
+#endif
+
 template<unsigned N>
 int32<N> i_min(int32<N> a, int32<N> b)
 {
@@ -194,6 +201,13 @@ inline uint32x4 i_min(uint32x4 a, uint32x4 b)
 inline uint32x8 i_min(uint32x8 a, uint32x8 b)
 {
     return _mm256_min_epu32(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_min(uint32<16> a, uint32<16> b)
+{
+    return _mm512_min_epu32(a, b);
 }
 #endif
 

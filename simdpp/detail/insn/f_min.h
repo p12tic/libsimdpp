@@ -43,6 +43,13 @@ inline float32x8 i_min(float32x8 a, float32x8 b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_min(float32<16> a, float32<16> b)
+{
+    return _mm512_min_ps(a, b);
+}
+#endif
+
 template<unsigned N>
 float32<N> i_min(float32<N> a, float32<N> b)
 {
@@ -64,6 +71,13 @@ inline float64x2 i_min(float64x2 a, float64x2 b)
 inline float64x4 i_min(float64x4 a, float64x4 b)
 {
     return _mm256_min_pd(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline float64<8> i_min(float64<8> a, float64<8> b)
+{
+    return _mm512_min_pd(a, b);
 }
 #endif
 

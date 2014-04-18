@@ -64,17 +64,77 @@ uint8<N> i_move16_r(uint8<N> a)
     SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_move16_r<shift>, a);
 }
 
+// -----------------------------------------------------------------------------
+
 template<unsigned shift, unsigned N>
 uint16<N> i_move8_r(uint16<N> a)
 {
     return uint16<N>(i_move16_r<shift*2>(uint8<N*2>(a)));
 }
 
+// -----------------------------------------------------------------------------
+
+template<unsigned shift>
+uint32<4> i_move4_r(uint32<4> a)
+{
+    return (uint32<4>) i_move16_r<shift*4>(uint8<16>(a));
+}
+
+#if SIMDPP_USE_AVX2
+template<unsigned shift>
+uint32<8> i_move4_r(uint32<8> a)
+{
+    static_assert(shift <= 4, "Selector out of range");
+    return _mm256_slli_si256(a, shift*4);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned shift>
+uint32<16> i_move4_r(uint32<16> a)
+{
+    static_assert(shift <= 4, "Selector out of range");
+    switch (shift) {
+    case 0: return a;
+    case 1: return _mm512_maskz_shuffle_epi32(0xeeee, a, _MM_SHUFFLE(2, 1, 0, 0));
+    case 2: return _mm512_maskz_shuffle_epi32(0xcccc, a, _MM_SHUFFLE(1, 0, 0, 0));
+    case 3: return _mm512_maskz_shuffle_epi32(0x8888, a, _MM_SHUFFLE(0, 0, 0, 0));
+    case 4: return uint32<16>::zero();
+    }
+}
+#endif
+
 template<unsigned shift, unsigned N>
 uint32<N> i_move4_r(uint32<N> a)
 {
-    return uint32<N>(i_move16_r<shift*4>(uint8<N*4>(a)));
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_move4_r<shift>, a);
 }
+
+// -----------------------------------------------------------------------------
+
+template<unsigned shift>
+uint64<2> i_move2_r(uint64<2> a)
+{
+    return (uint64<2>) i_move16_r<shift*8>(uint8<16>(a));
+}
+
+#if SIMDPP_USE_AVX2
+template<unsigned shift>
+uint64<4> i_move2_r(uint64<4> a)
+{
+    static_assert(shift <= 2, "Selector out of range");
+    return _mm256_slli_si256(a, shift*8);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned shift>
+uint64<8> i_move2_r(uint64<8> a)
+{
+    static_assert(shift <= 4, "Selector out of range");
+    return (uint64<8>) i_move4_r<shift*2>(uint32<16>(a));
+}
+#endif
 
 template<unsigned shift, unsigned N>
 uint64<N> i_move2_r(uint64<N> a)
@@ -82,11 +142,73 @@ uint64<N> i_move2_r(uint64<N> a)
     return uint64<N>(i_move16_r<shift*8>(uint8<N*8>(a)));
 }
 
+// -----------------------------------------------------------------------------
+
+template<unsigned shift>
+float32<4> i_move4_r(float32<4> a)
+{
+    return (float32<4>) i_move16_r<shift*4>(uint8<16>(a));
+}
+
+#if SIMDPP_USE_AVX2
+template<unsigned shift>
+float32<8> i_move4_r(float32<8> a)
+{
+    static_assert(shift <= 4, "Selector out of range");
+    return (float32<8>) i_move16_r<shift*4>(uint8<32>(a));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned shift>
+float32<16> i_move4_r(float32<16> a)
+{
+    static_assert(shift <= 4, "Selector out of range");
+    switch (shift) {
+    case 0: return a;
+    case 1: return _mm512_maskz_shuffle_ps(0xeeee, a, a, _MM_SHUFFLE(2, 1, 0, 0));
+    case 2: return _mm512_maskz_shuffle_ps(0xcccc, a, a, _MM_SHUFFLE(1, 0, 0, 0));
+    case 3: return _mm512_maskz_shuffle_ps(0x8888, a, a, _MM_SHUFFLE(0, 0, 0, 0));
+    case 4: return float32<16>::zero();
+    }
+}
+#endif
+
 template<unsigned shift, unsigned N>
 float32<N> i_move4_r(float32<N> a)
 {
     return float32<N>(i_move4_r<shift>(uint32<N>(a)));
 }
+
+// -----------------------------------------------------------------------------
+
+template<unsigned shift>
+float64<2> i_move2_r(float64<2> a)
+{
+    return (float64<2>) i_move16_r<shift*8>(uint8<16>(a));
+}
+
+#if SIMDPP_USE_AVX2
+template<unsigned shift>
+float64<4> i_move2_r(float64<4> a)
+{
+    static_assert(shift <= 2, "Selector out of range");
+    return (float64<4>) i_move16_r<shift*8>(uint8<32>(a));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<unsigned shift>
+float64<8> i_move2_r(float64<8> a)
+{
+    static_assert(shift <= 2, "Selector out of range");
+    switch (shift) {
+    case 0: return a;
+    case 1: return _mm512_maskz_shuffle_pd(0xaa, a, a, _MM_SHUFFLE2(0, 0));
+    case 2: return float64<8>::zero();
+    }
+}
+#endif
 
 template<unsigned shift, unsigned N>
 float64<N> i_move2_r(float64<N> a)

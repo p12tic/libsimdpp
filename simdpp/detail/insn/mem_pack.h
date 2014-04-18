@@ -62,6 +62,23 @@ void mem_pack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
     qa.vec() = shuffle1_128<0,0>(c1, c2);
     qb.vec() = shuffle1_128<1,1>(c1, c2);
 }
+
+#if SIMDPP_USE_AVX512
+template<class V>
+void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
+{
+    V a = qa.vec();
+    V b = qb.vec();
+
+    V c1, c2, d1, d2;
+    c1 = zip128_lo(a, b);
+    c2 = zip128_hi(a, b);
+    d1 = shuffle2_128<0,1,0,1>(c1, c2);
+    d2 = shuffle2_128<2,3,2,3>(c1, c2);
+    qa.vec() = permute4_128<0,2,1,3>(d1); // FIXME: optimize
+    qb.vec() = permute4_128<0,2,1,3>(d2);
+}
+#endif
 /// @}
 
 /// @{
@@ -370,6 +387,34 @@ void v_mem_pack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V>&
     qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;
 }
 
+#if SIMDPP_USE_AVX512
+template<class V>
+void v_mem_pack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>& qc)
+{
+    V a, b, c; // TODO: optimize. Using full-vector shuffle may be faster
+    a = qa.vec();  b = qb.vec();  c = qc.vec();
+
+    V t0, t1, t2;
+    t0 = shuffle2_128<0,2,0,2>(a, b);
+    t1 = shuffle2_128<0,2,1,3>(c, a);
+    t2 = shuffle2_128<1,3,1,3>(b, c);
+    // [a0,a2,b0,b2]
+    // [c0,c2,a1,a3]
+    // [b1,b3,c1,c3]
+    t0 = permute4_128<0,2,1,3>(t0);
+    t1 = permute4_128<0,2,1,3>(t1);
+    t2 = permute4_128<0,2,1,3>(t2);
+    // [a0,b0,a2,b2]
+    // [c0,a1,c2,a3]
+    // [b1,c1,b3,c3]
+    a = shuffle2_128<0,1,0,1>(t0, t1);
+    b = shuffle2_128<0,1,2,3>(t2, t0);
+    c = shuffle2_128<2,3,2,3>(t1, t2);
+
+    qa.vec() = a;  qb.vec() = b;  qc.vec() = c;
+}
+#endif
+
 /// @{
 /** Interleaves the elements of @a a, @a b and @a c in such way that:
      * every (3n)-th element comes from @a a
@@ -550,6 +595,43 @@ void v_mem_pack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
 
     qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;  qd.vec() = d1;
 }
+
+#if SIMDPP_USE_AVX512
+template<class V>
+void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
+                            any_vec<64,V>& qc, any_vec<64,V>& qd)
+{
+    V a, b, c, d; // TODO: optimize. Using full-vector shuffle/permute will be faster
+
+    a = qa.vec();  b = qb.vec();  c = qc.vec();  d = qd.vec();
+
+    V b0, b1, b2, b3;
+    // [a0,a1,a2,a3]
+    // [b0,b1,b2,b3]
+    // [c0,c1,c2,c3]
+    // [d0,d1,d2,d3]
+    b0 = shuffle2_128<0,1,0,1>(a, b);
+    b1 = shuffle2_128<2,3,2,3>(a, b);
+    b2 = shuffle2_128<0,1,0,1>(c, d);
+    b3 = shuffle2_128<2,3,2,3>(c, d);
+
+    b0 = permute4_128<0,2,1,3>(b0);
+    b1 = permute4_128<0,2,1,3>(b1);
+    b2 = permute4_128<0,2,1,3>(b2);
+    b3 = permute4_128<0,2,1,3>(b3);
+
+    // [a0,b0,a1,b1]
+    // [a2,b2,a3,b3]
+    // [c0,d0,c1,d1]
+    // [c2,d2,c3,d3]
+    a = shuffle2_128<0,1,0,1>(b0, b2);
+    b = shuffle2_128<2,3,2,3>(b0, b2);
+    c = shuffle2_128<0,1,0,1>(b1, b3);
+    d = shuffle2_128<2,3,2,3>(b1, b3);
+
+    qa.vec() = a;  qb.vec() = b;  qc.vec() = c;  qd.vec() = d;
+}
+#endif
 
 /// @{
 /** Interleaves the elements of @a a, @a b, @a c and @a d in such way that:

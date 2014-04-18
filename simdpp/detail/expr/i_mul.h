@@ -196,6 +196,17 @@ uint32<8> expr_eval(expr_mul_lo<uint32<8,E1>,
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+template<class E1, class E2>
+uint32<16> expr_eval(expr_mul_lo<uint32<16,E1>,
+                                 uint32<16,E2>> q)
+{
+    uint32<16> a = q.a.eval();
+    uint32<16> b = q.b.eval();
+    return _mm512_mullo_epi32(a, b);
+}
+#endif
+
 template<unsigned N, class E1, class E2>
 uint32<N> expr_eval(expr_mul_lo<uint32<N,E1>,
                                 uint32<N,E2>> q)

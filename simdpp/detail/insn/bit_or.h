@@ -135,6 +135,13 @@ inline uint32<8> i_bit_or(uint32<8> a, uint32<8> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_bit_or(uint32<16> a, uint32<16> b)
+{
+    return _mm512_or_epi32(a, b);
+}
+#endif
+
 template<unsigned N>
 uint32<N> i_bit_or(uint32<N> a, uint32<N> b)
 {
@@ -159,6 +166,13 @@ inline mask_int32<8> i_bit_or(mask_int32<8> a, mask_int32<8> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_int32<16> i_bit_or(mask_int32<16> a, mask_int32<16> b)
+{
+    return _mm512_kor(a, b);
+}
+#endif
+
 template<unsigned N>
 mask_int32<N> i_bit_or(mask_int32<N> a, mask_int32<N> b)
 {
@@ -177,6 +191,13 @@ inline uint64<2> i_bit_or(uint64<2> a, uint64<2> b)
 inline uint64<4> i_bit_or(uint64<4> a, uint64<4> b)
 {
     return _mm256_or_si256(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint64<8> i_bit_or(uint64<8> a, uint64<8> b)
+{
+    return _mm512_or_epi64(a, b);
 }
 #endif
 
@@ -201,6 +222,13 @@ inline mask_int64<2> i_bit_or(mask_int64<2> a, mask_int64<2> b)
 inline mask_int64<4> i_bit_or(mask_int64<4> a, mask_int64<4> b)
 {
     return mask_int64<4>(i_bit_or(uint64<4>(a), uint64<4>(b)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_int64<8> i_bit_or(mask_int64<8> a, mask_int64<8> b)
+{
+    return _mm512_kor(a, b);
 }
 #endif
 
@@ -234,6 +262,13 @@ inline float32<8> i_bit_or(float32<8> a, float32<8> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_bit_or(float32<16> a, float32<16> b)
+{
+    return (float32<16>) i_bit_or(uint32<16>(a), uint32<16>(b));
+}
+#endif
+
 template<unsigned N>
 float32<N> i_bit_or(float32<N> a, float32<N> b)
 {
@@ -255,6 +290,13 @@ inline mask_float32<4> i_bit_or(mask_float32<4> a, mask_float32<4> b)
 inline mask_float32<8> i_bit_or(mask_float32<8> a, mask_float32<8> b)
 {
     return mask_float32<8>(i_bit_or(float32<8>(a), float32<8>(b)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float32<16> i_bit_or(mask_float32<16> a, mask_float32<16> b)
+{
+    return _mm512_kor(a, b);
 }
 #endif
 
@@ -283,6 +325,13 @@ inline float64<4> i_bit_or(float64<4> a, float64<4> b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float64<8> i_bit_or(float64<8> a, float64<8> b)
+{
+    return (float64<8>) i_bit_or(uint64<8>(a), uint64<8>(b));
+}
+#endif
+
 template<unsigned N>
 float64<N> i_bit_or(float64<N> a, float64<N> b)
 {
@@ -304,6 +353,13 @@ inline mask_float64<2> i_bit_or(mask_float64<2> a, mask_float64<2> b)
 inline mask_float64<4> i_bit_or(mask_float64<4> a, mask_float64<4> b)
 {
     return mask_float64<4>(i_bit_or(float64<4>(a), float64<4>(b)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float64<8> i_bit_or(mask_float64<8> a, mask_float64<8> b)
+{
+    return _mm512_kor(a, b);
 }
 #endif
 

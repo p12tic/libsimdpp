@@ -32,6 +32,8 @@ void v128_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 template<class V>
 void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 template<class V>
+void v512_load_packed4(V& a, V& b, V& c, V& d, const char* p);
+template<class V>
 void v_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 
 // -----------------------------------------------------------------------------
@@ -129,6 +131,14 @@ inline void i_load_packed4(uint32x8& a, uint32x8& b, uint32x8& c, uint32x8& d,
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed4(uint32<16>& a, uint32<16>& b, uint32<16>& c, uint32<16>& d,
+                           const char* p)
+{
+    v512_load_packed4(a, b, c, d, p);
+}
+#endif
+
 template<unsigned N>
 void i_load_packed4(uint32<N>& a, uint32<N>& b, uint32<N>& c, uint32<N>& d,
                     const char* p)
@@ -146,15 +156,23 @@ inline void i_load_packed4(uint64x2& a, uint64x2& b,
 
 #if SIMDPP_USE_AVX2
 inline void i_load_packed4(uint64x4& a, uint64x4& b, uint64x4& c, uint64x4& d,
-                         const char* p)
+                           const char* p)
 {
     v256_load_packed4(a, b, c, d, p);
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed4(uint64<8>& a, uint64<8>& b, uint64<8>& c, uint64<8>& d,
+                           const char* p)
+{
+    v512_load_packed4(a, b, c, d, p);
+}
+#endif
+
 template<unsigned N>
 void i_load_packed4(uint64<N>& a, uint64<N>& b, uint64<N>& c, uint64<N>& d,
-                  const char* p)
+                    const char* p)
 {
     v_load_packed4(a, b, c, d, p);
 }
@@ -186,6 +204,15 @@ inline void i_load_packed4(float32x8& a, float32x8& b, float32x8& c, float32x8& 
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_load_packed4(float32<16>& a, float32<16>& b, float32<16>& c, float32<16>& d,
+                           const char* p)
+{
+    v512_load_packed4(a, b, c, d, p);
+}
+#endif
+
+
 template<unsigned N>
 void i_load_packed4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d,
                   const char* p)
@@ -211,6 +238,14 @@ inline void i_load_packed4(float64x4& a, float64x4& b, float64x4& c, float64x4& 
                            const char* p)
 {
     v256_load_packed4(a, b, c, d, p);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_load_packed4(float64<8>& a, float64<8>& b, float64<8>& c, float64<8>& d,
+                           const char* p)
+{
+    v512_load_packed4(a, b, c, d, p);
 }
 #endif
 
@@ -242,6 +277,17 @@ void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p)
     b = load(p + 32);
     c = load(p + 64);
     d = load(p + 96);
+    mem_unpack4(a, b, c, d);
+}
+
+template<class V>
+void v512_load_packed4(V& a, V& b, V& c, V& d, const char* p)
+{
+    p = detail::assume_aligned(p, 64);
+    a = load(p);
+    b = load(p + 64);
+    c = load(p + 128);
+    d = load(p + 192);
     mem_unpack4(a, b, c, d);
 }
 

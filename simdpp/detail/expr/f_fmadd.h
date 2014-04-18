@@ -45,8 +45,8 @@ float32<4> expr_eval(expr_fmadd<float32<4,E1>,
 #if SIMDPP_USE_AVX
 template<class E1, class E2, class E3>
 float32<8> expr_eval(expr_fmadd<float32<8,E1>,
-                                           float32<8,E2>,
-                                           float32<8,E3>> q)
+                                float32<8,E2>,
+                                float32<8,E3>> q)
 {
     float32<8> a = q.a.eval();
     float32<8> b = q.b.eval();
@@ -58,6 +58,19 @@ float32<8> expr_eval(expr_fmadd<float32<8,E1>,
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E1, class E2, class E3>
+float32<16> expr_eval(expr_fmadd<float32<16,E1>,
+                                 float32<16,E2>,
+                                 float32<16,E3>> q)
+{
+    float32<16> a = q.a.eval();
+    float32<16> b = q.b.eval();
+    float32<16> c = q.c.eval();
+    return _mm512_fmadd_ps(a, b, c);
 }
 #endif
 
@@ -110,6 +123,19 @@ float64<4> expr_eval(expr_fmadd<float64<4,E1>,
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+template<class E1, class E2, class E3>
+float64<8> expr_eval(expr_fmadd<float64<8,E1>,
+                                float64<8,E2>,
+                                float64<8,E3>> q)
+{
+    float64<8> a = q.a.eval();
+    float64<8> b = q.b.eval();
+    float64<8> c = q.c.eval();
+    return _mm512_fmadd_pd(a, b, c);
 }
 #endif
 

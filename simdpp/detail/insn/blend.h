@@ -203,6 +203,13 @@ inline uint32<8> i_blend(uint32<8> on, uint32<8> off, uint32<8> mask)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_blend(uint32<16> on, uint32<16> off, uint32<16> mask)
+{
+    return _mm512_ternarylogic_epi32(on, off, mask, 0xe4);
+}
+#endif
+
 template<unsigned N>
 uint32<N> i_blend(uint32<N> on, uint32<N> off, uint32<N> mask)
 {
@@ -228,6 +235,13 @@ inline uint32<8> i_blend(uint32<8> on, uint32<8> off, mask_int32<8> mask)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint32<16> i_blend(uint32<16> on, uint32<16> off, mask_int32<16> mask)
+{
+    return _mm512_mask_blend_epi32(mask, off, on);
+}
+#endif
+
 template<unsigned N>
 uint32<N> i_blend(uint32<N> on, uint32<N> off, mask_int32<N> mask)
 {
@@ -250,6 +264,13 @@ inline mask_int32<4> i_blend(mask_int32<4> on, mask_int32<4> off, mask_int32<4> 
 inline mask_int32<8> i_blend(mask_int32<8> on, mask_int32<8> off, mask_int32<8> mask)
 {
     return mask_int32<8>(i_blend(uint32<8>(on), uint32<8>(off), uint32<8>(mask)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_int32<16> i_blend(mask_int32<16> on, mask_int32<16> off, mask_int32<16> mask)
+{
+    return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
 }
 #endif
 
@@ -289,6 +310,14 @@ inline float32<8> i_blend(float32<8> on, float32<8> off, float32<8> mask)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_blend(float32<16> on, float32<16> off, float32<16> mask)
+{
+    // maybe cmp_eq + blend has lower latency?
+    return (float32<16>) i_blend(uint32<16>(on), uint32<16>(off), uint32<16>(mask));
+}
+#endif
+
 template<unsigned N>
 float32<N> i_blend(float32<N> on, float32<N> off, float32<N> mask)
 {
@@ -311,6 +340,13 @@ inline float32<4> i_blend(float32<4> on, float32<4> off, mask_float32<4> mask)
 inline float32<8> i_blend(float32<8> on, float32<8> off, mask_float32<8> mask)
 {
     return i_blend(on, off, float32<8>(mask));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline float32<16> i_blend(float32<16> on, float32<16> off, mask_float32<16> mask)
+{
+    return _mm512_mask_blend_ps(mask, off, on);
 }
 #endif
 
@@ -339,6 +375,13 @@ inline mask_float32<8> i_blend(mask_float32<8> on, mask_float32<8> off, mask_flo
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline mask_float32<16> i_blend(mask_float32<16> on, mask_float32<16> off, mask_float32<16> mask)
+{
+    return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
+}
+#endif
+
 template<unsigned N>
 mask_float32<N> i_blend(mask_float32<N> on, mask_float32<N> off, mask_float32<N> mask)
 {
@@ -357,6 +400,13 @@ inline uint64<2> i_blend(uint64<2> on, uint64<2> off, uint64<2> mask)
 inline uint64<4> i_blend(uint64<4> on, uint64<4> off, uint64<4> mask)
 {
     return _mm256_blendv_epi8(off, on, mask);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline uint64<8> i_blend(uint64<8> on, uint64<8> off, uint64<8> mask)
+{
+    return _mm512_ternarylogic_epi64(on, off, mask, 0xe4);
 }
 #endif
 
@@ -385,6 +435,13 @@ inline uint64<4> i_blend(uint64<4> on, uint64<4> off, mask_int64<4> mask)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline uint64<8> i_blend(uint64<8> on, uint64<8> off, mask_int64<8> mask)
+{
+    return _mm512_mask_blend_epi64(mask, off, on);
+}
+#endif
+
 template<unsigned N>
 uint64<N> i_blend(uint64<N> on, uint64<N> off, mask_int64<N> mask)
 {
@@ -407,6 +464,13 @@ inline mask_int64<2> i_blend(mask_int64<2> on, mask_int64<2> off, mask_int64<2> 
 inline mask_int64<4> i_blend(mask_int64<4> on, mask_int64<4> off, mask_int64<4> mask)
 {
     return mask_int64<4>(i_blend(uint64<4>(on), uint64<4>(off), uint64<4>(mask)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_int64<8> i_blend(mask_int64<8> on, mask_int64<8> off, mask_int64<8> mask)
+{
+    return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
 }
 #endif
 
@@ -441,6 +505,13 @@ inline float64<4> i_blend(float64<4> on, float64<4> off, float64<4> mask)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float64<8> i_blend(float64<8> on, float64<8> off, float64<8> mask)
+{
+    return (float64<8>) i_blend(uint64<8>(on), uint64<8>(off), uint64<8>(mask));
+}
+#endif
+
 template<unsigned N>
 float64<N> i_blend(float64<N> on, float64<N> off, float64<N> mask)
 {
@@ -466,6 +537,13 @@ inline float64<4> i_blend(float64<4> on, float64<4> off, mask_float64<4> mask)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float64<8> i_blend(float64<8> on, float64<8> off, mask_float64<8> mask)
+{
+    return _mm512_mask_blend_pd(mask, off, on);
+}
+#endif
+
 template<unsigned N>
 float64<N> i_blend(float64<N> on, float64<N> off, mask_float64<N> mask)
 {
@@ -488,6 +566,13 @@ inline mask_float64<2> i_blend(mask_float64<2> on, mask_float64<2> off, mask_flo
 inline mask_float64<4> i_blend(mask_float64<4> on, mask_float64<4> off, mask_float64<4> mask)
 {
     return mask_float64<4>(i_blend(float64<4>(on), float64<4>(off), float64<4>(mask)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline mask_float64<8> i_blend(mask_float64<8> on, mask_float64<8> off, mask_float64<8> mask)
+{
+    return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
 }
 #endif
 

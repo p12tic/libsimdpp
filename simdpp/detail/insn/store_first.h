@@ -123,6 +123,13 @@ inline void i_store_first(char* p, uint32x8 a, unsigned n)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_store_first(char* p, uint32<16> a, unsigned n)
+{
+    _mm512_mask_store_epi32(p, 0xffff >> (16-n), a);
+}
+#endif
+
 template<unsigned N>
 void i_store_first(char* p, uint32<N> a, unsigned n)
 {
@@ -158,6 +165,13 @@ inline void i_store_first(char* p, uint64x4 a, unsigned n)
     static const int64_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     uint64<4> mask = load_u(mask_d + 4-n);
     _mm256_maskstore_epi64(reinterpret_cast<long long*>(p), mask, a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_store_first(char* p, uint64<8> a, unsigned n)
+{
+    _mm512_mask_store_epi64(p, 0xff >> (8-n), a);
 }
 #endif
 
@@ -212,6 +226,13 @@ inline void i_store_first(char* p, float32x8 a, unsigned n)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline void i_store_first(char* p, float32<16> a, unsigned n)
+{
+    _mm512_mask_store_ps(p, 0xffff >> (16-n), a);
+}
+#endif
+
 template<unsigned N>
 void i_store_first(char* p, float32<N> a, unsigned n)
 {
@@ -245,6 +266,13 @@ inline void i_store_first(char* p, float64x4 a, unsigned n)
     a = blend(a, old, mask);
     store(v, a);
 #endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512
+inline void i_store_first(char* p, float64<8> a, unsigned n)
+{
+    _mm512_mask_store_pd(p, 0xff >> (8-n), a);
 }
 #endif
 

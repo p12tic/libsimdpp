@@ -73,6 +73,20 @@ inline float32x8 i_rcp_rh(float32x8 x, float32x8 a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+inline float32<16> i_rcp_rh(float32<16> x, float32<16> a)
+{
+    float32<16> c2, r;
+    c2 = make_float(2.0f);
+
+    r = mul(a, x);
+    r = sub(c2, r);
+    x = mul(x, r);
+
+    return x;
+}
+#endif
+
 template<unsigned N>
 float32<N> i_rcp_rh(float32<N> x, float32<N> a)
 {
