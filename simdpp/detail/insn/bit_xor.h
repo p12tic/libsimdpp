@@ -51,33 +51,9 @@ inline uint8<N> i_bit_xor(uint8<N> a, uint8<N> b)
 }
 
 template<unsigned N>
-uint8<N> i_bit_xor(uint8<N> a, uint16<N/2> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-uint8<N> i_bit_xor(uint8<N> a, uint32<N/4> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-uint8<N> i_bit_xor(uint8<N> a, uint64<N/8> b) { return i_bit_xor(uint8<N>(a), uint8<N>(b)); }
-template<unsigned N>
-uint16<N> i_bit_xor(uint16<N> a, uint8<N*2> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
 uint16<N> i_bit_xor(uint16<N> a, uint16<N> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
 template<unsigned N>
-uint16<N> i_bit_xor(uint16<N> a, uint32<N/2> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-uint16<N> i_bit_xor(uint16<N> a, uint64<N/4> b) { return (uint16<N>) i_bit_xor(uint8<N*2>(a), uint8<N*2>(b)); }
-template<unsigned N>
-uint32<N> i_bit_xor(uint32<N> a, uint8<N*4> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-uint32<N> i_bit_xor(uint32<N> a, uint16<N/2> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
 uint32<N> i_bit_xor(uint32<N> a, uint32<N> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-uint32<N> i_bit_xor(uint32<N> a, uint64<N*2> b) { return (uint32<N>) i_bit_xor(uint8<N*4>(a), uint8<N*4>(b)); }
-template<unsigned N>
-uint64<N> i_bit_xor(uint64<N> a, uint8<N*8> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-uint64<N> i_bit_xor(uint64<N> a, uint16<N/4> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
-template<unsigned N>
-uint64<N> i_bit_xor(uint64<N> a, uint32<N/2> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
 template<unsigned N>
 uint64<N> i_bit_xor(uint64<N> a, uint64<N> b) { return (uint64<N>) i_bit_xor(uint8<N*8>(a), uint8<N*8>(b)); }
 

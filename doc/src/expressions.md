@@ -52,7 +52,7 @@ bit_and, bit_andnot:
         * float64, mask_float64
         * mask_float64, mask_float64
 
-bit_or:
+bit_or, bit_xor:
     - `expr_bit_or<V1,V2>`, where V1,V2 is one of:
         * mask_int8, mask_int8
         * uint8, uint8
@@ -67,7 +67,6 @@ bit_or:
         * mask_float64, mask_float64
         * float64, float64
 
-bit_xor (TODO, not implemented yet)
 bit_not (TODO, not implemented yet)
 
 blend
