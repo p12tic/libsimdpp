@@ -5,21 +5,21 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_TEST_TEST_CASE_H
-#define LIBSIMDPP_TEST_TEST_CASE_H
+#ifndef LIBSIMDPP_TEST_TEST_SUITE_H
+#define LIBSIMDPP_TEST_TEST_SUITE_H
 
 #include <vector>
 #include <cstring>
 #include <iosfwd>
 #include <cstdint>
 
-class TestCase;
+class TestSuite;
 
-bool test_equal(const TestCase& a, const char* a_arch,
-                const TestCase& b, const char* b_arch,
+bool test_equal(const TestSuite& a, const char* a_arch,
+                const TestSuite& b, const char* b_arch,
                 std::ostream& err);
 
-class TestCase {
+class TestSuite {
 public:
 
     // Types of vector elements
@@ -92,11 +92,11 @@ public:
 
 private:
     friend class TestResults;
-    friend bool test_equal(const TestCase& a, const char* a_arch,
-                           const TestCase& b, const char* b_arch,
+    friend bool test_equal(const TestSuite& a, const char* a_arch,
+                           const TestSuite& b, const char* b_arch,
                            std::ostream& err);
 
-    TestCase(const char* name, const char* file);
+    TestSuite(const char* name, const char* file);
 
     static std::size_t size_for_type(Type t);
     static unsigned precision_for_result(const Result& res);

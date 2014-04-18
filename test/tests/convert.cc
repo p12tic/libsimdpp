@@ -13,7 +13,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 void test_convert(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "convert");
+    TestSuite& tc = NEW_TEST_SUITE(res, "convert");
 
     using namespace simdpp;
 

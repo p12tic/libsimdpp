@@ -13,7 +13,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<unsigned B>
-void test_transpose_n(TestCase& tc)
+void test_transpose_n(TestSuite& tc)
 {
     using namespace simdpp;
     Vectors<B,8> v;
@@ -63,7 +63,7 @@ void test_transpose_n(TestCase& tc)
 
 void test_transpose(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "transpose");
+    TestSuite& tc = NEW_TEST_SUITE(res, "transpose");
     test_transpose_n<16>(tc);
     test_transpose_n<32>(tc);
 }

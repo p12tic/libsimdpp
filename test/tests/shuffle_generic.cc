@@ -15,7 +15,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned i>
 struct Test_permute2 {
     static const unsigned limit = 4;
-    static void test(TestCase& tc, V a)
+    static void test(TestSuite& tc, V a)
     {
         const unsigned s0 = i / 2 % 2;
         const unsigned s1 = i % 2;
@@ -28,7 +28,7 @@ struct Test_permute2 {
 template<class V, unsigned i>
 struct Test_permute4 {
     static const unsigned limit = 256;
-    static void test(TestCase& tc, V a)
+    static void test(TestSuite& tc, V a)
     {
         const unsigned s0 = i / 64 % 4;
         const unsigned s1 = i / 16 % 4;
@@ -43,7 +43,7 @@ struct Test_permute4 {
 template<class V, unsigned i>
 struct Test_shuffle21 {
     static const unsigned limit = 4;
-    static void test(TestCase& tc, V a, V b)
+    static void test(TestSuite& tc, V a, V b)
     {
         const unsigned s0 = i / 2 % 2;
         const unsigned s1 = i % 2;
@@ -56,7 +56,7 @@ struct Test_shuffle21 {
 template<class V, unsigned i>
 struct Test_shuffle42 {
     static const unsigned limit = 256;
-    static void test(TestCase& tc, V a, V b)
+    static void test(TestSuite& tc, V a, V b)
     {
         const unsigned s0 = i / 64 % 4;
         const unsigned s1 = i / 16 % 4;
@@ -69,7 +69,7 @@ struct Test_shuffle42 {
 };
 
 template<unsigned B>
-void test_shuffle_generic_n(TestCase& tc)
+void test_shuffle_generic_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -102,7 +102,7 @@ void test_shuffle_generic_n(TestCase& tc)
 
 void test_shuffle_generic(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "shuffle_generic");
+    TestSuite& tc = NEW_TEST_SUITE(res, "shuffle_generic");
 
     test_shuffle_generic_n<16>(tc);
     test_shuffle_generic_n<32>(tc);

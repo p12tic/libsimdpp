@@ -13,7 +13,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 template<unsigned B>
-void test_math_fp_n(TestCase& tc)
+void test_math_fp_n(TestSuite& tc)
 {
     // TODO sqrt_e sqrt_rh rcp_e rcp_rh
 
@@ -119,7 +119,7 @@ void test_math_fp_n(TestCase& tc)
 
 void test_math_fp(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "math_fp");
+    TestSuite& tc = NEW_TEST_SUITE(res, "math_fp");
     test_math_fp_n<16>(tc);
     test_math_fp_n<32>(tc);
 }

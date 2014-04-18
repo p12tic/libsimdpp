@@ -13,7 +13,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned vnum>
-void test_load_helper(TestCase& tc, void* sv_p)
+void test_load_helper(TestSuite& tc, void* sv_p)
 {
     using E = typename V::element_type;
     auto sdata = reinterpret_cast<E*>(sv_p);
@@ -76,7 +76,7 @@ void test_load_helper(TestCase& tc, void* sv_p)
 }
 
 template<unsigned B>
-void test_memory_load_n(TestCase& tc)
+void test_memory_load_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -94,7 +94,7 @@ void test_memory_load_n(TestCase& tc)
 
 void test_memory_load(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "memory_load");
+    TestSuite& tc = NEW_TEST_SUITE(res, "memory_load");
 
     test_memory_load_n<16>(tc);
     test_memory_load_n<32>(tc);

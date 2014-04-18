@@ -14,7 +14,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned vnum>
-void test_store_helper(TestCase& tc, V* sv)
+void test_store_helper(TestSuite& tc, V* sv)
 {
     using E = typename V::element_type;
 
@@ -70,7 +70,7 @@ void test_store_helper(TestCase& tc, V* sv)
 }
 
 template<unsigned B>
-void test_memory_store_n(TestCase& tc)
+void test_memory_store_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -88,7 +88,7 @@ void test_memory_store_n(TestCase& tc)
 
 void test_memory_store(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "memory_store");
+    TestSuite& tc = NEW_TEST_SUITE(res, "memory_store");
 
     test_memory_store_n<16>(tc);
     test_memory_store_n<32>(tc);

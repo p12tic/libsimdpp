@@ -5,7 +5,7 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include "test_case.h"
+#include "test_suite.h"
 #include <cmath>
 #include <iomanip>
 #include <iostream>
@@ -14,7 +14,7 @@
 #include <typeinfo>
 #include <cstdlib>
 
-TestCase::TestCase(const char* name, const char* file) :
+TestSuite::TestSuite(const char* name, const char* file) :
     name_(name),
     file_(file),
     curr_precision_ulp_(0)
@@ -22,14 +22,14 @@ TestCase::TestCase(const char* name, const char* file) :
     reset_seq();
 }
 
-TestCase::Result& TestCase::push(Type type, unsigned length, unsigned line)
+TestSuite::Result& TestSuite::push(Type type, unsigned length, unsigned line)
 {
     results_.emplace_back(type, length, size_for_type(type), line, seq_++,
                           curr_precision_ulp_);
     return results_.back();
 }
 
-std::size_t TestCase::size_for_type(Type t)
+std::size_t TestSuite::size_for_type(Type t)
 {
     switch (t) {
     case TYPE_INT8:
@@ -46,11 +46,11 @@ std::size_t TestCase::size_for_type(Type t)
     }
 }
 
-unsigned TestCase::precision_for_result(const Result& res)
+unsigned TestSuite::precision_for_result(const Result& res)
 {
     switch (res.type) {
-    case TestCase::TYPE_FLOAT32:
-    case TestCase::TYPE_FLOAT64:
+    case TestSuite::TYPE_FLOAT32:
+    case TestSuite::TYPE_FLOAT64:
         return res.prec_ulp;
     default:
         return 0;
@@ -132,8 +132,8 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems, unsigned prec)
     return true;
 }
 
-bool test_equal(const TestCase& a, const char* a_arch,
-                const TestCase& b, const char* b_arch,
+bool test_equal(const TestSuite& a, const char* a_arch,
+                const TestSuite& b, const char* b_arch,
                 std::ostream& err)
 
 {
@@ -173,74 +173,74 @@ bool test_equal(const TestCase& a, const char* a_arch,
     auto type_str = [&](unsigned type) -> const char*
     {
         switch (type) {
-        case TestCase::TYPE_UINT8: return "uint86";
-        case TestCase::TYPE_INT8: return "int86";
-        case TestCase::TYPE_UINT16: return "uint16";
-        case TestCase::TYPE_INT16: return "int16";
-        case TestCase::TYPE_UINT32: return "uint32";
-        case TestCase::TYPE_INT32: return "int32";
-        case TestCase::TYPE_UINT64: return "uint64";
-        case TestCase::TYPE_INT64: return "int64";
-        case TestCase::TYPE_FLOAT32: return "float32";
-        case TestCase::TYPE_FLOAT64: return "float64";
+        case TestSuite::TYPE_UINT8: return "uint86";
+        case TestSuite::TYPE_INT8: return "int86";
+        case TestSuite::TYPE_UINT16: return "uint16";
+        case TestSuite::TYPE_INT16: return "int16";
+        case TestSuite::TYPE_UINT32: return "uint32";
+        case TestSuite::TYPE_INT32: return "int32";
+        case TestSuite::TYPE_UINT64: return "uint64";
+        case TestSuite::TYPE_INT64: return "int64";
+        case TestSuite::TYPE_FLOAT32: return "float32";
+        case TestSuite::TYPE_FLOAT64: return "float64";
         default: return "UNDEFINED";
         }
     };
 
-    auto fmt_vector = [&](const TestCase::Result& r, const char* prefix) -> void
+    auto fmt_vector = [&](const TestSuite::Result& r, const char* prefix) -> void
     {
         if (r.length == 1) {
             switch (r.type) {
-            case TestCase::TYPE_INT8:   fmt_bin(err, r.length, prefix, (const int8_t*)r.d());
-            case TestCase::TYPE_UINT8:  fmt_bin(err, r.length, prefix, (const uint8_t*)r.d());
-            case TestCase::TYPE_INT16:  fmt_bin(err, r.length, prefix, (const int16_t*)r.d());
-            case TestCase::TYPE_UINT16: fmt_bin(err, r.length, prefix, (const uint16_t*)r.d());
-            case TestCase::TYPE_INT32:  fmt_bin(err, r.length, prefix, (const int32_t*)r.d());
-            case TestCase::TYPE_UINT32: fmt_bin(err, r.length, prefix, (const uint32_t*)r.d());
-            case TestCase::TYPE_INT64:  fmt_bin(err, r.length, prefix, (const int64_t*)r.d());
-            case TestCase::TYPE_UINT64: fmt_bin(err, r.length, prefix, (const uint64_t*)r.d());
-            case TestCase::TYPE_FLOAT32: fmt_bin(err, r.length, prefix, (const float*)r.d());
-            case TestCase::TYPE_FLOAT64:  fmt_bin(err, r.length, prefix, (const double*)r.d());
+            case TestSuite::TYPE_INT8:   fmt_bin(err, r.length, prefix, (const int8_t*)r.d());
+            case TestSuite::TYPE_UINT8:  fmt_bin(err, r.length, prefix, (const uint8_t*)r.d());
+            case TestSuite::TYPE_INT16:  fmt_bin(err, r.length, prefix, (const int16_t*)r.d());
+            case TestSuite::TYPE_UINT16: fmt_bin(err, r.length, prefix, (const uint16_t*)r.d());
+            case TestSuite::TYPE_INT32:  fmt_bin(err, r.length, prefix, (const int32_t*)r.d());
+            case TestSuite::TYPE_UINT32: fmt_bin(err, r.length, prefix, (const uint32_t*)r.d());
+            case TestSuite::TYPE_INT64:  fmt_bin(err, r.length, prefix, (const int64_t*)r.d());
+            case TestSuite::TYPE_UINT64: fmt_bin(err, r.length, prefix, (const uint64_t*)r.d());
+            case TestSuite::TYPE_FLOAT32: fmt_bin(err, r.length, prefix, (const float*)r.d());
+            case TestSuite::TYPE_FLOAT64:  fmt_bin(err, r.length, prefix, (const double*)r.d());
             }
         } else {
             switch (r.type) {
-            case TestCase::TYPE_UINT8:
+            case TestSuite::TYPE_UINT8:
                 fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
                 fmt_num(err, r.length, 4, prefix, (const int8_t*)r.d());
                 break;
-            case TestCase::TYPE_INT8:
+            case TestSuite::TYPE_INT8:
                 fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
                 fmt_num(err, r.length, 4, prefix, (const uint8_t*)r.d());
                 break;
-            case TestCase::TYPE_UINT16:
+            case TestSuite::TYPE_UINT16:
                 fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
                 fmt_num(err, r.length, 6, prefix, (const int16_t*)r.d());
                 break;
-            case TestCase::TYPE_INT16:
+            case TestSuite::TYPE_INT16:
                 fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
                 fmt_num(err, r.length, 6, prefix, (const uint16_t*)r.d());
                 break;
-            case TestCase::TYPE_UINT32:
+            case TestSuite::TYPE_UINT32:
                 fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
                 fmt_num(err, r.length, 11, prefix, (const int32_t*)r.d());
                 break;
-            case TestCase::TYPE_INT32:
+            case TestSuite::TYPE_INT32:
                 fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
                 fmt_num(err, r.length, 11, prefix, (const uint32_t*)r.d());
                 break;
-            case TestCase::TYPE_UINT64:
+            case TestSuite::TYPE_UINT64:
                 fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
                 fmt_num(err, r.length, 20, prefix, (const int64_t*)r.d());
                 break;
-            case TestCase::TYPE_INT64:
+            case TestSuite::TYPE_INT64:
                 fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
                 fmt_num(err, r.length, 20, prefix, (const uint64_t*)r.d());
                 break;
-            case TestCase::TYPE_FLOAT32:
+            case TestSuite::TYPE_FLOAT32:
                 fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
                 fmt_num(err, r.length, 7, prefix, (const float*)r.d());
                 break;
-            case TestCase::TYPE_FLOAT64:
+            case TestSuite::TYPE_FLOAT64:
                 fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
                 fmt_num(err, r.length, 17, prefix, (const double*)r.d());
                 break;
@@ -248,10 +248,10 @@ bool test_equal(const TestCase& a, const char* a_arch,
         }
     };
 
-    auto cmpeq_result = [](const TestCase::Result& ia, const TestCase::Result& ib,
+    auto cmpeq_result = [](const TestSuite::Result& ia, const TestSuite::Result& ib,
                            unsigned prec) -> bool
     {
-        if (std::memcmp(ia.d(), ib.d(), TestCase::size_for_type(ia.type)) == 0) {
+        if (std::memcmp(ia.d(), ib.d(), TestSuite::size_for_type(ia.type)) == 0) {
             return true;
         }
 
@@ -260,9 +260,9 @@ bool test_equal(const TestCase& a, const char* a_arch,
         }
 
         switch (ia.type) {
-        case TestCase::TYPE_FLOAT32:
+        case TestSuite::TYPE_FLOAT32:
             return cmpeq_arrays((const float*)ia.d(), (const float*)ib.d(), ia.length, prec);
-        case TestCase::TYPE_FLOAT64:
+        case TestSuite::TYPE_FLOAT64:
             return cmpeq_arrays((const double*)ia.d(), (const double*)ib.d(), ia.length, prec);
         default:
             return false;
@@ -318,8 +318,8 @@ bool test_equal(const TestCase& a, const char* a_arch,
             return false;
         }
 
-        unsigned prec = std::max(TestCase::precision_for_result(ia),
-                                 TestCase::precision_for_result(ib));
+        unsigned prec = std::max(TestSuite::precision_for_result(ia),
+                                 TestSuite::precision_for_result(ib));
 
         if (!cmpeq_result(ia, ib, prec)) {
             fmt_separator();

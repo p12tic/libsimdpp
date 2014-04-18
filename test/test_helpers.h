@@ -10,22 +10,22 @@
 
 #include <simdpp/simd.h>
 #include <simdpp/detail/align_v128.h>
-#include "test_case.h"
+#include "test_suite.h"
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/*  A bunch of overloads that wrap the TestCase::push() method. The push()
+/*  A bunch of overloads that wrap the TestSuite::push() method. The push()
     method accepts a type enum plus a pointer; the wrapper overloads determine
     the type enum from the type of the supplied argument.
     @{
 */
-inline void test_push_internal(TestCase& t, std::uint16_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, std::uint16_t data, unsigned line)
 {
-    t.push(TestCase::TYPE_UINT16, 1, line).set(0, &data);
+    t.push(TestSuite::TYPE_UINT16, 1, line).set(0, &data);
 }
 
 template<class V>
-void test_push_internal_vec(TestCase::Result& res, const V& data)
+void test_push_internal_vec(TestSuite::Result& res, const V& data)
 {
     for (unsigned i = 0; i < data.vec_length; ++i) {
         using Base = typename V::base_vector_type;
@@ -37,60 +37,60 @@ void test_push_internal_vec(TestCase::Result& res, const V& data)
 }
 
 template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::int8<N> data, unsigned line)
+void test_push_internal(TestSuite& t, simdpp::int8<N> data, unsigned line)
 {
-    test_push_internal_vec(t.push(TestCase::TYPE_INT8, N, line), data);
+    test_push_internal_vec(t.push(TestSuite::TYPE_INT8, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::uint8<N> data, unsigned line)
+void test_push_internal(TestSuite& t, simdpp::uint8<N> data, unsigned line)
 {
-    test_push_internal_vec(t.push(TestCase::TYPE_UINT8, N, line), data);
+    test_push_internal_vec(t.push(TestSuite::TYPE_UINT8, N, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::int16<N> data, unsigned line)
+void test_push_internal(TestSuite& t, simdpp::int16<N> data, unsigned line)
 {
-    test_push_internal_vec(t.push(TestCase::TYPE_INT16, N, line), data);
-}
-
-template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::uint16<N> data, unsigned line)
-{
-    test_push_internal_vec(t.push(TestCase::TYPE_UINT16, N, line), data);
-}
-template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::int32<N> data, unsigned line)
-{
-    test_push_internal_vec(t.push(TestCase::TYPE_INT32, N, line), data);
+    test_push_internal_vec(t.push(TestSuite::TYPE_INT16, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::uint32<N> data, unsigned line)
+void test_push_internal(TestSuite& t, simdpp::uint16<N> data, unsigned line)
 {
-    test_push_internal_vec(t.push(TestCase::TYPE_UINT32, N, line), data);
+    test_push_internal_vec(t.push(TestSuite::TYPE_UINT16, N, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::int64<N> data, unsigned line)
+void test_push_internal(TestSuite& t, simdpp::int32<N> data, unsigned line)
 {
-    test_push_internal_vec(t.push(TestCase::TYPE_INT64, N, line), data);
-}
-
-template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::uint64<N> data, unsigned line)
-{
-    test_push_internal_vec(t.push(TestCase::TYPE_UINT64, N, line), data);
+    test_push_internal_vec(t.push(TestSuite::TYPE_INT32, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::float32<N> data, unsigned line)
+void test_push_internal(TestSuite& t, simdpp::uint32<N> data, unsigned line)
 {
-    test_push_internal_vec(t.push(TestCase::TYPE_FLOAT32, N, line), data);
+    test_push_internal_vec(t.push(TestSuite::TYPE_UINT32, N, line), data);
+}
+template<unsigned N>
+void test_push_internal(TestSuite& t, simdpp::int64<N> data, unsigned line)
+{
+    test_push_internal_vec(t.push(TestSuite::TYPE_INT64, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
+void test_push_internal(TestSuite& t, simdpp::uint64<N> data, unsigned line)
 {
-    test_push_internal_vec(t.push(TestCase::TYPE_FLOAT64, N, line), data);
+    test_push_internal_vec(t.push(TestSuite::TYPE_UINT64, N, line), data);
+}
+
+template<unsigned N>
+void test_push_internal(TestSuite& t, simdpp::float32<N> data, unsigned line)
+{
+    test_push_internal_vec(t.push(TestSuite::TYPE_FLOAT32, N, line), data);
+}
+
+template<unsigned N>
+void test_push_internal(TestSuite& t, simdpp::float64<N> data, unsigned line)
+{
+    test_push_internal_vec(t.push(TestSuite::TYPE_FLOAT64, N, line), data);
 }
 // @}
 } // namespace SIMDPP_ARCH_NAMESPACE
@@ -108,7 +108,7 @@ void test_push_internal(TestCase& t, simdpp::float64<N> data, unsigned line)
 */
 #define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __LINE__); }
 
-#define NEW_TEST_CASE(R, NAME) ((R).new_test_case((NAME), __FILE__))
+#define NEW_TEST_SUITE(R, NAME) ((R).new_test_suite((NAME), __FILE__))
 
 #define TEST_ARRAY_PUSH(TC, T, A)                                       \
 {                                                                       \
@@ -238,14 +238,14 @@ struct TemplateTestHelperImpl;
 template<template<class, unsigned> class F, class V, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl<F, V, false, i, limit> {
 
-    static void run(TestCase& tc, V a)
+    static void run(TestSuite& tc, V a)
     {
         F<V, i>::test(tc, a);
         const bool is_large = i + 30 < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a);
     }
 
-    static void run(TestCase& tc, V a, V b)
+    static void run(TestSuite& tc, V a, V b)
     {
         F<V, i>::test(tc, a, b);
         const bool is_large = i + 30 < limit;
@@ -256,7 +256,7 @@ struct TemplateTestHelperImpl<F, V, false, i, limit> {
 template<template<class, unsigned> class F, class V, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl<F, V, true, i, limit> {
 
-    static void run(TestCase& tc, V a)
+    static void run(TestSuite& tc, V a)
     {
         F<V, i>::test(tc, a);
         F<V, i+1>::test(tc, a);
@@ -293,7 +293,7 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a);
     }
 
-    static void run(TestCase& tc, V a, V b)
+    static void run(TestSuite& tc, V a, V b)
     {
         F<V, i>::test(tc, a, b);
         F<V, i+1>::test(tc, a, b);
@@ -333,19 +333,19 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
 
 template<template<class, unsigned> class F, class V, unsigned i>
 struct TemplateTestHelperImpl<F, V, true, i, i> {
-    static void run(TestCase, V) {}
-    static void run(TestCase, V, V) {}
+    static void run(TestSuite, V) {}
+    static void run(TestSuite, V, V) {}
 };
 
 template<template<class, unsigned> class F, class V, unsigned i>
 struct TemplateTestHelperImpl<F, V, false, i, i> {
-    static void run(TestCase, V) {}
-    static void run(TestCase, V, V) {}
+    static void run(TestSuite, V) {}
+    static void run(TestSuite, V, V) {}
 };
 
 template<template<class, unsigned> class F, class V>
 struct TemplateTestHelper {
-    static void run(TestCase& tc, V a)
+    static void run(TestSuite& tc, V a)
     {
         const unsigned limit = F<V,0>::limit;
 
@@ -353,7 +353,7 @@ struct TemplateTestHelper {
         TemplateTestHelperImpl<F, V, false, 0, limit>::run(tc, a);
     }
 
-    static void run(TestCase& tc, V a, V b)
+    static void run(TestSuite& tc, V a, V b)
     {
         const unsigned limit = F<V,0>::limit;
 
@@ -364,7 +364,7 @@ struct TemplateTestHelper {
 
 template<template<class, unsigned> class F, class V>
 struct TemplateTestArrayHelper {
-    static void run(TestCase& tc, V* a, unsigned n)
+    static void run(TestSuite& tc, V* a, unsigned n)
     {
         const unsigned limit = F<V,0>::limit;
 
@@ -374,7 +374,7 @@ struct TemplateTestArrayHelper {
         }
     }
 
-    static void run(TestCase& tc, V* a, V* b, unsigned n)
+    static void run(TestSuite& tc, V* a, V* b, unsigned n)
     {
         const unsigned limit = F<V,0>::limit;
 

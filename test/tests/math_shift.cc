@@ -15,7 +15,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned i>
 struct Test_shift_l {
     static const unsigned limit = V::num_bits;
-    static void test(TestCase& tc, V a)
+    static void test(TestSuite& tc, V a)
     {
         V b = simdpp::shift_l<i>(a);
         V c = simdpp::shift_l(a, i);
@@ -27,7 +27,7 @@ struct Test_shift_l {
 template<class V, unsigned i>
 struct Test_shift_r {
     static const unsigned limit = V::num_bits;
-    static void test(TestCase& tc, V a)
+    static void test(TestSuite& tc, V a)
     {
         V b = simdpp::shift_r<i>(a);
         V c = simdpp::shift_r(a, i);
@@ -37,7 +37,7 @@ struct Test_shift_r {
 };
 
 template<unsigned B>
-void test_math_shift_n(TestCase& tc)
+void test_math_shift_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -73,7 +73,7 @@ void test_math_shift_n(TestCase& tc)
 
 void test_math_shift(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "math_shift");
+    TestSuite& tc = NEW_TEST_SUITE(res, "math_shift");
 
     test_math_shift_n<16>(tc);
     test_math_shift_n<32>(tc);

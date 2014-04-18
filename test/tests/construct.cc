@@ -13,7 +13,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<unsigned B>
-void test_construct_n(TestCase& tc)
+void test_construct_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -101,7 +101,7 @@ void test_construct_n(TestCase& tc)
 
 void test_construct(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "construct");
+    TestSuite& tc = NEW_TEST_SUITE(res, "construct");
     test_construct_n<16>(tc);
     test_construct_n<32>(tc);
 }

@@ -17,7 +17,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<unsigned N>
-void test_blend_n(TestCase& tc)
+void test_blend_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -121,7 +121,7 @@ void test_blend_n(TestCase& tc)
 
 void test_blend(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "blend");
+    TestSuite& tc = NEW_TEST_SUITE(res, "blend");
     test_blend_n<16>(tc);
     test_blend_n<32>(tc);
 }

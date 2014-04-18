@@ -20,7 +20,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 }
 
 template<unsigned B>
-void test_compare_n(TestCase& tc)
+void test_compare_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -160,7 +160,7 @@ void test_compare_n(TestCase& tc)
 
 void test_compare(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "compare");
+    TestSuite& tc = NEW_TEST_SUITE(res, "compare");
     test_compare_n<16>(tc);
     test_compare_n<32>(tc);
 }

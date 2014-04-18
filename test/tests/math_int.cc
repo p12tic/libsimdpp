@@ -12,7 +12,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<unsigned B>
-void test_math_int_n(TestCase& tc)
+void test_math_int_n(TestSuite& tc)
 {
     using namespace simdpp;
 
@@ -187,7 +187,7 @@ void test_math_int_n(TestCase& tc)
 
 void test_math_int(TestResults& res)
 {
-    TestCase& tc = NEW_TEST_CASE(res, "math_int");
+    TestSuite& tc = NEW_TEST_SUITE(res, "math_int");
     test_math_int_n<16>(tc);
     test_math_int_n<32>(tc);
 
