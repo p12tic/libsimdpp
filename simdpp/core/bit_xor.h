@@ -31,6 +31,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+_PROMOTED_EXPRESSION_ bit_xor(const any_vec<N,V1>& a,
+                              const any_vec<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 typename detail::get_expr2<V1, V2, void>::empty
     bit_xor(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
@@ -40,6 +45,7 @@ typename detail::get_expr2<V1, V2, void>::empty
     rb = b.vec().eval();
     return detail::insn::i_bit_xor(ra, rb);
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

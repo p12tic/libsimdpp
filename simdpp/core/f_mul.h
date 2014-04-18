@@ -32,6 +32,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+float32<N, _DETAIL_> mul(float32<N,E1> a,
+                         float32<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 float32<N, expr_mul<float32<N,E1>,
                     float32<N,E2>>> mul(float32<N,E1> a,
@@ -39,6 +44,7 @@ float32<N, expr_mul<float32<N,E1>,
 {
     return { { a, b }, 0 };
 }
+#endif
 
 /** Multiplies the values of two vectors
 
@@ -55,6 +61,11 @@ float32<N, expr_mul<float32<N,E1>,
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+float64<N, _DETAIL_> mul(float64<N,E1> a,
+                         float64<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 float64<N, expr_mul<float64<N,E1>,
                     float64<N,E2>>> mul(float64<N,E1> a,
@@ -62,6 +73,7 @@ float64<N, expr_mul<float64<N,E1>,
 {
     return { { a, b }, 0 };
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

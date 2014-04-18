@@ -41,6 +41,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ move16_l(const any_vec8<N,V>& a);
+#else
 template<unsigned shift, unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
         move16_l(const any_vec8<N,V>& a)
@@ -53,6 +57,7 @@ typename detail::get_expr_nomask<V, void>::empty
     ra = a.vec().eval();
     return detail::insn::i_move16_l<shift>(ra);
 }
+#endif
 
 /** Moves the 16-bit elements in a vector to the left by @a shift positions.
 
@@ -73,6 +78,10 @@ typename detail::get_expr_nomask<V, void>::empty
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ move8_l(const any_vec16<N,V>& a);
+#else
 template<unsigned shift, unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
         move8_l(const any_vec16<N,V>& a)
@@ -85,6 +94,7 @@ typename detail::get_expr_nomask<V, void>::empty
     ra = a.vec().eval();
     return detail::insn::i_move8_l<shift>(ra);
 }
+#endif
 
 
 /** Moves the 32-bit elements in a vector to the left by @a shift positions.
@@ -104,6 +114,10 @@ typename detail::get_expr_nomask<V, void>::empty
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ move4_l(const any_vec32<N,V>& a);
+#else
 template<unsigned shift, unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
         move4_l(const any_vec32<N,V>& a)
@@ -116,6 +130,7 @@ typename detail::get_expr_nomask<V, void>::empty
     ra = a.vec().eval();
     return detail::insn::i_move4_l<shift>(ra);
 }
+#endif
 
 
 /** Moves the 64-bit elements in a vector to the left by @a shift positions.
@@ -133,6 +148,10 @@ typename detail::get_expr_nomask<V, void>::empty
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ move2_l(const any_vec64<N,V>& a);
+#else
 template<unsigned shift, unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
         move2_l(const any_vec64<N,V>& a)
@@ -145,6 +164,7 @@ typename detail::get_expr_nomask<V, void>::empty
     ra = a.vec().eval();
     return detail::insn::i_move2_l<shift>(ra);
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

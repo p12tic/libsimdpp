@@ -32,6 +32,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+int8<N, _DETAIL_> add_sat(int8<N,E1> a, int8<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 int8<N, expr_add_sat<int8<N,E1>,
                      int8<N,E2>>> add_sat(int8<N,E1> a,
@@ -39,6 +43,7 @@ int8<N, expr_add_sat<int8<N,E1>,
 {
     return { { a, b }, 0 };
 }
+#endif
 
 /** Adds and saturates signed 16-bit integer values.
 
@@ -51,6 +56,10 @@ int8<N, expr_add_sat<int8<N,E1>,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+int16<N, _DETAIL_> add_sat(int16<N,E1> a, int16<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 int16<N, expr_add_sat<int16<N,E1>,
                       int16<N,E2>>> add_sat(int16<N,E1> a,
@@ -58,6 +67,7 @@ int16<N, expr_add_sat<int16<N,E1>,
 {
     return { { a, b }, 0 };
 }
+#endif
 
 /** Adds and saturates unsigned 8-bit integer values.
 
@@ -70,6 +80,10 @@ int16<N, expr_add_sat<int16<N,E1>,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+uint8<N, _DETAIL_> add_sat(uint8<N,E1> a, uint8<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 uint8<N, expr_add_sat<uint8<N,E1>,
                       uint8<N,E2>>> add_sat(uint8<N,E1> a,
@@ -77,6 +91,7 @@ uint8<N, expr_add_sat<uint8<N,E1>,
 {
     return { { a, b }, 0 };
 }
+#endif
 
 /** Adds and saturates unsigned 16-bit integer values.
 
@@ -89,6 +104,10 @@ uint8<N, expr_add_sat<uint8<N,E1>,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+uint16<N, _DETAIL_> add_sat(uint16<N,E1> a, uint16<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 uint16<N, expr_add_sat<uint16<N,E1>,
                        uint16<N,E2>>> add_sat(uint16<N,E1> a,
@@ -96,6 +115,7 @@ uint16<N, expr_add_sat<uint16<N,E1>,
 {
     return { { a, b }, 0 };
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

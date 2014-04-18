@@ -69,12 +69,17 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, NEON, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+int32<N, _DETAIL_> mull(int16<N,E1> a, int16<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 int32<N, expr_mull<int16<N,E1>,
                    int16<N,E2>>> mull(int16<N,E1> a, int16<N,E2> b)
 {
     return { { a, b }, 0 };
 }
+#endif
 
 /** Multiplies unsigned 16-bit values and expands the results to 32 bits.
 
@@ -94,14 +99,18 @@ int32<N, expr_mull<int16<N,E1>,
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
-    @note Use with mull_hi on the same arguments to save instructions.
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+uint32<N, _DETAIL_> mull(uint16<N,E1> a, uint16<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 uint32<N, expr_mull<uint16<N,E1>,
                     uint16<N,E2>>> mull(uint16<N,E1> a, uint16<N,E2> b)
 {
     return { { a, b }, 0 };
 }
+#endif
 
 /** Multiplies signed 32-bit values in and expands the results to 64 bits.
 
@@ -123,12 +132,17 @@ uint32<N, expr_mull<uint16<N,E1>,
     @icost{NEON, 2}
     @unimp{SSE2-SSSE3, ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+int64<N, _DETAIL_> mull(int32<N,E1> a, int32<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 int64<N, expr_mull<int32<N,E1>,
                    int32<N,E2>>> mull(int32<N,E1> a, int32<N,E2> b)
 {
     return { { a, b }, 0 };
 }
+#endif
 
 /** Multiplies unsigned 32-bit values in the lower halves of the vectors and
     expands the results to 64 bits.
@@ -150,12 +164,17 @@ int64<N, expr_mull<int32<N,E1>,
     @icost{NEON, 2}
     @unimp{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+uint64<N, _DETAIL_> mull(uint32<N,E1> a, uint32<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 uint64<N, expr_mull<uint32<N,E1>,
                     uint32<N,E2>>> mull(uint32<N,E1> a, uint32<N,E2> b)
 {
     return { { a, b }, 0 };
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

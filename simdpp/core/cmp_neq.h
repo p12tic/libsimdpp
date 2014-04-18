@@ -38,6 +38,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+mask_int8<N, _DETAIL_> cmp_neq(const any_int8<N,V1>& a,
+                               const any_int8<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 mask_int8<N, mask_int8<N>> cmp_neq(const any_int8<N,V1>& a,
                                    const any_int8<N,V2>& b)
@@ -47,6 +52,7 @@ mask_int8<N, mask_int8<N>> cmp_neq(const any_int8<N,V1>& a,
     rb = b.vec().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
+#endif
 
 /** Compares the values of two int16x8 vectors for inequality
 
@@ -65,6 +71,11 @@ mask_int8<N, mask_int8<N>> cmp_neq(const any_int8<N,V1>& a,
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+mask_int16<N, _DETAIL_> cmp_neq(const any_int16<N,V1>& a,
+                                const any_int16<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 mask_int16<N, mask_int16<N>> cmp_neq(const any_int16<N,V1>& a,
                                      const any_int16<N,V2>& b)
@@ -74,6 +85,7 @@ mask_int16<N, mask_int16<N>> cmp_neq(const any_int16<N,V1>& a,
     rb = b.vec().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
+#endif
 
 /** Compares the values of two int32x4 vectors for inequality
 
@@ -92,6 +104,12 @@ mask_int16<N, mask_int16<N>> cmp_neq(const any_int16<N,V1>& a,
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
+#if SIMDPP_DOXYGEN
+ template<unsigned N, class V1, class V2>
+ mask_int32<N, _DETAIL_> cmp_neq(const any_int32<N,V1>& a,
+                                 const any_int32<N,V2>& b);
+
+#else
 template<unsigned N, class V1, class V2>
 mask_int32<N, mask_int32<N>> cmp_neq(const any_int32<N,V1>& a,
                                      const any_int32<N,V2>& b)
@@ -101,6 +119,7 @@ mask_int32<N, mask_int32<N>> cmp_neq(const any_int32<N,V1>& a,
     rb = b.vec().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
+#endif
 
 /** Compares the values of two int64x2 vectors for inequality
 
@@ -124,6 +143,11 @@ mask_int32<N, mask_int32<N>> cmp_neq(const any_int32<N,V1>& a,
     @icost{NEON, 8}
     @icost{ALTIVEC, 6-8}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+mask_int64<N, _DETAIL_> cmp_neq(const any_int64<N,V1>& a,
+                                const any_int64<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 mask_int64<N, mask_int64<N>> cmp_neq(const any_int64<N,V1>& a,
                                      const any_int64<N,V2>& b)
@@ -133,6 +157,7 @@ mask_int64<N, mask_int64<N>> cmp_neq(const any_int64<N,V1>& a,
     rb = b.vec().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
+#endif
 
 /** Compares the values of two float32x4 vectors for inequality
 
@@ -149,12 +174,18 @@ mask_int64<N, mask_int64<N>> cmp_neq(const any_int64<N,V1>& a,
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, ALTIVEC, 4}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+mask_float32<N, _DETAIL_> cmp_neq(const any_float32<N,V1>& a,
+                                  const any_float32<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 mask_float32<N, mask_float32<N>> cmp_neq(const any_float32<N,V1>& a,
                                          const any_float32<N,V2>& b)
 {
     return detail::insn::i_cmp_neq(a.vec().eval(), b.vec().eval());
 }
+#endif
 
 /** Compares the values of two float64x2 vectors for inequality
 
@@ -171,12 +202,18 @@ mask_float32<N, mask_float32<N>> cmp_neq(const any_float32<N,V1>& a,
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+mask_float64<N, _DETAIL_> cmp_neq(const any_float64<N,V1>& a,
+                                  const any_float64<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 mask_float64<N, mask_float64<N>> cmp_neq(const any_float64<N,V1>& a,
                                          const any_float64<N,V2>& b)
 {
     return detail::insn::i_cmp_neq(a.vec().eval(), b.vec().eval());
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

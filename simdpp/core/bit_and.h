@@ -23,8 +23,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-
-/// @{
 /** Computes bitwise AND of integer or floating-point vectors.
 
     @code
@@ -35,15 +33,21 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @todo: icost
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+_PROMOTED_EXPRESSION_ bit_and(const any_vec<N,V1>& a,
+                              const any_vec<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 typename detail::get_expr_bitwise2_and<expr_bit_and, V1, V2>::type
-    bit_and(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
+        bit_and(const any_vec<N,V1>& a,
+                const any_vec<N,V2>& b)
 {
     using expr = detail::get_expr_bitwise2_and<expr_bit_and, V1, V2>;
     return { { typename expr::v1_type(a.vec()),
                typename expr::v2_type(b.vec()) }, 0 };
 }
-
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

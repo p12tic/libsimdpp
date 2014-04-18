@@ -45,6 +45,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, 2-3}
     @icost{NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s, unsigned N, class E>
+int8<N, _DETAIL_> splat16(int8<N,E> a);
+
+template<unsigned s, unsigned N, class E>
+uint8<N, _DETAIL_> splat16(uint8<N,E> a);
+#else
 template<unsigned s, unsigned N, class E>
 int8<N, expr_splat16<s,int8<N,E>>> splat16(int8<N,E> a)
 {
@@ -58,6 +65,7 @@ uint8<N, expr_splat16<s,uint8<N,E>>> splat16(uint8<N,E> a)
     static_assert(s < 16, "Access out of bounds");
     return { { a }, 0 };
 }
+#endif
 /// @}
 
 /// @{
@@ -80,6 +88,13 @@ uint8<N, expr_splat16<s,uint8<N,E>>> splat16(uint8<N,E> a)
     @icost{SSSE3-AVX, 2-3}
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s, unsigned N, class E>
+int16<N, _DETAIL_> splat8(int16<N,E> a);
+
+template<unsigned s, unsigned N, class E>
+uint16<N, _DETAIL_> splat8(uint16<N,E> a);
+#else
 template<unsigned s, unsigned N, class E>
 int16<N, expr_splat8<s,int16<N,E>>> splat8(int16<N,E> a)
 {
@@ -93,6 +108,7 @@ uint16<N, expr_splat8<s,uint16<N,E>>> splat8(uint16<N,E> a)
     static_assert(s < 8, "Access out of bounds");
     return { { a }, 0 };
 }
+#endif
 /// @}
 
 /// @{
@@ -108,6 +124,13 @@ uint16<N, expr_splat8<s,uint16<N,E>>> splat8(uint16<N,E> a)
     @par 256-bit version:
     @icost{NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s, unsigned N, class E>
+int32<N, _DETAIL_> splat4(int32<N,E> a);
+
+template<unsigned s, unsigned N, class E>
+uint32<N, _DETAIL_> splat4(uint32<N,E> a);
+#else
 template<unsigned s, unsigned N, class E>
 int32<N, expr_splat4<s,int32<N,E>>> splat4(int32<N,E> a)
 {
@@ -121,6 +144,7 @@ uint32<N, expr_splat4<s,uint32<N,E>>> splat4(uint32<N,E> a)
     static_assert(s < 4, "Access out of bounds");
     return { { a }, 0 };
 }
+#endif
 /// @}
 
 /// @{
@@ -138,6 +162,13 @@ uint32<N, expr_splat4<s,uint32<N,E>>> splat4(uint32<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s, unsigned N, class E>
+int64<N, _DETAIL_> splat2(int64<N,E> a);
+
+template<unsigned s, unsigned N, class E>
+uint64<N, _DETAIL_> splat2(uint64<N,E> a);
+#else
 template<unsigned s, unsigned N, class E>
 int64<N, expr_splat2<s,int64<N,E>>> splat2(int64<N,E> a)
 {
@@ -151,6 +182,7 @@ uint64<N, expr_splat2<s,uint64<N,E>>> splat2(uint64<N,E> a)
     static_assert(s < 2, "Access out of bounds");
     return { { a }, 0 };
 }
+#endif
 /// @}
 
 /// @{
@@ -166,12 +198,17 @@ uint64<N, expr_splat2<s,uint64<N,E>>> splat2(uint64<N,E> a)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s, unsigned N, class E>
+float32<N, _DETAIL_> splat4(float32<N,E> a);
+#else
 template<unsigned s, unsigned N, class E>
 float32<N, expr_splat4<s,float32<N,E>>> splat4(float32<N,E> a)
 {
     static_assert(s < 4, "Access out of bounds");
     return { { a }, 0 };
 }
+#endif
 /// @}
 
 /// @{
@@ -189,12 +226,17 @@ float32<N, expr_splat4<s,float32<N,E>>> splat4(float32<N,E> a)
     @icost{SSE2-AVX, 2}
     @novec{NEON, ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s, unsigned N, class E>
+float64<N, _DETAIL_> splat2(float64<N,E> a);
+#else
 template<unsigned s, unsigned N, class E>
 float64<N, expr_splat2<s,float64<N,E>>> splat2(float64<N,E> a)
 {
     static_assert(s < 2, "Access out of bounds");
     return { { a }, 0 };
 }
+#endif
 /// @}
 
 #ifndef SIMDPP_DOXYGEN

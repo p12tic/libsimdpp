@@ -36,11 +36,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, ALTIVEC, NEON, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+float32<N, _DETAIL_> sign(float32<N,E> a);
+#else
 template<unsigned N, class E>
 float32<N, float32<N>> sign(float32<N,E> a)
 {
     return detail::insn::i_sign(a.eval());
 }
+#endif
 
 /** Extracts sigh bit from the values in float64x2 vector.
 
@@ -59,11 +64,16 @@ float32<N, float32<N>> sign(float32<N,E> a)
     @icost{AVX-AVX2, 1-2}
     @novec{NEON, ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+float64<N, _DETAIL_> abs(float64<N,E> a);
+#else
 template<unsigned N, class E>
 float64<N, float64<N>> sign(float64<N,E> a)
 {
     return detail::insn::i_sign(a.eval());
 }
+#endif
 
 
 #ifndef SIMDPP_DOXYGEN

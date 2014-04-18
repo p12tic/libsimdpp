@@ -41,6 +41,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int8<N, _DETAIL_> shift_l(int8<N,E> a, unsigned count);
+
+template<unsigned N, class E>
+uint8<N, _DETAIL_> shift_l(uint8<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int8<N, int8<N>> shift_l(int8<N,E> a, unsigned count)
 {
@@ -53,6 +60,7 @@ uint8<N, uint8<N>> shift_l(uint8<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+#endif
 /// @}
 
 /// @{
@@ -73,6 +81,13 @@ uint8<N, uint8<N>> shift_l(uint8<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int16<N, _DETAIL_> shift_l(int16<N,E> a, unsigned count);
+
+template<unsigned N, class E>
+uint16<N, _DETAIL_> shift_l(uint16<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int16<N, int16<N>> shift_l(int16<N,E> a, unsigned count)
 {
@@ -85,6 +100,7 @@ uint16<N, uint16<N>> shift_l(uint16<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+#endif
 /// @}
 
 /// @{
@@ -105,6 +121,13 @@ uint16<N, uint16<N>> shift_l(uint16<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int32<N, _DETAIL_> shift_l(int32<N,E> a, unsigned count);
+
+template<unsigned N, class E>
+uint32<N, _DETAIL_> shift_l(uint32<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int32<N, int32<N>> shift_l(int32<N,E> a, unsigned count)
 {
@@ -117,6 +140,7 @@ uint32<N, uint32<N>> shift_l(uint32<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+#endif
 /// @}
 
 /// @{
@@ -137,6 +161,13 @@ uint32<N, uint32<N>> shift_l(uint32<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @unimp{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int64<N, _DETAIL_> shift_l(int64<N,E> a, unsigned count);
+
+template<unsigned N, class E>
+uint64<N, _DETAIL_> shift_l(uint64<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int64<N, int64<N>> shift_l(int64<N,E> a, unsigned count)
 {
@@ -149,6 +180,7 @@ uint64<N, uint64<N>> shift_l(uint64<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+#endif
 /// @}
 
 /// @{
@@ -169,6 +201,13 @@ uint64<N, uint64<N>> shift_l(uint64<N,E> a, unsigned count)
     @icost{SSE2-AVX, 4-5}
     @icost{AVX2,NEON, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int8<N, _DETAIL_> shift_l(int8<N,E> a);
+
+template<unsigned count, unsigned N, class E>
+uint8<N, _DETAIL_> shift_l(uint8<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int8<N, int8<N>> shift_l(int8<N,E> a)
 {
@@ -188,6 +227,7 @@ uint8<N, uint8<N>> shift_l(uint8<N,E> a)
     if (count == 8) return uint8<N>::zero();
     return detail::insn::i_shift_l<count>(a.eval());
 }
+#endif
 /// @}
 
 /// @{
@@ -206,6 +246,13 @@ uint8<N, uint8<N>> shift_l(uint8<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int16<N, _DETAIL_> shift_l(int16<N,E> a);
+
+template<unsigned count, unsigned N, class E>
+uint16<N, _DETAIL_> shift_l(uint16<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int16<N, int16<N>> shift_l(int16<N,E> a)
 {
@@ -225,6 +272,7 @@ uint16<N, uint16<N>> shift_l(uint16<N,E> a)
     if (count == 16) return uint16<N>::zero();
     return detail::insn::i_shift_l<count>(a.eval());
 }
+#endif
 /// @}
 
 /// @{
@@ -243,6 +291,13 @@ uint16<N, uint16<N>> shift_l(uint16<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int32<N, _DETAIL_> shift_l(int32<N,E> a);
+
+template<unsigned count, unsigned N, class E>
+uint32<N, _DETAIL_> shift_l(uint32<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int32<N, int32<N>> shift_l(int32<N,E> a)
 {
@@ -262,6 +317,7 @@ uint32<N, uint32<N>> shift_l(uint32<N,E> a)
     if (count == 32) return uint32<N>::zero();
     return detail::insn::i_shift_l<count>(a.eval());
 }
+#endif
 /// @}
 
 /// @{
@@ -279,6 +335,13 @@ uint32<N, uint32<N>> shift_l(uint32<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @unimp{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int64<N, _DETAIL_> shift_l(int64<N,E> a);
+
+template<unsigned count, unsigned N, class E>
+uint64<N, _DETAIL_> shift_l(uint64<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int64<N, int64<N>> shift_l(int64<N,E> a)
 {
@@ -298,6 +361,7 @@ uint64<N, uint64<N>> shift_l(uint64<N,E> a)
     if (count == 64) return uint64<N>::zero();
     return detail::insn::i_shift_l<count>(a.eval());
 }
+#endif
 /// @}
 
 #ifndef SIMDPP_DOXYGEN

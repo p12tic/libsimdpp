@@ -22,7 +22,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-/// @{
 /** Computes bitwise OR of integer vectors.
 
     @code
@@ -33,6 +32,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @todo icost
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+_PROMOTED_EXPRESSION_ bit_or(const any_vec<N,V1>& a,
+                             const any_vec<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 typename detail::get_expr_bit_or<V1, V2>::type
         bit_or(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
@@ -41,9 +45,8 @@ typename detail::get_expr_bit_or<V1, V2>::type
     return { { typename expr::v12_type(a.vec()),
                typename expr::v12_type(b.vec()) }, 0 };
 }
+#endif
 
-/// @}
-///
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif

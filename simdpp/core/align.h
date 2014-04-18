@@ -44,6 +44,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ align16(const any_vec8<N,V1>& lower,
+                                     const any_vec8<N,V2>& upper);
+#else
 template<unsigned shift, unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2, void>::empty
     align16(const any_vec8<N,V1>& lower,
@@ -58,6 +63,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     qupper = upper.vec().eval();
     return detail::insn::i_align16<shift>(qlower, qupper);
 }
+#endif
 
 /** Extracts a int16x8 vector from two concatenated int16x8 vectors
 
@@ -80,8 +86,12 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
 
     The all 128-bit sub-vectors are processed as if 128-bit instruction
     was applied to each of them separately.
-
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ align8(const any_vec16<N,V1>& lower,
+                                    const any_vec16<N,V2>& upper);
+#else
 template<unsigned shift, unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2, void>::empty
     align8(const any_vec16<N,V1>& lower,
@@ -96,6 +106,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     qupper = upper.vec().eval();
     return detail::insn::i_align8<shift>(qlower, qupper);
 }
+#endif
 
 /** Extracts a int32x4 vector from two concatenated int32x4 vectors
 
@@ -132,6 +143,11 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ align4(const any_vec32<N,V1>& lower,
+                                    const any_vec32<N,V2>& upper);
+#else
 template<unsigned shift, unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2, void>::empty
     align4(const any_vec32<N,V1>& lower,
@@ -146,6 +162,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     qupper = upper.vec().eval();
     return detail::insn::i_align4<shift>(qlower, qupper);
 }
+#endif
 
 /** Extracts a int64x2 vector from two concatenated int64x2 vectors
 
@@ -180,6 +197,11 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     @icost{SSE2-SSE3, 6}
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned shift, unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ align2(const any_vec64<N,V1>& lower,
+                                    const any_vec64<N,V2>& upper);
+#else
 template<unsigned shift, unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2, void>::empty
     align2(const any_vec64<N,V1>& lower,
@@ -194,6 +216,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     qupper = upper.vec().eval();
     return detail::insn::i_align2<shift>(qlower, qupper);
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

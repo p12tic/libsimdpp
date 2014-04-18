@@ -40,13 +40,17 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int8<N, _DETAIL_> shift_r(int8<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int8<N, int8<N>> shift_r(int8<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
-/// @{
 /** Shifts unsigned 8-bit values right by @a count bits while shifting in zeros.
 
     @code
@@ -66,13 +70,17 @@ int8<N, int8<N>> shift_r(int8<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint8<N, _DETAIL_> shift_r(uint8<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 uint8<N, uint8<N>> shift_r(uint8<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
-/// @{
 /** Shifts signed 16-bit values right by @a count bits while shifting in the
     sign bit.
 
@@ -91,11 +99,16 @@ uint8<N, uint8<N>> shift_r(uint8<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int16<N, _DETAIL_> shift_r(int16<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int16<N, int16<N>> shift_r(int16<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
 /** Shifts unsigned 16-bit values right by @a count bits while shifting in
     zeros.
@@ -115,11 +128,16 @@ int16<N, int16<N>> shift_r(int16<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint16<N, _DETAIL_> shift_r(uint16<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 uint16<N, uint16<N>> shift_r(uint16<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
 /** Shifts signed 32-bit values right by @a count bits while shifting in the
     sign bit.
@@ -144,11 +162,16 @@ uint16<N, uint16<N>> shift_r(uint16<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int32<N, _DETAIL_> shift_r(int32<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int32<N, int32<N>> shift_r(int32<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
 /** Shifts unsigned 32-bit values right by @a count bits while shifting in
     zeros.
@@ -168,11 +191,16 @@ int32<N, int32<N>> shift_r(int32<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint32<N, _DETAIL_> shift_r(uint32<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 uint32<N, uint32<N>> shift_r(uint32<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
 /** Shifts signed 64-bit values right by @a count bits while shifting in the
     sign bit.
@@ -194,11 +222,16 @@ uint32<N, uint32<N>> shift_r(uint32<N,E> a, unsigned count)
     @icost{NEON, 3}
     @unimp{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+int64<N, _DETAIL_> shift_r(int64<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 int64<N, int64<N>> shift_r(int64<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
 /** Shifts unsigned 64-bit values right by @a count bits while shifting in
     zeros.
@@ -218,13 +251,17 @@ int64<N, int64<N>> shift_r(int64<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @unimp{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint64<N, _DETAIL_> shift_r(uint64<N,E> a, unsigned count);
+#else
 template<unsigned N, class E>
 uint64<N, uint64<N>> shift_r(uint64<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+#endif
 
-/// @{
 /** Shifts signed 8-bit values right by @a count bits while shifting in the
     sign bit.
 
@@ -244,6 +281,10 @@ uint64<N, uint64<N>> shift_r(uint64<N,E> a, unsigned count)
     @icost{NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int8<N, _DETAIL_> shift_r(int8<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int8<N, int8<N>> shift_r(int8<N,E> a)
 {
@@ -251,6 +292,7 @@ int8<N, int8<N>> shift_r(int8<N,E> a)
     if (count == 0) return a;
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 /** Shifts unsigned 8-bit values right by @a count bits while shifting in
     zeros.
@@ -271,6 +313,10 @@ int8<N, int8<N>> shift_r(int8<N,E> a)
     @icost{NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+uint8<N, _DETAIL_> shift_r(uint8<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 uint8<N, uint8<N>> shift_r(uint8<N,E> a)
 {
@@ -279,6 +325,7 @@ uint8<N, uint8<N>> shift_r(uint8<N,E> a)
     if (count == 8) return uint8<N>::zero();
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 /** Shifts signed 16-bit values right by @a count bits while shifting in the
     sign bit.
@@ -296,6 +343,10 @@ uint8<N, uint8<N>> shift_r(uint8<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int16<N, _DETAIL_> shift_r(int16<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int16<N, int16<N>> shift_r(int16<N,E> a)
 {
@@ -303,6 +354,7 @@ int16<N, int16<N>> shift_r(int16<N,E> a)
     if (count == 0) return a;
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 /** Shifts unsigned 16-bit values right by @a count bits while shifting in
     zeros.
@@ -320,6 +372,10 @@ int16<N, int16<N>> shift_r(int16<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+uint16<N, _DETAIL_> shift_r(uint16<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 uint16<N, uint16<N>> shift_r(uint16<N,E> a)
 {
@@ -328,6 +384,7 @@ uint16<N, uint16<N>> shift_r(uint16<N,E> a)
     if (count == 16) return uint16<N>::zero();
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 /** Shifts signed 32-bit values right by @a count bits while shifting in the
     sign bit.
@@ -345,6 +402,10 @@ uint16<N, uint16<N>> shift_r(uint16<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int32<N, _DETAIL_> shift_r(int32<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int32<N, int32<N>> shift_r(int32<N,E> a)
 {
@@ -352,6 +413,7 @@ int32<N, int32<N>> shift_r(int32<N,E> a)
     if (count == 0) return a;
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 /** Shifts unsigned 32-bit values right by @a count bits while shifting in
     zeros.
@@ -369,6 +431,10 @@ int32<N, int32<N>> shift_r(int32<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+uint32<N, _DETAIL_> shift_r(uint32<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 uint32<N, uint32<N>> shift_r(uint32<N,E> a)
 {
@@ -377,6 +443,7 @@ uint32<N, uint32<N>> shift_r(uint32<N,E> a)
     if (count == 32) return uint32<N>::zero();
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 /** Shifts signed 64-bit values right by @a count bits while shifting in the
     sign bit.
@@ -399,6 +466,10 @@ uint32<N, uint32<N>> shift_r(uint32<N,E> a)
     @icost{NEON, 2}
     @unimp{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+int64<N, _DETAIL_> shift_r(int64<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 int64<N, int64<N>> shift_r(int64<N,E> a)
 {
@@ -406,6 +477,7 @@ int64<N, int64<N>> shift_r(int64<N,E> a)
     if (count == 0) return a;
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 /** Shifts unsigned 64-bit values right by @a count bits while shifting in
     zeros.
@@ -422,6 +494,10 @@ int64<N, int64<N>> shift_r(int64<N,E> a)
     @icost{SSE2-AVX, NEON, 2}
     @unimp{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned count, unsigned N, class E>
+uint64<N, _DETAIL_> shift_r(uint64<N,E> a);
+#else
 template<unsigned count, unsigned N, class E>
 uint64<N, uint64<N>> shift_r(uint64<N,E> a)
 {
@@ -430,6 +506,7 @@ uint64<N, uint64<N>> shift_r(uint64<N,E> a)
     if (count == 64) return uint64<N>::zero();
     return detail::insn::i_shift_r<count>(a.eval());
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

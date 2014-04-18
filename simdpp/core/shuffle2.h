@@ -58,6 +58,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-8}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned sa0, unsigned sa1, unsigned sb0, unsigned sb1, unsigned N,
+         class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ shuffle2(const any_vec32<N,V1>& a,
+                                      const any_vec32<N,V2>& b);
+#else
 template<unsigned sa0, unsigned sa1, unsigned sb0, unsigned sb1, unsigned N,
          class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2, void>::empty
@@ -68,6 +74,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
                                                         b0 = b.vec().eval();
     return detail::insn::i_shuffle2<sa0,sa1,sb0,sb1>(a0, b0);
 }
+#endif
 
 /** Selects 32-bit values from two vectors. The first two values in each four
     consecutive values must come from @a a, the last two - from @a b. The
@@ -106,6 +113,12 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s0, unsigned s1, unsigned N,
+         class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ shuffle2(const any_vec32<N,V1>& a,
+                                      const any_vec32<N,V2>& b);
+#else
 template<unsigned s0, unsigned s1, unsigned N,
          class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2, void>::empty
@@ -116,6 +129,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
                                                         b0 = b.vec().eval();
     return detail::insn::i_shuffle2<s0,s1,s0,s1>(a0, b0);
 }
+#endif
 
 
 #ifndef SIMDPP_DOXYGEN

@@ -79,6 +79,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, 2}
     @novec{NEON, ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s, unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ splat(const any_vec<N,V>& a);
+#else
 template<unsigned s, unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
         splat(const any_vec<N,V>& a)
@@ -87,6 +91,7 @@ typename detail::get_expr_nomask<V, void>::empty
     typename detail::get_expr_nomask<V, void>::type ra = a.vec().eval();
     return detail::insn::i_splat<s>(ra);
 }
+#endif
 /// @}
 
 #ifndef SIMDPP_DOXYGEN

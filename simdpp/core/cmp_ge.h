@@ -21,7 +21,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 
-/// @{
 /** Compares the values of two float32x4 vectors for greater-than or equal
 
     @code
@@ -33,15 +32,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+mask_float32<N, _DETAIL_> cmp_ge(float32<N,E1> a,
+                                 float32<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 mask_float32<N, mask_float32<N>> cmp_ge(float32<N,E1> a,
                                         float32<N,E2> b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
-/// @}
+#endif
 
-/// @}
 /** Compares the values of two float64x2 vectors for greater-than
 
     @code
@@ -57,13 +60,18 @@ mask_float32<N, mask_float32<N>> cmp_ge(float32<N,E1> a,
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+mask_float64<N, _DETAIL_> cmp_ge(float64<N,E1> a,
+                                 float64<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 mask_float64<N, mask_float64<N>> cmp_ge(float64<N,E1> a,
                                         float64<N,E2> b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
-/// @}
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

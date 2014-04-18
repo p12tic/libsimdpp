@@ -26,6 +26,7 @@ The documentation is not complete at the moment.
 
 - [Overview](@ref overview)
 - [Tutorial](@ref tutorial)
+- [Function overview](@ref overview-functions)
 - [Selection of instruction set](@ref instruction-set)
 - [Instruction counts](@ref insn-counts)
 - [Dynamic dispatch](@ref dispatch)

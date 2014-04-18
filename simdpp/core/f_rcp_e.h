@@ -37,11 +37,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+float32<N, _DETAIL_> rcp_e(float32<N,E> a);
+#else
 template<unsigned N, class E>
 float32<N, float32<N>> rcp_e(float32<N,E> a)
 {
     return detail::insn::i_rcp_e(a.eval());
 }
+#endif
 
 
 #ifndef SIMDPP_DOXYGEN

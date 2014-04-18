@@ -33,6 +33,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ add(const any_int8<N,V1>& a,
+                                 const any_int8<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint8<N, typename V1::expr_type>,
@@ -43,6 +48,7 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.vec(), b.vec() }, 0 };
 }
+#endif
 
 /** Adds 16-bit integer values.
 
@@ -55,6 +61,11 @@ typename detail::get_expr2_nomask<V1, V2,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ add(const any_int16<N,V1>& a,
+                                 const any_int16<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint16<N, typename V1::expr_type>,
@@ -65,6 +76,7 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.vec(), b.vec() }, 0 };
 }
+#endif
 
 /** Adds 32-bit integer values.
 
@@ -77,6 +89,11 @@ typename detail::get_expr2_nomask<V1, V2,
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ add(const any_int32<N,V1>& a,
+                                 const any_int32<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint32<N, typename V1::expr_type>,
@@ -87,6 +104,7 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.vec(), b.vec() }, 0 };
 }
+#endif
 
 /** Adds 64-bit integer values.
 
@@ -103,6 +121,11 @@ typename detail::get_expr2_nomask<V1, V2,
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 10-11}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ add(const any_int64<N,V1>& a,
+                                 const any_int64<N,V2>& b);
+#else
 template<unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint64<N, typename V1::expr_type>,
@@ -113,7 +136,7 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.vec(), b.vec() }, 0 };
 }
-
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

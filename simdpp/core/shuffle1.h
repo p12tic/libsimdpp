@@ -50,6 +50,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 1-2}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s0, unsigned s1, unsigned N, class V1, class V2>
+_PROMOTED_NOMASK_EXPRESSION_ shuffle1(const any_vec64<N,V1>& a,
+                                      const any_vec64<N,V2>& b);
+#else
 template<unsigned s0, unsigned s1, unsigned N, class V1, class V2>
 typename detail::get_expr2_nomask<V1, V2, void>::empty
         shuffle1(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
@@ -59,6 +64,7 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
                                                                rb = b.vec().eval();
     return detail::insn::i_shuffle1<s0,s1>(ra, rb);
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

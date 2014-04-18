@@ -36,11 +36,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSSE3, 8}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+int8<N, _DETAIL_> max(int8<N,E1> a, int8<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 int8<N, int8<N>> max(int8<N,E1> a, int8<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
+#endif
 
 /** Computes maximum of the unsigned 8-bit values.
 
@@ -53,11 +58,16 @@ int8<N, int8<N>> max(int8<N,E1> a, int8<N,E2> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+uint8<N, _DETAIL_> max(uint8<N,E1> a, uint8<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 uint8<N, uint8<N>> max(uint8<N,E1> a, uint8<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
+#endif
 
 /** Computes maximum of the signed 16-bit values.
 
@@ -70,11 +80,16 @@ uint8<N, uint8<N>> max(uint8<N,E1> a, uint8<N,E2> b)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+int16<N, _DETAIL_> max(int16<N,E1> a, int16<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 int16<N, int16<N>> max(int16<N,E1> a, int16<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
+#endif
 
 /** Computes maximum of the unsigned 16-bit values.
 
@@ -91,11 +106,16 @@ int16<N, int16<N>> max(int16<N,E1> a, int16<N,E2> b)
     @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+uint16<N, _DETAIL_> max(uint16<N,E1> a, uint16<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 uint16<N, uint16<N>> max(uint16<N,E1> a, uint16<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
+#endif
 
 /** Computes maximum of the signed 32-bit values.
 
@@ -112,11 +132,16 @@ uint16<N, uint16<N>> max(uint16<N,E1> a, uint16<N,E2> b)
     @icost{SSE2-SSSE3, 8}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+int32<N, _DETAIL_> max(int32<N,E1> a, int32<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 int32<N, int32<N>> max(int32<N,E1> a, int32<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
+#endif
 
 /** Computes maximum of the unsigned 32-bit values.
 
@@ -133,11 +158,16 @@ int32<N, int32<N>> max(int32<N,E1> a, int32<N,E2> b)
     @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+uint32<N, _DETAIL_> max(uint32<N,E1> a, uint32<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 uint32<N, uint32<N>> max(uint32<N,E1> a, uint32<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

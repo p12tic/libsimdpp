@@ -37,11 +37,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, NEON, 2}
     @icost{ALTIVEC, 2-4}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint8<N, _DETAIL_> abs(int8<N,E> a);
+#else
 template<unsigned N, class E>
 uint8<N, expr_abs<int8<N,E>>> abs(int8<N,E> a)
 {
     return { { a }, 0 };
 }
+#endif
 
 
 /** Computes absolute value of 16-bit integer values.
@@ -60,11 +65,16 @@ uint8<N, expr_abs<int8<N,E>>> abs(int8<N,E> a)
     @icost{SSSE3-AVX, NEON, 2}
     @icost{ALTIVEC, 2-5}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint16<N, _DETAIL_> abs(int16<N,E> a);
+#else
 template<unsigned N, class E>
 uint16<N, expr_abs<int16<N,E>>> abs(int16<N,E> a)
 {
     return { { a }, 0 };
 }
+#endif
 
 /** Computes absolute value of 32-bit integer values.
 
@@ -82,11 +92,16 @@ uint16<N, expr_abs<int16<N,E>>> abs(int16<N,E> a)
     @icost{SSSE3-AVX, NEON, 2}
     @icost{ALTIVEC, 2-4}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint32<N, _DETAIL_> abs(int32<N,E> a);
+#else
 template<unsigned N, class E>
 uint32<N, expr_abs<int32<N,E>>> abs(int32<N,E> a)
 {
     return { { a }, 0 };
 }
+#endif
 
 /** Computes absolute value of 64-bit integer values.
 
@@ -106,11 +121,16 @@ uint32<N, expr_abs<int32<N,E>>> abs(int32<N,E> a)
     @icost{AVX2, 4}
     @novec{ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+uint64<N, _DETAIL_> abs(int64<N,E> a);
+#else
 template<unsigned N, class E>
 uint64<N, expr_abs<int64<N,E>>> abs(int64<N,E> a)
 {
     return { { a }, 0 };
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -38,11 +38,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 128-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E>
+float32<N, _DETAIL_> rsqrt_e(float32<N,E> a);
+#else
 template<unsigned N, class E>
 float32<N, float32<N>> rsqrt_e(float32<N,E> a)
 {
     return detail::insn::i_rsqrt_e(a.eval());
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

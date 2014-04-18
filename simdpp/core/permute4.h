@@ -54,6 +54,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-10}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
+         unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec16<N,V>& a);
+#else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
@@ -64,6 +69,7 @@ typename detail::get_expr_nomask<V, void>::empty
     ra = a.vec().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
+#endif
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 3].
@@ -99,6 +105,11 @@ typename detail::get_expr_nomask<V, void>::empty
     @icost{NEON, 2-8}
     @icost{ALTIVEC, 2-3}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
+         unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec32<N,V>& a);
+#else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
@@ -109,6 +120,7 @@ typename detail::get_expr_nomask<V, void>::empty
     ra = a.vec().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
+#endif
 
 /** Permutes the values of each set of four consecutive 64-bit values. The
     selector values must be in range [0; 3].
@@ -128,6 +140,11 @@ typename detail::get_expr_nomask<V, void>::empty
     @icost{NEON, 1-4}
     @icost{ALTIVEC, 1-4}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
+         unsigned N, class V>
+_PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec64<N,V>& a);
+#else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V>
 typename detail::get_expr_nomask<V, void>::empty
@@ -138,6 +155,7 @@ typename detail::get_expr_nomask<V, void>::empty
     ra = a.vec().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
+#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

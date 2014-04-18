@@ -36,11 +36,17 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 12}
     @icost{ALTIVEC, 19}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+float32<N, _DETAIL_> div(float32<N,E1> a,
+                         float32<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 float32<N, float32<N>> div(float32<N,E1> a, float32<N,E2> b)
 {
     return detail::insn::i_div(a.eval(), b.eval());
 }
+#endif
 
 /** Divides the values of two vectors
 
@@ -57,11 +63,17 @@ float32<N, float32<N>> div(float32<N,E1> a, float32<N,E2> b)
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
 */
+#if SIMDPP_DOXYGEN
+template<unsigned N, class E1, class E2>
+float64<N, _DETAIL_> div(float64<N,E1> a,
+                         float64<N,E2> b);
+#else
 template<unsigned N, class E1, class E2>
 float64<N, float64<N>> div(float64<N,E1> a, float64<N,E2> b)
 {
     return detail::insn::i_div(a.eval(), b.eval());
 }
+#endif
 
 
 #ifndef SIMDPP_DOXYGEN
