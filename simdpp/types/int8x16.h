@@ -210,6 +210,8 @@ public:
     mask_int8<16>(const uint8<16>& d) : d_(d) {}
 #endif
 
+    operator native_type() const { return d_; }
+
     /// Access the underlying type
     uint8<16> unmask() const
     {

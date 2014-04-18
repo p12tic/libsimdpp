@@ -146,6 +146,8 @@ public:
         *this = bit_cast<mask_float32<4>>(d.eval()); return *this;
     }
 
+    operator native_type() const { return d_; }
+
     /// Access the underlying type
     float32<4> unmask() const
     {

@@ -130,6 +130,8 @@ public:
         *this = bit_cast<mask_float32<8>>(d.eval()); return *this;
     }
 
+    operator native_type() const { return d_; }
+
     /// Access the underlying type
     float32<8> unmask() const
     {

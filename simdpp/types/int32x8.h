@@ -188,6 +188,8 @@ public:
         *this = bit_cast<mask_int32<8>>(d.eval()); return *this;
     }
 
+    operator native_type() const { return d_; }
+
     /// Access the underlying type
     uint32<8> unmask() const
     {

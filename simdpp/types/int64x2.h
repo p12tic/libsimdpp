@@ -220,6 +220,8 @@ public:
         *this = bit_cast<mask_int64<2>>(d.eval()); return *this;
     }
 
+    operator native_type() const { return d_; }
+
     /// Access the underlying type
     uint64<2> unmask() const
     {

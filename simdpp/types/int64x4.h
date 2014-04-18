@@ -189,6 +189,8 @@ public:
         *this = bit_cast<mask_int64<4>>(d.eval()); return *this;
     }
 
+    operator native_type() const { return d_; }
+
     /// Access the underlying type
     uint64<4> unmask() const
     {

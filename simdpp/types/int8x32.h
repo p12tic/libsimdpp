@@ -179,6 +179,8 @@ public:
     mask_int8<32>(const uint8<32>& d) : d_(d) {}
 #endif
 
+    operator native_type() const { return d_; }
+
     /// Access the underlying type
     uint8<32> unmask() const
     {
