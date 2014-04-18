@@ -20,12 +20,17 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
+/// @{
 /** De-interleaves the odd(lower) elements of two int8x16 vectors
+
+    For example, in case of int8x16:
 
     @code
         | 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  |
     r = [ a0  a2  a4  a6  a8  a10 a12 a14 b0  b2  b4  b6  b8  b10 b12 b14 ]
     @endcode
+
+    @par int8
 
     @par 128-bit version:
     @icost{SSE2-AVX2, 4-5}
@@ -40,19 +45,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, 4-5}
     @icost{ALTIVEC, 2-3}
 
-*/
-template<unsigned N, class E1, class E2>
-uint8<N, uint8<N>> unzip16_lo(uint8<N,E1> a, uint8<N,E2> b)
-{
-    return detail::insn::i_unzip16_lo(a.eval(), b.eval());
-}
-
-/** De-interleaves the odd(lower) elements of two int16x8 vectors
-
-    @code
-        | 0  1  2  3  4  5  6  7  |
-    r = [ a0 a2 a4 a6 b0 b2 b4 b6 ]
-    @endcode
+    @par int16
 
     @par 128-bit version:
     @icost{SSE2-SSSE3, 5}
@@ -68,19 +61,8 @@ uint8<N, uint8<N>> unzip16_lo(uint8<N,E1> a, uint8<N,E2> b)
     @icost{AVX2, 4-5}
     @icost{NEON, 2}
     @icost{ALTIVEC, 2-3}
-*/
-template<unsigned N, class E1, class E2>
-uint16<N, uint16<N>> unzip8_lo(uint16<N,E1> a, uint16<N,E2> b)
-{
-    return detail::insn::i_unzip8_lo(a.eval(), b.eval());
-}
 
-/** De-interleaves the odd(lower) elements of two int32x4 vectors
-
-    @code
-        | 0  1  2  3  |
-    r = [ a0 a2 b0 b2 ]
-    @endcode
+    @par int32
 
     @par 128-bit version:
     @icost{ALTIVEC, 1-2}
@@ -91,57 +73,24 @@ uint16<N, uint16<N>> unzip8_lo(uint16<N,E1> a, uint16<N,E2> b)
 
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
-*/
-template<unsigned N, class E1, class E2>
-uint32<N, uint32<N>> unzip4_lo(uint32<N,E1> a, uint32<N,E2> b)
-{
-    return detail::insn::i_unzip4_lo(a.eval(), b.eval());
-}
 
-/** De-interleaves the odd(lower) elements of two int64x2 vectors
-
-    @code
-        | 0  1  |
-    r = [ a0 b0 ]
-    @endcode
+    @par int64
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
-*/
-template<unsigned N, class E1, class E2>
-uint64<N, uint64<N>> unzip2_lo(uint64<N,E1> a, uint64<N,E2> b)
-{
-    return detail::insn::i_unzip2_lo(a.eval(), b.eval());
-}
 
-/** De-interleaves the odd(lower) elements of two float32x4 vectors
-
-    @code
-        | 0  1  2  3  |
-    r = [ a0 a2 b0 b2 ]
-    @endcode
+    @par float32
 
     @par 256-bit version:
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
-*/
-template<unsigned N, class E1, class E2>
-float32<N, float32<N>> unzip4_lo(float32<N,E1> a, float32<N,E2> b)
-{
-    return detail::insn::i_unzip4_lo(a.eval(), b.eval());
-}
 
-/** De-interleaves the odd(lower) elements of two float64x2 vectors
-
-    @code
-        | 0  1  |
-    r = [ a0 b0 ]
-    @endcode
+    @par float64
 
     @par 128-bit version:
     @novec{NEON, ALTIVEC}
@@ -153,11 +102,46 @@ float32<N, float32<N>> unzip4_lo(float32<N,E1> a, float32<N,E2> b)
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-template<unsigned N, class E1, class E2>
-float64<N, float64<N>> unzip2_lo(float64<N,E1> a, float64<N,E2> b)
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        unzip16_lo(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
-    return detail::insn::i_unzip2_lo(a.eval(), b.eval());
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_unzip16_lo(ra, rb);
 }
+
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        unzip8_lo(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
+{
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_unzip8_lo(ra, rb);
+}
+
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        unzip4_lo(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
+{
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_unzip4_lo(ra, rb);
+}
+
+template<unsigned N, class V1, class V2>
+typename detail::get_expr2_nomask<V1, V2, void>::empty
+        unzip2_lo(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
+{
+    typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
+    ra = a.vec().eval();
+    rb = b.vec().eval();
+    return detail::insn::i_unzip2_lo(ra, rb);
+}
+/// @}
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
