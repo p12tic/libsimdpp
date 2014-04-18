@@ -26,7 +26,9 @@ namespace detail {
 namespace insn {
 
 
-// the 256-bit versions are mostly boilerplate. Collect that stuff here.
+// collect some boilerplate
+template<class V>
+void v128_store_pack4(char* p, V a, V b, V c, V d);
 template<class V>
 void v256_store_pack4(char* p, V a, V b, V c, V d);
 template<class V>
@@ -41,11 +43,7 @@ inline void i_store_packed4(char* p,
 #if SIMDPP_USE_NULL
     detail::null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack4(a, b, c, d);
-    i_store(p, a);
-    i_store(p+16, b);
-    i_store(p+32, c);
-    i_store(p+48, d);
+    v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint8x16x4_t t;
     t.val[0] = a;
@@ -80,11 +78,7 @@ inline void i_store_packed4(char* p,
 #if SIMDPP_USE_NULL
     detail::null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack4(a, b, c, d);
-    i_store(p, a);
-    i_store(p+16, b);
-    i_store(p+32, c);
-    i_store(p+48, d);
+    v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint16x8x4_t t;
     t.val[0] = a;
@@ -119,11 +113,7 @@ inline void i_store_packed4(char* p,
 #if SIMDPP_USE_NULL
     detail::null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack4(a, b, c, d);
-    i_store(p, a);
-    i_store(p+16, b);
-    i_store(p+32, c);
-    i_store(p+48, d);
+    v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint32x4x4_t t;
     t.val[0] = a;
@@ -154,13 +144,7 @@ void i_store_packed4(char* p,
 inline void i_store_packed4(char* p,
                             uint64x2 a, uint64x2 b, uint64x2 c, uint64x2 d)
 {
-    p = detail::assume_aligned(p, 16);
-    transpose2(a, b);
-    transpose2(c, d);
-    i_store(p, a);
-    i_store(p+16, c);
-    i_store(p+32, b);
-    i_store(p+48, d);
+    v128_store_pack4(p, a, b, c, d);
 }
 
 #if SIMDPP_USE_AVX2
@@ -187,11 +171,7 @@ inline void i_store_packed4(char* p,
 #if SIMDPP_USE_NULL
     detail::null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack4(a, b, c, d);
-    i_store(p, a);
-    i_store(p+16, b);
-    i_store(p+32, c);
-    i_store(p+48, d);
+    v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     float32x4x4_t t;
     t.val[0] = a;
@@ -226,11 +206,7 @@ inline void i_store_packed4(char* p,
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::null::store_packed4(p, a, b, c, d);
 #elif SIMDPP_USE_SSE2
-    mem_pack4(a, b, c, d);
-    i_store(p, a);
-    i_store(p+16, b);
-    i_store(p+32, c);
-    i_store(p+48, d);
+    v128_store_pack4(p, a, b, c, d);
 #endif
 }
 
@@ -250,6 +226,17 @@ void i_store_packed4(char* p,
 }
 
 // -----------------------------------------------------------------------------
+
+template<class V>
+void v128_store_pack4(char* p, V a, V b, V c, V d)
+{
+    p = detail::assume_aligned(p, 16);
+    mem_pack4(a, b, c, d);
+    i_store(p, a);
+    i_store(p + 16, b);
+    i_store(p + 32, c);
+    i_store(p + 48, d);
+}
 
 template<class V>
 void v256_store_pack4(char* p, V a, V b, V c, V d)

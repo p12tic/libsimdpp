@@ -26,7 +26,9 @@ namespace detail {
 namespace insn {
 
 
-// the 256-bit versions are mostly boilerplate. Collect that stuff here.
+// collect some boilerplate
+template<class V>
+void v128_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 template<class V>
 void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 template<class V>
@@ -41,11 +43,7 @@ inline void i_load_packed4(uint8x16& a, uint8x16& b,
 #if SIMDPP_USE_NULL
     detail::null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    c = load(p+32);
-    d = load(p+48);
-    mem_unpack4(a, b, c, d);
+    v128_load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u8(reinterpret_cast<const uint8_t*>(p));
     a = r.val[0];
@@ -79,11 +77,7 @@ inline void i_load_packed4(uint16x8& a, uint16x8& b,
 #if SIMDPP_USE_NULL
     detail::null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    c = load(p+32);
-    d = load(p+48);
-    mem_unpack4(a, b, c, d);
+    v128_load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u16(reinterpret_cast<const uint16_t*>(p));
     a = r.val[0];
@@ -117,11 +111,7 @@ inline void i_load_packed4(uint32x4& a, uint32x4& b,
 #if SIMDPP_USE_NULL
     detail::null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    c = load(p+32);
-    d = load(p+48);
-    mem_unpack4(a, b, c, d);
+    v128_load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_u32(reinterpret_cast<const uint32_t*>(p));
     a = r.val[0];
@@ -151,13 +141,7 @@ void i_load_packed4(uint32<N>& a, uint32<N>& b, uint32<N>& c, uint32<N>& d,
 inline void i_load_packed4(uint64x2& a, uint64x2& b,
                            uint64x2& c, uint64x2& d, const char* p)
 {
-    p = detail::assume_aligned(p, 16);
-    a = load(p);
-    c = load(p+16);
-    b = load(p+32);
-    d = load(p+48);
-    transpose2(a, b);
-    transpose2(c, d);
+    v128_load_packed4(a, b, c, d, p);
 }
 
 #if SIMDPP_USE_AVX2
@@ -184,11 +168,7 @@ inline void i_load_packed4(float32x4& a, float32x4& b, float32x4& c, float32x4& 
 #if SIMDPP_USE_NULL
     detail::null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    c = load(p+32);
-    d = load(p+48);
-    mem_unpack4(a, b, c, d);
+    v128_load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_NEON
     auto r = vld4q_f32(p);
     a = r.val[0];
@@ -222,11 +202,7 @@ inline void i_load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_SSE2
-    a = load(p);
-    b = load(p+16);
-    c = load(p+32);
-    d = load(p+48);
-    mem_unpack4(a, b, c, d);
+    v128_load_packed4(a, b, c, d, p);
 #endif
 }
 
@@ -246,6 +222,17 @@ void i_load_packed4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d,
 }
 
 // -----------------------------------------------------------------------------
+
+template<class V>
+void v128_load_packed4(V& a, V& b, V& c, V& d, const char* p)
+{
+    p = detail::assume_aligned(p, 16);
+    a = load(p);
+    b = load(p + 16);
+    c = load(p + 32);
+    d = load(p + 48);
+    mem_unpack4(a, b, c, d);
+}
 
 template<class V>
 void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p)

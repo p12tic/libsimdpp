@@ -25,7 +25,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-// the 256-bit versions are mostly boilerplate. Collect that stuff here.
+
+// collect some boilerplate
+template<class V>
+void v128_load_packed2(V& a, V& b, const char* p);
 template<class V>
 void v256_load_packed2(V& a, V& b, const char* p);
 template<class V>
@@ -39,9 +42,7 @@ inline void i_load_packed2(uint8x16& a, uint8x16& b, const char* p)
 #if SIMDPP_USE_NULL
     detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    mem_unpack2(a, b);
+    v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u8(reinterpret_cast<const uint8_t*>(p));
     a = r.val[0];
@@ -70,9 +71,7 @@ inline void i_load_packed2(uint16x8& a, uint16x8& b, const char* p)
 #if SIMDPP_USE_NULL
     detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    mem_unpack2(a, b);
+    v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u16(reinterpret_cast<const uint16_t*>(p));
     a = r.val[0];
@@ -101,9 +100,7 @@ inline void i_load_packed2(uint32x4& a, uint32x4& b, const char* p)
 #if SIMDPP_USE_NULL
     detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    mem_unpack2(a, b);
+    v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u32(reinterpret_cast<const uint32_t*>(p));
     a = r.val[0];
@@ -128,10 +125,7 @@ void i_load_packed2(uint32<N>& a, uint32<N>& b, const char* p)
 
 inline void i_load_packed2(uint64x2& a, uint64x2& b, const char* p)
 {
-    p = detail::assume_aligned(p, 16);
-    a = load(p);
-    b = load(p+16);
-    transpose2(a, b);
+    v128_load_packed2(a, b, p);
 }
 
 #if SIMDPP_USE_AVX2
@@ -155,9 +149,7 @@ inline void i_load_packed2(float32x4& a, float32x4& b, const char* p)
 #if SIMDPP_USE_NULL
     detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    a = load(p);
-    b = load(p+16);
-    mem_unpack2(a, b);
+    v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_f32(p);
     a = r.val[0];
@@ -182,11 +174,7 @@ void i_load_packed2(float32<N>& a, float32<N>& b, const char* p)
 
 inline void i_load_packed2(float64x2& a, float64x2& b, const char* p)
 {
-    const double* q = reinterpret_cast<const double*>(p);
-    q = detail::assume_aligned(q, 16);
-    a = load(q);
-    b = load(q+16);
-    transpose2(a, b);
+    v128_load_packed2(a, b, p);
 }
 
 #if SIMDPP_USE_AVX
@@ -203,6 +191,15 @@ void i_load_packed2(float64<N>& a, float64<N>& b, const char* p)
 }
 
 // -----------------------------------------------------------------------------
+
+template<class V>
+void v128_load_packed2(V& a, V& b, const char* p)
+{
+    p = detail::assume_aligned(p, 16);
+    a = load(p);
+    b = load(p + 16);
+    mem_unpack2(a, b);
+}
 
 template<class V>
 void v256_load_packed2(V& a, V& b, const char* p)

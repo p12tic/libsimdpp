@@ -25,7 +25,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-// the 256-bit versions are mostly boilerplate. Collect that stuff here.
+// collect some boilerplate
+template<class V>
+void v128_store_pack2(char* p, V a, V b);
 template<class V>
 void v256_store_pack2(char* p, V a, V b);
 template<class V>
@@ -39,9 +41,7 @@ inline void i_store_packed2(char* p, uint8x16 a, uint8x16 b)
 #if SIMDPP_USE_NULL
     detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack2(a, b);
-    i_store(p, a);
-    i_store(p+16, b);
+    v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint8x16x2_t t;
     t.val[0] = a;
@@ -71,9 +71,7 @@ inline void i_store_packed2(char* p, uint16x8 a, uint16x8 b)
 #if SIMDPP_USE_NULL
     detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack2(a, b);
-    i_store(p, a);
-    i_store(p+16, b);
+    v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint16x8x2_t t;
     t.val[0] = a;
@@ -103,9 +101,7 @@ inline void i_store_packed2(char* p, uint32x4 a, uint32x4 b)
 #if SIMDPP_USE_NULL
     detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack2(a, b);
-    i_store(p, a);
-    i_store(p+16, b);
+    v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint32x4x2_t t;
     t.val[0] = a;
@@ -131,10 +127,7 @@ void i_store_packed2(char* p, uint32<N> a, uint32<N> b)
 
 inline void i_store_packed2(char* p, uint64x2 a, uint64x2 b)
 {
-    p = detail::assume_aligned(p, 16);
-    transpose2(a, b);
-    i_store(p, a);
-    i_store(p+16, b);
+    v128_store_pack2(p, a, b);
 }
 
 #if SIMDPP_USE_AVX2
@@ -158,9 +151,7 @@ inline void i_store_packed2(char* p, float32x4 a, float32x4 b)
 #if SIMDPP_USE_NULL
     detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    mem_pack2(a, b);
-    i_store(p, a);
-    i_store(p+16, b);
+    v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     float32x4x2_t t;
     t.val[0] = a;
@@ -186,10 +177,7 @@ void i_store_packed2(char* p, float32<N> a, float32<N> b)
 
 inline void i_store_packed2(char* p, float64x2 a, float64x2 b)
 {
-    p = detail::assume_aligned(p, 16);
-    transpose2(a, b);
-    i_store(p, a);
-    i_store(p+16, b);
+    v128_store_pack2(p, a, b);
 }
 
 #if SIMDPP_USE_AVX
@@ -206,6 +194,15 @@ void i_store_packed2(char* p, float64<N> a, float64<N> b)
 }
 
 // -----------------------------------------------------------------------------
+
+template<class V>
+void v128_store_pack2(char* p, V a, V b)
+{
+    p = detail::assume_aligned(p, 32);
+    mem_pack2(a, b);
+    i_store(p, a);
+    i_store(p + 16, b);
+}
 
 template<class V>
 void v256_store_pack2(char* p, V a, V b)
