@@ -60,4 +60,20 @@
     }                                                           \
     return r;
 
+#define SIMDPP_VEC_ARRAY_IMPL_REF1(RTYPE, OP, V1)               \
+    for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
+        OP((V1)[i]); }
+
+#define SIMDPP_VEC_ARRAY_IMPL_REF2(RTYPE, OP, V1, V2)           \
+    for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
+        OP((V1)[i], (V2)[i]); }
+
+#define SIMDPP_VEC_ARRAY_IMPL_REF3(RTYPE, OP, V1, V2, V3)       \
+    for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
+        OP((V1)[i], (V2)[i], (V3)[i]); }
+
+#define SIMDPP_VEC_ARRAY_IMPL_REF4(RTYPE, OP, V1, V2, V3, V4)   \
+    for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
+        OP((V1)[i], (V2)[i], (V3)[i], (V4)[i]); }
+
 #endif
