@@ -369,17 +369,6 @@ void v_mem_pack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V>&
 
     qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;
 }
-template<class T>
-void mem_pack3_256_shuffle128(T& a, T& b, T& c)
-{
-    // shuffle the vectors with the lower halves containing the first 3 128-bit
-    // items and the higher halves contain the rest
-    T t0, t1, t2;
-    t0 = a;  t1 = b;  t2 = c;
-    a = shuffle1_128<0,0>(t0, t1);
-    b = shuffle1_128<0,1>(t2, t0);
-    c = shuffle1_128<1,1>(t1, t2);
-}
 
 /// @{
 /** Interleaves the elements of @a a, @a b and @a c in such way that:
