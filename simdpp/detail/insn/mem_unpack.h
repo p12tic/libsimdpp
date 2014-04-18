@@ -34,26 +34,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<class T>
-void v_mem_unpack2_impl(T& a, T& b)
-{
-    T c1, c2;
-    c1 = a;
-    c2 = b;
-    a = unzip128_lo(c1, c2);
-    b = unzip128_hi(c1, c2);
-}
-
-template<class T>
-void v256_mem_unpack2_impl(T& a, T& b)
-{
-    T c1, c2;
-    c1 = shuffle1_128<0,0>(a, b);
-    c2 = shuffle1_128<1,1>(a, b);
-    a = unzip128_lo(c1, c2);
-    b = unzip128_hi(c1, c2);
-}
-
 /// @{
 /** Concatenates @a a and @a b and stores the elements of the resulting array
     as follows:
@@ -62,27 +42,36 @@ void v256_mem_unpack2_impl(T& a, T& b)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_unpack2(uint8x16& a, uint8x16& b)   { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(uint16x8& a, uint16x8& b)   { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(uint32x4& a, uint32x4& b)   { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(uint64x2& a, uint64x2& b)   { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(float32x4& a, float32x4& b) { v_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(float64x2& a, float64x2& b) { v_mem_unpack2_impl(a, b); }
+template<class V>
+void mem_unpack2(any_vec<16,V>& qa, any_vec<16,V>& qb)
+{
+    V a = qa.vec();
+    V b = qb.vec();
 
-inline void mem_unpack2(uint8x32& a, uint8x32& b)   { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(uint16x16& a, uint16x16& b) { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(uint32x8& a, uint32x8& b)   { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(uint64x4& a, uint64x4& b)   { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(float32x8& a, float32x8& b) { v256_mem_unpack2_impl(a, b); }
-inline void mem_unpack2(float64x4& a, float64x4& b) { v256_mem_unpack2_impl(a, b); }
+    qa.vec() = unzip128_lo(a, b);
+    qb.vec() = unzip128_hi(a, b);
+}
+
+template<class V>
+void mem_unpack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
+{
+    V a = qa.vec();
+    V b = qb.vec();
+
+    V c1 = shuffle1_128<0,0>(a, b);
+    V c2 = shuffle1_128<1,1>(a, b);
+    qa.vec() = unzip128_lo(c1, c2);
+    qb.vec() = unzip128_hi(c1, c2);
+}
+
 /// @}
 
 /// @{
-/** Generic implementation of mem_unpack3. The 256-bit version applies 128-bit
-    operations to each half of each vector separately.
+/** Generic implementation of mem_unpack3. The 128-bit lanes are processed
+    independently
 */
 template<class T>
-void v_mem_unpack3_impl8(T& a, T& b, T& c)
+void v_mem_unpack3_impl8_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
     using U = typename T::uint_vector_type;
@@ -161,7 +150,7 @@ void v_mem_unpack3_impl8(T& a, T& b, T& c)
 }
 
 template<class T>
-void v_mem_unpack3_impl16(T& a, T& b, T& c)
+void v_mem_unpack3_impl16_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
     using U = typename T::uint_vector_type;
@@ -231,7 +220,7 @@ void v_mem_unpack3_impl16(T& a, T& b, T& c)
 }
 
 template<class T>
-void v_mem_unpack3_impl32(T& a, T& b, T& c)
+void v_mem_unpack3_impl32_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
     using U = typename T::uint_vector_type;
@@ -284,7 +273,7 @@ void v_mem_unpack3_impl32(T& a, T& b, T& c)
 }
 
 template<class T>
-void v_mem_unpack3_impl64(T& a, T& b, T& c)
+void v_mem_unpack3_impl64_128(T& a, T& b, T& c)
 {
     T d0, d1, d2;
     d0 = shuffle1<0,1>(a, b);
@@ -294,16 +283,28 @@ void v_mem_unpack3_impl64(T& a, T& b, T& c)
 }
 /// @}
 
-template<class T>
-void v256_mem_unpack3_shuffle(T& a, T& b, T& c)
+template<class V>
+void v_mem_unpack3_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb, any_vec<16,V>& qc)
+{
+    (void) qa; (void) qb; (void) qc;
+}
+
+template<class V>
+void v_mem_unpack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V>& qc)
 {
     // shuffle the vectors so that the lower halves contain the first 3 128-bit
     // items (a and lower half of b) and the higher halves contain the rest
-    T t0, t1, t2;
-    t0 = a;  t1 = b;  t2 = c;
-    a = shuffle1_128<0,1>(t0, t1);
-    b = shuffle1_128<1,0>(t0, t2);
-    c = shuffle1_128<0,1>(t1, t2);
+
+    V a0, b0, c0, a1, b1, c1;
+
+    a0 = qa.vec();  b0 = qb.vec();  c0 = qc.vec();
+
+    a1 = shuffle1_128<0,1>(a0, b0);
+    b1 = shuffle1_128<1,0>(a0, c0);
+    c1 = shuffle1_128<0,1>(b0, c0);
+
+    qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;
+}
 }
 /// @{
 /** Concatenates @a a, @a b and @a c and stores the elements of the resulting
@@ -314,64 +315,46 @@ void v256_mem_unpack3_shuffle(T& a, T& b, T& c)
 
     n = [0, <number of elements in vector> - 1]
 */
-inline void mem_unpack3(uint8x16& a, uint8x16& b, uint8x16& c)
+template<unsigned N>
+void mem_unpack3(uint8<N>& a, uint8<N>& b, uint8<N>& c)
 {
-    v_mem_unpack3_impl8(a, b, c);
-}
-inline void mem_unpack3(uint8x32& a, uint8x32& b, uint8x32& c)
-{
-    v256_mem_unpack3_shuffle(a, b, c);
-    v_mem_unpack3_impl8(a, b, c);
+    v_mem_unpack3_shuffle128(a, b, c);
+    v_mem_unpack3_impl8_128(a, b, c);
 }
 
-inline void mem_unpack3(uint16x8& a, uint16x8& b, uint16x8& c)
+template<unsigned N>
+void mem_unpack3(uint16<N>& a, uint16<N>& b, uint16<N>& c)
 {
-    v_mem_unpack3_impl16(a, b, c);
-}
-inline void mem_unpack3(uint16x16& a, uint16x16& b, uint16x16& c)
-{
-    v256_mem_unpack3_shuffle(a, b, c);
-    v_mem_unpack3_impl16(a, b, c);
+    v_mem_unpack3_shuffle128(a, b, c);
+    v_mem_unpack3_impl16_128(a, b, c);
 }
 
-inline void mem_unpack3(uint32x4& a, uint32x4& b, uint32x4& c)
+template<unsigned N>
+void mem_unpack3(uint32<N>& a, uint32<N>& b, uint32<N>& c)
 {
-    v_mem_unpack3_impl32(a, b, c);
-}
-inline void mem_unpack3(uint32x8& a, uint32x8& b, uint32x8& c)
-{
-    v256_mem_unpack3_shuffle(a, b, c);
-    v_mem_unpack3_impl32(a, b, c);
+    v_mem_unpack3_shuffle128(a, b, c);
+    v_mem_unpack3_impl32_128(a, b, c);
 }
 
-inline void mem_unpack3(uint64x2& a, uint64x2& b, uint64x2& c)
+template<unsigned N>
+void mem_unpack3(uint64<N>& a, uint64<N>& b, uint64<N>& c)
 {
-    v_mem_unpack3_impl64(a, b, c);
-}
-inline void mem_unpack3(uint64x4& a, uint64x4& b, uint64x4& c)
-{
-    v256_mem_unpack3_shuffle(a, b, c);
-    v_mem_unpack3_impl64(a, b, c);
+    v_mem_unpack3_shuffle128(a, b, c);
+    v_mem_unpack3_impl64_128(a, b, c);
 }
 
-inline void mem_unpack3(float32x4& a, float32x4& b, float32x4& c)
+template<unsigned N>
+void mem_unpack3(float32<N>& a, float32<N>& b, float32<N>& c)
 {
-    v_mem_unpack3_impl32(a, b, c);
-}
-inline void mem_unpack3(float32x8& a, float32x8& b, float32x8& c)
-{
-    v256_mem_unpack3_shuffle(a, b, c);
-    v_mem_unpack3_impl32(a, b, c);
+    v_mem_unpack3_shuffle128(a, b, c);
+    v_mem_unpack3_impl32_128(a, b, c);
 }
 
-inline void mem_unpack3(float64x2& a, float64x2& b, float64x2& c)
+template<unsigned N>
+void mem_unpack3(float64<N>& a, float64<N>& b, float64<N>& c)
 {
-    v_mem_unpack3_impl64(a, b, c);
-}
-inline void mem_unpack3(float64x4& a, float64x4& b, float64x4& c)
-{
-    v256_mem_unpack3_shuffle(a, b, c);
-    v_mem_unpack3_impl64(a, b, c);
+    v_mem_unpack3_shuffle128(a, b, c);
+    v_mem_unpack3_impl64_128(a, b, c);
 }
 /// @}
 
@@ -379,7 +362,8 @@ inline void mem_unpack3(float64x4& a, float64x4& b, float64x4& c)
 /** Generic implementation of mem_unpack4. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
-template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
+template<class T>
+void v_mem_unpack4_impl8_128(T& a, T& b, T& c, T& d)
 {
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // TODO: optimize for altivec
@@ -429,7 +413,8 @@ template<class T> void mem_unpack4_impl8(T& a, T& b, T& c, T& d)
 #endif
 }
 
-template<class T> void mem_unpack4_impl16(T& a, T& b, T& c, T& d)
+template<class T>
+void v_mem_unpack4_impl16_128(T& a, T& b, T& c, T& d)
 {
     // [a0,b0,c0,d0,a1,b1,c1,d1]
     // [a2,b2,c2,d2,a3,b3,c3,d3]
@@ -459,7 +444,14 @@ template<class T> void mem_unpack4_impl16(T& a, T& b, T& c, T& d)
     d = zip2_hi(u1, u3);
 }
 
-template<class T> void mem_unpack4_impl64(T& a, T& b, T& c, T& d)
+template<class T>
+void v_mem_unpack4_impl32_128(T& a, T& b, T& c, T& d)
+{
+    transpose4(a, b, c, d);
+}
+
+template<class T>
+void v_mem_unpack4_impl64_128(T& a, T& b, T& c, T& d)
 {
     transpose2(a, c);
     transpose2(b, d);
@@ -471,17 +463,31 @@ template<class T> void mem_unpack4_impl64(T& a, T& b, T& c, T& d)
 /// @}
 
 
-template<class T>
-void mem_unpack4_256_shuffle(T& a, T& b, T& c, T& d)
+template<class V>
+void v_mem_unpack4_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb,
+                              any_vec<16,V>& qc, any_vec<16,V>& qd)
+{
+    (void) qa; (void) qb; (void) qc; (void) qd;
+}
+
+template<class V>
+void v_mem_unpack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
+                              any_vec<32,V>& qc, any_vec<32,V>& qd)
 {
     // shuffle the vectors so that the lower halves contain the first 3 128-bit
     // items (a and lower half of b) and the higher halves contain the rest
-    T t0, t1, t2, t3;
-    t0 = a;  t1 = b;  t2 = c;  t3 = d;
-    a = shuffle1_128<0,0>(t0, t2);
-    b = shuffle1_128<1,1>(t0, t2);
-    c = shuffle1_128<0,0>(t1, t3);
-    d = shuffle1_128<1,1>(t1, t3);
+
+    V a0, b0, c0, d0, a1, b1, c1, d1;
+
+    a0 = qa.vec();  b0 = qb.vec();  c0 = qc.vec();  d0 = qd.vec();
+
+    a1 = shuffle1_128<0,0>(a0, c0);
+    b1 = shuffle1_128<1,1>(a0, c0);
+    c1 = shuffle1_128<0,0>(b0, d0);
+    d1 = shuffle1_128<1,1>(b0, d0);
+
+    qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;  qd.vec() = d1;
+}
 }
 
 /// @{
@@ -496,78 +502,46 @@ void mem_unpack4_256_shuffle(T& a, T& b, T& c, T& d)
 */
 // @icost{SSE2, SSE3, 16}
 // @icost{SSSE3, SSE4.1, 12}
-inline void mem_unpack4(uint8x16& a, uint8x16& b,
-                       uint8x16& c, uint8x16& d)
+template<unsigned N>
+void mem_unpack4(uint8<N>& a, uint8<N>& b, uint8<N>& c, uint8<N>& d)
 {
-    mem_unpack4_impl8(a, b, c, d);
+    v_mem_unpack4_shuffle128(a, b, c, d);
+    v_mem_unpack4_impl8_128(a, b, c, d);
 }
 
-inline void mem_unpack4(uint8x32& a, uint8x32& b,
-                       uint8x32& c, uint8x32& d)
+template<unsigned N>
+void mem_unpack4(uint16<N>& a, uint16<N>& b, uint16<N>& c, uint16<N>& d)
 {
-    mem_unpack4_256_shuffle(a, b, c, d);
-    mem_unpack4_impl8(a, b, c, d);
+    v_mem_unpack4_shuffle128(a, b, c, d);
+    v_mem_unpack4_impl16_128(a, b, c, d);
 }
 
-inline void mem_unpack4(uint16x8& a, uint16x8& b,
-                       uint16x8& c, uint16x8& d)
+template<unsigned N>
+void mem_unpack4(uint32<N>& a, uint32<N>& b, uint32<N>& c, uint32<N>& d)
 {
-    mem_unpack4_impl16(a, b, c, d);
+    v_mem_unpack4_shuffle128(a, b, c, d);
+    v_mem_unpack4_impl32_128(a, b, c, d);
 }
 
-inline void mem_unpack4(uint16x16& a, uint16x16& b,
-                       uint16x16& c, uint16x16& d)
+template<unsigned N>
+void mem_unpack4(uint64<N>& a, uint64<N>& b, uint64<N>& c, uint64<N>& d)
 {
-    mem_unpack4_256_shuffle(a, b, c, d);
-    mem_unpack4_impl16(a, b, c, d);
+    v_mem_unpack4_shuffle128(a, b, c, d);
+    v_mem_unpack4_impl64_128(a, b, c, d);
 }
 
-inline void mem_unpack4(uint32x4& a, uint32x4& b,
-                       uint32x4& c, uint32x4& d)
+template<unsigned N>
+void mem_unpack4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d)
 {
-    transpose4(a, b, c, d);
+    v_mem_unpack4_shuffle128(a, b, c, d);
+    v_mem_unpack4_impl32_128(a, b, c, d);
 }
 
-inline void mem_unpack4(uint32x8& a, uint32x8& b,
-                       uint32x8& c, uint32x8& d)
+template<unsigned N>
+void mem_unpack4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d)
 {
-    mem_unpack4_256_shuffle(a, b, c, d);
-    transpose4(a, b, c, d);
-}
-
-inline void mem_unpack4(uint64x2& a, uint64x2& b,
-                       uint64x2& c, uint64x2& d)
-{
-    mem_unpack4_impl64(a, b, c, d);
-}
-
-inline void mem_unpack4(uint64x4& a, uint64x4& b,
-                       uint64x4& c, uint64x4& d)
-{
-    mem_unpack4_256_shuffle(a, b, c, d);
-    mem_unpack4_impl64(a, b, c, d);
-}
-
-inline void mem_unpack4(float32x4& a, float32x4& b, float32x4& c, float32x4& d)
-{
-    transpose4(a, b, c, d);
-}
-
-inline void mem_unpack4(float32x8& a, float32x8& b, float32x8& c, float32x8& d)
-{
-    mem_unpack4_256_shuffle(a, b, c, d);
-    transpose4(a, b, c, d);
-}
-
-inline void mem_unpack4(float64x2& a, float64x2& b, float64x2& c, float64x2& d)
-{
-    mem_unpack4_impl64(a, b, c, d);
-}
-
-inline void mem_unpack4(float64x4& a, float64x4& b, float64x4& c, float64x4& d)
-{
-    mem_unpack4_256_shuffle(a, b, c, d);
-    mem_unpack4_impl64(a, b, c, d);
+    v_mem_unpack4_shuffle128(a, b, c, d);
+    v_mem_unpack4_impl64_128(a, b, c, d);
 }
 /// @}
 
