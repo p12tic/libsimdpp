@@ -55,7 +55,7 @@ add_executable(test1 EXCLUDE_FROM_ALL
     ${TEST1_ARCH_GEN_SOURCES}
 )
 
-if(!MSVC)
+if(NOT MSVC)
     set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall -Wextra -fstack-protector -fstack-protector-all")
 endif()
 
@@ -101,7 +101,7 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 )
 target_link_libraries(test_dispatcher pthread)
 
-if(!MSVC)
+if(NOT MSVC)
     set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-pthread -std=c++11 -g2 -Wall")
 endif()
 
