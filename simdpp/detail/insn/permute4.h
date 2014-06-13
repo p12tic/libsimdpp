@@ -168,10 +168,10 @@ uint64x4 i_permute4(uint64x4 a)
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
     uint64x4 r;
-    r[0].el(0) = a[s0/2].el(s0%2);
-    r[0].el(1) = a[s1/2].el(s1%2);
-    r[1].el(0) = a[s2/2].el(s2%2);
-    r[1].el(1) = a[s3/2].el(s3%2);
+    r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
+    r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
+    r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
+    r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
@@ -204,10 +204,10 @@ float64x4 i_permute4(float64x4 a)
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_NULL
     float64x4 r;
-    r[0].el(0) = a[s0/2].el(s0%2);
-    r[0].el(1) = a[s1/2].el(s1%2);
-    r[1].el(0) = a[s2/2].el(s2%2);
-    r[1].el(1) = a[s3/2].el(s3%2);
+    r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
+    r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
+    r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
+    r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));

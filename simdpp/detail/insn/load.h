@@ -147,7 +147,7 @@ void v_load(V& a, const char* p)
     unsigned veclen = sizeof(typename V::base_vector_type);
 
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_load(a[i], p);
+        i_load(a.vec(i), p);
         p += veclen;
     }
 }

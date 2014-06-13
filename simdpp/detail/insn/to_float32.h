@@ -57,8 +57,8 @@ inline float32x8 i_to_float32(int32x8 a)
     return _mm256_cvtepi32_ps(a);
 #else
     __m256i a1;
-    a1 = _mm256_castsi128_si256(a[0]);
-    a1 = _mm256_insertf128_si256(a1, a[1], 1);
+    a1 = _mm256_castsi128_si256(a.vec(0));
+    a1 = _mm256_insertf128_si256(a1, a.vec(1), 1);
     return _mm256_cvtepi32_ps(a1);
 #endif
 }
@@ -76,7 +76,7 @@ float32<N> i_to_float32(int32<N> a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r[i] = i_to_float32(detail::vec_extract<r.base_length>(a, i));
+        r.vec(i) = i_to_float32(detail::vec_extract<r.base_length>(a, i));
     }
     return r;
 }
@@ -87,17 +87,17 @@ inline float32x4 i_to_float32(float64x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
-    r[0] = float(a[0].el(0));
-    r[1] = float(a[0].el(1));
-    r[2] = float(a[1].el(0));
-    r[3] = float(a[1].el(1));
+    r[0] = float(a.vec(0).el(0));
+    r[1] = float(a.vec(0).el(1));
+    r[2] = float(a.vec(1).el(0));
+    r[3] = float(a.vec(1).el(1));
     return r;
 #elif SIMDPP_USE_AVX
     return _mm256_cvtpd_ps(a);
 #elif SIMDPP_USE_SSE2
     float32x4 r1, r2;
-    r1 = _mm_cvtpd_ps(a[0]);
-    r2 = _mm_cvtpd_ps(a[1]);
+    r1 = _mm_cvtpd_ps(a.vec(0));
+    r2 = _mm_cvtpd_ps(a.vec(1));
     r2 = move4_l<2>(r2);
     return bit_or(r1, r2);
 #endif
@@ -110,8 +110,8 @@ inline float32x8 i_to_float32(float64<8> a)
     return _mm512_cvt_roundpd_ps(a, (_MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC));
 #else
     float32x4 r1, r2;
-    r1 = i_to_float32(a[0]);
-    r2 = i_to_float32(a[1]);
+    r1 = i_to_float32(a.vec(0));
+    r2 = i_to_float32(a.vec(1));
     return combine(r1, r2);
 #endif
 }
@@ -121,8 +121,8 @@ inline float32x8 i_to_float32(float64<8> a)
 inline float32<16> i_to_float32(float64<16> a)
 {
     float32<8> r1, r2;
-    r1 = i_to_float32(a[0]);
-    r2 = i_to_float32(a[1]);
+    r1 = i_to_float32(a.vec(0));
+    r2 = i_to_float32(a.vec(1));
     return combine(r1, r2);
 }
 #endif
@@ -132,7 +132,7 @@ float32<N> i_to_float32(float64<N> a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r[i] = i_to_float32(detail::vec_extract<r.base_length>(a, i));
+        r.vec(i) = i_to_float32(detail::vec_extract<r.base_length>(a, i));
     }
     return r;
 }

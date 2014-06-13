@@ -63,8 +63,8 @@ public:
     }
 #endif
 
-    const int32v& operator[](unsigned i) const { return d_[i]; }
-    int32v& operator[](unsigned i)             { return d_[i]; }
+    const int32v& vec(unsigned i) const { return d_[i]; }
+    int32v& vec(unsigned i)             { return d_[i]; }
 
     int32<N> eval() const { return *this; }
 
@@ -123,8 +123,8 @@ public:
     }
 #endif
 
-    const uint32v& operator[](unsigned i) const { return d_[i]; }
-    uint32v& operator[](unsigned i)             { return d_[i]; }
+    const uint32v& vec(unsigned i) const { return d_[i]; }
+    uint32v& vec(unsigned i)             { return d_[i]; }
 
     uint32<N> eval() const { return *this; }
 
@@ -174,13 +174,13 @@ public:
     {
         uint32<N> r;
         for (unsigned i = 0; i < mask_int32::vec_length; ++i) {
-            r[i] = d_[i].unmask();
+            r.vec(i) = d_[i].unmask();
         }
         return r;
     }
 
-    const mask_int32v& operator[](unsigned i) const { return d_[i]; }
-          mask_int32v& operator[](unsigned i)       { return d_[i]; }
+    const mask_int32v& vec(unsigned i) const { return d_[i]; }
+          mask_int32v& vec(unsigned i)       { return d_[i]; }
 
     mask_int32<N> eval() const { return *this; }
 

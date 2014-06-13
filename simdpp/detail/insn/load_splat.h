@@ -57,7 +57,7 @@ void i_load_splat(uint8<N>& v, const void* p0)
     uint8v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -92,7 +92,7 @@ void i_load_splat(uint16<N>& v, const void* p0)
     uint16v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -136,7 +136,7 @@ void i_load_splat(uint32<N>& v, const void* p0)
     uint32v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -188,7 +188,7 @@ void i_load_splat(uint64<N>& v, const void* p0)
     uint64v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -234,7 +234,7 @@ void i_load_splat(float32<N>& v, const void* p0)
     float32v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -276,7 +276,7 @@ void i_load_splat(float64<N>& v, const void* p0)
     float64v tv;
     i_load_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 

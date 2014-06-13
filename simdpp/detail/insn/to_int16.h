@@ -34,7 +34,7 @@ inline uint16x16 i_to_uint16(uint8x16 a)
 #if SIMDPP_USE_NULL
     uint16x16 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i/8].el(i%8) = uint16_t(a.el(i));
+        r.vec(i/8).el(i%8) = uint16_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
@@ -49,13 +49,13 @@ inline uint16x16 i_to_uint16(uint8x16 a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;
-    r[0] = vmovl_u8(vget_low_u8(a));
-    r[1] = vmovl_u8(vget_high_u8(a));
+    r.vec(0) = vmovl_u8(vget_low_u8(a));
+    r.vec(1) = vmovl_u8(vget_high_u8(a));
     return r;
 #elif SIMDPP_USE_ALTIVEC
     int16x16 r;
-    r[0] = vmovl_u8(vget_low_u8(a[0]));
-    r[1] = vmovl_u8(vget_high_u8(a[1]));
+    r.vec(0) = vmovl_u8(vget_low_u8(a.vec(0)));
+    r.vec(1) = vmovl_u8(vget_high_u8(a.vec(1)));
     return r;
 #endif
 }
@@ -77,7 +77,7 @@ uint16<N> i_to_uint16(uint8<N> a)
 {
     uint16<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_uint16(a[i]), i);
+        detail::vec_insert(r, i_to_uint16(a.vec(i)), i);
     }
     return r;
 }
@@ -89,7 +89,7 @@ inline int16x16 i_to_int16(int8x16 a)
 #if SIMDPP_USE_NULL
     int16x16 r;
     for (unsigned i = 0; i < 16; i++) {
-        r[i/8].el(i%8) = int16_t(a.el(i));
+        r.vec(i/8).el(i%8) = int16_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
@@ -106,13 +106,13 @@ inline int16x16 i_to_int16(int8x16 a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;
-    r[0] = vmovl_s8(vget_low_s8(a));
-    r[1] = vmovl_s8(vget_high_s8(a));
+    r.vec(0) = vmovl_s8(vget_low_s8(a));
+    r.vec(1) = vmovl_s8(vget_high_s8(a));
     return r;
 #elif SIMDPP_USE_ALTIVEC
     int16x16 r;
-    r[0] = vec_unpackh((__vector int8_t)a[0]);
-    r[1] = vec_unpackl((__vector int8_t)a[0]);
+    r.vec(0) = vec_unpackh((__vector int8_t)a.vec(0));
+    r.vec(1) = vec_unpackl((__vector int8_t)a.vec(0));
     return r;
 #endif
 }
@@ -134,7 +134,7 @@ int16<N> i_to_int16(int8<N> a)
 {
     int16<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_int16(a[i]), i);
+        detail::vec_insert(r, i_to_int16(a.vec(i)), i);
     }
     return r;
 }

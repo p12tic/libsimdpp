@@ -123,8 +123,8 @@ template<class V, class H>
 void i_split(V a, H& r1, H& r2)
 {
     unsigned h = H::vec_length;
-    for (unsigned i = 0; i < h; ++i) { r1[i] = a[i]; }
-    for (unsigned i = 0; i < h; ++i) { r2[i] = a[i+h]; }
+    for (unsigned i = 0; i < h; ++i) { r1.vec(i) = a.vec(i); }
+    for (unsigned i = 0; i < h; ++i) { r2.vec(i) = a.vec(i+h); }
 }
 
 

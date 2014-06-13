@@ -62,7 +62,7 @@ uint16x16 permute_lo(uint16x16 a)
     a = _mm256_shufflelo_epi16(a, _MM_SHUFFLE(s3, s2, s1, s0));
     return a;
 #else
-    return {permute_lo<s0,s1,s2,s3>(a[0]), permute_lo<s0,s1,s2,s3>(a[1])};
+    return {permute_lo<s0,s1,s2,s3>(a.vec(0)), permute_lo<s0,s1,s2,s3>(a.vec(1))};
 #endif
 }
 /// @}
@@ -108,7 +108,7 @@ uint16x16 permute_hi(uint16x16 a)
     a = _mm256_shufflehi_epi16(a, _MM_SHUFFLE(s3, s2, s1, s0));
     return a;
 #else
-    return {permute_hi<s0,s1,s2,s3>(a[0]), permute_hi<s0,s1,s2,s3>(a[1])};
+    return {permute_hi<s0,s1,s2,s3>(a.vec(0)), permute_hi<s0,s1,s2,s3>(a.vec(1))};
 #endif
 }
 /// @}

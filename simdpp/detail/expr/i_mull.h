@@ -64,7 +64,7 @@ int32<8> expr_eval(expr_mull<int16<8,E1>,
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i/4].el(i%4) = int32_t(a.el(i)) * b.el(i);
+        r.vec(i/4).el(i%4) = int32_t(a.el(i)) * b.el(i);
     }
     return r;
 #elif SIMDPP_USE_SSE2
@@ -103,7 +103,7 @@ int32<N> expr_eval(expr_mull<int16<N,E1>,
     int16<N> b = q.b.eval();
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }
@@ -119,7 +119,7 @@ uint32<8> expr_eval(expr_mull<uint16<8,E1>,
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i/4].el(i%4) = uint32_t(a.el(i)) * b.el(i);
+        r.vec(i/4).el(i%4) = uint32_t(a.el(i)) * b.el(i);
     }
     return r;
 #elif SIMDPP_USE_SSE2
@@ -158,7 +158,7 @@ uint32<N> expr_eval(expr_mull<uint16<N,E1>,
     uint16<N> b = q.b.eval();
     uint32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }
@@ -173,10 +173,10 @@ int64<4> expr_eval(expr_mull<int32<4,E1>,
     int32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL
     int64x4 r;
-    r[0].el(0) = int64_t(a.el(0)) * b.el(0);
-    r[0].el(1) = int64_t(a.el(1)) * b.el(1);
-    r[1].el(0) = int64_t(a.el(2)) * b.el(2);
-    r[1].el(1) = int64_t(a.el(3)) * b.el(3);
+    r.vec(0).el(0) = int64_t(a.el(0)) * b.el(0);
+    r.vec(0).el(1) = int64_t(a.el(1)) * b.el(1);
+    r.vec(1).el(0) = int64_t(a.el(2)) * b.el(2);
+    r.vec(1).el(1) = int64_t(a.el(3)) * b.el(3);
     return r;
 #elif SIMDPP_USE_SSE4_1
     int32x4 al, ah, bl, bh;
@@ -224,7 +224,7 @@ int64<N> expr_eval(expr_mull<int32<N,E1>,
     int32<N> b = q.b.eval();
     int64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }
@@ -239,10 +239,10 @@ uint64<4> expr_eval(expr_mull<uint32<4,E1>,
     uint32<4> b = q.b.eval();
 #if SIMDPP_USE_NULL
     uint64x4 r;
-    r[0].el(0) = uint64_t(a.el(0)) * b.el(0);
-    r[0].el(1) = uint64_t(a.el(1)) * b.el(1);
-    r[1].el(0) = uint64_t(a.el(2)) * b.el(2);
-    r[1].el(1) = uint64_t(a.el(3)) * b.el(3);
+    r.vec(0).el(0) = uint64_t(a.el(0)) * b.el(0);
+    r.vec(0).el(1) = uint64_t(a.el(1)) * b.el(1);
+    r.vec(1).el(0) = uint64_t(a.el(2)) * b.el(2);
+    r.vec(1).el(1) = uint64_t(a.el(3)) * b.el(3);
     return r;
 #elif SIMDPP_USE_SSE2
     uint32x4 al, ah, bl, bh;
@@ -308,7 +308,7 @@ uint64<N> expr_eval(expr_mull<uint32<N,E1>,
     uint32<N> b = q.b.eval();
     uint64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a[i], b[i]).eval(), i);
+        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }

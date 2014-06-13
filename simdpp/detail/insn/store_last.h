@@ -310,13 +310,13 @@ void v_store_last(char* p, V a, unsigned n)
     p += n_empty_vec * veclen;
     curr_vec += n_empty_vec;
     if (mid_vec_skip_count > 0) {
-        i_store_last(p, a[curr_vec], mid_vec_skip_count);
+        i_store_last(p, a.vec(curr_vec), mid_vec_skip_count);
         p += veclen;
         curr_vec++;
     }
 
     for (; curr_vec < V::vec_length; ++curr_vec) {
-        i_store(p, a[curr_vec]);
+        i_store(p, a.vec(curr_vec));
         p += veclen;
     }
 }

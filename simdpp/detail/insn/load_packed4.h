@@ -298,7 +298,7 @@ void v_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_load_packed4(a[i], b[i], c[i], d[i], p);
+        i_load_packed4(a.vec(i), b.vec(i), c.vec(i), d.vec(i), p);
         p += veclen*4;
     }
 }

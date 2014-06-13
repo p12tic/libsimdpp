@@ -30,7 +30,7 @@ R vec_extract_impl(V a, unsigned n)
 
     R r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r[i] = a[n*r.vec_length + i];
+        r.vec(i) = a.vec(n*r.vec_length + i);
     }
     return r;
 

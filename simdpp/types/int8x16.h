@@ -86,8 +86,8 @@ public:
 
     /// @{
     /// Access base vectors
-    const int8<16>& operator[](unsigned) const { return *this; }
-          int8<16>& operator[](unsigned)       { return *this; }
+    const int8<16>& vec(unsigned) const { return *this; }
+          int8<16>& vec(unsigned)       { return *this; }
     /// @}
 
     int8<16> eval() const { return *this; }
@@ -162,8 +162,8 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint8<16>& operator[](unsigned) const { return *this; }
-          uint8<16>& operator[](unsigned)       { return *this; }
+    const uint8<16>& vec(unsigned) const { return *this; }
+          uint8<16>& vec(unsigned)       { return *this; }
     /// @}
 
     uint8<16> eval() const { return *this; }
@@ -227,8 +227,8 @@ public:
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
-    const mask_int8<16>& operator[](unsigned) const { return *this; }
-          mask_int8<16>& operator[](unsigned)       { return *this; }
+    const mask_int8<16>& vec(unsigned) const { return *this; }
+          mask_int8<16>& vec(unsigned)       { return *this; }
 
     mask_int8<16> eval() const { return *this; }
 

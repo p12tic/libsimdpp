@@ -31,10 +31,10 @@ inline float64x4 i_to_float64(int32x4 a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> ax(a);
     float64x4 r;
-    r[0].el(0) = double(ax[0]);
-    r[0].el(1) = double(ax[1]);
-    r[1].el(0) = double(ax[2]);
-    r[1].el(1) = double(ax[3]);
+    r.vec(0).el(0) = double(ax[0]);
+    r.vec(0).el(1) = double(ax[1]);
+    r.vec(1).el(0) = double(ax[2]);
+    r.vec(1).el(1) = double(ax[3]);
     return r;
 #elif SIMDPP_USE_AVX
     return _mm256_cvtepi32_pd(a);
@@ -79,7 +79,7 @@ float64<N> i_to_float64(int32<N> a)
 {
     float64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_float64(a[i]), i);
+        detail::vec_insert(r, i_to_float64(a.vec(i)), i);
     }
     return r;
 }
@@ -91,10 +91,10 @@ inline float64x4 i_to_float64(float32x4 a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
     float64x4 r;
-    r[0].el(0) = double(ax[0]);
-    r[0].el(1) = double(ax[1]);
-    r[1].el(0) = double(ax[2]);
-    r[1].el(1) = double(ax[3]);
+    r.vec(0).el(0) = double(ax[0]);
+    r.vec(0).el(1) = double(ax[1]);
+    r.vec(1).el(0) = double(ax[2]);
+    r.vec(1).el(1) = double(ax[3]);
     return r;
 #elif SIMDPP_USE_AVX
     return _mm256_cvtps_pd(a);
@@ -139,7 +139,7 @@ float64<N> i_to_float64(float32<N> a)
 {
     float64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_float64(a[i]), i);
+        detail::vec_insert(r, i_to_float64(a.vec(i)), i);
     }
     return r;
 }

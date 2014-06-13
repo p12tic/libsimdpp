@@ -237,12 +237,12 @@ template<unsigned s, class V>
 V v_splat(V a)
 {
     using U = typename V::base_vector_type;
-    U one = a[s / U::length];
+    U one = a.vec(s / U::length);
 
     one = i_splat<s % U::length>(one);
 
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        a[i] = one;
+        a.vec(i) = one;
     }
     return a;
 }

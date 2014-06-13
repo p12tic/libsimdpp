@@ -151,8 +151,8 @@ V i_combine(H a1, H a2)
 {
     V r;
     unsigned h = H::vec_length;
-    for (unsigned i = 0; i < h; ++i) { r[i] = a1[i]; }
-    for (unsigned i = 0; i < h; ++i) { r[i+h] = a2[i]; }
+    for (unsigned i = 0; i < h; ++i) { r.vec(i) = a1.vec(i); }
+    for (unsigned i = 0; i < h; ++i) { r.vec(i+h) = a2.vec(i); }
     return r;
 }
 

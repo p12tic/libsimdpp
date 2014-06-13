@@ -30,7 +30,7 @@ inline uint8x16 extract_lo(uint8x32 a)
 #if SIMDPP_USE_AVX2
     return _mm256_castsi256_si128(a);
 #else
-    return a[0];
+    return a.vec(0);
 #endif
 }
 
@@ -43,7 +43,7 @@ inline float32x4 extract_lo(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_castps256_ps128(a);
 #else
-    return a[0];
+    return a.vec(0);
 #endif
 }
 
@@ -52,7 +52,7 @@ inline float64x2 extract_lo(float64x4 a)
 #if SIMDPP_USE_AVX
     return _mm256_castpd256_pd128(a);
 #else
-    return a[0];
+    return a.vec(0);
 #endif
 }
 /// @}
@@ -66,7 +66,7 @@ inline uint8x16 extract_hi(uint8x32 a)
 #if SIMDPP_USE_AVX2
     return _mm256_extracti128_si256(a, 1);
 #else
-    return a[1];
+    return a.vec(1);
 #endif
 }
 
@@ -79,7 +79,7 @@ inline float32x4 extract_hi(float32x8 a)
 #if SIMDPP_USE_AVX
     return _mm256_extractf128_ps(a, 1);
 #else
-    return a[1];
+    return a.vec(1);
 #endif
 }
 
@@ -88,7 +88,7 @@ inline float64x2 extract_hi(float64x4 a)
 #if SIMDPP_USE_AVX
     return _mm256_extractf128_pd(a, 1);
 #else
-    return a[1];
+    return a.vec(1);
 #endif
 }
 /// @}

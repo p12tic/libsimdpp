@@ -63,8 +63,8 @@ public:
     }
 #endif
 
-    const int16v& operator[](unsigned i) const { return d_[i]; }
-    int16v& operator[](unsigned i)             { return d_[i]; }
+    const int16v& vec(unsigned i) const { return d_[i]; }
+    int16v& vec(unsigned i)             { return d_[i]; }
 
     int16<N> eval() const { return *this; }
 
@@ -112,8 +112,8 @@ public:
         *this = bit_cast<uint16<N>>(d.wrapped().eval()); return *this;
     }
 
-    const uint16v& operator[](unsigned i) const { return d_[i]; }
-    uint16v& operator[](unsigned i)             { return d_[i]; }
+    const uint16v& vec(unsigned i) const { return d_[i]; }
+    uint16v& vec(unsigned i)             { return d_[i]; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> uint16<N>(const expr_vec_construct<E>& e)
@@ -164,13 +164,13 @@ public:
     {
         uint16<N> r;
         for (unsigned i = 0; i < mask_int16::vec_length; ++i) {
-            r[i] = d_[i].unmask();
+            r.vec(i) = d_[i].unmask();
         }
         return r;
     }
 
-    const mask_int16v& operator[](unsigned i) const { return d_[i]; }
-          mask_int16v& operator[](unsigned i)       { return d_[i]; }
+    const mask_int16v& vec(unsigned i) const { return d_[i]; }
+          mask_int16v& vec(unsigned i)       { return d_[i]; }
 
     mask_int16<N> eval() const { return *this; }
 

@@ -88,8 +88,8 @@ public:
 
     /// @{
     /// Access base vectors
-    const float32<4>& operator[](unsigned) const { return *this; }
-          float32<4>& operator[](unsigned)       { return *this; }
+    const float32<4>& vec(unsigned) const { return *this; }
+          float32<4>& vec(unsigned)       { return *this; }
     /// @}
 
     float32<4> eval() const { return *this; }
@@ -163,8 +163,8 @@ public:
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
-    const mask_float32<4>& operator[](unsigned) const { return *this; }
-          mask_float32<4>& operator[](unsigned)       { return *this; }
+    const mask_float32<4>& vec(unsigned) const { return *this; }
+          mask_float32<4>& vec(unsigned)       { return *this; }
 
     mask_float32<4> eval() const { return *this; }
 

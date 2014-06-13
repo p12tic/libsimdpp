@@ -26,7 +26,7 @@ namespace altivec {
     undefined.
 
     @code
-    a[0] = *p
+    a.vec(0) = *p
     @endcode
 
     @icost{ALTIVEC, 2}

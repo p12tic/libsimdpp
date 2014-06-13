@@ -296,12 +296,12 @@ void v_store_first(char* p, V a, unsigned n)
     unsigned curr_vec = 0;
 
     for (; curr_vec < n_full_vec; ++curr_vec) {
-        store(p, a[curr_vec]);
+        store(p, a.vec(curr_vec));
         p += veclen;
     }
 
     if (mid_vec_fill_count > 0) {
-        i_store_first(p, a[curr_vec], mid_vec_fill_count);
+        i_store_first(p, a.vec(curr_vec), mid_vec_fill_count);
     }
 }
 

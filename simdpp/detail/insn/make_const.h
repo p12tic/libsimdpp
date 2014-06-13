@@ -103,7 +103,7 @@ void i_make_const(float32<N>& v, const expr_vec_make_const<VE,NE>& e)
     float32v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -142,7 +142,7 @@ void i_make_const(float64<N>& v, const expr_vec_make_const<VE,NE>& e)
     float64v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -247,7 +247,7 @@ void i_make_const(uint8<N>& v, const expr_vec_make_const<VE,NE>& e)
     uint8v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -331,7 +331,7 @@ void i_make_const(uint16<N>& v, const expr_vec_make_const<VE,NE>& e)
     uint16v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -406,7 +406,7 @@ void i_make_const(uint32<N>& v, const expr_vec_make_const<VE,NE>& e)
     uint32v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -471,7 +471,7 @@ void i_make_const(uint64<N>& v, const expr_vec_make_const<VE,NE>& e)
     uint64v tv;
     i_make_const(tv, e);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 

@@ -297,7 +297,7 @@ void v_load_packed3(V& a, V& b, V& c, const char* p)
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_load_packed3(a[i], b[i], c[i], p);
+        i_load_packed3(a.vec(i), b.vec(i), c.vec(i), p);
         p += veclen*3;
     }
 }

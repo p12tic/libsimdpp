@@ -45,39 +45,39 @@
 
 #define SIMDPP_VEC_ARRAY_IMPL1(RTYPE, OP, V1)                   \
     RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
-        r[i] = OP((V1)[i]); }                                   \
+        r.vec(i) = OP((V1).vec(i)); }                           \
     return r;
 
 #define SIMDPP_VEC_ARRAY_IMPL2(RTYPE, OP, V1, V2)               \
     RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
-        r[i] = OP((V1)[i], (V2)[i]); }                          \
+        r.vec(i) = OP((V1).vec(i), (V2).vec(i)); }              \
     return r;
 
 #define SIMDPP_VEC_ARRAY_IMPL2S(RTYPE, OP, V1, A2)              \
     RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
-        r[i] = OP((V1)[i], (A2)); }                             \
+        r.vec(i) = OP((V1).vec(i), (A2)); }                     \
     return r;
 
 #define SIMDPP_VEC_ARRAY_IMPL3(RTYPE, OP, V1, V2, V3)           \
     RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
-        r[i] = OP((V1)[i], (V2)[i], (V3)[i]);                   \
+        r.vec(i) = OP((V1).vec(i), (V2).vec(i), (V3).vec(i));   \
     }                                                           \
     return r;
 
 #define SIMDPP_VEC_ARRAY_IMPL_REF1(RTYPE, OP, V1)               \
     for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
-        OP((V1)[i]); }
+        OP((V1).vec(i)); }
 
 #define SIMDPP_VEC_ARRAY_IMPL_REF2(RTYPE, OP, V1, V2)           \
     for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
-        OP((V1)[i], (V2)[i]); }
+        OP((V1).vec(i), (V2).vec(i)); }
 
 #define SIMDPP_VEC_ARRAY_IMPL_REF3(RTYPE, OP, V1, V2, V3)       \
     for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
-        OP((V1)[i], (V2)[i], (V3)[i]); }
+        OP((V1).vec(i), (V2).vec(i), (V3).vec(i)); }
 
 #define SIMDPP_VEC_ARRAY_IMPL_REF4(RTYPE, OP, V1, V2, V3, V4)   \
     for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
-        OP((V1)[i], (V2)[i], (V3)[i], (V4)[i]); }
+        OP((V1).vec(i), (V2).vec(i), (V3).vec(i), (V4).vec(i)); }
 
 #endif

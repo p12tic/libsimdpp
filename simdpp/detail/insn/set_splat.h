@@ -66,7 +66,7 @@ void i_set_splat(uint8<N>& v, uint8_t v0)
     uint8v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -109,7 +109,7 @@ void i_set_splat(uint16<N>& v, uint16_t v0)
     uint16v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -156,7 +156,7 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
     uint32v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -210,7 +210,7 @@ void i_set_splat(uint64<N>& v, uint64_t v0)
     uint64v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -258,7 +258,7 @@ void i_set_splat(float32<N>& v, float v0)
     float32v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 
@@ -295,7 +295,7 @@ void i_set_splat(float64<N>& v, double v0)
     float64v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
-        v[i] = tv;
+        v.vec(i) = tv;
     }
 }
 

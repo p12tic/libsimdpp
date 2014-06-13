@@ -79,8 +79,8 @@ public:
 
     /// @{
     /// Access base vectors
-    const int32<16>& operator[](unsigned) const { return *this; }
-          int32<16>& operator[](unsigned)       { return *this; }
+    const int32<16>& vec(unsigned) const { return *this; }
+          int32<16>& vec(unsigned)       { return *this; }
     /// @}
 
     int32<16> eval() const { return *this; }
@@ -143,8 +143,8 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint32<16>& operator[](unsigned) const { return *this; }
-          uint32<16>& operator[](unsigned)       { return *this; }
+    const uint32<16>& vec(unsigned) const { return *this; }
+          uint32<16>& vec(unsigned)       { return *this; }
     /// @}
 
     uint32<16> eval() const { return *this; }
@@ -194,8 +194,8 @@ public:
     #endif
     }
 
-    const mask_int32<16>& operator[](unsigned) const { return *this; }
-          mask_int32<16>& operator[](unsigned)       { return *this; }
+    const mask_int32<16>& vec(unsigned) const { return *this; }
+          mask_int32<16>& vec(unsigned)       { return *this; }
 
     mask_int32<16> eval() const { return *this; }
 

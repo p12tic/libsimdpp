@@ -64,8 +64,8 @@ public:
     }
 #endif
 
-    const float64v& operator[](unsigned i) const { return d_[i]; }
-    float64v& operator[](unsigned i)             { return d_[i]; }
+    const float64v& vec(unsigned i) const { return d_[i]; }
+    float64v& vec(unsigned i)             { return d_[i]; }
 
     float64<N> eval() const { return *this; }
 
@@ -94,7 +94,7 @@ private:
     static float64<N> set_vec(float64v v0)
     {
         float64<N> r;
-        for (unsigned i = 0; i < r.vec_length; i++) r[i] = v0;
+        for (unsigned i = 0; i < r.vec_length; i++) r.vec(i) = v0;
         return r;
     }
 
@@ -128,13 +128,13 @@ public:
     {
         float64<N> r;
         for (unsigned i = 0; i < mask_float64::vec_length; ++i) {
-            r[i] = d_[i].unmask();
+            r.vec(i) = d_[i].unmask();
         }
         return r;
     }
 
-    const mask_float64v& operator[](unsigned i) const { return d_[i]; }
-          mask_float64v& operator[](unsigned i)       { return d_[i]; }
+    const mask_float64v& vec(unsigned i) const { return d_[i]; }
+          mask_float64v& vec(unsigned i)       { return d_[i]; }
 
     mask_float64<N> eval() const { return *this; }
 

@@ -260,7 +260,7 @@ void v_store_pack2(char* p, V a, V b)
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_store_packed2(p, a[i], b[i]);
+        i_store_packed2(p, a.vec(i), b.vec(i));
         p += veclen*2;
     }
 }

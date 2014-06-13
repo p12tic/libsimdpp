@@ -178,7 +178,7 @@ void v_stream(char* p, V a)
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_stream(p, a[i]);
+        i_stream(p, a.vec(i));
         p += veclen;
     }
 }

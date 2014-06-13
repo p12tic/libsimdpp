@@ -174,7 +174,7 @@ void v_store(char* p, V a)
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_store(p, a[i]);
+        i_store(p, a.vec(i));
         p += veclen;
     }
 }

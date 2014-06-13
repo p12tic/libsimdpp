@@ -34,15 +34,15 @@ inline int32x8 i_to_int32(int16x8 a)
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
-        r[i/4].el(i%4) = int32_t(a[0].el(i));
+        r.vec(i/4).el(i%4) = int32_t(a.vec(0).el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX2
     return  _mm256_cvtepi16_epi32(a);
 #elif SIMDPP_USE_SSE4_1
     int32x8 r;
-    r[0] = _mm_cvtepi16_epi32(a);
-    r[1] = _mm_cvtepi16_epi32(move8_l<4>(a).eval());
+    r.vec(0) = _mm_cvtepi16_epi32(a);
+    r.vec(1) = _mm_cvtepi16_epi32(move8_l<4>(a).eval());
     return r;
 #elif SIMDPP_USE_SSE2
     int16x8 b0, b1, sign;
@@ -52,13 +52,13 @@ inline int32x8 i_to_int32(int16x8 a)
     return uint32x8(combine(b0, b1));
 #elif SIMDPP_USE_NEON
     int32x8 r;
-    r[0] = vmovl_s16(vget_low_s16(a[0]));
-    r[1] = vmovl_s16(vget_high_s16(a[1]));
+    r.vec(0) = vmovl_s16(vget_low_s16(a.vec(0)));
+    r.vec(1) = vmovl_s16(vget_high_s16(a.vec(1)));
     return r;
 #elif SIMDPP_USE_ALTIVEC
     int32x4 b0, b1;
-    b0 = vec_unpackh((__vector int16_t)a[0]);
-    b1 = vec_unpackl((__vector int16_t)a[0]);
+    b0 = vec_unpackh((__vector int16_t)a.vec(0));
+    b1 = vec_unpackl((__vector int16_t)a.vec(0));
     return combine(b0, b1);
 #endif
 }
@@ -84,7 +84,7 @@ int32<N> i_to_int32(int16<N> a)
 {
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_int32(a[i]), i);
+        detail::vec_insert(r, i_to_int32(a.vec(i)), i);
     }
     return r;
 }
@@ -139,7 +139,7 @@ int32<N> i_to_int32(float32<N> a)
 {
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_int32(a[i]), i);
+        detail::vec_insert(r, i_to_int32(a.vec(i)), i);
     }
     return r;
 }
@@ -150,10 +150,10 @@ inline int32x4 i_to_int32(float64x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
-    r[0] = int32_t(a[0].el(0));
-    r[1] = int32_t(a[0].el(1));
-    r[2] = int32_t(a[1].el(0));
-    r[3] = int32_t(a[1].el(1));
+    r[0] = int32_t(a.vec(0).el(0));
+    r[1] = int32_t(a.vec(0).el(1));
+    r[2] = int32_t(a.vec(1).el(0));
+    r[3] = int32_t(a.vec(1).el(1));
     return r;
 #elif SIMDPP_USE_SSE2
     int32x4 r, r1, r2;
@@ -175,8 +175,8 @@ inline int32<8> i_to_int32(float64<8> a)
     return _mm512_cvtpd_epi32(a);
 #else
     int32<4> r1, r2;
-    r1 = _mm256_cvtpd_epi32(a[0]);
-    r2 = _mm256_cvtpd_epi32(a[1]);
+    r1 = _mm256_cvtpd_epi32(a.vec(0));
+    r2 = _mm256_cvtpd_epi32(a.vec(1));
     return combine(r1, r2);
 #endif
 }
@@ -186,8 +186,8 @@ inline int32<8> i_to_int32(float64<8> a)
 inline int32<16> i_to_int32(float64<16> a)
 {
     int32<8> r0, r1;
-    r0 = _mm512_cvtpd_epi32(a[0]);
-    r1 = _mm512_cvtpd_epi32(a[1]);
+    r0 = _mm512_cvtpd_epi32(a.vec(0));
+    r1 = _mm512_cvtpd_epi32(a.vec(1));
     return combine(r0, r1);
 }
 #endif
@@ -197,7 +197,7 @@ int32<N> i_to_int32(float64<N> a)
 {
     int32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r[i] = i_to_int32(detail::vec_extract<r.base_length>(a, i));
+        r.vec(i) = i_to_int32(detail::vec_extract<r.base_length>(a, i));
     }
     return r;
 }

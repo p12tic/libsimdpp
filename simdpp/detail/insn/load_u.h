@@ -220,7 +220,7 @@ void v_load_u(V& a, const char* p)
     unsigned veclen = sizeof(typename V::base_vector_type);
 
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_load_u(a[i], p);
+        i_load_u(a.vec(i), p);
         p += veclen;
     }
 }

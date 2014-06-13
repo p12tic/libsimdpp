@@ -29,7 +29,7 @@ void test_push_internal_vec(TestSuite::Result& res, const V& data)
 {
     for (unsigned i = 0; i < data.vec_length; ++i) {
         using Base = typename V::base_vector_type;
-        simdpp::detail::mem_block<Base> block(data[i]);
+        simdpp::detail::mem_block<Base> block(data.vec(i));
         for (unsigned j = 0; j < Base::length; j++) {
             res.set(i*Base::length + j, &block[j]);
         }

@@ -77,8 +77,8 @@ public:
 
     /// @{
     /// Access base vectors
-    const float32<8>& operator[](unsigned) const { return *this; }
-          float32<8>& operator[](unsigned)       { return *this; }
+    const float32<8>& vec(unsigned) const { return *this; }
+          float32<8>& vec(unsigned)       { return *this; }
     /// @}
 
     float32<8> eval() const { return *this; }
@@ -138,8 +138,8 @@ public:
         return float32<8>(d_);
     }
 
-    const mask_float32<8>& operator[](unsigned) const { return *this; }
-          mask_float32<8>& operator[](unsigned)       { return *this; }
+    const mask_float32<8>& vec(unsigned) const { return *this; }
+          mask_float32<8>& vec(unsigned)       { return *this; }
 
     mask_float32<8> eval() const { return *this; }
 

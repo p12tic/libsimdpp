@@ -306,7 +306,7 @@ void v_store_pack3(char* p, V a, V b, V c)
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        i_store_packed3(p, a[i], b[i], c[i]);
+        i_store_packed3(p, a.vec(i), b.vec(i), c.vec(i));
         p += veclen*3;
     }
 }

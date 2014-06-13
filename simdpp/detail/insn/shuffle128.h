@@ -102,8 +102,8 @@ uint8x32 shuffle1_128(uint8x32 a, uint8x32 b)
     return _mm256_permute2x128_si256(a, b, s1*0x10 + s0);
 #else
     uint8x32 r;
-    r[0] = a[s0];
-    r[1] = b[s1];
+    r.vec(0) = a.vec(s0);
+    r.vec(1) = b.vec(s1);
     return r;
 #endif
 }
@@ -122,8 +122,8 @@ float32x8 shuffle1_128(float32x8 a, float32x8 b)
     return _mm256_permute2f128_ps(a, b, s1*0x10 + s0);
 #else
     float32x8 r;
-    r[0] = a[s0];
-    r[1] = b[s1];
+    r.vec(0) = a.vec(s0);
+    r.vec(1) = b.vec(s1);
     return r;
 #endif
 }
@@ -135,8 +135,8 @@ float64x4 shuffle1_128(float64x4 a, float64x4 b)
     return _mm256_permute2f128_pd(a, b, s1*0x10 + s0);
 #else
     float64x4 r;
-    r[0] = a[s0];
-    r[1] = b[s1];
+    r.vec(0) = a.vec(s0);
+    r.vec(1) = b.vec(s1);
     return r;
 #endif
 }
