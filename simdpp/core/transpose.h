@@ -58,11 +58,11 @@ void transpose2(any_int16<N,V>& a0, any_int16<N,V>& a1)
 {
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
     static_assert(is_value_vector<V>::value, "Expression vectors are not supported");
-    uint16<N> qa0 = a0.vec();
-    uint16<N> qa1 = a1.vec();
+    uint16<N> qa0 = a0.wrapped();
+    uint16<N> qa1 = a1.wrapped();
     detail::insn::i_transpose2(qa0, qa1);
-    a0.vec() = qa0;
-    a1.vec() = qa1;
+    a0.wrapped() = qa0;
+    a1.wrapped() = qa1;
 }
 
 /** Transposes two 2x2 32-bit matrices within two int32x4 vectors
@@ -90,11 +90,11 @@ void transpose2(any_int32<N,V>& a0, any_int32<N,V>& a1)
 {
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
     static_assert(is_value_vector<V>::value, "Expression vectors are not supported");
-    uint32<N> qa0 = a0.vec();
-    uint32<N> qa1 = a1.vec();
+    uint32<N> qa0 = a0.wrapped();
+    uint32<N> qa1 = a1.wrapped();
     detail::insn::i_transpose2(qa0, qa1);
-    a0.vec() = qa0;
-    a1.vec() = qa1;
+    a0.wrapped() = qa0;
+    a1.wrapped() = qa1;
 }
 
 /** Transposes a 2x2 64-bit matrix within two int64x2 vectors
@@ -122,11 +122,11 @@ void transpose2(any_int64<N,V>& a0, any_int64<N,V>& a1)
 {
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
     static_assert(is_value_vector<V>::value, "Expression vectors are not supported");
-    uint64<N> qa0 = a0.vec();
-    uint64<N> qa1 = a1.vec();
+    uint64<N> qa0 = a0.wrapped();
+    uint64<N> qa1 = a1.wrapped();
     detail::insn::i_transpose2(qa0, qa1);
-    a0.vec() = qa0;
-    a1.vec() = qa1;
+    a0.wrapped() = qa0;
+    a1.wrapped() = qa1;
 }
 
 /** Transposes two 2x2 32-bit matrices within two float32x4 vectors
@@ -212,9 +212,9 @@ void transpose4(any_int8<N,V>& a0, any_int8<N,V>& a1,
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
     static_assert(is_value_vector<V>::value, "Expression vectors are not supported");
     uint8<N> qa0, qa1, qa2, qa3;
-    qa0 = a0.vec();  qa1 = a1.vec();  qa2 = a2.vec();  qa3 = a3.vec();
+    qa0 = a0.wrapped();  qa1 = a1.wrapped();  qa2 = a2.wrapped();  qa3 = a3.wrapped();
     detail::insn::i_transpose4(qa0, qa1, qa2, qa3);
-    a0.vec() = qa0;  a1.vec() = qa1;  a2.vec() = qa2;  a3.vec() = qa3;
+    a0.wrapped() = qa0;  a1.wrapped() = qa1;  a2.wrapped() = qa2;  a3.wrapped() = qa3;
 }
 
 /** Transposes two 4x4 16-bit matrices within four int16x8 vectors
@@ -249,9 +249,9 @@ void transpose4(any_int16<N,V>& a0, any_int16<N,V>& a1,
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
     static_assert(is_value_vector<V>::value, "Expression vectors are not supported");
     uint16<N> qa0, qa1, qa2, qa3;
-    qa0 = a0.vec();  qa1 = a1.vec();  qa2 = a2.vec();  qa3 = a3.vec();
+    qa0 = a0.wrapped();  qa1 = a1.wrapped();  qa2 = a2.wrapped();  qa3 = a3.wrapped();
     detail::insn::i_transpose4(qa0, qa1, qa2, qa3);
-    a0.vec() = qa0;  a1.vec() = qa1;  a2.vec() = qa2;  a3.vec() = qa3;
+    a0.wrapped() = qa0;  a1.wrapped() = qa1;  a2.wrapped() = qa2;  a3.wrapped() = qa3;
 }
 
 /** Transposes a 4x4 32-bit matrix within four int32x4 vectors
@@ -286,9 +286,9 @@ void transpose4(any_int32<N,V>& a0, any_int32<N,V>& a1,
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
     static_assert(is_value_vector<V>::value, "Expression vectors are not supported");
     uint32<N> qa0, qa1, qa2, qa3;
-    qa0 = a0.vec();  qa1 = a1.vec();  qa2 = a2.vec();  qa3 = a3.vec();
+    qa0 = a0.wrapped();  qa1 = a1.wrapped();  qa2 = a2.wrapped();  qa3 = a3.wrapped();
     detail::insn::i_transpose4(qa0, qa1, qa2, qa3);
-    a0.vec() = qa0;  a1.vec() = qa1;  a2.vec() = qa2;  a3.vec() = qa3;
+    a0.wrapped() = qa0;  a1.wrapped() = qa1;  a2.wrapped() = qa2;  a3.wrapped() = qa3;
 }
 
 /** Transposes 4x4 32-bit matrix within four float32x4 vectors

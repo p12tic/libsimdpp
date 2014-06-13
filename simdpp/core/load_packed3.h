@@ -41,9 +41,9 @@ void load_packed3(any_vec<N,V>& a, any_vec<N,V>& b, any_vec<N,V>& c,
     static_assert(!is_mask<V>::value, "Mask types can not be loaded");
     typename detail::get_expr_nosign<V,void>::type ra, rb, rc;
     detail::insn::i_load_packed3(ra, rb, rc, reinterpret_cast<const char*>(p));
-    a.vec() = ra;
-    b.vec() = rb;
-    c.vec() = rc;
+    a.wrapped() = ra;
+    b.wrapped() = rb;
+    c.wrapped() = rc;
 }
 
 

@@ -49,11 +49,11 @@ public:
     template<class E> float64<8>(const float64<8,E>& d) { *this = d.eval(); }
     template<class V> explicit float64<8>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<float64<8>>(d.vec().eval());
+        *this = bit_cast<float64<8>>(d.wrapped().eval());
     }
     template<class V> float64<8>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<float64<8>>(d.vec().eval()); return *this;
+        *this = bit_cast<float64<8>>(d.wrapped().eval()); return *this;
     }
 
     /// @{

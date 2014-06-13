@@ -46,7 +46,7 @@ typename detail::get_expr2_nomask<V1, V2,
         add(const any_int8<N,V1>& a,
             const any_int8<N,V2>& b)
 {
-    return { { a.vec(), b.vec() }, 0 };
+    return { { a.wrapped(), b.wrapped() }, 0 };
 }
 #endif
 
@@ -74,7 +74,7 @@ typename detail::get_expr2_nomask<V1, V2,
         add(const any_int16<N,V1>& a,
             const any_int16<N,V2>& b)
 {
-    return { { a.vec(), b.vec() }, 0 };
+    return { { a.wrapped(), b.wrapped() }, 0 };
 }
 #endif
 
@@ -102,7 +102,7 @@ typename detail::get_expr2_nomask<V1, V2,
         add(const any_int32<N,V1>& a,
             const any_int32<N,V2>& b)
 {
-    return { { a.vec(), b.vec() }, 0 };
+    return { { a.wrapped(), b.wrapped() }, 0 };
 }
 #endif
 
@@ -134,7 +134,7 @@ typename detail::get_expr2_nomask<V1, V2,
         add(const any_int64<N,V1>& a,
             const any_int64<N,V2>& b)
 {
-    return { { a.vec(), b.vec() }, 0 };
+    return { { a.wrapped(), b.wrapped() }, 0 };
 }
 #endif
 

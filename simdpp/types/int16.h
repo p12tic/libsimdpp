@@ -45,11 +45,11 @@ public:
     template<class E> int16<N>(const uint16<N,E>& d) { *this = d.eval(); }
     template<class V> explicit int16<N>(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<int16<N>>(d.vec().eval());
+        *this = bit_cast<int16<N>>(d.wrapped().eval());
     }
     template<class V> int16<N>& operator=(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<int16<N>>(d.vec().eval()); return *this;
+        *this = bit_cast<int16<N>>(d.wrapped().eval()); return *this;
     }
 
 #ifndef SIMDPP_DOXYGEN
@@ -105,11 +105,11 @@ public:
     template<class E> uint16<N>(const int16<N,E>& d) { *this = d.eval(); }
     template<class V> explicit uint16<N>(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<uint16<N>>(d.vec().eval());
+        *this = bit_cast<uint16<N>>(d.wrapped().eval());
     }
     template<class V> uint16<N>& operator=(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<uint16<N>>(d.vec().eval()); return *this;
+        *this = bit_cast<uint16<N>>(d.wrapped().eval()); return *this;
     }
 
     const uint16v& operator[](unsigned i) const { return d_[i]; }

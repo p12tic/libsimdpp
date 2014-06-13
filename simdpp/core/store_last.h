@@ -47,7 +47,7 @@ void store_last(void* p, const any_vec<N,V>& a, unsigned n)
 {
     static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
     detail::insn::i_store_last(reinterpret_cast<char*>(p),
-                                a.vec().eval(), n);
+                                a.wrapped().eval(), n);
 }
 
 #ifndef SIMDPP_DOXYGEN

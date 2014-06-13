@@ -55,12 +55,12 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
             const any_vec8<N,V2>& upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return lower.vec().eval();
-    if (shift == 16) return upper.vec().eval();
+    if (shift == 0) return lower.wrapped().eval();
+    if (shift == 16) return upper.wrapped().eval();
 
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
-    qlower = lower.vec().eval();
-    qupper = upper.vec().eval();
+    qlower = lower.wrapped().eval();
+    qupper = upper.wrapped().eval();
     return detail::insn::i_align16<shift>(qlower, qupper);
 }
 #endif
@@ -98,12 +98,12 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
            const any_vec16<N,V2>& upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    if (shift == 0) return lower.vec().eval();
-    if (shift == 8) return upper.vec().eval();
+    if (shift == 0) return lower.wrapped().eval();
+    if (shift == 8) return upper.wrapped().eval();
 
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
-    qlower = lower.vec().eval();
-    qupper = upper.vec().eval();
+    qlower = lower.wrapped().eval();
+    qupper = upper.wrapped().eval();
     return detail::insn::i_align8<shift>(qlower, qupper);
 }
 #endif
@@ -154,12 +154,12 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
            const any_vec32<N,V2>& upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    if (shift == 0) return lower.vec().eval();
-    if (shift == 4) return upper.vec().eval();
+    if (shift == 0) return lower.wrapped().eval();
+    if (shift == 4) return upper.wrapped().eval();
 
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
-    qlower = lower.vec().eval();
-    qupper = upper.vec().eval();
+    qlower = lower.wrapped().eval();
+    qupper = upper.wrapped().eval();
     return detail::insn::i_align4<shift>(qlower, qupper);
 }
 #endif
@@ -208,12 +208,12 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
            const any_vec64<N,V2>& upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    if (shift == 0) return lower.vec().eval();
-    if (shift == 2) return upper.vec().eval();
+    if (shift == 0) return lower.wrapped().eval();
+    if (shift == 2) return upper.wrapped().eval();
 
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type qlower, qupper;
-    qlower = lower.vec().eval();
-    qupper = upper.vec().eval();
+    qlower = lower.wrapped().eval();
+    qupper = upper.wrapped().eval();
     return detail::insn::i_align2<shift>(qlower, qupper);
 }
 #endif

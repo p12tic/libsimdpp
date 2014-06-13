@@ -121,8 +121,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         unzip16_lo(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_unzip16_lo(ra, rb);
 }
 
@@ -131,8 +131,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         unzip8_lo(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_unzip8_lo(ra, rb);
 }
 
@@ -141,8 +141,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         unzip4_lo(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_unzip4_lo(ra, rb);
 }
 
@@ -151,8 +151,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         unzip2_lo(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_unzip2_lo(ra, rb);
 }
 #endif

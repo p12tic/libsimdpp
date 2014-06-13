@@ -42,7 +42,7 @@ template<unsigned N, class V>
 void store(void* p, const any_vec<N,V>& a)
 {
     static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.vec().eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.wrapped().eval());
 }
 
 #ifndef SIMDPP_DOXYGEN

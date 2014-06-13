@@ -42,8 +42,8 @@ typename detail::get_expr_bit_or<V1, V2>::type
         bit_or(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
     using expr = detail::get_expr_bit_or<V1, V2>;
-    return { { typename expr::v12_type(a.vec()),
-               typename expr::v12_type(b.vec()) }, 0 };
+    return { { typename expr::v12_type(a.wrapped()),
+               typename expr::v12_type(b.wrapped()) }, 0 };
 }
 #endif
 

@@ -48,11 +48,11 @@ public:
     template<class E> float32<8>(const float32<8,E>& d) { *this = d.eval(); }
     template<class V> explicit float32<8>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<float32<8>>(d.vec().eval());
+        *this = bit_cast<float32<8>>(d.wrapped().eval());
     }
     template<class V> float32<8>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<float32<8>>(d.vec().eval()); return *this;
+        *this = bit_cast<float32<8>>(d.wrapped().eval()); return *this;
     }
 
     /// @{

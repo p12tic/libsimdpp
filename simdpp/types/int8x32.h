@@ -50,11 +50,11 @@ public:
     template<class E> int8<32>(const uint8<32,E>& d) { *this = d.eval(); }
     template<class V> explicit int8<32>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<int8<32>>(d.vec().eval());
+        *this = bit_cast<int8<32>>(d.wrapped().eval());
     }
     template<class V> int8<32>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<int8<32>>(d.vec().eval()); return *this;
+        *this = bit_cast<int8<32>>(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -114,11 +114,11 @@ public:
     template<class E> uint8<32>(const int8<32,E>& d) { *this = d.eval(); }
     template<class V> explicit uint8<32>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<uint8<32>>(d.vec().eval());
+        *this = bit_cast<uint8<32>>(d.wrapped().eval());
     }
     template<class V> uint8<32>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<uint8<32>>(d.vec().eval()); return *this;
+        *this = bit_cast<uint8<32>>(d.wrapped().eval()); return *this;
     }
 
     /// @{

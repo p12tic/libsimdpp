@@ -41,8 +41,8 @@ typename detail::get_expr2<V1, V2, void>::empty
     bit_xor(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_bit_xor(ra, rb);
 }
 #endif

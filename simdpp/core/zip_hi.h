@@ -54,8 +54,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         zip16_hi(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_zip16_hi(ra, rb);
 }
 
@@ -64,8 +64,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         zip8_hi(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_zip8_hi(ra, rb);
 }
 
@@ -74,8 +74,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         zip4_hi(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_zip4_hi(ra, rb);
 }
 
@@ -84,8 +84,8 @@ typename detail::get_expr2_nomask<V1, V2, void>::empty
         zip2_hi(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_zip2_hi(ra, rb);
 }
 #endif

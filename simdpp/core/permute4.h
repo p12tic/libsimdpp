@@ -66,7 +66,7 @@ typename detail::get_expr_nomask<V, void>::empty
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     typename detail::get_expr_nomask<V, void>::type ra;
-    ra = a.vec().eval();
+    ra = a.wrapped().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 #endif
@@ -117,7 +117,7 @@ typename detail::get_expr_nomask<V, void>::empty
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     typename detail::get_expr_nomask<V, void>::type ra;
-    ra = a.vec().eval();
+    ra = a.wrapped().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 #endif
@@ -152,7 +152,7 @@ typename detail::get_expr_nomask<V, void>::empty
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     typename detail::get_expr_nomask<V, void>::type ra;
-    ra = a.vec().eval();
+    ra = a.wrapped().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 #endif

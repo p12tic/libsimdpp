@@ -23,7 +23,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /// @ingroup simd_vec_any
 /// @{
 
-/** Represents any vector that has @a B bytes of data
+/** Represents any vector that has @a B bytes of data. The exact vector type is
+    @a V.
 */
 template<unsigned B, class V>
 struct any_vec {
@@ -32,8 +33,8 @@ struct any_vec {
 
     /// @{
     /// Returns the wrapped vector
-    V& vec() { return static_cast<V&>(*this); }
-    const V& vec() const { return static_cast<const V&>(*this); }
+    V& wrapped() { return static_cast<V&>(*this); }
+    const V& wrapped() const { return static_cast<const V&>(*this); }
     /// @}
 };
 

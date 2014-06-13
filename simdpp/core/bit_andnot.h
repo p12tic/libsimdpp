@@ -42,8 +42,8 @@ typename detail::get_expr_bitwise2_and<expr_bit_andnot, V1, V2>::type
         bit_andnot(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
     using expr = typename detail::get_expr_bitwise2_and<expr_bit_andnot, V1, V2>;
-    return { { typename expr::v1_type(a.vec()),
-               typename expr::v2_type(b.vec()) }, 0 };
+    return { { typename expr::v1_type(a.wrapped()),
+               typename expr::v2_type(b.wrapped()) }, 0 };
 }
 #endif
 

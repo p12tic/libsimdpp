@@ -49,8 +49,8 @@ void store_packed4(void* p,
                   V1::size_tag == V4::size_tag,
                   "Vector elements must have the same size");
     detail::insn::i_store_packed4(reinterpret_cast<char*>(p),
-                                  a.vec().eval(), b.vec().eval(),
-                                  c.vec().eval(), d.vec().eval());
+                                  a.wrapped().eval(), b.wrapped().eval(),
+                                  c.wrapped().eval(), d.wrapped().eval());
 }
 
 

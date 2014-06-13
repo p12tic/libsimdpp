@@ -189,9 +189,9 @@ typename detail::get_expr_blend<V1, V2, V3>::type
               const any_vec<N,V3>& mask)
 {
     using expr = detail::get_expr_blend<V1, V2, V3>;
-    return { { typename expr::v1_type(on.vec()),
-               typename expr::v2_type(off.vec()),
-               typename expr::v3_type(mask.vec()) }, 0 };
+    return { { typename expr::v1_type(on.wrapped()),
+               typename expr::v2_type(off.wrapped()),
+               typename expr::v3_type(mask.wrapped()) }, 0 };
 }
 #endif
 

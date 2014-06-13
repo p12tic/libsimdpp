@@ -42,8 +42,8 @@ mask_int8<N, mask_int8<N>> cmp_eq(const any_int8<N,V1>& a,
                                   const any_int8<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 #endif
@@ -69,8 +69,8 @@ mask_int16<N, mask_int16<N>> cmp_eq(const any_int16<N,V1>& a,
                                     const any_int16<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 #endif
@@ -96,8 +96,8 @@ mask_int32<N, mask_int32<N>> cmp_eq(const any_int32<N,V1>& a,
                                     const any_int32<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 #endif
@@ -132,8 +132,8 @@ mask_int64<N, mask_int64<N>> cmp_eq(const any_int64<N,V1>& a,
                                     const any_int64<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
-    ra = a.vec().eval();
-    rb = b.vec().eval();
+    ra = a.wrapped().eval();
+    rb = b.wrapped().eval();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 #endif
@@ -158,7 +158,7 @@ template<unsigned N, class V1, class V2>
 mask_float32<N, mask_float32<N>> cmp_eq(const any_float32<N,V1>& a,
                                         const any_float32<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.vec().eval(), b.vec().eval());
+    return detail::insn::i_cmp_eq(a.wrapped().eval(), b.wrapped().eval());
 }
 #endif
 
@@ -186,7 +186,7 @@ template<unsigned N, class V1, class V2>
 mask_float64<N, mask_float64<N>> cmp_eq(const any_float64<N,V1>& a,
                                         const any_float64<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.vec().eval(), b.vec().eval());
+    return detail::insn::i_cmp_eq(a.wrapped().eval(), b.wrapped().eval());
 }
 #endif
 

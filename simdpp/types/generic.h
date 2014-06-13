@@ -51,9 +51,9 @@ public:
 
     float32(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    float32(const any_vec<N*4,V<N2,E>>& a) : e(a.vec().e) {}
+    float32(const any_vec<N*4,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    float32(const any_vec<N*4,V<N2,void>>& a) : e(a.vec()) {}
+    float32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator float32<N>() const { return eval(); }
     float32<N> eval() const;
@@ -86,9 +86,9 @@ public:
 
     float64(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    float64(const any_vec<N*8,V<N2,E>>& a) : e(a.vec().e) {}
+    float64(const any_vec<N*8,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    float64(const any_vec<N*8,V<N2,void>>& a) : e(a.vec()) {}
+    float64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator float64<N>() const { return eval(); }
     float64<N> eval() const;
@@ -121,9 +121,9 @@ public:
     int8(const E& a, int /* dummy */) : e(a) {}
 
     template<template<unsigned, class> class V, unsigned N2>
-    int8(const any_vec<N,V<N2,E>>& a) : e(a.vec().e) {}
+    int8(const any_vec<N,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    int8(const any_vec<N,V<N2,void>>& a) : e(a.vec()) {}
+    int8(const any_vec<N,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator int8<N>() const { return eval(); }
     int8<N> eval() const;
@@ -140,9 +140,9 @@ public:
     uint8(const E& a, int /* dummy */) : e(a) {}
 
     template<template<unsigned, class> class V, unsigned N2>
-    uint8(const any_vec<N,V<N2,E>>& a) : e(a.vec().e) {}
+    uint8(const any_vec<N,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    uint8(const any_vec<N,V<N2,void>>& a) : e(a.vec()) {}
+    uint8(const any_vec<N,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator uint8<N>() const { return eval(); }
     uint8<N> eval() const;
@@ -174,9 +174,9 @@ public:
 
     int16(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    int16(const any_vec<N*2,V<N2,E>>& a) : e(a.vec().e) {}
+    int16(const any_vec<N*2,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    int16(const any_vec<N*2,V<N2,void>>& a) : e(a.vec()) {}
+    int16(const any_vec<N*2,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator int16<N>() const { return eval(); }
     int16<N> eval() const;
@@ -192,9 +192,9 @@ public:
 
     uint16(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    uint16(const any_vec<N*2,V<N2,E>>& a) : e(a.vec().e) {}
+    uint16(const any_vec<N*2,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    uint16(const any_vec<N*2,V<N2,void>>& a) : e(a.vec()) {}
+    uint16(const any_vec<N*2,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator uint16<N>() const { return eval(); }
     uint16<N> eval() const;
@@ -226,9 +226,9 @@ public:
 
     int32(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    int32(const any_vec<N*4,V<N2,E>>& a) : e(a.vec().e) {}
+    int32(const any_vec<N*4,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    int32(const any_vec<N*4,V<N2,void>>& a) : e(a.vec()) {}
+    int32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator int32<N>() const { return eval(); }
     int32<N> eval() const;
@@ -244,9 +244,9 @@ public:
 
     uint32(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    uint32(const any_vec<N*4,V<N2,E>>& a) : e(a.vec().e) {}
+    uint32(const any_vec<N*4,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    uint32(const any_vec<N*4,V<N2,void>>& a) : e(a.vec()) {}
+    uint32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator uint32<N>() const { return eval(); }
     uint32<N> eval() const;
@@ -279,9 +279,9 @@ public:
 
     int64(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    int64(const any_vec<N*8,V<N2,E>>& a) : e(a.vec().e) {}
+    int64(const any_vec<N*8,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    int64(const any_vec<N*8,V<N2,void>>& a) : e(a.vec()) {}
+    int64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator int64<N>() const { return eval(); }
     int64<N> eval() const;
@@ -297,9 +297,9 @@ public:
 
     uint64(const E& a, int /* dummy */) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2>
-    uint64(const any_vec<N*8,V<N2,E>>& a) : e(a.vec().e) {}
+    uint64(const any_vec<N*8,V<N2,E>>& a) : e(a.wrapped().e) {}
     template<template<unsigned, class> class V, unsigned N2>
-    uint64(const any_vec<N*8,V<N2,void>>& a) : e(a.vec()) {}
+    uint64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
 
     operator uint64<N>() const { return eval(); }
     uint64<N> eval() const;

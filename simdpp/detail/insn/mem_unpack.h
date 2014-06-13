@@ -45,36 +45,36 @@ namespace insn {
 template<class V>
 void mem_unpack2(any_vec<16,V>& qa, any_vec<16,V>& qb)
 {
-    V a = qa.vec();
-    V b = qb.vec();
+    V a = qa.wrapped();
+    V b = qb.wrapped();
 
-    qa.vec() = unzip128_lo(a, b);
-    qb.vec() = unzip128_hi(a, b);
+    qa.wrapped() = unzip128_lo(a, b);
+    qb.wrapped() = unzip128_hi(a, b);
 }
 
 template<class V>
 void mem_unpack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
 {
-    V a = qa.vec();
-    V b = qb.vec();
+    V a = qa.wrapped();
+    V b = qb.wrapped();
 
     V c1 = shuffle1_128<0,0>(a, b);
     V c2 = shuffle1_128<1,1>(a, b);
-    qa.vec() = unzip128_lo(c1, c2);
-    qb.vec() = unzip128_hi(c1, c2);
+    qa.wrapped() = unzip128_lo(c1, c2);
+    qb.wrapped() = unzip128_hi(c1, c2);
 }
 
 #if SIMDPP_USE_AVX512
 template<class V>
 void mem_unpack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 {
-    V a = qa.vec();
-    V b = qb.vec();
+    V a = qa.wrapped();
+    V b = qb.wrapped();
 
     V c1 = shuffle2_128<0,2,0,2>(a, b);
     V c2 = shuffle2_128<1,3,1,3>(a, b);
-    qa.vec() = unzip128_lo(c1, c2);
-    qb.vec() = unzip128_hi(c1, c2);
+    qa.wrapped() = unzip128_lo(c1, c2);
+    qb.wrapped() = unzip128_hi(c1, c2);
 }
 #endif
 /// @}
@@ -310,13 +310,13 @@ void v_mem_unpack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V
 
     V a0, b0, c0, a1, b1, c1;
 
-    a0 = qa.vec();  b0 = qb.vec();  c0 = qc.vec();
+    a0 = qa.wrapped();  b0 = qb.wrapped();  c0 = qc.wrapped();
 
     a1 = shuffle1_128<0,1>(a0, b0);
     b1 = shuffle1_128<1,0>(a0, c0);
     c1 = shuffle1_128<0,1>(b0, c0);
 
-    qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;
+    qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;
 }
 
 #if SIMDPP_USE_AVX512
@@ -324,7 +324,7 @@ template<class V>
 void v_mem_unpack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>& qc)
 {
     V a, b, c; // TODO: optimize. Using full-vector shuffle may be faster
-    a = qa.vec();  b = qb.vec();  c = qc.vec();
+    a = qa.wrapped();  b = qb.wrapped();  c = qc.wrapped();
 
     V t11, t12, t21, t22, t31, t32;
     // [a0,b0,c0,a1]
@@ -346,7 +346,7 @@ void v_mem_unpack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V
     b = shuffle2_128<1,2,1,2>(t21, t22);
     c = shuffle2_128<0,3,0,3>(t31, t32);
 
-    qa.vec() = a;  qb.vec() = b;  qc.vec() = c;
+    qa.wrapped() = a;  qb.wrapped() = b;  qc.wrapped() = c;
 }
 #endif
 
@@ -523,14 +523,14 @@ void v_mem_unpack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
 
     V a0, b0, c0, d0, a1, b1, c1, d1;
 
-    a0 = qa.vec();  b0 = qb.vec();  c0 = qc.vec();  d0 = qd.vec();
+    a0 = qa.wrapped();  b0 = qb.wrapped();  c0 = qc.wrapped();  d0 = qd.wrapped();
 
     a1 = shuffle1_128<0,0>(a0, c0);
     b1 = shuffle1_128<1,1>(a0, c0);
     c1 = shuffle1_128<0,0>(b0, d0);
     d1 = shuffle1_128<1,1>(b0, d0);
 
-    qa.vec() = a1;  qb.vec() = b1;  qc.vec() = c1;  qd.vec() = d1;
+    qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;  qd.wrapped() = d1;
 }
 
 #if SIMDPP_USE_AVX512
@@ -541,7 +541,7 @@ void v_mem_unpack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
     V a, b, c, d; // TODO: optimize. Using full-vector shuffle/permute will be faster
 
 
-    a = qa.vec();  b = qb.vec();  c = qc.vec();  d = qd.vec();
+    a = qa.wrapped();  b = qb.wrapped();  c = qc.wrapped();  d = qd.wrapped();
 
     V t11, t12, t21, t22, t31, t32;
     // [a0,b0,c0,a1]
@@ -563,7 +563,7 @@ void v_mem_unpack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
     b = shuffle2_128<1,2,1,2>(t21, t22);
     c = shuffle2_128<0,3,0,3>(t31, t32);
 
-    qa.vec() = a;  qb.vec() = b;  qc.vec() = c;  qd.vec() = d;
+    qa.wrapped() = a;  qb.wrapped() = b;  qc.wrapped() = c;  qd.wrapped() = d;
 }
 #endif
 
