@@ -31,7 +31,10 @@ struct Vectors {
         int32_t pi32[BE*N/4];
         int64_t pi64[BE*N/8];
         float pf32[BE*N/4];
-        double pf64[BE*N/8];
+        double pf64[BE*N / 8];
+#ifdef _MSC_VER
+    };
+#endif
 
         simdpp::uint8<BE> u8[N];
         simdpp::uint16<BE/2> u16[N];
@@ -42,8 +45,10 @@ struct Vectors {
         simdpp::int32<BE/4> i32[N];
         simdpp::int64<BE/8> i64[N];
         simdpp::float32<BE/4> f32[N];
-        simdpp::float64<BE/8> f64[N];
+        simdpp::float64<BE / 8> f64[N];
+#ifndef _MSC_VER
     };
+#endif
 
     Vectors() { reset(); }
 
@@ -52,6 +57,18 @@ struct Vectors {
         for (unsigned i = 0; i < BE*N; i++) {
             c[i] = i%256;
         }
+#ifdef _MSC_VER
+        std::memcpy(u8, c, sizeof(u8));
+        std::memcpy(u16, c, sizeof(u16));
+        std::memcpy(u32, c, sizeof(u32));
+        std::memcpy(u64, c, sizeof(u64));
+        std::memcpy(i8, c, sizeof(i8));
+        std::memcpy(i16, c, sizeof(i16));
+        std::memcpy(i32, c, sizeof(i32));
+        std::memcpy(i64, c, sizeof(i64));
+        std::memcpy(f32, c, sizeof(f32));
+        std::memcpy(f64, c, sizeof(f64));
+#endif
     }
 
     void zero()
@@ -59,6 +76,18 @@ struct Vectors {
         for (unsigned i = 0; i < BE*N; i++) {
             c[i] = 0;
         }
+#ifdef _MSC_VER
+        std::memcpy(u8, c, sizeof(u8));
+        std::memcpy(u16, c, sizeof(u16));
+        std::memcpy(u32, c, sizeof(u32));
+        std::memcpy(u64, c, sizeof(u64));
+        std::memcpy(i8, c, sizeof(i8));
+        std::memcpy(i16, c, sizeof(i16));
+        std::memcpy(i32, c, sizeof(i32));
+        std::memcpy(i64, c, sizeof(i64));
+        std::memcpy(f32, c, sizeof(f32));
+        std::memcpy(f64, c, sizeof(f64));
+#endif
     }
 };
 
