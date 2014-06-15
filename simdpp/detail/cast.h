@@ -23,8 +23,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
+enum {
+    CAST_MASK_MEMCPY,
+    CAST_MASK_UNMASK,
+    CAST_MASK_REMASK
+};
 // defined in cast.inl
-template<bool IsRMask, bool IsLMask> struct cast_wrapper;
+template<bool IsRMask, bool IsLMask, unsigned MaskCastOverride> struct cast_wrapper;
 
 
 } // namespace detail

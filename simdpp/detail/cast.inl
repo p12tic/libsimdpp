@@ -14,8 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/cast.h>
-#include <simdpp/core/insert.h>
-#include <simdpp/sse/extract_half.h>
+#include <simdpp/core/cmp_neq.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -41,15 +40,23 @@ R cast_memcpy(T t)
 }
 
 template<class R, class T>
-R cast_memcpy_mask(T t)
+R cast_memcpy_unmask(T t)
 {
     using TT = typename base_mask_vector_type<T>::type;
     TT tt = t.unmask();
     return cast_memcpy<R>(tt);
 }
 
+template<class R, class T>
+R cast_memcpy_remask(T t)
+{
+    using RR = typename base_mask_vector_type<R>::type;
+    RR rr = cast_memcpy<RR>(t.unmask());
+    return cmp_neq(rr, RR::zero());
+}
+
 template<>
-struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/> {
+struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
     template<class R, class T>
     static R run(T t)
     {
@@ -61,7 +68,31 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/> {
 };
 
 template<>
-struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/> {
+struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
+    template<class R, class T>
+    static R run(T t)
+    {
+        static_assert(R::size_tag == T::size_tag,
+                      "Conversions between masks with different element size is"
+                      " not allowed");
+        return cast_memcpy_unmask<R>(t);
+    }
+};
+
+template<>
+struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
+    template<class R, class T>
+    static R run(T t)
+    {
+        static_assert(R::size_tag == T::size_tag,
+                      "Conversions between masks with different element size is"
+                      " not allowed");
+        return cast_memcpy_remask<R>(t);
+    }
+};
+
+template<unsigned MaskCastOverride>
+struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
     template<class R, class T>
     static R run(T)
     {
@@ -70,17 +101,17 @@ struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/> {
     }
 };
 
-template<>
-struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/> {
+template<unsigned MaskCastOverride>
+struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/, MaskCastOverride> {
     template<class R, class T>
     static R run(T t)
     {
-        return cast_memcpy_mask<R>(t);
+        return cast_memcpy_unmask<R>(t);
     }
 };
 
-template<>
-struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/> {
+template<unsigned MaskCastOverride>
+struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
     template<class R, class T>
     static R run(T t)
     {
