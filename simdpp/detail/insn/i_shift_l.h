@@ -16,6 +16,7 @@
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/bit_andnot.h>
+#include <simdpp/core/set_splat.h>
 #include <simdpp/detail/insn/i_shift.h>
 #include <simdpp/detail/null/math.h>
 #include <simdpp/neon/detail/math_shift.h>

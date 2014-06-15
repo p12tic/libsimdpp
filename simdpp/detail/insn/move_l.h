@@ -41,7 +41,7 @@ uint8x16 i_move16_l(uint8x16 a)
 #elif SIMDPP_USE_SSE2
     return _mm_srli_si128(a, shift);
 #elif SIMDPP_USE_NEON
-    int8x16 z = int8x16::zero();
+    uint8x16 z = uint8x16::zero();
     return vextq_u8(a, z, shift);
 #elif SIMDPP_USE_ALTIVEC
     // return align<shift>(a, uint8x16::zero());

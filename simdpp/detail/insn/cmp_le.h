@@ -26,14 +26,14 @@ namespace insn {
 
 inline mask_float32x4 i_cmp_le(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::cmp_le(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_LE_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmple_ps(a, b);
 #elif SIMDPP_USE_NEON
-    return vcleq_f32(a, b);
+    return vreinterpretq_f32_u32(vcleq_f32(a, b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmple((__vector float)a, (__vector float)b);
 #endif

@@ -209,7 +209,6 @@ inline void i_store_last(char* p, float32x4 a, unsigned n)
 #elif SIMDPP_USE_NEON
     float* q = reinterpret_cast<float*>(p);
     // + VFP
-    float* q = reinterpret_cast<float*>(p);
     if (n < 1) return;
     neon::store_lane<3,1>(q+3, a);
     if (n < 2) return;

@@ -170,11 +170,13 @@ uint64<2> expr_eval(expr_abs<int64<2,E>> q)
     a = sub(a, t);
     return a;
 #elif SIMDPP_USE_NEON
-    int32x4 z = shift_r<63>(uint64x2(a));
+    int32x4 z;
+    z = shift_r<63>(uint64x2(a));
     z = cmp_eq(z, int32x4::zero());
     z = permute4<0,0,2,2>(z);
     z = bit_not(z);
-    int64x2 t = z;
+    int64x2 t;
+    t = z;
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;

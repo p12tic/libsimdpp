@@ -164,7 +164,7 @@ void i_store_packed2(char* p, uint64<N> a, uint64<N> b)
 inline void i_store_packed2(char* p, float32x4 a, float32x4 b)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack2(p, a, b);
@@ -172,7 +172,7 @@ inline void i_store_packed2(char* p, float32x4 a, float32x4 b)
     float32x4x2_t t;
     t.val[0] = a;
     t.val[1] = b;
-    vst2q_f32(p, t);
+    vst2q_f32(reinterpret_cast<float*>(p), t);
 #endif
 }
 

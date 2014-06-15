@@ -218,7 +218,7 @@ void i_set_splat(uint64<N>& v, uint64_t v0)
 
 inline void i_set_splat(float32x4& v, float v0)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     v = detail::null::make_vec<float32x4>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_ps(v0);        // likely in a SSE register anyway

@@ -38,22 +38,22 @@ inline uint16x16 i_to_uint16(uint8x16 a)
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
-    int16x8 r1, r2;
+    uint16x8 r1, r2;
     r1 = _mm_cvtepu8_epi16(a);
     r2 = _mm_cvtepu8_epi16(move16_r<8>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
-    int16x8 r1, r2;
+    uint16x8 r1, r2;
     r1 = zip16_lo(a, uint8x16::zero());
     r2 = zip16_hi(a, uint8x16::zero());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
-    int16x16 r;
+    uint16x16 r;
     r.vec(0) = vmovl_u8(vget_low_u8(a));
     r.vec(1) = vmovl_u8(vget_high_u8(a));
     return r;
 #elif SIMDPP_USE_ALTIVEC
-    int16x16 r;
+    uint16x16 r;
     r.vec(0) = vmovl_u8(vget_low_u8(a.vec(0)));
     r.vec(1) = vmovl_u8(vget_high_u8(a.vec(1)));
     return r;

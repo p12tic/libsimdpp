@@ -36,7 +36,7 @@ inline mask_int8x16 i_cmp_eq(uint8x16 a, uint8x16 b)
 #elif SIMDPP_USE_SSE2
     return _mm_cmpeq_epi8(a, b);
 #elif SIMDPP_USE_NEON
-    return vceqq_s8(a, b);
+    return vceqq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpeq((__vector uint8_t)a, (__vector uint8_t)b);
 #endif
@@ -64,7 +64,7 @@ inline mask_int16x8 i_cmp_eq(uint16x8 a, uint16x8 b)
 #elif SIMDPP_USE_SSE2
     return _mm_cmpeq_epi16(a, b);
 #elif SIMDPP_USE_NEON
-    return vceqq_s16(a, b);
+    return vceqq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpeq((__vector uint16_t)a, (__vector uint16_t)b);
 #endif
@@ -92,7 +92,7 @@ inline mask_int32x4 i_cmp_eq(uint32x4 a, uint32x4 b)
 #elif SIMDPP_USE_SSE2
     return _mm_cmpeq_epi32(a, b);
 #elif SIMDPP_USE_NEON
-    return vceqq_s32(a, b);
+    return vceqq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpeq((__vector uint32_t)a, (__vector uint32_t)b);
 #endif
@@ -138,7 +138,7 @@ inline mask_int64x2 i_cmp_eq(uint64x2 a, uint64x2 b)
     return r32;
 #elif SIMDPP_USE_NEON
     uint32x4 r32, r32s;
-    r32 = cmp_eq(uint32x4(a), uint32x4(b));
+    r32 = i_cmp_eq(uint32x4(a), uint32x4(b));
     r32s = r32;
     // swap the 32-bit halves
     transpose2(r32, r32s);
@@ -180,14 +180,14 @@ mask_int64<N> i_cmp_eq(uint64<N> a, uint64<N> b)
 
 inline mask_float32x4 i_cmp_eq(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::cmp_eq(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_EQ_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpeq_ps(a, b);
 #elif SIMDPP_USE_NEON
-    return vceqq_f32(a, b);
+    return vreinterpretq_f32_u32(vceqq_f32(a, b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpeq((__vector float)a, (__vector float)b);
 #endif

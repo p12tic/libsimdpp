@@ -17,6 +17,7 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/core/bit_or.h>
+#include <simdpp/core/splat.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/detail/insn/i_shift.h>

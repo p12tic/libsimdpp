@@ -154,7 +154,7 @@ uint64<N> i_zip2_lo(uint64<N> a, uint64<N> b)
 
 inline float32x4 i_zip4_lo(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::zip4_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_ps(a, b);
@@ -195,7 +195,7 @@ inline float64x2 i_zip2_lo(float64x2 a, float64x2 b)
     return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a),
                                        _mm_castpd_ps(b)));
 #elif SIMDPP_USE_NEON
-    return bit_cast<float64x2>(zip2_lo(int64x2(a), int64x2(b)));
+    return (float64<2>) i_zip2_lo(int64x2(a), int64x2(b));
 #endif
 }
 

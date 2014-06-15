@@ -197,7 +197,7 @@ void i_load_splat(uint64<N>& v, const void* p0)
 inline void i_load_splat(float32x4& v, const void* p0)
 {
     const float* v0 = reinterpret_cast<const float*>(p0);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     v = detail::null::make_vec<float32x4>(*v0);
 #elif SIMDPP_USE_AVX
     v = _mm_broadcast_ss(v0);

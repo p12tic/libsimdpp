@@ -15,6 +15,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/transpose.h>
+#include <simdpp/neon/shuffle.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -49,7 +50,7 @@ void v_sse_transpose32x4(V& a0, V& a1, V& a2, V& a3);
 inline void i_transpose2(uint8x16& a0, uint8x16& a1)
 {
 #if SIMDPP_USE_NULL
-    null::transpose2(a0, a1);
+    detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_NEON
     auto r = vtrnq_u8(a0, a1);
     a0 = r.val[0];
@@ -213,7 +214,7 @@ inline void i_transpose2(uint64x2& a0, uint64x2& a1)
     a1 = zip2_hi(a0, a1);
     a0 = b0;
 #elif SIMDPP_USE_NEON
-    neon::i_transpose2(a0, a1);
+    neon::transpose2(a0, a1);
 #elif SIMDPP_USE_ALTIVEC
     uint64x2 m0 = make_shuffle_bytes16_mask<0,2+0>(m0);
     uint64x2 m1 = make_shuffle_bytes16_mask<1,2+1>(m1);
@@ -254,7 +255,7 @@ void i_transpose2(uint64<N>& a0, uint64<N>& a1)
 
 inline void i_transpose2(float32x4& a0, float32x4& a1)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     float64x2 b0, b1;
@@ -316,7 +317,7 @@ inline void i_transpose2(float64x2& a0, float64x2& a1)
     a1 = zip2_hi(a0, a1);
     a0 = b0;
 #elif SIMDPP_USE_NEON
-    int64x2 b0, b1;
+    uint64x2 b0, b1;
     b0 = a0;  b1 = a1;
     i_transpose2(b0, b1);
     a0 = b0;  a1 = b1;

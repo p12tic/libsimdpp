@@ -266,7 +266,7 @@ template<unsigned s>
 float32x4 i_splat4(float32x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     return permute4<s,s,s,s>(a);

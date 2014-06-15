@@ -162,12 +162,12 @@ void i_load_packed2(uint64<N>& a, uint64<N>& b, const char* p)
 inline void i_load_packed2(float32x4& a, float32x4& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::load_packed2(a, b, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
-    auto r = vld2q_f32(p);
+    auto r = vld2q_f32(reinterpret_cast<const float*>(p));
     a = r.val[0];
     b = r.val[1];
 #endif

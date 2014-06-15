@@ -152,14 +152,14 @@ inline mask_int16<8> i_bit_and(mask_int16<8> a, mask_int16<8> b)
 #if SIMDPP_USE_NULL
     return detail::null::bit_and_mm(a, b);
 #else
-    return mask_int16<8>(i_bit_and(uint8<16>(a), uint8<16>(b)));
+    return (mask_int16<8>) (uint16<8>) i_bit_and(uint8<16>(a), uint8<16>(b));
 #endif
 }
 
 #if SIMDPP_USE_AVX2
 inline mask_int16<16> i_bit_and(mask_int16<16> a, mask_int16<16> b)
 {
-    return mask_int16<16>(i_bit_and(uint16<16>(a), uint16<16>(b)));
+    return (mask_int16<16>) (uint16<16>) i_bit_and(uint16<16>(a), uint16<16>(b));
 }
 #endif
 
@@ -234,14 +234,14 @@ inline mask_int32<4> i_bit_and(mask_int32<4> a, mask_int32<4> b)
 #if SIMDPP_USE_NULL
     return detail::null::bit_and_mm(a, b);
 #else
-    return mask_int32<4>(i_bit_and(uint8<16>(a), uint8<16>(b)));
+    return (mask_int32<4>) (uint32<4>) i_bit_and(uint8<16>(a), uint8<16>(b));
 #endif
 }
 
 #if SIMDPP_USE_AVX2
 inline mask_int32<8> i_bit_and(mask_int32<8> a, mask_int32<8> b)
 {
-    return mask_int32<8>(i_bit_and(uint32<8>(a), uint32<8>(b)));
+    return (mask_int32<8>) (uint32<8>) i_bit_and(uint32<8>(a), uint32<8>(b));
 }
 #endif
 
@@ -324,14 +324,14 @@ inline mask_int64<2> i_bit_and(mask_int64<2> a, mask_int64<2> b)
 #if SIMDPP_USE_NULL
     return detail::null::bit_and_mm(a, b);
 #else
-    return mask_int64<2>(i_bit_and(uint8<16>(a), uint8<16>(b)));
+    return (mask_int64<2>) (uint64<2>) i_bit_and(uint8<16>(a), uint8<16>(b));
 #endif
 }
 
 #if SIMDPP_USE_AVX2
 inline mask_int64<4> i_bit_and(mask_int64<4> a, mask_int64<4> b)
 {
-    return mask_int64<4>(i_bit_and(uint64<4>(a), uint64<4>(b)));
+    return (mask_int64<4>) (uint64<4>) i_bit_and(uint64<4>(a), uint64<4>(b));
 }
 #endif
 
@@ -353,7 +353,7 @@ mask_int64<N> i_bit_and(mask_int64<N> a, mask_int64<N> b)
 // float32, float32
 inline float32<4> i_bit_and(float32<4> a, float32<4> b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::bit_and(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_and_ps(a, b);
@@ -420,7 +420,7 @@ float32<N> i_bit_and(float32<N> a, mask_float32<N> b)
 // mask_float32, mask_float32
 inline mask_float32<4> i_bit_and(mask_float32<4> a, mask_float32<4> b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::bit_and_mm(a, b);
 #else
     return mask_float32<4>(i_bit_and(float32<4>(a), float32<4>(b)));
@@ -514,7 +514,7 @@ float64<N> i_bit_and(float64<N> a, mask_float64<N> b)
 // mask_float64, mask_float64
 inline mask_float64<2> i_bit_and(mask_float64<2> a, mask_float64<2> b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     return detail::null::bit_and_mm(a, b);
 #else
     return mask_float64<2>(i_bit_and(float64<2>(a), float64<2>(b)));

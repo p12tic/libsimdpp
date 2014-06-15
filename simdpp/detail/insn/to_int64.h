@@ -109,7 +109,7 @@ inline uint64x4 i_to_uint64(uint32x4 a)
     return (uint64x4) combine(zip4_lo(a, uint32x4::zero()),
                               zip4_hi(a, uint32x4::zero()));
 #elif SIMDPP_USE_NEON
-    int64x2 r1, r2;
+    uint64x2 r1, r2;
     r1 = vmovl_u32(vget_low_u32(a));
     r2 = vmovl_u32(vget_high_u32(a));
     return combine(r1, r2);

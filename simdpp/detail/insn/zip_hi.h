@@ -155,7 +155,7 @@ uint64<N> i_zip2_hi(uint64<N> a, uint64<N> b)
 
 inline float32x4 i_zip4_hi(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::zip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpackhi_ps(a, b);
@@ -190,13 +190,11 @@ float32<N> i_zip4_hi(float32<N> a, float32<N> b)
 
 inline float64x2 i_zip2_hi(float64x2 a, float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     return detail::null::zip2_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b),
                                        _mm_castpd_ps(a)));
-#elif SIMDPP_USE_NEON
-    return bit_cast<float64x2>(zip2_hi(int64x2(a), int64x2(b)));
 #endif
 }
 

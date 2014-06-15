@@ -147,9 +147,9 @@ inline void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON
     uint64x2 a0, b0, c0;
-    a0 = load(a0, p);
-    b0 = load(b0, p+16);
-    c0 = load(c0, p+32);
+    a0 = load(p);
+    b0 = load(p+16);
+    c0 = load(p+32);
 
     int64x1_t al, bl, cl, ah, bh, ch;
     al = vget_low_u64(a0);
@@ -190,12 +190,12 @@ void i_load_packed3(uint64<N>& a, uint64<N>& b, uint64<N>& c, const char* p)
 inline void i_load_packed3(float32x4& a, float32x4& b, float32x4& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON
-    auto r = vld3q_f32(p);
+    auto r = vld3q_f32(reinterpret_cast<const float*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];

@@ -25,7 +25,7 @@ namespace insn {
 
 inline float32x4 i_max(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::max(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_max_ps(a, b);

@@ -105,7 +105,7 @@ inline uint64x2 i_load_u(uint64x2& a, const void* p)
 inline float32x4 i_load_u(float32x4& a, const void* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::load(a, q);
     return a;
 #elif SIMDPP_USE_SSE2

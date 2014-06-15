@@ -135,7 +135,7 @@ uint64<N> i_unzip2_hi(uint64<N> a, uint64<N> b)
 
 inline float32x4 i_unzip4_hi(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::unzip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
     return shuffle2<1,3,1,3>(a,b);

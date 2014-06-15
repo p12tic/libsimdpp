@@ -25,14 +25,14 @@ namespace insn {
 
 inline mask_float32x4 i_isnan(float32x4 a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::isnan(a);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, a, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
     return (mask_float32x4) _mm_cmpunord_ps(a, a);
 #elif SIMDPP_USE_NEON
-    return vceqq_f32(a, a);
+    return vreinterpretq_f32_u32(vceqq_f32(a, a));
 #elif SIMDPP_USE_ALTIVEC
     return (mask_float32x4) vec_cmpeq((__vector float)a, (__vector float)a);
 #endif

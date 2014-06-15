@@ -39,11 +39,11 @@ public:
 
 #if SIMDPP_USE_SSE2
     using native_type = __m128;
-#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+#elif SIMDPP_USE_NEON_FLT_SP
     using native_type = float32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector float;
-#else // NULL
+#else // NULL && (NEON && !FLT_SP)
     using native_type = detail::array<float, 4>;
 #endif
 
@@ -70,7 +70,7 @@ public:
     /// Convert to the underlying vector type
     operator native_type() const { return d_; }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if (SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP) && !SIMDPP_DOXYGEN
     float& el(unsigned id) { return d_[id]; }
     const float& el(unsigned id) const { return d_[id]; }
 #endif
@@ -120,11 +120,11 @@ public:
 
 #if SIMDPP_USE_SSE2
     using native_type = __m128;
-#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+#elif SIMDPP_USE_NEON_FLT_SP
     using native_type = float32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector float;
-#else // NULL
+#else // NULL || (NEON && !FLT_SP)
     using native_type = detail::array<bool, 4>;
 #endif
     mask_float32<4>() = default;
@@ -151,14 +151,14 @@ public:
     /// Access the underlying type
     float32<4> unmask() const
     {
-    #if SIMDPP_USE_NULL
+    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
         return detail::null::unmask_mask<float32<4>>(*this);
     #else
         return float32<4>(d_);
     #endif
     }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if (SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP) && !SIMDPP_DOXYGEN
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif

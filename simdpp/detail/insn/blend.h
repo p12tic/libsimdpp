@@ -285,7 +285,7 @@ mask_int32<N> i_blend(mask_int32<N> on, mask_int32<N> off, mask_int32<N> mask)
 
 inline float32<4> i_blend(float32<4> on, float32<4> off, float32<4> mask)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::blend(on, off, mask);
 #elif SIMDPP_USE_AVX
     return _mm_blendv_ps(off, on, mask);
@@ -361,7 +361,7 @@ float32<N> i_blend(float32<N> on, float32<N> off, mask_float32<N> mask)
 
 inline mask_float32<4> i_blend(mask_float32<4> on, mask_float32<4> off, mask_float32<4> mask)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::blend_mask(on, off, mask);
 #else
     return mask_float32<4>(i_blend(float32<4>(on), float32<4>(off), float32<4>(mask)));

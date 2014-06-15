@@ -25,7 +25,7 @@ namespace insn {
 
 inline float32x4 i_min(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_min_ps(a, b);

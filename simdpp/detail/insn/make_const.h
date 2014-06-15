@@ -29,7 +29,7 @@ struct is_expr_vec_make_const<expr_vec_make_const<VE,N>> { static const bool val
 
 namespace insn {
 
-#if SIMDPP_USE_NEON
+#if SIMDPP_USE_NEON_FLT_SP
 template<class VE>
 void i_make_const(float32<4>& v, const expr_vec_make_const<VE,1>& e)
 {
@@ -54,7 +54,7 @@ void i_make_const(float32<4>& v, const expr_vec_make_const<VE,2>& e)
 template<class VE, unsigned N>
 void i_make_const(float32<4>& v, const expr_vec_make_const<VE,N>& e)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     v = detail::null::make_vec<float32<4>, float>(e.val(0), e.val(1),
                                           e.val(2), e.val(3));
 #elif SIMDPP_USE_SSE2
@@ -165,7 +165,7 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,2>& e)
     };
     rvv[0] = e.val(0);
     rvv[1] = e.val(1);
-    v = vld1q_dup_u16(rv);
+    v = (uint16<8>) vld1q_dup_u16(rv);
 }
 
 template<class VE>
@@ -176,7 +176,7 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,4>& e)
         uint8_t rvv[4];
     };
     rvv[0] = e.val(0);  rvv[1] = e.val(1);  rvv[2] = e.val(2);  rvv[3] = e.val(3);
-    v = vld1q_dup_u32(rv);
+    v = (uint32<4>) vld1q_dup_u32(rv);
 }
 
 template<class VE>
@@ -215,7 +215,7 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e)
     rvv[4] = e.val(4);   rvv[5] = e.val(5);   rvv[6] = e.val(6);   rvv[7] = e.val(7);
     rvv[8] = e.val(8);   rvv[9] = e.val(9);   rvv[10] = e.val(10); rvv[11] = e.val(11);
     rvv[12] = e.val(12); rvv[13] = e.val(13); rvv[14] = e.val(14); rvv[15] = e.val(15);
-    v = vld1q_u8(rv);
+    v = vld1q_u8(rvv);
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint8_t){
         uint8_t(e.val(0)),  uint8_t(e.val(1)),  uint8_t(e.val(2)),  uint8_t(e.val(3)),
@@ -270,7 +270,7 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,2>& e)
     };
     rvv[0] = e.val(0);
     rvv[1] = e.val(1);
-    v = vld1q_dup_u32(rv);
+    v = (uint32<4>) vld1q_dup_u32(rv);
 }
 
 template<class VE>
@@ -304,7 +304,7 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e)
     };
     rvv[0] = e.val(0);  rvv[1] = e.val(1);  rvv[2] = e.val(2);  rvv[3] = e.val(3);
     rvv[4] = e.val(4);  rvv[5] = e.val(5);  rvv[6] = e.val(6);  rvv[7] = e.val(7);
-    v = vld1q_u16(rv);
+    v = vld1q_u16(rvv);
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint16_t){
         uint16_t(e.val(0)), uint16_t(e.val(1)), uint16_t(e.val(2)), uint16_t(e.val(3)),
@@ -373,7 +373,7 @@ void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e)
     };
     rvv[0] = e.val(0);  rvv[1] = e.val(1);
     rvv[2] = e.val(2);  rvv[3] = e.val(3);
-    v = vld1q_u32(rv);
+    v = vld1q_u32(rvv);
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint32_t) { uint32_t(e.val(0)), uint32_t(e.val(1)),
                               uint32_t(e.val(2)), uint32_t(e.val(3)) };
@@ -418,7 +418,7 @@ template<class VE>
 void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,1>& e)
 {
     uint64x1_t r0 = vcreate_u64(uint64_t(e.val(0)));
-    return vcombine_u64(r0, r0);
+    v = vcombine_u64(r0, r0);
 }
 #endif
 
@@ -436,7 +436,7 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e)
     };
     rvv[0] = e.val(0);
     rvv[1] = e.val(1);
-    v = vld1q_u64(rv);
+    v = vld1q_u64(rvv);
 #elif SIMDPP_USE_ALTIVEC
     // big endian
     uint32_t v0 = uint64_t(e.val(0)) >> 32;

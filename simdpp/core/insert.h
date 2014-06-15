@@ -216,10 +216,10 @@ uint64x2 insert(uint64x2 a, uint64_t x)
 template<unsigned id>
 float32x4 insert(float32x4 a, float x)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return float32x4(insert<id>(int32x4(a), bit_cast<uint32_t>(x)));
-#elif SIMDPP_USE_NEON
+#if SIMDPP_USE_NEON_FLT_SP
     return vsetq_lane_f32(x, a, id);
+#else
+    return float32x4(insert<id>(int32x4(a), bit_cast<uint32_t>(x)));
 #endif
 }
 

@@ -44,7 +44,7 @@ inline void i_load(uint8x16& a, const char* p)
 #elif SIMDPP_USE_SSE2
     a = _mm_load_si128(reinterpret_cast<const __m128i*>(p));
 #elif SIMDPP_USE_NEON
-    a = vreinterpretq_u32_u64(vld1q_u64(reinterpret_cast<const uint64_t*>(p)));
+    a = vreinterpretq_u8_u64(vld1q_u64(reinterpret_cast<const uint64_t*>(p)));
 #elif SIMDPP_USE_ALTIVEC
     a = vec_ldl(0, reinterpret_cast<const uint8_t*>(p));
 #endif
@@ -58,7 +58,7 @@ inline void i_load(float32x4& a, const char* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::load(a, q);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_ps(q);

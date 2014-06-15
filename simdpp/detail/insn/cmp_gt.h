@@ -236,14 +236,14 @@ mask_int32<N> i_cmp_gt(uint32<N> a, uint32<N> b)
 
 inline mask_float32x4 i_cmp_gt(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_GT_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpgt_ps(a, b);
 #elif SIMDPP_USE_NEON
-    return vcgtq_f32(a, b);
+    return vreinterpretq_f32_u32(vcgtq_f32(a, b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector float)a, (__vector float)b);
 #endif

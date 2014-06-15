@@ -40,7 +40,7 @@ template<unsigned N, class E> struct is_vector<mask_int64<N,E>>    : std::true_t
 template<unsigned N, class E> struct is_vector<mask_float32<N,E>>  : std::true_type {};
 template<unsigned N, class E> struct is_vector<mask_float64<N,E>>  : std::true_type {};
 
-/// Allows detection whether specific type is a simdpp value vector
+/// Allows detection whether specific type is a simdpp value (i.e. not expression) vector
 template<class V>
 struct is_value_vector : std::false_type {};
 

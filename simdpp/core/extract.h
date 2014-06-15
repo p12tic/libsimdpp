@@ -16,8 +16,10 @@
 #include <simdpp/core/cast.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/i_shift_l.h>
+#include <simdpp/core/make_int.h>
 #include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/insn/split.h>
+#include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -221,7 +223,7 @@ template<unsigned id>
 float extract(float32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return a.el(id);
 #elif SIMDPP_USE_SSE2
     return bit_cast<float>(extract<id>(int32x4(a)));
@@ -290,10 +292,10 @@ inline uint16_t extract_bits_any(uint8x16 a)
     uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
 
     a = bit_and(a, mask);
-    a = vpaddlq_u8(a);
-    a = vpaddlq_u16(a);
-    a = vpaddlq_u32(a);
-    uint8x8_t r = vzip_u8(vget_low_u8(a), vget_high_u8(a)).val[0];
+    uint16<8> a16 = vpaddlq_u8(a);
+    uint32<4> a32 = vpaddlq_u16(a16);
+    uint8<16> a8 = (uint8<16>) (uint64<2>) vpaddlq_u32(a32);
+    uint8x8_t r = vzip_u8(vget_low_u8(a8), vget_high_u8(a8)).val[0];
     return vget_lane_u16(vreinterpret_u16_u8(r), 0);
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);

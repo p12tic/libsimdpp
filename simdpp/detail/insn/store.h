@@ -31,7 +31,7 @@ inline void i_store(char* p, uint8x16 a)
 #elif SIMDPP_USE_SSE2
     _mm_store_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
-    vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u32(a));
+    vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u8(a));
 #elif SIMDPP_USE_ALTIVEC
     vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
 #endif
@@ -109,7 +109,7 @@ inline void i_store(char* p, float32x4 a)
 {
     float* q = reinterpret_cast<float*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::store(q, a);
 #elif SIMDPP_USE_SSE2
     _mm_store_ps(q, a);
