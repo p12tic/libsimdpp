@@ -99,9 +99,9 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
     ${TEST_DISPATCHER_SOURCES}
     ${TEST_DISPATCHER_ARCH_GEN_SOURCES}
 )
-target_link_libraries(test_dispatcher pthread)
 
 if(NOT MSVC)
+    target_link_libraries(test_dispatcher pthread)
     set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-pthread -std=c++11 -g2 -Wall")
 endif()
 

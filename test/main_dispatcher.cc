@@ -8,6 +8,7 @@
 #include "tests/dispatcher.h"
 #include <algorithm>
 #include <iostream>
+#include <string>
 #include <cstdlib>
 
 static simdpp::Arch g_supported_arch;
