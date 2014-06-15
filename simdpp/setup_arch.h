@@ -341,6 +341,11 @@
 
 #define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT13
 
+// helper macro
+#if SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+#define SIMDPP_USE_NEON_NO_FLT_SP 1
+#endif
+
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required
 */

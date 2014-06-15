@@ -27,7 +27,7 @@ namespace insn {
 
 inline float32x4 i_div(float32x4 a, float32x4 b)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_ps(a, b);

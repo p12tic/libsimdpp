@@ -46,7 +46,7 @@ V v_rsqrt_rh(V x, V a)
 inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 {
     // x_n = x*(3-d*x*x)/2
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
 #elif SIMDPP_USE_SSE2
     return v_rsqrt_rh(x, a);

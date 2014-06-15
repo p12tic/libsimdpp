@@ -36,7 +36,7 @@ namespace insn {
 
 inline float32x4 i_ceil(float32x4 a)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(a, [](float x){ return std::ceil(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_ceil_ps(a);

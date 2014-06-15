@@ -27,7 +27,7 @@ float32<4> expr_eval(expr_sub<float32<4,E1>,
 {
     float32<4> a = q.a.eval();
     float32<4> b = q.b.eval();
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_sub_ps(a,b);

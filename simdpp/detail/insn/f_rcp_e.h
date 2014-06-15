@@ -29,7 +29,7 @@ namespace insn {
 
 inline float32x4 i_rcp_e(float32x4 a)
 {
-#if SIMDPP_USE_NULL || (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(a, [](float a){ return 1.0f / a; });
 #elif SIMDPP_USE_SSE2
     return _mm_rcp_ps(a);
