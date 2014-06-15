@@ -186,7 +186,7 @@ void i_store_first(char* p, uint64<N> a, unsigned n)
 inline void i_store_first(char* p, float32x4 a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_FLT_SP
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_NO_FLT_SP
     i_store_first(p, int32x4(a), n);
 #elif SIMDPP_USE_AVX && !SIMDPP_USE_AMD
     static const int32_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
@@ -199,13 +199,14 @@ inline void i_store_first(char* p, float32x4 a, unsigned n)
     a = blend(a, old, mask);
     store(p, a);
 #elif SIMDPP_USE_NEON
+    float* q = reinterpret_cast<float*>(p);
     // + VFP
     if (n < 1) return;
-    neon::store_lane<0,1>(p, a);
+    neon::store_lane<0,1>(q, a);
     if (n < 2) return;
-    neon::store_lane<1,1>(p, a);
+    neon::store_lane<1,1>(q+1, a);
     if (n < 3) return;
-    neon::store_lane<2,1>(p, a);
+    neon::store_lane<2,1>(q+2, a);
 #endif
 }
 

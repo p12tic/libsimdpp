@@ -21,6 +21,7 @@ void test_store_helper(TestSuite& tc, V* sv)
     union {
         E rdata[V::length * vnum];
         V rv[vnum];
+        simdpp::uint8<16> align;
     };
 
     auto rzero = [&](V* r)
