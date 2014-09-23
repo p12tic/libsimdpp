@@ -219,7 +219,7 @@ inline mask_int64<2> i_bit_xor(mask_int64<2> a, mask_int64<2> b)
 #if SIMDPP_USE_AVX2
 inline mask_int64<4> i_bit_xor(mask_int64<4> a, mask_int64<4> b)
 {
-    return (mask_int64<2>) (uint64<2>) i_bit_xor(uint64<4>(a), uint64<4>(b));
+    return (mask_int64<4>) (uint64<4>) i_bit_xor(uint64<4>(a), uint64<4>(b));
 }
 #endif
 
