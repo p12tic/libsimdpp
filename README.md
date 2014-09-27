@@ -42,8 +42,10 @@ depend on boost if the built-in dispatcher functionality is not used. The
 library has been tested with the following compilers:
 
  - C++11 version:
-   - GCC: 4.8.1, 4.7.3
-   - Clang: 3.3, 3.4
+   - GCC: 4.9.0, 4.8.1
+   - Clang: 3.3, 3.4, 3.5
+   - MSVC: 2013 (x86-64)
+   - ICC: 2015 (x86-64), 2013 (x86-64)
 
  - C++98 version
    - GCC: 4.8.1, 4.7.3
