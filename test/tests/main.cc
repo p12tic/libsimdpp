@@ -15,6 +15,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 void main_test_function(TestResults& res)
 {
+    test_test_utils(res);
+
     test_construct(res);
     test_convert(res);
     test_blend(res);

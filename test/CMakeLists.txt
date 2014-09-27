@@ -41,6 +41,7 @@ set(TEST1_ARCH_SOURCES
     tests/shuffle.cc
     tests/shuffle_bytes.cc
     tests/shuffle_generic.cc
+    tests/test_utils.cc
     tests/transpose.cc
 )
 

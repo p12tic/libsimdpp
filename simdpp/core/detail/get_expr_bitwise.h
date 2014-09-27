@@ -82,8 +82,9 @@ class get_expr_bitwise2_and {
     static const bool is_v1_float = type_tag == SIMDPP_TAG_FLOAT ||
                                      type_tag == SIMDPP_TAG_MASK_FLOAT;
 
-    // if second parameter is a mask then convert the mask to float mask if the
-    // expression is float and to integer mask otherwise
+    // if second parameter is a mask, then:
+    //    - convert the mask to float mask if the expression is float
+    //    - convert the mask to integer mask otherwise
     static const unsigned v2_type_tag = (!is_v2_mask) ? v1_type_tag :
                                         is_v1_float ? SIMDPP_TAG_MASK_FLOAT :
                                         SIMDPP_TAG_MASK_INT;

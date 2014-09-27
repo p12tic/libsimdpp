@@ -32,6 +32,7 @@ void test_shuffle(TestResults& res);
 void test_shuffle_bytes(TestResults& res);
 void test_shuffle_generic(TestResults& res);
 void test_shuffle_transpose(TestResults& res);
+void test_test_utils(TestResults& res);
 void test_transpose(TestResults& res);
 
 } // namespace SIMDPP_ARCH_NAMESPACE
