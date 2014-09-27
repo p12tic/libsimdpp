@@ -208,6 +208,7 @@ set(SIMDPP_X86_XOP_TEST_CODE
         };
         __m128i one = _mm_load_si128((__m128i*)(a));
         one = _mm_cmov_si128(one, one, one);
+        one = _mm_comeq_epi64(one, one);
         _mm_store_si128((__m128i*)(a), one);
     }"
 )
