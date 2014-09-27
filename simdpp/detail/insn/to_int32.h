@@ -197,7 +197,7 @@ int32<N> i_to_int32(float64<N> a)
 {
     int32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r.vec(i) = i_to_int32(detail::vec_extract<r.base_length>(a, i));
+        r.vec(i) = i_to_int32(detail::vec_extract<int32<N>::base_length>(a, i));
     }
     return r;
 }

@@ -76,7 +76,7 @@ float32<N> i_to_float32(int32<N> a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r.vec(i) = i_to_float32(detail::vec_extract<r.base_length>(a, i));
+        r.vec(i) = i_to_float32(detail::vec_extract<float32<N>::base_length>(a, i));
     }
     return r;
 }
@@ -132,7 +132,7 @@ float32<N> i_to_float32(float64<N> a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r.vec(i) = i_to_float32(detail::vec_extract<r.base_length>(a, i));
+        r.vec(i) = i_to_float32(detail::vec_extract<float32<N>::base_length>(a, i));
     }
     return r;
 }
