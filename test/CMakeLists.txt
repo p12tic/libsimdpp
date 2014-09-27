@@ -56,7 +56,12 @@ add_executable(test1 EXCLUDE_FROM_ALL
     ${TEST1_ARCH_GEN_SOURCES}
 )
 
-if(NOT MSVC)
+if(MSVC)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+        # enable _vectorcall on i386 builds (only works on MSVC 2013)
+        set_target_properties(test1 PROPERTIES COMPILE_FLAGS "/Gv")
+    endif()
+else()
     set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall -Wextra -fstack-protector -fstack-protector-all")
 endif()
 
