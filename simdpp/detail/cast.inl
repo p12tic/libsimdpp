@@ -30,12 +30,16 @@ template<unsigned N> struct base_mask_vector_type<mask_int64<N>> { using type = 
 template<unsigned N> struct base_mask_vector_type<mask_float32<N>> { using type = float32<N>; };
 template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type = float64<N>; };
 
+#if _MSC_VER
+#pragma intrinsic(memcpy)
+#endif
+
 template<class R, class T>
 R cast_memcpy(T t)
 {
     static_assert(sizeof(R) == sizeof(T), "Size mismatch");
     R r;
-    std::memcpy(&r, &t, sizeof(R));
+    ::memcpy(&r, &t, sizeof(R));
     return r;
 }
 
