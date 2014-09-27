@@ -55,7 +55,7 @@ inline uint8x16 permute_zbytes16(uint8x16 a, uint8x16 mask)
 
     for (unsigned i = 0; i < 16; i++) {
         unsigned j = mi.el(i) & 0x0f;
-        bool zero = mi.el(i) & 0x80;
+        bool zero = (mi.el(i) & 0x80) != 0;
         r.el(i) = zero ? 0 : ai.el(j);
     }
     return r;

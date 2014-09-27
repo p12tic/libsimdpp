@@ -61,8 +61,8 @@ public:
     }
 
     // stateless
-    bool operator!=(const aligned_allocator& other) const { return false; }
-    bool operator==(const aligned_allocator& other) const { return true; }
+    bool operator!=(const aligned_allocator&) const { return false; }
+    bool operator==(const aligned_allocator&) const { return true; }
 
     void construct(T* p, const T& t) const
     {

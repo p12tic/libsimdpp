@@ -66,7 +66,7 @@ inline uint8x16 shuffle_zbytes16(uint8x16 a, uint8x16 b, uint8x16 mask)
     for (unsigned i = 0; i < 16; i++) {
         unsigned j = mi.el(i) & 0x0f;
         unsigned which = mi.el(i) < 0x10;
-        bool zero = mi.el(i) & 0x80;
+        bool zero = (mi.el(i) & 0x80) != 0;
         r.el(i) = zero ? 0 : (which ? ai.el(j) : bi.el(j));
     }
     return r;

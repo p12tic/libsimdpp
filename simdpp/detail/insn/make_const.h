@@ -16,6 +16,11 @@
 #include <simdpp/detail/null/set.h>
 #include <simdpp/detail/traits.h>
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4244)
+#endif
+
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -514,6 +519,10 @@ void construct_eval(V& v, const expr_vec_make_const<VE, N>& e)
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp
+
+#if _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif
 

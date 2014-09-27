@@ -13,6 +13,11 @@
     #error "This file must be included through simd.h"
 #endif
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4244)
+#endif
+
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -46,6 +51,10 @@ R foreach(V1 v1, V2 v2, C c)
 } // namespace SIMDPP_ARCH_NAMESPACE
 #endif
 } // namespace simdpp
+
+#if _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif
 #endif

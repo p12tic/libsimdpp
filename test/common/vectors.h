@@ -45,7 +45,7 @@ struct Vectors {
         simdpp::int32<BE/4> i32[N];
         simdpp::int64<BE/8> i64[N];
         simdpp::float32<BE/4> f32[N];
-        simdpp::float64<BE / 8> f64[N];
+        simdpp::float64<BE/8> f64[N];
 #ifndef _MSC_VER
     };
 #endif

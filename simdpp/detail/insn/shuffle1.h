@@ -48,7 +48,7 @@ float64x2 i_shuffle1(float64x2 a, float64x2 b)
                                            _mm_castpd_ps(a)));
     } else if (s0 == 0 && s1 == 1) {
         return _mm_move_sd(b, a);
-    } else if (s0 == 1 && s1 == 0) {
+    } else /* if (s0 == 1 && s1 == 0) */ {
         return _mm_shuffle_pd(a, b, _MM_SHUFFLE2(s1, s0));
     }
 #endif
