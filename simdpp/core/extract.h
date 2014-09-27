@@ -170,7 +170,7 @@ uint64_t extract(uint64x2 a)
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS
-    uint32x4 t = a;
+    uint32x4 t = uint32x4(a);
     uint64_t r = extract<id*2>(t);
     r |= uint64_t(extract<id*2+1>(t)) << 32;
     return r;
@@ -179,7 +179,7 @@ uint64_t extract(uint64x2 a)
 #endif
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_SSE_32_BITS
-    uint32x4 t = a;
+    uint32x4 t = uint32x4(a);
     uint64_t r = 0;
     t = move4_l<id*2>(t); // when id==0, move_l is template-specialized and does nothing
     r = extract<0>(t);

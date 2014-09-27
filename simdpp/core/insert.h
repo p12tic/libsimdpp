@@ -163,10 +163,10 @@ uint64x2 insert(uint64x2 a, uint64_t x)
     return a;
 #elif SIMDPP_USE_SSE4_1
 #if SIMDPP_SSE_32_BITS
-    uint32x4 a0 = a;
+    uint32x4 a0 = (uint32x4) a;
     a0 = insert<id*2>(a0, uint32_t(x));
     a0 = insert<id*2+1>(a0, uint32_t(x >> 32));
-    return a0;
+    return (uint64x2) a0;
 #else
     return _mm_insert_epi64(a.operator __m128i(), x, id);
 #endif
@@ -174,7 +174,7 @@ uint64x2 insert(uint64x2 a, uint64_t x)
 #if SIMDPP_SSE_32_BITS
     int32x4 va = _mm_cvtsi32_si128(uint32_t(x));
     int32x4 vb = _mm_cvtsi32_si128(uint32_t(x >> 32));
-    int64x2 vx = zip4_lo(va, vb);
+    int64x2 vx = (int64x2) zip4_lo(va, vb);
     if (id == 0) {
         a = shuffle1<0,1>(vx, a);
     } else {
