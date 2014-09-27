@@ -108,12 +108,10 @@ inline unsigned select_version_any(std::vector<FnVersion>& versions,
 */
 inline void gcc_linker_bug_workaround()
 {
-    static volatile int i = 0;
+    static volatile int* i = 0;
     if (i) {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnonnull"
-        pthread_create(nullptr, nullptr, nullptr, nullptr);
-#pragma GCC diagnostic pop
+        pthread_t x;
+        pthread_create(&x, nullptr, (void*(*)(void*))(i), nullptr);
     }
 }
 #endif
