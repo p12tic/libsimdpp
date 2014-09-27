@@ -16,6 +16,7 @@
 #include <simdpp/detail/word_size.h>
 #include <simdpp/core/cast.h>
 #include <simdpp/core/shuffle1.h>
+#include <simdpp/core/zip_lo.h>
 #include <simdpp/altivec/load1.h>
 #include <simdpp/detail/null/set.h>
 #include <simdpp/detail/insn/combine.h>

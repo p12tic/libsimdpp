@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/zip_lo.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
