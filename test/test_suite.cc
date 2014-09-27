@@ -119,10 +119,13 @@ template<class T>
 bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems, unsigned prec)
 {
     for (unsigned i = 0; i < num_elems; i++) {
-        // we need to be extra-precise here. nextafter works won't introduce
-        // any rounding errors
+        // we need to be extra-precise here. nextafter is used because it won't
+        // introduce any rounding errors
         T ia = *a++;
         T ib = *b++;
+        if (std::isnan(ia) && std::isnan(ib)) {
+            continue;
+        }
         for (unsigned i = 0; i < prec; i++) {
             ia = std::nextafter(ia, ib);
         }
@@ -201,7 +204,7 @@ bool test_equal(const TestSuite& a, const char* a_arch,
             case TestSuite::TYPE_INT64:  fmt_bin(err, r.length, prefix, (const int64_t*)r.d());
             case TestSuite::TYPE_UINT64: fmt_bin(err, r.length, prefix, (const uint64_t*)r.d());
             case TestSuite::TYPE_FLOAT32: fmt_bin(err, r.length, prefix, (const float*)r.d());
-            case TestSuite::TYPE_FLOAT64:  fmt_bin(err, r.length, prefix, (const double*)r.d());
+            case TestSuite::TYPE_FLOAT64: fmt_bin(err, r.length, prefix, (const double*)r.d());
             }
         } else {
             switch (r.type) {
@@ -254,10 +257,6 @@ bool test_equal(const TestSuite& a, const char* a_arch,
     {
         if (std::memcmp(ia.d(), ib.d(), TestSuite::size_for_type(ia.type)) == 0) {
             return true;
-        }
-
-        if (prec == 0) {
-            return false;
         }
 
         switch (ia.type) {
