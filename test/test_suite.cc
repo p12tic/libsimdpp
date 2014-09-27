@@ -105,7 +105,7 @@ void fmt_bin(std::ostream& err, unsigned num_elems, const char* prefix, const T*
         std::memcpy(&pi, &pl, sizeof(T));
         unsigned bits = sizeof(T)*8;
         for (unsigned j = 0; j < bits; j++) {
-            err << ((pi & (1 << j)) ? '1' : '0');
+            err << ((pi & (uint64_t(1) << j)) ? '1' : '0');
         }
         if (i != num_elems - 1) {
             err << " ; ";
