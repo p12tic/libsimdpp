@@ -354,6 +354,13 @@
 #define SIMDPP_STRINGIFY(x) SIMDPP_STRINGIFY2(x)
 #define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
 
+// workarounds
+#if !defined(__clang__)
+// the implementation of XOP's com instruction is buggy in clang 3.5 and 3.4.
+// clang 3.3 doesn't support the corresponding intrinsic at all
+#define SIMDPP_SAFE_XOP_COM 1
+#endif
+
 // FIXME: unused (workarounds for AMD CPUs)
 // #define SIMDPP_USE_AMD
 

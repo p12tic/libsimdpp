@@ -59,7 +59,7 @@ inline mask_int8x16 i_cmp_gt(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_gt(a, b);
-#elif SIMDPP_USE_XOP
+#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
     return _mm_comgt_epu8(a, b);
 #elif SIMDPP_USE_SSE2
     uint8x16 bias = make_uint(0x80);
@@ -123,7 +123,7 @@ inline mask_int16x8 i_cmp_gt(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_gt(a, b);
-#elif SIMDPP_USE_XOP
+#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
     return _mm_comgt_epu16(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 bias = make_uint(0x8000);
@@ -194,7 +194,7 @@ inline mask_int32x4 i_cmp_gt(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_gt(a, b);
-#elif SIMDPP_USE_XOP
+#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
     return _mm_comgt_epu32(a, b);
 #elif SIMDPP_USE_SSE2
     uint32x4 bias = make_uint(0x80000000);

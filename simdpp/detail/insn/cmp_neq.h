@@ -30,7 +30,7 @@ inline mask_int8x16 i_cmp_neq(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
-#elif SIMDPP_USE_XOP
+#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
     return _mm_comneq_epi8(a, b);
 #else
     return bit_not(cmp_eq(a, b));
@@ -56,7 +56,7 @@ inline mask_int16x8 i_cmp_neq(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
-#elif SIMDPP_USE_XOP
+#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
     return _mm_comneq_epi16(a, b);
 #else
     return bit_not(cmp_eq(a, b));
@@ -82,7 +82,7 @@ inline mask_int32x4 i_cmp_neq(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
-#elif SIMDPP_USE_XOP
+#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
     return _mm_comneq_epi32(a, b);
 #else
     return bit_not(cmp_eq(a, b));
@@ -115,7 +115,7 @@ inline mask_int64x2 i_cmp_neq(uint64x2 a, uint64x2 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
-#elif SIMDPP_USE_XOP
+#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
     return _mm_comneq_epi64(a, b);
 #elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON
     return bit_not(cmp_eq(a, b));
