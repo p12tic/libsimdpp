@@ -29,6 +29,8 @@ void print_arch();
 #include "test.h"
 #include <simdpp/simd.h>
 #include <iostream>
+#include <simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h>
+#define SIMDPP_USER_ARCH_INFO ::simdpp::get_arch_gcc_builtin_cpu_supports
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -65,7 +67,7 @@ main.o: main.cc
 
 # inclusion of NONE_NULL is mandatory
 test_null.o: test.cc
-    g++ test.cc -c $(CXXFLAGS) -o test_sse2.o
+    g++ test.cc -c $(CXXFLAGS) -o test_null.o
 
 test_sse2.o: test.cc
     g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE2 -msse2 -o test_sse2.o
@@ -74,7 +76,7 @@ test_sse3.o: test.cc
     g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE3 -msse3 -o test_sse3.o
 
 test_sse4_1.o: test.cc
-    g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE4_1 -msse4.1 -o test_sse3.o
+    g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE4_1 -msse4.1 -o test_sse4_1.o
 ~~~
 
 If compiled, the above example selects the "fastest" of SSE2, SSE3 or SSE4.1

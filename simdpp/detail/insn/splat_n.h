@@ -17,6 +17,8 @@
 #include <simdpp/core/permute2.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/permute_bytes16.h>
+#include <simdpp/core/zip_lo.h>
+#include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/shuffle.h>
 #include <simdpp/sse/shuffle.h>
 
