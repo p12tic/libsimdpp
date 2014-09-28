@@ -52,14 +52,14 @@ template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_FLOAT + SIMDPP_TAG_S
 template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE32, B, E> { using type = mask_float32<B/4,E>; using empty = mask_float32<B/4,mask_float32<B/4>>; };
 template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE64, B, E> { using type = mask_float64<B/8,E>; using empty = mask_float64<B/8,mask_float64<B/8>>; };
 
-template<class V, class E>
+template<class V, class E = void>
 class get_expr {
 public:
     using type = typename type_of_tag<V::type_tag + V::size_tag, V::length_bytes, E>::type;
     using empty = typename type_of_tag<V::type_tag + V::size_tag, V::length_bytes, E>::empty;
 };
 
-template<class V, class E>
+template<class V, class E = void>
 class get_expr_nomask {
     static const unsigned type_tag = (V::type_tag == SIMDPP_TAG_MASK_FLOAT) ? SIMDPP_TAG_FLOAT :
                                      (V::type_tag == SIMDPP_TAG_MASK_INT) ? SIMDPP_TAG_UINT : V::type_tag;
@@ -68,7 +68,7 @@ public:
     using empty = typename type_of_tag<type_tag + V::size_tag, V::length_bytes, E>::empty;
 };
 
-template<class V, class E>
+template<class V, class E = void>
 class get_expr_nosign {
     static const unsigned type_tag = (V::type_tag == SIMDPP_TAG_INT) ? SIMDPP_TAG_UINT : V::type_tag;
 public:
@@ -76,7 +76,7 @@ public:
     using empty = typename type_of_tag<type_tag + V::size_tag, V::length_bytes, E>::empty;
 };
 
-template<class V, class E>
+template<class V, class E = void>
 class get_expr_nomask_nosign {
     static const unsigned type_tag = (V::type_tag == SIMDPP_TAG_MASK_FLOAT) ? SIMDPP_TAG_FLOAT :
                                      (V::type_tag == SIMDPP_TAG_INT) ? SIMDPP_TAG_UINT :
@@ -86,7 +86,7 @@ public:
     using empty = typename type_of_tag<type_tag + V::size_tag, V::length_bytes, E>::empty;
 };
 
-template<class V1, class V2, class E>
+template<class V1, class V2, class E = void>
 class get_expr2 {
     static const bool is_mask_op = (V1::type_tag == SIMDPP_TAG_MASK_FLOAT || V1::type_tag == SIMDPP_TAG_MASK_INT) &&
                                    (V2::type_tag == SIMDPP_TAG_MASK_FLOAT || V2::type_tag == SIMDPP_TAG_MASK_INT);
@@ -99,7 +99,7 @@ public:
     using empty = typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::empty;
 };
 
-template<class V1, class V2, class E>
+template<class V1, class V2, class E = void>
 class get_expr2_nomask {
     static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
 
@@ -112,7 +112,7 @@ public:
     using empty = typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::empty;
 };
 
-template<class V1, class V2, class E>
+template<class V1, class V2, class E = void>
 class get_expr2_nosign {
     static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
 
@@ -125,7 +125,7 @@ public:
 };
 
 
-template<class V1, class V2, class E>
+template<class V1, class V2, class E = void>
 class get_expr2_nomask_nosign {
     static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
     static const bool is_mask_op = type_tag_t1 == SIMDPP_TAG_MASK_FLOAT || type_tag_t1 == SIMDPP_TAG_MASK_INT;

@@ -66,7 +66,7 @@ class get_expr_bitwise2_and {
 
     // (type_tag) get the type tag of the expression. We compute it in the same
     // way get_expr2 computes them, i.e.
-    // type_tag == get_expr2<V1,V2,void>::type::type_tag
+    // type_tag == get_expr2<V1,V2>::type::type_tag
     static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
     static const bool is_mask_op1 = type_tag_t1 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t1 == SIMDPP_TAG_MASK_FLOAT;
@@ -132,7 +132,7 @@ class get_expr_bit_or {
 
     // (type_tag) get the type tag of the expression. We compute it in the same
     // way get_expr2 computes them, i.e.
-    // type_tag == get_expr2<V1,V2,void>::type::type_tag
+    // type_tag == get_expr2<V1,V2>::type::type_tag
     static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
     static const bool is_mask_op1 = type_tag_t1 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t1 == SIMDPP_TAG_MASK_FLOAT;

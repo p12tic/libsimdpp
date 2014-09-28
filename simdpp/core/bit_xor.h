@@ -37,10 +37,10 @@ _PROMOTED_EXPRESSION_ bit_xor(const any_vec<N,V1>& a,
                               const any_vec<N,V2>& b);
 #else
 template<unsigned N, class V1, class V2>
-typename detail::get_expr2<V1, V2, void>::empty
+typename detail::get_expr2<V1, V2>::empty
     bit_xor(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
-    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
     ra = a.wrapped().eval();
     rb = b.wrapped().eval();
     return detail::insn::i_bit_xor(ra, rb);

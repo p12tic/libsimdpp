@@ -56,11 +56,11 @@ _PROMOTED_NOMASK_EXPRESSION_ shuffle1(const any_vec64<N,V1>& a,
                                       const any_vec64<N,V2>& b);
 #else
 template<unsigned s0, unsigned s1, unsigned N, class V1, class V2>
-typename detail::get_expr2_nomask<V1, V2, void>::empty
+typename detail::get_expr2_nomask<V1, V2>::empty
         shuffle1(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    typename detail::get_expr2_nomask<V1, V2, void>::type ra = a.wrapped().eval(),
+    typename detail::get_expr2_nomask<V1, V2>::type ra = a.wrapped().eval(),
                                                                rb = b.wrapped().eval();
     return detail::insn::i_shuffle1<s0,s1>(ra, rb);
 }

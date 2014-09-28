@@ -47,7 +47,7 @@ template<unsigned N, class V1, class V2>
 mask_int8<N, mask_int8<N>> cmp_neq(const any_int8<N,V1>& a,
                                    const any_int8<N,V2>& b)
 {
-    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
     ra = a.wrapped().eval();
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);
@@ -80,7 +80,7 @@ template<unsigned N, class V1, class V2>
 mask_int16<N, mask_int16<N>> cmp_neq(const any_int16<N,V1>& a,
                                      const any_int16<N,V2>& b)
 {
-    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
     ra = a.wrapped().eval();
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);
@@ -114,7 +114,7 @@ template<unsigned N, class V1, class V2>
 mask_int32<N, mask_int32<N>> cmp_neq(const any_int32<N,V1>& a,
                                      const any_int32<N,V2>& b)
 {
-    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
     ra = a.wrapped().eval();
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);
@@ -152,7 +152,7 @@ template<unsigned N, class V1, class V2>
 mask_int64<N, mask_int64<N>> cmp_neq(const any_int64<N,V1>& a,
                                      const any_int64<N,V2>& b)
 {
-    typename detail::get_expr2_nosign<V1, V2, void>::type ra, rb;
+    typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
     ra = a.wrapped().eval();
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);

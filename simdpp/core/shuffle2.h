@@ -66,7 +66,7 @@ _PROMOTED_NOMASK_EXPRESSION_ shuffle2(const any_vec32<N,V1>& a,
 #else
 template<unsigned sa0, unsigned sa1, unsigned sb0, unsigned sb1, unsigned N,
          class V1, class V2>
-typename detail::get_expr2_nomask<V1, V2, void>::empty
+typename detail::get_expr2_nomask<V1, V2>::empty
     shuffle2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     static_assert(sa0 < 4 && sa1 < 4 && sb0 < 4 && sb1 < 4, "Selector out of range");
@@ -121,7 +121,7 @@ _PROMOTED_NOMASK_EXPRESSION_ shuffle2(const any_vec32<N,V1>& a,
 #else
 template<unsigned s0, unsigned s1, unsigned N,
          class V1, class V2>
-typename detail::get_expr2_nomask<V1, V2, void>::empty
+typename detail::get_expr2_nomask<V1, V2>::empty
     shuffle2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");

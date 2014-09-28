@@ -61,11 +61,11 @@ _PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec16<N,V>& a);
 #else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V>
-typename detail::get_expr_nomask<V, void>::empty
+typename detail::get_expr_nomask<V>::empty
         permute4(const any_vec16<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    typename detail::get_expr_nomask<V, void>::type ra;
+    typename detail::get_expr_nomask<V>::type ra;
     ra = a.wrapped().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
@@ -112,11 +112,11 @@ _PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec32<N,V>& a);
 #else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V>
-typename detail::get_expr_nomask<V, void>::empty
+typename detail::get_expr_nomask<V>::empty
         permute4(const any_vec32<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    typename detail::get_expr_nomask<V, void>::type ra;
+    typename detail::get_expr_nomask<V>::type ra;
     ra = a.wrapped().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
@@ -147,11 +147,11 @@ _PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec64<N,V>& a);
 #else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V>
-typename detail::get_expr_nomask<V, void>::empty
+typename detail::get_expr_nomask<V>::empty
         permute4(const any_vec64<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    typename detail::get_expr_nomask<V, void>::type ra;
+    typename detail::get_expr_nomask<V>::type ra;
     ra = a.wrapped().eval();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }

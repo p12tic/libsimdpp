@@ -37,7 +37,7 @@ template<unsigned N, class V>
 void load_packed2(any_vec<N,V>& a, any_vec<N,V>& b, const void* p)
 {
     static_assert(!is_mask<V>::value, "Mask types can not be loaded");
-    typename detail::get_expr_nosign<V, void>::type ra, rb;
+    typename detail::get_expr_nosign<V>::type ra, rb;
     detail::insn::i_load_packed2(ra, rb, reinterpret_cast<const char*>(p));
     a.wrapped() = ra;
     b.wrapped() = rb;

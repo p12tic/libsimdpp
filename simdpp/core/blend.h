@@ -74,7 +74,7 @@ class get_expr_blend {
 
     // (type_tag_t2) get the type tag of the first pair of parameters. We
     // compute it by applying the promotion rules to the first two parameters,
-    // i.e. type_tag_t2 == get_expr2<V1,V2,void>::type::type_tag
+    // i.e. type_tag_t2 == get_expr2<V1,V2>::type::type_tag
     static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
     static const bool is_mask_op1 = type_tag_t1 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t1 == SIMDPP_TAG_MASK_FLOAT;
@@ -84,7 +84,7 @@ class get_expr_blend {
     // (type_tag) get the type tag of the expression. We compute it by applying
     // the promotion rules to the pair that includes the third parameter and
     // the result of the first promotion.
-    // I.e. type_tag == get_expr2<get_expr2<V1,V2,void>::type, V3>::type::type_tag
+    // I.e. type_tag == get_expr2<get_expr2<V1,V2>::type, V3>::type::type_tag
     static const unsigned type_tag_t3 = type_tag_t2 > V3::type_tag ? type_tag_t2 : V3::type_tag;
     static const bool is_mask_op2 = type_tag_t3 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t3 == SIMDPP_TAG_MASK_FLOAT;
