@@ -43,8 +43,8 @@ inline float32x4 i_floor(float32x4 a)
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
     mask_float32x4 large_mask, zero_mask, mask;
-    large_mask = cmp_gt(ba, float32x4(make_float(8388607.0f)));
-    zero_mask = cmp_eq(ba, float32x4::zero());
+    large_mask = cmp_gt(ba, 8388607.0f);
+    zero_mask = cmp_eq(ba, 0);
     mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
 
     //calculate the i_floor using trunc

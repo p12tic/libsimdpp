@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/i_min.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -47,6 +48,8 @@ int8<N, int8<N>> min(int8<N,E1> a, int8<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, int8, int8)
+
 /** Computes minimum of the unsigned 8-bit values.
 
     @code
@@ -69,6 +72,8 @@ uint8<N, uint8<N>> min(uint8<N,E1> a, uint8<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint8, uint8)
+
 /** Computes minimum of the signed 16-bit values.
 
     @code
@@ -90,6 +95,8 @@ int16<N, int16<N>> min(int16<N,E1> a, int16<N,E2> b)
     return detail::insn::i_min(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, int16, int16)
 
 /** Computes minimum of the unsigned 16-bit values.
 
@@ -116,6 +123,9 @@ uint16<N, uint16<N>> min(uint16<N,E1> a, uint16<N,E2> b)
     return detail::insn::i_min(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint16, uint16)
+
 /** Computes minimum of the signed 32-bit values.
 
     @code
@@ -142,6 +152,9 @@ int32<N, int32<N>> min(int32<N,E1> a, int32<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, int32, int32)
+
+
 /** Computes minimum of the unsigned 32-bit values.
 
     @code
@@ -167,6 +180,9 @@ uint32<N, uint32<N>> min(uint32<N,E1> a, uint32<N,E2> b)
     return detail::insn::i_min(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint32, uint32)
+
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

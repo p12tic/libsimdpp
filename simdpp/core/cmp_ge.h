@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/cmp_ge.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -45,6 +46,8 @@ mask_float32<N, mask_float32<N>> cmp_ge(float32<N,E1> a,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_float32, float32)
+
 /** Compares the values of two float64x2 vectors for greater-than
 
     @code
@@ -72,6 +75,8 @@ mask_float64<N, mask_float64<N>> cmp_ge(float64<N,E1> a,
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_float64, float64)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

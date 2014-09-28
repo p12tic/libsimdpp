@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/f_min.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -46,6 +47,8 @@ float32<N, float32<N>> min(float32<N,E1> a, float32<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, float32, float32)
+
 /** Computes minima of the values in two vectors. If at least one of the values
     is NaN, or both values are zeroes, it is unspecified which value will be
     returned.
@@ -73,6 +76,8 @@ float64<N, float64<N>> min(float64<N,E1> a, float64<N,E2> b)
     return detail::insn::i_min(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, float64, float64)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

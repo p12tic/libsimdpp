@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_sub_sat.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -44,6 +45,8 @@ int8<N, expr_sub_sat<int8<N,E1>,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_EXPR(sub_sat, expr_sub_sat, int8, int8)
+
 /** Subtracts and saturaters signed 16-bit integer values.
 
     @code
@@ -67,6 +70,8 @@ int16<N, expr_sub_sat<int16<N,E1>,
     return { { a, b }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_EXPR(sub_sat, expr_sub_sat, int16, int16)
 
 /** Subtracts and saturaters unsigned 8-bit integer values.
 
@@ -92,6 +97,8 @@ uint8<N, expr_sub_sat<uint8<N,E1>,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_EXPR(sub_sat, expr_sub_sat, uint8, uint8)
+
 /** Subtracts and saturaters unsigned 16-bit integer values.
 
     @code
@@ -115,6 +122,8 @@ uint16<N, expr_sub_sat<uint16<N,E1>,
     return { { a, b }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_EXPR(sub_sat, expr_sub_sat, uint16, uint16)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

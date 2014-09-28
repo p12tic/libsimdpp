@@ -16,6 +16,7 @@
 #include <simdpp/detail/insn/bit_andnot.h>
 #include <simdpp/detail/expr/bit_andnot.h>
 #include <simdpp/core/detail/get_expr_bitwise.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -47,7 +48,19 @@ typename detail::get_expr_bitwise2_and<expr_bit_andnot, V1, V2>::type
 }
 #endif
 
-// FIXME: add expression-template optimizations
+// support scalar arguments
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(detail::scalar_param<typename V::element_type> a, const any_vec<N,V>& b)
+{
+    return bit_andnot(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(const any_vec<N,V>& a, detail::scalar_param<typename V::element_type> b)
+{
+    return bit_andnot(detail::make_const<typename detail::get_expr_nomask<V>::type>(b), a);
+}
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

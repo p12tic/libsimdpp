@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/bit_xor.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -46,6 +47,21 @@ typename detail::get_expr2<V1, V2>::empty
     return detail::insn::i_bit_xor(ra, rb);
 }
 #endif
+
+// support scalar arguments
+template<unsigned N, class V>
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
+        bit_xor(detail::scalar_param<typename V::element_type> a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+
+template<unsigned N, class V>
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
+        bit_xor(const any_vec<N,V>& a, detail::scalar_param<typename V::element_type> b)
+{
+    return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

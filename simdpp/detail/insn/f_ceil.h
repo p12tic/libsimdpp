@@ -44,13 +44,13 @@ inline float32x4 i_ceil(float32x4 a)
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
     mask_float32x4 large_mask, zero_mask, mask;
-    large_mask = cmp_gt(ba, float32x4(make_float(8388607.0f)));
-    zero_mask = cmp_eq(ba, float32x4::zero());
+    large_mask = cmp_gt(ba, 8388607.0f);
+    zero_mask = cmp_eq(ba, 0);
     mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
 
     //calculate the ceil using trunc
     int32x4 s = shift_r((uint32x4)a, 31);
-            s = bit_xor(s, int32x4(make_int((0x00000001)))); //=1 if a>0
+            s = bit_xor(s, 0x00000001); //=1 if a>0
     float32x4 at = (float32x4) sub((int32x4)a, s); //=nextafter towards -inf if a>0
     int32x4 ia = to_int32(at);
             ia = add(ia, s);

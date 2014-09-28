@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/i_avg_trunc.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -48,6 +49,8 @@ uint8<N, uint8<N>> avg_trunc(uint8<N,E1> a, uint8<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint8, uint8)
+
 /** Computes truncated average of signed 8-bit values.
 
     @code
@@ -74,6 +77,8 @@ int8<N, int8<N>> avg_trunc(int8<N,E1> a, int8<N,E2> b)
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int8, int8)
 
 /** Computes truncated average of unsigned 16-bit values.
 
@@ -103,6 +108,8 @@ uint16<N, uint16<N>> avg_trunc(uint16<N,E1> a, uint16<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint16, uint16)
+
 /** Computes truncated average of signed 16-bit values.
 
     @code
@@ -130,6 +137,8 @@ int16<N, int16<N>> avg_trunc(int16<N,E1> a, int16<N,E2> b)
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int16, int16)
 
 /** Computes truncated average of unsigned 32-bit values.
 
@@ -159,6 +168,8 @@ uint32<N, uint32<N>> avg_trunc(uint32<N,E1> a, uint32<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint32, uint32)
+
 /** Computes truncated average of signed 32-bit values.
 
     @code
@@ -187,6 +198,8 @@ int32<N, int32<N>> avg_trunc(int32<N,E1> a, int32<N,E2> b)
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int32, int32)
 
 
 #ifndef SIMDPP_DOXYGEN

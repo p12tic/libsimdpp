@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/f_div.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -48,6 +49,8 @@ float32<N, float32<N>> div(float32<N,E1> a, float32<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(div, float32, float32)
+
 /** Divides the values of two vectors
 
     @code
@@ -75,6 +78,7 @@ float64<N, float64<N>> div(float64<N,E1> a, float64<N,E2> b)
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC(div, float64, float64)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

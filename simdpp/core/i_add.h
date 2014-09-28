@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_add.h>
 #include <simdpp/detail/get_expr.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -50,6 +51,8 @@ typename detail::get_expr2_nomask<V1, V2,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int8, uint8)
+
 /** Adds 16-bit integer values.
 
     @code
@@ -78,6 +81,8 @@ typename detail::get_expr2_nomask<V1, V2,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int16, uint16)
+
 /** Adds 32-bit integer values.
 
     @code
@@ -105,6 +110,8 @@ typename detail::get_expr2_nomask<V1, V2,
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int32, uint32)
 
 /** Adds 64-bit integer values.
 
@@ -137,6 +144,8 @@ typename detail::get_expr2_nomask<V1, V2,
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int64, uint64)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/cmp_eq.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -48,6 +49,8 @@ mask_int8<N, mask_int8<N>> cmp_eq(const any_int8<N,V1>& a,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int8, any_int8)
+
 /** Compares 16-bit values for equality.
 
     @code
@@ -75,6 +78,8 @@ mask_int16<N, mask_int16<N>> cmp_eq(const any_int16<N,V1>& a,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int16, any_int16)
+
 /** Compares the values of two int32x4 vectors for equality
 
     @code
@@ -101,6 +106,8 @@ mask_int32<N, mask_int32<N>> cmp_eq(const any_int32<N,V1>& a,
     return detail::insn::i_cmp_eq(ra, rb);
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int32, any_int32)
 
 /** Compares the values of two int64x2 vectors for equality
 
@@ -138,6 +145,8 @@ mask_int64<N, mask_int64<N>> cmp_eq(const any_int64<N,V1>& a,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int64, any_int64)
+
 /** Compares the values of two float32x4 vectors for equality
 
     @code
@@ -151,8 +160,8 @@ mask_int64<N, mask_int64<N>> cmp_eq(const any_int64<N,V1>& a,
 */
 #if SIMDPP_DOXYGEN
 template<unsigned N, class V1, class V2>
-mask_float32<N, _DETAIL_> cmp_eq(const float32<N,V1>& a,
-                                 const float32<N,V2>& b);
+mask_float32<N, _DETAIL_> cmp_eq(const any_float32<N,V1>& a,
+                                 const any_float32<N,V2>& b);
 #else
 template<unsigned N, class V1, class V2>
 mask_float32<N, mask_float32<N>> cmp_eq(const any_float32<N,V1>& a,
@@ -161,6 +170,8 @@ mask_float32<N, mask_float32<N>> cmp_eq(const any_float32<N,V1>& a,
     return detail::insn::i_cmp_eq(a.wrapped().eval(), b.wrapped().eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_float32, any_float32)
 
 /** Compares the values of two float64x2 vectors for equality
 
@@ -189,6 +200,9 @@ mask_float64<N, mask_float64<N>> cmp_eq(const any_float64<N,V1>& a,
     return detail::insn::i_cmp_eq(a.wrapped().eval(), b.wrapped().eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_float64, any_float64)
+
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

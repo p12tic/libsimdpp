@@ -163,12 +163,11 @@ uint64<2> expr_eval(expr_sub<uint64<2,E1>,
 #elif SIMDPP_USE_NEON
     return vsubq_u64(a, b);
 #else
-    uint64x2 c1 = make_uint(1);
     uint32x4 r, carry;
     carry = vec_subc((__vector uint32_t) a, (__vector uint32_t) b);
     carry = move_l<1>(carry);
     r = sub((uint32x4)a, (uint32x4)b);
-    carry = bit_and(carry, c1);
+    carry = bit_and(carry, 1);
     r = sub(r, carry);
     return r;
 #endif

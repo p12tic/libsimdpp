@@ -65,12 +65,11 @@ inline int8x16 i_avg_trunc(int8x16 a, int8x16 b)
         return (int16_t(a) + b) >> 1;
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    uint8x16 a2, b2, bias, r;
-    bias = make_uint(0x80);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
+    uint8x16 a2, b2, r;
+    a2 = bit_xor(a, 0x80); // add
+    b2 = bit_xor(b, 0x80); // add
     r = i_avg_trunc(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
+    r = bit_xor(r, 0x80); // sub
     return r;
 #elif SIMDPP_USE_NEON
     return vhaddq_s8(a, b);
@@ -133,12 +132,11 @@ inline int16x8 i_avg_trunc(int16x8 a, int16x8 b)
         return (int32_t(a) + b) >> 1;
     });
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    uint16x8 a2, b2, bias, r;
-    bias = make_uint(0x8000);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
+    uint16x8 a2, b2, r;
+    a2 = bit_xor(a, 0x8000); // add
+    b2 = bit_xor(b, 0x8000); // add
     r = i_avg_trunc(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
+    r = bit_xor(r, 0x8000); // sub
     return r;
 #elif SIMDPP_USE_NEON
     return vhaddq_s16(a, b);
@@ -148,12 +146,11 @@ inline int16x8 i_avg_trunc(int16x8 a, int16x8 b)
 #if SIMDPP_USE_AVX2
 inline int16x16 i_avg_trunc(int16x16 a, int16x16 b)
 {
-    uint16x16 a2, b2, bias, r;
-    bias = make_uint(0x8000);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
+    uint16x16 a2, b2, r;
+    a2 = bit_xor(a, 0x8000); // add
+    b2 = bit_xor(b, 0x8000); // add
     r = i_avg_trunc(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
+    r = bit_xor(r, 0x8000); // sub
     return r;
 }
 #endif
@@ -246,12 +243,11 @@ V v_emul_avg_trunc(V a, V b)
 template<class V>
 V v_emul_avg_trunc_i32(V a, V b)
 {
-    typename V::uint_vector_type a2, b2, bias, r;
-    bias = make_uint(0x80000000);
-    a2 = bit_xor(a, bias); // add
-    b2 = bit_xor(b, bias); // add
+    typename V::uint_vector_type a2, b2, r;
+    a2 = bit_xor(a, 0x80000000); // add
+    b2 = bit_xor(b, 0x80000000); // add
     r = v_emul_avg_trunc(a2, b2); // unsigned
-    r = bit_xor(r, bias); // sub
+    r = bit_xor(r, 0x80000000); // sub
     return r;
 }
 

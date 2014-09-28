@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_mul.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -49,6 +50,8 @@ typename detail::get_expr2_nomask<V1, V2,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, uint16)
+
 /** Multiplies signed 16-bit values and returns the higher half of the result.
 
     @code
@@ -78,6 +81,8 @@ int16<N, expr_mul_hi<int16<N,E1>,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, int16, int16)
+
 /** Multiplies unsigned 16-bit values and returns the higher half of the result.
 
     @code
@@ -106,6 +111,9 @@ uint16<N, expr_mul_hi<uint16<N,E1>,
     return { { a, b }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, uint16, uint16)
+
 
 /** Multiplies 32-bit values and returns the lower half of the result.
 
@@ -140,6 +148,9 @@ typename detail::get_expr2_nomask<V1, V2,
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int32, uint32)
+
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

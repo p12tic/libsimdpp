@@ -36,10 +36,9 @@ inline float32x4 i_rcp_rh(float32x4 x, float32x4 a)
     return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
 #elif SIMDPP_USE_SSE2
     float32x4 c2, r;
-    c2 = make_float(2.0f);
 
     r = mul(a, x);
-    r = sub(c2, r);
+    r = sub(2.0, r);
     x = mul(x, r);
 
     return x;
@@ -63,10 +62,9 @@ inline float32x4 i_rcp_rh(float32x4 x, float32x4 a)
 inline float32x8 i_rcp_rh(float32x8 x, float32x8 a)
 {
     float32x8 c2, r;
-    c2 = make_float(2.0f);
 
     r = mul(a, x);
-    r = sub(c2, r);
+    r = sub(2.0, r);
     x = mul(x, r);
 
     return x;
@@ -77,10 +75,9 @@ inline float32x8 i_rcp_rh(float32x8 x, float32x8 a)
 inline float32<16> i_rcp_rh(float32<16> x, float32<16> a)
 {
     float32<16> c2, r;
-    c2 = make_float(2.0f);
 
     r = mul(a, x);
-    r = sub(c2, r);
+    r = sub(2.0, r);
     x = mul(x, r);
 
     return x;

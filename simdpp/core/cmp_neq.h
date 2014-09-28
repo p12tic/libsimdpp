@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/cmp_neq.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -54,6 +55,8 @@ mask_int8<N, mask_int8<N>> cmp_neq(const any_int8<N,V1>& a,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_int8, any_int8)
+
 /** Compares the values of two int16x8 vectors for inequality
 
     @code
@@ -86,6 +89,8 @@ mask_int16<N, mask_int16<N>> cmp_neq(const any_int16<N,V1>& a,
     return detail::insn::i_cmp_neq(ra, rb);
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_int16, any_int16)
 
 /** Compares the values of two int32x4 vectors for inequality
 
@@ -120,6 +125,8 @@ mask_int32<N, mask_int32<N>> cmp_neq(const any_int32<N,V1>& a,
     return detail::insn::i_cmp_neq(ra, rb);
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_int32, any_int32)
 
 /** Compares the values of two int64x2 vectors for inequality
 
@@ -159,6 +166,8 @@ mask_int64<N, mask_int64<N>> cmp_neq(const any_int64<N,V1>& a,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_int64, any_int64)
+
 /** Compares the values of two float32x4 vectors for inequality
 
     @code
@@ -187,6 +196,8 @@ mask_float32<N, mask_float32<N>> cmp_neq(const any_float32<N,V1>& a,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_float32, any_float32)
+
 /** Compares the values of two float64x2 vectors for inequality
 
     @code
@@ -214,6 +225,8 @@ mask_float64<N, mask_float64<N>> cmp_neq(const any_float64<N,V1>& a,
     return detail::insn::i_cmp_neq(a.wrapped().eval(), b.wrapped().eval());
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_float64, any_float64)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

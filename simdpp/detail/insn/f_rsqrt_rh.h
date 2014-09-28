@@ -31,13 +31,10 @@ V v_rsqrt_rh(V x, V a)
 {
     V x2, c3, c0p5, r;
 
-    c3 = make_float(3.0f);
-    c0p5 = make_float(0.5f);
-
     x2 = mul(x, x);
     r = mul(a, x2);
-    r = sub(c3, r);
-    x = mul(x, c0p5);
+    r = sub(3.0, r);
+    x = mul(x, 0.5);
     r = mul(x, r);
 
     return r;
@@ -62,12 +59,11 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
     float32x4 c3, c0p5, x2, r, xp5;
 
     c3 = make_float(3.0f);
-    c0p5 = make_float(0.5f);
 
     x2 = mul(x, x);
     // r = (c3 - a*x2)
     r = vec_nmsub((__vector float)a, (__vector float)x2, (__vector float)c3);
-    xp5 = mul(x, c0p5);
+    xp5 = mul(x, 0.5);
     r = mul(xp5, r);
 
     return r;

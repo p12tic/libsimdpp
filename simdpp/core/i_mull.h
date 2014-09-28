@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_mull.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -81,6 +82,8 @@ int32<N, expr_mull<int16<N,E1>,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
+
 /** Multiplies unsigned 16-bit values and expands the results to 32 bits.
 
     @par 128-bit version:
@@ -111,6 +114,8 @@ uint32<N, expr_mull<uint16<N,E1>,
     return { { a, b }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
 
 /** Multiplies signed 32-bit values in and expands the results to 64 bits.
 
@@ -144,6 +149,8 @@ int64<N, expr_mull<int32<N,E1>,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
+
 /** Multiplies unsigned 32-bit values in the lower halves of the vectors and
     expands the results to 64 bits.
 
@@ -175,6 +182,8 @@ uint64<N, expr_mull<uint32<N,E1>,
     return { { a, b }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint64, uint32)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

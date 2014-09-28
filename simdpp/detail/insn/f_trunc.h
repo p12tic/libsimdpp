@@ -34,7 +34,7 @@ inline float32x4 i_trunc(float32x4 a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large
     float32x4 af = abs(a);
-    mask_float32x4 mask = cmp_gt(af, float32x4(make_float(8388607.0f)));
+    mask_float32x4 mask = cmp_gt(af, 8388607.0f);
 
     //truncate
     int32x4 ia = to_int32(a);

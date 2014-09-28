@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/f_sub.h>
+#include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -45,6 +46,8 @@ float32<N, expr_sub<float32<N,E1>,
 }
 #endif
 
+SIMDPP_SCALAR_ARG_IMPL_EXPR(sub, expr_sub, float32, float32)
+
 /** Subtracts the values of two vectors
 
     @code
@@ -73,6 +76,8 @@ float64<N, expr_sub<float64<N,E1>,
     return { { a, b }, 0 };
 }
 #endif
+
+SIMDPP_SCALAR_ARG_IMPL_EXPR(sub, expr_sub, float64, float64)
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

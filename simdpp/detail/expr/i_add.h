@@ -162,12 +162,11 @@ uint64<2> expr_eval(expr_add<uint64<2,E1>,
 #elif SIMDPP_USE_NEON
     return vaddq_u64(a, b);
 #elif SIMDPP_USE_ALTIVEC
-    uint64x2 c1 = make_uint(1);
     uint32x4 r, carry;
     carry = vec_addc((__vector uint32_t) a, (__vector uint32_t) b);
     carry = move4_l<1>(carry);
     r = add((uint32x4)a, (uint32x4)b);
-    carry = bit_and(carry, c1);
+    carry = bit_and(carry, 1);
     r = add(r, carry);
     return r;
 #endif
