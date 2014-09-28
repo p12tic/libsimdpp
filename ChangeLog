@@ -1,0 +1,18 @@
+
+What's new in v2.0:
+
+ * Expression template-based backend
+ * Support scalar arguments to certain functions
+ * Support for vectors much longer than the native vector type. The only
+    limitation is that the length must be a power of 2.
+ * API break: int128 and int256 types have been removed. On some archs it's more
+    efficient to have different physical representations for vectors with
+    different element widths.
+ * API break: 'broadcast' family of functions have been renamed to 'splat'
+ * API break: 'permute' family of functions has been renamed to 'permute2' and
+    'permute4' depending on the number of template arguments taken.
+ * API break: value conversion functions such as to_float32x4 have been renamed
+    and now returns a vector with the same number of elements as the source
+    vector.
+ * API break: certain functions return "empty" expressions instead of vectors
+ * API break: saturated add and sub are now called sat_add and sat_sub
