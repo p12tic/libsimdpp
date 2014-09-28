@@ -110,6 +110,11 @@ inline mask_int32<16> i_cmp_eq(uint32<16> a, uint32<16> b)
 {
     return _mm512_cmpeq_epi32_mask(a, b);
 }
+
+inline mask_int32<16> i_cmp_eq(mask_int32<16> a, mask_int32<16> b)
+{
+    return _mm512_kxnor(a, b);
+}
 #endif
 
 template<unsigned N>
@@ -168,6 +173,11 @@ inline mask_int64<8> i_cmp_eq(uint64<8> a, uint64<8> b)
 {
     return _mm512_cmpeq_epi64_mask(a, b);
 }
+
+inline mask_int64<8> i_cmp_eq(mask_int64<8> a, mask_int64<8> b)
+{
+    return _mm512_kxnor(a, b);
+}
 #endif
 
 template<unsigned N>
@@ -205,6 +215,11 @@ inline mask_float32<16> i_cmp_eq(float32<16> a, float32<16> b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_EQ_OQ);
 }
+
+inline mask_float32<16> i_cmp_eq(mask_float32<16> a, mask_float32<16> b)
+{
+    return _mm512_kxnor(a, b);
+}
 #endif
 
 template<unsigned N>
@@ -239,6 +254,11 @@ inline mask_float64x4 i_cmp_eq(float64x4 a, float64x4 b)
 inline mask_float64<8> i_cmp_eq(float64<8> a, float64<8> b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_EQ_OQ);
+}
+
+inline mask_float64<8> i_cmp_eq(mask_float64<8> a, mask_float64<8> b)
+{
+    return _mm512_kxnor(a, b);
 }
 #endif
 
