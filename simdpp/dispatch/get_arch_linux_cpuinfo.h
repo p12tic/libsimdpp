@@ -26,7 +26,7 @@ namespace simdpp {
 */
 inline Arch get_arch_linux_cpuinfo()
 {
-    Arch res;
+    Arch res = Arch::NONE_NULL;
 
     std::map<std::string, Arch> features;
     std::string ident;
