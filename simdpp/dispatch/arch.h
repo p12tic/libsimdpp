@@ -96,6 +96,15 @@ inline Arch operator~(const Arch& x)
 }
 /// @}
 
+/// Checks if the bits set in @a required is a subset of bits set in @a current.
+inline bool test_arch_subset(Arch current, Arch required)
+{
+    if ((~current & required) == Arch::NONE_NULL) {
+        return true;
+    }
+    return false;
+}
+
 /// @} -- end defgroup
 
 } // namespace simdpp

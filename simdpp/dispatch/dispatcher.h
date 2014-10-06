@@ -87,7 +87,7 @@ inline unsigned select_version_any(std::vector<FnVersion>& versions,
 
     unsigned i;
     for (i = 0; i < versions.size(); ++i) {
-        if ((versions[i].needed_arch & ~arch) == Arch::NONE_NULL) {
+        if (test_arch_subset(arch, versions[i].needed_arch)) {
             break;
         }
     }
