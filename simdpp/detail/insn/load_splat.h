@@ -167,9 +167,8 @@ inline void i_load_splat(uint64x2& v, const void* p0)
 #if SIMDPP_USE_AVX2
 inline void i_load_splat(uint64x4& v, const void* p0)
 {
-    const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
-    uint64x2 a = _mm_cvtsi64_si128(*v0);
-    v = _mm256_broadcastq_epi64(a);
+    __m128i x = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(p0));
+    v = _mm256_broadcastq_epi64(x);
 }
 #endif
 

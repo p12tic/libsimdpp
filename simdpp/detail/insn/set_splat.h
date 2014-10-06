@@ -193,8 +193,15 @@ inline void i_set_splat(uint64x2& v, uint64_t v0)
 #if SIMDPP_USE_AVX2
 inline void i_set_splat(uint64x4& v, uint64_t v0)
 {
+#if SIMDPP_SSE_32_BITS
+    uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
+    uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
+    uint64x2 a = (uint64x2) zip4_lo(va, vb);
+    v = _mm256_broadcastq_epi64(a);
+#else
     uint64x2 a = _mm_cvtsi64_si128(v0);
     v = _mm256_broadcastq_epi64(a);
+#endif
 }
 #endif
 
