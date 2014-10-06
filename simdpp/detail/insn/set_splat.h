@@ -34,6 +34,10 @@ inline void i_set_splat(uint8x16& v, uint8_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint8x16>(v0);
+#elif SIMDPP_USE_AVX2
+    uint32_t u0 = v0;
+    v = _mm_cvtsi32_si128(u0);
+    v = _mm_broadcastw_epi16(v);
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 * 0x01010101;
@@ -77,6 +81,10 @@ inline void i_set_splat(uint16x8& v, uint16_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint16x8>(v0);
+#elif SIMDPP_USE_AVX2
+    uint32_t u0 = v0;
+    v = _mm_cvtsi32_si128(u0);
+    v = _mm_broadcastw_epi16(v);
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 | v0 << 16;
@@ -120,6 +128,9 @@ inline void i_set_splat(uint32x4& v, uint32_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint32x4>(v0);
+#elif SIMDPP_USE_AVX2
+    v = _mm_cvtsi32_si128(v0);
+    v = _mm_broadcastd_epi32(v);
 #elif SIMDPP_USE_SSE2
     v = _mm_cvtsi32_si128(v0);
     v = permute4<0,0,0,0>(v);
