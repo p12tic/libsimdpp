@@ -1,4 +1,4 @@
-/*  Copyright (C) 2013  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2014  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -47,6 +47,8 @@ enum class Arch : std::uint32_t {
     X86_FMA4 = 1 << 8,
     /// Indicates x86 XOP (AMD) support
     X86_XOP = 1 << 9,
+    /// Indicates x86 AVX-512F suppotr
+    X86_AVX512F = 1 << 10,
 
     /// Indicates ARM NEON support (SP and DP floating-point math is executed
     /// on VFP)

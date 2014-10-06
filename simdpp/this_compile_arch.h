@@ -48,6 +48,9 @@ inline Arch this_compile_arch()
 #if SIMDPP_USE_AVX2
     res |= Arch::X86_AVX2;
 #endif
+#if SIMDPP_USE_AVX512F
+    res |= Arch::X86_AVX512F;
+#endif
 #if SIMDPP_USE_NEON
     res |= Arch::ARM_NEON;
 #endif
