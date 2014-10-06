@@ -59,7 +59,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 // FIXME: return empty expr
-template<class V = expr_vec_make_const<double,1>>
+template<class V = expr_vec_make_const<double,1>> SIMDPP_INL
 V make_float(double v0)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -70,7 +70,7 @@ V make_float(double v0)
     return detail::insn::i_make_const_dispatch<V>::run(a);
 }
 
-template<class V = expr_vec_make_const<double,2>>
+template<class V = expr_vec_make_const<double,2>> SIMDPP_INL
 V make_float(double v0, double v1)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -82,7 +82,7 @@ V make_float(double v0, double v1)
     return detail::insn::i_make_const_dispatch<V>::run(a);
 }
 
-template<class V = expr_vec_make_const<double,4>>
+template<class V = expr_vec_make_const<double,4>> SIMDPP_INL
 V make_float(double v0, double v1, double v2, double v3)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -93,7 +93,7 @@ V make_float(double v0, double v1, double v2, double v3)
     return detail::insn::i_make_const_dispatch<V>::run(a);
 }
 
-template<class V = expr_vec_make_const<double,8>>
+template<class V = expr_vec_make_const<double,8>> SIMDPP_INL
 V make_float(double v0, double v1, double v2, double v3,
              double v4, double v5, double v6, double v7)
 {

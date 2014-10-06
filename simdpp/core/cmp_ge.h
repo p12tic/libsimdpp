@@ -38,7 +38,7 @@ template<unsigned N, class E1, class E2>
 mask_float32<N, _DETAIL_> cmp_ge(float32<N,E1> a,
                                  float32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_float32<N, mask_float32<N>> cmp_ge(float32<N,E1> a,
                                         float32<N,E2> b)
 {
@@ -68,7 +68,7 @@ template<unsigned N, class E1, class E2>
 mask_float64<N, _DETAIL_> cmp_ge(float64<N,E1> a,
                                  float64<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_float64<N, mask_float64<N>> cmp_ge(float64<N,E1> a,
                                         float64<N,E2> b)
 {

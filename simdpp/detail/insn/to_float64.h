@@ -26,7 +26,7 @@ namespace detail {
 namespace insn {
 
 
-inline float64x4 i_to_float64(int32x4 a)
+SIMDPP_INL float64x4 i_to_float64(int32x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> ax(a);
@@ -47,7 +47,7 @@ inline float64x4 i_to_float64(int32x4 a)
 }
 
 #if SIMDPP_USE_AVX2
-inline float64<8> i_to_float64(int32x8 a)
+SIMDPP_INL float64<8> i_to_float64(int32x8 a)
 {
 #if SIMDPP_USE_AVX512
     return _mm512_cvtepi32_pd(a);
@@ -63,7 +63,7 @@ inline float64<8> i_to_float64(int32x8 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-inline float64<16> i_to_float64(int32<16> a)
+SIMDPP_INL float64<16> i_to_float64(int32<16> a)
 {
     float64<8> r1, r2;
     int32<8> a1, a2;
@@ -74,7 +74,7 @@ inline float64<16> i_to_float64(int32<16> a)
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 float64<N> i_to_float64(int32<N> a)
 {
     float64<N> r;
@@ -86,7 +86,7 @@ float64<N> i_to_float64(int32<N> a)
 
 // -----------------------------------------------------------------------------
 
-inline float64x4 i_to_float64(float32x4 a)
+SIMDPP_INL float64x4 i_to_float64(float32x4 a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
@@ -107,7 +107,7 @@ inline float64x4 i_to_float64(float32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-inline float64<8> i_to_float64(float32x8 a)
+SIMDPP_INL float64<8> i_to_float64(float32x8 a)
 {
 #if SIMDPP_USE_AVX512
     return _mm512_cvtps_pd(a);
@@ -123,7 +123,7 @@ inline float64<8> i_to_float64(float32x8 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-inline float64<16> i_to_float64(float32<16> a)
+SIMDPP_INL float64<16> i_to_float64(float32<16> a)
 {
     float64<8> r1, r2;
     float32<8> a1, a2;
@@ -134,7 +134,7 @@ inline float64<16> i_to_float64(float32<16> a)
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 float64<N> i_to_float64(float32<N> a)
 {
     float64<N> r;

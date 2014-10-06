@@ -26,7 +26,7 @@ namespace detail {
 namespace insn {
 
 
-inline mask_int8x16 i_cmp_neq(uint8x16 a, uint8x16 b)
+SIMDPP_INL mask_int8x16 i_cmp_neq(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
@@ -38,13 +38,13 @@ inline mask_int8x16 i_cmp_neq(uint8x16 a, uint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline mask_int8x32 i_cmp_neq(uint8x32 a, uint8x32 b)
+SIMDPP_INL mask_int8x32 i_cmp_neq(uint8x32 a, uint8x32 b)
 {
     return bit_not(cmp_eq(a, b));
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 mask_int8<N> i_cmp_neq(uint8<N> a, uint8<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, i_cmp_neq, a, b);
@@ -52,7 +52,7 @@ mask_int8<N> i_cmp_neq(uint8<N> a, uint8<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline mask_int16x8 i_cmp_neq(uint16x8 a, uint16x8 b)
+SIMDPP_INL mask_int16x8 i_cmp_neq(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
@@ -64,13 +64,13 @@ inline mask_int16x8 i_cmp_neq(uint16x8 a, uint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline mask_int16x16 i_cmp_neq(uint16x16 a, uint16x16 b)
+SIMDPP_INL mask_int16x16 i_cmp_neq(uint16x16 a, uint16x16 b)
 {
     return bit_not(cmp_eq(a, b));
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 mask_int16<N> i_cmp_neq(uint16<N> a, uint16<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, i_cmp_neq, a, b);
@@ -78,7 +78,7 @@ mask_int16<N> i_cmp_neq(uint16<N> a, uint16<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline mask_int32x4 i_cmp_neq(uint32x4 a, uint32x4 b)
+SIMDPP_INL mask_int32x4 i_cmp_neq(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
@@ -90,25 +90,25 @@ inline mask_int32x4 i_cmp_neq(uint32x4 a, uint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline mask_int32x8 i_cmp_neq(uint32x8 a, uint32x8 b)
+SIMDPP_INL mask_int32x8 i_cmp_neq(uint32x8 a, uint32x8 b)
 {
     return bit_not(cmp_eq(a, b));
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline mask_int32<16> i_cmp_neq(uint32<16> a, uint32<16> b)
+SIMDPP_INL mask_int32<16> i_cmp_neq(uint32<16> a, uint32<16> b)
 {
     return _mm512_cmpneq_epu32_mask(a, b);
 }
 
-inline mask_int32<16> i_cmp_neq(mask_int32<16> a, mask_int32<16> b)
+SIMDPP_INL mask_int32<16> i_cmp_neq(mask_int32<16> a, mask_int32<16> b)
 {
     return _mm512_kxor(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 mask_int32<N> i_cmp_neq(uint32<N> a, uint32<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, i_cmp_neq, a, b);
@@ -116,7 +116,7 @@ mask_int32<N> i_cmp_neq(uint32<N> a, uint32<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline mask_int64x2 i_cmp_neq(uint64x2 a, uint64x2 b)
+SIMDPP_INL mask_int64x2 i_cmp_neq(uint64x2 a, uint64x2 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
@@ -146,25 +146,25 @@ inline mask_int64x2 i_cmp_neq(uint64x2 a, uint64x2 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline mask_int64x4 i_cmp_neq(uint64x4 a, uint64x4 b)
+SIMDPP_INL mask_int64x4 i_cmp_neq(uint64x4 a, uint64x4 b)
 {
     return bit_not(cmp_eq(a, b));
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline mask_int64<8> i_cmp_neq(uint64<8> a, uint64<8> b)
+SIMDPP_INL mask_int64<8> i_cmp_neq(uint64<8> a, uint64<8> b)
 {
     return _mm512_cmpneq_epi64_mask(a, b);
 }
 
-inline mask_int64<8> i_cmp_neq(mask_int64<8> a, mask_int64<8> b)
+SIMDPP_INL mask_int64<8> i_cmp_neq(mask_int64<8> a, mask_int64<8> b)
 {
     return _mm512_kxor(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 mask_int64<N> i_cmp_neq(uint64<N> a, uint64<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_neq, a, b);
@@ -172,7 +172,7 @@ mask_int64<N> i_cmp_neq(uint64<N> a, uint64<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline mask_float32x4 i_cmp_neq(float32x4 a, float32x4 b)
+SIMDPP_INL mask_float32x4 i_cmp_neq(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
@@ -186,25 +186,25 @@ inline mask_float32x4 i_cmp_neq(float32x4 a, float32x4 b)
 }
 
 #if SIMDPP_USE_AVX
-inline mask_float32x8 i_cmp_neq(float32x8 a, float32x8 b)
+SIMDPP_INL mask_float32x8 i_cmp_neq(float32x8 a, float32x8 b)
 {
     return _mm256_cmp_ps(a, b, _CMP_NEQ_UQ);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline mask_float32<16> i_cmp_neq(float32<16> a, float32<16> b)
+SIMDPP_INL mask_float32<16> i_cmp_neq(float32<16> a, float32<16> b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_NEQ_UQ);
 }
 
-inline mask_float32<16> i_cmp_neq(mask_float32<16> a, mask_float32<16> b)
+SIMDPP_INL mask_float32<16> i_cmp_neq(mask_float32<16> a, mask_float32<16> b)
 {
     return _mm512_kxor(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 mask_float32<N> i_cmp_neq(float32<N> a, float32<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, i_cmp_neq, a, b);
@@ -212,7 +212,7 @@ mask_float32<N> i_cmp_neq(float32<N> a, float32<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline mask_float64x2 i_cmp_neq(float64x2 a, float64x2 b)
+SIMDPP_INL mask_float64x2 i_cmp_neq(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_neq(a, b);
@@ -226,25 +226,25 @@ inline mask_float64x2 i_cmp_neq(float64x2 a, float64x2 b)
 }
 
 #if SIMDPP_USE_AVX
-inline mask_float64x4 i_cmp_neq(float64x4 a, float64x4 b)
+SIMDPP_INL mask_float64x4 i_cmp_neq(float64x4 a, float64x4 b)
 {
     return _mm256_cmp_pd(a, b, _CMP_NEQ_UQ);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline mask_float64<8> i_cmp_neq(float64<8> a, float64<8> b)
+SIMDPP_INL mask_float64<8> i_cmp_neq(float64<8> a, float64<8> b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_NEQ_UQ);
 }
 
-inline mask_float64<8> i_cmp_neq(mask_float64<8> a, mask_float64<8> b)
+SIMDPP_INL mask_float64<8> i_cmp_neq(mask_float64<8> a, mask_float64<8> b)
 {
     return _mm512_kxor(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 mask_float64<N> i_cmp_neq(float64<N> a, float64<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, i_cmp_neq, a, b);

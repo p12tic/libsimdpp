@@ -26,7 +26,7 @@ namespace insn {
 
 
 // base 8x16 implementation
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint8x16 i_align16(uint8x16 lower, uint8x16 upper)
 {
 #if SIMDPP_USE_NULL
@@ -55,14 +55,14 @@ uint8x16 i_align16(uint8x16 lower, uint8x16 upper)
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint8x32 i_align16(uint8x32 lower, uint8x32 upper)
 {
     return _mm256_alignr_epi8(upper, lower, shift);
 }
 #endif
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_align16(uint8<N> lower, uint8<N> upper)
 {
     SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_align16<shift>, lower, upper);
@@ -70,35 +70,35 @@ uint8<N> i_align16(uint8<N> lower, uint8<N> upper)
 
 // generic implementations
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint16<N> i_align8(uint16<N> lower, uint16<N> upper)
 {
     return uint16<N>(i_align16<shift*2>(uint8<N*2>(lower),
                                         uint8<N*2>(upper)));
 }
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint32<N> i_align4(uint32<N> lower, uint32<N> upper)
 {
     return uint32<N>(i_align16<shift*4>(uint8<N*4>(lower),
                                         uint8<N*4>(upper)));
 }
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint64<N> i_align2(uint64<N> lower, uint64<N> upper)
 {
     return uint64<N>(i_align16<shift*8>(uint8<N*8>(lower),
                                         uint8<N*8>(upper)));
 }
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 float32<N> i_align4(float32<N> lower, float32<N> upper)
 {
     return float32<N>(i_align4<shift>(uint32<N>(lower),
                                       uint32<N>(upper)));
 }
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 float64<N> i_align2(float64<N> lower, float64<N> upper)
 {
     return float64<N>(i_align2<shift>(uint64<N>(lower),

@@ -55,7 +55,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 
 */
-inline uint8x16 shuffle_zbytes16(uint8x16 a, uint8x16 b, uint8x16 mask)
+SIMDPP_INL uint8x16 shuffle_zbytes16(uint8x16 a, uint8x16 b, uint8x16 mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -110,7 +110,7 @@ inline uint8x16 shuffle_zbytes16(uint8x16 a, uint8x16 b, uint8x16 mask)
 }
 
 #if SIMDPP_USE_AVX2
-inline uint8x32 shuffle_zbytes16(uint8x32 a, uint8x32 b, uint8x32 mask)
+SIMDPP_INL uint8x32 shuffle_zbytes16(uint8x32 a, uint8x32 b, uint8x32 mask)
 {
     int8x32 sel, set_zero, ai, bi, r;
     sel = mask;
@@ -125,33 +125,33 @@ inline uint8x32 shuffle_zbytes16(uint8x32 a, uint8x32 b, uint8x32 mask)
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint8<N> shuffle_zbytes16(uint8<N> a, uint8<N> b, uint8<N> mask)
 {
     SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, shuffle_zbytes16, a, b, mask);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint16<N> shuffle_zbytes16(uint16<N> a, uint16<N> b, uint16<N> mask)
 {
     return (uint16<N>) shuffle_zbytes16(uint8<N*2>(a), uint8<N*2>(b), uint8<N*2>(mask));
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint32<N> shuffle_zbytes16(uint32<N> a, uint32<N> b, uint32<N> mask)
 {
     return (uint32<N>) shuffle_zbytes16(uint8<N*4>(a), uint8<N*4>(b), uint8<N*4>(mask));
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint64<N> shuffle_zbytes16(uint64<N> a, uint64<N> b, uint64<N> mask)
 {
     return (uint64<N>) shuffle_zbytes16(uint8<N*8>(a), uint8<N*8>(b), uint8<N*8>(mask));
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 float32<N> shuffle_zbytes16(float32<N> a, float32<N> b, uint32<N> mask)
 {
     return float32<N>(shuffle_zbytes16(uint32<N>(a), uint32<N>(b), mask));
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 float64<N> shuffle_zbytes16(float64<N> a, float64<N> b, uint64<N> mask)
 {
     return float64<N>(shuffle_zbytes16(uint64<N>(a), uint64<N>(b), mask));

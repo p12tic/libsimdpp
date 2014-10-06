@@ -24,19 +24,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<unsigned s, class V>
+template<unsigned s, class V> SIMDPP_INL
 V v_splat(V a);
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint8x16 i_splat(uint8x16 a)
 {
     return i_splat16<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint8x32 i_splat(uint8x32 a)
 {
     static_assert(s < 32, "Access out of bounds");
@@ -47,7 +47,7 @@ uint8x32 i_splat(uint8x32 a)
 }
 #endif
 
-template<unsigned s, unsigned N>
+template<unsigned s, unsigned N> SIMDPP_INL
 uint8<N> i_splat(uint8<N> a)
 {
     static_assert(s < N, "Access out of bounds");
@@ -56,14 +56,14 @@ uint8<N> i_splat(uint8<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint16x8 i_splat(uint16x8 a)
 {
     return i_splat8<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint16x16 i_splat(uint16x16 a)
 {
     static_assert(s < 16, "Access out of bounds");
@@ -74,7 +74,7 @@ uint16x16 i_splat(uint16x16 a)
 }
 #endif
 
-template<unsigned s, unsigned N>
+template<unsigned s, unsigned N> SIMDPP_INL
 uint16<N> i_splat(uint16<N> a)
 {
     static_assert(s < N, "Access out of bounds");
@@ -83,14 +83,14 @@ uint16<N> i_splat(uint16<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint32x4 i_splat(uint32x4 a)
 {
     return i_splat4<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint32x8 i_splat(uint32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
@@ -101,7 +101,7 @@ uint32x8 i_splat(uint32x8 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint32<16> i_splat(uint32<16> a)
 {
     static_assert(s < 16, "Access out of bounds");
@@ -111,7 +111,7 @@ uint32<16> i_splat(uint32<16> a)
 }
 #endif
 
-template<unsigned s, unsigned N>
+template<unsigned s, unsigned N> SIMDPP_INL
 uint32<N> i_splat(uint32<N> a)
 {
     static_assert(s < N, "Access out of bounds");
@@ -120,14 +120,14 @@ uint32<N> i_splat(uint32<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint64x2 i_splat(uint64x2 a)
 {
     return i_splat2<s>(a);
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint64x4 i_splat(uint64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
@@ -136,7 +136,7 @@ uint64x4 i_splat(uint64x4 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 uint64<8> i_splat(uint64<8> a)
 {
     static_assert(s < 8, "Access out of bounds");
@@ -146,7 +146,7 @@ uint64<8> i_splat(uint64<8> a)
 }
 #endif
 
-template<unsigned s, unsigned N>
+template<unsigned s, unsigned N> SIMDPP_INL
 uint64<N> i_splat(uint64<N> a)
 {
     static_assert(s < N, "Access out of bounds");
@@ -155,14 +155,14 @@ uint64<N> i_splat(uint64<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 float32x4 i_splat(float32x4 a)
 {
     return i_splat4<s>(a);
 }
 
 #if SIMDPP_USE_AVX
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 float32x8 i_splat(float32x8 a)
 {
     static_assert(s < 8, "Access out of bounds");
@@ -172,7 +172,7 @@ float32x8 i_splat(float32x8 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 float32<16> i_splat(float32<16> a)
 {
     static_assert(s < 16, "Access out of bounds");
@@ -182,7 +182,7 @@ float32<16> i_splat(float32<16> a)
 }
 #endif
 
-template<unsigned s, unsigned N>
+template<unsigned s, unsigned N> SIMDPP_INL
 float32<N> i_splat(float32<N> a)
 {
     static_assert(s < N, "Access out of bounds");
@@ -191,14 +191,14 @@ float32<N> i_splat(float32<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 float64x2 i_splat(float64x2 a)
 {
     return i_splat2<s>(a);
 }
 
 #if SIMDPP_USE_AVX
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 float64x4 i_splat(float64x4 a)
 {
     static_assert(s < 4, "Access out of bounds");
@@ -213,7 +213,7 @@ float64x4 i_splat(float64x4 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s>
+template<unsigned s> SIMDPP_INL
 float64<8> i_splat(float64<8> a)
 {
     static_assert(s < 8, "Access out of bounds");
@@ -223,7 +223,7 @@ float64<8> i_splat(float64<8> a)
 }
 #endif
 
-template<unsigned s, unsigned N>
+template<unsigned s, unsigned N> SIMDPP_INL
 float64<N> i_splat(float64<N> a)
 {
     static_assert(s < N, "Access out of bounds");
@@ -233,7 +233,7 @@ float64<N> i_splat(float64<N> a)
 // -----------------------------------------------------------------------------
 
 // collect some duplicate stuff here
-template<unsigned s, class V>
+template<unsigned s, class V> SIMDPP_INL
 V v_splat(V a)
 {
     using U = typename V::base_vector_type;

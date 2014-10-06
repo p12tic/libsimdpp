@@ -42,7 +42,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE4.1-AVX, 1}
     @icost{ALTIVEC, 2}
 */
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 uint8_t extract(uint8x16 a)
 {
     static_assert(id < 16, "index out of bounds");
@@ -66,7 +66,7 @@ uint8_t extract(uint8x16 a)
 #endif
 }
 
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 int8_t extract(int8x16 a)
 {
     return extract<id>(uint8x16(a));
@@ -84,7 +84,7 @@ int8_t extract(int8x16 a)
 
     @icost{ALTIVEC, 2}
 */
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 uint16_t extract(uint16x8 a)
 {
     static_assert(id < 8, "index out of bounds");
@@ -101,7 +101,7 @@ uint16_t extract(uint16x8 a)
 #endif
 }
 
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 int16_t extract(int16x8 a)
 {
     return extract<id>(uint16x8(a));
@@ -120,7 +120,7 @@ int16_t extract(int16x8 a)
     @icost{SSE2, SSE3, SSSE3, 1-2}
     @icost{ALTIVEC, 2}
 */
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 uint32_t extract(uint32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
@@ -140,7 +140,7 @@ uint32_t extract(uint32x4 a)
 #endif
 }
 
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 int32_t extract(int32x4 a)
 {
     return extract<id>(uint32x4(a));
@@ -162,7 +162,7 @@ int32_t extract(int32x4 a)
     @icost{SSE4_1_32bit, 2}
     @icost{ALTIVEC, 2}
 */
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 uint64_t extract(uint64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
@@ -201,7 +201,7 @@ uint64_t extract(uint64x2 a)
 #endif
 }
 
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 int64_t extract(int64x2 a)
 {
     return extract<id>(uint64x2(a));
@@ -219,7 +219,7 @@ int64_t extract(int64x2 a)
     @icost{SSE2, SSE3, SSSE3, 1-2}
     @icost{ALTIVEC, 2}
 */
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 float extract(float32x4 a)
 {
     static_assert(id < 4, "index out of bounds");
@@ -246,7 +246,7 @@ float extract(float32x4 a)
 
     @icost{NEON, ALTIVEC, 2}
 */
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 double extract(float64x2 a)
 {
     static_assert(id < 2, "index out of bounds");
@@ -275,7 +275,7 @@ double extract(float64x2 a)
     @icost{NEON, 6-7}
     @icost{ALTIVEC, 8-9}
 */
-inline uint16_t extract_bits_any(uint8x16 a)
+SIMDPP_INL uint16_t extract_bits_any(uint8x16 a)
 {
     // extract_bits_impl depends on the exact implementation of this function
 #if SIMDPP_USE_NULL
@@ -324,7 +324,7 @@ inline uint16_t extract_bits_any(uint8x16 a)
     @icost{NEON, 7-9}
     @icost{ALTIVEC, 9-11}
 */
-template<unsigned id>
+template<unsigned id> SIMDPP_INL
 uint16_t extract_bits(uint8x16 a)
 {
     static_assert(id < 8, "index out of bounds");
@@ -355,7 +355,7 @@ uint16_t extract_bits(uint8x16 a)
 
 namespace detail {
 
-template<class A, class R>
+template<class A, class R> SIMDPP_INL
 void v256_split(A a, R& r1, R& r2)
 {
 #if SIMDPP_USE_AVX2
@@ -383,31 +383,31 @@ void v256_split(A a, R& r1, R& r2)
     @icost{AVX2, 1}
     @icost{SSE2-AVX, NEON, ALTIVEC, 0}
 */
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(uint8<N> a, uint8<N/2>& r1, uint8<N/2>& r2)
 {
     detail::insn::i_split(a, r1, r2);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(uint16<N> a, uint16<N/2>& r1, uint16<N/2>& r2)
 {
     detail::insn::i_split(a, r1, r2);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(uint32<N> a, uint32<N/2>& r1, uint32<N/2>& r2)
 {
     detail::insn::i_split(a, r1, r2);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(uint64<N> a, uint64<N/2>& r1, uint64<N/2>& r2)
 {
     detail::insn::i_split(a, r1, r2);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(int8<N> a, int8<N/2>& r1, int8<N/2>& r2)
 {
     uint8<N/2> q1, q2;  q1 = r1;  q2 = r2;
@@ -415,7 +415,7 @@ void split(int8<N> a, int8<N/2>& r1, int8<N/2>& r2)
     r1 = q1;  r2 = q2;
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(int16<N> a, int16<N/2>& r1, int16<N/2>& r2)
 {
     uint16<N/2> q1, q2;  q1 = r1;  q2 = r2;
@@ -423,7 +423,7 @@ void split(int16<N> a, int16<N/2>& r1, int16<N/2>& r2)
     r1 = q1;  r2 = q2;
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(int32<N> a, int32<N/2>& r1, int32<N/2>& r2)
 {
     uint32<N/2> q1, q2;  q1 = r1;  q2 = r2;
@@ -431,7 +431,7 @@ void split(int32<N> a, int32<N/2>& r1, int32<N/2>& r2)
     r1 = q1;  r2 = q2;
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(int64<N> a, int64<N/2>& r1, int64<N/2>& r2)
 {
     uint64<N/2> q1, q2;  q1 = r1;  q2 = r2;
@@ -439,13 +439,13 @@ void split(int64<N> a, int64<N/2>& r1, int64<N/2>& r2)
     r1 = q1;  r2 = q2;
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(float32<N> a, float32<N/2>& r1, float32<N/2>& r2)
 {
     detail::insn::i_split(a, r1, r2);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void split(float64<N> a, float64<N/2>& r1, float64<N/2>& r2)
 {
     detail::insn::i_split(a, r1, r2);

@@ -35,7 +35,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 mask_float32<N, _DETAIL_> isnan(float32<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 mask_float32<N, mask_float32<N>> isnan(float32<N,E> a)
 {
     return detail::insn::i_isnan(a.eval());
@@ -61,7 +61,7 @@ mask_float32<N, mask_float32<N>> isnan(float32<N,E> a)
 template<unsigned N, class E>
 mask_float64<N, _DETAIL_> isnan(float64<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 mask_float64<N, mask_float64<N>> isnan(float64<N,E> a)
 {
     return detail::insn::i_isnan(a.eval());

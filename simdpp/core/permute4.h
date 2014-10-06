@@ -60,7 +60,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
 _PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec16<N,V>& a);
 #else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class V>
+         unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute4(const any_vec16<N,V>& a)
 {
@@ -111,7 +111,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
 _PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec32<N,V>& a);
 #else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class V>
+         unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute4(const any_vec32<N,V>& a)
 {
@@ -146,7 +146,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
 _PROMOTED_NOMASK_EXPRESSION_ permute4(const any_vec64<N,V>& a);
 #else
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
-         unsigned N, class V>
+         unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute4(const any_vec64<N,V>& a)
 {

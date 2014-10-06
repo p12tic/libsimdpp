@@ -24,20 +24,20 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 /// s - selector, u - number of elements per group
-template<int s, unsigned u>
+template<int s, unsigned u> SIMDPP_INL
 void assert_selector_range()
 {
     static_assert(-1 <= s && s < u*2, "Selector out of range");
 }
 
-template<int s0, int s1, int u>
+template<int s0, int s1, int u> SIMDPP_INL
 void assert_selector_range()
 {
     static_assert(-1 <= s0 && s0 < u*2, "Selector out of range");
     static_assert(-1 <= s1 && s1 < u*2, "Selector out of range");
 }
 
-template<int s0, int s1, int s2, int s3, int u>
+template<int s0, int s1, int s2, int s3, int u> SIMDPP_INL
 void assert_selector_range()
 {
     static_assert(-1 <= s0 && s0 < u*2, "Selector out of range");
@@ -47,7 +47,7 @@ void assert_selector_range()
 }
 
 /// s - selector, u - the number of elements per group
-template<int s, int u>
+template<int s, int u> SIMDPP_INL
 uint8_t get_shuffle_bytex1_16()
 {
     return (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
@@ -58,7 +58,7 @@ using uint8x4 = array<uint8_t, 4>;
 using uint8x8 = array<uint8_t, 8>;
 
 /// s - selector, u - the number of elements per group
-template<int s, int u>
+template<int s, int u> SIMDPP_INL
 uint8x2 get_shuffle_bytex2_16()
 {
     uint8x2 r;
@@ -68,7 +68,7 @@ uint8x2 get_shuffle_bytex2_16()
 }
 
 /// s - selector, u - the number of elements per group
-template<int s, int u>
+template<int s, int u> SIMDPP_INL
 uint8x4 get_shuffle_bytex4_16()
 {
     uint8x4 r;
@@ -80,7 +80,7 @@ uint8x4 get_shuffle_bytex4_16()
 }
 
 /// s - selector, u - the number of elements per group
-template<int s, int u>
+template<int s, int u> SIMDPP_INL
 uint8x8 get_shuffle_bytex8_16()
 {
     uint8x8 r;
@@ -133,7 +133,7 @@ uint8x8 get_shuffle_bytex8_16()
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, unsigned N>
+template<int s0, int s1, unsigned N> SIMDPP_INL
 uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
@@ -181,7 +181,7 @@ uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, int s2, int s3, unsigned N>
+template<int s0, int s1, int s2, int s3, unsigned N> SIMDPP_INL
 uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
@@ -228,7 +228,7 @@ uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, unsigned N>
+template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, unsigned N> SIMDPP_INL
 uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
@@ -275,7 +275,7 @@ uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7,
-         int s8, int s9, int s10, int s11, int s12, int s13, int s14, int s15, unsigned N>
+         int s8, int s9, int s10, int s11, int s12, int s13, int s14, int s15, unsigned N> SIMDPP_INL
 uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,16>();
@@ -338,7 +338,7 @@ uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, unsigned N>
+template<int s0, int s1, unsigned N> SIMDPP_INL
 uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
@@ -386,7 +386,7 @@ uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, int s2, int s3, unsigned N>
+template<int s0, int s1, int s2, int s3, unsigned N> SIMDPP_INL
 uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
@@ -430,7 +430,7 @@ uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
     lower and higher halves of the vectors separately.
 */
 template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7,
-         unsigned N>
+         unsigned N> SIMDPP_INL
 uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
@@ -481,7 +481,7 @@ uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, unsigned N>
+template<int s0, int s1, unsigned N> SIMDPP_INL
 uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
@@ -520,7 +520,7 @@ uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, int s2, int s3, unsigned N>
+template<int s0, int s1, int s2, int s3, unsigned N> SIMDPP_INL
 uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
@@ -559,7 +559,7 @@ uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
     The vectors will be shuffled as if the 128-bit version was applied to the
     lower and higher halves of the vectors separately.
 */
-template<int s0, int s1, unsigned N>
+template<int s0, int s1, unsigned N> SIMDPP_INL
 uint64<N> make_shuffle_bytes16_mask(uint64<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();

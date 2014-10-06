@@ -22,7 +22,7 @@ namespace detail {
 namespace insn {
 
 #if SIMDPP_USE_AVX2
-template<class V = void>
+template<class V = void> SIMDPP_INL
 uint8<32> i_combine(uint8<16> a, uint8<16> b)
 {
     uint8<32> r;
@@ -35,7 +35,7 @@ uint8<32> i_combine(uint8<16> a, uint8<16> b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void>
+template<class V = void> SIMDPP_INL
 uint16<16> i_combine(uint16<8> a, uint16<8> b)
 {
     uint16<16> r;
@@ -48,7 +48,7 @@ uint16<16> i_combine(uint16<8> a, uint16<8> b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void>
+template<class V = void> SIMDPP_INL
 uint32<8> i_combine(uint32<4> a, uint32<4> b)
 {
     uint32<8> r;
@@ -59,7 +59,7 @@ uint32<8> i_combine(uint32<4> a, uint32<4> b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class V = void>
+template<class V = void> SIMDPP_INL
 uint32<16> i_combine(uint32<8> a, uint32<8> b)
 {
     uint32<16> r;
@@ -73,7 +73,7 @@ uint32<16> i_combine(uint32<8> a, uint32<8> b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void>
+template<class V = void> SIMDPP_INL
 uint64<4> i_combine(uint64<2> a, uint64<2> b)
 {
     uint64<4> r;
@@ -84,7 +84,7 @@ uint64<4> i_combine(uint64<2> a, uint64<2> b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class V = void>
+template<class V = void> SIMDPP_INL
 uint64<8> i_combine(uint64<4> a, uint64<4> b)
 {
     uint64<8> r;
@@ -97,7 +97,7 @@ uint64<8> i_combine(uint64<4> a, uint64<4> b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX
-template<class V = void>
+template<class V = void> SIMDPP_INL
 float32<8> i_combine(float32<4> a, float32<4> b)
 {
     float32<8> r;
@@ -108,7 +108,7 @@ float32<8> i_combine(float32<4> a, float32<4> b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class V = void>
+template<class V = void> SIMDPP_INL
 float32<16> i_combine(float32<8> a, float32<8> b)
 {
     float64<8> r;
@@ -122,7 +122,7 @@ float32<16> i_combine(float32<8> a, float32<8> b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX
-template<class V = void>
+template<class V = void> SIMDPP_INL
 float64<4> i_combine(float64<2> a, float64<2> b)
 {
     float64<4> r;
@@ -133,7 +133,7 @@ float64<4> i_combine(float64<2> a, float64<2> b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class V = void>
+template<class V = void> SIMDPP_INL
 float64<8> i_combine(float64<4> a, float64<4> b)
 {
     float64<8> r;
@@ -146,7 +146,7 @@ float64<8> i_combine(float64<4> a, float64<4> b)
 
 // -----------------------------------------------------------------------------
 // generic implementation
-template<class V, class H>
+template<class V, class H> SIMDPP_INL
 V i_combine(H a1, H a2)
 {
     V r;

@@ -22,7 +22,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
-template<class V, class E = typename V::element_type>
+template<class V, class E = typename V::element_type> SIMDPP_INL
 V make_vec(E v0)
 {
     V r;
@@ -32,7 +32,7 @@ V make_vec(E v0)
     return r;
 }
 
-template<class V, class E = typename V::element_type>
+template<class V, class E = typename V::element_type> SIMDPP_INL
 V make_vec(E v0, E v1)
 {
     V r;
@@ -43,7 +43,7 @@ V make_vec(E v0, E v1)
     return r;
 }
 
-template<class V, class E = typename V::element_type>
+template<class V, class E = typename V::element_type> SIMDPP_INL
 V make_vec(E v0, E v1, E v2, E v3)
 {
     V r;
@@ -56,7 +56,7 @@ V make_vec(E v0, E v1, E v2, E v3)
     return r;
 }
 
-template<class V, class E = typename V::element_type>
+template<class V, class E = typename V::element_type> SIMDPP_INL
 V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7)
 {
     V r;
@@ -73,7 +73,7 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7)
     return r;
 }
 
-template<class V, class E = typename V::element_type>
+template<class V, class E = typename V::element_type> SIMDPP_INL
 V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7,
            E v8, E v9, E v10, E v11, E v12, E v13, E v14, E v15)
 {

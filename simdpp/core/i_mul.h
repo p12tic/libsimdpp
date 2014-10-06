@@ -38,7 +38,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ mul_lo(const any_int16<N,V1>& a,
                                     const any_int16<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_mul_lo<uint16<N, typename V1::expr_type>,
                                               uint16<N, typename V2::expr_type>>
@@ -72,7 +72,7 @@ template<unsigned N, class E1, class E2>
 int16<N, _DETAIL_> mul_hi(int16<N,E1> a,
                           int16<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 int16<N, expr_mul_hi<int16<N,E1>,
                      int16<N,E2>>> mul_hi(int16<N,E1> a,
                                           int16<N,E2> b)
@@ -103,7 +103,7 @@ template<unsigned N, class E1, class E2>
 uint16<N, _DETAIL_> mul_hi(uint16<N,E1> a,
                            uint16<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N, expr_mul_hi<uint16<N,E1>,
                       uint16<N,E2>>> mul_hi(uint16<N,E1> a,
                                             uint16<N,E2> b)
@@ -137,7 +137,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ mul_lo(const any_int32<N,V1>& a,
                                     const any_int32<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_mul_lo<uint32<N, typename V1::expr_type>,
                                               uint32<N, typename V2::expr_type>>

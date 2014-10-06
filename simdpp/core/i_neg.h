@@ -35,7 +35,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 int8<N, _DETAIL_> neg(int8<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int8<N, expr_neg<int8<N,E>>> neg(int8<N,E> a)
 {
     return { { a }, 0 };
@@ -57,7 +57,7 @@ int8<N, expr_neg<int8<N,E>>> neg(int8<N,E> a)
 template<unsigned N, class E>
 int16<N, _DETAIL_> neg(int16<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int16<N, expr_neg<int16<N,E>>> neg(int16<N,E> a)
 {
     return { { a }, 0 };
@@ -79,7 +79,7 @@ int16<N, expr_neg<int16<N,E>>> neg(int16<N,E> a)
 template<unsigned N, class E>
 int32<N, _DETAIL_> neg(int32<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int32<N, expr_neg<int32<N,E>>> neg(int32<N,E> a)
 {
     return { { a }, 0 };
@@ -105,7 +105,7 @@ int32<N, expr_neg<int32<N,E>>> neg(int32<N,E> a)
 template<unsigned N, class E>
 int64<N, _DETAIL_> neg(int64<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int64<N, expr_neg<int64<N,E>>> neg(int64<N,E> a)
 {
     return { { a }, 0 };

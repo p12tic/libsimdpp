@@ -39,7 +39,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ operator*(const any_int16<N,V1>& a,
                                     const any_int16<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_mul_lo<uint16<N, typename V1::expr_type>,
                                               uint16<N, typename V2::expr_type>>
@@ -75,7 +75,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ operator*(const any_int32<N,V1>& a,
                                     const any_int32<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_mul_lo<uint32<N, typename V1::expr_type>,
                                               uint32<N, typename V2::expr_type>>

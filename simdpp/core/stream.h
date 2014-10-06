@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void stream(void* p, const any_vec<N,V>& a)
 {
     static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: convert automatically

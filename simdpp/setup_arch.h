@@ -361,6 +361,8 @@
 #define SIMDPP_SAFE_XOP_COM 1
 #endif
 
+#define SIMDPP_INL inline
+
 // FIXME: unused (workarounds for AMD CPUs)
 // #define SIMDPP_USE_AMD
 

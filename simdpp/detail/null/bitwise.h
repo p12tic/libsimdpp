@@ -28,7 +28,7 @@ namespace null {
    *_mm variants accept masks as both arguments
 */
 
-template<class V>
+template<class V> SIMDPP_INL
 V bit_and(V a, V b)
 {
     V r;
@@ -42,7 +42,7 @@ V bit_and(V a, V b)
     return r;
 }
 
-template<class V, class M>
+template<class V, class M> SIMDPP_INL
 V bit_and_vm(V a, M m)
 {
     V r;
@@ -52,7 +52,7 @@ V bit_and_vm(V a, M m)
     return r;
 }
 
-template<class M>
+template<class M> SIMDPP_INL
 M bit_and_mm(M a, M b)
 {
     M r;
@@ -63,7 +63,7 @@ M bit_and_mm(M a, M b)
 }
 
 
-template<class V>
+template<class V> SIMDPP_INL
 V bit_andnot(V a, V b)
 {
     V r;
@@ -77,7 +77,7 @@ V bit_andnot(V a, V b)
     return r;
 }
 
-template<class V, class M>
+template<class V, class M> SIMDPP_INL
 V bit_andnot_vm(V a, M m)
 {
     V r;
@@ -87,7 +87,7 @@ V bit_andnot_vm(V a, M m)
     return r;
 }
 
-template<class M>
+template<class M> SIMDPP_INL
 M bit_andnot_mm(M a, M b)
 {
     M r;
@@ -98,7 +98,7 @@ M bit_andnot_mm(M a, M b)
 }
 
 
-template<class V>
+template<class V> SIMDPP_INL
 V bit_or(V a, V b)
 {
     V r;
@@ -112,7 +112,7 @@ V bit_or(V a, V b)
     return r;
 }
 
-template<class M>
+template<class M> SIMDPP_INL
 M bit_or_mm(M a, M b)
 {
     M r;
@@ -122,7 +122,7 @@ M bit_or_mm(M a, M b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V bit_xor(V a, V b)
 {
     V r;
@@ -136,7 +136,7 @@ V bit_xor(V a, V b)
     return r;
 }
 
-template<class M>
+template<class M> SIMDPP_INL
 M bit_xor_mm(M a, M b)
 {
     M r;
@@ -147,7 +147,7 @@ M bit_xor_mm(M a, M b)
     return r;
 }
 
-template<class M>
+template<class M> SIMDPP_INL
 M bit_not_mm(M a)
 {
     M r;

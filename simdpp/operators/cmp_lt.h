@@ -38,7 +38,7 @@ template<unsigned N, class E1, class E2>
 mask_int8<N, _DETAIL_> operator<(int8<N,E1> a,
                               int8<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_int8<N, mask_int8<N>> operator<(int8<N,E1> a,
                                   int8<N,E2> b)
 {
@@ -70,7 +70,7 @@ template<unsigned N, class E1, class E2>
 mask_int8<N, _DETAIL_> operator<(uint8<N,E1> a,
                               uint8<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_int8<N, mask_int8<N>> operator<(uint8<N,E1> a,
                                   uint8<N,E2> b)
 {
@@ -96,7 +96,7 @@ template<unsigned N, class E1, class E2>
 mask_int16<N, _DETAIL_> operator<(int16<N,E1> a,
                                int16<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_int16<N, mask_int16<N>> operator<(int16<N,E1> a,
                                     int16<N,E2> b)
 {
@@ -128,7 +128,7 @@ template<unsigned N, class E1, class E2>
 mask_int16<N, _DETAIL_> operator<(uint16<N,E1> a,
                                uint16<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_int16<N, mask_int16<N>> operator<(uint16<N,E1> a,
                                     uint16<N,E2> b)
 {
@@ -154,7 +154,7 @@ template<unsigned N, class E1, class E2>
 mask_int32<N, _DETAIL_> operator<(int32<N,E1> a,
                                int32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_int32<N, mask_int32<N>> operator<(int32<N,E1> a,
                                     int32<N,E2> b)
 {
@@ -182,11 +182,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int32, int32)
     @icost{XOP, NEON, ALTIVEC, 2}
 */
 #if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_int32<N, _DETAIL_> operator<(uint32<N,E1> a,
                                uint32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_int32<N, mask_int32<N>> operator<(uint32<N,E1> a,
                                     uint32<N,E2> b)
 {
@@ -212,7 +212,7 @@ template<unsigned N, class E1, class E2>
 mask_float32<N, _DETAIL_> operator<(float32<N,E1> a,
                                  float32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_float32<N, mask_float32<N>> operator<(float32<N,E1> a,
                                         float32<N,E2> b)
 {
@@ -242,7 +242,7 @@ template<unsigned N, class E1, class E2>
 mask_float64<N, _DETAIL_> operator<(float64<N,E1> a,
                                  float64<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 mask_float64<N, mask_float64<N>> operator<(float64<N,E1> a,
                                         float64<N,E2> b)
 {

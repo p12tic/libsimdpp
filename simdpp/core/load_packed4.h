@@ -35,7 +35,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @a p must be aligned to the vector size in bytes
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void load_packed4(any_vec<N,V>& a, any_vec<N,V>& b,
                   any_vec<N,V>& c, any_vec<N,V>& d,
                   const void* p)

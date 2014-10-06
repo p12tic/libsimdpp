@@ -41,7 +41,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX (integer vectors), 2}
 */
 // Fixme return empty expression
-template<class V = expr_vec_load>
+template<class V = expr_vec_load> SIMDPP_INL
 V load(const void* p)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||

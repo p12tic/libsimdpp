@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @param ptr pointer to the data to prefetch
 */
-inline void prefetch_read(const void* ptr)
+SIMDPP_INL void prefetch_read(const void* ptr)
 {
 #if SIMDPP_USE_SSE2
     _mm_prefetch((const char*)ptr, _MM_HINT_T0);
@@ -58,7 +58,7 @@ inline void prefetch_read(const void* ptr)
 
     @param ptr pointer to the data to prefetch
 */
-inline void prefetch_write(const void* ptr)
+SIMDPP_INL void prefetch_write(const void* ptr)
 {
 #if SIMDPP_USE_SSE2
     _mm_prefetch((const char*)ptr, _MM_HINT_T0);

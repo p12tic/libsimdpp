@@ -41,7 +41,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E1, class E2>
 int8<N, _DETAIL_> min(int8<N,E1> a, int8<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 int8<N, int8<N>> min(int8<N,E1> a, int8<N,E2> b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
@@ -65,7 +65,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, int8, int8)
 template<unsigned N, class E1, class E2>
 uint8<N, _DETAIL_> min(uint8<N,E1> a, uint8<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 uint8<N, uint8<N>> min(uint8<N,E1> a, uint8<N,E2> b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
@@ -89,7 +89,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint8, uint8)
 template<unsigned N, class E1, class E2>
 int16<N, _DETAIL_> min(int16<N,E1> a, int16<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 int16<N, int16<N>> min(int16<N,E1> a, int16<N,E2> b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
@@ -117,7 +117,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, int16, int16)
 template<unsigned N, class E1, class E2>
 uint16<N, _DETAIL_> min(uint16<N,E1> a, uint16<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N, uint16<N>> min(uint16<N,E1> a, uint16<N,E2> b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
@@ -145,7 +145,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint16, uint16)
 template<unsigned N, class E1, class E2>
 int32<N, _DETAIL_> min(int32<N,E1> a, int32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 int32<N, int32<N>> min(int32<N,E1> a, int32<N,E2> b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
@@ -174,7 +174,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, int32, int32)
 template<unsigned N, class E1, class E2>
 uint32<N, _DETAIL_> min(uint32<N,E1> a, uint32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 uint32<N, uint32<N>> min(uint32<N,E1> a, uint32<N,E2> b)
 {
     return detail::insn::i_min(a.eval(), b.eval());

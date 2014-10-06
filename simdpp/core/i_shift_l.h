@@ -48,14 +48,14 @@ int8<N, _DETAIL_> shift_l(int8<N,E> a, unsigned count);
 template<unsigned N, class E>
 uint8<N, _DETAIL_> shift_l(uint8<N,E> a, unsigned count);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int8<N, int8<N>> shift_l(int8<N,E> a, unsigned count)
 {
     uint8<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint8<N, uint8<N>> shift_l(uint8<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
@@ -88,14 +88,14 @@ int16<N, _DETAIL_> shift_l(int16<N,E> a, unsigned count);
 template<unsigned N, class E>
 uint16<N, _DETAIL_> shift_l(uint16<N,E> a, unsigned count);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int16<N, int16<N>> shift_l(int16<N,E> a, unsigned count)
 {
     uint16<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint16<N, uint16<N>> shift_l(uint16<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
@@ -128,14 +128,14 @@ int32<N, _DETAIL_> shift_l(int32<N,E> a, unsigned count);
 template<unsigned N, class E>
 uint32<N, _DETAIL_> shift_l(uint32<N,E> a, unsigned count);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int32<N, int32<N>> shift_l(int32<N,E> a, unsigned count)
 {
     uint32<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint32<N, uint32<N>> shift_l(uint32<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
@@ -168,14 +168,14 @@ int64<N, _DETAIL_> shift_l(int64<N,E> a, unsigned count);
 template<unsigned N, class E>
 uint64<N, _DETAIL_> shift_l(uint64<N,E> a, unsigned count);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int64<N, int64<N>> shift_l(int64<N,E> a, unsigned count)
 {
     uint64<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint64<N, uint64<N>> shift_l(uint64<N,E> a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
@@ -208,7 +208,7 @@ int8<N, _DETAIL_> shift_l(int8<N,E> a);
 template<unsigned count, unsigned N, class E>
 uint8<N, _DETAIL_> shift_l(uint8<N,E> a);
 #else
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 int8<N, int8<N>> shift_l(int8<N,E> a)
 {
     static_assert(count <= 8, "Shift out of bounds");
@@ -219,7 +219,7 @@ int8<N, int8<N>> shift_l(int8<N,E> a)
     return detail::insn::i_shift_l<count>(qa);
 }
 
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint8<N, uint8<N>> shift_l(uint8<N,E> a)
 {
     static_assert(count <= 8, "Shift out of bounds");
@@ -253,7 +253,7 @@ int16<N, _DETAIL_> shift_l(int16<N,E> a);
 template<unsigned count, unsigned N, class E>
 uint16<N, _DETAIL_> shift_l(uint16<N,E> a);
 #else
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 int16<N, int16<N>> shift_l(int16<N,E> a)
 {
     static_assert(count <= 16, "Shift out of bounds");
@@ -264,7 +264,7 @@ int16<N, int16<N>> shift_l(int16<N,E> a)
     return detail::insn::i_shift_l<count>(qa);
 }
 
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint16<N, uint16<N>> shift_l(uint16<N,E> a)
 {
     static_assert(count <= 16, "Shift out of bounds");
@@ -298,7 +298,7 @@ int32<N, _DETAIL_> shift_l(int32<N,E> a);
 template<unsigned count, unsigned N, class E>
 uint32<N, _DETAIL_> shift_l(uint32<N,E> a);
 #else
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 int32<N, int32<N>> shift_l(int32<N,E> a)
 {
     static_assert(count <= 32, "Shift out of bounds");
@@ -309,7 +309,7 @@ int32<N, int32<N>> shift_l(int32<N,E> a)
     return detail::insn::i_shift_l<count>(qa);
 }
 
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint32<N, uint32<N>> shift_l(uint32<N,E> a)
 {
     static_assert(count <= 32, "Shift out of bounds");
@@ -342,7 +342,7 @@ int64<N, _DETAIL_> shift_l(int64<N,E> a);
 template<unsigned count, unsigned N, class E>
 uint64<N, _DETAIL_> shift_l(uint64<N,E> a);
 #else
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 int64<N, int64<N>> shift_l(int64<N,E> a)
 {
     static_assert(count <= 64, "Shift out of bounds");
@@ -353,7 +353,7 @@ int64<N, int64<N>> shift_l(int64<N,E> a)
     return detail::insn::i_shift_l<count>(qa);
 }
 
-template<unsigned count, unsigned N, class E>
+template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint64<N, uint64<N>> shift_l(uint64<N,E> a)
 {
     static_assert(count <= 64, "Shift out of bounds");

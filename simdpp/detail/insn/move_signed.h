@@ -18,15 +18,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class V, int id, bool is_pos>
+template<class V, int id, bool is_pos> SIMDPP_INL
 struct move_l_signed_impl;
 
-template<class V, int id>
+template<class V, int id> SIMDPP_INL
 struct move_l_signed_impl<V, id, true> {
     static V run(V v) { return move_l<id>(v); }
 };
 
-template<class V, int id>
+template<class V, int id> SIMDPP_INL
 struct move_l_signed_impl<V, id, false> {
     static V run(V v) { return move_r<-id>(v); }
 };
@@ -34,7 +34,7 @@ struct move_l_signed_impl<V, id, false> {
 /** Equivalent to @c move_l<id> if @a id is positive and to @c move_r<-id> if
     @a id is negative.
 */
-template<int id, class V>
+template<int id, class V> SIMDPP_INL
 V move_l_signed(V a)
 {
     return move_l_signed_impl<V, id, (id >= 0)>::run(a);

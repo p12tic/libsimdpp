@@ -38,7 +38,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ sub(const any_int8<N,V1>& a,
                                  const any_int8<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_sub<uint8<N, typename V1::expr_type>,
                                            uint8<N, typename V2::expr_type>>
@@ -68,7 +68,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ sub(const any_int16<N,V1>& a,
                                  const any_int16<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_sub<uint16<N, typename V1::expr_type>,
                                            uint16<N, typename V2::expr_type>>
@@ -98,7 +98,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ sub(const any_int32<N,V1>& a,
                                  const any_int32<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_sub<uint32<N, typename V1::expr_type>,
                                            uint32<N, typename V2::expr_type>>
@@ -132,7 +132,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ add(const any_int64<N,V1>& a,
                                  const any_int64<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_sub<uint64<N, typename V1::expr_type>,
                                            uint64<N, typename V2::expr_type>>

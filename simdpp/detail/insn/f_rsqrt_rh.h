@@ -26,7 +26,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<class V>
+template<class V> SIMDPP_INL
 V v_rsqrt_rh(V x, V a)
 {
     V x2, r;
@@ -40,7 +40,7 @@ V v_rsqrt_rh(V x, V a)
     return r;
 }
 
-inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
+SIMDPP_INL float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 {
     // x_n = x*(3-d*x*x)/2
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -71,21 +71,21 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-inline float32x8 i_rsqrt_rh(float32x8 x, float32x8 a)
+SIMDPP_INL float32x8 i_rsqrt_rh(float32x8 x, float32x8 a)
 {
     return v_rsqrt_rh(x, a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline float32<16> i_rsqrt_rh(float32<16> x, float32<16> a)
+SIMDPP_INL float32<16> i_rsqrt_rh(float32<16> x, float32<16> a)
 {
     return v_rsqrt_rh(x, a);
 }
 #endif
 
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 float32<N> i_rsqrt_rh(float32<N> x, float32<N> a)
 {
     SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_rsqrt_rh, x, a);

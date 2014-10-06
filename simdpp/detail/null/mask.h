@@ -23,7 +23,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
-template<class V, class M>
+template<class V, class M> SIMDPP_INL
 V unmask_mask(const M& m)
 {
     static_assert(V::length == M::length && V::size_tag == M::size_tag,

@@ -16,20 +16,20 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class Int> uint64_t convert_from_int(Int x) { return x; }
-inline double convert_from_int(double x) { return x; }
-inline float convert_from_int(float x) { return x; }
+template<class Int> SIMDPP_INL uint64_t convert_from_int(Int x) { return x; }
+SIMDPP_INL double convert_from_int(double x) { return x; }
+SIMDPP_INL float convert_from_int(float x) { return x; }
 template<class Int> void scalar_convert(Int& d, uint64_t x) { d = x; }
 template<class Int> void scalar_convert(Int& d, float x) { d = bit_cast<uint32_t>(x); }
 template<class Int> void scalar_convert(Int& d, double x) { d = bit_cast<uint64_t>(x); }
-inline void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
-inline void scalar_convert(float& d, float x) { d = x; }
-inline void scalar_convert(float& d, double x) { d = x; }
-inline void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
-inline void scalar_convert(double& d, float x) { d = x; }
-inline void scalar_convert(double& d, double x) { d = x; }
+SIMDPP_INL void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
+SIMDPP_INL void scalar_convert(float& d, float x) { d = x; }
+SIMDPP_INL void scalar_convert(float& d, double x) { d = x; }
+SIMDPP_INL void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
+SIMDPP_INL void scalar_convert(double& d, float x) { d = x; }
+SIMDPP_INL void scalar_convert(double& d, double x) { d = x; }
 
-template<class V, class U>
+template<class V, class U> SIMDPP_INL
 V make_const(U t)
 {
     typename detail::remove_sign<V>::type r;
@@ -67,19 +67,19 @@ RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::el
 #else
 
 #define SIMDPP_SCALAR_ARG_IMPL_VEC_IMPL(FUNC, RET_VEC, EXPR, NEW_VEC)                                                                   \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(uint32_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }    \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(uint64_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }    \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(int32_t a,  const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }     \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(int64_t a,  const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }     \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(float a,    const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }   \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(double a,   const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(uint32_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }    \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(uint64_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }    \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(int32_t a,  const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }     \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(int64_t a,  const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }     \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(float a,    const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(double a,   const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }   \
                                                                                                                                         \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, uint32_t b) { return FUNC(a, detail::make_const<NEW_VEC>(b)); }    \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, uint64_t b) { return FUNC(a, detail::make_const<NEW_VEC>(b)); }    \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, int32_t b)  { return FUNC(a, detail::make_const<NEW_VEC>(b)); }     \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, int64_t b)  { return FUNC(a, detail::make_const<NEW_VEC>(b)); }     \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, float b)    { return FUNC(a, detail::make_const<NEW_VEC>(b)); }   \
-template<unsigned N, class V> RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, double b)   { return FUNC(a, detail::make_const<NEW_VEC>(b)); }
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, uint32_t b) { return FUNC(a, detail::make_const<NEW_VEC>(b)); }    \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, uint64_t b) { return FUNC(a, detail::make_const<NEW_VEC>(b)); }    \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, int32_t b)  { return FUNC(a, detail::make_const<NEW_VEC>(b)); }     \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, int64_t b)  { return FUNC(a, detail::make_const<NEW_VEC>(b)); }     \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, float b)    { return FUNC(a, detail::make_const<NEW_VEC>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, double b)   { return FUNC(a, detail::make_const<NEW_VEC>(b)); }
 
 
 #define SIMDPP_SCALAR_ARG_IMPL_VEC(FUNC, RET_VEC, VEC) \
@@ -104,19 +104,19 @@ RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::el
 #else
 
 #define SIMDPP_SCALAR_ARG_IMPL_EXPR(FUNC, EXPR, RET_VEC, VEC)                                                                                   \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint32_t a, const VEC<N,V>& b) { return FUNC(detail::make_const<VEC<N>>(a), b); }  \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint64_t a, const VEC<N,V>& b) { return FUNC(detail::make_const<VEC<N>>(a), b); }  \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(int32_t a, const VEC<N,V>& b)  { return FUNC(detail::make_const<VEC<N>>(a), b); }   \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(int64_t a, const VEC<N,V>& b)  { return FUNC(detail::make_const<VEC<N>>(a), b); }   \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(float a, const VEC<N,V>& b)    { return FUNC(detail::make_const<VEC<N>>(a), b); } \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(double a, const VEC<N,V>& b)   { return FUNC(detail::make_const<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint32_t a, const VEC<N,V>& b) { return FUNC(detail::make_const<VEC<N>>(a), b); }  \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint64_t a, const VEC<N,V>& b) { return FUNC(detail::make_const<VEC<N>>(a), b); }  \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(int32_t a, const VEC<N,V>& b)  { return FUNC(detail::make_const<VEC<N>>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(int64_t a, const VEC<N,V>& b)  { return FUNC(detail::make_const<VEC<N>>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(float a, const VEC<N,V>& b)    { return FUNC(detail::make_const<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(double a, const VEC<N,V>& b)   { return FUNC(detail::make_const<VEC<N>>(a), b); } \
                                                                                                                                                 \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, uint32_t b) { return FUNC(a, detail::make_const<VEC<N>>(b)); }  \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, uint64_t b) { return FUNC(a, detail::make_const<VEC<N>>(b)); }  \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, int32_t b)  { return FUNC(a, detail::make_const<VEC<N>>(b)); }   \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, int64_t b)  { return FUNC(a, detail::make_const<VEC<N>>(b)); }   \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, float b)    { return FUNC(a, detail::make_const<VEC<N>>(b)); } \
-template<unsigned N, class V> RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, double b)   { return FUNC(a, detail::make_const<VEC<N>>(b)); }
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, uint32_t b) { return FUNC(a, detail::make_const<VEC<N>>(b)); }  \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, uint64_t b) { return FUNC(a, detail::make_const<VEC<N>>(b)); }  \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, int32_t b)  { return FUNC(a, detail::make_const<VEC<N>>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, int64_t b)  { return FUNC(a, detail::make_const<VEC<N>>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, float b)    { return FUNC(a, detail::make_const<VEC<N>>(b)); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, double b)   { return FUNC(a, detail::make_const<VEC<N>>(b)); }
 
 // end #define
 
@@ -135,73 +135,73 @@ _PROMOTED_NOMASK_EXPRESSION_ FUNC(const VEC<N,V>& a, detail::scalar_param<typena
 #else
 
 #define SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(FUNC, EXPR, VEC, UINT_VEC)          \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, uint32_t b)                                     \
 { return FUNC(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b)); }    \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, uint64_t b)                                     \
 { return FUNC(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b)); }    \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, int32_t b)                                      \
 { return FUNC(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b)); }     \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, int64_t b)                                      \
 { return FUNC(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b)); }     \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, float b)                                        \
 { return FUNC(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b)); }   \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, double b)                                       \
 { return FUNC(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b)); }   \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(uint32_t a, const VEC<N,V>& b)                                     \
 { return FUNC(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b); }    \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(uint64_t a, const VEC<N,V>& b)                                     \
 { return FUNC(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b); }    \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(int32_t a, const VEC<N,V>& b)                                      \
 { return FUNC(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b); }     \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(int64_t a, const VEC<N,V>& b)                                      \
 { return FUNC(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b); }     \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(float a, const VEC<N,V>& b)                                        \
 { return FUNC(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b); }   \
                                                                                 \
-template<unsigned N, class V>                                                   \
+template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(double a, const VEC<N,V>& b)                                       \

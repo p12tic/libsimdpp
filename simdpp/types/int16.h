@@ -41,23 +41,23 @@ public:
     int16<N>(const int16<N>&) = default;
     int16<N>& operator=(const int16<N>&) = default;
 
-    template<class E> int16<N>(const int16<N,E>& d) { *this = d.eval(); }
-    template<class E> int16<N>(const uint16<N,E>& d) { *this = d.eval(); }
-    template<class V> explicit int16<N>(const any_vec<N*2,V>& d)
+    template<class E> SIMDPP_INL int16<N>(const int16<N,E>& d) { *this = d.eval(); }
+    template<class E> SIMDPP_INL int16<N>(const uint16<N,E>& d) { *this = d.eval(); }
+    template<class V> SIMDPP_INL explicit int16<N>(const any_vec<N*2,V>& d)
     {
         *this = bit_cast<int16<N>>(d.wrapped().eval());
     }
-    template<class V> int16<N>& operator=(const any_vec<N*2,V>& d)
+    template<class V> SIMDPP_INL int16<N>& operator=(const any_vec<N*2,V>& d)
     {
         *this = bit_cast<int16<N>>(d.wrapped().eval()); return *this;
     }
 
 #ifndef SIMDPP_DOXYGEN
-    template<class E> int16<N>(const expr_vec_construct<E>& e)
+    template<class E> SIMDPP_INL int16<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
     }
-    template<class E> int16<N>& operator=(const expr_vec_construct<E>& e)
+    template<class E> SIMDPP_INL int16<N>& operator=(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
@@ -101,13 +101,13 @@ public:
     uint16<N>(const uint16<N>&) = default;
     uint16<N>& operator=(const uint16<N>&) = default;
 
-    template<class E> uint16<N>(const uint16<N,E>& d) { *this = d.eval(); }
-    template<class E> uint16<N>(const int16<N,E>& d) { *this = d.eval(); }
-    template<class V> explicit uint16<N>(const any_vec<N*2,V>& d)
+    template<class E> SIMDPP_INL uint16<N>(const uint16<N,E>& d) { *this = d.eval(); }
+    template<class E> SIMDPP_INL uint16<N>(const int16<N,E>& d) { *this = d.eval(); }
+    template<class V> SIMDPP_INL explicit uint16<N>(const any_vec<N*2,V>& d)
     {
         *this = bit_cast<uint16<N>>(d.wrapped().eval());
     }
-    template<class V> uint16<N>& operator=(const any_vec<N*2,V>& d)
+    template<class V> SIMDPP_INL uint16<N>& operator=(const any_vec<N*2,V>& d)
     {
         *this = bit_cast<uint16<N>>(d.wrapped().eval()); return *this;
     }
@@ -116,11 +116,11 @@ public:
     uint16v& vec(unsigned i)             { return d_[i]; }
 
 #ifndef SIMDPP_DOXYGEN
-    template<class E> uint16<N>(const expr_vec_construct<E>& e)
+    template<class E> SIMDPP_INL uint16<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
     }
-    template<class E> uint16<N>& operator=(const expr_vec_construct<E>& e)
+    template<class E> SIMDPP_INL uint16<N>& operator=(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }

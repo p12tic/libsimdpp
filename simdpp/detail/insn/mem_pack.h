@@ -40,7 +40,7 @@ namespace insn {
 
     n = [0, <number of elements in vector> - 1]
 */
-template<class V>
+template<class V> SIMDPP_INL
 void mem_pack2(any_vec<16,V>& qa, any_vec<16,V>& qb)
 {
     V a = qa.wrapped();
@@ -50,7 +50,7 @@ void mem_pack2(any_vec<16,V>& qa, any_vec<16,V>& qb)
     qb.wrapped() = zip128_hi(a, b);
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void mem_pack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
 {
     V a = qa.wrapped();
@@ -64,7 +64,7 @@ void mem_pack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
 }
 
 #if SIMDPP_USE_AVX512
-template<class V>
+template<class V> SIMDPP_INL
 void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 {
     V a = qa.wrapped();
@@ -85,7 +85,7 @@ void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 /** Generic implementation of mem_pack3. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack3_impl8_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
@@ -202,7 +202,7 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
 #endif
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack3_impl16_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
@@ -299,7 +299,7 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
 #endif
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack3_impl32_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
@@ -353,7 +353,7 @@ void v_mem_pack3_impl32_128(T& a, T& b, T& c)
 #endif
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack3_impl64_128(T& a, T& b, T& c)
 {
     T d0, d1, d2;
@@ -364,13 +364,13 @@ void v_mem_pack3_impl64_128(T& a, T& b, T& c)
 }
 /// @}
 
-template<class V>
+template<class V> SIMDPP_INL
 void v_mem_pack3_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb, any_vec<16,V>& qc)
 {
     (void) qa; (void) qb; (void) qc;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void v_mem_pack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V>& qc)
 {
     // shuffle the vectors so that the lower halves contain the first 3 128-bit
@@ -388,7 +388,7 @@ void v_mem_pack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V>&
 }
 
 #if SIMDPP_USE_AVX512
-template<class V>
+template<class V> SIMDPP_INL
 void v_mem_pack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>& qc)
 {
     V a, b, c; // TODO: optimize. Using full-vector shuffle may be faster
@@ -423,42 +423,42 @@ void v_mem_pack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>&
 
     n = [0, <number of elements in vector> - 1]
 */
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack3(uint8<N>& a, uint8<N>& b, uint8<N>& c)
 {
     v_mem_pack3_impl8_128(a, b, c);
     v_mem_pack3_shuffle128(a, b, c);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack3(uint16<N>& a, uint16<N>& b, uint16<N>& c)
 {
     v_mem_pack3_impl16_128(a, b, c);
     v_mem_pack3_shuffle128(a, b, c);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack3(uint32<N>& a, uint32<N>& b, uint32<N>& c)
 {
     v_mem_pack3_impl32_128(a, b, c);
     v_mem_pack3_shuffle128(a, b, c);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack3(uint64<N>& a, uint64<N>& b, uint64<N>& c)
 {
     v_mem_pack3_impl64_128(a, b, c);
     v_mem_pack3_shuffle128(a, b, c);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack3(float32<N>& a, float32<N>& b, float32<N>& c)
 {
     v_mem_pack3_impl32_128(a, b, c);
     v_mem_pack3_shuffle128(a, b, c);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack3(float64<N>& a, float64<N>& b, float64<N>& c)
 {
     v_mem_pack3_impl64_128(a, b, c);
@@ -470,7 +470,7 @@ void mem_pack3(float64<N>& a, float64<N>& b, float64<N>& c)
 /** Generic implementation of mem_pack4. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack4_impl8_128(T& a, T& b, T& c, T& d)
 {
     // either uint16x8 or uint16x16, other entries likewise
@@ -519,7 +519,7 @@ void v_mem_pack4_impl8_128(T& a, T& b, T& c, T& d)
 #endif
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack4_impl16_128(T& a, T& b, T& c, T& d)
 {
     using w_b16 = T;
@@ -552,13 +552,13 @@ void v_mem_pack4_impl16_128(T& a, T& b, T& c, T& d)
     d = zip4_hi(f2, f3);
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack4_impl32_128(T& a, T& b, T& c, T& d)
 {
     transpose4(a, b, c, d);
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 void v_mem_pack4_impl64_128(T& a, T& b, T& c, T& d)
 {
     transpose2(a, b);
@@ -571,14 +571,14 @@ void v_mem_pack4_impl64_128(T& a, T& b, T& c, T& d)
 
 /// @}
 
-template<class V>
+template<class V> SIMDPP_INL
 void v_mem_pack4_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb,
                             any_vec<16,V>& qc, any_vec<16,V>& qd)
 {
     (void) qa; (void) qb; (void) qc; (void) qd;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void v_mem_pack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
                             any_vec<32,V>& qc, any_vec<32,V>& qd)
 {
@@ -597,7 +597,7 @@ void v_mem_pack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
 }
 
 #if SIMDPP_USE_AVX512
-template<class V>
+template<class V> SIMDPP_INL
 void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
                             any_vec<64,V>& qc, any_vec<64,V>& qd)
 {
@@ -642,42 +642,42 @@ void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
 
     n = [0, <number of elements in vector> - 1]
 */
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack4(uint8<N>& a, uint8<N>& b, uint8<N>& c, uint8<N>& d)
 {
     v_mem_pack4_impl8_128(a, b, c, d);
     v_mem_pack4_shuffle128(a, b, c, d);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack4(uint16<N>& a, uint16<N>& b, uint16<N>& c, uint16<N>& d)
 {
     v_mem_pack4_impl16_128(a, b, c, d);
     v_mem_pack4_shuffle128(a, b, c, d);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack4(uint32<N>& a, uint32<N>& b, uint32<N>& c, uint32<N>& d)
 {
     v_mem_pack4_impl32_128(a, b, c, d);
     v_mem_pack4_shuffle128(a, b, c, d);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack4(uint64<N>& a, uint64<N>& b, uint64<N>& c, uint64<N>& d)
 {
     v_mem_pack4_impl64_128(a, b, c, d);
     v_mem_pack4_shuffle128(a, b, c, d);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d)
 {
     v_mem_pack4_impl32_128(a, b, c, d);
     v_mem_pack4_shuffle128(a, b, c, d);
 }
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void mem_pack4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d)
 {
     v_mem_pack4_impl64_128(a, b, c, d);

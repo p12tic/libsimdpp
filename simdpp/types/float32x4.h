@@ -51,12 +51,12 @@ public:
     float32<4>(const float32<4> &) = default;
     float32<4> &operator=(const float32<4> &) = default;
 
-    template<class E> float32<4>(const float32<4,E>& d) { *this = d.eval(); }
-    template<class V> explicit float32<4>(const any_vec<16,V>& d)
+    template<class E> SIMDPP_INL float32<4>(const float32<4,E>& d) { *this = d.eval(); }
+    template<class V> SIMDPP_INL explicit float32<4>(const any_vec<16,V>& d)
     {
         *this = bit_cast<float32<4>>(d.wrapped().eval());
     }
-    template<class V> float32<4>& operator=(const any_vec<16,V>& d)
+    template<class V> SIMDPP_INL float32<4>& operator=(const any_vec<16,V>& d)
     {
         *this = bit_cast<float32<4>>(d.wrapped().eval()); return *this;
     }
@@ -76,11 +76,11 @@ public:
 #endif
 
 #ifndef SIMDPP_DOXYGEN
-    template<class E> float32<4>(const expr_vec_construct<E>& e)
+    template<class E> SIMDPP_INL float32<4>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
     }
-    template<class E> float32<4>& operator=(const expr_vec_construct<E>& e)
+    template<class E> SIMDPP_INL float32<4>& operator=(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
@@ -142,11 +142,11 @@ public:
     mask_float32<4>(const float32<4>& d) : d_(d) {}
 #endif
 
-    template<class E> explicit mask_float32<4>(const mask_int32<4,E>& d)
+    template<class E> SIMDPP_INL explicit mask_float32<4>(const mask_int32<4,E>& d)
     {
         *this = bit_cast<mask_float32<4>>(d.eval());
     }
-    template<class E> mask_float32<4>& operator=(const mask_int32<4,E>& d)
+    template<class E> SIMDPP_INL mask_float32<4>& operator=(const mask_int32<4,E>& d)
     {
         *this = bit_cast<mask_float32<4>>(d.eval()); return *this;
     }

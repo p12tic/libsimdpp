@@ -48,7 +48,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned s0, unsigned s1, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ permute2(const any_vec16<N,V>& a);
 #else
-template<unsigned s0, unsigned s1, unsigned N, class V>
+template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute2(const any_vec16<N,V>& a)
 {
@@ -98,7 +98,7 @@ typename detail::get_expr_nomask<V>::empty
 template<unsigned s0, unsigned s1, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ permute2(const any_vec32<N,V>& a);
 #else
-template<unsigned s0, unsigned s1, unsigned N, class V>
+template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute2(const any_vec32<N,V>& a)
 {
@@ -134,7 +134,7 @@ typename detail::get_expr_nomask<V>::empty
 template<unsigned s0, unsigned s1, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ permute2(const any_vec64<N,V>& a);
 #else
-template<unsigned s0, unsigned s1, unsigned N, class V>
+template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute2(const any_vec64<N,V>& a)
 {

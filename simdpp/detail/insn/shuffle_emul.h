@@ -26,7 +26,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<unsigned s0, unsigned s1, class V>
+template<unsigned s0, unsigned s1, class V> SIMDPP_INL
 V permute_half(V a0, V a1)
 {
     switch (s0*4+s1) {
@@ -53,7 +53,7 @@ V permute_half(V a0, V a1)
 /** Permutes 4 64-bit elements within 256-bit vector using 2 element shuffling
     functions.
 */
-template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint64x4 permute_emul(uint64x4 a)
 {
     uint64x2 r0, r1, a0, a1;
@@ -63,7 +63,7 @@ uint64x4 permute_emul(uint64x4 a)
     return combine(r0, r1);
 }
 
-template<unsigned s0, unsigned s1, unsigned s2, unsigned s3>
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float64x4 permute_emul(float64x4 a)
 {
     float64x2 r0, r1, a0, a1;

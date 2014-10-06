@@ -28,18 +28,18 @@ namespace insn {
 
 
 // collect some boilerplate
-template<class V>
+template<class V> SIMDPP_INL
 void v128_load_packed3(V& a, V& b, V& c, const char* p);
-template<class V>
+template<class V> SIMDPP_INL
 void v256_load_packed3(V& a, V& b, V& c, const char* p);
-template<class V>
+template<class V> SIMDPP_INL
 void v512_load_packed3(V& a, V& b, V& c, const char* p);
-template<class V>
+template<class V> SIMDPP_INL
 void v_load_packed3(V& a, V& b, V& c, const char* p);
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(uint8x16& a, uint8x16& b, uint8x16& c, const char* p)
+SIMDPP_INL void i_load_packed3(uint8x16& a, uint8x16& b, uint8x16& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -55,13 +55,13 @@ inline void i_load_packed3(uint8x16& a, uint8x16& b, uint8x16& c, const char* p)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_packed3(uint8x32& a, uint8x32& b, uint8x32& c, const char* p)
+SIMDPP_INL void i_load_packed3(uint8x32& a, uint8x32& b, uint8x32& c, const char* p)
 {
     v256_load_packed3(a, b, c, p);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_packed3(uint8<N>& a, uint8<N>& b, uint8<N>& c, const char* p)
 {
     v_load_packed3(a, b, c, p);
@@ -69,8 +69,8 @@ void i_load_packed3(uint8<N>& a, uint8<N>& b, uint8<N>& c, const char* p)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(uint16x8& a, uint16x8& b, uint16x8& c,
-                         const char* p)
+SIMDPP_INL void i_load_packed3(uint16x8& a, uint16x8& b, uint16x8& c,
+                               const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -86,14 +86,14 @@ inline void i_load_packed3(uint16x8& a, uint16x8& b, uint16x8& c,
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_packed3(uint16x16& a, uint16x16& b, uint16x16& c,
-                           const char* p)
+SIMDPP_INL void i_load_packed3(uint16x16& a, uint16x16& b, uint16x16& c,
+                               const char* p)
 {
     v256_load_packed3(a, b, c, p);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_packed3(uint16<N>& a, uint16<N>& b, uint16<N>& c, const char* p)
 {
     v_load_packed3(a, b, c, p);
@@ -101,7 +101,7 @@ void i_load_packed3(uint16<N>& a, uint16<N>& b, uint16<N>& c, const char* p)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(uint32x4& a, uint32x4& b, uint32x4&c, const char* p)
+SIMDPP_INL void i_load_packed3(uint32x4& a, uint32x4& b, uint32x4&c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -117,20 +117,20 @@ inline void i_load_packed3(uint32x4& a, uint32x4& b, uint32x4&c, const char* p)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_packed3(uint32x8& a, uint32x8& b, uint32x8& c, const char* p)
+SIMDPP_INL void i_load_packed3(uint32x8& a, uint32x8& b, uint32x8& c, const char* p)
 {
     v256_load_packed3(a, b, c, p);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_packed3(uint32<16>& a, uint32<16>& b, uint32<16>& c, const char* p)
+SIMDPP_INL void i_load_packed3(uint32<16>& a, uint32<16>& b, uint32<16>& c, const char* p)
 {
     v512_load_packed3(a, b, c, p);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_packed3(uint32<N>& a, uint32<N>& b, uint32<N>& c, const char* p)
 {
     v_load_packed3(a, b, c, p);
@@ -138,7 +138,7 @@ void i_load_packed3(uint32<N>& a, uint32<N>& b, uint32<N>& c, const char* p)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
+SIMDPP_INL void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -165,21 +165,21 @@ inline void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_packed3(uint64x4& a, uint64x4& b, uint64x4& c, const char* p)
+SIMDPP_INL void i_load_packed3(uint64x4& a, uint64x4& b, uint64x4& c, const char* p)
 {
     v256_load_packed3(a, b, c, p);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_packed3(uint64<8>& a, uint64<8>& b, uint64<8>& c,
-                           const char* p)
+SIMDPP_INL void i_load_packed3(uint64<8>& a, uint64<8>& b, uint64<8>& c,
+                               const char* p)
 {
     v512_load_packed3(a, b, c, p);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_packed3(uint64<N>& a, uint64<N>& b, uint64<N>& c, const char* p)
 {
     v_load_packed3(a, b, c, p);
@@ -187,7 +187,7 @@ void i_load_packed3(uint64<N>& a, uint64<N>& b, uint64<N>& c, const char* p)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(float32x4& a, float32x4& b, float32x4& c, const char* p)
+SIMDPP_INL void i_load_packed3(float32x4& a, float32x4& b, float32x4& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -203,21 +203,21 @@ inline void i_load_packed3(float32x4& a, float32x4& b, float32x4& c, const char*
 }
 
 #if SIMDPP_USE_AVX
-inline void i_load_packed3(float32x8& a, float32x8& b, float32x8& c, const char* p)
+SIMDPP_INL void i_load_packed3(float32x8& a, float32x8& b, float32x8& c, const char* p)
 {
     v256_load_packed3(a, b, c, p);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_packed3(float32<16>& a, float32<16>& b, float32<16>& c,
-                           const char* p)
+SIMDPP_INL void i_load_packed3(float32<16>& a, float32<16>& b, float32<16>& c,
+                               const char* p)
 {
     v512_load_packed3(a, b, c, p);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const char* p)
 {
     v_load_packed3(a, b, c, p);
@@ -225,7 +225,7 @@ void i_load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const char* p)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const char* p)
+SIMDPP_INL void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -236,22 +236,22 @@ inline void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const char*
 }
 
 #if SIMDPP_USE_AVX
-inline void i_load_packed3(float64x4& a, float64x4& b, float64x4& c,
-                           const char* p)
+SIMDPP_INL void i_load_packed3(float64x4& a, float64x4& b, float64x4& c,
+                               const char* p)
 {
     v256_load_packed3(a, b, c, p);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_packed3(float64<8>& a, float64<8>& b, float64<8>& c,
-                           const char* p)
+SIMDPP_INL void i_load_packed3(float64<8>& a, float64<8>& b, float64<8>& c,
+                               const char* p)
 {
     v512_load_packed3(a, b, c, p);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_packed3(float64<N>& a, float64<N>& b, float64<N>& c, const char* p)
 {
     v_load_packed3(a, b, c, p);
@@ -259,7 +259,7 @@ void i_load_packed3(float64<N>& a, float64<N>& b, float64<N>& c, const char* p)
 
 // -----------------------------------------------------------------------------
 
-template<class V>
+template<class V> SIMDPP_INL
 void v128_load_packed3(V& a, V& b, V& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
@@ -269,7 +269,7 @@ void v128_load_packed3(V& a, V& b, V& c, const char* p)
     mem_unpack3(a, b, c);
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void v256_load_packed3(V& a, V& b, V& c, const char* p)
 {
     p = detail::assume_aligned(p, 32);
@@ -279,7 +279,7 @@ void v256_load_packed3(V& a, V& b, V& c, const char* p)
     mem_unpack3(a, b, c);
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void v512_load_packed3(V& a, V& b, V& c, const char* p)
 {
     p = detail::assume_aligned(p, 64);
@@ -290,7 +290,7 @@ void v512_load_packed3(V& a, V& b, V& c, const char* p)
 }
 
 
-template<class V>
+template<class V> SIMDPP_INL
 void v_load_packed3(V& a, V& b, V& c, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);

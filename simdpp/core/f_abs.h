@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 float32<N, _DETAIL_> abs(float32<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 float32<N, expr_abs<float32<N,E>>> abs(float32<N,E> a)
 {
     return { { a }, 0 };
@@ -71,7 +71,7 @@ float32<N, expr_abs<float32<N,E>>> abs(float32<N,E> a)
 template<unsigned N, class E>
 float64<N, _DETAIL_> abs(float64<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 float64<N, expr_abs<float64<N,E>>> abs(float64<N,E> a)
 {
     return { { a }, 0 };

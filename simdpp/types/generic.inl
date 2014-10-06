@@ -17,27 +17,27 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
-template<unsigned N, class E> float32<N>           float32<N,E>::eval() const { return (float32<N>) detail::expr_eval(e); }
-template<unsigned N, class E> mask_float32<N> mask_float32<N,E>::eval() const { return (mask_float32<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL float32<N>           float32<N,E>::eval() const { return (float32<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL mask_float32<N> mask_float32<N,E>::eval() const { return (mask_float32<N>) detail::expr_eval(e); }
 
-template<unsigned N, class E> float64<N>           float64<N,E>::eval() const { return (float64<N>) detail::expr_eval(e); }
-template<unsigned N, class E> mask_float64<N> mask_float64<N,E>::eval() const { return (mask_float64<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL float64<N>           float64<N,E>::eval() const { return (float64<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL mask_float64<N> mask_float64<N,E>::eval() const { return (mask_float64<N>) detail::expr_eval(e); }
 
-template<unsigned N, class E> int8<N>           int8<N,E>::eval() const { return (int8<N>)      detail::expr_eval(e); }
-template<unsigned N, class E> uint8<N>         uint8<N,E>::eval() const { return (uint8<N>)     detail::expr_eval(e); }
-template<unsigned N, class E> mask_int8<N> mask_int8<N,E>::eval() const { return (mask_int8<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL int8<N>           int8<N,E>::eval() const { return (int8<N>)      detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL uint8<N>         uint8<N,E>::eval() const { return (uint8<N>)     detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL mask_int8<N> mask_int8<N,E>::eval() const { return (mask_int8<N>) detail::expr_eval(e); }
 
-template<unsigned N, class E> int16<N>           int16<N,E>::eval() const { return (int16<N>)      detail::expr_eval(e); }
-template<unsigned N, class E> uint16<N>         uint16<N,E>::eval() const { return (uint16<N>)     detail::expr_eval(e); }
-template<unsigned N, class E> mask_int16<N> mask_int16<N,E>::eval() const { return (mask_int16<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL int16<N>           int16<N,E>::eval() const { return (int16<N>)      detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL uint16<N>         uint16<N,E>::eval() const { return (uint16<N>)     detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL mask_int16<N> mask_int16<N,E>::eval() const { return (mask_int16<N>) detail::expr_eval(e); }
 
-template<unsigned N, class E> int32<N>           int32<N,E>::eval() const { return (int32<N>)      detail::expr_eval(e); }
-template<unsigned N, class E> uint32<N>         uint32<N,E>::eval() const { return (uint32<N>)     detail::expr_eval(e); }
-template<unsigned N, class E> mask_int32<N> mask_int32<N,E>::eval() const { return (mask_int32<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL int32<N>           int32<N,E>::eval() const { return (int32<N>)      detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL uint32<N>         uint32<N,E>::eval() const { return (uint32<N>)     detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL mask_int32<N> mask_int32<N,E>::eval() const { return (mask_int32<N>) detail::expr_eval(e); }
 
-template<unsigned N, class E> int64<N>           int64<N,E>::eval() const { return (int64<N>)      detail::expr_eval(e); }
-template<unsigned N, class E> uint64<N>         uint64<N,E>::eval() const { return (uint64<N>)     detail::expr_eval(e); }
-template<unsigned N, class E> mask_int64<N> mask_int64<N,E>::eval() const { return (mask_int64<N>) detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL int64<N>           int64<N,E>::eval() const { return (int64<N>)      detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL uint64<N>         uint64<N,E>::eval() const { return (uint64<N>)     detail::expr_eval(e); }
+template<unsigned N, class E> SIMDPP_INL mask_int64<N> mask_int64<N,E>::eval() const { return (mask_int64<N>) detail::expr_eval(e); }
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

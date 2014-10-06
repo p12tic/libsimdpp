@@ -34,7 +34,7 @@ namespace sse {
     @endcode
     @unimp{SSE2}
 */
-inline float32x4 hadd2(float32x4 a, float32x4 b)
+SIMDPP_INL float32x4 hadd2(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hadd_ps(a, b);
@@ -57,7 +57,7 @@ inline float32x4 hadd2(float32x4 a, float32x4 b)
     @endcode
     @unimp{SSE2,SSE3}
 */
-inline float32x8 hadd2(float32x8 a, float32x8 b)
+SIMDPP_INL float32x8 hadd2(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
     return _mm256_hadd_ps(a, b);
@@ -74,7 +74,7 @@ inline float32x8 hadd2(float32x8 a, float32x8 b)
     @endcode
     @unimp{SSE2}
 */
-inline float64x2 hadd2(float64x2 a, float64x2 b)
+SIMDPP_INL float64x2 hadd2(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hadd_pd(a, b);
@@ -93,7 +93,7 @@ inline float64x2 hadd2(float64x2 a, float64x2 b)
     @endcode
     @unimp{SSE2}
 */
-inline float32x4 hadd4(float32x4 a)
+SIMDPP_INL float32x4 hadd4(float32x4 a)
 {
 #if SIMDPP_USE_SSE3
     a = hadd2(a, float32x4::zero());
@@ -115,7 +115,7 @@ inline float32x4 hadd4(float32x4 a)
     @icost{SSE3, SSSE3, SSE4.1, 3}
     @unimp{SSE2}
 */
-inline float32x4 hadd4(float32x4 a, float32x4 b, float32x4 c, float32x4 d)
+SIMDPP_INL float32x4 hadd4(float32x4 a, float32x4 b, float32x4 c, float32x4 d)
 {
 #if SIMDPP_USE_SSE3
     a = hadd2(a, b);
@@ -137,7 +137,7 @@ inline float32x4 hadd4(float32x4 a, float32x4 b, float32x4 c, float32x4 d)
     @endcode
     @unimp{SSE2}
 */
-inline float32x4 hsub2(float32x4 a, float32x4 b)
+SIMDPP_INL float32x4 hsub2(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hsub_ps(a, b);
@@ -160,7 +160,7 @@ inline float32x4 hsub2(float32x4 a, float32x4 b)
     @endcode
     @unimp{SSE2,SSE3}
 */
-inline float32x8 hsub2(float32x8 a, float32x8 b)
+SIMDPP_INL float32x8 hsub2(float32x8 a, float32x8 b)
 {
 #if SIMDPP_USE_AVX
     return _mm256_hsub_ps(a, b);
@@ -178,7 +178,7 @@ inline float32x8 hsub2(float32x8 a, float32x8 b)
     @endcode
     @unimp{SSE2}
 */
-inline float64x2 hsub2(float64x2 a, float64x2 b)
+SIMDPP_INL float64x2 hsub2(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hsub_pd(a, b);
@@ -197,7 +197,7 @@ inline float64x2 hsub2(float64x2 a, float64x2 b)
     @endcode
     @unimp{SSE2}
 */
-inline float32x4 sub_add(float32x4 a, float32x4 b)
+SIMDPP_INL float32x4 sub_add(float32x4 a, float32x4 b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_addsub_ps(a, b);
@@ -214,7 +214,7 @@ inline float32x4 sub_add(float32x4 a, float32x4 b)
     @endcode
     @unimp{SSE2}
 */
-inline float64x2 sub_add(float64x2 a, float64x2 b)
+SIMDPP_INL float64x2 sub_add(float64x2 a, float64x2 b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_addsub_pd(a, b);
@@ -232,7 +232,7 @@ inline float64x2 sub_add(float64x2 a, float64x2 b)
     @endcode
     @icost{SSE2, SSE3, SSSE3, 20}
 */
-inline float64x2 floor(float64x2 a)
+SIMDPP_INL float64x2 floor(float64x2 a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<float64x2>(a, [](double x){ return std::floor(x); });
@@ -266,7 +266,7 @@ inline float64x2 floor(float64x2 a)
     @endcode
     @icost{SSE2, SSE3, SSSE3, 21}
 */
-inline float64x2 ceil(float64x2 a)
+SIMDPP_INL float64x2 ceil(float64x2 a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<float64x2>(a, [](float x){ return std::ceil(x); });
@@ -302,7 +302,7 @@ inline float64x2 ceil(float64x2 a)
     @icost{SSE2, SSE3, SSSE3, 10}
     @icost{SSE4_1, 5}
 */
-inline float64x2 trunc(float64x2 a)
+SIMDPP_INL float64x2 trunc(float64x2 a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<float64x2>(a, [](double x){ return std::trunc(x); });

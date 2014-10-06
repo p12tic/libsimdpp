@@ -28,7 +28,7 @@ namespace neon {
     @a n must be a power of 2. @a pos must be a multiple of @a n. The behavior is
     undefined if @a pos+n exceeds the number of elements in the specified vector.
 */
-template<unsigned pos, unsigned n>
+template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, uint8x16 a)
 {
     static_assert(n == 1 || n == 2 || n == 4 || n == 8, "Size not supported");
@@ -50,7 +50,7 @@ void store_lane(void* p, uint8x16 a)
     }
 }
 
-template<unsigned pos, unsigned n>
+template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, uint16x8 a)
 {
     static_assert(n == 1 || n == 2 || n == 4, "Size not supported");
@@ -69,7 +69,7 @@ void store_lane(void* p, uint16x8 a)
     }
 }
 
-template<unsigned pos, unsigned n>
+template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, uint32x4 a)
 {
     static_assert(n == 1 || n == 2, "Size not supported");
@@ -85,7 +85,7 @@ void store_lane(void* p, uint32x4 a)
     }
 }
 
-template<unsigned pos, unsigned n>
+template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, uint64x2 a)
 {
     static_assert(n == 1, "Size not supported");
@@ -94,7 +94,7 @@ void store_lane(void* p, uint64x2 a)
     vst1q_lane_u64(reinterpret_cast<uint64_t*>(p), a, pos);
 }
 
-template<unsigned pos, unsigned n>
+template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, float32x4 a)
 {
     store_lane<pos,n>(p, uint32x4(a));

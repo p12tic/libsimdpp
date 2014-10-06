@@ -42,7 +42,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 float32<N, _DETAIL_> sqrt(float32<N,E> a);
 #else
-template<unsigned N, class E1>
+template<unsigned N, class E1> SIMDPP_INL
 float32<N, float32<N>> sqrt(float32<N,E1> a)
 {
     return detail::insn::i_sqrt(a.eval());
@@ -68,7 +68,7 @@ float32<N, float32<N>> sqrt(float32<N,E1> a)
 template<unsigned N, class E>
 float64<N, _DETAIL_> abs(float64<N,E> a);
 #else
-template<unsigned N, class E1>
+template<unsigned N, class E1> SIMDPP_INL
 float64<N, float64<N>> sqrt(float64<N,E1> a)
 {
     return detail::insn::i_sqrt(a.eval());

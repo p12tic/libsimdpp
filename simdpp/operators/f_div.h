@@ -43,7 +43,7 @@ template<unsigned N, class E1, class E2>
 float32<N, _DETAIL_> operator/(float32<N,E1> a,
                          float32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 float32<N, float32<N>> operator/(float32<N,E1> a, float32<N,E2> b)
 {
     return detail::insn::i_div(a.eval(), b.eval());
@@ -72,7 +72,7 @@ template<unsigned N, class E1, class E2>
 float64<N, _DETAIL_> operator/(float64<N,E1> a,
                          float64<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 float64<N, float64<N>> operator/(float64<N,E1> a, float64<N,E2> b)
 {
     return detail::insn::i_div(a.eval(), b.eval());

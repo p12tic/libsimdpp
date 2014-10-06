@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E1, class E2>
 float32<N, _DETAIL_> max(float32<N,E1> a, float32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 float32<N, float32<N>> max(float32<N,E1> a, float32<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
@@ -69,7 +69,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, float32, float32)
 template<unsigned N, class E1, class E2>
 float64<N, _DETAIL_> max(float64<N,E1> a, float64<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 float64<N, float64<N>> max(float64<N,E1> a, float64<N,E2> b)
 {
     return detail::insn::i_max(a.eval(), b.eval());

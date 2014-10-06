@@ -23,7 +23,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
-template<class V>
+template<class V> SIMDPP_INL
 void transpose2(V& a0, V& a1)
 {
     for (unsigned j = 0; j < V::length; j+=2) {
@@ -31,7 +31,7 @@ void transpose2(V& a0, V& a1)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void transpose4(V& a0, V& a1, V& a2, V& a3)
 {
     for (unsigned j = 0; j < V::length; j+=4) {

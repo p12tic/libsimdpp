@@ -55,7 +55,7 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigne
     Conversions between mask types is only allowed if the element size is the
     same.
 */
-template<class R, class T>
+template<class R, class T> SIMDPP_INL
 R bit_cast(T t)
 {
     static_assert(is_vector<R>::value == is_vector<T>::value,

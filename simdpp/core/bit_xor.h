@@ -37,7 +37,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_EXPRESSION_ bit_xor(const any_vec<N,V1>& a,
                               const any_vec<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2<V1, V2>::empty
     bit_xor(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
@@ -49,37 +49,37 @@ typename detail::get_expr2<V1, V2>::empty
 #endif
 
 // support scalar arguments
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
         bit_xor(uint32_t a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
         bit_xor(uint64_t a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
         bit_xor(int32_t a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
         bit_xor(int64_t a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
         bit_xor(float a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
         bit_xor(double a, const any_vec<N,V>& b)
 {
@@ -89,37 +89,37 @@ typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
 
 
 
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
         bit_xor(const any_vec<N,V>& a, uint32_t b)
 {
     return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
         bit_xor(const any_vec<N,V>& a, uint64_t b)
 {
     return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
         bit_xor(const any_vec<N,V>& a, int32_t b)
 {
     return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
         bit_xor(const any_vec<N,V>& a, int64_t b)
 {
     return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
         bit_xor(const any_vec<N,V>& a, float b)
 {
     return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
 }
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
         bit_xor(const any_vec<N,V>& a, double b)
 {

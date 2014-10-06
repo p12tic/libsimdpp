@@ -31,14 +31,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSSE3, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int32<N> to_int32(int16<N,E> a)
 {
     return detail::insn::i_to_int32(a.eval());
 }
 
 // TODO: document
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint32<N> to_int32(uint16<N,E> a)
 {
     return (uint32<N>) detail::insn::i_to_int32(int16<N>(a.eval())); // FIXME
@@ -67,7 +67,7 @@ uint32<N> to_int32(uint16<N,E> a)
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int32<N> to_int32(float32<N,E> a)
 {
     return detail::insn::i_to_int32(a.eval());
@@ -98,7 +98,7 @@ int32<N> to_int32(float32<N,E> a)
 
     @icost{SSE2-SSE4.1, 3}
 */
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 int32<N> to_int32(float64<N,E> a)
 {
     return detail::insn::i_to_int32(a.eval());

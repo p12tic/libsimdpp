@@ -28,9 +28,9 @@ struct is_expr_vec_set_splat<expr_vec_set_splat<VE>> { static const bool value =
 
 namespace insn {
 
-inline void i_set_splat(uint32x4&, uint32_t);
+SIMDPP_INL void i_set_splat(uint32x4&, uint32_t);
 
-inline void i_set_splat(uint8x16& v, uint8_t v0)
+SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint8x16>(v0);
@@ -58,14 +58,14 @@ inline void i_set_splat(uint8x16& v, uint8_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(uint8x32& v, uint8_t v0)
+SIMDPP_INL void i_set_splat(uint8x32& v, uint8_t v0)
 {
     uint8x16 a = _mm_cvtsi32_si128(v0);
     v = _mm256_broadcastb_epi8(a);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_set_splat(uint8<N>& v, uint8_t v0)
 {
     uint8v tv;
@@ -77,7 +77,7 @@ void i_set_splat(uint8<N>& v, uint8_t v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(uint16x8& v, uint16_t v0)
+SIMDPP_INL void i_set_splat(uint16x8& v, uint16_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint16x8>(v0);
@@ -105,14 +105,14 @@ inline void i_set_splat(uint16x8& v, uint16_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(uint16x16& v, uint16_t v0)
+SIMDPP_INL void i_set_splat(uint16x16& v, uint16_t v0)
 {
     uint16x8 a = _mm_cvtsi32_si128(v0);
     v = _mm256_broadcastw_epi16(a);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_set_splat(uint16<N>& v, uint16_t v0)
 {
     uint16v tv;
@@ -124,7 +124,7 @@ void i_set_splat(uint16<N>& v, uint16_t v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(uint32x4& v, uint32_t v0)
+SIMDPP_INL void i_set_splat(uint32x4& v, uint32_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint32x4>(v0);
@@ -148,7 +148,7 @@ inline void i_set_splat(uint32x4& v, uint32_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(uint32x8& v, uint32_t v0)
+SIMDPP_INL void i_set_splat(uint32x8& v, uint32_t v0)
 {
     uint32x4 a = _mm_cvtsi32_si128(v0);
     v = _mm256_broadcastd_epi32(a);
@@ -156,13 +156,13 @@ inline void i_set_splat(uint32x8& v, uint32_t v0)
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_set_splat(uint32<16>& v, uint32_t v0)
+SIMDPP_INL void i_set_splat(uint32<16>& v, uint32_t v0)
 {
     v = _mm512_set1_epi32(v0);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_set_splat(uint32<N>& v, uint32_t v0)
 {
     uint32v tv;
@@ -174,7 +174,7 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(uint64x2& v, uint64_t v0)
+SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint64x2>(v0);
@@ -202,7 +202,7 @@ inline void i_set_splat(uint64x2& v, uint64_t v0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_set_splat(uint64x4& v, uint64_t v0)
+SIMDPP_INL void i_set_splat(uint64x4& v, uint64_t v0)
 {
 #if SIMDPP_SSE_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
@@ -217,13 +217,13 @@ inline void i_set_splat(uint64x4& v, uint64_t v0)
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_set_splat(uint64<8>& v, uint64_t v0)
+SIMDPP_INL void i_set_splat(uint64<8>& v, uint64_t v0)
 {
     v = _mm512_set1_epi64(v0);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_set_splat(uint64<N>& v, uint64_t v0)
 {
     uint64v tv;
@@ -235,7 +235,7 @@ void i_set_splat(uint64<N>& v, uint64_t v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(float32x4& v, float v0)
+SIMDPP_INL void i_set_splat(float32x4& v, float v0)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     v = detail::null::make_vec<float32x4>(v0);
@@ -256,14 +256,14 @@ inline void i_set_splat(float32x4& v, float v0)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_set_splat(float32x8& v, float v0)
+SIMDPP_INL void i_set_splat(float32x8& v, float v0)
 {
     v = _mm256_broadcast_ss(&v0);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_set_splat(float32<16>& v, float v0)
+SIMDPP_INL void i_set_splat(float32<16>& v, float v0)
 {
     float32<4> a;
     i_set_splat(a, v0);
@@ -271,7 +271,7 @@ inline void i_set_splat(float32<16>& v, float v0)
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_set_splat(float32<N>& v, float v0)
 {
     float32v tv;
@@ -283,7 +283,7 @@ void i_set_splat(float32<N>& v, float v0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_set_splat(float64x2& v, double v0)
+SIMDPP_INL void i_set_splat(float64x2& v, double v0)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<float64x2>(v0);
@@ -293,14 +293,14 @@ inline void i_set_splat(float64x2& v, double v0)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_set_splat(float64x4& v, double v0)
+SIMDPP_INL void i_set_splat(float64x4& v, double v0)
 {
     v = _mm256_broadcast_sd(&v0);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_set_splat(float64<8>& v, double v0)
+SIMDPP_INL void i_set_splat(float64<8>& v, double v0)
 {
     float64<4> v1;
     i_set_splat(v1, v0);
@@ -308,7 +308,7 @@ inline void i_set_splat(float64<8>& v, double v0)
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_set_splat(float64<N>& v, double v0)
 {
     float64v tv;
@@ -323,7 +323,7 @@ void i_set_splat(float64<N>& v, double v0)
 template<class V>
 struct i_set_splat_dispatch
 {
-    template<class VE>
+    template<class VE> SIMDPP_INL
     static V run(VE v)
     {
         V r;
@@ -335,7 +335,7 @@ struct i_set_splat_dispatch
 template<class VE>
 struct i_set_splat_dispatch<expr_vec_set_splat<VE>>
 {
-    static expr_vec_set_splat<VE> run(VE v)
+    static SIMDPP_INL expr_vec_set_splat<VE> run(VE v)
     {
         expr_vec_set_splat<VE> r;
         r.a = v;
@@ -345,7 +345,7 @@ struct i_set_splat_dispatch<expr_vec_set_splat<VE>>
 
 } // namespace insn
 
-template<class V, class VE>
+template<class V, class VE> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
 {
     typename detail::remove_sign<V>::type r;

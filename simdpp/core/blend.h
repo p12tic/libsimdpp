@@ -183,7 +183,7 @@ _PROMOTED_EXPRESSION_ blend(const any_vec<N,V1>& on,
                             const any_vec<N,V2>& off,
                             const any_vec<N,V3>& mask);
 #else
-template<unsigned N, class V1, class V2, class V3>
+template<unsigned N, class V1, class V2, class V3> SIMDPP_INL
 typename detail::get_expr_blend<V1, V2, V3>::type
         blend(const any_vec<N,V1>& on, const any_vec<N,V2>& off,
               const any_vec<N,V3>& mask)

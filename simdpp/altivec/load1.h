@@ -32,7 +32,7 @@ namespace altivec {
     @icost{ALTIVEC, 2}
 */
 /// @{
-inline uint8x16 load1_u(uint8x16& a, const uint8_t* p)
+SIMDPP_INL uint8x16 load1_u(uint8x16& a, const uint8_t* p)
 {
     a = vec_lde(0, p);
     // The format of vec_lvs{l,r} is compatible with the one accepted by
@@ -42,7 +42,7 @@ inline uint8x16 load1_u(uint8x16& a, const uint8_t* p)
     return a;
 }
 
-inline uint16x8 load1_u(uint16x8& a, const uint16_t* p)
+SIMDPP_INL uint16x8 load1_u(uint16x8& a, const uint16_t* p)
 {
     a = vec_lde(0, p);
     uint8x16 perm = vec_lvsl(0, p);
@@ -50,7 +50,7 @@ inline uint16x8 load1_u(uint16x8& a, const uint16_t* p)
     return a;
 }
 
-inline uint32x4 load1_u(uint32x4& a, const uint32_t* p)
+SIMDPP_INL uint32x4 load1_u(uint32x4& a, const uint32_t* p)
 {
     a = vec_lde(0, p);
     uint8x16 perm = vec_lvsl(0, p);
@@ -58,7 +58,7 @@ inline uint32x4 load1_u(uint32x4& a, const uint32_t* p)
     return a;
 }
 
-inline float32x4 load1_u(float32x4& a, const float* p)
+SIMDPP_INL float32x4 load1_u(float32x4& a, const float* p)
 {
     a = vec_lde(0, p);
     uint8x16 perm = vec_lvsl(0, p);
@@ -77,25 +77,25 @@ inline float32x4 load1_u(float32x4& a, const float* p)
     @endcode
 */
 /// @{
-inline uint8x16 load1(uint8x16& a, const uint8_t* p)
+SIMDPP_INL uint8x16 load1(uint8x16& a, const uint8_t* p)
 {
     a = vec_lde(0, p);
     return a;
 }
 
-inline uint16x8 load1(uint16x8& a, const uint16_t* p)
+SIMDPP_INL uint16x8 load1(uint16x8& a, const uint16_t* p)
 {
     a = vec_lde(0, p);
     return a;
 }
 
-inline uint32x4 load1(uint32x4& a, const uint32_t* p)
+SIMDPP_INL uint32x4 load1(uint32x4& a, const uint32_t* p)
 {
     a = vec_lde(0, p);
     return a;
 }
 
-inline float32x4 load1(float32x4& a, const float* p)
+SIMDPP_INL float32x4 load1(float32x4& a, const float* p)
 {
     a = vec_lde(0, p);
     return a;

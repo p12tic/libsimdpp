@@ -37,7 +37,7 @@ template<unsigned N, class E1, class E2>
 float32<N, _DETAIL_> sub(float32<N,E1> a,
                          float32<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 float32<N, expr_sub<float32<N,E1>,
                     float32<N,E2>>> sub(float32<N,E1> a,
                                         float32<N,E2> b)
@@ -68,7 +68,7 @@ template<unsigned N, class E1, class E2>
 float64<N, _DETAIL_> sub(float64<N,E1> a,
                          float64<N,E2> b);
 #else
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 float64<N, expr_sub<float64<N,E1>,
                     float64<N,E2>>> sub(float64<N,E1> a,
                                         float64<N,E2> b)

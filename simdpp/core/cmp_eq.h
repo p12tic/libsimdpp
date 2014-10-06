@@ -38,7 +38,7 @@ template<unsigned N, class V1, class V2>
 mask_int8<N, _DETAIL_> cmp_eq(const any_int8<N,V1>& a,
                               const any_int8<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int8<N, mask_int8<N>> cmp_eq(const any_int8<N,V1>& a,
                                   const any_int8<N,V2>& b)
 {
@@ -67,7 +67,7 @@ template<unsigned N, class V1, class V2>
 mask_int16<N, _DETAIL_> cmp_eq(const any_int16<N,V1>& a,
                                const any_int16<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int16<N, mask_int16<N>> cmp_eq(const any_int16<N,V1>& a,
                                     const any_int16<N,V2>& b)
 {
@@ -96,7 +96,7 @@ template<unsigned N, class V1, class V2>
 mask_int32<N, _DETAIL_> cmp_eq(const any_int32<N,V1>& a,
                                const any_int32<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int32<N, mask_int32<N>> cmp_eq(const any_int32<N,V1>& a,
                                     const any_int32<N,V2>& b)
 {
@@ -134,7 +134,7 @@ template<unsigned N, class V1, class V2>
 mask_int64<N, _DETAIL_> cmp_eq(const any_int64<N,V1>& a,
                                const any_int64<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int64<N, mask_int64<N>> cmp_eq(const any_int64<N,V1>& a,
                                     const any_int64<N,V2>& b)
 {
@@ -163,7 +163,7 @@ template<unsigned N, class V1, class V2>
 mask_float32<N, _DETAIL_> cmp_eq(const any_float32<N,V1>& a,
                                  const any_float32<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float32<N, mask_float32<N>> cmp_eq(const any_float32<N,V1>& a,
                                         const any_float32<N,V2>& b)
 {
@@ -193,7 +193,7 @@ template<unsigned N, class V1, class V2>
 mask_float64<N, _DETAIL_> cmp_eq(const any_float64<N,V1>& a,
                                  const any_float64<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float64<N, mask_float64<N>> cmp_eq(const any_float64<N,V1>& a,
                                         const any_float64<N,V2>& b)
 {

@@ -27,7 +27,7 @@ namespace sse {
 /** Prefetches data to level 1 cache
     @param ptr pointer to the data to prefetch
 */
-inline void prefetch_l1(const void* ptr)
+SIMDPP_INL void prefetch_l1(const void* ptr)
 {
     _mm_prefetch((const char*)ptr, _MM_HINT_T0);
 }
@@ -35,7 +35,7 @@ inline void prefetch_l1(const void* ptr)
 /** Prefetches data to level 2 cache
     @param ptr pointer to the data to prefetch
 */
-inline void prefetch_l2(const void* ptr)
+SIMDPP_INL void prefetch_l2(const void* ptr)
 {
     _mm_prefetch((const char*)ptr, _MM_HINT_T1);
 }
@@ -43,7 +43,7 @@ inline void prefetch_l2(const void* ptr)
 /** Prefetches data to level 3 cache
     @param ptr pointer to the data to prefetch
 */
-inline void prefetch_l3(const void* ptr)
+SIMDPP_INL void prefetch_l3(const void* ptr)
 {
     _mm_prefetch((const char*)ptr, _MM_HINT_T2);
 }
@@ -51,7 +51,7 @@ inline void prefetch_l3(const void* ptr)
 /** Prefetches data to a non-temporary buffer to be read once
     @param ptr pointer to the data to prefetch
 */
-inline void prefetch_nt(const void* ptr)
+SIMDPP_INL void prefetch_nt(const void* ptr)
 {
     _mm_prefetch((const char*)ptr, _MM_HINT_NTA);
 }

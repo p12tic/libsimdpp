@@ -32,7 +32,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 // FIXME: return empty expression
-template<class V = expr_vec_set_splat<int>>
+template<class V = expr_vec_set_splat<int>> SIMDPP_INL
 V splat(int x)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -41,7 +41,7 @@ V splat(int x)
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
-template<class V = expr_vec_set_splat<unsigned>>
+template<class V = expr_vec_set_splat<unsigned>> SIMDPP_INL
 V splat(unsigned x)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -50,7 +50,7 @@ V splat(unsigned x)
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
-template<class V = expr_vec_set_splat<int64_t>>
+template<class V = expr_vec_set_splat<int64_t>> SIMDPP_INL
 V splat(int64_t x)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -59,7 +59,7 @@ V splat(int64_t x)
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
-template<class V = expr_vec_set_splat<uint64_t>>
+template<class V = expr_vec_set_splat<uint64_t>> SIMDPP_INL
 V splat(uint64_t x)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -68,7 +68,7 @@ V splat(uint64_t x)
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
-template<class V = expr_vec_set_splat<float>>
+template<class V = expr_vec_set_splat<float>> SIMDPP_INL
 V splat(float x)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -77,7 +77,7 @@ V splat(float x)
     return detail::insn::i_set_splat_dispatch<V>::run(x);
 }
 
-template<class V = expr_vec_set_splat<double>>
+template<class V = expr_vec_set_splat<double>> SIMDPP_INL
 V splat(double x)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||

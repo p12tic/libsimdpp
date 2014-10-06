@@ -34,7 +34,7 @@ namespace insn {
 
 
 // collect some boilerplate here
-template<class V>
+template<class V> SIMDPP_INL
 void v_load_u(V& a, const char* p);
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ void v_load_u(V& a, const char* p);
 // offer better performance on e.g. ARM. Note, we don't use LDDQU on SSE,
 // because it has usage restrictions and offers improved performance only on
 // Pentium 4 era processors.
-inline uint8x16 i_load_u(uint8x16& a, const void* p)
+SIMDPP_INL uint8x16 i_load_u(uint8x16& a, const void* p)
 {
 #if SIMDPP_USE_NULL
     detail::null::load(a, p);
@@ -66,7 +66,7 @@ inline uint8x16 i_load_u(uint8x16& a, const void* p)
 #endif
 }
 
-inline uint16x8 i_load_u(uint16x8& a, const void* p)
+SIMDPP_INL uint16x8 i_load_u(uint16x8& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
@@ -78,7 +78,7 @@ inline uint16x8 i_load_u(uint16x8& a, const void* p)
 #endif
 }
 
-inline uint32x4 i_load_u(uint32x4& a, const void* p)
+SIMDPP_INL uint32x4 i_load_u(uint32x4& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
@@ -90,7 +90,7 @@ inline uint32x4 i_load_u(uint32x4& a, const void* p)
 #endif
 }
 
-inline uint64x2 i_load_u(uint64x2& a, const void* p)
+SIMDPP_INL uint64x2 i_load_u(uint64x2& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
@@ -102,7 +102,7 @@ inline uint64x2 i_load_u(uint64x2& a, const void* p)
 #endif
 }
 
-inline float32x4 i_load_u(float32x4& a, const void* p)
+SIMDPP_INL float32x4 i_load_u(float32x4& a, const void* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -121,7 +121,7 @@ inline float32x4 i_load_u(float32x4& a, const void* p)
 #endif
 }
 
-inline float64x2 i_load_u(float64x2& a, const void* p)
+SIMDPP_INL float64x2 i_load_u(float64x2& a, const void* p)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     detail::null::load(a, p);
@@ -135,78 +135,78 @@ inline float64x2 i_load_u(float64x2& a, const void* p)
 }
 
 #if SIMDPP_USE_AVX2
-inline uint8x32  i_load_u(uint8x32& a,  const void* p)
+SIMDPP_INL uint8x32  i_load_u(uint8x32& a,  const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-inline uint16x16 i_load_u(uint16x16& a, const void* p)
+SIMDPP_INL uint16x16 i_load_u(uint16x16& a, const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-inline uint32x8  i_load_u(uint32x8& a,  const void* p)
+SIMDPP_INL uint32x8  i_load_u(uint32x8& a,  const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
-inline uint64x4  i_load_u(uint64x4& a,  const void* p)
+SIMDPP_INL uint64x4  i_load_u(uint64x4& a,  const void* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p)); return a;
 }
 #endif
 #if SIMDPP_USE_AVX
-inline float32x8 i_load_u(float32x8& a, const void* p)
+SIMDPP_INL float32x8 i_load_u(float32x8& a, const void* p)
 {
     a = _mm256_loadu_ps(reinterpret_cast<const float*>(p)); return a;
 }
-inline float64x4 i_load_u(float64x4& a, const void* p)
+SIMDPP_INL float64x4 i_load_u(float64x4& a, const void* p)
 {
     a = _mm256_loadu_pd(reinterpret_cast<const double*>(p)); return a;
 }
 #endif
 #if SIMDPP_USE_AVX512
-inline uint32<16> i_load_u(uint32<16>& a, const void* p)
+SIMDPP_INL uint32<16> i_load_u(uint32<16>& a, const void* p)
 {
     a = _mm512_loadu_si512(p); return a;
 }
-inline uint64<8> i_load_u(uint64<8>& a,  const void* p)
+SIMDPP_INL uint64<8> i_load_u(uint64<8>& a,  const void* p)
 {
     a = _mm512_loadu_si512(p); return a;
 }
-inline float32<16> i_load_u(float32<16>& a, const void* p)
+SIMDPP_INL float32<16> i_load_u(float32<16>& a, const void* p)
 {
     a = _mm512_loadu_ps(p); return a;
 }
-inline float64<8> i_load_u(float64<8>& a, const void* p)
+SIMDPP_INL float64<8> i_load_u(float64<8>& a, const void* p)
 {
     a = _mm512_loadu_pd(p); return a;
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint8<N>  i_load_u(uint8<N>& a,  const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint16<N> i_load_u(uint16<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint32<N> i_load_u(uint32<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint64<N> i_load_u(uint64<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 float32<N> i_load_u(float32<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
 }
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 float64<N> i_load_u(float64<N>& a, const void* p)
 {
     v_load_u(a, reinterpret_cast<const char*>(p)); return a;
@@ -214,7 +214,7 @@ float64<N> i_load_u(float64<N>& a, const void* p)
 
 // -----------------------------------------------------------------------------
 
-template<class V>
+template<class V> SIMDPP_INL
 void v_load_u(V& a, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
@@ -247,7 +247,7 @@ struct i_load_u_dispatch<expr_vec_load_u> {
 
 } // namespace insn
 
-template<class V>
+template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load_u& e)
 {
     typename detail::remove_sign<V>::type r;

@@ -28,7 +28,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 uint16<8> expr_eval(expr_mul_lo<uint16<8,E1>,
                                 uint16<8,E2>> q)
 {
@@ -47,7 +47,7 @@ uint16<8> expr_eval(expr_mul_lo<uint16<8,E1>,
 }
 
 #if SIMDPP_USE_AVX2
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 uint16<16> expr_eval(expr_mul_lo<uint16<16,E1>,
                                  uint16<16,E2>> q)
 {
@@ -57,7 +57,7 @@ uint16<16> expr_eval(expr_mul_lo<uint16<16,E1>,
 }
 #endif
 
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N> expr_eval(expr_mul_lo<uint16<N,E1>,
                                 uint16<N,E2>> q)
 {
@@ -68,7 +68,7 @@ uint16<N> expr_eval(expr_mul_lo<uint16<N,E1>,
 
 // -----------------------------------------------------------------------------
 
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 int16<8> expr_eval(expr_mul_hi<int16<8,E1>,
                                int16<8,E2>> q)
 {
@@ -88,7 +88,7 @@ int16<8> expr_eval(expr_mul_hi<int16<8,E1>,
 }
 
 #if SIMDPP_USE_AVX2
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 int16<16> expr_eval(expr_mul_hi<int16<16,E1>,
                                 int16<16,E2>> q)
 {
@@ -98,7 +98,7 @@ int16<16> expr_eval(expr_mul_hi<int16<16,E1>,
 }
 #endif
 
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 int16<N> expr_eval(expr_mul_hi<int16<N,E1>,
                                int16<N,E2>> q)
 {
@@ -109,7 +109,7 @@ int16<N> expr_eval(expr_mul_hi<int16<N,E1>,
 
 // -----------------------------------------------------------------------------
 
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 uint16<8> expr_eval(expr_mul_hi<uint16<8,E1>,
                                 uint16<8,E2>> q)
 {
@@ -129,7 +129,7 @@ uint16<8> expr_eval(expr_mul_hi<uint16<8,E1>,
 }
 
 #if SIMDPP_USE_AVX2
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 uint16<16> expr_eval(expr_mul_hi<uint16<16,E1>,
                                  uint16<16,E2>> q)
 {
@@ -139,7 +139,7 @@ uint16<16> expr_eval(expr_mul_hi<uint16<16,E1>,
 }
 #endif
 
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N> expr_eval(expr_mul_hi<uint16<N,E1>,
                                 uint16<N,E2>> q)
 {
@@ -150,7 +150,7 @@ uint16<N> expr_eval(expr_mul_hi<uint16<N,E1>,
 
 // -----------------------------------------------------------------------------
 
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 uint32<4> expr_eval(expr_mul_lo<uint32<4,E1>,
                                 uint32<4,E2>> q)
 {
@@ -190,7 +190,7 @@ uint32<4> expr_eval(expr_mul_lo<uint32<4,E1>,
 }
 
 #if SIMDPP_USE_AVX2
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 uint32<8> expr_eval(expr_mul_lo<uint32<8,E1>,
                                 uint32<8,E2>> q)
 {
@@ -201,7 +201,7 @@ uint32<8> expr_eval(expr_mul_lo<uint32<8,E1>,
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class E1, class E2>
+template<class E1, class E2> SIMDPP_INL
 uint32<16> expr_eval(expr_mul_lo<uint32<16,E1>,
                                  uint32<16,E2>> q)
 {
@@ -211,7 +211,7 @@ uint32<16> expr_eval(expr_mul_lo<uint32<16,E1>,
 }
 #endif
 
-template<unsigned N, class E1, class E2>
+template<unsigned N, class E1, class E2> SIMDPP_INL
 uint32<N> expr_eval(expr_mul_lo<uint32<N,E1>,
                                 uint32<N,E2>> q)
 {

@@ -40,7 +40,7 @@ namespace detail {
 template<unsigned N, class V>
 _PROMOTED_EXPRESSION_ bit_not(const any_vec<N,V>& a);
 #else
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr<V, expr_bit_not<V>>::empty
     bit_not(const any_vec<N,V>& a)
 {
@@ -51,12 +51,12 @@ typename detail::get_expr<V, expr_bit_not<V>>::empty
 #endif
 
 /* FIXME
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 mask_int32<N, expr_bit_not<mask_int32<N,E>>> bit_not(mask_int32<N,E> a)
 {
     return { { a }, 0 };
 }
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 mask_int64<N, expr_bit_not<mask_int64<N,E>>> bit_not(mask_int64<N,E> a)
 {
     return { { a }, 0 };
@@ -64,12 +64,12 @@ mask_int64<N, expr_bit_not<mask_int64<N,E>>> bit_not(mask_int64<N,E> a)
 /// @}
 
 
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 mask_float32<N, expr_bit_not<mask_float32<N,E>>> bit_not(mask_float32<N,E> a)
 {
     return { { a }, 0 };
 }
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 mask_float64<N, expr_bit_not<mask_float64<N,E>>> bit_not(mask_float64<N,E> a)
 {
     return { { a }, 0 };

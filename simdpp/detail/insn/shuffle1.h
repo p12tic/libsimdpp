@@ -28,12 +28,12 @@ namespace detail {
 namespace insn {
 
 // fwd declarations
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64x2 i_shuffle1(uint64x2 a, uint64x2 b);
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 float64x2 i_shuffle1(float64x2 a, float64x2 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -55,7 +55,7 @@ float64x2 i_shuffle1(float64x2 a, float64x2 b)
 }
 
 #if SIMDPP_USE_AVX
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 float64x4 i_shuffle1(float64x4 a, float64x4 b)
 {
     return _mm256_shuffle_pd(a, b, s0 | s1<<1 | s0<<2 | s1<<3);
@@ -63,14 +63,14 @@ float64x4 i_shuffle1(float64x4 a, float64x4 b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 float64<8> i_shuffle1(float64<8> a, float64<8> b)
 {
     return _mm512_shuffle_pd(a, b, s0 | s1<<1 | s0<<2 | s1<<3);
 }
 #endif
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 float64<N> i_shuffle1(float64<N> a, float64<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(float64<N>, (i_shuffle1<s0,s1>), a, b);
@@ -78,7 +78,7 @@ float64<N> i_shuffle1(float64<N> a, float64<N> b)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64x2 i_shuffle1(uint64x2 a, uint64x2 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -96,7 +96,7 @@ uint64x2 i_shuffle1(uint64x2 a, uint64x2 b)
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64x4 i_shuffle1(uint64x4 a, uint64x4 b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -106,7 +106,7 @@ uint64x4 i_shuffle1(uint64x4 a, uint64x4 b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64<8> i_shuffle1(uint64<8> a, uint64<8> b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -115,7 +115,7 @@ uint64<8> i_shuffle1(uint64<8> a, uint64<8> b)
 }
 #endif
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 uint64<N> i_shuffle1(uint64<N> a, uint64<N> b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");

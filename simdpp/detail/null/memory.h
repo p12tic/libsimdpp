@@ -22,7 +22,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
-template<class V>
+template<class V> SIMDPP_INL
 V load(V& a, const void* p)
 {
     using T = typename V::element_type;
@@ -33,7 +33,7 @@ V load(V& a, const void* p)
     return a;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void load_packed2(V& a, V& b, const void* p)
 {
     using T = typename V::element_type;
@@ -44,7 +44,7 @@ void load_packed2(V& a, V& b, const void* p)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void load_packed3(V& a, V& b, V& c, const void* p)
 {
     using T = typename V::element_type;
@@ -56,7 +56,7 @@ void load_packed3(V& a, V& b, V& c, const void* p)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void load_packed4(V& a, V& b, V& c, V& d, const void* p)
 {
     using T = typename V::element_type;
@@ -69,7 +69,7 @@ void load_packed4(V& a, V& b, V& c, V& d, const void* p)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void store(void* p, V a)
 {
     using T = typename V::element_type;
@@ -79,7 +79,7 @@ void store(void* p, V a)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void store_first(void* p, V a, unsigned n)
 {
     using T = typename V::element_type;
@@ -89,7 +89,7 @@ void store_first(void* p, V a, unsigned n)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void store_last(void* p, V a, unsigned n)
 {
     using T = typename V::element_type;
@@ -100,7 +100,7 @@ void store_last(void* p, V a, unsigned n)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void store_packed2(void* p, V& a, V& b)
 {
     using T = typename V::element_type;
@@ -111,7 +111,7 @@ void store_packed2(void* p, V& a, V& b)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void store_packed3(void* p, V& a, V& b, V& c)
 {
     using T = typename V::element_type;
@@ -123,7 +123,7 @@ void store_packed3(void* p, V& a, V& b, V& c)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 void store_packed4(void* p, V& a, V& b, V& c, V& d)
 {
     using T = typename V::element_type;

@@ -23,7 +23,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class R, class V>
+template<class R, class V> SIMDPP_INL
 void vec_insert_impl(R& r, V v, unsigned n)
 {
     static_assert(V::length >= R::base_length, "Too small vector to insert");
@@ -34,27 +34,27 @@ void vec_insert_impl(R& r, V v, unsigned n)
 }
 
 // Sets the elements [M*n .. M*(n+1)) of @a a to the contents of @a x
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(uint8<N>& a, uint8<M> x, unsigned n) { vec_insert_impl(a, x, n); }
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(uint16<N>& a, uint16<M> x, unsigned n) { vec_insert_impl(a, x, n); }
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(uint32<N>& a, uint32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(uint64<N>& a, uint64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(int8<N>& a, int8<M> x, unsigned n) { vec_insert_impl(a, x, n); }
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(int16<N>& a, int16<M> x, unsigned n) { vec_insert_impl(a, x, n); }
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(int32<N>& a, int32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(int64<N>& a, int64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(float32<N>& a, float32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
-template<unsigned N, unsigned M>
+template<unsigned N, unsigned M> SIMDPP_INL
 void vec_insert(float64<N>& a, float64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
 
 } // namespace detail

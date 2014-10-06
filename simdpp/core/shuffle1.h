@@ -55,7 +55,7 @@ template<unsigned s0, unsigned s1, unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ shuffle1(const any_vec64<N,V1>& a,
                                       const any_vec64<N,V2>& b);
 #else
-template<unsigned s0, unsigned s1, unsigned N, class V1, class V2>
+template<unsigned s0, unsigned s1, unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
         shuffle1(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {

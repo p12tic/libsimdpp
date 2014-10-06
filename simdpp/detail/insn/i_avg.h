@@ -26,11 +26,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<class V> V v_emul_avg_u32(V a, V b);
-template<class V> V v_emul_avg_i32(V a, V b);
+template<class V> SIMDPP_INL V v_emul_avg_u32(V a, V b);
+template<class V> SIMDPP_INL V v_emul_avg_i32(V a, V b);
 
 
-inline uint8x16 i_avg(uint8x16 a, uint8x16 b)
+SIMDPP_INL uint8x16 i_avg(uint8x16 a, uint8x16 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<uint8x16>(a, b, [](uint8_t a, uint8_t b){
@@ -46,13 +46,13 @@ inline uint8x16 i_avg(uint8x16 a, uint8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline uint8x32 i_avg(uint8x32 a, uint8x32 b)
+SIMDPP_INL uint8x32 i_avg(uint8x32 a, uint8x32 b)
 {
     return _mm256_avg_epu8(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint8<N> i_avg(uint8<N> a, uint8<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_avg, a, b);
@@ -60,7 +60,7 @@ uint8<N> i_avg(uint8<N> a, uint8<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline int8x16 i_avg(int8x16 a, int8x16 b)
+SIMDPP_INL int8x16 i_avg(int8x16 a, int8x16 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<int8x16>(a, b, [](int8_t a, int8_t b){
@@ -82,7 +82,7 @@ inline int8x16 i_avg(int8x16 a, int8x16 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline int8x32 i_avg(int8x32 a, int8x32 b)
+SIMDPP_INL int8x32 i_avg(int8x32 a, int8x32 b)
 {
     uint8x32 a2, b2, bias, r;
     bias = make_uint(0x80);
@@ -94,7 +94,7 @@ inline int8x32 i_avg(int8x32 a, int8x32 b)
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 int8<N> i_avg(int8<N> a, int8<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(int8<N>, i_avg, a, b);
@@ -102,7 +102,7 @@ int8<N> i_avg(int8<N> a, int8<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline uint16x8 i_avg(uint16x8 a, uint16x8 b)
+SIMDPP_INL uint16x8 i_avg(uint16x8 a, uint16x8 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){
@@ -118,13 +118,13 @@ inline uint16x8 i_avg(uint16x8 a, uint16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline uint16x16 i_avg(uint16x16 a, uint16x16 b)
+SIMDPP_INL uint16x16 i_avg(uint16x16 a, uint16x16 b)
 {
     return _mm256_avg_epu16(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint16<N> i_avg(uint16<N> a, uint16<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_avg, a, b);
@@ -132,7 +132,7 @@ uint16<N> i_avg(uint16<N> a, uint16<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline int16x8 i_avg(int16x8 a, int16x8 b)
+SIMDPP_INL int16x8 i_avg(int16x8 a, int16x8 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){
@@ -153,7 +153,7 @@ inline int16x8 i_avg(int16x8 a, int16x8 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline int16x16 i_avg(int16x16 a, int16x16 b)
+SIMDPP_INL int16x16 i_avg(int16x16 a, int16x16 b)
 {
     uint16x16 a2, b2, r;
     a2 = bit_xor(a, 0x8000); // add
@@ -164,7 +164,7 @@ inline int16x16 i_avg(int16x16 a, int16x16 b)
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 int16<N> i_avg(int16<N> a, int16<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(int16<N>, i_avg, a, b);
@@ -172,7 +172,7 @@ int16<N> i_avg(int16<N> a, int16<N> b)
 
 // -----------------------------------------------------------------------------
 
-inline uint32x4 i_avg(uint32x4 a, uint32x4 b)
+SIMDPP_INL uint32x4 i_avg(uint32x4 a, uint32x4 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<uint32x4>(a, b, [](uint32_t a, uint32_t b){
@@ -188,26 +188,26 @@ inline uint32x4 i_avg(uint32x4 a, uint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline uint32x8 i_avg(uint32x8 a, uint32x8 b)
+SIMDPP_INL uint32x8 i_avg(uint32x8 a, uint32x8 b)
 {
     return v_emul_avg_u32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline uint32<16> i_avg(uint32<16> a, uint32<16> b)
+SIMDPP_INL uint32<16> i_avg(uint32<16> a, uint32<16> b)
 {
     return v_emul_avg_u32(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 uint32<N> i_avg(uint32<N> a, uint32<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_avg, a, b);
 }
 
-inline int32x4 i_avg(int32x4 a, int32x4 b)
+SIMDPP_INL int32x4 i_avg(int32x4 a, int32x4 b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<int32x4>(a, b, [](int32_t a, int32_t b){
@@ -224,20 +224,20 @@ inline int32x4 i_avg(int32x4 a, int32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-inline int32x8 i_avg(int32x8 a, int32x8 b)
+SIMDPP_INL int32x8 i_avg(int32x8 a, int32x8 b)
 {
     return v_emul_avg_i32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline int32<16> i_avg(int32<16> a, int32<16> b)
+SIMDPP_INL int32<16> i_avg(int32<16> a, int32<16> b)
 {
     return v_emul_avg_i32(a, b);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 int32<N> i_avg(int32<N> a, int32<N> b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(int32<N>, i_avg, a, b);
@@ -245,7 +245,7 @@ int32<N> i_avg(int32<N> a, int32<N> b)
 
 // generic implementations
 
-template<class V>
+template<class V> SIMDPP_INL
 V v_emul_avg_u32(V a, V b)
 {
     // (x & y) + ((x ^ y) >> 1) + (x ^ y) & 1
@@ -258,7 +258,7 @@ V v_emul_avg_u32(V a, V b)
     return x1;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V v_emul_avg_i32(V a, V b)
 {
     using VI = typename V::uint_vector_type;

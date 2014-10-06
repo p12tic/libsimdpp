@@ -23,7 +23,7 @@ namespace detail {
 
 template<unsigned N,
          template<unsigned, class> class V1, class E1,
-         template<unsigned, class> class V2, class E2>
+         template<unsigned, class> class V2, class E2> SIMDPP_INL
 V1<N,void> expr_eval(expr_bit_or<V1<N,E1>, V2<N,E2>> q)
 {
     return (V1<N,void>) insn::i_bit_or(q.a.eval(), q.b.eval());

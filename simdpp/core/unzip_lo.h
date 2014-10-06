@@ -116,7 +116,7 @@ template<unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ unzip2_lo(const any_vec64<N,V1>& a,
                                        const any_vec64<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
         unzip16_lo(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
@@ -126,7 +126,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     return detail::insn::i_unzip16_lo(ra, rb);
 }
 
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
         unzip8_lo(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
 {
@@ -136,7 +136,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     return detail::insn::i_unzip8_lo(ra, rb);
 }
 
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
         unzip4_lo(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
@@ -146,7 +146,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     return detail::insn::i_unzip4_lo(ra, rb);
 }
 
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
         unzip2_lo(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {

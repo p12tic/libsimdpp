@@ -22,7 +22,7 @@ namespace detail {
 namespace insn {
 
 
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint8x16 i_move16_r(uint8x16 a)
 {
     static_assert(shift <= 16, "Selector out of range");
@@ -49,7 +49,7 @@ uint8x16 i_move16_r(uint8x16 a)
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint8x32 i_move16_r(uint8x32 a)
 {
     static_assert(shift <= 16, "Selector out of range");
@@ -57,7 +57,7 @@ uint8x32 i_move16_r(uint8x32 a)
 }
 #endif
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_move16_r(uint8<N> a)
 {
     static_assert(shift <= 16, "Selector out of range");
@@ -66,7 +66,7 @@ uint8<N> i_move16_r(uint8<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint16<N> i_move8_r(uint16<N> a)
 {
     return uint16<N>(i_move16_r<shift*2>(uint8<N*2>(a)));
@@ -74,14 +74,14 @@ uint16<N> i_move8_r(uint16<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint32<4> i_move4_r(uint32<4> a)
 {
     return (uint32<4>) i_move16_r<shift*4>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint32<8> i_move4_r(uint32<8> a)
 {
     static_assert(shift <= 4, "Selector out of range");
@@ -90,7 +90,7 @@ uint32<8> i_move4_r(uint32<8> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint32<16> i_move4_r(uint32<16> a)
 {
     static_assert(shift <= 4, "Selector out of range");
@@ -104,7 +104,7 @@ uint32<16> i_move4_r(uint32<16> a)
 }
 #endif
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint32<N> i_move4_r(uint32<N> a)
 {
     SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_move4_r<shift>, a);
@@ -112,14 +112,14 @@ uint32<N> i_move4_r(uint32<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint64<2> i_move2_r(uint64<2> a)
 {
     return (uint64<2>) i_move16_r<shift*8>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint64<4> i_move2_r(uint64<4> a)
 {
     static_assert(shift <= 2, "Selector out of range");
@@ -128,7 +128,7 @@ uint64<4> i_move2_r(uint64<4> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 uint64<8> i_move2_r(uint64<8> a)
 {
     static_assert(shift <= 4, "Selector out of range");
@@ -136,7 +136,7 @@ uint64<8> i_move2_r(uint64<8> a)
 }
 #endif
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 uint64<N> i_move2_r(uint64<N> a)
 {
     return uint64<N>(i_move16_r<shift*8>(uint8<N*8>(a)));
@@ -144,14 +144,14 @@ uint64<N> i_move2_r(uint64<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 float32<4> i_move4_r(float32<4> a)
 {
     return (float32<4>) i_move16_r<shift*4>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 float32<8> i_move4_r(float32<8> a)
 {
     static_assert(shift <= 4, "Selector out of range");
@@ -160,7 +160,7 @@ float32<8> i_move4_r(float32<8> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 float32<16> i_move4_r(float32<16> a)
 {
     static_assert(shift <= 4, "Selector out of range");
@@ -174,7 +174,7 @@ float32<16> i_move4_r(float32<16> a)
 }
 #endif
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 float32<N> i_move4_r(float32<N> a)
 {
     return float32<N>(i_move4_r<shift>(uint32<N>(a)));
@@ -182,14 +182,14 @@ float32<N> i_move4_r(float32<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 float64<2> i_move2_r(float64<2> a)
 {
     return (float64<2>) i_move16_r<shift*8>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 float64<4> i_move2_r(float64<4> a)
 {
     static_assert(shift <= 2, "Selector out of range");
@@ -198,7 +198,7 @@ float64<4> i_move2_r(float64<4> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned shift>
+template<unsigned shift> SIMDPP_INL
 float64<8> i_move2_r(float64<8> a)
 {
     static_assert(shift <= 2, "Selector out of range");
@@ -210,7 +210,7 @@ float64<8> i_move2_r(float64<8> a)
 }
 #endif
 
-template<unsigned shift, unsigned N>
+template<unsigned shift, unsigned N> SIMDPP_INL
 float64<N> i_move2_r(float64<N> a)
 {
     return float64<N>(i_move2_r<shift>(uint64<N>(a)));

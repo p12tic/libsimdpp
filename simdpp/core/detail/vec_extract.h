@@ -23,7 +23,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class R, class V>
+template<class R, class V> SIMDPP_INL
 R vec_extract_impl(V a, unsigned n)
 {
     static_assert(R::length >= V::base_length, "Too small vector to extract");
@@ -37,27 +37,27 @@ R vec_extract_impl(V a, unsigned n)
 }
 
 // extract a sub-vector consisting of [M*n .. M*(n+1)) elements
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 uint8<M> vec_extract(uint8<N> a, unsigned n) { return vec_extract_impl<uint8<M>>(a, n); }
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 uint16<M> vec_extract(uint16<N> a, unsigned n) { return vec_extract_impl<uint16<M>>(a, n); }
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 uint32<M> vec_extract(uint32<N> a, unsigned n) { return vec_extract_impl<uint32<M>>(a, n); }
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 uint64<M> vec_extract(uint64<N> a, unsigned n) { return vec_extract_impl<uint64<M>>(a, n); }
 
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 int8<M> vec_extract(int8<N> a, unsigned n) { return vec_extract_impl<int8<M>>(a, n); }
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 int16<M> vec_extract(int16<N> a, unsigned n) { return vec_extract_impl<int16<M>>(a, n); }
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 int32<M> vec_extract(int32<N> a, unsigned n) { return vec_extract_impl<int32<M>>(a, n); }
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 int64<M> vec_extract(int64<N> a, unsigned n) { return vec_extract_impl<int64<M>>(a, n); }
 
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 float32<M> vec_extract(float32<N> a, unsigned n) { return vec_extract_impl<float32<M>>(a, n); }
-template<unsigned M, unsigned N>
+template<unsigned M, unsigned N> SIMDPP_INL
 float64<M> vec_extract(float64<N> a, unsigned n) { return vec_extract_impl<float64<M>>(a, n); }
 
 

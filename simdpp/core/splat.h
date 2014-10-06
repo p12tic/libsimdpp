@@ -83,7 +83,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned s, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ splat(const any_vec<N,V>& a);
 #else
-template<unsigned s, unsigned N, class V>
+template<unsigned s, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         splat(const any_vec<N,V>& a)
 {

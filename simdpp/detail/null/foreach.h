@@ -25,7 +25,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
-template<class R, class V, class C>
+template<class R, class V, class C> SIMDPP_INL
 R foreach(V v, C c)
 {
     R r;
@@ -35,7 +35,7 @@ R foreach(V v, C c)
     return static_cast<R>(r);
 }
 
-template<class R, class V1, class V2, class C>
+template<class R, class V1, class V2, class C> SIMDPP_INL
 R foreach(V1 v1, V2 v2, C c)
 {
     R r;

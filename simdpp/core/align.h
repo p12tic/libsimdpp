@@ -49,7 +49,7 @@ template<unsigned shift, unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ align16(const any_vec8<N,V1>& lower,
                                      const any_vec8<N,V2>& upper);
 #else
-template<unsigned shift, unsigned N, class V1, class V2>
+template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
     align16(const any_vec8<N,V1>& lower,
             const any_vec8<N,V2>& upper)
@@ -92,7 +92,7 @@ template<unsigned shift, unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ align8(const any_vec16<N,V1>& lower,
                                     const any_vec16<N,V2>& upper);
 #else
-template<unsigned shift, unsigned N, class V1, class V2>
+template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
     align8(const any_vec16<N,V1>& lower,
            const any_vec16<N,V2>& upper)
@@ -148,7 +148,7 @@ template<unsigned shift, unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ align4(const any_vec32<N,V1>& lower,
                                     const any_vec32<N,V2>& upper);
 #else
-template<unsigned shift, unsigned N, class V1, class V2>
+template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
     align4(const any_vec32<N,V1>& lower,
            const any_vec32<N,V2>& upper)
@@ -202,7 +202,7 @@ template<unsigned shift, unsigned N, class V1, class V2>
 _PROMOTED_NOMASK_EXPRESSION_ align2(const any_vec64<N,V1>& lower,
                                     const any_vec64<N,V2>& upper);
 #else
-template<unsigned shift, unsigned N, class V1, class V2>
+template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
     align2(const any_vec64<N,V1>& lower,
            const any_vec64<N,V2>& upper)

@@ -45,7 +45,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned shift, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ move16_r(const any_vec8<N,V>& a);
 #else
-template<unsigned shift, unsigned N, class V>
+template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move16_r(const any_vec8<N,V>& a)
 {
@@ -82,7 +82,7 @@ typename detail::get_expr_nomask<V>::empty
 template<unsigned shift, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ move8_r(const any_vec16<N,V>& a);
 #else
-template<unsigned shift, unsigned N, class V>
+template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move8_r(const any_vec16<N,V>& a)
 {
@@ -117,7 +117,7 @@ typename detail::get_expr_nomask<V>::empty
 template<unsigned shift, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ move4_r(const any_vec32<N,V>& a);
 #else
-template<unsigned shift, unsigned N, class V>
+template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move4_r(const any_vec32<N,V>& a)
 {
@@ -151,7 +151,7 @@ typename detail::get_expr_nomask<V>::empty
 template<unsigned shift, unsigned N, class V>
 _PROMOTED_NOMASK_EXPRESSION_ move2_r(const any_vec64<N,V>& a);
 #else
-template<unsigned shift, unsigned N, class V>
+template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move2_r(const any_vec64<N,V>& a)
 {

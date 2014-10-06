@@ -20,7 +20,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-inline const void* assume_aligned_impl(const void* x, unsigned bytes)
+SIMDPP_INL const void* assume_aligned_impl(const void* x, unsigned bytes)
 {
 #if (__GNUC__ == 4) && (__GNUC_MINOR__ > 7) && !defined(__clang__)
     // since GCC(>4.7.0)
@@ -32,13 +32,13 @@ inline const void* assume_aligned_impl(const void* x, unsigned bytes)
 #endif
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 T* assume_aligned(T* x, unsigned bytes)
 {
     return const_cast<T*>(reinterpret_cast<const T*>(assume_aligned_impl(x, bytes)));
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 const T* assume_aligned(const T* x, unsigned bytes)
 {
     return reinterpret_cast<const T*>(assume_aligned_impl(x, bytes));

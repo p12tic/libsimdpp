@@ -27,7 +27,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type isnan(V a)
 {
     typename V::mask_vector_type r;
@@ -37,7 +37,7 @@ typename V::mask_vector_type isnan(V a)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type isnan2(V a, V b)
 {
     typename V::mask_vector_type r;
@@ -47,7 +47,7 @@ typename V::mask_vector_type isnan2(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V abs(V a)
 {
     for (unsigned i = 0; i < V::length; i++) {
@@ -56,7 +56,7 @@ V abs(V a)
     return a;
 }
 
-template<class T, class U>
+template<class T, class U> SIMDPP_INL
 T saturate(U t)
 {
     U min = std::numeric_limits<T>::min();
@@ -66,7 +66,7 @@ T saturate(U t)
     return t;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V add(V a, V b)
 {
     V r;
@@ -76,7 +76,7 @@ V add(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V add_sat(V a, V b)
 {
     V r;
@@ -86,7 +86,7 @@ V add_sat(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V sub(V a, V b)
 {
     V r;
@@ -96,7 +96,7 @@ V sub(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V sub_sat(V a, V b)
 {
     V r;
@@ -106,7 +106,7 @@ V sub_sat(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V neg(V a)
 {
     V r;
@@ -116,7 +116,7 @@ V neg(V a)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V mul(V a, V b)
 {
     V r;
@@ -126,7 +126,7 @@ V mul(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V fmadd(V a, V b, V c)
 {
     V r;
@@ -136,7 +136,7 @@ V fmadd(V a, V b, V c)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V fmsub(V a, V b, V c)
 {
     V r;
@@ -146,7 +146,7 @@ V fmsub(V a, V b, V c)
     return r;
 }
 
-template<unsigned P, class V>
+template<unsigned P, class V> SIMDPP_INL
 V div_p(V a, V b)
 {
     // the least P significant bits of the mask are set.
@@ -164,7 +164,7 @@ V div_p(V a, V b)
 }
 
 
-template<class V>
+template<class V> SIMDPP_INL
 V shift_r(V a, unsigned shift)
 {
     V r;
@@ -174,7 +174,7 @@ V shift_r(V a, unsigned shift)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V shift_l(V a, unsigned shift)
 {
     V r;
@@ -184,7 +184,7 @@ V shift_l(V a, unsigned shift)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V min(V a, V b)
 {
     V r;
@@ -194,7 +194,7 @@ V min(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V max(V a, V b)
 {
     V r;

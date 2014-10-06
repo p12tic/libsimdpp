@@ -28,7 +28,7 @@ struct is_expr_vec_load_splat<expr_vec_load_splat> { static const bool value = t
 
 namespace insn {
 
-inline void i_load_splat(uint8x16& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint8x16& v, const void* p0)
 {
     const uint8_t* v0 = reinterpret_cast<const uint8_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -44,13 +44,13 @@ inline void i_load_splat(uint8x16& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(uint8x32& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint8x32& v, const void* p0)
 {
     i_set_splat(v, *reinterpret_cast<const uint8_t*>(p0));
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_splat(uint8<N>& v, const void* p0)
 {
     const uint8_t* v0 = reinterpret_cast<const uint8_t*>(p0);
@@ -63,7 +63,7 @@ void i_load_splat(uint8<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(uint16x8& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint16x8& v, const void* p0)
 {
     const uint16_t* v0 = reinterpret_cast<const uint16_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -79,13 +79,13 @@ inline void i_load_splat(uint16x8& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(uint16x16& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint16x16& v, const void* p0)
 {
     i_set_splat(v, *reinterpret_cast<const uint16_t*>(p0));
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_splat(uint16<N>& v, const void* p0)
 {
     const uint16_t* v0 = reinterpret_cast<const uint16_t*>(p0);
@@ -98,7 +98,7 @@ void i_load_splat(uint16<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(uint32x4& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint32x4& v, const void* p0)
 {
     const uint32_t* v0 = reinterpret_cast<const uint32_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -115,21 +115,21 @@ inline void i_load_splat(uint32x4& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(uint32x8& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint32x8& v, const void* p0)
 {
     i_set_splat(v, *reinterpret_cast<const uint32_t*>(p0));
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_splat(uint32<16>& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint32<16>& v, const void* p0)
 {
     __m128 x = _mm_load_ss(reinterpret_cast<const float*>(p0));
     v = _mm512_broadcastd_epi32(_mm_castps_si128(x));
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_splat(uint32<N>& v, const void* p0)
 {
     const uint32_t* v0 = reinterpret_cast<const uint32_t*>(p0);
@@ -142,7 +142,7 @@ void i_load_splat(uint32<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(uint64x2& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
 #if SIMDPP_USE_NULL
@@ -165,7 +165,7 @@ inline void i_load_splat(uint64x2& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX2
-inline void i_load_splat(uint64x4& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint64x4& v, const void* p0)
 {
     __m128i x = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(p0));
     v = _mm256_broadcastq_epi64(x);
@@ -173,14 +173,14 @@ inline void i_load_splat(uint64x4& v, const void* p0)
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_splat(uint64<8>& v, const void* p0)
+SIMDPP_INL void i_load_splat(uint64<8>& v, const void* p0)
 {
     __m128i x = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(p0));
     v = _mm512_broadcastq_epi64(x);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_splat(uint64<N>& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
@@ -193,7 +193,7 @@ void i_load_splat(uint64<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(float32x4& v, const void* p0)
+SIMDPP_INL void i_load_splat(float32x4& v, const void* p0)
 {
     const float* v0 = reinterpret_cast<const float*>(p0);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -212,21 +212,21 @@ inline void i_load_splat(float32x4& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_load_splat(float32x8& v, const void* p0)
+SIMDPP_INL void i_load_splat(float32x8& v, const void* p0)
 {
     v = _mm256_broadcast_ss(reinterpret_cast<const float*>(p0));
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_splat(float32<16>& v, const void* p0)
+SIMDPP_INL void i_load_splat(float32<16>& v, const void* p0)
 {
     __m128 x = _mm_load_ss(reinterpret_cast<const float*>(p0));
     v = _mm512_broadcastss_ps(x);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_splat(float32<N>& v, const void* p0)
 {
     const float* v0 = reinterpret_cast<const float*>(p0);
@@ -239,7 +239,7 @@ void i_load_splat(float32<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-inline void i_load_splat(float64x2& v, const void* p0)
+SIMDPP_INL void i_load_splat(float64x2& v, const void* p0)
 {
     const double* v0 = reinterpret_cast<const double*>(p0);
 
@@ -254,21 +254,21 @@ inline void i_load_splat(float64x2& v, const void* p0)
 }
 
 #if SIMDPP_USE_AVX
-inline void i_load_splat(float64x4& v, const void* p0)
+SIMDPP_INL void i_load_splat(float64x4& v, const void* p0)
 {
     v = _mm256_broadcast_sd(reinterpret_cast<const double*>(p0));
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-inline void i_load_splat(float64<8>& v, const void* p0)
+SIMDPP_INL void i_load_splat(float64<8>& v, const void* p0)
 {
     __m128d x = _mm_load_sd(reinterpret_cast<const double*>(p0));
     v = _mm512_broadcastsd_pd(x);
 }
 #endif
 
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void i_load_splat(float64<N>& v, const void* p0)
 {
     const double* v0 = reinterpret_cast<const double*>(p0);
@@ -306,7 +306,7 @@ struct i_load_splat_dispatch<expr_vec_load_splat>
 // -----------------------------------------------------------------------------
 } // namespace insn
 
-template<class V>
+template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load_splat& e)
 {
     typename detail::remove_sign<V>::type r;

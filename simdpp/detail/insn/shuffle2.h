@@ -29,10 +29,10 @@ namespace detail {
 namespace insn {
 
 // fwd decl
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1> SIMDPP_INL
 uint32x4 i_shuffle2(uint32x4 a, uint32x4 b);
 
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1> SIMDPP_INL
 float32x4 i_shuffle2(float32x4 a, float32x4 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -54,7 +54,7 @@ float32x4 i_shuffle2(float32x4 a, float32x4 b)
 }
 
 #if SIMDPP_USE_AVX
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1> SIMDPP_INL
 float32x8 i_shuffle2(float32x8 a, float32x8 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -63,7 +63,7 @@ float32x8 i_shuffle2(float32x8 a, float32x8 b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1> SIMDPP_INL
 float32<16> i_shuffle2(float32<16> a, float32<16> b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -71,7 +71,7 @@ float32<16> i_shuffle2(float32<16> a, float32<16> b)
 }
 #endif
 
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N> SIMDPP_INL
 float32<N> i_shuffle2(float32<N> a, float32<N> b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -80,7 +80,7 @@ float32<N> i_shuffle2(float32<N> a, float32<N> b)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 float32<N> i_shuffle2(float32<N> a, float32<N> b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
@@ -89,7 +89,7 @@ float32<N> i_shuffle2(float32<N> a, float32<N> b)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1> SIMDPP_INL
 uint32x4 i_shuffle2(uint32x4 a, uint32x4 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -107,7 +107,7 @@ uint32x4 i_shuffle2(uint32x4 a, uint32x4 b)
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1> SIMDPP_INL
 uint32x8 i_shuffle2(uint32x8 a, uint32x8 b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -117,7 +117,7 @@ uint32x8 i_shuffle2(uint32x8 a, uint32x8 b)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1> SIMDPP_INL
 uint32<16> i_shuffle2(uint32<16> a, uint32<16> b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -126,7 +126,7 @@ uint32<16> i_shuffle2(uint32<16> a, uint32<16> b)
 }
 #endif
 
-template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N>
+template<unsigned a0, unsigned a1, unsigned b0, unsigned b1, unsigned N> SIMDPP_INL
 uint32<N> i_shuffle2(uint32<N> a, uint32<N> b)
 {
     static_assert(a0 < 4 && a1 < 4 && b0 < 4 && b1 < 4, "Selector out of range");
@@ -135,7 +135,7 @@ uint32<N> i_shuffle2(uint32<N> a, uint32<N> b)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 uint32<N> i_shuffle2(uint32<N> a, uint32<N> b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");

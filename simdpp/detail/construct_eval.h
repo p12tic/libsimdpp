@@ -24,35 +24,35 @@ namespace detail {
 // put forward declarations of all construct_eval functions here. Definitions
 // are needed only if the corresponding expression is used
 
-template<class V>
+template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load_splat& e);
 
-template<class V, class VE>
+template<class V, class VE> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_set_splat<VE>& e);
 
-template<class V>
+template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load& e);
 
-template<class V>
+template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load_u& e);
 
-template<class V, class VE, unsigned N>
+template<class V, class VE, unsigned N> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_make_const<VE, N>& e);
 
-template<class V, class E>
+template<class V, class E> SIMDPP_INL
 void construct_eval_wrapper(V& v, const E& e)
 {
     construct_eval(v, e);
 }
 
-inline expr_vec_make_const<uint64_t,1> make_zero()
+SIMDPP_INL expr_vec_make_const<uint64_t,1> make_zero()
 {
     expr_vec_make_const<uint64_t,1> r;
     r.a[0] = 0;
     return r;
 }
 
-inline expr_vec_make_const<uint64_t,1> make_ones()
+SIMDPP_INL expr_vec_make_const<uint64_t,1> make_ones()
 {
     expr_vec_make_const<uint64_t,1> r;
     r.a[0] = -1;

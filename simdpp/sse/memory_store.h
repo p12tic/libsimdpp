@@ -28,7 +28,7 @@ namespace sse {
     @a N must be a power of 2 and at least @a M/4 where @a M is the number of
     elements within vector. @a P must be 0 or @a M/2 if @a N == M/2.
 */
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void store_lane(void* p, uint8x16 a)
 {
     static_assert(N==4 || N==8, "Size not supported");
@@ -47,7 +47,7 @@ void store_lane(void* p, uint8x16 a)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void store_lane(void* p, uint16x8 a)
 {
     static_assert(N==2 || N==4, "Size not supported");
@@ -66,7 +66,7 @@ void store_lane(void* p, uint16x8 a)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void store_lane(void* p, uint32x4 a)
 {
     static_assert(N==1 || N==2, "Size not supported");
@@ -85,7 +85,7 @@ void store_lane(void* p, uint32x4 a)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void store_lane(void* p, uint64x2 a)
 {
     static_assert(N==1, "Size not supported");
@@ -97,7 +97,7 @@ void store_lane(void* p, uint64x2 a)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void store_lane(void* p, float32x4 a)
 {
     static_assert(N==1 || N==2, "Size not supported");
@@ -116,7 +116,7 @@ void store_lane(void* p, float32x4 a)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void store_lane(void* p, float64x2 a)
 {
     static_assert(N==1, "Size not supported");
@@ -133,14 +133,14 @@ void store_lane(void* p, float64x2 a)
     bit in the corresponding byte in the mask defines whether the byte will
     be saved. @a p does not need to be aligned to 16 bytes.
 */
-inline void store_masked(void* p, uint8x16 a, uint8x16 mask)
+SIMDPP_INL void store_masked(void* p, uint8x16 a, uint8x16 mask)
 {
     _mm_maskmoveu_si128(a, mask, reinterpret_cast<char*>(p));
 }
 
-inline void store_masked(void* p, uint16x8 a, uint16x8 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
-inline void store_masked(void* p, uint32x4 a, uint32x4 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
-inline void store_masked(void* p, uint64x2 a, uint64x2 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+SIMDPP_INL void store_masked(void* p, uint16x8 a, uint16x8 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+SIMDPP_INL void store_masked(void* p, uint32x4 a, uint32x4 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+SIMDPP_INL void store_masked(void* p, uint64x2 a, uint64x2 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
 
 
 } // namespace sse

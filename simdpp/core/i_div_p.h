@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, 10}
     @icost{AVX2, 4}
 */
-template<unsigned P>
+template<unsigned P> SIMDPP_INL
 uint8x16 div_p(uint8x16 num, uint8x16 den)
 {
 #if SIMDPP_USE_NULL
@@ -92,7 +92,7 @@ uint8x16 div_p(uint8x16 num, uint8x16 den)
 #endif
 }
 
-template<unsigned P>
+template<unsigned P> SIMDPP_INL
 uint16x8 div_p(uint16x8 num, uint16x8 den)
 {
 #if SIMDPP_USE_NULL

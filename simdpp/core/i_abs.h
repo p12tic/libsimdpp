@@ -41,7 +41,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 uint8<N, _DETAIL_> abs(int8<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint8<N, expr_abs<int8<N,E>>> abs(int8<N,E> a)
 {
     return { { a }, 0 };
@@ -69,7 +69,7 @@ uint8<N, expr_abs<int8<N,E>>> abs(int8<N,E> a)
 template<unsigned N, class E>
 uint16<N, _DETAIL_> abs(int16<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint16<N, expr_abs<int16<N,E>>> abs(int16<N,E> a)
 {
     return { { a }, 0 };
@@ -96,7 +96,7 @@ uint16<N, expr_abs<int16<N,E>>> abs(int16<N,E> a)
 template<unsigned N, class E>
 uint32<N, _DETAIL_> abs(int32<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint32<N, expr_abs<int32<N,E>>> abs(int32<N,E> a)
 {
     return { { a }, 0 };
@@ -125,7 +125,7 @@ uint32<N, expr_abs<int32<N,E>>> abs(int32<N,E> a)
 template<unsigned N, class E>
 uint64<N, _DETAIL_> abs(int64<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 uint64<N, expr_abs<int64<N,E>>> abs(int64<N,E> a)
 {
     return { { a }, 0 };

@@ -31,7 +31,7 @@ namespace sse {
     If @a N is @a M/2, then the values of non-loaded elements are preserved,
     otherwise, they are set to zero.
 */
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void load_lane(uint8x16& a, const void* p)
 {
     static_assert(N==4 || N==8, "Size not supported");
@@ -50,7 +50,7 @@ void load_lane(uint8x16& a, const void* p)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void load_lane(uint16x8& a, const void* p)
 {
     static_assert(N==2 || N==4, "Size not supported");
@@ -69,7 +69,7 @@ void load_lane(uint16x8& a, const void* p)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void load_lane(uint32x4& a, const void* p)
 {
     static_assert(N==1 || N==2, "Size not supported");
@@ -88,7 +88,7 @@ void load_lane(uint32x4& a, const void* p)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void load_lane(uint64x2& a, const void* p)
 {
     static_assert(N==1, "Size not supported");
@@ -100,7 +100,7 @@ void load_lane(uint64x2& a, const void* p)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void load_lane(float32x4& a, const void* p)
 {
     static_assert(N==1 || N==2, "Size not supported");
@@ -117,7 +117,7 @@ void load_lane(float32x4& a, const void* p)
     }
 }
 
-template<unsigned P, unsigned N>
+template<unsigned P, unsigned N> SIMDPP_INL
 void load_lane(float64x2& a, const void* p)
 {
     static_assert(N==1, "Size not supported");

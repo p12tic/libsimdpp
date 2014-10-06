@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E>
 float32<N, _DETAIL_> sign(float32<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 float32<N, float32<N>> sign(float32<N,E> a)
 {
     return detail::insn::i_sign(a.eval());
@@ -68,7 +68,7 @@ float32<N, float32<N>> sign(float32<N,E> a)
 template<unsigned N, class E>
 float64<N, _DETAIL_> abs(float64<N,E> a);
 #else
-template<unsigned N, class E>
+template<unsigned N, class E> SIMDPP_INL
 float64<N, float64<N>> sign(float64<N,E> a)
 {
     return detail::insn::i_sign(a.eval());

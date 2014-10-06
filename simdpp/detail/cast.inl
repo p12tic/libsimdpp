@@ -34,7 +34,7 @@ template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type 
 #pragma intrinsic(memcpy)
 #endif
 
-template<class R, class T>
+template<class R, class T> SIMDPP_INL
 R cast_memcpy(T t)
 {
     static_assert(sizeof(R) == sizeof(T), "Size mismatch");
@@ -43,7 +43,7 @@ R cast_memcpy(T t)
     return r;
 }
 
-template<class R, class T>
+template<class R, class T> SIMDPP_INL
 R cast_memcpy_unmask(T t)
 {
     using TT = typename base_mask_vector_type<T>::type;
@@ -51,7 +51,7 @@ R cast_memcpy_unmask(T t)
     return cast_memcpy<R>(tt);
 }
 
-template<class R, class T>
+template<class R, class T> SIMDPP_INL
 R cast_memcpy_remask(T t)
 {
     using RR = typename base_mask_vector_type<R>::type;
@@ -61,7 +61,7 @@ R cast_memcpy_remask(T t)
 
 template<>
 struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
-    template<class R, class T>
+    template<class R, class T> SIMDPP_INL
     static R run(T t)
     {
         static_assert(R::size_tag == T::size_tag,
@@ -73,7 +73,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
 
 template<>
 struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
-    template<class R, class T>
+    template<class R, class T> SIMDPP_INL
     static R run(T t)
     {
         static_assert(R::size_tag == T::size_tag,
@@ -85,7 +85,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
 
 template<>
 struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
-    template<class R, class T>
+    template<class R, class T> SIMDPP_INL
     static R run(T t)
     {
         static_assert(R::size_tag == T::size_tag,
@@ -97,7 +97,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
 
 template<unsigned MaskCastOverride>
 struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
-    template<class R, class T>
+    template<class R, class T> SIMDPP_INL
     static R run(T)
     {
         static_assert(!std::is_same<T,T>::value, // fake dependency
@@ -107,7 +107,7 @@ struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
 
 template<unsigned MaskCastOverride>
 struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/, MaskCastOverride> {
-    template<class R, class T>
+    template<class R, class T> SIMDPP_INL
     static R run(T t)
     {
         return cast_memcpy_unmask<R>(t);
@@ -116,7 +116,7 @@ struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/, MaskCastOverride> {
 
 template<unsigned MaskCastOverride>
 struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
-    template<class R, class T>
+    template<class R, class T> SIMDPP_INL
     static R run(T t)
     {
         return cast_memcpy<R>(t);

@@ -25,7 +25,7 @@ namespace sse {
 /** Extracts the lower half of a 256-bit vector
     @icost{0}
 */
-inline uint8x16 extract_lo(uint8x32 a)
+SIMDPP_INL uint8x16 extract_lo(uint8x32 a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_castsi256_si128(a);
@@ -34,11 +34,11 @@ inline uint8x16 extract_lo(uint8x32 a)
 #endif
 }
 
-inline uint16x8 extract_lo(uint16x16 a) { return (uint16x8) extract_lo(uint8x32(a)); }
-inline uint32x4 extract_lo(uint32x8 a) { return (uint32x4) extract_lo(uint8x32(a)); }
-inline uint64x2 extract_lo(uint64x4 a) { return (uint64x2) extract_lo(uint8x32(a)); }
+SIMDPP_INL uint16x8 extract_lo(uint16x16 a) { return (uint16x8) extract_lo(uint8x32(a)); }
+SIMDPP_INL uint32x4 extract_lo(uint32x8 a) { return (uint32x4) extract_lo(uint8x32(a)); }
+SIMDPP_INL uint64x2 extract_lo(uint64x4 a) { return (uint64x2) extract_lo(uint8x32(a)); }
 
-inline float32x4 extract_lo(float32x8 a)
+SIMDPP_INL float32x4 extract_lo(float32x8 a)
 {
 #if SIMDPP_USE_AVX
     return _mm256_castps256_ps128(a);
@@ -47,7 +47,7 @@ inline float32x4 extract_lo(float32x8 a)
 #endif
 }
 
-inline float64x2 extract_lo(float64x4 a)
+SIMDPP_INL float64x2 extract_lo(float64x4 a)
 {
 #if SIMDPP_USE_AVX
     return _mm256_castpd256_pd128(a);
@@ -61,7 +61,7 @@ inline float64x2 extract_lo(float64x4 a)
 /** Extracts the higher half of a 256-bit vector
     @icost{0}
 */
-inline uint8x16 extract_hi(uint8x32 a)
+SIMDPP_INL uint8x16 extract_hi(uint8x32 a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_extracti128_si256(a, 1);
@@ -70,11 +70,11 @@ inline uint8x16 extract_hi(uint8x32 a)
 #endif
 }
 
-inline uint16x8 extract_hi(uint16x16 a) { return (uint16x8) extract_hi(uint8x32(a)); }
-inline uint32x4 extract_hi(uint32x8 a) { return (uint32x4) extract_hi(uint8x32(a)); }
-inline uint64x2 extract_hi(uint64x4 a) { return (uint64x2) extract_hi(uint8x32(a)); }
+SIMDPP_INL uint16x8 extract_hi(uint16x16 a) { return (uint16x8) extract_hi(uint8x32(a)); }
+SIMDPP_INL uint32x4 extract_hi(uint32x8 a) { return (uint32x4) extract_hi(uint8x32(a)); }
+SIMDPP_INL uint64x2 extract_hi(uint64x4 a) { return (uint64x2) extract_hi(uint8x32(a)); }
 
-inline float32x4 extract_hi(float32x8 a)
+SIMDPP_INL float32x4 extract_hi(float32x8 a)
 {
 #if SIMDPP_USE_AVX
     return _mm256_extractf128_ps(a, 1);
@@ -83,7 +83,7 @@ inline float32x4 extract_hi(float32x8 a)
 #endif
 }
 
-inline float64x2 extract_hi(float64x4 a)
+SIMDPP_INL float64x2 extract_hi(float64x4 a)
 {
 #if SIMDPP_USE_AVX
     return _mm256_extractf128_pd(a, 1);

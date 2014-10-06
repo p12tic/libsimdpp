@@ -29,7 +29,7 @@ namespace detail {
 namespace insn {
 
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 uint16<N> i_permute2(uint16<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -37,7 +37,7 @@ uint16<N> i_permute2(uint16<N> a)
 }
 
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 uint32<N> i_permute2(uint32<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -45,7 +45,7 @@ uint32<N> i_permute2(uint32<N> a)
 }
 
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 float32<N> i_permute2(float32<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -53,7 +53,7 @@ float32<N> i_permute2(float32<N> a)
 }
 
 
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64x2 i_permute2(uint64x2 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -71,7 +71,7 @@ uint64x2 i_permute2(uint64x2 a)
 }
 
 #if SIMDPP_USE_AVX2
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64x4 i_permute2(uint64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -80,7 +80,7 @@ uint64x4 i_permute2(uint64x4 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64<8> i_permute2(uint64<8> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -88,7 +88,7 @@ uint64<8> i_permute2(uint64<8> a)
 }
 #endif
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 uint64<N> i_permute2(uint64<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -97,7 +97,7 @@ uint64<N> i_permute2(uint64<N> a)
 
 // -----------------------------------------------------------------------------
 
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 float64x2 i_permute2(float64x2 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -109,7 +109,7 @@ float64x2 i_permute2(float64x2 a)
 }
 
 #if SIMDPP_USE_AVX
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 float64x4 i_permute2(float64x4 a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -122,7 +122,7 @@ float64x4 i_permute2(float64x4 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<unsigned s0, unsigned s1>
+template<unsigned s0, unsigned s1> SIMDPP_INL
 float64<8> i_permute2(float64<8> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -130,7 +130,7 @@ float64<8> i_permute2(float64<8> a)
 }
 #endif
 
-template<unsigned s0, unsigned s1, unsigned N>
+template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 float64<N> i_permute2(float64<N> a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");

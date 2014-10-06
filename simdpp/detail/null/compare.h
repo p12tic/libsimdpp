@@ -22,7 +22,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type cmp_eq(V a, V b)
 {
     typename V::mask_vector_type r;
@@ -32,7 +32,7 @@ typename V::mask_vector_type cmp_eq(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type cmp_neq(V a, V b)
 {
     typename V::mask_vector_type r;
@@ -42,7 +42,7 @@ typename V::mask_vector_type cmp_neq(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type cmp_lt(V a, V b)
 {
     typename V::mask_vector_type r;
@@ -52,7 +52,7 @@ typename V::mask_vector_type cmp_lt(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type cmp_le(V a, V b)
 {
     typename V::mask_vector_type r;
@@ -62,7 +62,7 @@ typename V::mask_vector_type cmp_le(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type cmp_gt(V a, V b)
 {
     typename V::mask_vector_type r;
@@ -72,7 +72,7 @@ typename V::mask_vector_type cmp_gt(V a, V b)
     return r;
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 typename V::mask_vector_type cmp_ge(V a, V b)
 {
     typename V::mask_vector_type r;

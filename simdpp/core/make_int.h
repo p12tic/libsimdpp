@@ -59,7 +59,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 // FIXME: return empty expr
-template<class V = expr_vec_make_const<int64_t,1>>
+template<class V = expr_vec_make_const<int64_t,1>> SIMDPP_INL
 V make_int(int64_t v0)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -70,7 +70,7 @@ V make_int(int64_t v0)
     return detail::insn::i_make_const_dispatch<V>::run(a);
 }
 
-template<class V = expr_vec_make_const<int64_t,2>>
+template<class V = expr_vec_make_const<int64_t,2>> SIMDPP_INL
 V make_int(int64_t v0, int64_t v1)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -81,7 +81,7 @@ V make_int(int64_t v0, int64_t v1)
     return detail::insn::i_make_const_dispatch<V>::run(a);
 }
 
-template<class V = expr_vec_make_const<int64_t,4>>
+template<class V = expr_vec_make_const<int64_t,4>> SIMDPP_INL
 V make_int(int64_t v0, int64_t v1, int64_t v2, int64_t v3)
 {
     static_assert((is_vector<V>::value && !is_mask<V>::value) ||
@@ -92,7 +92,7 @@ V make_int(int64_t v0, int64_t v1, int64_t v2, int64_t v3)
     return detail::insn::i_make_const_dispatch<V>::run(a);
 }
 
-template<class V = expr_vec_make_const<int64_t,8>>
+template<class V = expr_vec_make_const<int64_t,8>> SIMDPP_INL
 V make_int(int64_t v0, int64_t v1, int64_t v2, int64_t v3,
            int64_t v4, int64_t v5, int64_t v6, int64_t v7)
 {
@@ -105,7 +105,7 @@ V make_int(int64_t v0, int64_t v1, int64_t v2, int64_t v3,
     return detail::insn::i_make_const_dispatch<V>::run(a);
 }
 
-template<class V = expr_vec_make_const<int64_t,16>>
+template<class V = expr_vec_make_const<int64_t,16>> SIMDPP_INL
 V make_int(int64_t v0,  int64_t v1,  int64_t v2,  int64_t v3,
            int64_t v4,  int64_t v5,  int64_t v6,  int64_t v7,
            int64_t v8,  int64_t v9,  int64_t v10, int64_t v11,

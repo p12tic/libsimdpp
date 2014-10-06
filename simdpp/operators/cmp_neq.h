@@ -45,7 +45,7 @@ template<unsigned N, class V1, class V2>
 mask_int8<N, _DETAIL_> operator!=(const any_int8<N,V1>& a,
                                const any_int8<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int8<N, mask_int8<N>> operator!=(const any_int8<N,V1>& a,
                                    const any_int8<N,V2>& b)
 {
@@ -80,7 +80,7 @@ template<unsigned N, class V1, class V2>
 mask_int16<N, _DETAIL_> operator!=(const any_int16<N,V1>& a,
                                 const any_int16<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int16<N, mask_int16<N>> operator!=(const any_int16<N,V1>& a,
                                      const any_int16<N,V2>& b)
 {
@@ -116,7 +116,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int16, any_int16)
                                  const any_int32<N,V2>& b);
 
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int32<N, mask_int32<N>> operator!=(const any_int32<N,V1>& a,
                                      const any_int32<N,V2>& b)
 {
@@ -156,7 +156,7 @@ template<unsigned N, class V1, class V2>
 mask_int64<N, _DETAIL_> operator!=(const any_int64<N,V1>& a,
                                 const any_int64<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int64<N, mask_int64<N>> operator!=(const any_int64<N,V1>& a,
                                      const any_int64<N,V2>& b)
 {
@@ -189,7 +189,7 @@ template<unsigned N, class V1, class V2>
 mask_float32<N, _DETAIL_> operator!=(const any_float32<N,V1>& a,
                                   const any_float32<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float32<N, mask_float32<N>> operator!=(const any_float32<N,V1>& a,
                                          const any_float32<N,V2>& b)
 {
@@ -219,7 +219,7 @@ template<unsigned N, class V1, class V2>
 mask_float64<N, _DETAIL_> operator!=(const any_float64<N,V1>& a,
                                   const any_float64<N,V2>& b);
 #else
-template<unsigned N, class V1, class V2>
+template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float64<N, mask_float64<N>> operator!=(const any_float64<N,V1>& a,
                                          const any_float64<N,V2>& b)
 {

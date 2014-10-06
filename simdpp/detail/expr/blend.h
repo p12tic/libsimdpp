@@ -24,7 +24,7 @@ namespace detail {
 template<unsigned N,
          template<unsigned, class> class V1, class E1,
          template<unsigned, class> class V2, class E2,
-         template<unsigned, class> class V3, class E3>
+         template<unsigned, class> class V3, class E3>  SIMDPP_INL
 V1<N,void> expr_eval(const expr_blend<V1<N,E1>,
                                       V2<N,E2>,
                                       V3<N,E3>>& q)

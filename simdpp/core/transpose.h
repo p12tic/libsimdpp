@@ -53,7 +53,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2}
     @icost{ALTIVEC, 4-6}
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void transpose2(any_int16<N,V>& a0, any_int16<N,V>& a1)
 {
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
@@ -85,7 +85,7 @@ void transpose2(any_int16<N,V>& a0, any_int16<N,V>& a1)
     @icost{NEON, 2}
     @icost{ALTIVEC, 4-6}
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void transpose2(any_int32<N,V>& a0, any_int32<N,V>& a1)
 {
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
@@ -117,7 +117,7 @@ void transpose2(any_int32<N,V>& a0, any_int32<N,V>& a1)
     @icost{NEON, 2}
     @icost{ALTIVEC, 4-6}
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void transpose2(any_int64<N,V>& a0, any_int64<N,V>& a1)
 {
     static_assert(!is_mask<V>::value, "Mask vectors are not supported");
@@ -149,7 +149,7 @@ void transpose2(any_int64<N,V>& a0, any_int64<N,V>& a1)
     @icost{ALTIVEC, 4-6}
     @icost{NEON, 2}
 */
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void transpose2(float32<N>& a0, float32<N>& a1)
 {
     detail::insn::i_transpose2(a0, a1);
@@ -174,7 +174,7 @@ void transpose2(float32<N>& a0, float32<N>& a1)
     @icost{AVX-AVX2, 2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void transpose2(float64<N>& a0, float64<N>& a1)
 {
     detail::insn::i_transpose2(a0, a1);
@@ -205,7 +205,7 @@ void transpose2(float64<N>& a0, float64<N>& a1)
     @icost{NEON, 8}
     @icost{ALTIVEC, 16-20}
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void transpose4(any_int8<N,V>& a0, any_int8<N,V>& a1,
                 any_int8<N,V>& a2, any_int8<N,V>& a3)
 {
@@ -242,7 +242,7 @@ void transpose4(any_int8<N,V>& a0, any_int8<N,V>& a1,
     @icost{NEON, 8}
     @icost{ALTIVEC, 16-20}
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void transpose4(any_int16<N,V>& a0, any_int16<N,V>& a1,
                 any_int16<N,V>& a2, any_int16<N,V>& a3)
 {
@@ -279,7 +279,7 @@ void transpose4(any_int16<N,V>& a0, any_int16<N,V>& a1,
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-template<unsigned N, class V>
+template<unsigned N, class V> SIMDPP_INL
 void transpose4(any_int32<N,V>& a0, any_int32<N,V>& a1,
                 any_int32<N,V>& a2, any_int32<N,V>& a3)
 {
@@ -314,7 +314,7 @@ void transpose4(any_int32<N,V>& a0, any_int32<N,V>& a1,
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-template<unsigned N>
+template<unsigned N> SIMDPP_INL
 void transpose4(float32<N>& a0, float32<N>& a1,
                 float32<N>& a2, float32<N>& a3)
 {
