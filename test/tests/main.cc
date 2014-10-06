@@ -34,6 +34,7 @@ void main_test_function(TestResults& res)
 }
 
 static ArchRegistration tester(main_test_function,
-                               SIMDPP_ARCH_NAME);
+                               SIMDPP_ARCH_NAME,
+                               simdpp::this_compile_arch());
 
 } // namespace SIMDPP_ARCH_NAMESPACE

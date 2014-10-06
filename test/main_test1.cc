@@ -11,6 +11,12 @@
 #include <iostream>
 #include <cstdlib>
 
+#if __arm__
+#include <simdpp/dispatch/get_arch_linux_cpuinfo.h>
+#else
+#include <simdpp/dispatch/get_arch_raw_cpuid.h>
+#endif
+
 /*  We test libsimdpp by comparing the results of the same computations done in
     different 'architectures'. That is, we build a list of results for each
     instruction set available plus the 'null' instruction set (simple,
@@ -20,7 +26,11 @@
 int main()
 {
     std::ostream& err = std::cerr;
-
+    #if __arm__
+    simdpp::Arch current_arch = simdpp::get_arch_linux_cpuinfo();
+    #else
+    simdpp::Arch current_arch = simdpp::get_arch_raw_cpuid();
+    #endif
     const auto& arch_list = ArchRegistration::arch_list();
     auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
                                   [](const ArchRegistration::Arch& a) -> bool
@@ -41,11 +51,15 @@ int main()
     bool ok = true;
 
     for (auto it = arch_list.begin(); it != arch_list.end(); it++) {
-        std::cout << "Testing: " << it->arch << std::endl;
-
         if (it == null_arch) {
             continue;
         }
+
+        if (!simdpp::test_arch_subset(current_arch, it->required_arch)) {
+            std::cout << "Not testing: " << it->arch << std::endl;
+            continue;
+        }
+        std::cout << "Testing: " << it->arch << std::endl;
 
         TestResults results(it->arch);
         it->run(results);
