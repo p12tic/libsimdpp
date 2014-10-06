@@ -50,7 +50,7 @@ add_to_config("i_mul.h", "mul_lo", "*");
 add_to_config("f_div.h", "div", "/");
 add_to_config("bit_or.h"     , "bit_or"     , "|" );
 add_to_config("bit_and.h"    , "bit_and"    , "&" );
-add_to_config("bit_not.h"    , "bit_not"    , "!" );
+add_to_config("bit_not.h"    , "bit_not"    , "~" );
 add_to_config("bit_xor.h"    , "bit_xor"    , "^" );
 
 #print Dumper(@config);
