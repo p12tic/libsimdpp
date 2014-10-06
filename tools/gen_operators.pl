@@ -6,6 +6,9 @@
 #   (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
+# Generates the simdpp/operator/*.h files
+# Use as $ ./tools/gen_operators.py
+
 use strict;
 use Data::Dumper;
 
@@ -61,9 +64,9 @@ foreach my $rec (@config)
 
 	my $curly_braces_counter = 0;
 	my %types = ();
-	mkdir "../simdpp/operator/";
-	my $file_out = "../simdpp/operator/".$rec->{file};
-	my $file_in  = "../simdpp/core/".$rec->{file};
+	mkdir "simdpp/operators/";
+	my $file_out = "simdpp/operators/".$rec->{file};
+	my $file_in  = "simdpp/core/".$rec->{file};
 	open FILE_OUT, ">", $file_out or die "Unable to open the file '$file_out'";
 	open FILE_IN , "<", $file_in  or die "Unable to open the file '$file_in'";
 
