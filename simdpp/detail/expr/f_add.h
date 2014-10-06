@@ -22,8 +22,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class E1, class E2> SIMDPP_INL
-float32<4> expr_eval(expr_add<float32<4,E1>,
-                              float32<4,E2>> q)
+float32<4> expr_eval(const expr_add<float32<4,E1>,
+                                    float32<4,E2>>& q)
 {
     float32<4> a = q.a.eval();
     float32<4> b = q.b.eval();
@@ -40,8 +40,8 @@ float32<4> expr_eval(expr_add<float32<4,E1>,
 
 #if SIMDPP_USE_AVX
 template<class E1, class E2> SIMDPP_INL
-float32<8> expr_eval(expr_add<float32<8,E1>,
-                              float32<8,E2>> q)
+float32<8> expr_eval(const expr_add<float32<8,E1>,
+                                    float32<8,E2>>& q)
 {
     float32<8> a = q.a.eval();
     float32<8> b = q.b.eval();
@@ -51,8 +51,8 @@ float32<8> expr_eval(expr_add<float32<8,E1>,
 
 #if SIMDPP_USE_AVX512
 template<class E1, class E2> SIMDPP_INL
-float32<16> expr_eval(expr_add<float32<16,E1>,
-                              float32<16,E2>> q)
+float32<16> expr_eval(const expr_add<float32<16,E1>,
+                                     float32<16,E2>>& q)
 {
     float32<16> a = q.a.eval();
     float32<16> b = q.b.eval();
@@ -61,8 +61,8 @@ float32<16> expr_eval(expr_add<float32<16,E1>,
 #endif
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N> expr_eval(expr_add<float32<N,E1>,
-                              float32<N,E2>> q)
+float32<N> expr_eval(const expr_add<float32<N,E1>,
+                                    float32<N,E2>>& q)
 {
     float32<N> a = q.a.eval();
     float32<N> b = q.b.eval();
@@ -72,8 +72,8 @@ float32<N> expr_eval(expr_add<float32<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2> SIMDPP_INL
-float64<2> expr_eval(expr_add<float64<2,E1>,
-                              float64<2,E2>> q)
+float64<2> expr_eval(const expr_add<float64<2,E1>,
+                                    float64<2,E2>>& q)
 {
     float64<2> a = q.a.eval();
     float64<2> b = q.b.eval();
@@ -86,8 +86,8 @@ float64<2> expr_eval(expr_add<float64<2,E1>,
 
 #if SIMDPP_USE_AVX
 template<class E1, class E2> SIMDPP_INL
-float64<4> expr_eval(expr_add<float64<4,E1>,
-                              float64<4,E2>> q)
+float64<4> expr_eval(const expr_add<float64<4,E1>,
+                                    float64<4,E2>>& q)
 {
     float64<4> a = q.a.eval();
     float64<4> b = q.b.eval();
@@ -97,8 +97,8 @@ float64<4> expr_eval(expr_add<float64<4,E1>,
 
 #if SIMDPP_USE_AVX512
 template<class E1, class E2> SIMDPP_INL
-float64<8> expr_eval(expr_add<float64<8,E1>,
-                              float64<8,E2>> q)
+float64<8> expr_eval(const expr_add<float64<8,E1>,
+                                    float64<8,E2>>& q)
 {
     float64<8> a = q.a.eval();
     float64<8> b = q.b.eval();
@@ -107,8 +107,8 @@ float64<8> expr_eval(expr_add<float64<8,E1>,
 #endif
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N> expr_eval(expr_add<float64<N,E1>,
-                              float64<N,E2>> q)
+float64<N> expr_eval(const expr_add<float64<N,E1>,
+                                    float64<N,E2>>& q)
 {
     float64<N> a = q.a.eval();
     float64<N> b = q.b.eval();

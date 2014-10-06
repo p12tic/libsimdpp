@@ -23,8 +23,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class E1, class E2> SIMDPP_INL
-int8<16> expr_eval(expr_add_sat<int8<16,E1>,
-                                int8<16,E2>> q)
+int8<16> expr_eval(const expr_add_sat<int8<16,E1>,
+                                      int8<16,E2>>& q)
 {
     int8<16> a = q.a.eval();
     int8<16> b = q.b.eval();
@@ -41,8 +41,8 @@ int8<16> expr_eval(expr_add_sat<int8<16,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2> SIMDPP_INL
-int8<32> expr_eval(expr_add_sat<int8<32,E1>,
-                                int8<32,E2>> q)
+int8<32> expr_eval(const expr_add_sat<int8<32,E1>,
+                                      int8<32,E2>>& q)
 {
     int8<32> a = q.a.eval();
     int8<32> b = q.b.eval();
@@ -51,8 +51,8 @@ int8<32> expr_eval(expr_add_sat<int8<32,E1>,
 #endif
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int8<N> expr_eval(expr_add_sat<int8<N,E1>,
-                               int8<N,E2>> q)
+int8<N> expr_eval(const expr_add_sat<int8<N,E1>,
+                                     int8<N,E2>>& q)
 {
     int8<N> a = q.a.eval();
     int8<N> b = q.b.eval();
@@ -62,8 +62,8 @@ int8<N> expr_eval(expr_add_sat<int8<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2> SIMDPP_INL
-int16<8> expr_eval(expr_add_sat<int16<8,E1>,
-                                int16<8,E2>> q)
+int16<8> expr_eval(const expr_add_sat<int16<8,E1>,
+                                      int16<8,E2>>& q)
 {
     int16<8> a = q.a.eval();
     int16<8> b = q.b.eval();
@@ -80,8 +80,8 @@ int16<8> expr_eval(expr_add_sat<int16<8,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2> SIMDPP_INL
-int16<16> expr_eval(expr_add_sat<int16<16,E1>,
-                                 int16<16,E2>> q)
+int16<16> expr_eval(const expr_add_sat<int16<16,E1>,
+                                       int16<16,E2>>& q)
 {
     int16<16> a = q.a.eval();
     int16<16> b = q.b.eval();
@@ -90,8 +90,8 @@ int16<16> expr_eval(expr_add_sat<int16<16,E1>,
 #endif
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int16<N> expr_eval(expr_add_sat<int16<N,E1>,
-                                int16<N,E2>> q)
+int16<N> expr_eval(const expr_add_sat<int16<N,E1>,
+                                      int16<N,E2>>& q)
 {
     int16<N> a = q.a.eval();
     int16<N> b = q.b.eval();
@@ -101,8 +101,8 @@ int16<N> expr_eval(expr_add_sat<int16<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2> SIMDPP_INL
-uint8<16> expr_eval(expr_add_sat<uint8<16,E1>,
-                                 uint8<16,E2>> q)
+uint8<16> expr_eval(const expr_add_sat<uint8<16,E1>,
+                                       uint8<16,E2>>& q)
 {
     uint8<16> a = q.a.eval();
     uint8<16> b = q.b.eval();
@@ -119,8 +119,8 @@ uint8<16> expr_eval(expr_add_sat<uint8<16,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2> SIMDPP_INL
-uint8<32> expr_eval(expr_add_sat<uint8<32,E1>,
-                                 uint8<32,E2>> q)
+uint8<32> expr_eval(const expr_add_sat<uint8<32,E1>,
+                                       uint8<32,E2>>& q)
 {
     uint8<32> a = q.a.eval();
     uint8<32> b = q.b.eval();
@@ -129,8 +129,8 @@ uint8<32> expr_eval(expr_add_sat<uint8<32,E1>,
 #endif
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N> expr_eval(expr_add_sat<uint8<N,E1>,
-                                uint8<N,E2>> q)
+uint8<N> expr_eval(const expr_add_sat<uint8<N,E1>,
+                                      uint8<N,E2>>& q)
 {
     uint8<N> a = q.a.eval();
     uint8<N> b = q.b.eval();
@@ -140,8 +140,8 @@ uint8<N> expr_eval(expr_add_sat<uint8<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class E1, class E2> SIMDPP_INL
-uint16<8> expr_eval(expr_add_sat<uint16<8,E1>,
-                                 uint16<8,E2>> q)
+uint16<8> expr_eval(const expr_add_sat<uint16<8,E1>,
+                                       uint16<8,E2>>& q)
 {
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
@@ -158,8 +158,8 @@ uint16<8> expr_eval(expr_add_sat<uint16<8,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class E1, class E2> SIMDPP_INL
-uint16<16> expr_eval(expr_add_sat<uint16<16,E1>,
-                                  uint16<16,E2>> q)
+uint16<16> expr_eval(const expr_add_sat<uint16<16,E1>,
+                                        uint16<16,E2>>& q)
 {
     uint16<16> a = q.a.eval();
     uint16<16> b = q.b.eval();
@@ -168,8 +168,8 @@ uint16<16> expr_eval(expr_add_sat<uint16<16,E1>,
 #endif
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N> expr_eval(expr_add_sat<uint16<N,E1>,
-                                 uint16<N,E2>> q)
+uint16<N> expr_eval(const expr_add_sat<uint16<N,E1>,
+                                       uint16<N,E2>>& q)
 {
     uint16<N> a = q.a.eval();
     uint16<N> b = q.b.eval();
