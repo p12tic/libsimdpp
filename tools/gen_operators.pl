@@ -31,6 +31,7 @@ sub add_to_config
 }
 
 add_to_config("i_shift_l.h", "shift_l", "<<", '\bshift_l\b.*\bcount\b');
+add_to_config("i_shift_r.h", "shift_r", ">>", '\bshift_l\b.*\bcount\b');
 add_to_config("cmp_eq.h" , "cmp_eq" , "==");
 add_to_config("cmp_neq.h", "cmp_neq", "!=");
 add_to_config("cmp_ge.h" , "cmp_ge" , ">=");
