@@ -105,59 +105,6 @@ foreach my $rec (@config)
 		print FILE_OUT "$_\n";
 	}
 
-	# Add operators with mixed vectors and scalars
-	if ($rec->{file} !~ /_shift_/ &&
-		$rec->{file} !~ /bit_not/)
-	{
-		$header_ifdef =~ s/_H\b/_MIX_H/;
-
-		print FILE_OUT "
-		#ifndef $header_ifdef
-		#define $header_ifdef
-
-		namespace simdpp {
-		#ifndef SIMDPP_DOXYGEN
-		namespace SIMDPP_ARCH_NAMESPACE {
-		#endif
-		";
-		
-		if ($rec->{file} =~ /bit_/) {
-			%types = ("any_int64"=>1, "any_int32"=>1, "any_int16"=>1, "any_int8"=>1, "any_float32"=>1, "any_float64"=>1);
-		}
-		foreach my $any (keys(%types)) {
-			my $noany = $any;
-			$noany =~ s/^any_//;
-			my $scalar = $noany;
-			$scalar =~ s/[0-9]*$//;
-			my $ret = $rec->{file} =~ /cmp_/ ? "mask_$noany" : $noany;
-			#(my $unused, my $scalar) = $type =~ /(any_){0,1}(^[a-z]*)/;
-			#print "$any $noany $scalar\n";
-		
-			print FILE_OUT "
-			template<unsigned N, class V>
-			$ret<N> operator$rec->{op}(const $scalar& a, const any_$noany<N, V>& b) {
-				return ($noany<N>)make_int(a) $rec->{op} b.wrapped();
-			}
-			template<unsigned N, class V>
-			$ret<N> operator$rec->{op}(const any_$noany<N, V>& a, const $scalar& b) {
-				return a.wrapped() $rec->{op} ($noany<N>)make_int(b);
-			}
-		
-			";
-		}
-		
-		print FILE_OUT "
-		#ifndef SIMDPP_DOXYGEN
-		} // namespace SIMDPP_ARCH_NAMESPACE
-		#endif
-		} // namespace simdpp
-
-		#endif
-		";
-	}
-
 	close FILE_IN;
 	close FILE_OUT;
-
 }
-
