@@ -161,12 +161,3 @@ foreach my $rec (@config)
 
 }
 
-#--------------------------------------------------
-# CREATE GLOBAL HEADER
-#--------------------------------------------------
-my $file_global_header_out = "../simdpp/operators/operators.h";
-open FILE_GLOBAL_HEADER_OUT, ">", $file_global_header_out or die "Unable to open the file '$file_global_header_out'";
-foreach my $rec (@config) {
-	print FILE_GLOBAL_HEADER_OUT "#include <simdpp/operators/$rec->{file}>\n";
-}
-close FILE_GLOBAL_HEADER_OUT;
