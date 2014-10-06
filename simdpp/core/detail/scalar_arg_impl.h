@@ -76,17 +76,9 @@ V make_const(typename V::element_type t)
 
 #define SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(FUNC, RET_VEC, VEC) \
 template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(uint64_t a, const VEC<N,V>& b);   \
+RET_VEC<N, _DETAIL_> FUNC(detail::scalar_param<typename V::element_type> a, const VEC<N,V>& b);   \
 template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(int64_t a, const VEC<N,V>& b);    \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(double a, const VEC<N,V>& b);     \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, uint64_t b);   \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, int64_t b);    \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, double b);
+RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::element_type> b);   \
 // end #define
 
 #else
@@ -126,17 +118,9 @@ RET_VEC<N, RET_VEC<N>> FUNC(const VEC<N,V>& a, detail::scalar_param<typename VEC
 
 #define SIMDPP_SCALAR_ARG_IMPL_EXPR(FUNC, EXPR, RET_VEC, VEC)   \
 template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(uint64_t a, const VEC<N,V>& b);       \
+RET_VEC<N, _DETAIL_> FUNC(detail::scalar_param<typename V::element_type> a, const VEC<N,V>& b);         \
 template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(int64_t a, const VEC<N,V>& b);        \
-template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(double a, const VEC<N,V>& b);         \
-template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, uint64_t b);       \
-template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, int64_t b);        \
-template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, double b);
+RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::element_type> b);
 // end #define
 
 #else
@@ -162,17 +146,9 @@ RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, detail::scalar_param<
 
 #define SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(FUNC, EXPR, VEC, UINT_VEC)      \
 template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(uint64_t a, const VEC<N,V>& b);       \
+_PROMOTED_NOMASK_EXPRESSION_ FUNC(detail::scalar_param<typename V::element_type> a, const VEC<N,V>& b);         \
 template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(int64_t a, const VEC<N,V>& b);        \
-template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(double a, const VEC<N,V>& b);         \
-template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(const VEC<N,V>& a, uint64_t b);       \
-template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(const VEC<N,V>& a, int64_t b);        \
-template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(const VEC<N,V>& a, double b);
+_PROMOTED_NOMASK_EXPRESSION_ FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::element_type> b);       \
 // end #define
 
 #else
