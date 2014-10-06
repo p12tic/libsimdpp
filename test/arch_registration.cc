@@ -12,3 +12,9 @@ ArchRegistration::ArchList& ArchRegistration::arch_list()
     static ArchList archs;
     return archs;
 }
+
+ArchRegistration::ArchRegistration(TestFunction fn, const char* arch,
+                                   simdpp::Arch required_arch)
+{
+    arch_list().push_back(Arch{fn, arch, required_arch});
+}
