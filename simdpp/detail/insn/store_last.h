@@ -172,7 +172,11 @@ inline void i_store_last(char* p, uint64x4 a, unsigned n)
 {
     static const int64_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
     uint64<4> mask = load_u(mask_d + n);
+#if __INTEL_COMPILER
+    _mm256_maskstore_epi64(reinterpret_cast<__int64*>(p), mask, a);
+#else
     _mm256_maskstore_epi64(reinterpret_cast<long long*>(p), mask, a);
+#endif
 }
 #endif
 

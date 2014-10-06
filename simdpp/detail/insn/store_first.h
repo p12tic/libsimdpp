@@ -164,7 +164,11 @@ inline void i_store_first(char* p, uint64x4 a, unsigned n)
 {
     static const int64_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     uint64<4> mask = load_u(mask_d + 4-n);
+#if __INTEL_COMPILER
+    _mm256_maskstore_epi64(reinterpret_cast<__int64*>(p), mask, a);
+#else
     _mm256_maskstore_epi64(reinterpret_cast<long long*>(p), mask, a);
+#endif
 }
 #endif
 
