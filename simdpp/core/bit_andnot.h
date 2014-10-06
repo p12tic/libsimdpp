@@ -49,17 +49,79 @@ typename detail::get_expr_bitwise2_and<expr_bit_andnot, V1, V2>::type
 #endif
 
 // support scalar arguments
+// support scalar arguments
 template<unsigned N, class V>
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
-        bit_andnot(detail::scalar_param<typename V::element_type> a, const any_vec<N,V>& b)
+        bit_andnot(uint32_t a, const any_vec<N,V>& b)
 {
     return bit_andnot(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V>
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
-        bit_andnot(const any_vec<N,V>& a, detail::scalar_param<typename V::element_type> b)
+        bit_andnot(uint64_t a, const any_vec<N,V>& b)
 {
-    return bit_andnot(detail::make_const<typename detail::get_expr_nomask<V>::type>(b), a);
+    return bit_andnot(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(int32_t a, const any_vec<N,V>& b)
+{
+    return bit_andnot(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(int64_t a, const any_vec<N,V>& b)
+{
+    return bit_andnot(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(float a, const any_vec<N,V>& b)
+{
+    return bit_andnot(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(double a, const any_vec<N,V>& b)
+{
+    return bit_andnot(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(const any_vec<N,V>& a, uint32_t b)
+{
+    return bit_andnot(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(const any_vec<N,V>& a, uint64_t b)
+{
+    return bit_andnot(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(const any_vec<N,V>& a, int32_t b)
+{
+    return bit_andnot(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(const any_vec<N,V>& a, int64_t b)
+{
+    return bit_andnot(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(const any_vec<N,V>& a, float b)
+{
+    return bit_andnot(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_expr_nomask<V>::type, V>::type
+        bit_andnot(const any_vec<N,V>& a, double b)
+{
+    return bit_andnot(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
 }
 
 #ifndef SIMDPP_DOXYGEN

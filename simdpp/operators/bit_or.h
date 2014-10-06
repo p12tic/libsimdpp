@@ -52,16 +52,76 @@ typename detail::get_expr_bit_or<V1, V2>::type
 // support scalar arguments
 template<unsigned N, class V>
 typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
-        operator|(detail::scalar_param<typename V::element_type> a, const any_vec<N,V>& b)
+        operator|(uint32_t a, const any_vec<N,V>& b)
 {
-    return operator|(make_uint<detail::get_expr_nomask<V>::type>(a), b);
+    return operator|(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+        operator|(uint64_t a, const any_vec<N,V>& b)
+{
+    return operator|(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+        operator|(int32_t a, const any_vec<N,V>& b)
+{
+    return operator|(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+        operator|(int64_t a, const any_vec<N,V>& b)
+{
+    return operator|(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+        operator|(float a, const any_vec<N,V>& b)
+{
+    return operator|(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+        operator|(double a, const any_vec<N,V>& b)
+{
+    return operator|(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
 }
 
 template<unsigned N, class V>
 typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
-        operator|(const any_vec<N,V>& a, detail::scalar_param<typename V::element_type> b)
+        operator|(const any_vec<N,V>& a, uint32_t b)
 {
-    return operator|(a, make_uint<detail::get_expr_nomask<V>::type>(b));
+    return operator|(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+        operator|(const any_vec<N,V>& a, uint64_t b)
+{
+    return operator|(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+        operator|(const any_vec<N,V>& a, int32_t b)
+{
+    return operator|(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+        operator|(const any_vec<N,V>& a, int64_t b)
+{
+    return operator|(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+        operator|(const any_vec<N,V>& a, float b)
+{
+    return operator|(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+        operator|(const any_vec<N,V>& a, double b)
+{
+    return operator|(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
 }
 
 #ifndef SIMDPP_DOXYGEN

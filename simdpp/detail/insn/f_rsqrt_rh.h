@@ -29,7 +29,7 @@ namespace insn {
 template<class V>
 V v_rsqrt_rh(V x, V a)
 {
-    V x2, c3, c0p5, r;
+    V x2, r;
 
     x2 = mul(x, x);
     r = mul(a, x2);
@@ -56,7 +56,7 @@ inline float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 
     return x;
 #elif SIMDPP_USE_ALTIVEC
-    float32x4 c3, c0p5, x2, r, xp5;
+    float32x4 x2, r, xp5;
 
     c3 = make_float(3.0f);
 

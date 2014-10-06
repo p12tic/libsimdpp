@@ -51,14 +51,77 @@ typename detail::get_expr2<V1, V2>::empty
 // support scalar arguments
 template<unsigned N, class V>
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
-        bit_xor(detail::scalar_param<typename V::element_type> a, const any_vec<N,V>& b)
+        bit_xor(uint32_t a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
+        bit_xor(uint64_t a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
+        bit_xor(int32_t a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
+        bit_xor(int64_t a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
+        bit_xor(float a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V>
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
+        bit_xor(double a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 
+
+
+
 template<unsigned N, class V>
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
-        bit_xor(const any_vec<N,V>& a, detail::scalar_param<typename V::element_type> b)
+        bit_xor(const any_vec<N,V>& a, uint32_t b)
+{
+    return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
+        bit_xor(const any_vec<N,V>& a, uint64_t b)
+{
+    return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
+        bit_xor(const any_vec<N,V>& a, int32_t b)
+{
+    return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
+        bit_xor(const any_vec<N,V>& a, int64_t b)
+{
+    return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
+        bit_xor(const any_vec<N,V>& a, float b)
+{
+    return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V>
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
+        bit_xor(const any_vec<N,V>& a, double b)
 {
     return bit_xor(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
 }
