@@ -47,10 +47,7 @@ SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u8(v0);
 #elif SIMDPP_USE_ALTIVEC
-    union {
-        uint8_t rv[16];
-        uint8x16 align;
-    };
+    SIMDPP_ALIGN(16) uint8_t rv[16];
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
@@ -94,10 +91,7 @@ SIMDPP_INL void i_set_splat(uint16x8& v, uint16_t v0)
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u16(v0);
 #elif SIMDPP_USE_ALTIVEC
-    union {
-        uint16_t rv[8];
-        uint16x8 align;
-    };
+    SIMDPP_ALIGN(16) uint16_t rv[8];
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
@@ -137,10 +131,7 @@ SIMDPP_INL void i_set_splat(uint32x4& v, uint32_t v0)
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u32(v0);
 #elif SIMDPP_USE_ALTIVEC
-    union {
-        uint32_t rv[4];
-        uint32x4 align;
-    };
+    SIMDPP_ALIGN(16) uint32_t rv[4];
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
@@ -191,10 +182,7 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u64(v0);
 #elif SIMDPP_USE_ALTIVEC
-    union {
-        uint64_t rv[2];
-        uint64x2 align;
-    };
+    SIMDPP_ALIGN(16) uint64_t rv[2];
     rv[0] = v0;
     v = load(v, rv);
     v = splat<0>(v);
@@ -245,10 +233,7 @@ SIMDPP_INL void i_set_splat(float32x4& v, float v0)
     v = vsetq_lane_f32(v0, v, 0);
     v = splat<0>(v);
 #elif SIMDPP_USE_ALTIVEC
-    union {
-        float rv[4];
-        float32x4 align;
-    };
+    SIMDPP_ALIGN(16) float rv[4];
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);

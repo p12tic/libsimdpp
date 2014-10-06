@@ -106,12 +106,11 @@ public:
     static float32<4> zero() { return detail::make_zero(); }
 
 private:
-    union {
-        native_type d_;
-#if SIMDPP_USE_NEON_NO_FLT_SP
-        float32x4_t align_;
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+    SIMDPP_ALIGN(16) native_type d_;
+#else
+    native_type d_;
 #endif
-    };
 };
 
 /// Class representing possibly optimized mask data for 4x 32-bit floating-point

@@ -154,10 +154,7 @@ SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
     uint64x1_t r0 = vld1_dup_u64(v0);
     v = vcombine_u64(r0, r0);
 #elif SIMDPP_USE_ALTIVEC
-    union { // FIXME: just use align for unaligned case
-        uint64_t rv[2];
-        uint64x2 align;
-    };
+    SIMDPP_ALIGN(16) uint64_t rv[2];
     rv[0] = *v0;
     uint64x2 v = load(v, rv);
     v = splat<0>(v);

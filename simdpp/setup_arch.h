@@ -364,6 +364,13 @@
 #endif
 
 #define SIMDPP_INL inline
+#if __GNUC__
+#define SIMDPP_ALIGN(X) __attribute__((__aligned__(X)))
+#elif _MSC_VER
+#define SIMDPP_ALIGN(X) __declspec(align(X))
+#else
+#error "Unsupported compiler"
+#endif
 
 // FIXME: unused (workarounds for AMD CPUs)
 // #define SIMDPP_USE_AMD

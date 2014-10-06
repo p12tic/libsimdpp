@@ -104,14 +104,11 @@ public:
     static float64<2> zero() { return detail::make_zero(); }
 
 private:
-    union {
-        native_type d_;
-#if SIMDPP_USE_NEON
-        float32x4_t align_;
-#elif SIMDPP_USE_ALTIVEC
-        __vector float align_;
+#if SIMDPP_USE_SSE2
+    native_type d_;
+#else
+    SIMDPP_ALIGN(16) native_type d_;
 #endif
-    };
 };
 
 
