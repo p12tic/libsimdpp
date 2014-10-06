@@ -53,69 +53,6 @@ typename detail::get_expr2_nomask<V1, V2,
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, uint16)
 
-/** Multiplies signed 16-bit values and returns the higher half of the result.
-
-    @code
-    r0 = high(a0 * b0)
-    ...
-    rN = high(aN * bN)
-    @endcode
-
-    @par 128-bit version:
-    @icost{NEON, ALTIVEC, 3}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, ALTIVEC, 6}
-*/
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-int16<N, _DETAIL_> mul_hi_DISABLED(int16<N,E1> a,
-                          int16<N,E2> b);
-#else
-template<unsigned N, class E1, class E2>
-int16<N, expr_mul_hi<int16<N,E1>,
-                     int16<N,E2>>> mul_hi_DISABLED(int16<N,E1> a,
-                                          int16<N,E2> b)
-{
-    return { { a, b }, 0 };
-}
-#endif
-
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi_DISABLED, expr_mul_hi, int16, int16)
-
-/** Multiplies unsigned 16-bit values and returns the higher half of the result.
-
-    @code
-    r0 = high(a0 * b0)
-    ...
-    rN = high(aN * bN)
-    @endcode
-
-    @par 128-bit version:
-    @icost{NEON, ALTIVEC, 3}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, ALTIVEC, 6}
-*/
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-uint16<N, _DETAIL_> mul_hi_DISABLED(uint16<N,E1> a,
-                           uint16<N,E2> b);
-#else
-template<unsigned N, class E1, class E2>
-uint16<N, expr_mul_hi<uint16<N,E1>,
-                      uint16<N,E2>>> mul_hi_DISABLED(uint16<N,E1> a,
-                                            uint16<N,E2> b)
-{
-    return { { a, b }, 0 };
-}
-#endif
-
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi_DISABLED, expr_mul_hi, uint16, uint16)
-
-
 /** Multiplies 32-bit values and returns the lower half of the result.
 
     @code
