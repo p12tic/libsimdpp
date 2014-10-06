@@ -8,6 +8,8 @@
 #ifndef LIBSIMDPP_SIMD_SETUP_ARCH_H
 #define LIBSIMDPP_SIMD_SETUP_ARCH_H
 
+#include <simdpp/detail/word_size.h>
+
 #ifdef SIMDPP_ARCH_X86_SSE2
     #ifndef SIMDPP_USE_SSE2
         #define SIMDPP_USE_SSE2 1
