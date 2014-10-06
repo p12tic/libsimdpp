@@ -363,7 +363,12 @@
 #define SIMDPP_SAFE_XOP_COM 1
 #endif
 
+#if __GNUC__
+#define SIMDPP_INL __attribute__((__always_inline__)) inline
+#else
 #define SIMDPP_INL inline
+#endif
+
 #if __GNUC__
 #define SIMDPP_ALIGN(X) __attribute__((__aligned__(X)))
 #elif _MSC_VER

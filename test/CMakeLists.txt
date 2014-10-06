@@ -62,7 +62,7 @@ if(MSVC)
         set_target_properties(test1 PROPERTIES COMPILE_FLAGS "/Gv")
     endif()
 else()
-    set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -g0 -Wall -Wextra")
+    set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -O1 -g0 -Wall -Wextra")
 endif()
 
 add_test(s_test1 test1)
