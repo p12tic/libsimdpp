@@ -31,7 +31,7 @@
     * R: the type of the return value
 
     * T1, T2, ..., T#: the types of the parameters of the function that is
-      dispatcher.
+      dispatched.
 
 
     @c SIMDPP_ARCH_NAMESPACE::NAME must refer to the function to be disptached
