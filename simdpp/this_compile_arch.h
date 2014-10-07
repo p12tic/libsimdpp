@@ -48,6 +48,15 @@ inline Arch this_compile_arch()
 #if SIMDPP_USE_AVX2
     res |= Arch::X86_AVX2;
 #endif
+#if SIMDPP_USE_FMA3
+    res |= Arch::X86_FMA3;
+#endif
+#if SIMDPP_USE_FMA4
+    res |= Arch::X86_FMA4;
+#endif
+#if SIMDPP_USE_XOP
+    res |= Arch::X86_XOP;
+#endif
 #if SIMDPP_USE_AVX512F
     res |= Arch::X86_AVX512F;
 #endif
