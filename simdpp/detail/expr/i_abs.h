@@ -162,10 +162,11 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSE2
-    float64x2 ta;
+    uint32x4 ta;
     int64x2 t;
-    ta = float64x2(shift_r<63>(uint64x2(a)));
-    t = cmp_neq(ta, float64x2::zero());
+    ta = (uint32x4) bit_and(a, 0x8000000000000000);
+    ta = shift_r<1>(ta);
+    t = cmp_neq(float64x2(ta), float64x2::zero());
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
