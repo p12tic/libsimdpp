@@ -9,7 +9,6 @@
 #define LIBSIMDPP_TEST_ARCH_REGISTRATION_H
 
 #include "test_results.h"
-#include <functional>
 #include <vector>
 #include <utility>
 #include <simdpp/dispatch/arch.h>
@@ -17,7 +16,7 @@
 class ArchRegistration {
 public:
 
-    using TestFunction = std::function<void(TestResults&)>;
+    using TestFunction = void(*)(TestResults&);
 
     struct Arch {
         TestFunction run;
