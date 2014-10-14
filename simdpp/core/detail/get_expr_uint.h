@@ -59,8 +59,10 @@ class get_expr_uint {
     static const unsigned v2_type_tag = SIMDPP_TAG_UINT;
 
 public:
-    using v1_type = typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes, typename V1::expr_type>::type;
-    using v2_type = typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes, typename V2::expr_type>::type;
+    using v1_type = typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes,
+                                         typename wrap_vector_expr<V1>::type>::type;
+    using v2_type = typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes,
+                                         typename wrap_vector_expr<V2>::type>::type;
 
     using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
                                       E<v1_type, v2_type>>::type;

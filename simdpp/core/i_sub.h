@@ -14,7 +14,8 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_sub.h>
-#include <simdpp/detail/get_expr.h>
+#include <simdpp/detail/cast_expr.h>
+#include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 #include <simdpp/core/detail/get_expr_uint.h>
 
@@ -39,7 +40,9 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
         sub(const any_int8<N,V1>& a,
             const any_int8<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_sub, any_int8, uint8)
@@ -60,7 +63,9 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
         sub(const any_int16<N,V1>& a,
             const any_int16<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_sub, any_int16, uint16)
@@ -81,7 +86,9 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
         sub(const any_int32<N,V1>& a,
             const any_int32<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_sub, any_int32, uint32)
@@ -106,7 +113,9 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
         sub(const any_int64<N,V1>& a,
             const any_int64<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_sub, any_int64, uint64)

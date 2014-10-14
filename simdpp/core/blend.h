@@ -107,15 +107,13 @@ class get_expr_blend {
                                         is_v12_float ? SIMDPP_TAG_MASK_FLOAT :
                                         SIMDPP_TAG_MASK_INT;
 
-    using expr12 = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, void>::type;
-    using expr3 = typename type_of_tag<v3_type_tag + size_tag, V1::length_bytes, void>::type;
 
 public:
-    using v1_type = expr12;
-    using v2_type = expr12;
-    using v3_type = expr3;
+    using v1_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type;
+    using v2_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type;
+    using v3_type = typename type_of_tag<v3_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V3>::type>::type;
     using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                      expr_blend<expr12, expr12, expr3>>::type;
+                                      expr_blend<v1_type, v2_type, v3_type>>::type;
 };
 
 } // namespace detail
@@ -183,9 +181,9 @@ typename detail::get_expr_blend<V1, V2, V3>::type
               const any_vec<N,V3>& mask)
 {
     using expr = detail::get_expr_blend<V1, V2, V3>;
-    return { { typename expr::v1_type(on.wrapped()),
-               typename expr::v2_type(off.wrapped()),
-               typename expr::v3_type(mask.wrapped()) }, 0 };
+    return { { detail::cast_expr<typename expr::v1_type>(on.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(off.wrapped()),
+               detail::cast_expr<typename expr::v3_type>(mask.wrapped()) }, 0 };
 }
 
 #ifndef SIMDPP_DOXYGEN

@@ -24,6 +24,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
+// Same as V::expr_type, except that if that type is void, returns V as type.
+// In other words, if V is a vector (V<N,void>), then type is V<N,void>.
+// otherwise type is V.
+template<class V>
+struct wrap_vector_expr { using type = typename V::expr_type; };
+
+template<template<unsigned, class> class V, unsigned N>
+struct wrap_vector_expr< V<N,void> > { using type = V<N,void>; };
+
+
 /*  The tag values are selected specifically to make this class template
     simpler.
 

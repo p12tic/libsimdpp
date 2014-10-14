@@ -377,6 +377,8 @@
 #error "Unsupported compiler"
 #endif
 
+// #define SIMDPP_EXPR_DEBUG 1
+
 // FIXME: unused (workarounds for AMD CPUs)
 // #define SIMDPP_USE_AMD
 

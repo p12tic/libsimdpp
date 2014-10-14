@@ -16,6 +16,7 @@
 #include <simdpp/detail/insn/bit_and.h>
 #include <simdpp/detail/expr/bit_and.h>
 #include <simdpp/detail/get_expr.h>
+#include <simdpp/detail/cast_expr.h>
 #include <simdpp/core/detail/get_expr_bitwise.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
@@ -40,8 +41,8 @@ typename detail::get_expr_bitwise2_and<expr_bit_and, V1, V2>::type
                 const any_vec<N,V2>& b)
 {
     using expr = detail::get_expr_bitwise2_and<expr_bit_and, V1, V2>;
-    return { { typename expr::v1_type(a.wrapped()),
-               typename expr::v2_type(b.wrapped()) }, 0 };
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
 
 // support scalar arguments
@@ -49,50 +50,50 @@ template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type, V>::type
         bit_and(const uint32_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type{ { a }, 0 }, b);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type, V>::type
         bit_and(const uint64_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type{ { a }, 0 }, b);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type, V>::type
         bit_and(const int32_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type{ { a }, 0 }, b);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type, V>::type
         bit_and(const int64_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type{ { a }, 0 }, b);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type>(a), b);
 }
 
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const uint32_t& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type{ { b }, 0 }, a);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type>(b), a);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const uint64_t& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type{ { b }, 0 }, a);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type>(b), a);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const int32_t& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type{ { b }, 0 }, a);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type>(b), a);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const int64_t& b)
 {
-    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type{ { b }, 0 }, a);
+    return bit_and(detail::cast_expr<typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type>(b), a);
 }
 
 

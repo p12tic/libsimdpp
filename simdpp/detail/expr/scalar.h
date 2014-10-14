@@ -47,7 +47,7 @@ R expr_eval(const expr_scalar<EL>& q)
 {
     typename detail::remove_sign<R>::type r;
     expr_vec_make_const<typename R::element_type, 1> e;
-    e.a[0] = q.e;
+    e.a[0] = reinterpret_cast<const EL&>(q);
     insn::i_make_const(r, e);
     return R(r);
 }
@@ -55,7 +55,7 @@ R expr_eval(const expr_scalar<EL>& q)
 template<class R, class EL> SIMDPP_INL
 R expr_eval(const expr_scalar_bitwise<EL>& q)
 {
-    return make_const_bitwise<R>(cast_int(q.e));
+    return make_const_bitwise<R>(cast_int(reinterpret_cast<const EL&>(q)));
 }
 
 } // namespace detail
