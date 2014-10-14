@@ -52,19 +52,19 @@ V make_const_same(const typename V::element_type& t)
 
 // simple implementation returning empty expression
 #define SIMDPP_SCALAR_ARG_IMPL_VEC_IMPL(FUNC, RET_VEC, EXPR, NEW_VEC)                                                                   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(uint32_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(uint64_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(int32_t a,  const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(int64_t a,  const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(float a,    const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(double a,   const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const uint32_t& a, const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const uint64_t& a, const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const int32_t& a,  const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const int64_t& a,  const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const float& a,    const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const double& a,   const EXPR<N,V>& b) { return FUNC(detail::make_const_same<NEW_VEC>(a), b); }   \
                                                                                                                                         \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, uint32_t b) { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, uint64_t b) { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, int32_t b)  { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, int64_t b)  { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, float b)    { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, double b)   { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, const uint32_t& b) { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, const uint64_t& b) { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, const int32_t& b)  { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, const int64_t& b)  { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, const float& b)    { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }   \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<N,V>& a, const double& b)   { return FUNC(a, detail::make_const_same<NEW_VEC>(b)); }
 // end #define
 
 
@@ -76,19 +76,19 @@ template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<
 
 // implementation returning an expression for vector arguments
 #define SIMDPP_SCALAR_ARG_IMPL_EXPR(FUNC, EXPR, RET_VEC, VEC)                                                                                   \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint32_t a, const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint64_t a, const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(int32_t a, const VEC<N,V>& b)  { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(int64_t a, const VEC<N,V>& b)  { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(float a, const VEC<N,V>& b)    { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(double a, const VEC<N,V>& b)   { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(const uint32_t& a, const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(const uint64_t& a, const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(const int32_t& a,  const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(const int64_t& a,  const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(const float& a,    const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(const double& a,   const VEC<N,V>& b) { return FUNC(detail::make_const_same<VEC<N>>(a), b); } \
                                                                                                                                                 \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, uint32_t b) { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, uint64_t b) { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, int32_t b)  { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, int64_t b)  { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, float b)    { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
-template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, double b)   { return FUNC(a, detail::make_const_same<VEC<N>>(b)); }
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, const uint32_t& b) { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, const uint64_t& b) { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, const int32_t& b)  { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, const int64_t& b)  { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, const float& b)    { return FUNC(a, detail::make_const_same<VEC<N>>(b)); } \
+template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, const double& b)   { return FUNC(a, detail::make_const_same<VEC<N>>(b)); }
 // end #define
 
 // a implementation for integer operations that optimize the returned expression
@@ -96,73 +96,73 @@ template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(const VEC<N,V>& a, uint32_t b)                                     \
+        FUNC(const VEC<N,V>& a, const uint32_t& b)                              \
 { return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(const VEC<N,V>& a, uint64_t b)                                     \
+        FUNC(const VEC<N,V>& a, const uint64_t& b)                              \
 { return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(const VEC<N,V>& a, int32_t b)                                      \
+        FUNC(const VEC<N,V>& a, const int32_t& b)                               \
 { return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(const VEC<N,V>& a, int64_t b)                                      \
+        FUNC(const VEC<N,V>& a, const int64_t& b)                               \
 { return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(const VEC<N,V>& a, float b)                                        \
+        FUNC(const VEC<N,V>& a, const float& b)                                 \
 { return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(const VEC<N,V>& a, double b)                                       \
+        FUNC(const VEC<N,V>& a, const double& b)                                \
 { return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(uint32_t a, const VEC<N,V>& b)                                     \
+        FUNC(const uint32_t& a, const VEC<N,V>& b)                              \
 { return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(uint64_t a, const VEC<N,V>& b)                                     \
+        FUNC(const uint64_t& a, const VEC<N,V>& b)                              \
 { return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(int32_t a, const VEC<N,V>& b)                                      \
+        FUNC(const int32_t& a, const VEC<N,V>& b)                               \
 { return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(int64_t a, const VEC<N,V>& b)                                      \
+        FUNC(const int64_t& a, const VEC<N,V>& b)                               \
 { return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(float a, const VEC<N,V>& b)                                        \
+        FUNC(const float& a, const VEC<N,V>& b)                                 \
 { return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
-        FUNC(double a, const VEC<N,V>& b)                                       \
+        FUNC(const double& a, const VEC<N,V>& b)                                \
 { return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }
 // end #define
 
