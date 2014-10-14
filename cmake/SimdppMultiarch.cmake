@@ -213,6 +213,26 @@ set(SIMDPP_X86_XOP_TEST_CODE
     }"
 )
 
+list(APPEND SIMDPP_ARCHS_PRI "X86_AVX512F")
+if(NOT MSVC)
+    set(SIMDPP_X86_AVX512F_CXX_FLAGS "-mavx512f -DSIMDPP_ARCH_X86_AVX512F")
+else()
+    set(SIMDPP_X86_AVX512F_CXX_FLAGS "/arch:AVX -DSIMDPP_ARCH_X86_AVX512F") #unsupported
+endif()
+set(SIMDPP_X86_AVX512F_SUFFIX "-x86_avx512f")
+set(SIMDPP_X86_AVX512F_TEST_CODE
+    "#include <immintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[64];
+            __m512 align;
+        };
+        __m512 one = _mm512_load_ps((float*)a);
+        one = _mm512_add_ps(one, one);
+        _mm512_store_ps((float*)a, one);
+    }"
+)
 
 list(APPEND SIMDPP_ARCHS_PRI "ARM_NEON")
 set(SIMDPP_ARM_NEON_CXX_FLAGS "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON")
@@ -387,6 +407,9 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
         if(DEFINED ARCH_SUPPORTED_X86_AVX)
             list(APPEND ALL_ARCHS "X86_AVX,X86_FMA4")
         endif()
+    endif()
+    if(DEFINED ARCH_SUPPORTED_X86_AVX512F)
+        list(APPEND ALL_ARCHS "X86_AVX512F")
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_XOP)
         list(APPEND ALL_ARCHS "X86_XOP")
