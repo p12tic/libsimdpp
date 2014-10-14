@@ -14,7 +14,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class M, class V>
-M make_mask(unsigned i)
+SIMDPP_INL M make_mask(unsigned i)
 {
     V v1 = simdpp::make_uint((i/2)%2, i%2);
     V v2 = V::zero();
