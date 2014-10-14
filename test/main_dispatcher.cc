@@ -48,6 +48,10 @@ int main(int argc, char** argv)
     } else if (arch_name == "X86_AVX2") {
         g_supported_arch = Arch::X86_SSE2 | Arch::X86_SSE3 | Arch::X86_SSSE3 |
                 Arch::X86_SSE4_1 | Arch::X86_AVX | Arch::X86_AVX2;
+    } else if (arch_name == "X86_AVX512F") {
+        g_supported_arch = Arch::X86_SSE2 | Arch::X86_SSE3 | Arch::X86_SSSE3 |
+                Arch::X86_SSE4_1 | Arch::X86_AVX | Arch::X86_AVX2 |
+                Arch::X86_AVX512F;
     } else if (arch_name == "ARM_NEON") {
         g_supported_arch = Arch::ARM_NEON;
     } else if (arch_name == "ARM_NEON_FLT_SP") {
