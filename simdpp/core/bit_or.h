@@ -44,54 +44,54 @@ typename detail::get_expr_bit_or<V1, V2>::type
 
 // support scalar arguments
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type, V>::type
         bit_or(const uint32_t& a, const any_vec<N,V>& b)
 {
-    return bit_or(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+    return bit_or(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type{ { a }, 0 }, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type, V>::type
         bit_or(const uint64_t& a, const any_vec<N,V>& b)
 {
-    return bit_or(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+    return bit_or(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type{ { a }, 0 }, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type, V>::type
         bit_or(const int32_t& a, const any_vec<N,V>& b)
 {
-    return bit_or(detail::make_const<detail::get_expr_nomask<V>::type>(uint32_t(b)), b);
+    return bit_or(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type{ { b }, 0 }, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bit_or<typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type, V>::type
         bit_or(const int64_t& a, const any_vec<N,V>& b)
 {
-    return bit_or(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+    return bit_or(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type{ { a }, 0 }, b);
 }
 
 
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type>::type
         bit_or(const any_vec<N,V>& a, const uint32_t& b)
 {
-    return bit_or(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+    return bit_or(a, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type{ { b }, 0 });
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type>::type
         bit_or(const any_vec<N,V>& a, const uint64_t& b)
 {
-    return bit_or(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+    return bit_or(a, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type{ { b }, 0 });
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type>::type
         bit_or(const any_vec<N,V>& a, const int32_t& b)
 {
-    return bit_or(a, detail::make_const<detail::get_expr_nomask<V>::type>(uint32_t(b)));
+    return bit_or(a, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type{ { b }, 0 });
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V>::type>::type
+typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type>::type
         bit_or(const any_vec<N,V>& a, const int64_t& b)
 {
-    return bit_or(a, detail::make_const<detail::get_expr_nomask<V>::type>(b));
+    return bit_or(a, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type{ { b }, 0 });
 }
 
 

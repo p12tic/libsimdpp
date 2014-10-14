@@ -17,6 +17,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 // -----------------------------------------------------------------------------
 
+template<class VE>
+struct expr_scalar_bitwise {
+    VE e;
+};
+
+template<class VE>
+struct expr_scalar {
+    VE e;
+};
+
 template<class E1, class E2>
 struct expr_bit_and {
     E1 a;

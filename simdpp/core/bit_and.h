@@ -46,53 +46,53 @@ typename detail::get_expr_bitwise2_and<expr_bit_and, V1, V2>::type
 
 // support scalar arguments
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type, V>::type
         bit_and(const uint32_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type{ { a }, 0 }, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type, V>::type
         bit_and(const uint64_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type{ { a }, 0 }, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type, V>::type
         bit_and(const int32_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(detail::make_const<detail::get_expr_nomask<V>::type>(uint32_t(a)), b);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type{ { a }, 0 }, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type, V>::type
         bit_and(const int64_t& a, const any_vec<N,V>& b)
 {
-    return bit_and(detail::make_const<detail::get_expr_nomask<V>::type>(a), b);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type{ { a }, 0 }, b);
 }
 
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const uint32_t& b)
 {
-    return bit_and(detail::make_const<typename detail::get_expr_nomask<V>::type>(b), a);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint32_t>>::type{ { b }, 0 }, a);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const uint64_t& b)
 {
-    return bit_and(detail::make_const<typename detail::get_expr_nomask<V>::type>(b), a);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<uint64_t>>::type{ { b }, 0 }, a);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const int32_t& b)
 {
-    return bit_and(detail::make_const<typename detail::get_expr_nomask<V>::type>(uint32_t(b)), a);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int32_t>>::type{ { b }, 0 }, a);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V>::type, V>::type
+typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type, V>::type
         bit_and(const any_vec<N,V>& a, const int64_t& b)
 {
-    return bit_and(detail::make_const<typename detail::get_expr_nomask<V>::type>(b), a);
+    return bit_and(typename detail::get_expr_nomask<V, expr_scalar_bitwise<int64_t>>::type{ { b }, 0 }, a);
 }
 
 

@@ -16,6 +16,7 @@
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/types/tag.h>
+#include <simdpp/expr.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -138,6 +139,7 @@ public:
     using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::type;
     using empty = typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::empty;
 };
+
 
 } // namespace detail
 #ifndef SIMDPP_DOXYGEN
