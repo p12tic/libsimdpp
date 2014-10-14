@@ -107,7 +107,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<16> i_permute4(const uint32<16>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    return _mm512_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
+    return _mm512_shuffle_epi32(a, _MM_PERM_ENUM(_MM_SHUFFLE(s3, s2, s1, s0)));
 }
 #endif
 
