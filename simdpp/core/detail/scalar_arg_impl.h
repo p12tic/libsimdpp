@@ -16,25 +16,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class Int> SIMDPP_INL uint64_t convert_from_int(Int x) { return x; }
-SIMDPP_INL double convert_from_int(double x) { return x; }
-SIMDPP_INL float convert_from_int(float x) { return x; }
 template<class Int> void scalar_convert(Int& d, uint64_t x) { d = x; }
-template<class Int> void scalar_convert(Int& d, float x) { d = bit_cast<uint32_t>(x); }
-template<class Int> void scalar_convert(Int& d, double x) { d = bit_cast<uint64_t>(x); }
 SIMDPP_INL void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
-SIMDPP_INL void scalar_convert(float& d, float x) { d = x; }
-SIMDPP_INL void scalar_convert(float& d, double x) { d = x; }
 SIMDPP_INL void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
-SIMDPP_INL void scalar_convert(double& d, float x) { d = x; }
-SIMDPP_INL void scalar_convert(double& d, double x) { d = x; }
 
-template<class V, class U> SIMDPP_INL
-V make_const(U t)
+template<class V> SIMDPP_INL
+V make_const(uint64_t t)
 {
     typename detail::remove_sign<V>::type r;
     expr_vec_make_const<typename V::element_type, 1> e;
-    scalar_convert(e.a[0], convert_from_int(t));
+    scalar_convert(e.a[0], t);
     insn::i_make_const(r, e);
     return V(r);
 }
