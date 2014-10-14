@@ -34,11 +34,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ add(const any_int8<N,V1>& a,
-                                 const any_int8<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint8<N, typename V1::expr_type>,
@@ -49,7 +44,6 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int8, uint8)
 
@@ -64,11 +58,6 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int8, uint8)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ add(const any_int16<N,V1>& a,
-                                 const any_int16<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint16<N, typename V1::expr_type>,
@@ -79,7 +68,6 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int16, uint16)
 
@@ -94,11 +82,6 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int16, uint16)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ add(const any_int32<N,V1>& a,
-                                 const any_int32<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint32<N, typename V1::expr_type>,
@@ -109,7 +92,6 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int32, uint32)
 
@@ -128,11 +110,6 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int32, uint32)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 10-11}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ add(const any_int64<N,V1>& a,
-                                 const any_int64<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_add<uint64<N, typename V1::expr_type>,
@@ -143,7 +120,6 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(add, expr_add, any_int64, uint64)
 

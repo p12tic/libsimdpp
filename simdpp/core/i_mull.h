@@ -70,17 +70,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, NEON, 2-3}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-int32<N, _DETAIL_> mull(int16<N,E1> a, int16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int32<N, expr_mull<int16<N,E1>,
                    int16<N,E2>>> mull(int16<N,E1> a, int16<N,E2> b)
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
 
@@ -103,17 +98,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-uint32<N, _DETAIL_> mull(uint16<N,E1> a, uint16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint32<N, expr_mull<uint16<N,E1>,
                     uint16<N,E2>>> mull(uint16<N,E1> a, uint16<N,E2> b)
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
 
@@ -137,17 +127,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
     @icost{NEON, 2}
     @unimp{SSE2-SSSE3, ALTIVEC}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-int64<N, _DETAIL_> mull(int32<N,E1> a, int32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int64<N, expr_mull<int32<N,E1>,
                    int32<N,E2>>> mull(int32<N,E1> a, int32<N,E2> b)
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
 
@@ -171,17 +156,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
     @icost{NEON, 2}
     @unimp{ALTIVEC}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-uint64<N, _DETAIL_> mull(uint32<N,E1> a, uint32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint64<N, expr_mull<uint32<N,E1>,
                     uint32<N,E2>>> mull(uint32<N,E1> a, uint32<N,E2> b)
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint64, uint32)
 

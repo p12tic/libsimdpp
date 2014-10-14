@@ -33,17 +33,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     Implemented only on architectures with either @c X86_FMA3 or @c X86_FMA4
     support.
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2, class E3>
-float32<N, _DETAIL_> fmadd(float32<N,E1> a,
-                           float32<N,E2> b,
-                           float32<N,E3> c);
-
-template<unsigned N, class E1, class E2, class E3>
-float64<N, _DETAIL_> fmadd(float64<N,E1> a,
-                           float64<N,E2> b,
-                           float64<N,E3> c);
-#else
 template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
 float32<N, expr_fmadd<float32<N,E1>,
                       float32<N,E2>,
@@ -63,7 +52,6 @@ float64<N, expr_fmadd<float64<N,E1>,
 {
     return { { a, b, c }, 0 };
 }
-#endif
 /// @}
 
 #ifndef SIMDPP_DOXYGEN

@@ -38,16 +38,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-uint8<N, _DETAIL_> avg_trunc(uint8<N,E1> a, uint8<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint8<N, uint8<N>> avg_trunc(uint8<N,E1> a, uint8<N,E2> b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint8, uint8)
 
@@ -67,16 +62,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint8, uint8)
     @icost{AVX2, 7-8}
     @icost{NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-int8<N, _DETAIL_> avg_trunc(int8<N,E1> a, int8<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int8<N, int8<N>> avg_trunc(int8<N,E1> a, int8<N,E2> b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int8, int8)
 
@@ -97,16 +87,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int8, int8)
     @icost{AVX2, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-uint16<N, _DETAIL_> avg_trunc(uint16<N,E1> a, uint16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N, uint16<N>> avg_trunc(uint16<N,E1> a, uint16<N,E2> b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint16, uint16)
 
@@ -127,16 +112,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint16, uint16)
     @icost{AVX2, 7-8}
     @icost{NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-int16<N, _DETAIL_> avg_trunc(int16<N,E1> a, int16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int16<N, int16<N>> avg_trunc(int16<N,E1> a, int16<N,E2> b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int16, int16)
 
@@ -157,16 +137,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int16, int16)
     @icost{AVX2, 4}
     @icost{NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-uint32<N, _DETAIL_> avg_trunc(uint32<N,E1> a, uint32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint32<N, uint32<N>> avg_trunc(uint32<N,E1> a, uint32<N,E2> b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint32, uint32)
 
@@ -188,16 +163,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint32, uint32)
     @icost{ALTIVEC, 8}
     @icost{NEON, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-int32<N, _DETAIL_> avg_trunc(int32<N,E1> a, int32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int32<N, int32<N>> avg_trunc(int32<N,E1> a, int32<N,E2> b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int32, int32)
 

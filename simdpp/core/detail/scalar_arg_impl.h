@@ -50,22 +50,6 @@ V make_const(U t)
 */
 
 // simple implementation returning empty expression
-#if SIMDPP_DOXYGEN
-
-#define SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(FUNC, RET_VEC, VEC) \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(detail::scalar_param<typename V::element_type> a, const VEC<N,V>& b);   \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::element_type> b);
-#define SIMDPP_SCALAR_ARG_IMPL_VEC(FUNC, RET_VEC, VEC) \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(detail::scalar_param<typename V::element_type> a, const VEC<N,V>& b);   \
-template<unsigned N, class V>                               \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::element_type> b);
-// end #define
-
-#else
-
 #define SIMDPP_SCALAR_ARG_IMPL_VEC_IMPL(FUNC, RET_VEC, EXPR, NEW_VEC)                                                                   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(uint32_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }    \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(uint64_t a, const EXPR<N,V>& b) { return FUNC(detail::make_const<NEW_VEC>(a), b); }    \
@@ -89,20 +73,7 @@ template<unsigned N, class V> SIMDPP_INL RET_VEC<N, RET_VEC<N>> FUNC(const EXPR<
 
 // end #define
 
-#endif // SIMDPP_DOXYGEN
-
 // implementation returning an expression for vector arguments
-#if SIMDPP_DOXYGEN
-
-#define SIMDPP_SCALAR_ARG_IMPL_EXPR(FUNC, EXPR, RET_VEC, VEC)   \
-template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(detail::scalar_param<typename V::element_type> a, const VEC<N,V>& b);         \
-template<unsigned N, class V>                                   \
-RET_VEC<N, _DETAIL_> FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::element_type> b);
-// end #define
-
-#else
-
 #define SIMDPP_SCALAR_ARG_IMPL_EXPR(FUNC, EXPR, RET_VEC, VEC)                                                                                   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint32_t a, const VEC<N,V>& b) { return FUNC(detail::make_const<VEC<N>>(a), b); }  \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N>, VEC<N,V>>> FUNC(uint64_t a, const VEC<N,V>& b) { return FUNC(detail::make_const<VEC<N>>(a), b); }  \
@@ -117,23 +88,9 @@ template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, int64_t b)  { return FUNC(a, detail::make_const<VEC<N>>(b)); }   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, float b)    { return FUNC(a, detail::make_const<VEC<N>>(b)); } \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N>>> FUNC(const VEC<N,V>& a, double b)   { return FUNC(a, detail::make_const<VEC<N>>(b)); }
-
 // end #define
-
-#endif // SIMDPP_DOXYGEN
 
 // a implementation for integer operations that optimize the returned expression
-#if SIMDPP_DOXYGEN
-
-#define SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(FUNC, EXPR, VEC, UINT_VEC)      \
-template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(detail::scalar_param<typename V::element_type> a, const VEC<N,V>& b);         \
-template<unsigned N, class V>                                           \
-_PROMOTED_NOMASK_EXPRESSION_ FUNC(const VEC<N,V>& a, detail::scalar_param<typename V::element_type> b);       \
-// end #define
-
-#else
-
 #define SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(FUNC, EXPR, VEC, UINT_VEC)          \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
@@ -207,7 +164,5 @@ typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    
         FUNC(double a, const VEC<N,V>& b)                                       \
 { return FUNC(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b); }
 // end #define
-
-#endif // SIMDPP_DOXYGEN
 
 #endif

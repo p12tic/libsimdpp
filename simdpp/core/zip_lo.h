@@ -35,20 +35,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ zip16_lo(const any_vec8<N,V1>& a,
-                                      const any_vec8<N,V2>& b);
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ zip8_lo(const any_vec16<N,V1>& a,
-                                     const any_vec16<N,V2>& b);
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ zip4_lo(const any_vec32<N,V1>& a,
-                                     const any_vec32<N,V2>& b);
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ zip2_lo(const any_vec64<N,V1>& a,
-                                     const any_vec64<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2>::empty
         zip16_lo(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
@@ -88,7 +74,6 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     rb = b.wrapped().eval();
     return detail::insn::i_zip2_lo(ra, rb);
 }
-#endif
 /// @}
 
 

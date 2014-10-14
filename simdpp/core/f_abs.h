@@ -39,16 +39,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX-AVX2, 1-2}
     @icost{ALTIVEC, 2-3}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-float32<N, _DETAIL_> abs(float32<N,E> a);
-#else
 template<unsigned N, class E> SIMDPP_INL
 float32<N, expr_abs<float32<N,E>>> abs(float32<N,E> a)
 {
     return { { a }, 0 };
 }
-#endif
 
 /** Computes absolute value of floating point values.
 
@@ -67,16 +62,11 @@ float32<N, expr_abs<float32<N,E>>> abs(float32<N,E> a)
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-float64<N, _DETAIL_> abs(float64<N,E> a);
-#else
 template<unsigned N, class E> SIMDPP_INL
 float64<N, expr_abs<float64<N,E>>> abs(float64<N,E> a)
 {
     return { { a }, 0 };
 }
-#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

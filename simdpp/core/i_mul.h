@@ -33,11 +33,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ mul_lo(const any_int16<N,V1>& a,
-                                    const any_int16<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_mul_lo<uint16<N, typename V1::expr_type>,
@@ -48,7 +43,6 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, uint16)
 
@@ -67,11 +61,6 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, uint16)
     @icost{SSE2-AVX, 2}
     @icost{NEON, ALTIVEC, 6}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-int16<N, _DETAIL_> mul_hi(int16<N,E1> a,
-                          int16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int16<N, expr_mul_hi<int16<N,E1>,
                      int16<N,E2>>> mul_hi(int16<N,E1> a,
@@ -79,7 +68,6 @@ int16<N, expr_mul_hi<int16<N,E1>,
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, int16, int16)
 
@@ -98,11 +86,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, int16, int16)
     @icost{SSE2-AVX, 2}
     @icost{NEON, ALTIVEC, 6}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-uint16<N, _DETAIL_> mul_hi(uint16<N,E1> a,
-                           uint16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N, expr_mul_hi<uint16<N,E1>,
                       uint16<N,E2>>> mul_hi(uint16<N,E1> a,
@@ -110,7 +93,6 @@ uint16<N, expr_mul_hi<uint16<N,E1>,
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, uint16, uint16)
 
@@ -132,11 +114,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, uint16, uint16)
     @icost{SSE4.1, AVX, NEON, 2}
     @icost{ALTIVEC, 16}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ mul_lo(const any_int32<N,V1>& a,
-                                    const any_int32<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2_nomask<V1, V2,
                                   expr_mul_lo<uint32<N, typename V1::expr_type>,
@@ -147,7 +124,6 @@ typename detail::get_expr2_nomask<V1, V2,
 {
     return { { a.wrapped(), b.wrapped() }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int32, uint32)
 

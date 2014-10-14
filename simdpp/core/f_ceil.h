@@ -38,16 +38,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 22-24}
     @icost{ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-float32<N, _DETAIL_> ceil(float32<N,E> a);
-#else
 template<unsigned N, class E> SIMDPP_INL
 float32<N, float32<N>> ceil(float32<N,E> a)
 {
     return detail::insn::i_ceil(a.eval());
 }
-#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

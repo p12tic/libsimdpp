@@ -53,16 +53,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 4}
     @icost{ALTIVEC, 4-5}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-float32<N, _DETAIL_> rcp_rh(float32<N,E> x, float32<N,E> a);
-#else
 template<unsigned N, class E> SIMDPP_INL
 float32<N, float32<N>> rcp_rh(float32<N,E> x, float32<N,E> a)
 {
     return detail::insn::i_rcp_rh(x.eval(), a.eval());
 }
-#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

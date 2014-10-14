@@ -177,12 +177,6 @@ public:
     @icost{SSE2-SSE4.1, 6}
     @novec{NEON, ALTIVEC}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2, class V3>
-_PROMOTED_EXPRESSION_ blend(const any_vec<N,V1>& on,
-                            const any_vec<N,V2>& off,
-                            const any_vec<N,V3>& mask);
-#else
 template<unsigned N, class V1, class V2, class V3> SIMDPP_INL
 typename detail::get_expr_blend<V1, V2, V3>::type
         blend(const any_vec<N,V1>& on, const any_vec<N,V2>& off,
@@ -193,7 +187,6 @@ typename detail::get_expr_blend<V1, V2, V3>::type
                typename expr::v2_type(off.wrapped()),
                typename expr::v3_type(mask.wrapped()) }, 0 };
 }
-#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

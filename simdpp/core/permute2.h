@@ -44,10 +44,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-4}
     @icost{ALTIVEC, 2-3}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned s0, unsigned s1, unsigned N, class V>
-_PROMOTED_NOMASK_EXPRESSION_ permute2(const any_vec16<N,V>& a);
-#else
 template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute2(const any_vec16<N,V>& a)
@@ -57,7 +53,6 @@ typename detail::get_expr_nomask<V>::empty
     ra = a.wrapped().eval();
     return detail::insn::i_permute2<s0,s1>(ra);
 }
-#endif
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 3].
@@ -94,10 +89,6 @@ typename detail::get_expr_nomask<V>::empty
     @icost{NEON, 4-8}
     @icost{ALTIVEC, 2-3}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned s0, unsigned s1, unsigned N, class V>
-_PROMOTED_NOMASK_EXPRESSION_ permute2(const any_vec32<N,V>& a);
-#else
 template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute2(const any_vec32<N,V>& a)
@@ -107,7 +98,6 @@ typename detail::get_expr_nomask<V>::empty
     ra = a.wrapped().eval();
     return detail::insn::i_permute2<s0,s1>(ra);
 }
-#endif
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
     selector values must be in range [0; 1].
@@ -130,10 +120,6 @@ typename detail::get_expr_nomask<V>::empty
     @icost{NEON, 2-4}
     @icost{ALTIVEC, 2-4}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned s0, unsigned s1, unsigned N, class V>
-_PROMOTED_NOMASK_EXPRESSION_ permute2(const any_vec64<N,V>& a);
-#else
 template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         permute2(const any_vec64<N,V>& a)
@@ -143,7 +129,6 @@ typename detail::get_expr_nomask<V>::empty
     ra = a.wrapped().eval();
     return detail::insn::i_permute2<s0,s1>(ra);
 }
-#endif
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

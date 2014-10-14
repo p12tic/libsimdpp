@@ -36,10 +36,6 @@ namespace detail {
 
     @todo icost
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V>
-_PROMOTED_EXPRESSION_ bit_not(const any_vec<N,V>& a);
-#else
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr<V, expr_bit_not<V>>::empty
     bit_not(const any_vec<N,V>& a)
@@ -48,7 +44,6 @@ typename detail::get_expr<V, expr_bit_not<V>>::empty
     ra = a.wrapped().eval();
     return detail::insn::i_bit_not(ra);
 }
-#endif
 
 /* FIXME
 template<unsigned N, class E> SIMDPP_INL
