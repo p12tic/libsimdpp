@@ -21,12 +21,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<unsigned N,
-         template<unsigned, class> class V1, class E1,
-         template<unsigned, class> class V2, class E2> SIMDPP_INL
-V1<N,void> expr_eval(const expr_bit_and<V1<N,E1>, V2<N,E2>>& q)
+template<class R, class E1, class E2> SIMDPP_INL
+R expr_eval(const expr_bit_and<E1, E2>& q)
 {
-    return (V1<N,void>) insn::i_bit_and(q.a.eval(), q.b.eval());
+    return (R) insn::i_bit_and(q.a.eval(), q.b.eval());
 }
 
 } // namespace detail

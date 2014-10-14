@@ -22,7 +22,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 float32<4> expr_eval(const expr_neg<float32<4,E>>& q)
 {
     float32<4> a = q.a.eval();
@@ -37,7 +37,7 @@ float32<4> expr_eval(const expr_neg<float32<4,E>>& q)
 }
 
 #if SIMDPP_USE_AVX
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 float32<8> expr_eval(const expr_neg<float32<8,E>>& q)
 {
     float32<8> a = q.a.eval();
@@ -46,7 +46,7 @@ float32<8> expr_eval(const expr_neg<float32<8,E>>& q)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 float32<16> expr_eval(const expr_neg<float32<16,E>>& q)
 {
     // FIXME: check whether we can simply use sub
@@ -55,7 +55,7 @@ float32<16> expr_eval(const expr_neg<float32<16,E>>& q)
 }
 #endif
 
-template<unsigned N, class E> SIMDPP_INL
+template<class R, unsigned N, class E> SIMDPP_INL
 float32<N> expr_eval(const expr_neg<float32<N,E>>& q)
 {
     float32<N> a = q.a.eval();
@@ -64,7 +64,7 @@ float32<N> expr_eval(const expr_neg<float32<N,E>>& q)
 
 // -----------------------------------------------------------------------------
 
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 float64x2 expr_eval(const expr_neg<float64<2,E>>& q)
 {
     float64x2 a = q.a.eval();
@@ -76,7 +76,7 @@ float64x2 expr_eval(const expr_neg<float64<2,E>>& q)
 }
 
 #if SIMDPP_USE_AVX
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 float64x4 expr_eval(const expr_neg<float64<4,E>>& q)
 {
     float64x4 a = q.a.eval();
@@ -85,7 +85,7 @@ float64x4 expr_eval(const expr_neg<float64<4,E>>& q)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 float64<8> expr_eval(const expr_neg<float64<8,E>>& q)
 {
     // FIXME: check whether we can simply use sub
@@ -94,7 +94,7 @@ float64<8> expr_eval(const expr_neg<float64<8,E>>& q)
 }
 #endif
 
-template<unsigned N, class E> SIMDPP_INL
+template<class R, unsigned N, class E> SIMDPP_INL
 float64<N> expr_eval(const expr_neg<float64<N,E>>& q)
 {
     float64<N> a = q.a.eval();

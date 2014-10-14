@@ -26,7 +26,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
 {
     int8<16> a = q.a.eval();
@@ -49,7 +49,7 @@ uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
 }
 
 #if SIMDPP_USE_AVX2
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint8<32> expr_eval(const expr_abs<int8<32,E>>& q)
 {
     int8<32> a = q.a.eval();
@@ -57,7 +57,7 @@ uint8<32> expr_eval(const expr_abs<int8<32,E>>& q)
 }
 #endif
 
-template<unsigned N, class E> SIMDPP_INL
+template<class R, unsigned N, class E> SIMDPP_INL
 uint8<N> expr_eval(const expr_abs<int8<N,E>>& q)
 {
     int8<N> a = q.a.eval();
@@ -66,7 +66,7 @@ uint8<N> expr_eval(const expr_abs<int8<N,E>>& q)
 
 // -----------------------------------------------------------------------------
 
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
 {
     int16<8> a = q.a.eval();
@@ -89,7 +89,7 @@ uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
 }
 
 #if SIMDPP_USE_AVX2
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint16<16> expr_eval(const expr_abs<int16<16,E>>& q)
 {
     int16<16> a = q.a.eval();
@@ -97,7 +97,7 @@ uint16<16> expr_eval(const expr_abs<int16<16,E>>& q)
 }
 #endif
 
-template<unsigned N, class E> SIMDPP_INL
+template<class R, unsigned N, class E> SIMDPP_INL
 uint16<N> expr_eval(const expr_abs<int16<N,E>>& q)
 {
     int16<N> a = q.a.eval();
@@ -106,7 +106,7 @@ uint16<N> expr_eval(const expr_abs<int16<N,E>>& q)
 
 // -----------------------------------------------------------------------------
 
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
 {
     int32<4> a = q.a.eval();
@@ -129,7 +129,7 @@ uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
 }
 
 #if SIMDPP_USE_AVX2
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint32<8> expr_eval(const expr_abs<int32<8,E>>& q)
 {
     int32<8> a = q.a.eval();
@@ -138,7 +138,7 @@ uint32<8> expr_eval(const expr_abs<int32<8,E>>& q)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint32<16> expr_eval(const expr_abs<int32<16,E>>& q)
 {
     int32<16> a = q.a.eval();
@@ -146,7 +146,7 @@ uint32<16> expr_eval(const expr_abs<int32<16,E>>& q)
 }
 #endif
 
-template<unsigned N, class E> SIMDPP_INL
+template<class R, unsigned N, class E> SIMDPP_INL
 uint32<N> expr_eval(const expr_abs<int32<N,E>>& q)
 {
     int32<N> a = q.a.eval();
@@ -155,7 +155,7 @@ uint32<N> expr_eval(const expr_abs<int32<N,E>>& q)
 
 // -----------------------------------------------------------------------------
 
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 {
     int64<2> a = q.a.eval();
@@ -185,7 +185,7 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 }
 
 #if SIMDPP_USE_AVX2
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint64<4> expr_eval(const expr_abs<int64<4,E>>& q)
 {
     int64<4> a = q.a.eval();
@@ -198,7 +198,7 @@ uint64<4> expr_eval(const expr_abs<int64<4,E>>& q)
 #endif
 
 #if SIMDPP_USE_AVX512
-template<class E> SIMDPP_INL
+template<class R, class E> SIMDPP_INL
 uint64<8> expr_eval(const expr_abs<int64<8,E>>& q)
 {
     int64<8> a = q.a.eval();
@@ -206,7 +206,7 @@ uint64<8> expr_eval(const expr_abs<int64<8,E>>& q)
 }
 #endif
 
-template<unsigned N, class E> SIMDPP_INL
+template<class R, unsigned N, class E> SIMDPP_INL
 uint64<N> expr_eval(const expr_abs<int64<N,E>>& q)
 {
     int64<N> a = q.a.eval();

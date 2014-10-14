@@ -21,15 +21,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 namespace detail {
 
-template<unsigned N,
-         template<unsigned, class> class V1, class E1,
-         template<unsigned, class> class V2, class E2,
-         template<unsigned, class> class V3, class E3>  SIMDPP_INL
-V1<N,void> expr_eval(const expr_blend<V1<N,E1>,
-                                      V2<N,E2>,
-                                      V3<N,E3>>& q)
+template<class R, class E1, class E2, class E3>  SIMDPP_INL
+R expr_eval(const expr_blend<E1, E2, E3>& q)
 {
-    return (V1<N,void>) insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
+    return (R) insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
 }
 
 } // namespace detail
