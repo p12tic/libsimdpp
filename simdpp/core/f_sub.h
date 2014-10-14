@@ -15,6 +15,8 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/f_sub.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
+#include <simdpp/core/detail/get_expr_uint.h>
+
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN

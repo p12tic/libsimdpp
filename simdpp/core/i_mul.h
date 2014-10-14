@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_mul.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
+#include <simdpp/core/detail/get_expr_uint.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -34,10 +35,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2,
-                                  expr_mul_lo<uint16<N, typename V1::expr_type>,
-                                              uint16<N, typename V2::expr_type>>
-                                 >::type
+typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         mul_lo(const any_int16<N,V1>& a,
                const any_int16<N,V2>& b)
 {
@@ -115,10 +113,7 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, uint16, uint16)
     @icost{ALTIVEC, 16}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2,
-                                  expr_mul_lo<uint32<N, typename V1::expr_type>,
-                                              uint32<N, typename V2::expr_type>>
-                                 >::type
+typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         mul_lo(const any_int32<N,V1>& a,
                const any_int32<N,V2>& b)
 {
