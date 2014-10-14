@@ -25,13 +25,13 @@ namespace insn {
 
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_sign(float32<N> a)
+float32<N> i_sign(const float32<N>& a)
 {
     return bit_and(a, 0x80000000);
 }
 
 template<unsigned N> SIMDPP_INL
-float64<N> i_sign(float64<N> a)
+float64<N> i_sign(const float64<N>& a)
 {
     return bit_and(a, 0x8000000000000000);
 }

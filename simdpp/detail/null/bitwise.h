@@ -29,7 +29,7 @@ namespace null {
 */
 
 template<class V> SIMDPP_INL
-V bit_and(V a, V b)
+V bit_and(const V& a, const V& b)
 {
     V r;
     using E = typename V::element_type;
@@ -43,7 +43,7 @@ V bit_and(V a, V b)
 }
 
 template<class V, class M> SIMDPP_INL
-V bit_and_vm(V a, M m)
+V bit_and_vm(const V& a, const M& m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -53,7 +53,7 @@ V bit_and_vm(V a, M m)
 }
 
 template<class M> SIMDPP_INL
-M bit_and_mm(M a, M b)
+M bit_and_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
@@ -64,7 +64,7 @@ M bit_and_mm(M a, M b)
 
 
 template<class V> SIMDPP_INL
-V bit_andnot(V a, V b)
+V bit_andnot(const V& a, const V& b)
 {
     V r;
     using E = typename V::element_type;
@@ -78,7 +78,7 @@ V bit_andnot(V a, V b)
 }
 
 template<class V, class M> SIMDPP_INL
-V bit_andnot_vm(V a, M m)
+V bit_andnot_vm(const V& a, const M& m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -88,7 +88,7 @@ V bit_andnot_vm(V a, M m)
 }
 
 template<class M> SIMDPP_INL
-M bit_andnot_mm(M a, M b)
+M bit_andnot_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
@@ -99,7 +99,7 @@ M bit_andnot_mm(M a, M b)
 
 
 template<class V> SIMDPP_INL
-V bit_or(V a, V b)
+V bit_or(const V& a, const V& b)
 {
     V r;
     using E = typename V::element_type;
@@ -113,7 +113,7 @@ V bit_or(V a, V b)
 }
 
 template<class M> SIMDPP_INL
-M bit_or_mm(M a, M b)
+M bit_or_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
@@ -123,7 +123,7 @@ M bit_or_mm(M a, M b)
 }
 
 template<class V> SIMDPP_INL
-V bit_xor(V a, V b)
+V bit_xor(const V& a, const V& b)
 {
     V r;
     using E = typename V::element_type;
@@ -137,7 +137,7 @@ V bit_xor(V a, V b)
 }
 
 template<class M> SIMDPP_INL
-M bit_xor_mm(M a, M b)
+M bit_xor_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
@@ -148,7 +148,7 @@ M bit_xor_mm(M a, M b)
 }
 
 template<class M> SIMDPP_INL
-M bit_not_mm(M a)
+M bit_not_mm(const M& a)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {

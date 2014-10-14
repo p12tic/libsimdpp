@@ -46,7 +46,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 
 */
-SIMDPP_INL uint8x16 permute_zbytes16(uint8x16 a, uint8x16 mask)
+SIMDPP_INL uint8x16 permute_zbytes16(const uint8x16& a, const uint8x16& mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -74,39 +74,39 @@ SIMDPP_INL uint8x16 permute_zbytes16(uint8x16 a, uint8x16 mask)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 permute_zbytes16(uint8x32 a, uint8x32 mask)
+SIMDPP_INL uint8x32 permute_zbytes16(const uint8x32& a, const uint8x32& mask)
 {
     return _mm256_shuffle_epi8(a, mask);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-uint8<N> permute_zbytes16(uint8<N> a, uint8<N> mask)
+uint8<N> permute_zbytes16(const uint8<N>& a, const uint8<N>& mask)
 {
     SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, permute_zbytes16, a, mask);
 }
 template<unsigned N> SIMDPP_INL
-uint16<N> permute_zbytes16(uint16<N> a, uint16<N> mask)
+uint16<N> permute_zbytes16(const uint16<N>& a, const uint16<N>& mask)
 {
     return (uint16<N>) permute_zbytes16(uint8<N*2>(a), uint8<N*2>(mask));
 }
 template<unsigned N> SIMDPP_INL
-uint32<N> permute_zbytes16(uint32<N> a, uint32<N> mask)
+uint32<N> permute_zbytes16(const uint32<N>& a, const uint32<N>& mask)
 {
     return (uint32<N>) permute_zbytes16(uint8<N*4>(a), uint8<N*4>(mask));
 }
 template<unsigned N> SIMDPP_INL
-uint64<N> permute_zbytes16(uint64<N> a, uint64<N> mask)
+uint64<N> permute_zbytes16(const uint64<N>& a, const uint64<N>& mask)
 {
     return (uint64<N>) permute_zbytes16(uint8<N*8>(a), uint8<N*8>(mask));
 }
 template<unsigned N> SIMDPP_INL
-float32<N> permute_zbytes16(float32<N> a, uint32<N> mask)
+float32<N> permute_zbytes16(const float32<N>& a, const uint32<N>& mask)
 {
     return float32<N>(permute_zbytes16(uint32<N>(a), mask));
 }
 template<unsigned N> SIMDPP_INL
-float64<N> permute_zbytes16(float64<N> a, uint64<N> mask)
+float64<N> permute_zbytes16(const float64<N>& a, const uint64<N>& mask)
 {
     return float64<N>(permute_zbytes16(uint64<N>(a), mask));
 }

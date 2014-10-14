@@ -37,58 +37,58 @@ void test_push_internal_vec(TestSuite::Result& res, const V& data)
 }
 
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::int8<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::int8<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_INT8, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::uint8<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::uint8<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_UINT8, N, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::int16<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::int16<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_INT16, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::uint16<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::uint16<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_UINT16, N, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::int32<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::int32<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_INT32, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::uint32<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::uint32<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_UINT32, N, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::int64<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::int64<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_INT64, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::uint64<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::uint64<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_UINT64, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::float32<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::float32<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_FLOAT32, N, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestSuite& t, simdpp::float64<N> data, unsigned line)
+void test_push_internal(TestSuite& t, const simdpp::float64<N>& data, unsigned line)
 {
     test_push_internal_vec(t.push(TestSuite::TYPE_FLOAT64, N, line), data);
 }

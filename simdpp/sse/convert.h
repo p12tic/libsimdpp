@@ -31,7 +31,7 @@ namespace sse {
     @endcode
     @icost{SSE2, SSE3, SSSE3, 4}
 */
-SIMDPP_INL uint32x4 to_int32x4(int8x16 a)
+SIMDPP_INL uint32x4 to_int32x4(const int8x16& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_cvtepi8_epi32(a);
@@ -54,7 +54,7 @@ SIMDPP_INL uint32x4 to_int32x4(int8x16 a)
     @endcode
     @icost{SSE2, SSE3, SSSE3, 3}
 */
-SIMDPP_INL uint32x4 to_int32x4(uint8x16 a)
+SIMDPP_INL uint32x4 to_int32x4(const uint8x16& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_cvtepu8_epi32(a);
@@ -73,7 +73,7 @@ SIMDPP_INL uint32x4 to_int32x4(uint8x16 a)
     @endcode
     @unimp{SSE2, SSE3, SSSE3}
 */
-SIMDPP_INL uint64x2 to_int64x2(int8x16 a)
+SIMDPP_INL uint64x2 to_int64x2(const int8x16& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_cvtepi8_epi64(a);
@@ -90,7 +90,7 @@ SIMDPP_INL uint64x2 to_int64x2(int8x16 a)
     @endcode
     @unimp{SSE2, SSE3, SSSE3}
 */
-SIMDPP_INL uint64x2 to_int64x2(int16x8 a)
+SIMDPP_INL uint64x2 to_int64x2(const int16x8& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_cvtepi16_epi64(a);
@@ -107,7 +107,7 @@ SIMDPP_INL uint64x2 to_int64x2(int16x8 a)
     @endcode
     @icost{SSE2, SSE3, SSSE3, 4}
 */
-SIMDPP_INL uint64x2 to_int64x2(uint8x16 a)
+SIMDPP_INL uint64x2 to_int64x2(const uint8x16& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_cvtepu8_epi64(a);
@@ -131,7 +131,7 @@ SIMDPP_INL uint64x2 to_int64x2(uint8x16 a)
     r3 = (int32_t) a3
     @endcode
 */
-SIMDPP_INL uint32x4 to_int32x4_r(float32x4 a)
+SIMDPP_INL uint32x4 to_int32x4_r(const float32x4& a)
 {
     return _mm_cvtps_epi32(a);
 }
@@ -148,7 +148,7 @@ SIMDPP_INL uint32x4 to_int32x4_r(float32x4 a)
     r3 = 0
     @endcode
 */
-SIMDPP_INL uint32x4 to_int32x4(float64x2 a)
+SIMDPP_INL uint32x4 to_int32x4(const float64x2& a)
 {
     return _mm_cvttpd_epi32(a);
 }
@@ -166,7 +166,7 @@ SIMDPP_INL uint32x4 to_int32x4(float64x2 a)
     r3 = 0
     @endcode
 */
-SIMDPP_INL uint32x4 to_int32x4_r(float64x2 a)
+SIMDPP_INL uint32x4 to_int32x4_r(const float64x2& a)
 {
     return _mm_cvtpd_epi32(a);
 }

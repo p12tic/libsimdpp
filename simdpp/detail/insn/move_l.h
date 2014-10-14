@@ -24,7 +24,7 @@ namespace insn {
 
 
 template<unsigned shift> SIMDPP_INL
-uint8x16 i_move16_l(uint8x16 a)
+uint8x16 i_move16_l(const uint8x16& a)
 {
     static_assert(shift <= 16, "Selector out of range");
 
@@ -51,7 +51,7 @@ uint8x16 i_move16_l(uint8x16 a)
 
 #if SIMDPP_USE_AVX2
 template<unsigned shift> SIMDPP_INL
-uint8x32 i_move16_l(uint8x32 a)
+uint8x32 i_move16_l(const uint8x32& a)
 {
     static_assert(shift <= 16, "Selector out of range");
     return _mm256_srli_si256(a, shift);
@@ -59,7 +59,7 @@ uint8x32 i_move16_l(uint8x32 a)
 #endif
 
 template<unsigned shift, unsigned N> SIMDPP_INL
-uint8<N> i_move16_l(uint8<N> a)
+uint8<N> i_move16_l(const uint8<N>& a)
 {
     static_assert(shift <= 16, "Selector out of range");
     SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_move16_l<shift>, a);
@@ -68,7 +68,7 @@ uint8<N> i_move16_l(uint8<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned shift, unsigned N> SIMDPP_INL
-uint16<N> i_move8_l(uint16<N> a)
+uint16<N> i_move8_l(const uint16<N>& a)
 {
     return uint16<N>(i_move16_l<shift*2>(uint8<N*2>(a)));
 }
@@ -76,14 +76,14 @@ uint16<N> i_move8_l(uint16<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned shift> SIMDPP_INL
-uint32<4> i_move4_l(uint32<4> a)
+uint32<4> i_move4_l(const uint32<4>& a)
 {
     return (uint32<4>) i_move16_l<shift*4>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned shift> SIMDPP_INL
-uint32<8> i_move4_l(uint32<8> a)
+uint32<8> i_move4_l(const uint32<8>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
     return _mm256_srli_si256(a, shift*4);
@@ -92,7 +92,7 @@ uint32<8> i_move4_l(uint32<8> a)
 
 #if SIMDPP_USE_AVX512
 template<unsigned shift> SIMDPP_INL
-uint32<16> i_move4_l(uint32<16> a)
+uint32<16> i_move4_l(const uint32<16>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
     switch (shift) {
@@ -106,7 +106,7 @@ uint32<16> i_move4_l(uint32<16> a)
 #endif
 
 template<unsigned shift, unsigned N> SIMDPP_INL
-uint32<N> i_move4_l(uint32<N> a)
+uint32<N> i_move4_l(const uint32<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_move4_l<shift>, a);
 }
@@ -114,14 +114,14 @@ uint32<N> i_move4_l(uint32<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned shift> SIMDPP_INL
-uint64<2> i_move2_l(uint64<2> a)
+uint64<2> i_move2_l(const uint64<2>& a)
 {
     return (uint64<2>) i_move16_l<shift*8>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned shift> SIMDPP_INL
-uint64<4> i_move2_l(uint64<4> a)
+uint64<4> i_move2_l(const uint64<4>& a)
 {
     static_assert(shift <= 2, "Selector out of range");
     return _mm256_srli_si256(a, shift*8);
@@ -130,7 +130,7 @@ uint64<4> i_move2_l(uint64<4> a)
 
 #if SIMDPP_USE_AVX512
 template<unsigned shift> SIMDPP_INL
-uint64<8> i_move2_l(uint64<8> a)
+uint64<8> i_move2_l(const uint64<8>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
     return (uint64<8>) i_move4_l<shift*2>(uint32<16>(a));
@@ -138,7 +138,7 @@ uint64<8> i_move2_l(uint64<8> a)
 #endif
 
 template<unsigned shift, unsigned N> SIMDPP_INL
-uint64<N> i_move2_l(uint64<N> a)
+uint64<N> i_move2_l(const uint64<N>& a)
 {
     return uint64<N>(i_move16_l<shift*8>(uint8<N*8>(a)));
 }
@@ -146,14 +146,14 @@ uint64<N> i_move2_l(uint64<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned shift> SIMDPP_INL
-float32<4> i_move4_l(float32<4> a)
+float32<4> i_move4_l(const float32<4>& a)
 {
     return (float32<4>) i_move16_l<shift*4>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned shift> SIMDPP_INL
-float32<8> i_move4_l(float32<8> a)
+float32<8> i_move4_l(const float32<8>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
     return (float32<8>) i_move16_l<shift*4>(uint8<32>(a));
@@ -162,7 +162,7 @@ float32<8> i_move4_l(float32<8> a)
 
 #if SIMDPP_USE_AVX512
 template<unsigned shift> SIMDPP_INL
-float32<16> i_move4_l(float32<16> a)
+float32<16> i_move4_l(const float32<16>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
     switch (shift) {
@@ -176,7 +176,7 @@ float32<16> i_move4_l(float32<16> a)
 #endif
 
 template<unsigned shift, unsigned N> SIMDPP_INL
-float32<N> i_move4_l(float32<N> a)
+float32<N> i_move4_l(const float32<N>& a)
 {
     return float32<N>(i_move4_l<shift>(uint32<N>(a)));
 }
@@ -184,14 +184,14 @@ float32<N> i_move4_l(float32<N> a)
 // -----------------------------------------------------------------------------
 
 template<unsigned shift> SIMDPP_INL
-float64<2> i_move2_l(float64<2> a)
+float64<2> i_move2_l(const float64<2>& a)
 {
     return (float64<2>) i_move16_l<shift*8>(uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
 template<unsigned shift> SIMDPP_INL
-float64<4> i_move2_l(float64<4> a)
+float64<4> i_move2_l(const float64<4>& a)
 {
     static_assert(shift <= 2, "Selector out of range");
     return (float64<4>) i_move16_l<shift*8>(uint8<32>(a));
@@ -200,7 +200,7 @@ float64<4> i_move2_l(float64<4> a)
 
 #if SIMDPP_USE_AVX512
 template<unsigned shift> SIMDPP_INL
-float64<8> i_move2_l(float64<8> a)
+float64<8> i_move2_l(const float64<8>& a)
 {
     static_assert(shift <= 2, "Selector out of range");
     switch (shift) {
@@ -212,7 +212,7 @@ float64<8> i_move2_l(float64<8> a)
 #endif
 
 template<unsigned shift, unsigned N> SIMDPP_INL
-float64<N> i_move2_l(float64<N> a)
+float64<N> i_move2_l(const float64<N>& a)
 {
     return float64<N>(i_move2_l<shift>(uint64<N>(a)));
 }

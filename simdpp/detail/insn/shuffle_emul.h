@@ -54,7 +54,7 @@ V permute_half(V a0, V a1)
     functions.
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
-uint64x4 permute_emul(uint64x4 a)
+uint64x4 permute_emul(const uint64x4& a)
 {
     uint64x2 r0, r1, a0, a1;
     split(a, a0, a1);
@@ -64,7 +64,7 @@ uint64x4 permute_emul(uint64x4 a)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
-float64x4 permute_emul(float64x4 a)
+float64x4 permute_emul(const float64x4& a)
 {
     float64x2 r0, r1, a0, a1;
     split(a, a0, a1);

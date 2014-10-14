@@ -38,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-4}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint8<N, expr_abs<int8<N,E>>> abs(int8<N,E> a)
+uint8<N, expr_abs<int8<N,E>>> abs(const int8<N,E>& a)
 {
     return { { a }, 0 };
 }
@@ -61,7 +61,7 @@ uint8<N, expr_abs<int8<N,E>>> abs(int8<N,E> a)
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint16<N, expr_abs<int16<N,E>>> abs(int16<N,E> a)
+uint16<N, expr_abs<int16<N,E>>> abs(const int16<N,E>& a)
 {
     return { { a }, 0 };
 }
@@ -83,7 +83,7 @@ uint16<N, expr_abs<int16<N,E>>> abs(int16<N,E> a)
     @icost{ALTIVEC, 2-4}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint32<N, expr_abs<int32<N,E>>> abs(int32<N,E> a)
+uint32<N, expr_abs<int32<N,E>>> abs(const int32<N,E>& a)
 {
     return { { a }, 0 };
 }
@@ -107,7 +107,7 @@ uint32<N, expr_abs<int32<N,E>>> abs(int32<N,E> a)
     @novec{ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint64<N, expr_abs<int64<N,E>>> abs(int64<N,E> a)
+uint64<N, expr_abs<int64<N,E>>> abs(const int64<N,E>& a)
 {
     return { { a }, 0 };
 }

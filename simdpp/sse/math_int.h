@@ -32,7 +32,7 @@ namespace sse {
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL int8x16 copysign(int8x16 a, int8x16 b)
+SIMDPP_INL int8x16 copysign(const int8x16& a, const int8x16& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_sign_epi8(a,b);
@@ -50,7 +50,7 @@ SIMDPP_INL int8x16 copysign(int8x16 a, int8x16 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL int16x8 copysign(int16x8 a, int16x8 b)
+SIMDPP_INL int16x8 copysign(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_sign_epi16(a,b);
@@ -69,7 +69,7 @@ SIMDPP_INL int16x8 copysign(int16x8 a, int16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL int32x4 copysign(int32x4 a, int32x4 b)
+SIMDPP_INL int32x4 copysign(const int32x4& a, const int32x4& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_sign_epi32(a, b);
@@ -90,7 +90,7 @@ SIMDPP_INL int32x4 copysign(int32x4 a, int32x4 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL uint16x8 hadd2(uint16x8 a, uint16x8 b)
+SIMDPP_INL uint16x8 hadd2(const uint16x8& a, const uint16x8& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi16(a, b);
@@ -109,7 +109,7 @@ SIMDPP_INL uint16x8 hadd2(uint16x8 a, uint16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL uint32x4 hadd2(uint32x4 a, uint32x4 b)
+SIMDPP_INL uint32x4 hadd2(const uint32x4& a, const uint32x4& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadd_epi32(a, b);
@@ -126,7 +126,7 @@ SIMDPP_INL uint32x4 hadd2(uint32x4 a, uint32x4 b)
     @endcode
     @icost{3}
 */
-SIMDPP_INL uint64x2 hadd2(uint64x2 a, uint64x2 b)
+SIMDPP_INL uint64x2 hadd2(const uint64x2& a, const uint64x2& b)
 {
     uint64x2 ia, ib;
     ia = zip2_lo(a, b);
@@ -147,7 +147,7 @@ SIMDPP_INL uint64x2 hadd2(uint64x2 a, uint64x2 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL int16x8 hadds2(int16x8 a, int16x8 b)
+SIMDPP_INL int16x8 hadds2(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hadds_epi16(a, b);
@@ -167,13 +167,13 @@ SIMDPP_INL int16x8 hadds2(int16x8 a, int16x8 b)
     @unimp{SSE2, SSE3}
     @icost{3}
 */
-SIMDPP_INL uint32x4 hadd4(uint32x4 a, uint32x4 b, uint32x4 c, uint32x4 d)
+SIMDPP_INL uint32x4 hadd4(const uint32x4& a, const uint32x4& b, const uint32x4& c, const uint32x4& d)
 {
 #if SIMDPP_USE_SSSE3
-    a = hadd2(a, b);
-    c = hadd2(c, d);
-    a = hadd2(a, c);
-    return a;
+    uint32<4> ab, cd;
+    ab = hadd2(a, b);
+    cd = hadd2(c, d);
+    return hadd2(ab, cd);
 #else
     return SIMDPP_NOT_IMPLEMENTED4(a, b, c, d);
 #endif
@@ -191,7 +191,7 @@ SIMDPP_INL uint32x4 hadd4(uint32x4 a, uint32x4 b, uint32x4 c, uint32x4 d)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL uint16x8 hsub2(uint16x8 a, uint16x8 b)
+SIMDPP_INL uint16x8 hsub2(const uint16x8& a, const uint16x8& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi16(a, b);
@@ -210,7 +210,7 @@ SIMDPP_INL uint16x8 hsub2(uint16x8 a, uint16x8 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL uint32x4 hsub2(uint32x4 a, uint32x4 b)
+SIMDPP_INL uint32x4 hsub2(const uint32x4& a, const uint32x4& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsub_epi32(a, b);
@@ -227,7 +227,7 @@ SIMDPP_INL uint32x4 hsub2(uint32x4 a, uint32x4 b)
     @endcode
     @icost{3}
 */
-SIMDPP_INL uint64x2 hsub2(uint64x2 a, uint64x2 b)
+SIMDPP_INL uint64x2 hsub2(const uint64x2& a, const uint64x2& b)
 {
 #if SIMDPP_USE_SSSE3
     uint64x2 ia, ib;
@@ -252,7 +252,7 @@ SIMDPP_INL uint64x2 hsub2(uint64x2 a, uint64x2 b)
     @endcode
     @unimp{SSE2, SSE3}
 */
-SIMDPP_INL int16x8 hsubs2(int16x8 a, int16x8 b)
+SIMDPP_INL int16x8 hsubs2(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_SSSE3
     return _mm_hsubs_epi16(a, b);

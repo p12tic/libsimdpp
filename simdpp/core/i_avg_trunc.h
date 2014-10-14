@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N, uint8<N>> avg_trunc(uint8<N,E1> a, uint8<N,E2> b)
+uint8<N, uint8<N>> avg_trunc(const uint8<N,E1>& a, const uint8<N,E2>& b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
@@ -63,7 +63,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint8, uint8)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int8<N, int8<N>> avg_trunc(int8<N,E1> a, int8<N,E2> b)
+int8<N, int8<N>> avg_trunc(const int8<N,E1>& a, const int8<N,E2>& b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
@@ -88,7 +88,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int8, int8)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N, uint16<N>> avg_trunc(uint16<N,E1> a, uint16<N,E2> b)
+uint16<N, uint16<N>> avg_trunc(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
@@ -113,7 +113,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint16, uint16)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int16<N, int16<N>> avg_trunc(int16<N,E1> a, int16<N,E2> b)
+int16<N, int16<N>> avg_trunc(const int16<N,E1>& a, const int16<N,E2>& b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
@@ -138,7 +138,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int16, int16)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N, uint32<N>> avg_trunc(uint32<N,E1> a, uint32<N,E2> b)
+uint32<N, uint32<N>> avg_trunc(const uint32<N,E1>& a, const uint32<N,E2>& b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }
@@ -164,7 +164,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint32, uint32)
     @icost{NEON, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int32<N, int32<N>> avg_trunc(int32<N,E1> a, int32<N,E2> b)
+int32<N, int32<N>> avg_trunc(const int32<N,E1>& a, const int32<N,E2>& b)
 {
     return detail::insn::i_avg_trunc(a.eval(), b.eval());
 }

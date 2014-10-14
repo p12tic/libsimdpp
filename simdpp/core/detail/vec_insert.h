@@ -35,27 +35,27 @@ void vec_insert_impl(R& r, V v, unsigned n)
 
 // Sets the elements [M*n .. M*(n+1)) of @a a to the contents of @a x
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(uint8<N>& a, uint8<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(uint8<N>& a, const uint8<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(uint16<N>& a, uint16<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(uint16<N>& a, const uint16<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(uint32<N>& a, uint32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(uint32<N>& a, const uint32<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(uint64<N>& a, uint64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(uint64<N>& a, const uint64<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(int8<N>& a, int8<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(int8<N>& a, const int8<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(int16<N>& a, int16<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(int16<N>& a, const int16<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(int32<N>& a, int32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(int32<N>& a, const int32<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(int64<N>& a, int64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(int64<N>& a, const int64<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(float32<N>& a, float32<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(float32<N>& a, const float32<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 template<unsigned N, unsigned M> SIMDPP_INL
-void vec_insert(float64<N>& a, float64<M> x, unsigned n) { vec_insert_impl(a, x, n); }
+void vec_insert(float64<N>& a, const float64<M>& x, unsigned n) { vec_insert_impl(a, x, n); }
 
 } // namespace detail
 #ifndef SIMDPP_DOXYGEN

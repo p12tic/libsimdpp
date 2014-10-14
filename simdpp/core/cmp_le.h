@@ -33,8 +33,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float32<N, mask_float32<N>> cmp_le(float32<N,E1> a,
-                                        float32<N,E2> b)
+mask_float32<N, mask_float32<N>> cmp_le(const float32<N,E1>& a,
+                                        const float32<N,E2>& b)
 {
     return detail::insn::i_cmp_le(a.eval(), b.eval());
 }
@@ -57,8 +57,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_le, mask_float32, float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float64<N, mask_float64<N>> cmp_le(float64<N,E1> a,
-                                        float64<N,E2> b)
+mask_float64<N, mask_float64<N>> cmp_le(const float64<N,E1>& a,
+                                        const float64<N,E2>& b)
 {
     return detail::insn::i_cmp_le(a.eval(), b.eval());
 }

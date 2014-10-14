@@ -36,9 +36,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
 float32<N, expr_fmadd<float32<N,E1>,
                       float32<N,E2>,
-                      float32<N,E3>>> fmadd(float32<N,E1> a,
-                                            float32<N,E2> b,
-                                            float32<N,E3> c)
+                      float32<N,E3>>> fmadd(const float32<N,E1>& a,
+                                            const float32<N,E2>& b,
+                                            const float32<N,E3>& c)
 {
     return { { a, b, c }, 0 };
 }
@@ -46,9 +46,9 @@ float32<N, expr_fmadd<float32<N,E1>,
 template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
 float64<N, expr_fmadd<float64<N,E1>,
                       float64<N,E2>,
-                      float64<N,E3>>> fmadd(float64<N,E1> a,
-                                            float64<N,E2> b,
-                                            float64<N,E3> c)
+                      float64<N,E3>>> fmadd(const float64<N,E1>& a,
+                                            const float64<N,E2>& b,
+                                            const float64<N,E3>& c)
 {
     return { { a, b, c }, 0 };
 }

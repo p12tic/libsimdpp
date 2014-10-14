@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N, float32<N>> floor(float32<N,E> a)
+float32<N, float32<N>> floor(const float32<N,E>& a)
 {
     return detail::insn::i_floor(a.eval());
 }

@@ -23,7 +23,7 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_max(float32x4 a, float32x4 b)
+SIMDPP_INL float32x4 i_max(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::max(a, b);
@@ -37,28 +37,28 @@ SIMDPP_INL float32x4 i_max(float32x4 a, float32x4 b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_max(float32x8 a, float32x8 b)
+SIMDPP_INL float32x8 i_max(const float32x8& a, const float32x8& b)
 {
     return _mm256_max_ps(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float32<16> i_max(float32<16> a, float32<16> b)
+SIMDPP_INL float32<16> i_max(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_max_ps(a, b);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_max(float32<N> a, float32<N> b)
+float32<N> i_max(const float32<N>& a, const float32<N>& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_max, a, b);
 }
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_max(float64x2 a, float64x2 b)
+SIMDPP_INL float64x2 i_max(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return detail::null::max(a, b);
@@ -68,21 +68,21 @@ SIMDPP_INL float64x2 i_max(float64x2 a, float64x2 b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_max(float64x4 a, float64x4 b)
+SIMDPP_INL float64x4 i_max(const float64x4& a, const float64x4& b)
 {
     return _mm256_max_pd(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float64<8> i_max(float64<8> a, float64<8> b)
+SIMDPP_INL float64<8> i_max(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_max_pd(a, b);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-float64<N> i_max(float64<N> a, float64<N> b)
+float64<N> i_max(const float64<N>& a, const float64<N>& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(float64<N>, i_max, a, b);
 }

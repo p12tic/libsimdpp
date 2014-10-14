@@ -29,7 +29,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL uint16x16 i_to_uint16(uint8x16 a)
+SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
 {
 #if SIMDPP_USE_NULL
     uint16x16 r;
@@ -61,7 +61,7 @@ SIMDPP_INL uint16x16 i_to_uint16(uint8x16 a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16<32> i_to_uint16(uint8<32> a)
+SIMDPP_INL uint16<32> i_to_uint16(const uint8<32>& a)
 {
     uint16<16> r0, r1;
     uint8<16> a0, a1;
@@ -73,7 +73,7 @@ SIMDPP_INL uint16<32> i_to_uint16(uint8<32> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-uint16<N> i_to_uint16(uint8<N> a)
+uint16<N> i_to_uint16(const uint8<N>& a)
 {
     uint16<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
@@ -84,7 +84,7 @@ uint16<N> i_to_uint16(uint8<N> a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int16x16 i_to_int16(int8x16 a)
+SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
 {
 #if SIMDPP_USE_NULL
     int16x16 r;
@@ -118,7 +118,7 @@ SIMDPP_INL int16x16 i_to_int16(int8x16 a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int16<32> i_to_int16(int8<32> a)
+SIMDPP_INL int16<32> i_to_int16(const int8<32>& a)
 {
     int16<16> r0, r1;
     int8<16> a0, a1;
@@ -130,7 +130,7 @@ SIMDPP_INL int16<32> i_to_int16(int8<32> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-int16<N> i_to_int16(int8<N> a)
+int16<N> i_to_int16(const int8<N>& a)
 {
     int16<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {

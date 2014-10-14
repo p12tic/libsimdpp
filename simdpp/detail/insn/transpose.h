@@ -80,7 +80,7 @@ SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
 
     Needs SSSE3
 */
-SIMDPP_INL uint8x16 transpose_inplace(uint8x16 a)
+SIMDPP_INL uint8x16 transpose_inplace(const uint8x16& a)
 {
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // the compiler will take this out of any loops automatically
@@ -92,7 +92,7 @@ SIMDPP_INL uint8x16 transpose_inplace(uint8x16 a)
 #endif
 }
 
-SIMDPP_INL uint8x32 transpose_inplace(uint8x32 a)
+SIMDPP_INL uint8x32 transpose_inplace(const uint8x32& a)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_ALTIVEC
     uint8x32 idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,

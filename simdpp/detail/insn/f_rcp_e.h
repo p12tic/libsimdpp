@@ -27,7 +27,7 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_rcp_e(float32x4 a)
+SIMDPP_INL float32x4 i_rcp_e(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(a, [](float a){ return 1.0f / a; });
@@ -41,14 +41,14 @@ SIMDPP_INL float32x4 i_rcp_e(float32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rcp_e(float32x8 a)
+SIMDPP_INL float32x8 i_rcp_e(const float32x8& a)
 {
     return _mm256_rcp_ps(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float32<16> i_rcp_e(float32<16> a)
+SIMDPP_INL float32<16> i_rcp_e(const float32<16>& a)
 {
     // TODO: document precision
     return _mm512_rcp14_ps(a);
@@ -56,7 +56,7 @@ SIMDPP_INL float32<16> i_rcp_e(float32<16> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_rcp_e(float32<N> a)
+float32<N> i_rcp_e(const float32<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_rcp_e, a);
 }

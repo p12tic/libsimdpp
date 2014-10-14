@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(int8<N,E> a)
+int16<N> to_int16(const int8<N,E>& a)
 {
     return detail::insn::i_to_int16(a.eval());
 }
@@ -49,7 +49,7 @@ int16<N> to_int16(int8<N,E> a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_int16(uint8<N,E> a)
+uint16<N> to_int16(const uint8<N,E>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }

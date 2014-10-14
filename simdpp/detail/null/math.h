@@ -28,7 +28,7 @@ namespace detail {
 namespace null {
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type isnan(V a)
+typename V::mask_vector_type isnan(const V& a)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -38,7 +38,7 @@ typename V::mask_vector_type isnan(V a)
 }
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type isnan2(V a, V b)
+typename V::mask_vector_type isnan2(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -48,12 +48,13 @@ typename V::mask_vector_type isnan2(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V abs(V a)
+V abs(const V& a)
 {
+    V r;
     for (unsigned i = 0; i < V::length; i++) {
-        a.el(i) = std::abs(a.el(i));
+        r.el(i) = std::abs(a.el(i));
     }
-    return a;
+    return r;
 }
 
 template<class T, class U> SIMDPP_INL
@@ -67,7 +68,7 @@ T saturate(U t)
 }
 
 template<class V> SIMDPP_INL
-V add(V a, V b)
+V add(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -77,7 +78,7 @@ V add(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V add_sat(V a, V b)
+V add_sat(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -87,7 +88,7 @@ V add_sat(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V sub(V a, V b)
+V sub(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -97,7 +98,7 @@ V sub(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V sub_sat(V a, V b)
+V sub_sat(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -107,7 +108,7 @@ V sub_sat(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V neg(V a)
+V neg(const V& a)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -117,7 +118,7 @@ V neg(V a)
 }
 
 template<class V> SIMDPP_INL
-V mul(V a, V b)
+V mul(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -127,7 +128,7 @@ V mul(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V fmadd(V a, V b, V c)
+V fmadd(const V& a, const V& b, V c)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -137,7 +138,7 @@ V fmadd(V a, V b, V c)
 }
 
 template<class V> SIMDPP_INL
-V fmsub(V a, V b, V c)
+V fmsub(const V& a, const V& b, V c)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -147,7 +148,7 @@ V fmsub(V a, V b, V c)
 }
 
 template<unsigned P, class V> SIMDPP_INL
-V div_p(V a, V b)
+V div_p(const V& a, const V& b)
 {
     // the least P significant bits of the mask are set.
     uint64_t mask = 0;
@@ -165,7 +166,7 @@ V div_p(V a, V b)
 
 
 template<class V> SIMDPP_INL
-V shift_r(V a, unsigned shift)
+V shift_r(const V& a, unsigned shift)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -175,7 +176,7 @@ V shift_r(V a, unsigned shift)
 }
 
 template<class V> SIMDPP_INL
-V shift_l(V a, unsigned shift)
+V shift_l(const V& a, unsigned shift)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -185,7 +186,7 @@ V shift_l(V a, unsigned shift)
 }
 
 template<class V> SIMDPP_INL
-V min(V a, V b)
+V min(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -195,7 +196,7 @@ V min(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V max(V a, V b)
+V max(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {

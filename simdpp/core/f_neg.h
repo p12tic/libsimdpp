@@ -36,7 +36,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX-AVX2, NEON, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N, expr_neg<float32<N,E>>> neg(float32<N,E> a)
+float32<N, expr_neg<float32<N,E>>> neg(const float32<N,E>& a)
 {
     return { { a }, 0 };
 }
@@ -59,7 +59,7 @@ float32<N, expr_neg<float32<N,E>>> neg(float32<N,E> a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-float64<N, expr_neg<float64<N,E>>> neg(float64<N,E> a)
+float64<N, expr_neg<float64<N,E>>> neg(const float64<N,E>& a)
 {
     return { { a }, 0 };
 }

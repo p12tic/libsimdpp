@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL float32x4 i_ceil(float32x4 a)
+SIMDPP_INL float32x4 i_ceil(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(a, [](float x){ return std::ceil(x); });
@@ -57,29 +57,28 @@ SIMDPP_INL float32x4 i_ceil(float32x4 a)
     float32x4 fa = to_float32(ia);
 
     //combine the results
-    a = blend(a, fa, mask);
-    return a;
+    return blend(a, fa, mask);
 #elif SIMDPP_USE_ALTIVEC
     return vec_ceil((__vector float)a);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_ceil(float32x8 a)
+SIMDPP_INL float32x8 i_ceil(const float32x8& a)
 {
     return _mm256_ceil_ps(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float32<16> i_ceil(float32<16> a)
+SIMDPP_INL float32<16> i_ceil(const float32<16>& a)
 {
     return _mm512_ceil_ps(a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_ceil(float32<N> a)
+float32<N> i_ceil(const float32<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL1(float32<N>, ceil, a);
 }

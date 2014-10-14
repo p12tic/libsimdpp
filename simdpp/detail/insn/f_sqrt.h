@@ -27,7 +27,7 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_sqrt(float32x4 a)
+SIMDPP_INL float32x4 i_sqrt(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
@@ -42,28 +42,28 @@ SIMDPP_INL float32x4 i_sqrt(float32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_sqrt(float32x8 a)
+SIMDPP_INL float32x8 i_sqrt(const float32x8& a)
 {
     return _mm256_sqrt_ps(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float32<16> i_sqrt(float32<16> a)
+SIMDPP_INL float32<16> i_sqrt(const float32<16>& a)
 {
     return _mm512_sqrt_ps(a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_sqrt(float32<N> a)
+float32<N> i_sqrt(const float32<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_sqrt, a);
 }
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_sqrt(float64x2 a)
+SIMDPP_INL float64x2 i_sqrt(const float64x2& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return detail::null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
@@ -73,21 +73,21 @@ SIMDPP_INL float64x2 i_sqrt(float64x2 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_sqrt(float64x4 a)
+SIMDPP_INL float64x4 i_sqrt(const float64x4& a)
 {
     return _mm256_sqrt_pd(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float64<8> i_sqrt(float64<8> a)
+SIMDPP_INL float64<8> i_sqrt(const float64<8>& a)
 {
     return _mm512_sqrt_pd(a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-float64<N> i_sqrt(float64<N> a)
+float64<N> i_sqrt(const float64<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_sqrt, a);
 }

@@ -29,7 +29,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL int32x8 i_to_int32(int16x8 a)
+SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
 {
 #if SIMDPP_USE_NULL
     int32x8 r;
@@ -64,7 +64,7 @@ SIMDPP_INL int32x8 i_to_int32(int16x8 a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32<16> i_to_int32(int16<16> a)
+SIMDPP_INL int32<16> i_to_int32(const int16<16>& a)
 {
 #if SIMDPP_USE_AVX512
     return _mm512_cvtepi16_epi32(a);
@@ -80,7 +80,7 @@ SIMDPP_INL int32<16> i_to_int32(int16<16> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-int32<N> i_to_int32(int16<N> a)
+int32<N> i_to_int32(const int16<N>& a)
 {
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
@@ -91,7 +91,7 @@ int32<N> i_to_int32(int16<N> a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_to_int32(float32x4 a)
+SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
@@ -113,7 +113,7 @@ SIMDPP_INL int32x4 i_to_int32(float32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL int32x8 i_to_int32(float32x8 a)
+SIMDPP_INL int32x8 i_to_int32(const float32x8& a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cvttps_epi32(a);
@@ -128,14 +128,14 @@ SIMDPP_INL int32x8 i_to_int32(float32x8 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL uint32<16> i_to_int32(float32<16> a)
+SIMDPP_INL uint32<16> i_to_int32(const float32<16>& a)
 {
     return _mm512_cvttps_epi32(a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-int32<N> i_to_int32(float32<N> a)
+int32<N> i_to_int32(const float32<N>& a)
 {
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
@@ -146,7 +146,7 @@ int32<N> i_to_int32(float32<N> a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_to_int32(float64x4 a)
+SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
@@ -169,7 +169,7 @@ SIMDPP_INL int32x4 i_to_int32(float64x4 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL int32<8> i_to_int32(float64<8> a)
+SIMDPP_INL int32<8> i_to_int32(const float64<8>& a)
 {
 #if SIMDPP_USE_AVX512
     return _mm512_cvtpd_epi32(a);
@@ -183,7 +183,7 @@ SIMDPP_INL int32<8> i_to_int32(float64<8> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL int32<16> i_to_int32(float64<16> a)
+SIMDPP_INL int32<16> i_to_int32(const float64<16>& a)
 {
     int32<8> r0, r1;
     r0 = _mm512_cvtpd_epi32(a.vec(0));
@@ -193,7 +193,7 @@ SIMDPP_INL int32<16> i_to_int32(float64<16> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-int32<N> i_to_int32(float64<N> a)
+int32<N> i_to_int32(const float64<N>& a)
 {
     int32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {

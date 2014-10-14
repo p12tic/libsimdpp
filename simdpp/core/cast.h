@@ -56,7 +56,7 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigne
     same.
 */
 template<class R, class T> SIMDPP_INL
-R bit_cast(T t)
+R bit_cast(const T& t)
 {
     static_assert(is_vector<R>::value == is_vector<T>::value,
                   "bit_cast can't convert between vector and non-vector types");

@@ -25,7 +25,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL int64x4 i_to_int64(int32x4 a)
+SIMDPP_INL int64x4 i_to_int64(const int32x4& a)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;
@@ -54,7 +54,7 @@ SIMDPP_INL int64x4 i_to_int64(int32x4 a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int64<8> i_to_int64(int32<8> a)
+SIMDPP_INL int64<8> i_to_int64(const int32<8>& a)
 {
     int32<4> a1, a2;
     int64<4> r1, r2;
@@ -66,7 +66,7 @@ SIMDPP_INL int64<8> i_to_int64(int32<8> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL int64<16> i_to_int64(int32<16> a)
+SIMDPP_INL int64<16> i_to_int64(const int32<16>& a)
 {
     int32<8> a1, a2;
     int64<8> r1, r2;
@@ -78,7 +78,7 @@ SIMDPP_INL int64<16> i_to_int64(int32<16> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-int64<N> i_to_int64(int32<N> a)
+int64<N> i_to_int64(const int32<N>& a)
 {
     int64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
@@ -89,7 +89,7 @@ int64<N> i_to_int64(int32<N> a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint64x4 i_to_uint64(uint32x4 a)
+SIMDPP_INL uint64x4 i_to_uint64(const uint32x4& a)
 {
 #if SIMDPP_USE_NULL
     uint64x4 r;
@@ -117,7 +117,7 @@ SIMDPP_INL uint64x4 i_to_uint64(uint32x4 a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint64<8> i_to_uint64(uint32<8> a)
+SIMDPP_INL uint64<8> i_to_uint64(const uint32<8>& a)
 {
     uint32<4> a1, a2;
     uint64<4> r1, r2;
@@ -129,7 +129,7 @@ SIMDPP_INL uint64<8> i_to_uint64(uint32<8> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL uint64<16> i_to_uint64(uint32<16> a)
+SIMDPP_INL uint64<16> i_to_uint64(const uint32<16>& a)
 {
     uint32<8> a1, a2;
     uint64<8> r1, r2;
@@ -141,7 +141,7 @@ SIMDPP_INL uint64<16> i_to_uint64(uint32<16> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-uint64<N> i_to_uint64(uint32<N> a)
+uint64<N> i_to_uint64(const uint32<N>& a)
 {
     uint64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {

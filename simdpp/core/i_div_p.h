@@ -44,7 +44,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, 4}
 */
 template<unsigned P> SIMDPP_INL
-uint8x16 div_p(uint8x16 num, uint8x16 den)
+uint8x16 div_p(const uint8x16& num, const uint8x16& den)
 {
 #if SIMDPP_USE_NULL
     return detail::null::div_p<P>(num, den);
@@ -93,7 +93,7 @@ uint8x16 div_p(uint8x16 num, uint8x16 den)
 }
 
 template<unsigned P> SIMDPP_INL
-uint16x8 div_p(uint16x8 num, uint16x8 den)
+uint16x8 div_p(const uint16x8& num, const uint16x8& den)
 {
 #if SIMDPP_USE_NULL
     return detail::null::div_p<P>(num, den);

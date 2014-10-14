@@ -63,8 +63,8 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, uint16)
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int16<N, expr_mul_hi<int16<N,E1>,
-                     int16<N,E2>>> mul_hi(int16<N,E1> a,
-                                          int16<N,E2> b)
+                     int16<N,E2>>> mul_hi(const int16<N,E1>& a,
+                                          const int16<N,E2>& b)
 {
     return { { a, b }, 0 };
 }
@@ -88,8 +88,8 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, int16, int16)
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N, expr_mul_hi<uint16<N,E1>,
-                      uint16<N,E2>>> mul_hi(uint16<N,E1> a,
-                                            uint16<N,E2> b)
+                      uint16<N,E2>>> mul_hi(const uint16<N,E1>& a,
+                                            const uint16<N,E2>& b)
 {
     return { { a, b }, 0 };
 }

@@ -31,7 +31,8 @@ V unmask_mask(const M& m)
     V r;
     for (unsigned i = 0; i < V::vec_length; ++i) {
         for (unsigned j = 0; j < V::base_vector_type::length; j++) {
-            r.vec(i).el(j) = m.vec(i).el(j) ? bit_cast<typename V::element_type>(V::all_bits) : 0;
+            typename V::uint_element_type all_bits = V::all_bits;
+            r.vec(i).el(j) = m.vec(i).el(j) ? bit_cast<typename V::element_type>(all_bits) : 0;
         }
     }
     return r;

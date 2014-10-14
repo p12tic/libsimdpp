@@ -26,7 +26,7 @@ namespace detail {
 namespace null {
 
 template<class R, class V, class C> SIMDPP_INL
-R foreach(V v, C c)
+R foreach(const V& v, C c)
 {
     R r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -36,7 +36,7 @@ R foreach(V v, C c)
 }
 
 template<class R, class V1, class V2, class C> SIMDPP_INL
-R foreach(V1 v1, V2 v2, C c)
+R foreach(const V1& v1, const V2& v2, C c)
 {
     R r;
     for (unsigned i = 0; i < V1::length; i++) {

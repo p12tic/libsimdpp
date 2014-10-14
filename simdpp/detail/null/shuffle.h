@@ -26,7 +26,7 @@ namespace detail {
 namespace null {
 
 template<class V> SIMDPP_INL
-V zip_lo_impl(V a, V b)
+V zip_lo_impl(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length/2; i++) {
@@ -37,7 +37,7 @@ V zip_lo_impl(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V zip_hi_impl(V a, V b)
+V zip_hi_impl(const V& a, const V& b)
 {
     V r;
     unsigned half = V::length/2;
@@ -50,7 +50,7 @@ V zip_hi_impl(V a, V b)
 
 
 template<class V> SIMDPP_INL
-V unzip_lo_impl(V a, V b)
+V unzip_lo_impl(const V& a, const V& b)
 {
     V r;
     unsigned half = V::length/2;
@@ -62,7 +62,7 @@ V unzip_lo_impl(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-V unzip_hi_impl(V a, V b)
+V unzip_hi_impl(const V& a, const V& b)
 {
     V r;
     unsigned half = V::length/2;
@@ -73,26 +73,26 @@ V unzip_hi_impl(V a, V b)
     return r;
 }
 
-template<class V> SIMDPP_INL V zip16_lo(V a, V b) { return zip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V zip8_lo(V a, V b)  { return zip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V zip4_lo(V a, V b)  { return zip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V zip2_lo(V a, V b)  { return zip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V zip16_hi(V a, V b) { return zip_hi_impl(a, b); }
-template<class V> SIMDPP_INL V zip8_hi(V a, V b)  { return zip_hi_impl(a, b); }
-template<class V> SIMDPP_INL V zip4_hi(V a, V b)  { return zip_hi_impl(a, b); }
-template<class V> SIMDPP_INL V zip2_hi(V a, V b)  { return zip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V zip16_lo(const V& a, const V& b) { return zip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V zip8_lo(const V& a, const V& b)  { return zip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V zip4_lo(const V& a, const V& b)  { return zip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V zip2_lo(const V& a, const V& b)  { return zip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V zip16_hi(const V& a, const V& b) { return zip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V zip8_hi(const V& a, const V& b)  { return zip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V zip4_hi(const V& a, const V& b)  { return zip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V zip2_hi(const V& a, const V& b)  { return zip_hi_impl(a, b); }
 
-template<class V> SIMDPP_INL V unzip16_lo(V a, V b) { return unzip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V unzip8_lo(V a, V b)  { return unzip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V unzip4_lo(V a, V b)  { return unzip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V unzip2_lo(V a, V b)  { return unzip_lo_impl(a, b); }
-template<class V> SIMDPP_INL V unzip16_hi(V a, V b) { return unzip_hi_impl(a, b); }
-template<class V> SIMDPP_INL V unzip8_hi(V a, V b)  { return unzip_hi_impl(a, b); }
-template<class V> SIMDPP_INL V unzip4_hi(V a, V b)  { return unzip_hi_impl(a, b); }
-template<class V> SIMDPP_INL V unzip2_hi(V a, V b)  { return unzip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V unzip16_lo(const V& a, const V& b) { return unzip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V unzip8_lo(const V& a, const V& b)  { return unzip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V unzip4_lo(const V& a, const V& b)  { return unzip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V unzip2_lo(const V& a, const V& b)  { return unzip_lo_impl(a, b); }
+template<class V> SIMDPP_INL V unzip16_hi(const V& a, const V& b) { return unzip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V unzip8_hi(const V& a, const V& b)  { return unzip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V unzip4_hi(const V& a, const V& b)  { return unzip_hi_impl(a, b); }
+template<class V> SIMDPP_INL V unzip2_hi(const V& a, const V& b)  { return unzip_hi_impl(a, b); }
 
 template<unsigned pos, class V> SIMDPP_INL
-V splat(V v)
+V splat(const V& v)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -102,7 +102,7 @@ V splat(V v)
 }
 
 template<unsigned shift, class V> SIMDPP_INL
-V align(V lo, V hi)
+V align(const V& lo, const V& hi)
 {
     V r;
     for (unsigned i = 0; i < 16-shift; i++) {
@@ -115,18 +115,18 @@ V align(V lo, V hi)
 }
 
 template<class V> SIMDPP_INL
-V blend(V on, V off, V mask)
+V blend(const V& on, const V& off, const V& mask)
 {
     V r;
-     on = detail::null::bit_and(on, mask);
-    off = detail::null::bit_andnot(off, mask);
-      r = detail::null::bit_or(on, off);
+    V mon = detail::null::bit_and(on, mask);
+    V moff = detail::null::bit_andnot(off, mask);
+      r = detail::null::bit_or(mon, moff);
     return r;
 }
 
 template<unsigned L> struct blend_mask_impl {
     template<class V, class M> SIMDPP_INL
-    static V run(V on, V off, M mask)
+    static V run(const V& on, const V& off, const M& mask)
     {
         V r;
         for (unsigned i = 0; i < L; i++) {
@@ -138,7 +138,7 @@ template<unsigned L> struct blend_mask_impl {
 
 template<> struct blend_mask_impl<1> {
     template<class V, class M> SIMDPP_INL
-    static V run(V on, V off, M mask)
+    static V run(const V& on, const V& off, const M& mask)
     {
         V r;
         r.el(0) = mask.el(0) ? on.el(0) : off.el(0);
@@ -147,7 +147,7 @@ template<> struct blend_mask_impl<1> {
 };
 template<> struct blend_mask_impl<2> {
     template<class V, class M> SIMDPP_INL
-    static V run(V on, V off, M mask)
+    static V run(const V& on, const V& off, const M& mask)
     {
         V r;
         r.el(0) = mask.el(0) ? on.el(0) : off.el(0);
@@ -157,7 +157,7 @@ template<> struct blend_mask_impl<2> {
 };
 template<> struct blend_mask_impl<4> {
     template<class V, class M> SIMDPP_INL
-    static V run(V on, V off, M mask)
+    static V run(const V& on, const V& off, const M& mask)
     {
         V r;
         r.el(0) = mask.el(0) ? on.el(0) : off.el(0);
@@ -169,13 +169,13 @@ template<> struct blend_mask_impl<4> {
 };
 
 template<class V, class M> SIMDPP_INL
-V blend_mask(V on, V off, M mask)
+V blend_mask(const V& on, const V& off, const M& mask)
 {
     return blend_mask_impl<V::length>::run(on, off, mask);
 }
 
 template<unsigned s0, unsigned s1, class V> SIMDPP_INL
-V permute(V a)
+V permute(const V& a)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=2) {
@@ -186,7 +186,7 @@ V permute(V a)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V> SIMDPP_INL
-V permute(V a)
+V permute(const V& a)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=4) {
@@ -199,7 +199,7 @@ V permute(V a)
 }
 
 template<unsigned s0, unsigned s1, class V> SIMDPP_INL
-V shuffle1(V a, V b)
+V shuffle1(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=2) {
@@ -210,7 +210,7 @@ V shuffle1(V a, V b)
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V> SIMDPP_INL
-V shuffle2(V a, V b)
+V shuffle2(const V& a, const V& b)
 {
     V r;
     for (unsigned i = 0; i < V::length; i+=4) {

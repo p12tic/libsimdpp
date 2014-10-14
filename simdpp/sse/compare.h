@@ -30,7 +30,7 @@ namespace sse {
     @icost{SSE4.1, 2}
 */
 template<class = void> SIMDPP_INL
-bool test_zero(uint8x16 a)
+bool test_zero(const uint8x16& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(int8x16::zero(), a);
@@ -40,11 +40,11 @@ bool test_zero(uint8x16 a)
 #endif
 }
 template<class = void> SIMDPP_INL
-bool test_zero(uint16x8 a) { return test_zero(uint8x16(a)); }
+bool test_zero(const uint16x8& a) { return test_zero(uint8x16(a)); }
 template<class = void> SIMDPP_INL
-bool test_zero(uint32x4 a) { return test_zero(uint8x16(a)); }
+bool test_zero(const uint32x4& a) { return test_zero(uint8x16(a)); }
 template<class = void> SIMDPP_INL
-bool test_zero(uint64x2 a) { return test_zero(uint8x16(a)); }
+bool test_zero(const uint64x2& a) { return test_zero(uint8x16(a)); }
 
 /** Tests if 128-bit integer @a a consists only from zeros if a mask @a mask is
     applied. Returns @c true if <tt>a & mask</tt> has all bits unset, @c false
@@ -54,7 +54,7 @@ bool test_zero(uint64x2 a) { return test_zero(uint8x16(a)); }
     @icost{SSE4.1, 1}
 */
 template<class = void> SIMDPP_INL
-bool test_zero(uint8x16 a, uint8x16 mask)
+bool test_zero(const uint8x16& a, const uint8x16& mask)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testz_si128(a, mask);
@@ -68,11 +68,11 @@ bool test_zero(uint8x16 a, uint8x16 mask)
 }
 
 template<class = void> SIMDPP_INL
-bool test_zero(uint16x8 a, uint16x8 mask) { return test_zero(uint8x16(a), uint8x16(mask)); }
+bool test_zero(const uint16x8& a, const uint16x8& mask) { return test_zero(uint8x16(a), uint8x16(mask)); }
 template<class = void> SIMDPP_INL
-bool test_zero(uint32x4 a, uint32x4 mask) { return test_zero(uint8x16(a), uint8x16(mask)); }
+bool test_zero(const uint32x4& a, const uint32x4& mask) { return test_zero(uint8x16(a), uint8x16(mask)); }
 template<class = void> SIMDPP_INL
-bool test_zero(uint64x2 a, uint64x2 mask) { return test_zero(uint8x16(a), uint8x16(mask)); }
+bool test_zero(const uint64x2& a, const uint64x2& mask) { return test_zero(uint8x16(a), uint8x16(mask)); }
 
 /** Tests if all bits are set in a 128-bit integer. Returns @c true if @a a has
     all bits set, @c false otherwise.
@@ -81,7 +81,7 @@ bool test_zero(uint64x2 a, uint64x2 mask) { return test_zero(uint8x16(a), uint8x
     @icost{SSE4.1, 2}
 */
 template<class = void> SIMDPP_INL
-bool test_ones(uint8x16 a)
+bool test_ones(const uint8x16& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(a, int8x16::ones());
@@ -92,11 +92,11 @@ bool test_ones(uint8x16 a)
 }
 
 template<class = void> SIMDPP_INL
-bool test_ones(uint16x8 a) { return test_ones(uint8x16(a)); }
+bool test_ones(const uint16x8& a) { return test_ones(uint8x16(a)); }
 template<class = void> SIMDPP_INL
-bool test_ones(uint32x4 a) { return test_ones(uint8x16(a)); }
+bool test_ones(const uint32x4& a) { return test_ones(uint8x16(a)); }
 template<class = void> SIMDPP_INL
-bool test_ones(uint64x2 a) { return test_ones(uint8x16(a)); }
+bool test_ones(const uint64x2& a) { return test_ones(uint8x16(a)); }
 
 
 /** Tests if 128-bit integer consists only from ones when a mask is applied.
@@ -107,7 +107,7 @@ bool test_ones(uint64x2 a) { return test_ones(uint8x16(a)); }
     @icost{SSE4.1, 1}
 */
 template<class = void> SIMDPP_INL
-bool test_ones(uint8x16 a, uint8x16 mask)
+bool test_ones(const uint8x16& a, const uint8x16& mask)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_testc_si128(a, mask);
@@ -122,11 +122,11 @@ bool test_ones(uint8x16 a, uint8x16 mask)
 }
 
 template<class = void> SIMDPP_INL
-bool test_ones(uint16x8 a, uint16x8 mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
+bool test_ones(const uint16x8& a, const uint16x8& mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
 template<class = void> SIMDPP_INL
-bool test_ones(uint32x4 a, uint32x4 mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
+bool test_ones(const uint32x4& a, const uint32x4& mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
 template<class = void> SIMDPP_INL
-bool test_ones(uint64x2 a, uint64x2 mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
+bool test_ones(const uint64x2& a, const uint64x2& mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
 
 } // namespace sse
 #ifndef SIMDPP_DOXYGEN

@@ -32,10 +32,10 @@ namespace insn {
 
 // Multi-vector i_store_first is mostly boilerplate
 template<class V> SIMDPP_INL
-void v_store_first(char* p, V a, unsigned n);
+void v_store_first(char* p, const V& a, unsigned n);
 
 
-SIMDPP_INL void i_store_first(char* p, uint8x16 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint8x16& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -47,14 +47,14 @@ SIMDPP_INL void i_store_first(char* p, uint8x16 a, unsigned n)
                                        0,0,0,0,0,0,0,0};
 
     uint8x16 mask = load_u(mask_d + 16 - n);
-    uint8x16 old = load(p);
-    a = blend(a, old, mask);
-    store(p, a);
+    uint8x16 b = load(p);
+    b = blend(a, b, mask);
+    store(p, b);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_first(char* p, uint8x32 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint8x32& a, unsigned n)
 {
     static const uint8_t mask_d[64] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
@@ -64,21 +64,21 @@ SIMDPP_INL void i_store_first(char* p, uint8x32 a, unsigned n)
                                        0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0};
 
     uint8x32 mask = load_u(mask_d + 32 - n);
-    uint8x32 old = load(p);
-    a = blend(a, old, mask);
+    uint8x32 b = load(p);
+    b = blend(a, b, mask);
     store(p, a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, uint8<N> a, unsigned n)
+void i_store_first(char* p, const uint8<N>& a, unsigned n)
 {
     v_store_first(p, a, n);
 }
 
 // 16 bits
 
-SIMDPP_INL void i_store_first(char* p, uint16x8 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint16x8& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -89,21 +89,21 @@ SIMDPP_INL void i_store_first(char* p, uint16x8 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_first(char* p, uint16x16 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint16x16& a, unsigned n)
 {
     i_store_first(p, uint8x32(a), n*2);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, uint16<N> a, unsigned n)
+void i_store_first(char* p, const uint16<N>& a, unsigned n)
 {
     v_store_first(p, a, n);
 }
 
 // 32 bits
 
-SIMDPP_INL void i_store_first(char* p, uint32x4 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint32x4& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -114,7 +114,7 @@ SIMDPP_INL void i_store_first(char* p, uint32x4 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_first(char* p, uint32x8 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint32x8& a, unsigned n)
 {
     static const int32_t mask_d[16] = { -1, -1, -1, -1, -1, -1, -1, -1,
                                         0, 0, 0, 0, 0, 0, 0, 0 };
@@ -124,21 +124,21 @@ SIMDPP_INL void i_store_first(char* p, uint32x8 a, unsigned n)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL void i_store_first(char* p, uint32<16> a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint32<16>& a, unsigned n)
 {
     _mm512_mask_store_epi32(p, 0xffff >> (16-n), a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, uint32<N> a, unsigned n)
+void i_store_first(char* p, const uint32<N>& a, unsigned n)
 {
     v_store_first(p, a, n);
 }
 
 // 64 bits
 
-SIMDPP_INL void i_store_first(char* p, uint64x2 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -160,7 +160,7 @@ SIMDPP_INL void i_store_first(char* p, uint64x2 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_first(char* p, uint64x4 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint64x4& a, unsigned n)
 {
     static const int64_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     uint64<4> mask = load_u(mask_d + 4-n);
@@ -173,21 +173,21 @@ SIMDPP_INL void i_store_first(char* p, uint64x4 a, unsigned n)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL void i_store_first(char* p, uint64<8> a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const uint64<8>& a, unsigned n)
 {
     _mm512_mask_store_epi64(p, 0xff >> (8-n), a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, uint64<N> a, unsigned n)
+void i_store_first(char* p, const uint64<N>& a, unsigned n)
 {
     v_store_first(p, a, n);
 }
 
 // 32 bits float
 
-SIMDPP_INL void i_store_first(char* p, float32x4 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const float32x4& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_NO_FLT_SP
@@ -199,9 +199,9 @@ SIMDPP_INL void i_store_first(char* p, float32x4 a, unsigned n)
 #elif SIMDPP_USE_SSE2
     static const int32_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     float32x4 mask = load_u(mask_d + 4-n);
-    float32x4 old = load(p);
-    a = blend(a, old, mask);
-    store(p, a);
+    float32x4 b = load(p);
+    b = blend(a, b, mask);
+    store(p, b);
 #elif SIMDPP_USE_NEON
     float* q = reinterpret_cast<float*>(p);
     // + VFP
@@ -215,7 +215,7 @@ SIMDPP_INL void i_store_first(char* p, float32x4 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_first(char* p, float32x8 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const float32x8& a, unsigned n)
 {
     static const int32_t mask_d[16] = { -1, -1, -1, -1, -1, -1, -1, -1,
                                          0, 0, 0, 0, 0, 0, 0, 0 };
@@ -224,29 +224,29 @@ SIMDPP_INL void i_store_first(char* p, float32x8 a, unsigned n)
 #if !SIMDPP_USE_AMD
     _mm256_maskstore_ps(reinterpret_cast<float*>(p), _mm256_castps_si256(mask), a);
 #else
-    float32x8 old = load(p);
-    a = blend(a, old, mask);
-    store(v, a);
+    float32x8 b = load(p);
+    b = blend(a, b, mask);
+    store(v, b);
 #endif
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL void i_store_first(char* p, float32<16> a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const float32<16>& a, unsigned n)
 {
     _mm512_mask_store_ps(p, 0xffff >> (16-n), a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, float32<N> a, unsigned n)
+void i_store_first(char* p, const float32<N>& a, unsigned n)
 {
     v_store_first(p, a, n);
 }
 
 // 64 bit float
 
-SIMDPP_INL void i_store_first(char* p, float64x2 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const float64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
@@ -259,30 +259,29 @@ SIMDPP_INL void i_store_first(char* p, float64x2 a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_first(char* p, float64x4 a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const float64x4& a, unsigned n)
 {
     static const int64_t mask_d[16] = { -1, -1, -1, -1, 0, 0, 0, 0 };
-
     float64x4 mask = load_u(mask_d + 4-n);
 #if !SIMDPP_USE_AMD
     _mm256_maskstore_pd(reinterpret_cast<double*>(p), _mm256_castpd_si256(mask), a);
 #else
-    float64x4 old = load(p);
-    a = blend(a, old, mask);
-    store(v, a);
+    float64x4 b = load(p);
+    b = blend(a, b, mask);
+    store(v, b);
 #endif
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL void i_store_first(char* p, float64<8> a, unsigned n)
+SIMDPP_INL void i_store_first(char* p, const float64<8>& a, unsigned n)
 {
     _mm512_mask_store_pd(p, 0xff >> (8-n), a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, float64<N> a, unsigned n)
+void i_store_first(char* p, const float64<N>& a, unsigned n)
 {
     v_store_first(p, a, n);
 }
@@ -290,7 +289,7 @@ void i_store_first(char* p, float64<N> a, unsigned n)
 // -----------------------------------------------------------------------------
 
 template<class V> SIMDPP_INL
-void v_store_first(char* p, V a, unsigned n)
+void v_store_first(char* p, const V& a, unsigned n)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 

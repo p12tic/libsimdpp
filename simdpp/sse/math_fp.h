@@ -34,7 +34,7 @@ namespace sse {
     @endcode
     @unimp{SSE2}
 */
-SIMDPP_INL float32x4 hadd2(float32x4 a, float32x4 b)
+SIMDPP_INL float32x4 hadd2(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hadd_ps(a, b);
@@ -57,7 +57,7 @@ SIMDPP_INL float32x4 hadd2(float32x4 a, float32x4 b)
     @endcode
     @unimp{SSE2,SSE3}
 */
-SIMDPP_INL float32x8 hadd2(float32x8 a, float32x8 b)
+SIMDPP_INL float32x8 hadd2(const float32x8& a, const float32x8& b)
 {
 #if SIMDPP_USE_AVX
     return _mm256_hadd_ps(a, b);
@@ -74,7 +74,7 @@ SIMDPP_INL float32x8 hadd2(float32x8 a, float32x8 b)
     @endcode
     @unimp{SSE2}
 */
-SIMDPP_INL float64x2 hadd2(float64x2 a, float64x2 b)
+SIMDPP_INL float64x2 hadd2(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hadd_pd(a, b);
@@ -93,8 +93,9 @@ SIMDPP_INL float64x2 hadd2(float64x2 a, float64x2 b)
     @endcode
     @unimp{SSE2}
 */
-SIMDPP_INL float32x4 hadd4(float32x4 a)
+SIMDPP_INL float32x4 hadd4(const float32x4& ca)
 {
+    float32<4> a = ca;
 #if SIMDPP_USE_SSE3
     a = hadd2(a, float32x4::zero());
     a = hadd2(a, float32x4::zero());
@@ -115,13 +116,13 @@ SIMDPP_INL float32x4 hadd4(float32x4 a)
     @icost{SSE3, SSSE3, SSE4.1, 3}
     @unimp{SSE2}
 */
-SIMDPP_INL float32x4 hadd4(float32x4 a, float32x4 b, float32x4 c, float32x4 d)
+SIMDPP_INL float32x4 hadd4(const float32x4& a, const float32x4& b, const float32x4& c, const float32x4& d)
 {
 #if SIMDPP_USE_SSE3
-    a = hadd2(a, b);
-    c = hadd2(c, d);
-    a = hadd2(a, c);
-    return a;
+    float32<4> ab, cd;
+    ab = hadd2(a, b);
+    cd = hadd2(c, d);
+    return hadd2(ab, cd);
 #else
     return SIMDPP_NOT_IMPLEMENTED4(a, b, c, d);
 #endif
@@ -137,7 +138,7 @@ SIMDPP_INL float32x4 hadd4(float32x4 a, float32x4 b, float32x4 c, float32x4 d)
     @endcode
     @unimp{SSE2}
 */
-SIMDPP_INL float32x4 hsub2(float32x4 a, float32x4 b)
+SIMDPP_INL float32x4 hsub2(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hsub_ps(a, b);
@@ -160,7 +161,7 @@ SIMDPP_INL float32x4 hsub2(float32x4 a, float32x4 b)
     @endcode
     @unimp{SSE2,SSE3}
 */
-SIMDPP_INL float32x8 hsub2(float32x8 a, float32x8 b)
+SIMDPP_INL float32x8 hsub2(const float32x8& a, const float32x8& b)
 {
 #if SIMDPP_USE_AVX
     return _mm256_hsub_ps(a, b);
@@ -178,7 +179,7 @@ SIMDPP_INL float32x8 hsub2(float32x8 a, float32x8 b)
     @endcode
     @unimp{SSE2}
 */
-SIMDPP_INL float64x2 hsub2(float64x2 a, float64x2 b)
+SIMDPP_INL float64x2 hsub2(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_hsub_pd(a, b);
@@ -197,7 +198,7 @@ SIMDPP_INL float64x2 hsub2(float64x2 a, float64x2 b)
     @endcode
     @unimp{SSE2}
 */
-SIMDPP_INL float32x4 sub_add(float32x4 a, float32x4 b)
+SIMDPP_INL float32x4 sub_add(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_addsub_ps(a, b);
@@ -214,7 +215,7 @@ SIMDPP_INL float32x4 sub_add(float32x4 a, float32x4 b)
     @endcode
     @unimp{SSE2}
 */
-SIMDPP_INL float64x2 sub_add(float64x2 a, float64x2 b)
+SIMDPP_INL float64x2 sub_add(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_SSE3
     return _mm_addsub_pd(a, b);
@@ -232,7 +233,7 @@ SIMDPP_INL float64x2 sub_add(float64x2 a, float64x2 b)
     @endcode
     @icost{SSE2, SSE3, SSSE3, 20}
 */
-SIMDPP_INL float64x2 floor(float64x2 a)
+SIMDPP_INL float64x2 floor(const float64x2& a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<float64x2>(a, [](double x){ return std::floor(x); });
@@ -253,8 +254,7 @@ SIMDPP_INL float64x2 floor(float64x2 a)
     float64x2 fa = to_float64x2(ia);
 
     //combine the results
-    a = blend(a, fa, mask);
-    return a;
+    return blend(a, fa, mask);
 #endif
 }
 
@@ -266,7 +266,7 @@ SIMDPP_INL float64x2 floor(float64x2 a)
     @endcode
     @icost{SSE2, SSE3, SSSE3, 21}
 */
-SIMDPP_INL float64x2 ceil(float64x2 a)
+SIMDPP_INL float64x2 ceil(const float64x2& a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<float64x2>(a, [](float x){ return std::ceil(x); });
@@ -288,8 +288,7 @@ SIMDPP_INL float64x2 ceil(float64x2 a)
     float64x2 fa = to_float64x2(ia);
 
     //combine the results
-    a = blend(a, fa, mask);
-    return a;
+    return blend(a, fa, mask);
 #endif
 }
 
@@ -302,7 +301,7 @@ SIMDPP_INL float64x2 ceil(float64x2 a)
     @icost{SSE2, SSE3, SSSE3, 10}
     @icost{SSE4_1, 5}
 */
-SIMDPP_INL float64x2 trunc(float64x2 a)
+SIMDPP_INL float64x2 trunc(const float64x2& a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<float64x2>(a, [](double x){ return std::trunc(x); });
@@ -323,8 +322,7 @@ SIMDPP_INL float64x2 trunc(float64x2 a)
     float64x2 fa = sse::to_float64x2(ia);
 
     //combine the results
-    a = blend(a, fa, mask); // takes care of nans
-    return a;
+    return blend(a, fa, mask); // takes care of nans
 #endif
 }
 

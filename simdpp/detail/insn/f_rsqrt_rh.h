@@ -40,9 +40,10 @@ V v_rsqrt_rh(V x, V a)
     return r;
 }
 
-SIMDPP_INL float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
+SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 {
     // x_n = x*(3-d*x*x)/2
+    float32<4> x = cx;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
 #elif SIMDPP_USE_SSE2
@@ -71,14 +72,14 @@ SIMDPP_INL float32x4 i_rsqrt_rh(float32x4 x, float32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rsqrt_rh(float32x8 x, float32x8 a)
+SIMDPP_INL float32x8 i_rsqrt_rh(const float32x8& x, const float32x8& a)
 {
     return v_rsqrt_rh(x, a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float32<16> i_rsqrt_rh(float32<16> x, float32<16> a)
+SIMDPP_INL float32<16> i_rsqrt_rh(const float32<16>& x, const float32<16>& a)
 {
     return v_rsqrt_rh(x, a);
 }
@@ -86,7 +87,7 @@ SIMDPP_INL float32<16> i_rsqrt_rh(float32<16> x, float32<16> a)
 
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_rsqrt_rh(float32<N> x, float32<N> a)
+float32<N> i_rsqrt_rh(const float32<N>& x, const float32<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_rsqrt_rh, x, a);
 }

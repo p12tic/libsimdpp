@@ -44,8 +44,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 3}
 */
 template<unsigned id> SIMDPP_INL
-uint8x16 insert(uint8x16 a, uint8_t x)
+uint8x16 insert(const uint8x16& ca, uint8_t x)
 {
+    uint8<16> a = ca;
     static_assert(id < 16, "Position out of range");
 #if SIMDPP_USE_NULL
     a.el(id) = x;
@@ -84,8 +85,9 @@ uint8x16 insert(uint8x16 a, uint8_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id> SIMDPP_INL
-uint16x8 insert(uint16x8 a, uint16_t x)
+uint16x8 insert(const uint16x8& ca, uint16_t x)
 {
+    uint16<8> a = ca;
 #if SIMDPP_USE_NULL
     a.el(id) = x;
     return a;
@@ -116,8 +118,9 @@ uint16x8 insert(uint16x8 a, uint16_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id> SIMDPP_INL
-uint32x4 insert(uint32x4 a, uint32_t x)
+uint32x4 insert(const uint32x4& ca, uint32_t x)
 {
+    uint32<4> a = ca;
 #if SIMDPP_USE_NULL
     a.el(id) = x;
     return a;
@@ -156,8 +159,9 @@ uint32x4 insert(uint32x4 a, uint32_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id> SIMDPP_INL
-uint64x2 insert(uint64x2 a, uint64_t x)
+uint64x2 insert(const uint64x2& ca, uint64_t x)
 {
+    uint64<2> a = ca;
 #if SIMDPP_USE_NULL
     a.el(id) = x;
     return a;
@@ -215,7 +219,7 @@ uint64x2 insert(uint64x2 a, uint64_t x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id> SIMDPP_INL
-float32x4 insert(float32x4 a, float x)
+float32x4 insert(const float32x4& a, float x)
 {
 #if SIMDPP_USE_NEON_FLT_SP
     return vsetq_lane_f32(x, a, id);
@@ -238,7 +242,7 @@ float32x4 insert(float32x4 a, float x)
     @icost{ALTIVEC, 3}
 */
 template<unsigned id> SIMDPP_INL
-float64x2 insert(float64x2 a, double x)
+float64x2 insert(const float64x2& a, double x)
 {
     return float64x2(insert<id>(int64x2(a), bit_cast<int64_t>(x)));
 }
@@ -260,65 +264,65 @@ namespace detail {
     @todo icost
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N*2> combine(uint8<N,E1> a1, uint8<N,E2> a2)
+uint8<N*2> combine(const uint8<N,E1>& a1, const uint8<N,E2>& a2)
 {
     return detail::insn::i_combine<uint8<N*2>>(a1.eval(), a2.eval());
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N*2> combine(uint16<N,E1> a1, uint16<N,E2> a2)
+uint16<N*2> combine(const uint16<N,E1>& a1, const uint16<N,E2>& a2)
 {
     return detail::insn::i_combine<uint16<N*2>>(a1.eval(), a2.eval());
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N*2> combine(uint32<N,E1> a1, uint32<N,E2> a2)
+uint32<N*2> combine(const uint32<N,E1>& a1, const uint32<N,E2>& a2)
 {
     return detail::insn::i_combine<uint32<N*2>>(a1.eval(), a2.eval());
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint64<N*2> combine(uint64<N,E1> a1, uint64<N,E2> a2)
+uint64<N*2> combine(const uint64<N,E1>& a1, const uint64<N,E2>& a2)
 {
     return detail::insn::i_combine<uint64<N*2>>(a1.eval(), a2.eval());
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int8<N*2> combine(int8<N,E1> a1, int8<N,E2> a2)
+int8<N*2> combine(const int8<N,E1>& a1, const int8<N,E2>& a2)
 {
     return detail::insn::i_combine<uint8<N*2>>(uint8<N>(a1.eval()),
                                                uint8<N>(a2.eval()));
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int16<N*2> combine(int16<N,E1> a1, int16<N,E2> a2)
+int16<N*2> combine(const int16<N,E1>& a1, const int16<N,E2>& a2)
 {
     return detail::insn::i_combine<uint16<N*2>>(uint16<N>(a1.eval()),
                                                 uint16<N>(a2.eval()));
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int32<N*2> combine(int32<N,E1> a1, int32<N,E2> a2)
+int32<N*2> combine(const int32<N,E1>& a1, const int32<N,E2>& a2)
 {
     return detail::insn::i_combine<uint32<N*2>>(uint32<N>(a1.eval()),
                                                 uint32<N>(a2.eval()));
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int64<N*2> combine(int64<N,E1> a1, int64<N,E2> a2)
+int64<N*2> combine(const int64<N,E1> a1, const int64<N,E2>& a2)
 {
     return detail::insn::i_combine<uint64<N*2>>(uint64<N>(a1.eval()),
                                                 uint64<N>(a2.eval()));
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N*2> combine(float32<N,E1> a1, float32<N,E2> a2)
+float32<N*2> combine(const float32<N,E1>& a1, const float32<N,E2>& a2)
 {
     return detail::insn::i_combine<float32<N*2>>(a1.eval(), a2.eval());
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N*2> combine(float64<N,E1> a1, float64<N,E2> a2)
+float64<N*2> combine(const float64<N,E1>& a1, const float64<N,E2>& a2)
 {
     return detail::insn::i_combine<float64<N*2>>(a1.eval(), a2.eval());
 }

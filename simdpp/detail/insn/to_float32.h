@@ -29,7 +29,7 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_to_float32(int32x4 a)
+SIMDPP_INL float32x4 i_to_float32(const int32x4& a)
 {
 #if SIMDPP_USE_NULL
     return detail::null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
@@ -51,7 +51,7 @@ SIMDPP_INL float32x4 i_to_float32(int32x4 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_to_float32(int32x8 a)
+SIMDPP_INL float32x8 i_to_float32(const int32x8& a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cvtepi32_ps(a);
@@ -65,14 +65,14 @@ SIMDPP_INL float32x8 i_to_float32(int32x8 a)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float32<16> i_to_float32(int32<16> a)
+SIMDPP_INL float32<16> i_to_float32(const int32<16>& a)
 {
     return _mm512_cvtepi32_ps(a);
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_to_float32(int32<N> a)
+float32<N> i_to_float32(const int32<N>& a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
@@ -83,7 +83,7 @@ float32<N> i_to_float32(int32<N> a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float32x4 i_to_float32(float64x4 a)
+SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
@@ -104,7 +104,7 @@ SIMDPP_INL float32x4 i_to_float32(float64x4 a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_to_float32(float64<8> a)
+SIMDPP_INL float32x8 i_to_float32(const float64<8>& a)
 {
 #if SIMDPP_USE_AVX512
     return _mm512_cvt_roundpd_ps(a, (_MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC));
@@ -118,7 +118,7 @@ SIMDPP_INL float32x8 i_to_float32(float64<8> a)
 #endif
 
 #if SIMDPP_USE_AVX512
-SIMDPP_INL float32<16> i_to_float32(float64<16> a)
+SIMDPP_INL float32<16> i_to_float32(const float64<16>& a)
 {
     float32<8> r1, r2;
     r1 = i_to_float32(a.vec(0));
@@ -128,7 +128,7 @@ SIMDPP_INL float32<16> i_to_float32(float64<16> a)
 #endif
 
 template<unsigned N> SIMDPP_INL
-float32<N> i_to_float32(float64<N> a)
+float32<N> i_to_float32(const float64<N>& a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {

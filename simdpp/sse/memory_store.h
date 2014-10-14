@@ -29,7 +29,7 @@ namespace sse {
     elements within vector. @a P must be 0 or @a M/2 if @a N == M/2.
 */
 template<unsigned P, unsigned N> SIMDPP_INL
-void store_lane(void* p, uint8x16 a)
+void store_lane(void* p, const uint8x16& a)
 {
     static_assert(N==4 || N==8, "Size not supported");
     static_assert(P==0 || (N==8 && P==8), "Position not supported");
@@ -48,7 +48,7 @@ void store_lane(void* p, uint8x16 a)
 }
 
 template<unsigned P, unsigned N> SIMDPP_INL
-void store_lane(void* p, uint16x8 a)
+void store_lane(void* p, const uint16x8& a)
 {
     static_assert(N==2 || N==4, "Size not supported");
     static_assert(P==0 || (N==4 && P==4), "Position not supported");
@@ -67,7 +67,7 @@ void store_lane(void* p, uint16x8 a)
 }
 
 template<unsigned P, unsigned N> SIMDPP_INL
-void store_lane(void* p, uint32x4 a)
+void store_lane(void* p, const uint32x4& a)
 {
     static_assert(N==1 || N==2, "Size not supported");
     static_assert(P==0 || (N==2 && P==2), "Position not supported");
@@ -86,7 +86,7 @@ void store_lane(void* p, uint32x4 a)
 }
 
 template<unsigned P, unsigned N> SIMDPP_INL
-void store_lane(void* p, uint64x2 a)
+void store_lane(void* p, const uint64x2& a)
 {
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");
@@ -98,7 +98,7 @@ void store_lane(void* p, uint64x2 a)
 }
 
 template<unsigned P, unsigned N> SIMDPP_INL
-void store_lane(void* p, float32x4 a)
+void store_lane(void* p, const float32x4& a)
 {
     static_assert(N==1 || N==2, "Size not supported");
     static_assert(P==0 || (N==2 && P==2), "Position not supported");
@@ -117,7 +117,7 @@ void store_lane(void* p, float32x4 a)
 }
 
 template<unsigned P, unsigned N> SIMDPP_INL
-void store_lane(void* p, float64x2 a)
+void store_lane(void* p, const float64x2& a)
 {
     static_assert(N==1, "Size not supported");
     static_assert(P==0 || P==1, "Position not supported");
@@ -133,14 +133,14 @@ void store_lane(void* p, float64x2 a)
     bit in the corresponding byte in the mask defines whether the byte will
     be saved. @a p does not need to be aligned to 16 bytes.
 */
-SIMDPP_INL void store_masked(void* p, uint8x16 a, uint8x16 mask)
+SIMDPP_INL void store_masked(void* p, const uint8x16& a, const uint8x16& mask)
 {
     _mm_maskmoveu_si128(a, mask, reinterpret_cast<char*>(p));
 }
 
-SIMDPP_INL void store_masked(void* p, uint16x8 a, uint16x8 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
-SIMDPP_INL void store_masked(void* p, uint32x4 a, uint32x4 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
-SIMDPP_INL void store_masked(void* p, uint64x2 a, uint64x2 mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+SIMDPP_INL void store_masked(void* p, const uint16x8& a, const uint16x8& mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+SIMDPP_INL void store_masked(void* p, const uint32x4& a, const uint32x4& mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
+SIMDPP_INL void store_masked(void* p, const uint64x2& a, const uint64x2& mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
 
 
 } // namespace sse

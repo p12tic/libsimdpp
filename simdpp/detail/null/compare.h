@@ -23,7 +23,7 @@ namespace detail {
 namespace null {
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type cmp_eq(V a, V b)
+typename V::mask_vector_type cmp_eq(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -33,7 +33,7 @@ typename V::mask_vector_type cmp_eq(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type cmp_neq(V a, V b)
+typename V::mask_vector_type cmp_neq(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -43,7 +43,7 @@ typename V::mask_vector_type cmp_neq(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type cmp_lt(V a, V b)
+typename V::mask_vector_type cmp_lt(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -53,7 +53,7 @@ typename V::mask_vector_type cmp_lt(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type cmp_le(V a, V b)
+typename V::mask_vector_type cmp_le(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -63,7 +63,7 @@ typename V::mask_vector_type cmp_le(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type cmp_gt(V a, V b)
+typename V::mask_vector_type cmp_gt(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
@@ -73,7 +73,7 @@ typename V::mask_vector_type cmp_gt(V a, V b)
 }
 
 template<class V> SIMDPP_INL
-typename V::mask_vector_type cmp_ge(V a, V b)
+typename V::mask_vector_type cmp_ge(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
