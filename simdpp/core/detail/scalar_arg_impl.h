@@ -97,73 +97,73 @@ template<unsigned N, class V> SIMDPP_INL                                        
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, uint32_t b)                                     \
-{ return FUNC(a, detail::make_const_same<typename detail::get_expr_nomask<V>::type>(b)); }    \
+{ return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, uint64_t b)                                     \
-{ return FUNC(a, detail::make_const_same<typename detail::get_expr_nomask<V>::type>(b)); }    \
+{ return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, int32_t b)                                      \
-{ return FUNC(a, detail::make_const_same<typename detail::get_expr_nomask<V>::type>(b)); }     \
+{ return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, int64_t b)                                      \
-{ return FUNC(a, detail::make_const_same<typename detail::get_expr_nomask<V>::type>(b)); }     \
+{ return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, float b)                                        \
-{ return FUNC(a, detail::make_const_same<typename detail::get_expr_nomask<V>::type>(b)); }   \
+{ return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(const VEC<N,V>& a, double b)                                       \
-{ return FUNC(a, detail::make_const_same<typename detail::get_expr_nomask<V>::type>(b)); }   \
+{ return FUNC(a, detail::make_const_same<UINT_VEC<N>>(b)); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(uint32_t a, const VEC<N,V>& b)                                     \
-{ return FUNC(detail::make_const_same<typename detail::get_expr_nomask<V>::type>(a), b); }    \
+{ return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(uint64_t a, const VEC<N,V>& b)                                     \
-{ return FUNC(detail::make_const_same<typename detail::get_expr_nomask<V>::type>(a), b); }    \
+{ return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(int32_t a, const VEC<N,V>& b)                                      \
-{ return FUNC(detail::make_const_same<typename detail::get_expr_nomask<V>::type>(a), b); }     \
+{ return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(int64_t a, const VEC<N,V>& b)                                      \
-{ return FUNC(detail::make_const_same<typename detail::get_expr_nomask<V>::type>(a), b); }     \
+{ return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(float a, const VEC<N,V>& b)                                        \
-{ return FUNC(detail::make_const_same<typename detail::get_expr_nomask<V>::type>(a), b); }   \
+{ return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }                    \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                                   \
 typename detail::get_expr_nomask<V, EXPR<UINT_VEC<N, typename V::expr_type>,    \
                                          UINT_VEC<N>>>::type                    \
         FUNC(double a, const VEC<N,V>& b)                                       \
-{ return FUNC(detail::make_const_same<typename detail::get_expr_nomask<V>::type>(a), b); }
+{ return FUNC(detail::make_const_same<UINT_VEC<N>>(a), b); }
 // end #define
 
 #endif
