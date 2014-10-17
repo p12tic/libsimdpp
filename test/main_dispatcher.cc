@@ -5,7 +5,7 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include "tests/dispatcher.h"
+#include "insn/dispatcher.h"
 #include <algorithm>
 #include <iostream>
 #include <string>

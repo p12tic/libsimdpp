@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include "../test_helpers.h"
-#include "../test_results.h"
+#include "../utils/test_helpers.h"
+#include "../utils/test_results.h"
 #include "../common/vectors.h"
 #include "../common/masks.h"
 #include <simdpp/simd.h>

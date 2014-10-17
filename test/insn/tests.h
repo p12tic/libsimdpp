@@ -5,11 +5,11 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef SIMDPP_TEST_SIMD_H
-#define SIMDPP_TEST_SIMD_H
+#ifndef SIMDPP_TEST_INSN_TESTS_H
+#define SIMDPP_TEST_INSN_TESTS_H
 
-#include "test_helpers.h"
-#include "test_results.h"
+#include "../utils/test_helpers.h"
+#include "../utils/test_results.h"
 
 #include <cstdint>
 #include <iostream>

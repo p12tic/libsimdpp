@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_TEST_TEST_RESULTS_H
-#define LIBSIMDPP_TEST_TEST_RESULTS_H
+#ifndef LIBSIMDPP_TEST_UTILS_TEST_RESULTS_H
+#define LIBSIMDPP_TEST_UTILS_TEST_RESULTS_H
 
 #include "test_suite.h"
 #include <vector>

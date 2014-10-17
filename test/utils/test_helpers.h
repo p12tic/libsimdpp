@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_TEST_TEST_HELPERS_H
-#define LIBSIMDPP_TEST_TEST_HELPERS_H
+#ifndef LIBSIMDPP_TEST_UTILS_TEST_HELPERS_H
+#define LIBSIMDPP_TEST_UTILS_TEST_HELPERS_H
 
 #include <simdpp/simd.h>
 #include <simdpp/detail/align_v128.h>

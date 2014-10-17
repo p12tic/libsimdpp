@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include "arch_registration.h"
-#include "test_results.h"
+#include "utils/arch_registration.h"
+#include "utils/test_results.h"
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>

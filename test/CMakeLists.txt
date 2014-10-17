@@ -10,39 +10,39 @@ include_directories(${libsimdpp_SOURCE_DIR})
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
 set(TEST1_SOURCES
-    arch_registration.cc
-    test_suite.cc
+    utils/arch_registration.cc
+    utils/test_suite.cc
     main_test1.cc
 )
 
 set(TEST1_HEADERS
-    arch_registration.h
-    test_suite.h
-    test_helpers.h
-    test_results.h
-    tests.h
+    utils/arch_registration.h
+    utils/test_suite.h
+    utils/test_helpers.h
+    utils/test_results.h
+    insn/tests.h
     common/masks.h
     common/vectors.h
     common/aligned_allocator.h
 )
 
 set(TEST1_ARCH_SOURCES
-    tests/bitwise.cc
-    tests/blend.cc
-    tests/compare.cc
-    tests/construct.cc
-    tests/convert.cc
-    tests/main.cc
-    tests/math_fp.cc
-    tests/math_int.cc
-    tests/math_shift.cc
-    tests/memory_load.cc
-    tests/memory_store.cc
-    tests/shuffle.cc
-    tests/shuffle_bytes.cc
-    tests/shuffle_generic.cc
-    tests/test_utils.cc
-    tests/transpose.cc
+    insn/bitwise.cc
+    insn/blend.cc
+    insn/compare.cc
+    insn/construct.cc
+    insn/convert.cc
+    insn/math_fp.cc
+    insn/math_int.cc
+    insn/math_shift.cc
+    insn/memory_load.cc
+    insn/memory_store.cc
+    insn/shuffle.cc
+    insn/shuffle_bytes.cc
+    insn/shuffle_generic.cc
+    insn/test_utils.cc
+    insn/tests.cc
+    insn/transpose.cc
 )
 
 set(TEST1_ARCH_GEN_SOURCES "")
@@ -92,7 +92,7 @@ set(TEST_DISPATCHER_SOURCES
 )
 
 set(TEST_DISPATCHER_ARCH_SOURCES
-    tests/dispatcher.cc
+    insn/dispatcher.cc
 )
 
 set(TEST_DISPATCHER_ARCH_GEN_SOURCES "")

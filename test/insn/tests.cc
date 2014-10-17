@@ -5,10 +5,10 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include "../arch_registration.h"
-#include "../test_helpers.h"
-#include "../test_results.h"
-#include "../tests.h"
+#include "../utils/arch_registration.h"
+#include "../utils/test_helpers.h"
+#include "../utils/test_results.h"
+#include "tests.h"
 #include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
