@@ -42,26 +42,18 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-int8<N, _DETAIL_> operator<<(int8<N,E> a, unsigned count);
-
-template<unsigned N, class E>
-uint8<N, _DETAIL_> operator<<(uint8<N,E> a, unsigned count);
-#else
 template<unsigned N, class E> SIMDPP_INL
-int8<N, int8<N>> operator<<(int8<N,E> a, unsigned count)
+int8<N, int8<N>> operator<<(const int8<N,E>& a, unsigned count)
 {
     uint8<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint8<N, uint8<N>> operator<<(uint8<N,E> a, unsigned count)
+uint8<N, uint8<N>> operator<<(const uint8<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-#endif
 /// @}
 
 /// @{
@@ -82,26 +74,18 @@ uint8<N, uint8<N>> operator<<(uint8<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-int16<N, _DETAIL_> operator<<(int16<N,E> a, unsigned count);
-
-template<unsigned N, class E>
-uint16<N, _DETAIL_> operator<<(uint16<N,E> a, unsigned count);
-#else
 template<unsigned N, class E> SIMDPP_INL
-int16<N, int16<N>> operator<<(int16<N,E> a, unsigned count)
+int16<N, int16<N>> operator<<(const int16<N,E>& a, unsigned count)
 {
     uint16<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint16<N, uint16<N>> operator<<(uint16<N,E> a, unsigned count)
+uint16<N, uint16<N>> operator<<(const uint16<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-#endif
 /// @}
 
 /// @{
@@ -122,26 +106,18 @@ uint16<N, uint16<N>> operator<<(uint16<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @icost{ALTIVEC, 2-5}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-int32<N, _DETAIL_> operator<<(int32<N,E> a, unsigned count);
-
-template<unsigned N, class E>
-uint32<N, _DETAIL_> operator<<(uint32<N,E> a, unsigned count);
-#else
 template<unsigned N, class E> SIMDPP_INL
-int32<N, int32<N>> operator<<(int32<N,E> a, unsigned count)
+int32<N, int32<N>> operator<<(const int32<N,E>& a, unsigned count)
 {
     uint32<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint32<N, uint32<N>> operator<<(uint32<N,E> a, unsigned count)
+uint32<N, uint32<N>> operator<<(const uint32<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-#endif
 /// @}
 
 /// @{
@@ -162,26 +138,18 @@ uint32<N, uint32<N>> operator<<(uint32<N,E> a, unsigned count)
     @icost{NEON, 2-3}
     @unimp{ALTIVEC}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E>
-int64<N, _DETAIL_> operator<<(int64<N,E> a, unsigned count);
-
-template<unsigned N, class E>
-uint64<N, _DETAIL_> operator<<(uint64<N,E> a, unsigned count);
-#else
 template<unsigned N, class E> SIMDPP_INL
-int64<N, int64<N>> operator<<(int64<N,E> a, unsigned count)
+int64<N, int64<N>> operator<<(const int64<N,E>& a, unsigned count)
 {
     uint64<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint64<N, uint64<N>> operator<<(uint64<N,E> a, unsigned count)
+uint64<N, uint64<N>> operator<<(const uint64<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-#endif
 /// @}
 
 /// @{

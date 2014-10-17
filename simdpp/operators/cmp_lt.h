@@ -33,18 +33,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-mask_int8<N, _DETAIL_> operator<(int8<N,E1> a,
-                              int8<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int8<N, mask_int8<N>> operator<(int8<N,E1> a,
-                                  int8<N,E2> b)
+mask_int8<N, mask_int8<N>> operator<(const int8<N,E1>& a,
+                                  const int8<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int8, int8)
 
@@ -65,18 +59,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int8, int8)
     @icost{AVX2, 3-4}
     @icost{XOP, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-mask_int8<N, _DETAIL_> operator<(uint8<N,E1> a,
-                              uint8<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int8<N, mask_int8<N>> operator<(uint8<N,E1> a,
-                                  uint8<N,E2> b)
+mask_int8<N, mask_int8<N>> operator<(const uint8<N,E1>& a,
+                                  const uint8<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int8, uint8)
 
@@ -91,18 +79,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int8, uint8)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-mask_int16<N, _DETAIL_> operator<(int16<N,E1> a,
-                               int16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int16<N, mask_int16<N>> operator<(int16<N,E1> a,
-                                    int16<N,E2> b)
+mask_int16<N, mask_int16<N>> operator<(const int16<N,E1>& a,
+                                    const int16<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int16, int16)
 
@@ -123,18 +105,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int16, int16)
     @icost{AVX2, 3-4}
     @icost{XOP, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-mask_int16<N, _DETAIL_> operator<(uint16<N,E1> a,
-                               uint16<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int16<N, mask_int16<N>> operator<(uint16<N,E1> a,
-                                    uint16<N,E2> b)
+mask_int16<N, mask_int16<N>> operator<(const uint16<N,E1>& a,
+                                    const uint16<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int16, uint16)
 
@@ -149,18 +125,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int16, uint16)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-mask_int32<N, _DETAIL_> operator<(int32<N,E1> a,
-                               int32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int32<N, mask_int32<N>> operator<(int32<N,E1> a,
-                                    int32<N,E2> b)
+mask_int32<N, mask_int32<N>> operator<(const int32<N,E1>& a,
+                                    const int32<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int32, int32)
 
@@ -181,18 +151,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int32, int32)
     @icost{AVX2, 3-4}
     @icost{XOP, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int32<N, _DETAIL_> operator<(uint32<N,E1> a,
-                               uint32<N,E2> b);
-#else
-template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int32<N, mask_int32<N>> operator<(uint32<N,E1> a,
-                                    uint32<N,E2> b)
+mask_int32<N, mask_int32<N>> operator<(const uint32<N,E1>& a,
+                                    const uint32<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int32, uint32)
 
@@ -207,18 +171,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_int32, uint32)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-mask_float32<N, _DETAIL_> operator<(float32<N,E1> a,
-                                 float32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float32<N, mask_float32<N>> operator<(float32<N,E1> a,
-                                        float32<N,E2> b)
+mask_float32<N, mask_float32<N>> operator<(const float32<N,E1>& a,
+                                        const float32<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_float32, float32)
 
@@ -237,18 +195,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_float32, float32)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-mask_float64<N, _DETAIL_> operator<(float64<N,E1> a,
-                                 float64<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float64<N, mask_float64<N>> operator<(float64<N,E1> a,
-                                        float64<N,E2> b)
+mask_float64<N, mask_float64<N>> operator<(const float64<N,E1>& a,
+                                        const float64<N,E2>& b)
 {
     return detail::insn::i_cmp_lt(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<, mask_float64, float64)
 

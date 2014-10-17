@@ -33,11 +33,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_EXPRESSION_ operator^(const any_vec<N,V1>& a,
-                              const any_vec<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr2<V1, V2>::empty
     operator^(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
@@ -47,85 +42,59 @@ typename detail::get_expr2<V1, V2>::empty
     rb = b.wrapped().eval();
     return detail::insn::i_bit_xor(ra, rb);
 }
-#endif
 
 // support scalar arguments
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
-        operator^(uint32_t a, const any_vec<N,V>& b)
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        operator^(const uint32_t& a, const any_vec<N,V>& b)
 {
-    return operator^(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+    return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
-        operator^(uint64_t a, const any_vec<N,V>& b)
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        operator^(const uint64_t& a, const any_vec<N,V>& b)
 {
-    return operator^(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+    return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
-        operator^(int32_t a, const any_vec<N,V>& b)
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        operator^(const int32_t& a, const any_vec<N,V>& b)
 {
-    return operator^(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+    return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
-        operator^(int64_t a, const any_vec<N,V>& b)
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        operator^(const int64_t& a, const any_vec<N,V>& b)
 {
-    return operator^(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
-        operator^(float a, const any_vec<N,V>& b)
-{
-    return operator^(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::type
-        operator^(double a, const any_vec<N,V>& b)
-{
-    return operator^(detail::make_const<typename detail::get_expr_nomask<V>::type>(a), b);
+    return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 
 
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        operator^(const any_vec<N,V>& a, const uint32_t& b)
+{
+    return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        operator^(const any_vec<N,V>& a, const uint64_t& b)
+{
+    return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        operator^(const any_vec<N,V>& a, const int32_t& b)
+{
+    return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        operator^(const any_vec<N,V>& a, const int64_t& b)
+{
+    return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
 
-
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
-        operator^(const any_vec<N,V>& a, uint32_t b)
-{
-    return operator^(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
-        operator^(const any_vec<N,V>& a, uint64_t b)
-{
-    return operator^(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
-        operator^(const any_vec<N,V>& a, int32_t b)
-{
-    return operator^(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
-        operator^(const any_vec<N,V>& a, int64_t b)
-{
-    return operator^(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
-        operator^(const any_vec<N,V>& a, float b)
-{
-    return operator^(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::type
-        operator^(const any_vec<N,V>& a, double b)
-{
-    return operator^(a, detail::make_const<typename detail::get_expr_nomask<V>::type>(b));
-}
 
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE

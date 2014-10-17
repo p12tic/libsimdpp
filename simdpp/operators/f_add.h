@@ -34,18 +34,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-float32<N, _DETAIL_> operator+(float32<N,E1> a,
-                         float32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 float32<N, expr_add<float32<N,E1>,
-                    float32<N,E2>>> operator+(float32<N,E1> a, float32<N,E2> b)
+                    float32<N,E2>>> operator+(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(operator+, expr_add, float32, float32)
 
@@ -64,18 +58,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(operator+, expr_add, float32, float32)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-float64<N, _DETAIL_> operator+(float64<N,E1> a,
-                         float64<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
 float64<N, expr_add<float64<N,E1>,
-                    float64<N,E2>>> operator+(float64<N,E1> a, float64<N,E2> b)
+                    float64<N,E2>>> operator+(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return { { a, b }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(operator+, expr_add, float64, float64)
 

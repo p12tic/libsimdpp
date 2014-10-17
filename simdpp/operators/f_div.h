@@ -38,17 +38,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 12}
     @icost{ALTIVEC, 19}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-float32<N, _DETAIL_> operator/(float32<N,E1> a,
-                         float32<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N, float32<N>> operator/(float32<N,E1> a, float32<N,E2> b)
+float32<N, float32<N>> operator/(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return detail::insn::i_div(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator/, float32, float32)
 
@@ -67,17 +61,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator/, float32, float32)
     @icost{SSE2-SSE4.1, 2}
     @novec{NEON, ALTIVEC}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class E1, class E2>
-float64<N, _DETAIL_> operator/(float64<N,E1> a,
-                         float64<N,E2> b);
-#else
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N, float64<N>> operator/(float64<N,E1> a, float64<N,E2> b)
+float64<N, float64<N>> operator/(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return detail::insn::i_div(a.eval(), b.eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator/, float64, float64)
 

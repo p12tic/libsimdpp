@@ -15,8 +15,10 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_sub.h>
-#include <simdpp/detail/get_expr.h>
+#include <simdpp/detail/cast_expr.h>
+#include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
+#include <simdpp/core/detail/get_expr_uint.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -34,22 +36,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ operator-(const any_int8<N,V1>& a,
-                                 const any_int8<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2,
-                                  expr_sub<uint8<N, typename V1::expr_type>,
-                                           uint8<N, typename V2::expr_type>>
-                                 >::type
+typename detail::get_expr_uint<expr_sub, V1, V2>::type
         operator-(const any_int8<N,V1>& a,
             const any_int8<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int8, uint8)
 
@@ -64,22 +59,15 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int8, uint8)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ operator-(const any_int16<N,V1>& a,
-                                 const any_int16<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2,
-                                  expr_sub<uint16<N, typename V1::expr_type>,
-                                           uint16<N, typename V2::expr_type>>
-                                 >::type
+typename detail::get_expr_uint<expr_sub, V1, V2>::type
         operator-(const any_int16<N,V1>& a,
             const any_int16<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int16, uint16)
 
@@ -94,22 +82,15 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int16, uint16)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ operator-(const any_int32<N,V1>& a,
-                                 const any_int32<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2,
-                                  expr_sub<uint32<N, typename V1::expr_type>,
-                                           uint32<N, typename V2::expr_type>>
-                                 >::type
+typename detail::get_expr_uint<expr_sub, V1, V2>::type
         operator-(const any_int32<N,V1>& a,
             const any_int32<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int32, uint32)
 
@@ -128,22 +109,15 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int32, uint32)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 10-11}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-_PROMOTED_NOMASK_EXPRESSION_ add(const any_int64<N,V1>& a,
-                                 const any_int64<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2,
-                                  expr_sub<uint64<N, typename V1::expr_type>,
-                                           uint64<N, typename V2::expr_type>>
-                                 >::type
+typename detail::get_expr_uint<expr_sub, V1, V2>::type
         operator-(const any_int64<N,V1>& a,
             const any_int64<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() }, 0 };
+    using expr = typename detail::get_expr_uint<expr_sub, V1, V2>;
+    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int64, uint64)
 

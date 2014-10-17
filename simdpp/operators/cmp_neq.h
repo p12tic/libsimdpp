@@ -40,11 +40,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-mask_int8<N, _DETAIL_> operator!=(const any_int8<N,V1>& a,
-                               const any_int8<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int8<N, mask_int8<N>> operator!=(const any_int8<N,V1>& a,
                                    const any_int8<N,V2>& b)
@@ -54,7 +49,6 @@ mask_int8<N, mask_int8<N>> operator!=(const any_int8<N,V1>& a,
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int8, any_int8)
 
@@ -75,11 +69,6 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int8, any_int8)
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-mask_int16<N, _DETAIL_> operator!=(const any_int16<N,V1>& a,
-                                const any_int16<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int16<N, mask_int16<N>> operator!=(const any_int16<N,V1>& a,
                                      const any_int16<N,V2>& b)
@@ -89,7 +78,6 @@ mask_int16<N, mask_int16<N>> operator!=(const any_int16<N,V1>& a,
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int16, any_int16)
 
@@ -110,12 +98,6 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int16, any_int16)
     @icost{AVX2, 2}
     @icost{XOP, 2}
 */
-#if SIMDPP_DOXYGEN
- template<unsigned N, class V1, class V2>
- mask_int32<N, _DETAIL_> operator!=(const any_int32<N,V1>& a,
-                                 const any_int32<N,V2>& b);
-
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int32<N, mask_int32<N>> operator!=(const any_int32<N,V1>& a,
                                      const any_int32<N,V2>& b)
@@ -125,7 +107,6 @@ mask_int32<N, mask_int32<N>> operator!=(const any_int32<N,V1>& a,
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int32, any_int32)
 
@@ -151,11 +132,6 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int32, any_int32)
     @icost{NEON, 8}
     @icost{ALTIVEC, 6-8}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-mask_int64<N, _DETAIL_> operator!=(const any_int64<N,V1>& a,
-                                const any_int64<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int64<N, mask_int64<N>> operator!=(const any_int64<N,V1>& a,
                                      const any_int64<N,V2>& b)
@@ -165,7 +141,6 @@ mask_int64<N, mask_int64<N>> operator!=(const any_int64<N,V1>& a,
     rb = b.wrapped().eval();
     return detail::insn::i_cmp_neq(ra, rb);
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int64, any_int64)
 
@@ -184,18 +159,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int64, any_int64)
     @icost{SSE2-SSE4.1, 2}
     @icost{NEON, ALTIVEC, 4}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-mask_float32<N, _DETAIL_> operator!=(const any_float32<N,V1>& a,
-                                  const any_float32<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float32<N, mask_float32<N>> operator!=(const any_float32<N,V1>& a,
                                          const any_float32<N,V2>& b)
 {
     return detail::insn::i_cmp_neq(a.wrapped().eval(), b.wrapped().eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_float32, any_float32)
 
@@ -214,18 +183,12 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_float32, any_float32)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-#if SIMDPP_DOXYGEN
-template<unsigned N, class V1, class V2>
-mask_float64<N, _DETAIL_> operator!=(const any_float64<N,V1>& a,
-                                  const any_float64<N,V2>& b);
-#else
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float64<N, mask_float64<N>> operator!=(const any_float64<N,V1>& a,
                                          const any_float64<N,V2>& b)
 {
     return detail::insn::i_cmp_neq(a.wrapped().eval(), b.wrapped().eval());
 }
-#endif
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_float64, any_float64)
 
