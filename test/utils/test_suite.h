@@ -108,6 +108,29 @@ private:
     std::vector<Result> results_;
 };
 
+class SeqTestSuite {
+public:
+    SeqTestSuite() : num_failure_(0), num_success_(0) {}
+
+    unsigned num_failure() const { return num_failure_; }
+    unsigned num_success() const { return num_success_; }
+
+    void add_result(bool success)
+    {
+        if (success) {
+            num_success_++;
+        } else {
+            num_failure_++;
+        }
+    }
+
+    bool success() const { return num_failure_ == 0; }
+
+private:
+    unsigned num_failure_;
+    unsigned num_success_;
+};
+
 
 
 #endif

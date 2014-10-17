@@ -149,3 +149,26 @@ endif()
 
 add_dependencies(check test_dispatcher)
 
+# ------------------------------------------------------------------------------
+# Expression test
+
+set(TEST_EXPR_SOURCES
+    main_expr.cc
+    expr/tests.cc
+    expr/bitwise.cc
+    expr/math_float.cc
+    expr/math_int.cc
+)
+
+add_executable(test_expr EXCLUDE_FROM_ALL
+    ${TEST_EXPR_SOURCES}
+)
+
+if(NOT MSVC)
+    target_link_libraries(test_expr pthread)
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-pthread -std=c++11 -g2 -Wall")
+endif()
+
+add_test(s_test_expr1 test_expr)
+add_dependencies(check test_expr)
+
