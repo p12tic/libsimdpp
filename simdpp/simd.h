@@ -166,6 +166,25 @@
 #include <simdpp/types/traits.h>
 #include <simdpp/types/generic.inl>
 
+#include <simdpp/operators/bit_and.h>
+#include <simdpp/operators/bit_or.h>
+#include <simdpp/operators/bit_xor.h>
+#include <simdpp/operators/bit_not.h>
+#include <simdpp/operators/cmp_eq.h>
+#include <simdpp/operators/cmp_neq.h>
+#include <simdpp/operators/cmp_ge.h>
+#include <simdpp/operators/cmp_gt.h>
+#include <simdpp/operators/cmp_le.h>
+#include <simdpp/operators/cmp_lt.h>
+#include <simdpp/operators/f_add.h>
+#include <simdpp/operators/f_mul.h>
+#include <simdpp/operators/f_sub.h>
+#include <simdpp/operators/i_add.h>
+#include <simdpp/operators/i_mul.h>
+#include <simdpp/operators/i_shift_l.h>
+#include <simdpp/operators/i_shift_r.h>
+#include <simdpp/operators/i_sub.h>
+
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher
     mechanism is not needed, the user can define the @c SIMDPP_NO_DISPATCHER.
