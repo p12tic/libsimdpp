@@ -14,7 +14,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned vnum>
-void test_store_helper(TestSuite& tc, V* sv)
+void test_store_helper(TestSuite& tc, const V* sv)
 {
     using E = typename V::element_type;
 
