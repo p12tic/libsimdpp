@@ -19,7 +19,7 @@ void test_store_helper(TestSuite& tc, const V* sv)
     using E = typename V::element_type;
 
     union {
-        E rdata[V::length * vnum];
+        SIMDPP_ALIGN(16) E rdata[V::length * vnum];
         V rv[vnum];
     };
 

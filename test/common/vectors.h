@@ -20,17 +20,17 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned BE, unsigned N>
 struct Vectors {
 
-    uint8_t c[BE*N];
-    uint8_t pu8[BE*N];
-    uint16_t pu16[BE*N/2];
-    uint32_t pu32[BE*N/4];
-    uint64_t pu64[BE*N/8];
-    int8_t pi8[BE*N];
-    int16_t pi16[BE*N/2];
-    int32_t pi32[BE*N/4];
-    int64_t pi64[BE*N/8];
-    float pf32[BE*N/4];
-    double pf64[BE*N / 8];
+    SIMDPP_ALIGN(BE) uint8_t c[BE*N];
+    SIMDPP_ALIGN(BE) uint8_t pu8[BE*N];
+    SIMDPP_ALIGN(BE) uint16_t pu16[BE*N/2];
+    SIMDPP_ALIGN(BE) uint32_t pu32[BE*N/4];
+    SIMDPP_ALIGN(BE) uint64_t pu64[BE*N/8];
+    SIMDPP_ALIGN(BE) int8_t pi8[BE*N];
+    SIMDPP_ALIGN(BE) int16_t pi16[BE*N/2];
+    SIMDPP_ALIGN(BE) int32_t pi32[BE*N/4];
+    SIMDPP_ALIGN(BE) int64_t pi64[BE*N/8];
+    SIMDPP_ALIGN(BE) float pf32[BE*N/4];
+    SIMDPP_ALIGN(BE) double pf64[BE*N / 8];
 
     simdpp::uint8<BE> u8[N];
     simdpp::uint16<BE/2> u16[N];
