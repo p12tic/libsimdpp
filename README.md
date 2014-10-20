@@ -60,13 +60,6 @@ Documentation
 Online documentation is provided
 [here](http://p12tic.github.io/libsimdpp/v2.0~beta1/doc/html).
 
-Caveats
--------
-
-Due to [bug #28831] (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=28831), GCC
-produces non-optimal code for double precision floating point math on ARM.
-Clang does not have this problem.
-
 License
 -------
 
