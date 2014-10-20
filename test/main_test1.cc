@@ -11,7 +11,7 @@
 #include <iostream>
 #include <cstdlib>
 
-#if __arm__
+#if __arm__ || __aarch64__
 #include <simdpp/dispatch/get_arch_linux_cpuinfo.h>
 #else
 #include <simdpp/dispatch/get_arch_raw_cpuid.h>
@@ -26,7 +26,7 @@
 int main()
 {
     std::ostream& err = std::cerr;
-    #if __arm__
+    #if __arm__ || __aarch64__
     simdpp::Arch current_arch = simdpp::get_arch_linux_cpuinfo();
     #else
     simdpp::Arch current_arch = simdpp::get_arch_raw_cpuid();

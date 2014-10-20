@@ -252,6 +252,20 @@ list(APPEND SIMDPP_ARCHS_SEC "ARM_NEON_FLT_SP")
 set(SIMDPP_ARM_NEON_FLT_SP_CXX_FLAGS "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON_FLT_SP")
 set(SIMDPP_ARM_NEON_FLT_SP_SUFFIX "-arm_neon_flt_sp")
 
+list(APPEND SIMDPP_ARCHS_PRI "ARM64_NEON")
+set(SIMDPP_ARM64_NEON_CXX_FLAGS "-mcpu=generic+simd -DSIMDPP_ARCH_ARM_NEON")
+set(SIMDPP_ARM64_NEON_SUFFIX "-arm64_neon")
+set(SIMDPP_ARM64_NEON_TEST_CODE
+    "#include <arm_neon.h>
+    int main()
+    {
+        volatile long long a[4];
+        uint32x4_t one = vld1q_u32((uint32_t*)(a));
+        one = vaddq_u32(one, one);
+        vst1q_u32((uint32_t*)(a), one);
+    }"
+)
+
 list(APPEND SIMDPP_ARCHS_PRI "POWER_ALTIVEC")
 set(SIMDPP_POWER_ALTIVEC_CXX_FLAGS "-maltivec -DSIMDPP_ARCH_POWER_ALTIVEC")
 set(SIMDPP_POWER_ALTIVEC_SUFFIX "-power_altivec")
@@ -330,7 +344,7 @@ endfunction()
 #
 #   The following identifiers are currently supported:
 #   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1, X86_AVX, X86_AVX2, X86_FMA3,
-#   X86_FMA4, X86_XOP, ARM_NEON, ARM_NEON_FLT_SP
+#   X86_FMA4, X86_XOP, ARM_NEON, ARM_NEON_FLT_SP, ARM64_NEON
 #
 function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
@@ -420,6 +434,9 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
     if(DEFINED ARCH_SUPPORTED_ARM_NEON)
         list(APPEND ALL_ARCHS "ARM_NEON")
         list(APPEND ALL_ARCHS "ARM_NEON_FLT_SP")
+    endif()
+    if(DEFINED ARCH_SUPPORTED_ARM64_NEON)
+        list(APPEND ALL_ARCHS "ARM64_NEON")
     endif()
     if(DEFINED ARCH_SUPPORTED_POWER_ALTIVEC)
         list(APPEND ALL_ARCHS "POWER_ALTIVEC")

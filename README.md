@@ -28,8 +28,11 @@ Compiler and instruction set support
   unfit for use. For available releases please see the
   [libsimdpp wiki](https://github.com/p12tic/libsimdpp/wiki).
 
-The library supports SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
-XOP and NEON instruction sets.
+The library supports the following architectures and instruction sets:
+
+ - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
+XOP
+ - ARM, ARM64: NEON
 
 Code for ALTIVEC instruction set has been added, but it has not been tested
 on actual hardware, thus definitely contains bugs.
@@ -39,17 +42,21 @@ version of the library is provided on the
 [cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch. Boost libraries
 are used as a replacement for C++11-only functionality. The library does not
 depend on boost if the built-in dispatcher functionality is not used. The
-library has been tested with the following compilers:
+following compilers are supported:
 
  - C++11 version:
-   - GCC: 4.9.0, 4.8.1
+   - GCC: 4.9, 4.8
    - Clang: 3.3, 3.4, 3.5
-   - MSVC: 2013 (x86-64)
-   - ICC: 2015 (x86-64), 2013 (x86-64)
+   - MSVC: 2013
+   - ICC: 2015, 2013
+
+Clang 3.3 is not supported on ARM. MSVC is only supported on x86-64. ICC is
+only supported on x86 and x86-64.
 
  - C++98 version
    - GCC: 4.8.1, 4.7.3
    - Clang: 3.3, 3.4
+
 
 The C++98 version has been tested with boost 1.53 and 1.54. Most probably other
 versions will work too.
