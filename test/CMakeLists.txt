@@ -39,6 +39,7 @@ set(TEST1_ARCH_SOURCES
     insn/memory_store.cc
     insn/shuffle.cc
     insn/shuffle_bytes.cc
+    insn/permute_generic.cc
     insn/shuffle_generic.cc
     insn/test_utils.cc
     insn/tests.cc

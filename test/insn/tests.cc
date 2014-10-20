@@ -25,6 +25,7 @@ void main_test_function(TestResults& res)
     test_math_int(res);
     test_compare(res);
     test_math_shift(res);
+    test_permute_generic(res);
     test_shuffle_generic(res);
     test_shuffle(res);
     test_shuffle_bytes(res);
