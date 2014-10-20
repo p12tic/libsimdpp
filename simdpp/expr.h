@@ -101,7 +101,7 @@ struct expr_vec_set_splat : expr_vec_construct<expr_vec_set_splat<VE>> {
 template<class VE, unsigned N>
 struct expr_vec_make_const : expr_vec_construct<expr_vec_make_const<VE,N>> {
     VE a[N];
-    VE val(unsigned n) const { return a[n%N]; }
+    const VE& val(unsigned n) const { return a[n%N]; }
 };
 
 struct expr_vec_load : expr_vec_construct<expr_vec_load> {
