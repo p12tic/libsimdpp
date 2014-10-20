@@ -45,11 +45,13 @@ void i_make_const(float32<4>& v, const expr_vec_make_const<VE,1>& e)
 template<class VE> SIMDPP_INL
 void i_make_const(float32<4>& v, const expr_vec_make_const<VE,2>& e)
 {
-    SIMDPP_ALIGN(16) float rv[2];
-    rv[0] = e.val(0);
-    rv[1] = e.val(1);
-    float32x2_t r0 = vld1_f32(rv);
-    v = vcombine_f32(r0, r0);
+    union {
+        float rv[2];
+        float32x2_t r;
+    } x;
+    x.rv[0] = e.val(0);
+    x.rv[1] = e.val(1);
+    v = vcombine_f32(x.r, x.r);
 }
 #endif
 
@@ -58,16 +60,19 @@ void i_make_const(float32<4>& v, const expr_vec_make_const<VE,N>& e)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     v = detail::null::make_vec<float32<4>, float>(e.val(0), e.val(1),
-                                          e.val(2), e.val(3));
+                                                  e.val(2), e.val(3));
 #elif SIMDPP_USE_SSE2
     v = _mm_set_ps(e.val(3), e.val(2), e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    SIMDPP_ALIGN(16) float rv[4];
-    rv[0] = e.val(0);
-    rv[1] = e.val(1);
-    rv[2] = e.val(2);
-    rv[3] = e.val(3);
-    v = vld1q_f32(rv);
+    union {
+        SIMDPP_ALIGN(16) float rv[4];
+        float32<4> r;
+    } x;
+    x.rv[0] = e.val(0);
+    x.rv[1] = e.val(1);
+    x.rv[2] = e.val(2);
+    x.rv[3] = e.val(3);
+    v = x.r;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector float){ float(e.val(0)), float(e.val(1)),
                           float(e.val(2)), float(e.val(3)) };
@@ -158,34 +163,28 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,1>& e)
 template<class VE> SIMDPP_INL
 void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,2>& e)
 {
-    union {
-        uint16_t rv[1];
-        uint8_t rvv[2];
-    };
-    rvv[0] = e.val(0);
-    rvv[1] = e.val(1);
-    v = (uint16<8>) vld1q_dup_u16(rv);
+    uint16_t rv = (e.val(0) & 0xff) | (e.val(1) & 0xff) << 8;
+    v = (uint16<8>) vld1q_dup_u16(&rv);
 }
 
 template<class VE> SIMDPP_INL
 void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,4>& e)
 {
-    union {
-        uint32_t rv[1];
-        uint8_t rvv[4];
-    };
-    rvv[0] = e.val(0);  rvv[1] = e.val(1);  rvv[2] = e.val(2);  rvv[3] = e.val(3);
-    v = (uint32<4>) vld1q_dup_u32(rv);
+    uint32_t rv = (e.val(0) & 0xff) | (e.val(1) & 0xff) << 8 |
+                  (e.val(0) & 0xff) << 16 | (e.val(1) & 0xff) << 24;
+    v = (uint32<4>) vld1q_dup_u32(&rv);
 }
 
 template<class VE> SIMDPP_INL
 void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,8>& e)
 {
-    SIMDPP_ALIGN(16) uint8_t rvv[8];
-    rvv[0] = e.val(0);  rvv[1] = e.val(1);  rvv[2] = e.val(2);  rvv[3] = e.val(3);
-    rvv[4] = e.val(4);  rvv[5] = e.val(5);  rvv[6] = e.val(6);  rvv[7] = e.val(7);
-    uint8x8_t r0 = vld1_u8(rvv);
-    v = vcombine_u8(r0, r0);
+    union {
+        uint8_t rvv[8];
+        uint8x8_t r;
+    } x;
+    x.rvv[0] = e.val(0);  x.rvv[1] = e.val(1);  x.rvv[2] = e.val(2);  x.rvv[3] = e.val(3);
+    x.rvv[4] = e.val(4);  x.rvv[5] = e.val(5);  x.rvv[6] = e.val(6);  x.rvv[7] = e.val(7);
+    v = vcombine_u8(x.r, x.r);
 }
 #endif
 
@@ -203,12 +202,15 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e)
                      e.val(7),  e.val(6),  e.val(5),  e.val(4),
                      e.val(3),  e.val(2),  e.val(1),  e.val(0));
 #elif SIMDPP_USE_NEON
-    SIMDPP_ALIGN(16) uint8_t rvv[16];
-    rvv[0] = e.val(0);   rvv[1] = e.val(1);   rvv[2] = e.val(2);   rvv[3] = e.val(3);
-    rvv[4] = e.val(4);   rvv[5] = e.val(5);   rvv[6] = e.val(6);   rvv[7] = e.val(7);
-    rvv[8] = e.val(8);   rvv[9] = e.val(9);   rvv[10] = e.val(10); rvv[11] = e.val(11);
-    rvv[12] = e.val(12); rvv[13] = e.val(13); rvv[14] = e.val(14); rvv[15] = e.val(15);
-    v = vld1q_u8(rvv);
+    union {
+        SIMDPP_ALIGN(16) uint8_t rvv[16];
+        uint8<16> r;
+    } x;
+    x.rvv[0] = e.val(0);   x.rvv[1] = e.val(1);   x.rvv[2] = e.val(2);   x.rvv[3] = e.val(3);
+    x.rvv[4] = e.val(4);   x.rvv[5] = e.val(5);   x.rvv[6] = e.val(6);   x.rvv[7] = e.val(7);
+    x.rvv[8] = e.val(8);   x.rvv[9] = e.val(9);   x.rvv[10] = e.val(10); x.rvv[11] = e.val(11);
+    x.rvv[12] = e.val(12); x.rvv[13] = e.val(13); x.rvv[14] = e.val(14); x.rvv[15] = e.val(15);
+    v = x.r;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint8_t){
         uint8_t(e.val(0)),  uint8_t(e.val(1)),  uint8_t(e.val(2)),  uint8_t(e.val(3)),
@@ -257,23 +259,20 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,1>& e)
 template<class VE> SIMDPP_INL
 void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,2>& e)
 {
-    union {
-        uint32_t rv[1];
-        uint16_t rvv[2];
-    };
-    rvv[0] = e.val(0);
-    rvv[1] = e.val(1);
-    v = (uint32<4>) vld1q_dup_u32(rv);
+    uint32_t rv = (e.val(0) & 0xffff) | (e.val(1) & 0xffff) << 16;
+    v = (uint32<4>) vld1q_dup_u32(&rv);
 }
 
 template<class VE> SIMDPP_INL
 void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,4>& e)
 {
-    SIMDPP_ALIGN(16) uint16_t rvv[4];
-    rvv[0] = e.val(0);  rvv[1] = e.val(1);
-    rvv[2] = e.val(2);  rvv[3] = e.val(3);
-    uint16x4_t r0 = vld1_u16(rvv);
-    v = vcombine_u16(r0, r0);
+    union {
+        uint16_t rvv[4];
+        uint16x4_t r;
+    } x;
+    x.rvv[0] = e.val(0);  x.rvv[1] = e.val(1);
+    x.rvv[2] = e.val(2);  x.rvv[3] = e.val(3);
+    v = vcombine_u16(x.r, x.r);
 }
 #endif
 
@@ -288,10 +287,13 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e)
     v = _mm_set_epi16(e.val(7), e.val(6), e.val(5), e.val(4),
                       e.val(3), e.val(2), e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    SIMDPP_ALIGN(16) uint16_t rvv[8];
-    rvv[0] = e.val(0);  rvv[1] = e.val(1);  rvv[2] = e.val(2);  rvv[3] = e.val(3);
-    rvv[4] = e.val(4);  rvv[5] = e.val(5);  rvv[6] = e.val(6);  rvv[7] = e.val(7);
-    v = vld1q_u16(rvv);
+    union {
+        SIMDPP_ALIGN(16) uint16_t rvv[8];
+        uint16<8> r;
+    } x;
+    x.rvv[0] = e.val(0);  x.rvv[1] = e.val(1);  x.rvv[2] = e.val(2);  x.rvv[3] = e.val(3);
+    x.rvv[4] = e.val(4);  x.rvv[5] = e.val(5);  x.rvv[6] = e.val(6);  x.rvv[7] = e.val(7);
+    v = x.r;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint16_t){
         uint16_t(e.val(0)), uint16_t(e.val(1)), uint16_t(e.val(2)), uint16_t(e.val(3)),
@@ -335,11 +337,13 @@ void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,1>& e)
 template<class VE> SIMDPP_INL
 void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,2>& e)
 {
-    SIMDPP_ALIGN(16) uint32_t rvv[2];
-    rvv[0] = e.val(0);
-    rvv[1] = e.val(1);
-    uint32x2_t r0 = vld1_u32(rvv);
-    v = vcombine_u32(r0, r0);
+    union {
+        uint32_t rvv[2];
+        uint32x2_t r;
+    } x;
+    x.rvv[0] = e.val(0);
+    x.rvv[1] = e.val(1);
+    v = vcombine_u32(x.r, x.r);
 }
 #endif
 
@@ -351,10 +355,13 @@ void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e)
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi32(e.val(3), e.val(2), e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    SIMDPP_ALIGN(16) uint32_t rvv[4];
-    rvv[0] = e.val(0);  rvv[1] = e.val(1);
-    rvv[2] = e.val(2);  rvv[3] = e.val(3);
-    v = vld1q_u32(rvv);
+    union {
+        SIMDPP_ALIGN(16) uint32_t rvv[4];
+        uint32<4> r;
+    } x;
+    x.rvv[0] = e.val(0);  x.rvv[1] = e.val(1);
+    x.rvv[2] = e.val(2);  x.rvv[3] = e.val(3);
+    v = x.r;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint32_t) { uint32_t(e.val(0)), uint32_t(e.val(1)),
                               uint32_t(e.val(2)), uint32_t(e.val(3)) };
@@ -411,10 +418,13 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e)
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi64x(e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    SIMDPP_ALIGN(16) uint64_t rvv[2];
-    rvv[0] = e.val(0);
-    rvv[1] = e.val(1);
-    v = vld1q_u64(rvv);
+    union {
+        SIMDPP_ALIGN(16) uint64_t rvv[2];
+        uint64<2> r;
+    } x;
+    x.rvv[0] = e.val(0);
+    x.rvv[1] = e.val(1);
+    v = x.r;
 #elif SIMDPP_USE_ALTIVEC
     // big endian
     uint32_t v0 = uint64_t(e.val(0)) >> 32;
