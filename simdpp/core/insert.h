@@ -13,7 +13,6 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/word_size.h>
 #include <simdpp/core/cast.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/core/zip_lo.h>
@@ -166,7 +165,7 @@ uint64x2 insert(const uint64x2& ca, uint64_t x)
     a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
-#if SIMDPP_SSE_32_BITS
+#if SIMDPP_32_BITS
     uint32x4 a0 = (uint32x4) a;
     a0 = insert<id*2>(a0, uint32_t(x));
     a0 = insert<id*2+1>(a0, uint32_t(x >> 32));
@@ -175,7 +174,7 @@ uint64x2 insert(const uint64x2& ca, uint64_t x)
     return _mm_insert_epi64(a.operator __m128i(), x, id);
 #endif
 #elif SIMDPP_USE_SSE2
-#if SIMDPP_SSE_32_BITS
+#if SIMDPP_32_BITS
     int32x4 va = _mm_cvtsi32_si128(uint32_t(x));
     int32x4 vb = _mm_cvtsi32_si128(uint32_t(x >> 32));
     int64x2 vx = (int64x2) zip4_lo(va, vb);

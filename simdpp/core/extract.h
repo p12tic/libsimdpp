@@ -169,7 +169,7 @@ uint64_t extract(const uint64x2& a)
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
-#if SIMDPP_SSE_32_BITS
+#if SIMDPP_32_BITS
     uint32x4 t = uint32x4(a);
     uint64_t r = extract<id*2>(t);
     r |= uint64_t(extract<id*2+1>(t)) << 32;
@@ -178,7 +178,7 @@ uint64_t extract(const uint64x2& a)
     return _mm_extract_epi64(a.operator __m128i(), id);
 #endif
 #elif SIMDPP_USE_SSE2
-#if SIMDPP_SSE_32_BITS
+#if SIMDPP_32_BITS
     uint32x4 t = uint32x4(a);
     uint64_t r = 0;
     t = move4_l<id*2>(t); // when id==0, move_l is template-specialized and does nothing

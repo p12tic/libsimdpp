@@ -8,8 +8,6 @@
 #ifndef LIBSIMDPP_SIMD_SETUP_ARCH_H
 #define LIBSIMDPP_SIMD_SETUP_ARCH_H
 
-#include <simdpp/detail/word_size.h>
-
 #ifdef SIMDPP_ARCH_X86_SSE2
     #ifndef SIMDPP_USE_SSE2
         #define SIMDPP_USE_SSE2 1
@@ -317,6 +315,15 @@
 #else
     #define SIMDPP_PP_ALTIVEC
 #endif
+
+#if __i386__ || __i386 || _M_IX86
+#define SIMDPP_32_BITS 1
+#define SIMDPP_64_BITS 0
+#else
+#define SIMDPP_32_BITS 0
+#define SIMDPP_64_BITS 1
+#endif
+
 
 /** @def SIMDPP_ARCH_NAMESPACE
     Put all functions to a namespace that depends on the instruction set that

@@ -170,7 +170,7 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint64x2>(v0);
 #elif SIMDPP_USE_SSE2
-#if SIMDPP_SSE_32_BITS
+#if SIMDPP_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
     uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
     v = zip4_lo(va, vb);
@@ -192,7 +192,7 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL void i_set_splat(uint64x4& v, uint64_t v0)
 {
-#if SIMDPP_SSE_32_BITS
+#if SIMDPP_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
     uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
     uint64x2 a = (uint64x2) zip4_lo(va, vb);
