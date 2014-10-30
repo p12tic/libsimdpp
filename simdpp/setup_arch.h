@@ -324,6 +324,13 @@
 #define SIMDPP_64_BITS 0
 #endif
 
+#if __i386__ || __i386 || _M_IX86 || __amd64__ || __x64_64__ || _M_AMD64 || _M_X64
+#define SIMDPP_X86 1
+#elif _M_ARM || __arm__ || __aarch64__
+#define SIMDPP_ARM 1
+#elif __powerpc__ || __powerpc64__
+#define SIMDPP_PPC 1
+#endif
 
 /** @def SIMDPP_ARCH_NAMESPACE
     Put all functions to a namespace that depends on the instruction set that
