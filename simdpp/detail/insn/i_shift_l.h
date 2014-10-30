@@ -19,7 +19,6 @@
 #include <simdpp/core/set_splat.h>
 #include <simdpp/detail/insn/i_shift.h>
 #include <simdpp/detail/null/math.h>
-#include <simdpp/neon/detail/math_shift.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -203,7 +202,7 @@ uint8x16 i_shift_l(const uint8x16& a)
     */
     return shift_l_8<count>(a);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_l<count>(a);
+    return vshlq_n_u8(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = make_uint(count);
     return vec_sl((__vector uint8_t)a, (__vector uint8_t)shift);
@@ -245,7 +244,7 @@ uint16x8 i_shift_l(const uint16x8& a)
 #elif SIMDPP_USE_SSE2
     return _mm_slli_epi16(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_l<count>(a);
+    return vshlq_n_u16(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = make_uint(count);
     return vec_sl((__vector uint16_t)a, (__vector uint16_t)shift);
@@ -279,7 +278,7 @@ uint32x4 i_shift_l(const uint32x4& a)
 #elif SIMDPP_USE_SSE2
     return _mm_slli_epi32(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_l<count>(a);
+    return vshlq_n_u32(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = make_uint(count);
     return vec_sl((__vector uint32_t)a, (__vector uint32_t)shift);
@@ -322,7 +321,7 @@ uint64x2 i_shift_l(const uint64x2& a)
 #elif SIMDPP_USE_SSE2
     return _mm_slli_epi64(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_l<count>(a);
+    return vshlq_n_u64(a, count);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif

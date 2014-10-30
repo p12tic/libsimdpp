@@ -114,7 +114,6 @@ set(HEADERS
     dispatch/get_arch_gcc_builtin_cpu_supports.h
     dispatch/get_arch_linux_cpuinfo.h
     dispatch/macros.h
-    neon/detail/math_shift.h
     neon/detail/shuffle.h
     neon/detail/shuffle_int16x8.h
     neon/detail/shuffle_int32x4.h

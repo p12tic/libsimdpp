@@ -23,7 +23,6 @@
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/detail/insn/i_shift.h>
 #include <simdpp/detail/null/math.h>
-#include <simdpp/neon/detail/math_shift.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -396,7 +395,7 @@ int8x16 i_shift_r(const int8x16& a)
     hi = shift_l<8>(hi);
     return (int8<16>) bit_or(lo, hi);    //higher part of lo is already clear
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_s8(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = make_uint(count);
     return vec_sra((__vector int8_t)a, (__vector uint8_t)shift);
@@ -442,7 +441,7 @@ uint8x16 i_shift_r(const uint8x16& a)
     */
     return shift_r_u8<count>(a);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_u8(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = make_uint(count);
     return vec_sr((__vector uint8_t)a, (__vector uint8_t)shift);
@@ -484,7 +483,7 @@ int16x8 i_shift_r(const int16x8& a)
 #elif SIMDPP_USE_SSE2
     return _mm_srai_epi16(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_s16(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = make_uint(count);
     return vec_sra((__vector int16_t)a, (__vector uint16_t)shift);
@@ -518,7 +517,7 @@ uint16x8 i_shift_r(const uint16x8& a)
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi16(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_u16(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = make_uint(count);
     return vec_sr((__vector uint16_t)a, (__vector uint16_t)shift);
@@ -552,7 +551,7 @@ int32x4 i_shift_r(const int32x4& a)
 #elif SIMDPP_USE_SSE2
     return _mm_srai_epi32(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_s32(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = make_uint(count);
     return vec_sra((__vector int32_t)a, (__vector uint32_t)shift);
@@ -595,7 +594,7 @@ uint32x4 i_shift_r(const uint32x4& a)
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi32(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_u32(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = make_uint(count);
     return vec_sr((__vector uint32_t)a, (__vector uint32_t)shift);
@@ -636,7 +635,7 @@ int64x2 i_shift_r(const int64x2& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return i_shift_r(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_s64(a, count);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
@@ -677,7 +676,7 @@ uint64x2 i_shift_r(const uint64x2& a)
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi64(a, count);
 #elif SIMDPP_USE_NEON
-    return neon::detail::shift_r<count>(a);
+    return vshrq_n_u64(a, count);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
