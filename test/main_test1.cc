@@ -7,14 +7,22 @@
 
 #include "utils/arch_registration.h"
 #include "utils/test_results.h"
+#include <simdpp/setup_arch.h>
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>
 
-#if __arm__ || __aarch64__
+#if __linux__
 #include <simdpp/dispatch/get_arch_linux_cpuinfo.h>
-#else
+
+inline simdpp::Arch get_arch() { return simdpp::get_arch_linux_cpuinfo(); }
+
+#elif SIMDPP_X86
 #include <simdpp/dispatch/get_arch_raw_cpuid.h>
+
+inline simdpp::Arch get_arch() { return simdpp::get_arch_raw_cpuid(); }
+#else
+#error "Can't test dispatcher on this platform"
 #endif
 
 /*  We test libsimdpp by comparing the results of the same computations done in
@@ -26,11 +34,7 @@
 int main()
 {
     std::ostream& err = std::cerr;
-    #if __arm__ || __aarch64__
-    simdpp::Arch current_arch = simdpp::get_arch_linux_cpuinfo();
-    #else
-    simdpp::Arch current_arch = simdpp::get_arch_raw_cpuid();
-    #endif
+    simdpp::Arch current_arch = get_arch();
     const auto& arch_list = ArchRegistration::arch_list();
     auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
                                   [](const ArchRegistration::Arch& a) -> bool
