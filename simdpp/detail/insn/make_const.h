@@ -171,7 +171,7 @@ template<class VE> SIMDPP_INL
 void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,4>& e)
 {
     uint32_t rv = (e.val(0) & 0xff) | (e.val(1) & 0xff) << 8 |
-                  (e.val(0) & 0xff) << 16 | (e.val(1) & 0xff) << 24;
+                  (e.val(2) & 0xff) << 16 | (e.val(3) & 0xff) << 24;
     v = (uint32<4>) vld1q_dup_u32(&rv);
 }
 
