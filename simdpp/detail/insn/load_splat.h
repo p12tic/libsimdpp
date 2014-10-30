@@ -156,7 +156,7 @@ SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
 #elif SIMDPP_USE_ALTIVEC
     SIMDPP_ALIGN(16) uint64_t rv[2];
     rv[0] = *v0;
-    uint64x2 v = load(v, rv);
+    v = load(rv);
     v = splat<0>(v);
 #endif
 }

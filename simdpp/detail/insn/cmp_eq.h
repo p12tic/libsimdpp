@@ -152,12 +152,11 @@ SIMDPP_INL mask_int64x2 i_cmp_eq(const uint64x2& a, const uint64x2& b)
     return uint64x2(r32);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
-    uint32x4 a0, b0, r;
-    a0 = a;  b0 = b;
-    r = cmp_eq(a, b);
+    uint32x4 r;
+    r = i_cmp_eq(uint32<4>(a), uint32<4>(b));
     r = permute_bytes16(uint16x8(a), mask);
-    r = cmp_eq(r, uint32x4::zero();
-    return r;
+    r = i_cmp_eq(r, uint32x4::zero());
+    return uint64x2(r);
 #endif
 }
 

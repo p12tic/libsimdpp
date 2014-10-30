@@ -18,6 +18,7 @@
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/core/bit_or.h>
 #include <simdpp/core/splat.h>
+#include <simdpp/core/set_splat.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/detail/insn/i_shift.h>
@@ -290,7 +291,7 @@ SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
     int64x2 shift = splat(-int(count));
     return vshlq_s64(a, shift);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED2(a, count);
 #endif
 }
 
@@ -346,7 +347,7 @@ SIMDPP_INL uint64x2 i_shift_r(const uint64x2& a, unsigned count)
     int64x2 shift = splat(-int(count));
     return vshlq_u64(a, shift);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED2(a, count);
 #endif
 }
 

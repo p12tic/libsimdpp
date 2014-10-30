@@ -206,6 +206,10 @@ public:
 
     mask_int8<16>(const native_type& d) : d_(d) {}
 
+#if SIMDPP_USE_ALTIVEC
+    mask_int8<16>(const __vector __bool char& d) : d_((__vector uint8_t)d) {}
+#endif
+
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     mask_int8<16>(const uint8<16>& d) : d_(d) {}
 #endif

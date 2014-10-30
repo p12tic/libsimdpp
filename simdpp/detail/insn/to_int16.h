@@ -53,11 +53,10 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     r.vec(1) = vmovl_u8(vget_high_u8(a));
     return r;
 #elif SIMDPP_USE_ALTIVEC
-    uint16x16 r;
-    //r.vec(0) = vmovl_u8(vget_low_u8(a.vec(0)));
-    //r.vec(1) = vmovl_u8(vget_high_u8(a.vec(1)));
-    TODO
-    return r;
+    uint16x8 r1, r2;
+    r1 = zip16_lo(uint8x16::zero(), a);
+    r2 = zip16_hi(uint8x16::zero(), a);
+    return combine(r1, r2);
 #endif
 }
 

@@ -306,7 +306,7 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     uint32x4 s2 = (__vector uint32_t)vec_mergel((__vector uint8_t)a,
                                                 (__vector uint8_t)uint8x16::zero());
     s = bit_or(s, s2);
-    s = (int32x4)vec_sums((__vector int32_t)s,
+    s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
                           (__vector int32_t)int32x4::zero());
     return extract<7>(uint16x8(s));
 #endif

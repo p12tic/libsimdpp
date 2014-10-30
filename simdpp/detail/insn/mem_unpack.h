@@ -87,8 +87,6 @@ template<class T> SIMDPP_INL
 void v_mem_unpack3_impl8_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
-
     // [a0, b0, c0, a1, b1, c1, a2, b2, c2, a3, b3, c3, a4, b4, c4, a5 ]
     // [b5, c5, a6, b6, c6, a7, b7, c7, a8, b8, c8, a9, b9, c9, a10,b10]
     // [c10,a11,b11,c11,a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15]
@@ -166,8 +164,6 @@ template<class T> SIMDPP_INL
 void v_mem_unpack3_impl16_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
-
     // [a0,b0,c0,a1,b1,c1,a2,b2]
     // [c2,a3,b3,c3,a4,b4,c4,a5]
     // [b5,c5,a6,b6,c6,a7,b7,c7]

@@ -50,7 +50,7 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
 
     return x;
 #elif SIMDPP_USE_ALTIVEC
-    float32x4 r;
+    float32x4 r, c2;
     c2 = make_float(2.0f);
     // -(x*a-c2)
     r = vec_nmsub((__vector float)x, (__vector float)a, (__vector float)c2);

@@ -37,32 +37,32 @@ SIMDPP_INL uint8x16 load1_u(uint8x16& a, const uint8_t* p)
     a = vec_lde(0, p);
     // The format of vec_lvs{l,r} is compatible with the one accepted by
     // shuffle_bytes16
-    uint8x16 perm = vec_lvsl(0, p);
-    a = shuffle_bytes16(a, a, perm);
+    __vector uint8_t perm = vec_lvsl(0, p);
+    a = (__vector uint8_t) vec_perm((__vector uint8_t)a, (__vector uint8_t)a, perm);
     return a;
 }
 
 SIMDPP_INL uint16x8 load1_u(uint16x8& a, const uint16_t* p)
 {
-    a = vec_lde(0, p);
-    uint8x16 perm = vec_lvsl(0, p);
-    a = shuffle_bytes16(a, a, perm);
+    __vector uint16_t r = vec_lde(0, p);
+    __vector uint8_t perm = vec_lvsl(0, p);
+    a = (__vector uint16_t) vec_perm((__vector uint8_t)r, (__vector uint8_t)r, perm);
     return a;
 }
 
 SIMDPP_INL uint32x4 load1_u(uint32x4& a, const uint32_t* p)
 {
-    a = vec_lde(0, p);
-    uint8x16 perm = vec_lvsl(0, p);
-    a = shuffle_bytes16(a, a, perm);
+    __vector uint32_t r = vec_lde(0, p);
+    __vector uint8_t perm = vec_lvsl(0, p);
+    a = (__vector uint32_t) vec_perm((__vector uint8_t)r, (__vector uint8_t)r, perm);
     return a;
 }
 
 SIMDPP_INL float32x4 load1_u(float32x4& a, const float* p)
 {
-    a = vec_lde(0, p);
-    uint8x16 perm = vec_lvsl(0, p);
-    a = shuffle_bytes16(a, a, perm);
+    __vector float r = vec_lde(0, p);
+    __vector uint8_t perm = vec_lvsl(0, p);
+    a = (__vector float) vec_perm((__vector uint8_t)r, (__vector uint8_t)r, perm);
     return a;
 }
 /// @}

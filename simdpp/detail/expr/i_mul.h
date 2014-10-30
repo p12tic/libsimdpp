@@ -83,7 +83,9 @@ int16<8> expr_eval(const expr_mul_hi<int16<8,E1>,
     int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
     return unzip8_hi(int16x8(lo), int16x8(hi));
 #elif SIMDPP_USE_ALTIVEC
-    return unzip8_lo((int16x8)mull_lo(a, b), (int16x8)mull_hi(a, b));
+    int16<16> ab;
+    ab = mull(a, b);
+    return unzip8_lo(ab.vec(0), ab.vec(1));
 #endif
 }
 
@@ -124,7 +126,9 @@ uint16<8> expr_eval(const expr_mul_hi<uint16<8,E1>,
     uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
     return unzip8_hi(uint16x8(lo), uint16x8(hi));
 #elif SIMDPP_USE_ALTIVEC
-    return unzip8_lo((uint16x8)mull_lo(a, b), (uint16x8)mull_hi(a, b));
+    uint16<16> ab;
+    ab = mull(a, b);
+    return unzip8_lo(ab.vec(0), ab.vec(1));
 #endif
 }
 
@@ -173,19 +177,24 @@ uint32<4> expr_eval(const expr_mul_lo<uint32<4,E1>,
     return vmulq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     // implement in terms of 16-bit multiplies
-    uint16x8 la, lb, ha, hb;
-    uint32x4 rl, rh1, rh2;
-    la = a;  lb = b;
-    ha = move8_r<1>(la);
-    hb = move8_r<1>(lb);
+    //   *  ah  al
+    //      bh  bl
+    //      ======
+    //   + (al*bl) <-  l_ab
+    //+ (ah*bl)    <-  h_ab
+    //+ (al*bh)    <-  h_ba
 
-    rl = mull_lo(la, lb);
-    rh1 = mull_lo(la, hb);
-    rh2 = mull_lo(ha, lb);
+    uint16<8> ra = a, rb = b;
+    uint16<8> sa = move8_l<1>(ra);
+    uint16<8> sb = move8_l<1>(rb);
 
-    rh1 = shift_l<16>(add(rh1, rh2));
-    rl = add(rl, rh1);
-    return rl;
+    uint32<4> l_ab = vec_mulo((__vector uint16_t) ra, (__vector uint16_t) rb);
+    uint32<4> h_ab = vec_mulo((__vector uint16_t) ra, (__vector uint16_t) sb);
+    uint32<4> h_ba = vec_mulo((__vector uint16_t) sa, (__vector uint16_t) rb);
+
+    h_ab = shift_l<16>(add(h_ab, h_ba));
+    h_ab = add(h_ab, l_ab);
+    return h_ab;
 #endif
 }
 

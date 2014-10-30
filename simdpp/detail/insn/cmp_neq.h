@@ -141,7 +141,7 @@ SIMDPP_INL mask_int64x2 i_cmp_neq(const uint64x2& a, const uint64x2& b)
     r = cmp_eq(a, b);
     r = permute_bytes16(uint16x8(a), mask);
     r = cmp_eq(r, ones);
-    return r;
+    return uint64x2(r);
 #endif
 }
 

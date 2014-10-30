@@ -432,7 +432,7 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e)
     uint32_t v2 = uint64_t(e.val(1)) >> 32;
     uint32_t v3 = uint64_t(e.val(1));
 
-    v = (__vector uint32_t) { v0, v1, v2, v3 };
+    v = (uint32<4>)(__vector uint32_t) { v0, v1, v2, v3 };
 #endif
 }
 

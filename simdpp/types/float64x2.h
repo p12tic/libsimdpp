@@ -151,7 +151,7 @@ public:
     /// Access the underlying type
     float64<2> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
         return detail::null::unmask_mask<float64<2>>(*this);
     #else
         return float64<2>(d_);

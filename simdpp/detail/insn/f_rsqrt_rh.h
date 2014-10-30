@@ -57,7 +57,7 @@ SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 
     return x;
 #elif SIMDPP_USE_ALTIVEC
-    float32x4 x2, r, xp5;
+    float32x4 x2, r, xp5, c3;
 
     c3 = make_float(3.0f);
 

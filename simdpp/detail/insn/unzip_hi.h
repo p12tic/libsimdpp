@@ -37,7 +37,7 @@ SIMDPP_INL uint8x16 i_unzip16_hi(const uint8x16& ca, const uint8x16& cb)
 #elif SIMDPP_USE_NEON
     return vuzpq_u8(a, b).val[1];
 #elif SIMDPP_USE_ALTIVEC
-    return vec_pack((__vector uint16_t)a, (__vector uint16_t)b);
+    return vec_pack((__vector uint16_t)(__vector uint8_t)a, (__vector uint16_t)(__vector uint8_t)b);
 #endif
 }
 
@@ -73,7 +73,7 @@ SIMDPP_INL uint16x8 i_unzip8_hi(const uint16x8& ca, const uint16x8& cb)
 #elif SIMDPP_USE_NEON
     return vuzpq_u16(a, b).val[1];
 #elif SIMDPP_USE_ALTIVEC
-    return vec_pack((__vector uint32_t)a, (__vector uint32_t)b);
+    return vec_pack((__vector uint32_t)(__vector uint16_t)a, (__vector uint32_t)(__vector uint16_t)b);
 #endif
 }
 

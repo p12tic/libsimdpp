@@ -18,6 +18,7 @@
 #include <simdpp/core/cmp_neq.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_sub.h>
+#include <simdpp/core/move_r.h>
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
@@ -159,7 +160,7 @@ template<class R, class E> SIMDPP_INL
 uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSE2
     uint32x4 ta;
@@ -173,10 +174,23 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 #elif SIMDPP_USE_NEON
     int32x4 z;
     z = shift_r<63>(uint64x2(a));
-    z = cmp_eq(z, int32x4::zero());
+    z = cmp_eq(z, 0);
     z = permute4<0,0,2,2>(z);
     z = bit_not(z);
     int64x2 t;
+    t = z;
+    a = bit_xor(a, t);
+    a = sub(a, t);
+    return a;
+#elif SIMDPP_USE_ALTIVEC
+    // not really supported
+    uint32x4 z;
+    z = move4_r<1>(uint32<4>(a));
+    z = shift_r<31>(z);
+    z = cmp_eq(z, 0);
+    z = permute4<0,0,2,2>(z);
+    z = bit_not(z);
+    uint64x2 t;
     t = z;
     a = bit_xor(a, t);
     a = sub(a, t);

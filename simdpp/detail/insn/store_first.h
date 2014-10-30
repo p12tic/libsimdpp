@@ -153,8 +153,8 @@ SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
     }
 #elif SIMDPP_USE_ALTIVEC
     if (n == 1) {
-        vec_ste((__vector uint32_t)a, 0, reinterpret_cast<uint32_t*>(p));
-        vec_ste((__vector uint32_t)a, 4, reinterpret_cast<uint32_t*>(p));
+        vec_ste((__vector uint32_t)(__vector uint64_t)a, 0, reinterpret_cast<uint32_t*>(p));
+        vec_ste((__vector uint32_t)(__vector uint64_t)a, 4, reinterpret_cast<uint32_t*>(p));
     }
 #endif
 }

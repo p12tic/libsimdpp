@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
+#include <simdpp/core/permute_bytes16.h>
 #include <simdpp/detail/null/shuffle.h>
 #include <simdpp/sse/shuffle.h>
 #include <simdpp/neon/detail/shuffle_int16x8.h>

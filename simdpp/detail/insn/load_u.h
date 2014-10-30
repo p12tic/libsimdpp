@@ -60,9 +60,9 @@ SIMDPP_INL uint8x16 i_load_u(uint8x16& a, const void* p)
     l1 = vec_ldl(0, q);
     l2 = vec_ldl(16, q);
     mask = vec_lvsl(0, q);
-    l1 = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
+    a = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
                  (__vector uint8_t)mask);
-    return l1;
+    return a;
 #endif
 }
 

@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/load.h>
 #include <simdpp/core/zip_lo.h>
 
 namespace simdpp {
@@ -184,7 +185,7 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #elif SIMDPP_USE_ALTIVEC
     SIMDPP_ALIGN(16) uint64_t rv[2];
     rv[0] = v0;
-    v = load(v, rv);
+    v = load(rv);
     v = splat<0>(v);
 #endif
 }

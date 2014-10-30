@@ -161,8 +161,8 @@ SIMDPP_INL void i_store_last(char* p, const uint64x2& a, unsigned n)
     }
 #elif SIMDPP_USE_ALTIVEC
     if (n == 1) {
-        vec_ste((__vector uint32_t)a, 8, reinterpret_cast<uint32_t*>(p));
-        vec_ste((__vector uint32_t)a, 12, reinterpret_cast<uint32_t*>(p));
+        vec_ste((__vector uint32_t)(uint32x4)a, 8, reinterpret_cast<uint32_t*>(p));
+        vec_ste((__vector uint32_t)(uint32x4)a, 12, reinterpret_cast<uint32_t*>(p));
     }
 #endif
 }

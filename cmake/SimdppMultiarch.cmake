@@ -274,9 +274,9 @@ set(SIMDPP_POWER_ALTIVEC_TEST_CODE
     int main()
     {
         volatile unsigned char a[16];
-        vector unsigned char v = vec_ld(a);
+        vector unsigned char v = vec_ld(0, a);
         v = vec_add(v, v);
-        vec_st(a, v);
+        vec_st(v, 0, a);
     }"
 )
 set(SIMDPP_ARCHS "${SIMDPP_ARCHS_PRI};${SIMDPP_ARCHS_SEC}")

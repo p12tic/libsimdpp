@@ -206,6 +206,10 @@ public:
 
     mask_int32<4>(const native_type& d) : d_(d) {}
 
+#if SIMDPP_USE_ALTIVEC
+    mask_int32<4>(const __vector __bool int& d) : d_((__vector uint32_t)d) {}
+#endif
+
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     mask_int32<4>(const uint32<4>& d) : d_(d) {}
 #endif

@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_DETAIL_NULL_FOREACH_H
 #define LIBSIMDPP_DETAIL_NULL_FOREACH_H
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || defined(SIMDPP_DOXYGEN)
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"

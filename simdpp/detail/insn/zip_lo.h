@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/detail/null/shuffle.h>
 #include <simdpp/neon/shuffle.h>
 

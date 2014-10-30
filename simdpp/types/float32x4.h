@@ -137,6 +137,10 @@ public:
 
     mask_float32<4>(const native_type& d) : d_(d) {}
 
+#if SIMDPP_USE_ALTIVEC
+    mask_float32<4>(const __vector __bool int& d) : d_((__vector float)d) {}
+#endif
+
 #if SIMDPP_USE_SSE2
     mask_float32<4>(const float32<4>& d) : d_(d) {}
 #endif

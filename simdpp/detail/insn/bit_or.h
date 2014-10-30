@@ -342,7 +342,7 @@ float64<N> i_bit_or(const float64<N>& a, const float64<N>& b)
 // mask_float64, mask_float64
 SIMDPP_INL mask_float64<2> i_bit_or(const mask_float64<2>& a, const mask_float64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return detail::null::bit_or_mm(a, b);
 #else
     return (mask_float64<2>) i_bit_or(float64<2>(a), float64<2>(b));
