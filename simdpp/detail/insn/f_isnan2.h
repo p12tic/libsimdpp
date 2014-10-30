@@ -62,12 +62,14 @@ mask_float32<N> i_isnan2(const float32<N>& a, const float32<N>& b)
 
 SIMDPP_INL mask_float64x2 i_isnan2(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::isnan2(a, b);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpunord_pd(a, b);
+#elif SIMDPP_USE_NEON64
+    return bit_or(isnan(a), isnan(b));
 #endif
 }
 

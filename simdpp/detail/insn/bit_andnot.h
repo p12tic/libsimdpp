@@ -451,10 +451,13 @@ mask_float32<N> i_bit_andnot(const mask_float32<N>& a, const mask_float32<N>& b)
 // float64, float64
 SIMDPP_INL float64<2> i_bit_andnot(const float64<2>& a, const float64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_andnot(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_andnot_pd(b, a);
+#elif SIMDPP_USE_NEON64
+    return vreinterpretq_f64_u64(vbicq_u64(vreinterpretq_u64_f64(a),
+                                           vreinterpretq_u64_f64(b)));
 #endif
 }
 
@@ -513,7 +516,7 @@ float64<N> i_bit_andnot(const float64<N>& a, const mask_float64<N>& b)
 // mask_float64, mask_float64
 SIMDPP_INL mask_float64<2> i_bit_andnot(const mask_float64<2>& a, const mask_float64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_andnot_mm(a, b);
 #else
     return mask_float64<2>(i_bit_andnot(float64<2>(a), float64<2>(b)));

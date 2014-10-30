@@ -190,11 +190,13 @@ float32<N> i_zip4_lo(const float32<N>& a, const float32<N>& b)
 
 SIMDPP_INL float64x2 i_zip2_lo(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
     return detail::null::zip2_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a),
                                        _mm_castpd_ps(b)));
+#elif SIMDPP_USE_NEON64
+    return vtrn1q_f64(a, b);
 #endif
 }
 

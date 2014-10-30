@@ -308,10 +308,13 @@ mask_float32<N> i_bit_xor(const mask_float32<N>& a, const mask_float32<N>& b)
 
 SIMDPP_INL float64x2 i_bit_xor(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_xor(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_xor_pd(a, b);
+#elif SIMDPP_USE_NEON64
+    return vreinterpretq_f64_u64(veorq_u64(vreinterpretq_u64_f64(a),
+                                           vreinterpretq_u64_f64(b)));
 #endif
 }
 
@@ -340,7 +343,7 @@ float64<N> i_bit_xor(const float64<N>& a, const float64<N>& b)
 
 SIMDPP_INL mask_float64x2 i_bit_xor(const mask_float64x2& a, mask_float64x2 b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_xor_mm(a, b);
 #else
     return (mask_float64x2) i_bit_xor(float64x2(a), float64x2(b));

@@ -77,8 +77,10 @@ float64<2> expr_eval(const expr_sub<float64<2,E1>,
 {
     float64<2> a = q.a.eval();
     float64<2> b = q.b.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::sub(a, b);
+#elif SIMDPP_USE_NEON64
+    return vsubq_f64(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_sub_pd(a, b);
 #endif

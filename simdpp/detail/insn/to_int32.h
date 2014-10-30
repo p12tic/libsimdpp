@@ -148,7 +148,7 @@ int32<N> i_to_int32(const float32<N>& a)
 
 SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
     r[0] = int32_t(a.vec(0).el(0));
     r[1] = int32_t(a.vec(0).el(1));
@@ -162,6 +162,13 @@ SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
     r1 = _mm_cvttpd_epi32(a1);
     r2 = _mm_cvttpd_epi32(a2);
     r = zip2_lo(int64<2>(r1), int64<2>(r2));
+    return r;
+#elif SIMDPP_USE_NEON64
+    int64<2> r1, r2;
+    r1 = vcvtq_s64_f64(a.vec(0));
+    r2 = vcvtq_s64_f64(a.vec(1));
+    // FIXME: saturation
+    int32<4> r = vcombine_s32(vqmovn_s64(r1), vqmovn_s64(r2));
     return r;
 #else
     SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();

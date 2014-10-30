@@ -488,7 +488,7 @@ mask_int64<N> i_blend(const mask_int64<N>& on, const mask_int64<N>& off, const m
 SIMDPP_INL float64<2> i_blend(const float64<2>& con, const float64<2>& coff, const float64<2>& mask)
 {
     float64<2> on = con, off = coff;
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::blend(on, off, mask);
 #elif SIMDPP_USE_AVX
     return _mm_blendv_pd(off, on, mask);
@@ -498,6 +498,8 @@ SIMDPP_INL float64<2> i_blend(const float64<2>& con, const float64<2>& coff, con
     off = bit_andnot(off, mask);
       r = bit_or(on, off);
     return r;
+#elif SIMDPP_USE_NEON64
+    return vbslq_f64(uint64<2>(mask), on, off);
 #endif
 }
 
@@ -526,7 +528,7 @@ float64<N> i_blend(const float64<N>& on, const float64<N>& off, const float64<N>
 
 SIMDPP_INL float64<2> i_blend(const float64<2>& on, const float64<2>& off, const mask_float64<2>& mask)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::blend_mask(on, off, mask);
 #else
     return i_blend(on, off, float64<2>(mask));
@@ -558,7 +560,7 @@ float64<N> i_blend(const float64<N>& on, const float64<N>& off, const mask_float
 
 SIMDPP_INL mask_float64<2> i_blend(const mask_float64<2>& on, const mask_float64<2>& off, const mask_float64<2>& mask)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::blend_mask(on, off, mask);
 #else
     return mask_float64<2>(i_blend(float64<2>(on), float64<2>(off), float64<2>(mask)));

@@ -29,7 +29,7 @@ namespace insn {
 
 SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> ax(a);
     float64x4 r;
     r.vec(0).el(0) = double(ax[0]);
@@ -43,6 +43,11 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
     float64x2 r1, r2;
     r1 = _mm_cvtepi32_pd(a);
     r2 = _mm_cvtepi32_pd(move4_r<2>(a).eval());
+    return combine(r1, r2);
+#elif SIMDPP_USE_NEON64
+    float64<2> r1, r2;
+    r1 = vcvtq_f64_s64(vmovl_s32(vget_low_s32(a)));
+    r2 = vcvtq_f64_s64(vmovl_s32(vget_high_s32(a)));
     return combine(r1, r2);
 #endif
 }
@@ -89,7 +94,7 @@ float64<N> i_to_float64(const int32<N>& a)
 
 SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
     float64x4 r;
     r.vec(0).el(0) = double(ax[0]);
@@ -103,6 +108,11 @@ SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
     float64x2 r1, r2;
     r1 = _mm_cvtps_pd(a);
     r2 = _mm_cvtps_pd(move4_r<2>(a).eval());
+    return combine(r1, r2);
+#elif SIMDPP_USE_NEON64
+    float64<2> r1, r2;
+    r1 = vcvt_f64_f32(vget_low_f32(a));
+    r2 = vcvt_high_f64_f32(a);
     return combine(r1, r2);
 #endif
 }

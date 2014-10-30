@@ -316,6 +316,7 @@
     #define SIMDPP_PP_ALTIVEC
 #endif
 
+// helper macros
 #if __amd64__ || __x86_64__ || _M_AMD64 || __aarch64__ || __powerpc64__
 #define SIMDPP_64_BITS 1
 #define SIMDPP_32_BITS 0
@@ -323,6 +324,15 @@
 #define SIMDPP_32_BITS 1
 #define SIMDPP_64_BITS 0
 #endif
+
+#if SIMDPP_USE_NEON && SIMDPP_64_BITS
+#define SIMDPP_USE_NEON_FLT_SP 1
+#endif
+
+#define SIMDPP_USE_NEON32 (SIMDPP_USE_NEON && SIMDPP_32_BITS)
+#define SIMDPP_USE_NEON64 (SIMDPP_USE_NEON && SIMDPP_64_BITS)
+#define SIMDPP_USE_NEON32_FLT_SP (SIMDPP_USE_NEON_FLT_SP && SIMDPP_32_BITS)
+#define SIMDPP_USE_NEON_NO_FLT_SP (SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP)
 
 #if __i386__ || __i386 || _M_IX86 || __amd64__ || __x64_64__ || _M_AMD64 || _M_X64
 #define SIMDPP_X86 1
@@ -357,10 +367,7 @@
 
 #define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT13
 
-// helper macro
-#if SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
-#define SIMDPP_USE_NEON_NO_FLT_SP 1
-#endif
+
 
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required

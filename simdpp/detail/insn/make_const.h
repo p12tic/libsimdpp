@@ -116,8 +116,16 @@ void i_make_const(float32<N>& v, const expr_vec_make_const<VE,NE>& e)
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(float64<2>& v, const expr_vec_make_const<VE,N>& e)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<float64<2>, double>(e.val(0), e.val(1));
+#elif SIMDPP_USE_NEON64
+    union {
+        SIMDPP_ALIGN(16) double rv[2];
+        float64<2> r;
+    } x;
+    x.rv[0] = e.val(0);
+    x.rv[1] = e.val(1);
+    v = x.r;
 #elif SIMDPP_USE_SSE2
     v = _mm_set_pd(e.val(1), e.val(0));
 #endif

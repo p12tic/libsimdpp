@@ -228,8 +228,13 @@ void i_load_packed3(float32<N>& a, float32<N>& b, float32<N>& c, const char* p)
 SIMDPP_INL void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::null::load_packed3(a, b, c, p);
+#elif SIMDPP_USE_NEON64
+    auto r = vld3q_f64(reinterpret_cast<const double*>(p));
+    a = r.val[0];
+    b = r.val[1];
+    c = r.val[2];
 #elif SIMDPP_USE_SSE2
     v128_load_packed3(a, b, c, p);
 #endif

@@ -86,7 +86,7 @@ float32<N> i_to_float32(const int32<N>& a)
 
 SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
     r[0] = float(a.vec(0).el(0));
     r[1] = float(a.vec(0).el(1));
@@ -101,6 +101,11 @@ SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
     r2 = _mm_cvtpd_ps(a.vec(1));
     r2 = move4_l<2>(r2);
     return bit_or(r1, r2);
+#elif SIMDPP_USE_NEON64
+    float32<4> r;
+    r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0)),
+                          a.vec(1));
+    return r;
 #endif
 }
 

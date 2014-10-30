@@ -123,11 +123,15 @@ SIMDPP_INL float32x4 i_load_u(float32x4& a, const void* p)
 
 SIMDPP_INL float64x2 i_load_u(float64x2& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
-    detail::null::load(a, p);
+    const double* q = reinterpret_cast<const double*>(p);
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
+    detail::null::load(a, q);
     return a;
 #elif SIMDPP_USE_SSE2
-    a = _mm_loadu_pd(reinterpret_cast<const double*>(p));
+    a = _mm_loadu_pd(q);
+    return a;
+#elif SIMDPP_USE_NEON64
+    a = vld1q_f64(q);
     return a;
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, p);

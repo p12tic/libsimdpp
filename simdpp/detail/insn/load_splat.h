@@ -239,13 +239,15 @@ SIMDPP_INL void i_load_splat(float64x2& v, const void* p0)
 {
     const double* v0 = reinterpret_cast<const double*>(p0);
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<float64x2>(*v0);
 #elif SIMDPP_USE_SSE3
     v = _mm_loaddup_pd(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_load_sd(v0);
     v = permute2<0,0>(v);
+#elif SIMDPP_USE_NEON64
+    v = vld1q_dup_f64(v0);
 #endif
 }
 

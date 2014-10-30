@@ -33,6 +33,8 @@ SIMDPP_INL float32x4 i_sqrt(const float32x4& a)
     return detail::null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a);
+#elif SIMPDP_USE_NEON64
+    return vsqrtq_f32(a);
 #elif SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_ALTIVEC
     float32x4 x;
     x = rsqrt_e(a);
@@ -65,10 +67,12 @@ float32<N> i_sqrt(const float32<N>& a)
 
 SIMDPP_INL float64x2 i_sqrt(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_pd(a);
+#elif SIMDPP_USE_NEON64
+    return vsqrtq_f64(a);
 #endif
 }
 

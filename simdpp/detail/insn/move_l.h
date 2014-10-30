@@ -209,7 +209,7 @@ float32<N> i_move4_l(const float32<N>& a)
 template<unsigned shift> SIMDPP_INL
 float64<2> i_move2_l(const float64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::move_n_l<shift>(a);
 #else
     return (float64<2>) i_move16_l<shift*8>(uint8<16>(a));

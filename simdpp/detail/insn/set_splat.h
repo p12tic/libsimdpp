@@ -271,10 +271,12 @@ void i_set_splat(float32<N>& v, float v0)
 
 SIMDPP_INL void i_set_splat(float64x2& v, double v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<float64x2>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_pd(v0);            // likely in a SSE register anyway
+#elif SIMDPP_USE_NEON64
+    v = vdupq_n_f64(v0);
 #endif
 }
 

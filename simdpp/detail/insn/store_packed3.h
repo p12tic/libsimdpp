@@ -237,10 +237,16 @@ void i_store_packed3(char* p,
 SIMDPP_INL void i_store_packed3(char* p, const float64x2& a, const float64x2& b, const float64x2& c)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
     detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2
     v128_store_pack3(p, a, b, c);
+#elif SIMDPP_USE_NEON64
+    float64x2x3_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    vst3q_f64(reinterpret_cast<double*>(p), t);
 #endif
 }
 

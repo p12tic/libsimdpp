@@ -73,10 +73,12 @@ SIMDPP_INL void i_load(float64x2& a, const char* p)
 {
     const double* q = reinterpret_cast<const double*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
     detail::null::load(a, q);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_pd(q);
+#elif SIMDPP_USE_NEON64
+    a = vld1q_f64(q);
 #endif
 }
 

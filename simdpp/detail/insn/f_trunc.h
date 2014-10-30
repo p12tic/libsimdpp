@@ -31,6 +31,8 @@ SIMDPP_INL float32x4 i_trunc(const float32x4& a)
     return detail::null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_round_ps(a, 3); // 3 = i_truncate
+#elif SIMDPP_USE_NEON64
+    return vrndq_f32(a); // FIXME: in ARM8 A32 too
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large
     float32x4 af = abs(a);

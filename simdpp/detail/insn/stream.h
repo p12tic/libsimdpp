@@ -146,10 +146,12 @@ SIMDPP_INL void i_stream(char* p, const float32<16>& a)
 SIMDPP_INL void i_stream(char* p, const float64x2& a)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_pd(reinterpret_cast<double*>(p), a);
+#elif SIMDPP_USE_NEON64
+    store(p, a);
 #endif
 }
 

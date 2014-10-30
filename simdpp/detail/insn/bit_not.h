@@ -234,11 +234,13 @@ float32<N> i_bit_not(const float32<N>& a)
 
 SIMDPP_INL float64x2 i_bit_not(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return float64x2(i_bit_not(uint64x2(a)));
 #elif SIMDPP_USE_SSE2
     uint64x2 ones = uint64x2::ones();
     return bit_xor(a, ones);
+#elif SIMDPP_USE_NEON64
+    return (float64<2>) (uint32<4>) vmvnq_u32((uint32<4>)a);
 #endif
 }
 
@@ -299,7 +301,7 @@ mask_float32<N> i_bit_not(const mask_float32<N>& a)
 
 SIMDPP_INL mask_float64x2 i_bit_not(const mask_float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_not_mm(a);
 #else
     return (mask_float64x2) i_bit_not(float64x2(a));

@@ -68,10 +68,12 @@ template<class R, class E> SIMDPP_INL
 float64x2 expr_eval(const expr_neg<float64<2,E>>& q)
 {
     float64x2 a = q.a.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::neg(a);
 #elif SIMDPP_USE_SSE2
     return bit_xor(a, 0x8000000000000000);
+#elif SIMDPP_USE_NEON64
+    return vnegq_f64(a);
 #endif
 }
 

@@ -40,6 +40,8 @@ SIMDPP_INL float32x4 i_ceil(const float32x4& a)
     return detail::null::foreach<float32x4>(a, [](float x){ return std::ceil(x); });
 #elif SIMDPP_USE_SSE4_1
     return _mm_ceil_ps(a);
+#elif SIMDPP_USE_NEON64
+    return vrndpq_f32(a); // FIXME: ARMv8
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);

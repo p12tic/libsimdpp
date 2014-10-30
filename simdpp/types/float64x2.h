@@ -40,6 +40,8 @@ public:
 
 #if SIMDPP_USE_SSE2
     using native_type = __m128d;
+#elif SIMDPP_USE_NEON64
+    using native_type = float64x2_t;
 #else
     using native_type = detail::array<double, 2>;
 #endif
@@ -87,7 +89,7 @@ public:
     float64<2> eval() const { return *this; }
 
 #ifndef SIMDPP_DOXYGEN
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     /// For internal use only
     const double& el(unsigned i) const { return d_[i]; }
           double& el(unsigned i)       { return d_[i]; }
@@ -123,7 +125,9 @@ public:
 
 #if SIMDPP_USE_SSE2
     using native_type = __m128d;
-#else // NULL, NEON, ALTIVEC
+#elif SIMDPP_USE_NEON64
+    using native_type = float64x2_t;
+#else // NULL, NEON 32bit, ALTIVEC
     using native_type = detail::array<bool, 2>;
 #endif
 
@@ -133,7 +137,7 @@ public:
 
     mask_float64<2>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
     mask_float64<2>(const float64<2>& d) : d_(d) {}
 #endif
 
@@ -151,14 +155,14 @@ public:
     /// Access the underlying type
     float64<2> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
         return detail::null::unmask_mask<float64<2>>(*this);
     #else
         return float64<2>(d_);
     #endif
     }
 
-#if !SIMDPP_USE_SSE2 && !SIMDPP_DOXYGEN
+#if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64)
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif

@@ -141,11 +141,14 @@ SIMDPP_INL void i_store(char* p, const float32<16>& a)
 
 SIMDPP_INL void i_store(char* p, const float64x2& a)
 {
-    p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::null::store(p, a);
+    double* q = reinterpret_cast<double*>(p);
+    q = detail::assume_aligned(q, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    detail::null::store(q, a);
 #elif SIMDPP_USE_SSE2
-    _mm_store_pd(reinterpret_cast<double*>(p), a);
+    _mm_store_pd(q, a);
+#elif SIMDPP_USE_NEON64
+    vst1q_f64(q, a);
 #endif
 }
 

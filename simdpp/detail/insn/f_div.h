@@ -31,6 +31,8 @@ SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
     return detail::null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_ps(a, b);
+#elif SIMDPP_USE_NEON64
+    return vdivq_f32(a, b);
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x;
     x = rcp_e(b);
@@ -70,10 +72,12 @@ float32<N> i_div(const float32<N>& a, const float32<N>& b)
 
 SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
 #elif SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
+#elif SIMDPP_USE_NEON64
+    return vdivq_f64(a, b);
 #endif
 }
 

@@ -101,7 +101,7 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 float64x2 i_permute2(const float64x2& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::permute<s0,s1>(a);
 #elif SIMDPP_USE_SSE2
     return _mm_shuffle_pd(a, a, _MM_SHUFFLE2(s1, s0));

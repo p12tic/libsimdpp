@@ -36,6 +36,9 @@ float32<4> expr_eval(const expr_fmsub<float32<4,E1>,
     return _mm_fmsub_ps(a, b, c);
 #elif SIMDPP_USE_FMA4
     return _mm_msub_ps(a, b, c);
+#elif SIMDPP_USE_NEON64
+    // FIXME: also in vfpv4
+    return vfmsq_f32(a, b, c);
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif
@@ -100,6 +103,9 @@ float64<2> expr_eval(const expr_fmsub<float64<2,E1>,
     return _mm_fmsub_pd(a, b, c);
 #elif SIMDPP_USE_FMA4
     return _mm_msub_pd(a, b, c);
+#elif SIMDPP_USE_NEON64
+    // FIXME: also in vfpv4
+    return vfmsq_f64(a, b, c);
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
 #endif

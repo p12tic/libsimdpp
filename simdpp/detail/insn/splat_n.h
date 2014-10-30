@@ -319,9 +319,9 @@ template<unsigned s> SIMDPP_INL
 float64x2 i_splat2(const float64x2& a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
     return detail::null::splat<s>(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
     return permute2<s,s>(a);
 #endif
 }
