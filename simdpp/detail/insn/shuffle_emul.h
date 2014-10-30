@@ -16,8 +16,8 @@
 #include <simdpp/types.h>
 #include <simdpp/core/permute2.h>
 #include <simdpp/core/shuffle1.h>
-#include <simdpp/core/insert.h>
-#include <simdpp/core/extract.h>
+#include <simdpp/core/combine.h>
+#include <simdpp/core/split.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN

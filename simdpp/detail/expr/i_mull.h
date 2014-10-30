@@ -17,6 +17,7 @@
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/detail/vec_insert.h>
 #include <simdpp/core/to_int64.h>
+#include <simdpp/core/combine.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 

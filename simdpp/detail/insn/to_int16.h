@@ -13,12 +13,12 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/combine.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/core/insert.h>
 #include <simdpp/detail/null/foreach.h>
 #include <simdpp/core/detail/vec_insert.h>
 
@@ -54,8 +54,9 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     return r;
 #elif SIMDPP_USE_ALTIVEC
     uint16x16 r;
-    r.vec(0) = vmovl_u8(vget_low_u8(a.vec(0)));
-    r.vec(1) = vmovl_u8(vget_high_u8(a.vec(1)));
+    //r.vec(0) = vmovl_u8(vget_low_u8(a.vec(0)));
+    //r.vec(1) = vmovl_u8(vget_high_u8(a.vec(1)));
+    TODO
     return r;
 #endif
 }

@@ -16,7 +16,7 @@
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/core/insert.h>
+#include <simdpp/core/combine.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN

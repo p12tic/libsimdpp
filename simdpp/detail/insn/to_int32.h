@@ -13,12 +13,12 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/combine.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/core/insert.h>
 #include <simdpp/detail/null/foreach.h>
 #include <simdpp/core/detail/vec_insert.h>
 
