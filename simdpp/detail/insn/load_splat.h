@@ -151,8 +151,7 @@ SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
     v = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(v0));
     v = permute2<0,0>(v);
 #elif SIMDPP_USE_NEON
-    uint64x1_t r0 = vld1_dup_u64(v0);
-    v = vcombine_u64(r0, r0);
+    v = vld1q_dup_u64(v0);
 #elif SIMDPP_USE_ALTIVEC
     SIMDPP_ALIGN(16) uint64_t rv[2];
     rv[0] = *v0;
