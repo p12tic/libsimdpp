@@ -26,7 +26,7 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL uint8x16 shuffle_bytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
+SIMDPP_INL uint8x16 i_shuffle_bytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -50,7 +50,7 @@ SIMDPP_INL uint8x16 shuffle_bytes16(const uint8x16& a, const uint8x16& b, const 
     ai = _mm_shuffle_epi8(a, mask);
     bi = _mm_shuffle_epi8(b, mask);
     r = _mm_blendv_epi8(ai, bi, sel);
-    return r;
+    return (uint8<16>) r;
 #elif SIMDPP_USE_SSSE3
     uint8x16 m, m1, m2, ai, bi;
     m = mask;
@@ -76,7 +76,7 @@ SIMDPP_INL uint8x16 shuffle_bytes16(const uint8x16& a, const uint8x16& b, const 
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 shuffle_bytes16(const uint8x32& a, const uint8x32& b, const uint8x32& mask)
+SIMDPP_INL uint8x32 i_shuffle_bytes16(const uint8x32& a, const uint8x32& b, const uint8x32& mask)
 {
     int16x16 sel, ai, bi, r;
     sel = mask;
@@ -85,40 +85,40 @@ SIMDPP_INL uint8x32 shuffle_bytes16(const uint8x32& a, const uint8x32& b, const 
     ai = _mm256_shuffle_epi8(a, mask);
     bi = _mm256_shuffle_epi8(b, mask);
     r = _mm256_blendv_epi8(ai, bi, sel);
-    return r;
+    return (uint8<32>) r;
 }
 #endif
 
 template<unsigned N> SIMDPP_INL
-uint8<N> shuffle_bytes16(const uint8<N>& a, const uint8<N>& b, const uint8<N>& mask)
+uint8<N> i_shuffle_bytes16(const uint8<N>& a, const uint8<N>& b, const uint8<N>& mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, shuffle_bytes16, a, b, mask);
+    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, i_shuffle_bytes16, a, b, mask);
 }
 
 template<unsigned N> SIMDPP_INL
-uint16<N> shuffle_bytes16(const uint16<N>& a, const uint16<N>& b, const uint16<N>& mask)
+uint16<N> i_shuffle_bytes16(const uint16<N>& a, const uint16<N>& b, const uint16<N>& mask)
 {
-    return shuffle_bytes16(uint8<N*2>(a), uint8<N*2>(b), uint8<N*2>(mask));
+    return (uint16<N>) i_shuffle_bytes16(uint8<N*2>(a), uint8<N*2>(b), uint8<N*2>(mask));
 }
 template<unsigned N> SIMDPP_INL
-uint32<N> shuffle_bytes16(const uint32<N>& a, const uint32<N>& b, const uint32<N>& mask)
+uint32<N> i_shuffle_bytes16(const uint32<N>& a, const uint32<N>& b, const uint32<N>& mask)
 {
-    return shuffle_bytes16(uint8<N*4>(a), uint8<N*4>(b), uint8<N*4>(mask));
+    return (uint32<N>) i_shuffle_bytes16(uint8<N*4>(a), uint8<N*4>(b), uint8<N*4>(mask));
 }
 template<unsigned N> SIMDPP_INL
-uint64<N> shuffle_bytes16(const uint64<N>& a, const uint64<N>& b, const uint64<N>& mask)
+uint64<N> i_shuffle_bytes16(const uint64<N>& a, const uint64<N>& b, const uint64<N>& mask)
 {
-    return shuffle_bytes16(uint8<N*8>(a), uint8<N*8>(b), uint8<N*8>(mask));
+    return (uint64<N>) i_shuffle_bytes16(uint8<N*8>(a), uint8<N*8>(b), uint8<N*8>(mask));
 }
 template<unsigned N> SIMDPP_INL
-float32<N> shuffle_bytes16(const float32<N>& a, const float32<N>& b, const uint32<N>& mask)
+float32<N> i_shuffle_bytes16(const float32<N>& a, const float32<N>& b, const uint32<N>& mask)
 {
-    return float32<N>(shuffle_bytes16(uint32<N>(a), uint32<N>(b), mask));
+    return float32<N>(i_shuffle_bytes16(uint32<N>(a), uint32<N>(b), mask));
 }
 template<unsigned N> SIMDPP_INL
-float64<N> shuffle_bytes16(const float64<N>& a, const float64<N>& b, const uint64<N>& mask)
+float64<N> i_shuffle_bytes16(const float64<N>& a, const float64<N>& b, const uint64<N>& mask)
 {
-    return float64<N>(shuffle_bytes16(uint64<N>(a), uint64<N>(b), mask));
+    return float64<N>(i_shuffle_bytes16(uint64<N>(a), uint64<N>(b), mask));
 }
 
 
