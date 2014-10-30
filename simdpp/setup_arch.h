@@ -316,12 +316,12 @@
     #define SIMDPP_PP_ALTIVEC
 #endif
 
-#if __i386__ || __i386 || _M_IX86 || !defined(__aarch64__)
+#if __amd64__ || __x86_64__ || _M_AMD64 || __aarch64__ || __powerpc64__
+#define SIMDPP_64_BITS 1
+#define SIMDPP_32_BITS 0
+#else
 #define SIMDPP_32_BITS 1
 #define SIMDPP_64_BITS 0
-#else
-#define SIMDPP_32_BITS 0
-#define SIMDPP_64_BITS 1
 #endif
 
 
