@@ -155,7 +155,7 @@ SIMDPP_INL void i_store_packed3(char* p,
     detail::null::store_packed3(p, a, b, c);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack3(p, a, b, c);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON32
     uint64_t* q = reinterpret_cast<uint64_t*>(p);
     uint64x1x2_t t1, t2, t3;
     t1.val[0] = vget_low_u64(a);  t1.val[1] = vget_low_u64(b);
@@ -165,6 +165,12 @@ SIMDPP_INL void i_store_packed3(char* p,
     vst2_u64(q, t1);
     vst2_u64(q+2, t2);
     vst2_u64(q+4, t3);
+#elif SIMDPP_USE_NEON64
+    uint64x2x3_t t;
+    t.val[0] = a;
+    t.val[1] = b;
+    t.val[2] = c;
+    vst3q_u64(reinterpret_cast<uint64_t*>(p), t);
 #endif
 }
 

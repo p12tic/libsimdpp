@@ -153,6 +153,12 @@ SIMDPP_INL void i_load_packed4(uint64x2& a, uint64x2& b,
 {
 #if SIMDPP_USE_NULL
     detail::null::load_packed4(a, b, c, d, p);
+#elif SIMDPP_USE_NEON64
+    auto r = vld4q_u64(reinterpret_cast<const uint64_t*>(p));
+    a = r.val[0];
+    b = r.val[1];
+    c = r.val[2];
+    d = r.val[3];
 #else
     v128_load_packed4(a, b, c, d, p);
 #endif

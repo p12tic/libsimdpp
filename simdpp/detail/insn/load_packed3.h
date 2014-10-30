@@ -145,7 +145,12 @@ SIMDPP_INL void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char
     detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed3(a, b, c, p);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON64
+    auto r = vld3q_u64(reinterpret_cast<const uint64_t*>(p));
+    a = r.val[0];
+    b = r.val[1];
+    c = r.val[2];
+#elif SIMDPP_USE_NEON32
     uint64x2 a0, b0, c0;
     a0 = load(p);
     b0 = load(p+16);
