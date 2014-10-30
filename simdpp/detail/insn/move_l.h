@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/permute4.h>
+#include <simdpp/detail/null/shuffle.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -27,17 +28,8 @@ template<unsigned shift> SIMDPP_INL
 uint8x16 i_move16_l(const uint8x16& a)
 {
     static_assert(shift <= 16, "Selector out of range");
-
 #if SIMDPP_USE_NULL
-    uint8x16 r;
-    //use int to disable warnings wrt. comparison result always being true/false
-    for (int i = 0; i < (int) (16-shift); i++) {
-        r.el(i) = a.el(i + shift);
-    }
-    for (unsigned i = 16-shift; i < 16; i++) {
-        r.el(i) = 0;
-    }
-    return r;
+    return detail::null::move_n_l<shift>(a);
 #elif SIMDPP_USE_SSE2
     return _mm_srli_si128(a, shift);
 #elif SIMDPP_USE_NEON
@@ -67,10 +59,29 @@ uint8<N> i_move16_l(const uint8<N>& a)
 
 // -----------------------------------------------------------------------------
 
+template<unsigned shift> SIMDPP_INL
+uint16<8> i_move8_l(const uint16<8>& a)
+{
+#if SIMDPP_USE_NULL
+    return detail::null::move_n_l<shift>(a);
+#else
+    return (uint16<8>) i_move16_l<shift*2>(uint8<16>(a));
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+template<unsigned shift> SIMDPP_INL
+uint16<16> i_move8_l(const uint16<16>& a)
+{
+    static_assert(shift <= 8, "Selector out of range");
+    return _mm256_srli_si256(a, shift*2);
+}
+#endif
+
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint16<N> i_move8_l(const uint16<N>& a)
 {
-    return uint16<N>(i_move16_l<shift*2>(uint8<N*2>(a)));
+    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, i_move8_l<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +89,11 @@ uint16<N> i_move8_l(const uint16<N>& a)
 template<unsigned shift> SIMDPP_INL
 uint32<4> i_move4_l(const uint32<4>& a)
 {
+#if SIMDPP_USE_NULL
+    return detail::null::move_n_l<shift>(a);
+#else
     return (uint32<4>) i_move16_l<shift*4>(uint8<16>(a));
+#endif
 }
 
 #if SIMDPP_USE_AVX2
@@ -116,7 +131,11 @@ uint32<N> i_move4_l(const uint32<N>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<2> i_move2_l(const uint64<2>& a)
 {
+#if SIMDPP_USE_NULL
+    return detail::null::move_n_l<shift>(a);
+#else
     return (uint64<2>) i_move16_l<shift*8>(uint8<16>(a));
+#endif
 }
 
 #if SIMDPP_USE_AVX2
@@ -140,7 +159,7 @@ uint64<8> i_move2_l(const uint64<8>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint64<N> i_move2_l(const uint64<N>& a)
 {
-    return uint64<N>(i_move16_l<shift*8>(uint8<N*8>(a)));
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_move2_l<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -148,10 +167,14 @@ uint64<N> i_move2_l(const uint64<N>& a)
 template<unsigned shift> SIMDPP_INL
 float32<4> i_move4_l(const float32<4>& a)
 {
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+    return detail::null::move_n_l<shift>(a);
+#else
     return (float32<4>) i_move16_l<shift*4>(uint8<16>(a));
+#endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 template<unsigned shift> SIMDPP_INL
 float32<8> i_move4_l(const float32<8>& a)
 {
@@ -178,7 +201,7 @@ float32<16> i_move4_l(const float32<16>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 float32<N> i_move4_l(const float32<N>& a)
 {
-    return float32<N>(i_move4_l<shift>(uint32<N>(a)));
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_move4_l<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -186,10 +209,14 @@ float32<N> i_move4_l(const float32<N>& a)
 template<unsigned shift> SIMDPP_INL
 float64<2> i_move2_l(const float64<2>& a)
 {
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    return detail::null::move_n_l<shift>(a);
+#else
     return (float64<2>) i_move16_l<shift*8>(uint8<16>(a));
+#endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 template<unsigned shift> SIMDPP_INL
 float64<4> i_move2_l(const float64<4>& a)
 {
@@ -214,7 +241,7 @@ float64<8> i_move2_l(const float64<8>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 float64<N> i_move2_l(const float64<N>& a)
 {
-    return float64<N>(i_move2_l<shift>(uint64<N>(a)));
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_move2_l<shift>, a);
 }
 
 } // namespace insn

@@ -134,7 +134,12 @@ void i_load_packed2(uint32<N>& a, uint32<N>& b, const char* p)
 
 SIMDPP_INL void i_load_packed2(uint64x2& a, uint64x2& b, const char* p)
 {
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL
+    detail::null::load_packed2(a, b, p);
+#else
     v128_load_packed2(a, b, p);
+#endif
 }
 
 #if SIMDPP_USE_AVX2
@@ -198,7 +203,12 @@ void i_load_packed2(float32<N>& a, float32<N>& b, const char* p)
 
 SIMDPP_INL void i_load_packed2(float64x2& a, float64x2& b, const char* p)
 {
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::null::load_packed2(a, b, p);
+#else
     v128_load_packed2(a, b, p);
+#endif
 }
 
 #if SIMDPP_USE_AVX

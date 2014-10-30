@@ -154,7 +154,11 @@ void i_store_packed4(char* p,
 SIMDPP_INL void i_store_packed4(char* p,
                                 const uint64x2& a, const uint64x2& b, const uint64x2& c, const uint64x2& d)
 {
+#if SIMDPP_USE_NULL
+    detail::null::store_packed4(p, a, b, c, d);
+#else
     v128_store_pack4(p, a, b, c, d);
+#endif
 }
 
 #if SIMDPP_USE_AVX2

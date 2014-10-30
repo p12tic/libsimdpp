@@ -25,6 +25,32 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace null {
 
+template<unsigned count, class V> SIMDPP_INL
+V move_n_l(const V& a)
+{
+    V r;
+    for (unsigned i = 0; i < V::length - count; i++) {
+        r.el(i) = a.el(i+count);
+    }
+    for (unsigned i = V::length - count; i < V::length; i++) {
+        r.el(i) = 0;
+    }
+    return r;
+}
+
+template<unsigned count, class V> SIMDPP_INL
+V move_n_r(const V& a)
+{
+    V r;
+    for (unsigned i = 0; i < count; i++) {
+        r.el(i) = 0;
+    }
+    for (unsigned i = 0; i < V::length - count; i++) {
+        r.el(i+count) = a.el(i);
+    }
+    return r;
+}
+
 template<class V> SIMDPP_INL
 V zip_lo_impl(const V& a, const V& b)
 {

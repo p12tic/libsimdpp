@@ -136,7 +136,11 @@ void i_store_packed2(char* p, const uint32<N>& a, const uint32<N>& b)
 
 SIMDPP_INL void i_store_packed2(char* p, const uint64x2& a, const uint64x2& b)
 {
+#if SIMDPP_USE_NULL
+    detail::null::store_packed2(p, a, b);
+#else
     v128_store_pack2(p, a, b);
+#endif
 }
 
 #if SIMDPP_USE_AVX2
@@ -200,7 +204,11 @@ void i_store_packed2(char* p, const float32<N>& a, const float32<N>& b)
 
 SIMDPP_INL void i_store_packed2(char* p, const float64x2& a, const float64x2& b)
 {
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::null::store_packed2(p, a, b);
+#else
     v128_store_pack2(p, a, b);
+#endif
 }
 
 #if SIMDPP_USE_AVX

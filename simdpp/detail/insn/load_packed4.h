@@ -151,7 +151,11 @@ void i_load_packed4(uint32<N>& a, uint32<N>& b, uint32<N>& c, uint32<N>& d,
 SIMDPP_INL void i_load_packed4(uint64x2& a, uint64x2& b,
                                uint64x2& c, uint64x2& d, const char* p)
 {
+#if SIMDPP_USE_NULL
+    detail::null::load_packed4(a, b, c, d, p);
+#else
     v128_load_packed4(a, b, c, d, p);
+#endif
 }
 
 #if SIMDPP_USE_AVX2
