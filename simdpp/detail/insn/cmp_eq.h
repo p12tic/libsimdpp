@@ -129,7 +129,7 @@ SIMDPP_INL mask_int64x2 i_cmp_eq(const uint64x2& a, const uint64x2& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_eq(a, b);
-#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comeq_epi64(a, b);
 #elif SIMDPP_USE_SSE4_1
     return _mm_cmpeq_epi64(a, b);

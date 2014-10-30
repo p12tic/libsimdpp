@@ -57,7 +57,7 @@ SIMDPP_INL mask_int8x16 i_cmp_lt(const uint8x16& ca, const uint8x16& cb)
     uint8<16> a = ca, b = cb;
 #if SIMDPP_USE_NULL
     return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu8(a, b);
 #elif SIMDPP_USE_SSE2
     a = bit_xor(a, 0x80); // sub
@@ -121,7 +121,7 @@ SIMDPP_INL mask_int16x8 i_cmp_lt(const uint16x8& ca, const uint16x8& cb)
     uint16<8> a = ca, b = cb;
 #if SIMDPP_USE_NULL
     return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu16(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 bias = make_uint(0x8000);
@@ -195,7 +195,7 @@ SIMDPP_INL mask_int32x4 i_cmp_lt(const uint32x4& ca, const uint32x4& cb)
     uint32<4> a = ca, b = cb;
 #if SIMDPP_USE_NULL
     return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && SIMDPP_SAFE_XOP_COM
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu32(a, b);
 #elif SIMDPP_USE_SSE2
     a = bit_xor(a, 0x80000000); // sub
