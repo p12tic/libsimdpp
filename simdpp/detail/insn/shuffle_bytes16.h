@@ -61,12 +61,17 @@ SIMDPP_INL uint8x16 i_shuffle_bytes16(const uint8x16& a, const uint8x16& b, cons
     ai = _mm_shuffle_epi8(a, m1);
     bi = _mm_shuffle_epi8(b, m2);
     return bit_or(ai, bi);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON32
     uint8x8x4_t table = {{vget_low_u8(a), vget_high_u8(a),
                           vget_low_u8(b), vget_high_u8(b)}};
     uint8x8_t lo = vtbl4_u8(table, vget_low_u8(mask));
     uint8x8_t hi = vtbl4_u8(table, vget_high_u8(mask));
     return vcombine_u8(lo, hi);
+#elif SIMDPP_USE_NEON64
+    uint8x16x2_t table;
+    table.val[0] = a;
+    table.val[1] = b;
+    return vqtbl2q_u8(table, mask);
 #elif SIMDPP_USE_ALTIVEC
     return vec_perm((__vector uint8_t)a, (__vector uint8_t)b,
                     (__vector uint8_t)mask);

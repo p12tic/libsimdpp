@@ -36,11 +36,13 @@ SIMDPP_INL uint8x16 i_permute_bytes16(const uint8x16& a, const uint8x16& mask)
     return r;
 #elif SIMDPP_USE_SSSE3
     return _mm_shuffle_epi8(a, mask);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON32
     uint8x8x2_t table = {{vget_low_u8(a), vget_high_u8(a)}};
     uint8x8_t lo = vtbl2_u8(table, vget_low_u8(mask));
     uint8x8_t hi = vtbl2_u8(table, vget_high_u8(mask));
     return vcombine_u8(lo, hi);
+#elif SIMDPP_USE_NEON64
+    return vqtbl1q_u8(a, mask);
 #elif SIMDPP_USE_ALTIVEC
     return vec_perm((__vector uint8_t)a, (__vector uint8_t)a,
                     (__vector uint8_t)mask);
