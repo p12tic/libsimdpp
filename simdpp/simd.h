@@ -103,6 +103,7 @@
 #include <simdpp/core/store_packed2.h>
 #include <simdpp/core/store_packed3.h>
 #include <simdpp/core/store_packed4.h>
+#include <simdpp/core/store_u.h>
 #include <simdpp/core/stream.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_float64.h>

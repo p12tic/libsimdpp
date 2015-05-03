@@ -38,6 +38,18 @@ void test_store_helper(TestSuite& tc, const V* sv)
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
+        store_u(rdata+i*V::length, sv[0]);
+        TEST_ARRAY_PUSH(tc, V, rv);
+    }
+
+    for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
+        rzero(rv);
+        store_u(rdata+i, sv[0]);
+        TEST_ARRAY_PUSH(tc, V, rv);
+    }
+
+    for (unsigned i = 0; i < vnum; i++) {
+        rzero(rv);
         stream(rdata+i*V::length, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }

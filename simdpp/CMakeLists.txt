@@ -93,6 +93,7 @@ set(HEADERS
     core/store_packed2.h
     core/store_packed3.h
     core/store_packed4.h
+    core/store_u.h
     core/stream.h
     core/to_float32.h
     core/to_float64.h
