@@ -31,7 +31,7 @@ SIMDPP_INL void i_store_u(char* p, const uint8<16>& a)
 #elif SIMDPP_USE_SSE2
     _mm_storeu_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
-    vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u8(a));
+    vst1q_u8(reinterpret_cast<uint8_t*>(p), a);
 #elif SIMDPP_USE_ALTIVEC
     // From https://web.archive.org/web/20110305043420/http://developer.apple.com/hardwaredrivers/ve/alignment.html
     uint8_t* q = reinterpret_cast<uint8_t*>(p);
@@ -51,17 +51,29 @@ SIMDPP_INL void i_store_u(char* p, const uint8<16>& a)
 
 SIMDPP_INL void i_store_u(char* p, const uint16<8>& a)
 {
+#if SIMDPP_USE_NEON
+    vst1q_u16(reinterpret_cast<uint16_t*>(p), a);
+#else
     i_store_u(p, uint8<16>(a));
+#endif
 }
 
 SIMDPP_INL void i_store_u(char* p, const uint32<4>& a)
 {
+#if SIMDPP_USE_NEON
+    vst1q_u32(reinterpret_cast<uint32_t*>(p), a);
+#else
     i_store_u(p, uint8<16>(a));
+#endif
 }
 
 SIMDPP_INL void i_store_u(char* p, const uint64<2>& a)
 {
+#if SIMDPP_USE_NEON
+    vst1q_u64(reinterpret_cast<uint64_t*>(p), a);
+#else
     i_store_u(p, uint8<16>(a));
+#endif
 }
 
 SIMDPP_INL void i_store_u(char* p, const float32x4& a)
