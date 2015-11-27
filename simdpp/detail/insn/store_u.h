@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/null/memory.h>
 #include <simdpp/detail/align.h>
+#include <simdpp/core/cast.h>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
@@ -32,7 +33,19 @@ SIMDPP_INL void i_store_u(char* p, const uint8<16>& a)
 #elif SIMDPP_USE_NEON
     vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u8(a));
 #elif SIMDPP_USE_ALTIVEC
-    vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
+    // From https://web.archive.org/web/20110305043420/http://developer.apple.com/hardwaredrivers/ve/alignment.html
+    uint8_t* q = reinterpret_cast<uint8_t*>(p);
+    __vector uint8_t MSQ, LSQ, edges;
+    __vector uint8_t edgeAlign, align;
+    MSQ = vec_ld(0, q);                                 // most significant quadword
+    LSQ = vec_ld(15, q);                                // least significant quadword
+    edgeAlign = vec_lvsl(0, q);                         // permute map to extract edges
+    edges = vec_perm(LSQ, MSQ, edgeAlign);              // extract the edges
+    align = vec_lvsr(0, q);                             // permute map to misalign data
+    MSQ = vec_perm(edges, (__vector uint8_t)a, align);  // misalign the data (MSQ)
+    LSQ = vec_perm((__vector uint8_t)a, edges, align);  // misalign the data (LSQ)
+    vec_st(LSQ, 15, q);                                 // Store the LSQ part first
+    vec_st(MSQ, 0, q);                                  // Store the MSQ part
 #endif
 }
 
@@ -61,7 +74,8 @@ SIMDPP_INL void i_store_u(char* p, const float32x4& a)
 #elif SIMDPP_USE_NEON
     vst1q_f32(q, a);
 #elif SIMDPP_USE_ALTIVEC
-    vec_stl((__vector float)a, 0, q);
+    uint32x4 b = bit_cast<uint32x4>(a.eval());
+    i_store_u(reinterpret_cast<char*>(q), b);
 #endif
 }
 
