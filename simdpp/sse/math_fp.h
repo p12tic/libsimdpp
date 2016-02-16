@@ -18,9 +18,7 @@
 #include <simdpp/sse/convert.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace sse {
 
 
@@ -328,9 +326,7 @@ SIMDPP_INL float64x2 trunc(const float64x2& a)
 
 #endif
 } // namespace sse
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

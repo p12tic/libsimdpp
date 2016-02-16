@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Compares 8-bit values for equality.
@@ -168,9 +166,7 @@ mask_float64<N,expr_empty> cmp_eq(const any_float64<N,V1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_float64, any_float64)
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

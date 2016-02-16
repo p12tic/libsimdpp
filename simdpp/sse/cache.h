@@ -15,9 +15,7 @@
 #include <simdpp/setup_arch.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace sse {
 
 /** @defgroup simd_cache
@@ -59,9 +57,7 @@ SIMDPP_INL void prefetch_nt(const void* ptr)
 /// @}
 
 } // namespace sse
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

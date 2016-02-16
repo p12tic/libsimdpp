@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/move_l.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /// @{
@@ -145,9 +143,7 @@ typename detail::get_expr_nomask<V>::empty
     return detail::insn::i_move2_l<shift>(ra);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

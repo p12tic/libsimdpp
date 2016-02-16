@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/f_fmsub.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /// @{
@@ -54,9 +52,7 @@ float64<N, expr_fmsub<float64<N,E1>,
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

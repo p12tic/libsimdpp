@@ -17,9 +17,7 @@
 #include <simdpp/core/bit_and.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, class E1, class E2> SIMDPP_INL
@@ -206,9 +204,7 @@ uint64<N> expr_eval(const expr_add<uint64<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

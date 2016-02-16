@@ -18,9 +18,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -219,9 +217,7 @@ uint32<N> i_min(const uint32<N>& a, const uint32<N>& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

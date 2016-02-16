@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/i_shift_r.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Shifts signed 8-bit values right by @a count bits while shifting in the
     sign bit.
@@ -428,9 +426,7 @@ uint64<N,expr_empty> shift_r(const uint64<N,E>& a)
     return detail::insn::i_shift_r<count>(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

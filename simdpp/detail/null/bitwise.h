@@ -18,9 +18,7 @@
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace null {
 
@@ -159,9 +157,7 @@ M bit_not_mm(const M& a)
 
 } // namespace null
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -16,9 +16,7 @@
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace null {
 
@@ -84,9 +82,7 @@ typename V::mask_vector_type cmp_ge(const V& a, const V& b)
 
 } // namespace null
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

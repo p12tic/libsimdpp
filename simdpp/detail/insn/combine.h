@@ -15,9 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -158,9 +156,7 @@ V i_combine(H a1, H a2)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

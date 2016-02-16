@@ -16,9 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace altivec {
 
 /** Loads a single element from unaligned memory location and places it to the
@@ -103,9 +101,7 @@ SIMDPP_INL float32x4 load1(float32x4& a, const float* p)
 /// @}
 
 } // namespace altivec
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

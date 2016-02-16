@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/f_abs.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Computes absolute value of floating point values.
@@ -68,9 +66,7 @@ float64<N, expr_abs<float64<N,E>>> abs(const float64<N,E>& a)
     return { { a } };
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

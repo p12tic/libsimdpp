@@ -19,9 +19,7 @@
 #include <simdpp/core/combine.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -153,9 +151,7 @@ uint64<N> i_to_uint64(const uint32<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

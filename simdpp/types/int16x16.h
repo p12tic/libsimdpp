@@ -20,9 +20,7 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 #if SIMDPP_USE_AVX2 || SIMDPP_DOXYGEN
 
@@ -203,9 +201,7 @@ private:
 
 #endif // SIMDPP_USE_AVX2 || SIMDPP_DOXYGEN
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

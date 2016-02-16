@@ -15,9 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 /*  Normalizes vector type. Removes sign from a vector type.
@@ -55,9 +53,7 @@ template<unsigned N, class E> struct remove_mask<mask_float64<N,E>> { using type
 
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

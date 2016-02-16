@@ -18,9 +18,7 @@
 #include <simdpp/core/cmp_eq.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace sse {
 
 /** Tests no bits are set in 128-bit integer vector. Returns @c true if
@@ -129,9 +127,7 @@ template<class = void> SIMDPP_INL
 bool test_ones(const uint64x2& a, const uint64x2& mask) { return test_ones(uint8x16(a), uint8x16(mask)); }
 
 } // namespace sse
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

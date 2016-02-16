@@ -20,9 +20,7 @@
 #include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class V>
@@ -185,9 +183,7 @@ void construct_eval(V& v, const expr_vec_load& e)
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

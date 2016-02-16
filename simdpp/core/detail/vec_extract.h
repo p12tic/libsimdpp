@@ -18,9 +18,7 @@
 #include <simdpp/core/extract.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, class V> SIMDPP_INL
@@ -62,9 +60,7 @@ float64<M> vec_extract(const float64<N>& a, unsigned n) { return vec_extract_imp
 
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

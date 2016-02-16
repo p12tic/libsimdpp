@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes bitwise XOR of integer or floating-point vectors.
 
@@ -119,9 +117,7 @@ typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

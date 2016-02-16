@@ -17,9 +17,7 @@
 #include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, class E1, class E2, class E3> SIMDPP_INL
@@ -155,9 +153,7 @@ float64<N> expr_eval(const expr_fmsub<float64<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

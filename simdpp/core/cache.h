@@ -14,9 +14,7 @@
 #include <simdpp/setup_arch.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** @defgroup simd_cache Operations: prefetch
     @{
@@ -73,9 +71,7 @@ SIMDPP_INL void prefetch_write(const void* ptr)
 /// @}
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

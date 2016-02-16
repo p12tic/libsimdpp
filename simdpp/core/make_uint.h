@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/make_const.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Creates a vector from unsigned integer values known at compile-time.
@@ -127,9 +125,7 @@ V make_uint(uint64_t v0,  uint64_t v1,  uint64_t v2,  uint64_t v3,
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

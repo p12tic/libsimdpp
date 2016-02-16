@@ -22,9 +22,7 @@
 #include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** @defgroup simd_transpose Operations: transpose matrices consisting of
     several vectors
@@ -323,9 +321,7 @@ void transpose4(float32<N>& a0, float32<N>& a1,
 
 /// @} -- end defgroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

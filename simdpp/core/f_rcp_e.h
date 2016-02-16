@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_rcp_e.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes approximate reciprocal.
 
@@ -45,9 +43,7 @@ float32<N,expr_empty> rcp_e(const float32<N,E>& a)
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

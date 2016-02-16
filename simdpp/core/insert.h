@@ -22,9 +22,7 @@
 #include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @defgroup simd_insert_extract Operations: insert or extract a single element from a vector
 /// @{
@@ -249,9 +247,7 @@ float64x2 insert(const float64x2& a, double x)
 
 /// @} -- end defgroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -20,9 +20,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -94,9 +92,7 @@ float32<N> i_rsqrt_rh(const float32<N>& x, const float32<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

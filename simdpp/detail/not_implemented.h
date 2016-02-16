@@ -15,9 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 namespace detail {
 
@@ -83,9 +81,7 @@ void libsimdpp_instruction_not_available();
     ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
     )
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

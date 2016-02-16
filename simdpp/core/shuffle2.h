@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/shuffle4x2.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Selects 32-bit floating-point values from two vectors. The first two values
@@ -118,9 +116,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

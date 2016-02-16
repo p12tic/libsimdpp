@@ -16,9 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace sse {
 
 
@@ -133,9 +131,7 @@ void load_lane(float64x2& a, const void* p)
 /// @}
 
 } // namespace sse
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

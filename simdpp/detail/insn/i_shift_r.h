@@ -25,9 +25,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -725,9 +723,7 @@ uint8<N> shift_r_u8(const uint8<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

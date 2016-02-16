@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/permute_zbytes16.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Selects bytes from a vector according to a mask, optionally selecting zero.
@@ -75,9 +73,7 @@ float64<N> permute_zbytes16(const float64<N>& a, const uint64<N>& mask)
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

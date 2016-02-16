@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_trunc.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Rounds the values of a vector towards zero
@@ -43,9 +41,7 @@ float32<N,expr_empty> trunc(const float32<N,E>& a)
     return detail::insn::i_trunc(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

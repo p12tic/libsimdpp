@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_rcp_rh.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Computes one Newton-Rhapson iterations for reciprocal. @a x is the current
@@ -59,9 +57,7 @@ float32<N,expr_empty> rcp_rh(const float32<N,E>& x, const float32<N,E>& a)
     return detail::insn::i_rcp_rh(x.eval(), a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

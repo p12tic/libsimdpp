@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/bit_or.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, class E1, class E2> SIMDPP_INL
@@ -28,9 +26,7 @@ R expr_eval(const expr_bit_or<E1, E2>& q)
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

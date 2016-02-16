@@ -17,9 +17,7 @@
 #include <simdpp/core/cast.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace null {
 
@@ -41,9 +39,7 @@ V unmask_mask(const M& m)
 
 } // namespace null
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

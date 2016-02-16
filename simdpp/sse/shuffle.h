@@ -17,9 +17,7 @@
 #include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace sse {
 
 /// @{
@@ -110,9 +108,7 @@ uint16x16 permute_hi(const uint16x16& a)
 /// @}
 
 } // namespace sse
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

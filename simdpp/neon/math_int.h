@@ -16,9 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace neon {
 
 /** Multiplies the values of two int8x16 vectors and returns the low
@@ -93,9 +91,7 @@ SIMDPP_INL uint16x8 mull_hi(const uint8x16& a, const uint8x16& b)
 }
 
 } // namespace neon
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

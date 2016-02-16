@@ -20,9 +20,7 @@
 #include <simdpp/expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 // Same as V::expr_type, except that if that type is void, returns V as type.
@@ -153,9 +151,7 @@ public:
 
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

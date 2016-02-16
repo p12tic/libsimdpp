@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/split.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 namespace detail {
 
@@ -119,9 +117,7 @@ void split(const float64<N>& a, float64<N/2>& r1, float64<N/2>& r2)
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

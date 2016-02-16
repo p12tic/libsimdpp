@@ -19,9 +19,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 namespace detail {
 
@@ -72,9 +70,7 @@ mask_float64<N, expr_bit_not<mask_float64<N,E>>> operator~(mask_float64<N,E> a)
 }
 /// @}*/
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

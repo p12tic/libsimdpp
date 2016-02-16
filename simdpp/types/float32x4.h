@@ -22,9 +22,7 @@
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @defgroup simd_vec_fp Types: floating-point vectors
 /// @{
@@ -182,9 +180,7 @@ private:
 
 /// @} -- end defgroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

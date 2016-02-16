@@ -15,9 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 template<unsigned N, class E> SIMDPP_INL
 uint8<N,expr_empty> shift_l(const uint8<N,E>& a, unsigned count);
@@ -100,9 +98,7 @@ struct shift_u8_mask<8,V> { V operator()() { return make_uint(0xff); } };
 
 } // namespace detail
 } // namespace insn
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

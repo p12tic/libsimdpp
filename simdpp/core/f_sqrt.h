@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_sqrt.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Computes square root.
@@ -65,9 +63,7 @@ float64<N,expr_empty> sqrt(const float64<N,E1>& a)
     return detail::insn::i_sqrt(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

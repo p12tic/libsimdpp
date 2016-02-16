@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_sign.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Extracts sign bits from the values in float32x4 vector
@@ -66,9 +64,7 @@ float64<N,expr_empty> sign(const float64<N,E>& a)
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

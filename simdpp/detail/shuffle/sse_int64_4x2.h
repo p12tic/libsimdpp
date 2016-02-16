@@ -21,9 +21,7 @@
 #if SIMDPP_USE_AVX2
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace sse_shuffle4x2_int64 {
 
@@ -206,9 +204,7 @@ uint64<N> do_shuffle(const uint64<N>& a, const uint64<N>& b)
 
 } // namespace sse_shuffle4x2_int64
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

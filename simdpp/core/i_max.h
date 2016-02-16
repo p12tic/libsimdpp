@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Computes maximum of the signed 8-bit values.
@@ -153,9 +151,7 @@ uint32<N,expr_empty> max(const uint32<N,E1>& a, const uint32<N,E2>& b)
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint32, uint32)
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

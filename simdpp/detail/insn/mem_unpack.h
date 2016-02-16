@@ -28,9 +28,7 @@
 #include <simdpp/core/zip_lo.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -708,9 +706,7 @@ SIMDPP_INL void mem_unpack6(uint16x8& a, uint16x8& b, uint16x8& c,
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

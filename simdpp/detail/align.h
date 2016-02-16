@@ -15,9 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 SIMDPP_INL const void* assume_aligned_impl(const void* x, unsigned bytes)
@@ -45,9 +43,7 @@ const T* assume_aligned(const T* x, unsigned bytes)
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

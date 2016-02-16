@@ -17,9 +17,7 @@
 #include <simdpp/types/traits.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 namespace detail {
 
@@ -65,9 +63,7 @@ R bit_cast(const T& t)
                                 detail::cast_mask_override<R,T>::value>::template run<R>(t);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

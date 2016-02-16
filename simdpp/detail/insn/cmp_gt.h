@@ -20,9 +20,7 @@
 #include <simdpp/detail/null/compare.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -308,9 +306,7 @@ mask_float64<N> i_cmp_gt(const float64<N>& a, const float64<N>& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

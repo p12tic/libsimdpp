@@ -18,9 +18,7 @@
 #include <simdpp/detail/array.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 /// s - selector, u - number of elements per group
@@ -574,9 +572,7 @@ uint64<N> make_shuffle_bytes16_mask(uint64<N> &mask)
 
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

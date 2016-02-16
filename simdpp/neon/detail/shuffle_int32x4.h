@@ -12,9 +12,7 @@
 #include <type_traits>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace neon {
 namespace detail {
 namespace shuffle_int32x4 {
@@ -134,9 +132,7 @@ T shuffle2(T a, T b)
 } // namespace shuffle_int32x4
 } // namespace detail
 } // namespace neon
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

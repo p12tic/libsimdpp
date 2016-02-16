@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Compares the values of two int8x16 vectors for inequality
@@ -191,9 +189,7 @@ mask_float64<N,expr_empty> cmp_neq(const any_float64<N,V1>& a,
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_float64, any_float64)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

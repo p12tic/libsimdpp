@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Multiplies the values of two vectors
@@ -68,9 +66,7 @@ float64<N, expr_mul<float64<N,E1>,
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mul, expr_mul, float64, float64)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

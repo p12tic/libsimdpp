@@ -16,9 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace null {
 
@@ -101,9 +99,7 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7,
 
 } // namespace null
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

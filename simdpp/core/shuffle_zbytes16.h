@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/shuffle_zbytes16.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /// @{
@@ -82,9 +80,7 @@ float64<N> shuffle_zbytes16(const float64<N>& a, const float64<N>& b, const uint
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

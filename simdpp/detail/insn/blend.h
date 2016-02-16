@@ -19,9 +19,7 @@
 #include <simdpp/detail/null/shuffle.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -590,9 +588,7 @@ mask_float64<N> i_blend(const mask_float64<N>& on, const mask_float64<N>& off, c
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

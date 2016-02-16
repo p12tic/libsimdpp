@@ -18,9 +18,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class Int> SIMDPP_INL void scalar_convert(Int& d, uint64_t x) { d = x; }
@@ -59,9 +57,7 @@ R expr_eval(const expr_scalar_bitwise<EL>& q)
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

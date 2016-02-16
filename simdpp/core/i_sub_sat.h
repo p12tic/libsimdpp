@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Subtracts and saturaters signed 8-bit integer values.
 
@@ -105,9 +103,7 @@ uint16<N, expr_sub_sat<uint16<N,E1>,
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(sub_sat, expr_sub_sat, uint16, uint16)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

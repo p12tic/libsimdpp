@@ -19,9 +19,7 @@
 #include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -331,9 +329,7 @@ void v_store_pack4(char* p, const V& ca, const V& cb, const V& cc, const V& dd)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

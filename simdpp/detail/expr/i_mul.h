@@ -22,9 +22,7 @@
 #include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 
@@ -230,9 +228,7 @@ uint32<N> expr_eval(const expr_mul_lo<uint32<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

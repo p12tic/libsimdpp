@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/store.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Stores a 128-bit or 256-bit integer vector to an aligned memory location.
 
@@ -45,9 +43,7 @@ void store(void* p, const any_vec<N,V>& a)
     detail::insn::i_store(reinterpret_cast<char*>(p), a.wrapped().eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

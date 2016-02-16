@@ -22,9 +22,7 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @ingroup simd_vec_int
 /// @{
@@ -242,9 +240,7 @@ private:
 
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

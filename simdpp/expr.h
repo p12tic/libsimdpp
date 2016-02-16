@@ -11,9 +11,7 @@
 #include <simdpp/setup_arch.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 // -----------------------------------------------------------------------------
 struct expr_empty {};
@@ -197,9 +195,7 @@ struct expr_imm_shift_r {
     static const unsigned shift = S;
 };
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/splat_n.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, unsigned N, unsigned s, class E> SIMDPP_INL
@@ -64,9 +62,7 @@ float64<N> expr_eval(const expr_splat2<s,float64<N,E>>& q)
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

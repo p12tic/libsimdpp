@@ -18,14 +18,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
-
-namespace detail {
-
-
-} // namespace detail
 
 /// @{
 /** Computes bitwise NOT of an integer or floating-point vector
@@ -71,9 +64,7 @@ mask_float64<N, expr_bit_not<mask_float64<N,E>>> bit_not(mask_float64<N,E> a)
 }
 /// @}*/
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

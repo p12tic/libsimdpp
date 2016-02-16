@@ -18,9 +18,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Compares the values of two float32x4 vectors for less-than or equal
 
@@ -66,9 +64,7 @@ mask_float64<N, mask_float64<N>> operator<=(const float64<N,E1>& a,
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_float64, float64)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

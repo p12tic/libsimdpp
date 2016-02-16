@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_ceil.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Rounds the values a vector towards positive infinity
@@ -44,9 +42,7 @@ float32<N,expr_empty> ceil(const float32<N,E>& a)
     return detail::insn::i_ceil(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

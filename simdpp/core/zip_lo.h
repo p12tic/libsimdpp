@@ -17,9 +17,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Interleaves the lower halves of two vectors.
@@ -77,9 +75,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 /// @}
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -17,9 +17,7 @@
 #include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace sse {
 
 /** Sign extends the values of a signed int8x16 vector to 32-bits
@@ -172,9 +170,7 @@ SIMDPP_INL uint32x4 to_int32x4_r(const float64x2& a)
 }
 
 } // namespace sse
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

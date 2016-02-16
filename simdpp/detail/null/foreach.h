@@ -19,9 +19,7 @@
 #endif
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace null {
 
@@ -47,9 +45,7 @@ R foreach(const V1& v1, const V2& v2, C c)
 
 } // namespace null
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #if _MSC_VER

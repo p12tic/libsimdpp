@@ -19,9 +19,7 @@
 
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Substracts the values of two vectors
 
@@ -69,9 +67,7 @@ float64<N, expr_sub<float64<N,E1>,
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(sub, expr_sub, float64, float64)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

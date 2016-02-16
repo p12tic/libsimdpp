@@ -17,9 +17,7 @@
 #include <simdpp/core/permute_bytes16.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -92,9 +90,7 @@ float64<N> i_permute_zbytes16(const float64<N>& a, const uint64<N>& mask)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

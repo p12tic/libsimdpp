@@ -21,9 +21,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 // FIXME: move to adv
 /// @{
@@ -128,9 +126,7 @@ uint16x8 div_p(const uint16x8& num, const uint16x8& den)
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

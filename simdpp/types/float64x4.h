@@ -21,9 +21,7 @@
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 #if SIMDPP_USE_AVX || SIMDPP_DOXYGEN
 
@@ -153,9 +151,7 @@ private:
 
 #endif // SIMDPP_USE_AVX || SIMDPP_DOXYGEN
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

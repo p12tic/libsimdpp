@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/i_abs.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes absolute value of 8-bit integer values.
 
@@ -112,9 +110,7 @@ uint64<N, expr_abs<int64<N,E>>> abs(const int64<N,E>& a)
     return { { a } };
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

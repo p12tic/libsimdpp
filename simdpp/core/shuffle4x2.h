@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/shuffle4x2.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Selects 32-bit values from two vectors.
     The selector values must be in range [0; 7].
@@ -74,9 +72,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 #endif
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

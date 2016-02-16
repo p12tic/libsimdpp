@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/i_shift_l.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Shifts 8-bit values left by @a count bits while shifting in zeros.
@@ -300,9 +298,7 @@ uint64<N,expr_empty> shift_l(const uint64<N,E>& a)
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

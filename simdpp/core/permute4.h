@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/permute4.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /// @{
@@ -139,9 +137,7 @@ typename detail::get_expr_nomask<V>::empty
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

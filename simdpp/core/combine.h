@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/combine.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Combines two vectors into one twice as large. This function is useful when
@@ -97,9 +95,7 @@ float64<N*2> combine(const float64<N,E1>& a1, const float64<N,E2>& a2)
 
 /// @} -- end defgroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

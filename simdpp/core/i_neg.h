@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/i_neg.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Negates signed 8-bit values.
 
@@ -92,9 +90,7 @@ int64<N, expr_neg<int64<N,E>>> neg(const int64<N,E>& a)
     return { { a } };
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

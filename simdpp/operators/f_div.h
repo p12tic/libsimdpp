@@ -18,9 +18,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Divides the values of two vectors.
 
@@ -69,9 +67,7 @@ float64<N, float64<N>> operator/(const float64<N,E1>& a, const float64<N,E2>& b)
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator/, float64, float64)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

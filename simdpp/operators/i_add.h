@@ -21,9 +21,7 @@
 #include <simdpp/core/detail/get_expr_uint.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Adds 8-bit integer values.
@@ -122,9 +120,7 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int64, uint64)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

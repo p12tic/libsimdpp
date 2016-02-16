@@ -18,9 +18,7 @@
 #if SIMDPP_USE_SSE2
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace sse_shuffle4x2_float32 {
 
@@ -512,9 +510,7 @@ float32<N> do_shuffle(const float32<N>& a, const float32<N>& b)
 
 } // namespace sse_shuffle4x2_float32
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

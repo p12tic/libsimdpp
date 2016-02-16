@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_isnan2.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Checks whether corresponding elements in either @a a or @a b are IEEE754 NaN.
 
@@ -64,9 +62,7 @@ mask_float64<N,expr_empty> isnan2(const float64<N,E1>& a, const float64<N,E2>& b
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

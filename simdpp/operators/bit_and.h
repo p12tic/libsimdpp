@@ -22,9 +22,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes bitwise AND of integer or floating-point vectors.
 
@@ -98,9 +96,7 @@ typename detail::get_expr_bitwise2_and<expr_bit_and, typename detail::get_expr_n
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/to_float64.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /// @{
@@ -78,9 +76,7 @@ float64<N> to_float64(const float32<N,E>& a)
     return detail::insn::i_to_float64(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

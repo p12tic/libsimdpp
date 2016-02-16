@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Computes rounded average of the unsigned 8-bit values.
@@ -157,9 +155,7 @@ int32<N,expr_empty> avg(const int32<N,E1>& a, const int32<N,E2>& b)
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg, int32, int32)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -22,9 +22,7 @@
 #include <simdpp/core/zip_lo.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 
@@ -317,9 +315,7 @@ uint64<N> expr_eval(const expr_mull<uint32<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

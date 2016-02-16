@@ -22,9 +22,7 @@
 #include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @ingroup simd_insert_extract
 /// @{
@@ -359,9 +357,7 @@ uint16_t extract_bits(const uint8x16& ca)
 
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

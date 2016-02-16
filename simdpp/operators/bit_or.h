@@ -21,9 +21,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes bitwise OR of integer vectors.
 
@@ -97,9 +95,7 @@ typename detail::get_expr_bit_or<V, typename detail::get_expr_nomask<V, expr_sca
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -18,9 +18,7 @@
 #include <cstring>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 /*  Casts the base type of an expression.
@@ -79,9 +77,7 @@ const R& cast_expr(const S& expr)
 #endif
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

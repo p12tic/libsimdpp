@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/load_splat.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Loads a value from a memory location and broadcasts it to all elements of a
     vector.
@@ -41,9 +39,7 @@ V load_splat(const void* p)
     return detail::insn::i_load_splat_dispatch<V>::run(p);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

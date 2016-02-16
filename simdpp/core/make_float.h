@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/make_const.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Creates a vector from floating-point values known at compile-time.
@@ -107,9 +105,7 @@ V make_float(double v0, double v1, double v2, double v3,
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

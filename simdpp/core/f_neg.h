@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/f_neg.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Negates the values of a float32x4 vector
 
@@ -65,9 +63,7 @@ float64<N, expr_neg<float64<N,E>>> neg(const float64<N,E>& a)
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

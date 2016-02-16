@@ -27,9 +27,7 @@
 #include <simdpp/detail/insn/zip128.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -687,9 +685,7 @@ void mem_pack4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

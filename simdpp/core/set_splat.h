@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/set_splat.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Loads a value from a register and broadcasts it to all elements of a vector.
@@ -42,9 +40,7 @@ template<class V = expr_vec_set_splat<float>>    SIMDPP_INL V splat(float x) { r
 template<class V = expr_vec_set_splat<double>>   SIMDPP_INL V splat(double x) { return detail::splat_impl<V>(x); }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

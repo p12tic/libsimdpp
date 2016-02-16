@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/to_int64.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Extends the values of a signed int32x4 vector to 64-bits
@@ -58,9 +56,7 @@ uint64<N> to_int64(const uint32<N,E>& a)
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -20,9 +20,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes bitwise AND NOT of two integer or floating-point vectors.
 
@@ -120,9 +118,7 @@ typename detail::get_expr_bitwise2_and<expr_bit_andnot, typename detail::get_exp
 
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

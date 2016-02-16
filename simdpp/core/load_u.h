@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/load_u.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector from an
     unaligned memory location.
@@ -58,9 +56,7 @@ V load_u(const void* p)
     return detail::insn::i_load_u_dispatch<V>::run(reinterpret_cast<const char*>(p));
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

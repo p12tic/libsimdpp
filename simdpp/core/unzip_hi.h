@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/unzip_hi.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** De-interleaves the even(higher) elements of two vectors
@@ -139,9 +137,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -17,9 +17,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Broadcasts the specified element to all elements.
@@ -89,9 +87,7 @@ typename detail::get_expr_nomask<V>::empty
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

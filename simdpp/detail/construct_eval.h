@@ -16,9 +16,7 @@
 #include <simdpp/expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 // put forward declarations of all construct_eval functions here. Definitions
@@ -60,9 +58,7 @@ SIMDPP_INL expr_vec_make_const<uint64_t,1> make_ones()
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -14,9 +14,7 @@
 #include <type_traits>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 // -----------------------------------------------------------------------------
 // float32
@@ -272,9 +270,7 @@ public:
     SIMDPP_INL mask_int64<N> eval() const { return e; }
 };
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

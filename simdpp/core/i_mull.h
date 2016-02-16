@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /*  Note: widening integer multiplication instructions are very different among
@@ -165,9 +163,7 @@ uint64<N, expr_mull<uint32<N,E1>,
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint64, uint32)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

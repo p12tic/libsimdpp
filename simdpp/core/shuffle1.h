@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/shuffle2x2.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Selects 64-bit values from two vectors. The first value in
     each pair of values must come from @a a, the second - from @a b. The
@@ -60,9 +58,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     return detail::insn::i_shuffle2x2<s0,s1+2>(ra, rb);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif
