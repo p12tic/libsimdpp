@@ -16,7 +16,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned vnum>
 void test_store_helper(TestSuite& tc, const V* sv)
 {
-    V rv[vnum];
+    // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
+    // necessarily aligned to 16 bytes on the stack
+    SIMDPP_ALIGN(16) V rv[vnum];
 
     auto rzero = [](V* r)
     {

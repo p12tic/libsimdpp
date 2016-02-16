@@ -18,7 +18,9 @@ void test_load_helper(TestSuite& tc, void* sv_p)
     using E = typename V::element_type;
     auto sdata = reinterpret_cast<E*>(sv_p);
 
-    V rv[vnum];
+    // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
+    // necessarily aligned to 16 bytes on the stack
+    SIMDPP_ALIGN(16) V rv[vnum];
 
     auto rzero = [&](V* r)
     {
