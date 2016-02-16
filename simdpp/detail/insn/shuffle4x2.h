@@ -13,6 +13,8 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/make_shuffle_bytes_mask.h>
+#include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/detail/insn/shuffle2x2.h>
 #include <simdpp/detail/shuffle/sse_float32_4x2.h>
 #include <simdpp/detail/shuffle/sse_float64_4x2.h>
@@ -59,6 +61,9 @@ float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
     return sse_shuffle4x2_float32::do_shuffle<s0, s1, s2, s3>(a, b);
 #elif SIMDPP_USE_NEON_FLT_SP
     return (float32<4>)neon::detail::shuffle_int32x4::shuffle4x2<s0, s1, s2, s3>(uint32<4>(a), uint32<4>(b));
+#elif SIMDPP_USE_ALTIVEC
+    uint32<4> mask = make_shuffle_bytes16_mask<s0, s1, s2, s3>(mask);
+    return shuffle_bytes16(a, b, mask);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
@@ -141,6 +146,9 @@ uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
     return sse_shuffle4x2_int32::do_shuffle<s0, s1, s2, s3>(a, b);
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int32x4::shuffle4x2<s0, s1, s2, s3>(a, b);
+#elif SIMDPP_USE_ALTIVEC
+    uint32<4> mask = make_shuffle_bytes16_mask<s0, s1, s2, s3>(mask);
+    return shuffle_bytes16(a, b, mask);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
