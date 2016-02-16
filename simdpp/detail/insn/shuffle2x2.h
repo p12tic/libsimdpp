@@ -367,7 +367,7 @@ uint64<4> i_shuffle2x2(const uint64<4>& a, const uint64<4>& b)
         return _mm256_blend_epi32(b, a, 0xcc);
     } else if (s0 == 1 && s1 == 2) {
         return _mm256_alignr_epi8(b, a, 8);
-    } else if (s0 == 3 && s1 == 0) {
+    } else { // if (s0 == 3 && s1 == 0)
         return _mm256_alignr_epi8(a, b, 8);
     }
 }
