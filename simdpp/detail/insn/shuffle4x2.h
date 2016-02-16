@@ -18,6 +18,7 @@
 #include <simdpp/detail/shuffle/sse_float64_4x2.h>
 #include <simdpp/detail/shuffle/sse_int32_4x2.h>
 #include <simdpp/detail/shuffle/sse_int64_4x2.h>
+#include <simdpp/neon/detail/shuffle_int32x4.h>
 #include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
@@ -47,7 +48,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
 {
     static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32<4> r;
     r.el(0) = s0 < 4 ? a.el(s0) : b.el(s0-4);
     r.el(1) = s1 < 4 ? a.el(s1) : b.el(s1-4);
@@ -56,6 +57,8 @@ float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
     return r;
 #elif SIMDPP_USE_SSE2
     return sse_shuffle4x2_float32::do_shuffle<s0, s1, s2, s3>(a, b);
+#elif SIMDPP_USE_NEON_FLT_SP
+    return (float32<4>)neon::detail::shuffle_int32x4::shuffle4x2<s0, s1, s2, s3>(uint32<4>(a), uint32<4>(b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -136,6 +139,8 @@ uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
     return r;
 #elif SIMDPP_USE_SSE2
     return sse_shuffle4x2_int32::do_shuffle<s0, s1, s2, s3>(a, b);
+#elif SIMDPP_USE_NEON
+    return neon::detail::shuffle_int32x4::shuffle4x2<s0, s1, s2, s3>(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif

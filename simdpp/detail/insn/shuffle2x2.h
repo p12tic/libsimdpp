@@ -15,6 +15,8 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/detail/shuffle/shuffle_mask.h>
+#include <simdpp/neon/detail/shuffle_int32x4.h>
+#include <simdpp/neon/detail/shuffle_int64x2.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -54,6 +56,8 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
         __m128 t = _mm_shuffle_ps(b, a, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
         return _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     }
+#elif SIMDPP_USE_NEON
+    return (float32<4>) neon::detail::shuffle_int32x4::shuffle2x2<s0,s1>(float32<4>(a), float32<4>(b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -118,7 +122,7 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32
     float64<2> r;
     r.el(0) = s0 < 2 ? a.el(s0) : b.el(s0-2);
     r.el(1) = s1 < 2 ? a.el(s1) : b.el(s1-2);
@@ -139,6 +143,8 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
     } else { // s0 >= 2, s1 < 2
         return _mm_shuffle_pd(b, a, _MM_SHUFFLE2(s0-2,s1));
     }
+#elif SIMDPP_USE_NEON64
+    return (float64<2>)neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(uint64<2>(a), uint64<2>(b));
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -225,6 +231,8 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
         __m128 t = _mm_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
         return (__m128i) _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     }
+#elif SIMDPP_USE_NEON
+    return neon::detail::shuffle_int32x4::shuffle2x2<s0,s1>(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -329,6 +337,8 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
         float64<2> fa, fb; fa = a; fb = b;
         return (__m128i) _mm_shuffle_pd(fb, fa, _MM_SHUFFLE2(s0-2,s1));
     }
+#elif SIMDPP_USE_NEON
+    return neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif

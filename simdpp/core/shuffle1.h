@@ -54,7 +54,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     typename detail::get_expr2_nomask<V1, V2>::type ra = a.wrapped().eval(),
-                                                               rb = b.wrapped().eval();
+                                                    rb = b.wrapped().eval();
     return detail::insn::i_shuffle2x2<s0,s1+2>(ra, rb);
 }
 

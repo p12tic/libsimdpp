@@ -56,7 +56,7 @@ SIMDPP_INL H dup_hi(H a)   { return vdup_lane_u32(a, 1); }
     Cost: If s0,s1 == 0,3 or 2,1 then 2, otherwise 0-1.
 */
 template<unsigned s0, unsigned s1> SIMDPP_INL
-H shf(H a, H b)
+H shf2x2(H a, H b)
 {
     const unsigned sel = s0*4 + s1;
     switch (sel) {
@@ -79,16 +79,35 @@ H shf(H a, H b)
     }
 }
 
+// The first element comes from a, the second from b.
 template<unsigned s0, unsigned s1> SIMDPP_INL
-H shf(T a)
+H shf_1x2(H a, H b)
 {
-    return shf<s0,s1>(lo(a), hi(a));
+    const unsigned sel = s0*2 + s1;
+    switch (sel) {
+    case 0:  /*00*/ return vzip_u32(a, b).val[0];;
+    case 1:  /*01*/ return rev(vext_u32(b, a, 1));
+    case 2:  /*10*/ return vext_u32(a, b, 1);
+    case 3:  /*11*/ return vzip_u32(a, b).val[1];
+    }
 }
 
-template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
-T shf(T a)
+template<unsigned sel>
+H sel_lo_hi(T a, T b)
 {
-    return co(shf<s0,s1>(lo(a), hi(a)), shf<s2,s3>(lo(a), hi(a)));
+    switch (sel) {
+    case 0: return lo(a);
+    case 1: return hi(a);
+    case 2: return lo(b);
+    case 3: return hi(b);
+    }
+}
+
+template<unsigned s0, unsigned s1> SIMDPP_INL
+H shf4x2(T a, T b)
+{
+    return shf_1x2<s0%2, s1%2>(sel_lo_hi<s0/2>(a, b),
+                               sel_lo_hi<s1/2>(a, b));
 }
 
 // 4-element permutations
@@ -102,9 +121,9 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 T perm4(std::integral_constant<unsigned, s0>,
         std::integral_constant<unsigned, s1>,
         std::integral_constant<unsigned, s2>,
-        std::integral_constant<unsigned, s3>, T a)
+        std::integral_constant<unsigned, s3>, const T& a)
 {
-    return shf<s0,s1,s2,s3>(a);
+    return co(shf2x2<s0,s1>(lo(a), hi(a)), shf2x2<s2,s3>(lo(a), hi(a)));
 }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
@@ -121,12 +140,27 @@ T permute4(T a)
 template<unsigned s0, unsigned s1> SIMDPP_INL
 T shuffle2(T a, T b)
 {
-    return co(shf<s0,s1>(a), shf<s0,s1>(b));
+    return co(shf2x2<s0,s1>(lo(a), hi(a)), shf2x2<s0,s1>(lo(b), hi(b)));
 }
+
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 T shuffle2(T a, T b)
 {
-    return co(shf<s0,s1>(a), shf<s2,s3>(b));
+    return co(shf2x2<s0,s1>(lo(a), hi(a)), shf2x2<s2,s3>(lo(b), hi(b)));
+}
+
+// 4-element shuffle among two 2-element (sub) vectors
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+T shuffle2x2(const T& a, const T& b)
+{
+    return co(shf2x2<s0,s1>(lo(a), lo(b)), shf2x2<s2,s3>(hi(a), hi(b)));
+}
+
+// 8-element shuffle among two 4-element vectors
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+T shuffle4x2(const T& a, const T& b)
+{
+    return co(shf4x2<s0,s1>(a, b), shf4x2<s2,s3>(a, b));
 }
 
 } // namespace shuffle_int32x4
