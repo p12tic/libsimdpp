@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/not_implemented.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -149,17 +150,17 @@ float64<4> i_shuffle2x2(const float64<4>& a, const float64<4>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm256_shuffle_pd(a, a, _MM_SHUFFLE2(s1,s0));
+        return _mm256_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm256_shuffle_pd(b, b, _MM_SHUFFLE2(s1-2,s0-2));
+        return _mm256_shuffle_pd(b, b, SIMDPP_SHUFFLE_MASK_2x2_2(s0-2,s1-2));
     } else if (s0 == 0 && s1 == 3) {
         return _mm256_blend_pd(a, b, 0xa);
     } else if (s0 == 2 && s1 == 1) {
         return _mm256_blend_pd(b, a, 0xa);
     } else if (s0 < 2) { // s1 >= 2
-        return _mm256_shuffle_pd(a, b, _MM_SHUFFLE2(s1-2,s0));
+        return _mm256_shuffle_pd(a, b, SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1-2));
     } else { // s0 >= 2, s1 < 2
-        return _mm256_shuffle_pd(b, a, _MM_SHUFFLE2(s0-2,s1));
+        return _mm256_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-2));
     }
 }
 #endif
@@ -170,17 +171,17 @@ float64<8> i_shuffle2x2(const float64<8>& a, const float64<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_shuffle_pd(a, a, _MM_SHUFFLE2(s1,s0));
+        return _mm512_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_shuffle_pd(b, b, _MM_SHUFFLE2(s1-2,s0-2));
+        return _mm512_shuffle_pd(b, b, SIMDPP_SHUFFLE_MASK_2x2_2(s0-2,s1-2));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_pd(0xaa, a, b);
     } else if (s0 == 2 && s1 == 1) {
         return _mm512_mask_blend_pd(0xaa, b, a);
     } else if (s0 < 2) { // s1 >= 2
-        return _mm512_shuffle_pd(a, b, _MM_SHUFFLE2(s1-2,s0));
+        return _mm512_shuffle_pd(a, b, SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1-2));
     } else { // s0 >= 2, s1 < 2
-        return _mm512_shuffle_pd(b, a, _MM_SHUFFLE2(s0-2,s1));
+        return _mm512_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-2));
     }
 }
 #endif
