@@ -36,7 +36,7 @@ SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
 #elif SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
-    v = _mm_broadcastw_epi16(v);
+    v = _mm_broadcastb_epi8(v);
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 * 0x01010101;
