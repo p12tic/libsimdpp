@@ -8,6 +8,8 @@
 #ifndef LIBSIMDPP_SIMD_SETUP_ARCH_H
 #define LIBSIMDPP_SIMD_SETUP_ARCH_H
 
+#include <simdpp/detail/arch_id.h>
+
 #ifdef SIMDPP_ARCH_X86_SSE2
     #ifndef SIMDPP_USE_SSE2
         #define SIMDPP_USE_SSE2 1
@@ -214,13 +216,13 @@
 
 #ifndef SIMDPP_ARCH_NOT_NULL
     #define SIMDPP_USE_NULL 1
-    #define SIMDPP_PP_NULL _null
+    #define SIMDPP_PP_NULL SIMDPP_INSN_ID_NULL
 #else
     #define SIMDPP_PP_NULL
 #endif
 
 #ifdef SIMDPP_USE_SSE2
-    #define SIMDPP_PP_SSE2 _sse2
+    #define SIMDPP_PP_SSE2 SIMDPP_INSN_ID_SSE2
     #include <xmmintrin.h>
     #include <emmintrin.h>
 #else
@@ -228,49 +230,49 @@
 #endif
 
 #ifdef SIMDPP_USE_SSE3
-    #define SIMDPP_PP_SSE3 _sse3
+    #define SIMDPP_PP_SSE3 SIMDPP_INSN_ID_SSE3
     #include <pmmintrin.h>
 #else
     #define SIMDPP_PP_SSE3
 #endif
 
 #ifdef SIMDPP_USE_SSSE3
-    #define SIMDPP_PP_SSSE3 _ssse3
+    #define SIMDPP_PP_SSSE3 SIMDPP_INSN_ID_SSSE3
     #include <tmmintrin.h>
 #else
     #define SIMDPP_PP_SSSE3
 #endif
 
 #ifdef SIMDPP_USE_SSE4_1
-    #define SIMDPP_PP_SSE4_1 _sse4p1
+    #define SIMDPP_PP_SSE4_1 SIMDPP_INSN_ID_SSE4_1
     #include <smmintrin.h>
 #else
     #define SIMDPP_PP_SSE4_1
 #endif
 
 #ifdef SIMDPP_USE_AVX
-    #define SIMDPP_PP_AVX _avx
+    #define SIMDPP_PP_AVX SIMDPP_INSN_ID_AVX
     #include <immintrin.h>
 #else
     #define SIMDPP_PP_AVX
 #endif
 
 #ifdef SIMDPP_USE_AVX2
-    #define SIMDPP_PP_AVX2 _avx2
+    #define SIMDPP_PP_AVX2 SIMDPP_INSN_ID_AVX2
     #include <immintrin.h>
 #else
     #define SIMDPP_PP_AVX2
 #endif
 
 #ifdef SIMDPP_USE_FMA3
-    #define SIMDPP_PP_FMA3 _fma3
+    #define SIMDPP_PP_FMA3 SIMDPP_INSN_ID_FMA3
     #include <immintrin.h>
 #else
     #define SIMDPP_PP_FMA3
 #endif
 
 #ifdef SIMDPP_USE_FMA4
-    #define SIMDPP_PP_FMA4 _fma4
+    #define SIMDPP_PP_FMA4 SIMDPP_INSN_ID_FMA4
     #include <x86intrin.h>
     #ifdef SIMDPP_USE_FMA3
         #error "X86_FMA3 and X86_FMA4 can't be used together"
@@ -287,27 +289,27 @@
 #endif
 
 #ifdef SIMDPP_USE_AVX512
-    #define SIMDPP_PP_AVX512 _avx512
+    #define SIMDPP_PP_AVX512 SIMDPP_INSN_ID_AVX512F
     #include <immintrin.h>
 #else
     #define SIMDPP_PP_AVX512
 #endif
 
 #ifdef SIMDPP_USE_NEON
-    #define SIMDPP_PP_NEON _neon
+    #define SIMDPP_PP_NEON SIMDPP_INSN_ID_NEON
     #include <arm_neon.h>
 #else
     #define SIMDPP_PP_NEON
 #endif
 
 #ifdef SIMDPP_USE_NEON_FLT_SP
-    #define SIMDPP_PP_NEON_FLT_SP _neonfltsp
+    #define SIMDPP_PP_NEON_FLT_SP SIMDPP_INSN_ID_NEON_FLT_SP
 #else
     #define SIMDPP_PP_NEON_FLT_SP
 #endif
 
 #ifdef SIMDPP_USE_ALTIVEC
-    #define SIMDPP_PP_ALTIVEC _altivec
+    #define SIMDPP_PP_ALTIVEC SIMDPP_INSN_ID_ALTIVEC
     #include <altivec.h>
     #undef vector
     #undef pixel
