@@ -38,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E> SIMDPP_INL
 float32<N, expr_neg<float32<N,E>>> neg(const float32<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 /** Negates the values of a vector
@@ -61,7 +61,7 @@ float32<N, expr_neg<float32<N,E>>> neg(const float32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 float64<N, expr_neg<float64<N,E>>> neg(const float64<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 

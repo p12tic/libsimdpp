@@ -39,7 +39,7 @@ float32<N, expr_sub<float32<N,E1>,
                     float32<N,E2>>> sub(const float32<N,E1>& a,
                                         const float32<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(sub, expr_sub, float32, float32)
@@ -64,7 +64,7 @@ float64<N, expr_sub<float64<N,E1>,
                     float64<N,E2>>> sub(const float64<N,E1>& a,
                                         const float64<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(sub, expr_sub, float64, float64)

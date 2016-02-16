@@ -74,7 +74,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 int32<N, expr_mull<int16<N,E1>,
                    int16<N,E2>>> mull(const int16<N,E1>& a, const int16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
@@ -102,7 +102,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 uint32<N, expr_mull<uint16<N,E1>,
                     uint16<N,E2>>> mull(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
@@ -131,7 +131,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 int64<N, expr_mull<int32<N,E1>,
                    int32<N,E2>>> mull(const int32<N,E1>& a, const int32<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
@@ -160,7 +160,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 uint64<N, expr_mull<uint32<N,E1>,
                     uint32<N,E2>>> mull(const uint32<N,E1>& a, const uint32<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint64, uint32)

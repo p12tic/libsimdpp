@@ -183,7 +183,7 @@ typename detail::get_expr_blend<V1, V2, V3>::type
     using expr = detail::get_expr_blend<V1, V2, V3>;
     return { { detail::cast_expr<typename expr::v1_type>(on.wrapped()),
                detail::cast_expr<typename expr::v2_type>(off.wrapped()),
-               detail::cast_expr<typename expr::v3_type>(mask.wrapped()) }, 0 };
+               detail::cast_expr<typename expr::v3_type>(mask.wrapped()) } };
 }
 
 #ifndef SIMDPP_DOXYGEN

@@ -43,7 +43,7 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
 {
     using expr = typename detail::get_expr_uint<expr_mul_lo, V1, V2>;
     return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, uint16)
@@ -68,7 +68,7 @@ int16<N, expr_mul_hi<int16<N,E1>,
                      int16<N,E2>>> mul_hi(const int16<N,E1>& a,
                                           const int16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, int16, int16)
@@ -93,7 +93,7 @@ uint16<N, expr_mul_hi<uint16<N,E1>,
                       uint16<N,E2>>> mul_hi(const uint16<N,E1>& a,
                                             const uint16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, uint16, uint16)
@@ -123,7 +123,7 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
 {
     using expr = typename detail::get_expr_uint<expr_mul_lo, V1, V2>;
     return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) }, 0 };
+               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int32, uint32)
