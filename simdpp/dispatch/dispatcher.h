@@ -208,6 +208,6 @@ public:
 } // namespace detail
 } // namespace simdpp
 
-#include <simdpp/dispatch/macros.h>
+#include <simdpp/dispatch/macros_generated.h>
 
 #endif

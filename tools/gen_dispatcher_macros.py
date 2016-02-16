@@ -6,8 +6,8 @@
 #   (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-# Generates the simdpp/dispatch/macros.h file
-# Use as $ ./tools/gen_dispatch_macros.py > simdpp/dispatch/macros.h
+# Generates the simdpp/dispatch/macros_generated.h file
+# Use as $ ./tools/gen_dispatch_macros.py > simdpp/dispatch/macros_generated.h
 
 import re
 
