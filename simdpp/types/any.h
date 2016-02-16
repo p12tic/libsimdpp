@@ -31,8 +31,8 @@ struct any_vec {
 
     /// @{
     /// Returns the wrapped vector
-    V& wrapped() { return static_cast<V&>(*this); }
-    const V& wrapped() const { return static_cast<const V&>(*this); }
+    SIMDPP_INL V& wrapped() { return static_cast<V&>(*this); }
+    SIMDPP_INL const V& wrapped() const { return static_cast<const V&>(*this); }
     /// @}
 };
 

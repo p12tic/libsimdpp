@@ -45,7 +45,7 @@ namespace detail {
     S<N,void>.
 */
 #if !SIMDPP_EXPR_DEBUG
-template<class R, class S>
+template<class R, class S> SIMDPP_INL
 const R& cast_expr(const S& expr)
 {
     return reinterpret_cast<const R&>(expr);
@@ -68,7 +68,7 @@ template<template<unsigned, template<unsigned, class> class> class R,
          unsigned N, class E>
 struct cast_expr_check< R<N, S<N,E> >, S<N,E> > { };
 
-template<class R, class S>
+template<class R, class S> SIMDPP_INL
 const R& cast_expr(const S& expr)
 {
     cast_expr_check<R,S> x;

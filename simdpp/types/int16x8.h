@@ -47,9 +47,9 @@ public:
     using native_type = detail::array<int16_t, 8>;
 #endif
 
-    int16<8>() = default;
-    int16<8>(const int16<8> &) = default;
-    int16<8> &operator=(const int16<8> &) = default;
+    SIMDPP_INL int16<8>() = default;
+    SIMDPP_INL int16<8>(const int16<8> &) = default;
+    SIMDPP_INL int16<8> &operator=(const int16<8> &) = default;
 
     template<class E> SIMDPP_INL int16<8>(const int16<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int16<8>(const uint16<8,E>& d) { *this = d.eval(); }
@@ -64,12 +64,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    int16<8>(const native_type& d) : d_(d) {}
-    int16<8>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL int16<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL int16<8>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int16<8>(const expr_vec_construct<E>& e)
@@ -84,11 +84,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const int16<8>& vec(unsigned) const { return *this; }
-          int16<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const int16<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL int16<8>& vec(unsigned)       { return *this; }
     /// @}
 
-    int16<8> eval() const { return *this; }
+    SIMDPP_INL int16<8> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
     /// For internal use only
@@ -96,8 +96,8 @@ public:
           int16_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static int16<8> zero() { return detail::make_zero(); }
-    static int16<8> ones() { return detail::make_ones(); }
+    static SIMDPP_INL int16<8> zero() { return detail::make_zero(); }
+    static SIMDPP_INL int16<8> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -123,9 +123,9 @@ public:
     using native_type = detail::array<uint16_t, 8>;
 #endif
 
-    uint16<8>() = default;
-    uint16<8>(const uint16<8> &) = default;
-    uint16<8> &operator=(const uint16<8> &) = default;
+    SIMDPP_INL uint16<8>() = default;
+    SIMDPP_INL uint16<8>(const uint16<8> &) = default;
+    SIMDPP_INL uint16<8> &operator=(const uint16<8> &) = default;
 
     template<class E> SIMDPP_INL uint16<8>(const uint16<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint16<8>(const int16<8,E>& d) { *this = d.eval(); }
@@ -140,12 +140,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    uint16<8>(const native_type& d) : d_(d) {}
-    uint16<8>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL uint16<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL uint16<8>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint16<8>(const expr_vec_construct<E>& e)
@@ -160,11 +160,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint16<8>& vec(unsigned) const { return *this; }
-          uint16<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const uint16<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL uint16<8>& vec(unsigned)       { return *this; }
     /// @}
 
-    uint16<8> eval() const { return *this; }
+    SIMDPP_INL uint16<8> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
     /// For uinternal use only
@@ -172,8 +172,8 @@ public:
           uint16_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static uint16<8> zero() { return detail::make_zero(); }
-    static uint16<8> ones() { return detail::make_ones(); }
+    static SIMDPP_INL uint16<8> zero() { return detail::make_zero(); }
+    static SIMDPP_INL uint16<8> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -198,24 +198,24 @@ public:
     using native_type = detail::array<bool, 8>;
 #endif
 
-    mask_int16<8>() = default;
-    mask_int16<8>(const mask_int16<8> &) = default;
-    mask_int16<8> &operator=(const mask_int16<8> &) = default;
+    SIMDPP_INL mask_int16<8>() = default;
+    SIMDPP_INL mask_int16<8>(const mask_int16<8> &) = default;
+    SIMDPP_INL mask_int16<8> &operator=(const mask_int16<8> &) = default;
 
-    mask_int16<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int16<8>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_ALTIVEC
-    mask_int16<8>(const __vector __bool short& d) : d_((__vector uint16_t)d) {}
+    SIMDPP_INL mask_int16<8>(const __vector __bool short& d) : d_((__vector uint16_t)d) {}
 #endif
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    mask_int16<8>(const uint16<8>& d) : d_(d) {}
+    SIMDPP_INL mask_int16<8>(const uint16<8>& d) : d_(d) {}
 #endif
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    uint16<8> unmask() const
+    SIMDPP_INL uint16<8> unmask() const
     {
     #if SIMDPP_USE_NULL
         return detail::null::unmask_mask<uint16<8>>(*this);
@@ -229,10 +229,10 @@ public:
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
-    const mask_int16<8>& vec(unsigned) const { return *this; }
-          mask_int16<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_int16<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_int16<8>& vec(unsigned)       { return *this; }
 
-    mask_int16<8> eval() const { return *this; }
+    SIMDPP_INL mask_int16<8> eval() const { return *this; }
 
 private:
     native_type d_;

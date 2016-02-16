@@ -84,8 +84,8 @@ struct expr_splat16 {
 
 template<class E>
 struct expr_vec_construct {
-    E& expr() { return static_cast<E&>(*this); }
-    const E& expr() const { return static_cast<const E&>(*this); }
+    SIMDPP_INL E& expr() { return static_cast<E&>(*this); }
+    SIMDPP_INL const E& expr() const { return static_cast<const E&>(*this); }
 };
 
 struct expr_vec_load_splat : expr_vec_construct<expr_vec_load_splat> {
@@ -100,7 +100,7 @@ struct expr_vec_set_splat : expr_vec_construct<expr_vec_set_splat<VE>> {
 template<class VE, unsigned N>
 struct expr_vec_make_const : expr_vec_construct<expr_vec_make_const<VE,N>> {
     VE a[N];
-    const VE& val(unsigned n) const { return a[n%N]; }
+    SIMDPP_INL const VE& val(unsigned n) const { return a[n%N]; }
 };
 
 struct expr_vec_load : expr_vec_construct<expr_vec_load> {

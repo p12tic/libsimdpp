@@ -40,9 +40,9 @@ public:
     using native_type = __m512i;
 #endif
 
-    int64<8>() = default;
-    int64<8>(const int64<8> &) = default;
-    int64<8> &operator=(const int64<8> &) = default;
+    SIMDPP_INL int64<8>() = default;
+    SIMDPP_INL int64<8>(const int64<8> &) = default;
+    SIMDPP_INL int64<8> &operator=(const int64<8> &) = default;
 
     template<class E> SIMDPP_INL int64<8>(const int64<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int64<8>(const uint64<8,E>& d) { *this = d.eval(); }
@@ -57,12 +57,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    int64<8>(const native_type& d) : d_(d) {}
-    int64<8>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL int64<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL int64<8>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int64<8>(const expr_vec_construct<E>& e)
@@ -77,14 +77,14 @@ public:
 
     /// @{
     /// Access base vectors
-    const int64<8>& vec(unsigned) const { return *this; }
-          int64<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const int64<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL int64<8>& vec(unsigned)       { return *this; }
     /// @}
 
-    int64<8> eval() const { return *this; }
+    SIMDPP_INL int64<8> eval() const { return *this; }
 
-    static int64<8> zero() { return detail::make_zero(); }
-    static int64<8> ones() { return detail::make_ones(); }
+    static SIMDPP_INL int64<8> zero() { return detail::make_zero(); }
+    static SIMDPP_INL int64<8> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -104,9 +104,9 @@ public:
     using native_type = __m512i;
 #endif
 
-    uint64<8>() = default;
-    uint64<8>(const uint64<8> &) = default;
-    uint64<8> &operator=(const uint64<8> &) = default;
+    SIMDPP_INL uint64<8>() = default;
+    SIMDPP_INL uint64<8>(const uint64<8> &) = default;
+    SIMDPP_INL uint64<8> &operator=(const uint64<8> &) = default;
 
     template<class E> SIMDPP_INL uint64<8>(const uint64<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint64<8>(const int64<8,E>& d) { *this = d.eval(); }
@@ -121,12 +121,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    uint64<8>(const native_type& d) : d_(d) {}
-    uint64<8>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL uint64<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL uint64<8>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint64<8>(const expr_vec_construct<E>& e)
@@ -141,14 +141,14 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint64<8>& vec(unsigned) const { return *this; }
-          uint64<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const uint64<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL uint64<8>& vec(unsigned)       { return *this; }
     /// @}
 
-    uint64<8> eval() const { return *this; }
+    SIMDPP_INL uint64<8> eval() const { return *this; }
 
-    static uint64<8> zero() { return detail::make_zero(); }
-    static uint64<8> ones() { return detail::make_ones(); }
+    static SIMDPP_INL uint64<8> zero() { return detail::make_zero(); }
+    static SIMDPP_INL uint64<8> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -168,11 +168,11 @@ public:
     using native_type = __mmask8;
 #endif
 
-    mask_int64<8>() = default;
-    mask_int64<8>(const mask_int64<8> &) = default;
-    mask_int64<8> &operator=(const mask_int64<8> &) = default;
+    SIMDPP_INL mask_int64<8>() = default;
+    SIMDPP_INL mask_int64<8>(const mask_int64<8> &) = default;
+    SIMDPP_INL mask_int64<8> &operator=(const mask_int64<8> &) = default;
 
-    mask_int64<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int64<8>(const native_type& d) : d_(d) {}
 
     template<class E> SIMDPP_INL explicit mask_int64<8>(const mask_float64<8,E>& d)
     {
@@ -183,20 +183,20 @@ public:
         *this = bit_cast<mask_int64<8>>(d.eval()); return *this;
     }
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    uint64<8> unmask() const
+    SIMDPP_INL uint64<8> unmask() const
     {
     #if SIMDPP_USE_AVX512
         return _mm512_maskz_set1_epi64(d_, 0xffffffffffffffff);
     #endif
     }
 
-    const mask_int64<8>& vec(unsigned) const { return *this; }
-          mask_int64<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_int64<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_int64<8>& vec(unsigned)       { return *this; }
 
-    mask_int64<8> eval() const { return *this; }
+    SIMDPP_INL mask_int64<8> eval() const { return *this; }
 
 private:
     native_type d_;

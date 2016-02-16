@@ -35,9 +35,9 @@ public:
     using base_vector_type = int8v;
     using expr_type = void;
 
-    int8<N>() = default;
-    int8<N>(const int8<N>&) = default;
-    int8<N>& operator=(const int8<N>&) = default;
+    SIMDPP_INL int8<N>() = default;
+    SIMDPP_INL int8<N>(const int8<N>&) = default;
+    SIMDPP_INL int8<N>& operator=(const int8<N>&) = default;
 
     template<class E> SIMDPP_INL int8<N>(const int8<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int8<N>(const uint8<N,E>& d) { *this = d.eval(); }
@@ -61,18 +61,18 @@ public:
     }
 #endif
 
-    const int8v& vec(unsigned i) const { return d_[i]; }
-    int8v& vec(unsigned i)             { return d_[i]; }
+    SIMDPP_INL const int8v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL int8v& vec(unsigned i)             { return d_[i]; }
 
-    int8<N> eval() const { return *this; }
+    SIMDPP_INL int8<N> eval() const { return *this; }
 
-    static int8<N> zero() { return set_vec(int8v::zero()); }
-    static int8<N> ones() { return set_vec(int8v::ones()); }
+    static SIMDPP_INL int8<N> zero() { return set_vec(int8v::zero()); }
+    static SIMDPP_INL int8<N> ones() { return set_vec(int8v::ones()); }
 
 private:
     /// Creates a signed int8 vector with the contents set to copy of native
     /// register
-    static int8<N> set_vec(int8v a)
+    static SIMDPP_INL int8<N> set_vec(int8v a)
     {
         int8<N> r;
         for (auto& v : r.d_) {
@@ -96,9 +96,9 @@ public:
     using base_vector_type = uint8v;
     using expr_type = void;
 
-    uint8<N>() = default;
-    uint8<N>(const uint8<N>&) = default;
-    uint8<N>& operator=(const uint8<N>&) = default;
+    SIMDPP_INL uint8<N>() = default;
+    SIMDPP_INL uint8<N>(const uint8<N>&) = default;
+    SIMDPP_INL uint8<N>& operator=(const uint8<N>&) = default;
 
     template<class E> SIMDPP_INL uint8<N>(const uint8<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint8<N>(const int8<N,E>& d) { *this = d.eval(); }
@@ -122,18 +122,18 @@ public:
     }
 #endif
 
-    const uint8v& vec(unsigned i) const { return d_[i]; }
-    uint8v& vec(unsigned i)             { return d_[i]; }
+    SIMDPP_INL const uint8v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL uint8v& vec(unsigned i)             { return d_[i]; }
 
-    uint8<N> eval() const { return *this; }
+    SIMDPP_INL uint8<N> eval() const { return *this; }
 
-    static uint8<N> zero() { return set_vec(uint8v::zero()); }
-    static uint8<N> ones() { return set_vec(uint8v::ones()); }
+    static SIMDPP_INL uint8<N> zero() { return set_vec(uint8v::zero()); }
+    static SIMDPP_INL uint8<N> ones() { return set_vec(uint8v::ones()); }
 
 private:
     /// Creates a unsigned int8 vector with the contents set to copy of native
     /// register
-    static uint8<N> set_vec(uint8v a)
+    static SIMDPP_INL uint8<N> set_vec(uint8v a)
     {
         uint8<N> r;
         for (auto& v : r.d_) {
@@ -155,12 +155,12 @@ public:
     using base_vector_type = mask_int8v;
     using expr_type = void;
 
-    mask_int8<N>() = default;
-    mask_int8<N>(const mask_int8<N> &) = default;
-    mask_int8<N> &operator=(const mask_int8<N> &) = default;
+    SIMDPP_INL mask_int8<N>() = default;
+    SIMDPP_INL mask_int8<N>(const mask_int8<N> &) = default;
+    SIMDPP_INL mask_int8<N> &operator=(const mask_int8<N> &) = default;
 
     /// Access the underlying type
-    uint8<N> unmask() const
+    SIMDPP_INL uint8<N> unmask() const
     {
         uint8<N> r;
         for (unsigned i = 0; i < mask_int8::vec_length; ++i) {
@@ -169,10 +169,10 @@ public:
         return r;
     }
 
-    const mask_int8v& vec(unsigned i) const { return d_[i]; }
-          mask_int8v& vec(unsigned i)       { return d_[i]; }
+    SIMDPP_INL const mask_int8v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL mask_int8v& vec(unsigned i)       { return d_[i]; }
 
-    mask_int8<N> eval() const { return *this; }
+    SIMDPP_INL mask_int8<N> eval() const { return *this; }
 
 private:
     mask_int8v d_[mask_int8::vec_length];

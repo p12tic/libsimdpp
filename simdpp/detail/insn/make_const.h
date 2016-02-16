@@ -486,7 +486,7 @@ struct i_make_const_dispatch
 template<class VE, unsigned N>
 struct i_make_const_dispatch<expr_vec_make_const<VE,N>>
 {
-    static expr_vec_make_const<VE,N> run(const expr_vec_make_const<VE,N>& e)
+    static SIMDPP_INL expr_vec_make_const<VE,N> run(const expr_vec_make_const<VE,N>& e)
     {
         return e;
     }

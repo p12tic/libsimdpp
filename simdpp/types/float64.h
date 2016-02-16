@@ -37,9 +37,9 @@ public:
     using base_vector_type = float64v;
     using expr_type = void;
 
-    float64<N>() = default;
-    float64<N>(const float64<N>&) = default;
-    float64<N>& operator=(const float64<N>&) = default;
+    SIMDPP_INL float64<N>() = default;
+    SIMDPP_INL float64<N>(const float64<N>&) = default;
+    SIMDPP_INL float64<N>& operator=(const float64<N>&) = default;
 
     template<class E> SIMDPP_INL float64<N>(const float64<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float64<N>(const any_vec<N*8,V>& d)
@@ -62,10 +62,10 @@ public:
     }
 #endif
 
-    const float64v& vec(unsigned i) const { return d_[i]; }
-    float64v& vec(unsigned i)             { return d_[i]; }
+    SIMDPP_INL const float64v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL float64v& vec(unsigned i)             { return d_[i]; }
 
-    float64<N> eval() const { return *this; }
+    SIMDPP_INL float64<N> eval() const { return *this; }
 
     /** Creates a float64 vector with the contents set to zero
 
@@ -75,7 +75,7 @@ public:
         rN = 0.0f
         @endcode
     */
-    static float64<N> zero()
+    static SIMDPP_INL float64<N> zero()
     {
         return set_vec(float64v::zero());
     }
@@ -89,7 +89,7 @@ private:
         rN = v0
         @endcode
     */
-    static float64<N> set_vec(float64v v0)
+    static SIMDPP_INL float64<N> set_vec(float64v v0)
     {
         float64<N> r;
         for (unsigned i = 0; i < r.vec_length; i++) r.vec(i) = v0;
@@ -108,9 +108,9 @@ public:
     using base_vector_type = mask_float64v;
     using expr_type = void;
 
-    mask_float64<N>() = default;
-    mask_float64<N>(const mask_float64<N> &) = default;
-    mask_float64<N> &operator=(const mask_float64<N> &) = default;
+    SIMDPP_INL mask_float64<N>() = default;
+    SIMDPP_INL mask_float64<N>(const mask_float64<N> &) = default;
+    SIMDPP_INL mask_float64<N> &operator=(const mask_float64<N> &) = default;
 
     template<class E> SIMDPP_INL explicit mask_float64<N>(const mask_int64<N,E>& d)
     {
@@ -122,7 +122,7 @@ public:
     }
 
     /// Access the underlying type
-    float64<N> unmask() const
+    SIMDPP_INL float64<N> unmask() const
     {
         float64<N> r;
         for (unsigned i = 0; i < mask_float64::vec_length; ++i) {
@@ -131,10 +131,10 @@ public:
         return r;
     }
 
-    const mask_float64v& vec(unsigned i) const { return d_[i]; }
-          mask_float64v& vec(unsigned i)       { return d_[i]; }
+    SIMDPP_INL const mask_float64v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL mask_float64v& vec(unsigned i)       { return d_[i]; }
 
-    mask_float64<N> eval() const { return *this; }
+    SIMDPP_INL mask_float64<N> eval() const { return *this; }
 
 private:
     mask_float64v d_[mask_float64::vec_length];

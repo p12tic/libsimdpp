@@ -39,9 +39,9 @@ public:
     using native_type = __m256;
 #endif
 
-    float32<8>() = default;
-    float32<8>(const float32<8> &) = default;
-    float32<8> &operator=(const float32<8> &) = default;
+    SIMDPP_INL float32<8>() = default;
+    SIMDPP_INL float32<8>(const float32<8> &) = default;
+    SIMDPP_INL float32<8> &operator=(const float32<8> &) = default;
 
     template<class E> SIMDPP_INL float32<8>(const float32<8,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float32<8>(const any_vec<32,V>& d)
@@ -60,7 +60,7 @@ public:
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL float32<8>(const expr_vec_construct<E>& e)
@@ -75,11 +75,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const float32<8>& vec(unsigned) const { return *this; }
-          float32<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const float32<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL float32<8>& vec(unsigned)       { return *this; }
     /// @}
 
-    float32<8> eval() const { return *this; }
+    SIMDPP_INL float32<8> eval() const { return *this; }
 
     /** Creates a float32x4 vector with the contents set to zero
 
@@ -90,7 +90,7 @@ public:
         r3 = 0.0f
         @endcode
     */
-    static float32<8> zero() { return detail::make_zero(); }
+    static SIMDPP_INL float32<8> zero() { return detail::make_zero(); }
 
 private:
     native_type d_;
@@ -109,14 +109,14 @@ public:
     using native_type = __m256;
 #endif
 
-    mask_float32<8>() = default;
-    mask_float32<8>(const mask_float32<8> &) = default;
-    mask_float32<8> &operator=(const mask_float32<8> &) = default;
+    SIMDPP_INL mask_float32<8>() = default;
+    SIMDPP_INL mask_float32<8>(const mask_float32<8> &) = default;
+    SIMDPP_INL mask_float32<8> &operator=(const mask_float32<8> &) = default;
 
-    mask_float32<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_float32<8>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX
-    mask_float32<8>(const float32<8>& d) : d_(d) {}
+    SIMDPP_INL mask_float32<8>(const float32<8>& d) : d_(d) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float32<8>(const mask_int32<8,E>& d)
@@ -128,18 +128,18 @@ public:
         *this = bit_cast<mask_float32<8>>(d.eval()); return *this;
     }
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    float32<8> unmask() const
+    SIMDPP_INL float32<8> unmask() const
     {
         return float32<8>(d_);
     }
 
-    const mask_float32<8>& vec(unsigned) const { return *this; }
-          mask_float32<8>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_float32<8>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_float32<8>& vec(unsigned)       { return *this; }
 
-    mask_float32<8> eval() const { return *this; }
+    SIMDPP_INL mask_float32<8> eval() const { return *this; }
 
 private:
     native_type d_;

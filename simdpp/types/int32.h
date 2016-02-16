@@ -35,9 +35,9 @@ public:
     using base_vector_type = int32v;
     using expr_type = void;
 
-    int32<N>() = default;
-    int32<N>(const int32<N>&) = default;
-    int32<N>& operator=(const int32<N>&) = default;
+    SIMDPP_INL int32<N>() = default;
+    SIMDPP_INL int32<N>(const int32<N>&) = default;
+    SIMDPP_INL int32<N>& operator=(const int32<N>&) = default;
 
     template<class E> SIMDPP_INL int32<N>(const int32<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int32<N>(const uint32<N,E>& d) { *this = d.eval(); }
@@ -61,18 +61,18 @@ public:
     }
 #endif
 
-    const int32v& vec(unsigned i) const { return d_[i]; }
-    int32v& vec(unsigned i)             { return d_[i]; }
+    SIMDPP_INL const int32v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL int32v& vec(unsigned i)             { return d_[i]; }
 
-    int32<N> eval() const { return *this; }
+    SIMDPP_INL int32<N> eval() const { return *this; }
 
-    static int32<N> zero() { return set_vec(int32v::zero()); }
-    static int32<N> ones() { return set_vec(int32v::ones()); }
+    static SIMDPP_INL int32<N> zero() { return set_vec(int32v::zero()); }
+    static SIMDPP_INL int32<N> ones() { return set_vec(int32v::ones()); }
 
 private:
     /// Creates a signed int32 vector with the contents set to copy of native
     /// register
-    static int32<N> set_vec(int32v a)
+    static SIMDPP_INL int32<N> set_vec(int32v a)
     {
         int32<N> r;
         for (auto& v : r.d_) {
@@ -95,9 +95,9 @@ public:
     using base_vector_type = uint32v;
     using expr_type = void;
 
-    uint32<N>() = default;
-    uint32<N>(const uint32<N>&) = default;
-    uint32<N>& operator=(const uint32<N>&) = default;
+    SIMDPP_INL uint32<N>() = default;
+    SIMDPP_INL uint32<N>(const uint32<N>&) = default;
+    SIMDPP_INL uint32<N>& operator=(const uint32<N>&) = default;
 
     template<class E> SIMDPP_INL uint32<N>(const uint32<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint32<N>(const int32<N,E>& d) { *this = d.eval(); }
@@ -121,18 +121,18 @@ public:
     }
 #endif
 
-    const uint32v& vec(unsigned i) const { return d_[i]; }
-    uint32v& vec(unsigned i)             { return d_[i]; }
+    SIMDPP_INL const uint32v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL uint32v& vec(unsigned i)             { return d_[i]; }
 
-    uint32<N> eval() const { return *this; }
+    SIMDPP_INL uint32<N> eval() const { return *this; }
 
-    static uint32<N> zero() { return set_vec(uint32v::zero()); }
-    static uint32<N> ones() { return set_vec(uint32v::ones()); }
+    static SIMDPP_INL uint32<N> zero() { return set_vec(uint32v::zero()); }
+    static SIMDPP_INL uint32<N> ones() { return set_vec(uint32v::ones()); }
 
 private:
     /// Creates a unsigned int32 vector with the contents set to copy of native
     /// register
-    static uint32<N> set_vec(uint32v a)
+    static SIMDPP_INL uint32<N> set_vec(uint32v a)
     {
         uint32<N> r;
         for (auto& v : r.d_) {
@@ -154,9 +154,9 @@ public:
     using base_vector_type = mask_int32v;
     using expr_type = void;
 
-    mask_int32<N>() = default;
-    mask_int32<N>(const mask_int32<N> &) = default;
-    mask_int32<N> &operator=(const mask_int32<N> &) = default;
+    SIMDPP_INL mask_int32<N>() = default;
+    SIMDPP_INL mask_int32<N>(const mask_int32<N> &) = default;
+    SIMDPP_INL mask_int32<N> &operator=(const mask_int32<N> &) = default;
 
     template<class E> SIMDPP_INL explicit mask_int32<N>(const mask_float32<N,E>& d)
     {
@@ -168,7 +168,7 @@ public:
     }
 
     /// Access the underlying type
-    uint32<N> unmask() const
+    SIMDPP_INL uint32<N> unmask() const
     {
         uint32<N> r;
         for (unsigned i = 0; i < mask_int32::vec_length; ++i) {
@@ -177,10 +177,10 @@ public:
         return r;
     }
 
-    const mask_int32v& vec(unsigned i) const { return d_[i]; }
-          mask_int32v& vec(unsigned i)       { return d_[i]; }
+    SIMDPP_INL const mask_int32v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL mask_int32v& vec(unsigned i)       { return d_[i]; }
 
-    mask_int32<N> eval() const { return *this; }
+    SIMDPP_INL mask_int32<N> eval() const { return *this; }
 
 private:
     mask_int32v d_[mask_int32::vec_length];

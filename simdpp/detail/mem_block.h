@@ -30,18 +30,18 @@ public:
     using element_type = typename V::element_type;
     static const unsigned length = V::length;
 
-    mem_block() = default;
-    mem_block(const mem_block&) = default;
-    mem_block(V v) { std::memcpy(d_, &v, sizeof(v)); }
+    SIMDPP_INL mem_block() = default;
+    SIMDPP_INL mem_block(const mem_block&) = default;
+    SIMDPP_INL mem_block(V v) { std::memcpy(d_, &v, sizeof(v)); }
 
-    mem_block& operator=(V v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
+    SIMDPP_INL mem_block& operator=(V v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
 
-    operator V() const { V r; std::memcpy(&r, d_, sizeof(r)); return r; }
+    SIMDPP_INL operator V() const { V r; std::memcpy(&r, d_, sizeof(r)); return r; }
 
-    const element_type& operator[](unsigned id) const { return d_[id]; }
-    element_type& operator[](unsigned id) { return d_[id]; }
+    SIMDPP_INL const element_type& operator[](unsigned id) const { return d_[id]; }
+    SIMDPP_INL element_type& operator[](unsigned id) { return d_[id]; }
 
-    element_type* operator&() const { return d_; }
+    SIMDPP_INL element_type* operator&() const { return d_; }
 private:
     union {
         element_type d_[length];

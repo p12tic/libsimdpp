@@ -40,9 +40,9 @@ public:
     using native_type = __m256i;
 #endif
 
-    int64<4>() = default;
-    int64<4>(const int64<4> &) = default;
-    int64<4> &operator=(const int64<4> &) = default;
+    SIMDPP_INL int64<4>() = default;
+    SIMDPP_INL int64<4>(const int64<4> &) = default;
+    SIMDPP_INL int64<4> &operator=(const int64<4> &) = default;
 
     template<class E> SIMDPP_INL int64<4>(const int64<4,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int64<4>(const uint64<4,E>& d) { *this = d.eval(); }
@@ -62,7 +62,7 @@ public:
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int64<4>(const expr_vec_construct<E>& e)
@@ -77,14 +77,14 @@ public:
 
     /// @{
     /// Access base vectors
-    const int64<4>& vec(unsigned) const { return *this; }
-          int64<4>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const int64<4>& vec(unsigned) const { return *this; }
+    SIMDPP_INL int64<4>& vec(unsigned)       { return *this; }
     /// @}
 
-    int64<4> eval() const { return *this; }
+    SIMDPP_INL int64<4> eval() const { return *this; }
 
-    static int64<4> zero() { return detail::make_zero(); }
-    static int64<4> ones() { return detail::make_ones(); }
+    static SIMDPP_INL int64<4> zero() { return detail::make_zero(); }
+    static SIMDPP_INL int64<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -104,9 +104,9 @@ public:
     using native_type = __m256i;
 #endif
 
-    uint64<4>() = default;
-    uint64<4>(const uint64<4> &) = default;
-    uint64<4> &operator=(const uint64<4> &) = default;
+    SIMDPP_INL uint64<4>() = default;
+    SIMDPP_INL uint64<4>(const uint64<4> &) = default;
+    SIMDPP_INL uint64<4> &operator=(const uint64<4> &) = default;
 
     template<class E> SIMDPP_INL uint64<4>(const uint64<4,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint64<4>(const int64<4,E>& d) { *this = d.eval(); }
@@ -126,7 +126,7 @@ public:
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint64<4>(const expr_vec_construct<E>& e)
@@ -141,14 +141,14 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint64<4>& vec(unsigned) const { return *this; }
-          uint64<4>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const uint64<4>& vec(unsigned) const { return *this; }
+    SIMDPP_INL uint64<4>& vec(unsigned)       { return *this; }
     /// @}
 
-    uint64<4> eval() const { return *this; }
+    SIMDPP_INL uint64<4> eval() const { return *this; }
 
-    static uint64<4> zero() { return detail::make_zero(); }
-    static uint64<4> ones() { return detail::make_ones(); }
+    static SIMDPP_INL uint64<4> zero() { return detail::make_zero(); }
+    static SIMDPP_INL uint64<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -168,14 +168,14 @@ public:
     using native_type = __m256i;
 #endif
 
-    mask_int64<4>() = default;
-    mask_int64<4>(const mask_int64<4> &) = default;
-    mask_int64<4> &operator=(const mask_int64<4> &) = default;
+    SIMDPP_INL mask_int64<4>() = default;
+    SIMDPP_INL mask_int64<4>(const mask_int64<4> &) = default;
+    SIMDPP_INL mask_int64<4> &operator=(const mask_int64<4> &) = default;
 
-    mask_int64<4>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int64<4>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX2
-    mask_int64<4>(const uint64<4>& d) : d_(d) {}
+    SIMDPP_INL mask_int64<4>(const uint64<4>& d) : d_(d) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_int64<4>(const mask_float64<4,E>& d)
@@ -187,20 +187,20 @@ public:
         *this = bit_cast<mask_int64<4>>(d.eval()); return *this;
     }
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    uint64<4> unmask() const
+    SIMDPP_INL uint64<4> unmask() const
     {
     #if SIMDPP_USE_AVX2
         return uint64<4>(d_);
     #endif
     }
 
-    const mask_int64<4>& vec(unsigned) const { return *this; }
-          mask_int64<4>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_int64<4>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_int64<4>& vec(unsigned)       { return *this; }
 
-    mask_int64<4> eval() const { return *this; }
+    SIMDPP_INL mask_int64<4> eval() const { return *this; }
 
 private:
     native_type d_;

@@ -73,7 +73,7 @@ public:
     using expr_type = expr_empty;
     mask_float64<N> e;
 
-    mask_float64(const mask_float64<N>& a) : e(a) {}
+    SIMDPP_INL mask_float64(const mask_float64<N>& a) : e(a) {}
 
     SIMDPP_INL operator mask_float64<N>() const { return e; }
     SIMDPP_INL operator float64<N>() const { return e; }
@@ -89,7 +89,7 @@ public:
     using expr_type = expr_empty;
     int8<N> e;
 
-    int8(const int8<N>& a) : e(a) {}
+    SIMDPP_INL int8(const int8<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     int8(const any_vec<N,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -105,7 +105,7 @@ public:
     using expr_type = expr_empty;
     uint8<N> e;
 
-    uint8(const uint8<N>& a) : e(a) {}
+    SIMDPP_INL uint8(const uint8<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     uint8(const any_vec<N,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -120,7 +120,7 @@ public:
     using expr_type = expr_empty;
     mask_int8<N> e;
 
-    mask_int8(const mask_int8<N>& a) : e(a) {}
+    SIMDPP_INL mask_int8(const mask_int8<N>& a) : e(a) {}
 
     SIMDPP_INL operator mask_int8<N>() const { return e; }
     SIMDPP_INL operator uint8<N>() const { return e; }
@@ -136,7 +136,7 @@ public:
     using expr_type = expr_empty;
     int16<N> e;
 
-    int16(const int16<N>& a) : e(a) {}
+    SIMDPP_INL int16(const int16<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     int16(const any_vec<N*2,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -152,7 +152,7 @@ public:
     using expr_type = expr_empty;
     uint16<N> e;
 
-    uint16(const uint16<N>& a) : e(a) {}
+    SIMDPP_INL uint16(const uint16<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     uint16(const any_vec<N*2,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -167,7 +167,7 @@ public:
     using expr_type = expr_empty;
     mask_int16<N> e;
 
-    mask_int16(const mask_int16<N>& a) : e(a) {}
+    SIMDPP_INL mask_int16(const mask_int16<N>& a) : e(a) {}
 
     SIMDPP_INL operator mask_int16<N>() const { return e; }
     SIMDPP_INL operator uint16<N>() const { return e; }
@@ -183,7 +183,7 @@ public:
     using expr_type = expr_empty;
     int32<N> e;
 
-    int32(const int32<N>& a) : e(a) {}
+    SIMDPP_INL int32(const int32<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     int32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -199,7 +199,7 @@ public:
     using expr_type = expr_empty;
     uint32<N> e;
 
-    uint32(const uint32<N>& a) : e(a) {}
+    SIMDPP_INL uint32(const uint32<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     uint32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -214,7 +214,7 @@ public:
     using expr_type = expr_empty;
     mask_int32<N> e;
 
-    mask_int32(const mask_int32<N>& a) : e(a) {}
+    SIMDPP_INL mask_int32(const mask_int32<N>& a) : e(a) {}
 
     SIMDPP_INL operator mask_int32<N>() const { return e; }
     SIMDPP_INL operator uint32<N>() const { return e; }
@@ -231,7 +231,7 @@ public:
     using expr_type = expr_empty;
     int64<N> e;
 
-    int64(const int64<N>& a) : e(a) {}
+    SIMDPP_INL int64(const int64<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     int64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -247,7 +247,7 @@ public:
     using expr_type = expr_empty;
     uint64<N> e;
 
-    uint64(const uint64<N>& a) : e(a) {}
+    SIMDPP_INL uint64(const uint64<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
     uint64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
 
@@ -263,7 +263,7 @@ public:
     using expr_type = expr_empty;
     mask_int64<N> e;
 
-    mask_int64(const mask_int64<N>& a) : e(a) {}
+    SIMDPP_INL mask_int64(const mask_int64<N>& a) : e(a) {}
 
     SIMDPP_INL operator mask_int64<N>() const { return e; }
     SIMDPP_INL operator uint64<N>() const { return e; }
