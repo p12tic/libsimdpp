@@ -62,9 +62,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @par 256-bit version:
 
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, NEON, 2-3}
 */
@@ -89,9 +86,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
     @icost{SSE2-AVX2, ALTIVEC, 2-3}
 
     @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
@@ -117,9 +111,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
     @unimp{SSE2-SSSE3, ALTIVEC}
 
     @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE4.1-AVX, 6}
     @icost{AVX2, 3}
     @icost{NEON, 2}
@@ -144,10 +135,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
     @endcode
     @icost{SSE2-AVX, 3}
     @unimp{ALTIVEC}
-
-    @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
 
     @icost{SSE2-AVX, 6}
     @icost{AVX2, 3}
