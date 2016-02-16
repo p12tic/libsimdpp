@@ -232,6 +232,7 @@
 #endif
 
 #if SIMDPP_USE_NEON && SIMDPP_64_BITS
+#undef SIMDPP_USE_NEON_FLT_SP
 #define SIMDPP_USE_NEON_FLT_SP 1
 #endif
 
