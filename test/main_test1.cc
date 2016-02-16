@@ -21,8 +21,9 @@
 #if SIMDPP_X86
 #include <simdpp/dispatch/get_arch_raw_cpuid.h>
 #endif
+#include <simdpp/dispatch/get_arch_string_list.h>
 
-inline simdpp::Arch get_arch(bool is_simulator)
+simdpp::Arch get_arch_from_system(bool is_simulator)
 {
     (void) is_simulator;
     std::vector<simdpp::Arch> supported_archs;
@@ -50,13 +51,21 @@ inline simdpp::Arch get_arch(bool is_simulator)
     return result;
 }
 
-void parse_args(int argc, char* argv[], bool& is_simulator)
+simdpp::Arch parse_arch_from_args(int argc, char* argv[])
+{
+    return simdpp::get_arch_string_list(argv + 1, argc - 1, "--arch_");
+}
+
+void parse_args(int argc, char* argv[], bool& is_simulator, bool& force_arch)
 {
     is_simulator = false;
+    force_arch = false;
     for (int i = 1; i < argc; ++i)
     {
         if (std::strcmp(argv[i], "--simulator") == 0)
             is_simulator = true;
+        if (std::strcmp(argv[i], "--force_arch") == 0)
+            force_arch = true;
     }
 }
 
@@ -69,9 +78,14 @@ void parse_args(int argc, char* argv[], bool& is_simulator)
 int main(int argc, char* argv[])
 {
     bool is_simulator = false;
-    parse_args(argc, argv, is_simulator);
+    bool force_arch = false;
+    parse_args(argc, argv, is_simulator, force_arch);
 
-    simdpp::Arch current_arch = get_arch(is_simulator);
+    simdpp::Arch current_arch;
+    if (force_arch)
+        current_arch = parse_arch_from_args(argc, argv);
+    else
+        current_arch = get_arch_from_system(is_simulator);
 
     std::ostream& err = std::cerr;
     const auto& arch_list = get_test_archs();
