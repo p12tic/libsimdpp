@@ -40,7 +40,7 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtepi32_pd(a);
-    r2 = _mm_cvtepi32_pd(move4_r<2>(a).eval());
+    r2 = _mm_cvtepi32_pd(move4_l<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON64
     float64<2> r1, r2;
@@ -105,7 +105,7 @@ SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtps_pd(a);
-    r2 = _mm_cvtps_pd(move4_r<2>(a).eval());
+    r2 = _mm_cvtps_pd(move4_l<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON64
     float64<2> r1, r2;

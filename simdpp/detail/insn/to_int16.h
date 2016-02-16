@@ -31,14 +31,14 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
 {
 #if SIMDPP_USE_NULL
     uint16x16 r;
-    for (unsigned i = 0; i < 8; i++) {
+    for (unsigned i = 0; i < 16; i++) {
         r.vec(i/8).el(i%8) = uint16_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
     uint16x8 r1, r2;
     r1 = _mm_cvtepu8_epi16(a);
-    r2 = _mm_cvtepu8_epi16(move16_r<8>(a).eval());
+    r2 = _mm_cvtepu8_epi16(move16_l<8>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     uint16x8 r1, r2;
@@ -93,7 +93,7 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
 #elif SIMDPP_USE_SSE4_1
     int16x8 r1, r2;
     r1 = _mm_cvtepi8_epi16(a);
-    r2 = _mm_cvtepi8_epi16(move16_r<8>(a).eval());
+    r2 = _mm_cvtepi8_epi16(move16_l<8>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
