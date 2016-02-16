@@ -255,7 +255,7 @@ bool test_equal(const TestSuite& a, const char* a_arch,
     auto cmpeq_result = [](const TestSuite::Result& ia, const TestSuite::Result& ib,
                            unsigned prec) -> bool
     {
-        if (std::memcmp(ia.d(), ib.d(), TestSuite::size_for_type(ia.type)) == 0) {
+        if (std::memcmp(ia.d(), ib.d(), ia.el_size * ia.length) == 0) {
             return true;
         }
 
