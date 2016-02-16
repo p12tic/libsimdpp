@@ -22,12 +22,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
-
-template<class V>
-struct is_expr_vec_load { static const bool value = false; };
-template<>
-struct is_expr_vec_load<expr_vec_load> { static const bool value = true; };
-
 namespace insn {
 
 // collect some boilerplate here
@@ -153,33 +147,19 @@ void v_load(V& a, const char* p)
 }
 
 template<class V>
-struct i_load_dispatch {
-    static V run(const char* p)
-    {
-        V r;
-        i_load(r, p);
-        return r;
-    }
-};
-
-template<>
-struct i_load_dispatch<expr_vec_load> {
-    static expr_vec_load run(const char* p)
-    {
-        expr_vec_load r;
-        r.a = p;
-        return r;
-    }
-};
+V i_load_any(const char* p)
+{
+    typename detail::remove_sign<V>::type r;
+    i_load(r, p);
+    return V(r);
+}
 
 } // namespace insn
 
 template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load& e)
 {
-    typename detail::remove_sign<V>::type r;
-    insn::i_load(r, e.a);
-    v = r;
+    v = insn::i_load_any<V>(e.a);
 }
 
 } // namespace detail

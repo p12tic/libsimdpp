@@ -24,12 +24,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
-
-template<class V>
-struct is_expr_vec_make_const { static const bool value = false; };
-template<class VE, unsigned N>
-struct is_expr_vec_make_const<expr_vec_make_const<VE,N>> { static const bool value = true; };
-
 namespace insn {
 
 #if SIMDPP_USE_NEON_FLT_SP
@@ -471,26 +465,13 @@ void i_make_const(uint64<N>& v, const expr_vec_make_const<VE,NE>& e)
 
 // -----------------------------------------------------------------------------
 
-template<class V>
-struct i_make_const_dispatch
+template<class V, class VE, unsigned N>
+V i_make_const_any(const expr_vec_make_const<VE,N>& e)
 {
-    template<class VE, unsigned N> SIMDPP_INL
-    static V run(const expr_vec_make_const<VE,N>& e)
-    {
-        typename detail::remove_sign<V>::type r;
-        i_make_const(r, e);
-        return V(r);
-    }
-};
-
-template<class VE, unsigned N>
-struct i_make_const_dispatch<expr_vec_make_const<VE,N>>
-{
-    static SIMDPP_INL expr_vec_make_const<VE,N> run(const expr_vec_make_const<VE,N>& e)
-    {
-        return e;
-    }
-};
+    typename detail::remove_sign<V>::type r;
+    i_make_const(r, e);
+    return V(r);
+}
 
 // -----------------------------------------------------------------------------
 } // namespace insn
@@ -498,9 +479,7 @@ struct i_make_const_dispatch<expr_vec_make_const<VE,N>>
 template<class V, class VE, unsigned N> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_make_const<VE, N>& e)
 {
-    typename detail::remove_sign<V>::type r;
-    insn::i_make_const(r, e);
-    v = r;
+    v = insn::i_make_const_any<V>(e);
 }
 
 } // namespace detail

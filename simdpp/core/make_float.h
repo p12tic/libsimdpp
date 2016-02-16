@@ -56,52 +56,108 @@ namespace SIMDPP_ARCH_NAMESPACE {
     r = [ v0 v1 .. v7 v0  ... v7 ]
     @endcode
 */
-// FIXME: return empty expr
-template<class V = expr_vec_make_const<double,1>> SIMDPP_INL
+SIMDPP_INL expr_vec_make_const<double,1> make_float(double v0)
+{
+    expr_vec_make_const<double,1> a;
+    a.a[0] = v0;
+    return a;
+}
+
+SIMDPP_INL expr_vec_make_const<double,2> make_float(double v0, double v1)
+{
+    expr_vec_make_const<double,2> a;
+    a.a[0] = v0;  a.a[1] = v1;
+    return a;
+}
+
+SIMDPP_INL expr_vec_make_const<double,4>
+    make_float(double v0, double v1, double v2, double v3)
+{
+    expr_vec_make_const<double,4> a;
+    a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
+    return a;
+}
+
+SIMDPP_INL expr_vec_make_const<double,8>
+    make_float(double v0, double v1, double v2, double v3,
+               double v4, double v5, double v6, double v7)
+{
+    expr_vec_make_const<double,8> a;
+    a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
+    a.a[4] = v4;  a.a[5] = v5;  a.a[6] = v6;  a.a[7] = v7;
+    return a;
+}
+
+SIMDPP_INL expr_vec_make_const<double,16>
+    make_float(double v0,  double v1,  double v2,  double v3,
+               double v4,  double v5,  double v6,  double v7,
+               double v8,  double v9,  double v10, double v11,
+               double v12, double v13, double v14, double v15)
+{
+    expr_vec_make_const<double,16> a;
+    a.a[0] = v0;    a.a[1] = v1;    a.a[2] = v2;    a.a[3] = v3;
+    a.a[4] = v4;    a.a[5] = v5;    a.a[6] = v6;    a.a[7] = v7;
+    a.a[8] = v8;    a.a[9] = v9;    a.a[10] = v10;  a.a[11] = v11;
+    a.a[12] = v12;  a.a[13] = v13;  a.a[14] = v14;  a.a[15] = v15;
+    return a;
+}
+
+template<class V> SIMDPP_INL
 V make_float(double v0)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                  detail::is_expr_vec_make_const<V>::value,
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,1> a;
     a.a[0] = v0;
-    return detail::insn::i_make_const_dispatch<V>::run(a);
+    return detail::insn::i_make_const_any<V>(a);
 }
 
-template<class V = expr_vec_make_const<double,2>> SIMDPP_INL
+template<class V> SIMDPP_INL
 V make_float(double v0, double v1)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                  detail::is_expr_vec_make_const<V>::value,
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,2> a;
-    a.a[0] = v0;
-    a.a[1] = v1;
-    return detail::insn::i_make_const_dispatch<V>::run(a);
+    a.a[0] = v0;  a.a[1] = v1;
+    return detail::insn::i_make_const_any<V>(a);
 }
 
-template<class V = expr_vec_make_const<double,4>> SIMDPP_INL
+template<class V> SIMDPP_INL
 V make_float(double v0, double v1, double v2, double v3)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                  detail::is_expr_vec_make_const<V>::value,
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,4> a;
     a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
-    return detail::insn::i_make_const_dispatch<V>::run(a);
+    return detail::insn::i_make_const_any<V>(a);
 }
 
-template<class V = expr_vec_make_const<double,8>> SIMDPP_INL
+template<class V> SIMDPP_INL
 V make_float(double v0, double v1, double v2, double v3,
              double v4, double v5, double v6, double v7)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                  detail::is_expr_vec_make_const<V>::value,
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,8> a;
     a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
     a.a[4] = v4;  a.a[5] = v5;  a.a[6] = v6;  a.a[7] = v7;
-    return detail::insn::i_make_const_dispatch<V>::run(a);
+    return detail::insn::i_make_const_any<V>(a);
+}
+
+template<class V> SIMDPP_INL
+V make_float(double v0,  double v1,  double v2,  double v3,
+             double v4,  double v5,  double v6,  double v7,
+             double v8,  double v9,  double v10, double v11,
+             double v12, double v13, double v14, double v15)
+{
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
+                  "V must be a non-mask vector");
+    expr_vec_make_const<double,16> a;
+    a.a[0] = v0;    a.a[1] = v1;    a.a[2] = v2;    a.a[3] = v3;
+    a.a[4] = v4;    a.a[5] = v5;    a.a[6] = v6;    a.a[7] = v7;
+    a.a[8] = v8;    a.a[9] = v9;    a.a[10] = v10;  a.a[11] = v11;
+    a.a[12] = v12;  a.a[13] = v13;  a.a[14] = v14;  a.a[15] = v15;
+    return detail::insn::i_make_const_any<V>(a);
 }
 /// @}
 

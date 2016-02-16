@@ -18,12 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
-
-template<class V>
-struct is_expr_vec_load_splat { static const bool value = false; };
-template<>
-struct is_expr_vec_load_splat<expr_vec_load_splat> { static const bool value = true; };
-
 namespace insn {
 
 SIMDPP_INL void i_load_splat(uint8x16& v, const void* p0)
@@ -277,27 +271,13 @@ void i_load_splat(float64<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-template<class V>
-struct i_load_splat_dispatch
+template<class V> SIMDPP_INL
+V i_load_splat_any(const char* p)
 {
-    static V run(const void* v)
-    {
-        V r;
-        i_load_splat(r, v);
-        return r;
-    }
-};
-
-template<>
-struct i_load_splat_dispatch<expr_vec_load_splat>
-{
-    static expr_vec_load_splat run(const void* v)
-    {
-        expr_vec_load_splat r;
-        r.a = v;
-        return r;
-    }
-};
+    typename detail::remove_sign<V>::type r;
+    i_load_splat(r, p);
+    return V(r);
+}
 
 // -----------------------------------------------------------------------------
 } // namespace insn
@@ -305,9 +285,7 @@ struct i_load_splat_dispatch<expr_vec_load_splat>
 template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load_splat& e)
 {
-    typename detail::remove_sign<V>::type r;
-    insn::i_load_splat(r, e.a);
-    v = r;
+    v = insn::i_load_splat_any<V>(e.a);
 }
 
 } // namespace detail

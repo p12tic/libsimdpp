@@ -89,12 +89,16 @@ struct expr_vec_construct {
 };
 
 struct expr_vec_load_splat : expr_vec_construct<expr_vec_load_splat> {
-    const void* a;
+    const char* a;
+
+    expr_vec_load_splat(const char* x) : a(x) {}
 };
 
 template<class VE>
 struct expr_vec_set_splat : expr_vec_construct<expr_vec_set_splat<VE>> {
     VE a;
+
+    expr_vec_set_splat(const VE& x) : a(x) {}
 };
 
 template<class VE, unsigned N>
@@ -109,6 +113,8 @@ struct expr_vec_load : expr_vec_construct<expr_vec_load> {
 
 struct expr_vec_load_u : expr_vec_construct<expr_vec_load_u> {
     const char* a;
+
+    expr_vec_load_u(const char* x) : a(x) {}
 };
 
 template<class E1, class E2>

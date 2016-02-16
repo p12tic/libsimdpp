@@ -19,12 +19,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
-
-template<class V>
-struct is_expr_vec_set_splat { static const bool value = false; };
-template<class VE>
-struct is_expr_vec_set_splat<expr_vec_set_splat<VE>> { static const bool value = true; };
-
 namespace insn {
 
 SIMDPP_INL void i_set_splat(uint32x4&, uint32_t);
@@ -306,46 +300,28 @@ void i_set_splat(float64<N>& v, double v0)
 
 // -----------------------------------------------------------------------------
 
-template<class V>
-struct i_set_splat_dispatch
+template<class V, class VE> SIMDPP_INL
+V i_splat_any(const VE& x)
 {
-    template<class VE> SIMDPP_INL
-    static V run(VE v)
-    {
-        V r;
-        i_set_splat(r, static_cast<typename V::element_type>(v));
-        return r;
-    }
-};
-
-template<class VE>
-struct i_set_splat_dispatch<expr_vec_set_splat<VE>>
-{
-    static SIMDPP_INL expr_vec_set_splat<VE> run(VE v)
-    {
-        expr_vec_set_splat<VE> r;
-        r.a = v;
-        return r;
-    }
-};
+    typename detail::remove_sign<V>::type r;
+    insn::i_set_splat(r, x);
+    return V(r);
+}
 
 } // namespace insn
 
 template<class V, class VE> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
 {
-    typename detail::remove_sign<V>::type r;
-    insn::i_set_splat(r, e.a);
-    v = r;
+    v = insn::i_splat_any<V>(e.a);
 }
 
 template<class V, class VE>
 V splat_impl(const VE& x)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_set_splat<V>::value,
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
-    return detail::insn::i_set_splat_dispatch<V>::run(x);
+    return insn::i_splat_any<V>(x);
 }
 
 } // namespace detail
