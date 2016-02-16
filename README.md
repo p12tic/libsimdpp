@@ -39,10 +39,7 @@ on actual hardware, thus definitely contains bugs.
 
 The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the
-[cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch. Boost libraries
-are used as a replacement for C++11-only functionality. The library does not
-depend on boost if the built-in dispatcher functionality is not used. The
-following compilers are supported:
+[cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch.
 
  - C++11 version:
    - GCC: 4.9, 4.8
@@ -56,10 +53,6 @@ only supported on x86 and x86-64.
  - C++98 version
    - GCC: 4.8.1, 4.7.3
    - Clang: 3.3, 3.4
-
-
-The C++98 version has been tested with boost 1.53 and 1.54. Most probably other
-versions will work too.
 
 Documentation
 -------------
