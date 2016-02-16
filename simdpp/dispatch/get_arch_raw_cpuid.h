@@ -22,7 +22,7 @@ inline void get_cpuid(unsigned level, unsigned* eax, unsigned* ebx,
                       unsigned* ecx, unsigned* edx)
 {
 #if __GNUC__ || defined(__clang__)
-    __get_cpuid(level, eax, ebx, ecx, edx);
+    __cpuid_count(level, 0, *eax, *ebx, *ecx, *edx);
 #elif _MSC_VER
     uint32_t regs[4];
     __cpuid((int*) regs, level);
@@ -100,9 +100,9 @@ inline Arch get_arch_raw_cpuid()
 
     if (max_cpuid_level >= 0x00000007) {
         detail::get_cpuid(0x80000007, &eax, &ebx, &ecx, &edx);
-        if (ecx & (1 << 5) && xsave_xrstore_avail)
+        if (ebx & (1 << 5) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX2;
-        if (ecx & (1 << 16) && xsave_xrstore_avail)
+        if (ebx & (1 << 16) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512F;
     }
 
