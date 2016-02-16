@@ -64,7 +64,7 @@ SIMDPP_INL void i_store_first(char* p, const uint8x32& a, unsigned n)
     uint8x32 mask = load_u(mask_d + 32 - n);
     uint8x32 b = load(p);
     b = blend(a, b, mask);
-    store(p, a);
+    store(p, b);
 }
 #endif
 
