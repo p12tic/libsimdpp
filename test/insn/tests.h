@@ -38,4 +38,6 @@ void test_transpose(TestResults& res);
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 
+std::vector<simdpp::detail::FnVersion> get_test_archs();
+
 #endif

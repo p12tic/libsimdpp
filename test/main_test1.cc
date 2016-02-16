@@ -7,7 +7,8 @@
 
 #include "utils/arch_registration.h"
 #include "utils/test_results.h"
-#include <simdpp/setup_arch.h>
+#include "insn/tests.h"
+#include <simdpp/simd.h>
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
@@ -74,11 +75,11 @@ int main(int argc, char* argv[])
     simdpp::Arch current_arch = get_arch(is_simulator);
 
     std::ostream& err = std::cerr;
-    const auto& arch_list = ArchRegistration::arch_list();
+    const auto& arch_list = get_test_archs();
     auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
-                                  [](const ArchRegistration::Arch& a) -> bool
+                                  [](const simdpp::detail::FnVersion& a) -> bool
                                   {
-                                      return std::strcmp(a.arch, "arch_null") == 0;
+                                      return a.arch_name && std::strcmp(a.arch_name, "arch_null") == 0;
                                   });
 
     if (null_arch == arch_list.end()) {
@@ -86,26 +87,26 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    TestResults null_results(null_arch->arch);
-    null_arch->run(null_results);
+    TestResults null_results(null_arch->arch_name);
+    reinterpret_cast<void(*)(TestResults&)>(null_arch->fun_ptr)(null_results);
 
     std::cout << "Num results: " << null_results.num_results() << '\n';
 
     bool ok = true;
 
     for (auto it = arch_list.begin(); it != arch_list.end(); it++) {
-        if (it == null_arch) {
+        if (it->fun_ptr == NULL || it == null_arch) {
             continue;
         }
 
-        if (!simdpp::test_arch_subset(current_arch, it->required_arch)) {
-            std::cout << "Not testing: " << it->arch << std::endl;
+        if (!simdpp::test_arch_subset(current_arch, it->needed_arch)) {
+            std::cout << "Not testing: " << it->arch_name << std::endl;
             continue;
         }
-        std::cout << "Testing: " << it->arch << std::endl;
+        std::cout << "Testing: " << it->arch_name << std::endl;
 
-        TestResults results(it->arch);
-        it->run(results);
+        TestResults results(it->arch_name);
+        reinterpret_cast<void(*)(TestResults&)>(it->fun_ptr)(results);
 
         if (!test_equal(null_results, results, err)) {
             ok = false;

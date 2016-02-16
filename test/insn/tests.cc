@@ -10,6 +10,7 @@
 #include "../utils/test_results.h"
 #include "tests.h"
 #include <simdpp/simd.h>
+#include <vector>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -34,8 +35,27 @@ void main_test_function(TestResults& res)
     test_transpose(res);
 }
 
-static ArchRegistration tester(main_test_function,
-                               SIMDPP_ARCH_NAME,
-                               simdpp::this_compile_arch());
-
 } // namespace SIMDPP_ARCH_NAMESPACE
+/* TODO: here we use dispatcher only to register the available functions, not
+    to dispatch them. To simplify, use a dummy function for SIMDPP_USER_ARCH_INFO
+*/
+inline simdpp::Arch get_arch()
+{
+    return simdpp::Arch();
+}
+
+#define SIMDPP_USER_ARCH_INFO get_arch
+
+SIMDPP_MAKE_DISPATCHER_VOID1(main_test_function, TestResults&)
+
+#if SIMDPP_EMIT_DISPATCHER
+std::vector<simdpp::detail::FnVersion> get_test_archs()
+{
+    simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {};
+    SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, void(*)(TestResults&))
+    std::vector<simdpp::detail::FnVersion> result;
+    result.assign(versions, versions+SIMDPP_DISPATCH_MAX_ARCHS);
+    return result;
+}
+#endif
+
