@@ -16,56 +16,49 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned vnum>
 void test_store_helper(TestSuite& tc, const V* sv)
 {
-    using E = typename V::element_type;
+    V rv[vnum];
 
-    union {
-        SIMDPP_ALIGN(16) E rdata[V::length * vnum];
-        V rv[vnum];
-    };
-
-    auto rzero = [&](V* r)
+    auto rzero = [](V* r)
     {
-        for (unsigned i = 0; i < vnum; i++) {
-            r[i] = V::zero();
-        }
+        std::memset(r, 0, sizeof(V) * vnum);
     };
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
-        store(rdata+i*V::length, sv[0]);
+        store(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
-        stream(rdata+i*V::length, sv[0]);
+        stream(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
         rzero(rv);
-        store_first(rdata, sv[0], i);
+        store_first(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
         rzero(rv);
-        store_last(rdata, sv[0], i);
+        store_last(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
     }
 
     rzero(rv);
-    store_packed2(rdata, sv[0], sv[1]);
+    store_packed2(rv, sv[0], sv[1]);
     TEST_ARRAY_PUSH(tc, V, rv);
 
     rzero(rv);
-    store_packed3(rdata, sv[0], sv[1], sv[2]);
+    store_packed3(rv, sv[0], sv[1], sv[2]);
     TEST_ARRAY_PUSH(tc, V, rv);
 
     rzero(rv);
-    store_packed4(rdata, sv[0], sv[1], sv[2], sv[3]);
+    store_packed4(rv, sv[0], sv[1], sv[2], sv[3]);
     TEST_ARRAY_PUSH(tc, V, rv);
 }
 
