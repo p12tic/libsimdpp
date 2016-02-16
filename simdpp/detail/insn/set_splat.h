@@ -341,6 +341,15 @@ void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
     v = r;
 }
 
+template<class V, class VE>
+V splat_impl(const VE& x)
+{
+    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
+                      detail::is_expr_vec_set_splat<V>::value,
+                  "V must be a non-mask vector");
+    return detail::insn::i_set_splat_dispatch<V>::run(x);
+}
+
 } // namespace detail
 #ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
