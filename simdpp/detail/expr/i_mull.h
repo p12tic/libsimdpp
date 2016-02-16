@@ -203,14 +203,13 @@ int64<8> expr_eval(const expr_mull<int32<8,E1>,
 {
     int32<8> a = q.a.eval();
     int32<8> b = q.b.eval();
-    int32x8 al, ah, bl, bh;
+    int32x4 al, ah, bl, bh;
     int64x4 rl, rh;
-    al = zip4_lo(a, a);
-    bl = zip4_lo(b, b);
-    ah = zip4_hi(a, a);
-    bh = zip4_hi(b, b);
-    rl = _mm256_mul_epi32(al, bl);
-    rh = _mm256_mul_epi32(ah, bh);
+    split(a, al, ah);
+    split(b, bl, bh);
+
+    rl = _mm256_mul_epi32(to_int64(al).eval(), to_int64(bl).eval());
+    rh = _mm256_mul_epi32(to_int64(ah).eval(), to_int64(bh).eval());
     return combine(rl, rh);
 }
 #endif
@@ -269,14 +268,15 @@ uint64<8> expr_eval(const expr_mull<uint32<8,E1>,
 {
     uint32<8> a = q.a.eval();
     uint32<8> b = q.b.eval();
-    uint32x8 al, ah, bl, bh;
+    uint32x4 al, ah, bl, bh;
     uint64x4 rl, rh;
-    al = zip4_lo(a, a); // FIXME; extract halves and use cvtepu32_epi64
-    bl = zip4_lo(b, b);
-    ah = zip4_hi(a, a);
-    bh = zip4_hi(b, b);
-    rl = _mm256_mul_epu32(al, bl);
-    rh = _mm256_mul_epu32(ah, bh);
+
+    split(a, al, ah);
+    split(b, bl, bh);
+
+    rl = _mm256_mul_epu32(to_int64(al).eval(), to_int64(bl).eval());
+    rh = _mm256_mul_epu32(to_int64(ah).eval(), to_int64(bh).eval());
+
     return combine(rl, rh);
 }
 #endif
