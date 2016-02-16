@@ -9,7 +9,7 @@
 # Generates the simdpp/dispatch/macros_generated.h file
 # Use as $ ./tools/gen_dispatch_macros.py > simdpp/dispatch/macros_generated.h
 
-import re
+from gen_common import output_template
 
 num_args = 10
 
@@ -64,27 +64,6 @@ static ::simdpp::detail::DispatchRegistrator<                               $n$
 
 template_null = template_head + template_fn + template_registration
 template_not_null = template_head + template_registration
-
-# Prints a template substituting the given variables with given replacements
-def output_template(template, vars):
-    text = template
-    for var in vars:
-        text = text.replace('$'+var+'$', vars[var])
-
-    # make the position of the backslash fixed
-    lines = text.split('\n')
-    text = []
-    for line in lines:
-        line = re.sub(' *\$n\$', '$n$', line)
-        padlen = 80 + 3 - 2 - len(line)
-        pad = ''
-        if padlen > 0:
-            pad = ' ' * padlen
-        line = line.replace('$n$', pad + '\\')
-        text.append(line)
-
-    text = '\n'.join(text)
-    print(text)
 
 # Returns a string T1,T2,T3,...,T_num
 def get_Tn_list(num):
