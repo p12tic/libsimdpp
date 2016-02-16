@@ -93,6 +93,7 @@
 #include <simdpp/core/set_splat.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/core/shuffle2.h>
+#include <simdpp/core/shuffle4x2.h>
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/core/shuffle_zbytes16.h>
 #include <simdpp/core/splat.h>

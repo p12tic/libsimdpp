@@ -16,9 +16,37 @@
 #define SIMDPP_WORKAROUND_XOP_COM 1
 #endif
 
-#if SIMDPP_USE_NEON64 && (__GNUC__ == 4) && (__GNUC_MINOR__ == 8)
+#if SIMDPP_USE_NEON64 && (__GNUC__ == 4) && (__GNUC_MINOR__ <= 8)
 #define vreinterpretq_f64_u64(x) ((float64x2_t) (uint64x2_t) (x))
 #define vreinterpretq_u64_f64(x) ((uint64x2_t) (float64x2_t) (x))
+#endif
+
+#if SIMDPP_USE_AVX512 && (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9)
+#define _mm512_castpd512_pd256(x) ((__m256d)(x))
+#define _mm512_castpd256_pd512(x) ((__m512d)(x))
+#define _mm512_castsi512_si256(x) ((__m256i)(x))
+#define _mm512_castsi256_si512(x) ((__m512i)(x))
+#define _mm512_castpd_si512(x) ((__m512i)(x))
+#endif
+
+namespace simdpp {
+#ifndef SIMDPP_DOXYGEN
+namespace SIMDPP_ARCH_NAMESPACE {
+#endif
+namespace detail {
+
+template<unsigned V> struct make_constexpr { static const unsigned value = V; };
+
+} // namespace detail
+#ifndef SIMDPP_DOXYGEN
+} // namespace SIMDPP_ARCH_NAMESPACE
+#endif
+} // namespace simdpp
+
+#if __GNUC__
+#define SIMDPP_WORKAROUND_MAKE_CONSTEXPR(X) detail::make_constexpr<(X)>::value
+#else
+#define SIMDPP_WORKAROUND_MAKE_CONSTEXPR(X) (X)
 #endif
 
 #endif
