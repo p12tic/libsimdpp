@@ -18,20 +18,33 @@
 namespace simdpp {
 namespace detail {
 
-inline void get_cpuid(unsigned level, unsigned* eax, unsigned* ebx,
+inline void get_cpuid(unsigned level, unsigned subleaf, unsigned* eax, unsigned* ebx,
                       unsigned* ecx, unsigned* edx)
 {
-#if __GNUC__ || defined(__clang__)
-    __cpuid_count(level, 0, *eax, *ebx, *ecx, *edx);
+#if defined(__clang__) || defined (__INTEL_COMPILER)
+    // Older versions of clang don't support subleafs, which leads to inability
+    // to detect AVX2 for example. On ICC there's no proper cpuid intrinsic.
+#if __i386__
+    __asm("cpuid" : "=a"(*eax), "=b" (*ebx), "=c"(*ecx), "=d"(*edx) \
+                  : "0"(level), "2"(subleaf));
+#else
+// x86-64 uses %rbx as the base register, so preserve it. */
+    __asm("xchgq  %%rbx,%q1\n" \
+          "cpuid\n" \
+          "xchgq  %%rbx,%q1" \
+            : "=a"(*eax), "=b" (*ebx), "=c"(*ecx), "=d"(*edx) \
+            : "0"(level), "2"(subleaf));
+#endif
+#elif __GNUC__
+    __cpuid_count(level, subleaf, *eax, *ebx, *ecx, *edx);
 #elif _MSC_VER
     uint32_t regs[4];
-    __cpuid((int*) regs, level);
+    __cpuidex((int*) regs, subleaf, level);
     *eax = regs[0];
     *ebx = regs[1];
     *ecx = regs[2];
     *edx = regs[3];
 #else
-    // TODO ICC
     #error "unsupported compiler"
 #endif
 }
@@ -61,14 +74,14 @@ inline Arch get_arch_raw_cpuid()
     uint32_t eax, ebx, ecx, edx;
     bool xsave_xrstore_avail = false;
 
-    simdpp::detail::get_cpuid(0, &eax, &ebx, &ecx, &edx);
+    simdpp::detail::get_cpuid(0, 0, &eax, &ebx, &ecx, &edx);
     unsigned max_cpuid_level = eax;
 
-    simdpp::detail::get_cpuid(0x80000000, &eax, &ebx, &ecx, &edx);
+    simdpp::detail::get_cpuid(0x80000000, 0, &eax, &ebx, &ecx, &edx);
     unsigned max_ex_cpuid_level = eax;
 
     if (max_cpuid_level >= 0x00000001) {
-        simdpp::detail::get_cpuid(0x00000001, &eax, &ebx, &ecx, &edx);
+        simdpp::detail::get_cpuid(0x00000001, 0, &eax, &ebx, &ecx, &edx);
 
         if (edx & (1 << 26))
             arch_info |= Arch::X86_SSE2;
@@ -91,7 +104,7 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_AVX;
     }
     if (max_ex_cpuid_level >= 0x80000001) {
-        simdpp::detail::get_cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
+        simdpp::detail::get_cpuid(0x80000001, 0, &eax, &ebx, &ecx, &edx);
         if (ecx & (1 << 16))
             arch_info |= Arch::X86_FMA4;
         if (ecx & (1 << 11))
@@ -99,7 +112,7 @@ inline Arch get_arch_raw_cpuid()
     }
 
     if (max_cpuid_level >= 0x00000007) {
-        simdpp::detail::get_cpuid(0x00000007, &eax, &ebx, &ecx, &edx);
+        simdpp::detail::get_cpuid(0x00000007, 0, &eax, &ebx, &ecx, &edx);
         if (ebx & (1 << 5) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX2;
         if (ebx & (1 << 16) && xsave_xrstore_avail)
