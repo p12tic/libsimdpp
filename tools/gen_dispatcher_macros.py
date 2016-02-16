@@ -64,6 +64,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                           $n$
     ::simdpp::detail::FnVersion ret;                                        $n$
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                      $n$
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(); $n$
+    ret.arch_name = SIMDPP_ARCH_NAME;                                       $n$
     return ret;                                                             $n$
 }                                                                           $n$
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                     $n$'''

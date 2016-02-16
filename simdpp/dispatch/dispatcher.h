@@ -70,6 +70,9 @@ struct FnVersion {
         type is allowed fortunately.
     */
     VoidFunPtr fun_ptr;
+
+    /*  Optional string identifier identifying the architecture. */
+    const char* arch_name;
 };
 
 inline FnVersion select_version_any(FnVersion* versions, unsigned size,

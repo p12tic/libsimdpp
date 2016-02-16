@@ -83,6 +83,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -113,6 +114,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -143,6 +145,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -173,6 +176,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -203,6 +207,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -233,6 +238,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -263,6 +269,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -293,6 +300,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -323,6 +331,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -353,6 +362,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -383,6 +393,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -413,6 +424,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -443,6 +455,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -473,6 +486,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -503,6 +517,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -533,6 +548,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -563,6 +579,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -593,6 +610,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -623,6 +641,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -653,6 +672,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -669,6 +689,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -682,6 +703,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -695,6 +717,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -708,6 +731,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -721,6 +745,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -734,6 +759,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -747,6 +773,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -760,6 +787,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -773,6 +801,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -786,6 +815,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -799,6 +829,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -812,6 +843,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -825,6 +857,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -838,6 +871,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -851,6 +885,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -864,6 +899,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -877,6 +913,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -890,6 +927,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -903,6 +941,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
@@ -916,6 +955,7 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
     ::simdpp::detail::FnVersion ret;                                          \
     ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                        \
     ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch();   \
+    ret.arch_name = SIMDPP_ARCH_NAME;                                         \
     return ret;                                                               \
 }                                                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
