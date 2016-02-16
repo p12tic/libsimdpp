@@ -39,7 +39,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
                                                                b0 = b.wrapped().eval();
     return detail::insn::i_shuffle2x2<s0,s1>(a0, b0);
 #else
-    return SIMDPP_NOT_IMPLEMENTED(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(V1, a, b);
 #endif
 }
 
@@ -64,7 +64,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
                                                                b0 = b.wrapped().eval();
     return detail::insn::i_shuffle2x2<s0,s1>(a0, b0);
 #else
-    return SIMDPP_NOT_IMPLEMENTED(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(V1, a, b);
 #endif
 }
 

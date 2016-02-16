@@ -169,7 +169,7 @@ SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
     int32<4> r = vcombine_s32(vqmovn_s64(r1), vqmovn_s64(r2));
     return r;
 #else
-    SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 

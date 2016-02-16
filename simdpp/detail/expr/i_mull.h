@@ -192,7 +192,7 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
     int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
     return combine(lo, hi);
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
 #endif
 }
 
@@ -257,7 +257,7 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
-    return SIMDPP_NOT_IMPLEMENTED1(q);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(R, q);
 #endif
 }
 

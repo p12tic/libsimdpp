@@ -635,7 +635,7 @@ int64x2 i_shift_r(const int64x2& a)
 #elif SIMDPP_USE_NEON
     return vshrq_n_s64(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif
 }
 
@@ -676,7 +676,7 @@ uint64x2 i_shift_r(const uint64x2& a)
 #elif SIMDPP_USE_NEON
     return vshrq_n_u64(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif
 }
 
@@ -716,7 +716,7 @@ uint8<N> shift_r_u8(const uint8<N>& a)
     a16 = i_shift_r<count>(a16);
     return uint8<N>(a16);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif
 }
 

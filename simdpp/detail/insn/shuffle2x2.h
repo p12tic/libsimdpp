@@ -59,7 +59,7 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
 #elif SIMDPP_USE_NEON
     return (float32<4>) neon::detail::shuffle_int32x4::shuffle2x2<s0,s1>(float32<4>(a), float32<4>(b));
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
 }
 
@@ -146,7 +146,7 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
 #elif SIMDPP_USE_NEON64
     return (float64<2>)neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(uint64<2>(a), uint64<2>(b));
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
 }
 
@@ -234,7 +234,7 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int32x4::shuffle2x2<s0,s1>(a, b);
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
 }
 
@@ -340,7 +340,7 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
 }
 

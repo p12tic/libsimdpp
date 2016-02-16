@@ -184,7 +184,7 @@ uint8<N> shift_l_8(const uint8<N>& a)
     a16 = shift_l<count>(a16);
     return uint8<N>(a16);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(uint8<N>, a);
 #endif
 }
 

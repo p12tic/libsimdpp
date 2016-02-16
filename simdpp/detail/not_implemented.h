@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <type_traits>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -22,7 +23,7 @@ namespace detail {
 /** A data type that can be implicitly converted to all types used in the
     library. Used to silence 'no return value' warnings
 */
-class not_implemented_proxy {
+class dummy_value {
 public:
     operator int8x16() { return int8x16::zero(); }
     operator int8x32() { return int8x32::zero(); }
@@ -48,37 +49,82 @@ public:
 
 } // namespace detail
 
-#ifndef SIMDPP_DOXYGEN
-/** Causes linker error whenever unimplemented functionality is used.
+/** Causes compile-time error whenever unimplemented functionality is used.
+    The function may only be used in templates which are not instantiated by
+    default.
 */
-void libsimdpp_instruction_not_available();
-#endif
+template<class T>
+void libsimdpp_instruction_not_available_template()
+{
+    static_assert(!std::is_same<T, T>::value, "The instruction is not available");
+}
+
+/** Causes linker error whenever unimplemented functionality is used. Compared
+    to libsimdpp_instruction_not_available, this function is not limited to
+    template contexts, but the errors are much harder to track down.
+*/
+void libsimdpp_instruction_not_available0();
+void libsimdpp_instruction_not_available1();
+void libsimdpp_instruction_not_available2();
+void libsimdpp_instruction_not_available3();
+void libsimdpp_instruction_not_available4();
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE0(T)  (                          \
+    libsimdpp_instruction_not_available_template<T>(),                  \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(T,A)  (                        \
+    (void) A,                                                           \
+    libsimdpp_instruction_not_available_template<T>(),                  \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(T,A,B)  (                      \
+    (void) A, (void) B,                                                 \
+    libsimdpp_instruction_not_available_template<T>(),                  \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(T,A,B,C)  (                    \
+    (void) A, (void) B, (void) C,                                       \
+    libsimdpp_instruction_not_available_template<T>(),                  \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE4(T,A,B,C,D)  (                  \
+    (void) A, (void) B, (void) C, (void) D,                             \
+    libsimdpp_instruction_not_available_template<T>(),                  \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
 
 #define SIMDPP_NOT_IMPLEMENTED0()  (                                    \
-    libsimdpp_instruction_not_available(),                              \
-    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
+    libsimdpp_instruction_not_available0(),                             \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
     )
+
 #define SIMDPP_NOT_IMPLEMENTED1(A)  (                                   \
     (void) A,                                                           \
-    libsimdpp_instruction_not_available(),                              \
-    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
+    libsimdpp_instruction_not_available1(),                             \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
     )
+
 #define SIMDPP_NOT_IMPLEMENTED2(A,B)  (                                 \
     (void) A, (void) B,                                                 \
-    libsimdpp_instruction_not_available(),                              \
-    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
+    libsimdpp_instruction_not_available2(),                             \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
     )
 
 #define SIMDPP_NOT_IMPLEMENTED3(A,B,C)  (                               \
     (void) A, (void) B, (void) C,                                       \
-    libsimdpp_instruction_not_available(),                              \
-    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
+    libsimdpp_instruction_not_available3(),                             \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
     )
 
 #define SIMDPP_NOT_IMPLEMENTED4(A,B,C,D)  (                             \
     (void) A, (void) B, (void) C, (void) D,                             \
-    libsimdpp_instruction_not_available(),                              \
-    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::not_implemented_proxy()    \
+    libsimdpp_instruction_not_available4(),                             \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
     )
 
 } // namespace SIMDPP_ARCH_NAMESPACE
