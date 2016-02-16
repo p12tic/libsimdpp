@@ -59,11 +59,13 @@ inline Arch get_arch_raw_cpuid()
     Arch arch_info = Arch::NONE_NULL;
 
     uint32_t eax, ebx, ecx, edx;
-    unsigned max_cpuid_level;
     bool xsave_xrstore_avail = false;
 
     detail::get_cpuid(0, &eax, &ebx, &ecx, &edx);
-    max_cpuid_level = eax;
+    unsigned max_cpuid_level = eax;
+
+    detail::get_cpuid(0x80000000, &eax, &ebx, &ecx, &edx);
+    unsigned max_ex_cpuid_level = eax;
 
     if (max_cpuid_level >= 0x00000001) {
         detail::get_cpuid(0x00000001, &eax, &ebx, &ecx, &edx);
@@ -78,7 +80,7 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_SSE4_1;
         if (ecx & (1 << 12))
             arch_info |= Arch::X86_FMA3;
-        if (ecx & (1 << 27)) {
+        if (ecx & (1 << 26)) {
             // XSAVE/XRSTORE available on hardware, now check OS support
             uint64_t xcr = detail::get_xcr(0);
             if ((xcr & 6) == 6)
@@ -88,7 +90,7 @@ inline Arch get_arch_raw_cpuid()
         if (ecx & (1 << 28) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX;
     }
-    if (max_cpuid_level >= 0x80000001) {
+    if (max_ex_cpuid_level >= 0x80000001) {
         detail::get_cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
         if (ecx & (1 << 16))
             arch_info |= Arch::X86_FMA4;
