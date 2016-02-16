@@ -97,7 +97,7 @@ uint8x32 shuffle1_128(const uint8x32& a, const uint8x32& b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
-    return _mm256_permute2x128_si256(a, b, s1*0x10 + s0);
+    return _mm256_permute2x128_si256(a, b, ((s1+2)<<4) + s0);
 #else
     uint8x32 r;
     r.vec(0) = a.vec(s0);
@@ -117,7 +117,7 @@ float32x8 shuffle1_128(const float32x8& a, const float32x8& b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX
-    return _mm256_permute2f128_ps(a, b, s1*0x10 + s0);
+    return _mm256_permute2f128_ps(a, b, ((s1+2)<<4) + s0);
 #else
     float32x8 r;
     r.vec(0) = a.vec(s0);
@@ -130,7 +130,7 @@ float64x4 shuffle1_128(const float64x4& a, const float64x4& b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX
-    return _mm256_permute2f128_pd(a, b, s1*0x10 + s0);
+    return _mm256_permute2f128_pd(a, b, ((s1+2)<<4) + s0);
 #else
     float64x4 r;
     r.vec(0) = a.vec(s0);
