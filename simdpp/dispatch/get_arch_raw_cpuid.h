@@ -61,14 +61,14 @@ inline Arch get_arch_raw_cpuid()
     uint32_t eax, ebx, ecx, edx;
     bool xsave_xrstore_avail = false;
 
-    detail::get_cpuid(0, &eax, &ebx, &ecx, &edx);
+    simdpp::detail::get_cpuid(0, &eax, &ebx, &ecx, &edx);
     unsigned max_cpuid_level = eax;
 
-    detail::get_cpuid(0x80000000, &eax, &ebx, &ecx, &edx);
+    simdpp::detail::get_cpuid(0x80000000, &eax, &ebx, &ecx, &edx);
     unsigned max_ex_cpuid_level = eax;
 
     if (max_cpuid_level >= 0x00000001) {
-        detail::get_cpuid(0x00000001, &eax, &ebx, &ecx, &edx);
+        simdpp::detail::get_cpuid(0x00000001, &eax, &ebx, &ecx, &edx);
 
         if (edx & (1 << 26))
             arch_info |= Arch::X86_SSE2;
@@ -82,7 +82,7 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_FMA3;
         if (ecx & (1 << 26)) {
             // XSAVE/XRSTORE available on hardware, now check OS support
-            uint64_t xcr = detail::get_xcr(0);
+            uint64_t xcr = simdpp::detail::get_xcr(0);
             if ((xcr & 6) == 6)
                 xsave_xrstore_avail = true;
         }
@@ -91,7 +91,7 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_AVX;
     }
     if (max_ex_cpuid_level >= 0x80000001) {
-        detail::get_cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
+        simdpp::detail::get_cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
         if (ecx & (1 << 16))
             arch_info |= Arch::X86_FMA4;
         if (ecx & (1 << 11))
@@ -99,7 +99,7 @@ inline Arch get_arch_raw_cpuid()
     }
 
     if (max_cpuid_level >= 0x00000007) {
-        detail::get_cpuid(0x80000007, &eax, &ebx, &ecx, &edx);
+        simdpp::detail::get_cpuid(0x00000007, &eax, &ebx, &ecx, &edx);
         if (ebx & (1 << 5) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX2;
         if (ebx & (1 << 16) && xsave_xrstore_avail)
