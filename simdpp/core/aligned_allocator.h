@@ -11,6 +11,7 @@
 #include <memory>
 #include <cstddef>
 #include <cstdint>
+#include <stdexcept>
 
 namespace simdpp {
 #ifndef SIMDPP_DOXYGEN
