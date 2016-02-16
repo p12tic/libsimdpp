@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 8-10}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N, float32<N>> rsqrt_rh(const float32<N,E>& x, const float32<N,E>& a)
+float32<N,expr_empty> rsqrt_rh(const float32<N,E>& x, const float32<N,E>& a)
 {
     return detail::insn::i_rsqrt_rh(x.eval(), a.eval());
 }

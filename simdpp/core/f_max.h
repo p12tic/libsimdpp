@@ -36,7 +36,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N, float32<N>> max(const float32<N,E1>& a, const float32<N,E2>& b)
+float32<N,expr_empty> max(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -61,7 +61,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, float32, float32)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N, float64<N>> max(const float64<N,E1>& a, const float64<N,E2>& b)
+float64<N,expr_empty> max(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }

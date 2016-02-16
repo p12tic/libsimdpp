@@ -144,6 +144,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/types/generic.h>
+#include <simdpp/types/empty_expr.h>
 #include <simdpp/types/float32.h>
 #include <simdpp/types/float32x4.h>
 #include <simdpp/types/float32x8.h>

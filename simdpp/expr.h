@@ -16,6 +16,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 #endif
 
 // -----------------------------------------------------------------------------
+struct expr_empty {};
 
 template<class VE>
 struct expr_scalar_bitwise {

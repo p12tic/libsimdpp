@@ -37,7 +37,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N, float32<N>> min(const float32<N,E1>& a, const float32<N,E2>& b)
+float32<N,expr_empty> min(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -62,7 +62,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, float32, float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N, float64<N>> min(const float64<N,E1>& a, const float64<N,E2>& b)
+float64<N,expr_empty> min(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
