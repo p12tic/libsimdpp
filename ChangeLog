@@ -5,6 +5,11 @@ What's new in v2.0:
  * Support scalar arguments to certain functions
  * Support for vectors much longer than the native vector type. The only
     limitation is that the length must be a power of 2.
+ * API break: The built-in dispatcher has been rewritten to generate hard
+    link-time dependencies on the versioned functions. It is no longer
+    susceptible in lazy static variable initialization breaking function
+    registration. User must supply the list of generated architectures via
+    predefined macro values. See examples/dispatcher for an example.
  * API break: int128 and int256 types have been removed. On some archs it's more
     efficient to have different physical representations for vectors with
     different element widths.

@@ -8,314 +8,218 @@
 #ifndef LIBSIMDPP_SIMD_SETUP_ARCH_H
 #define LIBSIMDPP_SIMD_SETUP_ARCH_H
 
-#include <simdpp/detail/arch_id.h>
+#include <simdpp/detail/preprocessor.h>
 
-#ifdef SIMDPP_ARCH_X86_SSE2
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
+// Set up macros for current architecture. Note that this file may be included
+// multiple times, more information on the caveats are within the file.
+#include <simdpp/detail/preprocess_single_arch.h>
 
-#ifdef SIMDPP_ARCH_X86_SSE3
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_SSSE3
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSSE3
-        #define SIMDPP_USE_SSSE3 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_SSE4_1
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSSE3
-        #define SIMDPP_USE_SSSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSE4_1
-        #define SIMDPP_USE_SSE4_1 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_AVX
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSSE3
-        #define SIMDPP_USE_SSSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSE4_1
-        #define SIMDPP_USE_SSE4_1 1
-    #endif
-    #ifndef SIMDPP_USE_AVX
-        #define SIMDPP_USE_AVX 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_AVX2
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSSE3
-        #define SIMDPP_USE_SSSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSE4_1
-        #define SIMDPP_USE_SSE4_1 1
-    #endif
-    #ifndef SIMDPP_USE_AVX
-        #define SIMDPP_USE_AVX 1
-    #endif
-    #ifndef SIMDPP_USE_AVX2
-        #define SIMDPP_USE_AVX2 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_FMA3
-    #ifndef SIMDPP_USE_FMA3
-        #define SIMDPP_USE_FMA3 1
-    #endif
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_FMA4
-    #ifndef SIMDPP_USE_FMA4
-        #define SIMDPP_USE_FMA4 1
-    #endif
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_XOP
-    #ifndef SIMDPP_USE_XOP
-        #define SIMDPP_USE_XOP 1
-    #endif
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_X86_AVX512F
-    #ifndef SIMDPP_USE_SSE2
-        #define SIMDPP_USE_SSE2 1
-    #endif
-    #ifndef SIMDPP_USE_SSE3
-        #define SIMDPP_USE_SSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSSE3
-        #define SIMDPP_USE_SSSE3 1
-    #endif
-    #ifndef SIMDPP_USE_SSE4_1
-        #define SIMDPP_USE_SSE4_1 1
-    #endif
-    #ifndef SIMDPP_USE_AVX
-        #define SIMDPP_USE_AVX 1
-    #endif
-    #ifndef SIMDPP_USE_AVX2
-        #define SIMDPP_USE_AVX2 1
-    #endif
-    #ifndef SIMDPP_USE_FMA3
-        #define SIMDPP_USE_FMA3 1
-    #endif
-    #ifndef SIMDPP_USE_AVX512
-        #define SIMDPP_USE_AVX512 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_ARM_NEON
-    #ifndef SIMDPP_USE_NEON
-        #define SIMDPP_USE_NEON 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_ARM_NEON_FLT_SP
-    #ifndef SIMDPP_USE_NEON
-        #define SIMDPP_USE_NEON 1
-    #endif
-    #ifndef SIMDPP_USE_NEON_FLT_SP
-        #define SIMDPP_USE_NEON_FLT_SP 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifdef SIMDPP_ARCH_POWER_ALTIVEC
-    #ifndef SIMDPP_USE_ALTIVEC
-        #define SIMDPP_USE_ALTIVEC 1
-    #endif
-    #ifndef SIMDPP_ARCH_NOT_NULL
-        #define SIMDPP_ARCH_NOT_NULL
-    #endif
-#endif
-
-#ifndef SIMDPP_ARCH_NOT_NULL
-    #define SIMDPP_USE_NULL 1
-    #define SIMDPP_PP_NULL SIMDPP_INSN_ID_NULL
+// Set up main feature macros
+#if SIMDPP_ARCH_PP_USE_NULL
+#define SIMDPP_USE_NULL 1
 #else
-    #define SIMDPP_PP_NULL
+#define SIMDPP_USE_NULL 0
+#endif
+#if SIMDPP_ARCH_PP_USE_SSE2
+#define SIMDPP_USE_SSE2 1
+#else
+#define SIMDPP_USE_SSE2 0
+#endif
+#if SIMDPP_ARCH_PP_USE_SSE3
+#define SIMDPP_USE_SSE3 1
+#else
+#define SIMDPP_USE_SSE3 0
+#endif
+#if SIMDPP_ARCH_PP_USE_SSSE3
+#define SIMDPP_USE_SSSE3 1
+#else
+#define SIMDPP_USE_SSSE3 0
+#endif
+#if SIMDPP_ARCH_PP_USE_SSE4_1
+#define SIMDPP_USE_SSE4_1 1
+#else
+#define SIMDPP_USE_SSE4_1 0
+#endif
+#if SIMDPP_ARCH_PP_USE_AVX
+#define SIMDPP_USE_AVX 1
+#else
+#define SIMDPP_USE_AVX 0
+#endif
+#if SIMDPP_ARCH_PP_USE_AVX2
+#define SIMDPP_USE_AVX2 1
+#else
+#define SIMDPP_USE_AVX2 0
+#endif
+#if SIMDPP_ARCH_PP_USE_FMA3
+#define SIMDPP_USE_FMA3 1
+#else
+#define SIMDPP_USE_FMA3 0
+#endif
+#if SIMDPP_ARCH_PP_USE_FMA4
+#define SIMDPP_USE_FMA4 1
+#else
+#define SIMDPP_USE_FMA4 0
+#endif
+#if SIMDPP_ARCH_PP_USE_XOP
+#define SIMDPP_USE_XOP 1
+#else
+#define SIMDPP_USE_XOP 0
+#endif
+#if SIMDPP_ARCH_PP_USE_AVX512F
+#define SIMDPP_USE_AVX512F 1
+#else
+#define SIMDPP_USE_AVX512F 0
+#endif
+#if SIMDPP_ARCH_PP_USE_NEON
+#define SIMDPP_USE_NEON 1
+#else
+#define SIMDPP_USE_NEON 0
+#endif
+#if SIMDPP_ARCH_PP_USE_NEON_FLT_SP
+#define SIMDPP_USE_NEON_FLT_SP 1
+#else
+#define SIMDPP_USE_NEON_FLT_SP 0
+#endif
+#if SIMDPP_ARCH_PP_USE_ALTIVEC
+#define SIMDPP_USE_ALTIVEC 1
+#else
+#define SIMDPP_USE_ALTIVEC 0
 #endif
 
-#ifdef SIMDPP_USE_SSE2
-    #define SIMDPP_PP_SSE2 SIMDPP_INSN_ID_SSE2
+// Generate SIMDPP_ARCH_NAMESPACE. It's a human-readable identifier depending
+// on the enabled instruction sets
+#if SIMDPP_ARCH_PP_NS_USE_NULL
+#define SIMDPP_NS_ID_NULL SIMDPP_INSN_ID_NULL
+#else
+#define SIMDPP_NS_ID_NULL
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_SSE2
+#define SIMDPP_NS_ID_SSE2 SIMDPP_INSN_ID_SSE2
+#else
+#define SIMDPP_NS_ID_SSE2
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_SSE3
+#define SIMDPP_NS_ID_SSE3 SIMDPP_INSN_ID_SSE3
+#else
+#define SIMDPP_NS_ID_SSE3
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_SSSE3
+#define SIMDPP_NS_ID_SSSE3 SIMDPP_INSN_ID_SSSE3
+#else
+#define SIMDPP_NS_ID_SSSE3
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_SSE4_1
+#define SIMDPP_NS_ID_SSE4_1 SIMDPP_INSN_ID_SSE4_1
+#else
+#define SIMDPP_NS_ID_SSE4_1
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_AVX
+#define SIMDPP_NS_ID_AVX SIMDPP_INSN_ID_AVX
+#else
+#define SIMDPP_NS_ID_AVX
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_AVX2
+#define SIMDPP_NS_ID_AVX2 SIMDPP_INSN_ID_AVX2
+#else
+#define SIMDPP_NS_ID_AVX2
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_FMA3
+#define SIMDPP_NS_ID_FMA3 SIMDPP_INSN_ID_FMA3
+#else
+#define SIMDPP_NS_ID_FMA3
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_FMA4
+#define SIMDPP_NS_ID_FMA4 SIMDPP_INSN_ID_FMA4
+#else
+#define SIMDPP_NS_ID_FMA4
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_XOP
+#define SIMDPP_NS_ID_XOP SIMDPP_INSN_ID_XOP
+#else
+#define SIMDPP_NS_ID_XOP
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_AVX512F
+#define SIMDPP_NS_ID_AVX512F SIMDPP_INSN_ID_AVX512F
+#else
+#define SIMDPP_NS_ID_AVX512F
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_NEON
+#define SIMDPP_NS_ID_NEON SIMDPP_INSN_ID_NEON
+#else
+#define SIMDPP_NS_ID_NEON
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_NEON_FLT_SP
+#define SIMDPP_NS_ID_NEON_FLT_SP SIMDPP_INSN_ID_NEON_FLT_SP
+#else
+#define SIMDPP_NS_ID_NEON_FLT_SP
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_ALTIVEC
+#define SIMDPP_NS_ID_ALTIVEC SIMDPP_INSN_ID_ALTIVEC
+#else
+#define SIMDPP_NS_ID_ALTIVEC
+#endif
+
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE15(arch, \
+	SIMDPP_NS_ID_NULL, SIMDPP_NS_ID_SSE2, SIMDPP_NS_ID_SSE3,                \
+    SIMDPP_NS_ID_SSSE3, SIMDPP_NS_ID_SSE4_1, SIMDPP_NS_ID_AVX,              \
+    SIMDPP_NS_ID_AVX2, SIMDPP_NS_ID_AVX512F, SIMDPP_NS_ID_FMA3,             \
+    SIMDPP_NS_ID_FMA4, SIMDPP_NS_ID_XOP, SIMDPP_NS_ID_NEON,                 \
+    SIMDPP_NS_ID_NEON_FLT_SP, SIMDPP_NS_ID_ALTIVEC)
+
+// Include headers relevant for the enabled instruction sets.
+#if SIMDPP_USE_SSE2
     #include <xmmintrin.h>
     #include <emmintrin.h>
-#else
-    #define SIMDPP_PP_SSE2
 #endif
 
-#ifdef SIMDPP_USE_SSE3
-    #define SIMDPP_PP_SSE3 SIMDPP_INSN_ID_SSE3
+#if SIMDPP_USE_SSE3
     #include <pmmintrin.h>
-#else
-    #define SIMDPP_PP_SSE3
 #endif
 
-#ifdef SIMDPP_USE_SSSE3
-    #define SIMDPP_PP_SSSE3 SIMDPP_INSN_ID_SSSE3
+#if SIMDPP_USE_SSSE3
     #include <tmmintrin.h>
-#else
-    #define SIMDPP_PP_SSSE3
 #endif
 
-#ifdef SIMDPP_USE_SSE4_1
-    #define SIMDPP_PP_SSE4_1 SIMDPP_INSN_ID_SSE4_1
+#if SIMDPP_USE_SSE4_1
     #include <smmintrin.h>
-#else
-    #define SIMDPP_PP_SSE4_1
 #endif
 
-#ifdef SIMDPP_USE_AVX
-    #define SIMDPP_PP_AVX SIMDPP_INSN_ID_AVX
+#if SIMDPP_USE_AVX
     #include <immintrin.h>
-#else
-    #define SIMDPP_PP_AVX
 #endif
 
-#ifdef SIMDPP_USE_AVX2
-    #define SIMDPP_PP_AVX2 SIMDPP_INSN_ID_AVX2
+#if SIMDPP_USE_AVX2
     #include <immintrin.h>
-#else
-    #define SIMDPP_PP_AVX2
 #endif
 
-#ifdef SIMDPP_USE_FMA3
-    #define SIMDPP_PP_FMA3 SIMDPP_INSN_ID_FMA3
+#if SIMDPP_USE_FMA3
     #include <immintrin.h>
-#else
-    #define SIMDPP_PP_FMA3
 #endif
 
-#ifdef SIMDPP_USE_FMA4
-    #define SIMDPP_PP_FMA4 SIMDPP_INSN_ID_FMA4
+#if SIMDPP_USE_FMA4
     #include <x86intrin.h>
-    #ifdef SIMDPP_USE_FMA3
+    #if SIMDPP_USE_FMA3
         #error "X86_FMA3 and X86_FMA4 can't be used together"
     #endif
-#else
-    #define SIMDPP_PP_FMA4
 #endif
 
-#ifdef SIMDPP_USE_XOP
-    #define SIMDPP_PP_XOP _xop
+#if SIMDPP_USE_XOP
     #include <x86intrin.h>
-#else
-    #define SIMDPP_PP_XOP
 #endif
 
-#ifdef SIMDPP_USE_AVX512
-    #define SIMDPP_PP_AVX512 SIMDPP_INSN_ID_AVX512F
+#if SIMDPP_USE_AVX512
     #include <immintrin.h>
-#else
-    #define SIMDPP_PP_AVX512
 #endif
 
-#ifdef SIMDPP_USE_NEON
-    #define SIMDPP_PP_NEON SIMDPP_INSN_ID_NEON
+#if SIMDPP_USE_NEON || SIMDPP_USE_NEON_FLT_SP
     #include <arm_neon.h>
-#else
-    #define SIMDPP_PP_NEON
 #endif
 
-#ifdef SIMDPP_USE_NEON_FLT_SP
-    #define SIMDPP_PP_NEON_FLT_SP SIMDPP_INSN_ID_NEON_FLT_SP
-#else
-    #define SIMDPP_PP_NEON_FLT_SP
-#endif
-
-#ifdef SIMDPP_USE_ALTIVEC
-    #define SIMDPP_PP_ALTIVEC SIMDPP_INSN_ID_ALTIVEC
+#if SIMDPP_USE_ALTIVEC
     #include <altivec.h>
     #undef vector
     #undef pixel
     #undef bool
-#else
-    #define SIMDPP_PP_ALTIVEC
 #endif
 
 // helper macros
@@ -344,39 +248,9 @@
 #define SIMDPP_PPC 1
 #endif
 
-/** @def SIMDPP_ARCH_NAMESPACE
-    Put all functions to a namespace that depends on the instruction set that
-    the library is compiled for. This is needed to avoid violating the One
-    Definition Rule.
-*/
-#define SIMDPP_CONCAT2(a, ...) a ## __VA_ARGS__
-#define SIMDPP_CONCAT(a, b) SIMDPP_CONCAT2(a, b)
-
-#define SIMDPP_PP_ARCH_CONCAT0  SIMDPP_CONCAT(arch, SIMDPP_PP_NULL)
-#define SIMDPP_PP_ARCH_CONCAT1  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT0, SIMDPP_PP_SSE2)
-#define SIMDPP_PP_ARCH_CONCAT2  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT1, SIMDPP_PP_SSE3)
-#define SIMDPP_PP_ARCH_CONCAT3  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT2, SIMDPP_PP_SSSE3)
-#define SIMDPP_PP_ARCH_CONCAT4  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT3, SIMDPP_PP_SSE4_1)
-#define SIMDPP_PP_ARCH_CONCAT5  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT4, SIMDPP_PP_AVX)
-#define SIMDPP_PP_ARCH_CONCAT6  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT5, SIMDPP_PP_AVX2)
-#define SIMDPP_PP_ARCH_CONCAT7  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT6, SIMDPP_PP_FMA3)
-#define SIMDPP_PP_ARCH_CONCAT8  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT7, SIMDPP_PP_FMA4)
-#define SIMDPP_PP_ARCH_CONCAT9  SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT8, SIMDPP_PP_XOP)
-#define SIMDPP_PP_ARCH_CONCAT10 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT9, SIMDPP_PP_AVX512)
-#define SIMDPP_PP_ARCH_CONCAT11 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT10, SIMDPP_PP_NEON)
-#define SIMDPP_PP_ARCH_CONCAT12 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT11, SIMDPP_PP_NEON_FLT_SP)
-#define SIMDPP_PP_ARCH_CONCAT13 SIMDPP_CONCAT(SIMDPP_PP_ARCH_CONCAT12, SIMDPP_PP_ALTIVEC)
-
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_ARCH_CONCAT13
-
-
-
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required
 */
-
-#define SIMDPP_STRINGIFY2(x) #x
-#define SIMDPP_STRINGIFY(x) SIMDPP_STRINGIFY2(x)
 #define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
 
 // workarounds

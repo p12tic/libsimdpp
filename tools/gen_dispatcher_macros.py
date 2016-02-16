@@ -7,7 +7,7 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 # Generates the simdpp/dispatch/macros_generated.h file
-# Use as $ ./tools/gen_dispatch_macros.py > simdpp/dispatch/macros_generated.h
+# Use as $ ./tools/gen_dispatcher_macros.py > simdpp/dispatch/macros_generated.h
 
 from gen_common import output_template
 
@@ -36,34 +36,40 @@ num_args = 10
 
 template_head = '''
 #define SIMDPP_MAKE_DISPATCHER_$macro_end$(NAME$ret_param$$type_params$)    $n$
-struct simdpp_ ## NAME ## _tag;                                             $n$
                                                                             $n$'''
 
 template_fn = '''
+SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, $ret_type$(*)($types$))             $n$
+                                                                            $n$
 $ret_type$ NAME($types_vars$)                                               $n$
 {                                                                           $n$
     using FunPtr = $ret_type$(*)($types$);                                  $n$
-    using Tag = simdpp_ ## NAME ## _tag;                                    $n$
-    $return$ ::simdpp::detail::Dispatcher<                                  $n$
-        Tag,FunPtr                                                          $n$
-    >::get_fun_ptr(SIMDPP_USER_ARCH_INFO)($vars$);                          $n$
+    static FunPtr selected = NULL;                                          $n$
+    if (selected == NULL) {                                                 $n$
+        ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; $n$
+        SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, NAME, FunPtr)           $n$
+        ::simdpp::detail::FnVersion version =                               $n$
+            ::simdpp::detail::select_version_any(versions,                  $n$
+                SIMDPP_DISPATCH_MAX_ARCHS, SIMDPP_USER_ARCH_INFO);          $n$
+        selected = reinterpret_cast<FunPtr>(version.fun_ptr);               $n$
+    }                                                                       $n$
+    $return$ selected($vars$);                                              $n$
 }                                                                           $n$
                                                                             $n$'''
-
 template_registration = '''
 namespace SIMDPP_ARCH_NAMESPACE {                                           $n$
                                                                             $n$
-static ::simdpp::detail::DispatchRegistrator<                               $n$
-        simdpp_ ## NAME ## _tag,$ret_type$(*)($types$)                      $n$
-> simdpp_dispatch_registrator_ ## NAME (                                    $n$
-        ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(),               $n$
-        static_cast<$ret_type$(*)($types$)>(&NAME));                        $n$
-                                                                            $n$
-} /* namespace SIMDPP_ARCH_NAMESPACE */
-'''
+::simdpp::detail::FnVersion register_fn_##NAME($ret_type$(*)($types$))      $n$
+{                                                                           $n$
+    ::simdpp::detail::FnVersion ret;                                        $n$
+    ret.fun_ptr = reinterpret_cast<void (*)()>(&NAME);                      $n$
+    ret.needed_arch = ::simdpp::SIMDPP_ARCH_NAMESPACE::this_compile_arch(); $n$
+    return ret;                                                             $n$
+}                                                                           $n$
+} /* namespace SIMDPP_ARCH_NAMESPACE */                                     $n$'''
 
-template_null = template_head + template_fn + template_registration
-template_not_null = template_head + template_registration
+template_emit_dispatcher = template_head + template_fn + template_registration
+template_not_emit_dispatcher = template_head + template_registration
 
 # Returns a string T1,T2,T3,...,T_num
 def get_Tn_list(num):
@@ -140,8 +146,10 @@ print('''/*  Copyright (C) 2013  Povilas Kanapickas <povilas@radix.lt>
 
 // This file is generated automatically. See tools/gen_dispatcher_macros.py
 
-#ifndef LIBSIMDPP_DISPATCH_MACROS_H
-#define LIBSIMDPP_DISPATCH_MACROS_H
+#ifndef LIBSIMDPP_DISPATCH_MACROS_GENERATED_H
+#define LIBSIMDPP_DISPATCH_MACROS_GENERATED_H
+
+#include <simdpp/dispatch/collect_macros_generated.h>
 
 /** @def SIMDPP_MAKE_DISPATCHER_***
     Builds a dispatcher for a specific non-member function. Different macros
@@ -177,17 +185,20 @@ print('''/*  Copyright (C) 2013  Povilas Kanapickas <povilas@radix.lt>
 
     The macro defines a function with the same signature as the dispatched
     function in the namespace the macro is used. The body of that function
-    implements the dispatch mechanism. The function must not be called before
-    main() starts.
+    implements the dispatch mechanism.
+
+    The dispatch functions check the enabled instruction set and select the
+    best function on first call. The initialization does not introduce race
+    conditions when done concurrently.
 */
 /// @{
-#ifdef SIMDPP_USE_NULL
+#if SIMDPP_EMIT_DISPATCHER
 ''')
-do_template(template_null)
+do_template(template_emit_dispatcher)
 print('''
 #else
 ''')
-do_template(template_not_null)
+do_template(template_not_emit_dispatcher)
 print('''
 #endif
 /// @}

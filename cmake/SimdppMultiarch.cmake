@@ -14,7 +14,8 @@ include(CheckCXXSourceCompiles)
 #  - SIMDPP_${ARCH}_TEST_CODE: source code snippet that uses functionality
 #       from that arch. Used for @c check_cxx_source_runs macro.
 #  - SIMDPP_${ARCH}_CXX_FLAGS: compiler flags that are needed for compilation.
-#       The flags predefine the SIMDPP_ARCH_* macro too.
+#  - SIMDPP_${ARCH}_DEFINE: defines the macro that is needed to enable the
+#       specific instruction set within the library.
 #  - SIMDPP_${ARCH}_SUFFIX: defines a suffix to append to the filename of the
 #       source file specific to this architecture.
 #
@@ -29,10 +30,11 @@ include(CheckCXXSourceCompiles)
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_SSE2")
 if(NOT MSVC)
-    set(SIMDPP_X86_SSE2_CXX_FLAGS "-msse2 -DSIMDPP_ARCH_X86_SSE2")
+    set(SIMDPP_X86_SSE2_CXX_FLAGS "-msse2")
 else()
-    set(SIMDPP_X86_SSE2_CXX_FLAGS "/arch:SSE2 -DSIMDPP_ARCH_X86_SSE2")
+    set(SIMDPP_X86_SSE2_CXX_FLAGS "/arch:SSE2")
 endif()
+set(SIMDPP_X86_SSE2_DEFINE "SIMDPP_ARCH_X86_SSE2")
 set(SIMDPP_X86_SSE2_SUFFIX "-x86_sse2")
 set(SIMDPP_X86_SSE2_TEST_CODE
     "#include <emmintrin.h>
@@ -50,10 +52,11 @@ set(SIMDPP_X86_SSE2_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_SSE3")
 if(NOT MSVC)
-    set(SIMDPP_X86_SSE3_CXX_FLAGS "-msse3 -DSIMDPP_ARCH_X86_SSE3")
+    set(SIMDPP_X86_SSE3_CXX_FLAGS "-msse3")
 else()
-    set(SIMDPP_X86_SSE3_CXX_FLAGS "/arch:SSE2 -DSIMDPP_ARCH_X86_SSE3")
+    set(SIMDPP_X86_SSE3_CXX_FLAGS "/arch:SSE2")
 endif()
+set(SIMDPP_X86_SSE3_DEFINE "SIMDPP_ARCH_X86_SSE3")
 set(SIMDPP_X86_SSE3_SUFFIX "-x86_sse3")
 set(SIMDPP_X86_SSE3_TEST_CODE
     "#include <pmmintrin.h>
@@ -71,10 +74,11 @@ set(SIMDPP_X86_SSE3_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_SSSE3")
 if(NOT MSVC)
-    set(SIMDPP_X86_SSSE3_CXX_FLAGS "-mssse3 -DSIMDPP_ARCH_X86_SSSE3")
+    set(SIMDPP_X86_SSSE3_CXX_FLAGS "-mssse3")
 else()
-    set(SIMDPP_X86_SSSE3_CXX_FLAGS "/arch:SSE2 -DSIMDPP_ARCH_X86_SSSE3")
+    set(SIMDPP_X86_SSSE3_CXX_FLAGS "/arch:SSE2")
 endif()
+set(SIMDPP_X86_SSSE3_DEFINE "SIMDPP_ARCH_X86_SSSE3")
 set(SIMDPP_X86_SSSE3_SUFFIX "-x86_ssse3")
 set(SIMDPP_X86_SSSE3_TEST_CODE
     "#include <tmmintrin.h>
@@ -92,10 +96,11 @@ set(SIMDPP_X86_SSSE3_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_SSE4_1")
 if(NOT MSVC)
-    set(SIMDPP_X86_SSE4_1_CXX_FLAGS "-msse4.1 -DSIMDPP_ARCH_X86_SSE4_1")
+    set(SIMDPP_X86_SSE4_1_CXX_FLAGS "-msse4.1")
 else()
-    set(SIMDPP_X86_SSE4_1_CXX_FLAGS "/arch:SSE2 -DSIMDPP_ARCH_X86_SSE4_1")
+    set(SIMDPP_X86_SSE4_1_CXX_FLAGS "/arch:SSE2")
 endif()
+set(SIMDPP_X86_SSE4_1_DEFINE "SIMDPP_ARCH_X86_SSE4_1")
 set(SIMDPP_X86_SSE4_1_SUFFIX "-x86_sse4_1")
 set(SIMDPP_X86_SSE4_1_TEST_CODE
     "#include <smmintrin.h>
@@ -113,10 +118,11 @@ set(SIMDPP_X86_SSE4_1_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_AVX")
 if(NOT MSVC)
-    set(SIMDPP_X86_AVX_CXX_FLAGS "-mavx -DSIMDPP_ARCH_X86_AVX")
+    set(SIMDPP_X86_AVX_CXX_FLAGS "-mavx")
 else()
-    set(SIMDPP_X86_AVX_CXX_FLAGS "/arch:AVX -DSIMDPP_ARCH_X86_AVX")
+    set(SIMDPP_X86_AVX_CXX_FLAGS "/arch:AVX")
 endif()
+set(SIMDPP_X86_AVX_DEFINE "SIMDPP_ARCH_X86_AVX")
 set(SIMDPP_X86_AVX_SUFFIX "-x86_avx")
 set(SIMDPP_X86_AVX_TEST_CODE
     "#include <immintrin.h>
@@ -134,10 +140,11 @@ set(SIMDPP_X86_AVX_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_AVX2")
 if(NOT MSVC)
-    set(SIMDPP_X86_AVX2_CXX_FLAGS "-mavx2 -DSIMDPP_ARCH_X86_AVX2")
+    set(SIMDPP_X86_AVX2_CXX_FLAGS "-mavx2")
 else()
-    set(SIMDPP_X86_AVX2_CXX_FLAGS "/arch:AVX -DSIMDPP_ARCH_X86_AVX2")
+    set(SIMDPP_X86_AVX2_CXX_FLAGS "/arch:AVX")
 endif()
+set(SIMDPP_X86_AVX2_DEFINE "SIMDPP_ARCH_X86_AVX2")
 set(SIMDPP_X86_AVX2_SUFFIX "-x86_avx2")
 set(SIMDPP_X86_AVX2_TEST_CODE
     "#include <immintrin.h>
@@ -155,10 +162,11 @@ set(SIMDPP_X86_AVX2_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_FMA3")
 if(NOT MSVC)
-    set(SIMDPP_X86_FMA3_CXX_FLAGS "-mfma -DSIMDPP_ARCH_X86_FMA3")
+    set(SIMDPP_X86_FMA3_CXX_FLAGS "-mfma")
 else()
-    set(SIMDPP_X86_FMA3_CXX_FLAGS "/arch:AVX -DSIMDPP_ARCH_X86_FMA3")
+    set(SIMDPP_X86_FMA3_CXX_FLAGS "/arch:AVX")
 endif()
+set(SIMDPP_X86_FMA3_DEFINE "SIMDPP_ARCH_X86_FMA3")
 set(SIMDPP_X86_FMA3_SUFFIX "-x86_fma3")
 set(SIMDPP_X86_FMA3_TEST_CODE
     "#include <immintrin.h>
@@ -176,10 +184,11 @@ set(SIMDPP_X86_FMA3_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_FMA4")
 if(NOT MSVC)
-    set(SIMDPP_X86_FMA4_CXX_FLAGS "-mfma4 -DSIMDPP_ARCH_X86_FMA4")
+    set(SIMDPP_X86_FMA4_CXX_FLAGS "-mfma4")
 else()
-    set(SIMDPP_X86_FMA4_CXX_FLAGS "/arch:AVX -DSIMDPP_ARCH_X86_FMA4")
+    set(SIMDPP_X86_FMA4_CXX_FLAGS "/arch:AVX")
 endif()
+set(SIMDPP_X86_FMA4_DEFINE "SIMDPP_ARCH_X86_FMA4")
 set(SIMDPP_X86_FMA4_SUFFIX "-x86_fma4")
 set(SIMDPP_X86_FMA4_TEST_CODE
     "#include <x86intrin.h>
@@ -196,7 +205,8 @@ set(SIMDPP_X86_FMA4_TEST_CODE
 )
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_XOP")
-set(SIMDPP_X86_XOP_CXX_FLAGS "-mxop -DSIMDPP_ARCH_X86_XOP")
+set(SIMDPP_X86_XOP_CXX_FLAGS "-mxop")
+set(SIMDPP_X86_XOP_DEFINE "SIMDPP_ARCH_X86_XOP")
 set(SIMDPP_X86_XOP_SUFFIX "-x86_xop")
 set(SIMDPP_X86_XOP_TEST_CODE
     "#include <x86intrin.h>
@@ -215,10 +225,11 @@ set(SIMDPP_X86_XOP_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_AVX512F")
 if(NOT MSVC)
-    set(SIMDPP_X86_AVX512F_CXX_FLAGS "-mavx512f -DSIMDPP_ARCH_X86_AVX512F")
+    set(SIMDPP_X86_AVX512F_CXX_FLAGS "-mavx512f")
 else()
-    set(SIMDPP_X86_AVX512F_CXX_FLAGS "/arch:AVX -DSIMDPP_ARCH_X86_AVX512F") #unsupported
+    set(SIMDPP_X86_AVX512F_CXX_FLAGS "/arch:AVX") #unsupported
 endif()
+set(SIMDPP_X86_AVX512F_DEFINE "SIMDPP_ARCH_X86_AVX512F")
 set(SIMDPP_X86_AVX512F_SUFFIX "-x86_avx512f")
 set(SIMDPP_X86_AVX512F_TEST_CODE
     "#include <immintrin.h>
@@ -235,7 +246,8 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
 )
 
 list(APPEND SIMDPP_ARCHS_PRI "ARM_NEON")
-set(SIMDPP_ARM_NEON_CXX_FLAGS "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON")
+set(SIMDPP_ARM_NEON_CXX_FLAGS "-mfpu=neon")
+set(SIMDPP_ARM_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM_NEON_SUFFIX "-arm_neon")
 set(SIMDPP_ARM_NEON_TEST_CODE
     "#include <arm_neon.h>
@@ -249,11 +261,13 @@ set(SIMDPP_ARM_NEON_TEST_CODE
 )
 
 list(APPEND SIMDPP_ARCHS_SEC "ARM_NEON_FLT_SP")
-set(SIMDPP_ARM_NEON_FLT_SP_CXX_FLAGS "-mfpu=neon -DSIMDPP_ARCH_ARM_NEON_FLT_SP")
+set(SIMDPP_ARM_NEON_FLT_SP_CXX_FLAGS "-mfpu=neon")
+set(SIMDPP_ARM_NEON_FLT_SP_DEFINE "SIMDPP_ARCH_ARM_NEON_FLT_SP")
 set(SIMDPP_ARM_NEON_FLT_SP_SUFFIX "-arm_neon_flt_sp")
 
 list(APPEND SIMDPP_ARCHS_PRI "ARM64_NEON")
-set(SIMDPP_ARM64_NEON_CXX_FLAGS "-mcpu=generic+simd -DSIMDPP_ARCH_ARM_NEON")
+set(SIMDPP_ARM64_NEON_CXX_FLAGS "-mcpu=generic+simd")
+set(SIMDPP_ARM64_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM64_NEON_SUFFIX "-arm64_neon")
 set(SIMDPP_ARM64_NEON_TEST_CODE
     "#include <arm_neon.h>
@@ -267,7 +281,8 @@ set(SIMDPP_ARM64_NEON_TEST_CODE
 )
 
 list(APPEND SIMDPP_ARCHS_PRI "POWER_ALTIVEC")
-set(SIMDPP_POWER_ALTIVEC_CXX_FLAGS "-maltivec -DSIMDPP_ARCH_POWER_ALTIVEC")
+set(SIMDPP_POWER_ALTIVEC_CXX_FLAGS "-maltivec")
+set(SIMDPP_POWER_ALTIVEC_DEFINE "SIMDPP_ARCH_POWER_ALTIVEC")
 set(SIMDPP_POWER_ALTIVEC_SUFFIX "-power_altivec")
 set(SIMDPP_POWER_ALTIVEC_TEST_CODE
     "#include <altivec.h>
@@ -289,13 +304,18 @@ set(SIMDPP_ARCHS "${SIMDPP_ARCHS_PRI};${SIMDPP_ARCHS_SEC}")
 #
 # - CXX_FLAGS_VAR: the name of a variable to store the compilation flags to
 #
+# - DEFINES_LIST_VAR: the name of a variable to store comma defimited list of
+# preprocessor defines for the current architecture.
+#
 # - UNIQUE_ID_VAR: the name of a variable to store the unique identifier to
 #
 # - ARCH: an architecture
 #
-function(simdpp_get_arch_info CXX_FLAGS_VAR UNIQUE_ID_VAR ARCH)
+function(simdpp_get_arch_info CXX_FLAGS_VAR DEFINES_LIST_VAR UNIQUE_ID_VAR ARCH)
     set(UNIQUE_ID "")
     set(CXX_FLAGS "")
+    set(DISPATCH_FLAGS "")
+    set(DEFINES_LIST "")
 
     string(REPLACE "," ";" ARCH_IDS "${ARCH}")
     list(SORT ARCH_IDS)
@@ -305,13 +325,18 @@ function(simdpp_get_arch_info CXX_FLAGS_VAR UNIQUE_ID_VAR ARCH)
         else()
             list(FIND SIMDPP_ARCHS "${ID}" FOUND)
             if(NOT ${FOUND} EQUAL -1)
-                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_${ID}_CXX_FLAGS}")
+                list(APPEND DEFINES_LIST "${SIMDPP_${ID}_DEFINE}")
+                set(CXX_FLAGS "${CXX_FLAGS} ${SIMDPP_${ID}_CXX_FLAGS} -D${SIMDPP_${ID}_DEFINE}")
                 set(UNIQUE_ID "${UNIQUE_ID}${SIMDPP_${ID}_SUFFIX}")
             endif()
         endif()
     endforeach()
+
+    string(REPLACE ";" "," DEFINES_LIST "${DEFINES_LIST}")
+
     set(${CXX_FLAGS_VAR} "${CXX_FLAGS}" PARENT_SCOPE)
     set(${UNIQUE_ID_VAR} "${UNIQUE_ID}" PARENT_SCOPE)
+    set(${DEFINES_LIST_VAR} "${DEFINES_LIST}" PARENT_SCOPE)
 endfunction()
 
 # ------------------------------------------------------------------------------
@@ -336,7 +361,7 @@ endfunction()
 # * SRC_FILE: the name of the source file relative to the @a
 #   CMAKE_CURRENT_SOURCE_DIR
 #
-# * ARCH...: a list of architecture definitions. Each architecture definitions
+# * ARCH...: a list of architecture definitions. Each architecture definition
 #   consist of comma separated list of identifiers directly corresponding to
 #   macros defined in simdpp/simd.h, which ultimately identify instruction set
 #   features. The user of the function must ensure that sensible combination of
@@ -355,20 +380,42 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     get_filename_component(SRC_EXT "${SRC_FILE}" EXT)
 
     set(FILE_LIST "")
+    set(DISPATCHER_FILE "")
+    set(DISPATCHER_CXX_FLAGS "-DSIMDPP_EMIT_DISPATCHER=1")
+    set(DISPATCH_ARCH_IDX "1")
+
     list(APPEND ARCHS ${ARGV})
-    list(REMOVE_AT ARCHS 0 1)
+    list(REMOVE_AT ARCHS 0 1) # strip FILE_LIST_VAR and SRC_FILE args
     foreach(ARCH ${ARCHS})
-        simdpp_get_arch_info(CXX_FLAGS SUFFIX ${ARCH})
+        simdpp_get_arch_info(CXX_FLAGS DEFINES_LIST SUFFIX ${ARCH})
 
         set(CXX_FLAGS "-I\"${CMAKE_CURRENT_SOURCE_DIR}/${SRC_PATH}\" ${CXX_FLAGS}")
         if(NOT "${SUFFIX}" STREQUAL "")
+            # Copy the source file and add the required flags
             set(DST_ABS_FILE "${CMAKE_CURRENT_BINARY_DIR}/${SRC_PATH}/${SRC_NAME}_simdpp_${SUFFIX}${SRC_EXT}")
             set(SRC_ABS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
             configure_file("${SRC_ABS_FILE}" "${DST_ABS_FILE}" COPYONLY)
             list(APPEND FILE_LIST "${DST_ABS_FILE}")
             set_source_files_properties("${DST_ABS_FILE}" PROPERTIES COMPILE_FLAGS ${CXX_FLAGS})
+
+            # For the first file that is being processed, set it to emit
+            # dispatcher code. The required flags will be added later
+            if("${DISPATCHER_FILE}" STREQUAL "")
+                set(DISPATCHER_FILE "${DST_ABS_FILE}")
+            endif()
+
+            # Add required dispatcher predefined macros for this architecture
+            set(DISPATCHER_CXX_FLAGS "${DISPATCHER_CXX_FLAGS} -DSIMDPP_DISPATCH_ARCH${DISPATCH_ARCH_IDX}=${DEFINES_LIST}")
+            math(EXPR DISPATCH_ARCH_IDX "${DISPATCH_ARCH_IDX}+1")
         endif()
     endforeach()
+
+    # Emit dispatcher code in the first valid generated file.
+    if(NOT "${DISPATCHER_FILE}" STREQUAL "")
+        set_property(SOURCE "${DISPATCHER_FILE}" APPEND_STRING PROPERTY COMPILE_FLAGS
+                     "${DISPATCHER_CXX_FLAGS}")
+        set(DISPATCHER_FILE "${DST_ABS_FILE}")
+    endif()
 
     set(RECV_FILE_LIST ${${FILE_LIST_VAR}})
     list(APPEND RECV_FILE_LIST ${FILE_LIST})
@@ -472,7 +519,7 @@ endfunction()
 
 # ------------------------------------------------------------------------------
 #
-# simdpp_get_compilable_archs(ARCH_LIST_VAR)
+# simdpp_get_runnable_archs(ARCH_LIST_VAR)
 #
 # Returns a list of architectures that are supported by the current build
 # system and the processor. The generated list may be used as an argument to
