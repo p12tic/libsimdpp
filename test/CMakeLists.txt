@@ -10,13 +10,11 @@ include_directories(${libsimdpp_SOURCE_DIR})
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
 set(TEST1_SOURCES
-    utils/arch_registration.cc
     utils/test_suite.cc
     main_test1.cc
 )
 
 set(TEST1_HEADERS
-    utils/arch_registration.h
     utils/test_suite.h
     utils/test_helpers.h
     utils/test_results.h

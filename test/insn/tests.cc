@@ -5,7 +5,6 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include "../utils/arch_registration.h"
 #include "../utils/test_helpers.h"
 #include "../utils/test_results.h"
 #include "tests.h"
