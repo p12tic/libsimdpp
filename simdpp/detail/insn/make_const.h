@@ -465,7 +465,7 @@ void i_make_const(uint64<N>& v, const expr_vec_make_const<VE,NE>& e)
 
 // -----------------------------------------------------------------------------
 
-template<class V, class VE, unsigned N>
+template<class V, class VE, unsigned N> SIMDPP_INL
 V i_make_const_any(const expr_vec_make_const<VE,N>& e)
 {
     typename detail::remove_sign<V>::type r;
