@@ -41,7 +41,7 @@ public:
     SIMDPP_INL const element_type& operator[](unsigned id) const { return d_[id]; }
     SIMDPP_INL element_type& operator[](unsigned id) { return d_[id]; }
 
-    SIMDPP_INL element_type* operator&() const { return d_; }
+    SIMDPP_INL const element_type* operator&() const { return d_; }
 private:
     union {
         element_type d_[length];
