@@ -34,12 +34,6 @@ void test_math_int_n(TestSuite& tc)
             (uint8_n) make_uint(0xfc, 0xfd, 0xfe, 0xff),
             (uint8_n) make_uint(0x7e, 0x7f, 0x80, 0x81),
 
-            (uint8_n) make_uint(0x11, 0x22, 0x33, 0x44),
-            (uint8_n) make_uint(0xcc, 0xdd, 0xee, 0xff),
-            (uint8_n) make_uint(0x00, 0x01, 0x02, 0x03),
-            (uint8_n) make_uint(0xfc, 0xfd, 0xfe, 0xff),
-            (uint8_n) make_uint(0x7e, 0x7f, 0x80, 0x81),
-
             (uint8_n) make_uint(0),
             (uint8_n) make_uint(0xff),
             (uint8_n) make_uint(0x7f),
@@ -83,12 +77,6 @@ void test_math_int_n(TestSuite& tc)
     // Vectors with 16-bit integer elements
     {
         uint16_n s[] = {
-            (uint16_n) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
-            (uint16_n) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
-            (uint16_n) make_uint(0x0000, 0x0001, 0x0002, 0x0003),
-            (uint16_n) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
-            (uint16_n) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
-
             (uint16_n) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
             (uint16_n) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
             (uint16_n) make_uint(0x0000, 0x0001, 0x0002, 0x0003),
@@ -147,12 +135,6 @@ void test_math_int_n(TestSuite& tc)
     // Vectors with 32-bit integer elements
     {
         uint32_n s[] = {
-            (uint32_n) make_uint(0x11111111, 0x22222222, 0x33333333, 0x44444444),
-            (uint32_n) make_uint(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
-            (uint32_n) make_uint(0x00000000, 0x00000001, 0x00000002, 0x00000003),
-            (uint32_n) make_uint(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
-            (uint32_n) make_uint(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
-
             (uint32_n) make_uint(0x11111111, 0x22222222, 0x33333333, 0x44444444),
             (uint32_n) make_uint(0xcccccccc, 0xdddddddd, 0xeeeeeeee, 0xffffffff),
             (uint32_n) make_uint(0x00000000, 0x00000001, 0x00000002, 0x00000003),
@@ -219,18 +201,6 @@ void test_math_int_n(TestSuite& tc)
             (uint64_n) make_uint(0x7ffffffffffffffe, 0x7fffffffffffffff),
             (uint64_n) make_uint(0x8000000000000000, 0x8000000000000001),
 
-            (uint64_n) make_uint(0x1111111111111111, 0x2222222222222222),
-            (uint64_n) make_uint(0x3333333333333333, 0x4444444444444444),
-            (uint64_n) make_uint(0xcccccccccccccccc, 0xdddddddddddddddd),
-            (uint64_n) make_uint(0xeeeeeeeeeeeeeeee, 0xffffffffffffffff),
-            (uint64_n) make_uint(0x0000000000000000, 0x0000000000000001),
-
-            (uint64_n) make_uint(0x0000000000000002, 0x0000000000000003),
-            (uint64_n) make_uint(0xfffffffffffffffc, 0xfffffffffffffffd),
-            (uint64_n) make_uint(0xfffffffffffffffe, 0xffffffffffffffff),
-            (uint64_n) make_uint(0x7ffffffffffffffe, 0x7fffffffffffffff),
-            (uint64_n) make_uint(0x8000000000000000, 0x8000000000000001),
-
             (uint64_n) make_uint(0),
             (uint64_n) make_uint(0xffffffffffffffff),
             (uint64_n) make_uint(0x7fffffffffffffff),
@@ -261,10 +231,14 @@ void test_math_int_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_or, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_and, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_and, s, 1);
+        tc.sync_archs();
+#if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
         TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_min, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_min, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_max, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_max, s, 1);
+#endif
+        tc.sync_archs();
     }
 }
 
@@ -283,12 +257,6 @@ void test_math_int(TestResults& res)
             (uint16<8>) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
             (uint16<8>) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
             (uint16<8>) make_uint(0x0510, 0x0001, 0x0002, 0x0003),
-            (uint16<8>) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
-            (uint16<8>) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
-
-            (uint16<8>) make_uint(0x1111, 0x2222, 0x3333, 0x4444),
-            (uint16<8>) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
-            (uint16<8>) make_uint(0x0230, 0x0001, 0x0002, 0x0003),
             (uint16<8>) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
             (uint16<8>) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
         };
