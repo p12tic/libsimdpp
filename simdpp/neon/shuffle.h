@@ -28,7 +28,7 @@ namespace neon {
 */
 SIMDPP_INL void swap_lo(uint64x2& a, uint64x2& b)
 {
-    int64x1_t ah, bh, al, bl;
+    uint64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
     ah = vget_high_u64(a);
@@ -46,7 +46,7 @@ SIMDPP_INL void swap_lo(uint64x2& a, uint64x2& b)
 */
 SIMDPP_INL void swap_hi(uint64x2& a, uint64x2& b)
 {
-    int64x1_t ah, bh, al, bl;
+    uint64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
     ah = vget_high_u64(a);
@@ -57,7 +57,7 @@ SIMDPP_INL void swap_hi(uint64x2& a, uint64x2& b)
 
 SIMDPP_INL void transpose2(uint64x2& a, uint64x2& b)
 {
-    int64x1_t ah, bh, al, bl;
+    uint64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
     bl = vget_low_u64(b);
     ah = vget_high_u64(a);
