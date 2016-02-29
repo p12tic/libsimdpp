@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/detail/null/shuffle.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -230,7 +231,7 @@ float64<8> i_move2_l(const float64<8>& a)
     static_assert(shift <= 2, "Selector out of range");
     switch (shift) {
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_pd(0x55, a, a, _MM_SHUFFLE2(1, 1));
+    case 1: return _mm512_maskz_shuffle_pd(0x55, a, a, SIMDPP_SHUFFLE_MASK_2x2_4(1, 1));
     case 2: return float64<8>::zero();
     }
 }

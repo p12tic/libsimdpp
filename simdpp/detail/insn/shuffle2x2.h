@@ -134,9 +134,9 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
     return r;
 #elif SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_pd(a, a, _MM_SHUFFLE2(s1,s0));
+        return _mm_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_pd(b, b, _MM_SHUFFLE2(s1-2,s0-2));
+        return _mm_shuffle_pd(b, b, SIMDPP_SHUFFLE_MASK_2x2(s0-2,s1-2));
 #if SIMDPP_USE_SSE4_1
     } else if (s0 == 0 && s1 == 3) {
         return _mm_blend_pd(a, b, 0x2);
@@ -144,9 +144,9 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
         return _mm_blend_pd(b, a, 0x2);
 #endif
     } else if (s0 < 2) { // s1 >= 2
-        return _mm_shuffle_pd(a, b, _MM_SHUFFLE2(s1-2,s0));
+        return _mm_shuffle_pd(a, b, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
     } else { // s0 >= 2, s1 < 2
-        return _mm_shuffle_pd(b, a, _MM_SHUFFLE2(s0-2,s1));
+        return _mm_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
     }
 #elif SIMDPP_USE_NEON64
     return (float64<2>)neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(uint64<2>(a), uint64<2>(b));
@@ -182,17 +182,17 @@ float64<8> i_shuffle2x2(const float64<8>& a, const float64<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1));
+        return _mm512_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2_4(s0,s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_shuffle_pd(b, b, SIMDPP_SHUFFLE_MASK_2x2_2(s0-2,s1-2));
+        return _mm512_shuffle_pd(b, b, SIMDPP_SHUFFLE_MASK_2x2_4(s0-2,s1-2));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_pd(0xaa, a, b);
     } else if (s0 == 2 && s1 == 1) {
         return _mm512_mask_blend_pd(0xaa, b, a);
     } else if (s0 < 2) { // s1 >= 2
-        return _mm512_shuffle_pd(a, b, SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1-2));
+        return _mm512_shuffle_pd(a, b, SIMDPP_SHUFFLE_MASK_2x2_4(s0,s1-2));
     } else { // s0 >= 2, s1 < 2
-        return _mm512_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-2));
+        return _mm512_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2_4(s1,s0-2));
     }
 }
 #endif
@@ -340,10 +340,10 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 #endif
     } else if (s0 < 2) { // s1 >= 2
         float64<2> fa, fb; fa = a; fb = b;
-        return (__m128i) _mm_shuffle_pd(fa, fb, _MM_SHUFFLE2(s1-2,s0));
+        return (__m128i) _mm_shuffle_pd(fa, fb, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
     } else { // s0 >= 2, s1 < 2
         float64<2> fa, fb; fa = a; fb = b;
-        return (__m128i) _mm_shuffle_pd(fb, fa, _MM_SHUFFLE2(s0-2,s1));
+        return (__m128i) _mm_shuffle_pd(fb, fa, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
     }
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
@@ -407,10 +407,10 @@ uint64<8> i_shuffle2x2(const uint64<8>& a, const uint64<8>& b)
         return _mm512_mask_blend_epi64(0xaa, b, a);
     } else if (s0 < 2) { // s1 >= 2
         float64<8> fa, fb; fa = a; fb = b;
-        return _mm512_castpd_si512(_mm512_shuffle_pd(fa, fb, _MM_SHUFFLE2(s1-2,s0)));
+        return _mm512_castpd_si512(_mm512_shuffle_pd(fa, fb, SIMDPP_SHUFFLE_MASK_2x2_4(s0, s1-2)));
     } else { // s0 >= 2, s1 < 2
         float64<8> fa, fb; fa = a; fb = b;
-        return _mm512_castpd_si512(_mm512_shuffle_pd(fb, fa, _MM_SHUFFLE2(s0-2,s1)));
+        return _mm512_castpd_si512(_mm512_shuffle_pd(fb, fa, SIMDPP_SHUFFLE_MASK_2x2_4(s1, s0-2)));
     }
     /* GCC BUG
     } else if (s0 == 1 && s1 == 2) {

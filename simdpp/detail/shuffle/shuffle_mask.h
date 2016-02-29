@@ -14,5 +14,5 @@
 
 #define SIMDPP_SHUFFLE_MASK_2x2(x0, x1) (((x1) << 1) | (x0))
 #define SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1) ((SIMDPP_SHUFFLE_MASK_2x2(x0, x1) << 2) | SIMDPP_SHUFFLE_MASK_2x2(x0, x1))
-
+#define SIMDPP_SHUFFLE_MASK_2x2_4(x0, x1) ((SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1) << 4) | SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1))
 #endif
