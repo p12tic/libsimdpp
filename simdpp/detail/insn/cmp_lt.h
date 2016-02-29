@@ -257,7 +257,7 @@ SIMDPP_INL mask_int64x4 i_cmp_lt(const int64x4& a, const int64x4& b)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int64<8> i_cmp_lt(const int64<8>& a, const int64<8>& b)
 {
-    return _mm512_cmplt_epu64_mask(a, b);
+    return _mm512_cmplt_epi64_mask(a, b);
 }
 #endif
 

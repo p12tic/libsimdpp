@@ -150,6 +150,41 @@ uint32<N,expr_empty> max(const uint32<N,E1>& a, const uint32<N,E2>& b)
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint32, uint32)
 
+/** Computes maximum of the signed 64-bit values.
+
+    @code
+    r0 = max(a0, b0)
+    ...
+    rN = max(aN, bN)
+    @endcode
+
+    Supported since AVX2, NEON64. Not supported on ALTIVEC.
+*/
+template<unsigned N, class E1, class E2> SIMDPP_INL
+int64<N,expr_empty> max(const int64<N,E1>& a, const int64<N,E2>& b)
+{
+    return detail::insn::i_max(a.eval(), b.eval());
+}
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(max, int64, int64)
+
+/** Computes maximum of the unsigned 64-bit values.
+
+    @code
+    r0 = max(a0, b0)
+    ...
+    rN = max(aN, bN)
+    @endcode
+
+    Supported since AVX2, NEON64. Not supported on ALTIVEC.
+*/
+template<unsigned N, class E1, class E2> SIMDPP_INL
+uint64<N,expr_empty> max(const uint64<N,E1>& a, const uint64<N,E2>& b)
+{
+    return detail::insn::i_max(a.eval(), b.eval());
+}
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint64, uint64)
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

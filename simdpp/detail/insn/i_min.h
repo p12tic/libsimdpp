@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/blend.h>
 #include <simdpp/core/cmp_lt.h>
+#include <simdpp/detail/not_implemented.h>
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
@@ -213,6 +214,76 @@ template<unsigned N> SIMDPP_INL
 uint32<N> i_min(const uint32<N>& a, const uint32<N>& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_min, a, b);
+}
+
+// -----------------------------------------------------------------------------
+
+SIMDPP_INL int64x2 i_min(const int64x2& a, const int64x2& b)
+{
+#if SIMDPP_USE_NULL
+    return detail::null::min(a, b);
+#elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+    mask_int64x2 mask = cmp_lt(a, b);
+    return blend(a, b, mask);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL int64x4 i_min(const int64x4& a, const int64x4& b)
+{
+    mask_int64x4 mask = cmp_lt(a, b);
+    return blend(a, b, mask);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+SIMDPP_INL int64<8> i_min(const int64<8>& a, const int64<8>& b)
+{
+    return _mm512_min_epi64(a, b);
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+int64<N> i_min(const int64<N>& a, const int64<N>& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(int64<N>, i_min, a, b);
+}
+
+// -----------------------------------------------------------------------------
+
+SIMDPP_INL uint64x2 i_min(const uint64x2& a, const uint64x2& b)
+{
+#if SIMDPP_USE_NULL
+    return detail::null::min(a, b);
+#elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+    mask_int64x2 mask = cmp_lt(a, b);
+    return blend(a, b, mask);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL uint64x4 i_min(const uint64x4& a, const uint64x4& b)
+{
+    mask_int64x4 mask = cmp_lt(a, b);
+    return blend(a, b, mask);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+SIMDPP_INL uint64<8> i_min(const uint64<8>& a, const uint64<8>& b)
+{
+    return _mm512_min_epu64(a, b);
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+uint64<N> i_min(const uint64<N>& a, const uint64<N>& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, i_min, a, b);
 }
 
 } // namespace insn

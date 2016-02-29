@@ -179,7 +179,12 @@ void test_math_int_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER2(tc, int64_n, sub, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint64_n, add, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint64_n, sub, s, 2);
-
+#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+        TEST_ALL_COMB_HELPER2(tc, int64_n, min, s, 4);
+        TEST_ALL_COMB_HELPER2(tc, int64_n, max, s, 4);
+        TEST_ALL_COMB_HELPER2(tc, uint64_n, min, s, 4);
+        TEST_ALL_COMB_HELPER2(tc, uint64_n, max, s, 4);
+#endif
         TEST_ARRAY_HELPER1(tc, int64_n, neg, s);
         TEST_ARRAY_HELPER1(tc, int64_n, abs, s);
     }

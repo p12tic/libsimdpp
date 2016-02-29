@@ -151,6 +151,41 @@ uint32<N,expr_empty> min(const uint32<N,E1>& a, const uint32<N,E2>& b)
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint32, uint32)
 
+/** Computes minimum of the signed 64-bit values.
+
+    @code
+    r0 = min(a0, b0)
+    ...
+    rN = min(aN, bN)
+    @endcode
+
+    Supported since AVX2, NEON64. Not supported on ALTIVEC.
+*/
+template<unsigned N, class E1, class E2> SIMDPP_INL
+int64<N,expr_empty> min(const int64<N,E1>& a, const int64<N,E2>& b)
+{
+    return detail::insn::i_min(a.eval(), b.eval());
+}
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, int64, int64)
+
+/** Computes minimum of the unsigned 64-bit values.
+
+    @code
+    r0 = min(a0, b0)
+    ...
+    rN = min(aN, bN)
+    @endcode
+
+    Supported since AVX2, NEON64. Not supported on ALTIVEC.
+*/
+template<unsigned N, class E1, class E2> SIMDPP_INL
+uint64<N,expr_empty> min(const uint64<N,E1>& a, const uint64<N,E2>& b)
+{
+    return detail::insn::i_min(a.eval(), b.eval());
+}
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint64, uint64)
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

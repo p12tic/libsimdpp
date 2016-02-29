@@ -258,8 +258,8 @@ SIMDPP_INL mask_int64x4 i_cmp_gt(const int64x4& a, const int64x4& b)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int64<8> i_cmp_gt(const int64<8>& a, const int64<8>& b)
 {
-    // GCC does not have _mm512_cmpgt_epu64_mask
-    return _mm512_cmp_epu64_mask((x), (y), _MM_CMPINT_NLE);
+    // GCC does not have _mm512_cmpgt_epi64_mask
+    return _mm512_cmp_epi64_mask(a, b, _MM_CMPINT_NLE);
 }
 #endif
 
@@ -301,7 +301,7 @@ SIMDPP_INL mask_int64x4 i_cmp_gt(const uint64x4& ca, const uint64x4& cb)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int64<8> i_cmp_gt(const uint64<8>& a, const uint64<8>& b)
 {
-    return _mm512_cmp_epu64_mask((x), (y), _MM_CMPINT_NLE);
+    return _mm512_cmp_epu64_mask(a, b, _MM_CMPINT_NLE);
 }
 #endif
 
