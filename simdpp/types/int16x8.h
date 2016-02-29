@@ -19,7 +19,7 @@
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
 #include <simdpp/detail/null/mask.h>
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -30,36 +30,36 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 8x 16-bit signed integer vector
 */
 template<>
-class int16<8, void> : public any_int16<8, int16<8,void>> {
+class int16<8, void> : public any_int16<8, int16<8,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using element_type = int16_t;
-    using base_vector_type = int16<8>;
-    using expr_type = void;
+    typedef int16_t element_type;
+    typedef int16<8> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = int16x8_t;
+    typedef int16x8_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector int16_t;
+    typedef __vector int16_t native_type;
 #else
-    using native_type = detail::array<int16_t, 8>;
+    typedef detail::array<int16_t, 8> native_type;
 #endif
 
-    SIMDPP_INL int16<8>() = default;
-    SIMDPP_INL int16<8>(const int16<8> &) = default;
-    SIMDPP_INL int16<8> &operator=(const int16<8> &) = default;
+    SIMDPP_INL int16<8>() {}
+    // SIMDPP_INL int16<8>(const int16<8> &) = default;
+    // SIMDPP_INL int16<8> &operator=(const int16<8> &) = default;
 
     template<class E> SIMDPP_INL int16<8>(const int16<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int16<8>(const uint16<8,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit int16<8>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int16<8>>(d.wrapped().eval());
+        *this = bit_cast<int16<8> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL int16<8>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int16<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int16<8> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -106,36 +106,36 @@ private:
 /** Class representing 8x 16-bit unsigned integer vector
 */
 template<>
-class uint16<8, void> : public any_int16<8, uint16<8,void>> {
+class uint16<8, void> : public any_int16<8, uint16<8,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using element_type = uint16_t;
-    using base_vector_type = uint16<8,void>;
-    using expr_type = void;
+    typedef uint16_t element_type;
+    typedef uint16<8,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = uint16x8_t;
+    typedef uint16x8_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector uint16_t;
+    typedef __vector uint16_t native_type;
 #else
-    using native_type = detail::array<uint16_t, 8>;
+    typedef detail::array<uint16_t, 8> native_type;
 #endif
 
-    SIMDPP_INL uint16<8>() = default;
-    SIMDPP_INL uint16<8>(const uint16<8> &) = default;
-    SIMDPP_INL uint16<8> &operator=(const uint16<8> &) = default;
+    SIMDPP_INL uint16<8>() {}
+    // SIMDPP_INL uint16<8>(const uint16<8> &) = default;
+    // SIMDPP_INL uint16<8> &operator=(const uint16<8> &) = default;
 
     template<class E> SIMDPP_INL uint16<8>(const uint16<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint16<8>(const int16<8,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint16<8>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint16<8>>(d.wrapped().eval());
+        *this = bit_cast<uint16<8> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL uint16<8>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint16<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint16<8> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -182,25 +182,25 @@ private:
 /// Class representing possibly optimized mask data for 8x 16-bit integer
 /// vector
 template<>
-class mask_int16<8, void> : public any_int16<8, mask_int16<8,void>> {
+class mask_int16<8, void> : public any_int16<8, mask_int16<8,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int16<8, void>;
-    using expr_type = void;
+    typedef mask_int16<8, void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = uint16x8_t;
+    typedef uint16x8_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector uint16_t;
+    typedef __vector uint16_t native_type;
 #else
-    using native_type = detail::array<bool, 8>;
+    typedef detail::array<bool, 8> native_type;
 #endif
 
-    SIMDPP_INL mask_int16<8>() = default;
-    SIMDPP_INL mask_int16<8>(const mask_int16<8> &) = default;
-    SIMDPP_INL mask_int16<8> &operator=(const mask_int16<8> &) = default;
+    SIMDPP_INL mask_int16<8>() {}
+    // SIMDPP_INL mask_int16<8>(const mask_int16<8> &) = default;
+    // SIMDPP_INL mask_int16<8> &operator=(const mask_int16<8> &) = default;
 
     SIMDPP_INL mask_int16<8>(const native_type& d) : d_(d) {}
 
@@ -218,7 +218,7 @@ public:
     SIMDPP_INL uint16<8> unmask() const
     {
     #if SIMDPP_USE_NULL
-        return detail::null::unmask_mask<uint16<8>>(*this);
+        return detail::null::unmask_mask<uint16<8> >(*this);
     #else
         return uint16<8>(d_);
     #endif

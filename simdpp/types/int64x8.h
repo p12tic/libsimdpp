@@ -16,7 +16,7 @@
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/detail/construct_eval.h>
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -29,30 +29,30 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 4x 64-bit signed integer vector
 */
 template<>
-class int64<8, void> : public any_int64<8, int64<8,void>> {
+class int64<8, void> : public any_int64<8, int64<8,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using element_type = int64_t;
-    using base_vector_type = int64<8,void>;
-    using expr_type = void;
+    typedef int64_t element_type;
+    typedef int64<8,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_AVX512F
-    using native_type = __m512i;
+    typedef __m512i native_type;
 #endif
 
-    SIMDPP_INL int64<8>() = default;
-    SIMDPP_INL int64<8>(const int64<8> &) = default;
-    SIMDPP_INL int64<8> &operator=(const int64<8> &) = default;
+    SIMDPP_INL int64<8>() {}
+    // SIMDPP_INL int64<8>(const int64<8> &) = default;
+    // SIMDPP_INL int64<8> &operator=(const int64<8> &) = default;
 
     template<class E> SIMDPP_INL int64<8>(const int64<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int64<8>(const uint64<8,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit int64<8>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int64<8>>(d.wrapped().eval());
+        *this = bit_cast<int64<8> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL int64<8>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int64<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int64<8> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -93,30 +93,30 @@ private:
 /** Class representing 4x 64-bit unsigned integer vector
 */
 template<>
-class uint64<8, void> : public any_int64<8, uint64<8,void>> {
+class uint64<8, void> : public any_int64<8, uint64<8,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using element_type = uint64_t;
-    using base_vector_type = uint64<8,void>;
-    using expr_type = void;
+    typedef uint64_t element_type;
+    typedef uint64<8,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_AVX512F
-    using native_type = __m512i;
+    typedef __m512i native_type;
 #endif
 
-    SIMDPP_INL uint64<8>() = default;
-    SIMDPP_INL uint64<8>(const uint64<8> &) = default;
-    SIMDPP_INL uint64<8> &operator=(const uint64<8> &) = default;
+    SIMDPP_INL uint64<8>() {}
+    // SIMDPP_INL uint64<8>(const uint64<8> &) = default;
+    // SIMDPP_INL uint64<8> &operator=(const uint64<8> &) = default;
 
     template<class E> SIMDPP_INL uint64<8>(const uint64<8,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint64<8>(const int64<8,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint64<8>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint64<8>>(d.wrapped().eval());
+        *this = bit_cast<uint64<8> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL uint64<8>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint64<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint64<8> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -158,29 +158,29 @@ private:
 /// Class representing possibly optimized mask data for 4x 64-bit integer
 /// vector
 template<>
-class mask_int64<8, void> : public any_int64<8, mask_int64<8,void>> {
+class mask_int64<8, void> : public any_int64<8, mask_int64<8,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int64<8,void>;
-    using expr_type = void;
+    typedef mask_int64<8,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_AVX512F
-    using native_type = __mmask8;
+    typedef __mmask8 native_type;
 #endif
 
-    SIMDPP_INL mask_int64<8>() = default;
-    SIMDPP_INL mask_int64<8>(const mask_int64<8> &) = default;
-    SIMDPP_INL mask_int64<8> &operator=(const mask_int64<8> &) = default;
+    SIMDPP_INL mask_int64<8>() {}
+    // SIMDPP_INL mask_int64<8>(const mask_int64<8> &) = default;
+    // SIMDPP_INL mask_int64<8> &operator=(const mask_int64<8> &) = default;
 
     SIMDPP_INL mask_int64<8>(const native_type& d) : d_(d) {}
 
     template<class E> SIMDPP_INL explicit mask_int64<8>(const mask_float64<8,E>& d)
     {
-        *this = bit_cast<mask_int64<8>>(d.eval());
+        *this = bit_cast<mask_int64<8> >(d.eval());
     }
     template<class E> SIMDPP_INL mask_int64<8>& operator=(const mask_float64<8,E>& d)
     {
-        *this = bit_cast<mask_int64<8>>(d.eval()); return *this;
+        *this = bit_cast<mask_int64<8> >(d.eval()); return *this;
     }
 
     SIMDPP_INL operator native_type() const { return d_; }

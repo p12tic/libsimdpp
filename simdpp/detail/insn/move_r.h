@@ -24,7 +24,7 @@ namespace insn {
 template<unsigned shift> SIMDPP_INL
 uint8x16 i_move16_r(const uint8x16& a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
 
 #if SIMDPP_USE_NULL
     return detail::null::move_n_r<shift>(a);
@@ -43,7 +43,7 @@ uint8x16 i_move16_r(const uint8x16& a)
 template<unsigned shift> SIMDPP_INL
 uint8x32 i_move16_r(const uint8x32& a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     return _mm256_slli_si256(a, shift);
 }
 #endif
@@ -51,7 +51,7 @@ uint8x32 i_move16_r(const uint8x32& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_move16_r(const uint8<N>& a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_move16_r<shift>, a);
 }
 
@@ -71,7 +71,7 @@ uint16<8> i_move8_r(const uint16<8>& a)
 template<unsigned shift> SIMDPP_INL
 uint16<16> i_move8_r(const uint16<16>& a)
 {
-    static_assert(shift <= 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 8, "Selector out of range");
     return _mm256_slli_si256(a, shift*2);
 }
 #endif
@@ -98,7 +98,7 @@ uint32<4> i_move4_r(const uint32<4>& a)
 template<unsigned shift> SIMDPP_INL
 uint32<8> i_move4_r(const uint32<8>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     return _mm256_slli_si256(a, shift*4);
 }
 #endif
@@ -107,7 +107,7 @@ uint32<8> i_move4_r(const uint32<8>& a)
 template<unsigned shift> SIMDPP_INL
 uint32<16> i_move4_r(const uint32<16>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     switch (shift) {
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_epi32(0xeeee, a, _MM_PERM_ENUM(_MM_SHUFFLE(2, 1, 0, 0)));
@@ -140,7 +140,7 @@ uint64<2> i_move2_r(const uint64<2>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<4> i_move2_r(const uint64<4>& a)
 {
-    static_assert(shift <= 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
     return _mm256_slli_si256(a, shift*8);
 }
 #endif
@@ -149,7 +149,7 @@ uint64<4> i_move2_r(const uint64<4>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<8> i_move2_r(const uint64<8>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     return (uint64<8>) i_move4_r<shift*2>(uint32<16>(a));
 }
 #endif
@@ -176,7 +176,7 @@ float32<4> i_move4_r(const float32<4>& a)
 template<unsigned shift> SIMDPP_INL
 float32<8> i_move4_r(const float32<8>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     return (float32<8>) i_move16_r<shift*4>(uint8<32>(a));
 }
 #endif
@@ -185,7 +185,7 @@ float32<8> i_move4_r(const float32<8>& a)
 template<unsigned shift> SIMDPP_INL
 float32<16> i_move4_r(const float32<16>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     switch (shift) {
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_ps(0xeeee, a, a, _MM_SHUFFLE(2, 1, 0, 0));
@@ -218,7 +218,7 @@ float64<2> i_move2_r(const float64<2>& a)
 template<unsigned shift> SIMDPP_INL
 float64<4> i_move2_r(const float64<4>& a)
 {
-    static_assert(shift <= 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
     return (float64<4>) i_move16_r<shift*8>(uint8<32>(a));
 }
 #endif
@@ -227,7 +227,7 @@ float64<4> i_move2_r(const float64<4>& a)
 template<unsigned shift> SIMDPP_INL
 float64<8> i_move2_r(const float64<8>& a)
 {
-    static_assert(shift <= 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
     switch (shift) {
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_pd(0xaa, a, a, SIMDPP_SHUFFLE_MASK_2x2_4(0, 0));

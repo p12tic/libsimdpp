@@ -41,7 +41,7 @@ template<unsigned s> SIMDPP_INL
 uint8x16 i_splat16(const uint8x16& ca)
 {
     uint8<16> a = ca;
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_AVX2
@@ -80,7 +80,7 @@ uint8x16 i_splat16(const uint8x16& ca)
 template<unsigned s> SIMDPP_INL
 uint8x32 i_splat16(const uint8x32& a)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
     uint16x16 b; b = s < 8 ? zip16_lo(a, a) : zip16_hi(a, a);
     return (uint8x32) i_splat8<s%8>(b);
 }
@@ -89,7 +89,7 @@ uint8x32 i_splat16(const uint8x32& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint8<N> i_splat16(const uint8<N>& a)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_splat16<s>, a);
 }
 
@@ -98,7 +98,7 @@ uint8<N> i_splat16(const uint8<N>& a)
 template<unsigned s> SIMDPP_INL
 uint16x8 i_splat8(const uint16x8& a)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_AVX2
@@ -108,7 +108,7 @@ uint16x8 i_splat8(const uint16x8& a)
     uint16x8 mask = make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
     return permute_bytes16(a, mask);
 #elif SIMDPP_USE_SSE2
-    // s2 is needed because static_assert fires in branch we don't use
+    // s2 is needed because SIMDPP_STATIC_ASSERT fires in branch we don't use
     uint64x2 b;
     if (s < 4) {
         const unsigned s2 = s < 4 ? s : s-4;
@@ -136,7 +136,7 @@ uint16x8 i_splat8(const uint16x8& a)
 template<unsigned s> SIMDPP_INL
 uint16x16 i_splat8(const uint16x16& a)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     if (s < 4) {
         const unsigned q = (s < 4) ? s : 0;
         uint64x4 h = _mm256_shufflelo_epi16(a, q << 6 | q << 4 | q << 2 | q);
@@ -154,7 +154,7 @@ uint16x16 i_splat8(const uint16x16& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint16<N> i_splat8(const uint16<N>& a)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, i_splat8<s>, a);
 }
 
@@ -163,7 +163,7 @@ uint16<N> i_splat8(const uint16<N>& a)
 template<unsigned s> SIMDPP_INL
 uint32x4 i_splat4(const uint32x4& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
@@ -187,7 +187,7 @@ uint32x4 i_splat4(const uint32x4& a)
 template<unsigned s> SIMDPP_INL
 uint32x8 i_splat4(const uint32x8& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
 }
 #endif\
@@ -196,7 +196,7 @@ uint32x8 i_splat4(const uint32x8& a)
 template<unsigned s> SIMDPP_INL
 uint32<16> i_splat4(const uint32<16>& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
 }
 #endif
@@ -204,7 +204,7 @@ uint32<16> i_splat4(const uint32<16>& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint32<N> i_splat4(const uint32<N>& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_splat4<s>, a);
 }
 
@@ -213,7 +213,7 @@ uint32<N> i_splat4(const uint32<N>& a)
 template<unsigned s> SIMDPP_INL
 uint64x2 i_splat2(const uint64x2& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
@@ -240,7 +240,7 @@ uint64x2 i_splat2(const uint64x2& a)
 template<unsigned s> SIMDPP_INL
 uint64x4 i_splat2(const uint64x4& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
     return permute2<s,s>(a);
 }
 #endif
@@ -249,7 +249,7 @@ uint64x4 i_splat2(const uint64x4& a)
 template<unsigned s> SIMDPP_INL
 uint64<8> i_splat2(const uint64<8>& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
     return permute2<s,s>(a);
 }
 #endif
@@ -257,7 +257,7 @@ uint64<8> i_splat2(const uint64<8>& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint64<N> i_splat2(const uint64<N>& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_splat2<s>, a);
 }
 
@@ -266,7 +266,7 @@ uint64<N> i_splat2(const uint64<N>& a)
 template<unsigned s> SIMDPP_INL
 float32x4 i_splat4(const float32x4& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
@@ -290,7 +290,7 @@ float32x4 i_splat4(const float32x4& a)
 template<unsigned s> SIMDPP_INL
 float32x8 i_splat4(const float32x8& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
 }
 #endif
@@ -299,7 +299,7 @@ float32x8 i_splat4(const float32x8& a)
 template<unsigned s> SIMDPP_INL
 float32<16> i_splat4(const float32<16>& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
 }
 #endif
@@ -307,7 +307,7 @@ float32<16> i_splat4(const float32<16>& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 float32<N> i_splat4(const float32<N>& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_splat4<s>, a);
 }
 
@@ -316,7 +316,7 @@ float32<N> i_splat4(const float32<N>& a)
 template<unsigned s> SIMDPP_INL
 float64x2 i_splat2(const float64x2& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
@@ -328,7 +328,7 @@ float64x2 i_splat2(const float64x2& a)
 template<unsigned s> SIMDPP_INL
 float64x4 i_splat2(const float64x4& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
     return permute2<s,s>(a);
 }
 #endif
@@ -337,7 +337,7 @@ float64x4 i_splat2(const float64x4& a)
 template<unsigned s> SIMDPP_INL
 float64<8> i_splat2(const float64<8>& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
     return permute2<s,s>(a);
 }
 #endif
@@ -345,7 +345,7 @@ float64<8> i_splat2(const float64<8>& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 float64<N> i_splat2(const float64<N>& a)
 {
-    static_assert(s < 2, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 2, "Access out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_splat2<s>, a);
 }
 

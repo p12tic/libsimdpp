@@ -9,7 +9,7 @@
 #define LIBSIMDPP_DISPATCH_GET_ARCH_RAW_CPUID_H
 
 #include <simdpp/dispatch/arch.h>
-#include <cstdint>
+#include <stdint.h>
 
 #if __GNUC__
 #include <cpuid.h>

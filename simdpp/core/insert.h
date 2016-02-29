@@ -45,7 +45,7 @@ template<unsigned id> SIMDPP_INL
 uint8x16 insert(const uint8x16& ca, uint8_t x)
 {
     uint8<16> a = ca;
-    static_assert(id < 16, "Position out of range");
+    SIMDPP_STATIC_ASSERT(id < 16, "Position out of range");
 #if SIMDPP_USE_NULL
     a.el(id) = x;
     return a;

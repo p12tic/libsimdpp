@@ -21,7 +21,7 @@
 #include <simdpp/core/f_add.h>
 #include <simdpp/core/make_float.h>
 #include <simdpp/core/make_uint.h>
-
+#include <simdpp/detail/cxx11_emul.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -34,7 +34,7 @@ SIMDPP_INL float32x4 i_trunc(const float32x4& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
     for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = std::trunc(a.el(i));
+        r.el(i) = detail::cxx11::trunc(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
@@ -86,7 +86,7 @@ SIMDPP_INL float64x2 i_trunc(const float64x2& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     float64x2 r;
     for (unsigned i = 0; i < r.length; ++i) {
-        r.el(i) = std::trunc(a.el(i));
+        r.el(i) = detail::cxx11::trunc(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1

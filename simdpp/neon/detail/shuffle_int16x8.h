@@ -11,7 +11,7 @@
 
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/permute_bytes16.h>
-#include <type_traits>
+#include <simdpp/types/traits.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -27,13 +27,13 @@ namespace shuffle_int16x8 {
 
     Note: the compiler should optimize all masks into one VMOV #imm instruction
 */
-
-using _0 = std::integral_constant<unsigned, 0>;
-using _1 = std::integral_constant<unsigned, 1>;
-using _2 = std::integral_constant<unsigned, 2>;
-using _3 = std::integral_constant<unsigned, 3>;
-using T = uint16x8;    // full vector
-using H = uint16x4_t;       // half vector
+using namespace simdpp::SIMDPP_ARCH_NAMESPACE::detail;
+typedef integral_constant<unsigned, 0> _0;
+typedef integral_constant<unsigned, 1> _1;
+typedef integral_constant<unsigned, 2> _2;
+typedef integral_constant<unsigned, 3> _3;
+typedef uint16x8 T;    // full vector
+typedef uint16x4_t H;       // half vector
 
 /// Cost: 2
 template<unsigned n> SIMDPP_INL
@@ -464,10 +464,10 @@ SIMDPP_INL T perm4(_3,_3,_3,_2, T a) { return sel<1,1,1,0>(swap1<2,3>(a), bcast<
 SIMDPP_INL T perm4(_3,_3,_3,_3, T a) { return bcast<3>(a); }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
-T perm4(std::integral_constant<unsigned, s0>,
-        std::integral_constant<unsigned, s1>,
-        std::integral_constant<unsigned, s2>,
-        std::integral_constant<unsigned, s3>, T a)
+T perm4(integral_constant<unsigned, s0>,
+        integral_constant<unsigned, s1>,
+        integral_constant<unsigned, s2>,
+        integral_constant<unsigned, s3>, T a)
 {
     return fallback<s0,s1,s2,s3>(a);
 }
@@ -475,10 +475,10 @@ T perm4(std::integral_constant<unsigned, s0>,
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 T permute4(T a)
 {
-    return perm4(std::integral_constant<unsigned, s0>{},
-                 std::integral_constant<unsigned, s1>{},
-                 std::integral_constant<unsigned, s2>{},
-                 std::integral_constant<unsigned, s3>{}, a);
+    return perm4(integral_constant<unsigned, s0>{},
+                 integral_constant<unsigned, s1>{},
+                 integral_constant<unsigned, s2>{},
+                 integral_constant<unsigned, s3>{}, a);
 }
 
 } // namespace shuffle_int16x8

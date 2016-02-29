@@ -29,33 +29,33 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float64x2 vector
 template<>
-class float64<2, void> : public any_float64<2, float64<2,void>> {
+class float64<2, void> : public any_float64<2, float64<2,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
-    using element_type = double;
-    using base_vector_type = float64<2,void>;
-    using expr_type = void;
+    typedef double element_type;
+    typedef float64<2,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128d;
+    typedef __m128d native_type;
 #elif SIMDPP_USE_NEON64
-    using native_type = float64x2_t;
+    typedef float64x2_t native_type;
 #else
-    using native_type = detail::array<double, 2>;
+    typedef detail::array<double, 2> native_type;
 #endif
 
-    SIMDPP_INL float64<2>() = default;
-    SIMDPP_INL float64<2>(const float64<2> &) = default;
-    SIMDPP_INL float64<2> &operator=(const float64<2> &) = default;
+    SIMDPP_INL float64<2>() {}
+    // SIMDPP_INL float64<2>(const float64<2> &) = default;
+    // SIMDPP_INL float64<2> &operator=(const float64<2> &) = default;
 
     template<class E> SIMDPP_INL float64<2>(const float64<2,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float64<2>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<float64<2>>(d.wrapped().eval());
+        *this = bit_cast<float64<2> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL float64<2>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<float64<2>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<float64<2> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -115,23 +115,23 @@ private:
 /// Class representing possibly optimized mask data for 2x 64-bit floating point
 /// vector
 template<>
-class mask_float64<2, void> : public any_float64<2, mask_float64<2,void>> {
+class mask_float64<2, void> : public any_float64<2, mask_float64<2,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using base_vector_type = mask_float64<2,void>;
-    using expr_type = void;
+    typedef mask_float64<2,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128d;
+    typedef __m128d native_type;
 #elif SIMDPP_USE_NEON64
-    using native_type = float64x2_t;
+    typedef float64x2_t native_type;
 #else // NULL, NEON 32bit, ALTIVEC
-    using native_type = detail::array<bool, 2>;
+    typedef detail::array<bool, 2> native_type;
 #endif
 
-    SIMDPP_INL mask_float64<2>() = default;
-    SIMDPP_INL mask_float64<2>(const mask_float64<2> &) = default;
-    SIMDPP_INL mask_float64<2> &operator=(const mask_float64<2> &) = default;
+    SIMDPP_INL mask_float64<2>() {}
+    // SIMDPP_INL mask_float64<2>(const mask_float64<2> &) = default;
+    // SIMDPP_INL mask_float64<2> &operator=(const mask_float64<2> &) = default;
 
     SIMDPP_INL mask_float64<2>(const native_type& d) : d_(d) {}
 
@@ -141,11 +141,11 @@ public:
 
     template<class E> SIMDPP_INL explicit mask_float64<2>(const mask_int64<2,E>& d)
     {
-        *this = bit_cast<mask_float64<2>>(d.eval());
+        *this = bit_cast<mask_float64<2> >(d.eval());
     }
     template<class E> SIMDPP_INL mask_float64<2>& operator=(const mask_int64<2,E>& d)
     {
-        *this = bit_cast<mask_float64<2>>(d.eval()); return *this;
+        *this = bit_cast<mask_float64<2> >(d.eval()); return *this;
     }
 
     SIMDPP_INL operator native_type() const { return d_; }
@@ -154,7 +154,7 @@ public:
     SIMDPP_INL float64<2> unmask() const
     {
     #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-        return detail::null::unmask_mask<float64<2>>(*this);
+        return detail::null::unmask_mask<float64<2> >(*this);
     #else
         return float64<2>(d_);
     #endif

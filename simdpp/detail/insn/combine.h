@@ -20,7 +20,7 @@ namespace detail {
 namespace insn {
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 uint8<32> i_combine(const uint8<16>& a, const uint8<16>& b)
 {
     uint8<32> r;
@@ -33,7 +33,7 @@ uint8<32> i_combine(const uint8<16>& a, const uint8<16>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 uint16<16> i_combine(const uint16<8>& a, const uint16<8>& b)
 {
     uint16<16> r;
@@ -46,7 +46,7 @@ uint16<16> i_combine(const uint16<8>& a, const uint16<8>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 uint32<8> i_combine(const uint32<4>& a, const uint32<4>& b)
 {
     uint32<8> r;
@@ -57,7 +57,7 @@ uint32<8> i_combine(const uint32<4>& a, const uint32<4>& b)
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 uint32<16> i_combine(const uint32<8>& a, const uint32<8>& b)
 {
     uint32<16> r;
@@ -71,7 +71,7 @@ uint32<16> i_combine(const uint32<8>& a, const uint32<8>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 uint64<4> i_combine(const uint64<2>& a, const uint64<2>& b)
 {
     uint64<4> r;
@@ -82,7 +82,7 @@ uint64<4> i_combine(const uint64<2>& a, const uint64<2>& b)
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 uint64<8> i_combine(const uint64<4>& a, const uint64<4>& b)
 {
     uint64<8> r;
@@ -95,7 +95,7 @@ uint64<8> i_combine(const uint64<4>& a, const uint64<4>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 float32<8> i_combine(const float32<4>& a, const float32<4> b)
 {
     float32<8> r;
@@ -106,7 +106,7 @@ float32<8> i_combine(const float32<4>& a, const float32<4> b)
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 float32<16> i_combine(const float32<8>& a, const float32<8>& b)
 {
     float64<8> r;
@@ -120,7 +120,7 @@ float32<16> i_combine(const float32<8>& a, const float32<8>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 float64<4> i_combine(const float64<2>& a, const float64<2>& b)
 {
     float64<4> r;
@@ -131,7 +131,7 @@ float64<4> i_combine(const float64<2>& a, const float64<2>& b)
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class V> SIMDPP_INL
 float64<8> i_combine(const float64<4>& a, const float64<4>& b)
 {
     float64<8> r;

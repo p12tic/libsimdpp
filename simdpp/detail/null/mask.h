@@ -24,7 +24,7 @@ namespace null {
 template<class V, class M> SIMDPP_INL
 V unmask_mask(const M& m)
 {
-    static_assert(V::length == M::length && V::size_tag == M::size_tag,
+    SIMDPP_STATIC_ASSERT(V::length == M::length && V::size_tag == M::size_tag,
                   "Can't convert mask to different type");
     V r;
     for (unsigned i = 0; i < V::vec_length; ++i) {

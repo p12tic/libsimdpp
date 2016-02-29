@@ -41,14 +41,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
-int8<N, int8<N>> operator<<(const int8<N,E>& a, unsigned count)
+int8<N, int8<N> > operator<<(const int8<N,E>& a, unsigned count)
 {
     uint8<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint8<N, uint8<N>> operator<<(const uint8<N,E>& a, unsigned count)
+uint8<N, uint8<N> > operator<<(const uint8<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
@@ -73,14 +73,14 @@ uint8<N, uint8<N>> operator<<(const uint8<N,E>& a, unsigned count)
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
-int16<N, int16<N>> operator<<(const int16<N,E>& a, unsigned count)
+int16<N, int16<N> > operator<<(const int16<N,E>& a, unsigned count)
 {
     uint16<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint16<N, uint16<N>> operator<<(const uint16<N,E>& a, unsigned count)
+uint16<N, uint16<N> > operator<<(const uint16<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
@@ -105,14 +105,14 @@ uint16<N, uint16<N>> operator<<(const uint16<N,E>& a, unsigned count)
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
-int32<N, int32<N>> operator<<(const int32<N,E>& a, unsigned count)
+int32<N, int32<N> > operator<<(const int32<N,E>& a, unsigned count)
 {
     uint32<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint32<N, uint32<N>> operator<<(const uint32<N,E>& a, unsigned count)
+uint32<N, uint32<N> > operator<<(const uint32<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
@@ -137,14 +137,14 @@ uint32<N, uint32<N>> operator<<(const uint32<N,E>& a, unsigned count)
     @unimp{ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-int64<N, int64<N>> operator<<(const int64<N,E>& a, unsigned count)
+int64<N, int64<N> > operator<<(const int64<N,E>& a, unsigned count)
 {
     uint64<N> qa = a.eval();
     return detail::insn::i_shift_l(qa, count);
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint64<N, uint64<N>> operator<<(const uint64<N,E>& a, unsigned count)
+uint64<N, uint64<N> > operator<<(const uint64<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }

@@ -22,7 +22,7 @@ namespace simdpp {
     @{
 */
 
-using GetArchCb = Arch(*)();
+typedef Arch(*GetArchCb)();
 
 /** @def SIMDPP_USER_ARCH_INFO
     The user must define this macro if he wants to use the dispatcher
@@ -51,7 +51,7 @@ using GetArchCb = Arch(*)();
 
 namespace detail {
 
-using VoidFunPtr = void (*)();
+typedef void (*VoidFunPtr)();
 
 struct FnVersion {
     /*  Identifies the instruction support that is needed for this version to
@@ -73,21 +73,25 @@ struct FnVersion {
 
     /*  Optional string identifier identifying the architecture. */
     const char* arch_name;
+
+    FnVersion() : needed_arch(Arch::NONE_NULL), fun_ptr(NULL), arch_name(NULL) {}
 };
+
+inline bool cmp_fnversion(const FnVersion& lhs, const FnVersion& rhs)
+{
+    return lhs.needed_arch > rhs.needed_arch;
+}
 
 inline FnVersion select_version_any(FnVersion* versions, unsigned size,
                                     const GetArchCb& get_info_cb)
 {
     // No need to try to be very efficient here.
     Arch arch = get_info_cb();
-    std::sort(versions, versions + size,
-              [](const FnVersion& lhs, const FnVersion& rhs) {
-                  return lhs.needed_arch > rhs.needed_arch;
-              });
+    std::sort(versions, versions + size, cmp_fnversion);
 
     unsigned i;
     for (i = 0; i < size; ++i) {
-        if (versions[i].fun_ptr == nullptr)
+        if (versions[i].fun_ptr == NULL)
             continue;
         if (test_arch_subset(arch, versions[i].needed_arch)) {
             break;

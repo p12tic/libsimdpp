@@ -46,16 +46,16 @@ struct SelVectors {
         using namespace simdpp;
 
         for (unsigned i = 0; i < N; ++i) {
-            u8[i] =  make_sel_vector<uint8<BE>>(i);
-            u16[i] = make_sel_vector<uint16<BE/2>>(i);
-            u32[i] = make_sel_vector<uint32<BE/4>>(i);
-            u64[i] = make_sel_vector<uint64<BE/8>>(i);
-            i8[i] =  make_sel_vector<uint8<BE>>(i);
-            i16[i] = make_sel_vector<uint16<BE/2>>(i);
-            i32[i] = make_sel_vector<uint32<BE/4>>(i);
-            i64[i] = make_sel_vector<uint64<BE/8>>(i);
-            f32[i] = make_sel_vector<float32<BE/4>>(i);
-            f64[i] = make_sel_vector<float64<BE/8>>(i);
+            u8[i] =  make_sel_vector<uint8<BE> >(i);
+            u16[i] = make_sel_vector<uint16<BE/2> >(i);
+            u32[i] = make_sel_vector<uint32<BE/4> >(i);
+            u64[i] = make_sel_vector<uint64<BE/8> >(i);
+            i8[i] =  make_sel_vector<uint8<BE> >(i);
+            i16[i] = make_sel_vector<uint16<BE/2> >(i);
+            i32[i] = make_sel_vector<uint32<BE/4> >(i);
+            i64[i] = make_sel_vector<uint64<BE/8> >(i);
+            f32[i] = make_sel_vector<float32<BE/4> >(i);
+            f64[i] = make_sel_vector<float64<BE/8> >(i);
         }
     }
 };

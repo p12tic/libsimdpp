@@ -42,12 +42,12 @@ struct Masks {
         using namespace simdpp;
 
         for (unsigned i = 0; i < N; ++i) {
-            u8[i] =  make_mask<mask_int8<BE>, uint8<BE>>(i);
-            u16[i] = make_mask<mask_int16<BE/2>, uint16<BE/2>>(i);
-            u32[i] = make_mask<mask_int32<BE/4>, uint32<BE/4>>(i);
-            u64[i] = make_mask<mask_int64<BE/8>, uint64<BE/8>>(i);
-            f32[i] = make_mask<mask_float32<BE/4>, float32<BE/4>>(i);
-            f64[i] = make_mask<mask_float64<BE/8>, float64<BE/8>>(i);
+            u8[i] =  make_mask<mask_int8<BE>, uint8<BE> >(i);
+            u16[i] = make_mask<mask_int16<BE/2>, uint16<BE/2> >(i);
+            u32[i] = make_mask<mask_int32<BE/4>, uint32<BE/4> >(i);
+            u64[i] = make_mask<mask_int64<BE/8>, uint64<BE/8> >(i);
+            f32[i] = make_mask<mask_float32<BE/4>, float32<BE/4> >(i);
+            f64[i] = make_mask<mask_float64<BE/8>, float64<BE/8> >(i);
         }
     }
 };

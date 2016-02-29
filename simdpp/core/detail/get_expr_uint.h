@@ -35,11 +35,11 @@ template<template<class, class> class E, class V1, class V2>
 class get_expr_uint {
 
 #if SIMDPP_EXPR_DEBUG
-    static_assert(V1::size_tag == V2::size_tag, "Mismatching vector sizes");
-    static_assert(V1::type_tag == SIMDPP_TAG_MASK_INT ||
+    SIMDPP_STATIC_ASSERT(V1::size_tag == V2::size_tag, "Mismatching vector sizes");
+    SIMDPP_STATIC_ASSERT(V1::type_tag == SIMDPP_TAG_MASK_INT ||
                   V1::type_tag == SIMDPP_TAG_UINT ||
                   V1::type_tag == SIMDPP_TAG_INT, "Incorrect type parameter");
-    static_assert(V2::type_tag == SIMDPP_TAG_MASK_INT ||
+    SIMDPP_STATIC_ASSERT(V2::type_tag == SIMDPP_TAG_MASK_INT ||
                   V2::type_tag == SIMDPP_TAG_UINT ||
                   V2::type_tag == SIMDPP_TAG_INT, "Incorrect type parameter");
 #endif
@@ -57,13 +57,15 @@ class get_expr_uint {
     static const unsigned v2_type_tag = SIMDPP_TAG_UINT;
 
 public:
-    using v1_type = typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes,
-                                         typename wrap_vector_expr<V1>::type>::type;
-    using v2_type = typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes,
-                                         typename wrap_vector_expr<V2>::type>::type;
+    typedef typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes,
+                                         typename wrap_vector_expr<V1>::type>::type v1_type;
+    typedef typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes,
+                                         typename wrap_vector_expr<V2>::type>::type v2_type;
 
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                      E<v1_type, v2_type>>::type;
+    typedef E<v1_type, v2_type> expr_type;
+
+    typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
+                                 E<v1_type, v2_type> >::type type;
 };
 
 } // namespace detail

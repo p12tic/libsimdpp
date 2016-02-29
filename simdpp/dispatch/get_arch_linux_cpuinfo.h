@@ -72,13 +72,14 @@ inline Arch get_arch_linux_cpuinfo()
         if (line.length() < ident.length()) {
             continue;
         }
-        auto r = std::mismatch(ident.begin(), ident.end(), line.begin());
+        std::pair<std::string::iterator,
+                  std::string::iterator> r = std::mismatch(ident.begin(), ident.end(), line.begin());
         if (r.first != ident.end()) {
             continue;
         }
 
         // Get the items
-        std::istringstream sin(std::string(r.second, line.end()));
+        std::istringstream sin(std::string(&*r.second, &*line.end()));
         std::vector<std::string> items;
 
         std::copy(std::istream_iterator<std::string>(sin),
@@ -86,8 +87,9 @@ inline Arch get_arch_linux_cpuinfo()
                   std::back_inserter(items));
 
         // Match items to known features
-        for (auto& item : items) {
-            auto it = features.find(item);
+        for (unsigned i = 0; i < items.size(); ++i) {
+            const std::string& item = items[i];
+            std::map<std::string, Arch>::const_iterator it = features.find(item);
             if (it == features.end()) {
                 continue;
             }

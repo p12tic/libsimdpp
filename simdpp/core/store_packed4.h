@@ -39,10 +39,10 @@ void store_packed4(void* p,
                    const any_vec<N,V1>& a, const any_vec<N,V2>& b,
                    const any_vec<N,V3>& c, const any_vec<N,V4>& d)
 {
-    static_assert(!is_mask<V1>::value && !is_mask<V2>::value &&
+    SIMDPP_STATIC_ASSERT(!is_mask<V1>::value && !is_mask<V2>::value &&
                   !is_mask<V3>::value && !is_mask<V4>::value,
                   "Mask types can not be stored"); // FIXME
-    static_assert(V1::size_tag == V2::size_tag &&
+    SIMDPP_STATIC_ASSERT(V1::size_tag == V2::size_tag &&
                   V1::size_tag == V3::size_tag &&
                   V1::size_tag == V4::size_tag,
                   "Vector elements must have the same size");

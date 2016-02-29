@@ -57,7 +57,7 @@ int main()
 ~~~.mk
 #Makefile
 
-CXXFLAGS="-std=c++11"
+CXXFLAGS=""
 
 test: main.o test_sse2.o test_sse3.o test_sse4_1.o test_null.o
     g++ $^ -o test

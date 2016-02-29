@@ -35,9 +35,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class V1, class V2> SIMDPP_INL
 void store_packed2(void* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
-    static_assert(!is_mask<V1>::value && !is_mask<V2>::value,
+    SIMDPP_STATIC_ASSERT(!is_mask<V1>::value && !is_mask<V2>::value,
                   "Mask types can not be stored"); // FIXME
-    static_assert(V1::size_tag == V2::size_tag,
+    SIMDPP_STATIC_ASSERT(V1::size_tag == V2::size_tag,
                   "Vector elements must have the same size");
     detail::insn::i_store_packed2(reinterpret_cast<char*>(p),
                                   a.wrapped().eval(), b.wrapped().eval());

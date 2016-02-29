@@ -9,8 +9,6 @@
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT64x2_H
 #if SIMDPP_USE_NEON
 
-#include <type_traits>
-
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace neon {
@@ -23,8 +21,8 @@ namespace shuffle_int64x2 {
     The code below implements generalized permutations of elements within
     int64x2 vectors using half-vector move instructions available on NEON.
 */
-using T = uint64x2;    // full vector
-using H = uint64x1_t;       // half vector
+typedef uint64x2 T;    // full vector
+typedef uint64x1_t H;       // half vector
 
 
 /// Returns the lower/higher part of a vector. Cost: 0
@@ -86,7 +84,7 @@ T shuffle2x2(const T& a, const T& b)
 
 #else // SIMDPP_USE_NEON64
 
-using T = uint64x2;    // full vector
+typedef uint64x2 T;    // full vector
 
 // Moves the high half of b onto high half of a
 SIMDPP_INL T move_hi(const T& a, const T& b)

@@ -8,6 +8,7 @@
 #include "../utils/test_helpers.h"
 #include "../utils/test_results.h"
 #include <simdpp/simd.h>
+#include <limits>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -18,8 +19,8 @@ void test_math_fp_n(TestSuite& tc)
     // TODO sqrt_e sqrt_rh rcp_e rcp_rh
     using namespace simdpp;
 
-    using float32_n = float32<B/4>;
-    using float64_n = float64<B/8>;
+    typedef float32<B/4> float32_n;
+    typedef float64<B/8> float64_n;
 
     float nanf = std::numeric_limits<float>::quiet_NaN();
     double nan = std::numeric_limits<double>::quiet_NaN();

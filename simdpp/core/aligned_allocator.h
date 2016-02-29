@@ -10,7 +10,7 @@
 
 #include <memory>
 #include <cstddef>
-#include <cstdint>
+#include <stdint.h>
 #include <stdexcept>
 
 namespace simdpp {
@@ -23,30 +23,28 @@ template<class T, std::size_t A>
 class aligned_allocator {
 private:
 
-    static_assert(!(A & (A - 1)), "A is not a power of two");
+    SIMDPP_STATIC_ASSERT(!(A & (A - 1)), "A is not a power of two");
 
 public:
-    using value_type = T;
-    using pointer = T*;
-    using const_pointer = const T*;
-    using reference = T&;
-    using const_reference = const T&;
-    using size_type = std::size_t;
-    using difference_type = std::ptrdiff_t;
+    typedef T value_type;
+    typedef T* pointer;
+    typedef const T* const_pointer;
+    typedef T& reference;
+    typedef const T& const_reference;
+    typedef std::size_t size_type;
+    typedef std::ptrdiff_t difference_type;
 
-    aligned_allocator() = default;
-    aligned_allocator(const aligned_allocator&) = default;
+    aligned_allocator() {}
+    aligned_allocator(const aligned_allocator&) {}
 
     template<class U>
     aligned_allocator(const aligned_allocator<U,A>&) {}
 
-    ~aligned_allocator() = default;
-
-    aligned_allocator& operator=(const aligned_allocator&) = delete;
+    ~aligned_allocator() {}
 
     template<class U>
     struct rebind {
-        using other = aligned_allocator<U,A>;
+        typedef aligned_allocator<U,A> other;
     };
 
     T* address(T& x) const
@@ -77,7 +75,7 @@ public:
     T* allocate(std::size_t n) const
     {
         if (n == 0) {
-            return nullptr;
+            return NULL;
         }
 
         if (n > max_size()) {
@@ -94,7 +92,7 @@ public:
         std::size_t al = A < 2*sizeof(void*) ? 2*sizeof(void*) : A;
 
         char* pv = new char[n*sizeof(T) + al];
-        std::uintptr_t upv = reinterpret_cast<std::uintptr_t>(pv);
+        uintptr_t upv = reinterpret_cast<uintptr_t>(pv);
         upv = (upv + al) & ~(al - 1);
         char** aligned_pv = reinterpret_cast<char**>(upv);
 
@@ -119,6 +117,8 @@ public:
         (void) hint;
         return allocate(n);
     }
+private:
+    aligned_allocator& operator=(const aligned_allocator&);
 };
 
 } // namespace SIMDPP_ARCH_NAMESPACE

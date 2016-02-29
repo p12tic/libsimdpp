@@ -48,6 +48,13 @@
 
 #endif
 
+#if ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))) || \
+    (defined(__clang__) && (__clang_major__ == 3) && (__clang_minor__ >= 6))
+#define SIMDPP_ATTRIBUTE_UNUSED __attribute__((unused))
+#else
+#define SIMDPP_ATTRIBUTE_UNUSED
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {

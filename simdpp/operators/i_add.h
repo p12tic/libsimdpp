@@ -40,9 +40,9 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
         operator+(const any_int8<N,V1>& a,
             const any_int8<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    typedef typename detail::get_expr_uint<expr_add, V1, V2> expr;
+    return expr::expr_type(detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+                           detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int8, uint8)
@@ -63,9 +63,9 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
         operator+(const any_int16<N,V1>& a,
             const any_int16<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    typedef typename detail::get_expr_uint<expr_add, V1, V2> expr;
+    return typename expr::expr_type(detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+                                    detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int16, uint16)
@@ -86,9 +86,9 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
         operator+(const any_int32<N,V1>& a,
             const any_int32<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    typedef typename detail::get_expr_uint<expr_add, V1, V2> expr;
+    return typename expr::expr_type(detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+                                    detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int32, uint32)
@@ -113,9 +113,9 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
         operator+(const any_int64<N,V1>& a,
             const any_int64<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    typedef typename detail::get_expr_uint<expr_add, V1, V2> expr;
+    return typename expr::expr_type(detail::cast_expr<typename expr::v1_type>(a.wrapped()),
+                                    detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
 SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int64, uint64)

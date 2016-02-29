@@ -63,7 +63,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)())                            \
                                                                               \
 void NAME()                                                                   \
 {                                                                             \
-    using FunPtr = void(*)();                                                 \
+    typedef void(*FunPtr)();                                                  \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -94,7 +94,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1))                          \
                                                                               \
 void NAME(T1 a1)                                                              \
 {                                                                             \
-    using FunPtr = void(*)(T1);                                               \
+    typedef void(*FunPtr)(T1);                                                \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -125,7 +125,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2))                       \
                                                                               \
 void NAME(T1 a1,T2 a2)                                                        \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2);                                            \
+    typedef void(*FunPtr)(T1,T2);                                             \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -156,7 +156,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2,T3))                    \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3)                                                  \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3);                                         \
+    typedef void(*FunPtr)(T1,T2,T3);                                          \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -187,7 +187,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2,T3,T4))                 \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4)                                            \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4);                                      \
+    typedef void(*FunPtr)(T1,T2,T3,T4);                                       \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -218,7 +218,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2,T3,T4,T5))              \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5)                                      \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5);                                   \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5);                                    \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -249,7 +249,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2,T3,T4,T5,T6))           \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6)                                \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6);                                \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6);                                 \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -280,7 +280,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2,T3,T4,T5,T6,T7))        \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7)                          \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6,T7);                             \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6,T7);                              \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -311,7 +311,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2,T3,T4,T5,T6,T7,T8))     \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8)                    \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6,T7,T8);                          \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8);                           \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -342,7 +342,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, void(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9))  \
                                                                               \
 void NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8,T9 a9)              \
 {                                                                             \
-    using FunPtr = void(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                       \
+    typedef void(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                        \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -373,7 +373,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)())                               \
                                                                               \
 R NAME()                                                                      \
 {                                                                             \
-    using FunPtr = R(*)();                                                    \
+    typedef R(*FunPtr)();                                                     \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -404,7 +404,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1))                             \
                                                                               \
 R NAME(T1 a1)                                                                 \
 {                                                                             \
-    using FunPtr = R(*)(T1);                                                  \
+    typedef R(*FunPtr)(T1);                                                   \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -435,7 +435,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2))                          \
                                                                               \
 R NAME(T1 a1,T2 a2)                                                           \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2);                                               \
+    typedef R(*FunPtr)(T1,T2);                                                \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -466,7 +466,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2,T3))                       \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3)                                                     \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3);                                            \
+    typedef R(*FunPtr)(T1,T2,T3);                                             \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -497,7 +497,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2,T3,T4))                    \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4)                                               \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4);                                         \
+    typedef R(*FunPtr)(T1,T2,T3,T4);                                          \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -528,7 +528,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2,T3,T4,T5))                 \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5)                                         \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5);                                      \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5);                                       \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -559,7 +559,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2,T3,T4,T5,T6))              \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6)                                   \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6);                                   \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6);                                    \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -590,7 +590,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2,T3,T4,T5,T6,T7))           \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7)                             \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6,T7);                                \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6,T7);                                 \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -621,7 +621,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2,T3,T4,T5,T6,T7,T8))        \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8)                       \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6,T7,T8);                             \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8);                              \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \
@@ -652,7 +652,7 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, R(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9))     \
                                                                               \
 R NAME(T1 a1,T2 a2,T3 a3,T4 a4,T5 a5,T6 a6,T7 a7,T8 a8,T9 a9)                 \
 {                                                                             \
-    using FunPtr = R(*)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                          \
+    typedef R(*FunPtr)(T1,T2,T3,T4,T5,T6,T7,T8,T9);                           \
     static FunPtr selected = NULL;                                            \
     if (selected == NULL) {                                                   \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; \

@@ -50,22 +50,22 @@ void test_permute_generic_n(TestSuite& tc)
     // There are no permute instructions for int8<N>
 
     // int16
-    TemplateTestHelper<Test_permute2, uint16<B/2>>::run(tc, v.u16[0]);
-    TemplateTestHelper<Test_permute4, uint16<B/2>>::run(tc, v.u16[0]);
+    TemplateTestHelper<Test_permute2, uint16<B/2> >::run(tc, v.u16[0]);
+    TemplateTestHelper<Test_permute4, uint16<B/2> >::run(tc, v.u16[0]);
 
     // int32
-    TemplateTestHelper<Test_permute2, uint32<B/4>>::run(tc, v.u32[0]);
-    TemplateTestHelper<Test_permute4, uint32<B/4>>::run(tc, v.u32[0]);
+    TemplateTestHelper<Test_permute2, uint32<B/4> >::run(tc, v.u32[0]);
+    TemplateTestHelper<Test_permute4, uint32<B/4> >::run(tc, v.u32[0]);
 
     // int64
-    TemplateTestHelper<Test_permute2, uint64<B/8>>::run(tc, v.u64[0]);
+    TemplateTestHelper<Test_permute2, uint64<B/8> >::run(tc, v.u64[0]);
 
     // float32
-    TemplateTestHelper<Test_permute2, float32<B/4>>::run(tc, v.f32[0]);
-    TemplateTestHelper<Test_permute4, float32<B/4>>::run(tc, v.f32[0]);
+    TemplateTestHelper<Test_permute2, float32<B/4> >::run(tc, v.f32[0]);
+    TemplateTestHelper<Test_permute4, float32<B/4> >::run(tc, v.f32[0]);
 
     // float64
-    TemplateTestHelper<Test_permute2, float64<B/8>>::run(tc, v.f64[0]);
+    TemplateTestHelper<Test_permute2, float64<B/8> >::run(tc, v.f64[0]);
 }
 
 void test_permute_generic(TestResults& res)

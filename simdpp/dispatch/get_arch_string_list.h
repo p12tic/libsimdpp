@@ -14,6 +14,14 @@
 #include <simdpp/setup_arch.h>
 
 namespace simdpp {
+namespace detail {
+struct ArchDesc {
+    const char* id;
+    Arch arch;
+
+    ArchDesc(const char* i, Arch a) : id(i), arch(a) {}
+};
+} // namespace detail
 
 /** @ingroup simdpp_dispatcher
     Retrieves supported architecture from given string list. The architecture
@@ -21,26 +29,21 @@ namespace simdpp {
 */
 inline Arch get_arch_string_list(const char* const strings[], int count, const char* prefix)
 {
+    typedef ::simdpp::detail::ArchDesc ArchDesc;
+
     Arch res = Arch::NONE_NULL;
 
     if (!prefix)
         prefix = "";
 
-    struct ArchDesc {
-        const char* id;
-        Arch arch;
-
-        ArchDesc(const char* i, Arch a) : id(i), arch(a) {}
-    };
-
     std::vector<ArchDesc> features;
 
 #if SIMDPP_ARM && SIMDPP_32_BITS
-    features.emplace_back("neon", Arch::ARM_NEON);
-    features.emplace_back("neonfltsp", Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP);
+    features.push_back(ArchDesc("neon", Arch::ARM_NEON));
+    features.push_back(ArchDesc("neonfltsp", Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP));
 #elif SIMDPP_ARM && SIMDPP_64_BITS
-    features.emplace_back("neon", Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP);
-    features.emplace_back("neonfltsp", Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP);
+    features.push_back(ArchDesc("neon", Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP));
+    features.push_back(ArchDesc("neonfltsp", Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP));
 #elif SIMDPP_X86
     Arch a_sse2 = Arch::X86_SSE2;
     Arch a_sse3 = a_sse2 | Arch::X86_SSE3;
@@ -53,18 +56,18 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     Arch a_fma4 = a_sse3 | Arch::X86_FMA4;
     Arch a_xop = a_sse3 | Arch::X86_XOP;
 
-    features.emplace_back("sse2", a_sse2);
-    features.emplace_back("sse3", a_sse3);
-    features.emplace_back("ssse3", a_ssse3);
-    features.emplace_back("sse4.1", a_sse4_1);
-    features.emplace_back("avx", a_avx);
-    features.emplace_back("avx2", a_avx2);
-    features.emplace_back("avx512f", a_avx512f);
-    features.emplace_back("fma", a_fma3);
-    features.emplace_back("fma4", a_fma4);
-    features.emplace_back("xop", a_xop);
+    features.push_back(ArchDesc("sse2", a_sse2));
+    features.push_back(ArchDesc("sse3", a_sse3));
+    features.push_back(ArchDesc("ssse3", a_ssse3));
+    features.push_back(ArchDesc("sse4.1", a_sse4_1));
+    features.push_back(ArchDesc("avx", a_avx));
+    features.push_back(ArchDesc("avx2", a_avx2));
+    features.push_back(ArchDesc("avx512f", a_avx512f));
+    features.push_back(ArchDesc("fma", a_fma3));
+    features.push_back(ArchDesc("fma4", a_fma4));
+    features.push_back(ArchDesc("xop", a_xop));
 #elif SIMDPP_PPC
-    features.emplace_back("altivec", Arch::POWER_ALTIVEC);
+    features.push_back(ArchDesc("altivec", Arch::POWER_ALTIVEC));
 #else
     return res;
 #endif
@@ -85,9 +88,9 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
         len -= prefixlen;
 
         // check if any of the architectures match
-        for (auto& feature : features) {
-            if (std::strcmp(s, feature.id) == 0)
-                res |= feature.arch;
+        for (unsigned j = 0; j < features.size(); ++j) {
+            if (std::strcmp(s, features[j].id) == 0)
+                res |= features[j].arch;
         }
     }
 

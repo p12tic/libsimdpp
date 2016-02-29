@@ -53,14 +53,14 @@ const R& cast_expr(const S& expr)
 #else
 template<class R, class S>
 struct cast_expr_check {
-    static_assert(std::is_same<R, R>::value, "Bad cast_expr");
+    SIMDPP_STATIC_ASSERT(detail::is_same<R, R>::value, "Bad cast_expr");
 };
 
 template<template<unsigned, class> class R,
          template<unsigned, class> class S,
          unsigned N, class E>
 struct cast_expr_check< R<N,E>, S<N,E> > {
-    static_assert(!std::is_void<E>::value, "Bad cast_expr");
+    SIMDPP_STATIC_ASSERT(!detail::is_void<E>::value, "Bad cast_expr");
 };
 
 template<template<unsigned, template<unsigned, class> class> class R,

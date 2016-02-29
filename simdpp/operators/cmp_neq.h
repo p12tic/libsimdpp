@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{XOP, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int8<N, mask_int8<N>> operator!=(const any_int8<N,V1>& a,
+mask_int8<N, mask_int8<N> > operator!=(const any_int8<N,V1>& a,
                                    const any_int8<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
@@ -68,7 +68,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int8, any_int8)
     @icost{XOP, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int16<N, mask_int16<N>> operator!=(const any_int16<N,V1>& a,
+mask_int16<N, mask_int16<N> > operator!=(const any_int16<N,V1>& a,
                                      const any_int16<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
@@ -97,7 +97,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int16, any_int16)
     @icost{XOP, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int32<N, mask_int32<N>> operator!=(const any_int32<N,V1>& a,
+mask_int32<N, mask_int32<N> > operator!=(const any_int32<N,V1>& a,
                                      const any_int32<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
@@ -131,7 +131,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int32, any_int32)
     @icost{ALTIVEC, 6-8}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int64<N, mask_int64<N>> operator!=(const any_int64<N,V1>& a,
+mask_int64<N, mask_int64<N> > operator!=(const any_int64<N,V1>& a,
                                      const any_int64<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
@@ -158,7 +158,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_int64, any_int64)
     @icost{NEON, ALTIVEC, 4}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_float32<N, mask_float32<N>> operator!=(const any_float32<N,V1>& a,
+mask_float32<N, mask_float32<N> > operator!=(const any_float32<N,V1>& a,
                                          const any_float32<N,V2>& b)
 {
     return detail::insn::i_cmp_neq(a.wrapped().eval(), b.wrapped().eval());
@@ -182,7 +182,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(operator!=, mask_float32, any_float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_float64<N, mask_float64<N>> operator!=(const any_float64<N,V1>& a,
+mask_float64<N, mask_float64<N> > operator!=(const any_float64<N,V1>& a,
                                          const any_float64<N,V2>& b)
 {
     return detail::insn::i_cmp_neq(a.wrapped().eval(), b.wrapped().eval());

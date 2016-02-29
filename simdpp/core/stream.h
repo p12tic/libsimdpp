@@ -41,7 +41,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class V> SIMDPP_INL
 void stream(void* p, const any_vec<N,V>& a)
 {
-    static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: convert automatically
+    SIMDPP_STATIC_ASSERT(!is_mask<V>::value, "Masks can not be stored"); // FIXME: convert automatically
     detail::insn::i_stream(reinterpret_cast<char*>(p), a.wrapped().eval());
 }
 

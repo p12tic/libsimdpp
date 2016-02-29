@@ -16,24 +16,24 @@ void test_convert_n(TestSuite& ts)
 {
     using namespace simdpp;
 
-    using uint8_n = uint8<B>;
-    using  int8_n = int8<B>;
-    using uint16_n = uint16<B/2>;
-    using  int16_n = int16<B/2>;
-    //using uint16_2n = uint16<B>;
-    using  int16_2n = int16<B>;
-    using uint32_n = uint32<B/4>;
-    using  int32_n = int32<B/4>;
-    //using uint32_2n = uint32<B/2>;
-    using  int32_2n = int32<B/2>;
-    //using uint64_n = uint64<B/8>;
-    //using  int64_n = int64<B/8>;
-    //using uint64_2n = uint64<B/4>;
-    using  int64_2n = int64<B/4>;
-    using float32_n =  float32<B/4>;
-    //using float32_2n = float32<B/2>;
-    //using float64_n =  float64<B/8>;
-    using float64_2n = float64<B/4>;
+    typedef uint8<B> uint8_n;
+    typedef int8<B>  int8_n;
+    typedef uint16<B/2> uint16_n;
+    typedef int16<B/2>  int16_n;
+    //typedef uint16<B> uint16_2n;
+    typedef int16<B>  int16_2n;
+    typedef uint32<B/4> uint32_n;
+    typedef int32<B/4>  int32_n;
+    //typedef uint32<B/2> uint32_2n;
+    typedef int32<B/2>  int32_2n;
+    //typedef uint64<B/8> uint64_n;
+    //typedef int64<B/8>  int64_n;
+    //typedef uint64<B/4> uint64_2n;
+    typedef int64<B/4>  int64_2n;
+    typedef  float32<B/4> float32_n;
+    //typedef float32<B/2> float32_2n;
+    //typedef  float64<B/8> float64_n;
+    typedef float64<B/4> float64_2n;
 
     //int8
     {

@@ -7,6 +7,7 @@
 
 #ifndef LIBSIMDPP_DETAIL_NULL_MATH_H
 #define LIBSIMDPP_DETAIL_NULL_MATH_H
+
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
 #ifndef LIBSIMDPP_SIMD_H
@@ -15,6 +16,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/cast.h>
+#include <simdpp/detail/cxx11_emul.h>
 
 #include <cmath>
 #include <cstdlib>
@@ -30,7 +32,7 @@ typename V::mask_vector_type isnan(const V& a)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = std::isnan(a.el(i)) ? 1 : 0;
+        r.el(i) = detail::cxx11::isnan(a.el(i)) ? 1 : 0;
     }
     return r;
 }
@@ -40,7 +42,8 @@ typename V::mask_vector_type isnan2(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = (std::isnan(a.el(i)) || std::isnan(b.el(i))) ? 1 : 0;
+        r.el(i) = (detail::cxx11::isnan(a.el(i)) ||
+                   detail::cxx11::isnan(b.el(i))) ? 1 : 0;
     }
     return r;
 }
@@ -126,23 +129,33 @@ V mul(const V& a, const V& b)
 }
 
 template<class V> SIMDPP_INL
-V fmadd(const V& a, const V& b, V c)
+V fmadd(const V& a, const V& b, const V& c)
 {
+    // std::fma is only available since MSVC 2013
+#if !defined(_MSC_VER) || _MSC_VER >= 1800
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = std::fma(a.el(i), b.el(i), c.el(i));
+        r.el(i) = detail::cxx11::fma(a.el(i), b.el(i), c.el(i));
     }
     return r;
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(V, a, b, c);
+#endif
 }
 
 template<class V> SIMDPP_INL
-V fmsub(const V& a, const V& b, V c)
+V fmsub(const V& a, const V& b, const V& c)
 {
+    // std::fma is only available since MSVC 2013
+#if !defined(_MSC_VER) || _MSC_VER >= 1800
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = std::fma(a.el(i), b.el(i), -c.el(i));
+        r.el(i) = detail::cxx11::fma(a.el(i), b.el(i), -c.el(i));
     }
     return r;
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(V, a, b, c);
+#endif
 }
 
 template<unsigned P, class V> SIMDPP_INL

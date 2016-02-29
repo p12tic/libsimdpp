@@ -26,7 +26,7 @@ SIMDPP_INL void i_set_splat(uint32x4&, uint32_t);
 SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint8x16>(v0);
+    v = detail::null::make_vec<uint8x16, uint8_t>(v0);
 #elif SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
@@ -70,7 +70,7 @@ void i_set_splat(uint8<N>& v, uint8_t v0)
 SIMDPP_INL void i_set_splat(uint16x8& v, uint16_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint16x8>(v0);
+    v = detail::null::make_vec<uint16x8, uint16_t>(v0);
 #elif SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
@@ -114,7 +114,7 @@ void i_set_splat(uint16<N>& v, uint16_t v0)
 SIMDPP_INL void i_set_splat(uint32x4& v, uint32_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint32x4>(v0);
+    v = detail::null::make_vec<uint32x4, uint32_t>(v0);
 #elif SIMDPP_USE_AVX2
     v = _mm_cvtsi32_si128(v0);
     v = _mm_broadcastd_epi32(v);
@@ -161,7 +161,7 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
 SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 {
 #if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint64x2>(v0);
+    v = detail::null::make_vec<uint64x2, uint64_t>(v0);
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
@@ -219,7 +219,7 @@ void i_set_splat(uint64<N>& v, uint64_t v0)
 SIMDPP_INL void i_set_splat(float32x4& v, float v0)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    v = detail::null::make_vec<float32x4>(v0);
+    v = detail::null::make_vec<float32x4, float>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_ps(v0);        // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON
@@ -264,7 +264,7 @@ void i_set_splat(float32<N>& v, float v0)
 SIMDPP_INL void i_set_splat(float64x2& v, double v0)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<float64x2>(v0);
+    v = detail::null::make_vec<float64x2, double>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_pd(v0);            // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON64
@@ -319,7 +319,7 @@ void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
 template<class V, class VE>
 V splat_impl(const VE& x)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     return insn::i_splat_any<V>(x);
 }

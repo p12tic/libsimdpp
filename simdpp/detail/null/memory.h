@@ -23,7 +23,7 @@ namespace null {
 template<class V> SIMDPP_INL
 V load(V& a, const void* p)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         a.el(i) = *pt++;
@@ -34,7 +34,7 @@ V load(V& a, const void* p)
 template<class V> SIMDPP_INL
 void load_packed2(V& a, V& b, const void* p)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         a.el(i) = *pt++;
@@ -45,7 +45,7 @@ void load_packed2(V& a, V& b, const void* p)
 template<class V> SIMDPP_INL
 void load_packed3(V& a, V& b, V& c, const void* p)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         a.el(i) = *pt++;
@@ -57,7 +57,7 @@ void load_packed3(V& a, V& b, V& c, const void* p)
 template<class V> SIMDPP_INL
 void load_packed4(V& a, V& b, V& c, V& d, const void* p)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         a.el(i) = *pt++;
@@ -70,7 +70,7 @@ void load_packed4(V& a, V& b, V& c, V& d, const void* p)
 template<class V> SIMDPP_INL
 void store(void* p, const V& a)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         *pt++ = a.el(i);
@@ -80,7 +80,7 @@ void store(void* p, const V& a)
 template<class V> SIMDPP_INL
 void store_first(void* p, const V& a, unsigned n)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length && i < n; i++) {
         *pt++ = a.el(i);
@@ -90,7 +90,7 @@ void store_first(void* p, const V& a, unsigned n)
 template<class V> SIMDPP_INL
 void store_last(void* p, const V& a, unsigned n)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
     pt += V::length - n;
     for (unsigned i = V::length - n; i < V::length; i++) {
@@ -101,7 +101,7 @@ void store_last(void* p, const V& a, unsigned n)
 template<class V> SIMDPP_INL
 void store_packed2(void* p, const V& a, const V& b)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         *pt++ = a.el(i);
@@ -112,7 +112,7 @@ void store_packed2(void* p, const V& a, const V& b)
 template<class V> SIMDPP_INL
 void store_packed3(void* p, const V& a, const V& b, const V& c)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         *pt++ = a.el(i);
@@ -124,7 +124,7 @@ void store_packed3(void* p, const V& a, const V& b, const V& c)
 template<class V> SIMDPP_INL
 void store_packed4(void* p, const V& a, const V& b, const V& c, const V& d)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         *pt++ = a.el(i);

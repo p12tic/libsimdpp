@@ -9,7 +9,6 @@
 #include "insn/tests.h"
 #include <simdpp/simd.h>
 #include <algorithm>
-#include <cfenv>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -94,12 +93,10 @@ int main(int argc, char* argv[])
         current_arch = get_arch_from_system(is_simulator);
 
     std::ostream& err = std::cerr;
-    const auto& arch_list = get_test_archs();
-    auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
-                                  [](const simdpp::detail::FnVersion& a) -> bool
-                                  {
-                                      return a.arch_name && std::strcmp(a.arch_name, "arch_null") == 0;
-                                  });
+
+    typedef std::vector<simdpp::detail::FnVersion> FnVersionList;
+    const FnVersionList& arch_list = get_test_archs();
+    FnVersionList::const_iterator null_arch = std::find_if(arch_list.begin(), arch_list.end(), find_arch_null);
 
     if (null_arch == arch_list.end()) {
         std::cerr << "FATAL: NULL architecture not defined\n";
@@ -115,7 +112,7 @@ int main(int argc, char* argv[])
 
     bool ok = true;
 
-    for (auto it = arch_list.begin(); it != arch_list.end(); it++) {
+    for (FnVersionList::const_iterator it = arch_list.begin(); it != arch_list.end(); it++) {
         if (it->fun_ptr == NULL || it == null_arch) {
             continue;
         }

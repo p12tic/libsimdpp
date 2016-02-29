@@ -30,14 +30,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 // FIXME: return empty expression
-SIMDPP_INL expr_vec_set_splat<uint32_t> splat(unsigned x) { return { x }; }
-SIMDPP_INL expr_vec_set_splat<uint64_t> splat(unsigned long x) { return { x }; }
-SIMDPP_INL expr_vec_set_splat<uint64_t> splat(unsigned long long x) { return { x }; }
-SIMDPP_INL expr_vec_set_splat<int32_t>  splat(int x) { return { x }; }
-SIMDPP_INL expr_vec_set_splat<int64_t>  splat(long x) { return { x }; }
-SIMDPP_INL expr_vec_set_splat<int64_t>  splat(long long x) { return { x }; }
-SIMDPP_INL expr_vec_set_splat<float>    splat(float x) { return { x }; }
-SIMDPP_INL expr_vec_set_splat<double>   splat(double x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<uint32_t> splat(unsigned x) { return expr_vec_set_splat<uint32_t>(x); }
+SIMDPP_INL expr_vec_set_splat<uint64_t> splat(unsigned long x) { return expr_vec_set_splat<uint64_t>(x); }
+SIMDPP_INL expr_vec_set_splat<uint64_t> splat(unsigned long long x) { return expr_vec_set_splat<uint64_t>(x); }
+SIMDPP_INL expr_vec_set_splat<int32_t>  splat(int x) { return expr_vec_set_splat<int32_t>(x); }
+SIMDPP_INL expr_vec_set_splat<int64_t>  splat(long x) { return expr_vec_set_splat<int64_t>(x); }
+SIMDPP_INL expr_vec_set_splat<int64_t>  splat(long long x) { return expr_vec_set_splat<int64_t>(x); }
+SIMDPP_INL expr_vec_set_splat<float>    splat(float x) { return expr_vec_set_splat<float>(x); }
+SIMDPP_INL expr_vec_set_splat<double>   splat(double x) { return expr_vec_set_splat<double>(x); }
 
 template<class V> SIMDPP_INL V splat(unsigned x) { return detail::splat_impl<V>(x); }
 template<class V> SIMDPP_INL V splat(unsigned long x) { return detail::splat_impl<V>(x); }

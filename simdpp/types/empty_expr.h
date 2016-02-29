@@ -11,7 +11,6 @@
 #include <simdpp/setup_arch.h>
 #include <simdpp/types.h>
 #include <simdpp/expr.h>
-#include <type_traits>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -20,25 +19,25 @@ namespace SIMDPP_ARCH_NAMESPACE {
 // float32
 
 template<unsigned N>
-class float32<N, expr_empty> : public any_float32<N, float32<N,expr_empty>> {
+class float32<N, expr_empty> : public any_float32<N, float32<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     float32<N> e;
 
     SIMDPP_INL float32(const float32<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    float32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
+    float32(const any_vec<N*4,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator float32<N>() const { return e; }
     SIMDPP_INL float32<N> eval() const { return e; }
 };
 
 template<unsigned N>
-class mask_float32<N, expr_empty> : public any_float32<N, mask_float32<N,expr_empty>> {
+class mask_float32<N, expr_empty> : public any_float32<N, mask_float32<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     mask_float32<N> e;
 
     SIMDPP_INL mask_float32(const mask_float32<N>& a) : e(a) {}
@@ -52,25 +51,25 @@ public:
 // float64
 
 template<unsigned N>
-class float64<N, expr_empty> : public any_float64<N, float64<N,expr_empty>> {
+class float64<N, expr_empty> : public any_float64<N, float64<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     float64<N> e;
 
     SIMDPP_INL float64(const float64<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    float64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
+    float64(const any_vec<N*8,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator float64<N>() const { return e; }
     SIMDPP_INL float64<N> eval() const { return e; }
 };
 
 template<unsigned N>
-class mask_float64<N, expr_empty> : public any_float64<N, mask_float64<N,expr_empty>> {
+class mask_float64<N, expr_empty> : public any_float64<N, mask_float64<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     mask_float64<N> e;
 
     SIMDPP_INL mask_float64(const mask_float64<N>& a) : e(a) {}
@@ -83,15 +82,15 @@ public:
 // -----------------------------------------------------------------------------
 // uint8<N>
 template<unsigned N>
-class int8<N, expr_empty> : public any_int8<N, int8<N,expr_empty>> {
+class int8<N, expr_empty> : public any_int8<N, int8<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     int8<N> e;
 
     SIMDPP_INL int8(const int8<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    int8(const any_vec<N,V<N2,void>>& a) : e(a.wrapped()) {}
+    int8(const any_vec<N,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator int8<N>() const { return e; }
     SIMDPP_INL int8<N> eval() const { return e; }
@@ -99,25 +98,25 @@ public:
 
 
 template<unsigned N>
-class uint8<N, expr_empty> : public any_int8<N, uint8<N,expr_empty>> {
+class uint8<N, expr_empty> : public any_int8<N, uint8<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     uint8<N> e;
 
     SIMDPP_INL uint8(const uint8<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    uint8(const any_vec<N,V<N2,void>>& a) : e(a.wrapped()) {}
+    uint8(const any_vec<N,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator uint8<N>() const { return e; }
     SIMDPP_INL uint8<N> eval() const { return e; }
 };
 
 template<unsigned N>
-class mask_int8<N, expr_empty> : public any_int8<N, mask_int8<N,expr_empty>> {
+class mask_int8<N, expr_empty> : public any_int8<N, mask_int8<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     mask_int8<N> e;
 
     SIMDPP_INL mask_int8(const mask_int8<N>& a) : e(a) {}
@@ -130,15 +129,15 @@ public:
 // -----------------------------------------------------------------------------
 // uint16<N>
 template<unsigned N>
-class int16<N, expr_empty> : public any_int16<N, int16<N,expr_empty>> {
+class int16<N, expr_empty> : public any_int16<N, int16<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     int16<N> e;
 
     SIMDPP_INL int16(const int16<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    int16(const any_vec<N*2,V<N2,void>>& a) : e(a.wrapped()) {}
+    int16(const any_vec<N*2,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator int16<N>() const { return e; }
     SIMDPP_INL int16<N> eval() const { return e; }
@@ -146,25 +145,25 @@ public:
 
 
 template<unsigned N>
-class uint16<N, expr_empty> : public any_int16<N, uint16<N,expr_empty>> {
+class uint16<N, expr_empty> : public any_int16<N, uint16<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     uint16<N> e;
 
     SIMDPP_INL uint16(const uint16<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    uint16(const any_vec<N*2,V<N2,void>>& a) : e(a.wrapped()) {}
+    uint16(const any_vec<N*2,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator uint16<N>() const { return e; }
     SIMDPP_INL uint16<N> eval() const { return e; }
 };
 
 template<unsigned N>
-class mask_int16<N, expr_empty> : public any_int16<N, mask_int16<N,expr_empty>> {
+class mask_int16<N, expr_empty> : public any_int16<N, mask_int16<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     mask_int16<N> e;
 
     SIMDPP_INL mask_int16(const mask_int16<N>& a) : e(a) {}
@@ -177,15 +176,15 @@ public:
 // -----------------------------------------------------------------------------
 // uint32<N>
 template<unsigned N>
-class int32<N, expr_empty> : public any_int32<N, int32<N,expr_empty>> {
+class int32<N, expr_empty> : public any_int32<N, int32<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     int32<N> e;
 
     SIMDPP_INL int32(const int32<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    int32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
+    int32(const any_vec<N*4,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator int32<N>() const { return e; }
     SIMDPP_INL int32<N> eval() const { return e; }
@@ -193,25 +192,25 @@ public:
 
 
 template<unsigned N>
-class uint32<N, expr_empty> : public any_int32<N, uint32<N,expr_empty>> {
+class uint32<N, expr_empty> : public any_int32<N, uint32<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     uint32<N> e;
 
     SIMDPP_INL uint32(const uint32<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    uint32(const any_vec<N*4,V<N2,void>>& a) : e(a.wrapped()) {}
+    uint32(const any_vec<N*4,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator uint32<N>() const { return e; }
     SIMDPP_INL uint32<N> eval() const { return e; }
 };
 
 template<unsigned N>
-class mask_int32<N, expr_empty> : public any_int32<N, mask_int32<N,expr_empty>> {
+class mask_int32<N, expr_empty> : public any_int32<N, mask_int32<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     mask_int32<N> e;
 
     SIMDPP_INL mask_int32(const mask_int32<N>& a) : e(a) {}
@@ -225,15 +224,15 @@ public:
 // int64<N>
 
 template<unsigned N>
-class int64<N, expr_empty> : public any_int64<N, int64<N,expr_empty>> {
+class int64<N, expr_empty> : public any_int64<N, int64<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     int64<N> e;
 
     SIMDPP_INL int64(const int64<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    int64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
+    int64(const any_vec<N*8,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator int64<N>() const { return e; }
     SIMDPP_INL int64<N> eval() const { return e; }
@@ -241,15 +240,15 @@ public:
 
 
 template<unsigned N>
-class uint64<N, expr_empty> : public any_int64<N, uint64<N,expr_empty>> {
+class uint64<N, expr_empty> : public any_int64<N, uint64<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     uint64<N> e;
 
     SIMDPP_INL uint64(const uint64<N>& a) : e(a) {}
     template<template<unsigned, class> class V, unsigned N2> SIMDPP_INL
-    uint64(const any_vec<N*8,V<N2,void>>& a) : e(a.wrapped()) {}
+    uint64(const any_vec<N*8,V<N2,void> >& a) : e(a.wrapped()) {}
 
     SIMDPP_INL operator uint64<N>() const { return e; }
     SIMDPP_INL uint64<N> eval() const { return e; }
@@ -257,10 +256,10 @@ public:
 
 
 template<unsigned N>
-class mask_int64<N, expr_empty> : public any_int64<N, mask_int64<N,expr_empty>> {
+class mask_int64<N, expr_empty> : public any_int64<N, mask_int64<N,expr_empty> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using expr_type = expr_empty;
+    typedef expr_empty expr_type;
     mask_int64<N> e;
 
     SIMDPP_INL mask_int64(const mask_int64<N>& a) : e(a) {}

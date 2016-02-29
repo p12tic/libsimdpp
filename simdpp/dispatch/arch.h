@@ -8,7 +8,7 @@
 #ifndef LIBSIMDPP_DISPATCH_ARCH_H
 #define LIBSIMDPP_DISPATCH_ARCH_H
 
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 
@@ -26,73 +26,65 @@ namespace simdpp {
 
     detail::select_version depends on this.
 */
-enum class Arch : std::uint32_t {
-    /// Indicates that no SIMD instructions are supported
-    NONE_NULL = 0,
-    /// Indicates x86 SSE2 support
-    X86_SSE2 = 1 << 1,
-    /// Indicates x86 SSE3 support
-    X86_SSE3 = 1 << 2,
-    /// Indicates x86 SSSE3 support
-    X86_SSSE3 = 1 << 3,
-    /// Indicates x86 SSE4.1 support
-    X86_SSE4_1 = 1 << 4,
-    /// Indicates x86 AVX support
-    X86_AVX = 1 << 5,
-    /// Indicates x86 AVX2 support
-    X86_AVX2 = 1 << 6,
-    /// Indicates x86 FMA3 (Intel) support
-    X86_FMA3 = 1 << 7,
-    /// Indicates x86 FMA4 (AMD) support
-    X86_FMA4 = 1 << 8,
-    /// Indicates x86 XOP (AMD) support
-    X86_XOP = 1 << 9,
-    /// Indicates x86 AVX-512F suppotr
-    X86_AVX512F = 1 << 10,
+struct Arch {
+    enum Value {
+        /// Indicates that no SIMD instructions are supported
+        NONE_NULL = 0,
+        /// Indicates x86 SSE2 support
+        X86_SSE2 = 1 << 1,
+        /// Indicates x86 SSE3 support
+        X86_SSE3 = 1 << 2,
+        /// Indicates x86 SSSE3 support
+        X86_SSSE3 = 1 << 3,
+        /// Indicates x86 SSE4.1 support
+        X86_SSE4_1 = 1 << 4,
+        /// Indicates x86 AVX support
+        X86_AVX = 1 << 5,
+        /// Indicates x86 AVX2 support
+        X86_AVX2 = 1 << 6,
+        /// Indicates x86 FMA3 (Intel) support
+        X86_FMA3 = 1 << 7,
+        /// Indicates x86 FMA4 (AMD) support
+        X86_FMA4 = 1 << 8,
+        /// Indicates x86 XOP (AMD) support
+        X86_XOP = 1 << 9,
+        /// Indicates x86 AVX-512F suppotr
+        X86_AVX512F = 1 << 10,
 
-    /// Indicates ARM NEON support (SP and DP floating-point math is executed
-    /// on VFP)
-    ARM_NEON = 1 << 0,
-    /// Indicates ARM NEON support (SP floating-point math is executed on NEON,
-    /// DP floating-point math is executed on VFP)
-    ARM_NEON_FLT_SP = 1 << 1,
+        /// Indicates ARM NEON support (SP and DP floating-point math is executed
+        /// on VFP)
+        ARM_NEON = 1 << 0,
+        /// Indicates ARM NEON support (SP floating-point math is executed on NEON,
+        /// DP floating-point math is executed on VFP)
+        ARM_NEON_FLT_SP = 1 << 1,
 
-    /// Indicates POWER ALTIVEC support.
-    POWER_ALTIVEC = 1 << 0
+        /// Indicates POWER ALTIVEC support.
+        POWER_ALTIVEC = 1 << 0
+    };
+
+    Arch() {} // works as regular fundamental type
+    Arch(uint32_t v) : value_(v) { }
+
+    operator uint32_t() const { return value_; }
+
+private:
+    uint32_t value_;
 };
 
 /// Bitwise operators for @c Arch
 /// @{
 inline Arch& operator|=(Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    typedef uint32_t T;
     x = static_cast<Arch>(static_cast<T>(x) | static_cast<T>(y));
     return x;
 }
 
 inline Arch& operator&=(Arch& x, const Arch& y)
 {
-    using T = std::uint32_t;
+    typedef uint32_t T;
     x = static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
     return x;
-}
-
-inline Arch operator|(const Arch& x, const Arch& y)
-{
-    using T = std::uint32_t;
-    return static_cast<Arch>(static_cast<T>(x) | static_cast<T>(y));
-}
-
-inline Arch operator&(const Arch& x, const Arch& y)
-{
-    using T = std::uint32_t;
-    return static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
-}
-
-inline Arch operator~(const Arch& x)
-{
-    using T = std::uint32_t;
-    return static_cast<Arch>(~static_cast<T>(x));
 }
 /// @}
 

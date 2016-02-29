@@ -19,29 +19,29 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 struct vec128_impl {
-    using i8  =  int8x16;
-    using u8  = uint8x16;
-    using i16 =  int16x8;
-    using u16 = uint16x8;
-    using i32 =  int32x4;
-    using u32 = uint32x4;
-    using i64 =  int64x2;
-    using u64 = uint64x2;
-    using f32 = float32x4;
-    using f64 = float64x2;
+    typedef  int8x16 i8 ;
+    typedef uint8x16 u8 ;
+    typedef  int16x8 i16;
+    typedef uint16x8 u16;
+    typedef  int32x4 i32;
+    typedef uint32x4 u32;
+    typedef  int64x2 i64;
+    typedef uint64x2 u64;
+    typedef float32x4 f32;
+    typedef float64x2 f64;
 };
 
 struct vec256_impl {
-    using i8  =  int8x32;
-    using u8  = uint8x32;
-    using i16 =  int16x16;
-    using u16 = uint16x16;
-    using i32 = int32x8;
-    using u32 = uint32x8;
-    using i64 = int64x4;
-    using u64 = uint64x4;
-    using f32 = float32x8;
-    using f64 = float64x4;
+    typedef  int8x32 i8 ;
+    typedef uint8x32 u8 ;
+    typedef  int16x16 i16;
+    typedef uint16x16 u16;
+    typedef int32x8 i32;
+    typedef uint32x8 u32;
+    typedef int64x4 i64;
+    typedef uint64x4 u64;
+    typedef float32x8 f32;
+    typedef float64x4 f64;
 };
 
 template<class T> struct same_width;

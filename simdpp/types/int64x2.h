@@ -19,7 +19,7 @@
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
 #include <simdpp/detail/null/mask.h>
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -30,36 +30,36 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 2x 64-bit signed integer vector
 */
 template<>
-class int64<2, void> : public any_int64<2, int64<2,void>> {
+class int64<2, void> : public any_int64<2, int64<2,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using element_type = int64_t;
-    using base_vector_type = int64<2,void>;
-    using expr_type = void;
+    typedef int64_t element_type;
+    typedef int64<2,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = int64x2_t;
+    typedef int64x2_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector int64_t;
+    typedef __vector int64_t native_type;
 #else
-    using native_type = detail::array<int64_t, 2>;
+    typedef detail::array<int64_t, 2> native_type;
 #endif
 
-    SIMDPP_INL int64<2>() = default;
-    SIMDPP_INL int64<2>(const int64<2> &) = default;
-    SIMDPP_INL int64<2> &operator=(const int64<2> &) = default;
+    SIMDPP_INL int64<2>() {}
+    // SIMDPP_INL int64<2>(const int64<2> &) = default;
+    // SIMDPP_INL int64<2> &operator=(const int64<2> &) = default;
 
     template<class E> SIMDPP_INL int64<2>(const int64<2,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int64<2>(const uint64<2,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit int64<2>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int64<2>>(d.wrapped().eval());
+        *this = bit_cast<int64<2> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL int64<2>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int64<2>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int64<2> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -106,36 +106,36 @@ private:
 /** Class representing 2x 64-bit unsigned integer vector
 */
 template<>
-class uint64<2, void> : public any_int64<2, uint64<2,void>> {
+class uint64<2, void> : public any_int64<2, uint64<2,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using element_type = uint64_t;
-    using base_vector_type = uint64<2,void>;
-    using expr_type = void;
+    typedef uint64_t element_type;
+    typedef uint64<2,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = uint64x2_t;
+    typedef uint64x2_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector uint64_t;
+    typedef __vector uint64_t native_type;
 #else
-    using native_type = detail::array<uint64_t, 2>;
+    typedef detail::array<uint64_t, 2> native_type;
 #endif
 
-    SIMDPP_INL uint64<2>() = default;
-    SIMDPP_INL uint64<2>(const uint64<2> &) = default;
-    SIMDPP_INL uint64<2> &operator=(const uint64<2> &) = default;
+    SIMDPP_INL uint64<2>() {}
+    // SIMDPP_INL uint64<2>(const uint64<2> &) = default;
+    // SIMDPP_INL uint64<2> &operator=(const uint64<2> &) = default;
 
     template<class E> SIMDPP_INL uint64<2>(const uint64<2,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint64<2>(const int64<2,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint64<2>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint64<2>>(d.wrapped().eval());
+        *this = bit_cast<uint64<2> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL uint64<2>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint64<2>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint64<2> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -183,25 +183,25 @@ private:
 /// Class representing possibly optimized mask data for 2x 64-bit integer
 /// vector
 template<>
-class mask_int64<2, void> : public any_int64<2, mask_int64<2,void>> {
+class mask_int64<2, void> : public any_int64<2, mask_int64<2,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int64<2,void>;
-    using expr_type = void;
+    typedef mask_int64<2,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = uint64x2_t;
+    typedef uint64x2_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = uint64<2>;
+    typedef uint64<2> native_type;
 #else // NULL
-    using native_type = detail::array<bool, 2>;
+    typedef detail::array<bool, 2> native_type;
 #endif
 
-    SIMDPP_INL mask_int64<2>() = default;
-    SIMDPP_INL mask_int64<2>(const mask_int64<2> &) = default;
-    SIMDPP_INL mask_int64<2> &operator=(const mask_int64<2> &) = default;
+    SIMDPP_INL mask_int64<2>() {}
+    // SIMDPP_INL mask_int64<2>(const mask_int64<2> &) = default;
+    // SIMDPP_INL mask_int64<2> &operator=(const mask_int64<2> &) = default;
 
     SIMDPP_INL mask_int64<2>(const native_type& d) : d_(d) {}
 
@@ -211,11 +211,11 @@ public:
 
     template<class E> SIMDPP_INL explicit mask_int64<2>(const mask_float64<2,E>& d)
     {
-        *this = bit_cast<mask_int64<2>>(d.eval());
+        *this = bit_cast<mask_int64<2> >(d.eval());
     }
     template<class E> SIMDPP_INL mask_int64<2>& operator=(const mask_float64<2,E>& d)
     {
-        *this = bit_cast<mask_int64<2>>(d.eval()); return *this;
+        *this = bit_cast<mask_int64<2> >(d.eval()); return *this;
     }
 
     SIMDPP_INL operator native_type() const { return d_; }
@@ -224,7 +224,7 @@ public:
     SIMDPP_INL uint64<2> unmask() const
     {
     #if SIMDPP_USE_NULL
-        return detail::null::unmask_mask<uint64<2>>(*this);
+        return detail::null::unmask_mask<uint64<2> >(*this);
     #else
         return uint64<2>(d_);
     #endif

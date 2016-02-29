@@ -30,29 +30,29 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float64x4 vector
 template<>
-class float64<4, void> : public any_float64<4, float64<4,void>> {
+class float64<4, void> : public any_float64<4, float64<4,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
-    using element_type = double;
-    using base_vector_type = float64<4,void>;
-    using expr_type = void;
+    typedef double element_type;
+    typedef float64<4,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_AVX
-    using native_type = __m256d;
+    typedef __m256d native_type;
 #endif
 
-    SIMDPP_INL float64<4>() = default;
-    SIMDPP_INL float64<4>(const float64<4> &) = default;
-    SIMDPP_INL float64<4> &operator=(const float64<4> &) = default;
+    SIMDPP_INL float64<4>() {}
+    // SIMDPP_INL float64<4>(const float64<4> &) = default;
+    // SIMDPP_INL float64<4> &operator=(const float64<4> &) = default;
 
     template<class E> SIMDPP_INL float64<4>(const float64<4,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float64<4>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<float64<4>>(d.wrapped().eval());
+        *this = bit_cast<float64<4> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL float64<4>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<float64<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<float64<4> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -100,19 +100,19 @@ private:
 /// Class representing possibly optimized mask data for 2x 64-bit floating point
 /// vector
 template<>
-class mask_float64<4, void> : public any_float64<4, mask_float64<4,void>> {
+class mask_float64<4, void> : public any_float64<4, mask_float64<4,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using base_vector_type = mask_float64<4,void>;
-    using expr_type = void;
+    typedef mask_float64<4,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_AVX
-    using native_type = __m256d;
+    typedef __m256d native_type;
 #endif
 
-    SIMDPP_INL mask_float64<4>() = default;
-    SIMDPP_INL mask_float64<4>(const mask_float64<4> &) = default;
-    SIMDPP_INL mask_float64<4> &operator=(const mask_float64<4> &) = default;
+    SIMDPP_INL mask_float64<4>() {}
+    // SIMDPP_INL mask_float64<4>(const mask_float64<4> &) = default;
+    // SIMDPP_INL mask_float64<4> &operator=(const mask_float64<4> &) = default;
 
     SIMDPP_INL mask_float64<4>(const native_type& d) : d_(d) {}
 
@@ -122,11 +122,11 @@ public:
 
     template<class E> SIMDPP_INL explicit mask_float64<4>(const mask_int64<4,E>& d)
     {
-        *this = bit_cast<mask_float64<4>>(d.eval());
+        *this = bit_cast<mask_float64<4> >(d.eval());
     }
     template<class E> SIMDPP_INL mask_float64<4>& operator=(const mask_int64<4,E>& d)
     {
-        *this = bit_cast<mask_float64<4>>(d.eval()); return *this;
+        *this = bit_cast<mask_float64<4> >(d.eval()); return *this;
     }
 
     SIMDPP_INL operator native_type() const { return d_; }

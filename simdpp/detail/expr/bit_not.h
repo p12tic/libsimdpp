@@ -20,25 +20,25 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, unsigned N, class E> SIMDPP_INL
-mask_int32<N> expr_eval(const expr_bit_not<mask_int32<N,E>>& q)
+mask_int32<N> expr_eval(const expr_bit_not<mask_int32<N,E> >& q)
 {
     return insn::i_bit_not(q.a.eval());
 }
 
 template<class R, unsigned N, class E> SIMDPP_INL
-mask_int64<N> expr_eval(const expr_bit_not<mask_int64<N,E>>& q)
+mask_int64<N> expr_eval(const expr_bit_not<mask_int64<N,E> >& q)
 {
     return insn::i_bit_not(q.a.eval());
 }
 
 template<class R, unsigned N, class E> SIMDPP_INL
-mask_float32<N> expr_eval(const expr_bit_not<mask_float32<N,E>>& q)
+mask_float32<N> expr_eval(const expr_bit_not<mask_float32<N,E> >& q)
 {
     return insn::i_bit_not(q.a.eval());
 }
 
 template<class R, unsigned N, class E> SIMDPP_INL
-mask_float64<N> expr_eval(const expr_bit_not<mask_float64<N,E>>& q)
+mask_float64<N> expr_eval(const expr_bit_not<mask_float64<N,E> >& q)
 {
     return insn::i_bit_not(q.a.eval());
 }

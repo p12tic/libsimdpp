@@ -12,20 +12,21 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+template<class V>
+void rzero(V* r, unsigned vnum)
+{
+    std::memset(r, 0, sizeof(V) * vnum);
+}
+
 template<class V, unsigned vnum>
 void test_load_helper(TestSuite& tc, void* sv_p)
 {
-    using E = typename V::element_type;
-    auto sdata = reinterpret_cast<E*>(sv_p);
+    typedef typename V::element_type E;
+    E* sdata = reinterpret_cast<E*>(sv_p);
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack
     SIMDPP_ALIGN(16) V rv[vnum];
-
-    auto rzero = [&](V* r)
-    {
-        std::memset(r, 0, sizeof(V) * vnum);
-    };
 
     // calls constructor that accepts expr_construct
     for (unsigned i = 0; i < vnum; i++) {
@@ -62,15 +63,15 @@ void test_load_helper(TestSuite& tc, void* sv_p)
         TEST_PUSH(tc, V, r);
     }
 
-    rzero(rv);
+    rzero(rv, vnum);
     load_packed2(rv[0], rv[1], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero(rv);
+    rzero(rv, vnum);
     load_packed3(rv[0], rv[1], rv[2], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero(rv);
+    rzero(rv, vnum);
     load_packed4(rv[0], rv[1], rv[2], rv[3], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 }

@@ -16,14 +16,14 @@ void test_math_int_n(TestSuite& tc)
 {
     using namespace simdpp;
 
-    using uint8_n = uint8<B>;
-    using int8_n = int8<B>;
-    using uint16_n = uint16<B/2>;
-    using int16_n = int16<B/2>;
-    using uint32_n = uint32<B/4>;
-    using int32_n = int32<B/4>;
-    using uint64_n = uint64<B/8>;
-    using int64_n = int64<B/8>;
+    typedef uint8<B> uint8_n;
+    typedef int8<B> int8_n;
+    typedef uint16<B/2> uint16_n;
+    typedef int16<B/2> int16_n;
+    typedef uint32<B/4> uint32_n;
+    typedef int32<B/4> int32_n;
+    typedef uint64<B/8> uint64_n;
+    typedef int64<B/8> int64_n;
 
     // Vectors with 8-bit integer elements
     {

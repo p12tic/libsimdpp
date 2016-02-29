@@ -22,7 +22,7 @@ namespace detail {
 
 
 template<class R, class E> SIMDPP_INL
-int8<16> expr_eval(const expr_neg<int8<16,E>>& q)
+int8<16> expr_eval(const expr_neg<int8<16,E> >& q)
 {
     int8<16> a = q.a.eval();
 #if SIMDPP_USE_NULL
@@ -36,7 +36,7 @@ int8<16> expr_eval(const expr_neg<int8<16,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-int8<32> expr_eval(const expr_neg<int8<32,E>>& q)
+int8<32> expr_eval(const expr_neg<int8<32,E> >& q)
 {
     int8<32> a = q.a.eval();
     return sub(int8x32::zero(), a);
@@ -44,7 +44,7 @@ int8<32> expr_eval(const expr_neg<int8<32,E>>& q)
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-int8<N> expr_eval(const expr_neg<int8<N,E>>& q)
+int8<N> expr_eval(const expr_neg<int8<N,E> >& q)
 {
     int8<N> a = q.a.eval();
     SIMDPP_VEC_ARRAY_IMPL1(int8<N>, neg, a);
@@ -53,7 +53,7 @@ int8<N> expr_eval(const expr_neg<int8<N,E>>& q)
 // -----------------------------------------------------------------------------
 
 template<class R, class E> SIMDPP_INL
-int16<8> expr_eval(const expr_neg<int16<8,E>>& q)
+int16<8> expr_eval(const expr_neg<int16<8,E> >& q)
 {
     int16<8> a = q.a.eval();
 #if SIMDPP_USE_NULL
@@ -67,7 +67,7 @@ int16<8> expr_eval(const expr_neg<int16<8,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-int16<16> expr_eval(const expr_neg<int16<16,E>>& q)
+int16<16> expr_eval(const expr_neg<int16<16,E> >& q)
 {
     int16<16> a = q.a.eval();
     return sub(int16x16::zero(), a);
@@ -75,7 +75,7 @@ int16<16> expr_eval(const expr_neg<int16<16,E>>& q)
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-int16<N> expr_eval(const expr_neg<int16<N,E>>& q)
+int16<N> expr_eval(const expr_neg<int16<N,E> >& q)
 {
     int16<N> a = q.a.eval();
     SIMDPP_VEC_ARRAY_IMPL1(int16<N>, neg, a);
@@ -84,7 +84,7 @@ int16<N> expr_eval(const expr_neg<int16<N,E>>& q)
 // -----------------------------------------------------------------------------
 
 template<class R, class E> SIMDPP_INL
-int32<4> expr_eval(const expr_neg<int32<4,E>>& q)
+int32<4> expr_eval(const expr_neg<int32<4,E> >& q)
 {
     int32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL
@@ -98,7 +98,7 @@ int32<4> expr_eval(const expr_neg<int32<4,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-int32<8> expr_eval(const expr_neg<int32<8,E>>& q)
+int32<8> expr_eval(const expr_neg<int32<8,E> >& q)
 {
     int32<8> a = q.a.eval();
     return sub(int32x8::zero(), a);
@@ -107,7 +107,7 @@ int32<8> expr_eval(const expr_neg<int32<8,E>>& q)
 
 #if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
-int32<16> expr_eval(const expr_neg<int32<16,E>>& q)
+int32<16> expr_eval(const expr_neg<int32<16,E> >& q)
 {
     int32<16> a = q.a.eval();
     return sub(int32<16>::zero(), a);
@@ -115,7 +115,7 @@ int32<16> expr_eval(const expr_neg<int32<16,E>>& q)
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-int32<N> expr_eval(const expr_neg<int32<N,E>>& q)
+int32<N> expr_eval(const expr_neg<int32<N,E> >& q)
 {
     int32<N> a = q.a.eval();
     SIMDPP_VEC_ARRAY_IMPL1(int32<N>, neg, a);
@@ -124,7 +124,7 @@ int32<N> expr_eval(const expr_neg<int32<N,E>>& q)
 // -----------------------------------------------------------------------------
 
 template<class R, class E> SIMDPP_INL
-int64<2> expr_eval(const expr_neg<int64<2,E>>& q)
+int64<2> expr_eval(const expr_neg<int64<2,E> >& q)
 {
     int64<2> a = q.a.eval();
 #if SIMDPP_USE_NULL
@@ -136,7 +136,7 @@ int64<2> expr_eval(const expr_neg<int64<2,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-uint64<4> expr_eval(const expr_neg<int64<4,E>>& q)
+uint64<4> expr_eval(const expr_neg<int64<4,E> >& q)
 {
     int64<4> a = q.a.eval();
     return sub(int64x4::zero(), a);
@@ -145,7 +145,7 @@ uint64<4> expr_eval(const expr_neg<int64<4,E>>& q)
 
 #if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
-uint64<8> expr_eval(const expr_neg<int64<8,E>>& q)
+uint64<8> expr_eval(const expr_neg<int64<8,E> >& q)
 {
     int64<8> a = q.a.eval();
     return sub(int64<8>::zero(), a);
@@ -153,7 +153,7 @@ uint64<8> expr_eval(const expr_neg<int64<8,E>>& q)
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-uint64<N> expr_eval(const expr_neg<int64<N,E>>& q)
+uint64<N> expr_eval(const expr_neg<int64<N,E> >& q)
 {
     int64<N> a = q.a.eval();
     SIMDPP_VEC_ARRAY_IMPL1(int64<N>, neg, a);

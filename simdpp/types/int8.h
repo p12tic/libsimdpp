@@ -28,26 +28,26 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class int8<N, void> : public any_int8<N, int8<N, void>> {
+class int8<N, void> : public any_int8<N, int8<N, void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using element_type = int8_t;
-    using base_vector_type = int8v;
-    using expr_type = void;
+    typedef int8_t element_type;
+    typedef int8v base_vector_type;
+    typedef void expr_type;
 
-    SIMDPP_INL int8<N>() = default;
-    SIMDPP_INL int8<N>(const int8<N>&) = default;
-    SIMDPP_INL int8<N>& operator=(const int8<N>&) = default;
+    SIMDPP_INL int8<N>() {}
+    // SIMDPP_INL int8<N>(const int8<N>&) = default;
+    // SIMDPP_INL int8<N>& operator=(const int8<N>&) = default;
 
     template<class E> SIMDPP_INL int8<N>(const int8<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int8<N>(const uint8<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit int8<N>(const any_vec<N,V>& d)
     {
-        *this = bit_cast<int8<N>>(d.wrapped().eval());
+        *this = bit_cast<int8<N> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL int8<N>& operator=(const any_vec<N,V>& d)
     {
-        *this = bit_cast<int8<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int8<N> >(d.wrapped().eval()); return *this;
     }
 
 #ifndef SIMDPP_DOXYGEN
@@ -75,9 +75,8 @@ private:
     static SIMDPP_INL int8<N> set_vec(int8v a)
     {
         int8<N> r;
-        for (auto& v : r.d_) {
-            v = a;
-        }
+        for (unsigned i = 0; i < r.vec_length; i++)
+            r.vec(i) = a;
         return r;
     }
 
@@ -89,26 +88,26 @@ private:
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint8<N, void> : public any_int8<N, uint8<N, void>> {
+class uint8<N, void> : public any_int8<N, uint8<N, void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using element_type = uint8_t;
-    using base_vector_type = uint8v;
-    using expr_type = void;
+    typedef uint8_t element_type;
+    typedef uint8v base_vector_type;
+    typedef void expr_type;
 
-    SIMDPP_INL uint8<N>() = default;
-    SIMDPP_INL uint8<N>(const uint8<N>&) = default;
-    SIMDPP_INL uint8<N>& operator=(const uint8<N>&) = default;
+    SIMDPP_INL uint8<N>() {}
+    // SIMDPP_INL uint8<N>(const uint8<N>&) = default;
+    // SIMDPP_INL uint8<N>& operator=(const uint8<N>&) = default;
 
     template<class E> SIMDPP_INL uint8<N>(const uint8<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint8<N>(const int8<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint8<N>(const any_vec<N,V>& d)
     {
-        *this = bit_cast<uint8<N>>(d.wrapped().eval());
+        *this = bit_cast<uint8<N> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL uint8<N>& operator=(const any_vec<N,V>& d)
     {
-        *this = bit_cast<uint8<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint8<N> >(d.wrapped().eval()); return *this;
     }
 
 #ifndef SIMDPP_DOXYGEN
@@ -136,9 +135,8 @@ private:
     static SIMDPP_INL uint8<N> set_vec(uint8v a)
     {
         uint8<N> r;
-        for (auto& v : r.d_) {
-            v = a;
-        }
+        for (unsigned i = 0; i < r.vec_length; i++)
+            r.vec(i) = a;
         return r;
     }
 
@@ -149,15 +147,15 @@ private:
 /// Class representing a mask for 8-bit integer vector of arbitrary
 /// length.
 template<unsigned N>
-class mask_int8<N, void> : public any_int8<N, mask_int8<N,void>> {
+class mask_int8<N, void> : public any_int8<N, mask_int8<N,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int8v;
-    using expr_type = void;
+    typedef mask_int8v base_vector_type;
+    typedef void expr_type;
 
-    SIMDPP_INL mask_int8<N>() = default;
-    SIMDPP_INL mask_int8<N>(const mask_int8<N> &) = default;
-    SIMDPP_INL mask_int8<N> &operator=(const mask_int8<N> &) = default;
+    SIMDPP_INL mask_int8<N>() {}
+    // SIMDPP_INL mask_int8<N>(const mask_int8<N> &) = default;
+    // SIMDPP_INL mask_int8<N> &operator=(const mask_int8<N> &) = default;
 
     /// Access the underlying type
     SIMDPP_INL uint8<N> unmask() const

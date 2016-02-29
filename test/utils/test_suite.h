@@ -11,7 +11,7 @@
 #include <vector>
 #include <cstring>
 #include <iosfwd>
-#include <cstdint>
+#include <stdint.h>
 
 class TestSuite;
 
@@ -22,8 +22,7 @@ bool test_equal(const TestSuite& a, const char* a_arch,
 class TestSuite {
 public:
 
-    // Types of vector elements
-    enum Type : uint8_t {
+    enum Type {
         TYPE_INT8 = 0,
         TYPE_UINT8,
         TYPE_INT16,
@@ -72,7 +71,7 @@ public:
             return data.data();
         }
 
-        std::vector<std::uint8_t> data;
+        std::vector<uint8_t> data;
     };
 
     /// Stores the results into the results set.
@@ -91,6 +90,9 @@ public:
 
     /// The name of the test case
     const char* name() const                { return name_; }
+
+    /// The file path of the test case
+    const char* file() const                { return file_; }
 
     /// Resets the sequence number
     void reset_seq()                        { seq_ = 1; }
@@ -125,7 +127,7 @@ private:
     unsigned curr_fp_zero_equal_;
 
     unsigned curr_results_section_;
-    std::vector<std::vector<Result>> results_;
+    std::vector<std::vector<Result> > results_;
 };
 
 class SeqTestSuite {

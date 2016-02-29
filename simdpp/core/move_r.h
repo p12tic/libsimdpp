@@ -43,7 +43,7 @@ template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move16_r(const any_vec8<N,V>& a)
 {
-    static_assert(shift <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();
@@ -73,7 +73,7 @@ template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move8_r(const any_vec16<N,V>& a)
 {
-    static_assert(shift <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 8, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();
@@ -101,7 +101,7 @@ template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move4_r(const any_vec32<N,V>& a)
 {
-    static_assert(shift <= 4, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();
@@ -128,7 +128,7 @@ template<unsigned shift, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         move2_r(const any_vec64<N,V>& a)
 {
-    static_assert(shift <= 2, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();

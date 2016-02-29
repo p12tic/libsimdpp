@@ -110,7 +110,7 @@ SIMDPP_INL expr_vec_make_const<uint64_t,16>
 template<class V> SIMDPP_INL
 V make_uint(uint64_t v0)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<uint64_t,1> a;
     a.a[0] = v0;
@@ -120,7 +120,7 @@ V make_uint(uint64_t v0)
 template<class V> SIMDPP_INL
 V make_uint(uint64_t v0, uint64_t v1)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<uint64_t,2> a;
     a.a[0] = v0;  a.a[1] = v1;
@@ -130,7 +130,7 @@ V make_uint(uint64_t v0, uint64_t v1)
 template<class V> SIMDPP_INL
 V make_uint(uint64_t v0, uint64_t v1, uint64_t v2, uint64_t v3)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<uint64_t,4> a;
     a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
@@ -141,7 +141,7 @@ template<class V> SIMDPP_INL
 V make_uint(uint64_t v0, uint64_t v1, uint64_t v2, uint64_t v3,
             uint64_t v4, uint64_t v5, uint64_t v6, uint64_t v7)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<uint64_t,8> a;
     a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
@@ -155,7 +155,7 @@ V make_uint(uint64_t v0,  uint64_t v1,  uint64_t v2,  uint64_t v3,
             uint64_t v8,  uint64_t v9,  uint64_t v10, uint64_t v11,
             uint64_t v12, uint64_t v13, uint64_t v14, uint64_t v15)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<uint64_t,16> a;
     a.a[0] = v0;    a.a[1] = v1;    a.a[2] = v2;    a.a[3] = v3;

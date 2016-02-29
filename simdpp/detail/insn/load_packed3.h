@@ -45,7 +45,7 @@ SIMDPP_INL void i_load_packed3(uint8x16& a, uint8x16& b, uint8x16& c, const char
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON
-    auto r = vld3q_u8(reinterpret_cast<const uint8_t*>(p));
+    uint8x16x3_t r = vld3q_u8(reinterpret_cast<const uint8_t*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];
@@ -76,7 +76,7 @@ SIMDPP_INL void i_load_packed3(uint16x8& a, uint16x8& b, uint16x8& c,
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON
-    auto r = vld3q_u16(reinterpret_cast<const uint16_t*>(p));
+    uint16x8x3_t r = vld3q_u16(reinterpret_cast<const uint16_t*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];
@@ -107,7 +107,7 @@ SIMDPP_INL void i_load_packed3(uint32x4& a, uint32x4& b, uint32x4&c, const char*
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON
-    auto r = vld3q_u32(reinterpret_cast<const uint32_t*>(p));
+    uint32x4x3_t r = vld3q_u32(reinterpret_cast<const uint32_t*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];
@@ -144,7 +144,7 @@ SIMDPP_INL void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON64
-    auto r = vld3q_u64(reinterpret_cast<const uint64_t*>(p));
+    uint64x2x3_t r = vld3q_u64(reinterpret_cast<const uint64_t*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];
@@ -198,7 +198,7 @@ SIMDPP_INL void i_load_packed3(float32x4& a, float32x4& b, float32x4& c, const c
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON
-    auto r = vld3q_f32(reinterpret_cast<const float*>(p));
+    float32x4x3_t r = vld3q_f32(reinterpret_cast<const float*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];
@@ -234,7 +234,7 @@ SIMDPP_INL void i_load_packed3(float64x2& a, float64x2& b, float64x2& c, const c
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::null::load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON64
-    auto r = vld3q_f64(reinterpret_cast<const double*>(p));
+    float64x2x3_t r = vld3q_f64(reinterpret_cast<const double*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];

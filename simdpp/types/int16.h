@@ -28,26 +28,26 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class int16<N, void> : public any_int16<N, int16<N,void>> {
+class int16<N, void> : public any_int16<N, int16<N,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using element_type = int16_t;
-    using base_vector_type = int16v;
-    using expr_type = void;
+    typedef int16_t element_type;
+    typedef int16v base_vector_type;
+    typedef void expr_type;
 
-    SIMDPP_INL int16<N>() = default;
-    SIMDPP_INL int16<N>(const int16<N>&) = default;
-    SIMDPP_INL int16<N>& operator=(const int16<N>&) = default;
+    SIMDPP_INL int16<N>() {}
+    // SIMDPP_INL int16<N>(const int16<N>&) = default;
+    // SIMDPP_INL int16<N>& operator=(const int16<N>&) = default;
 
     template<class E> SIMDPP_INL int16<N>(const int16<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int16<N>(const uint16<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit int16<N>(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<int16<N>>(d.wrapped().eval());
+        *this = bit_cast<int16<N> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL int16<N>& operator=(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<int16<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int16<N> >(d.wrapped().eval()); return *this;
     }
 
 #ifndef SIMDPP_DOXYGEN
@@ -75,9 +75,8 @@ private:
     static SIMDPP_INL int16<N> set_vec(int16v a)
     {
         int16<N> r;
-        for (auto& v : r.d_) {
-            v = a;
-        }
+        for (unsigned i = 0; i < r.vec_length; i++)
+            r.vec(i) = a;
         return r;
     }
 
@@ -88,26 +87,26 @@ private:
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint16<N, void> : public any_int16<N, uint16<N,void>> {
+class uint16<N, void> : public any_int16<N, uint16<N,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using element_type = uint16_t;
-    using base_vector_type = uint16v;
-    using expr_type = void;
+    typedef uint16_t element_type;
+    typedef uint16v base_vector_type;
+    typedef void expr_type;
 
-    SIMDPP_INL uint16<N>() = default;
-    SIMDPP_INL uint16<N>(const uint16<N>&) = default;
-    SIMDPP_INL uint16<N>& operator=(const uint16<N>&) = default;
+    SIMDPP_INL uint16<N>() {}
+    // SIMDPP_INL uint16<N>(const uint16<N>&) = default;
+    // SIMDPP_INL uint16<N>& operator=(const uint16<N>&) = default;
 
     template<class E> SIMDPP_INL uint16<N>(const uint16<N,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint16<N>(const int16<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint16<N>(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<uint16<N>>(d.wrapped().eval());
+        *this = bit_cast<uint16<N> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL uint16<N>& operator=(const any_vec<N*2,V>& d)
     {
-        *this = bit_cast<uint16<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint16<N> >(d.wrapped().eval()); return *this;
     }
 
     SIMDPP_INL const uint16v& vec(unsigned i) const { return d_[i]; }
@@ -135,9 +134,8 @@ private:
     static SIMDPP_INL uint16<N> set_vec(uint16v a)
     {
         uint16<N> r;
-        for (auto& v : r.d_) {
-            v = a;
-        }
+        for (unsigned i = 0; i < r.vec_length; i++)
+            r.vec(i) = a;
         return r;
     }
 
@@ -147,15 +145,15 @@ private:
 /// Class representing a mask for 16-bit integer vector of arbitrary
 /// length.
 template<unsigned N>
-class mask_int16<N, void> : public any_int16<N, mask_int16<N,void>> {
+class mask_int16<N, void> : public any_int16<N, mask_int16<N,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int16v;
-    using expr_type = void;
+    typedef mask_int16v base_vector_type;
+    typedef void expr_type;
 
-    SIMDPP_INL mask_int16<N>() = default;
-    SIMDPP_INL mask_int16<N>(const mask_int16<N> &) = default;
-    SIMDPP_INL mask_int16<N> &operator=(const mask_int16<N> &) = default;
+    SIMDPP_INL mask_int16<N>() {}
+    // SIMDPP_INL mask_int16<N>(const mask_int16<N> &) = default;
+    // SIMDPP_INL mask_int16<N> &operator=(const mask_int16<N> &) = default;
 
     /// Access the underlying type
     SIMDPP_INL uint16<N> unmask() const

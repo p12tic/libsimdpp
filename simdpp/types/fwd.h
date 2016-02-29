@@ -28,62 +28,62 @@ namespace detail {
 template<unsigned N, class E = void> class float32;
 template<unsigned N, class E = void> class mask_float32;
 
-using float32x4 = float32<4>;
-using float32x8 = float32<8>;
-using mask_float32x4 = mask_float32<4>;
-using mask_float32x8 = mask_float32<8>;
+typedef float32<4> float32x4;
+typedef float32<8> float32x8;
+typedef mask_float32<4> mask_float32x4;
+typedef mask_float32<8> mask_float32x8;
 
 template<unsigned N, class E = void> class float64;
 template<unsigned N, class E = void> class mask_float64;
 
-using float64x2 = float64<2>;
-using float64x4 = float64<4>;
-using mask_float64x2 = mask_float64<2>;
-using mask_float64x4 = mask_float64<4>;
+typedef float64<2> float64x2;
+typedef float64<4> float64x4;
+typedef mask_float64<2> mask_float64x2;
+typedef mask_float64<4> mask_float64x4;
 
 template<unsigned N, class E = void> class int8;
 template<unsigned N, class E = void> class uint8;
 template<unsigned N, class E = void> class mask_int8;
 
-using int8x16 = int8<16>;
-using int8x32 = int8<32>;
-using uint8x16 = uint8<16>;
-using uint8x32 = uint8<32>;
-using mask_int8x16 = mask_int8<16>;
-using mask_int8x32 = mask_int8<32>;
+typedef int8<16> int8x16;
+typedef int8<32> int8x32;
+typedef uint8<16> uint8x16;
+typedef uint8<32> uint8x32;
+typedef mask_int8<16> mask_int8x16;
+typedef mask_int8<32> mask_int8x32;
 
 template<unsigned N, class E = void> class int16;
 template<unsigned N, class E = void> class uint16;
 template<unsigned N, class E = void> class mask_int16;
 
-using int16x8 = int16<8>;
-using int16x16 = int16<16>;
-using uint16x8 = uint16<8>;
-using uint16x16 = uint16<16>;
-using mask_int16x8 = mask_int16<8>;
-using mask_int16x16 = mask_int16<16>;
+typedef int16<8> int16x8;
+typedef int16<16> int16x16;
+typedef uint16<8> uint16x8;
+typedef uint16<16> uint16x16;
+typedef mask_int16<8> mask_int16x8;
+typedef mask_int16<16> mask_int16x16;
 
 template<unsigned N, class E = void> class int32;
 template<unsigned N, class E = void> class uint32;
 template<unsigned N, class E = void> class mask_int32;
 
-using int32x4 = int32<4>;
-using int32x8 = int32<8>;
-using uint32x4 = uint32<4>;
-using uint32x8 = uint32<8>;
-using mask_int32x4 = mask_int32<4>;
-using mask_int32x8 = mask_int32<8>;
+typedef int32<4> int32x4;
+typedef int32<8> int32x8;
+typedef uint32<4> uint32x4;
+typedef uint32<8> uint32x8;
+typedef mask_int32<4> mask_int32x4;
+typedef mask_int32<8> mask_int32x8;
 
 template<unsigned N, class E = void> class int64;
 template<unsigned N, class E = void> class uint64;
 template<unsigned N, class E = void> class mask_int64;
 
-using int64x2 = int64<2>;
-using int64x4 = int64<4>;
-using uint64x2 = uint64<2>;
-using uint64x4 = uint64<4>;
-using mask_int64x2 = mask_int64<2>;
-using mask_int64x4 = mask_int64<4>;
+typedef int64<2> int64x2;
+typedef int64<4> int64x4;
+typedef uint64<2> uint64x2;
+typedef uint64<4> uint64x4;
+typedef mask_int64<2> mask_int64x2;
+typedef mask_int64<4> mask_int64x4;
 
 #if SIMDPP_USE_AVX512F
 #define SIMDPP_FAST_FLOAT32_SIZE 16
@@ -113,68 +113,68 @@ using mask_int64x4 = mask_int64<4>;
 #define SIMDPP_FAST_INT64_SIZE 2
 #endif
 
-using float32v =           float32<SIMDPP_FAST_FLOAT32_SIZE>;
-using mask_float32v = mask_float32<SIMDPP_FAST_FLOAT32_SIZE>;
-using float64v =           float64<SIMDPP_FAST_FLOAT64_SIZE>;
-using mask_float64v = mask_float64<SIMDPP_FAST_FLOAT64_SIZE>;
+typedef           float32<SIMDPP_FAST_FLOAT32_SIZE> float32v;
+typedef mask_float32<SIMDPP_FAST_FLOAT32_SIZE> mask_float32v;
+typedef           float64<SIMDPP_FAST_FLOAT64_SIZE> float64v;
+typedef mask_float64<SIMDPP_FAST_FLOAT64_SIZE> mask_float64v;
 
-using int8v =           int8<SIMDPP_FAST_INT8_SIZE>;
-using uint8v =         uint8<SIMDPP_FAST_INT8_SIZE>;
-using mask_int8v = mask_int8<SIMDPP_FAST_INT8_SIZE>;
+typedef           int8<SIMDPP_FAST_INT8_SIZE> int8v;
+typedef         uint8<SIMDPP_FAST_INT8_SIZE> uint8v;
+typedef mask_int8<SIMDPP_FAST_INT8_SIZE> mask_int8v;
 
-using int16v =           int16<SIMDPP_FAST_INT16_SIZE>;
-using uint16v =         uint16<SIMDPP_FAST_INT16_SIZE>;
-using mask_int16v = mask_int16<SIMDPP_FAST_INT16_SIZE>;
+typedef           int16<SIMDPP_FAST_INT16_SIZE> int16v;
+typedef         uint16<SIMDPP_FAST_INT16_SIZE> uint16v;
+typedef mask_int16<SIMDPP_FAST_INT16_SIZE> mask_int16v;
 
-using int32v =           int32<SIMDPP_FAST_INT32_SIZE>;
-using uint32v =         uint32<SIMDPP_FAST_INT32_SIZE>;
-using mask_int32v = mask_int32<SIMDPP_FAST_INT32_SIZE>;
+typedef           int32<SIMDPP_FAST_INT32_SIZE> int32v;
+typedef         uint32<SIMDPP_FAST_INT32_SIZE> uint32v;
+typedef mask_int32<SIMDPP_FAST_INT32_SIZE> mask_int32v;
 
-using int64v =           int64<SIMDPP_FAST_INT64_SIZE>;
-using uint64v =         uint64<SIMDPP_FAST_INT64_SIZE>;
-using mask_int64v = mask_int64<SIMDPP_FAST_INT64_SIZE>;
+typedef           int64<SIMDPP_FAST_INT64_SIZE> int64v;
+typedef         uint64<SIMDPP_FAST_INT64_SIZE> uint64v;
+typedef mask_int64<SIMDPP_FAST_INT64_SIZE> mask_int64v;
 
-using mask_float32v2 = mask_float32<SIMDPP_FAST_FLOAT32_SIZE*2>;
-using float64v2 =           float64<SIMDPP_FAST_FLOAT64_SIZE*2>;
-using mask_float64v2 = mask_float64<SIMDPP_FAST_FLOAT64_SIZE*2>;
+typedef mask_float32<SIMDPP_FAST_FLOAT32_SIZE*2> mask_float32v2;
+typedef           float64<SIMDPP_FAST_FLOAT64_SIZE*2> float64v2;
+typedef mask_float64<SIMDPP_FAST_FLOAT64_SIZE*2> mask_float64v2;
 
-using int8v2 =           int8<SIMDPP_FAST_INT8_SIZE*2>;
-using uint8v2 =         uint8<SIMDPP_FAST_INT8_SIZE*2>;
-using mask_int8v2 = mask_int8<SIMDPP_FAST_INT8_SIZE*2>;
+typedef           int8<SIMDPP_FAST_INT8_SIZE*2> int8v2;
+typedef         uint8<SIMDPP_FAST_INT8_SIZE*2> uint8v2;
+typedef mask_int8<SIMDPP_FAST_INT8_SIZE*2> mask_int8v2;
 
-using int16v2 =           int16<SIMDPP_FAST_INT16_SIZE*2>;
-using uint16v2 =         uint16<SIMDPP_FAST_INT16_SIZE*2>;
-using mask_int16v2 = mask_int16<SIMDPP_FAST_INT16_SIZE*2>;
+typedef           int16<SIMDPP_FAST_INT16_SIZE*2> int16v2;
+typedef         uint16<SIMDPP_FAST_INT16_SIZE*2> uint16v2;
+typedef mask_int16<SIMDPP_FAST_INT16_SIZE*2> mask_int16v2;
 
-using int32v2 =           int32<SIMDPP_FAST_INT32_SIZE*2>;
-using uint32v2 =         uint32<SIMDPP_FAST_INT32_SIZE*2>;
-using mask_int32v2 = mask_int32<SIMDPP_FAST_INT32_SIZE*2>;
+typedef           int32<SIMDPP_FAST_INT32_SIZE*2> int32v2;
+typedef         uint32<SIMDPP_FAST_INT32_SIZE*2> uint32v2;
+typedef mask_int32<SIMDPP_FAST_INT32_SIZE*2> mask_int32v2;
 
-using int64v2 =           int64<SIMDPP_FAST_INT64_SIZE*2>;
-using uint64v2 =         uint64<SIMDPP_FAST_INT64_SIZE*2>;
-using mask_int64v2 = mask_int64<SIMDPP_FAST_INT64_SIZE*2>;
+typedef           int64<SIMDPP_FAST_INT64_SIZE*2> int64v2;
+typedef         uint64<SIMDPP_FAST_INT64_SIZE*2> uint64v2;
+typedef mask_int64<SIMDPP_FAST_INT64_SIZE*2> mask_int64v2;
 
 
-using float32v4 =           float32<SIMDPP_FAST_FLOAT32_SIZE*4>;
-using mask_float32v4 = mask_float32<SIMDPP_FAST_FLOAT32_SIZE*4>;
-using float64v4 =           float64<SIMDPP_FAST_FLOAT64_SIZE*4>;
-using mask_float64v4 = mask_float64<SIMDPP_FAST_FLOAT64_SIZE*4>;
+typedef           float32<SIMDPP_FAST_FLOAT32_SIZE*4> float32v4;
+typedef mask_float32<SIMDPP_FAST_FLOAT32_SIZE*4> mask_float32v4;
+typedef           float64<SIMDPP_FAST_FLOAT64_SIZE*4> float64v4;
+typedef mask_float64<SIMDPP_FAST_FLOAT64_SIZE*4> mask_float64v4;
 
-using int8v4 =           int8<SIMDPP_FAST_INT8_SIZE*4>;
-using uint8v4 =         uint8<SIMDPP_FAST_INT8_SIZE*4>;
-using mask_int8v4 = mask_int8<SIMDPP_FAST_INT8_SIZE*4>;
+typedef           int8<SIMDPP_FAST_INT8_SIZE*4> int8v4;
+typedef         uint8<SIMDPP_FAST_INT8_SIZE*4> uint8v4;
+typedef mask_int8<SIMDPP_FAST_INT8_SIZE*4> mask_int8v4;
 
-using int16v4 =           int16<SIMDPP_FAST_INT16_SIZE*4>;
-using uint16v4 =         uint16<SIMDPP_FAST_INT16_SIZE*4>;
-using mask_int16v4 = mask_int16<SIMDPP_FAST_INT16_SIZE*4>;
+typedef           int16<SIMDPP_FAST_INT16_SIZE*4> int16v4;
+typedef         uint16<SIMDPP_FAST_INT16_SIZE*4> uint16v4;
+typedef mask_int16<SIMDPP_FAST_INT16_SIZE*4> mask_int16v4;
 
-using int32v4 =           int32<SIMDPP_FAST_INT32_SIZE*4>;
-using uint32v4 =         uint32<SIMDPP_FAST_INT32_SIZE*4>;
-using mask_int32v4 = mask_int32<SIMDPP_FAST_INT32_SIZE*4>;
+typedef           int32<SIMDPP_FAST_INT32_SIZE*4> int32v4;
+typedef         uint32<SIMDPP_FAST_INT32_SIZE*4> uint32v4;
+typedef mask_int32<SIMDPP_FAST_INT32_SIZE*4> mask_int32v4;
 
-using int64v4 =           int64<SIMDPP_FAST_INT64_SIZE*4>;
-using uint64v4 =         uint64<SIMDPP_FAST_INT64_SIZE*4>;
-using mask_int64v4 = mask_int64<SIMDPP_FAST_INT64_SIZE*4>;
+typedef           int64<SIMDPP_FAST_INT64_SIZE*4> int64v4;
+typedef         uint64<SIMDPP_FAST_INT64_SIZE*4> uint64v4;
+typedef mask_int64<SIMDPP_FAST_INT64_SIZE*4> mask_int64v4;
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -230,7 +230,7 @@ template<class T> SIMDPP_INL
 void v_mem_unpack3_impl32_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
+    typedef typename T::uint_vector_type U;
 
     // [a0,b0,c0,a1]
     // [b1,c1,a2,b2]

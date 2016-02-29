@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <type_traits>
+#include <simdpp/types/traits.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -74,7 +74,7 @@ public:
 template<class T>
 void libsimdpp_instruction_not_available_template()
 {
-    static_assert(!std::is_same<T, T>::value, "The instruction is not available");
+    SIMDPP_STATIC_ASSERT((!detail::is_same<T, T>::value), "The instruction is not available");
 }
 
 /** Causes linker error whenever unimplemented functionality is used. Compared

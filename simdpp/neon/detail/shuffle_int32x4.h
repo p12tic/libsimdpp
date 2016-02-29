@@ -9,7 +9,7 @@
 #define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT32x4_H
 #if SIMDPP_USE_NEON
 
-#include <type_traits>
+#include <simdpp/types/traits.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -17,16 +17,18 @@ namespace neon {
 namespace detail {
 namespace shuffle_int32x4 {
 
+using namespace simdpp::SIMDPP_ARCH_NAMESPACE::detail;
+
 /*
     The code below implements generalized permutations of elements within
     int32x4 vectors using various shuffling instructions available on NEON.
 */
-using _0 = std::integral_constant<unsigned, 0>;
-using _1 = std::integral_constant<unsigned, 1>;
-using _2 = std::integral_constant<unsigned, 2>;
-using _3 = std::integral_constant<unsigned, 3>;
-using T = uint32x4;    // full vector
-using H = uint32x2_t;       // half vector
+typedef integral_constant<unsigned, 0> _0;
+typedef integral_constant<unsigned, 1> _1;
+typedef integral_constant<unsigned, 2> _2;
+typedef integral_constant<unsigned, 3> _3;
+typedef uint32x4 T;    // full vector
+typedef uint32x2_t H;       // half vector
 
 
 /// Returns the lower/higher part of a vector. Cost: 0
@@ -118,10 +120,10 @@ SIMDPP_INL T perm4(_3,_3,_3,_3, T a) { return bcast<3>(a); }
 SIMDPP_INL T perm4(_1,_0,_3,_2, T a) { return rev(a); }
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
-T perm4(std::integral_constant<unsigned, s0>,
-        std::integral_constant<unsigned, s1>,
-        std::integral_constant<unsigned, s2>,
-        std::integral_constant<unsigned, s3>, const T& a)
+T perm4(integral_constant<unsigned, s0>,
+        integral_constant<unsigned, s1>,
+        integral_constant<unsigned, s2>,
+        integral_constant<unsigned, s3>, const T& a)
 {
     return co(shf2x2<s0,s1>(lo(a), hi(a)), shf2x2<s2,s3>(lo(a), hi(a)));
 }
@@ -129,10 +131,10 @@ T perm4(std::integral_constant<unsigned, s0>,
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 T permute4(T a)
 {
-    return perm4(std::integral_constant<unsigned, s0>{},
-                 std::integral_constant<unsigned, s1>{},
-                 std::integral_constant<unsigned, s2>{},
-                 std::integral_constant<unsigned, s3>{}, a);
+    return perm4(integral_constant<unsigned, s0>{},
+                 integral_constant<unsigned, s1>{},
+                 integral_constant<unsigned, s2>{},
+                 integral_constant<unsigned, s3>{}, a);
 }
 
 // 2-element shuffle: the first two elements must come from a, the last two -

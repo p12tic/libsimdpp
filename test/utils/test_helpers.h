@@ -12,7 +12,7 @@
 #include <simdpp/detail/align_v128.h>
 #include <iostream>
 #include "test_suite.h"
-#include <cfenv>
+#include <fenv.h>
 #include <float.h>
 
 
@@ -21,7 +21,7 @@ inline void set_round_to_zero()
 #if _MSC_VER
     _controlfp(_MCW_RC, _RC_CHOP);
 #else
-    std::fesetround(FE_TOWARDZERO);
+    ::fesetround(FE_TOWARDZERO);
 #endif
 #if SIMDPP_USE_SSE2
     _MM_SET_ROUNDING_MODE(_MM_ROUND_TOWARD_ZERO);
@@ -33,7 +33,7 @@ inline void set_round_to_nearest()
 #if _MSC_VER
     _controlfp(_MCW_RC, _RC_NEAR);
 #else
-    std::fesetround(FE_TONEAREST);
+    ::fesetround(FE_TONEAREST);
 #endif
 #if SIMDPP_USE_SSE2
     _MM_SET_ROUNDING_MODE(_MM_ROUND_NEAREST);
@@ -47,42 +47,42 @@ namespace SIMDPP_ARCH_NAMESPACE {
     the type enum from the type of the supplied argument.
     @{
 */
-inline void test_push_internal(TestSuite& t, std::int8_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, int8_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_INT8, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestSuite& t, std::uint8_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, uint8_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_UINT8, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestSuite& t, std::int16_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, int16_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_INT16, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestSuite& t, std::uint16_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, uint16_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_UINT16, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestSuite& t, std::int32_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, int32_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_INT32, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestSuite& t, std::uint32_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, uint32_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_UINT32, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestSuite& t, std::int64_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, int64_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_INT64, 1, line).set(0, &data);
 }
 
-inline void test_push_internal(TestSuite& t, std::uint64_t data, unsigned line)
+inline void test_push_internal(TestSuite& t, uint64_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_UINT64, 1, line).set(0, &data);
 }
@@ -101,7 +101,7 @@ template<class V>
 void test_push_internal_vec(TestSuite::Result& res, const V& data)
 {
     for (unsigned i = 0; i < data.vec_length; ++i) {
-        using Base = typename V::base_vector_type;
+        typedef typename V::base_vector_type Base;
         simdpp::detail::mem_block<Base> block(data.vec(i));
         for (unsigned j = 0; j < Base::length; j++) {
             res.set(i*Base::length + j, &block[j]);
@@ -464,7 +464,7 @@ void test_cmp_vectors(SeqTestSuite& ts, const V1& q1, const V2& q2,
 {
     typename simdpp::detail::get_expr_nomask<V1>::type v1 = q1.eval();
     typename simdpp::detail::get_expr_nomask<V2>::type v2 = q2.eval();
-    static_assert(sizeof(v1) == sizeof(v2),
+    SIMDPP_STATIC_ASSERT(sizeof(v1) == sizeof(v2),
                   "Only vectors of same size should be compared");
 
     bool success = std::memcmp(&v1, &v2, sizeof(v1)) == 0;

@@ -12,7 +12,7 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <cstdint>
+#include <stdint.h>
 #include <simdpp/types.h>
 #include <simdpp/core/make_uint.h>
 #include <simdpp/detail/array.h>
@@ -25,23 +25,23 @@ namespace detail {
 template<int s, unsigned u> SIMDPP_INL
 void assert_selector_range()
 {
-    static_assert(-1 <= s && s < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s && s < u*2, "Selector out of range");
 }
 
 template<int s0, int s1, int u> SIMDPP_INL
 void assert_selector_range()
 {
-    static_assert(-1 <= s0 && s0 < u*2, "Selector out of range");
-    static_assert(-1 <= s1 && s1 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s0 && s0 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s1 && s1 < u*2, "Selector out of range");
 }
 
 template<int s0, int s1, int s2, int s3, int u> SIMDPP_INL
 void assert_selector_range()
 {
-    static_assert(-1 <= s0 && s0 < u*2, "Selector out of range");
-    static_assert(-1 <= s1 && s1 < u*2, "Selector out of range");
-    static_assert(-1 <= s2 && s2 < u*2, "Selector out of range");
-    static_assert(-1 <= s3 && s3 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s0 && s0 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s1 && s1 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s2 && s2 < u*2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(-1 <= s3 && s3 < u*2, "Selector out of range");
 }
 
 /// s - selector, u - the number of elements per group
@@ -51,9 +51,9 @@ uint8_t get_shuffle_bytex1_16()
     return (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
 }
 
-using uint8x2 = array<uint8_t, 2>;
-using uint8x4 = array<uint8_t, 4>;
-using uint8x8 = array<uint8_t, 8>;
+typedef array<uint8_t, 2> uint8x2;
+typedef array<uint8_t, 4> uint8x4;
+typedef array<uint8_t, 8> uint8x8;
 
 /// s - selector, u - the number of elements per group
 template<int s, int u> SIMDPP_INL

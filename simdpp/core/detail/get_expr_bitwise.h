@@ -88,11 +88,12 @@ class get_expr_bitwise2_and {
                                         SIMDPP_TAG_MASK_INT;
 
 public:
-    using v1_type = typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type;
-    using v2_type = typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type;
+    typedef typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type v1_type;
+    typedef typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type v2_type;
+    typedef E<v1_type, v2_type> expr_type;
 
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                      E<v1_type, v2_type>>::type;
+    typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
+                                 expr_type>::type type;
 };
 
 
@@ -142,11 +143,12 @@ class get_expr_bit_or {
 
 
 public:
-    using v1_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type;
-    using v2_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type;
+    typedef typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type v1_type;
+    typedef typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type v2_type;
+    typedef expr_bit_or<v1_type, v2_type> expr_type;
 
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                      expr_bit_or<v1_type, v2_type>>::type;
+    typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
+                                 expr_type>::type type;
 };
 
 

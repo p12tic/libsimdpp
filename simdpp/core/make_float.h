@@ -105,7 +105,7 @@ SIMDPP_INL expr_vec_make_const<double,16>
 template<class V> SIMDPP_INL
 V make_float(double v0)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,1> a;
     a.a[0] = v0;
@@ -115,7 +115,7 @@ V make_float(double v0)
 template<class V> SIMDPP_INL
 V make_float(double v0, double v1)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,2> a;
     a.a[0] = v0;  a.a[1] = v1;
@@ -125,7 +125,7 @@ V make_float(double v0, double v1)
 template<class V> SIMDPP_INL
 V make_float(double v0, double v1, double v2, double v3)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,4> a;
     a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
@@ -136,7 +136,7 @@ template<class V> SIMDPP_INL
 V make_float(double v0, double v1, double v2, double v3,
              double v4, double v5, double v6, double v7)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,8> a;
     a.a[0] = v0;  a.a[1] = v1;  a.a[2] = v2;  a.a[3] = v3;
@@ -150,7 +150,7 @@ V make_float(double v0,  double v1,  double v2,  double v3,
              double v8,  double v9,  double v10, double v11,
              double v12, double v13, double v14, double v15)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     expr_vec_make_const<double,16> a;
     a.a[0] = v0;    a.a[1] = v1;    a.a[2] = v2;    a.a[3] = v3;

@@ -145,12 +145,12 @@ void test_shuffle_n(TestSuite& tc)
 
     Vectors<B,4> v;
 
-    using uint8_n = uint8<B>;
-    using uint16_n = uint16<B/2>;
-    using uint32_n = uint32<B/4>;
-    using uint64_n = uint64<B/8>;
-    using float32_n = float32<B/4>;
-    using float64_n = float64<B/8>;
+    typedef uint8<B> uint8_n;
+    typedef uint16<B/2> uint16_n;
+    typedef uint32<B/4> uint32_n;
+    typedef uint64<B/8> uint64_n;
+    typedef float32<B/4> float32_n;
+    typedef float64<B/8> float64_n;
 
     test_shuffle_type<uint8_n>(tc, v.u8[0], v.u8[1]);
     test_shuffle_type<uint16_n>(tc, v.u16[0], v.u16[1]);
@@ -179,16 +179,16 @@ void test_shuffle(TestResults& res)
 
     Vectors<16,4> v;
 
-    TemplateTestHelper<Test_insert_extract, uint8<16>>::run(tc, v.u8[0], v.u8[1]);
-    TemplateTestHelper<Test_insert_extract, int8<16>>::run(tc, v.i8[0], v.i8[1]);
-    TemplateTestHelper<Test_insert_extract, uint16<8>>::run(tc, v.u16[0], v.u16[1]);
-    TemplateTestHelper<Test_insert_extract, int16<8>>::run(tc, v.i16[0], v.i16[1]);
-    TemplateTestHelper<Test_insert_extract, uint32<4>>::run(tc, v.u32[0], v.u32[1]);
-    TemplateTestHelper<Test_insert_extract, int32<4>>::run(tc, v.i32[0], v.i32[1]);
-    TemplateTestHelper<Test_insert_extract, uint64<2>>::run(tc, v.u64[0], v.u64[1]);
-    TemplateTestHelper<Test_insert_extract, int64<2>>::run(tc, v.i64[0], v.i64[1]);
-    TemplateTestHelper<Test_insert_extract, float32<4>>::run(tc, v.f32[0], v.f32[1]);
-    TemplateTestHelper<Test_insert_extract, float64<2>>::run(tc, v.f64[0], v.f64[1]);
+    TemplateTestHelper<Test_insert_extract, uint8<16> >::run(tc, v.u8[0], v.u8[1]);
+    TemplateTestHelper<Test_insert_extract, int8<16> >::run(tc, v.i8[0], v.i8[1]);
+    TemplateTestHelper<Test_insert_extract, uint16<8> >::run(tc, v.u16[0], v.u16[1]);
+    TemplateTestHelper<Test_insert_extract, int16<8> >::run(tc, v.i16[0], v.i16[1]);
+    TemplateTestHelper<Test_insert_extract, uint32<4> >::run(tc, v.u32[0], v.u32[1]);
+    TemplateTestHelper<Test_insert_extract, int32<4> >::run(tc, v.i32[0], v.i32[1]);
+    TemplateTestHelper<Test_insert_extract, uint64<2> >::run(tc, v.u64[0], v.u64[1]);
+    TemplateTestHelper<Test_insert_extract, int64<2> >::run(tc, v.i64[0], v.i64[1]);
+    TemplateTestHelper<Test_insert_extract, float32<4> >::run(tc, v.f32[0], v.f32[1]);
+    TemplateTestHelper<Test_insert_extract, float64<2> >::run(tc, v.f64[0], v.f64[1]);
 
     // extract bits
 

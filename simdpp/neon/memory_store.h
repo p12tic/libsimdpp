@@ -29,9 +29,9 @@ namespace neon {
 template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, const uint8x16& a)
 {
-    static_assert(n == 1 || n == 2 || n == 4 || n == 8, "Size not supported");
-    static_assert(pos%n == 0, "pos must be a multiple of n");
-    static_assert(pos+n <= 16, "Index out of bounds");
+    SIMDPP_STATIC_ASSERT(n == 1 || n == 2 || n == 4 || n == 8, "Size not supported");
+    SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
+    SIMDPP_STATIC_ASSERT(pos+n <= 16, "Index out of bounds");
     switch (n) {
     case 1:
         vst1q_lane_u8(reinterpret_cast<uint8_t*>(p), a, pos);
@@ -51,9 +51,9 @@ void store_lane(void* p, const uint8x16& a)
 template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, const uint16x8& a)
 {
-    static_assert(n == 1 || n == 2 || n == 4, "Size not supported");
-    static_assert(pos%n == 0, "pos must be a multiple of n");
-    static_assert(pos+n <= 8, "Index out of bounds");
+    SIMDPP_STATIC_ASSERT(n == 1 || n == 2 || n == 4, "Size not supported");
+    SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
+    SIMDPP_STATIC_ASSERT(pos+n <= 8, "Index out of bounds");
     switch (n) {
     case 1:
         vst1q_lane_u16(reinterpret_cast<uint16_t*>(p), a, pos);
@@ -70,9 +70,9 @@ void store_lane(void* p, const uint16x8& a)
 template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, const uint32x4& a)
 {
-    static_assert(n == 1 || n == 2, "Size not supported");
-    static_assert(pos%n == 0, "pos must be a multiple of n");
-    static_assert(pos+n <= 4, "Index out of bounds");
+    SIMDPP_STATIC_ASSERT(n == 1 || n == 2, "Size not supported");
+    SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
+    SIMDPP_STATIC_ASSERT(pos+n <= 4, "Index out of bounds");
     switch (n) {
     case 1:
         vst1q_lane_u32(reinterpret_cast<uint32_t*>(p), a, pos);
@@ -86,9 +86,9 @@ void store_lane(void* p, const uint32x4& a)
 template<unsigned pos, unsigned n> SIMDPP_INL
 void store_lane(void* p, const uint64x2& a)
 {
-    static_assert(n == 1, "Size not supported");
-    static_assert(pos%n == 0, "pos must be a multiple of n");
-    static_assert(pos+n <= 2, "Index out of bounds");
+    SIMDPP_STATIC_ASSERT(n == 1, "Size not supported");
+    SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
+    SIMDPP_STATIC_ASSERT(pos+n <= 2, "Index out of bounds");
     vst1q_lane_u64(reinterpret_cast<uint64_t*>(p), a, pos);
 }
 

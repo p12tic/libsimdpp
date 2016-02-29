@@ -27,11 +27,11 @@ namespace detail {
 template<class V>
 class mem_block {
 public:
-    using element_type = typename V::element_type;
+    typedef typename V::element_type element_type;
     static const unsigned length = V::length;
 
-    SIMDPP_INL mem_block() = default;
-    SIMDPP_INL mem_block(const mem_block&) = default;
+    SIMDPP_INL mem_block() {}
+    SIMDPP_INL mem_block(const mem_block& other) { std::memcpy(this, &other, sizeof(other)); }
     SIMDPP_INL mem_block(V v) { std::memcpy(d_, &v, sizeof(v)); }
 
     SIMDPP_INL mem_block& operator=(V v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
@@ -45,7 +45,7 @@ public:
 private:
     union {
         element_type d_[length];
-        V align_;
+        typename V::native_type align_;
     };
 };
 

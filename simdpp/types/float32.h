@@ -30,25 +30,25 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class float32<N, void> : public any_float32<N, float32<N,void>> {
+class float32<N, void> : public any_float32<N, float32<N,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
-    using expr_type = void;
-    using element_type = float;
-    using base_vector_type = float32v;
+    typedef void expr_type;
+    typedef float element_type;
+    typedef float32v base_vector_type;
 
-    SIMDPP_INL float32<N>() = default;
-    SIMDPP_INL float32<N>(const float32<N>&) = default;
-    SIMDPP_INL float32<N>& operator=(const float32<N>&) = default;
+    SIMDPP_INL float32<N>() {}
+    // SIMDPP_INL float32<N>(const float32<N>&) = default;
+    // SIMDPP_INL float32<N>& operator=(const float32<N>&) = default;
 
     template<class E> SIMDPP_INL float32<N>(const float32<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float32<N>(const any_vec<N*4,V>& d)
     {
-        *this = bit_cast<float32<N>>(d.wrapped().eval());
+        *this = bit_cast<float32<N> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL float32<N>& operator=(const any_vec<N*4,V>& d)
     {
-        *this = bit_cast<float32<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<float32<N> >(d.wrapped().eval()); return *this;
     }
 
 #ifndef SIMDPP_DOXYGEN
@@ -92,7 +92,8 @@ private:
     static SIMDPP_INL float32<N> set_vec(float32v v0)
     {
         float32<N> r;
-        for (unsigned i = 0; i < r.vec_length; i++) r.vec(i) = v0;
+        for (unsigned i = 0; i < r.vec_length; i++)
+            r.vec(i) = v0;
         return r;
     }
 
@@ -103,23 +104,23 @@ private:
 /// Class representing a mask for 32-bit floating-point vector of arbitrary
 /// length.
 template<unsigned N>
-class mask_float32<N, void> : public any_float32<N, mask_float32<N,void>> {
+class mask_float32<N, void> : public any_float32<N, mask_float32<N,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using base_vector_type = mask_float32v;
-    using expr_type = void;
+    typedef mask_float32v base_vector_type;
+    typedef void expr_type;
 
-    SIMDPP_INL mask_float32<N>() = default;
-    SIMDPP_INL mask_float32<N>(const mask_float32<N> &) = default;
-    SIMDPP_INL mask_float32<N> &operator=(const mask_float32<N> &) = default;
+    SIMDPP_INL mask_float32<N>() {}
+    // SIMDPP_INL mask_float32<N>(const mask_float32<N> &) = default;
+    // SIMDPP_INL mask_float32<N> &operator=(const mask_float32<N> &) = default;
 
     template<class E> SIMDPP_INL explicit mask_float32<N>(const mask_int32<N,E>& d)
     {
-        *this = bit_cast<mask_float32<N>>(d.eval());
+        *this = bit_cast<mask_float32<N> >(d.eval());
     }
     template<class E> SIMDPP_INL mask_float32<N>& operator=(const mask_int32<N,E>& d)
     {
-        *this = bit_cast<mask_float32<N>>(d.eval()); return *this;
+        *this = bit_cast<mask_float32<N> >(d.eval()); return *this;
     }
 
     /// Access the underlying type

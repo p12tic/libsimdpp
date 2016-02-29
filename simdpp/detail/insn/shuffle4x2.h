@@ -49,7 +49,7 @@ V i_shuffle_emul_64x4_half(const V& a0, const V& a1, const V& b0, const V& b1)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32<4> r;
     r.el(0) = s0 < 4 ? a.el(s0) : b.el(s0-4);
@@ -73,7 +73,7 @@ float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float32<8> i_shuffle4x2(const float32<8>& a, const float32<8>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_float32::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif
@@ -82,7 +82,7 @@ float32<8> i_shuffle4x2(const float32<8>& a, const float32<8>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float32<16> i_shuffle4x2(const float32<16>& a, const float32<16>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_float32::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif
@@ -100,7 +100,7 @@ float32<N> i_shuffle4x2(const float32<N>& a, const float32<N>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float64<4> i_shuffle4x2(const float64<4>& a, const float64<4>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_float64::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif
@@ -109,7 +109,7 @@ float64<4> i_shuffle4x2(const float64<4>& a, const float64<4>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float64<8> i_shuffle4x2(const float64<8>& a, const float64<8>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_float64::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif
@@ -134,7 +134,7 @@ float64<N> i_shuffle4x2(const float64<N>& a, const float64<N>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
 #if SIMDPP_USE_NULL
     uint32<4> r;
     r.el(0) = s0 < 4 ? a.el(s0) : b.el(s0-4);
@@ -158,7 +158,7 @@ uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<8> i_shuffle4x2(const uint32<8>& a, const uint32<8>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_int32::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif
@@ -167,7 +167,7 @@ uint32<8> i_shuffle4x2(const uint32<8>& a, const uint32<8>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<16> i_shuffle4x2(const uint32<16>& a, const uint32<16>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_int32::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif
@@ -185,7 +185,7 @@ uint32<N> i_shuffle4x2(const uint32<N>& a, const uint32<N>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint64<4> i_shuffle4x2(const uint64<4>& a, const uint64<4>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_int64::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif
@@ -194,7 +194,7 @@ uint64<4> i_shuffle4x2(const uint64<4>& a, const uint64<4>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint64<8> i_shuffle4x2(const uint64<8>& a, const uint64<8>& b)
 {
-    static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     return sse_shuffle4x2_int64::do_shuffle<s0, s1, s2, s3>(a, b);
 }
 #endif

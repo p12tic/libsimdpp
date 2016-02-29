@@ -25,15 +25,15 @@ namespace detail {
 template<class R, class T> struct cast_mask_override { static const unsigned value = CAST_MASK_MEMCPY; };
 #if SIMDPP_USE_NEON_NO_FLT_SP
 template<unsigned N>
-struct cast_mask_override<mask_float32<N>, mask_int32<N>> { static const unsigned value = CAST_MASK_UNMASK; };
+struct cast_mask_override<mask_float32<N>, mask_int32<N> > { static const unsigned value = CAST_MASK_UNMASK; };
 template<unsigned N>
-struct cast_mask_override<mask_int32<N>, mask_float32<N>> { static const unsigned value = CAST_MASK_REMASK; };
+struct cast_mask_override<mask_int32<N>, mask_float32<N> > { static const unsigned value = CAST_MASK_REMASK; };
 #endif
 #if SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 template<unsigned N>
-struct cast_mask_override<mask_int64<N>, mask_float64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
+struct cast_mask_override<mask_int64<N>, mask_float64<N> > { static const unsigned value = CAST_MASK_UNMASK; };
 template<unsigned N>
-struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigned value = CAST_MASK_REMASK; };
+struct cast_mask_override<mask_float64<N>, mask_int64<N> > { static const unsigned value = CAST_MASK_REMASK; };
 #endif
 
 } // namespace detail
@@ -56,7 +56,7 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigne
 template<class R, class T> SIMDPP_INL
 R bit_cast(const T& t)
 {
-    static_assert(is_vector<R>::value == is_vector<T>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<R>::value == is_vector<T>::value,
                   "bit_cast can't convert between vector and non-vector types");
     return detail::cast_wrapper<is_mask<R>::value,
                                 is_mask<T>::value,

@@ -50,7 +50,7 @@ SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
 #if SIMDPP_USE_NULL
     detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u8(a0, a1);
+    uint8x16x2_t r = vtrnq_u8(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
@@ -116,7 +116,7 @@ SIMDPP_INL void i_transpose2(uint16x8& a0, uint16x8& a1)
     a0 = shuffle2<0,2,0,2>(b0, b1);
     a1 = shuffle2<1,3,1,3>(b0, b1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u16(a0, a1);
+    uint16x8x2_t r = vtrnq_u16(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
@@ -159,7 +159,7 @@ SIMDPP_INL void i_transpose2(uint32x4& a0, uint32x4& a1)
     a0 = zip2_lo(b0, b1);
     a1 = zip2_hi(b0, b1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u32(a0, a1);
+    uint32x4x2_t r = vtrnq_u32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
@@ -262,7 +262,7 @@ SIMDPP_INL void i_transpose2(float32x4& a0, float32x4& a1)
     a0 = bit_cast<float32x4>(zip2_lo(b0, b1));
     a1 = bit_cast<float32x4>(zip2_hi(b0, b1));
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_f32(a0, a1);
+    float32x4x2_t r = vtrnq_f32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC
@@ -513,7 +513,7 @@ SIMDPP_INL void i_transpose4(uint32x4& a0, uint32x4& a1,
 #if SIMDPP_USE_NULL
     detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
-    v_sse_transpose32x4<uint32<4>, uint64<2>>(a0, a1, a2, a3);
+    v_sse_transpose32x4<uint32<4>, uint64<2> >(a0, a1, a2, a3);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     uint64x2 b0, b1, b2, b3;
     i_transpose2(a0, a1);  // 32-bit transpose
@@ -529,7 +529,7 @@ SIMDPP_INL void i_transpose4(uint32x4& a0, uint32x4& a1,
 SIMDPP_INL void i_transpose4(uint32x8& a0, uint32x8& a1,
                              uint32x8& a2, uint32x8& a3)
 {
-    v_sse_transpose32x4<uint32<8>, uint64<4>>(a0, a1, a2, a3);
+    v_sse_transpose32x4<uint32<8>, uint64<4> >(a0, a1, a2, a3);
 }
 #endif
 
@@ -537,7 +537,7 @@ SIMDPP_INL void i_transpose4(uint32x8& a0, uint32x8& a1,
 SIMDPP_INL void i_transpose4(uint32<16>& a0, uint32<16>& a1,
                              uint32<16>& a2, uint32<16>& a3)
 {
-    v_sse_transpose32x4<uint32<16>, uint64<8>>(a0, a1, a2, a3);
+    v_sse_transpose32x4<uint32<16>, uint64<8> >(a0, a1, a2, a3);
 }
 #endif
 
@@ -553,7 +553,7 @@ SIMDPP_INL void i_transpose4(float32x4& a0, float32x4& a1,
                              float32x4& a2, float32x4& a3)
 {
 #if SIMDPP_USE_SSE2
-    v_sse_transpose32x4<float32<4>, float64<2>>(a0, a1, a2, a3);
+    v_sse_transpose32x4<float32<4>, float64<2> >(a0, a1, a2, a3);
 #else
     uint32x4 b0, b1, b2, b3;
     b0 = a0;  b1 = a1;  b2 = a2;  b3 = a3;
@@ -566,7 +566,7 @@ SIMDPP_INL void i_transpose4(float32x4& a0, float32x4& a1,
 SIMDPP_INL void i_transpose4(float32x8& a0, float32x8& a1,
                              float32x8& a2, float32x8& a3)
 {
-    v_sse_transpose32x4<float32<8>, float64<4>>(a0, a1, a2, a3);
+    v_sse_transpose32x4<float32<8>, float64<4> >(a0, a1, a2, a3);
 }
 #endif
 
@@ -574,7 +574,7 @@ SIMDPP_INL void i_transpose4(float32x8& a0, float32x8& a1,
 SIMDPP_INL void i_transpose4(float32<16>& a0, float32<16>& a1,
                              float32<16>& a2, float32<16>& a3)
 {
-    v_sse_transpose32x4<float32<16>, float64<8>>(a0, a1, a2, a3);
+    v_sse_transpose32x4<float32<16>, float64<8> >(a0, a1, a2, a3);
 }
 #endif
 

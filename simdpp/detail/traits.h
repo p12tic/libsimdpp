@@ -20,34 +20,34 @@ namespace detail {
 
 /*  Normalizes vector type. Removes sign from a vector type.
  */
-template<class V> struct remove_sign { using type = V; using expr = V; };
+template<class V> struct remove_sign { typedef V type; typedef V expr; };
 
-template<unsigned N, class E> struct remove_sign<int8<N,E>> { using type = uint8<N>;   using expr = uint8<N,E>; };
-template<unsigned N, class E> struct remove_sign<int16<N,E>> { using type = uint16<N>; using expr = uint16<N,E>; };
-template<unsigned N, class E> struct remove_sign<int32<N,E>> { using type = uint32<N>; using expr = uint32<N,E>; };
-template<unsigned N, class E> struct remove_sign<int64<N,E>> { using type = uint64<N>; using expr = uint64<N,E>; };
+template<unsigned N, class E> struct remove_sign<int8<N,E> > { typedef uint8<N> type;   typedef uint8<N,E> expr; };
+template<unsigned N, class E> struct remove_sign<int16<N,E> > { typedef uint16<N> type; typedef uint16<N,E> expr; };
+template<unsigned N, class E> struct remove_sign<int32<N,E> > { typedef uint32<N> type; typedef uint32<N,E> expr; };
+template<unsigned N, class E> struct remove_sign<int64<N,E> > { typedef uint64<N> type; typedef uint64<N,E> expr; };
 
 /*  Normalizes vector type. Removes sign from a vector type. Result type is a
     value type, not an expression.
  */
-template<class V> struct remove_mask { using type = V; using expr = V; };
+template<class V> struct remove_mask { typedef V type; typedef V expr; };
 
-template<unsigned N, class E> struct remove_mask<mask_int8<N,E>> { using type = uint8<N>;   using expr = uint8<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_int16<N,E>> { using type = uint16<N>; using expr = uint16<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_int32<N,E>> { using type = uint32<N>; using expr = uint32<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_int64<N,E>> { using type = uint64<N>; using expr = uint64<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_float32<N,E>> { using type = float32<N>; using expr = float32<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_float64<N,E>> { using type = float64<N>; using expr = float64<N,E>; };
+template<unsigned N, class E> struct remove_mask<mask_int8<N,E> > { typedef uint8<N> type;   typedef uint8<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_int16<N,E> > { typedef uint16<N> type; typedef uint16<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_int32<N,E> > { typedef uint32<N> type; typedef uint32<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_int64<N,E> > { typedef uint64<N> type; typedef uint64<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_float32<N,E> > { typedef float32<N> type; typedef float32<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_float64<N,E> > { typedef float64<N> type; typedef float64<N,E> expr; };
 
 /*
-template<class V> struct remove_mask { using type = V; using expr = V; };
+template<class V> struct remove_mask { typedef V type; typedef V expr; };
 
-template<unsigned N, class E> struct remove_mask<mask_int8<N,E>> { using type = uint8<N>;   using expr = uint8<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_int16<N,E>> { using type = uint16<N>; using expr = uint16<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_int32<N,E>> { using type = uint32<N>; using expr = uint32<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_int64<N,E>> { using type = uint64<N>; using expr = uint64<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_float32<N,E>> { using type = float32<N>; using expr = float32<N,E>; };
-template<unsigned N, class E> struct remove_mask<mask_float64<N,E>> { using type = float64<N>; using expr = float64<N,E>; };
+template<unsigned N, class E> struct remove_mask<mask_int8<N,E> > { typedef uint8<N> type;   typedef uint8<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_int16<N,E> > { typedef uint16<N> type; typedef uint16<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_int32<N,E> > { typedef uint32<N> type; typedef uint32<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_int64<N,E> > { typedef uint64<N> type; typedef uint64<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_float32<N,E> > { typedef float32<N> type; typedef float32<N,E> expr; };
+template<unsigned N, class E> struct remove_mask<mask_float64<N,E> > { typedef float64<N> type; typedef float64<N,E> expr; };
 
 */
 

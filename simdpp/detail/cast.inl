@@ -15,18 +15,19 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/cast.h>
 #include <simdpp/core/cmp_neq.h>
+#include <simdpp/types/traits.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class T> struct base_mask_vector_type { using type = T; };
-template<unsigned N> struct base_mask_vector_type<mask_int8<N>> { using type = uint8<N>; };
-template<unsigned N> struct base_mask_vector_type<mask_int16<N>> { using type = uint16<N>; };
-template<unsigned N> struct base_mask_vector_type<mask_int32<N>> { using type = uint32<N>; };
-template<unsigned N> struct base_mask_vector_type<mask_int64<N>> { using type = uint64<N>; };
-template<unsigned N> struct base_mask_vector_type<mask_float32<N>> { using type = float32<N>; };
-template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type = float64<N>; };
+template<class T> struct base_mask_vector_type { typedef T type; };
+template<unsigned N> struct base_mask_vector_type<mask_int8<N> > { typedef uint8<N> type; };
+template<unsigned N> struct base_mask_vector_type<mask_int16<N> > { typedef uint16<N> type; };
+template<unsigned N> struct base_mask_vector_type<mask_int32<N> > { typedef uint32<N> type; };
+template<unsigned N> struct base_mask_vector_type<mask_int64<N> > { typedef uint64<N> type; };
+template<unsigned N> struct base_mask_vector_type<mask_float32<N> > { typedef float32<N> type; };
+template<unsigned N> struct base_mask_vector_type<mask_float64<N> > { typedef float64<N> type; };
 
 #if _MSC_VER
 #pragma intrinsic(memcpy)
@@ -35,7 +36,7 @@ template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type 
 template<class R, class T> SIMDPP_INL
 R cast_memcpy(const T& t)
 {
-    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+    SIMDPP_STATIC_ASSERT(sizeof(R) == sizeof(T), "Size mismatch");
     R r;
     ::memcpy(&r, &t, sizeof(R));
     return r;
@@ -44,7 +45,7 @@ R cast_memcpy(const T& t)
 template<class R, class T> SIMDPP_INL
 R cast_memcpy_unmask(const T& t)
 {
-    using TT = typename base_mask_vector_type<T>::type;
+    typedef typename base_mask_vector_type<T>::type TT;
     TT tt = t.unmask();
     return cast_memcpy<R>(tt);
 }
@@ -52,7 +53,7 @@ R cast_memcpy_unmask(const T& t)
 template<class R, class T> SIMDPP_INL
 R cast_memcpy_remask(const T& t)
 {
-    using RR = typename base_mask_vector_type<R>::type;
+    typedef typename base_mask_vector_type<R>::type RR;
     RR rr = cast_memcpy<RR>(t.unmask());
     return cmp_neq(rr, RR::zero());
 }
@@ -62,7 +63,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
     template<class R, class T> SIMDPP_INL
     static R run(const T& t)
     {
-        static_assert(R::size_tag == T::size_tag,
+        SIMDPP_STATIC_ASSERT(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
         return cast_memcpy<R>(t);
@@ -74,7 +75,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
     template<class R, class T> SIMDPP_INL
     static R run(const T& t)
     {
-        static_assert(R::size_tag == T::size_tag,
+        SIMDPP_STATIC_ASSERT(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
         return cast_memcpy_unmask<R>(t);
@@ -86,7 +87,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
     template<class R, class T> SIMDPP_INL
     static R run(const T& t)
     {
-        static_assert(R::size_tag == T::size_tag,
+        SIMDPP_STATIC_ASSERT(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
         return cast_memcpy_remask<R>(t);
@@ -98,8 +99,8 @@ struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
     template<class R, class T> SIMDPP_INL
     static R run(const T&)
     {
-        static_assert(!std::is_same<T,T>::value, // fake dependency
-                      "Conversion from non-mask type to a mask type is not allowed");
+        SIMDPP_STATIC_ASSERT(!(detail::is_same<T,T>::value), // fake dependency
+                             "Conversion from non-mask type to a mask type is not allowed");
     }
 };
 

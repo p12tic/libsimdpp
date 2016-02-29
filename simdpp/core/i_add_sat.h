@@ -33,10 +33,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int8<N, expr_add_sat<int8<N,E1>,
-                     int8<N,E2>>> add_sat(const int8<N,E1>& a,
+                     int8<N,E2> > > add_sat(const int8<N,E1>& a,
                                          const  int8<N,E2>& b)
 {
-    return { { a, b } };
+    return expr_add_sat<int8<N,E1>, int8<N,E2> >(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, int8, int8)
@@ -54,10 +54,10 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, int8, int8)
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
 int16<N, expr_add_sat<int16<N,E1>,
-                      int16<N,E2>>> add_sat(const int16<N,E1>& a,
+                      int16<N,E2> > > add_sat(const int16<N,E1>& a,
                                             const int16<N,E2>& b)
 {
-    return { { a, b } };
+    return expr_add_sat<int16<N,E1>, int16<N,E2> >(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, int16, int16)
@@ -75,10 +75,10 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, int16, int16)
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint8<N, expr_add_sat<uint8<N,E1>,
-                      uint8<N,E2>>> add_sat(const uint8<N,E1>& a,
+                      uint8<N,E2> > > add_sat(const uint8<N,E1>& a,
                                             const uint8<N,E2>& b)
 {
-    return { { a, b } };
+    return expr_add_sat<uint8<N,E1>, uint8<N,E2> >(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, uint8, uint8)
@@ -96,10 +96,10 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, uint8, uint8)
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
 uint16<N, expr_add_sat<uint16<N,E1>,
-                       uint16<N,E2>>> add_sat(const uint16<N,E1>& a,
+                       uint16<N,E2> > > add_sat(const uint16<N,E1>& a,
                                               const uint16<N,E2>& b)
 {
-    return { { a, b } };
+    return expr_add_sat<uint16<N,E1>, uint16<N,E2> >(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, uint16, uint16)

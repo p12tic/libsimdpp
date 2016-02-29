@@ -19,7 +19,7 @@
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
 #include <simdpp/detail/null/mask.h>
-#include <cstdint>
+#include <stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -30,36 +30,36 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 4x 32-bit signed integer vector
 */
 template<>
-class int32<4, void> : public any_int32<4, int32<4,void>> {
+class int32<4, void> : public any_int32<4, int32<4,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
-    using element_type = int32_t;
-    using base_vector_type = int32<4,void>;
-    using expr_type = void;
+    typedef int32_t element_type;
+    typedef int32<4,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = int32x4_t;
+    typedef int32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector int32_t;
+    typedef __vector int32_t native_type;
 #else
-    using native_type = detail::array<int32_t, 4>;
+    typedef detail::array<int32_t, 4> native_type;
 #endif
 
-    SIMDPP_INL int32<4>() = default;
-    SIMDPP_INL int32<4>(const int32<4> &) = default;
-    SIMDPP_INL int32<4> &operator=(const int32<4> &) = default;
+    SIMDPP_INL int32<4>() {}
+    // SIMDPP_INL int32<4>(const int32<4> &) = default;
+    // SIMDPP_INL int32<4> &operator=(const int32<4> &) = default;
 
     template<class E> SIMDPP_INL int32<4>(const int32<4,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int32<4>(const uint32<4,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit int32<4>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int32<4>>(d.wrapped().eval());
+        *this = bit_cast<int32<4> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL int32<4>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int32<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int32<4> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -106,36 +106,36 @@ private:
 /** Class representing 4x 32-bit unsigned integer vector
 */
 template<>
-class uint32<4, void> : public any_int32<4, uint32<4,void>> {
+class uint32<4, void> : public any_int32<4, uint32<4,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
-    using element_type = uint32_t;
-    using base_vector_type = uint32<4,void>;
-    using expr_type = void;
+    typedef uint32_t element_type;
+    typedef uint32<4,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = uint32x4_t;
+    typedef uint32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector uint32_t;
+    typedef __vector uint32_t native_type;
 #else
-    using native_type = detail::array<uint32_t, 4>;
+    typedef detail::array<uint32_t, 4> native_type;
 #endif
 
-    SIMDPP_INL uint32<4>() = default;
-    SIMDPP_INL uint32<4>(const uint32<4> &) = default;
-    SIMDPP_INL uint32<4> &operator=(const uint32<4> &) = default;
+    SIMDPP_INL uint32<4>() {}
+    // SIMDPP_INL uint32<4>(const uint32<4> &) = default;
+    // SIMDPP_INL uint32<4> &operator=(const uint32<4> &) = default;
 
     template<class E> SIMDPP_INL uint32<4>(const uint32<4,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint32<4>(const int32<4,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint32<4>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint32<4>>(d.wrapped().eval());
+        *this = bit_cast<uint32<4> >(d.wrapped().eval());
     }
     template<class V> SIMDPP_INL uint32<4>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint32<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint32<4> >(d.wrapped().eval()); return *this;
     }
 
     /// @{
@@ -182,25 +182,25 @@ private:
 /// Class representing possibly optimized mask data for 4x 32-bit integer
 /// vector
 template<>
-class mask_int32<4, void> : public any_int32<4, mask_int32<4,void>> {
+class mask_int32<4, void> : public any_int32<4, mask_int32<4,void> > {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int32<4,void>;
-    using expr_type = void;
+    typedef mask_int32<4,void> base_vector_type;
+    typedef void expr_type;
 
 #if SIMDPP_USE_SSE2
-    using native_type = __m128i;
+    typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using native_type = uint32x4_t;
+    typedef uint32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
-    using native_type = __vector uint32_t;
+    typedef __vector uint32_t native_type;
 #else
-    using native_type = detail::array<bool, 4>;
+    typedef detail::array<bool, 4> native_type;
 #endif
 
-    SIMDPP_INL mask_int32<4>() = default;
-    SIMDPP_INL mask_int32<4>(const mask_int32<4> &) = default;
-    SIMDPP_INL mask_int32<4> &operator=(const mask_int32<4> &) = default;
+    SIMDPP_INL mask_int32<4>() {}
+    // SIMDPP_INL mask_int32<4>(const mask_int32<4> &) = default;
+    // SIMDPP_INL mask_int32<4> &operator=(const mask_int32<4> &) = default;
 
     SIMDPP_INL mask_int32<4>(const native_type& d) : d_(d) {}
 
@@ -214,11 +214,11 @@ public:
 
     template<class E> SIMDPP_INL explicit mask_int32<4>(const mask_float32<4,E>& d)
     {
-        *this = bit_cast<mask_int32<4>>(d.eval());
+        *this = bit_cast<mask_int32<4> >(d.eval());
     }
     template<class E> SIMDPP_INL mask_int32<4>& operator=(const mask_float32<4,E>& d)
     {
-        *this = bit_cast<mask_int32<4>>(d.eval()); return *this;
+        *this = bit_cast<mask_int32<4> >(d.eval()); return *this;
     }
 
     SIMDPP_INL operator native_type() const { return d_; }
@@ -227,7 +227,7 @@ public:
     SIMDPP_INL uint32<4> unmask() const
     {
     #if SIMDPP_USE_NULL
-        return detail::null::unmask_mask<uint32<4>>(*this);
+        return detail::null::unmask_mask<uint32<4> >(*this);
     #else
         return uint32<4>(d_);
     #endif

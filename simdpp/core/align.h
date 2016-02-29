@@ -47,7 +47,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     align16(const any_vec8<N,V1>& lower,
             const any_vec8<N,V2>& upper)
 {
-    static_assert(shift <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Shift out of bounds");
     if (shift == 0) return lower.wrapped().eval();
     if (shift == 16) return upper.wrapped().eval();
 
@@ -84,7 +84,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     align8(const any_vec16<N,V1>& lower,
            const any_vec16<N,V2>& upper)
 {
-    static_assert(shift <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 8, "Shift out of bounds");
     if (shift == 0) return lower.wrapped().eval();
     if (shift == 8) return upper.wrapped().eval();
 
@@ -134,7 +134,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     align4(const any_vec32<N,V1>& lower,
            const any_vec32<N,V2>& upper)
 {
-    static_assert(shift <= 4, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Shift out of bounds");
     if (shift == 0) return lower.wrapped().eval();
     if (shift == 4) return upper.wrapped().eval();
 
@@ -183,7 +183,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     align2(const any_vec64<N,V1>& lower,
            const any_vec64<N,V2>& upper)
 {
-    static_assert(shift <= 2, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Shift out of bounds");
     if (shift == 0) return lower.wrapped().eval();
     if (shift == 2) return upper.wrapped().eval();
 

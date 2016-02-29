@@ -37,7 +37,7 @@ uint8x16 i_splat(const uint8x16& a)
 template<unsigned s> SIMDPP_INL
 uint8x32 i_splat(const uint8x32& a)
 {
-    static_assert(s < 32, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 32, "Access out of bounds");
     uint8x16 lo;
     lo = s < 16 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move16_l<s % 16>(lo);
@@ -48,7 +48,7 @@ uint8x32 i_splat(const uint8x32& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint8<N> i_splat(const uint8<N>& a)
 {
-    static_assert(s < N, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < N, "Access out of bounds");
     return v_splat<s>(a);
 }
 
@@ -64,7 +64,7 @@ uint16x8 i_splat(const uint16x8& a)
 template<unsigned s> SIMDPP_INL
 uint16x16 i_splat(const uint16x16& a)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
     uint16x8 lo;
     lo = s < 8 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move8_l<s % 8>(lo);
@@ -75,7 +75,7 @@ uint16x16 i_splat(const uint16x16& a)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint16<N> i_splat(const uint16<N>& a)
 {
-    static_assert(s < N, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < N, "Access out of bounds");
     return v_splat<s>(a);
 }
 
@@ -91,7 +91,7 @@ uint32x4 i_splat(const uint32x4& a)
 template<unsigned s> SIMDPP_INL
 uint32x8 i_splat(const uint32x8& ca)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     uint32<8> a = ca;
     a = permute4<s%4,s%4,s%4,s%4>(a);
     a = detail::shuffle1_128<s/4, s/4>(a, a);
@@ -103,7 +103,7 @@ uint32x8 i_splat(const uint32x8& ca)
 template<unsigned s> SIMDPP_INL
 uint32<16> i_splat(const uint32<16>& ca)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
     uint32<16> a = ca;
     a = permute4<s%4,s%4,s%4,s%4>(a);
     a = detail::shuffle2_128<s/4, s/4, s/4, s/4>(a, a);
@@ -114,7 +114,7 @@ uint32<16> i_splat(const uint32<16>& ca)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint32<N> i_splat(const uint32<N>& a)
 {
-    static_assert(s < N, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < N, "Access out of bounds");
     return v_splat<s>(a);
 }
 
@@ -130,7 +130,7 @@ uint64x2 i_splat(const uint64x2& a)
 template<unsigned s> SIMDPP_INL
 uint64x4 i_splat(const uint64x4& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
     return permute4<s,s,s,s>(a);
 }
 #endif
@@ -139,7 +139,7 @@ uint64x4 i_splat(const uint64x4& a)
 template<unsigned s> SIMDPP_INL
 uint64<8> i_splat(const uint64<8>& ca)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     uint64<8> a = ca;
     a = permute2<s%2,s%2>(a);
     a = _mm512_shuffle_i64x2(a, a, ((s/2) << 6) + ((s/2) << 4) + ((s/2) << 2) + (s/2)); // TODO extract
@@ -150,7 +150,7 @@ uint64<8> i_splat(const uint64<8>& ca)
 template<unsigned s, unsigned N> SIMDPP_INL
 uint64<N> i_splat(const uint64<N>& a)
 {
-    static_assert(s < N, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < N, "Access out of bounds");
     return v_splat<s>(a);
 }
 
@@ -166,7 +166,7 @@ float32x4 i_splat(const float32x4& a)
 template<unsigned s> SIMDPP_INL
 float32x8 i_splat(const float32x8& ca)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     float32<8> a = ca;
     a = shuffle1_128<s/4,s/4>(a, a);
     return permute4<s%4,s%4,s%4,s%4>(a);
@@ -177,7 +177,7 @@ float32x8 i_splat(const float32x8& ca)
 template<unsigned s> SIMDPP_INL
 float32<16> i_splat(const float32<16>& ca)
 {
-    static_assert(s < 16, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
     float32<16> a = ca;
     a = permute4<s%4,s%4,s%4,s%4>(a);
     a = _mm512_shuffle_f32x4(a, a, ((s/4) << 6) + ((s/4) << 4) + ((s/4) << 2) + (s/4));
@@ -188,7 +188,7 @@ float32<16> i_splat(const float32<16>& ca)
 template<unsigned s, unsigned N> SIMDPP_INL
 float32<N> i_splat(const float32<N>& a)
 {
-    static_assert(s < N, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < N, "Access out of bounds");
     return v_splat<s>(a);
 }
 
@@ -204,7 +204,7 @@ float64x2 i_splat(const float64x2& a)
 template<unsigned s> SIMDPP_INL
 float64x4 i_splat(const float64x4& a)
 {
-    static_assert(s < 4, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 4, "Access out of bounds");
 #if SIMDPP_USE_AVX2
     return permute4<s,s,s,s>(a);
 #else // SIMDPP_USE_AVX
@@ -220,7 +220,7 @@ float64x4 i_splat(const float64x4& a)
 template<unsigned s> SIMDPP_INL
 float64<8> i_splat(const float64<8>& ca)
 {
-    static_assert(s < 8, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     float64<8> a = ca;
     a = permute2<s%2,s%2>(a);
     a = _mm512_shuffle_f64x2(a, a, ((s/2) << 6) + ((s/2) << 4) + ((s/2) << 2) + (s/2)); // TODO extract
@@ -231,7 +231,7 @@ float64<8> i_splat(const float64<8>& ca)
 template<unsigned s, unsigned N> SIMDPP_INL
 float64<N> i_splat(const float64<N>& a)
 {
-    static_assert(s < N, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < N, "Access out of bounds");
     return v_splat<s>(a);
 }
 
@@ -241,7 +241,7 @@ float64<N> i_splat(const float64<N>& a)
 template<unsigned s, class V> SIMDPP_INL
 V v_splat(V a)
 {
-    using U = typename V::base_vector_type;
+    typedef typename V::base_vector_type U;
     U one = a.vec(s / U::length);
 
     one = i_splat<s % U::length>(one);

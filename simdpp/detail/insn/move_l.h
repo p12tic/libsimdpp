@@ -26,7 +26,7 @@ namespace insn {
 template<unsigned shift> SIMDPP_INL
 uint8x16 i_move16_l(const uint8x16& a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
 #if SIMDPP_USE_NULL
     return detail::null::move_n_l<shift>(a);
 #elif SIMDPP_USE_SSE2
@@ -44,7 +44,7 @@ uint8x16 i_move16_l(const uint8x16& a)
 template<unsigned shift> SIMDPP_INL
 uint8x32 i_move16_l(const uint8x32& a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     return _mm256_srli_si256(a, shift);
 }
 #endif
@@ -52,7 +52,7 @@ uint8x32 i_move16_l(const uint8x32& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_move16_l(const uint8<N>& a)
 {
-    static_assert(shift <= 16, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
     SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_move16_l<shift>, a);
 }
 
@@ -72,7 +72,7 @@ uint16<8> i_move8_l(const uint16<8>& a)
 template<unsigned shift> SIMDPP_INL
 uint16<16> i_move8_l(const uint16<16>& a)
 {
-    static_assert(shift <= 8, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 8, "Selector out of range");
     return _mm256_srli_si256(a, shift*2);
 }
 #endif
@@ -99,7 +99,7 @@ uint32<4> i_move4_l(const uint32<4>& a)
 template<unsigned shift> SIMDPP_INL
 uint32<8> i_move4_l(const uint32<8>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     return _mm256_srli_si256(a, shift*4);
 }
 #endif
@@ -108,7 +108,7 @@ uint32<8> i_move4_l(const uint32<8>& a)
 template<unsigned shift> SIMDPP_INL
 uint32<16> i_move4_l(const uint32<16>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     switch (shift) {
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_epi32(0x7777, a, _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 2, 1)));
@@ -141,7 +141,7 @@ uint64<2> i_move2_l(const uint64<2>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<4> i_move2_l(const uint64<4>& a)
 {
-    static_assert(shift <= 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
     return _mm256_srli_si256(a, shift*8);
 }
 #endif
@@ -150,7 +150,7 @@ uint64<4> i_move2_l(const uint64<4>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<8> i_move2_l(const uint64<8>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     return (uint64<8>) i_move4_l<shift*2>(uint32<16>(a));
 }
 #endif
@@ -177,7 +177,7 @@ float32<4> i_move4_l(const float32<4>& a)
 template<unsigned shift> SIMDPP_INL
 float32<8> i_move4_l(const float32<8>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     return (float32<8>) i_move16_l<shift*4>(uint8<32>(a));
 }
 #endif
@@ -186,7 +186,7 @@ float32<8> i_move4_l(const float32<8>& a)
 template<unsigned shift> SIMDPP_INL
 float32<16> i_move4_l(const float32<16>& a)
 {
-    static_assert(shift <= 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     switch (shift) {
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_ps(0x7777, a, a, _MM_SHUFFLE(3, 3, 2, 1));
@@ -219,7 +219,7 @@ float64<2> i_move2_l(const float64<2>& a)
 template<unsigned shift> SIMDPP_INL
 float64<4> i_move2_l(const float64<4>& a)
 {
-    static_assert(shift <= 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
     return (float64<4>) i_move16_l<shift*8>(uint8<32>(a));
 }
 #endif
@@ -228,7 +228,7 @@ float64<4> i_move2_l(const float64<4>& a)
 template<unsigned shift> SIMDPP_INL
 float64<8> i_move2_l(const float64<8>& a)
 {
-    static_assert(shift <= 2, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
     switch (shift) {
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_pd(0x55, a, a, SIMDPP_SHUFFLE_MASK_2x2_4(1, 1));

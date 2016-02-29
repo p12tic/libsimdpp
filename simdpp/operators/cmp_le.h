@@ -32,7 +32,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float32<N, mask_float32<N>> operator<=(const float32<N,E1>& a,
+mask_float32<N, mask_float32<N> > operator<=(const float32<N,E1>& a,
                                         const float32<N,E2>& b)
 {
     return detail::insn::i_cmp_le(a.eval(), b.eval());
@@ -56,7 +56,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_float32, float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float64<N, mask_float64<N>> operator<=(const float64<N,E1>& a,
+mask_float64<N, mask_float64<N> > operator<=(const float64<N,E1>& a,
                                         const float64<N,E2>& b)
 {
     return detail::insn::i_cmp_le(a.eval(), b.eval());

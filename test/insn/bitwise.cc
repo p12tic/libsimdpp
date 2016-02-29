@@ -18,12 +18,12 @@ void test_bitwise_n(TestSuite& tc)
 {
     using namespace simdpp;
 
-    using uint8_n = uint8<B>;
-    using uint16_n = uint16<B/2>;
-    using uint32_n = uint32<B/4>;
-    using uint64_n = uint64<B/8>;
-    using float32_n = float32<B/4>;
-    using float64_n = float64<B/8>;
+    typedef uint8<B> uint8_n;
+    typedef uint16<B/2> uint16_n;
+    typedef uint32<B/4> uint32_n;
+    typedef uint64<B/8> uint64_n;
+    typedef float32<B/4> float32_n;
+    typedef float64<B/8> float64_n;
 
     uint64_n a11 = make_uint(0x0f0ff0f0ffff0000, 0x0f0ff0f0ffff0000);
     uint64_n a12 = make_uint(0xffffffffffffffff, 0x0000000000000000);

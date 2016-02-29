@@ -270,7 +270,7 @@ V v_emul_avg_u32(const V& a, const V& b)
 template<class V> SIMDPP_INL
 V v_emul_avg_i32(const V& a, const V& b)
 {
-    using VI = typename V::uint_vector_type;
+    typedef typename V::uint_vector_type VI;
     VI a2, b2, r;
     a2 = bit_xor(a, 0x80000000); // add
     b2 = bit_xor(b, 0x80000000); // add

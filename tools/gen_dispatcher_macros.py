@@ -43,10 +43,10 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME, $ret_type$(*)($types$))             $n$
                                                                             $n$
 $ret_type$ NAME($types_vars$)                                               $n$
 {                                                                           $n$
-    using FunPtr = $ret_type$(*)($types$);                                  $n$
+    typedef $ret_type$(*FunPtr)($types$);                                   $n$
     static FunPtr selected = NULL;                                          $n$
     if (selected == NULL) {                                                 $n$
-        ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {}; $n$
+        ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS];    $n$
         SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, NAME, FunPtr)           $n$
         ::simdpp::detail::FnVersion version =                               $n$
             ::simdpp::detail::select_version_any(versions,                  $n$

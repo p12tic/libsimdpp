@@ -378,7 +378,7 @@ uint8<N> shift_r_u8(const uint8<N>& a);
 template<unsigned count> SIMDPP_INL
 int8x16 i_shift_r(const int8x16& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -404,7 +404,7 @@ int8x16 i_shift_r(const int8x16& a)
 template<unsigned count> SIMDPP_INL
 int8x32 i_shift_r(const int8x32& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     uint16<16> hi, lo;
     lo = hi = a;
 
@@ -421,7 +421,7 @@ int8x32 i_shift_r(const int8x32& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 int8<N> i_shift_r(const int8<N>& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(int8<N>, i_shift_r<count>, a);
 }
 
@@ -430,7 +430,7 @@ int8<N> i_shift_r(const int8<N>& a)
 template<unsigned count> SIMDPP_INL
 uint8x16 i_shift_r(const uint8x16& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -450,7 +450,7 @@ uint8x16 i_shift_r(const uint8x16& a)
 template<unsigned count> SIMDPP_INL
 uint8x32 i_shift_r(const uint8x32& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     uint16<16> mask, a16;
     mask = uint16<16>::ones();
     mask = shift_l<16-count>(mask);
@@ -466,7 +466,7 @@ uint8x32 i_shift_r(const uint8x32& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 uint8<N> i_shift_r(const uint8<N>& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_shift_r<count>, a);
 }
 
@@ -475,7 +475,7 @@ uint8<N> i_shift_r(const uint8<N>& a)
 template<unsigned count> SIMDPP_INL
 int16x8 i_shift_r(const int16x8& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -492,7 +492,7 @@ int16x8 i_shift_r(const int16x8& a)
 template<unsigned count> SIMDPP_INL
 int16x16 i_shift_r(const int16x16& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     return _mm256_srai_epi16(a, count);
 }
 #endif
@@ -500,7 +500,7 @@ int16x16 i_shift_r(const int16x16& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 int16<N> i_shift_r(const int16<N>& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(int16<N>, i_shift_r<count>, a);
 }
 
@@ -509,7 +509,7 @@ int16<N> i_shift_r(const int16<N>& a)
 template<unsigned count> SIMDPP_INL
 uint16x8 i_shift_r(const uint16x8& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -526,7 +526,7 @@ uint16x8 i_shift_r(const uint16x8& a)
 template<unsigned count> SIMDPP_INL
 uint16x16 i_shift_r(const uint16x16& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     return _mm256_srli_epi16(a, count);
 }
 #endif
@@ -534,7 +534,7 @@ uint16x16 i_shift_r(const uint16x16& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 uint16<N> i_shift_r(const uint16<N>& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, i_shift_r<count>, a);
 }
 
@@ -543,7 +543,7 @@ uint16<N> i_shift_r(const uint16<N>& a)
 template<unsigned count> SIMDPP_INL
 int32x4 i_shift_r(const int32x4& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -560,7 +560,7 @@ int32x4 i_shift_r(const int32x4& a)
 template<unsigned count> SIMDPP_INL
 int32x8 i_shift_r(const int32x8& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     return _mm256_srai_epi32(a, count);
 }
 #endif
@@ -569,7 +569,7 @@ int32x8 i_shift_r(const int32x8& a)
 template<unsigned count> SIMDPP_INL
 int32<16> i_shift_r(const int32<16>& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     return _mm512_srai_epi32(a, count);
 }
 #endif
@@ -577,7 +577,7 @@ int32<16> i_shift_r(const int32<16>& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 int32<N> i_shift_r(const int32<N>& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(int32<N>, i_shift_r<count>, a);
 }
 
@@ -586,7 +586,7 @@ int32<N> i_shift_r(const int32<N>& a)
 template<unsigned count> SIMDPP_INL
 uint32x4 i_shift_r(const uint32x4& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -603,7 +603,7 @@ uint32x4 i_shift_r(const uint32x4& a)
 template<unsigned count> SIMDPP_INL
 uint32x8 i_shift_r(const uint32x8& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     return _mm256_srli_epi32(a, count);
 }
 #endif
@@ -612,7 +612,7 @@ uint32x8 i_shift_r(const uint32x8& a)
 template<unsigned count> SIMDPP_INL
 uint32<16> i_shift_r(const uint32<16>& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     return _mm512_srli_epi32(a, count);
 }
 #endif
@@ -620,7 +620,7 @@ uint32<16> i_shift_r(const uint32<16>& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 uint32<N> i_shift_r(const uint32<N>& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_shift_r<count>, a);
 }
 
@@ -629,7 +629,7 @@ uint32<N> i_shift_r(const uint32<N>& a)
 template<unsigned count> SIMDPP_INL
 int64x2 i_shift_r(const int64x2& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     return i_shift_r(a, count);
 #elif SIMDPP_USE_NEON
@@ -651,7 +651,7 @@ int64x4 i_shift_r(const int64x4& a)
 template<unsigned count> SIMDPP_INL
 int64<8> i_shift_r(const int64<8>& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     return _mm512_srai_epi64(a, count);
 }
 #endif
@@ -659,7 +659,7 @@ int64<8> i_shift_r(const int64<8>& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 int64<N> i_shift_r(const int64<N>& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(int64<N>, i_shift_r<count>, a);
 }
 
@@ -668,7 +668,7 @@ int64<N> i_shift_r(const int64<N>& a)
 template<unsigned count> SIMDPP_INL
 uint64x2 i_shift_r(const uint64x2& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
@@ -684,7 +684,7 @@ uint64x2 i_shift_r(const uint64x2& a)
 template<unsigned count> SIMDPP_INL
 uint64x4 i_shift_r(const uint64x4& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     return _mm256_srli_epi64(a, count);
 }
 #endif
@@ -693,7 +693,7 @@ uint64x4 i_shift_r(const uint64x4& a)
 template<unsigned count> SIMDPP_INL
 uint64<8> i_shift_r(const uint64<8>& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     return _mm512_srli_epi64(a, count);
 }
 #endif
@@ -701,7 +701,7 @@ uint64<8> i_shift_r(const uint64<8>& a)
 template<unsigned count, unsigned N> SIMDPP_INL
 uint64<N> i_shift_r(const uint64<N>& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_shift_r<count>, a);
 }
 
@@ -711,7 +711,7 @@ template<unsigned count, unsigned N> SIMDPP_INL
 uint8<N> shift_r_u8(const uint8<N>& a)
 {
 #if SIMDPP_USE_SSE2
-    uint8<N> mask = shift_u8_mask<count, uint8<N>>()();
+    uint8<N> mask = shift_u8_mask<count, uint8<N> >()();
     uint16<N/2> a16 = (uint16<N/2>) bit_andnot(a, mask);
     a16 = i_shift_r<count>(a16);
     return uint8<N>(a16);

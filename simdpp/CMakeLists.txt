@@ -184,12 +184,12 @@ foreach(ARCH ${COMPILABLE_ARCHS})
             COMMAND ${CMAKE_CXX_COMPILER}
                     -DLIBSIMDPP_SIMD_H
                     -I "${CMAKE_SOURCE_DIR}"
-                    ${CXX_FLAGS} -x c++ -std=c++11 -g2 -Wall
+                    ${CXX_FLAGS} -x c++ -g2 -Wall
                     ${CMAKE_SOURCE_DIR}/simdpp/${FILE}
                     -c -o ${CMAKE_BINARY_DIR}/${TEST}
             DEPENDS ${FILE} )
         #add_executable(${TEST} EXCLUDE_FROM_ALL ${FILE})
-        #set_target_properties(${TEST} PROPERTIES COMPILE_FLAGS "${CXX_FLAGS} -std=c++11 -g2 -Wall")
+        #set_target_properties(${TEST} PROPERTIES COMPILE_FLAGS "${CXX_FLAGS} -g2 -Wall")
         #add_dependencies(check_headers "${TEST}")
         set(HEADER_TESTS ${HEADER_TESTS} ${TEST})
     endforeach()

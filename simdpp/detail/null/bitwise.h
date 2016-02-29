@@ -30,8 +30,8 @@ template<class V> SIMDPP_INL
 V bit_and(const V& a, const V& b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a.el(i));
         U b1 = bit_cast<U, E>(b.el(i));
@@ -65,8 +65,8 @@ template<class V> SIMDPP_INL
 V bit_andnot(const V& a, const V& b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a.el(i));
         U b1 = bit_cast<U, E>(b.el(i));
@@ -100,8 +100,8 @@ template<class V> SIMDPP_INL
 V bit_or(const V& a, const V& b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a.el(i));
         U b1 = bit_cast<U, E>(b.el(i));
@@ -124,8 +124,8 @@ template<class V> SIMDPP_INL
 V bit_xor(const V& a, const V& b)
 {
     V r;
-    using E = typename V::element_type;
-    using U = typename V::uint_element_type;
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
     for (unsigned i = 0; i < V::length; i++) {
         U a1 = bit_cast<U, E>(a.el(i));
         U b1 = bit_cast<U, E>(b.el(i));

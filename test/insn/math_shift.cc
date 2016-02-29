@@ -45,29 +45,29 @@ void test_math_shift_n(TestSuite& tc)
     Vectors<B,vnum> v;
 
     // Vectors with 8-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint8<B>>::run(tc, v.u8, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int8<B>>::run(tc, v.i8, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint8<B>>::run(tc, v.u8, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int8<B>>::run(tc, v.i8, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint8<B> >::run(tc, v.u8, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int8<B> >::run(tc, v.i8, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint8<B> >::run(tc, v.u8, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int8<B> >::run(tc, v.i8, vnum);
 
     // Vectors with 16-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint16<B/2>>::run(tc, v.u16, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int16<B/2>>::run(tc, v.i16, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint16<B/2>>::run(tc, v.u16, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int16<B/2>>::run(tc, v.i16, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint16<B/2> >::run(tc, v.u16, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int16<B/2> >::run(tc, v.i16, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint16<B/2> >::run(tc, v.u16, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int16<B/2> >::run(tc, v.i16, vnum);
 
     // Vectors with 32-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint32<B/4>>::run(tc, v.u32, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int32<B/4>>::run(tc, v.i32, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint32<B/4>>::run(tc, v.u32, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int32<B/4>>::run(tc, v.i32, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint32<B/4> >::run(tc, v.u32, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int32<B/4> >::run(tc, v.i32, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint32<B/4> >::run(tc, v.u32, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int32<B/4> >::run(tc, v.i32, vnum);
 
 #if !(SIMDPP_USE_ALTIVEC)
     // Vectors with 64-bit integer elements
-    TemplateTestArrayHelper<Test_shift_l, uint64<B/8>>::run(tc, v.u64, vnum);
-    TemplateTestArrayHelper<Test_shift_l, int64<B/8>>::run(tc, v.i64, vnum);
-    TemplateTestArrayHelper<Test_shift_r, uint64<B/8>>::run(tc, v.u64, vnum);
-    TemplateTestArrayHelper<Test_shift_r, int64<B/8>>::run(tc, v.i64, vnum);
+    TemplateTestArrayHelper<Test_shift_l, uint64<B/8> >::run(tc, v.u64, vnum);
+    TemplateTestArrayHelper<Test_shift_l, int64<B/8> >::run(tc, v.i64, vnum);
+    TemplateTestArrayHelper<Test_shift_r, uint64<B/8> >::run(tc, v.u64, vnum);
+    TemplateTestArrayHelper<Test_shift_r, int64<B/8> >::run(tc, v.i64, vnum);
 #endif
 }
 

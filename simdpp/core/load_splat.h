@@ -38,7 +38,7 @@ SIMDPP_INL expr_vec_load_splat load_splat(const void* p)
 template<class V> SIMDPP_INL
 V load_splat(const void* p)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     return detail::insn::i_load_splat_any<V>(reinterpret_cast<const char*>(p));
 }

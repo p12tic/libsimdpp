@@ -49,13 +49,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 // Fixme return empty expression
 SIMDPP_INL expr_vec_load_u load_u(const void* p)
 {
-    return { reinterpret_cast<const char*>(p) };
+    return expr_vec_load_u(reinterpret_cast<const char*>(p));
 }
 
 template<class V> SIMDPP_INL
 V load_u(const void* p)
 {
-    static_assert(is_vector<V>::value && !is_mask<V>::value,
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");
     return detail::insn::i_load_u_any<V>(reinterpret_cast<const char*>(p));
 }

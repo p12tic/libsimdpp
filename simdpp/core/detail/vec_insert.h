@@ -24,7 +24,7 @@ namespace detail {
 template<class R, class V> SIMDPP_INL
 void vec_insert_impl(R& r, V v, unsigned n)
 {
-    static_assert(V::length >= R::base_length, "Too small vector to insert");
+    SIMDPP_STATIC_ASSERT(V::length >= R::base_length, "Too small vector to insert");
 
     for (unsigned i = 0; i < V::vec_length; ++i) {
         r.vec(n*v.vec_length + i) = v.vec(i); //TODO combine or split as needed

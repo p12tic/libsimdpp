@@ -87,7 +87,7 @@ template<class T> SIMDPP_INL
 void v_mem_pack3_impl8_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
+    typedef typename T::uint_vector_type U;
 
     T a1, b1, c1;
     a1 = align16<11>(a, a);
@@ -122,9 +122,9 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     // [c10,a11,b11,c11,a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15]
 #else
     // either uint16x8 or uint16x16, other entries likewise
-    using w_b16 = typename same_width<T>::u16;
-    using w_b32 = typename same_width<T>::u32;
-    using w_b8 = T;
+    typedef typename same_width<T>::u16 w_b16;
+    typedef typename same_width<T>::u32 w_b32;
+    typedef T w_b8;
 
     w_b16 t0, t1, t2, t3;
     t0 = zip16_lo(a, b);
@@ -152,7 +152,7 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     u2 = permute_bytes16(u2, idx);
     u3 = permute_bytes16(u3, idx);
 #else
-    using w_u64 = typename same_width<T>::u64;
+    typedef typename same_width<T>::u64 w_u64;
 
     // the following is still faster than non-SIMD implementation
     w_b8 mask1 = make_uint(0xff, 0xff, 0xff, 0, 0, 0, 0, 0,
@@ -204,7 +204,7 @@ template<class T> SIMDPP_INL
 void v_mem_pack3_impl16_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
+    typedef typename T::uint_vector_type U;
 
     // [a0..a7]
     // [b0..b7]
@@ -241,8 +241,8 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
 
 #else
     // either uint8x16 or uint8x32, other entries likewise
-    using w_b16 = T;
-    using w_b32 = typename same_width<T>::u32;
+    typedef T w_b16;
+    typedef typename same_width<T>::u32 w_b32;
 
     w_b32 t0, t1, t2, t3;
     t0 = zip8_lo(a, b);
@@ -301,7 +301,7 @@ template<class T> SIMDPP_INL
 void v_mem_pack3_impl32_128(T& a, T& b, T& c)
 {
 #if SIMDPP_USE_ALTIVEC
-    using U = typename T::uint_vector_type;
+    typedef typename T::uint_vector_type U;
 
     // [a0,a1,a2,a3]
     // [b0,b1,b2,b3]
@@ -474,7 +474,7 @@ void v_mem_pack4_impl8_128(T& a, T& b, T& c, T& d)
     // either uint16x8 or uint16x16, other entries likewise
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     // TODO: optimize for altivec
-    using w_b32 = typename same_width<T>::u32;
+    typedef typename same_width<T>::u32 w_b32;
 
     w_b32 b0, b1, b2, b3;
     b0 = a;  b1 = b;  b2 = c;  b3 = d;
@@ -486,9 +486,9 @@ void v_mem_pack4_impl8_128(T& a, T& b, T& c, T& d)
     c = transpose_inplace(c);
     d = transpose_inplace(d);
 #else
-    using w_b8 = T;
-    using w_b16 = typename same_width<T>::u16;
-    using w_b64 = typename same_width<T>::u64;
+    typedef T w_b8;
+    typedef typename same_width<T>::u16 w_b16;
+    typedef typename same_width<T>::u64 w_b64;
 
     w_b8 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;
@@ -520,9 +520,9 @@ void v_mem_pack4_impl8_128(T& a, T& b, T& c, T& d)
 template<class T> SIMDPP_INL
 void v_mem_pack4_impl16_128(T& a, T& b, T& c, T& d)
 {
-    using w_b16 = T;
-    using w_b32 = typename same_width<T>::u32;
-    using w_b64 = typename same_width<T>::u64;
+    typedef T w_b16;
+    typedef typename same_width<T>::u32 w_b32;
+    typedef typename same_width<T>::u64 w_b64;
 
     w_b16 e0, e1, e2, e3;
     w_b64 d0, d1, d2, d3;

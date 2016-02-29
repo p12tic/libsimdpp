@@ -34,7 +34,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     shuffle2x2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
     typename detail::get_expr2_nomask_nosign<V1,V2,void>::type a0 = a.wrapped().eval(),
                                                                b0 = b.wrapped().eval();
     return detail::insn::i_shuffle2x2<s0,s1>(a0, b0);
@@ -59,7 +59,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     shuffle2x2(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
-    static_assert(s0 < 4 && s1 < 4, "Selector out of range");
+    SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
     typename detail::get_expr2_nomask_nosign<V1,V2,void>::type a0 = a.wrapped().eval(),
                                                                b0 = b.wrapped().eval();
     return detail::insn::i_shuffle2x2<s0,s1>(a0, b0);

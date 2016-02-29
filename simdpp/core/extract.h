@@ -42,7 +42,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned id> SIMDPP_INL
 uint8_t extract(const uint8x16& a)
 {
-    static_assert(id < 16, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
@@ -84,7 +84,7 @@ int8_t extract(const int8x16& a)
 template<unsigned id> SIMDPP_INL
 uint16_t extract(const uint16x8& a)
 {
-    static_assert(id < 8, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
@@ -120,7 +120,7 @@ int16_t extract(const int16x8& a)
 template<unsigned id> SIMDPP_INL
 uint32_t extract(const uint32x4& a)
 {
-    static_assert(id < 4, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
@@ -162,7 +162,7 @@ int32_t extract(const int32x4& a)
 template<unsigned id> SIMDPP_INL
 uint64_t extract(const uint64x2& a)
 {
-    static_assert(id < 2, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
@@ -219,7 +219,7 @@ int64_t extract(const int64x2& a)
 template<unsigned id> SIMDPP_INL
 float extract(const float32x4& a)
 {
-    static_assert(id < 4, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return a.el(id);
 #elif SIMDPP_USE_SSE2
@@ -246,7 +246,7 @@ float extract(const float32x4& a)
 template<unsigned id> SIMDPP_INL
 double extract(const float64x2& a)
 {
-    static_assert(id < 2, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 2, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
@@ -328,7 +328,7 @@ template<unsigned id> SIMDPP_INL
 uint16_t extract_bits(const uint8x16& ca)
 {
     uint8<16> a = ca;
-    static_assert(id < 8, "index out of bounds");
+    SIMDPP_STATIC_ASSERT(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
     uint16_t r = 0;
     for (unsigned i = 0; i < a.length; i++) {

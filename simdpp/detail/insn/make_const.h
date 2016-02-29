@@ -57,7 +57,7 @@ void i_make_const(float32<4>& v, const expr_vec_make_const<VE,N>& e, unsigned of
 #elif SIMDPP_USE_SSE2
     v = _mm_set_ps(e.val(off+3), e.val(off+2), e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON
-    detail::mem_block<float32<4>> x;
+    detail::mem_block<float32<4> > x;
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     x[2] = e.val(off+2);
@@ -107,7 +107,7 @@ void i_make_const(float64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned of
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<float64<2>, double>(e.val(off+0), e.val(off+1));
 #elif SIMDPP_USE_NEON64
-    detail::mem_block<float64<2>> x;
+    detail::mem_block<float64<2> > x;
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     v = x;
@@ -194,7 +194,7 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e, unsigned off
                      e.val(off+7),  e.val(off+6),  e.val(off+5),  e.val(off+4),
                      e.val(off+3),  e.val(off+2),  e.val(off+1),  e.val(off+0));
 #elif SIMDPP_USE_NEON
-    detail::mem_block<uint8<16>> x;
+    detail::mem_block<uint8<16> > x;
     x[0] = e.val(off+0);   x[1] = e.val(off+1);   x[2] = e.val(off+2);   x[3] = e.val(off+3);
     x[4] = e.val(off+4);   x[5] = e.val(off+5);   x[6] = e.val(off+6);   x[7] = e.val(off+7);
     x[8] = e.val(off+8);   x[9] = e.val(off+9);   x[10] = e.val(off+10); x[11] = e.val(off+11);
@@ -274,7 +274,7 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e, unsigned off
     v = _mm_set_epi16(e.val(off+7), e.val(off+6), e.val(off+5), e.val(off+4),
                       e.val(off+3), e.val(off+2), e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON
-    detail::mem_block<uint16<8>> x;
+    detail::mem_block<uint16<8> > x;
     x[0] = e.val(off+0);  x[1] = e.val(off+1);  x[2] = e.val(off+2);  x[3] = e.val(off+3);
     x[4] = e.val(off+4);  x[5] = e.val(off+5);  x[6] = e.val(off+6);  x[7] = e.val(off+7);
     v = x;
@@ -337,7 +337,7 @@ void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e, unsigned off
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi32(e.val(off+3), e.val(off+2), e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON
-    detail::mem_block<uint32<4>> x;
+    detail::mem_block<uint32<4> > x;
     x[0] = e.val(off+0);  x[1] = e.val(off+1);
     x[2] = e.val(off+2);  x[3] = e.val(off+3);
     v = x;
@@ -395,7 +395,7 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi64x(e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON
-    detail::mem_block<uint64<2>> x;
+    detail::mem_block<uint64<2> > x;
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     v = x;
