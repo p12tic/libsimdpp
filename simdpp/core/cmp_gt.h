@@ -159,6 +159,44 @@ mask_int32<N,expr_empty> cmp_gt(const uint32<N,E1>& a,
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_gt, mask_int32, uint32)
 
+/** Compares the values of two signed int64 vectors for greater-than
+
+    @code
+    r0 = (a0 > b0) ? 0xffffffffffff : 0x0
+    ...
+    rN = (aN > bN) ? 0xffffffffffff : 0x0
+    @endcode
+
+    Supported since AVX2, NEON64. Not supported on ALTIVEC.
+*/
+template<unsigned N, class E1, class E2> SIMDPP_INL
+mask_int64<N,expr_empty> cmp_gt(const int64<N,E1>& a,
+                                const int64<N,E2>& b)
+{
+    return detail::insn::i_cmp_gt(a.eval(), b.eval());
+}
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_gt, mask_int64, int64)
+
+/** Compares the values of two unsigned int64 vectors for greater-than
+
+    @code
+    r0 = (a0 > b0) ? 0xffffffffffff : 0x0
+    ...
+    rN = (aN > bN) ? 0xffffffffffff : 0x0
+    @endcode
+
+    Supported since AVX2, NEON64. Not supported on ALTIVEC.
+*/
+template<unsigned N, class E1, class E2> SIMDPP_INL
+mask_int64<N,expr_empty> cmp_gt(const uint64<N,E1>& a,
+                                const uint64<N,E2>& b)
+{
+    return detail::insn::i_cmp_gt(a.eval(), b.eval());
+}
+
+SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_gt, mask_int64, uint64)
+
 /** Compares the values of two float32x4 vectors for greater-than
 
     @code

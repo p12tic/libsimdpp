@@ -18,6 +18,7 @@
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/bit_xor.h>
 #include <simdpp/detail/null/compare.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -229,6 +230,87 @@ mask_int32<N> i_cmp_gt(const uint32<N>& a, const uint32<N>& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, i_cmp_gt, a, b);
 }
+
+// -----------------------------------------------------------------------------
+
+SIMDPP_INL mask_int64x2 i_cmp_gt(const int64x2& a, const int64x2& b)
+{
+#if SIMDPP_USE_NULL
+    return detail::null::cmp_gt(a, b);
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+    return _mm_comgt_epi64(a, b);
+#elif SIMDPP_USE_AVX2
+    return _mm_cmpgt_epi64(a, b);
+#elif SIMDPP_USE_NEON64
+    return vcgtq_s64(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL mask_int64x4 i_cmp_gt(const int64x4& a, const int64x4& b)
+{
+    return _mm256_cmpgt_epi64(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+SIMDPP_INL mask_int64<8> i_cmp_gt(const int64<8>& a, const int64<8>& b)
+{
+    // GCC does not have _mm512_cmpgt_epu64_mask
+    return _mm512_cmp_epu64_mask((x), (y), _MM_CMPINT_NLE);
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+mask_int64<N> i_cmp_gt(const int64<N>& a, const int64<N>& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_gt, a, b);
+}
+
+// -----------------------------------------------------------------------------
+
+SIMDPP_INL mask_int64x2 i_cmp_gt(const uint64x2& a, const uint64x2& b)
+{
+#if SIMDPP_USE_NULL
+    return detail::null::cmp_gt(a, b);
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+    return _mm_comgt_epu64(a, b);
+#elif SIMDPP_USE_AVX2
+    uint64<2> ca = bit_xor(a, 0x8000000000000000); // sub
+    uint64<2> cb = bit_xor(b, 0x8000000000000000); // sub
+    return _mm_cmpgt_epi64(ca, cb);
+#elif SIMDPP_USE_NEON64
+    return vcgtq_u64(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL mask_int64x4 i_cmp_gt(const uint64x4& ca, const uint64x4& cb)
+{
+    uint64<4> a = ca, b = cb;
+    a = bit_xor(a, 0x8000000000000000); // sub
+    b = bit_xor(b, 0x8000000000000000); // sub
+    return _mm256_cmpgt_epi64(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+SIMDPP_INL mask_int64<8> i_cmp_gt(const uint64<8>& a, const uint64<8>& b)
+{
+    return _mm512_cmp_epu64_mask((x), (y), _MM_CMPINT_NLE);
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+mask_int64<N> i_cmp_gt(const uint64<N>& a, const uint64<N>& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_gt, a, b);
+}
+
 
 // -----------------------------------------------------------------------------
 
