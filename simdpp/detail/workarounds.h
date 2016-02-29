@@ -33,11 +33,17 @@
 #endif
 
 #if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9) && !__INTEL_COMPILER
+#define _mm512_castps512_ps128(x) ((__m128)(x))
+#define _mm512_castps512_ps256(x) ((__m256)(x))
+#define _mm512_castpd512_pd128(x) ((__m128d)(x))
 #define _mm512_castpd512_pd256(x) ((__m256d)(x))
-#define _mm512_castpd256_pd512(x) ((__m512d)(x))
 #define _mm512_castsi512_si256(x) ((__m256i)(x))
+#define _mm512_castsi512_si128(x) ((__m128i)(x))
+#define _mm512_castpd256_pd512(x) ((__m512d)(x))
 #define _mm512_castsi256_si512(x) ((__m512i)(x))
 #define _mm512_castpd_si512(x) ((__m512i)(x))
+#define _mm512_castpd_ps(x) ((__m512)(x))
+#define _mm512_castps_pd(x) ((__m512d)(x))
 #endif
 
 #endif
