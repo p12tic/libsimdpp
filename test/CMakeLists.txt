@@ -106,8 +106,7 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 )
 
 if(NOT MSVC)
-    target_link_libraries(test_dispatcher pthread)
-    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-pthread -std=c++11 -g2 -Wall")
+    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
 endif()
 
 list_contains(HAS_SSE2 X86_SSE2 ${NATIVE_ARCHS})
@@ -164,8 +163,7 @@ add_executable(test_expr EXCLUDE_FROM_ALL
 )
 
 if(NOT MSVC)
-    target_link_libraries(test_expr pthread)
-    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-pthread -std=c++11 -g2 -Wall")
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
 endif()
 
 add_test(s_test_expr1 test_expr)

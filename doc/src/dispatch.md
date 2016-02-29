@@ -115,6 +115,5 @@ include(SimdppMultiarch)
 simdpp_get_runnable_archs(RUNNABLE_ARCHS)
 simdpp_multiarch(GEN_ARCH_FILES test.cc ${RUNNABLE_ARCHS})
 add_executable(test main.cc ${GEN_ARCH_FILES})
-target_link_libraries(test pthread)
 set_target_properties(test PROPERTIES COMPILE_FLAGS "-std=c++11")
 ~~~

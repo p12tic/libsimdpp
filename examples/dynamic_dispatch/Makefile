@@ -1,7 +1,7 @@
 CXXFLAGS = -std=c++11 -I../../
 
 test: main.o test_sse2.o test_sse3.o test_sse4_1.o test_avx.o test_avx2.o test_null.o
-	g++ $^ -lpthread -o test
+	g++ $^ -o test
 
 main.o: main.cc
 	g++ main.cc $(CXXFLAGS) -c -o main.o
