@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/null/set.h>
 #include <simdpp/detail/traits.h>
+#include <simdpp/detail/mem_block.h>
 
 #if _MSC_VER
 #pragma warning(push)
@@ -56,15 +57,12 @@ void i_make_const(float32<4>& v, const expr_vec_make_const<VE,N>& e)
 #elif SIMDPP_USE_SSE2
     v = _mm_set_ps(e.val(3), e.val(2), e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    union {
-        SIMDPP_ALIGN(16) float rv[4];
-        float32<4> r;
-    } x;
-    x.rv[0] = e.val(0);
-    x.rv[1] = e.val(1);
-    x.rv[2] = e.val(2);
-    x.rv[3] = e.val(3);
-    v = x.r;
+    detail::mem_block<float32<4>> x;
+    x[0] = e.val(0);
+    x[1] = e.val(1);
+    x[2] = e.val(2);
+    x[3] = e.val(3);
+    v = x;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector float){ float(e.val(0)), float(e.val(1)),
                           float(e.val(2)), float(e.val(3)) };
@@ -111,13 +109,10 @@ void i_make_const(float64<2>& v, const expr_vec_make_const<VE,N>& e)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<float64<2>, double>(e.val(0), e.val(1));
 #elif SIMDPP_USE_NEON64
-    union {
-        SIMDPP_ALIGN(16) double rv[2];
-        float64<2> r;
-    } x;
-    x.rv[0] = e.val(0);
-    x.rv[1] = e.val(1);
-    v = x.r;
+    detail::mem_block<float64<2>> x;
+    x[0] = e.val(0);
+    x[1] = e.val(1);
+    v = x;
 #elif SIMDPP_USE_SSE2
     v = _mm_set_pd(e.val(1), e.val(0));
 #endif
@@ -202,15 +197,12 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e)
                      e.val(7),  e.val(6),  e.val(5),  e.val(4),
                      e.val(3),  e.val(2),  e.val(1),  e.val(0));
 #elif SIMDPP_USE_NEON
-    union {
-        SIMDPP_ALIGN(16) uint8_t rvv[16];
-        uint8<16> r;
-    } x;
-    x.rvv[0] = e.val(0);   x.rvv[1] = e.val(1);   x.rvv[2] = e.val(2);   x.rvv[3] = e.val(3);
-    x.rvv[4] = e.val(4);   x.rvv[5] = e.val(5);   x.rvv[6] = e.val(6);   x.rvv[7] = e.val(7);
-    x.rvv[8] = e.val(8);   x.rvv[9] = e.val(9);   x.rvv[10] = e.val(10); x.rvv[11] = e.val(11);
-    x.rvv[12] = e.val(12); x.rvv[13] = e.val(13); x.rvv[14] = e.val(14); x.rvv[15] = e.val(15);
-    v = x.r;
+    detail::mem_block<uint8<16>> x;
+    x[0] = e.val(0);   x[1] = e.val(1);   x[2] = e.val(2);   x[3] = e.val(3);
+    x[4] = e.val(4);   x[5] = e.val(5);   x[6] = e.val(6);   x[7] = e.val(7);
+    x[8] = e.val(8);   x[9] = e.val(9);   x[10] = e.val(10); x[11] = e.val(11);
+    x[12] = e.val(12); x[13] = e.val(13); x[14] = e.val(14); x[15] = e.val(15);
+    v = x;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint8_t){
         uint8_t(e.val(0)),  uint8_t(e.val(1)),  uint8_t(e.val(2)),  uint8_t(e.val(3)),
@@ -287,13 +279,10 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e)
     v = _mm_set_epi16(e.val(7), e.val(6), e.val(5), e.val(4),
                       e.val(3), e.val(2), e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    union {
-        SIMDPP_ALIGN(16) uint16_t rvv[8];
-        uint16<8> r;
-    } x;
-    x.rvv[0] = e.val(0);  x.rvv[1] = e.val(1);  x.rvv[2] = e.val(2);  x.rvv[3] = e.val(3);
-    x.rvv[4] = e.val(4);  x.rvv[5] = e.val(5);  x.rvv[6] = e.val(6);  x.rvv[7] = e.val(7);
-    v = x.r;
+    detail::mem_block<uint16<8>> x;
+    x[0] = e.val(0);  x[1] = e.val(1);  x[2] = e.val(2);  x[3] = e.val(3);
+    x[4] = e.val(4);  x[5] = e.val(5);  x[6] = e.val(6);  x[7] = e.val(7);
+    v = x;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint16_t){
         uint16_t(e.val(0)), uint16_t(e.val(1)), uint16_t(e.val(2)), uint16_t(e.val(3)),
@@ -355,13 +344,10 @@ void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e)
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi32(e.val(3), e.val(2), e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    union {
-        SIMDPP_ALIGN(16) uint32_t rvv[4];
-        uint32<4> r;
-    } x;
-    x.rvv[0] = e.val(0);  x.rvv[1] = e.val(1);
-    x.rvv[2] = e.val(2);  x.rvv[3] = e.val(3);
-    v = x.r;
+    detail::mem_block<uint32<4>> x;
+    x[0] = e.val(0);  x[1] = e.val(1);
+    x[2] = e.val(2);  x[3] = e.val(3);
+    v = x;
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint32_t) { uint32_t(e.val(0)), uint32_t(e.val(1)),
                               uint32_t(e.val(2)), uint32_t(e.val(3)) };
@@ -418,13 +404,10 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e)
 #elif SIMDPP_USE_SSE2
     v = _mm_set_epi64x(e.val(1), e.val(0));
 #elif SIMDPP_USE_NEON
-    union {
-        SIMDPP_ALIGN(16) uint64_t rvv[2];
-        uint64<2> r;
-    } x;
-    x.rvv[0] = e.val(0);
-    x.rvv[1] = e.val(1);
-    v = x.r;
+    detail::mem_block<uint64<2>> x;
+    x[0] = e.val(0);
+    x[1] = e.val(1);
+    v = x;
 #elif SIMDPP_USE_ALTIVEC
     // big endian
     uint32_t v0 = uint64_t(e.val(0)) >> 32;
