@@ -45,10 +45,9 @@ SIMDPP_INL float32x4 i_floor(const float32x4& a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
-    mask_float32x4 large_mask, zero_mask, mask;
-    large_mask = cmp_gt(ba, 8388607.0f);
-    zero_mask = cmp_eq(ba, 0);
-    mask = bit_or(large_mask, zero_mask); // takes care of nans and zeros
+    mask_float32x4 mask_range = cmp_le(ba, 8388607.0f);
+    mask_float32x4 mask_nonzero = cmp_gt(ba, 0);
+    mask_float32x4 mask = bit_and(mask_range, mask_nonzero); // takes care of nans and zeros
 
     //calculate the i_floor using trunc
     int32x4 s = shift_r((uint32x4)a, 31); //=1 if a<0
@@ -58,7 +57,7 @@ SIMDPP_INL float32x4 i_floor(const float32x4& a)
     float32x4 fa = to_float32(ia);
 
     //combine the results
-    return blend(a, fa, mask);
+    return blend(fa, a, mask);
 #elif SIMDPP_USE_ALTIVEC
     return vec_floor((__vector float)a);
 #endif

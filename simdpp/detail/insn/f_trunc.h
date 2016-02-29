@@ -37,14 +37,18 @@ SIMDPP_INL float32x4 i_trunc(const float32x4& a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
     //check if the value is not too large
     float32x4 af = abs(a);
-    mask_float32x4 mask = cmp_gt(af, 8388607.0f);
+    mask_float32x4 mask_range = cmp_le(af, 8388607.0f);
+
+    // don't change the sign of negative zero
+    mask_float32x4 mask_nonzero = cmp_gt(af, 0);
+    mask_float32x4 mask = bit_and(mask_range, mask_nonzero);
 
     //truncate
     int32x4 ia = to_int32(a);
     float32x4 fa = to_float32(ia);
 
     //combine the results
-    return blend(a, fa, mask);     // takes care of NaNs
+    return blend(fa, a, mask);     // takes care of NaNs
 #elif SIMDPP_USE_ALTIVEC
     return vec_trunc((__vector float)a);
 #endif
