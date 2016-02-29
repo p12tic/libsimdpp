@@ -45,7 +45,7 @@ SIMDPP_INL uint8x32 i_bit_xor(const uint8x32& a, const uint8x32& b)
 template<unsigned N> SIMDPP_INL
 uint8<N> i_bit_xor(const uint8<N>& a, const uint8<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint8x32, i_bit_xor, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_bit_xor, a, b)
 }
 
 // -----------------------------------------------------------------------------
