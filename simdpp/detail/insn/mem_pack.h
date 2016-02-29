@@ -61,7 +61,7 @@ void mem_pack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
     qb.wrapped() = shuffle1_128<1,1>(c1, c2);
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 {
@@ -385,7 +385,7 @@ void v_mem_pack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V>&
     qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void v_mem_pack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>& qc)
 {
@@ -594,7 +594,7 @@ void v_mem_pack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
     qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;  qd.wrapped() = d1;
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
                             any_vec<64,V>& qc, any_vec<64,V>& qd)

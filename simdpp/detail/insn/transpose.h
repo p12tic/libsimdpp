@@ -183,7 +183,7 @@ SIMDPP_INL void i_transpose2(uint32x8& a0, uint32x8& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(uint32<16>& a0, uint32<16>& a1)
 {
     uint64<8> b0, b1;
@@ -233,7 +233,7 @@ SIMDPP_INL void i_transpose2(uint64x4& a0, uint64x4& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(uint64<8>& a0, uint64<8>& a1)
 {
     uint64<8> b0;
@@ -286,7 +286,7 @@ SIMDPP_INL void i_transpose2(float32x8& a0, float32x8& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(float32<16>& a0, float32<16>& a1)
 {
     float64<8> b0, b1;
@@ -332,7 +332,7 @@ SIMDPP_INL void i_transpose2(float64x4& a0, float64x4& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(float64<8>& a0, float64<8>& a1)
 {
     float64<8> b0;
@@ -570,7 +570,7 @@ SIMDPP_INL void i_transpose4(float32x8& a0, float32x8& a1,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose4(float32<16>& a0, float32<16>& a1,
                              float32<16>& a2, float32<16>& a3)
 {

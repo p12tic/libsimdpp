@@ -95,7 +95,7 @@ template<> struct shuffle_impl<1> {
         return _mm256_unpacklo_ps(a, b);
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -127,7 +127,7 @@ template<> struct shuffle_impl<3> {
         return _mm256_unpackhi_ps(a, b);
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -162,7 +162,7 @@ template<> struct shuffle_impl<5> {
         return _mm256_blend_ps(a, b, mask | mask << 4);
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -188,7 +188,7 @@ template<> struct shuffle_impl<6> {
         return _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s3-4, s2-4, s1, s0));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -211,7 +211,7 @@ template<> struct shuffle_impl<7> {
         return _mm256_shuffle_ps(b, a, _MM_SHUFFLE(s3, s2, s1-4, s0-4));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -243,7 +243,7 @@ float32<8> select2_hi(const float32<8>& a, const float32<8>& b)
     return _mm256_blend_ps(a, b, mask);
 }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 float32<16> select2_hi(const float32<16>& a, const float32<16>& b)
 {
@@ -274,7 +274,7 @@ template<> struct shuffle_impl<8> {
         return _mm256_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -302,7 +302,7 @@ template<> struct shuffle_impl<9> {
         return _mm256_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1%4, s0%4));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -328,7 +328,7 @@ template<> struct shuffle_impl<10> {
         return _mm256_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1/4?3:1, s0/4?2:0));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -354,7 +354,7 @@ template<> struct shuffle_impl<11> {
         return _mm256_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1/4?3:1, s0/4?2:0));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -383,7 +383,7 @@ template<> struct shuffle_impl<12> {
         return _mm256_shuffle_ps(b, ab2, _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -411,7 +411,7 @@ template<> struct shuffle_impl<13> {
         return _mm256_shuffle_ps(a, ab2, _MM_SHUFFLE(s3%4, s2%4, s1, s0));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -437,7 +437,7 @@ template<> struct shuffle_impl<14> {
         return _mm256_shuffle_ps(b, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1-4, s0-4));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -463,7 +463,7 @@ template<> struct shuffle_impl<15> {
         return _mm256_shuffle_ps(a, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1, s0));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
@@ -491,7 +491,7 @@ template<> struct shuffle_impl<16> {
         return _mm256_shuffle_ps(ab1, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1/4?3:1, s0/4?2:0));
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {

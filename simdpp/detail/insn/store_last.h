@@ -128,7 +128,7 @@ SIMDPP_INL void i_store_last(char* p, const uint32x8& a, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const uint32<16>& a, unsigned n)
 {
     _mm512_mask_store_epi32(p, 0xffff << (16-n), a);
@@ -178,7 +178,7 @@ SIMDPP_INL void i_store_last(char* p, const uint64x4& a, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const uint64<8>& a, unsigned n)
 {
     _mm512_mask_store_epi64(p, 0xff << (8-n), a);
@@ -239,7 +239,7 @@ SIMDPP_INL void i_store_last(char* p, const float32x8& ca, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const float32<16>& a, unsigned n)
 {
     _mm512_mask_store_ps(p, 0xffff << (16-n), a);
@@ -287,7 +287,7 @@ SIMDPP_INL void i_store_last(char* p, const float64x4& a, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const float64<8>& a, unsigned n)
 {
     _mm512_mask_store_pd(p, 0xff << (8-n), a);

@@ -76,7 +76,7 @@ SIMDPP_INL void i_stream(char* p, const uint32<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_stream(char* p, const uint32<16>& a)
 {
     p = detail::assume_aligned(p, 64);
@@ -98,7 +98,7 @@ SIMDPP_INL void i_stream(char* p, const uint64<4>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_stream(char* p, const uint64<8>& a)
 {
     p = detail::assume_aligned(p, 64);
@@ -131,7 +131,7 @@ SIMDPP_INL void i_stream(char* p, const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_stream(char* p, const float32<16>& a)
 {
     p = detail::assume_aligned(p, 64);
@@ -161,7 +161,7 @@ SIMDPP_INL void i_stream(char* p, const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_stream(char* p, const float64<8>& a)
 {
     p = detail::assume_aligned(p, 64);

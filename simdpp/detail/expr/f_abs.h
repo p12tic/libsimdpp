@@ -44,7 +44,7 @@ float32<8> expr_eval(const expr_abs<float32<8,E>>& q)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
 float32<16> expr_eval(const expr_abs<float32<16,E>>& q)
 {
@@ -85,7 +85,7 @@ float64x4 expr_eval(const expr_abs<float64<4,E>>& q)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
 float64<8> expr_eval(const expr_abs<float64<8,E>>& q)
 {

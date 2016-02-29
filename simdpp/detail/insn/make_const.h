@@ -81,7 +81,7 @@ void i_make_const(float32<8>& v, const expr_vec_make_const<VE,N>& e)
 
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(float32<16>& v, const expr_vec_make_const<VE,N>& e)
 {
@@ -131,7 +131,7 @@ void i_make_const(float64<4>& v, const expr_vec_make_const<VE,N>& e)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(float64<8>& v, const expr_vec_make_const<VE,N>& e)
 {
@@ -377,7 +377,7 @@ void i_make_const(uint32<8>& v, const expr_vec_make_const<VE,N>& e)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint32<16>& v, const expr_vec_make_const<VE,N>& e)
 {
@@ -444,7 +444,7 @@ void i_make_const(uint64<4>& v, const expr_vec_make_const<VE,N>& e)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint64<8>& v, const expr_vec_make_const<VE,N>& e)
 {

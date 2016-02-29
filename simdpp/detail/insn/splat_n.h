@@ -192,7 +192,7 @@ uint32x8 i_splat4(const uint32x8& a)
 }
 #endif\
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 uint32<16> i_splat4(const uint32<16>& a)
 {
@@ -245,7 +245,7 @@ uint64x4 i_splat2(const uint64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 uint64<8> i_splat2(const uint64<8>& a)
 {
@@ -295,7 +295,7 @@ float32x8 i_splat4(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 float32<16> i_splat4(const float32<16>& a)
 {
@@ -333,7 +333,7 @@ float64x4 i_splat2(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 float64<8> i_splat2(const float64<8>& a)
 {

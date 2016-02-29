@@ -101,7 +101,7 @@ uint32x8 i_permute4(const uint32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<16> i_permute4(const uint32<16>& a)
 {
@@ -145,7 +145,7 @@ float32x8 i_permute4(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float32<16> i_permute4(const float32<16>& a)
 {
@@ -181,7 +181,7 @@ uint64x4 i_permute4(const uint64x4& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint64<8> i_permute4(const uint64<8>& a)
 {
@@ -217,7 +217,7 @@ float64x4 i_permute4(const float64x4& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float64<8> i_permute4(const float64<8>& a)
 {

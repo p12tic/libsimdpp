@@ -207,7 +207,7 @@ uint32<8> expr_eval(const expr_mul_lo<uint32<8,E1>,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2> SIMDPP_INL
 uint32<16> expr_eval(const expr_mul_lo<uint32<16,E1>,
                                        uint32<16,E2>>& q)

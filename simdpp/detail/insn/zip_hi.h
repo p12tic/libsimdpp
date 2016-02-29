@@ -100,7 +100,7 @@ SIMDPP_INL uint32x8 i_zip4_hi(const uint32x8& a, const uint32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_zip4_hi(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_unpackhi_epi32(a, b);
@@ -136,7 +136,7 @@ SIMDPP_INL uint64x4 i_zip2_hi(const uint64x4& a, const uint64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_zip2_hi(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_unpackhi_epi64(a, b);
@@ -171,7 +171,7 @@ SIMDPP_INL float32x8 i_zip4_hi(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_zip4_hi(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_unpackhi_ps(a, b);
@@ -205,7 +205,7 @@ SIMDPP_INL float64x4 i_zip2_hi(const float64x4& a, const float64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_zip2_hi(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_unpackhi_pd(a, b);

@@ -41,7 +41,7 @@ SIMDPP_INL mask_float32x8 i_isnan(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_isnan(const float32<16>& a)
 {
     return _mm512_cmp_ps_mask(a, a, _CMP_UNORD_Q);
@@ -76,7 +76,7 @@ SIMDPP_INL mask_float64x4 i_isnan(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_isnan(const float64<8>& a)
 {
     return _mm512_cmp_pd_mask(a, a, _CMP_UNORD_Q);

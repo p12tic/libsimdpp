@@ -22,7 +22,7 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-#if SIMDPP_USE_AVX512 || SIMDPP_DOXYGEN
+#if SIMDPP_USE_AVX512F || SIMDPP_DOXYGEN
 
 /// @ingroup simd_vec_fp
 /// @{
@@ -36,7 +36,7 @@ public:
     using base_vector_type = float64<8,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __m512d;
 #endif
 
@@ -105,7 +105,7 @@ public:
     using base_vector_type = mask_float64<8,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __mmask8;
 #endif
 
@@ -129,7 +129,7 @@ public:
     /// Access the underlying type
     SIMDPP_INL float64<8> unmask() const
     {
-    #if SIMDPP_USE_AVX512
+    #if SIMDPP_USE_AVX512F
         // FIXME: remove cross-domain access
         __m512i bits = _mm512_maskz_set1_epi64(d_, 0xffffffffffffffff);
         // return _mm512_castsi512_pd(bits); GCC BUG
@@ -147,7 +147,7 @@ private:
 };
 /// @} -- end ingroup
 
-#endif // SIMDPP_USE_AVX512 || SIMDPP_DOXYGEN
+#endif // SIMDPP_USE_AVX512F || SIMDPP_DOXYGEN
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

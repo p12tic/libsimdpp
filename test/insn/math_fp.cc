@@ -52,7 +52,7 @@ void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
         TEST_ARRAY_HELPER1(tc, float32_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float32_n, neg, s);
 
-#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512
+#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
         TEST_ALL_COMB_HELPER3(ts_fma, float32_n, fmadd, s, 4);
         TEST_ALL_COMB_HELPER3(ts_fma, float32_n, fmsub, s, 4);
 #endif
@@ -96,7 +96,7 @@ void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
         TEST_ARRAY_HELPER1(tc, float64_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float64_n, neg, s);
 
-#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512
+#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
         TEST_ALL_COMB_HELPER3(ts_fma, float64_n, fmadd, s, 8);
         TEST_ALL_COMB_HELPER3(ts_fma, float64_n, fmsub, s, 8);
 #endif

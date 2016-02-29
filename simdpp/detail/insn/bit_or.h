@@ -133,7 +133,7 @@ SIMDPP_INL uint32<8> i_bit_or(const uint32<8>& a, const uint32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_or(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_or_epi32(a, b);
@@ -164,7 +164,7 @@ SIMDPP_INL mask_int32<8> i_bit_or(const mask_int32<8>& a, const mask_int32<8>& b
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_bit_or(const mask_int32<16>& a, const mask_int32<16>& b)
 {
     return _mm512_kor(a, b);
@@ -192,7 +192,7 @@ SIMDPP_INL uint64<4> i_bit_or(const uint64<4>& a, const uint64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_or(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_or_epi64(a, b);
@@ -223,7 +223,7 @@ SIMDPP_INL mask_int64<4> i_bit_or(const mask_int64<4>& a, const mask_int64<4>& b
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int64<8> i_bit_or(const mask_int64<8>& a, const mask_int64<8>& b)
 {
     return _mm512_kor(a, b);
@@ -260,7 +260,7 @@ SIMDPP_INL float32<8> i_bit_or(const float32<8>& a, const float32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_or(const float32<16>& a, const float32<16>& b)
 {
     return (float32<16>) i_bit_or(uint32<16>(a), uint32<16>(b));
@@ -291,7 +291,7 @@ SIMDPP_INL mask_float32<8> i_bit_or(const mask_float32<8>& a, const mask_float32
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_bit_or(const mask_float32<16>& a, const mask_float32<16>& b)
 {
     return _mm512_kor(a, b);
@@ -326,7 +326,7 @@ SIMDPP_INL float64<4> i_bit_or(const float64<4>& a, const float64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_or(const float64<8>& a, const float64<8>& b)
 {
     return (float64<8>) i_bit_or(uint64<8>(a), uint64<8>(b));
@@ -357,7 +357,7 @@ SIMDPP_INL mask_float64<4> i_bit_or(const mask_float64<4>& a, const mask_float64
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_bit_or(const mask_float64<8>& a, const mask_float64<8>& b)
 {
     return _mm512_kor(a, b);

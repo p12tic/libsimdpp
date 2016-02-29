@@ -70,7 +70,7 @@ SIMDPP_INL float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_rcp_rh(const float32<16>& cx, const float32<16>& a)
 {
     float32<16> r, x = cx;

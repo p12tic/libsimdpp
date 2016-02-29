@@ -158,7 +158,7 @@ SIMDPP_INL float64x4 i_load_u(float64x4& a, const void* p)
     a = _mm256_loadu_pd(reinterpret_cast<const double*>(p)); return a;
 }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_load_u(uint32<16>& a, const void* p)
 {
     a = _mm512_loadu_si512(p); return a;

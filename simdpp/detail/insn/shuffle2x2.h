@@ -91,7 +91,7 @@ float32<8> i_shuffle2x2(const float32<8>& a, const float32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 float32<8> i_shuffle2x2(const float32<16>& a, const float32<16>& b)
 {
@@ -176,7 +176,7 @@ float64<4> i_shuffle2x2(const float64<4>& a, const float64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 float64<8> i_shuffle2x2(const float64<8>& a, const float64<8>& b)
 {
@@ -271,7 +271,7 @@ uint32<8> i_shuffle2x2(const uint32<8>& a, const uint32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 uint32<8> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
 {
@@ -384,7 +384,7 @@ uint64<4> i_shuffle2x2(const uint64<4>& a, const uint64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64<8> i_shuffle2x2(const uint64<8>& a, const uint64<8>& b)
 {

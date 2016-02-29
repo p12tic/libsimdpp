@@ -206,7 +206,7 @@ SIMDPP_INL int32x8 i_shift_r(const int32x8& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int32<16> i_shift_r(const int32<16>& a, unsigned count)
 {
     return _mm512_sra_epi32(a, _mm_cvtsi32_si128(count));
@@ -243,7 +243,7 @@ SIMDPP_INL uint32x8 i_shift_r(const uint32x8& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_shift_r(const uint32<16>& a, unsigned count)
 {
     return _mm512_srl_epi32(a, _mm_cvtsi32_si128(count));
@@ -319,7 +319,7 @@ SIMDPP_INL int64x4 i_shift_r(const int64x4& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int64<8> i_shift_r(const int64<8>& a, unsigned count)
 {
     return _mm512_sra_epi64(a, _mm_cvtsi32_si128(count));
@@ -355,7 +355,7 @@ SIMDPP_INL uint64x4 i_shift_r(const uint64x4& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_shift_r(const uint64<8>& a, unsigned count)
 {
     return _mm512_srl_epi64(a, _mm_cvtsi32_si128(count));
@@ -565,7 +565,7 @@ int32x8 i_shift_r(const int32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 int32<16> i_shift_r(const int32<16>& a)
 {
@@ -608,7 +608,7 @@ uint32x8 i_shift_r(const uint32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 uint32<16> i_shift_r(const uint32<16>& a)
 {
@@ -647,7 +647,7 @@ int64x4 i_shift_r(const int64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 int64<8> i_shift_r(const int64<8>& a)
 {
@@ -689,7 +689,7 @@ uint64x4 i_shift_r(const uint64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 uint64<8> i_shift_r(const uint64<8>& a)
 {

@@ -21,7 +21,7 @@
 #define vreinterpretq_u64_f64(x) ((uint64x2_t) (float64x2_t) (x))
 #endif
 
-#if SIMDPP_USE_AVX512 && (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9)
+#if SIMDPP_USE_AVX512F && (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9)
 #define _mm512_castpd512_pd256(x) ((__m256d)(x))
 #define _mm512_castpd256_pd512(x) ((__m512d)(x))
 #define _mm512_castsi512_si256(x) ((__m256i)(x))

@@ -164,7 +164,7 @@ SIMDPP_INL int32x8 i_max(const int32x8& a, const int32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int32<16> i_max(const int32<16>& a, const int32<16>& b)
 {
     return _mm512_max_epi32(a, b);
@@ -202,7 +202,7 @@ SIMDPP_INL uint32x8 i_max(const uint32x8& a, const uint32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_max(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_max_epu32(a, b);

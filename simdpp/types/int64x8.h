@@ -21,7 +21,7 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-#if SIMDPP_USE_AVX512 || SIMDPP_DOXYGEN
+#if SIMDPP_USE_AVX512F || SIMDPP_DOXYGEN
 
 /// @ingroup simd_vec_int
 /// @{
@@ -36,7 +36,7 @@ public:
     using base_vector_type = int64<8,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __m512i;
 #endif
 
@@ -100,7 +100,7 @@ public:
     using base_vector_type = uint64<8,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __m512i;
 #endif
 
@@ -164,7 +164,7 @@ public:
     using base_vector_type = mask_int64<8,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __mmask8;
 #endif
 
@@ -188,7 +188,7 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint64<8> unmask() const
     {
-    #if SIMDPP_USE_AVX512
+    #if SIMDPP_USE_AVX512F
         return _mm512_maskz_set1_epi64(d_, 0xffffffffffffffff);
     #endif
     }
@@ -204,7 +204,7 @@ private:
 
 /// @} -- end ingroup
 
-#endif // SIMDPP_USE_AVX512 || SIMDPP_DOXYGEN
+#endif // SIMDPP_USE_AVX512F || SIMDPP_DOXYGEN
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

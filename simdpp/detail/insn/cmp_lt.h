@@ -172,7 +172,7 @@ SIMDPP_INL mask_int32x8 i_cmp_lt(const int32x8& a, const int32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_cmp_lt(const int32<16>& a, const int32<16>& b)
 {
     return _mm512_cmpgt_epi32_mask(b, a);
@@ -216,7 +216,7 @@ SIMDPP_INL mask_int32x8 i_cmp_lt(const uint32x8& ca, const uint32x8& cb)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_cmp_lt(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_cmplt_epu32_mask(a, b);
@@ -253,7 +253,7 @@ SIMDPP_INL mask_float32x8 i_cmp_lt(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_cmp_lt(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_LT_OQ);
@@ -288,7 +288,7 @@ SIMDPP_INL mask_float64x4 i_cmp_lt(const float64x4& a, const float64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_cmp_lt(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_LT_OQ);

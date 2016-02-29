@@ -76,7 +76,7 @@ SIMDPP_INL float32x8 i_rsqrt_rh(const float32x8& x, const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_rsqrt_rh(const float32<16>& x, const float32<16>& a)
 {
     return v_rsqrt_rh(x, a);

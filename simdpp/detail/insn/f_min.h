@@ -41,7 +41,7 @@ SIMDPP_INL float32x8 i_min(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_min(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_min_ps(a, b);
@@ -74,7 +74,7 @@ SIMDPP_INL float64x4 i_min(const float64x4& a, const float64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_min(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_min_pd(a, b);

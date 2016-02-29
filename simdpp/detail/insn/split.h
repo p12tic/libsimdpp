@@ -48,7 +48,7 @@ SIMDPP_INL void i_split(const uint32<8>& a, uint32<4>& r1, uint32<4>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const uint32<16>& a, uint32<8>& r1, uint32<8>& r2)
 {
     // r1 = _mm512_castsi512_si256(a); GCC BUG
@@ -67,7 +67,7 @@ SIMDPP_INL void i_split(const uint64<4>& a, uint64<2>& r1, uint64<2>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const uint64<8>& a, uint64<4>& r1, uint64<4>& r2)
 {
     // r1 = _mm512_castsi512_si256(a); GCC BUG
@@ -86,7 +86,7 @@ SIMDPP_INL void i_split(const float32<8>& a, float32<4>& r1, float32<4>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const float32<16>& a, float32<8>& r1, float32<8>& r2)
 {
     // r1 = _mm512_castps512_ps256(a); GCC BUG
@@ -105,7 +105,7 @@ SIMDPP_INL void i_split(const float64<4>& a, float64<2>& r1, float64<2>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const float64<8>& a, float64<4>& r1, float64<4>& r2)
 {
     // r1 = _mm512_castpd512_pd256(a); GCC BUG

@@ -112,7 +112,7 @@ SIMDPP_INL uint32x8 i_unzip4_hi(const uint32x8& a, const uint32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_unzip4_hi(const uint32<16>& a, const uint32<16>& b)
 {
     return shuffle2<1,3,1,3>(a, b);
@@ -155,7 +155,7 @@ SIMDPP_INL float32x8 i_unzip4_hi(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_unzip4_hi(const float32<16>& a, const float32<16>& b)
 {
     return shuffle2<1,3,1,3>(a, b);

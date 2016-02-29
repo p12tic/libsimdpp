@@ -66,7 +66,7 @@ template<> struct shuffle_impl<1> {
         return _mm256_unpacklo_epi32(a, b);
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {
@@ -98,7 +98,7 @@ template<> struct shuffle_impl<3> {
         return _mm256_unpackhi_epi32(a, b);
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {
@@ -133,7 +133,7 @@ template<> struct shuffle_impl<5> {
         return _mm256_blend_epi32(a, b, mask | mask << 4);
     }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {

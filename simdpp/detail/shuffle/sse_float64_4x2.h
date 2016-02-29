@@ -40,7 +40,7 @@ struct impl_selector {
     static const bool is4_zip_hi2 = (s0==5 && s1==1 && s2==7 && s3==3);
     static const bool is5_blend = (s0==0 || s0==4) && (s1==1 || s1==5) &&
                                   (s2==2 || s2==6) && (s3==3 || s3==7);
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     static const bool is6_shuffle1 = false;
     static const bool is7_shuffle2 = false;
     static const bool is8_permx2var = true;
@@ -79,7 +79,7 @@ template<> struct shuffle_impl<1> {
     {
         return _mm256_unpacklo_pd(a, b);
     }
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float64<8> run(const float64<8>& a, const float64<8>& b)
     {
@@ -104,7 +104,7 @@ template<> struct shuffle_impl<3> {
     {
         return _mm256_unpackhi_pd(a, b);
     }
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float64<8> run(const float64<8>& a, const float64<8>& b)
     {
@@ -130,7 +130,7 @@ template<> struct shuffle_impl<5> {
         const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
         return _mm256_blend_pd(a, b, mask);
     }
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float64<8> run(const float64<8>& a, const float64<8>& b)
     {
@@ -178,7 +178,7 @@ template<> struct shuffle_impl<7> {
 };
 
 // is8_perm2xvar
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<> struct shuffle_impl<8> {
 
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL

@@ -70,7 +70,7 @@ SIMDPP_INL float32x8 i_ceil(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_ceil(const float32<16>& a)
 {
     return _mm512_ceil_ps(a);

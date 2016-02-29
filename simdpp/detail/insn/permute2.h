@@ -77,7 +77,7 @@ uint64x4 i_permute2(const uint64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64<8> i_permute2(const uint64<8>& a)
 {
@@ -121,7 +121,7 @@ float64x4 i_permute2(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 float64<8> i_permute2(const float64<8>& a)
 {

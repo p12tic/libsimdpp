@@ -181,7 +181,7 @@ SIMDPP_INL uint32<8> i_bit_and(const uint32<8>& a, const uint32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_and(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_and_epi32(a, b);
@@ -212,7 +212,7 @@ SIMDPP_INL uint32<8> i_bit_and(const uint32<8>& a, const mask_int32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_and(const uint32<16>& a, const mask_int32<16>& b)
 {
     return _mm512_maskz_mov_epi32(b, a);
@@ -243,7 +243,7 @@ SIMDPP_INL mask_int32<8> i_bit_and(const mask_int32<8>& a, const mask_int32<8>& 
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_bit_and(const mask_int32<16>& a, const mask_int32<16>& b)
 {
     return _mm512_kand(a, b);
@@ -271,7 +271,7 @@ SIMDPP_INL uint64<4> i_bit_and(const uint64<4>& a, const uint64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_and(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_and_epi64(a, b);
@@ -302,7 +302,7 @@ SIMDPP_INL uint64<4> i_bit_and(const uint64<4>& a, const mask_int64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_and(const uint64<8>& a, const mask_int64<8>& b)
 {
     return _mm512_maskz_mov_epi64(b, a);
@@ -333,7 +333,7 @@ SIMDPP_INL mask_int64<4> i_bit_and(const mask_int64<4>& a, const mask_int64<4>& 
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int64<8> i_bit_and(const mask_int64<8>& a, const mask_int64<8>& b)
 {
     return __mmask16(_mm512_kand(__mmask8(a), __mmask8(b)));
@@ -370,7 +370,7 @@ SIMDPP_INL float32<8> i_bit_and(const float32<8>& a, const float32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_and(const float32<16>& a, const float32<16>& b)
 {
     return float32<16>(i_bit_and(uint32<16>(a), uint32<16>(b)));
@@ -401,7 +401,7 @@ SIMDPP_INL float32<8> i_bit_and(const float32<8>& a, const mask_float32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_and(const float32<16>& a, const mask_float32<16>& b)
 {
     return _mm512_maskz_mov_ps(b, a);
@@ -432,7 +432,7 @@ SIMDPP_INL mask_float32<8> i_bit_and(const mask_float32<8>& a, const mask_float3
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_bit_and(const mask_float32<16>& a, const mask_float32<16>& b)
 {
     return _mm512_kand(a, b);
@@ -467,7 +467,7 @@ SIMDPP_INL float64<4> i_bit_and(const float64<4>& a, const float64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_and(const float64<8>& a, const float64<8>& b)
 {
     return float64<8>(i_bit_and(uint64<8>(a), uint64<8>(b)));
@@ -498,7 +498,7 @@ SIMDPP_INL float64<4> i_bit_and(const float64<4>& a, const mask_float64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_and(const float64<8>& a, const mask_float64<8>& b)
 {
     return _mm512_maskz_mov_pd(b, a);
@@ -529,7 +529,7 @@ SIMDPP_INL mask_float64<4> i_bit_and(const mask_float64<4>& a, const mask_float6
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_bit_and(const mask_float64<8>& a, const mask_float64<8>& b)
 {
     return __mmask16(_mm512_kand(__mmask8(a), __mmask8(b)));

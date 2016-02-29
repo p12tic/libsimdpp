@@ -207,7 +207,7 @@
     #include <x86intrin.h>
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     #include <immintrin.h>
 #endif
 

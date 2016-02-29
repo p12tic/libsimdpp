@@ -102,7 +102,7 @@ uint32<8> i_move4_r(const uint32<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned shift> SIMDPP_INL
 uint32<16> i_move4_r(const uint32<16>& a)
 {
@@ -144,7 +144,7 @@ uint64<4> i_move2_r(const uint64<4>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned shift> SIMDPP_INL
 uint64<8> i_move2_r(const uint64<8>& a)
 {
@@ -180,7 +180,7 @@ float32<8> i_move4_r(const float32<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned shift> SIMDPP_INL
 float32<16> i_move4_r(const float32<16>& a)
 {
@@ -222,7 +222,7 @@ float64<4> i_move2_r(const float64<4>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned shift> SIMDPP_INL
 float64<8> i_move2_r(const float64<8>& a)
 {

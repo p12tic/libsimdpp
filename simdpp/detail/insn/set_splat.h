@@ -139,7 +139,7 @@ SIMDPP_INL void i_set_splat(uint32x8& v, uint32_t v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(uint32<16>& v, uint32_t v0)
 {
     v = _mm512_set1_epi32(v0);
@@ -197,7 +197,7 @@ SIMDPP_INL void i_set_splat(uint64x4& v, uint64_t v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(uint64<8>& v, uint64_t v0)
 {
     v = _mm512_set1_epi64(v0);
@@ -240,7 +240,7 @@ SIMDPP_INL void i_set_splat(float32x8& v, float v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(float32<16>& v, float v0)
 {
     float32<4> a;
@@ -279,7 +279,7 @@ SIMDPP_INL void i_set_splat(float64x4& v, double v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(float64<8>& v, double v0)
 {
     float64<4> v1;

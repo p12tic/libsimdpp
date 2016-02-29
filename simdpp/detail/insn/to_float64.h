@@ -53,7 +53,7 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL float64<8> i_to_float64(const int32x8& a)
 {
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     return _mm512_cvtepi32_pd(a);
 #else
     float64x4 r1, r2;
@@ -66,7 +66,7 @@ SIMDPP_INL float64<8> i_to_float64(const int32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<16> i_to_float64(const int32<16>& a)
 {
     float64<8> r1, r2;
@@ -118,7 +118,7 @@ SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
 #if SIMDPP_USE_AVX
 SIMDPP_INL float64<8> i_to_float64(const float32x8& a)
 {
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     return _mm512_cvtps_pd(a);
 #else
     float64x4 r1, r2;
@@ -131,7 +131,7 @@ SIMDPP_INL float64<8> i_to_float64(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<16> i_to_float64(const float32<16>& a)
 {
     float64<8> r1, r2;

@@ -45,7 +45,7 @@ SIMDPP_INL float32x8 i_rcp_e(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_rcp_e(const float32<16>& a)
 {
     // TODO: document precision

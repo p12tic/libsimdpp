@@ -48,7 +48,7 @@ SIMDPP_INL float32x8 i_sqrt(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_sqrt(const float32<16>& a)
 {
     return _mm512_sqrt_ps(a);
@@ -81,7 +81,7 @@ SIMDPP_INL float64x4 i_sqrt(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_sqrt(const float64<8>& a)
 {
     return _mm512_sqrt_pd(a);

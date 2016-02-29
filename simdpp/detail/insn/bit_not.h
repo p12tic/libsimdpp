@@ -70,7 +70,7 @@ SIMDPP_INL uint32<8> i_bit_not(const uint32<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_not(const uint32<16>& a)
 {
     uint32<16> ones = uint32<16>::ones();
@@ -98,7 +98,7 @@ SIMDPP_INL uint64<4> i_bit_not(const uint64<4>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_not(const uint64<8>& a)
 {
     uint64<8> ones = uint64<8>::ones();
@@ -157,7 +157,7 @@ SIMDPP_INL mask_int32x8  i_bit_not(const mask_int32x8& a)  { return i_bit_not(ui
 SIMDPP_INL mask_int64x4  i_bit_not(const mask_int64x4& a)  { return i_bit_not(uint64x4(a)); }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_bit_not(const mask_int32<16>& a)
 {
     return _mm512_knot(a);
@@ -214,7 +214,7 @@ SIMDPP_INL float32x8 i_bit_not(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_not(const float32<16>& a)
 {
     uint32<16> ones = uint32<16>::ones();
@@ -250,7 +250,7 @@ SIMDPP_INL float64x4 i_bit_not(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_not(const float64<8>& a)
 {
     uint64<8> ones = uint64<8>::ones();
@@ -282,7 +282,7 @@ SIMDPP_INL mask_float32x8 i_bit_not(const mask_float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_bit_not(const mask_float32<16>& a)
 {
     return _mm512_knot(a);
@@ -313,7 +313,7 @@ SIMDPP_INL mask_float64x4 i_bit_not(const mask_float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_bit_not(const mask_float64<8>& a)
 {
     return _mm512_knot(a);

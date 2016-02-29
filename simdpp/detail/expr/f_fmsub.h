@@ -61,7 +61,7 @@ float32<8> expr_eval(const expr_fmsub<float32<8,E1>,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2, class E3> SIMDPP_INL
 float32<16> expr_eval(const expr_fmsub<float32<16,E1>,
                                        float32<16,E2>,
@@ -128,7 +128,7 @@ float64<4> expr_eval(const expr_fmsub<float64<4,E1>,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2, class E3> SIMDPP_INL
 float64<8> expr_eval(const expr_fmsub<float64<8,E1>,
                                       float64<8,E2>,

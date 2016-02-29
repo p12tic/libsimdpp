@@ -48,7 +48,7 @@ namespace detail {
         case 3: r[384..511] = b[384..511]
 @endcode
 */
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<16> shuffle2_128(const uint32<16>& a, const uint32<16>& b)
 {
@@ -139,7 +139,7 @@ float64x4 shuffle1_128(const float64x4& a, const float64x4& b)
 #endif
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
 uint32<16> shuffle1_128(const uint32<16>& a, const uint32<16>& b)
 {
@@ -170,7 +170,7 @@ float64<8> shuffle1_128(const float64<8>& a, const float64<8>& b)
 #endif
 /// @}
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V> SIMDPP_INL
 V permute4_128(V a)
 {

@@ -63,7 +63,7 @@ SIMDPP_INL int64<8> i_to_int64(const int32<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int64<16> i_to_int64(const int32<16>& a)
 {
     int32<8> a1, a2;
@@ -126,7 +126,7 @@ SIMDPP_INL uint64<8> i_to_uint64(const uint32<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<16> i_to_uint64(const uint32<16>& a)
 {
     uint32<8> a1, a2;
