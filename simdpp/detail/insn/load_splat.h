@@ -143,7 +143,13 @@ SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
     v = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(v0));
     v = permute2<0,0>(v);
 #elif SIMDPP_USE_NEON
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ == 7)
+    // BUG: GCC 4.7 loads only the first element
+    uint64x1_t x = vld1_dup_u64(v0);
+    v = vdupq_lane_u64(x, 0);
+#else
     v = vld1q_dup_u64(v0);
+#endif
 #elif SIMDPP_USE_ALTIVEC
     SIMDPP_ALIGN(16) uint64_t rv[2];
     rv[0] = *v0;
