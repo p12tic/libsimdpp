@@ -29,22 +29,34 @@ public:
     operator int8x32() { return int8x32::zero(); }
     operator uint8x16() { return uint8x16::zero(); }
     operator uint8x32() { return uint8x32::zero(); }
+    operator mask_int8x16() { return mask_int8x16(); }
+    operator mask_int8x32() { return mask_int8x32(); }
     operator int16x8() { return int16x8::zero(); }
     operator int16x16() { return int16x16::zero(); }
     operator uint16x8() { return uint16x8::zero(); }
     operator uint16x16() { return uint16x16::zero(); }
+    operator mask_int16x8() { return mask_int16x8(); }
+    operator mask_int16x16() { return mask_int16x16(); }
     operator int32x4() { return int32x4::zero(); }
     operator int32x8() { return int32x8::zero(); }
     operator uint32x4() { return uint32x4::zero(); }
     operator uint32x8() { return uint32x8::zero(); }
+    operator mask_int32x4() { return mask_int32x4(); }
+    operator mask_int32x8() { return mask_int32x8(); }
     operator int64x2() { return int64x2::zero(); }
     operator int64x4() { return int64x4::zero(); }
     operator uint64x2() { return uint64x2::zero(); }
     operator uint64x4() { return uint64x4::zero(); }
+    operator mask_int64x2() { return mask_int64x2(); }
+    operator mask_int64x4() { return mask_int64x4(); }
     operator float32x4() { return float32x4::zero(); }
     operator float32x8() { return float32x8::zero(); }
+    operator mask_float32x4() { return mask_float32x4(); }
+    operator mask_float32x8() { return mask_float32x8(); }
     operator float64x2() { return float64x2::zero(); }
     operator float64x4() { return float64x4::zero(); }
+    operator mask_float64x2() { return mask_float64x2(); }
+    operator mask_float64x4() { return mask_float64x4(); }
 };
 
 } // namespace detail
