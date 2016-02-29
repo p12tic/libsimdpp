@@ -42,17 +42,19 @@ version of the library is provided on the
 [cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch.
 
  - C++11 version:
-   - GCC: 4.9, 4.8
-   - Clang: 3.3, 3.4, 3.5
+   - GCC: 4.8-5.3
+   - Clang: 3.3-3.8
    - MSVC: 2013
-   - ICC: 2015, 2013
+   - ICC: 2013, 2015
 
 Clang 3.3 is not supported on ARM. MSVC is only supported on x86-64. ICC is
 only supported on x86 and x86-64.
 
  - C++98 version
-   - GCC: 4.8.1, 4.7.3
-   - Clang: 3.3, 3.4
+   - GCC: 4.4-5.3
+   - Clang: 3.3-3.8
+   - MSVC: 2013
+   - ICC: 2013, 2015
 
 Documentation
 -------------
