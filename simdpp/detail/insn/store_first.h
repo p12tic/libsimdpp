@@ -20,7 +20,7 @@
 #include <simdpp/core/store.h>
 #include <simdpp/neon/memory_store.h>
 #include <simdpp/detail/null/memory.h>
-#include <simdpp/sse/extract_half.h>
+#include <simdpp/detail/extract128.h>
 #include <simdpp/sse/memory_store.h>
 
 namespace simdpp {

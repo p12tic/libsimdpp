@@ -145,7 +145,7 @@
 #include <simdpp/sse/cache.h>
 #include <simdpp/sse/compare.h>
 #include <simdpp/sse/convert.h>
-#include <simdpp/sse/extract_half.h>
+#include <simdpp/detail/extract128.h>
 #include <simdpp/sse/math_int.h>
 #include <simdpp/sse/memory_load.h>
 #include <simdpp/sse/memory_store.h>

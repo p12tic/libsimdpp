@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/splat_n.h>
-#include <simdpp/sse/extract_half.h>
+#include <simdpp/detail/extract128.h>
 #include <simdpp/detail/insn/shuffle128.h>
 
 namespace simdpp {
@@ -39,7 +39,7 @@ uint8x32 i_splat(const uint8x32& a)
 {
     static_assert(s < 32, "Access out of bounds");
     uint8x16 lo;
-    lo = s < 16 ? sse::extract_lo(a) : sse::extract_hi(a);
+    lo = s < 16 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move16_l<s % 16>(lo);
     return _mm256_broadcastb_epi8(lo);
 }
@@ -66,7 +66,7 @@ uint16x16 i_splat(const uint16x16& a)
 {
     static_assert(s < 16, "Access out of bounds");
     uint16x8 lo;
-    lo = s < 8 ? sse::extract_lo(a) : sse::extract_hi(a);
+    lo = s < 8 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move8_l<s % 8>(lo);
     return _mm256_broadcastw_epi16(lo);
 }
