@@ -11,6 +11,39 @@
 #include <simdpp/simd.h>
 #include <vector>
 
+static_assert(sizeof(simdpp::uint8<16>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::int8<16>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint16<8>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::int16<8>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint32<4>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::int32<4>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint64<2>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::int64<2>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::float32<4>) == 16, "Incorrect vector size");
+static_assert(sizeof(simdpp::float64<2>) == 16, "Incorrect vector size");
+
+static_assert(sizeof(simdpp::uint8<32>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::int8<32>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint16<16>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::int16<16>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint32<8>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::int32<8>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint64<4>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::int64<4>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::float32<8>) == 32, "Incorrect vector size");
+static_assert(sizeof(simdpp::float64<4>) == 32, "Incorrect vector size");
+
+static_assert(sizeof(simdpp::uint8<64>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::int8<64>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint16<32>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::int16<32>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint32<16>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::int32<16>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::uint64<8>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::int64<8>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::float32<16>) == 64, "Incorrect vector size");
+static_assert(sizeof(simdpp::float64<8>) == 64, "Incorrect vector size");
+
 namespace SIMDPP_ARCH_NAMESPACE {
 
 void main_test_function(TestResults& res)
