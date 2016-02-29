@@ -83,6 +83,76 @@ float32<N> i_floor(const float32<N>& a)
     SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_floor, a);
 }
 
+SIMDPP_INL float64x2 i_floor(const float64x2& a)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    float64x2 r;
+    for (unsigned i = 0; i < r.length; ++i) {
+        r.el(i) = std::floor(a.el(i));
+    }
+    return r;
+#elif SIMDPP_USE_SSE4_1
+    return _mm_floor_pd(a);
+#elif SIMDPP_USE_SSE2
+    float64x2 af = abs(a);
+    // check if the value is not too large or is a nan
+    mask_float64x2 mask_range = cmp_le(af, 4503599627370495.0);
+    // check if truncate to zero or minus one
+    mask_float64x2 mask_1to1 = cmp_lt(af, 1.0);
+
+    /*  Emulate truncation for numbers not less than 1.0.
+        This is implemented by clearing the mantissa in the source number,
+        adding 1.0 and subtracting integer 1. The mantissa of the resulting
+        number will effectively contain a bit mask defining which bits need to
+        be cleared off the source number in order to truncate it.
+    */
+    float64x2 clearbits = bit_and(af, 0x7ff0000000000000); // clear the mantissa
+    clearbits = add(clearbits, 1.0);
+    clearbits = (float64x2) sub(uint64x2(clearbits), 1);
+    clearbits = bit_andnot(clearbits, 0xfff0000000000000); // leave only the mantissa
+
+    float64x2 a2 = bit_andnot(a, clearbits); // truncate
+
+    // check if we need to subtract one (truncated bits when negative)
+    mask_float64x2 mask_neg = cmp_lt(a, 0.0);
+    mask_float64x2 mask_sub1 = cmp_gt(bit_and(a, clearbits), 0.0);
+    mask_sub1 = bit_and(mask_sub1, mask_neg);
+
+    // one special case is when 'a' is in the range of (-1.0, 0.0) in which
+    // a & clearbits may still yield to zero. Thus this additional check
+    mask_sub1 = bit_or(mask_sub1, bit_and(mask_1to1, mask_neg));
+    float64x2 sub1 = make_float(-1.0);
+    sub1 = bit_and(sub1, mask_sub1);
+
+    a2 = bit_andnot(a, mask_1to1);
+    a2 = sub(a2, sub1);
+
+    return blend(a2, a, mask_range);
+#elif SIMDPP_USE_NEON64
+    return vrndnq_f64(a);
+#endif
+}
+
+#if SIMDPP_USE_AVX
+SIMDPP_INL float64x4 i_floor(const float64x4& a)
+{
+    return _mm256_floor_pd(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+SIMDPP_INL float64<8> i_floor(const float64<8>& a)
+{
+    return _mm512_floor_pd(a);
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+float64<N> i_floor(const float64<N>& a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_floor, a);
+}
+
 } // namespace insn
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

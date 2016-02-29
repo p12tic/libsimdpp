@@ -41,6 +41,11 @@ float32<N,expr_empty> ceil(const float32<N,E>& a)
 {
     return detail::insn::i_ceil(a.eval());
 }
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> ceil(const float64<N,E>& a)
+{
+    return detail::insn::i_ceil(a.eval());
+}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

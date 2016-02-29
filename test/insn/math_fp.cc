@@ -50,6 +50,12 @@ void test_math_fp_n(TestSuite& tc)
         TEST_ARRAY_HELPER1(tc, float32_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float32_n, neg, s);
 
+        tc.set_fp_zero_equal();
+        TEST_ARRAY_HELPER1(tc, float32_n, trunc, s);
+        TEST_ARRAY_HELPER1(tc, float32_n, floor, s);
+        TEST_ARRAY_HELPER1(tc, float32_n, ceil, s);
+        tc.unset_fp_zero_equal();
+
         tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
         TEST_ALL_COMB_HELPER3(tc, float32_n, fmadd, s, 4);
@@ -103,6 +109,12 @@ void test_math_fp_n(TestSuite& tc)
         TEST_ARRAY_HELPER1(tc, float64_n, abs, s);
         TEST_ARRAY_HELPER1(tc, float64_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float64_n, neg, s);
+
+        tc.set_fp_zero_equal();
+        TEST_ARRAY_HELPER1(tc, float64_n, trunc, s);
+        TEST_ARRAY_HELPER1(tc, float64_n, floor, s);
+        TEST_ARRAY_HELPER1(tc, float64_n, ceil, s);
+        tc.unset_fp_zero_equal();
 
         tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F

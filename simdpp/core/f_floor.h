@@ -41,6 +41,12 @@ float32<N,expr_empty> floor(const float32<N,E>& a)
 {
     return detail::insn::i_floor(a.eval());
 }
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> floor(const float64<N,E>& a)
+{
+    return detail::insn::i_floor(a.eval());
+}
+
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

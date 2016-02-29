@@ -40,6 +40,11 @@ float32<N,expr_empty> trunc(const float32<N,E>& a)
 {
     return detail::insn::i_trunc(a.eval());
 }
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> trunc(const float64<N,E>& a)
+{
+    return detail::insn::i_trunc(a.eval());
+}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -136,7 +136,6 @@ set(HEADERS
     sse/compare.h
     sse/convert.h
     sse/extract_half.h
-    sse/math_fp.h
     sse/math_int.h
     sse/memory_load.h
     sse/memory_store.h
