@@ -20,9 +20,54 @@ namespace SIMDPP_ARCH_NAMESPACE {
     the type enum from the type of the supplied argument.
     @{
 */
+inline void test_push_internal(TestSuite& t, std::int8_t data, unsigned line)
+{
+    t.push(TestSuite::TYPE_INT8, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, std::uint8_t data, unsigned line)
+{
+    t.push(TestSuite::TYPE_UINT8, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, std::int16_t data, unsigned line)
+{
+    t.push(TestSuite::TYPE_INT16, 1, line).set(0, &data);
+}
+
 inline void test_push_internal(TestSuite& t, std::uint16_t data, unsigned line)
 {
     t.push(TestSuite::TYPE_UINT16, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, std::int32_t data, unsigned line)
+{
+    t.push(TestSuite::TYPE_INT32, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, std::uint32_t data, unsigned line)
+{
+    t.push(TestSuite::TYPE_UINT32, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, std::int64_t data, unsigned line)
+{
+    t.push(TestSuite::TYPE_INT64, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, std::uint64_t data, unsigned line)
+{
+    t.push(TestSuite::TYPE_UINT64, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, float data, unsigned line)
+{
+    t.push(TestSuite::TYPE_FLOAT32, 1, line).set(0, &data);
+}
+
+inline void test_push_internal(TestSuite& t, double data, unsigned line)
+{
+    t.push(TestSuite::TYPE_FLOAT64, 1, line).set(0, &data);
 }
 
 template<class V>

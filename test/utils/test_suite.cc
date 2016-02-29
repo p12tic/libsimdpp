@@ -110,26 +110,6 @@ void fmt_num(std::ostream& err, unsigned num_elems, unsigned precision,
 }
 
 template<class T>
-void fmt_bin(std::ostream& err, unsigned num_elems, const char* prefix, const T* p)
-{
-    err << prefix << "[ ";
-    for (unsigned i = 0; i < num_elems; i++, p++) {
-        T pl = *p;
-        uint64_t pi;
-        std::memcpy(&pi, &pl, sizeof(T));
-        unsigned bits = sizeof(T)*8;
-        for (unsigned j = 0; j < bits; j++) {
-            err << ((pi & (uint64_t(1) << j)) ? '1' : '0');
-        }
-        if (i != num_elems - 1) {
-            err << " ; ";
-        }
-    }
-    err << " ]\n";
-    err << std::dec;
-}
-
-template<class T>
 struct binary_for_float;
 template<> struct binary_for_float<float> { using type = int32_t; };
 template<> struct binary_for_float<double> { using type = int64_t; };
@@ -268,62 +248,47 @@ bool test_equal(const TestSuite& a, const char* a_arch,
 
     auto fmt_vector = [&](const TestSuite::Result& r, const char* prefix) -> void
     {
-        if (r.length == 1) {
-            switch (r.type) {
-            case TestSuite::TYPE_INT8:   fmt_bin(err, r.length, prefix, (const int8_t*)r.d());
-            case TestSuite::TYPE_UINT8:  fmt_bin(err, r.length, prefix, (const uint8_t*)r.d());
-            case TestSuite::TYPE_INT16:  fmt_bin(err, r.length, prefix, (const int16_t*)r.d());
-            case TestSuite::TYPE_UINT16: fmt_bin(err, r.length, prefix, (const uint16_t*)r.d());
-            case TestSuite::TYPE_INT32:  fmt_bin(err, r.length, prefix, (const int32_t*)r.d());
-            case TestSuite::TYPE_UINT32: fmt_bin(err, r.length, prefix, (const uint32_t*)r.d());
-            case TestSuite::TYPE_INT64:  fmt_bin(err, r.length, prefix, (const int64_t*)r.d());
-            case TestSuite::TYPE_UINT64: fmt_bin(err, r.length, prefix, (const uint64_t*)r.d());
-            case TestSuite::TYPE_FLOAT32: fmt_bin(err, r.length, prefix, (const float*)r.d());
-            case TestSuite::TYPE_FLOAT64: fmt_bin(err, r.length, prefix, (const double*)r.d());
-            }
-        } else {
-            switch (r.type) {
-            case TestSuite::TYPE_UINT8:
-                fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
-                fmt_num(err, r.length, 4, prefix, (const int8_t*)r.d());
-                break;
-            case TestSuite::TYPE_INT8:
-                fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
-                fmt_num(err, r.length, 4, prefix, (const uint8_t*)r.d());
-                break;
-            case TestSuite::TYPE_UINT16:
-                fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
-                fmt_num(err, r.length, 6, prefix, (const int16_t*)r.d());
-                break;
-            case TestSuite::TYPE_INT16:
-                fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
-                fmt_num(err, r.length, 6, prefix, (const uint16_t*)r.d());
-                break;
-            case TestSuite::TYPE_UINT32:
-                fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
-                fmt_num(err, r.length, 11, prefix, (const int32_t*)r.d());
-                break;
-            case TestSuite::TYPE_INT32:
-                fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
-                fmt_num(err, r.length, 11, prefix, (const uint32_t*)r.d());
-                break;
-            case TestSuite::TYPE_UINT64:
-                fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
-                fmt_num(err, r.length, 20, prefix, (const int64_t*)r.d());
-                break;
-            case TestSuite::TYPE_INT64:
-                fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
-                fmt_num(err, r.length, 20, prefix, (const uint64_t*)r.d());
-                break;
-            case TestSuite::TYPE_FLOAT32:
-                fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
-                fmt_num(err, r.length, 7, prefix, (const float*)r.d());
-                break;
-            case TestSuite::TYPE_FLOAT64:
-                fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
-                fmt_num(err, r.length, 17, prefix, (const double*)r.d());
-                break;
-            }
+        switch (r.type) {
+        case TestSuite::TYPE_UINT8:
+            fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
+            fmt_num(err, r.length, 4, prefix, (const int8_t*)r.d());
+            break;
+        case TestSuite::TYPE_INT8:
+            fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
+            fmt_num(err, r.length, 4, prefix, (const uint8_t*)r.d());
+            break;
+        case TestSuite::TYPE_UINT16:
+            fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
+            fmt_num(err, r.length, 6, prefix, (const int16_t*)r.d());
+            break;
+        case TestSuite::TYPE_INT16:
+            fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
+            fmt_num(err, r.length, 6, prefix, (const uint16_t*)r.d());
+            break;
+        case TestSuite::TYPE_UINT32:
+            fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
+            fmt_num(err, r.length, 11, prefix, (const int32_t*)r.d());
+            break;
+        case TestSuite::TYPE_INT32:
+            fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
+            fmt_num(err, r.length, 11, prefix, (const uint32_t*)r.d());
+            break;
+        case TestSuite::TYPE_UINT64:
+            fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
+            fmt_num(err, r.length, 20, prefix, (const int64_t*)r.d());
+            break;
+        case TestSuite::TYPE_INT64:
+            fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
+            fmt_num(err, r.length, 20, prefix, (const uint64_t*)r.d());
+            break;
+        case TestSuite::TYPE_FLOAT32:
+            fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
+            fmt_num(err, r.length, 7, prefix, (const float*)r.d());
+            break;
+        case TestSuite::TYPE_FLOAT64:
+            fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
+            fmt_num(err, r.length, 17, prefix, (const double*)r.d());
+            break;
         }
     };
 
