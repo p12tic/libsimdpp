@@ -603,29 +603,28 @@ void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
 
     a = qa.wrapped();  b = qb.wrapped();  c = qc.wrapped();  d = qd.wrapped();
 
-    V b0, b1, b2, b3;
+    V t1, t2, t3, t4;
     // [a0,a1,a2,a3]
     // [b0,b1,b2,b3]
     // [c0,c1,c2,c3]
     // [d0,d1,d2,d3]
-    b0 = shuffle2_128<0,1,0,1>(a, b);
-    b1 = shuffle2_128<2,3,2,3>(a, b);
-    b2 = shuffle2_128<0,1,0,1>(c, d);
-    b3 = shuffle2_128<2,3,2,3>(c, d);
+    t1 = shuffle2_128<0,2,0,2>(a, b);
+    t2 = shuffle2_128<1,3,1,3>(a, b);
+    t3 = shuffle2_128<0,2,0,2>(c, d);
+    t4 = shuffle2_128<1,3,1,3>(c, d);
+    // [a0,a2,b0,b2]
+    // [a1,a3,b1,b3]
+    // [c0,c2,d0,d2]
+    // [c1,c3,d1,d3]
+    a = shuffle2_128<0,2,0,2>(t1, t3);
+    b = shuffle2_128<0,2,0,2>(t2, t4);
+    c = shuffle2_128<1,3,1,3>(t1, t3);
+    d = shuffle2_128<1,3,1,3>(t2, t4);
+    // [a0,b0,c0,d0]
+    // [a1,b1,c1,d1]
+    // [a2,b2,c2,d2]
+    // [a3,b3,c3,d3]
 
-    b0 = permute4_128<0,2,1,3>(b0);
-    b1 = permute4_128<0,2,1,3>(b1);
-    b2 = permute4_128<0,2,1,3>(b2);
-    b3 = permute4_128<0,2,1,3>(b3);
-
-    // [a0,b0,a1,b1]
-    // [a2,b2,a3,b3]
-    // [c0,d0,c1,d1]
-    // [c2,d2,c3,d3]
-    a = shuffle2_128<0,1,0,1>(b0, b2);
-    b = shuffle2_128<2,3,2,3>(b0, b2);
-    c = shuffle2_128<0,1,0,1>(b1, b3);
-    d = shuffle2_128<2,3,2,3>(b1, b3);
 
     qa.wrapped() = a;  qb.wrapped() = b;  qc.wrapped() = c;  qd.wrapped() = d;
 }
