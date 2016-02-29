@@ -116,6 +116,67 @@ void fmt_bin(std::ostream& err, unsigned num_elems, const char* prefix, const T*
 }
 
 template<class T>
+struct binary_for_float;
+template<> struct binary_for_float<float> { using type = int32_t; };
+template<> struct binary_for_float<double> { using type = int64_t; };
+
+template<class U, class T>
+U binary_convert(const T& x)
+{
+    U r;
+    std::memcpy(&r, &x, sizeof(r));
+    return r;
+}
+
+// Do not depend on floating-point operations when performing tests as flush
+// to zero may be enabled and wrong results may be reported. Assume IEEE-754
+// floating-number format and perform everything using integer operations.
+template<class T>
+T nextafter_ulps(T from, T to)
+{
+    // ignore NaNs
+    if (std::isnan(from) || std::isnan(to))
+        return from;
+
+    // if 'from' is infinity, ignore
+    if (from == std::numeric_limits<T>::infinity() ||
+        from == -std::numeric_limits<T>::infinity())
+    {
+        return from;
+    }
+
+    typedef typename binary_for_float<T>::type IntT;
+    IntT from_i = binary_convert<IntT>(from);
+    IntT to_i = binary_convert<IntT>(to);
+
+    // do nothing if 'from' already equals 'to'
+    if (from_i == to_i)
+        return from;
+
+    IntT zero = binary_convert<IntT>(T(0.0));
+    IntT neg_zero = binary_convert<IntT>(T(-0.0));
+
+    // handle sign wraparound at zero
+    if (from_i == zero && (to_i < 0 || to_i == neg_zero))
+        return T(-0.0);
+    if (from_i == neg_zero && (to_i > 0 || to_i == zero))
+        return T(0.0);
+
+    // fortunately IEEE-754 format is such that one ULPS can be added or
+    // subtracted with simple integer addition or subtraction, except in two
+    // cases: when the source number is infinity or the operation would change
+    // the sign of the argument (it's zero).
+
+    if (from_i < to_i)
+        from_i += 1;
+    else
+        from_i -= 1;
+
+    return binary_convert<T>(from_i);
+}
+
+// T is either double or float
+template<class T>
 bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems, unsigned prec)
 {
     for (unsigned i = 0; i < num_elems; i++) {
@@ -127,9 +188,9 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems, unsigned prec)
             continue;
         }
         for (unsigned i = 0; i < prec; i++) {
-            ia = std::nextafter(ia, ib);
+            ia = nextafter_ulps(ia, ib);
         }
-        if (ia != ib) {
+        if (std::memcmp(&ia, &ib, sizeof(ia)) != 0) {
             return false;
         }
     }
