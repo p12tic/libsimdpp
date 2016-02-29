@@ -36,6 +36,11 @@ SIMDPP_INL uint16x8 extract_lo(const uint16x16& a) { return (uint16x8) extract_l
 SIMDPP_INL uint32x4 extract_lo(const uint32x8& a) { return (uint32x4) extract_lo(uint8x32(a)); }
 SIMDPP_INL uint64x2 extract_lo(const uint64x4& a) { return (uint64x2) extract_lo(uint8x32(a)); }
 
+SIMDPP_INL int8x16 extract_lo(const int8x32& a) { return (int8x16) extract_lo(uint8x32(a)); }
+SIMDPP_INL int16x8 extract_lo(const int16x16& a) { return (int16x8) extract_lo(uint8x32(a)); }
+SIMDPP_INL int32x4 extract_lo(const int32x8& a) { return (int32x4) extract_lo(uint8x32(a)); }
+SIMDPP_INL int64x2 extract_lo(const int64x4& a) { return (int64x2) extract_lo(uint8x32(a)); }
+
 SIMDPP_INL float32x4 extract_lo(const float32x8& a)
 {
 #if SIMDPP_USE_AVX
@@ -71,6 +76,11 @@ SIMDPP_INL uint8x16 extract_hi(const uint8x32& a)
 SIMDPP_INL uint16x8 extract_hi(const uint16x16& a) { return (uint16x8) extract_hi(uint8x32(a)); }
 SIMDPP_INL uint32x4 extract_hi(const uint32x8& a) { return (uint32x4) extract_hi(uint8x32(a)); }
 SIMDPP_INL uint64x2 extract_hi(const uint64x4& a) { return (uint64x2) extract_hi(uint8x32(a)); }
+
+SIMDPP_INL int8x16 extract_hi(const int8x32& a) { return (int8x16) extract_hi(uint8x32(a)); }
+SIMDPP_INL int16x8 extract_hi(const int16x16& a) { return (int16x8) extract_hi(uint8x32(a)); }
+SIMDPP_INL int32x4 extract_hi(const int32x8& a) { return (int32x4) extract_hi(uint8x32(a)); }
+SIMDPP_INL int64x2 extract_hi(const int64x4& a) { return (int64x2) extract_hi(uint8x32(a)); }
 
 SIMDPP_INL float32x4 extract_hi(const float32x8& a)
 {
