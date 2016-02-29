@@ -68,7 +68,14 @@ void test_math_fp_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER2(tc, float32_n, min, snan, 4);
         TEST_ALL_COMB_HELPER2(tc, float32_n, max, snan, 4);
 
+        // Depending on the reduction order precision errors may occur.
+        tc.set_precision(2);
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_mul, s, 1);
+        tc.unset_precision();
 
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_min, snan, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_max, snan, 1);
     }
 
     // Vectors with 64-bit floating-point elements
@@ -118,6 +125,14 @@ void test_math_fp_n(TestSuite& tc)
         };
         TEST_ALL_COMB_HELPER2(tc, float64_n, min, snan, 8);
         TEST_ALL_COMB_HELPER2(tc, float64_n, max, snan, 8);
+
+        // Depending on the reduction order precision errors may occur.
+        tc.set_precision(2);
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_mul, s, 1);
+        tc.unset_precision();
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_min, snan, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_max, snan, 1);
     }
 }
 

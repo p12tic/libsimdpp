@@ -16,17 +16,30 @@
 #define SIMDPP_WORKAROUND_XOP_COM 1
 #endif
 
-#if SIMDPP_USE_NEON64 && (__GNUC__ == 4) && (__GNUC_MINOR__ <= 8)
+#if SIMDPP_USE_NEON64
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 8)
 #define vreinterpretq_f64_u64(x) ((float64x2_t) (uint64x2_t) (x))
 #define vreinterpretq_u64_f64(x) ((uint64x2_t) (float64x2_t) (x))
 #endif
 
-#if SIMDPP_USE_AVX512F && (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9)
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9)
+#define vmul_f64(x, y) ((float64x1_t)( ((float64x1_t)(x)) * ((float64x1_t)(y)) ))
+#endif
+#endif
+
+#if SIMDPP_USE_AVX512F
+#if ((__GNUC__ == 4) || (__GNUC__ == 5)) && !__INTEL_COMPILER
+#define SIMDPP_WORKAROUND_AVX512F_NO_REDUCE 1
+#endif
+
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9) && !__INTEL_COMPILER
 #define _mm512_castpd512_pd256(x) ((__m256d)(x))
 #define _mm512_castpd256_pd512(x) ((__m512d)(x))
 #define _mm512_castsi512_si256(x) ((__m256i)(x))
 #define _mm512_castsi256_si512(x) ((__m512i)(x))
 #define _mm512_castpd_si512(x) ((__m512i)(x))
+#endif
+
 #endif
 
 namespace simdpp {

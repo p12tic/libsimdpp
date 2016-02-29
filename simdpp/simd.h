@@ -50,6 +50,10 @@
 #include <simdpp/core/f_min.h>
 #include <simdpp/core/f_mul.h>
 #include <simdpp/core/f_neg.h>
+#include <simdpp/core/f_reduce_add.h>
+#include <simdpp/core/f_reduce_max.h>
+#include <simdpp/core/f_reduce_min.h>
+#include <simdpp/core/f_reduce_mul.h>
 #include <simdpp/core/f_rcp_e.h>
 #include <simdpp/core/f_rcp_rh.h>
 #include <simdpp/core/f_rsqrt_e.h>
@@ -69,6 +73,12 @@
 #include <simdpp/core/i_mul.h>
 #include <simdpp/core/i_mull.h>
 #include <simdpp/core/i_neg.h>
+#include <simdpp/core/i_reduce_add.h>
+#include <simdpp/core/i_reduce_and.h>
+#include <simdpp/core/i_reduce_max.h>
+#include <simdpp/core/i_reduce_min.h>
+#include <simdpp/core/i_reduce_mul.h>
+#include <simdpp/core/i_reduce_or.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_sub.h>

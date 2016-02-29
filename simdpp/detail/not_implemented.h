@@ -57,6 +57,12 @@ public:
     operator float64x4() { return float64x4(); }
     operator mask_float64x2() { return mask_float64x2(); }
     operator mask_float64x4() { return mask_float64x4(); }
+    operator int32_t() { return 0; }
+    operator uint32_t() { return 0; }
+    operator int64_t() { return 0; }
+    operator uint64_t() { return 0; }
+    operator float() { return 0; }
+    operator double() { return 0; }
 };
 
 } // namespace detail

@@ -39,6 +39,12 @@ void test_math_int_n(TestSuite& tc)
             (uint8_n) make_uint(0x00, 0x01, 0x02, 0x03),
             (uint8_n) make_uint(0xfc, 0xfd, 0xfe, 0xff),
             (uint8_n) make_uint(0x7e, 0x7f, 0x80, 0x81),
+
+            (uint8_n) make_uint(0),
+            (uint8_n) make_uint(0xff),
+            (uint8_n) make_uint(0x7f),
+            (uint8_n) make_uint(0x80),
+            (uint8_n) make_uint(0x5a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int8_n, add, s, 1);
@@ -61,6 +67,17 @@ void test_math_int_n(TestSuite& tc)
 
         TEST_ARRAY_HELPER1(tc, int8_n, neg, s);
         TEST_ARRAY_HELPER1(tc, int8_n, abs, s);
+
+        TEST_ALL_COMB_HELPER1_T(tc, uint16_t, uint8_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int16_t, int8_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint8_t, uint8_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int8_t, int8_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint8_t, uint8_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int8_t, int8_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint8_t, uint8_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int8_t, int8_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint8_t, uint8_n, reduce_max, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int8_t, int8_n, reduce_max, s, 1);
     }
 
     // Vectors with 16-bit integer elements
@@ -77,6 +94,12 @@ void test_math_int_n(TestSuite& tc)
             (uint16_n) make_uint(0x0000, 0x0001, 0x0002, 0x0003),
             (uint16_n) make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff),
             (uint16_n) make_uint(0x7ffe, 0x7fff, 0x8000, 0x8001),
+
+            (uint16_n) make_uint(0),
+            (uint16_n) make_uint(0xffff),
+            (uint16_n) make_uint(0x7fff),
+            (uint16_n) make_uint(0x8000),
+            (uint16_n) make_uint(0x5a6b, 0, 0, 0, 0, 0, 0, 0),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int16_n, add, s, 2);
@@ -106,6 +129,19 @@ void test_math_int_n(TestSuite& tc)
 
         TEST_ARRAY_HELPER1(tc, int16_n, neg, s);
         TEST_ARRAY_HELPER1(tc, int16_n, abs, s);
+
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint16_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int16_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint16_n, reduce_mul, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int16_n, reduce_mul, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint16_t, uint16_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int16_t, int16_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint16_t, uint16_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int16_t, int16_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint16_t, uint16_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int16_t, int16_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint16_t, uint16_n, reduce_max, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int16_t, int16_n, reduce_max, s, 1);
     }
 
     // Vectors with 32-bit integer elements
@@ -122,6 +158,12 @@ void test_math_int_n(TestSuite& tc)
             (uint32_n) make_uint(0x00000000, 0x00000001, 0x00000002, 0x00000003),
             (uint32_n) make_uint(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff),
             (uint32_n) make_uint(0x7ffffffe, 0x7fffffff, 0x80000000, 0x80000001),
+
+            (uint32_n) make_uint(0),
+            (uint32_n) make_uint(0xffffffff),
+            (uint32_n) make_uint(0x7fffffff),
+            (uint32_n) make_uint(0x80000000),
+            (uint32_n) make_uint(0x5a6b7c8d, 0, 0, 0, 0, 0, 0, 0),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int32_n, add, s, 4);
@@ -138,13 +180,28 @@ void test_math_int_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER2(tc, uint32_n, avg, s, 4);
         TEST_ALL_COMB_HELPER2(tc, uint32_n, avg_trunc, s, 4);
 
+        tc.sync_archs();
 #if !(SIMDPP_USE_ALTIVEC)
         TEST_ALL_COMB_HELPER2_T(tc, uint64<B/4>, uint32_n, mull, s, 4);
         TEST_ALL_COMB_HELPER2_T(tc, uint32_n, uint32_n, mul_lo, s, 4);
 #endif
+        tc.sync_archs();
 
         TEST_ARRAY_HELPER1(tc, int32_n, neg, s);
         TEST_ARRAY_HELPER1(tc, int32_n, abs, s);
+
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint32_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int32_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint32_n, reduce_mul, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int32_n, reduce_mul, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint32_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int32_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint32_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int32_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint32_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int32_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint32_t, uint32_n, reduce_max, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int32_t, int32_n, reduce_max, s, 1);
     }
 
     // Vectors with 64-bit integer elements
@@ -173,20 +230,41 @@ void test_math_int_n(TestSuite& tc)
             (uint64_n) make_uint(0xfffffffffffffffe, 0xffffffffffffffff),
             (uint64_n) make_uint(0x7ffffffffffffffe, 0x7fffffffffffffff),
             (uint64_n) make_uint(0x8000000000000000, 0x8000000000000001),
+
+            (uint64_n) make_uint(0),
+            (uint64_n) make_uint(0xffffffffffffffff),
+            (uint64_n) make_uint(0x7fffffffffffffff),
+            (uint64_n) make_uint(0x8000000000000000),
+            (uint64_n) make_uint(0x5a6b7c8da5b6c7d8, 0, 0, 0, 0, 0, 0, 0),
         };
 
         TEST_ALL_COMB_HELPER2(tc, int64_n, add, s, 2);
         TEST_ALL_COMB_HELPER2(tc, int64_n, sub, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint64_n, add, s, 2);
         TEST_ALL_COMB_HELPER2(tc, uint64_n, sub, s, 2);
-#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+
+        tc.sync_archs();
+#if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
         TEST_ALL_COMB_HELPER2(tc, int64_n, min, s, 4);
         TEST_ALL_COMB_HELPER2(tc, int64_n, max, s, 4);
         TEST_ALL_COMB_HELPER2(tc, uint64_n, min, s, 4);
         TEST_ALL_COMB_HELPER2(tc, uint64_n, max, s, 4);
 #endif
+        tc.sync_archs();
+
         TEST_ARRAY_HELPER1(tc, int64_n, neg, s);
         TEST_ARRAY_HELPER1(tc, int64_n, abs, s);
+
+        TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_or, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_and, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_min, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_max, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_max, s, 1);
     }
 }
 
