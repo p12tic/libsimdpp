@@ -13,11 +13,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 template<unsigned B>
-void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
+void test_math_fp_n(TestSuite& tc)
 {
     // TODO sqrt_e sqrt_rh rcp_e rcp_rh
-    (void) ts_fma;
-
     using namespace simdpp;
 
     using float32_n = float32<B/4>;
@@ -52,10 +50,13 @@ void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
         TEST_ARRAY_HELPER1(tc, float32_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float32_n, neg, s);
 
+        tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
-        TEST_ALL_COMB_HELPER3(ts_fma, float32_n, fmadd, s, 4);
-        TEST_ALL_COMB_HELPER3(ts_fma, float32_n, fmsub, s, 4);
+        TEST_ALL_COMB_HELPER3(tc, float32_n, fmadd, s, 4);
+        TEST_ALL_COMB_HELPER3(tc, float32_n, fmsub, s, 4);
 #endif
+        tc.sync_archs();
+
         float32_n snan[] = {
             (float32_n) make_float(1.0f, 2.0f, 3.0f, 4.0f),
             (float32_n) make_float(-1.0f, -2.0f, -3.0f, -4.0f),
@@ -96,10 +97,12 @@ void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
         TEST_ARRAY_HELPER1(tc, float64_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float64_n, neg, s);
 
+        tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
-        TEST_ALL_COMB_HELPER3(ts_fma, float64_n, fmadd, s, 8);
-        TEST_ALL_COMB_HELPER3(ts_fma, float64_n, fmsub, s, 8);
+        TEST_ALL_COMB_HELPER3(tc, float64_n, fmadd, s, 8);
+        TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, s, 8);
 #endif
+        tc.sync_archs();
 
         float64_n snan[] = {
             (float64_n) make_float(1.0, 2.0),
@@ -121,10 +124,9 @@ void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
 void test_math_fp(TestResults& res)
 {
     TestSuite& ts = NEW_TEST_SUITE(res, "math_fp");
-    TestSuite& ts_fma = NEW_TEST_SUITE(res, "math_fp.fma");
-    test_math_fp_n<16>(ts, ts_fma);
-    test_math_fp_n<32>(ts, ts_fma);
-    test_math_fp_n<64>(ts, ts_fma);
+    test_math_fp_n<16>(ts);
+    test_math_fp_n<32>(ts);
+    test_math_fp_n<64>(ts);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

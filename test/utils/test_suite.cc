@@ -18,16 +18,30 @@
 TestSuite::TestSuite(const char* name, const char* file) :
     name_(name),
     file_(file),
-    curr_precision_ulp_(0)
+    curr_precision_ulp_(0),
+    curr_results_section_(0)
 {
     reset_seq();
 }
 
 TestSuite::Result& TestSuite::push(Type type, unsigned length, unsigned line)
 {
-    results_.emplace_back(type, length, size_for_type(type), line, seq_++,
-                          curr_precision_ulp_);
-    return results_.back();
+    while (results_.size() <= curr_results_section_)
+        results_.push_back(std::vector<Result>());
+
+    auto& curr_part = results_[curr_results_section_];
+    curr_part.emplace_back(type, length, size_for_type(type), line, seq_++,
+                           curr_precision_ulp_);
+    return curr_part.back();
+}
+
+std::size_t TestSuite::num_results() const
+{
+    std::size_t r = 0;
+    for (const auto& sect: results_) {
+        r += sect.size();
+    }
+    return r;
 }
 
 std::size_t TestSuite::size_for_type(Type t)
@@ -342,12 +356,12 @@ bool test_equal(const TestSuite& a, const char* a_arch,
 
     if (a.results_.size() != b.results_.size()) {
         if (a.results_.size() == 0 || b.results_.size() == 0) {
-            return true; // Ignore empty sections
+            return true; // Ignore empty result sets
         }
         fmt_separator();
         fmt_file();
         fmt_test_case();
-        err << "FATAL: The lengths of the result vectors does not match: "
+        err << "FATAL: The number of result sections do not match: "
             << a.results_.size() << "/" << b.results_.size() << "\n";
         fmt_separator();
         return false;
@@ -355,47 +369,66 @@ bool test_equal(const TestSuite& a, const char* a_arch,
 
     bool ok = true;
     // Compare results
-    for (unsigned i = 0; i < a.results_.size(); i++) {
-        const auto& ia = a.results_[i];
-        const auto& ib = b.results_[i];
+    for (unsigned is = 0; is < a.results_.size(); is++) {
+        const auto& sect_a = a.results_[is];
+        const auto& sect_b = b.results_[is];
 
-        if (ia.line != ib.line) {
+        if (sect_a.empty() || sect_b.empty())
+            continue;
+
+        if (sect_a.size() != sect_b.size()) {
             fmt_separator();
             fmt_file();
             fmt_test_case();
-            err << "FATAL: Line numbers do not match for items with the same "
-                << "sequence number: id: " << i
-                << " line_A: " << ia.line << " line_B: " << ib.line << "\n";
+            err << "FATAL: The number of results in a section do not match: "
+                << " section: " << is << " result count: "
+                << sect_a.size() << "/" << sect_b.size() << "\n";
             fmt_separator();
             return false;
         }
 
-        if (ia.type != ib.type) {
-            fmt_separator();
-            fmt_file_line(ia.line);
-            fmt_test_case();
-            err << "FATAL: Types do not match for items with the same "
-                << "sequence number: id: " << i
-                << " type_A: " << type_str(ia.type)
-                << " line_B: " << type_str(ib.type) << "\n";
-            fmt_separator();
-            return false;
-        }
+        for (unsigned i = 0; i < sect_a.size(); ++i) {
+            const auto& ia = sect_a[i];
+            const auto& ib = sect_b[i];
 
-        unsigned prec = std::max(TestSuite::precision_for_result(ia),
-                                 TestSuite::precision_for_result(ib));
+            if (ia.line != ib.line) {
+                fmt_separator();
+                fmt_file();
+                fmt_test_case();
+                err << "FATAL: Line numbers do not match for items with the same "
+                    << "sequence number: section: " << is << " id: " << i
+                    << " line_A: " << ia.line << " line_B: " << ib.line << "\n";
+                fmt_separator();
+                return false;
+            }
 
-        if (!cmpeq_result(ia, ib, prec)) {
-            fmt_separator();
-            fmt_file_line(ia.line);
-            fmt_test_case();
-            fmt_seq(ia.seq);
-            err << "ERROR: Vectors not equal: \n";
-            fmt_vector(ia, "A : ");
-            fmt_vector(ib, "B : ");
-            fmt_prec(prec);
-            fmt_separator();
-            ok = false;
+            if (ia.type != ib.type) {
+                fmt_separator();
+                fmt_file_line(ia.line);
+                fmt_test_case();
+                err << "FATAL: Types do not match for items with the same "
+                    << "sequence number: id: " << i
+                    << " type_A: " << type_str(ia.type)
+                    << " line_B: " << type_str(ib.type) << "\n";
+                fmt_separator();
+                return false;
+            }
+
+            unsigned prec = std::max(TestSuite::precision_for_result(ia),
+                                     TestSuite::precision_for_result(ib));
+
+            if (!cmpeq_result(ia, ib, prec)) {
+                fmt_separator();
+                fmt_file_line(ia.line);
+                fmt_test_case();
+                fmt_seq(ia.seq);
+                err << "ERROR: Vectors not equal: \n";
+                fmt_vector(ia, "A : ");
+                fmt_vector(ib, "B : ");
+                fmt_prec(prec);
+                fmt_separator();
+                ok = false;
+            }
         }
     }
     return ok;

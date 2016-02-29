@@ -88,7 +88,16 @@ public:
     void reset_seq()                        { seq_ = 1; }
 
     /// The number of results pushed to the test case
-    std::size_t num_results() const         { return results_.size(); }
+    std::size_t num_results() const;
+
+    /** Allows synchronizing tests in cases when certain architectures do not
+        execute the test in question. The function must be called before and
+        after the block of tests that may not be executed. The call to this
+        function must be executed regardless of architectures.
+
+        The function resets the sequence number.
+    */
+    void sync_archs()                       { curr_results_section_++; reset_seq(); }
 
 private:
     friend class TestResults;
@@ -105,7 +114,9 @@ private:
     const char* file_;
     unsigned seq_;
     unsigned curr_precision_ulp_;
-    std::vector<Result> results_;
+
+    unsigned curr_results_section_;
+    std::vector<std::vector<Result>> results_;
 };
 
 class SeqTestSuite {
