@@ -15,7 +15,6 @@
 #include <simdpp/types.h>
 #include <simdpp/core/f_rcp_e.h>
 #include <simdpp/core/f_rcp_rh.h>
-#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -26,7 +25,11 @@ namespace insn {
 SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::foreach<float32x4>(a, b, [](float a, float b){ return a / b; });
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = a.el(i) / b.el(i);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_div_ps(a, b);
 #elif SIMDPP_USE_NEON64
@@ -71,7 +74,11 @@ float32<N> i_div(const float32<N>& a, const float32<N>& b)
 SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::foreach<float64x2>(a, b, [](double a, double b){ return a / b; });
+    float64x2 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = a.el(i) / b.el(i);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
 #elif SIMDPP_USE_NEON64

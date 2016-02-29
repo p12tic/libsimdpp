@@ -18,7 +18,6 @@
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/core/detail/vec_extract.h>
 
@@ -31,7 +30,11 @@ namespace insn {
 SIMDPP_INL float32x4 i_to_float32(const int32x4& a)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<float32x4>(a, [](int32_t x) { return float(x); });
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = float(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_ps(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP

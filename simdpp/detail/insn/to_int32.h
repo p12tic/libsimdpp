@@ -19,7 +19,6 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/core/detail/vec_insert.h>
 
 namespace simdpp {
@@ -92,7 +91,11 @@ int32<N> i_to_int32(const int16<N>& a)
 SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
+    int32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = int32_t(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP

@@ -13,7 +13,6 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/null/bitwise.h>
 
 namespace simdpp {

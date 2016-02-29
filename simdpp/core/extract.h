@@ -17,7 +17,6 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/core/make_int.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/insn/split.h>
 #include <simdpp/detail/mem_block.h>
 
@@ -281,11 +280,11 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     // extract_bits_impl depends on the exact implementation of this function
 #if SIMDPP_USE_NULL
     uint16_t r = 0;
-    detail::null::foreach<uint8x16>(a, [&r](uint8_t x){
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
         x = x & 1;
         r = (r >> 1) | (uint16_t(x) << 15);
-        return 0; // dummy
-    });
+    }
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_movemask_epi8(a);
@@ -332,11 +331,11 @@ uint16_t extract_bits(const uint8x16& ca)
     static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
     uint16_t r = 0;
-    detail::null::foreach<uint8x16>(a, [&r](uint8_t x){
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
         x = (x >> id) & 1;
         r = (r >> 1) | (uint16_t(x) << 15);
-        return 0; // dummy
-    });
+    }
     return r;
 #elif SIMDPP_USE_SSE2
     a = shift_l<7-id>((uint16x8) a);

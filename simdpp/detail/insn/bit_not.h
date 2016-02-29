@@ -14,7 +14,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/bit_xor.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/null/bitwise.h>
 
 namespace simdpp {
@@ -26,7 +25,11 @@ namespace insn {
 SIMDPP_INL uint8x16 i_bit_not(const uint8x16& a)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<uint8x16>(a, [](uint64_t a){ return ~a; });
+    uint8x16 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = ~a.el(i);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     uint8x16 ones = uint8x16::ones();
     return bit_xor(a, ones);

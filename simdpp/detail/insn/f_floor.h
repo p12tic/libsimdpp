@@ -23,7 +23,6 @@
 #include <simdpp/core/i_sub.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_int32.h>
-#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -34,7 +33,11 @@ namespace insn {
 SIMDPP_INL float32x4 i_floor(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::foreach<float32x4>(a, [](float x){ return std::floor(x); });
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = std::floor(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_floor_ps(a);
 #elif SIMDPP_USE_NEON64

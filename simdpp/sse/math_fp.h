@@ -234,7 +234,11 @@ SIMDPP_INL float64x2 sub_add(const float64x2& a, const float64x2& b)
 SIMDPP_INL float64x2 floor(const float64x2& a)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<float64x2>(a, [](double x){ return std::floor(x); });
+    float64x2 r;
+    for (unsigned i = 0; i < r.length; ++i) {
+        r.el(i) = std::floor(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_floor_pd(a);
 #elif SIMDPP_USE_SSE2
@@ -267,7 +271,11 @@ SIMDPP_INL float64x2 floor(const float64x2& a)
 SIMDPP_INL float64x2 ceil(const float64x2& a)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<float64x2>(a, [](float x){ return std::ceil(x); });
+    float64x2 r;
+    for (unsigned i = 0; i < r.length; ++i) {
+        r.el(i) = std::ceil(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_ceil_pd(a);
 #elif SIMDPP_USE_SSE2
@@ -302,7 +310,11 @@ SIMDPP_INL float64x2 ceil(const float64x2& a)
 SIMDPP_INL float64x2 trunc(const float64x2& a)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<float64x2>(a, [](double x){ return std::trunc(x); });
+    float64x2 r;
+    for (unsigned i = 0; i < r.length; ++i) {
+        r.el(i) = std::trunc(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     //use floor to implement trunc
     float64x2 s = sign(a);

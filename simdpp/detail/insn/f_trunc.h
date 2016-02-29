@@ -15,7 +15,6 @@
 #include <cmath>
 #include <simdpp/types.h>
 #include <simdpp/core/f_ceil.h>
-#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -26,7 +25,11 @@ namespace insn {
 SIMDPP_INL float32x4 i_trunc(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::foreach<float32x4>(a, [](float x){ return std::trunc(x); });
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = std::trunc(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE4_1
     return _mm_round_ps(a, 3); // 3 = i_truncate
 #elif SIMDPP_USE_NEON64

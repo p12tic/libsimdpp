@@ -16,7 +16,6 @@
 #include <simdpp/types.h>
 #include <simdpp/core/f_mul.h>
 #include <simdpp/core/f_sub.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
@@ -43,7 +42,13 @@ SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
     // x_n = x*(3-d*x*x)/2
     float32<4> x = cx;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x * (3.0f - a*x*x) * 0.5f; });
+    float32x4 r;
+    for (unsigned i = 0; i < cx.length; i++) {
+        float ix = x.el(i);
+        float ia = a.el(i);
+        r.el(i) = ix * (3.0f - ia*ix*ix) * 0.5f;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return v_rsqrt_rh(x, a);
 #elif SIMDPP_USE_NEON_FLT_SP

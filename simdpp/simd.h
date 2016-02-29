@@ -125,7 +125,6 @@
 
 #include <simdpp/detail/null/bitwise.h>
 #include <simdpp/detail/null/compare.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/null/mask.h>
 #include <simdpp/detail/null/math.h>
 #include <simdpp/detail/null/memory.h>
