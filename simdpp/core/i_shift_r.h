@@ -243,8 +243,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 int8<N,expr_empty> shift_r(const int8<N,E>& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-    if (count == 0) return a;
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, false>::template run<count>(a.eval());
 }
 
 /** Shifts unsigned 8-bit values right by @a count bits while shifting in
@@ -270,9 +269,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint8<N,expr_empty> shift_r(const uint8<N,E>& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-    if (count == 0) return a;
-    if (count == 8) return uint8<N>::zero();
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, count == 8>::template run<count>(a.eval());
 }
 
 /** Shifts signed 16-bit values right by @a count bits while shifting in the
@@ -295,8 +292,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 int16<N,expr_empty> shift_r(const int16<N,E>& a)
 {
     static_assert(count <= 16, "Shift out of bounds");
-    if (count == 0) return a;
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, false>::template run<count>(a.eval());
 }
 
 /** Shifts unsigned 16-bit values right by @a count bits while shifting in
@@ -319,9 +315,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint16<N,expr_empty> shift_r(const uint16<N,E>& a)
 {
     static_assert(count <= 16, "Shift out of bounds");
-    if (count == 0) return a;
-    if (count == 16) return uint16<N>::zero();
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, count == 16>::template run<count>(a.eval());
 }
 
 /** Shifts signed 32-bit values right by @a count bits while shifting in the
@@ -344,8 +338,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 int32<N,expr_empty> shift_r(const int32<N,E>& a)
 {
     static_assert(count <= 32, "Shift out of bounds");
-    if (count == 0) return a;
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, false>::template run<count>(a.eval());
 }
 
 /** Shifts unsigned 32-bit values right by @a count bits while shifting in
@@ -368,9 +361,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> shift_r(const uint32<N,E>& a)
 {
     static_assert(count <= 32, "Shift out of bounds");
-    if (count == 0) return a;
-    if (count == 32) return uint32<N>::zero();
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, count == 32>::template run<count>(a.eval());
 }
 
 /** Shifts signed 64-bit values right by @a count bits while shifting in the
@@ -398,8 +389,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 int64<N,expr_empty> shift_r(const int64<N,E>& a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-    if (count == 0) return a;
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, false>::template run<count>(a.eval());
 }
 
 /** Shifts unsigned 64-bit values right by @a count bits while shifting in
@@ -421,9 +411,7 @@ template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint64<N,expr_empty> shift_r(const uint64<N,E>& a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-    if (count == 0) return a;
-    if (count == 64) return uint64<N>::zero();
-    return detail::insn::i_shift_r<count>(a.eval());
+    return detail::insn::i_shift_r_wrapper<count == 0, count == 64>::template run<count>(a.eval());
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

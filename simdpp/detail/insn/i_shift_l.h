@@ -351,6 +351,22 @@ uint64<N> i_shift_l(const uint64<N>& a)
 }
 /// @}
 
+template<bool no_shift, bool full_shift>
+struct i_shift_l_wrapper {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V& arg) { return i_shift_l<count>(arg); }
+};
+template<>
+struct i_shift_l_wrapper<true, false> {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V& arg) { return arg; }
+};
+template<>
+struct i_shift_l_wrapper<false, true> {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V&) { return V::zero(); }
+};
+
 } // namespace insn
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

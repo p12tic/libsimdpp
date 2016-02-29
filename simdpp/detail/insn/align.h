@@ -47,7 +47,11 @@ uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
     a = bit_or(upper, lower);
     return a;
 #elif SIMDPP_USE_NEON
-    return vextq_u8(lower, upper, shift);
+    if (shift == 0)
+        return lower;
+    if (shift == 16)
+        return upper;
+    return vextq_u8(lower, upper, shift % 16);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, (unsigned)shift);
 #endif

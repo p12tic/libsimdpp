@@ -242,6 +242,74 @@ float64<N> i_move2_l(const float64<N>& a)
     SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_move2_l<shift>, a);
 }
 
+// -----------------------------------------------------------------------------
+// Certain compilers don't like zero or full vector width moves. The templates
+// below offer a warkaround
+
+template<unsigned count>
+struct i_move2_l_wrapper {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return i_move2_l<count>(arg); }
+};
+template<>
+struct i_move2_l_wrapper<0> {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return arg; }
+};
+template<>
+struct i_move2_l_wrapper<2> {
+    template<class V>
+    static SIMDPP_INL V run(const V&) { return V::zero(); }
+};
+
+template<unsigned count>
+struct i_move4_l_wrapper {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return i_move4_l<count>(arg); }
+};
+template<>
+struct i_move4_l_wrapper<0> {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return arg; }
+};
+template<>
+struct i_move4_l_wrapper<4> {
+    template<class V>
+    static SIMDPP_INL V run(const V&) { return V::zero(); }
+};
+
+template<unsigned count>
+struct i_move8_l_wrapper {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return i_move8_l<count>(arg); }
+};
+template<>
+struct i_move8_l_wrapper<0> {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return arg; }
+};
+template<>
+struct i_move8_l_wrapper<8> {
+    template<class V>
+    static SIMDPP_INL V run(const V&) { return V::zero(); }
+};
+
+template<unsigned count>
+struct i_move16_l_wrapper {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return i_move16_l<count>(arg); }
+};
+template<>
+struct i_move16_l_wrapper<0> {
+    template<class V>
+    static SIMDPP_INL V run(const V& arg) { return arg; }
+};
+template<>
+struct i_move16_l_wrapper<16> {
+    template<class V>
+    static SIMDPP_INL V run(const V&) { return V::zero(); }
+};
+
 } // namespace insn
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -720,6 +720,21 @@ uint8<N> shift_r_u8(const uint8<N>& a)
 #endif
 }
 
+template<bool no_shift, bool full_shift>
+struct i_shift_r_wrapper {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V& arg) { return i_shift_r<count>(arg); }
+};
+template<>
+struct i_shift_r_wrapper<true, false> {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V& arg) { return arg; }
+};
+template<>
+struct i_shift_r_wrapper<false, true> {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V&) { return V::zero(); }
+};
 
 } // namespace insn
 } // namespace detail
