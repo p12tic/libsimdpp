@@ -402,9 +402,9 @@ uint64<8> i_shuffle2x2(const uint64<8>& a, const uint64<8>& b)
     } else if (s0 == 3 && s1 == 1) {
         return _mm512_unpackhi_epi64(b, a);
     } else if (s0 == 0 && s1 == 3) {
-        return _mm512_mask_blend_epi64(0xcc, a, b);
+        return _mm512_mask_blend_epi64(0xaa, a, b);
     } else if (s0 == 2 && s1 == 1) {
-        return _mm512_mask_blend_epi64(0xcc, b, a);
+        return _mm512_mask_blend_epi64(0xaa, b, a);
     } else if (s0 < 2) { // s1 >= 2
         float64<8> fa, fb; fa = a; fb = b;
         return _mm512_castpd_si512(_mm512_shuffle_pd(fa, fb, _MM_SHUFFLE2(s1-2,s0)));
