@@ -19,6 +19,7 @@ TestSuite::TestSuite(const char* name, const char* file) :
     name_(name),
     file_(file),
     curr_precision_ulp_(0),
+    curr_fp_zero_equal_(false),
     curr_results_section_(0)
 {
     reset_seq();
@@ -31,7 +32,7 @@ TestSuite::Result& TestSuite::push(Type type, unsigned length, unsigned line)
 
     auto& curr_part = results_[curr_results_section_];
     curr_part.emplace_back(type, length, size_for_type(type), line, seq_++,
-                           curr_precision_ulp_);
+                           curr_precision_ulp_, curr_fp_zero_equal_);
     return curr_part.back();
 }
 
@@ -122,6 +123,16 @@ U binary_convert(const T& x)
     return r;
 }
 
+template<class T>
+bool is_zero_or_neg_zero(T x)
+{
+    typedef typename binary_for_float<T>::type IntT;
+    IntT zero = binary_convert<IntT>(T(0.0));
+    IntT neg_zero = binary_convert<IntT>(T(-0.0));
+    IntT ix = binary_convert<IntT>(x);
+    return ix == zero || ix == neg_zero;
+}
+
 // Do not depend on floating-point operations when performing tests as flush
 // to zero may be enabled and wrong results may be reported. Assume IEEE-754
 // floating-number format and perform everything using integer operations.
@@ -171,7 +182,8 @@ T nextafter_ulps(T from, T to)
 
 // T is either double or float
 template<class T>
-bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems, unsigned prec)
+bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
+                  unsigned prec, bool zero_eq)
 {
     for (unsigned i = 0; i < num_elems; i++) {
         // we need to be extra-precise here. nextafter is used because it won't
@@ -179,6 +191,9 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems, unsigned prec)
         T ia = *a++;
         T ib = *b++;
         if (std::isnan(ia) && std::isnan(ib)) {
+            continue;
+        }
+        if (zero_eq && is_zero_or_neg_zero(ia) && is_zero_or_neg_zero(ib)) {
             continue;
         }
         for (unsigned i = 0; i < prec; i++) {
@@ -293,7 +308,7 @@ bool test_equal(const TestSuite& a, const char* a_arch,
     };
 
     auto cmpeq_result = [](const TestSuite::Result& ia, const TestSuite::Result& ib,
-                           unsigned prec) -> bool
+                           unsigned fp_prec, unsigned fp_zero_eq) -> bool
     {
         if (std::memcmp(ia.d(), ib.d(), ia.el_size * ia.length) == 0) {
             return true;
@@ -301,9 +316,11 @@ bool test_equal(const TestSuite& a, const char* a_arch,
 
         switch (ia.type) {
         case TestSuite::TYPE_FLOAT32:
-            return cmpeq_arrays((const float*)ia.d(), (const float*)ib.d(), ia.length, prec);
+            return cmpeq_arrays((const float*)ia.d(), (const float*)ib.d(), ia.length,
+                                fp_prec, fp_zero_eq);
         case TestSuite::TYPE_FLOAT64:
-            return cmpeq_arrays((const double*)ia.d(), (const double*)ib.d(), ia.length, prec);
+            return cmpeq_arrays((const double*)ia.d(), (const double*)ib.d(), ia.length,
+                                fp_prec, fp_zero_eq);
         default:
             return false;
         }
@@ -382,7 +399,9 @@ bool test_equal(const TestSuite& a, const char* a_arch,
             unsigned prec = std::max(TestSuite::precision_for_result(ia),
                                      TestSuite::precision_for_result(ib));
 
-            if (!cmpeq_result(ia, ib, prec)) {
+            bool fp_zero_eq = ia.fp_zero_eq || ib.fp_zero_eq;
+
+            if (!cmpeq_result(ia, ib, prec, fp_zero_eq)) {
                 fmt_separator();
                 fmt_file_line(ia.line);
                 fmt_test_case();

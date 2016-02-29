@@ -41,12 +41,13 @@ public:
         static const unsigned num_bytes = 32;
 
         Result(Type atype, unsigned alength, unsigned ael_size, unsigned aline,
-               unsigned aseq, unsigned aprec_ulp)
+               unsigned aseq, unsigned aprec_ulp, bool afp_zero_eq)
         {
             type = atype;
             line = aline;
             seq = aseq;
             prec_ulp = aprec_ulp;
+            fp_zero_eq = afp_zero_eq;
             length = alength;
             el_size = ael_size;
             data.resize(el_size*length);
@@ -56,6 +57,7 @@ public:
         unsigned line;
         unsigned seq;
         unsigned prec_ulp;
+        bool fp_zero_eq;
         const char* file;
         unsigned length;
         unsigned el_size;
@@ -80,6 +82,12 @@ public:
     /// Affects all pushed data until the next call to @a unset_precision
     void set_precision(unsigned num_ulp)    { curr_precision_ulp_ = num_ulp; }
     void unset_precision()                  { curr_precision_ulp_ = 0; }
+
+    /// Sets whether floating-point zero and negative zero are considered
+    /// equal. Affects all pushed data until the next call to @a unset_fp_zero_equal
+    void set_fp_zero_equal()                { curr_fp_zero_equal_ = true; }
+    void unset_fp_zero_equal()              { curr_fp_zero_equal_ = false; }
+
 
     /// The name of the test case
     const char* name() const                { return name_; }
@@ -114,6 +122,7 @@ private:
     const char* file_;
     unsigned seq_;
     unsigned curr_precision_ulp_;
+    unsigned curr_fp_zero_equal_;
 
     unsigned curr_results_section_;
     std::vector<std::vector<Result>> results_;
