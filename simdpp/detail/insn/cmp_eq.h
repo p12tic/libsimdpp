@@ -139,7 +139,9 @@ SIMDPP_INL mask_int64x2 i_cmp_eq(const uint64x2& a, const uint64x2& b)
     // combine the results. Each 32-bit half is ANDed with the neighbouring pair
     r32 = bit_and(r32, r32s);
     return r32;
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON64
+    return vceqq_u64(a, b);
+#elif SIMDPP_USE_NEON32
     uint32x4 r32, r32s;
     r32 = i_cmp_eq(uint32x4(a), uint32x4(b));
     r32s = r32;
