@@ -88,6 +88,8 @@ int32<16> expr_eval(const expr_mull<int16<16,E1>,
 {
     int16<16> a = q.a.eval();
     int16<16> b = q.b.eval();
+    a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
+    b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return (int32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
@@ -143,6 +145,8 @@ uint32<16> expr_eval(const expr_mull<uint16<16,E1>,
 {
     uint16<16> a = q.a.eval();
     uint16<16> b = q.b.eval();
+    a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
+    b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epu16(a, b);
     return (uint32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
