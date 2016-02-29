@@ -77,8 +77,10 @@ void test_convert_n(TestSuite& ts)
     };
 
     ts.set_precision(1);
+    set_round_to_zero(); // set consistent mode on SSE2
     TEST_ARRAY_HELPER1_T(ts, float32_n,  int32_n, to_float32, sf);
     TEST_ARRAY_HELPER1_T(ts, float64_2n, int32_n, to_float64, sf);
+    set_round_to_nearest();
     ts.unset_precision();
     }
 
