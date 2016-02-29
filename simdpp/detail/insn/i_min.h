@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/blend.h>
 #include <simdpp/core/cmp_lt.h>
+#include <simdpp/core/bit_xor.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/detail/null/math.h>
 
@@ -31,8 +32,10 @@ SIMDPP_INL int8x16 i_min(const int8x16& a, const int8x16& b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epi8(a, b);
 #elif SIMDPP_USE_SSE2
-    mask_int8x16 mask = cmp_lt(a, b);
-    return blend(a, b, mask);
+    int8x16 ca = bit_xor(a, 0x80);
+    int8x16 cb = bit_xor(b, 0x80);
+    int8x16 r = _mm_min_epu8(ca, cb);
+    return bit_xor(r, 0x80);
 #elif SIMDPP_USE_NEON
     return vminq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
@@ -118,8 +121,10 @@ SIMDPP_INL uint16x8 i_min(const uint16x8& a, const uint16x8& b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_min_epu16(a, b);
 #elif SIMDPP_USE_SSE2
-    mask_int16x8 mask = cmp_lt(a, b);
-    return blend(a, b, mask);
+    int16x8 ca = bit_xor(a, 0x8000);
+    int16x8 cb = bit_xor(b, 0x8000);
+    int16x8 r = _mm_min_epi16(ca, cb);
+    return bit_xor(r, 0x8000);
 #elif SIMDPP_USE_NEON
     return vminq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC

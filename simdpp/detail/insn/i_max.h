@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/bit_xor.h>
 #include <simdpp/core/blend.h>
 #include <simdpp/core/cmp_gt.h>
 #include <simdpp/detail/null/math.h>
@@ -30,8 +31,10 @@ SIMDPP_INL int8x16 i_max(const int8x16& a, const int8x16& b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_max_epi8(a, b);
 #elif SIMDPP_USE_SSE2
-    mask_int8x16 mask = cmp_gt(a, b);
-    return blend(a, b, mask);
+    int8x16 ca = bit_xor(a, 0x80);
+    int8x16 cb = bit_xor(b, 0x80);
+    int8x16 r = _mm_max_epu8(ca, cb);
+    return bit_xor(r, 0x80);
 #elif SIMDPP_USE_NEON
     return vmaxq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
@@ -117,8 +120,10 @@ SIMDPP_INL uint16x8 i_max(const uint16x8& a, const uint16x8& b)
 #elif SIMDPP_USE_SSE4_1
     return _mm_max_epu16(a, b);
 #elif SIMDPP_USE_SSE2
-    mask_int16x8 mask = cmp_gt(a, b);
-    return blend(a, b, mask);
+    int16x8 ca = bit_xor(a, 0x8000);
+    int16x8 cb = bit_xor(b, 0x8000);
+    int16x8 r = _mm_max_epi16(ca, cb);
+    return bit_xor(r, 0x8000);
 #elif SIMDPP_USE_NEON
     return vmaxq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
