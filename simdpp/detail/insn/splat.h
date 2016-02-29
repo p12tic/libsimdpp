@@ -180,7 +180,7 @@ float32<16> i_splat(const float32<16>& ca)
     static_assert(s < 16, "Access out of bounds");
     float32<16> a = ca;
     a = permute4<s%4,s%4,s%4,s%4>(a);
-    a = _mm512_shuffle_f32x4(a, a, s/4);
+    a = _mm512_shuffle_f32x4(a, a, ((s/4) << 6) + ((s/4) << 4) + ((s/4) << 2) + (s/4));
     return a;
 }
 #endif
