@@ -9,6 +9,7 @@
 #include "insn/tests.h"
 #include <simdpp/simd.h>
 #include <algorithm>
+#include <cfenv>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -69,6 +70,11 @@ void parse_args(int argc, char* argv[], bool& is_simulator, bool& force_arch)
     }
 }
 
+bool find_arch_null(const simdpp::detail::FnVersion& a)
+{
+    return a.arch_name && std::strcmp(a.arch_name, "arch_null") == 0;
+}
+
 /*  We test libsimdpp by comparing the results of the same computations done in
     different 'architectures'. That is, we build a list of results for each
     instruction set available plus the 'null' instruction set (simple,
@@ -99,6 +105,8 @@ int main(int argc, char* argv[])
         std::cerr << "FATAL: NULL architecture not defined\n";
         return EXIT_FAILURE;
     }
+
+    set_round_to_nearest();
 
     TestResults null_results(null_arch->arch_name);
     reinterpret_cast<void(*)(TestResults&)>(null_arch->fun_ptr)(null_results);

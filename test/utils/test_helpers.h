@@ -12,6 +12,33 @@
 #include <simdpp/detail/align_v128.h>
 #include <iostream>
 #include "test_suite.h"
+#include <cfenv>
+#include <float.h>
+
+
+inline void set_round_to_zero()
+{
+#if _MSC_VER
+    _controlfp(_MCW_RC, _RC_CHOP);
+#else
+    std::fesetround(FE_TOWARDZERO);
+#endif
+#if SIMDPP_USE_SSE2
+    _MM_SET_ROUNDING_MODE(_MM_ROUND_TOWARD_ZERO);
+#endif
+}
+
+inline void set_round_to_nearest()
+{
+#if _MSC_VER
+    _controlfp(_MCW_RC, _RC_NEAR);
+#else
+    std::fesetround(FE_TONEAREST);
+#endif
+#if SIMDPP_USE_SSE2
+    _MM_SET_ROUNDING_MODE(_MM_ROUND_NEAREST);
+#endif
+}
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
