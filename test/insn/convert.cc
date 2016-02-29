@@ -76,8 +76,10 @@ void test_convert_n(TestSuite& ts)
         (int32_n) make_uint(-63100002, -63100003),
     };
 
+    ts.set_precision(1);
     TEST_ARRAY_HELPER1_T(ts, float32_n,  int32_n, to_float32, sf);
     TEST_ARRAY_HELPER1_T(ts, float64_2n, int32_n, to_float64, sf);
+    ts.unset_precision();
     }
 
     //float32
