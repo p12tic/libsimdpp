@@ -19,7 +19,6 @@
 #include <cstdlib>
 
 
-#include <simdpp/altivec/load1.h>
 #include <simdpp/core/align.h>
 #include <simdpp/core/aligned_allocator.h>
 #include <simdpp/core/bit_and.h>
@@ -111,10 +110,12 @@
 #include <simdpp/core/store_first.h>
 #include <simdpp/core/store.h>
 #include <simdpp/core/store_last.h>
+#include <simdpp/core/store_masked.h>
 #include <simdpp/core/store_packed2.h>
 #include <simdpp/core/store_packed3.h>
 #include <simdpp/core/store_packed4.h>
 #include <simdpp/core/stream.h>
+#include <simdpp/core/test_bits.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_float64.h>
 #include <simdpp/core/to_int16.h>
@@ -129,9 +130,11 @@
 #include <simdpp/detail/cast.h>
 #include <simdpp/detail/cast.inl>
 
-#include <simdpp/neon/math_int.h>
-#include <simdpp/neon/memory_store.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/altivec/load1.h>
+
+#include <simdpp/detail/neon/math_int.h>
+#include <simdpp/detail/neon/memory_store.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 #include <simdpp/detail/null/bitwise.h>
 #include <simdpp/detail/null/compare.h>
@@ -142,14 +145,7 @@
 #include <simdpp/detail/null/shuffle.h>
 #include <simdpp/detail/null/transpose.h>
 
-#include <simdpp/sse/cache.h>
-#include <simdpp/sse/compare.h>
-#include <simdpp/sse/convert.h>
 #include <simdpp/detail/extract128.h>
-#include <simdpp/sse/math_int.h>
-#include <simdpp/sse/memory_load.h>
-#include <simdpp/sse/memory_store.h>
-#include <simdpp/sse/shuffle.h>
 
 #include <simdpp/types.h>
 #include <simdpp/types/generic.h>

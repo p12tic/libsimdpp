@@ -70,33 +70,45 @@ void test_construct_n(TestSuite& tc)
     TEST_PUSH(tc,uint32_n,make_uint(0x10101010));
     TEST_PUSH(tc,uint32_n,make_uint(0x10101010, 0x11111111));
     TEST_PUSH(tc,uint32_n,make_uint(0x10101010, 0x11111111, 0x12121212, 0x13131313));
+    TEST_PUSH(tc,uint32_n,make_uint(0x10101010, 0x11111111, 0x12121212, 0x13131313,
+                                    0x14141414, 0x15151515, 0x16161616, 0x17171717));
 
     TEST_PUSH(tc,int32_n,load_splat(v.pi32+2));
     TEST_PUSH(tc,int32_n,splat(0x10101010));
     TEST_PUSH(tc,int32_n,make_int(0x10101010));
     TEST_PUSH(tc,int32_n,make_int(0x10101010, 0x11111111));
     TEST_PUSH(tc,int32_n,make_int(0x10101010, 0x11111111, 0x12121212, 0x13131313));
+    TEST_PUSH(tc,int32_n,make_int(0x10101010, 0x11111111, 0x12121212, 0x13131313,
+                                  0x14141414, 0x15151515, 0x16161616, 0x17171717));
 
     TEST_PUSH(tc,uint64_n,load_splat(v.pu64+0));
     TEST_PUSH(tc,uint64_n,splat(0x1010101010101010));
     TEST_PUSH(tc,uint64_n,make_uint(0x1010101010101010));
     TEST_PUSH(tc,uint64_n,make_uint(0x1010101010101010, 0x1111111111111111));
+    TEST_PUSH(tc,uint64_n,make_uint(0x1010101010101010, 0x1111111111111111,
+                                    0x1212121212121212, 0x1313131313131313));
 
     TEST_PUSH(tc,int64_n,load_splat(v.pi64+1));
     TEST_PUSH(tc,int64_n,splat(0x1010101010101010));
     TEST_PUSH(tc,int64_n,make_int(0x1010101010101010));
     TEST_PUSH(tc,int64_n,make_int(0x1010101010101010, 0x1111111111111111));
+    TEST_PUSH(tc,int64_n,make_int(0x1010101010101010, 0x1111111111111111,
+                                  0x1212121212121212, 0x1313131313131313));
 
     TEST_PUSH(tc,float32_n,load_splat(v.pf32+0));
     TEST_PUSH(tc,float32_n,splat(1.0101010f));
     TEST_PUSH(tc,float32_n,make_float(1.0101010f));
     TEST_PUSH(tc,float32_n,make_float(1.0101010f, 1.1111111f));
     TEST_PUSH(tc,float32_n,make_float(1.0101010f, 1.1111111f, 1.2121212f, 1.3131313f));
+    TEST_PUSH(tc,float32_n,make_float(1.0101010f, 1.1111111f, 1.2121212f, 1.3131313f,
+                                      1.4141414f, 1.5151515f, 1.6161616f, 1.7171717f));
 
     TEST_PUSH(tc,float64_n,load_splat(v.pf64+0));
     TEST_PUSH(tc,float64_n,splat(1.010101010101010));
     TEST_PUSH(tc,float64_n,make_float(1.010101010101010));
     TEST_PUSH(tc,float64_n,make_float(1.010101010101010, 1.111111111111111));
+    TEST_PUSH(tc,float64_n,make_float(1.010101010101010, 1.111111111111111,
+                                      1.212121212121212, 1.131313131313131));
 }
 
 void test_construct(TestResults& res)

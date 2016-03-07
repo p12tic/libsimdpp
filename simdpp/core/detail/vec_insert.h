@@ -22,7 +22,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class V> SIMDPP_INL
-void vec_insert_impl(R& r, V v, unsigned n)
+void vec_insert_impl(R& r, const V& v, unsigned n)
 {
     SIMDPP_STATIC_ASSERT(V::length >= R::base_length, "Too small vector to insert");
 

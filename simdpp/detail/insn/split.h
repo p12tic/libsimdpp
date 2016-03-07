@@ -118,7 +118,7 @@ SIMDPP_INL void i_split(const float64<8>& a, float64<4>& r1, float64<4>& r2)
 // generic version -- picked up if none of the above matches the arguments
 
 template<class V, class H> SIMDPP_INL
-void i_split(V a, H& r1, H& r2)
+void i_split(const V& a, H& r1, H& r2)
 {
     unsigned h = H::vec_length;
     for (unsigned i = 0; i < h; ++i) { r1.vec(i) = a.vec(i); }

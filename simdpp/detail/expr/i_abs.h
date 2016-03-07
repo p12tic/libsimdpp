@@ -158,7 +158,7 @@ template<class R, class E> SIMDPP_INL
 uint64<2> expr_eval(const expr_abs<int64<2,E> >& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSE2
     uint32x4 ta;
@@ -176,19 +176,6 @@ uint64<2> expr_eval(const expr_abs<int64<2,E> >& q)
     z = permute4<0,0,2,2>(z);
     z = bit_not(z);
     int64x2 t;
-    t = z;
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
-#elif SIMDPP_USE_ALTIVEC
-    // not really supported
-    uint32x4 z;
-    z = move4_r<1>(uint32<4>(a));
-    z = shift_r<31>(z);
-    z = cmp_eq(z, 0);
-    z = permute4<0,0,2,2>(z);
-    z = bit_not(z);
-    uint64x2 t;
     t = z;
     a = bit_xor(a, t);
     a = sub(a, t);

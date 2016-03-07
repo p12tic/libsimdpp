@@ -14,6 +14,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 
 #if SIMDPP_USE_SSE2
 
@@ -151,24 +152,20 @@ template<> struct shuffle_impl<5> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        return _mm_blend_ps(a, b, mask);
+        return _mm_blend_ps(a, b, SIMDPP_SHUFFLE_MASK_4x2(s0/4, s1/4, s2/4, s3/4));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        return _mm256_blend_ps(a, b, mask | mask << 4);
+        return _mm256_blend_ps(a, b, SIMDPP_SHUFFLE_MASK_4x2_2(s0/4, s1/4, s2/4, s3/4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        const unsigned mask2 = mask | mask << 4 | mask << 8 | mask << 12;
-        return _mm512_mask_blend_ps(mask2, a, b);
+        return _mm512_mask_blend_ps(SIMDPP_SHUFFLE_MASK_4x2_4(s0/4, s1/4, s2/4, s3/4), a, b);
     }
 #endif
 };
@@ -240,7 +237,7 @@ float32<8> select2_hi(const float32<8>& a, const float32<8>& b)
                           (s0==5||s1==5 ? 2 : 0) |
                           (s0==6||s1==6 ? 4 : 0) |
                           (s0==7||s1==7 ? 8 : 0);
-    return _mm256_blend_ps(a, b, mask);
+    return _mm256_blend_ps(a, b, mask | mask << 4);
 }
 #endif
 #if SIMDPP_USE_AVX512F
@@ -478,26 +475,32 @@ template<> struct shuffle_impl<16> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
+#if SIMDPP_USE_SSE4_1
+        __m128 ap = _mm_shuffle_ps(a, a, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        __m128 bp = _mm_shuffle_ps(b, b, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        return _mm_blend_ps(ap, bp, SIMDPP_SHUFFLE_MASK_4x2(s0/4,s1/4,s2/4,s3/4));
+#else
         __m128 ab1 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
         __m128 ab2 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
         return _mm_shuffle_ps(ab1, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1/4?3:1, s0/4?2:0));
+#endif
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab1 = _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        __m256 ab2 = _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm256_shuffle_ps(ab1, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1/4?3:1, s0/4?2:0));
+        __m256 ap = _mm256_shuffle_ps(a, a, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        __m256 bp = _mm256_shuffle_ps(b, b, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        return _mm256_blend_ps(ap, bp, SIMDPP_SHUFFLE_MASK_4x2_2(s0/4,s1/4,s2/4,s3/4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab1 = _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        __m512 ab2 = _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm512_shuffle_ps(ab1, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1/4?3:1, s0/4?2:0));
+        __m512 ap = _mm512_shuffle_ps(a, a, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        const int mask = SIMDPP_SHUFFLE_MASK_4x2_4(s0/4,s1/4,s2/4,s3/4);
+        return _mm512_mask_shuffle_ps(ap, mask, b, b, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
     }
 #endif
 };

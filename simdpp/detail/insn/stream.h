@@ -88,7 +88,12 @@ SIMDPP_INL void i_stream(char* p, const uint32<16>& a)
 
 SIMDPP_INL void i_stream(char* p, const uint64<2>& a)
 {
+#if SIMDPP_USE_ALTIVEC
+    p = detail::assume_aligned(p, 16);
+    detail::null::store(p, a);
+#else
     i_stream(p, uint8<16>(a));
+#endif
 }
 
 #if SIMDPP_USE_AVX2

@@ -123,8 +123,7 @@ public:
     #if SIMDPP_USE_AVX512F
         // FIXME: remove cross-domain access
         __m512i bits = _mm512_maskz_set1_epi32(d_, 0xffffffff);
-        // return _mm512_castsi512_ps(bits); GCC BUG
-        return (__m512) bits;
+        return _mm512_castsi512_ps(bits);
     #endif
     }
 

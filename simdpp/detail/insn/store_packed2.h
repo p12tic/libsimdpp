@@ -134,7 +134,7 @@ void i_store_packed2(char* p, const uint32<N>& a, const uint32<N>& b)
 
 SIMDPP_INL void i_store_packed2(char* p, const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_packed2(p, a, b);
 #elif SIMDPP_USE_NEON64
     uint64x2x2_t t;

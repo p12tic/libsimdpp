@@ -33,26 +33,30 @@ The library supports the following architectures and instruction sets:
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
 XOP
  - ARM, ARM64: NEON
-
-Code for ALTIVEC instruction set has been added, but it has not been tested
-on actual hardware, thus definitely contains bugs.
+ - PowerPC: Altivec
 
 The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the
 [cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch.
 
  - C++11 version:
-   - GCC: 4.9, 4.8
-   - Clang: 3.3, 3.4, 3.5
+   - GCC: 4.8-5.3
+   - Clang: 3.3-3.8
    - MSVC: 2013
-   - ICC: 2015, 2013
-
-Clang 3.3 is not supported on ARM. MSVC is only supported on x86-64. ICC is
-only supported on x86 and x86-64.
+   - ICC: 2013, 2015
 
  - C++98 version
-   - GCC: 4.8.1, 4.7.3
-   - Clang: 3.3, 3.4
+   - GCC: 4.4-5.3
+   - Clang: 3.3-3.8
+   - MSVC: 2013
+   - ICC: 2013, 2015
+
+Clang 3.3 is not supported on ARM. MSVC and ICC are only supported on x86 and
+x86-64.
+
+Newer versions of the aforementioned compilers will generally work with either
+C++11 or C++98 version of the library. Older versions of these compilers will
+generally work with the C++98 version of the library.
 
 Documentation
 -------------

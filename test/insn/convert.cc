@@ -17,64 +17,64 @@ void test_convert_n(TestSuite& ts)
     using namespace simdpp;
 
     typedef uint8<B> uint8_n;
-    typedef int8<B>  int8_n;
+    typedef int8<B> int8_n;
     typedef uint16<B/2> uint16_n;
-    typedef int16<B/2>  int16_n;
-    //typedef uint16<B> uint16_2n;
-    typedef int16<B>  int16_2n;
+    typedef int16<B/2> int16_n;
+    typedef uint16<B> uint16_2n;
+    typedef int16<B> int16_2n;
     typedef uint32<B/4> uint32_n;
-    typedef int32<B/4>  int32_n;
-    //typedef uint32<B/2> uint32_2n;
-    typedef int32<B/2>  int32_2n;
+    typedef int32<B/4> int32_n;
+    typedef uint32<B/2> uint32_2n;
+    typedef int32<B/2> int32_2n;
     //typedef uint64<B/8> uint64_n;
-    //typedef int64<B/8>  int64_n;
-    //typedef uint64<B/4> uint64_2n;
-    typedef int64<B/4>  int64_2n;
-    typedef  float32<B/4> float32_n;
+    //typedef int64<B/8> int64_n;
+    typedef uint64<B/4> uint64_2n;
+    typedef int64<B/4> int64_2n;
+    typedef float32<B/4> float32_n;
     //typedef float32<B/2> float32_2n;
-    //typedef  float64<B/8> float64_n;
+    //typedef float64<B/8> float64_n;
     typedef float64<B/4> float64_2n;
 
     //int8
     {
-    int8_n s[] = {
-        (uint8_n) make_uint(0x00, 0x11, 0x22, 0x33),
-        (uint8_n) make_uint(0xcc, 0xdd, 0xee, 0xff),
-    };
+    TestData<int8_n> s(
+        make_uint(0x00, 0x11, 0x22, 0x33),
+        make_uint(0xcc, 0xdd, 0xee, 0xff)
+    );
     TEST_ARRAY_HELPER1_T(ts, int16_2n,  int8_n, to_int16, s);
-    TEST_ARRAY_HELPER1_T(ts, int16_2n, uint8_n, to_int16, s);
+    TEST_ARRAY_HELPER1_T(ts, uint16_2n, uint8_n, to_uint16, s);
     }
 
     //int16
     {
-    int16_n s[] = {
-        (uint16_n) make_uint(0x0000, 0x1111, 0x2222, 0x3333),
-        (uint16_n) make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff),
-    };
+    TestData<int16_n> s(
+        make_uint(0x0000, 0x1111, 0x2222, 0x3333),
+        make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff)
+    );
     TEST_ARRAY_HELPER1_T(ts, int32_2n,  int16_n, to_int32, s);
-    TEST_ARRAY_HELPER1_T(ts, int32_2n, uint16_n, to_int32, s);
+    TEST_ARRAY_HELPER1_T(ts, uint32_2n, uint16_n, to_uint32, s);
     }
 
     //int32
     {
-    int32_n s[] = {
-        (int32_n) make_uint(0x00000000, 0x11111111),
-        (int32_n) make_uint(0x22222222, 0x33333333),
-        (int32_n) make_uint(0xcccccccc, 0xeeeeeeee),
-        (int32_n) make_uint(0xdddddddd, 0xffffffff),
-    };
+    TestData<int32_n> s(
+        make_uint(0x00000000, 0x11111111),
+        make_uint(0x22222222, 0x33333333),
+        make_uint(0xcccccccc, 0xeeeeeeee),
+        make_uint(0xdddddddd, 0xffffffff)
+    );
     TEST_ARRAY_HELPER1_T(ts, int64_2n,  int32_n, to_int64, s);
-    TEST_ARRAY_HELPER1_T(ts, int64_2n, uint32_n, to_int64, s);
+    TEST_ARRAY_HELPER1_T(ts, uint64_2n, uint32_n, to_uint64, s);
 
-    int32_n sf[] = {
-        (int32_n) make_uint(1, 100),
-        (int32_n) make_uint(-1, -100),
-        (int32_n) make_uint(0, -15),
-        (int32_n) make_uint(63100000, 63100001),
-        (int32_n) make_uint(63100002, 63100003),
-        (int32_n) make_uint(-63100000, -63100001),
-        (int32_n) make_uint(-63100002, -63100003),
-    };
+    TestData<int32_n> sf(
+        make_uint(1, 100),
+        make_uint(-1, -100),
+        make_uint(0, -15),
+        make_uint(63100000, 63100001),
+        make_uint(63100002, 63100003),
+        make_uint(-63100000, -63100001),
+        make_uint(-63100002, -63100003)
+    );
 
     ts.set_precision(1);
     set_round_to_zero(); // set consistent mode on SSE2
@@ -86,34 +86,34 @@ void test_convert_n(TestSuite& ts)
 
     //float32
     {
-    float32_n sf[] = {
-        (float32_n) make_float(1.0, 100.0),
-        (float32_n) make_float(-1.0, -100.0),
-        (float32_n) make_float(0.0, -15.0),
-        (float32_n) make_float(1.0, 1.1),
-        (float32_n) make_float(-1.0, -1.1),
-        (float32_n) make_float(63100000.0, 63100000.0),
-        (float32_n) make_float(63100002.0, 63100003.0),
-        (float32_n) make_float(-63100000.0, -63100001.0),
-        (float32_n) make_float(-63100002.0, -63100003.0),
-    };
+    TestData<float32_n> sf(
+        make_float(1.0, 100.0),
+        make_float(-1.0, -100.0),
+        make_float(0.0, -15.0),
+        make_float(1.0, 1.1),
+        make_float(-1.0, -1.1),
+        make_float(63100000.0, 63100000.0),
+        make_float(63100002.0, 63100003.0),
+        make_float(-63100000.0, -63100001.0),
+        make_float(-63100002.0, -63100003.0)
+    );
 
     TEST_ARRAY_HELPER1_T(ts, int32_n, float32_n, to_int32, sf);
     }
 
     //float64
     {
-    float64_2n sf[] = {
-        (float64_2n) make_float(1.0, 100.0),
-        (float64_2n) make_float(-1.0, -100.0),
-        (float64_2n) make_float(0.0, -15.0),
-        (float64_2n) make_float(1.0, 1.1),
-        (float64_2n) make_float(-1.0, -1.1),
-        (float64_2n) make_float(63100000.0, 63100000.0),
-        (float64_2n) make_float(63100002.0, 63100003.0),
-        (float64_2n) make_float(-63100000.0, -63100001.0),
-        (float64_2n) make_float(-63100002.0, -63100003.0),
-    };
+    TestData<float64_2n> sf(
+        make_float(1.0, 100.0),
+        make_float(-1.0, -100.0),
+        make_float(0.0, -15.0),
+        make_float(1.0, 1.1),
+        make_float(-1.0, -1.1),
+        make_float(63100000.0, 63100000.0),
+        make_float(63100002.0, 63100003.0),
+        make_float(-63100000.0, -63100001.0),
+        make_float(-63100002.0, -63100003.0)
+    );
 
     TEST_ARRAY_HELPER1_T(ts, int32_n, float64_2n, to_int32, sf);
     }

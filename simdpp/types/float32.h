@@ -89,7 +89,7 @@ private:
         rN = v0
         @endcode
     */
-    static SIMDPP_INL float32<N> set_vec(float32v v0)
+    static SIMDPP_INL float32<N> set_vec(const float32v& v0)
     {
         float32<N> r;
         for (unsigned i = 0; i < r.vec_length; i++)

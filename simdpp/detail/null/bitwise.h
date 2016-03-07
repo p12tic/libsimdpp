@@ -155,6 +155,17 @@ M bit_not_mm(const M& a)
     return r;
 }
 
+template<class V> SIMDPP_INL
+bool test_bits_any(const V& a)
+{
+    using U = typename V::uint_element_type;
+    U r = 0;
+    for (unsigned i = 0; i < a.length; ++i) {
+        r |= bit_cast<U>(a.el(i));
+    }
+    return r != 0;
+}
+
 } // namespace null
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

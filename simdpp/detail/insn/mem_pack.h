@@ -92,11 +92,11 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     T a1, b1, c1;
     a1 = align16<11>(a, a);
     b1 = b;
-    c1 = align16<6>(c, c);
+    c1 = align16<5>(c, c);
 
     // [a11..a15,a0..a10]
     // [b0..b15]
-    // [c5..c15,c0..c5]
+    // [c5..c15,c0..c4]
     U mask1 = make_uint(0xff);
     mask1 = move16_l<5>(mask1);
 
@@ -231,9 +231,9 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
     U mask1 = make_shuffle_bytes16_mask<0, 8+3, 8+6,
                                         1, 8+4, 8+7,
                                         2, 8+5>(mask1);
-    a = shuffle_bytes16(a, b, mask1);
-    b = shuffle_bytes16(c, a, mask1);
-    c = shuffle_bytes16(b, c, mask1);
+    a = shuffle_bytes16(a2, b2, mask1);
+    b = shuffle_bytes16(c2, a2, mask1);
+    c = shuffle_bytes16(b2, c2, mask1);
 
     // [a0,b0,c0,a1,b1,c1,a2,b2]
     // [c2,a3,b3,c3,a4,b4,c4,a5]
@@ -325,9 +325,9 @@ void v_mem_pack3_impl32_128(T& a, T& b, T& c)
     // [b1,b2,b3,a3]
     // [c2,c3,c0,b0]
     U mask1 = make_shuffle_bytes16_mask<0,4+3,4+2,1>(mask1);
-    a1 = shuffle_bytes16(a, c, mask1);
-    b1 = shuffle_bytes16(b, a, mask1);
-    c1 = shuffle_bytes16(c, b, mask1);
+    a = shuffle_bytes16(a2, c2, mask1);
+    b = shuffle_bytes16(b2, a2, mask1);
+    c = shuffle_bytes16(c2, b2, mask1);
     // [a0,b0,c0,a1]
     // [b1,c1,a2,b2]
     // [c2,a3,b3,c3]

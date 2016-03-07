@@ -91,7 +91,15 @@ uint32<N> i_bit_not(const uint32<N>& a)
 
 SIMDPP_INL uint64<2> i_bit_not(const uint64<2>& a)
 {
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    uint64x2 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = ~a.el(i);
+    }
+    return r;
+#else
     return uint64<2>(i_bit_not(uint8<16>(a)));
+#endif
 }
 
 #if SIMDPP_USE_AVX2
@@ -146,7 +154,7 @@ SIMDPP_INL mask_int32x4 i_bit_not(const mask_int32x4& a)
 
 SIMDPP_INL mask_int64x2 i_bit_not(const mask_int64x2& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::bit_not_mm(a);
 #else
     return (mask_int64x2)i_bit_not(uint64x2(a));

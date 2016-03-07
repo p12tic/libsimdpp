@@ -14,6 +14,12 @@
 #include <functional>
 #include <algorithm>
 
+struct TestOptions {
+    bool is_simulator;
+
+    TestOptions() : is_simulator(false) {}
+};
+
 class TestResults {
 public:
     // test case container.

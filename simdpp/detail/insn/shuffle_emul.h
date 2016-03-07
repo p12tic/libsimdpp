@@ -25,7 +25,7 @@ namespace detail {
 namespace insn {
 
 template<unsigned s0, unsigned s1, class V> SIMDPP_INL
-V permute_half(V a0, V a1)
+V permute_half(const V& a0, const V& a1)
 {
     switch (s0*4+s1) {
     case 0: /* 0 0 */ return permute2<0,0>(a0);

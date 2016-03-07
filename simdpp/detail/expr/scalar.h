@@ -21,7 +21,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class Int> SIMDPP_INL void scalar_convert(Int& d, uint64_t x) { d = x; }
+template<class Int> SIMDPP_INL void scalar_convert(Int& d, uint64_t x) { d = static_cast<Int>(x); }
 SIMDPP_INL void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
 SIMDPP_INL void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
 

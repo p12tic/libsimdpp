@@ -14,6 +14,8 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/types.h>
+#include <simdpp/core/blend.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 #include <simdpp/detail/shuffle/sse_float32_4x2.h>
 
 #if SIMDPP_USE_SSE2
@@ -145,17 +147,46 @@ template<> struct shuffle_impl<5> {
 };
 #endif
 
-// fallback to floats
 template<> struct shuffle_impl<6> {
-    template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_INL
-    static uint32<N> run(const uint32<N>& a, const uint32<N>& b)
+    template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+    static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
     {
-        float32<N> fa, fb; fa = a; fb = b;
-        return (uint32<N>) sse_shuffle4x2_float32::do_shuffle<s0,s1,s2,s3>(fa, fb);
-
+#if SIMDPP_USE_AVX2
+        __m128i pa = _mm_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m128i pb = _mm_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        return _mm_blend_epi32(pa, pb, SIMDPP_SHUFFLE_MASK_4x2(s0/4,s1/4,s2/4,s3/4));
+#elif SIMDPP_USE_SSE4_1
+        __m128i pa = _mm_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m128i pb = _mm_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        return _mm_blend_epi16(pa, pb, SIMDPP_SHUFFLE_MASK_4x4(s0/4*0x3,s1/4*0x3,s2/4*0x3,s3/4*0x3));
+#else
+        __m128 ca = _mm_castsi128_ps(a);
+        __m128 cb = _mm_castsi128_ps(b);
+        __m128 ab1 = _mm_shuffle_ps(ca, cb, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        __m128 ab2 = _mm_shuffle_ps(ca, cb, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        float32<4> r = _mm_shuffle_ps(ab1, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1/4?3:1, s0/4?2:0));
+        return uint32<4>(r);
+#endif
     }
+#if SIMDPP_USE_AVX2
+    template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+    static uint32<8> run(const uint32<8>& a, const uint32<8>& b)
+    {
+        __m256i pa = _mm256_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256i pb = _mm256_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        return _mm256_blend_epi32(pa, pb, SIMDPP_SHUFFLE_MASK_4x2_2(s0/4,s1/4,s2/4,s3/4));
+    }
+#endif
+#if SIMDPP_USE_AVX512F
+    template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+    static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
+    {
+        __m512i ap = _mm512_shuffle_epi32(a, _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4)));
+        const int mask = SIMDPP_SHUFFLE_MASK_4x2_4(s0/4,s1/4,s2/4,s3/4);
+        return _mm512_mask_shuffle_epi32(ap, mask, b, _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4)));
+    }
+#endif
 };
-
 
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
 uint32<N> do_shuffle(const uint32<N>& a, const uint32<N>& b)

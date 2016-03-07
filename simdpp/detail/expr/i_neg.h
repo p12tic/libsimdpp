@@ -127,9 +127,9 @@ template<class R, class E> SIMDPP_INL
 int64<2> expr_eval(const expr_neg<int64<2,E> >& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     return sub(int64x2::zero(), a);
 #endif
 }

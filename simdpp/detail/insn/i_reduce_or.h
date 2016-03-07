@@ -186,13 +186,13 @@ SIMDPP_INL uint32_t i_reduce_or(const uint32<N>& a)
 
 SIMDPP_INL uint64_t i_reduce_or(const uint64x2& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r |= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     uint64x2 r = bit_or(a, move2_l<1>(a));
     return extract<0>(r);
 #endif

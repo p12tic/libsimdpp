@@ -381,7 +381,7 @@ SIMDPP_INL int32_t i_reduce_min(const int32<N>& a)
 
 SIMDPP_INL uint64_t i_reduce_min(const uint64x2& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r = r < a.el(i) ? r : a.el(i);
@@ -390,7 +390,7 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64x2& a)
 #elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     uint64x2 r = min(a, move2_l<1>(a));
     return extract<0>(r);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32
     mem_block<uint64x2> b = a;
     return b[0] < b[1] ? b[0] : b[1];
 #else
@@ -422,7 +422,7 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64<8>& a)
 template<unsigned N>
 SIMDPP_INL uint64_t i_reduce_min(const uint64<N>& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64_t r = std::numeric_limits<uint64_t>::max();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         for (unsigned i = 0; i < a.base_length; i++) {
@@ -436,7 +436,7 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64<N>& a)
         r = min(r, a.vec(j));
     }
     return i_reduce_min(r);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32
     uint64_t r = std::numeric_limits<uint64_t>::max();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         mem_block<uint64v> b = a.vec(j);
@@ -454,7 +454,7 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64<N>& a)
 
 SIMDPP_INL int64_t i_reduce_min(const int64x2& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     int64_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r = r < a.el(i) ? r : a.el(i);
@@ -463,7 +463,7 @@ SIMDPP_INL int64_t i_reduce_min(const int64x2& a)
 #elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     int64x2 r = min(a, move2_l<1>(a));
     return extract<0>(r);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     mem_block<int64x2> b = a;
     return b[0] < b[1] ? b[0] : b[1];
 #else
@@ -495,7 +495,7 @@ SIMDPP_INL int64_t i_reduce_min(const int64<8>& a)
 template<unsigned N>
 SIMDPP_INL int64_t i_reduce_min(const int64<N>& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     int64_t r = std::numeric_limits<int64_t>::max();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         for (unsigned i = 0; i < a.base_length; i++) {
@@ -509,7 +509,7 @@ SIMDPP_INL int64_t i_reduce_min(const int64<N>& a)
         r = min(r, a.vec(j));
     }
     return i_reduce_min(r);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32
     int64_t r = std::numeric_limits<int64_t>::max();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         mem_block<int64v> b = a.vec(j);

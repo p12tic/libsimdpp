@@ -390,23 +390,22 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,1>& e, unsigned off
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<uint64<2>, uint64_t>(e.val(off+0), e.val(off+1));
 #elif SIMDPP_USE_SSE2
+#if SIMDPP_32_BITS && _MSC_VER
+    // MSVC does not support _mm_set_epi64x in 32-bit mode
+    uint64_t v1 = e.val(off+1);
+    uint64_t v0 = e.val(off+0);
+    v = _mm_set_epi32(v1 >> 32, v1 & 0xffffffff, v0 >> 32, v0 & 0xffffffff);
+#else
     v = _mm_set_epi64x(e.val(off+1), e.val(off+0));
+#endif
 #elif SIMDPP_USE_NEON
     detail::mem_block<uint64<2> > x;
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     v = x;
-#elif SIMDPP_USE_ALTIVEC
-    // big endian
-    uint32_t v0 = uint64_t(e.val(off+0)) >> 32;
-    uint32_t v1 = uint64_t(e.val(off+0));
-    uint32_t v2 = uint64_t(e.val(off+1)) >> 32;
-    uint32_t v3 = uint64_t(e.val(off+1));
-
-    v = (uint32<4>)(__vector uint32_t) { v0, v1, v2, v3 };
 #endif
 }
 
@@ -414,7 +413,17 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint64<4>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
+#if SIMDPP_32_BITS && _MSC_VER
+    // MSVC does not support _mm256_set_epi64x in 32-bit mode
+    uint64_t v3 = e.val(off+3);
+    uint64_t v2 = e.val(off+2);
+    uint64_t v1 = e.val(off+1);
+    uint64_t v0 = e.val(off+0);
+    v = _mm256_set_epi32(v3 >> 32, v3 & 0xffffffff, v2 >> 32, v2 & 0xffffffff,
+                         v1 >> 32, v1 & 0xffffffff, v0 >> 32, v0 & 0xffffffff);
+#else
     v = _mm256_set_epi64x(e.val(off+3), e.val(off+2), e.val(off+1), e.val(off+0));
+#endif
 }
 #endif
 

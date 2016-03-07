@@ -16,10 +16,9 @@
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/permute4.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/sse/shuffle.h>
-#include <simdpp/neon/detail/shuffle_int16x8.h>
-#include <simdpp/neon/detail/shuffle_int32x4.h>
-#include <simdpp/neon/detail/shuffle_int64x2.h>
+#include <simdpp/detail/shuffle/neon_int16x8.h>
+#include <simdpp/detail/shuffle/neon_int32x4.h>
+#include <simdpp/detail/shuffle/neon_int64x2.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -55,16 +54,12 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64x2 i_permute2(const uint64x2& a)
 {
     SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::permute<s0,s1>(a);
 #elif SIMDPP_USE_SSE2
     return (uint64x2) i_permute4<s0*2, s0*2+1, s1*2, s1*2+1>(int32x4(a));
 #elif SIMDPP_USE_NEON
-    return neon::detail::shuffle_int64x2::permute2<s0,s1>(a);
-#elif SIMDPP_USE_ALTIVEC
-    // TODO optimize
-    uint64x2 mask = make_shuffle_bytes16_mask<s0,s1>(mask);
-    return permute_bytes16(a, mask);
+    return detail::neon_shuffle_int64x2::permute2<s0,s1>(a);
 #endif
 }
 

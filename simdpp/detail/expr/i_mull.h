@@ -261,7 +261,14 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(R, q);
+    mem_block<uint32<4>> ba = a;
+    mem_block<uint32<4>> bb = b;
+    uint64x4 r;
+    r.vec(0).el(0) = (uint64_t) ba[0] * bb[0];
+    r.vec(0).el(1) = (uint64_t) ba[1] * bb[1];
+    r.vec(1).el(0) = (uint64_t) ba[2] * bb[2];
+    r.vec(1).el(1) = (uint64_t) ba[3] * bb[3];
+    return r;
 #endif
 }
 
@@ -278,8 +285,8 @@ uint64<8> expr_eval(const expr_mull<uint32<8,E1>,
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm256_mul_epu32(to_int64(al).eval(), to_int64(bl).eval());
-    rh = _mm256_mul_epu32(to_int64(ah).eval(), to_int64(bh).eval());
+    rl = _mm256_mul_epu32(to_uint64(al).eval(), to_uint64(bl).eval());
+    rh = _mm256_mul_epu32(to_uint64(ah).eval(), to_uint64(bh).eval());
 
     return combine(rl, rh);
 }

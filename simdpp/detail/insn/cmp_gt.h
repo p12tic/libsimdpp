@@ -235,7 +235,7 @@ mask_int32<N> i_cmp_gt(const uint32<N>& a, const uint32<N>& b)
 
 SIMDPP_INL mask_int64x2 i_cmp_gt(const int64x2& a, const int64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comgt_epi64(a, b);
@@ -273,7 +273,7 @@ mask_int64<N> i_cmp_gt(const int64<N>& a, const int64<N>& b)
 
 SIMDPP_INL mask_int64x2 i_cmp_gt(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_gt(a, b);
 #elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comgt_epu64(a, b);

@@ -72,7 +72,7 @@ public:
 private:
     /// Creates a signed int8 vector with the contents set to copy of native
     /// register
-    static SIMDPP_INL int8<N> set_vec(int8v a)
+    static SIMDPP_INL int8<N> set_vec(const int8v& a)
     {
         int8<N> r;
         for (unsigned i = 0; i < r.vec_length; i++)
@@ -132,7 +132,7 @@ public:
 private:
     /// Creates a unsigned int8 vector with the contents set to copy of native
     /// register
-    static SIMDPP_INL uint8<N> set_vec(uint8v a)
+    static SIMDPP_INL uint8<N> set_vec(const uint8v& a)
     {
         uint8<N> r;
         for (unsigned i = 0; i < r.vec_length; i++)
