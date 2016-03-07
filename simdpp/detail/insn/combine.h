@@ -61,8 +61,7 @@ template<class V = void> SIMDPP_INL
 uint32<16> i_combine(const uint32<8>& a, const uint32<8>& b)
 {
     uint32<16> r;
-    // r = _mm512_castsi256_si512(a); GCC BUG
-    r = _mm512_inserti64x4(r, a, 0);
+    r = _mm512_castsi256_si512(a);
     r = _mm512_inserti64x4(r, b, 1);
     return r;
 }
@@ -86,10 +85,10 @@ template<class V = void> SIMDPP_INL
 uint64<8> i_combine(const uint64<4>& a, const uint64<4>& b)
 {
     uint64<8> r;
-    // r = _mm512_castsi256_si512(a); GCC BUG
-    r = _mm512_inserti64x4(r, a, 0);
+    r = _mm512_castsi256_si512(a);
     r = _mm512_inserti64x4(r, b, 1);
-    return r;}
+    return r;
+}
 #endif
 
 // -----------------------------------------------------------------------------
@@ -109,11 +108,11 @@ float32<8> i_combine(const float32<4>& a, const float32<4> b)
 template<class V = void> SIMDPP_INL
 float32<16> i_combine(const float32<8>& a, const float32<8>& b)
 {
-    float64<8> r;
-    // r = _mm512_castpd256_pd512(a); GCC BUG
-    r = _mm512_insertf64x4(r, float64<4>(a), 0);
-    r = _mm512_insertf64x4(r, float64<4>(b), 1);
-    return float32<16>(r);
+    float32<16> r;
+    r = _mm512_castps256_ps512(a);
+    r = _mm512_castpd_ps(_mm512_insertf64x4(_mm512_castps_pd(r),
+                                            _mm256_castps_pd(b), 1));
+    return r;
 }
 #endif
 
@@ -135,8 +134,7 @@ template<class V = void> SIMDPP_INL
 float64<8> i_combine(const float64<4>& a, const float64<4>& b)
 {
     float64<8> r;
-    // r = _mm512_castpd256_pd512(a); GCC BUG
-    r = _mm512_insertf64x4(r, a, 0);
+    r = _mm512_castpd256_pd512(a);
     r = _mm512_insertf64x4(r, b, 1);
     return r;
 }
