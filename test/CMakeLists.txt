@@ -7,6 +7,34 @@
 
 include_directories(${libsimdpp_SOURCE_DIR})
 
+# LIST_CONTAINS(<var> ENTRY [LIST...])
+#
+# Helper macro that checks whether a list contains a specific entry. It sets
+# ${VAR} to TRUE if VALUE is within LIST.
+#
+macro(list_contains VAR VALUE)
+    set(${VAR})
+    foreach(IV ${ARGN})
+        if(${VALUE} STREQUAL ${IV})
+            SET(${VAR} TRUE)
+        endif()
+    endforeach()
+endmacro()
+
+# ---------------
+# check available architectures
+
+list_contains(HAS_SSE2 X86_SSE2 ${NATIVE_ARCHS})
+list_contains(HAS_SSE3 X86_SSE3 ${NATIVE_ARCHS})
+list_contains(HAS_SSSE3 X86_SSSE3 ${NATIVE_ARCHS})
+list_contains(HAS_SSE4_1 X86_SSE4_1 ${NATIVE_ARCHS})
+list_contains(HAS_AVX X86_AVX ${NATIVE_ARCHS})
+list_contains(HAS_AVX2 X86_AVX2 ${NATIVE_ARCHS})
+list_contains(HAS_AVX512F X86_AVX512F ${NATIVE_ARCHS})
+list_contains(HAS_NEON X86_NEON ${NATIVE_ARCHS})
+
+# ---------------
+
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
 set(TEST1_SOURCES
@@ -50,6 +78,26 @@ foreach(SRC ${TEST1_ARCH_SOURCES})
     simdpp_multiarch(TEST1_ARCH_GEN_SOURCES ${SRC} ${COMPILABLE_ARCHS})
 endforeach()
 
+# don't use x87 in any of the tests because it performs calculations with
+# different precision
+if(HAS_SSE2)
+    set(DEFAULT_FLAGS "")
+    if(SIMDPP_CLANG)
+        set(DEFAULT_FLAGS " -msse2")
+    elseif(SIMDPP_GCC)
+        set(DEFAULT_FLAGS " -mfpmath=sse -msse2")
+    elseif(SIMDPP_INTEL)
+        set(DEFAULT_FLAGS " -msse2")
+    elseif(SIMDPP_MSVC)
+        set(DEFAULT_FLAGS " /arch:SSE2")
+    endif()
+
+    foreach(GENSRC ${TEST1_ARCH_GEN_SOURCES})
+        set_property(SOURCE "${GENSRC}" APPEND_STRING PROPERTY COMPILE_FLAGS
+                     "${DEFAULT_FLAGS}")
+    endforeach()
+endif()
+
 add_executable(test1 EXCLUDE_FROM_ALL
     ${TEST1_SOURCES}
     ${TEST1_ARCH_GEN_SOURCES}
@@ -69,22 +117,6 @@ add_dependencies(check test1)
 
 # ------------------------------------------------------------------------------
 # Dispatcher test
-
-# LIST_CONTAINS(<var> ENTRY [LIST...])
-#
-# Helper macro that checks whether a list contains a specific entry. It sets
-# ${VAR} to TRUE if VALUE is within LIST.
-#
-macro(list_contains VAR VALUE)
-    set(${VAR})
-    foreach(IV ${ARGN})
-        if(${VALUE} STREQUAL ${IV})
-            SET(${VAR} TRUE)
-        endif()
-    endforeach()
-endmacro()
-
-# ---------------
 
 set(TEST_DISPATCHER_SOURCES
     main_dispatcher.cc
@@ -108,15 +140,6 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 if(NOT MSVC)
     set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
 endif()
-
-list_contains(HAS_SSE2 X86_SSE2 ${NATIVE_ARCHS})
-list_contains(HAS_SSE3 X86_SSE3 ${NATIVE_ARCHS})
-list_contains(HAS_SSSE3 X86_SSSE3 ${NATIVE_ARCHS})
-list_contains(HAS_SSE4_1 X86_SSE4_1 ${NATIVE_ARCHS})
-list_contains(HAS_AVX X86_AVX ${NATIVE_ARCHS})
-list_contains(HAS_AVX2 X86_AVX2 ${NATIVE_ARCHS})
-list_contains(HAS_AVX512F X86_AVX512F ${NATIVE_ARCHS})
-list_contains(HAS_NEON X86_NEON ${NATIVE_ARCHS})
 
 add_test(s_test_dispatcher1 test_dispatcher "NONE_NULL")
 if(HAS_SSE2)
