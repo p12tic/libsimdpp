@@ -34,8 +34,7 @@ The library supports the following architectures and instruction sets:
 XOP
  - ARM, ARM64: NEON
 
-Code for ALTIVEC instruction set has been added, but it has not been tested
-on actual hardware, thus definitely contains bugs.
+ - PowerPC: Altivec
 
 The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the
