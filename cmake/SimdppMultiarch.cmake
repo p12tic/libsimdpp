@@ -266,6 +266,7 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         };
         __m512 one = _mm512_load_ps((float*)a);
         one = _mm512_add_ps(one, one);
+        __m512d d = _mm512_castps_pd(one); // weed out GCC < 5.0
         _mm512_store_ps((float*)a, one);
     }"
 )
