@@ -240,7 +240,7 @@ float32<8> select2_hi(const float32<8>& a, const float32<8>& b)
                           (s0==5||s1==5 ? 2 : 0) |
                           (s0==6||s1==6 ? 4 : 0) |
                           (s0==7||s1==7 ? 8 : 0);
-    return _mm256_blend_ps(a, b, mask);
+    return _mm256_blend_ps(a, b, mask | mask << 4);
 }
 #endif
 #if SIMDPP_USE_AVX512F
