@@ -351,14 +351,14 @@ struct TemplateTestHelperImpl;
 template<template<class, unsigned> class F, class V, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl<F, V, false, i, limit> {
 
-    static void run(TestSuite& tc, V a)
+    static void run(TestSuite& tc, const V& a)
     {
         F<V, i>::test(tc, a);
         const bool is_large = i + 30 < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a);
     }
 
-    static void run(TestSuite& tc, V a, V b)
+    static void run(TestSuite& tc, const V& a, const V& b)
     {
         F<V, i>::test(tc, a, b);
         const bool is_large = i + 30 < limit;
@@ -369,7 +369,7 @@ struct TemplateTestHelperImpl<F, V, false, i, limit> {
 template<template<class, unsigned> class F, class V, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl<F, V, true, i, limit> {
 
-    static void run(TestSuite& tc, V a)
+    static void run(TestSuite& tc, const V& a)
     {
         F<V, i>::test(tc, a);
         F<V, i+1>::test(tc, a);
@@ -406,7 +406,7 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a);
     }
 
-    static void run(TestSuite& tc, V a, V b)
+    static void run(TestSuite& tc, const V& a, const V& b)
     {
         F<V, i>::test(tc, a, b);
         F<V, i+1>::test(tc, a, b);
@@ -446,19 +446,19 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
 
 template<template<class, unsigned> class F, class V, unsigned i>
 struct TemplateTestHelperImpl<F, V, true, i, i> {
-    static void run(TestSuite, V) {}
-    static void run(TestSuite, V, V) {}
+    static void run(TestSuite&, const V&) {}
+    static void run(TestSuite&, const V&, const V&) {}
 };
 
 template<template<class, unsigned> class F, class V, unsigned i>
 struct TemplateTestHelperImpl<F, V, false, i, i> {
-    static void run(TestSuite, V) {}
-    static void run(TestSuite, V, V) {}
+    static void run(TestSuite&, const V&) {}
+    static void run(TestSuite&, const V&, const V&) {}
 };
 
 template<template<class, unsigned> class F, class V>
 struct TemplateTestHelper {
-    static void run(TestSuite& tc, V a)
+    static void run(TestSuite& tc, const V& a)
     {
         const unsigned limit = F<V,0>::limit;
 
@@ -466,7 +466,7 @@ struct TemplateTestHelper {
         TemplateTestHelperImpl<F, V, false, 0, limit>::run(tc, a);
     }
 
-    static void run(TestSuite& tc, V a, V b)
+    static void run(TestSuite& tc, const V& a, const V& b)
     {
         const unsigned limit = F<V,0>::limit;
 

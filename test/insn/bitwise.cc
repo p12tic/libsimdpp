@@ -14,7 +14,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V>
-void test_bitwise_type(TestSuite& tc, V a, V b)
+void test_bitwise_type(TestSuite& tc, const V& a, const V& b)
 {
     TEST_PUSH(tc, V, bit_and(a, b));
     TEST_PUSH(tc, V, bit_andnot(a, b));

@@ -230,11 +230,11 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
     } else if (s0 < 2) { // s1 >= 2
         float32<4> fa, fb; fa = a, fb = b;
         __m128 t = _mm_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
-        return (__m128i) _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
+        return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<4> fa, fb; fa = a, fb = b;
         __m128 t = _mm_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
-        return (__m128i) _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
+        return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     }
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int32x4::shuffle2x2<s0,s1>(a, b);
@@ -262,11 +262,11 @@ uint32<8> i_shuffle2x2(const uint32<8>& a, const uint32<8>& b)
     } else if (s0 < 2) { // s1 >= 2
         float32<8> fa, fb; fa = a, fb = b;
         __m256 t = _mm256_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
-        return (__m256i) _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<8> fa, fb; fa = a, fb = b;
         __m256 t = _mm256_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
-        return (__m256i) _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
 #endif
@@ -287,11 +287,11 @@ uint32<8> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
     } else if (s0 < 2) { // s1 >= 2
         float32<16> fa, fb; fa = a; fb = b;
         __m512 t = _mm512_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
-        return (__m512i) _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<16> fa, fb; fa = a; fb = b;
         __m512 t = _mm512_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
-        return (__m512i) _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
 #endif
@@ -340,10 +340,10 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 #endif
     } else if (s0 < 2) { // s1 >= 2
         float64<2> fa, fb; fa = a; fb = b;
-        return (__m128i) _mm_shuffle_pd(fa, fb, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+        return _mm_castpd_si128(_mm_shuffle_pd(fa, fb, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2)));
     } else { // s0 >= 2, s1 < 2
         float64<2> fa, fb; fa = a; fb = b;
-        return (__m128i) _mm_shuffle_pd(fb, fa, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+        return _mm_castpd_si128(_mm_shuffle_pd(fb, fa, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2)));
     }
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(a, b);

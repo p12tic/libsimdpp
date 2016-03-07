@@ -172,7 +172,7 @@ float64<8> shuffle1_128(const float64<8>& a, const float64<8>& b)
 
 #if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V> SIMDPP_INL
-V permute4_128(V a)
+V permute4_128(const V& a)
 {
     return shuffle2_128<s0,s1,s2,s3>(a, a);
 }

@@ -348,7 +348,7 @@ mask_int64<N> i_bit_and(const mask_int64<N>& a, const mask_int64<N>& b)
 
 // -----------------------------------------------------------------------------
 // float32, float32
-SIMDPP_INL float32<4> i_bit_and(const float32<4>& a, const float32<4> b)
+SIMDPP_INL float32<4> i_bit_and(const float32<4>& a, const float32<4>& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::bit_and(a, b);

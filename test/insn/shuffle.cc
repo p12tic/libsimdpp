@@ -14,18 +14,18 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-template<unsigned S, unsigned N> simdpp::uint8<N> move_v128_l(simdpp::uint8<N> a) { return simdpp::move16_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::uint16<N> move_v128_l(simdpp::uint16<N> a) { return simdpp::move8_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::uint32<N> move_v128_l(simdpp::uint32<N> a) { return simdpp::move4_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::uint64<N> move_v128_l(simdpp::uint64<N> a) { return simdpp::move2_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::float32<N> move_v128_l(simdpp::float32<N> a) { return simdpp::move4_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::float64<N> move_v128_l(simdpp::float64<N> a) { return simdpp::move2_l<S>(a); }
-template<unsigned S, unsigned N> simdpp::uint8<N> move_v128_r(simdpp::uint8<N> a) { return simdpp::move16_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::uint16<N> move_v128_r(simdpp::uint16<N> a) { return simdpp::move8_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::uint32<N> move_v128_r(simdpp::uint32<N> a) { return simdpp::move4_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::uint64<N> move_v128_r(simdpp::uint64<N> a) { return simdpp::move2_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::float32<N> move_v128_r(simdpp::float32<N> a) { return simdpp::move4_r<S>(a); }
-template<unsigned S, unsigned N> simdpp::float64<N> move_v128_r(simdpp::float64<N> a) { return simdpp::move2_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint8<N> move_v128_l(const simdpp::uint8<N>& a) { return simdpp::move16_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint16<N> move_v128_l(const simdpp::uint16<N>& a) { return simdpp::move8_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint32<N> move_v128_l(const simdpp::uint32<N>& a) { return simdpp::move4_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint64<N> move_v128_l(const simdpp::uint64<N>& a) { return simdpp::move2_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::float32<N> move_v128_l(const simdpp::float32<N>& a) { return simdpp::move4_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::float64<N> move_v128_l(const simdpp::float64<N>& a) { return simdpp::move2_l<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint8<N> move_v128_r(const simdpp::uint8<N>& a) { return simdpp::move16_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint16<N> move_v128_r(const simdpp::uint16<N>& a) { return simdpp::move8_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint32<N> move_v128_r(const simdpp::uint32<N>& a) { return simdpp::move4_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::uint64<N> move_v128_r(const simdpp::uint64<N>& a) { return simdpp::move2_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::float32<N> move_v128_r(const simdpp::float32<N>& a) { return simdpp::move4_r<S>(a); }
+template<unsigned S, unsigned N> simdpp::float64<N> move_v128_r(const simdpp::float64<N>& a) { return simdpp::move2_r<S>(a); }
 
 // shuffles within 256-bit vectors are limited to 128-bit halves
 template<class V>
@@ -37,95 +37,95 @@ struct Shuffle_width {
 template<class V, unsigned i>
 struct Test_move_r {
     static const unsigned limit = Shuffle_width<V>::value + 1;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
-        a = move_v128_r<i>(a);
-        TEST_PUSH(tc, V, a);
+        V r = move_v128_r<i>(a);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_move_l {
     static const unsigned limit = Shuffle_width<V>::value + 1;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
-        a = move_v128_l<i>(a);
-        TEST_PUSH(tc, V, a);
+        V r = move_v128_l<i>(a);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_splat2 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
-        a = simdpp::splat2<i>(a);
-        TEST_PUSH(tc, V, a);
+        V r = simdpp::splat2<i>(a);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_splat4 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
-        a = simdpp::splat4<i>(a);
-        TEST_PUSH(tc, V, a);
+        V r = simdpp::splat4<i>(a);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_splat8 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
-        a = simdpp::splat8<i>(a);
-        TEST_PUSH(tc, V, a);
+        V r = simdpp::splat8<i>(a);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_splat16 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
-        a = simdpp::splat16<i>(a);
-        TEST_PUSH(tc, V, a);
+        V r = simdpp::splat16<i>(a);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_splat {
     static const unsigned limit = V::length;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
-        a = simdpp::splat<i>(a);
-        TEST_PUSH(tc, V, a);
+        V r = simdpp::splat<i>(a);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_align {
     static const unsigned limit = Shuffle_width<V>::value + 1;
-    static void test(TestSuite& tc, V a, V b)
+    static void test(TestSuite& tc, const V& a, const V& b)
     {
-        a = simdpp::detail::align_v128<i>(a, b);
-        TEST_PUSH(tc, V, a);
+        V r = simdpp::detail::align_v128<i>(a, b);
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V, unsigned i>
 struct Test_insert_extract {
     static const unsigned limit = V::length;
-    static void test(TestSuite& tc, V a, V b)
+    static void test(TestSuite& tc, const V& a, const V& b)
     {
-        a = simdpp::insert<i>(a, simdpp::extract<i>(b));
-        TEST_PUSH(tc, V, a);
+        V r = simdpp::insert<i>(a, simdpp::extract<i>(b));
+        TEST_PUSH(tc, V, r);
     }
 };
 
 template<class V>
-void test_shuffle_type(TestSuite &tc, V v1, V v2)
+void test_shuffle_type(TestSuite &tc, const V& v1, const V& v2)
 {
     TEST_PUSH(tc, V, simdpp::detail::insn::zip128_lo(v1, v2));
     TEST_PUSH(tc, V, simdpp::detail::insn::zip128_hi(v1, v2));

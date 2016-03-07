@@ -338,7 +338,7 @@ float64<N> i_bit_xor(const float64<N>& a, const float64<N>& b)
 // -----------------------------------------------------------------------------
 // mask_float64, mask_float64
 
-SIMDPP_INL mask_float64x2 i_bit_xor(const mask_float64x2& a, mask_float64x2 b)
+SIMDPP_INL mask_float64x2 i_bit_xor(const mask_float64x2& a, const mask_float64x2& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_xor_mm(a, b);

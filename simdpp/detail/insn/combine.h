@@ -95,7 +95,7 @@ uint64<8> i_combine(const uint64<4>& a, const uint64<4>& b)
 
 #if SIMDPP_USE_AVX
 template<class V = void> SIMDPP_INL
-float32<8> i_combine(const float32<4>& a, const float32<4> b)
+float32<8> i_combine(const float32<4>& a, const float32<4>& b)
 {
     float32<8> r;
     r = _mm256_castps128_ps256(a);
@@ -143,7 +143,7 @@ float64<8> i_combine(const float64<4>& a, const float64<4>& b)
 // -----------------------------------------------------------------------------
 // generic implementation
 template<class V, class H> SIMDPP_INL
-V i_combine(H a1, H a2)
+V i_combine(const H& a1, const H& a2)
 {
     V r;
     unsigned h = H::vec_length;

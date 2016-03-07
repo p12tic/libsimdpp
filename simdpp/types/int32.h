@@ -72,7 +72,7 @@ public:
 private:
     /// Creates a signed int32 vector with the contents set to copy of native
     /// register
-    static SIMDPP_INL int32<N> set_vec(int32v a)
+    static SIMDPP_INL int32<N> set_vec(const int32v& a)
     {
         int32<N> r;
         for (auto& v : r.d_) {
@@ -132,7 +132,7 @@ public:
 private:
     /// Creates a unsigned int32 vector with the contents set to copy of native
     /// register
-    static SIMDPP_INL uint32<N> set_vec(uint32v a)
+    static SIMDPP_INL uint32<N> set_vec(const uint32v& a)
     {
         uint32<N> r;
         for (auto& v : r.d_) {
