@@ -20,30 +20,27 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned BE, unsigned N>
 struct Vectors {
 
-    // MSVC does not support alignment as a compile-time constant. Use largest
-    // needed alignment as a literal.
-    SIMDPP_ALIGN(64) uint8_t c[BE*N];
-    SIMDPP_ALIGN(64) uint8_t pu8[BE*N];
-    SIMDPP_ALIGN(64) uint16_t pu16[BE*N/2];
-    SIMDPP_ALIGN(64) uint32_t pu32[BE*N/4];
-    SIMDPP_ALIGN(64) uint64_t pu64[BE*N/8];
-    SIMDPP_ALIGN(64) int8_t pi8[BE*N];
-    SIMDPP_ALIGN(64) int16_t pi16[BE*N/2];
-    SIMDPP_ALIGN(64) int32_t pi32[BE*N/4];
-    SIMDPP_ALIGN(64) int64_t pi64[BE*N/8];
-    SIMDPP_ALIGN(64) float pf32[BE*N/4];
-    SIMDPP_ALIGN(64) double pf64[BE*N / 8];
+    uint8_t* volatile pu8;
+    uint16_t* volatile pu16;
+    uint32_t* volatile pu32;
+    uint64_t* volatile pu64;
+    int8_t* volatile pi8;
+    int16_t* volatile pi16;
+    int32_t* volatile pi32;
+    int64_t* volatile pi64;
+    float* volatile pf32;
+    double* volatile pf64;
 
-    simdpp::uint8<BE> u8[N];
-    simdpp::uint16<BE/2> u16[N];
-    simdpp::uint32<BE/4> u32[N];
-    simdpp::uint64<BE/8> u64[N];
-    simdpp::int8<BE> i8[N];
-    simdpp::int16<BE/2> i16[N];
-    simdpp::int32<BE/4> i32[N];
-    simdpp::int64<BE/8> i64[N];
-    simdpp::float32<BE/4> f32[N];
-    simdpp::float64<BE/8> f64[N];
+    simdpp::uint8<BE>* volatile u8;
+    simdpp::uint16<BE/2>* volatile u16;
+    simdpp::uint32<BE/4>* volatile u32;
+    simdpp::uint64<BE/8>* volatile u64;
+    simdpp::int8<BE>* volatile i8;
+    simdpp::int16<BE/2>* volatile i16;
+    simdpp::int32<BE/4>* volatile i32;
+    simdpp::int64<BE/8>* volatile i64;
+    simdpp::float32<BE/4>* volatile f32;
+    simdpp::float64<BE/8>* volatile f64;
 
     Vectors() { reset(); }
 
@@ -57,26 +54,27 @@ struct Vectors {
 
     void broadcast()
     {
-        std::memcpy(u8, c, sizeof(u8));
-        std::memcpy(u16, c, sizeof(u16));
-        std::memcpy(u32, c, sizeof(u32));
-        std::memcpy(u64, c, sizeof(u64));
-        std::memcpy(i8, c, sizeof(i8));
-        std::memcpy(i16, c, sizeof(i16));
-        std::memcpy(i32, c, sizeof(i32));
-        std::memcpy(i64, c, sizeof(i64));
-        std::memcpy(f32, c, sizeof(f32));
-        std::memcpy(f64, c, sizeof(f64));
-        std::memcpy(pu8, c, sizeof(pu8));
-        std::memcpy(pu16, c, sizeof(pu16));
-        std::memcpy(pu32, c, sizeof(pu32));
-        std::memcpy(pu64, c, sizeof(pu64));
-        std::memcpy(pi8, c, sizeof(pi8));
-        std::memcpy(pi16, c, sizeof(pi16));
-        std::memcpy(pi32, c, sizeof(pi32));
-        std::memcpy(pi64, c, sizeof(pi64));
-        std::memcpy(pf32, c, sizeof(pf32));
-        std::memcpy(pf64, c, sizeof(pf64));
+        pu8 = reinterpret_cast<uint8_t*>(c);
+        pu16 = reinterpret_cast<uint16_t*>(c);
+        pu32 = reinterpret_cast<uint32_t*>(c);
+        pu64 = reinterpret_cast<uint64_t*>(c);
+        pi8 = reinterpret_cast<int8_t*>(c);
+        pi16 = reinterpret_cast<int16_t*>(c);
+        pi32 = reinterpret_cast<int32_t*>(c);
+        pi64 = reinterpret_cast<int64_t*>(c);
+        pf32 = reinterpret_cast<float*>(c);
+        pf64 = reinterpret_cast<double*>(c);
+
+        u8 = reinterpret_cast<simdpp::uint8<BE>*>(c);
+        u16 = reinterpret_cast<simdpp::uint16<BE/2>*>(c);
+        u32 = reinterpret_cast<simdpp::uint32<BE/4>*>(c);
+        u64 = reinterpret_cast<simdpp::uint64<BE/8>*>(c);
+        i8 = reinterpret_cast<simdpp::int8<BE>*>(c);
+        i16 = reinterpret_cast<simdpp::int16<BE/2>*>(c);
+        i32 = reinterpret_cast<simdpp::int32<BE/4>*>(c);
+        i64 = reinterpret_cast<simdpp::int64<BE/8>*>(c);
+        f32 = reinterpret_cast<simdpp::float32<BE/4>*>(c);
+        f64 = reinterpret_cast<simdpp::float64<BE/8>*>(c);
     }
 
     void zero()
@@ -86,6 +84,8 @@ struct Vectors {
         }
         broadcast();
     }
+private:
+    SIMDPP_ALIGN(64) uint8_t c[BE*N];
 };
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -20,10 +20,10 @@ void test_expr_math_float_v(SeqTestSuite& ts)
     using namespace simdpp;
 
     for (unsigned i = 0; i < 4; ++i) {
-        V a = load(v.c+(i*4+0)*B);
-        V b = load(v.c+(i*4+1)*B);
-        V c = load(v.c+(i*4+2)*B);
-        V d = load(v.c+(i*4+3)*B);
+        V a = load(v.pu8+(i*4+0)*B);
+        V b = load(v.pu8+(i*4+1)*B);
+        V c = load(v.pu8+(i*4+2)*B);
+        V d = load(v.pu8+(i*4+3)*B);
 
         // operators
         TEST_CMP_VEC(ts, add(a, b), a + b);
