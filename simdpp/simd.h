@@ -147,7 +147,6 @@
 #include <simdpp/detail/extract128.h>
 #include <simdpp/sse/memory_load.h>
 #include <simdpp/sse/memory_store.h>
-#include <simdpp/sse/shuffle.h>
 
 #include <simdpp/types.h>
 #include <simdpp/types/generic.h>

@@ -20,7 +20,6 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -112,11 +111,11 @@ uint16x8 i_splat8(const uint16x8& a)
     uint64x2 b;
     if (s < 4) {
         const unsigned s2 = s < 4 ? s : s-4;
-        b = sse::permute_lo<s2,s2,s2,s2>(a);
+        b = _mm_shufflelo_epi16(a, _MM_SHUFFLE(s2,s2,s2,s2));
         return (uint16<8>) permute2<0,0>(b);
     } else {
         const unsigned s2 = s < 4 ? s : s-4;
-        b = sse::permute_hi<s2,s2,s2,s2>(a);
+        b = _mm_shufflehi_epi16(a, _MM_SHUFFLE(s2,s2,s2,s2));
         return (uint16<8>) permute2<1,1>(b);
     }
 #elif SIMDPP_USE_NEON

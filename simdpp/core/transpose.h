@@ -19,7 +19,6 @@
 #include <simdpp/detail/insn/transpose.h>
 #include <simdpp/neon/shuffle.h>
 #include <simdpp/detail/null/transpose.h>
-#include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

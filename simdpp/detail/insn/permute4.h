@@ -16,7 +16,6 @@
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/permute_bytes16.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/sse/shuffle.h>
 #include <simdpp/neon/detail/shuffle_int16x8.h>
 #include <simdpp/neon/detail/shuffle_int32x4.h>
 #include <simdpp/neon/detail/shuffle_int64x2.h>
@@ -42,8 +41,8 @@ uint16x8 i_permute4(const uint16x8& a)
     return detail::null::permute<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_SSE2
     uint16<8> b = a;
-    b = sse::permute_lo<s0,s1,s2,s3>(b);
-    b = sse::permute_hi<s0,s1,s2,s3>(b);
+    b = _mm_shufflelo_epi16(b, _MM_SHUFFLE(s3, s2, s1, s0));
+    b = _mm_shufflehi_epi16(b, _MM_SHUFFLE(s3, s2, s1, s0));
     return b;
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int16x8::permute4<s0,s1,s2,s3>(a);
@@ -60,8 +59,8 @@ uint16x16 i_permute4(const uint16x16& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     uint16<16> b = a;
-    b = sse::permute_lo<s0,s1,s2,s3>(b);
-    b = sse::permute_hi<s0,s1,s2,s3>(b);
+    b = _mm256_shufflelo_epi16(b, _MM_SHUFFLE(s3, s2, s1, s0));
+    b = _mm256_shufflehi_epi16(b, _MM_SHUFFLE(s3, s2, s1, s0));
     return b;
 }
 #endif
