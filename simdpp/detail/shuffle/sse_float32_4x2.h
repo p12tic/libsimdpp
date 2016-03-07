@@ -152,24 +152,20 @@ template<> struct shuffle_impl<5> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        return _mm_blend_ps(a, b, mask);
+        return _mm_blend_ps(a, b, SIMDPP_SHUFFLE_MASK_4x2(s0/4, s1/4, s2/4, s3/4));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        return _mm256_blend_ps(a, b, mask | mask << 4);
+        return _mm256_blend_ps(a, b, SIMDPP_SHUFFLE_MASK_4x2_2(s0/4, s1/4, s2/4, s3/4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        const unsigned mask2 = mask | mask << 4 | mask << 8 | mask << 12;
-        return _mm512_mask_blend_ps(mask2, a, b);
+        return _mm512_mask_blend_ps(SIMDPP_SHUFFLE_MASK_4x2_4(s0/4, s1/4, s2/4, s3/4), a, b);
     }
 #endif
 };
