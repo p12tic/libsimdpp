@@ -13,34 +13,6 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned i>
-struct Test_permute2 {
-    static const unsigned limit = 4;
-    static void test(TestSuite& tc, V a)
-    {
-        const unsigned s0 = i / 2 % 2;
-        const unsigned s1 = i % 2;
-
-        a = simdpp::permute2<s0,s1>(a);
-        TEST_PUSH(tc, V, a);
-    }
-};
-
-template<class V, unsigned i>
-struct Test_permute4 {
-    static const unsigned limit = 256;
-    static void test(TestSuite& tc, V a)
-    {
-        const unsigned s0 = i / 64 % 4;
-        const unsigned s1 = i / 16 % 4;
-        const unsigned s2 = i / 4 % 4;
-        const unsigned s3 = i % 4;
-
-        a = simdpp::permute4<s0,s1,s2,s3>(a);
-        TEST_PUSH(tc, V, a);
-    }
-};
-
-template<class V, unsigned i>
 struct Test_shuffle21 {
     static const unsigned limit = 4;
     static void test(TestSuite& tc, V a, V b)
