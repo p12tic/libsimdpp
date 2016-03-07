@@ -65,7 +65,7 @@ mask_int8<N,expr_empty> cmp_gt(const uint8<N,E1>& a,
     return detail::insn::i_cmp_gt(a.eval(), b.eval());
 }
 
-SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_gt, mask_int16, uint8)
+SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_gt, mask_int8, uint8)
 
 /** Compares the values of two signed int16x8 vectors for greater-than
 
