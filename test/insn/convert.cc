@@ -20,15 +20,15 @@ void test_convert_n(TestSuite& ts)
     using  int8_n = int8<B>;
     using uint16_n = uint16<B/2>;
     using  int16_n = int16<B/2>;
-    //using uint16_2n = uint16<B>;
+    using uint16_2n = uint16<B>;
     using  int16_2n = int16<B>;
     using uint32_n = uint32<B/4>;
     using  int32_n = int32<B/4>;
-    //using uint32_2n = uint32<B/2>;
+    using uint32_2n = uint32<B/2>;
     using  int32_2n = int32<B/2>;
     //using uint64_n = uint64<B/8>;
     //using  int64_n = int64<B/8>;
-    //using uint64_2n = uint64<B/4>;
+    using uint64_2n = uint64<B/4>;
     using  int64_2n = int64<B/4>;
     using float32_n =  float32<B/4>;
     //using float32_2n = float32<B/2>;
@@ -42,7 +42,7 @@ void test_convert_n(TestSuite& ts)
         make_uint(0xcc, 0xdd, 0xee, 0xff)
     );
     TEST_ARRAY_HELPER1_T(ts, int16_2n,  int8_n, to_int16, s);
-    TEST_ARRAY_HELPER1_T(ts, int16_2n, uint8_n, to_int16, s);
+    TEST_ARRAY_HELPER1_T(ts, uint16_2n, uint8_n, to_uint16, s);
     }
 
     //int16
@@ -52,7 +52,7 @@ void test_convert_n(TestSuite& ts)
         make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff)
     );
     TEST_ARRAY_HELPER1_T(ts, int32_2n,  int16_n, to_int32, s);
-    TEST_ARRAY_HELPER1_T(ts, int32_2n, uint16_n, to_int32, s);
+    TEST_ARRAY_HELPER1_T(ts, uint32_2n, uint16_n, to_uint32, s);
     }
 
     //int32
@@ -64,7 +64,7 @@ void test_convert_n(TestSuite& ts)
         make_uint(0xdddddddd, 0xffffffff)
     );
     TEST_ARRAY_HELPER1_T(ts, int64_2n,  int32_n, to_int64, s);
-    TEST_ARRAY_HELPER1_T(ts, int64_2n, uint32_n, to_int64, s);
+    TEST_ARRAY_HELPER1_T(ts, uint64_2n, uint32_n, to_uint64, s);
 
     TestData<int32_n> sf(
         make_uint(1, 100),

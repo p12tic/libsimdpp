@@ -285,8 +285,8 @@ uint64<8> expr_eval(const expr_mull<uint32<8,E1>,
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm256_mul_epu32(to_int64(al).eval(), to_int64(bl).eval());
-    rh = _mm256_mul_epu32(to_int64(ah).eval(), to_int64(bh).eval());
+    rl = _mm256_mul_epu32(to_uint64(al).eval(), to_uint64(bl).eval());
+    rh = _mm256_mul_epu32(to_uint64(ah).eval(), to_uint64(bh).eval());
 
     return combine(rl, rh);
 }
