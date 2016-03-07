@@ -16,10 +16,21 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V>
 void test_bitwise_type(TestSuite& tc, const V& a, const V& b)
 {
+    using namespace simdpp;
+
     TEST_PUSH(tc, V, bit_and(a, b));
     TEST_PUSH(tc, V, bit_andnot(a, b));
     TEST_PUSH(tc, V, bit_or(a, b));
     TEST_PUSH(tc, V, bit_xor(a, b));
+
+    TestData<V> sl(
+        make_uint(0),
+        make_uint(0, 0, 0, 1),
+        make_uint(0, 0, 1, 0),
+        make_uint(0, 1, 0, 0),
+        make_uint(1, 0, 0, 0)
+    );
+    TEST_ARRAY_HELPER1_T(tc, bool, V, test_bits_any, sl);
 }
 
 template<unsigned B>

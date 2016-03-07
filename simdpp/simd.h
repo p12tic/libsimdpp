@@ -115,6 +115,7 @@
 #include <simdpp/core/store_packed3.h>
 #include <simdpp/core/store_packed4.h>
 #include <simdpp/core/stream.h>
+#include <simdpp/core/test_bits.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_float64.h>
 #include <simdpp/core/to_int16.h>
