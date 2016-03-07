@@ -145,7 +145,6 @@
 
 #include <simdpp/sse/convert.h>
 #include <simdpp/detail/extract128.h>
-#include <simdpp/sse/math_int.h>
 #include <simdpp/sse/memory_load.h>
 #include <simdpp/sse/memory_store.h>
 #include <simdpp/sse/shuffle.h>
