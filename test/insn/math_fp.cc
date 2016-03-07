@@ -43,10 +43,32 @@ void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
 
         TEST_ALL_COMB_HELPER2(tc, float32_n, add, s, 4);
         TEST_ALL_COMB_HELPER2(tc, float32_n, sub, s, 4);
+
+#if __PPC__
+        if (opts.is_simulator) {
+            // QEMU does not multiply or divide special values well
+            TestData<float32_n> s2(
+                make_float(1.0f, 2.0f, 3.0f, 4.0f),
+                make_float(-1.0f, -2.0f, -3.0f, -4.0f),
+                make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
+                make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f)
+            );
+            TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s2, 4);
+            tc.set_precision(1);
+            TEST_ALL_COMB_HELPER2(tc, float32_n, div, s2, 4);
+            tc.unset_precision();
+        } else {
+            TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s, 4);
+            tc.set_precision(1);
+            TEST_ALL_COMB_HELPER2(tc, float32_n, div, s, 4);
+            tc.unset_precision();
+        }
+#else
         TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s, 4);
         tc.set_precision(1);
         TEST_ALL_COMB_HELPER2(tc, float32_n, div, s, 4);
         tc.unset_precision();
+#endif
 
         TEST_ARRAY_HELPER1(tc, float32_n, abs, s);
         TEST_ARRAY_HELPER1(tc, float32_n, sign, s);

@@ -302,9 +302,8 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     a = bit_and(a, mask);
     uint32x4 s = vec_sum4s((__vector uint8_t)a,
                            (__vector uint32_t)uint32x4::zero());
-    uint32x4 s2 = (__vector uint32_t)vec_mergel((__vector uint8_t)a,
-                                                (__vector uint8_t)uint8x16::zero());
-    s = bit_or(s, s2);
+    uint32x4 shifts = make_uint(0, 0, 8, 8);
+    s = (__vector uint32_t) vec_sl((__vector uint32_t)s, (__vector uint32_t) shifts);
     s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
                           (__vector int32_t)int32x4::zero());
     return extract<7>(uint16x8(s));

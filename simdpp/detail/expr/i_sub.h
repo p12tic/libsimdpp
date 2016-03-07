@@ -167,7 +167,7 @@ uint64<2> expr_eval(const expr_sub<uint64<2,E1>,
     carry = vec_subc((__vector uint32_t) a32, (__vector uint32_t) b32);
     carry = move4_l<1>(carry);
     r = vec_sub((__vector uint32_t)a32, (__vector uint32_t)b32);
-    carry = (uint32x4) bit_and((uint64x2)carry, 0x0000000100000000);
+    carry = (uint32x4) bit_andnot(0x0000000100000000, (uint64x2)carry);
     r = vec_sub((__vector uint32_t)r, (__vector uint32_t)carry);
     return (uint64<2>) r;
 #endif

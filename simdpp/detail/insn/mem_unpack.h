@@ -89,7 +89,7 @@ void v_mem_unpack3_impl8_128(T& a, T& b, T& c)
     // [b5, c5, a6, b6, c6, a7, b7, c7, a8, b8, c8, a9, b9, c9, a10,b10]
     // [c10,a11,b11,c11,a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15]
     T mask1 = make_shuffle_bytes16_mask<   1,    4,    7, 10, 13,16+0,16+3,16+6,
-                                        16+9,16+12,16+15,  3,  6,   9,  12,  15>(mask1);
+                                        16+9,16+12,16+15,  2,  5,   8,  11,  14>(mask1);
     T a1, b1, c1;
     a1 = shuffle_bytes16(c, a, mask1);
     b1 = shuffle_bytes16(a, b, mask1);
