@@ -127,20 +127,6 @@ void store_lane(void* p, const float64x2& a)
 }
 /// @}
 
-/** Stores bytes in an 128-bit integer vector according to a mask. The highest
-    bit in the corresponding byte in the mask defines whether the byte will
-    be saved. @a p does not need to be aligned to 16 bytes.
-*/
-SIMDPP_INL void store_masked(void* p, const uint8x16& a, const uint8x16& mask)
-{
-    _mm_maskmoveu_si128(a, mask, reinterpret_cast<char*>(p));
-}
-
-SIMDPP_INL void store_masked(void* p, const uint16x8& a, const uint16x8& mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
-SIMDPP_INL void store_masked(void* p, const uint32x4& a, const uint32x4& mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
-SIMDPP_INL void store_masked(void* p, const uint64x2& a, const uint64x2& mask) { store_masked(p, uint8x16(a), uint8x16(mask)); }
-
-
 } // namespace sse
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -13,9 +13,38 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+template<class V>
+void test_store_masked(TestSuite& tc, const V* sv)
+{
+    using namespace simdpp;
+    SIMDPP_ALIGN(16) V rv[1];
+
+    tc.reset_seq();
+    TestData<V> mask_data(
+        make_int(0, 0, 0, 0),
+        make_int(1, 0, 0, 0),
+        make_int(0, 1, 0, 0),
+        make_int(0, 0, 1, 0),
+        make_int(0, 0, 0, 1)
+    );
+
+    for (unsigned j = 0; j < mask_data.size(); ++j) {
+        typename V::mask_vector_type mask;
+        mask = bit_not(cmp_eq(mask_data.data()[j], 0));
+
+        std::memset(rv, 0, sizeof(V));
+
+        store_masked(rv, sv[0], mask);
+        TEST_PUSH(tc, V, rv[0]);
+    }
+
+}
+
 template<class V, unsigned vnum>
 void test_store_helper(TestSuite& tc, const V* sv)
 {
+    using namespace simdpp;
+
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack
     SIMDPP_ALIGN(16) V rv[vnum];
@@ -79,6 +108,11 @@ void test_memory_store_n(TestSuite& tc)
     test_store_helper<uint64<B/8>, vnum>(tc, v.u64);
     test_store_helper<float32<B/4>, vnum>(tc, v.f32);
     test_store_helper<float64<B/8>, vnum>(tc, v.f64);
+
+    test_store_masked<uint32<B/4>>(tc, v.u32);
+    test_store_masked<uint64<B/8>>(tc, v.u64);
+    test_store_masked<float32<B/4>>(tc, v.f32);
+    test_store_masked<float64<B/8>>(tc, v.f64);
 }
 
 void test_memory_store(TestResults& res)

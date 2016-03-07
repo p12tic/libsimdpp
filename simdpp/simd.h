@@ -111,6 +111,7 @@
 #include <simdpp/core/store_first.h>
 #include <simdpp/core/store.h>
 #include <simdpp/core/store_last.h>
+#include <simdpp/core/store_masked.h>
 #include <simdpp/core/store_packed2.h>
 #include <simdpp/core/store_packed3.h>
 #include <simdpp/core/store_packed4.h>
