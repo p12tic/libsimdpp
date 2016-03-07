@@ -277,9 +277,9 @@ uint32<8> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_shuffle_epi32(a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm512_shuffle_epi32(a, _MM_PERM_ENUM(_MM_SHUFFLE(s1+2,s0+2,s1,s0)));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_shuffle_epi32(b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm512_shuffle_epi32(b, _MM_PERM_ENUM(_MM_SHUFFLE(s1,s0,s1-2,s0-2)));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_epi32(0xaaaa, a, b);
     } else if (s0 == 2 && s1 == 1) {
