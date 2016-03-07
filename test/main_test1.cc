@@ -93,6 +93,9 @@ int main(int argc, char* argv[])
     else
         current_arch = get_arch_from_system(is_simulator);
 
+    TestOptions options;
+    options.is_simulator = is_simulator;
+
     std::ostream& err = std::cerr;
     const auto& arch_list = get_test_archs();
     auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
@@ -109,7 +112,7 @@ int main(int argc, char* argv[])
     set_round_to_nearest();
 
     TestResults null_results(null_arch->arch_name);
-    reinterpret_cast<void(*)(TestResults&)>(null_arch->fun_ptr)(null_results);
+    reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(null_arch->fun_ptr)(null_results, options);
 
     std::cout << "Num results: " << null_results.num_results() << '\n';
 
@@ -127,7 +130,7 @@ int main(int argc, char* argv[])
         std::cout << "Testing: " << it->arch_name << std::endl;
 
         TestResults results(it->arch_name);
-        reinterpret_cast<void(*)(TestResults&)>(it->fun_ptr)(results);
+        reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(it->fun_ptr)(results, options);
 
         if (!test_equal(null_results, results, err)) {
             ok = false;

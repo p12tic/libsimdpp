@@ -13,8 +13,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 template<unsigned B>
-void test_math_fp_n(TestSuite& tc)
+void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
 {
+    (void) opts;
+
     // TODO sqrt_e sqrt_rh rcp_e rcp_rh
     using namespace simdpp;
 
@@ -116,13 +118,6 @@ void test_math_fp_n(TestSuite& tc)
         TEST_ARRAY_HELPER1(tc, float64_n, ceil, s);
         tc.unset_fp_zero_equal();
 
-        tc.sync_archs();
-#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
-        TEST_ALL_COMB_HELPER3(tc, float64_n, fmadd, s, 8);
-        TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, s, 8);
-#endif
-        tc.sync_archs();
-
         float64_n snan[] = {
             (float64_n) make_float(1.0, 2.0),
             (float64_n) make_float(3.0, 4.0),
@@ -138,6 +133,31 @@ void test_math_fp_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER2(tc, float64_n, min, snan, 8);
         TEST_ALL_COMB_HELPER2(tc, float64_n, max, snan, 8);
 
+        tc.sync_archs();
+#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
+        // Certain simulators can't handle NaNs and infinity in this instruction
+        if (opts.is_simulator) {
+
+            float64_n snan[] = {
+                (float64_n) make_float(1.0, 2.0),
+                (float64_n) make_float(3.0, 4.0),
+                (float64_n) make_float(-1.0, -2.0),
+                (float64_n) make_float(-3.0, -4.0),
+                (float64_n) make_float(63100000000000000.0, 63100000000000004.0),
+                (float64_n) make_float(63100000000000008.0, 63100000000000012.0),
+                (float64_n) make_float(-63100000000000000.0, -63100000000000004.0),
+                (float64_n) make_float(-63100000000000008.0, -63100000000000012.0),
+            };
+
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmadd, snan, 8);
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, snan, 8);
+        } else {
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmadd, s, 8);
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, s, 8);
+        }
+#endif
+        tc.sync_archs();
+
         // Depending on the reduction order precision errors may occur.
         tc.set_precision(2);
         TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_add, s, 1);
@@ -148,12 +168,12 @@ void test_math_fp_n(TestSuite& tc)
     }
 }
 
-void test_math_fp(TestResults& res)
+void test_math_fp(TestResults& res, const TestOptions& opts)
 {
     TestSuite& ts = NEW_TEST_SUITE(res, "math_fp");
-    test_math_fp_n<16>(ts);
-    test_math_fp_n<32>(ts);
-    test_math_fp_n<64>(ts);
+    test_math_fp_n<16>(ts, opts);
+    test_math_fp_n<32>(ts, opts);
+    test_math_fp_n<64>(ts, opts);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
