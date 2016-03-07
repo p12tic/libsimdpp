@@ -33,7 +33,6 @@ The library supports the following architectures and instruction sets:
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
 XOP
  - ARM, ARM64: NEON
-
  - PowerPC: Altivec
 
 The primary development of the library happens in C++11. A C++98-compatible
@@ -54,6 +53,10 @@ version of the library is provided on the
 
 Clang 3.3 is not supported on ARM. MSVC and ICC are only supported on x86 and
 x86-64.
+
+Newer versions of the aforementioned compilers will generally work with either
+C++11 or C++98 version of the library. Older versions of these compilers will
+generally work with the C++98 version of the library.
 
 Documentation
 -------------
