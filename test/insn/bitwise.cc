@@ -13,6 +13,15 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+template<class V>
+void test_bitwise_type(TestSuite& tc, V a, V b)
+{
+    TEST_PUSH(tc, V, bit_and(a, b));
+    TEST_PUSH(tc, V, bit_andnot(a, b));
+    TEST_PUSH(tc, V, bit_or(a, b));
+    TEST_PUSH(tc, V, bit_xor(a, b));
+}
+
 template<unsigned B>
 void test_bitwise_n(TestSuite& tc)
 {
@@ -25,32 +34,15 @@ void test_bitwise_n(TestSuite& tc)
     using float32_n = float32<B/4>;
     using float64_n = float64<B/8>;
 
-    uint64_n a11 = make_uint(0x0f0ff0f0ffff0000, 0x0f0ff0f0ffff0000);
-    uint64_n a12 = make_uint(0xffffffffffffffff, 0x0000000000000000);
+    uint64_n a = make_uint(0x0f0ff0f0ffff0000, 0x0f0ff0f0ffff0000);
+    uint64_n b = make_uint(0xffffffffffffffff, 0x0000000000000000);
 
-    float64_n b11, b12;
-    b11 = a11;  b12 = a12;
-
-    float32_n c11, c12;
-    c11 = a11;  c12 = a12;
-
-    TEST_PUSH(tc, uint64_n,  bit_and(a11, a12));
-    TEST_PUSH(tc, float64_n, bit_and(b11, b12));
-    TEST_PUSH(tc, float32_n, bit_and(c11, c12));
-
-    TEST_PUSH(tc, uint64_n,  bit_andnot(a11, a12));
-    TEST_PUSH(tc, float64_n, bit_andnot(b11, b12));
-    TEST_PUSH(tc, float32_n, bit_andnot(c11, c12));
-
-    TEST_PUSH(tc, uint64_n,  bit_or(a11, a12));
-    TEST_PUSH(tc, float64_n, bit_or(b11, b12));
-    TEST_PUSH(tc, float32_n, bit_or(c11, c12));
-
-    TEST_PUSH(tc, uint64_n,  bit_xor(a11, a12));
-    TEST_PUSH(tc, float64_n, bit_xor(b11, b12));
-    TEST_PUSH(tc, float32_n, bit_xor(c11, c12));
-
-    TEST_PUSH(tc, uint64_n,  bit_not(a11));
+    test_bitwise_type<uint8_n>(tc, (uint8_n)a, (uint8_n)b);
+    test_bitwise_type<uint16_n>(tc, (uint16_n)a, (uint16_n)b);
+    test_bitwise_type<uint32_n>(tc, (uint32_n)a, (uint32_n)b);
+    test_bitwise_type<uint64_n>(tc, (uint64_n)a, (uint64_n)b);
+    test_bitwise_type<float32_n>(tc, (float32_n)a, (float32_n)b);
+    test_bitwise_type<float64_n>(tc, (float64_n)a, (float64_n)b);
     tc.reset_seq();
 
     // masks
