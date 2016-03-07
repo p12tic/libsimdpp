@@ -149,9 +149,9 @@ SIMDPP_INL void i_store_packed3(char* p,
                                 const uint64x2& a, const uint64x2& b, const uint64x2& c)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     v128_store_pack3(p, a, b, c);
 #elif SIMDPP_USE_NEON32
     uint64_t* q = reinterpret_cast<uint64_t*>(p);

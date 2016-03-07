@@ -130,7 +130,7 @@ uint32<N> i_move4_l(const uint32<N>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<2> i_move2_l(const uint64<2>& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::move_n_l<shift>(a);
 #else
     return (uint64<2>) i_move16_l<shift*8>(uint8<16>(a));

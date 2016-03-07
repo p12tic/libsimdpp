@@ -214,7 +214,7 @@ template<unsigned s> SIMDPP_INL
 uint64x2 i_splat2(const uint64x2& a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
@@ -230,9 +230,6 @@ uint64x2 i_splat2(const uint64x2& a)
         z = vget_high_u64(a);
     }
     return (uint64x2_t) vdupq_lane_u64(z, 0);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 mask = make_shuffle_bytes16_mask<s, s>(mask);
-    return permute_bytes16(a, mask);
 #endif
 }
 

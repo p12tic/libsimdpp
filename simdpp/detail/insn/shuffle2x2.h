@@ -308,7 +308,7 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64<2> r;
     r.el(0) = s0 < 2 ? a.el(s0) : b.el(s0-2);
     r.el(1) = s1 < 2 ? a.el(s1) : b.el(s1-2);
@@ -347,9 +347,6 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
     }
 #elif SIMDPP_USE_NEON
     return neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    uint64<2> mask = make_shuffle_bytes16_mask<s0, s1>(mask);
-    return shuffle_bytes16(a, b, mask);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif

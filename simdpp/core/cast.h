@@ -29,7 +29,7 @@ struct cast_mask_override<mask_float32<N>, mask_int32<N>> { static const unsigne
 template<unsigned N>
 struct cast_mask_override<mask_int32<N>, mask_float32<N>> { static const unsigned value = CAST_MASK_REMASK; };
 #endif
-#if SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NEON
 template<unsigned N>
 struct cast_mask_override<mask_int64<N>, mask_float64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
 template<unsigned N>
@@ -45,8 +45,8 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigne
     Conversions between vector and non-vector types are not allowed.
 
     Conversion from non-mask type to mask type is not allowed.
- 
-    Conversion from mask type to a non-mask type is not a costless operation 
+
+    Conversion from mask type to a non-mask type is not a costless operation
     because masks may have different logical and physical layout (e.g., in
     some implementations one bit represents entire element in a vector).
 

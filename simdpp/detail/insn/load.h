@@ -44,7 +44,17 @@ SIMDPP_INL void i_load(uint8x16& a, const char* p)
 
 SIMDPP_INL void i_load(uint16x8& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
 SIMDPP_INL void i_load(uint32x4& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
-SIMDPP_INL void i_load(uint64x2& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
+
+SIMDPP_INL void i_load(uint64x2& a, const char* p)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    const uint64_t* q = reinterpret_cast<const uint64_t*>(p);
+    q = detail::assume_aligned(q, 16);
+    detail::null::load(a, q);
+#else
+    uint8x16 r; i_load(r, p); a = r;
+#endif
+}
 
 SIMDPP_INL void i_load(float32x4& a, const char* p)
 {

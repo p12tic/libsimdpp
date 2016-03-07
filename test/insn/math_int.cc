@@ -162,9 +162,9 @@ void test_math_int_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER2(tc, uint32_n, avg, s, 4);
         TEST_ALL_COMB_HELPER2(tc, uint32_n, avg_trunc, s, 4);
 
+        TEST_ALL_COMB_HELPER2_T(tc, uint64<B/4>, uint32_n, mull, s, 4);
         tc.sync_archs();
 #if !(SIMDPP_USE_ALTIVEC)
-        TEST_ALL_COMB_HELPER2_T(tc, uint64<B/4>, uint32_n, mull, s, 4);
         TEST_ALL_COMB_HELPER2_T(tc, uint32_n, uint32_n, mul_lo, s, 4);
 #endif
         tc.sync_archs();
@@ -214,7 +214,7 @@ void test_math_int_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER2(tc, uint64_n, sub, s, 2);
 
         tc.sync_archs();
-#if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_ALTIVEC
         TEST_ALL_COMB_HELPER2(tc, int64_n, min, s, 4);
         TEST_ALL_COMB_HELPER2(tc, int64_n, max, s, 4);
         TEST_ALL_COMB_HELPER2(tc, uint64_n, min, s, 4);
@@ -232,7 +232,7 @@ void test_math_int_n(TestSuite& tc)
         TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_and, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_and, s, 1);
         tc.sync_archs();
-#if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_ALTIVEC
         TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_min, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, int64_t, int64_n, reduce_min, s, 1);
         TEST_ALL_COMB_HELPER1_T(tc, uint64_t, uint64_n, reduce_max, s, 1);

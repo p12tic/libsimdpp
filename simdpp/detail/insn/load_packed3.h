@@ -139,9 +139,9 @@ void i_load_packed3(uint32<N>& a, uint32<N>& b, uint32<N>& c, const char* p)
 SIMDPP_INL void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON64
     auto r = vld3q_u64(reinterpret_cast<const uint64_t*>(p));

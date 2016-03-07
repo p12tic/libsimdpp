@@ -139,7 +139,7 @@ void i_store_first(char* p, const uint32<N>& a, unsigned n)
 SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
@@ -148,11 +148,6 @@ SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
 #elif SIMDPP_USE_NEON
     if (n == 1) {
         neon::store_lane<0,1>(p, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    if (n == 1) {
-        vec_ste((__vector uint32_t)(__vector uint64_t)a, 0, reinterpret_cast<uint32_t*>(p));
-        vec_ste((__vector uint32_t)(__vector uint64_t)a, 4, reinterpret_cast<uint32_t*>(p));
     }
 #endif
 }

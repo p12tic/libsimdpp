@@ -160,7 +160,7 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
 
 SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<uint64x2>(v0);
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS
@@ -174,11 +174,6 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #endif
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u64(v0);
-#elif SIMDPP_USE_ALTIVEC
-    SIMDPP_ALIGN(16) uint64_t rv[2];
-    rv[0] = v0;
-    v = load(rv);
-    v = splat<0>(v);
 #endif
 }
 

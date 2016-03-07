@@ -155,21 +155,12 @@ uint64<2> expr_eval(const expr_sub<uint64<2,E1>,
 {
     uint64<2> a = q.a.eval();
     uint64<2> b = q.b.eval();
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_sub_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u64(a, b);
-#else
-    uint32<4> r, carry, a32, b32;
-    a32 = a, b32 = b;
-    carry = vec_subc((__vector uint32_t) a32, (__vector uint32_t) b32);
-    carry = move4_l<1>(carry);
-    r = vec_sub((__vector uint32_t)a32, (__vector uint32_t)b32);
-    carry = (uint32x4) bit_andnot(0x0000000100000000, (uint64x2)carry);
-    r = vec_sub((__vector uint32_t)r, (__vector uint32_t)carry);
-    return (uint64<2>) r;
 #endif
 }
 

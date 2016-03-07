@@ -161,7 +161,7 @@ uint32<N> i_align4(const uint32<N>& lower, const uint32<N>& upper)
 template<unsigned shift> SIMDPP_INL
 uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64x2 r;
     //use int to disable warnings wrt. comparison result always being true/false
     for (int i = 0; i < (int)(2-shift); i++) {
@@ -185,9 +185,6 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
     if (shift == 2)
         return upper;
     return vextq_u64(lower, upper, shift % 2);
-#elif SIMDPP_USE_ALTIVEC
-    return (__vector uint64_t) vec_sld((__vector uint8_t)(uint8x16)lower,
-                                       (__vector uint8_t)(uint8x16)upper, (unsigned)shift*8);
 #endif
 }
 

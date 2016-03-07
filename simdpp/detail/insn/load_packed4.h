@@ -149,7 +149,7 @@ void i_load_packed4(uint32<N>& a, uint32<N>& b, uint32<N>& c, uint32<N>& d,
 SIMDPP_INL void i_load_packed4(uint64x2& a, uint64x2& b,
                                uint64x2& c, uint64x2& d, const char* p)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_NEON64
     auto r = vld4q_u64(reinterpret_cast<const uint64_t*>(p));

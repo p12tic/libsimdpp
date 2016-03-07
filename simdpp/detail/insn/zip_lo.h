@@ -117,15 +117,12 @@ uint32<N> i_zip4_lo(const uint32<N>& a, const uint32<N>& b)
 
 SIMDPP_INL uint64x2 i_zip2_lo(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::zip2_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return neon::zip2_lo(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 mask = make_shuffle_bytes16_mask<0, 2>(mask);
-    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
