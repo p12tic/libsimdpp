@@ -21,7 +21,6 @@
 #include <simdpp/neon/memory_store.h>
 #include <simdpp/detail/null/memory.h>
 #include <simdpp/detail/extract128.h>
-#include <simdpp/sse/memory_store.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -143,7 +142,7 @@ SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
     detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
-        sse::store_lane<0,1>(p, a);
+        _mm_store_sd(reinterpret_cast<double*>(p), _mm_castsi128_pd(a));
     }
 #elif SIMDPP_USE_NEON
     if (n == 1) {
@@ -246,7 +245,7 @@ SIMDPP_INL void i_store_first(char* p, const float64x2& a, unsigned n)
     detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
-        sse::store_lane<0,1>(p, a);
+        _mm_store_sd(reinterpret_cast<double*>(p), a);
     }
 #elif SIMDPP_USE_NEON64
     if (n == 1) {
