@@ -114,7 +114,7 @@ public:
 #if SIMDPP_USE_SSE2
     typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
-    using uint64x2_t native_type;
+    typedef uint64x2_t native_type;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     typedef detail::array<uint64_t, 2> native_type;
 #endif

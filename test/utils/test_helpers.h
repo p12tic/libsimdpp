@@ -52,10 +52,139 @@ template<class T>
 class TestData {
 public:
 
-    template<class... UArgs>
-    TestData(const UArgs&... args)
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8, class U9, class U10,
+             class U11, class U12, class U13, class U14, class U15>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
+             const U11& u11, const U12& u12, const U13& u13, const U14& u14, const U15& u15)
     {
-        add(args...);
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8); add(u9); add(u10);
+        add(u11); add(u12); add(u13); add(u14); add(u15);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8, class U9, class U10,
+             class U11, class U12, class U13, class U14>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
+             const U11& u11, const U12& u12, const U13& u13, const U14& u14)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8); add(u9); add(u10);
+        add(u11); add(u12); add(u13); add(u14);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8, class U9, class U10,
+             class U11, class U12, class U13>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
+             const U11& u11, const U12& u12, const U13& u13)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8); add(u9); add(u10);
+        add(u11); add(u12); add(u13);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8, class U9, class U10,
+             class U11, class U12>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
+             const U11& u11, const U12& u12)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8); add(u9); add(u10);
+        add(u11); add(u12);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8, class U9, class U10,
+             class U11>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
+             const U11& u11)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8); add(u9); add(u10);
+        add(u11);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8, class U9, class U10>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8); add(u9); add(u10);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8, class U9>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8, const U9& u9)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8); add(u9);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7, class U8>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7, const U8& u8)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7); add(u8);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6, class U7>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6, const U7& u7)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6); add(u7);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5,
+             class U6>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
+             const U6& u6)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+        add(u6);
+    }
+
+    template<class U1, class U2, class U3, class U4, class U5>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5)
+    {
+        add(u1); add(u2); add(u3); add(u4); add(u5);
+    }
+
+    template<class U1, class U2, class U3, class U4>
+    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4)
+    {
+        add(u1); add(u2); add(u3); add(u4);
+    }
+
+    template<class U1, class U2, class U3>
+    TestData(const U1& u1, const U2& u2, const U3& u3)
+    {
+        add(u1); add(u2); add(u3);
+    }
+
+    template<class U1, class U2>
+    TestData(const U1& u1, const U2& u2)
+    {
+        add(u1); add(u2);
+    }
+
+    template<class U1>
+    TestData(const U1& u1)
+    {
+        add(u1);
     }
 
     template<class U>
@@ -66,18 +195,11 @@ public:
         ptr_ = &data_.front();
     }
 
-    template<class U, class... UArgs>
-    void add(const U& u, const UArgs&... args)
-    {
-        add(u);
-        add(args...);
-    }
-
     unsigned size() const { return data_.size(); }
     const T* data() const { return ptr_; }
 
 private:
-    std::vector<T, simdpp::aligned_allocator<T, sizeof(T)>> data_;
+    std::vector<T, simdpp::aligned_allocator<T, sizeof(T)> > data_;
     T* volatile ptr_;
 };
 

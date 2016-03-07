@@ -31,7 +31,7 @@ bool e_test_bits_any(const any_vec<N,V>& a)
 #if SIMDPP_USE_SSE4_1
 template<unsigned N, template<unsigned, typename> class V,
          class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const any_vec<16, V<N, expr_bit_and<V1,V2>>>& e)
+bool e_test_bits_any(const any_vec<16, V<N, expr_bit_and<V1,V2> > >& e)
 {
     uint8<16> a, b;
     a = e.e.a.eval();
@@ -41,7 +41,7 @@ bool e_test_bits_any(const any_vec<16, V<N, expr_bit_and<V1,V2>>>& e)
 
 template<unsigned N, template<unsigned, typename> class V,
          class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const any_vec<16, V<N, expr_bit_andnot<V1,V2>>>& e)
+bool e_test_bits_any(const any_vec<16, V<N, expr_bit_andnot<V1,V2> > >& e)
 {
     uint8<16> a, b;
     a = e.e.a.eval();
@@ -53,7 +53,7 @@ bool e_test_bits_any(const any_vec<16, V<N, expr_bit_andnot<V1,V2>>>& e)
 #if SIMDPP_USE_AVX2
 template<unsigned N, template<unsigned, typename> class V,
          class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const any_vec<32, V<N, expr_bit_and<V1,V2>>>& e)
+bool e_test_bits_any(const any_vec<32, V<N, expr_bit_and<V1,V2> > >& e)
 {
     uint8<32> a, b;
     a = e.e.a.eval();
@@ -63,7 +63,7 @@ bool e_test_bits_any(const any_vec<32, V<N, expr_bit_and<V1,V2>>>& e)
 
 template<unsigned N, template<unsigned, typename> class V,
          class V1, class V2>
-bool e_test_bits_any(const any_vec<32, V<N, expr_bit_andnot<V1,V2>>>& e)
+bool e_test_bits_any(const any_vec<32, V<N, expr_bit_andnot<V1,V2> > >& e)
 {
     uint8<32> a, b;
     a = e.e.a.eval();
@@ -74,7 +74,7 @@ bool e_test_bits_any(const any_vec<32, V<N, expr_bit_andnot<V1,V2>>>& e)
 
 #if SIMDPP_USE_AVX512F
 template<class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const uint32<16, expr_bit_and<V1,V2>>& e)
+bool e_test_bits_any(const uint32<16, expr_bit_and<V1,V2> >& e)
 {
     uint32<16> a, b;
     a = e.e.a.eval();
@@ -83,7 +83,7 @@ bool e_test_bits_any(const uint32<16, expr_bit_and<V1,V2>>& e)
 }
 
 template<class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const uint64<8, expr_bit_and<V1,V2>>& e)
+bool e_test_bits_any(const uint64<8, expr_bit_and<V1,V2> >& e)
 {
     uint64<8> a, b;
     a = e.e.a.eval();

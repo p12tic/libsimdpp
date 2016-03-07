@@ -80,7 +80,7 @@ void store(void* p, const V& a)
 template<class V, class M> SIMDPP_INL
 void store_masked(void* p, const V& a, const M& mask)
 {
-    using T = typename V::element_type;
+    typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < a.length; ++i) {
         if (mask.el(i))

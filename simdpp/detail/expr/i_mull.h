@@ -261,8 +261,8 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
-    mem_block<uint32<4>> ba = a;
-    mem_block<uint32<4>> bb = b;
+    mem_block<uint32<4> > ba = a;
+    mem_block<uint32<4> > bb = b;
     uint64x4 r;
     r.vec(0).el(0) = (uint64_t) ba[0] * bb[0];
     r.vec(0).el(1) = (uint64_t) ba[1] * bb[1];
