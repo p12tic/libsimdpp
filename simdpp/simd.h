@@ -144,7 +144,6 @@
 #include <simdpp/detail/null/shuffle.h>
 #include <simdpp/detail/null/transpose.h>
 
-#include <simdpp/sse/convert.h>
 #include <simdpp/detail/extract128.h>
 
 #include <simdpp/types.h>
