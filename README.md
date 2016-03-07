@@ -47,14 +47,14 @@ version of the library is provided on the
    - MSVC: 2013
    - ICC: 2013, 2015
 
-Clang 3.3 is not supported on ARM. MSVC is only supported on x86-64. ICC is
-only supported on x86 and x86-64.
-
  - C++98 version
    - GCC: 4.4-5.3
    - Clang: 3.3-3.8
    - MSVC: 2013
    - ICC: 2013, 2015
+
+Clang 3.3 is not supported on ARM. MSVC and ICC are only supported on x86 and
+x86-64.
 
 Documentation
 -------------
