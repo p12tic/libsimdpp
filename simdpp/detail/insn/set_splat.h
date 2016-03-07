@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/load.h>
 #include <simdpp/core/zip_lo.h>
+#include <simdpp/detail/altivec/load1.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

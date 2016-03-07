@@ -15,7 +15,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/transpose.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

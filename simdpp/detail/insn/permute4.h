@@ -16,9 +16,9 @@
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/permute_bytes16.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/neon/detail/shuffle_int16x8.h>
-#include <simdpp/neon/detail/shuffle_int32x4.h>
-#include <simdpp/neon/detail/shuffle_int64x2.h>
+#include <simdpp/detail/shuffle/neon_int16x8.h>
+#include <simdpp/detail/shuffle/neon_int32x4.h>
+#include <simdpp/detail/shuffle/neon_int64x2.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -45,7 +45,7 @@ uint16x8 i_permute4(const uint16x8& a)
     b = _mm_shufflehi_epi16(b, _MM_SHUFFLE(s3, s2, s1, s0));
     return b;
 #elif SIMDPP_USE_NEON
-    return neon::detail::shuffle_int16x8::permute4<s0,s1,s2,s3>(a);
+    return detail::neon_shuffle_int16x8::permute4<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_ALTIVEC
     // TODO optimize
     uint16x8 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
@@ -83,7 +83,7 @@ uint32x4 i_permute4(const uint32x4& a)
 #elif SIMDPP_USE_SSE2
     return _mm_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
-    return neon::detail::shuffle_int32x4::permute4<s0,s1,s2,s3>(a);
+    return detail::neon_shuffle_int32x4::permute4<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_ALTIVEC
     // TODO optimize
     uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
@@ -127,7 +127,7 @@ float32x4 i_permute4(const float32x4& a)
 #elif SIMDPP_USE_SSE2
     return _mm_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
-    return float32x4(neon::detail::shuffle_int32x4::permute4<s0,s1,s2,s3>(int32x4(a)));
+    return float32x4(detail::neon_shuffle_int32x4::permute4<s0,s1,s2,s3>(int32x4(a)));
 #elif SIMDPP_USE_ALTIVEC
     // TODO optimize
     uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);

@@ -17,6 +17,7 @@
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
+namespace detail {
 namespace neon {
 
 /// @{
@@ -100,6 +101,7 @@ void store_lane(void* p, const float32x4& a)
 /// @}
 
 } // namespace neon
+} // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 

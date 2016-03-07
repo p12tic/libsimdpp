@@ -19,7 +19,7 @@
 #include <simdpp/core/load_u.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/store.h>
-#include <simdpp/neon/memory_store.h>
+#include <simdpp/detail/neon/memory_store.h>
 #include <simdpp/detail/null/memory.h>
 #include <simdpp/detail/extract128.h>
 

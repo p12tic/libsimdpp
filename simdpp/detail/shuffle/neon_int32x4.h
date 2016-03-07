@@ -5,17 +5,16 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT32x4_H
-#define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT32x4_H
+#ifndef LIBSIMDPP_DETAIL_SHUFFLE_NEON_INT32x4_H
+#define LIBSIMDPP_DETAIL_SHUFFLE_NEON_INT32x4_H
 #if SIMDPP_USE_NEON
 
 #include <type_traits>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
-namespace neon {
 namespace detail {
-namespace shuffle_int32x4 {
+namespace neon_shuffle_int32x4 {
 
 /*
     The code below implements generalized permutations of elements within
@@ -163,9 +162,8 @@ T shuffle4x2(const T& a, const T& b)
     return co(shf4x2<s0,s1>(a, b), shf4x2<s2,s3>(a, b));
 }
 
-} // namespace shuffle_int32x4
+} // namespace neon_shuffle_int32x4
 } // namespace detail
-} // namespace neon
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 

@@ -5,17 +5,16 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT64x2_H
-#define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT64x2_H
+#ifndef LIBSIMDPP_DETAIL_SHUFFLE_NEON_INT64x2_H
+#define LIBSIMDPP_DETAIL_SHUFFLE_NEON_INT64x2_H
 #if SIMDPP_USE_NEON
 
 #include <type_traits>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
-namespace neon {
 namespace detail {
-namespace shuffle_int64x2 {
+namespace neon_shuffle_int64x2 {
 
 #if SIMDPP_USE_NEON32
 
@@ -147,9 +146,8 @@ T shuffle2x2(const T& a, const T& b)
 
 #endif
 
-} // namespace shuffle_int64x2
+} // namespace neon_shuffle_int64x2
 } // namespace detail
-} // namespace neon
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 

@@ -19,7 +19,6 @@
 #include <cstdlib>
 
 
-#include <simdpp/altivec/load1.h>
 #include <simdpp/core/align.h>
 #include <simdpp/core/aligned_allocator.h>
 #include <simdpp/core/bit_and.h>
@@ -131,9 +130,11 @@
 #include <simdpp/detail/cast.h>
 #include <simdpp/detail/cast.inl>
 
-#include <simdpp/neon/math_int.h>
-#include <simdpp/neon/memory_store.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/altivec/load1.h>
+
+#include <simdpp/detail/neon/math_int.h>
+#include <simdpp/detail/neon/memory_store.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 #include <simdpp/detail/null/bitwise.h>
 #include <simdpp/detail/null/compare.h>

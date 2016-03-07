@@ -17,7 +17,7 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/detail/insn/transpose.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/neon/shuffle.h>
 #include <simdpp/detail/null/transpose.h>
 
 namespace simdpp {

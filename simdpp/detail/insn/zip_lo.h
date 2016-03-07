@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
