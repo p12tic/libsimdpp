@@ -305,7 +305,7 @@ void test_shuffle_bytes(TestResults& res)
     // some tests whether the permute mask itself is correctly generated
     {
         uint16x16 mask = make_shuffle_bytes16_mask<-1,-1,-1,-1>(mask);
-        uint16x16 r1 = uint16x16::zero();
+        uint16x16 r1 = make_zero();
         uint16x16 r2 = permute_zbytes16(v.u16[0], mask);
         TEST_PUSH(tc, uint16x16, cmp_eq(r1, r2));
     }

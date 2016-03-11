@@ -84,7 +84,7 @@ SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
-    mask = uint16x8::ones();
+    mask = make_ones();
     mask = shift_l(mask, 16-count);
     mask = shift_r<8>(mask);
 
@@ -105,7 +105,7 @@ SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
 SIMDPP_INL uint8x32 i_shift_r(const uint8x32& a, unsigned count)
 {
     uint16x16 mask, a16;
-    mask = uint16x16::ones();
+    mask = make_ones();
     mask = shift_l(mask, 16-count);
     mask = shift_r<8>(mask);
 
@@ -278,7 +278,7 @@ SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
         v = sgn = a;
         v = shift_r(v, count);
         sgn = shift_r(int32x4(sgn), count);
-        mask = uint64x2::ones();
+        mask = make_ones();
         mask = shift_l(mask, 64 - count);
         sgn = bit_and(sgn, mask);
         v = bit_or(v, sgn);
@@ -308,7 +308,7 @@ SIMDPP_INL int64x4 i_shift_r(const int64x4& a, unsigned count)
         v = sgn = a;
         v = shift_r(v, count);
         sgn = shift_r(sgn, count);
-        mask = uint64x4::ones();
+        mask = make_ones();
         mask = shift_l(mask, 64 - count);
         sgn = bit_and(sgn, mask);
         v = bit_or(v, sgn);
@@ -450,7 +450,7 @@ uint8x32 i_shift_r(const uint8x32& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     uint16<16> mask, a16;
-    mask = uint16<16>::ones();
+    mask = make_ones();
     mask = shift_l<16-count>(mask);
     mask = shift_r<8>(mask);
 
@@ -731,7 +731,7 @@ struct i_shift_r_wrapper<true, false> {
 template<>
 struct i_shift_r_wrapper<false, true> {
     template<unsigned count, class V>
-    static SIMDPP_INL V run(const V&) { return V::zero(); }
+    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
 };
 
 } // namespace insn

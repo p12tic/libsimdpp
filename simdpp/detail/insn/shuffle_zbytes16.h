@@ -46,7 +46,7 @@ SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, con
 #elif SIMDPP_USE_SSE4_1
     int8x16 sel, set_zero, ai, bi, r;
     sel = mask;
-    set_zero = cmp_lt(sel, int8x16::zero());
+    set_zero = cmp_lt(sel, 0);
     sel = _mm_slli_epi16(sel, 3);
 
     ai = _mm_shuffle_epi8(a, mask);
@@ -59,7 +59,7 @@ SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, con
     m = mask;
     m1 = add(m, 0x70);
     m2 = add(m, 0xf0);
-    set_zero = cmp_lt(m, int8x16::zero());
+    set_zero = cmp_lt(m, 0);
 
     ai = _mm_shuffle_epi8(a, m1);
     bi = _mm_shuffle_epi8(b, m2);
@@ -85,7 +85,7 @@ SIMDPP_INL uint8x32 i_shuffle_zbytes16(const uint8x32& a, const uint8x32& b, con
 {
     int8x32 sel, set_zero, ai, bi, r;
     sel = mask;
-    set_zero = cmp_lt(sel, int8x32::zero());
+    set_zero = cmp_lt(sel, 0);
     sel = _mm256_slli_epi16(sel, 3);
 
     ai = _mm256_shuffle_epi8(a, mask);

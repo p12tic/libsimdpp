@@ -35,7 +35,7 @@ float32<4> expr_eval(const expr_mul<float32<4,E1>,
     return vmulq_f32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_madd((__vector float)a, (__vector float)b,
-                    (__vector float)float32x4::zero());
+                    (__vector float)(float32x4) make_zero());
 #endif
 }
 

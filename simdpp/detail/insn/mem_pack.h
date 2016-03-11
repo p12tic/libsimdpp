@@ -129,8 +129,8 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     w_b16 t0, t1, t2, t3;
     t0 = zip16_lo(a, b);
     t1 = zip16_hi(a, b);
-    t2 = zip16_lo(c, w_b8::zero());
-    t3 = zip16_hi(c, w_b8::zero());
+    t2 = zip16_lo(c, (w_b8) make_zero());
+    t3 = zip16_hi(c, (w_b8) make_zero());
 
     w_b8 u0, u1, u2, u3;
     u0 = zip8_lo(t0, t2);
@@ -247,8 +247,8 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
     w_b32 t0, t1, t2, t3;
     t0 = zip8_lo(a, b);
     t1 = zip8_hi(a, b);
-    t2 = zip8_lo(c, w_b16::zero());
-    t3 = zip8_hi(c, w_b16::zero());
+    t2 = zip8_lo(c, (w_b16) make_zero());
+    t3 = zip8_hi(c, (w_b16) make_zero());
 
     w_b16 u0, u1, u2, u3;
     u0 = zip4_lo(t0, t2);

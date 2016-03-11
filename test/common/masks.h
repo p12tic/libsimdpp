@@ -17,7 +17,7 @@ template<class M, class V>
 SIMDPP_INL M make_mask(unsigned i)
 {
     V v1 = simdpp::make_uint((i/2)%2, i%2);
-    V v2 = V::zero();
+    V v2 = simdpp::make_zero();
     return cmp_eq(v1, v2);
 }
 

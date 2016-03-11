@@ -31,11 +31,12 @@ uint8x16 i_move16_r(const uint8x16& a)
 #elif SIMDPP_USE_SSE2
     return _mm_slli_si128(a, shift);
 #elif SIMDPP_USE_NEON
-    uint8x16 z = uint8x16::zero();
+    uint8x16 z = make_zero();
     return vextq_u8(z, a, 16-shift);
 #elif SIMDPP_USE_ALTIVEC
-    // return align<16-shift>(uint8x16::zero(), a);
-    return vec_sld((__vector uint8_t)uint8x16::zero(), (__vector uint8_t)a, 16-shift);
+    // return align<16-shift>((uint8x16) make_zero(), a);
+    return vec_sld((__vector uint8_t)(uint8x16) make_zero(),
+                   (__vector uint8_t)a, 16-shift);
 #endif
 }
 
@@ -113,7 +114,7 @@ uint32<16> i_move4_r(const uint32<16>& a)
     case 1: return _mm512_maskz_shuffle_epi32(0xeeee, a, _MM_PERM_ENUM(_MM_SHUFFLE(2, 1, 0, 0)));
     case 2: return _mm512_maskz_shuffle_epi32(0xcccc, a, _MM_PERM_ENUM(_MM_SHUFFLE(1, 0, 0, 0)));
     case 3: return _mm512_maskz_shuffle_epi32(0x8888, a, _MM_PERM_ENUM(_MM_SHUFFLE(0, 0, 0, 0)));
-    case 4: return uint32<16>::zero();
+    case 4: return make_zero();
     }
 }
 #endif
@@ -191,7 +192,7 @@ float32<16> i_move4_r(const float32<16>& a)
     case 1: return _mm512_maskz_shuffle_ps(0xeeee, a, a, _MM_SHUFFLE(2, 1, 0, 0));
     case 2: return _mm512_maskz_shuffle_ps(0xcccc, a, a, _MM_SHUFFLE(1, 0, 0, 0));
     case 3: return _mm512_maskz_shuffle_ps(0x8888, a, a, _MM_SHUFFLE(0, 0, 0, 0));
-    case 4: return float32<16>::zero();
+    case 4: return make_zero();
     }
 }
 #endif
@@ -231,7 +232,7 @@ float64<8> i_move2_r(const float64<8>& a)
     switch (shift) {
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_pd(0xaa, a, a, SIMDPP_SHUFFLE_MASK_2x2_4(0, 0));
-    case 2: return float64<8>::zero();
+    case 2: return make_zero();
     }
 }
 #endif
@@ -259,7 +260,7 @@ struct i_move2_r_wrapper<0> {
 template<>
 struct i_move2_r_wrapper<2> {
     template<class V>
-    static SIMDPP_INL V run(const V&) { return V::zero(); }
+    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
 };
 
 template<unsigned count>
@@ -275,7 +276,7 @@ struct i_move4_r_wrapper<0> {
 template<>
 struct i_move4_r_wrapper<4> {
     template<class V>
-    static SIMDPP_INL V run(const V&) { return V::zero(); }
+    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
 };
 
 template<unsigned count>
@@ -291,7 +292,7 @@ struct i_move8_r_wrapper<0> {
 template<>
 struct i_move8_r_wrapper<8> {
     template<class V>
-    static SIMDPP_INL V run(const V&) { return V::zero(); }
+    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
 };
 
 template<unsigned count>
@@ -307,7 +308,7 @@ struct i_move16_r_wrapper<0> {
 template<>
 struct i_move16_r_wrapper<16> {
     template<class V>
-    static SIMDPP_INL V run(const V&) { return V::zero(); }
+    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
 };
 
 } // namespace insn

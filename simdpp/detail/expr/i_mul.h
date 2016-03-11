@@ -39,7 +39,7 @@ uint16<8> expr_eval(const expr_mul_lo<uint16<8,E1>,
     return vmulq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_mladd((__vector uint16_t)a, (__vector uint16_t)b,
-                     (__vector uint16_t)uint16x8::zero());
+                     (__vector uint16_t)(uint16x8) make_zero());
 #endif
 }
 
