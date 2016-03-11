@@ -8,8 +8,6 @@ evaluates to an identifier which is unique for each architecture.
 
 In addition to the above, the source file must not define any of the
 architecture select macros; they must be supplied via the compiler options.
-The code for @c NONE_NULL architecture must be linked to the resulting
-executable.
 
 To use dynamic dispatch mechanism, declare the function within an
 `SIMDPP_ARCH_NAMESPACE` and then use one of `SIMDPP_MAKE_DISPATCHER_***`
@@ -84,11 +82,6 @@ test_sse4_1.o: test.cc
 If compiled, the above example selects the "fastest" of SSE2, SSE3 or SSE4.1
 instruction sets, whichever is available on the target processor and
 outputs an integer that identifiers that instruction set.
-
-Note, that the object files must be linked directly to the executable. If
-static libraries are used, the linker may throw out static dispatcher
-registration code and break the mechanism. Do prevent this behavior,
-@c -Wl,--whole-archive or an equivalent flag must be used.
 
 ## CMake ##
 

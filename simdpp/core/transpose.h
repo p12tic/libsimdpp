@@ -66,7 +66,7 @@ void transpose2(any_int16<N,V>& a0, any_int16<N,V>& a1)
 
     @code
     r0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
-    r1 = [ a0_1; a1_1 ; a0_3; a0_3 ]
+    r1 = [ a0_1; a1_1 ; a1_3; a0_3 ]
     @endcode
 
     @par 128-bit version:

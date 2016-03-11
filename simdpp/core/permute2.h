@@ -53,7 +53,7 @@ typename detail::get_expr_nomask<V>::empty
 }
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
-    selector values must be in range [0; 3].
+    selector values must be in range [0; 1].
 
     @code
     r0 = a[s0]

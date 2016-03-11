@@ -19,7 +19,7 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
 /** Selects 32-bit values from two vectors.
-    The selector values must be in range [0; 7].
+    The selector values must be in range [0; 3].
 
     @code
     For each 64-bit segment:
@@ -44,7 +44,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 }
 
 /** Selects 64-bit values from two vectors.
-    The selector values must be in range [0; 7].
+    The selector values must be in range [0; 3].
 
     @code
     For each 128-bit segment:
