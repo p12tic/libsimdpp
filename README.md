@@ -64,7 +64,7 @@ Documentation
 -------------
 
 Online documentation is provided
-[here](http://p12tic.github.io/libsimdpp/v2.0~beta1/doc/html).
+[here](http://p12tic.github.io/libsimdpp/v2.0~beta1-1/libsimdpp/).
 
 License
 -------
