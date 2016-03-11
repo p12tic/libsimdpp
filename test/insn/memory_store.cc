@@ -48,6 +48,7 @@ void test_store_helper(TestSuite& tc, const V* sv)
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack
     SIMDPP_ALIGN(16) V rv[vnum];
+    auto rdata = reinterpret_cast<typename V::element_type*>(rv);
 
     auto rzero = [](V* r)
     {
@@ -62,7 +63,7 @@ void test_store_helper(TestSuite& tc, const V* sv)
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
-        store_u(rdata+i*V::length, sv[0]);
+        store_u(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
