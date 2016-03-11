@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/store_first.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Stores the first @a n elements of an 128-bit or 256-bit integer, 32-bit or
     64-bit floating point vector to memory. @a n must be in range [0..N-1]
@@ -51,9 +49,7 @@ void store_first(void* p, const any_vec<N,V>& a, unsigned n)
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

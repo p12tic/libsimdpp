@@ -17,14 +17,11 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/core/make_int.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/insn/split.h>
 #include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @ingroup simd_insert_extract
 /// @{
@@ -283,11 +280,11 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     // extract_bits_impl depends on the exact implementation of this function
 #if SIMDPP_USE_NULL
     uint16_t r = 0;
-    detail::null::foreach<uint8x16>(a, [&r](uint8_t x){
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
         x = x & 1;
         r = (r >> 1) | (uint16_t(x) << 15);
-        return 0; // dummy
-    });
+    }
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_movemask_epi8(a);
@@ -304,12 +301,11 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
     a = bit_and(a, mask);
     uint32x4 s = vec_sum4s((__vector uint8_t)a,
-                           (__vector uint32_t)uint32x4::zero());
-    uint32x4 s2 = (__vector uint32_t)vec_mergel((__vector uint8_t)a,
-                                                (__vector uint8_t)uint8x16::zero());
-    s = bit_or(s, s2);
+                           (__vector uint32_t)(uint32x4) make_zero());
+    uint32x4 shifts = make_uint(0, 0, 8, 8);
+    s = (__vector uint32_t) vec_sl((__vector uint32_t)s, (__vector uint32_t) shifts);
     s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
-                          (__vector int32_t)int32x4::zero());
+                          (__vector int32_t)(int32x4) make_zero());
     return extract<7>(uint16x8(s));
 #endif
 }
@@ -334,11 +330,11 @@ uint16_t extract_bits(const uint8x16& ca)
     static_assert(id < 8, "index out of bounds");
 #if SIMDPP_USE_NULL
     uint16_t r = 0;
-    detail::null::foreach<uint8x16>(a, [&r](uint8_t x){
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
         x = (x >> id) & 1;
         r = (r >> 1) | (uint16_t(x) << 15);
-        return 0; // dummy
-    });
+    }
     return r;
 #elif SIMDPP_USE_SSE2
     a = shift_l<7-id>((uint16x8) a);
@@ -359,9 +355,7 @@ uint16_t extract_bits(const uint8x16& ca)
 
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

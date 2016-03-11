@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/f_fmadd.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /// @{
@@ -40,7 +38,7 @@ float32<N, expr_fmadd<float32<N,E1>,
                                             const float32<N,E2>& b,
                                             const float32<N,E3>& c)
 {
-    return { { a, b, c }, 0 };
+    return { { a, b, c } };
 }
 
 template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
@@ -50,13 +48,11 @@ float64<N, expr_fmadd<float64<N,E1>,
                                             const float64<N,E2>& b,
                                             const float64<N,E3>& c)
 {
-    return { { a, b, c }, 0 };
+    return { { a, b, c } };
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

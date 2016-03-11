@@ -41,12 +41,13 @@ public:
         static const unsigned num_bytes = 32;
 
         Result(Type atype, unsigned alength, unsigned ael_size, unsigned aline,
-               unsigned aseq, unsigned aprec_ulp)
+               unsigned aseq, unsigned aprec_ulp, bool afp_zero_eq)
         {
             type = atype;
             line = aline;
             seq = aseq;
             prec_ulp = aprec_ulp;
+            fp_zero_eq = afp_zero_eq;
             length = alength;
             el_size = ael_size;
             data.resize(el_size*length);
@@ -56,6 +57,7 @@ public:
         unsigned line;
         unsigned seq;
         unsigned prec_ulp;
+        bool fp_zero_eq;
         const char* file;
         unsigned length;
         unsigned el_size;
@@ -81,6 +83,12 @@ public:
     void set_precision(unsigned num_ulp)    { curr_precision_ulp_ = num_ulp; }
     void unset_precision()                  { curr_precision_ulp_ = 0; }
 
+    /// Sets whether floating-point zero and negative zero are considered
+    /// equal. Affects all pushed data until the next call to @a unset_fp_zero_equal
+    void set_fp_zero_equal()                { curr_fp_zero_equal_ = true; }
+    void unset_fp_zero_equal()              { curr_fp_zero_equal_ = false; }
+
+
     /// The name of the test case
     const char* name() const                { return name_; }
 
@@ -88,7 +96,16 @@ public:
     void reset_seq()                        { seq_ = 1; }
 
     /// The number of results pushed to the test case
-    std::size_t num_results() const         { return results_.size(); }
+    std::size_t num_results() const;
+
+    /** Allows synchronizing tests in cases when certain architectures do not
+        execute the test in question. The function must be called before and
+        after the block of tests that may not be executed. The call to this
+        function must be executed regardless of architectures.
+
+        The function resets the sequence number.
+    */
+    void sync_archs()                       { curr_results_section_++; reset_seq(); }
 
 private:
     friend class TestResults;
@@ -105,7 +122,10 @@ private:
     const char* file_;
     unsigned seq_;
     unsigned curr_precision_ulp_;
-    std::vector<Result> results_;
+    unsigned curr_fp_zero_equal_;
+
+    unsigned curr_results_section_;
+    std::vector<std::vector<Result>> results_;
 };
 
 class SeqTestSuite {

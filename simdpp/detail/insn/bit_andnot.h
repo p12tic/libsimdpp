@@ -13,13 +13,10 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/null/bitwise.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -183,7 +180,7 @@ SIMDPP_INL uint32<8> i_bit_andnot(const uint32<8>& a, const uint32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_andnot(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_andnot_epi32(b, a);
@@ -214,7 +211,7 @@ SIMDPP_INL uint32<8> i_bit_andnot(const uint32<8>& a, const mask_int32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_andnot(const uint32<16>& a, const mask_int32<16>& b)
 {
     return _mm512_maskz_mov_epi32(_mm512_knot(b), a);
@@ -245,7 +242,7 @@ SIMDPP_INL mask_int32<8> i_bit_andnot(const mask_int32<8>& a, const mask_int32<8
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_bit_andnot(const mask_int32<16>& a, const mask_int32<16>& b)
 {
     return _mm512_kandn(b, a);
@@ -263,7 +260,11 @@ mask_int32<N> i_bit_andnot(const mask_int32<N>& a, const mask_int32<N>& b)
 // uint64, uint64
 SIMDPP_INL uint64<2> i_bit_andnot(const uint64<2>& a, const uint64<2>& b)
 {
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::bit_andnot(a, b);
+#else
     return uint64<2>(i_bit_andnot(uint8<16>(a), uint8<16>(b)));
+#endif
 }
 
 #if SIMDPP_USE_AVX2
@@ -273,7 +274,7 @@ SIMDPP_INL uint64<4> i_bit_andnot(const uint64<4>& a, const uint64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_andnot(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_andnot_epi64(b, a);
@@ -290,7 +291,7 @@ uint64<N> i_bit_andnot(const uint64<N>& a, const uint64<N>& b)
 // uint64, mask_int64
 SIMDPP_INL uint64<2> i_bit_andnot(const uint64<2>& a, const mask_int64<2>& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::bit_andnot_vm(a, b);
 #else
     return i_bit_andnot(a, uint64<2>(b));
@@ -304,7 +305,7 @@ SIMDPP_INL uint64<4> i_bit_andnot(const uint64<4>& a, const mask_int64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_andnot(const uint64<8>& a, const mask_int64<8>& b)
 {
     return _mm512_maskz_mov_epi64(_mm512_knot(b), a);
@@ -321,7 +322,7 @@ uint64<N> i_bit_andnot(const uint64<N>& a, const mask_int64<N>& b)
 // mask_int64, mask_int64
 SIMDPP_INL mask_int64<2> i_bit_andnot(const mask_int64<2>& a, const mask_int64<2>& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::bit_andnot_mm(a, b);
 #else
     return (mask_int64<2>) (uint64<2>) i_bit_andnot(uint8<16>(a), uint8<16>(b));
@@ -335,7 +336,7 @@ SIMDPP_INL mask_int64<4> i_bit_andnot(const mask_int64<4>& a, const mask_int64<4
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int64<8> i_bit_andnot(const mask_int64<8>& a, const mask_int64<8>& b)
 {
     return _mm512_kandn(b, a);
@@ -351,7 +352,7 @@ mask_int64<N> i_bit_andnot(const mask_int64<N>& a, const mask_int64<N>& b)
 
 // -----------------------------------------------------------------------------
 // float32, float32
-SIMDPP_INL float32<4> i_bit_andnot(const float32<4>& a, const float32<4> b)
+SIMDPP_INL float32<4> i_bit_andnot(const float32<4>& a, const float32<4>& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::bit_andnot(a, b);
@@ -372,7 +373,7 @@ SIMDPP_INL float32<8> i_bit_andnot(const float32<8>& a, const float32<8>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_andnot(const float32<16>& a, const float32<16>& b)
 {
     return float32<16>(i_bit_andnot(uint32<16>(a), uint32<16>(b)));
@@ -403,7 +404,7 @@ SIMDPP_INL float32<8> i_bit_andnot(const float32<8>& a, const mask_float32<8>& b
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_andnot(const float32<16>& a, const mask_float32<16>& b)
 {
     return _mm512_maskz_mov_ps(_mm512_knot(b), a);
@@ -434,7 +435,7 @@ SIMDPP_INL mask_float32<8> i_bit_andnot(const mask_float32<8>& a, const mask_flo
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_bit_andnot(const mask_float32<16>& a, const mask_float32<16>& b)
 {
     return _mm512_kandn(b, a);
@@ -468,7 +469,7 @@ SIMDPP_INL float64<4> i_bit_andnot(const float64<4>& a, const float64<4>& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_andnot(const float64<8>& a, const float64<8>& b)
 {
     return float64<8>(i_bit_andnot(uint64<8>(a), uint64<8>(b)));
@@ -499,7 +500,7 @@ SIMDPP_INL float64<4> i_bit_andnot(const float64<4>& a, const mask_float64<4>& b
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_andnot(const float64<8>& a, const mask_float64<8>& b)
 {
     return _mm512_maskz_mov_pd(_mm512_knot(b), a);
@@ -530,7 +531,7 @@ SIMDPP_INL mask_float64<4> i_bit_andnot(const mask_float64<4>& a, const mask_flo
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_bit_andnot(const mask_float64<8>& a, const mask_float64<8>& b)
 {
     return _mm512_kandn(b, a);
@@ -546,9 +547,7 @@ mask_float64<N> i_bit_andnot(const mask_float64<N>& a, const mask_float64<N>& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

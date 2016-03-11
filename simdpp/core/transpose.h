@@ -17,14 +17,11 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/detail/insn/transpose.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/neon/shuffle.h>
 #include <simdpp/detail/null/transpose.h>
-#include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** @defgroup simd_transpose Operations: transpose matrices consisting of
     several vectors
@@ -69,7 +66,7 @@ void transpose2(any_int16<N,V>& a0, any_int16<N,V>& a1)
 
     @code
     r0 = [ a0_0; a1_0 ; a0_2; a1_2 ]
-    r1 = [ a0_1; a1_1 ; a0_3; a0_3 ]
+    r1 = [ a0_1; a1_1 ; a1_3; a0_3 ]
     @endcode
 
     @par 128-bit version:
@@ -323,9 +320,7 @@ void transpose4(float32<N>& a0, float32<N>& a1,
 
 /// @} -- end defgroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -16,9 +16,7 @@
 #include <simdpp/core/align.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<unsigned shift, unsigned N> SIMDPP_INL
@@ -45,9 +43,7 @@ template<unsigned shift, unsigned N> SIMDPP_INL
 float64<N> align_v128(const float64<N>& a, const float64<N>& b) { return align2<shift>(a, b); }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

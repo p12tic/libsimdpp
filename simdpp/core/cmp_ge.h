@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Compares the values of two float32x4 vectors for greater-than or equal
@@ -34,8 +32,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float32<N, mask_float32<N>> cmp_ge(const float32<N,E1>& a,
-                                        const float32<N,E2>& b)
+mask_float32<N,expr_empty> cmp_ge(const float32<N,E1>& a,
+                                  const float32<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -58,17 +56,15 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_float32, float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float64<N, mask_float64<N>> cmp_ge(const float64<N,E1>& a,
-                                        const float64<N,E2>& b)
+mask_float64<N,expr_empty> cmp_ge(const float64<N,E1>& a,
+                                  const float64<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_float64, float64)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

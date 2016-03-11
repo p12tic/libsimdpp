@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/permute_bytes16.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Selects bytes from a vector according to a mask. Each byte within the
@@ -70,9 +68,7 @@ float64<N> permute_bytes16(const float64<N>& a, const uint64<N>& mask)
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

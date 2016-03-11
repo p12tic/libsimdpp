@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/load.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector
     from an aligned memory location.
@@ -41,18 +39,22 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX (integer vectors), 2}
 */
 // Fixme return empty expression
-template<class V = expr_vec_load> SIMDPP_INL
-V load(const void* p)
+SIMDPP_INL expr_vec_load load(const void* p)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_load<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_load_dispatch<V>::run(reinterpret_cast<const char*>(p));
+    expr_vec_load r;
+    r.a = reinterpret_cast<const char*>(p);
+    return r;
 }
 
-#ifndef SIMDPP_DOXYGEN
+template<class V> SIMDPP_INL
+V load(const void* p)
+{
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
+                  "V must be a non-mask vector");
+    return detail::insn::i_load_any<V>(reinterpret_cast<const char*>(p));
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

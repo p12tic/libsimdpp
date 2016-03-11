@@ -18,9 +18,7 @@
 #include <cstring>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 enum {
@@ -33,9 +31,7 @@ template<bool IsRMask, bool IsLMask, unsigned MaskCastOverride> struct cast_wrap
 
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

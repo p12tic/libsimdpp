@@ -16,13 +16,13 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-void main_test_function(TestResults& res);
+void main_test_function(TestResults& res, const TestOptions& opts);
 void test_bitwise(TestResults& res);
 void test_blend(TestResults& res);
 void test_compare(TestResults& res);
 void test_convert(TestResults& res);
 void test_construct(TestResults& res);
-void test_math_fp(TestResults& res);
+void test_math_fp(TestResults& res, const TestOptions& opts);
 void test_math_int(TestResults& res);
 void test_math_shift(TestResults& res);
 void test_memory_load(TestResults& res);
@@ -37,5 +37,7 @@ void test_test_utils(TestResults& res);
 void test_transpose(TestResults& res);
 
 } // namespace SIMDPP_ARCH_NAMESPACE
+
+std::vector<simdpp::detail::FnVersion> get_test_archs();
 
 #endif

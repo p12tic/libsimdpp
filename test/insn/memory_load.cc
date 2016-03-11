@@ -18,13 +18,13 @@ void test_load_helper(TestSuite& tc, void* sv_p)
     using E = typename V::element_type;
     auto sdata = reinterpret_cast<E*>(sv_p);
 
-    V rv[vnum];
+    // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
+    // necessarily aligned to 16 bytes on the stack
+    SIMDPP_ALIGN(16) V rv[vnum];
 
-    auto rzero = [&]()
+    auto rzero = [&](V* r)
     {
-        for (unsigned i = 0; i < vnum; i++) {
-            rv[i] = V::zero();
-        }
+        std::memset(r, 0, sizeof(V) * vnum);
     };
 
     // calls constructor that accepts expr_construct
@@ -62,15 +62,15 @@ void test_load_helper(TestSuite& tc, void* sv_p)
         TEST_PUSH(tc, V, r);
     }
 
-    rzero();
+    rzero(rv);
     load_packed2(rv[0], rv[1], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero();
+    rzero(rv);
     load_packed3(rv[0], rv[1], rv[2], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 
-    rzero();
+    rzero(rv);
     load_packed4(rv[0], rv[1], rv[2], rv[3], sdata);
     TEST_ARRAY_PUSH(tc, V, rv);
 }

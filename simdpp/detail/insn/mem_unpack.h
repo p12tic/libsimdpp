@@ -28,9 +28,7 @@
 #include <simdpp/core/zip_lo.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -64,7 +62,7 @@ void mem_unpack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
     qb.wrapped() = unzip128_hi(c1, c2);
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void mem_unpack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 {
@@ -91,7 +89,7 @@ void v_mem_unpack3_impl8_128(T& a, T& b, T& c)
     // [b5, c5, a6, b6, c6, a7, b7, c7, a8, b8, c8, a9, b9, c9, a10,b10]
     // [c10,a11,b11,c11,a12,b12,c12,a13,b13,c13,a14,b14,c14,a15,b15,c15]
     T mask1 = make_shuffle_bytes16_mask<   1,    4,    7, 10, 13,16+0,16+3,16+6,
-                                        16+9,16+12,16+15,  3,  6,   9,  12,  15>(mask1);
+                                        16+9,16+12,16+15,  2,  5,   8,  11,  14>(mask1);
     T a1, b1, c1;
     a1 = shuffle_bytes16(c, a, mask1);
     b1 = shuffle_bytes16(a, b, mask1);
@@ -315,7 +313,7 @@ void v_mem_unpack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V
     qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void v_mem_unpack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>& qc)
 {
@@ -514,9 +512,6 @@ template<class V> SIMDPP_INL
 void v_mem_unpack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
                               any_vec<32,V>& qc, any_vec<32,V>& qd)
 {
-    // shuffle the vectors so that the lower halves contain the first 3 128-bit
-    // items (a and lower half of b) and the higher halves contain the rest
-
     V a0, b0, c0, d0, a1, b1, c1, d1;
 
     a0 = qa.wrapped();  b0 = qb.wrapped();  c0 = qc.wrapped();  d0 = qd.wrapped();
@@ -529,35 +524,36 @@ void v_mem_unpack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
     qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;  qd.wrapped() = d1;
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void v_mem_unpack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
                               any_vec<64,V>& qc, any_vec<64,V>& qd)
 {
     V a, b, c, d; // TODO: optimize. Using full-vector shuffle/permute will be faster
 
-
     a = qa.wrapped();  b = qb.wrapped();  c = qc.wrapped();  d = qd.wrapped();
 
-    V t11, t12, t21, t22, t31, t32;
-    // [a0,b0,c0,a1]
-    // [b1,c1,a2,b2]
-    // [c2,a3,b3,c3]
-    t11 = a;
-    t12 = shuffle2_128<0,1,2,3>(c, b);
-    t21 = shuffle2_128<0,1,0,1>(a, b);
-    t22 = shuffle2_128<2,3,2,3>(b, c);
-    t31 = shuffle2_128<2,3,0,1>(a, b);
-    t32 = c;
-    // [a0,b0,c0,a1]
-    // [c2,a3,a2,b2]
-    // [a0,b0,b1,c1]
-    // [a2,b2,b3,c3]
-    // [c0,a1,b1,c1]
-    // [c2,a3,b3,c3]
-    a = shuffle2_128<0,3,2,1>(t11, t12);
-    b = shuffle2_128<1,2,1,2>(t21, t22);
-    c = shuffle2_128<0,3,0,3>(t31, t32);
+    V t1, t2, t3, t4;
+    // [a0,a1,a2,a3]
+    // [b0,b1,b2,b3]
+    // [c0,c1,c2,c3]
+    // [d0,d1,d2,d3]
+    t1 = shuffle2_128<0,2,0,2>(a, b);
+    t2 = shuffle2_128<1,3,1,3>(a, b);
+    t3 = shuffle2_128<0,2,0,2>(c, d);
+    t4 = shuffle2_128<1,3,1,3>(c, d);
+    // [a0,a2,b0,b2]
+    // [a1,a3,b1,b3]
+    // [c0,c2,d0,d2]
+    // [c1,c3,d1,d3]
+    a = shuffle2_128<0,2,0,2>(t1, t3);
+    b = shuffle2_128<0,2,0,2>(t2, t4);
+    c = shuffle2_128<1,3,1,3>(t1, t3);
+    d = shuffle2_128<1,3,1,3>(t2, t4);
+    // [a0,b0,c0,d0]
+    // [a1,b1,c1,d1]
+    // [a2,b2,c2,d2]
+    // [a3,b3,c3,d3]
 
     qa.wrapped() = a;  qb.wrapped() = b;  qc.wrapped() = c;  qd.wrapped() = d;
 }
@@ -708,9 +704,7 @@ SIMDPP_INL void mem_unpack6(uint16x8& a, uint16x8& b, uint16x8& c,
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

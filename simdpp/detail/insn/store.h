@@ -17,9 +17,7 @@
 #include <simdpp/detail/align.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -73,7 +71,7 @@ SIMDPP_INL void i_store(char* p, const uint32<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store(char* p, const uint32<16>& a)
 {
     p = detail::assume_aligned(p, 64);
@@ -85,7 +83,12 @@ SIMDPP_INL void i_store(char* p, const uint32<16>& a)
 
 SIMDPP_INL void i_store(char* p, const uint64<2>& a)
 {
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    p = detail::assume_aligned(p, 16);
+    detail::null::store(p, a);
+#else
     i_store(p, uint8<16>(a));
+#endif
 }
 
 #if SIMDPP_USE_AVX2
@@ -95,7 +98,7 @@ SIMDPP_INL void i_store(char* p, const uint64<4>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store(char* p, const uint64<8>& a)
 {
     p = detail::assume_aligned(p, 64);
@@ -129,7 +132,7 @@ SIMDPP_INL void i_store(char* p, const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store(char* p, const float32<16>& a)
 {
     p = detail::assume_aligned(p, 64);
@@ -160,7 +163,7 @@ SIMDPP_INL void i_store(char* p, const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store(char* p, const float64<8>& a)
 {
     p = detail::assume_aligned(p, 64);
@@ -198,9 +201,7 @@ void i_store(char* p, const float64<N>& a){ v_store(p, a); }
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -16,13 +16,10 @@
 #include <simdpp/types.h>
 #include <simdpp/core/f_rsqrt_e.h>
 #include <simdpp/core/f_rsqrt_rh.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -30,7 +27,11 @@ namespace insn {
 SIMDPP_INL float32x4 i_sqrt(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::foreach<float32x4>(a, [](float a){ return std::sqrt(a); });
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = std::sqrt(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a);
 #elif SIMPDP_USE_NEON64
@@ -50,7 +51,7 @@ SIMDPP_INL float32x8 i_sqrt(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_sqrt(const float32<16>& a)
 {
     return _mm512_sqrt_ps(a);
@@ -68,7 +69,11 @@ float32<N> i_sqrt(const float32<N>& a)
 SIMDPP_INL float64x2 i_sqrt(const float64x2& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::foreach<float64x2>(a, [](double a){ return std::sqrt(a); });
+    float64x2 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = std::sqrt(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_pd(a);
 #elif SIMDPP_USE_NEON64
@@ -83,7 +88,7 @@ SIMDPP_INL float64x4 i_sqrt(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_sqrt(const float64<8>& a)
 {
     return _mm512_sqrt_pd(a);
@@ -99,9 +104,7 @@ float64<N> i_sqrt(const float64<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

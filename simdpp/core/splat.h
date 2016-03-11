@@ -17,9 +17,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Broadcasts the specified element to all elements.
@@ -83,15 +81,13 @@ template<unsigned s, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         splat(const any_vec<N,V>& a)
 {
-    static_assert(s < N, "Access out of bounds");
+    static_assert(s < V::length, "Access out of bounds");
     typename detail::get_expr_nomask<V>::type ra = a.wrapped().eval();
     return detail::insn::i_splat<s>(ra);
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

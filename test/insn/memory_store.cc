@@ -13,26 +13,50 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+template<class V>
+void test_store_masked(TestSuite& tc, const V* sv)
+{
+    using namespace simdpp;
+    SIMDPP_ALIGN(16) V rv[1];
+
+    tc.reset_seq();
+    TestData<V> mask_data(
+        make_int(0, 0, 0, 0),
+        make_int(1, 0, 0, 0),
+        make_int(0, 1, 0, 0),
+        make_int(0, 0, 1, 0),
+        make_int(0, 0, 0, 1)
+    );
+
+    for (unsigned j = 0; j < mask_data.size(); ++j) {
+        typename V::mask_vector_type mask;
+        mask = bit_not(cmp_eq(mask_data.data()[j], 0));
+
+        std::memset(rv, 0, sizeof(V));
+
+        store_masked(rv, sv[0], mask);
+        TEST_PUSH(tc, V, rv[0]);
+    }
+
+}
+
 template<class V, unsigned vnum>
 void test_store_helper(TestSuite& tc, const V* sv)
 {
-    using E = typename V::element_type;
+    using namespace simdpp;
 
-    union {
-        SIMDPP_ALIGN(16) E rdata[V::length * vnum];
-        V rv[vnum];
-    };
+    // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
+    // necessarily aligned to 16 bytes on the stack
+    SIMDPP_ALIGN(16) V rv[vnum];
 
-    auto rzero = [&](V* r)
+    auto rzero = [](V* r)
     {
-        for (unsigned i = 0; i < vnum; i++) {
-            r[i] = V::zero();
-        }
+        std::memset(r, 0, sizeof(V) * vnum);
     };
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
-        store(rdata+i*V::length, sv[0]);
+        store(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
@@ -50,34 +74,34 @@ void test_store_helper(TestSuite& tc, const V* sv)
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
-        stream(rdata+i*V::length, sv[0]);
+        stream(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
         rzero(rv);
-        store_first(rdata, sv[0], i);
+        store_first(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
     }
 
     tc.reset_seq();
     for (unsigned i = 0; i < V::length; i++) {
         rzero(rv);
-        store_last(rdata, sv[0], i);
+        store_last(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
     }
 
     rzero(rv);
-    store_packed2(rdata, sv[0], sv[1]);
+    store_packed2(rv, sv[0], sv[1]);
     TEST_ARRAY_PUSH(tc, V, rv);
 
     rzero(rv);
-    store_packed3(rdata, sv[0], sv[1], sv[2]);
+    store_packed3(rv, sv[0], sv[1], sv[2]);
     TEST_ARRAY_PUSH(tc, V, rv);
 
     rzero(rv);
-    store_packed4(rdata, sv[0], sv[1], sv[2], sv[3]);
+    store_packed4(rv, sv[0], sv[1], sv[2], sv[3]);
     TEST_ARRAY_PUSH(tc, V, rv);
 }
 
@@ -96,6 +120,11 @@ void test_memory_store_n(TestSuite& tc)
     test_store_helper<uint64<B/8>, vnum>(tc, v.u64);
     test_store_helper<float32<B/4>, vnum>(tc, v.f32);
     test_store_helper<float64<B/8>, vnum>(tc, v.f64);
+
+    test_store_masked<uint32<B/4>>(tc, v.u32);
+    test_store_masked<uint64<B/8>>(tc, v.u64);
+    test_store_masked<float32<B/4>>(tc, v.f32);
+    test_store_masked<float64<B/8>>(tc, v.f64);
 }
 
 void test_memory_store(TestResults& res)

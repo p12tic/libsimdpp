@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/to_int16.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Sign extends the 16 values of a signed int8x16 vector to 16-bits
@@ -49,14 +47,20 @@ int16<N> to_int16(const int8<N,E>& a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_int16(const uint8<N,E>& a)
+uint16<N> to_uint16(const uint8<N,E>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
-} // namespace SIMDPP_ARCH_NAMESPACE
+#if !SIMDPP_DISABLE_DEPRECATED
+template<unsigned N, class E> SIMDPP_INL
+uint16<N> to_int16(const uint8<N,E>& a)
+{
+    return to_uint16(a);
+}
 #endif
+
+} // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
 #endif

@@ -19,9 +19,7 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 #if SIMDPP_USE_AVX2 || SIMDPP_DOXYGEN
 
@@ -42,9 +40,9 @@ public:
     using native_type = __m256i;
 #endif
 
-    int8<32>() = default;
-    int8<32>(const int8<32> &) = default;
-    int8<32> &operator=(const int8<32> &) = default;
+    SIMDPP_INL int8<32>() = default;
+    SIMDPP_INL int8<32>(const int8<32> &) = default;
+    SIMDPP_INL int8<32> &operator=(const int8<32> &) = default;
 
     template<class E> SIMDPP_INL int8<32>(const int8<32,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int8<32>(const uint8<32,E>& d) { *this = d.eval(); }
@@ -64,7 +62,7 @@ public:
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int8<32>(const expr_vec_construct<E>& e)
@@ -79,14 +77,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const int8<32>& vec(unsigned) const { return *this; }
-          int8<32>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const int8<32>& vec(unsigned) const { return *this; }
+    SIMDPP_INL int8<32>& vec(unsigned)       { return *this; }
     /// @}
 
-    int8<32> eval() const { return *this; }
-
-    static int8<32> zero() { return detail::make_zero(); }
-    static int8<32> ones() { return detail::make_ones(); }
+    SIMDPP_INL int8<32> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -106,9 +101,9 @@ public:
     using native_type = __m256i;
 #endif
 
-    uint8<32>() = default;
-    uint8<32>(const uint8<32> &) = default;
-    uint8<32> &operator=(const uint8<32> &) = default;
+    SIMDPP_INL uint8<32>() = default;
+    SIMDPP_INL uint8<32>(const uint8<32> &) = default;
+    SIMDPP_INL uint8<32> &operator=(const uint8<32> &) = default;
 
     template<class E> SIMDPP_INL uint8<32>(const uint8<32,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint8<32>(const int8<32,E>& d) { *this = d.eval(); }
@@ -128,7 +123,7 @@ public:
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint8<32>(const expr_vec_construct<E>& e)
@@ -143,14 +138,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint8<32>& vec(unsigned) const { return *this; }
-          uint8<32>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const uint8<32>& vec(unsigned) const { return *this; }
+    SIMDPP_INL uint8<32>& vec(unsigned)       { return *this; }
     /// @}
 
-    uint8<32> eval() const { return *this; }
-
-    static uint8<32> zero() { return detail::make_zero(); }
-    static uint8<32> ones() { return detail::make_ones(); }
+    SIMDPP_INL uint8<32> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -169,30 +161,30 @@ public:
     using native_type = __m256i;
 #endif
 
-    mask_int8<32>() = default;
-    mask_int8<32>(const mask_int8<32> &) = default;
-    mask_int8<32> &operator=(const mask_int8<32> &) = default;
+    SIMDPP_INL mask_int8<32>() = default;
+    SIMDPP_INL mask_int8<32>(const mask_int8<32> &) = default;
+    SIMDPP_INL mask_int8<32> &operator=(const mask_int8<32> &) = default;
 
-    mask_int8<32>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int8<32>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX2
-    mask_int8<32>(const uint8<32>& d) : d_(d) {}
+    SIMDPP_INL mask_int8<32>(const uint8<32>& d) : d_(d) {}
 #endif
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    uint8<32> unmask() const
+    SIMDPP_INL uint8<32> unmask() const
     {
     #if SIMDPP_USE_AVX2
         return uint8<32>(d_);
     #endif
     }
 
-    const mask_int8<32>& vec(unsigned) const { return *this; }
-          mask_int8<32>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_int8<32>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_int8<32>& vec(unsigned)       { return *this; }
 
-    mask_int8<32> eval() const { return *this; }
+    SIMDPP_INL mask_int8<32> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -202,9 +194,7 @@ private:
 
 #endif // SIMDPP_USE_AVX2 || SIMDPP_DOXYGEN
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

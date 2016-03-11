@@ -19,7 +19,6 @@
 #include <cstdlib>
 
 
-#include <simdpp/altivec/load1.h>
 #include <simdpp/core/align.h>
 #include <simdpp/core/aligned_allocator.h>
 #include <simdpp/core/bit_and.h>
@@ -50,6 +49,10 @@
 #include <simdpp/core/f_min.h>
 #include <simdpp/core/f_mul.h>
 #include <simdpp/core/f_neg.h>
+#include <simdpp/core/f_reduce_add.h>
+#include <simdpp/core/f_reduce_max.h>
+#include <simdpp/core/f_reduce_min.h>
+#include <simdpp/core/f_reduce_mul.h>
 #include <simdpp/core/f_rcp_e.h>
 #include <simdpp/core/f_rcp_rh.h>
 #include <simdpp/core/f_rsqrt_e.h>
@@ -69,6 +72,12 @@
 #include <simdpp/core/i_mul.h>
 #include <simdpp/core/i_mull.h>
 #include <simdpp/core/i_neg.h>
+#include <simdpp/core/i_reduce_add.h>
+#include <simdpp/core/i_reduce_and.h>
+#include <simdpp/core/i_reduce_max.h>
+#include <simdpp/core/i_reduce_min.h>
+#include <simdpp/core/i_reduce_mul.h>
+#include <simdpp/core/i_reduce_or.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_sub.h>
@@ -93,6 +102,7 @@
 #include <simdpp/core/set_splat.h>
 #include <simdpp/core/shuffle1.h>
 #include <simdpp/core/shuffle2.h>
+#include <simdpp/core/shuffle4x2.h>
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/core/shuffle_zbytes16.h>
 #include <simdpp/core/splat.h>
@@ -100,11 +110,13 @@
 #include <simdpp/core/store_first.h>
 #include <simdpp/core/store.h>
 #include <simdpp/core/store_last.h>
+#include <simdpp/core/store_masked.h>
 #include <simdpp/core/store_packed2.h>
 #include <simdpp/core/store_packed3.h>
 #include <simdpp/core/store_packed4.h>
 #include <simdpp/core/store_u.h>
 #include <simdpp/core/stream.h>
+#include <simdpp/core/test_bits.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_float64.h>
 #include <simdpp/core/to_int16.h>
@@ -119,13 +131,14 @@
 #include <simdpp/detail/cast.h>
 #include <simdpp/detail/cast.inl>
 
-#include <simdpp/neon/math_int.h>
-#include <simdpp/neon/memory_store.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/altivec/load1.h>
+
+#include <simdpp/detail/neon/math_int.h>
+#include <simdpp/detail/neon/memory_store.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 #include <simdpp/detail/null/bitwise.h>
 #include <simdpp/detail/null/compare.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/detail/null/mask.h>
 #include <simdpp/detail/null/math.h>
 #include <simdpp/detail/null/memory.h>
@@ -133,18 +146,11 @@
 #include <simdpp/detail/null/shuffle.h>
 #include <simdpp/detail/null/transpose.h>
 
-#include <simdpp/sse/cache.h>
-#include <simdpp/sse/compare.h>
-#include <simdpp/sse/convert.h>
-#include <simdpp/sse/extract_half.h>
-#include <simdpp/sse/math_fp.h>
-#include <simdpp/sse/math_int.h>
-#include <simdpp/sse/memory_load.h>
-#include <simdpp/sse/memory_store.h>
-#include <simdpp/sse/shuffle.h>
+#include <simdpp/detail/extract128.h>
 
 #include <simdpp/types.h>
 #include <simdpp/types/generic.h>
+#include <simdpp/types/empty_expr.h>
 #include <simdpp/types/float32.h>
 #include <simdpp/types/float32x4.h>
 #include <simdpp/types/float32x8.h>

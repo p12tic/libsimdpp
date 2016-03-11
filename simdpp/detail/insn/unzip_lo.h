@@ -19,9 +19,7 @@
 #include <simdpp/detail/null/shuffle.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -33,7 +31,7 @@ SIMDPP_INL uint8x16 i_unzip16_lo(const uint8x16& ca, const uint8x16& cb)
     return detail::null::unzip16_lo(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, r;
-    mask = uint16x8::ones();
+    mask = make_ones();
     mask = _mm_srli_epi16(mask, 8);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
@@ -53,7 +51,7 @@ SIMDPP_INL uint8x32 i_unzip16_lo(const uint8x32& ca, const uint8x32& cb)
 {
     uint8<32> a = ca, b = cb;
     uint16x16 mask, r;
-    mask = uint16x16::ones();
+    mask = make_ones();
     mask = _mm256_srli_epi16(mask, 8);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
@@ -77,7 +75,7 @@ SIMDPP_INL uint16x8 i_unzip8_lo(const uint16x8& ca, const uint16x8& cb)
     return detail::null::unzip8_lo(a, b);
 #elif SIMDPP_USE_SSE4_1
     uint32x4 mask, r;
-    mask = uint32x4::ones();
+    mask = make_ones();
     mask = _mm_srli_epi32(mask, 16);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
@@ -104,7 +102,7 @@ SIMDPP_INL uint16x16 i_unzip8_lo(const uint16x16& ca, const uint16x16& cb)
 {
     uint16<16> a = ca, b = cb;
     uint32x8 mask, r;
-    mask = uint32x8::ones();
+    mask = make_ones();
     mask = _mm256_srli_epi32(mask, 16);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
@@ -142,7 +140,7 @@ SIMDPP_INL uint32x8 i_unzip4_lo(const uint32x8& a, const uint32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_unzip4_lo(const uint32<16>& a, const uint32<16>& b)
 {
     return shuffle2<0,2,0,2>(a,b);
@@ -186,7 +184,7 @@ SIMDPP_INL float32x8 i_unzip4_lo(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_unzip4_lo(const float32<16>& a, const float32<16>& b)
 {
     return shuffle2<0,2,0,2>(a,b);
@@ -209,9 +207,7 @@ float64<N> i_unzip2_lo(const float64<N>& a, const float64<N>& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

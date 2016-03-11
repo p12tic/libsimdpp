@@ -27,9 +27,7 @@
 #include <simdpp/detail/insn/zip128.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -63,7 +61,7 @@ void mem_pack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
     qb.wrapped() = shuffle1_128<1,1>(c1, c2);
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 {
@@ -94,11 +92,11 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     T a1, b1, c1;
     a1 = align16<11>(a, a);
     b1 = b;
-    c1 = align16<6>(c, c);
+    c1 = align16<5>(c, c);
 
     // [a11..a15,a0..a10]
     // [b0..b15]
-    // [c5..c15,c0..c5]
+    // [c5..c15,c0..c4]
     U mask1 = make_uint(0xff);
     mask1 = move16_l<5>(mask1);
 
@@ -131,8 +129,8 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
     w_b16 t0, t1, t2, t3;
     t0 = zip16_lo(a, b);
     t1 = zip16_hi(a, b);
-    t2 = zip16_lo(c, w_b8::zero());
-    t3 = zip16_hi(c, w_b8::zero());
+    t2 = zip16_lo(c, (w_b8) make_zero());
+    t3 = zip16_hi(c, (w_b8) make_zero());
 
     w_b8 u0, u1, u2, u3;
     u0 = zip8_lo(t0, t2);
@@ -233,9 +231,9 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
     U mask1 = make_shuffle_bytes16_mask<0, 8+3, 8+6,
                                         1, 8+4, 8+7,
                                         2, 8+5>(mask1);
-    a = shuffle_bytes16(a, b, mask1);
-    b = shuffle_bytes16(c, a, mask1);
-    c = shuffle_bytes16(b, c, mask1);
+    a = shuffle_bytes16(a2, b2, mask1);
+    b = shuffle_bytes16(c2, a2, mask1);
+    c = shuffle_bytes16(b2, c2, mask1);
 
     // [a0,b0,c0,a1,b1,c1,a2,b2]
     // [c2,a3,b3,c3,a4,b4,c4,a5]
@@ -249,8 +247,8 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
     w_b32 t0, t1, t2, t3;
     t0 = zip8_lo(a, b);
     t1 = zip8_hi(a, b);
-    t2 = zip8_lo(c, w_b16::zero());
-    t3 = zip8_hi(c, w_b16::zero());
+    t2 = zip8_lo(c, (w_b16) make_zero());
+    t3 = zip8_hi(c, (w_b16) make_zero());
 
     w_b16 u0, u1, u2, u3;
     u0 = zip4_lo(t0, t2);
@@ -327,9 +325,9 @@ void v_mem_pack3_impl32_128(T& a, T& b, T& c)
     // [b1,b2,b3,a3]
     // [c2,c3,c0,b0]
     U mask1 = make_shuffle_bytes16_mask<0,4+3,4+2,1>(mask1);
-    a1 = shuffle_bytes16(a, c, mask1);
-    b1 = shuffle_bytes16(b, a, mask1);
-    c1 = shuffle_bytes16(c, b, mask1);
+    a = shuffle_bytes16(a2, c2, mask1);
+    b = shuffle_bytes16(b2, a2, mask1);
+    c = shuffle_bytes16(c2, b2, mask1);
     // [a0,b0,c0,a1]
     // [b1,c1,a2,b2]
     // [c2,a3,b3,c3]
@@ -387,7 +385,7 @@ void v_mem_pack3_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb, any_vec<32,V>&
     qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void v_mem_pack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>& qc)
 {
@@ -596,7 +594,7 @@ void v_mem_pack4_shuffle128(any_vec<32,V>& qa, any_vec<32,V>& qb,
     qa.wrapped() = a1;  qb.wrapped() = b1;  qc.wrapped() = c1;  qd.wrapped() = d1;
 }
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class V> SIMDPP_INL
 void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
                             any_vec<64,V>& qc, any_vec<64,V>& qd)
@@ -605,29 +603,28 @@ void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
 
     a = qa.wrapped();  b = qb.wrapped();  c = qc.wrapped();  d = qd.wrapped();
 
-    V b0, b1, b2, b3;
+    V t1, t2, t3, t4;
     // [a0,a1,a2,a3]
     // [b0,b1,b2,b3]
     // [c0,c1,c2,c3]
     // [d0,d1,d2,d3]
-    b0 = shuffle2_128<0,1,0,1>(a, b);
-    b1 = shuffle2_128<2,3,2,3>(a, b);
-    b2 = shuffle2_128<0,1,0,1>(c, d);
-    b3 = shuffle2_128<2,3,2,3>(c, d);
+    t1 = shuffle2_128<0,2,0,2>(a, b);
+    t2 = shuffle2_128<1,3,1,3>(a, b);
+    t3 = shuffle2_128<0,2,0,2>(c, d);
+    t4 = shuffle2_128<1,3,1,3>(c, d);
+    // [a0,a2,b0,b2]
+    // [a1,a3,b1,b3]
+    // [c0,c2,d0,d2]
+    // [c1,c3,d1,d3]
+    a = shuffle2_128<0,2,0,2>(t1, t3);
+    b = shuffle2_128<0,2,0,2>(t2, t4);
+    c = shuffle2_128<1,3,1,3>(t1, t3);
+    d = shuffle2_128<1,3,1,3>(t2, t4);
+    // [a0,b0,c0,d0]
+    // [a1,b1,c1,d1]
+    // [a2,b2,c2,d2]
+    // [a3,b3,c3,d3]
 
-    b0 = permute4_128<0,2,1,3>(b0);
-    b1 = permute4_128<0,2,1,3>(b1);
-    b2 = permute4_128<0,2,1,3>(b2);
-    b3 = permute4_128<0,2,1,3>(b3);
-
-    // [a0,b0,a1,b1]
-    // [a2,b2,a3,b3]
-    // [c0,d0,c1,d1]
-    // [c2,d2,c3,d3]
-    a = shuffle2_128<0,1,0,1>(b0, b2);
-    b = shuffle2_128<2,3,2,3>(b0, b2);
-    c = shuffle2_128<0,1,0,1>(b1, b3);
-    d = shuffle2_128<2,3,2,3>(b1, b3);
 
     qa.wrapped() = a;  qb.wrapped() = b;  qc.wrapped() = c;  qd.wrapped() = d;
 }
@@ -687,9 +684,7 @@ void mem_pack4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

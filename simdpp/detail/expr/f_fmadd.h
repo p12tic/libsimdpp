@@ -18,9 +18,7 @@
 
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, class E1, class E2, class E3> SIMDPP_INL
@@ -41,7 +39,7 @@ float32<4> expr_eval(const expr_fmadd<float32<4,E1>,
     // FIXME: also in vfpv4
     return vfmaq_f32(a, b, c);
 #else
-    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
 }
 
@@ -59,12 +57,12 @@ float32<8> expr_eval(const expr_fmadd<float32<8,E1>,
 #elif SIMDPP_USE_FMA4
     return _mm256_macc_ps(a, b, c);
 #else
-    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2, class E3> SIMDPP_INL
 float32<16> expr_eval(const expr_fmadd<float32<16,E1>,
                                        float32<16,E2>,
@@ -109,7 +107,7 @@ float64<2> expr_eval(const expr_fmadd<float64<2,E1>,
     // FIXME: also in vfpv4
     return vfmaq_f64(a, b, c);
 #else
-    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
 }
 
@@ -127,12 +125,12 @@ float64<4> expr_eval(const expr_fmadd<float64<4,E1>,
 #elif SIMDPP_USE_FMA4
     return _mm256_macc_pd(a, b, c);
 #else
-    return SIMDPP_NOT_IMPLEMENTED3(a, b, c);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2, class E3> SIMDPP_INL
 float64<8> expr_eval(const expr_fmadd<float64<8,E1>,
                                       float64<8,E2>,
@@ -157,9 +155,7 @@ float64<N> expr_eval(const expr_fmadd<float64<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -22,9 +22,7 @@
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @ingroup simd_vec_fp
 /// @{
@@ -46,9 +44,9 @@ public:
     using native_type = detail::array<double, 2>;
 #endif
 
-    float64<2>() = default;
-    float64<2>(const float64<2> &) = default;
-    float64<2> &operator=(const float64<2> &) = default;
+    SIMDPP_INL float64<2>() = default;
+    SIMDPP_INL float64<2>(const float64<2> &) = default;
+    SIMDPP_INL float64<2> &operator=(const float64<2> &) = default;
 
     template<class E> SIMDPP_INL float64<2>(const float64<2,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float64<2>(const any_vec<16,V>& d)
@@ -62,12 +60,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    float64<2>(const native_type& d) : d_(d) {}
-    float64<2>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL float64<2>(const native_type& d) : d_(d) {}
+    SIMDPP_INL float64<2>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL float64<2>(const expr_vec_construct<E>& e)
@@ -82,11 +80,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const float64<2>& vec(unsigned) const { return *this; }
-          float64<2>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const float64<2>& vec(unsigned) const { return *this; }
+    SIMDPP_INL float64<2>& vec(unsigned)       { return *this; }
     /// @}
 
-    float64<2> eval() const { return *this; }
+    SIMDPP_INL float64<2> eval() const { return *this; }
 
 #ifndef SIMDPP_DOXYGEN
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
@@ -95,15 +93,6 @@ public:
           double& el(unsigned i)       { return d_[i]; }
 #endif
 #endif
-
-    /** Creates a float64x2 vector with the contens set to zero
-
-        @code
-        r0 = 0.0
-        r1 = 0.0
-        @endcode
-    */
-    static float64<2> zero() { return detail::make_zero(); }
 
 private:
 #if SIMDPP_USE_SSE2
@@ -131,14 +120,14 @@ public:
     using native_type = detail::array<bool, 2>;
 #endif
 
-    mask_float64<2>() = default;
-    mask_float64<2>(const mask_float64<2> &) = default;
-    mask_float64<2> &operator=(const mask_float64<2> &) = default;
+    SIMDPP_INL mask_float64<2>() = default;
+    SIMDPP_INL mask_float64<2>(const mask_float64<2> &) = default;
+    SIMDPP_INL mask_float64<2> &operator=(const mask_float64<2> &) = default;
 
-    mask_float64<2>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_float64<2>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
-    mask_float64<2>(const float64<2>& d) : d_(d) {}
+    SIMDPP_INL mask_float64<2>(const float64<2>& d) : d_(d) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float64<2>(const mask_int64<2,E>& d)
@@ -150,10 +139,10 @@ public:
         *this = bit_cast<mask_float64<2>>(d.eval()); return *this;
     }
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    float64<2> unmask() const
+    SIMDPP_INL float64<2> unmask() const
     {
     #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
         return detail::null::unmask_mask<float64<2>>(*this);
@@ -167,19 +156,17 @@ public:
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
-    const mask_float64<2>& vec(unsigned) const { return *this; }
-          mask_float64<2>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_float64<2>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_float64<2>& vec(unsigned)       { return *this; }
 
-    mask_float64<2> eval() const { return *this; }
+    SIMDPP_INL mask_float64<2> eval() const { return *this; }
 
 private:
     native_type d_;
 };
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

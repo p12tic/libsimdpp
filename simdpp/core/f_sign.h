@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_sign.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Extracts sign bits from the values in float32x4 vector
@@ -37,7 +35,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX-AVX2, 1-2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N, float32<N>> sign(const float32<N,E>& a)
+float32<N,expr_empty> sign(const float32<N,E>& a)
 {
     return detail::insn::i_sign(a.eval());
 }
@@ -60,15 +58,13 @@ float32<N, float32<N>> sign(const float32<N,E>& a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-float64<N, float64<N>> sign(const float64<N,E>& a)
+float64<N,expr_empty> sign(const float64<N,E>& a)
 {
     return detail::insn::i_sign(a.eval());
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

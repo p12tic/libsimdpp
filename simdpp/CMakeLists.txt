@@ -137,7 +137,6 @@ set(HEADERS
     sse/compare.h
     sse/convert.h
     sse/extract_half.h
-    sse/math_fp.h
     sse/math_int.h
     sse/memory_load.h
     sse/memory_store.h
@@ -174,7 +173,7 @@ endforeach()
 simdpp_get_compilable_archs(COMPILABLE_ARCHS)
 set(HEADER_TESTS "")
 foreach(ARCH ${COMPILABLE_ARCHS})
-    simdpp_get_arch_info(CXX_FLAGS SUFFIX ${ARCH})
+    simdpp_get_arch_info(CXX_FLAGS DEFINES_LIST SUFFIX ${ARCH})
     foreach(FILE ${HEADERS})
         string(REPLACE "/" "_" TEST "${FILE}")
         string(REPLACE "." "_" TEST "${TEST}")

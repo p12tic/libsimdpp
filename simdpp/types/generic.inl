@@ -13,9 +13,7 @@
 #include <simdpp/detail/expr/vec.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 template<unsigned N, class E> SIMDPP_INL float32<N>           float32<N,E>::eval() const { return (float32<N>) detail::expr_eval<float32<N>>(e); }
 template<unsigned N, class E> SIMDPP_INL mask_float32<N> mask_float32<N,E>::eval() const { return (mask_float32<N>) detail::expr_eval<mask_float32<N>>(e); }
@@ -39,9 +37,7 @@ template<unsigned N, class E> SIMDPP_INL int64<N>           int64<N,E>::eval() c
 template<unsigned N, class E> SIMDPP_INL uint64<N>         uint64<N,E>::eval() const { return (uint64<N>)     detail::expr_eval<uint64<N>>(e); }
 template<unsigned N, class E> SIMDPP_INL mask_int64<N> mask_int64<N,E>::eval() const { return (mask_int64<N>) detail::expr_eval<mask_int64<N>>(e); }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

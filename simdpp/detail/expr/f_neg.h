@@ -17,9 +17,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, class E> SIMDPP_INL
@@ -45,7 +43,7 @@ float32<8> expr_eval(const expr_neg<float32<8,E>>& q)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
 float32<16> expr_eval(const expr_neg<float32<16,E>>& q)
 {
@@ -86,7 +84,7 @@ float64x4 expr_eval(const expr_neg<float64<4,E>>& q)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
 float64<8> expr_eval(const expr_neg<float64<8,E>>& q)
 {
@@ -104,9 +102,7 @@ float64<N> expr_eval(const expr_neg<float64<N,E>>& q)
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

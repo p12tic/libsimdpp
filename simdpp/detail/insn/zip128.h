@@ -19,9 +19,7 @@
 #include <simdpp/detail/insn/unzip_lo.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -55,9 +53,7 @@ template<unsigned N> SIMDPP_INL float64<N> zip128_hi(const float64<N>& a, const 
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

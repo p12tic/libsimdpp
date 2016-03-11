@@ -14,18 +14,16 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/splat_n.h>
-#include <simdpp/sse/extract_half.h>
+#include <simdpp/detail/extract128.h>
 #include <simdpp/detail/insn/shuffle128.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
 template<unsigned s, class V> SIMDPP_INL
-V v_splat(V a);
+V v_splat(const V& a);
 
 // -----------------------------------------------------------------------------
 
@@ -41,7 +39,7 @@ uint8x32 i_splat(const uint8x32& a)
 {
     static_assert(s < 32, "Access out of bounds");
     uint8x16 lo;
-    lo = s < 16 ? sse::extract_lo(a) : sse::extract_hi(a);
+    lo = s < 16 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move16_l<s % 16>(lo);
     return _mm256_broadcastb_epi8(lo);
 }
@@ -68,7 +66,7 @@ uint16x16 i_splat(const uint16x16& a)
 {
     static_assert(s < 16, "Access out of bounds");
     uint16x8 lo;
-    lo = s < 8 ? sse::extract_lo(a) : sse::extract_hi(a);
+    lo = s < 8 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move8_l<s % 8>(lo);
     return _mm256_broadcastw_epi16(lo);
 }
@@ -101,7 +99,7 @@ uint32x8 i_splat(const uint32x8& ca)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 uint32<16> i_splat(const uint32<16>& ca)
 {
@@ -137,7 +135,7 @@ uint64x4 i_splat(const uint64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 uint64<8> i_splat(const uint64<8>& ca)
 {
@@ -175,14 +173,14 @@ float32x8 i_splat(const float32x8& ca)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 float32<16> i_splat(const float32<16>& ca)
 {
     static_assert(s < 16, "Access out of bounds");
     float32<16> a = ca;
     a = permute4<s%4,s%4,s%4,s%4>(a);
-    a = _mm512_shuffle_f32x4(a, a, s/4);
+    a = _mm512_shuffle_f32x4(a, a, ((s/4) << 6) + ((s/4) << 4) + ((s/4) << 2) + (s/4));
     return a;
 }
 #endif
@@ -218,7 +216,7 @@ float64x4 i_splat(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 float64<8> i_splat(const float64<8>& ca)
 {
@@ -241,24 +239,23 @@ float64<N> i_splat(const float64<N>& a)
 
 // collect some duplicate stuff here
 template<unsigned s, class V> SIMDPP_INL
-V v_splat(V a)
+V v_splat(const V& a)
 {
     using U = typename V::base_vector_type;
     U one = a.vec(s / U::length);
 
     one = i_splat<s % U::length>(one);
 
+    V r;
     for (unsigned i = 0; i < V::vec_length; ++i) {
-        a.vec(i) = one;
+        r.vec(i) = one;
     }
-    return a;
+    return r;
 }
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

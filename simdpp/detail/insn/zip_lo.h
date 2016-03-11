@@ -15,12 +15,10 @@
 #include <simdpp/types.h>
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -102,7 +100,7 @@ SIMDPP_INL uint32x8 i_zip4_lo(const uint32x8& a, const uint32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_zip4_lo(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_unpacklo_epi32(a, b);
@@ -119,15 +117,12 @@ uint32<N> i_zip4_lo(const uint32<N>& a, const uint32<N>& b)
 
 SIMDPP_INL uint64x2 i_zip2_lo(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::zip2_lo(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_unpacklo_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return neon::zip2_lo(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 mask = make_shuffle_bytes16_mask<0, 2>(mask);
-    return shuffle_bytes16(a, b, mask);
 #endif
 }
 
@@ -138,7 +133,7 @@ SIMDPP_INL uint64x4 i_zip2_lo(const uint64x4& a, const uint64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_zip2_lo(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_unpacklo_epi64(a, b);
@@ -173,7 +168,7 @@ SIMDPP_INL float32x8 i_zip4_lo(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_zip4_lo(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_unpacklo_ps(a, b);
@@ -207,7 +202,7 @@ SIMDPP_INL float64x4 i_zip2_lo(const float64x4& a, const float64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_zip2_lo(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_unpacklo_pd(a, b);
@@ -223,9 +218,7 @@ float64<N> i_zip2_lo(const float64<N>& a, const float64<N>& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

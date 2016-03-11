@@ -21,9 +21,7 @@
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @ingroup simd_vec_fp
 /// @{
@@ -39,9 +37,9 @@ public:
     using element_type = float;
     using base_vector_type = float32v;
 
-    float32<N>() = default;
-    float32<N>(const float32<N>&) = default;
-    float32<N>& operator=(const float32<N>&) = default;
+    SIMDPP_INL float32<N>() = default;
+    SIMDPP_INL float32<N>(const float32<N>&) = default;
+    SIMDPP_INL float32<N>& operator=(const float32<N>&) = default;
 
     template<class E> SIMDPP_INL float32<N>(const float32<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float32<N>(const any_vec<N*4,V>& d)
@@ -64,23 +62,10 @@ public:
     }
 #endif
 
-    const float32v& vec(unsigned i) const { return d_[i]; }
-    float32v& vec(unsigned i)             { return d_[i]; }
+    SIMDPP_INL const float32v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL float32v& vec(unsigned i)             { return d_[i]; }
 
-    float32<N> eval() const { return *this; }
-
-    /** Creates a float32 vector with the contents set to zero
-
-        @code
-        r0 = 0.0f
-        ...
-        rN = 0.0f
-        @endcode
-    */
-    static float32<N> zero()
-    {
-        return set_vec(float32v::zero());
-    }
+    SIMDPP_INL float32<N> eval() const { return *this; }
 
 private:
     /** Creates a float vector from a native vector
@@ -91,7 +76,7 @@ private:
         rN = v0
         @endcode
     */
-    static float32<N> set_vec(float32v v0)
+    static SIMDPP_INL float32<N> set_vec(const float32v& v0)
     {
         float32<N> r;
         for (unsigned i = 0; i < r.vec_length; i++) r.vec(i) = v0;
@@ -111,9 +96,9 @@ public:
     using base_vector_type = mask_float32v;
     using expr_type = void;
 
-    mask_float32<N>() = default;
-    mask_float32<N>(const mask_float32<N> &) = default;
-    mask_float32<N> &operator=(const mask_float32<N> &) = default;
+    SIMDPP_INL mask_float32<N>() = default;
+    SIMDPP_INL mask_float32<N>(const mask_float32<N> &) = default;
+    SIMDPP_INL mask_float32<N> &operator=(const mask_float32<N> &) = default;
 
     template<class E> SIMDPP_INL explicit mask_float32<N>(const mask_int32<N,E>& d)
     {
@@ -125,7 +110,7 @@ public:
     }
 
     /// Access the underlying type
-    float32<N> unmask() const
+    SIMDPP_INL float32<N> unmask() const
     {
         float32<N> r;
         for (unsigned i = 0; i < mask_float32::vec_length; ++i) {
@@ -134,10 +119,10 @@ public:
         return r;
     }
 
-    const mask_float32v& vec(unsigned i) const { return d_[i]; }
-          mask_float32v& vec(unsigned i)       { return d_[i]; }
+    SIMDPP_INL const mask_float32v& vec(unsigned i) const { return d_[i]; }
+    SIMDPP_INL mask_float32v& vec(unsigned i)       { return d_[i]; }
 
-    mask_float32<N> eval() const { return *this; }
+    SIMDPP_INL mask_float32<N> eval() const { return *this; }
 
 private:
     mask_float32v d_[mask_float32::vec_length];
@@ -145,9 +130,7 @@ private:
 
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -13,11 +13,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 template<unsigned B>
-void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
+void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
 {
-    // TODO sqrt_e sqrt_rh rcp_e rcp_rh
-    (void) ts_fma;
+    (void) opts;
 
+    // TODO sqrt_e sqrt_rh rcp_e rcp_rh
     using namespace simdpp;
 
     using float32_n = float32<B/4>;
@@ -30,62 +30,100 @@ void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
 
     // Vectors with 32-bit floating-point elements
     {
-        float32_n s[] = {
-            (float32_n) make_float(0.0f, -0.0f, 0.0f, -0.0f),
-            (float32_n) make_float(1.0f, 2.0f, 3.0f, 4.0f),
-            (float32_n) make_float(-1.0f, -2.0f, -3.0f, -4.0f),
-            (float32_n) make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
-            (float32_n) make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
-            (float32_n) make_float(nanf, nanf, nanf, nanf),
-            (float32_n) make_float(inff, inff, inff, inff),
-            (float32_n) make_float(-inff, -inff, -inff, -inff),
-        };
+        TestData<float32_n> s(
+            make_float(0.0f, -0.0f, 0.0f, -0.0f),
+            make_float(1.0f, 2.0f, 3.0f, 4.0f),
+            make_float(-1.0f, -2.0f, -3.0f, -4.0f),
+            make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
+            make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
+            make_float(nanf, nanf, nanf, nanf),
+            make_float(inff, inff, inff, inff),
+            make_float(-inff, -inff, -inff, -inff)
+        );
 
         TEST_ALL_COMB_HELPER2(tc, float32_n, add, s, 4);
         TEST_ALL_COMB_HELPER2(tc, float32_n, sub, s, 4);
+
+#if __PPC__
+        if (opts.is_simulator) {
+            // QEMU does not multiply or divide special values well
+            TestData<float32_n> s2(
+                make_float(1.0f, 2.0f, 3.0f, 4.0f),
+                make_float(-1.0f, -2.0f, -3.0f, -4.0f),
+                make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
+                make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f)
+            );
+            TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s2, 4);
+            tc.set_precision(1);
+            TEST_ALL_COMB_HELPER2(tc, float32_n, div, s2, 4);
+            tc.unset_precision();
+        } else {
+            TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s, 4);
+            tc.set_precision(1);
+            TEST_ALL_COMB_HELPER2(tc, float32_n, div, s, 4);
+            tc.unset_precision();
+        }
+#else
         TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s, 4);
         tc.set_precision(1);
         TEST_ALL_COMB_HELPER2(tc, float32_n, div, s, 4);
         tc.unset_precision();
+#endif
 
         TEST_ARRAY_HELPER1(tc, float32_n, abs, s);
         TEST_ARRAY_HELPER1(tc, float32_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float32_n, neg, s);
 
-#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512
-        TEST_ALL_COMB_HELPER3(ts_fma, float32_n, fmadd, s, 4);
-        TEST_ALL_COMB_HELPER3(ts_fma, float32_n, fmsub, s, 4);
+        tc.set_fp_zero_equal();
+        TEST_ARRAY_HELPER1(tc, float32_n, trunc, s);
+        TEST_ARRAY_HELPER1(tc, float32_n, floor, s);
+        TEST_ARRAY_HELPER1(tc, float32_n, ceil, s);
+        tc.unset_fp_zero_equal();
+
+        tc.sync_archs();
+#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
+        TEST_ALL_COMB_HELPER3(tc, float32_n, fmadd, s, 4);
+        TEST_ALL_COMB_HELPER3(tc, float32_n, fmsub, s, 4);
 #endif
-        float32_n snan[] = {
-            (float32_n) make_float(1.0f, 2.0f, 3.0f, 4.0f),
-            (float32_n) make_float(-1.0f, -2.0f, -3.0f, -4.0f),
-            (float32_n) make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
-            (float32_n) make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
-            (float32_n) make_float(inff, inff, inff, inff),
-            (float32_n) make_float(-inff, -inff, -inff, -inff),
-        };
+        tc.sync_archs();
+
+        TestData<float32_n> snan(
+            make_float(1.0f, 2.0f, 3.0f, 4.0f),
+            make_float(-1.0f, -2.0f, -3.0f, -4.0f),
+            make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
+            make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f),
+            make_float(inff, inff, inff, inff),
+            make_float(-inff, -inff, -inff, -inff)
+        );
         TEST_ALL_COMB_HELPER2(tc, float32_n, min, snan, 4);
         TEST_ALL_COMB_HELPER2(tc, float32_n, max, snan, 4);
 
+        // Depending on the reduction order precision errors may occur.
+        tc.set_precision(2);
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_mul, s, 1);
+        tc.unset_precision();
 
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_min, snan, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, float, float32_n, reduce_max, snan, 1);
     }
 
     // Vectors with 64-bit floating-point elements
     {
-        float64_n s[] = {
-            (float64_n) make_float(0.0, -0.0),
-            (float64_n) make_float(1.0, 2.0),
-            (float64_n) make_float(3.0, 4.0),
-            (float64_n) make_float(-1.0, -2.0),
-            (float64_n) make_float(-3.0, -4.0),
-            (float64_n) make_float(63100000000000000.0, 63100000000000004.0),
-            (float64_n) make_float(63100000000000008.0, 63100000000000012.0),
-            (float64_n) make_float(-63100000000000000.0, -63100000000000004.0),
-            (float64_n) make_float(-63100000000000008.0, -63100000000000012.0),
-            (float64_n) make_float(nan, nan),
-            (float64_n) make_float(inf, inf),
-            (float64_n) make_float(-inf, -inf),
-        };
+        TestData<float64_n> s(
+            make_float(0.0, -0.0),
+            make_float(1.0, 2.0),
+            make_float(3.0, 4.0),
+            make_float(-1.0, -2.0),
+            make_float(-3.0, -4.0),
+            make_float(63100000000000000.0, 63100000000000004.0),
+            make_float(63100000000000008.0, 63100000000000012.0),
+            make_float(-63100000000000000.0, -63100000000000004.0),
+            make_float(-63100000000000008.0, -63100000000000012.0),
+            make_float(nan, nan),
+            make_float(inf, inf),
+            make_float(-inf, -inf)
+        );
 
         TEST_ALL_COMB_HELPER2(tc, float64_n, add, s, 8);
         TEST_ALL_COMB_HELPER2(tc, float64_n, sub, s, 8);
@@ -96,35 +134,68 @@ void test_math_fp_n(TestSuite& tc, TestSuite& ts_fma)
         TEST_ARRAY_HELPER1(tc, float64_n, sign, s);
         TEST_ARRAY_HELPER1(tc, float64_n, neg, s);
 
-#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512
-        TEST_ALL_COMB_HELPER3(ts_fma, float64_n, fmadd, s, 8);
-        TEST_ALL_COMB_HELPER3(ts_fma, float64_n, fmsub, s, 8);
-#endif
+        tc.set_fp_zero_equal();
+        TEST_ARRAY_HELPER1(tc, float64_n, trunc, s);
+        TEST_ARRAY_HELPER1(tc, float64_n, floor, s);
+        TEST_ARRAY_HELPER1(tc, float64_n, ceil, s);
+        tc.unset_fp_zero_equal();
 
-        float64_n snan[] = {
-            (float64_n) make_float(1.0, 2.0),
-            (float64_n) make_float(3.0, 4.0),
-            (float64_n) make_float(-1.0, -2.0),
-            (float64_n) make_float(-3.0, -4.0),
-            (float64_n) make_float(63100000000000000.0, 63100000000000004.0),
-            (float64_n) make_float(63100000000000008.0, 63100000000000012.0),
-            (float64_n) make_float(-63100000000000000.0, -63100000000000004.0),
-            (float64_n) make_float(-63100000000000008.0, -63100000000000012.0),
-            (float64_n) make_float(inf, inf),
-            (float64_n) make_float(-inf, -inf),
-        };
+        TestData<float64_n> snan(
+            make_float(1.0, 2.0),
+            make_float(3.0, 4.0),
+            make_float(-1.0, -2.0),
+            make_float(-3.0, -4.0),
+            make_float(63100000000000000.0, 63100000000000004.0),
+            make_float(63100000000000008.0, 63100000000000012.0),
+            make_float(-63100000000000000.0, -63100000000000004.0),
+            make_float(-63100000000000008.0, -63100000000000012.0),
+            make_float(inf, inf),
+            make_float(-inf, -inf)
+        );
         TEST_ALL_COMB_HELPER2(tc, float64_n, min, snan, 8);
         TEST_ALL_COMB_HELPER2(tc, float64_n, max, snan, 8);
+
+        tc.sync_archs();
+#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
+        // Certain simulators can't handle NaNs and infinity in this instruction
+        if (opts.is_simulator) {
+
+            TestData<float64_n> snan(
+                make_float(1.0, 2.0),
+                make_float(3.0, 4.0),
+                make_float(-1.0, -2.0),
+                make_float(-3.0, -4.0),
+                make_float(63100000000000000.0, 63100000000000004.0),
+                make_float(63100000000000008.0, 63100000000000012.0),
+                make_float(-63100000000000000.0, -63100000000000004.0),
+                make_float(-63100000000000008.0, -63100000000000012.0)
+            );
+
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmadd, snan, 8);
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, snan, 8);
+        } else {
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmadd, s, 8);
+            TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, s, 8);
+        }
+#endif
+        tc.sync_archs();
+
+        // Depending on the reduction order precision errors may occur.
+        tc.set_precision(2);
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_add, s, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_mul, s, 1);
+        tc.unset_precision();
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_min, snan, 1);
+        TEST_ALL_COMB_HELPER1_T(tc, double, float64_n, reduce_max, snan, 1);
     }
 }
 
-void test_math_fp(TestResults& res)
+void test_math_fp(TestResults& res, const TestOptions& opts)
 {
     TestSuite& ts = NEW_TEST_SUITE(res, "math_fp");
-    TestSuite& ts_fma = NEW_TEST_SUITE(res, "math_fp.fma");
-    test_math_fp_n<16>(ts, ts_fma);
-    test_math_fp_n<32>(ts, ts_fma);
-    test_math_fp_n<64>(ts, ts_fma);
+    test_math_fp_n<16>(ts, opts);
+    test_math_fp_n<32>(ts, opts);
+    test_math_fp_n<64>(ts, opts);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

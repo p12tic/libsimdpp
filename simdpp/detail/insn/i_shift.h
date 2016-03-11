@@ -15,63 +15,61 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 template<unsigned N, class E> SIMDPP_INL
-uint8<N, uint8<N>> shift_l(const uint8<N,E>& a, unsigned count);
+uint8<N,expr_empty> shift_l(const uint8<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-uint16<N, uint16<N>> shift_l(const uint16<N,E>& a, unsigned count);
+uint16<N,expr_empty> shift_l(const uint16<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-uint32<N, uint32<N>> shift_l(const uint32<N,E>& a, unsigned count);
+uint32<N,expr_empty> shift_l(const uint32<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-uint64<N, uint64<N>> shift_l(const uint64<N,E>& a, unsigned count);
+uint64<N,expr_empty> shift_l(const uint64<N,E>& a, unsigned count);
 
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint8<N, uint8<N>> shift_l(const uint8<N,E>& a);
+uint8<N,expr_empty> shift_l(const uint8<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint16<N, uint16<N>> shift_l(const uint16<N,E>& a);
+uint16<N,expr_empty> shift_l(const uint16<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint32<N, uint32<N>> shift_l(const uint32<N,E>& a);
+uint32<N,expr_empty> shift_l(const uint32<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint64<N, uint64<N>> shift_l(const uint64<N,E>& a);
+uint64<N,expr_empty> shift_l(const uint64<N,E>& a);
 
 template<unsigned N, class E> SIMDPP_INL
-int8<N, int8<N>> shift_r(const int8<N,E>& a, unsigned count);
+int8<N,expr_empty> shift_r(const int8<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-int16<N, int16<N>> shift_r(const int16<N,E>& a, unsigned count);
+int16<N,expr_empty> shift_r(const int16<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-int32<N, int32<N>> shift_r(const int32<N,E>& a, unsigned count);
+int32<N,expr_empty> shift_r(const int32<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-int64<N, int64<N>> shift_r(const int64<N,E>& a, unsigned count);
+int64<N,expr_empty> shift_r(const int64<N,E>& a, unsigned count);
 
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-int8<N, int8<N>> shift_r(const int8<N,E>& a);
+int8<N,expr_empty> shift_r(const int8<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-int16<N, int16<N>> shift_r(const int16<N,E>& a);
+int16<N,expr_empty> shift_r(const int16<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-int32<N, int32<N>> shift_r(const int32<N,E>& a);
+int32<N,expr_empty> shift_r(const int32<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-int64<N, int64<N>> shift_r(const int64<N,E>& a);
+int64<N,expr_empty> shift_r(const int64<N,E>& a);
 
 template<unsigned N, class E> SIMDPP_INL
-uint8<N, uint8<N>> shift_r(const uint8<N,E>& a, unsigned count);
+uint8<N,expr_empty> shift_r(const uint8<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-uint16<N, uint16<N>> shift_r(const uint16<N,E>& a, unsigned count);
+uint16<N,expr_empty> shift_r(const uint16<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-uint32<N, uint32<N>> shift_r(const uint32<N,E>& a, unsigned count);
+uint32<N,expr_empty> shift_r(const uint32<N,E>& a, unsigned count);
 template<unsigned N, class E> SIMDPP_INL
-uint64<N, uint64<N>> shift_r(const uint64<N,E>& a, unsigned count);
+uint64<N,expr_empty> shift_r(const uint64<N,E>& a, unsigned count);
 
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint8<N, uint8<N>> shift_r(const uint8<N,E>& a);
+uint8<N,expr_empty> shift_r(const uint8<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint16<N, uint16<N>> shift_r(const uint16<N,E>& a);
+uint16<N,expr_empty> shift_r(const uint16<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint32<N, uint32<N>> shift_r(const uint32<N,E>& a);
+uint32<N,expr_empty> shift_r(const uint32<N,E>& a);
 template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint64<N, uint64<N>> shift_r(const uint64<N,E>& a);
+uint64<N,expr_empty> shift_r(const uint64<N,E>& a);
 
 namespace detail {
 namespace insn {
@@ -100,9 +98,7 @@ struct shift_u8_mask<8,V> { V operator()() { return make_uint(0xff); } };
 
 } // namespace detail
 } // namespace insn
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

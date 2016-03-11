@@ -17,9 +17,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Extracts a int8x16 vector from two concatenated int8x16 vectors
@@ -195,9 +193,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     return detail::insn::i_align2<shift>(qlower, qupper);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

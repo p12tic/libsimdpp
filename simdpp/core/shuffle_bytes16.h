@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/shuffle_bytes16.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Selects bytes from two vectors according to a mask. Each byte within the
@@ -78,9 +76,7 @@ float64<N> shuffle_bytes16(const float64<N>& a, const float64<N>& b, const uint6
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

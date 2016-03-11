@@ -19,13 +19,10 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/core/detail/vec_insert.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -66,7 +63,7 @@ SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL int32<16> i_to_int32(const int16<16>& a)
 {
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     return _mm512_cvtepi16_epi32(a);
 #else
     int32<8> r0, r1;
@@ -94,7 +91,11 @@ int32<N> i_to_int32(const int16<N>& a)
 SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<int32x4>(a, [](float x) { return int32_t(x); });
+    int32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = int32_t(a.el(i));
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
@@ -127,7 +128,7 @@ SIMDPP_INL int32x8 i_to_int32(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_to_int32(const float32<16>& a)
 {
     return _mm512_cvttps_epi32(a);
@@ -171,14 +172,14 @@ SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
     int32<4> r = vcombine_s32(vqmovn_s64(r1), vqmovn_s64(r2));
     return r;
 #else
-    SIMDPP_NOT_IMPLEMENTED1(a); return int32x4();
+    return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
 
 #if SIMDPP_USE_AVX
 SIMDPP_INL int32<8> i_to_int32(const float64<8>& a)
 {
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     return _mm512_cvtpd_epi32(a);
 #else
     int32<4> r1, r2;
@@ -189,7 +190,7 @@ SIMDPP_INL int32<8> i_to_int32(const float64<8>& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int32<16> i_to_int32(const float64<16>& a)
 {
     int32<8> r0, r1;
@@ -211,9 +212,7 @@ int32<N> i_to_int32(const float64<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -16,9 +16,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace null {
 
@@ -76,6 +74,18 @@ void store(void* p, const V& a)
     T* pt = reinterpret_cast<T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         *pt++ = a.el(i);
+    }
+}
+
+template<class V, class M> SIMDPP_INL
+void store_masked(void* p, const V& a, const M& mask)
+{
+    using T = typename V::element_type;
+    T* pt = reinterpret_cast<T*>(p);
+    for (unsigned i = 0; i < a.length; ++i) {
+        if (mask.el(i))
+            *pt = a.el(i);
+        pt++;
     }
 }
 
@@ -138,9 +148,7 @@ void store_packed4(void* p, const V& a, const V& b, const V& c, const V& d)
 
 } // namespace null
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -16,16 +16,8 @@
 #include <simdpp/detail/insn/set_splat.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
-
-template<class V>
-struct is_expr_vec_load_splat { static const bool value = false; };
-template<>
-struct is_expr_vec_load_splat<expr_vec_load_splat> { static const bool value = true; };
-
 namespace insn {
 
 SIMDPP_INL void i_load_splat(uint8x16& v, const void* p0)
@@ -121,7 +113,7 @@ SIMDPP_INL void i_load_splat(uint32x8& v, const void* p0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_splat(uint32<16>& v, const void* p0)
 {
     __m128 x = _mm_load_ss(reinterpret_cast<const float*>(p0));
@@ -145,18 +137,19 @@ void i_load_splat(uint32<N>& v, const void* p0)
 SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<uint64x2>(*v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(v0));
     v = permute2<0,0>(v);
 #elif SIMDPP_USE_NEON
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ == 7)
+    // BUG: GCC 4.7 loads only the first element
+    uint64x1_t x = vld1_dup_u64(v0);
+    v = vdupq_lane_u64(x, 0);
+#else
     v = vld1q_dup_u64(v0);
-#elif SIMDPP_USE_ALTIVEC
-    SIMDPP_ALIGN(16) uint64_t rv[2];
-    rv[0] = *v0;
-    v = load(rv);
-    v = splat<0>(v);
+#endif
 #endif
 }
 
@@ -168,7 +161,7 @@ SIMDPP_INL void i_load_splat(uint64x4& v, const void* p0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_splat(uint64<8>& v, const void* p0)
 {
     __m128i x = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(p0));
@@ -214,7 +207,7 @@ SIMDPP_INL void i_load_splat(float32x8& v, const void* p0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_splat(float32<16>& v, const void* p0)
 {
     __m128 x = _mm_load_ss(reinterpret_cast<const float*>(p0));
@@ -258,7 +251,7 @@ SIMDPP_INL void i_load_splat(float64x4& v, const void* p0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_splat(float64<8>& v, const void* p0)
 {
     __m128d x = _mm_load_sd(reinterpret_cast<const double*>(p0));
@@ -279,27 +272,13 @@ void i_load_splat(float64<N>& v, const void* p0)
 
 // -----------------------------------------------------------------------------
 
-template<class V>
-struct i_load_splat_dispatch
+template<class V> SIMDPP_INL
+V i_load_splat_any(const char* p)
 {
-    static V run(const void* v)
-    {
-        V r;
-        i_load_splat(r, v);
-        return r;
-    }
-};
-
-template<>
-struct i_load_splat_dispatch<expr_vec_load_splat>
-{
-    static expr_vec_load_splat run(const void* v)
-    {
-        expr_vec_load_splat r;
-        r.a = v;
-        return r;
-    }
-};
+    typename detail::remove_sign<V>::type r;
+    i_load_splat(r, p);
+    return V(r);
+}
 
 // -----------------------------------------------------------------------------
 } // namespace insn
@@ -307,15 +286,11 @@ struct i_load_splat_dispatch<expr_vec_load_splat>
 template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load_splat& e)
 {
-    typename detail::remove_sign<V>::type r;
-    insn::i_load_splat(r, e.a);
-    v = r;
+    v = insn::i_load_splat_any<V>(e.a);
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

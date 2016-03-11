@@ -17,9 +17,7 @@
 #include <simdpp/core/cmp_neq.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class T> struct base_mask_vector_type { using type = T; };
@@ -124,9 +122,7 @@ struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
 };
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

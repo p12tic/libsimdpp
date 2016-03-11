@@ -5,7 +5,7 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#define SIMDPP_USER_ARCH_INFO get_supported_arch
+#define SIMDPP_USER_ARCH_INFO get_supported_arch()
 #include "dispatcher.h"
 #include <simdpp/simd.h>
 

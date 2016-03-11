@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /*  Note: widening integer multiplication instructions are very different among
@@ -64,9 +62,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @par 256-bit version:
 
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, NEON, 2-3}
 */
@@ -74,7 +69,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 int32<N, expr_mull<int16<N,E1>,
                    int16<N,E2>>> mull(const int16<N,E1>& a, const int16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
@@ -91,9 +86,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
     @icost{SSE2-AVX2, ALTIVEC, 2-3}
 
     @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE2-AVX, ALTIVEC, 4-6}
     @icost{AVX2, 2-3}
     @icost{NEON, 2}
@@ -102,7 +94,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 uint32<N, expr_mull<uint16<N,E1>,
                     uint16<N,E2>>> mull(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
@@ -119,9 +111,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
     @unimp{SSE2-SSSE3, ALTIVEC}
 
     @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE4.1-AVX, 6}
     @icost{AVX2, 3}
     @icost{NEON, 2}
@@ -131,7 +120,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 int64<N, expr_mull<int32<N,E1>,
                    int32<N,E2>>> mull(const int32<N,E1>& a, const int32<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
@@ -147,10 +136,6 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
     @icost{SSE2-AVX, 3}
     @unimp{ALTIVEC}
 
-    @par 256-bit version:
-    The lower and higher 128-bit halves are processed as if 128-bit instruction
-    was applied to each of them separately.
-
     @icost{SSE2-AVX, 6}
     @icost{AVX2, 3}
     @icost{NEON, 2}
@@ -160,14 +145,12 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 uint64<N, expr_mull<uint32<N,E1>,
                     uint32<N,E2>>> mull(const uint32<N,E1>& a, const uint32<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint64, uint32)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

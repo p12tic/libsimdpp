@@ -15,11 +15,10 @@
 #include <simdpp/types.h>
 #include <simdpp/core/bit_xor.h>
 #include <simdpp/detail/null/compare.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -174,7 +173,7 @@ SIMDPP_INL mask_int32x8 i_cmp_lt(const int32x8& a, const int32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_cmp_lt(const int32<16>& a, const int32<16>& b)
 {
     return _mm512_cmpgt_epi32_mask(b, a);
@@ -218,7 +217,7 @@ SIMDPP_INL mask_int32x8 i_cmp_lt(const uint32x8& ca, const uint32x8& cb)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_cmp_lt(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_cmplt_epu32_mask(a, b);
@@ -229,6 +228,85 @@ template<unsigned N> SIMDPP_INL
 mask_int32<N> i_cmp_lt(const uint32<N>& a, const uint32<N>& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, i_cmp_lt, a, b);
+}
+
+// -----------------------------------------------------------------------------
+
+SIMDPP_INL mask_int64x2 i_cmp_lt(const int64x2& a, const int64x2& b)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::cmp_lt(a, b);
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+    return _mm_comlt_epi64(a, b);
+#elif SIMDPP_USE_AVX2
+    return _mm_cmpgt_epi64(b, a);
+#elif SIMDPP_USE_NEON64
+    return vcltq_s64(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL mask_int64x4 i_cmp_lt(const int64x4& a, const int64x4& b)
+{
+    return _mm256_cmpgt_epi64(b, a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+SIMDPP_INL mask_int64<8> i_cmp_lt(const int64<8>& a, const int64<8>& b)
+{
+    return _mm512_cmplt_epi64_mask(a, b);
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+mask_int64<N> i_cmp_lt(const int64<N>& a, const int64<N>& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_lt, a, b);
+}
+
+// -----------------------------------------------------------------------------
+
+SIMDPP_INL mask_int64x2 i_cmp_lt(const uint64x2& a, const uint64x2& b)
+{
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::cmp_lt(a, b);
+#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+    return _mm_comlt_epu64(a, b);
+#elif SIMDPP_USE_AVX2
+    uint64<2> ca = bit_xor(a, 0x8000000000000000); // sub
+    uint64<2> cb = bit_xor(b, 0x8000000000000000); // sub
+    return _mm_cmpgt_epi64(cb, ca);
+#elif SIMDPP_USE_NEON64
+    return vcltq_u64(a, b);
+#else
+    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL mask_int64x4 i_cmp_lt(const uint64x4& ca, const uint64x4& cb)
+{
+    uint64<4> a = ca, b = cb;
+    a = bit_xor(a, 0x8000000000000000); // sub
+    b = bit_xor(b, 0x8000000000000000); // sub
+    return _mm256_cmpgt_epi64(b, a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+SIMDPP_INL mask_int64<8> i_cmp_lt(const uint64<8>& a, const uint64<8>& b)
+{
+    return _mm512_cmplt_epu64_mask(a, b);
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+mask_int64<N> i_cmp_lt(const uint64<N>& a, const uint64<N>& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_lt, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +333,7 @@ SIMDPP_INL mask_float32x8 i_cmp_lt(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_cmp_lt(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_LT_OQ);
@@ -290,7 +368,7 @@ SIMDPP_INL mask_float64x4 i_cmp_lt(const float64x4& a, const float64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_cmp_lt(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_LT_OQ);
@@ -305,9 +383,7 @@ mask_float64<N> i_cmp_lt(const float64<N>& a, const float64<N>& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

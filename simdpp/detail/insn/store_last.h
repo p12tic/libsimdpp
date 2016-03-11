@@ -17,16 +17,14 @@
 #include <simdpp/core/blend.h>
 #include <simdpp/core/load.h>
 #include <simdpp/core/load_u.h>
+#include <simdpp/core/move_l.h>
 #include <simdpp/core/store.h>
-#include <simdpp/neon/memory_store.h>
+#include <simdpp/detail/neon/memory_store.h>
 #include <simdpp/detail/null/memory.h>
-#include <simdpp/sse/extract_half.h>
-#include <simdpp/sse/memory_store.h>
+#include <simdpp/detail/extract128.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -130,7 +128,7 @@ SIMDPP_INL void i_store_last(char* p, const uint32x8& a, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const uint32<16>& a, unsigned n)
 {
     _mm512_mask_store_epi32(p, 0xffff << (16-n), a);
@@ -149,20 +147,16 @@ void i_store_last(char* p, const uint32<N>& a, unsigned n)
 SIMDPP_INL void i_store_last(char* p, const uint64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
-        sse::store_lane<1,1>(p+8, a);
+        uint64x2 b = move2_l<1>(a);
+        _mm_store_sd(reinterpret_cast<double*>(p+8), _mm_castsi128_pd(b));
     }
 #elif SIMDPP_USE_NEON
     if (n == 1) {
         neon::store_lane<1,1>(p+8, a);
-    }
-#elif SIMDPP_USE_ALTIVEC
-    if (n == 1) {
-        vec_ste((__vector uint32_t)(uint32x4)a, 8, reinterpret_cast<uint32_t*>(p));
-        vec_ste((__vector uint32_t)(uint32x4)a, 12, reinterpret_cast<uint32_t*>(p));
     }
 #endif
 }
@@ -180,7 +174,7 @@ SIMDPP_INL void i_store_last(char* p, const uint64x4& a, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const uint64<8>& a, unsigned n)
 {
     _mm512_mask_store_epi64(p, 0xff << (8-n), a);
@@ -241,7 +235,7 @@ SIMDPP_INL void i_store_last(char* p, const float32x8& ca, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const float32<16>& a, unsigned n)
 {
     _mm512_mask_store_ps(p, 0xffff << (16-n), a);
@@ -264,7 +258,8 @@ SIMDPP_INL void i_store_last(char* p, const float64x2& a, unsigned n)
     detail::null::store_last(p, a, n);
 #elif SIMDPP_USE_SSE2
     if (n == 1) {
-        sse::store_lane<1,1>(q+1, a);
+        float64x2 b = zip2_hi(a, a);
+        _mm_store_sd(q+1, b);
     }
 #elif SIMDPP_USE_NEON64
     if (n == 1) {
@@ -289,7 +284,7 @@ SIMDPP_INL void i_store_last(char* p, const float64x4& a, unsigned n)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_last(char* p, const float64<8>& a, unsigned n)
 {
     _mm512_mask_store_pd(p, 0xff << (8-n), a);
@@ -332,9 +327,7 @@ void v_store_last(char* p, const V& a, unsigned n)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Adds and saturates signed 8-bit integer values.
@@ -38,7 +36,7 @@ int8<N, expr_add_sat<int8<N,E1>,
                      int8<N,E2>>> add_sat(const int8<N,E1>& a,
                                          const  int8<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, int8, int8)
@@ -59,7 +57,7 @@ int16<N, expr_add_sat<int16<N,E1>,
                       int16<N,E2>>> add_sat(const int16<N,E1>& a,
                                             const int16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, int16, int16)
@@ -80,7 +78,7 @@ uint8<N, expr_add_sat<uint8<N,E1>,
                       uint8<N,E2>>> add_sat(const uint8<N,E1>& a,
                                             const uint8<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, uint8, uint8)
@@ -101,14 +99,12 @@ uint16<N, expr_add_sat<uint16<N,E1>,
                        uint16<N,E2>>> add_sat(const uint16<N,E1>& a,
                                               const uint16<N,E2>& b)
 {
-    return { { a, b }, 0 };
+    return { { a, b } };
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(add_sat, expr_add_sat, uint16, uint16)
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

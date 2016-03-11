@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/i_neg.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Negates signed 8-bit values.
 
@@ -34,7 +32,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E> SIMDPP_INL
 int8<N, expr_neg<int8<N,E>>> neg(const int8<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 /** Negates signed 16-bit values.
@@ -51,7 +49,7 @@ int8<N, expr_neg<int8<N,E>>> neg(const int8<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 int16<N, expr_neg<int16<N,E>>> neg(const int16<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 /** Negates signed 32-bit values.
@@ -68,7 +66,7 @@ int16<N, expr_neg<int16<N,E>>> neg(const int16<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 int32<N, expr_neg<int32<N,E>>> neg(const int32<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 /** Negates signed 64-bit values.
@@ -89,12 +87,10 @@ int32<N, expr_neg<int32<N,E>>> neg(const int32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 int64<N, expr_neg<int64<N,E>>> neg(const int64<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

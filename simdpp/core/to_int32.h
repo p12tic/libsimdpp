@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/to_int32.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Sign extends the first 8 values of a signed int16x16 vector to 32-bits
 
@@ -39,10 +37,18 @@ int32<N> to_int32(const int16<N,E>& a)
 
 // TODO: document
 template<unsigned N, class E> SIMDPP_INL
-uint32<N> to_int32(const uint16<N,E>& a)
+uint32<N> to_uint32(const uint16<N,E>& a)
 {
     return (uint32<N>) detail::insn::i_to_int32(int16<N>(a.eval())); // FIXME
 }
+
+#if !SIMDPP_DISABLE_DEPRECATED
+template<unsigned N, class E> SIMDPP_INL
+uint32<N> to_int32(const uint16<N,E>& a)
+{
+    return to_uint32(a);
+}
+#endif
 
 /** Converts the values of a float32x4 vector into signed int32_t
     representation using truncation if only an inexact conversion can be
@@ -104,9 +110,7 @@ int32<N> to_int32(const float64<N,E>& a)
     return detail::insn::i_to_int32(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

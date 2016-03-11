@@ -22,9 +22,7 @@
 #include <simdpp/detail/null/compare.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -105,7 +103,7 @@ SIMDPP_INL mask_int32x8 i_cmp_eq(const uint32x8& a, const uint32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int32<16> i_cmp_eq(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_cmpeq_epi32_mask(a, b);
@@ -127,7 +125,7 @@ mask_int32<N> i_cmp_eq(const uint32<N>& a, const uint32<N>& b)
 
 SIMDPP_INL mask_int64x2 i_cmp_eq(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_eq(a, b);
 #elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comeq_epi64(a, b);
@@ -141,7 +139,9 @@ SIMDPP_INL mask_int64x2 i_cmp_eq(const uint64x2& a, const uint64x2& b)
     // combine the results. Each 32-bit half is ANDed with the neighbouring pair
     r32 = bit_and(r32, r32s);
     return r32;
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON64
+    return vceqq_u64(a, b);
+#elif SIMDPP_USE_NEON32
     uint32x4 r32, r32s;
     r32 = i_cmp_eq(uint32x4(a), uint32x4(b));
     r32s = r32;
@@ -150,13 +150,6 @@ SIMDPP_INL mask_int64x2 i_cmp_eq(const uint64x2& a, const uint64x2& b)
     // combine the results. Each 32-bit half is ANDed with the neighbouring pair
     r32 = bit_and(r32, r32s);
     return uint64x2(r32);
-#elif SIMDPP_USE_ALTIVEC
-    uint16x8 mask = make_shuffle_bytes16_mask<0, 2, 1, 3>(mask);
-    uint32x4 r;
-    r = i_cmp_eq(uint32<4>(a), uint32<4>(b));
-    r = permute_bytes16(uint16x8(a), mask);
-    r = i_cmp_eq(r, uint32x4::zero());
-    return uint64x2(r);
 #endif
 }
 
@@ -167,7 +160,7 @@ SIMDPP_INL mask_int64x4 i_cmp_eq(const uint64x4& a, const uint64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_int64<8> i_cmp_eq(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_cmpeq_epi64_mask(a, b);
@@ -209,7 +202,7 @@ SIMDPP_INL mask_float32x8 i_cmp_eq(const float32x8& a, const float32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float32<16> i_cmp_eq(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_EQ_OQ);
@@ -251,7 +244,7 @@ SIMDPP_INL mask_float64x4 i_cmp_eq(const float64x4& a, const float64x4& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_cmp_eq(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_EQ_OQ);
@@ -271,9 +264,7 @@ mask_float64<N> i_cmp_eq(const float64<N>& a, const float64<N>& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -17,9 +17,7 @@
 #include <simdpp/core/move_l.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 
@@ -129,7 +127,7 @@ uint32<8> expr_eval(const expr_sub<uint32<8,E1>,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2> SIMDPP_INL
 uint32<16> expr_eval(const expr_sub<uint32<16,E1>,
                                     uint32<16,E2>>& q)
@@ -157,21 +155,12 @@ uint64<2> expr_eval(const expr_sub<uint64<2,E1>,
 {
     uint64<2> a = q.a.eval();
     uint64<2> b = q.b.eval();
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
     return _mm_sub_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u64(a, b);
-#else
-    uint32<4> r, carry, a32, b32;
-    a32 = a, b32 = b;
-    carry = vec_subc((__vector uint32_t) a32, (__vector uint32_t) b32);
-    carry = move4_l<1>(carry);
-    r = vec_sub((__vector uint32_t)a32, (__vector uint32_t)b32);
-    carry = (uint32x4) bit_and((uint64x2)carry, 0x0000000100000000);
-    r = vec_sub((__vector uint32_t)r, (__vector uint32_t)carry);
-    return (uint64<2>) r;
 #endif
 }
 
@@ -186,7 +175,7 @@ uint64<4> expr_eval(const expr_sub<uint64<4,E1>,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2> SIMDPP_INL
 uint64<8> expr_eval(const expr_sub<uint64<8,E1>,
                                    uint64<8,E2>>& q)
@@ -207,9 +196,7 @@ uint64<N> expr_eval(const expr_sub<uint64<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

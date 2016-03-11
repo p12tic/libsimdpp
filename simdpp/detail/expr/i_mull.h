@@ -22,9 +22,7 @@
 #include <simdpp/core/zip_lo.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 
@@ -90,6 +88,8 @@ int32<16> expr_eval(const expr_mull<int16<16,E1>,
 {
     int16<16> a = q.a.eval();
     int16<16> b = q.b.eval();
+    a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
+    b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epi16(a, b);
     return (int32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
@@ -145,6 +145,8 @@ uint32<16> expr_eval(const expr_mull<uint16<16,E1>,
 {
     uint16<16> a = q.a.eval();
     uint16<16> b = q.b.eval();
+    a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
+    b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epu16(a, b);
     return (uint32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
@@ -194,7 +196,7 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
     int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
     return combine(lo, hi);
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
 #endif
 }
 
@@ -205,14 +207,13 @@ int64<8> expr_eval(const expr_mull<int32<8,E1>,
 {
     int32<8> a = q.a.eval();
     int32<8> b = q.b.eval();
-    int32x8 al, ah, bl, bh;
+    int32x4 al, ah, bl, bh;
     int64x4 rl, rh;
-    al = zip4_lo(a, a);
-    bl = zip4_lo(b, b);
-    ah = zip4_hi(a, a);
-    bh = zip4_hi(b, b);
-    rl = _mm256_mul_epi32(al, bl);
-    rh = _mm256_mul_epi32(ah, bh);
+    split(a, al, ah);
+    split(b, bl, bh);
+
+    rl = _mm256_mul_epi32(to_int64(al).eval(), to_int64(bl).eval());
+    rh = _mm256_mul_epi32(to_int64(ah).eval(), to_int64(bh).eval());
     return combine(rl, rh);
 }
 #endif
@@ -260,7 +261,14 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
-    return SIMDPP_NOT_IMPLEMENTED1(q);
+    mem_block<uint32<4>> ba = a;
+    mem_block<uint32<4>> bb = b;
+    uint64x4 r;
+    r.vec(0).el(0) = (uint64_t) ba[0] * bb[0];
+    r.vec(0).el(1) = (uint64_t) ba[1] * bb[1];
+    r.vec(1).el(0) = (uint64_t) ba[2] * bb[2];
+    r.vec(1).el(1) = (uint64_t) ba[3] * bb[3];
+    return r;
 #endif
 }
 
@@ -271,19 +279,20 @@ uint64<8> expr_eval(const expr_mull<uint32<8,E1>,
 {
     uint32<8> a = q.a.eval();
     uint32<8> b = q.b.eval();
-    uint32x8 al, ah, bl, bh;
+    uint32x4 al, ah, bl, bh;
     uint64x4 rl, rh;
-    al = zip4_lo(a, a); // FIXME; extract halves and use cvtepu32_epi64
-    bl = zip4_lo(b, b);
-    ah = zip4_hi(a, a);
-    bh = zip4_hi(b, b);
-    rl = _mm256_mul_epu32(al, bl);
-    rh = _mm256_mul_epu32(ah, bh);
+
+    split(a, al, ah);
+    split(b, bl, bh);
+
+    rl = _mm256_mul_epu32(to_uint64(al).eval(), to_uint64(bl).eval());
+    rh = _mm256_mul_epu32(to_uint64(ah).eval(), to_uint64(bh).eval());
+
     return combine(rl, rh);
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2> SIMDPP_INL
 uint64<16> expr_eval(const expr_mull<uint32<16,E1>,
                                      uint32<16,E2>>& q)
@@ -317,9 +326,7 @@ uint64<N> expr_eval(const expr_mull<uint32<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

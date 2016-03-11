@@ -13,12 +13,10 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/insn/shuffle1.h>
+#include <simdpp/detail/insn/shuffle2x2.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Selects 64-bit values from two vectors. The first value in
     each pair of values must come from @a a, the second - from @a b. The
@@ -56,13 +54,11 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     typename detail::get_expr2_nomask<V1, V2>::type ra = a.wrapped().eval(),
-                                                               rb = b.wrapped().eval();
-    return detail::insn::i_shuffle1<s0,s1>(ra, rb);
+                                                    rb = b.wrapped().eval();
+    return detail::insn::i_shuffle2x2<s0,s1+2>(ra, rb);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

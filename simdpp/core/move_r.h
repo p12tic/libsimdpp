@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/move_r.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /// @{
@@ -46,12 +44,10 @@ typename detail::get_expr_nomask<V>::empty
         move16_r(const any_vec8<N,V>& a)
 {
     static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return a.wrapped().eval();
-    if (shift == 16) return V::zero();
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();
-    return detail::insn::i_move16_r<shift>(ra);
+    return detail::insn::i_move16_r_wrapper<shift>::run(ra);
 }
 
 /** Moves the 16-bit elements in a vector to the right by @a shift positions.
@@ -78,12 +74,10 @@ typename detail::get_expr_nomask<V>::empty
         move8_r(const any_vec16<N,V>& a)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    if (shift == 0) return a.wrapped().eval();
-    if (shift == 8) return V::zero();
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();
-    return detail::insn::i_move8_r<shift>(ra);
+    return detail::insn::i_move8_r_wrapper<shift>::run(ra);
 }
 
 /** Moves the 32-bit elements in a vector to the right by @a shift positions.
@@ -108,12 +102,10 @@ typename detail::get_expr_nomask<V>::empty
         move4_r(const any_vec32<N,V>& a)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    if (shift == 0) return a.wrapped().eval();
-    if (shift == 4) return V::zero();
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();
-    return detail::insn::i_move4_r<shift>(ra);
+    return detail::insn::i_move4_r_wrapper<shift>::run(ra);
 }
 
 
@@ -137,18 +129,14 @@ typename detail::get_expr_nomask<V>::empty
         move2_r(const any_vec64<N,V>& a)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    if (shift == 0) return a.wrapped().eval();
-    if (shift == 2) return V::zero();
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
     ra = a.wrapped().eval();
-    return detail::insn::i_move2_r<shift>(ra);
+    return detail::insn::i_move2_r_wrapper<shift>::run(ra);
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

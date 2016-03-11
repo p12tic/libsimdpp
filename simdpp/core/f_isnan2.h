@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_isnan2.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Checks whether corresponding elements in either @a a or @a b are IEEE754 NaN.
 
@@ -36,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 6}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float32<N, mask_float32<N>> isnan2(const float32<N,E1>& a, const float32<N,E2>& b)
+mask_float32<N,expr_empty> isnan2(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return detail::insn::i_isnan2(a.eval(), b.eval());
 }
@@ -58,15 +56,13 @@ mask_float32<N, mask_float32<N>> isnan2(const float32<N,E1>& a, const float32<N,
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float64<N, mask_float64<N>> isnan2(const float64<N,E1>& a, const float64<N,E2>& b)
+mask_float64<N,expr_empty> isnan2(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return detail::insn::i_isnan2(a.eval(), b.eval());
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

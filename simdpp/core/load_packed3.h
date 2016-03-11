@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/load_packed3.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Loads values packed in triplets, de-interleaves them and stores the result
@@ -47,9 +45,7 @@ void load_packed3(any_vec<N,V>& a, any_vec<N,V>& b, any_vec<N,V>& c,
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

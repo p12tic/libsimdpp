@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/stream.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Stores a 128-bit or 256-bit integer, 32-bit or 64-bit floating point vector
@@ -47,9 +45,7 @@ void stream(void* p, const any_vec<N,V>& a)
     detail::insn::i_stream(reinterpret_cast<char*>(p), a.wrapped().eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -19,9 +19,7 @@
 #include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -130,7 +128,7 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_packed3(char* p,
                                 const uint32<16>& a, const uint32<16>& b, const uint32<16>& c)
 {
@@ -151,9 +149,9 @@ SIMDPP_INL void i_store_packed3(char* p,
                                 const uint64x2& a, const uint64x2& b, const uint64x2& c)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_packed3(p, a, b, c);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     v128_store_pack3(p, a, b, c);
 #elif SIMDPP_USE_NEON32
     uint64_t* q = reinterpret_cast<uint64_t*>(p);
@@ -182,7 +180,7 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_packed3(char* p,
                                 const uint64<8>& a, const uint64<8>& b, const uint64<8>& c)
 {
@@ -223,7 +221,7 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_packed3(char* p,
                                 const float32<16>& a, const float32<16>& b, const float32<16>& c)
 {
@@ -264,7 +262,7 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_packed3(char* p,
                                 const float64<8>& a, const float64<8>& b, const float64<8>& c)
 {
@@ -329,9 +327,7 @@ void v_store_pack3(char* p, const V& ca, const V& cb, const V& cc)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -21,9 +21,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 // FIXME: move to adv
 /// @{
@@ -51,7 +49,7 @@ uint8x16 div_p(const uint8x16& num, const uint8x16& den)
 #else
     static_assert(P <= 8, "Precision too large");
     uint8x16 r, q, bit_mask;
-    r = q = uint8x16::zero();
+    r = q = make_zero();
     bit_mask = make_uint(1 << (P-1));
 
     for (unsigned i = P; i > 0; i--) {
@@ -101,7 +99,7 @@ uint16x8 div_p(const uint16x8& num, const uint16x8& den)
     static_assert(P <= 16, "Precision too large");
     uint16x8 r, q, bit_mask;
 
-    r = q = uint16x8::zero();
+    r = q = make_zero();
     bit_mask = make_uint(1 << (P-1));
 
     for (unsigned i = P; i > 0; i--) {
@@ -128,9 +126,7 @@ uint16x8 div_p(const uint16x8& num, const uint16x8& den)
 }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

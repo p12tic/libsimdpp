@@ -11,11 +11,10 @@
 #include <memory>
 #include <cstddef>
 #include <cstdint>
+#include <stdexcept>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** An allocator that allocates memory with stricter alignment requirements than
     the defaults. @a A must be a power of two.
@@ -122,9 +121,7 @@ public:
     }
 };
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

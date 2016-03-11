@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_sqrt.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Computes square root.
@@ -39,7 +37,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 10-12}
 */
 template<unsigned N, class E1> SIMDPP_INL
-float32<N, float32<N>> sqrt(const float32<N,E1>& a)
+float32<N,expr_empty> sqrt(const float32<N,E1>& a)
 {
     return detail::insn::i_sqrt(a.eval());
 }
@@ -60,14 +58,12 @@ float32<N, float32<N>> sqrt(const float32<N,E1>& a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E1> SIMDPP_INL
-float64<N, float64<N>> sqrt(const float64<N,E1>& a)
+float64<N,expr_empty> sqrt(const float64<N,E1>& a)
 {
     return detail::insn::i_sqrt(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

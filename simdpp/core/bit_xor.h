@@ -17,9 +17,7 @@
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes bitwise XOR of integer or floating-point vectors.
 
@@ -45,25 +43,37 @@ typename detail::get_expr2<V1, V2>::empty
 // support scalar arguments
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        bit_xor(const uint32_t& a, const any_vec<N,V>& b)
+        bit_xor(const unsigned& a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        bit_xor(const uint64_t& a, const any_vec<N,V>& b)
+        bit_xor(const unsigned long& a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        bit_xor(const int32_t& a, const any_vec<N,V>& b)
+        bit_xor(const unsigned long long& a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        bit_xor(const int64_t& a, const any_vec<N,V>& b)
+        bit_xor(const int& a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        bit_xor(const long& a, const any_vec<N,V>& b)
+{
+    return bit_xor(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        bit_xor(const long long& a, const any_vec<N,V>& b)
 {
     return bit_xor(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
@@ -71,33 +81,43 @@ typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
 
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        bit_xor(const any_vec<N,V>& a, const uint32_t& b)
+        bit_xor(const any_vec<N,V>& a, const unsigned& b)
 {
     return bit_xor(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        bit_xor(const any_vec<N,V>& a, const uint64_t& b)
+        bit_xor(const any_vec<N,V>& a, const unsigned long& b)
 {
     return bit_xor(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        bit_xor(const any_vec<N,V>& a, const int32_t& b)
+        bit_xor(const any_vec<N,V>& a, const unsigned long long& b)
 {
     return bit_xor(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        bit_xor(const any_vec<N,V>& a, const int64_t& b)
+        bit_xor(const any_vec<N,V>& a, const int& b)
+{
+    return bit_xor(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        bit_xor(const any_vec<N,V>& a, const long& b)
+{
+    return bit_xor(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        bit_xor(const any_vec<N,V>& a, const long long& b)
 {
     return bit_xor(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

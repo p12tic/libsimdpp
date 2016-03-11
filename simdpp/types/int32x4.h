@@ -22,9 +22,7 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @ingroup simd_vec_int
 /// @{
@@ -49,9 +47,9 @@ public:
     using native_type = detail::array<int32_t, 4>;
 #endif
 
-    int32<4>() = default;
-    int32<4>(const int32<4> &) = default;
-    int32<4> &operator=(const int32<4> &) = default;
+    SIMDPP_INL int32<4>() = default;
+    SIMDPP_INL int32<4>(const int32<4> &) = default;
+    SIMDPP_INL int32<4> &operator=(const int32<4> &) = default;
 
     template<class E> SIMDPP_INL int32<4>(const int32<4,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int32<4>(const uint32<4,E>& d) { *this = d.eval(); }
@@ -66,12 +64,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    int32<4>(const native_type& d) : d_(d) {}
-    int32<4>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL int32<4>(const native_type& d) : d_(d) {}
+    SIMDPP_INL int32<4>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int32<4>(const expr_vec_construct<E>& e)
@@ -86,20 +84,17 @@ public:
 
     /// @{
     /// Access base vectors
-    const int32<4>& vec(unsigned) const { return *this; }
-          int32<4>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const int32<4>& vec(unsigned) const { return *this; }
+    SIMDPP_INL int32<4>& vec(unsigned)       { return *this; }
     /// @}
 
-    int32<4> eval() const { return *this; }
+    SIMDPP_INL int32<4> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
     /// For internal use only
     const int32_t& el(unsigned i) const  { return d_[i]; }
           int32_t& el(unsigned i)        { return d_[i]; }
 #endif
-
-    static int32<4> zero() { return detail::make_zero(); }
-    static int32<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -125,9 +120,9 @@ public:
     using native_type = detail::array<uint32_t, 4>;
 #endif
 
-    uint32<4>() = default;
-    uint32<4>(const uint32<4> &) = default;
-    uint32<4> &operator=(const uint32<4> &) = default;
+    SIMDPP_INL uint32<4>() = default;
+    SIMDPP_INL uint32<4>(const uint32<4> &) = default;
+    SIMDPP_INL uint32<4> &operator=(const uint32<4> &) = default;
 
     template<class E> SIMDPP_INL uint32<4>(const uint32<4,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint32<4>(const int32<4,E>& d) { *this = d.eval(); }
@@ -142,12 +137,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    uint32<4>(const native_type& d) : d_(d) {}
-    uint32<4>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL uint32<4>(const native_type& d) : d_(d) {}
+    SIMDPP_INL uint32<4>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint32<4>(const expr_vec_construct<E>& e)
@@ -162,20 +157,17 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint32<4>& vec(unsigned) const { return *this; }
-          uint32<4>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const uint32<4>& vec(unsigned) const { return *this; }
+    SIMDPP_INL uint32<4>& vec(unsigned)       { return *this; }
     /// @}
 
-    uint32<4> eval() const { return *this; }
+    SIMDPP_INL uint32<4> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
     /// For uinternal use only
     const uint32_t& el(unsigned i) const  { return d_[i]; }
           uint32_t& el(unsigned i)        { return d_[i]; }
 #endif
-
-    static uint32<4> zero() { return detail::make_zero(); }
-    static uint32<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -200,18 +192,18 @@ public:
     using native_type = detail::array<bool, 4>;
 #endif
 
-    mask_int32<4>() = default;
-    mask_int32<4>(const mask_int32<4> &) = default;
-    mask_int32<4> &operator=(const mask_int32<4> &) = default;
+    SIMDPP_INL mask_int32<4>() = default;
+    SIMDPP_INL mask_int32<4>(const mask_int32<4> &) = default;
+    SIMDPP_INL mask_int32<4> &operator=(const mask_int32<4> &) = default;
 
-    mask_int32<4>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int32<4>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_ALTIVEC
-    mask_int32<4>(const __vector __bool int& d) : d_((__vector uint32_t)d) {}
+    SIMDPP_INL mask_int32<4>(const __vector __bool int& d) : d_((__vector uint32_t)d) {}
 #endif
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    mask_int32<4>(const uint32<4>& d) : d_(d) {}
+    SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_int32<4>(const mask_float32<4,E>& d)
@@ -223,10 +215,10 @@ public:
         *this = bit_cast<mask_int32<4>>(d.eval()); return *this;
     }
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    uint32<4> unmask() const
+    SIMDPP_INL uint32<4> unmask() const
     {
     #if SIMDPP_USE_NULL
         return detail::null::unmask_mask<uint32<4>>(*this);
@@ -240,10 +232,10 @@ public:
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
-    const mask_int32<4>& vec(unsigned) const { return *this; }
-          mask_int32<4>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_int32<4>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_int32<4>& vec(unsigned)       { return *this; }
 
-    mask_int32<4> eval() const { return *this; }
+    SIMDPP_INL mask_int32<4> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -251,9 +243,7 @@ private:
 
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

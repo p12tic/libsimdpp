@@ -19,13 +19,10 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/detail/null/foreach.h>
 #include <simdpp/core/detail/vec_insert.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -33,19 +30,19 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
 {
 #if SIMDPP_USE_NULL
     uint16x16 r;
-    for (unsigned i = 0; i < 8; i++) {
+    for (unsigned i = 0; i < 16; i++) {
         r.vec(i/8).el(i%8) = uint16_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
     uint16x8 r1, r2;
     r1 = _mm_cvtepu8_epi16(a);
-    r2 = _mm_cvtepu8_epi16(move16_r<8>(a).eval());
+    r2 = _mm_cvtepu8_epi16(move16_l<8>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     uint16x8 r1, r2;
-    r1 = zip16_lo(a, uint8x16::zero());
-    r2 = zip16_hi(a, uint8x16::zero());
+    r1 = zip16_lo(a, (uint8x16) make_zero());
+    r2 = zip16_hi(a, (uint8x16) make_zero());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     uint16x16 r;
@@ -54,8 +51,8 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     return r;
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 r1, r2;
-    r1 = zip16_lo(uint8x16::zero(), a);
-    r2 = zip16_hi(uint8x16::zero(), a);
+    r1 = zip16_lo((uint8x16) make_zero(), a);
+    r2 = zip16_hi((uint8x16) make_zero(), a);
     return combine(r1, r2);
 #endif
 }
@@ -95,13 +92,13 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
 #elif SIMDPP_USE_SSE4_1
     int16x8 r1, r2;
     r1 = _mm_cvtepi8_epi16(a);
-    r2 = _mm_cvtepi8_epi16(move16_r<8>(a).eval());
+    r2 = _mm_cvtepi8_epi16(move16_l<8>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
-    r1 = zip16_lo(int8x16::zero(), a);
+    r1 = zip16_lo((int8x16) make_zero(), a);
     r1 = shift_r(r1, 8);
-    r2 = zip16_hi(int8x16::zero(), a);
+    r2 = zip16_hi((int8x16) make_zero(), a);
     r2 = shift_r(r2, 8);
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
@@ -141,9 +138,7 @@ int16<N> i_to_int16(const int8<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

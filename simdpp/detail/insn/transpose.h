@@ -15,12 +15,10 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/transpose.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -185,7 +183,7 @@ SIMDPP_INL void i_transpose2(uint32x8& a0, uint32x8& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(uint32<16>& a0, uint32<16>& a1)
 {
     uint64<8> b0, b1;
@@ -206,7 +204,7 @@ void i_transpose2(uint32<N>& a0, uint32<N>& a1)
 
 SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     uint64x2 b0;
@@ -215,13 +213,6 @@ SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
     a0 = b0;
 #elif SIMDPP_USE_NEON
     neon::transpose2(a0, a1);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 m0 = make_shuffle_bytes16_mask<0,2+0>(m0);
-    uint64x2 m1 = make_shuffle_bytes16_mask<1,2+1>(m1);
-    uint32x4 b0, b1;
-    b0 = shuffle_bytes16(a0, a1, m0);
-    b1 = shuffle_bytes16(a0, a1, m1);
-    a0 = b0;  a1 = b1;
 #endif
 }
 
@@ -235,7 +226,7 @@ SIMDPP_INL void i_transpose2(uint64x4& a0, uint64x4& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(uint64<8>& a0, uint64<8>& a1)
 {
     uint64<8> b0;
@@ -288,7 +279,7 @@ SIMDPP_INL void i_transpose2(float32x8& a0, float32x8& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(float32<16>& a0, float32<16>& a1)
 {
     float64<8> b0, b1;
@@ -334,7 +325,7 @@ SIMDPP_INL void i_transpose2(float64x4& a0, float64x4& a1)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose2(float64<8>& a0, float64<8>& a1)
 {
     float64<8> b0;
@@ -572,7 +563,7 @@ SIMDPP_INL void i_transpose4(float32x8& a0, float32x8& a1,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_transpose4(float32<16>& a0, float32<16>& a1,
                              float32<16>& a2, float32<16>& a3)
 {
@@ -613,9 +604,7 @@ void v_sse_transpose32x4(V& a0, V& a1, V& a2, V& a3)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

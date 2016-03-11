@@ -20,9 +20,7 @@
 #include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -123,7 +121,7 @@ SIMDPP_INL void i_load_packed3(uint32x8& a, uint32x8& b, uint32x8& c, const char
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_packed3(uint32<16>& a, uint32<16>& b, uint32<16>& c, const char* p)
 {
     v512_load_packed3(a, b, c, p);
@@ -141,9 +139,9 @@ void i_load_packed3(uint32<N>& a, uint32<N>& b, uint32<N>& c, const char* p)
 SIMDPP_INL void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::load_packed3(a, b, c, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2
     v128_load_packed3(a, b, c, p);
 #elif SIMDPP_USE_NEON64
     auto r = vld3q_u64(reinterpret_cast<const uint64_t*>(p));
@@ -176,7 +174,7 @@ SIMDPP_INL void i_load_packed3(uint64x4& a, uint64x4& b, uint64x4& c, const char
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_packed3(uint64<8>& a, uint64<8>& b, uint64<8>& c,
                                const char* p)
 {
@@ -214,7 +212,7 @@ SIMDPP_INL void i_load_packed3(float32x8& a, float32x8& b, float32x8& c, const c
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_packed3(float32<16>& a, float32<16>& b, float32<16>& c,
                                const char* p)
 {
@@ -253,7 +251,7 @@ SIMDPP_INL void i_load_packed3(float64x4& a, float64x4& b, float64x4& c,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_packed3(float64<8>& a, float64<8>& b, float64<8>& c,
                                const char* p)
 {
@@ -314,9 +312,7 @@ void v_load_packed3(V& a, V& b, V& c, const char* p)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

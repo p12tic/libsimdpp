@@ -25,9 +25,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -86,7 +84,7 @@ SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
-    mask = uint16x8::ones();
+    mask = make_ones();
     mask = shift_l(mask, 16-count);
     mask = shift_r<8>(mask);
 
@@ -107,7 +105,7 @@ SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
 SIMDPP_INL uint8x32 i_shift_r(const uint8x32& a, unsigned count)
 {
     uint16x16 mask, a16;
-    mask = uint16x16::ones();
+    mask = make_ones();
     mask = shift_l(mask, 16-count);
     mask = shift_r<8>(mask);
 
@@ -208,7 +206,7 @@ SIMDPP_INL int32x8 i_shift_r(const int32x8& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int32<16> i_shift_r(const int32<16>& a, unsigned count)
 {
     return _mm512_sra_epi32(a, _mm_cvtsi32_si128(count));
@@ -245,7 +243,7 @@ SIMDPP_INL uint32x8 i_shift_r(const uint32x8& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_shift_r(const uint32<16>& a, unsigned count)
 {
     return _mm512_srl_epi32(a, _mm_cvtsi32_si128(count));
@@ -262,7 +260,7 @@ uint32<N> i_shift_r(const uint32<N>& a, unsigned count)
 
 SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     if (count > 31) {
@@ -280,7 +278,7 @@ SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
         v = sgn = a;
         v = shift_r(v, count);
         sgn = shift_r(int32x4(sgn), count);
-        mask = uint64x2::ones();
+        mask = make_ones();
         mask = shift_l(mask, 64 - count);
         sgn = bit_and(sgn, mask);
         v = bit_or(v, sgn);
@@ -289,8 +287,6 @@ SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(-int(count));
     return vshlq_s64(a, shift);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, count);
 #endif
 }
 
@@ -312,7 +308,7 @@ SIMDPP_INL int64x4 i_shift_r(const int64x4& a, unsigned count)
         v = sgn = a;
         v = shift_r(v, count);
         sgn = shift_r(sgn, count);
-        mask = uint64x4::ones();
+        mask = make_ones();
         mask = shift_l(mask, 64 - count);
         sgn = bit_and(sgn, mask);
         v = bit_or(v, sgn);
@@ -321,7 +317,7 @@ SIMDPP_INL int64x4 i_shift_r(const int64x4& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int64<8> i_shift_r(const int64<8>& a, unsigned count)
 {
     return _mm512_sra_epi64(a, _mm_cvtsi32_si128(count));
@@ -338,7 +334,7 @@ int64<N> i_shift_r(const int64<N>& a, unsigned count)
 
 SIMDPP_INL uint64x2 i_shift_r(const uint64x2& a, unsigned count)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srl_epi64(a, _mm_cvtsi32_si128(count));
@@ -357,7 +353,7 @@ SIMDPP_INL uint64x4 i_shift_r(const uint64x4& a, unsigned count)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_shift_r(const uint64<8>& a, unsigned count)
 {
     return _mm512_srl_epi64(a, _mm_cvtsi32_si128(count));
@@ -454,7 +450,7 @@ uint8x32 i_shift_r(const uint8x32& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     uint16<16> mask, a16;
-    mask = uint16<16>::ones();
+    mask = make_ones();
     mask = shift_l<16-count>(mask);
     mask = shift_r<8>(mask);
 
@@ -567,7 +563,7 @@ int32x8 i_shift_r(const int32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 int32<16> i_shift_r(const int32<16>& a)
 {
@@ -610,7 +606,7 @@ uint32x8 i_shift_r(const uint32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 uint32<16> i_shift_r(const uint32<16>& a)
 {
@@ -632,12 +628,12 @@ template<unsigned count> SIMDPP_INL
 int64x2 i_shift_r(const int64x2& a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return i_shift_r(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_s64(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif
 }
 
@@ -649,7 +645,7 @@ int64x4 i_shift_r(const int64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 int64<8> i_shift_r(const int64<8>& a)
 {
@@ -671,14 +667,14 @@ template<unsigned count> SIMDPP_INL
 uint64x2 i_shift_r(const uint64x2& a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_srli_epi64(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_u64(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif
 }
 
@@ -691,7 +687,7 @@ uint64x4 i_shift_r(const uint64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned count> SIMDPP_INL
 uint64<8> i_shift_r(const uint64<8>& a)
 {
@@ -718,16 +714,29 @@ uint8<N> shift_r_u8(const uint8<N>& a)
     a16 = i_shift_r<count>(a16);
     return uint8<N>(a16);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif
 }
 
+template<bool no_shift, bool full_shift>
+struct i_shift_r_wrapper {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V& arg) { return i_shift_r<count>(arg); }
+};
+template<>
+struct i_shift_r_wrapper<true, false> {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V& arg) { return arg; }
+};
+template<>
+struct i_shift_r_wrapper<false, true> {
+    template<unsigned count, class V>
+    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
+};
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

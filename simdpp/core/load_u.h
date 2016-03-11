@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/load_u.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Loads a 128-bit or 256-bit integer, 32-bit or 64-bit float vector from an
     unaligned memory location.
@@ -49,18 +47,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
     smallest 32-byte aligned 64-byte block may be accessed.
 */
 // Fixme return empty expression
-template<class V = expr_vec_load_u> SIMDPP_INL
-V load_u(const void* p)
+SIMDPP_INL expr_vec_load_u load_u(const void* p)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_load_u<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_load_u_dispatch<V>::run(reinterpret_cast<const char*>(p));
+    return { reinterpret_cast<const char*>(p) };
 }
 
-#ifndef SIMDPP_DOXYGEN
+template<class V> SIMDPP_INL
+V load_u(const void* p)
+{
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
+                  "V must be a non-mask vector");
+    return detail::insn::i_load_u_any<V>(reinterpret_cast<const char*>(p));
+}
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

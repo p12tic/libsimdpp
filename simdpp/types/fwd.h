@@ -18,9 +18,7 @@
     vector templates and typedefs of specific vector types urcoah
 */
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 namespace detail {
 //template<int> void construct_eval();
@@ -87,7 +85,7 @@ using uint64x4 = uint64<4>;
 using mask_int64x2 = mask_int64<2>;
 using mask_int64x4 = mask_int64<4>;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 #define SIMDPP_FAST_FLOAT32_SIZE 16
 #define SIMDPP_FAST_FLOAT64_SIZE 8
 #elif SIMDPP_USE_AVX
@@ -98,7 +96,7 @@ using mask_int64x4 = mask_int64<4>;
 #define SIMDPP_FAST_FLOAT64_SIZE 2
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 #define SIMDPP_FAST_INT8_SIZE 32
 #define SIMDPP_FAST_INT16_SIZE 16
 #define SIMDPP_FAST_INT32_SIZE 16
@@ -178,9 +176,7 @@ using int64v4 =           int64<SIMDPP_FAST_INT64_SIZE*4>;
 using uint64v4 =         uint64<SIMDPP_FAST_INT64_SIZE*4>;
 using mask_int64v4 = mask_int64<SIMDPP_FAST_INT64_SIZE*4>;
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

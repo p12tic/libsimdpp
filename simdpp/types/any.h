@@ -16,9 +16,7 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @ingroup simd_vec_any
 /// @{
@@ -33,8 +31,8 @@ struct any_vec {
 
     /// @{
     /// Returns the wrapped vector
-    V& wrapped() { return static_cast<V&>(*this); }
-    const V& wrapped() const { return static_cast<const V&>(*this); }
+    SIMDPP_INL V& wrapped() { return static_cast<V&>(*this); }
+    SIMDPP_INL const V& wrapped() const { return static_cast<const V&>(*this); }
     /// @}
 };
 
@@ -147,9 +145,7 @@ struct any_int64 : any_vec64<N, V>
 
 /// @} -- end ingroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

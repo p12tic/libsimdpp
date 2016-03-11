@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/load_splat.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Loads a value from a memory location and broadcasts it to all elements of a
     vector.
@@ -32,18 +30,20 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @a p must have the alignment of the element of the target vector.
 */
 // FIXME: return empty expression
-template<class V = expr_vec_load_splat> SIMDPP_INL
-V load_splat(const void* p)
+SIMDPP_INL expr_vec_load_splat load_splat(const void* p)
 {
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_load_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_load_splat_dispatch<V>::run(p);
+    return expr_vec_load_splat(reinterpret_cast<const char*>(p));
 }
 
-#ifndef SIMDPP_DOXYGEN
+template<class V> SIMDPP_INL
+V load_splat(const void* p)
+{
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
+                  "V must be a non-mask vector");
+    return detail::insn::i_load_splat_any<V>(reinterpret_cast<const char*>(p));
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

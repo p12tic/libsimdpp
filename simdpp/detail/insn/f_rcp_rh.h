@@ -18,14 +18,11 @@
 #include <simdpp/core/make_float.h>
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     #include <cmath>
-    #include <simdpp/detail/null/foreach.h>
     #include <simdpp/detail/null/math.h>
 #endif
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -34,7 +31,13 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
 {
     float32<4> x = cx;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::foreach<float32x4>(x, a, [](float x, float a){ return x*(2.0f - x*a); });
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        float ix = x.el(i);
+        float ia = a.el(i);
+        r.el(i) = ix*(2.0f - ix*ia);
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     float32x4 r;
 
@@ -72,7 +75,7 @@ SIMDPP_INL float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_rcp_rh(const float32<16>& cx, const float32<16>& a)
 {
     float32<16> r, x = cx;
@@ -94,9 +97,7 @@ float32<N> i_rcp_rh(const float32<N>& x, const float32<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

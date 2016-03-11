@@ -20,9 +20,7 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 #if SIMDPP_USE_AVX2 || SIMDPP_DOXYGEN
 
@@ -43,9 +41,9 @@ public:
     using native_type = __m256i;
 #endif
 
-    int16<16>() = default;
-    int16<16>(const int16<16> &) = default;
-    int16<16> &operator=(const int16<16> &) = default;
+    SIMDPP_INL int16<16>() = default;
+    SIMDPP_INL int16<16>(const int16<16> &) = default;
+    SIMDPP_INL int16<16> &operator=(const int16<16> &) = default;
 
     template<class E> SIMDPP_INL int16<16>(const int16<16,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int16<16>(const uint16<16,E>& d) { *this = d.eval(); }
@@ -65,7 +63,7 @@ public:
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int16<16>(const expr_vec_construct<E>& e)
@@ -80,14 +78,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const int16<16>& vec(unsigned) const { return *this; }
-          int16<16>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const int16<16>& vec(unsigned) const { return *this; }
+    SIMDPP_INL int16<16>& vec(unsigned)       { return *this; }
     /// @}
 
-    int16<16> eval() const { return *this; }
-
-    static int16<16> zero() { return detail::make_zero(); }
-    static int16<16> ones() { return detail::make_ones(); }
+    SIMDPP_INL int16<16> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -107,9 +102,9 @@ public:
     using native_type = __m256i;
 #endif
 
-    uint16<16>() = default;
-    uint16<16>(const uint16<16> &) = default;
-    uint16<16> &operator=(const uint16<16> &) = default;
+    SIMDPP_INL uint16<16>() = default;
+    SIMDPP_INL uint16<16>(const uint16<16> &) = default;
+    SIMDPP_INL uint16<16> &operator=(const uint16<16> &) = default;
 
     template<class E> SIMDPP_INL uint16<16>(const uint16<16,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint16<16>(const int16<16,E>& d) { *this = d.eval(); }
@@ -129,7 +124,7 @@ public:
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint16<16>(const expr_vec_construct<E>& e)
@@ -144,14 +139,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint16<16>& vec(unsigned) const { return *this; }
-          uint16<16>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const uint16<16>& vec(unsigned) const { return *this; }
+    SIMDPP_INL uint16<16>& vec(unsigned)       { return *this; }
     /// @}
 
-    uint16<16> eval() const { return *this; }
-
-    static uint16<16> zero() { return detail::make_zero(); }
-    static uint16<16> ones() { return detail::make_ones(); }
+    SIMDPP_INL uint16<16> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -170,30 +162,30 @@ public:
     using native_type = __m256i;
 #endif
 
-    mask_int16<16>() = default;
-    mask_int16<16>(const mask_int16<16> &) = default;
-    mask_int16<16> &operator=(const mask_int16<16> &) = default;
+    SIMDPP_INL mask_int16<16>() = default;
+    SIMDPP_INL mask_int16<16>(const mask_int16<16> &) = default;
+    SIMDPP_INL mask_int16<16> &operator=(const mask_int16<16> &) = default;
 
-    mask_int16<16>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int16<16>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX2
-    mask_int16<16>(const uint16<16>& d) : d_(d) {}
+    SIMDPP_INL mask_int16<16>(const uint16<16>& d) : d_(d) {}
 #endif
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    uint16<16> unmask() const
+    SIMDPP_INL uint16<16> unmask() const
     {
     #if SIMDPP_USE_AVX2
         return uint16<16>(d_);
     #endif
     }
 
-    const mask_int16<16>& vec(unsigned) const { return *this; }
-          mask_int16<16>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_int16<16>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_int16<16>& vec(unsigned)       { return *this; }
 
-    mask_int16<16> eval() const { return *this; }
+    SIMDPP_INL mask_int16<16> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -203,9 +195,7 @@ private:
 
 #endif // SIMDPP_USE_AVX2 || SIMDPP_DOXYGEN
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

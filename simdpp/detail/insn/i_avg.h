@@ -17,12 +17,9 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/core/i_shift_r.h>
-#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -33,9 +30,11 @@ template<class V> SIMDPP_INL V v_emul_avg_i32(const V& a, const V& b);
 SIMDPP_INL uint8x16 i_avg(const uint8x16& a, const uint8x16& b)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<uint8x16>(a, b, [](uint8_t a, uint8_t b){
-        return (uint16_t(a) + b + 1) >> 1;
-    });
+    uint8x16 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint16_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_avg_epu8(a, b);
 #elif SIMDPP_USE_NEON
@@ -63,9 +62,11 @@ uint8<N> i_avg(const uint8<N>& a, const uint8<N>& b)
 SIMDPP_INL int8x16 i_avg(const int8x16& a, const int8x16& b)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<int8x16>(a, b, [](int8_t a, int8_t b){
-        return (int16_t(a) + b + 1) >> 1;
-    });
+    int8x16 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int16_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     uint8x16 a2, b2, bias, r;
     bias = make_uint(0x80);
@@ -105,9 +106,11 @@ int8<N> i_avg(const int8<N>& a, const int8<N>& b)
 SIMDPP_INL uint16x8 i_avg(const uint16x8& a, const uint16x8& b)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){
-        return (uint32_t(a) + b + 1) >> 1;
-    });
+    uint16x8 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint32_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_avg_epu16(a, b);
 #elif SIMDPP_USE_NEON
@@ -135,9 +138,11 @@ uint16<N> i_avg(const uint16<N>& a, const uint16<N>& b)
 SIMDPP_INL int16x8 i_avg(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){
-        return (int32_t(a) + b + 1) >> 1;
-    });
+    int16x8 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int32_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     uint16x8 a2, b2, r;
     a2 = bit_xor(a, 0x8000); // add
@@ -175,9 +180,11 @@ int16<N> i_avg(const int16<N>& a, const int16<N>& b)
 SIMDPP_INL uint32x4 i_avg(const uint32x4& a, const uint32x4& b)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<uint32x4>(a, b, [](uint32_t a, uint32_t b){
-        return (uint64_t(a) + b + 1) >> 1;
-    });
+    uint32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint64_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return v_emul_avg_u32(a, b);
 #elif SIMDPP_USE_NEON
@@ -194,7 +201,7 @@ SIMDPP_INL uint32x8 i_avg(const uint32x8& a, const uint32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_avg(const uint32<16>& a, const uint32<16>& b)
 {
     return v_emul_avg_u32(a, b);
@@ -210,9 +217,11 @@ uint32<N> i_avg(const uint32<N>& a, const uint32<N>& b)
 SIMDPP_INL int32x4 i_avg(const int32x4& a, const int32x4& b)
 {
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<int32x4>(a, b, [](int32_t a, int32_t b){
-        return (int64_t(a) + b + 1) >> 1;
-    });
+    int32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int64_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return v_emul_avg_i32(a, b);
 
@@ -230,7 +239,7 @@ SIMDPP_INL int32x8 i_avg(const int32x8& a, const int32x8& b)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL int32<16> i_avg(const int32<16>& a, const int32<16>& b)
 {
     return v_emul_avg_i32(a, b);
@@ -272,9 +281,7 @@ V v_emul_avg_i32(const V& a, const V& b)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

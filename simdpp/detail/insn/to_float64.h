@@ -16,13 +16,11 @@
 #include <simdpp/core/combine.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/core/move_l.h>
-#include <simdpp/sse/extract_half.h>
+#include <simdpp/detail/extract128.h>
 #include <simdpp/core/detail/vec_insert.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -42,7 +40,7 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtepi32_pd(a);
-    r2 = _mm_cvtepi32_pd(move4_r<2>(a).eval());
+    r2 = _mm_cvtepi32_pd(move4_l<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON64
     float64<2> r1, r2;
@@ -55,7 +53,7 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL float64<8> i_to_float64(const int32x8& a)
 {
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     return _mm512_cvtepi32_pd(a);
 #else
     float64x4 r1, r2;
@@ -68,7 +66,7 @@ SIMDPP_INL float64<8> i_to_float64(const int32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<16> i_to_float64(const int32<16>& a)
 {
     float64<8> r1, r2;
@@ -107,7 +105,7 @@ SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtps_pd(a);
-    r2 = _mm_cvtps_pd(move4_r<2>(a).eval());
+    r2 = _mm_cvtps_pd(move4_l<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON64
     float64<2> r1, r2;
@@ -120,7 +118,7 @@ SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
 #if SIMDPP_USE_AVX
 SIMDPP_INL float64<8> i_to_float64(const float32x8& a)
 {
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     return _mm512_cvtps_pd(a);
 #else
     float64x4 r1, r2;
@@ -133,7 +131,7 @@ SIMDPP_INL float64<8> i_to_float64(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<16> i_to_float64(const float32<16>& a)
 {
     float64<8> r1, r2;
@@ -158,9 +156,7 @@ float64<N> i_to_float64(const float32<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

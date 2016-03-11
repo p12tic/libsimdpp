@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/store_packed4.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Interleaves values from four vectors and stores the result into successive
@@ -54,9 +52,7 @@ void store_packed4(void* p,
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

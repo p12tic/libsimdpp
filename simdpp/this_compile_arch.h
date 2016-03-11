@@ -16,9 +16,7 @@
 #include <simdpp/setup_arch.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** @defgroup simd_dispatcher Dispatching support
     @{
@@ -71,9 +69,7 @@ inline Arch this_compile_arch()
 
 /// @} -- end defgroup
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -20,16 +20,8 @@
 #include <simdpp/detail/null/memory.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
-
-template<class V>
-struct is_expr_vec_load_u { static const bool value = false; };
-template<>
-struct is_expr_vec_load_u<expr_vec_load_u> { static const bool value = true; };
-
 namespace insn {
 
 
@@ -92,9 +84,12 @@ SIMDPP_INL uint32x4 i_load_u(uint32x4& a, const void* p)
 
 SIMDPP_INL uint64x2 i_load_u(uint64x2& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     uint8x16 b = i_load_u(b, p);
     a = b;
+    return a;
+#elif SIMDPP_USE_ALTIVEC
+    detail::null::load(a, p);
     return a;
 #elif SIMDPP_USE_NEON
     a = vld1q_u64(reinterpret_cast<const uint64_t*>(p));
@@ -166,7 +161,7 @@ SIMDPP_INL float64x4 i_load_u(float64x4& a, const void* p)
     a = _mm256_loadu_pd(reinterpret_cast<const double*>(p)); return a;
 }
 #endif
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_load_u(uint32<16>& a, const void* p)
 {
     a = _mm512_loadu_si512(p); return a;
@@ -230,39 +225,23 @@ void v_load_u(V& a, const char* p)
 }
 
 template<class V>
-struct i_load_u_dispatch {
-    static V run(const char* p)
-    {
-        V r;
-        i_load_u(r, p);
-        return r;
-    }
-};
-
-template<>
-struct i_load_u_dispatch<expr_vec_load_u> {
-    static expr_vec_load_u run(const char* p)
-    {
-        expr_vec_load_u r;
-        r.a = p;
-        return r;
-    }
-};
+V i_load_u_any(const char* p)
+{
+    typename detail::remove_sign<V>::type r;
+    i_load_u(r, p);
+    return V(r);
+}
 
 } // namespace insn
 
 template<class V> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_load_u& e)
 {
-    typename detail::remove_sign<V>::type r;
-    insn::i_load_u(r, e.a);
-    v = r;
+    v = insn::i_load_u_any<V>(e.a);
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

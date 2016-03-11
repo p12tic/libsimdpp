@@ -17,9 +17,7 @@
 #include <simdpp/detail/traits.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Loads values packed in pairs, de-interleaves them and stores the result
     into two vectors.
@@ -44,9 +42,7 @@ void load_packed2(any_vec<N,V>& a, any_vec<N,V>& b, const void* p)
 }
 
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

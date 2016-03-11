@@ -15,18 +15,11 @@
 #include <simdpp/types.h>
 #include <simdpp/core/load.h>
 #include <simdpp/core/zip_lo.h>
+#include <simdpp/detail/altivec/load1.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
-
-template<class V>
-struct is_expr_vec_set_splat { static const bool value = false; };
-template<class VE>
-struct is_expr_vec_set_splat<expr_vec_set_splat<VE>> { static const bool value = true; };
-
 namespace insn {
 
 SIMDPP_INL void i_set_splat(uint32x4&, uint32_t);
@@ -38,7 +31,7 @@ SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
 #elif SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
-    v = _mm_broadcastw_epi16(v);
+    v = _mm_broadcastb_epi8(v);
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 * 0x01010101;
@@ -147,7 +140,7 @@ SIMDPP_INL void i_set_splat(uint32x8& v, uint32_t v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(uint32<16>& v, uint32_t v0)
 {
     v = _mm512_set1_epi32(v0);
@@ -168,7 +161,7 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
 
 SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<uint64x2>(v0);
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS
@@ -182,11 +175,6 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #endif
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u64(v0);
-#elif SIMDPP_USE_ALTIVEC
-    SIMDPP_ALIGN(16) uint64_t rv[2];
-    rv[0] = v0;
-    v = load(rv);
-    v = splat<0>(v);
 #endif
 }
 
@@ -205,7 +193,7 @@ SIMDPP_INL void i_set_splat(uint64x4& v, uint64_t v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(uint64<8>& v, uint64_t v0)
 {
     v = _mm512_set1_epi64(v0);
@@ -248,7 +236,7 @@ SIMDPP_INL void i_set_splat(float32x8& v, float v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(float32<16>& v, float v0)
 {
     float32<4> a;
@@ -287,7 +275,7 @@ SIMDPP_INL void i_set_splat(float64x4& v, double v0)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_set_splat(float64<8>& v, double v0)
 {
     float64<4> v1;
@@ -308,43 +296,32 @@ void i_set_splat(float64<N>& v, double v0)
 
 // -----------------------------------------------------------------------------
 
-template<class V>
-struct i_set_splat_dispatch
+template<class V, class VE> SIMDPP_INL
+V i_splat_any(const VE& x)
 {
-    template<class VE> SIMDPP_INL
-    static V run(VE v)
-    {
-        V r;
-        i_set_splat(r, static_cast<typename V::element_type>(v));
-        return r;
-    }
-};
-
-template<class VE>
-struct i_set_splat_dispatch<expr_vec_set_splat<VE>>
-{
-    static SIMDPP_INL expr_vec_set_splat<VE> run(VE v)
-    {
-        expr_vec_set_splat<VE> r;
-        r.a = v;
-        return r;
-    }
-};
+    typename detail::remove_sign<V>::type r;
+    insn::i_set_splat(r, x);
+    return V(r);
+}
 
 } // namespace insn
 
 template<class V, class VE> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
 {
-    typename detail::remove_sign<V>::type r;
-    insn::i_set_splat(r, e.a);
-    v = r;
+    v = insn::i_splat_any<V>(e.a);
+}
+
+template<class V, class VE>
+V splat_impl(const VE& x)
+{
+    static_assert(is_vector<V>::value && !is_mask<V>::value,
+                  "V must be a non-mask vector");
+    return insn::i_splat_any<V>(x);
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -19,12 +19,9 @@
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/core/unzip_hi.h>
 #include <simdpp/detail/null/math.h>
-#include <simdpp/detail/null/foreach.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 
@@ -42,7 +39,7 @@ uint16<8> expr_eval(const expr_mul_lo<uint16<8,E1>,
     return vmulq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_mladd((__vector uint16_t)a, (__vector uint16_t)b,
-                     (__vector uint16_t)uint16x8::zero());
+                     (__vector uint16_t)(uint16x8) make_zero());
 #endif
 }
 
@@ -75,7 +72,11 @@ int16<8> expr_eval(const expr_mul_hi<int16<8,E1>,
     int16<8> a = q.a.eval();
     int16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<int16x8>(a, b, [](int16_t a, int16_t b){ return (int32_t(a) * b) >> 16; });
+    uint16<8> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int32_t(a.el(i)) * b.el(i)) >> 16;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
@@ -118,7 +119,11 @@ uint16<8> expr_eval(const expr_mul_hi<uint16<8,E1>,
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
 #if SIMDPP_USE_NULL
-    return detail::null::foreach<uint16x8>(a, b, [](uint16_t a, uint16_t b){ return (int64_t(a) * b) >> 16; });
+    uint16<8> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint32_t(a.el(i)) * b.el(i)) >> 16;
+    }
+    return r;
 #elif SIMDPP_USE_SSE2
     return _mm_mulhi_epu16(a, b);
 #elif SIMDPP_USE_NEON
@@ -209,7 +214,7 @@ uint32<8> expr_eval(const expr_mul_lo<uint32<8,E1>,
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2> SIMDPP_INL
 uint32<16> expr_eval(const expr_mul_lo<uint32<16,E1>,
                                        uint32<16,E2>>& q)
@@ -230,9 +235,7 @@ uint32<N> expr_eval(const expr_mul_lo<uint32<N,E1>,
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

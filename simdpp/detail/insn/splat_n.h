@@ -20,12 +20,9 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/sse/shuffle.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -114,11 +111,11 @@ uint16x8 i_splat8(const uint16x8& a)
     uint64x2 b;
     if (s < 4) {
         const unsigned s2 = s < 4 ? s : s-4;
-        b = sse::permute_lo<s2,s2,s2,s2>(a);
+        b = _mm_shufflelo_epi16(a, _MM_SHUFFLE(s2,s2,s2,s2));
         return (uint16<8>) permute2<0,0>(b);
     } else {
         const unsigned s2 = s < 4 ? s : s-4;
-        b = sse::permute_hi<s2,s2,s2,s2>(a);
+        b = _mm_shufflehi_epi16(a, _MM_SHUFFLE(s2,s2,s2,s2));
         return (uint16<8>) permute2<1,1>(b);
     }
 #elif SIMDPP_USE_NEON
@@ -194,7 +191,7 @@ uint32x8 i_splat4(const uint32x8& a)
 }
 #endif\
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 uint32<16> i_splat4(const uint32<16>& a)
 {
@@ -216,7 +213,7 @@ template<unsigned s> SIMDPP_INL
 uint64x2 i_splat2(const uint64x2& a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     if (s == 0) {
@@ -232,9 +229,6 @@ uint64x2 i_splat2(const uint64x2& a)
         z = vget_high_u64(a);
     }
     return (uint64x2_t) vdupq_lane_u64(z, 0);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 mask = make_shuffle_bytes16_mask<s, s>(mask);
-    return permute_bytes16(a, mask);
 #endif
 }
 
@@ -247,7 +241,7 @@ uint64x4 i_splat2(const uint64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 uint64<8> i_splat2(const uint64<8>& a)
 {
@@ -297,7 +291,7 @@ float32x8 i_splat4(const float32x8& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 float32<16> i_splat4(const float32<16>& a)
 {
@@ -335,7 +329,7 @@ float64x4 i_splat2(const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<unsigned s> SIMDPP_INL
 float64<8> i_splat2(const float64<8>& a)
 {
@@ -354,9 +348,7 @@ float64<N> i_splat2(const float64<N>& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

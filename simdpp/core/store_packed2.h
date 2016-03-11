@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/store_packed2.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Interleaves values from two vectors and stores the result into successive
@@ -45,9 +43,7 @@ void store_packed2(void* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b)
                                   a.wrapped().eval(), b.wrapped().eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

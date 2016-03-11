@@ -20,14 +20,12 @@
 #include <simdpp/core/split.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
 template<unsigned s0, unsigned s1, class V> SIMDPP_INL
-V permute_half(V a0, V a1)
+V permute_half(const V& a0, const V& a1)
 {
     switch (s0*4+s1) {
     case 0: /* 0 0 */ return permute2<0,0>(a0);
@@ -76,9 +74,7 @@ float64x4 permute_emul(const float64x4& a)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif // SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(SIMDPP_DOXYGEN)

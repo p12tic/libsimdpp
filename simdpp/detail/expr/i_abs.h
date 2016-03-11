@@ -22,9 +22,7 @@
 #include <simdpp/detail/null/math.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, class E> SIMDPP_INL
@@ -37,7 +35,7 @@ uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
     return _mm_abs_epi8(a);
 #elif SIMDPP_USE_SSE2
     int8x16 t;
-    t = cmp_lt(a, int8x16::zero());
+    t = cmp_lt(a, 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -77,7 +75,7 @@ uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
     return _mm_abs_epi16(a);
 #elif SIMDPP_USE_SSE2
     int16x8 t;
-    t = cmp_lt(a, int16x8::zero());
+    t = cmp_lt(a, 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -117,7 +115,7 @@ uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
     return _mm_abs_epi32(a);
 #elif SIMDPP_USE_SSE2
     int32x4 t;
-    t = cmp_lt(a, int32x4::zero());
+    t = cmp_lt(a, 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -138,7 +136,7 @@ uint32<8> expr_eval(const expr_abs<int32<8,E>>& q)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
 uint32<16> expr_eval(const expr_abs<int32<16,E>>& q)
 {
@@ -160,14 +158,14 @@ template<class R, class E> SIMDPP_INL
 uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSE2
     uint32x4 ta;
     int64x2 t;
     ta = (uint32x4) bit_and(a, 0x8000000000000000);
     ta = shift_r<1>(ta);
-    t = cmp_neq(float64x2(ta), float64x2::zero());
+    t = cmp_neq(float64x2(ta), 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -182,19 +180,6 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
-#elif SIMDPP_USE_ALTIVEC
-    // not really supported
-    uint32x4 z;
-    z = move4_r<1>(uint32<4>(a));
-    z = shift_r<31>(z);
-    z = cmp_eq(z, 0);
-    z = permute4<0,0,2,2>(z);
-    z = bit_not(z);
-    uint64x2 t;
-    t = z;
-    a = bit_xor(a, t);
-    a = sub(a, t);
-    return a;
 #endif
 }
 
@@ -204,14 +189,14 @@ uint64<4> expr_eval(const expr_abs<int64<4,E>>& q)
 {
     int64<4> a = q.a.eval();
     int64x4 t;
-    t = _mm256_cmpgt_epi64(int64x4::zero(), a);
+    t = _mm256_cmpgt_epi64((int64x4) make_zero(), a);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
 uint64<8> expr_eval(const expr_abs<int64<8,E>>& q)
 {
@@ -228,9 +213,7 @@ uint64<N> expr_eval(const expr_abs<int64<N,E>>& q)
 }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

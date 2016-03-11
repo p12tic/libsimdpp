@@ -19,11 +19,9 @@
 #include <cstdint>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
-#if SIMDPP_USE_AVX512 || SIMDPP_DOXYGEN
+#if SIMDPP_USE_AVX512F || SIMDPP_DOXYGEN
 
 /// @ingroup simd_vec_int
 /// @{
@@ -38,13 +36,13 @@ public:
     using base_vector_type = int32<16,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __m512i;
 #endif
 
-    int32<16>() = default;
-    int32<16>(const int32<16> &) = default;
-    int32<16> &operator=(const int32<16> &) = default;
+    SIMDPP_INL int32<16>() = default;
+    SIMDPP_INL int32<16>(const int32<16> &) = default;
+    SIMDPP_INL int32<16> &operator=(const int32<16> &) = default;
 
     template<class E> SIMDPP_INL int32<16>(const int32<16,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int32<16>(const uint32<16,E>& d) { *this = d.eval(); }
@@ -59,12 +57,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    int32<16>(const native_type& d) : d_(d) {}
-    int32<16>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL int32<16>(const native_type& d) : d_(d) {}
+    SIMDPP_INL int32<16>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int32<16>(const expr_vec_construct<E>& e)
@@ -79,14 +77,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const int32<16>& vec(unsigned) const { return *this; }
-          int32<16>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const int32<16>& vec(unsigned) const { return *this; }
+    SIMDPP_INL int32<16>& vec(unsigned)       { return *this; }
     /// @}
 
-    int32<16> eval() const { return *this; }
-
-    static int32<16> zero() { return detail::make_zero(); }
-    static int32<16> ones() { return detail::make_ones(); }
+    SIMDPP_INL int32<16> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -102,13 +97,13 @@ public:
     using base_vector_type = uint32<16,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __m512i;
 #endif
 
-    uint32<16>() = default;
-    uint32<16>(const uint32<16> &) = default;
-    uint32<16> &operator=(const uint32<16> &) = default;
+    SIMDPP_INL uint32<16>() = default;
+    SIMDPP_INL uint32<16>(const uint32<16> &) = default;
+    SIMDPP_INL uint32<16> &operator=(const uint32<16> &) = default;
 
     template<class E> SIMDPP_INL uint32<16>(const uint32<16,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint32<16>(const int32<16,E>& d) { *this = d.eval(); }
@@ -123,12 +118,12 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    uint32<16>(const native_type& d) : d_(d) {}
-    uint32<16>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL uint32<16>(const native_type& d) : d_(d) {}
+    SIMDPP_INL uint32<16>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
 #ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint32<16>(const expr_vec_construct<E>& e)
@@ -143,14 +138,11 @@ public:
 
     /// @{
     /// Access base vectors
-    const uint32<16>& vec(unsigned) const { return *this; }
-          uint32<16>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const uint32<16>& vec(unsigned) const { return *this; }
+    SIMDPP_INL uint32<16>& vec(unsigned)       { return *this; }
     /// @}
 
-    uint32<16> eval() const { return *this; }
-
-    static uint32<16> zero() { return detail::make_zero(); }
-    static uint32<16> ones() { return detail::make_ones(); }
+    SIMDPP_INL uint32<16> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -165,15 +157,15 @@ public:
     using base_vector_type = mask_int32<16,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
     using native_type = __mmask16;
 #endif
 
-    mask_int32<16>() = default;
-    mask_int32<16>(const mask_int32<16> &) = default;
-    mask_int32<16> &operator=(const mask_int32<16> &) = default;
+    SIMDPP_INL mask_int32<16>() = default;
+    SIMDPP_INL mask_int32<16>(const mask_int32<16> &) = default;
+    SIMDPP_INL mask_int32<16> &operator=(const mask_int32<16> &) = default;
 
-    mask_int32<16>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int32<16>(const native_type& d) : d_(d) {}
 
     template<class E> SIMDPP_INL explicit mask_int32<16>(const mask_float32<16,E>& d)
     {
@@ -184,20 +176,20 @@ public:
         *this = bit_cast<mask_int32<16>>(d.eval()); return *this;
     }
 
-    operator native_type() const { return d_; }
+    SIMDPP_INL operator native_type() const { return d_; }
 
     /// Access the underlying type
-    uint32<16> unmask() const
+    SIMDPP_INL uint32<16> unmask() const
     {
-    #if SIMDPP_USE_AVX512
+    #if SIMDPP_USE_AVX512F
         return _mm512_maskz_set1_epi32(d_, 0xffffffff);
     #endif
     }
 
-    const mask_int32<16>& vec(unsigned) const { return *this; }
-          mask_int32<16>& vec(unsigned)       { return *this; }
+    SIMDPP_INL const mask_int32<16>& vec(unsigned) const { return *this; }
+    SIMDPP_INL mask_int32<16>& vec(unsigned)       { return *this; }
 
-    mask_int32<16> eval() const { return *this; }
+    SIMDPP_INL mask_int32<16> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -205,11 +197,9 @@ private:
 
 /// @} -- end ingroup
 
-#endif // SIMDPP_USE_AVX512 || SIMDPP_DOXYGEN
+#endif // SIMDPP_USE_AVX512F || SIMDPP_DOXYGEN
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

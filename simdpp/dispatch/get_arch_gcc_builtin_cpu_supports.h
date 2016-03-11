@@ -20,7 +20,17 @@ inline Arch get_arch_gcc_builtin_cpu_supports()
     Arch arch_info;
 #if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 8)
 #if __i386__ || __amd64__
-    if (__builtin_cpu_supports("avx2")) {
+#define SIMDPP_GCC_BUILTIN_CPU_SUPPORTS_ENABLED 1
+    if (__builtin_cpu_supports("avx512f")) {
+        arch_info |= Arch::X86_SSE2;
+        arch_info |= Arch::X86_SSE3;
+        arch_info |= Arch::X86_SSSE3;
+        arch_info |= Arch::X86_SSE4_1;
+        arch_info |= Arch::X86_AVX;
+        arch_info |= Arch::X86_AVX2;
+        arch_info |= Arch::X86_FMA3;
+        arch_info |= Arch::X86_AVX512F;
+    } else if (__builtin_cpu_supports("avx2")) {
         arch_info |= Arch::X86_SSE2;
         arch_info |= Arch::X86_SSE3;
         arch_info |= Arch::X86_SSSE3;

@@ -4,17 +4,19 @@ Overview
 
 libsimdpp is a portable header-only zero-overhead C++ wrapper around
 single-instruction multiple-data (SIMD) intrinsics found in many compilers. The
-library presents a single interface over several instruction sets. In addition
-to that, the library allows to compile the same source code for different
-instruction sets and seamlessly hook the implementations to an internal dynamic
-dispatch mechanism.
+library presents a single interface over several instruction sets in such a way
+that the same source code may be compiled for different instruction sets. The
+resulting object files then may be hooked into internal dynamic dispatch
+mechanism.
 
 The library resolves differences between instruction sets by implementing the
 missing functionality as a combination of several intrinsics. Moreover, the
 library supplies a lot of additional, commonly used functionality, such as
 various variants of matrix transpositions, interleaving loads/stores, optimized
 compile-time shuffling instructions, etc. Each of these are implemented in the
-most efficient manner for the target instruction set.
+most efficient manner for the target instruction set. Finally, it's possible
+to fall back to native intrinsics when necessary, without compromising
+maintanability.
 
 The library sits somewhere in the middle between programming directly in
 intrinsics and even higher-level SIMD libraries. As much control as possible
@@ -33,33 +35,30 @@ The library supports the following architectures and instruction sets:
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
 XOP
  - ARM, ARM64: NEON
-
-Code for ALTIVEC instruction set has been added, but it has not been tested
-on actual hardware, thus definitely contains bugs.
+ - PowerPC: Altivec
 
 The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the
-[cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch. Boost libraries
-are used as a replacement for C++11-only functionality. The library does not
-depend on boost if the built-in dispatcher functionality is not used. The
-following compilers are supported:
+[cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch.
 
  - C++11 version:
-   - GCC: 4.9, 4.8
-   - Clang: 3.3, 3.4, 3.5
+   - GCC: 4.8-5.3
+   - Clang: 3.3-3.8
    - MSVC: 2013
-   - ICC: 2015, 2013
-
-Clang 3.3 is not supported on ARM. MSVC is only supported on x86-64. ICC is
-only supported on x86 and x86-64.
+   - ICC: 2013, 2015
 
  - C++98 version
-   - GCC: 4.8.1, 4.7.3
-   - Clang: 3.3, 3.4
+   - GCC: 4.4-5.3
+   - Clang: 3.3-3.8
+   - MSVC: 2013
+   - ICC: 2013, 2015
 
+Clang 3.3 is not supported on ARM. MSVC and ICC are only supported on x86 and
+x86-64.
 
-The C++98 version has been tested with boost 1.53 and 1.54. Most probably other
-versions will work too.
+Newer versions of the aforementioned compilers will generally work with either
+C++11 or C++98 version of the library. Older versions of these compilers will
+generally work with the C++98 version of the library.
 
 Documentation
 -------------

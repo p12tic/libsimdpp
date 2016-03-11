@@ -15,9 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 
 template<class R, unsigned N> SIMDPP_INL      float32<N> expr_eval(const float32<N>& a) { return a; }
@@ -43,9 +41,7 @@ template<class R, unsigned N> SIMDPP_INL      int64<N> expr_eval(const  int64<N>
 template<class R, unsigned N> SIMDPP_INL mask_int64<N> expr_eval(const mask_int64<N>& a) { return a; }
 
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

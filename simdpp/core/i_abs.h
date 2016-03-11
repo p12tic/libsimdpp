@@ -16,9 +16,7 @@
 #include <simdpp/detail/expr/i_abs.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Computes absolute value of 8-bit integer values.
 
@@ -40,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E> SIMDPP_INL
 uint8<N, expr_abs<int8<N,E>>> abs(const int8<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 
@@ -63,7 +61,7 @@ uint8<N, expr_abs<int8<N,E>>> abs(const int8<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint16<N, expr_abs<int16<N,E>>> abs(const int16<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 /** Computes absolute value of 32-bit integer values.
@@ -85,7 +83,7 @@ uint16<N, expr_abs<int16<N,E>>> abs(const int16<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint32<N, expr_abs<int32<N,E>>> abs(const int32<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
 /** Computes absolute value of 64-bit integer values.
@@ -109,12 +107,10 @@ uint32<N, expr_abs<int32<N,E>>> abs(const int32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint64<N, expr_abs<int64<N,E>>> abs(const int64<N,E>& a)
 {
-    return { { a }, 0 };
+    return { { a } };
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

@@ -15,9 +15,7 @@
 #include <simdpp/types.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 namespace detail {
 namespace insn {
 
@@ -50,7 +48,7 @@ SIMDPP_INL void i_split(const uint32<8>& a, uint32<4>& r1, uint32<4>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const uint32<16>& a, uint32<8>& r1, uint32<8>& r2)
 {
     // r1 = _mm512_castsi512_si256(a); GCC BUG
@@ -69,7 +67,7 @@ SIMDPP_INL void i_split(const uint64<4>& a, uint64<2>& r1, uint64<2>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const uint64<8>& a, uint64<4>& r1, uint64<4>& r2)
 {
     // r1 = _mm512_castsi512_si256(a); GCC BUG
@@ -88,7 +86,7 @@ SIMDPP_INL void i_split(const float32<8>& a, float32<4>& r1, float32<4>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const float32<16>& a, float32<8>& r1, float32<8>& r2)
 {
     // r1 = _mm512_castps512_ps256(a); GCC BUG
@@ -107,7 +105,7 @@ SIMDPP_INL void i_split(const float64<4>& a, float64<2>& r1, float64<2>& r2)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_split(const float64<8>& a, float64<4>& r1, float64<4>& r2)
 {
     // r1 = _mm512_castpd512_pd256(a); GCC BUG
@@ -120,7 +118,7 @@ SIMDPP_INL void i_split(const float64<8>& a, float64<4>& r1, float64<4>& r2)
 // generic version -- picked up if none of the above matches the arguments
 
 template<class V, class H> SIMDPP_INL
-void i_split(V a, H& r1, H& r2)
+void i_split(const V& a, H& r1, H& r2)
 {
     unsigned h = H::vec_length;
     for (unsigned i = 0; i < h; ++i) { r1.vec(i) = a.vec(i); }
@@ -130,9 +128,7 @@ void i_split(V a, H& r1, H& r2)
 
 } // namespace insn
 } // namespace detail
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

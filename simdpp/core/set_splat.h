@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/set_splat.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /// @{
 /** Loads a value from a register and broadcasts it to all elements of a vector.
@@ -32,64 +30,26 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 // FIXME: return empty expression
-template<class V = expr_vec_set_splat<int>> SIMDPP_INL
-V splat(int x)
-{
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_set_splat_dispatch<V>::run(x);
-}
+SIMDPP_INL expr_vec_set_splat<uint32_t> splat(unsigned x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<uint64_t> splat(unsigned long x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<uint64_t> splat(unsigned long long x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<int32_t>  splat(int x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<int64_t>  splat(long x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<int64_t>  splat(long long x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<float>    splat(float x) { return { x }; }
+SIMDPP_INL expr_vec_set_splat<double>   splat(double x) { return { x }; }
 
-template<class V = expr_vec_set_splat<unsigned>> SIMDPP_INL
-V splat(unsigned x)
-{
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_set_splat_dispatch<V>::run(x);
-}
-
-template<class V = expr_vec_set_splat<int64_t>> SIMDPP_INL
-V splat(int64_t x)
-{
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_set_splat_dispatch<V>::run(x);
-}
-
-template<class V = expr_vec_set_splat<uint64_t>> SIMDPP_INL
-V splat(uint64_t x)
-{
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_set_splat_dispatch<V>::run(x);
-}
-
-template<class V = expr_vec_set_splat<float>> SIMDPP_INL
-V splat(float x)
-{
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_set_splat_dispatch<V>::run(x);
-}
-
-template<class V = expr_vec_set_splat<double>> SIMDPP_INL
-V splat(double x)
-{
-    static_assert((is_vector<V>::value && !is_mask<V>::value) ||
-                      detail::is_expr_vec_set_splat<V>::value,
-                  "V must be a non-mask vector");
-    return detail::insn::i_set_splat_dispatch<V>::run(x);
-}
+template<class V> SIMDPP_INL V splat(unsigned x) { return detail::splat_impl<V>(x); }
+template<class V> SIMDPP_INL V splat(unsigned long x) { return detail::splat_impl<V>(x); }
+template<class V> SIMDPP_INL V splat(unsigned long long x) { return detail::splat_impl<V>(x); }
+template<class V> SIMDPP_INL V splat(int x) { return detail::splat_impl<V>(x); }
+template<class V> SIMDPP_INL V splat(long x) { return detail::splat_impl<V>(x); }
+template<class V> SIMDPP_INL V splat(long long x) { return detail::splat_impl<V>(x); }
+template<class V> SIMDPP_INL V splat(float x) { return detail::splat_impl<V>(x); }
+template<class V> SIMDPP_INL V splat(double x) { return detail::splat_impl<V>(x); }
 /// @}
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

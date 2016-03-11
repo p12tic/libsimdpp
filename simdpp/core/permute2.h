@@ -17,9 +17,7 @@
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 /** Permutes the 16-bit values within sets of two consecutive elements of the
     vector. The selector values must be in range [0; 1].
@@ -55,7 +53,7 @@ typename detail::get_expr_nomask<V>::empty
 }
 
 /** Permutes the values of each set of four consecutive 32-bit values. The
-    selector values must be in range [0; 3].
+    selector values must be in range [0; 1].
 
     @code
     r0 = a[s0]
@@ -130,9 +128,7 @@ typename detail::get_expr_nomask<V>::empty
     return detail::insn::i_permute2<s0,s1>(ra);
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif

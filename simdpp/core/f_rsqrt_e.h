@@ -16,9 +16,7 @@
 #include <simdpp/detail/insn/f_rsqrt_e.h>
 
 namespace simdpp {
-#ifndef SIMDPP_DOXYGEN
 namespace SIMDPP_ARCH_NAMESPACE {
-#endif
 
 
 /** Computes approximate reciprocal square root.
@@ -40,14 +38,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N, float32<N>> rsqrt_e(const float32<N,E>& a)
+float32<N,expr_empty> rsqrt_e(const float32<N,E>& a)
 {
     return detail::insn::i_rsqrt_e(a.eval());
 }
 
-#ifndef SIMDPP_DOXYGEN
 } // namespace SIMDPP_ARCH_NAMESPACE
-#endif
 } // namespace simdpp
 
 #endif
