@@ -112,17 +112,17 @@ SIMDPP_INL void i_store_u(char* p, const uint8<32>& a)
 
 SIMDPP_INL void i_store_u(char* p, const uint16<16>& a)
 {
-    i_store_u(p, uint8<32>(a));
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(p), a);
 }
 
 SIMDPP_INL void i_store_u(char* p, const uint32<8>& a)
 {
-    i_store_u(p, uint8<32>(a));
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(p), a);
 }
 
 SIMDPP_INL void i_store_u(char* p, const uint64<4>& a)
 {
-    i_store_u(p, uint8<32>(a));
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(p), a);
 }
 #endif
 
@@ -138,7 +138,7 @@ SIMDPP_INL void i_store_u(char* p, const float64x4& a)
 }
 #endif
 
-#if SIMDPP_USE_AVX512
+#if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_u(char* p, const uint32<16>& a)
 {
     _mm512_storeu_si512(reinterpret_cast<__m512i*>(p), a);
@@ -170,20 +170,6 @@ void v_store_u(char* p, const V& a)
         p += veclen;
     }
 }
-
-template<unsigned N> SIMDPP_INL
-void i_store_u(char* p, const uint8<N>& a) { v_store_u(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store_u(char* p, const uint16<N>& a) { v_store_u(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store_u(char* p, const uint32<N>& a) { v_store_u(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store_u(char* p, const uint64<N>& a) { v_store_u(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store_u(char* p, const float32<N>& a){ v_store_u(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store_u(char* p, const float64<N>& a){ v_store_u(p, a); }
-
 
 } // namespace insn
 } // namespace detail
