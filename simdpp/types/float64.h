@@ -67,19 +67,6 @@ public:
 
     SIMDPP_INL float64<N> eval() const { return *this; }
 
-    /** Creates a float64 vector with the contents set to zero
-
-        @code
-        r0 = 0.0f
-        ...
-        rN = 0.0f
-        @endcode
-    */
-    static SIMDPP_INL float64<N> zero()
-    {
-        return set_vec(float64v::zero());
-    }
-
 private:
     /** Creates a float vector from a native vector
 

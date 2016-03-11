@@ -81,17 +81,6 @@ public:
 
     SIMDPP_INL float32<8> eval() const { return *this; }
 
-    /** Creates a float32x4 vector with the contents set to zero
-
-        @code
-        r0 = 0.0f
-        r1 = 0.0f
-        r2 = 0.0f
-        r3 = 0.0f
-        @endcode
-    */
-    static SIMDPP_INL float32<8> zero() { return detail::make_zero(); }
-
 private:
     native_type d_;
 };

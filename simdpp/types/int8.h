@@ -66,9 +66,6 @@ public:
 
     SIMDPP_INL int8<N> eval() const { return *this; }
 
-    static SIMDPP_INL int8<N> zero() { return set_vec(int8v::zero()); }
-    static SIMDPP_INL int8<N> ones() { return set_vec(int8v::ones()); }
-
 private:
     /// Creates a signed int8 vector with the contents set to copy of native
     /// register
@@ -126,9 +123,6 @@ public:
     SIMDPP_INL uint8v& vec(unsigned i)             { return d_[i]; }
 
     SIMDPP_INL uint8<N> eval() const { return *this; }
-
-    static SIMDPP_INL uint8<N> zero() { return set_vec(uint8v::zero()); }
-    static SIMDPP_INL uint8<N> ones() { return set_vec(uint8v::ones()); }
 
 private:
     /// Creates a unsigned int8 vector with the contents set to copy of native

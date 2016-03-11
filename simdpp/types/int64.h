@@ -65,9 +65,6 @@ public:
 
     SIMDPP_INL int64<N> eval() const { return *this; }
 
-    static SIMDPP_INL int64<N> zero() { return set_vec(int64v::zero()); }
-    static SIMDPP_INL int64<N> ones() { return set_vec(int64v::ones()); }
-
 private:
 
     /// Creates a signed int64 vector with the contents set to copy of native
@@ -126,9 +123,6 @@ public:
     SIMDPP_INL uint64v& vec(unsigned i)             { return d_[i]; }
 
     SIMDPP_INL uint64<N> eval() const { return *this; }
-
-    static SIMDPP_INL uint64<N> zero() { return set_vec(uint64v::zero()); }
-    static SIMDPP_INL uint64<N> ones() { return set_vec(uint64v::ones()); }
 
 private:
     /// Creates a unsigned int64 vector with the contents set to copy of native

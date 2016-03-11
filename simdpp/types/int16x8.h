@@ -96,9 +96,6 @@ public:
           int16_t& el(unsigned i)        { return d_[i]; }
 #endif
 
-    static SIMDPP_INL int16<8> zero() { return detail::make_zero(); }
-    static SIMDPP_INL int16<8> ones() { return detail::make_ones(); }
-
 private:
     native_type d_;
 };
@@ -171,9 +168,6 @@ public:
     const uint16_t& el(unsigned i) const  { return d_[i]; }
           uint16_t& el(unsigned i)        { return d_[i]; }
 #endif
-
-    static SIMDPP_INL uint16<8> zero() { return detail::make_zero(); }
-    static SIMDPP_INL uint16<8> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;

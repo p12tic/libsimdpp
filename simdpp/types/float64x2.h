@@ -94,15 +94,6 @@ public:
 #endif
 #endif
 
-    /** Creates a float64x2 vector with the contens set to zero
-
-        @code
-        r0 = 0.0
-        r1 = 0.0
-        @endcode
-    */
-    static SIMDPP_INL float64<2> zero() { return detail::make_zero(); }
-
 private:
 #if SIMDPP_USE_SSE2
     native_type d_;

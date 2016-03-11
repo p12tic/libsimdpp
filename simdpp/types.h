@@ -41,9 +41,6 @@
 #include <simdpp/types/generic.h>
 #include <simdpp/types/empty_expr.h>
 
-// Used by all types in zero() and ones() as expr_vec_make_const<uint64_t,1>
-#include <simdpp/core/make_uint.h>
-
 #define SIMDPP_VEC_ARRAY_IMPL1(RTYPE, OP, V1)                   \
     RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
         r.vec(i) = OP((V1).vec(i)); }                           \

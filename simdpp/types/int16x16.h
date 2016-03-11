@@ -84,9 +84,6 @@ public:
 
     SIMDPP_INL int16<16> eval() const { return *this; }
 
-    static SIMDPP_INL int16<16> zero() { return detail::make_zero(); }
-    static SIMDPP_INL int16<16> ones() { return detail::make_ones(); }
-
 private:
     native_type d_;
 };
@@ -147,9 +144,6 @@ public:
     /// @}
 
     SIMDPP_INL uint16<16> eval() const { return *this; }
-
-    static SIMDPP_INL uint16<16> zero() { return detail::make_zero(); }
-    static SIMDPP_INL uint16<16> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;

@@ -66,9 +66,6 @@ public:
 
     SIMDPP_INL int32<N> eval() const { return *this; }
 
-    static SIMDPP_INL int32<N> zero() { return set_vec(int32v::zero()); }
-    static SIMDPP_INL int32<N> ones() { return set_vec(int32v::ones()); }
-
 private:
     /// Creates a signed int32 vector with the contents set to copy of native
     /// register
@@ -125,9 +122,6 @@ public:
     SIMDPP_INL uint32v& vec(unsigned i)             { return d_[i]; }
 
     SIMDPP_INL uint32<N> eval() const { return *this; }
-
-    static SIMDPP_INL uint32<N> zero() { return set_vec(uint32v::zero()); }
-    static SIMDPP_INL uint32<N> ones() { return set_vec(uint32v::ones()); }
 
 private:
     /// Creates a unsigned int32 vector with the contents set to copy of native

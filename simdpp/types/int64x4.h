@@ -83,9 +83,6 @@ public:
 
     SIMDPP_INL int64<4> eval() const { return *this; }
 
-    static SIMDPP_INL int64<4> zero() { return detail::make_zero(); }
-    static SIMDPP_INL int64<4> ones() { return detail::make_ones(); }
-
 private:
     native_type d_;
 };
@@ -146,9 +143,6 @@ public:
     /// @}
 
     SIMDPP_INL uint64<4> eval() const { return *this; }
-
-    static SIMDPP_INL uint64<4> zero() { return detail::make_zero(); }
-    static SIMDPP_INL uint64<4> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
