@@ -84,9 +84,12 @@ SIMDPP_INL uint32x4 i_load_u(uint32x4& a, const void* p)
 
 SIMDPP_INL uint64x2 i_load_u(uint64x2& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
     uint8x16 b = i_load_u(b, p);
     a = b;
+    return a;
+#elif SIMDPP_USE_ALTIVEC
+    detail::null::load(a, p);
     return a;
 #elif SIMDPP_USE_NEON
     a = vld1q_u64(reinterpret_cast<const uint64_t*>(p));

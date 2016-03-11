@@ -41,9 +41,7 @@ public:
     typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
     typedef int64x2_t native_type;
-#elif SIMDPP_USE_ALTIVEC
-    typedef __vector int64_t native_type;
-#else
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     typedef detail::array<int64_t, 2> native_type;
 #endif
 
@@ -90,7 +88,7 @@ public:
 
     SIMDPP_INL int64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     /// For internal use only
     const int64_t& el(unsigned i) const  { return d_[i]; }
           int64_t& el(unsigned i)        { return d_[i]; }
@@ -117,9 +115,7 @@ public:
     typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
     typedef uint64x2_t native_type;
-#elif SIMDPP_USE_ALTIVEC
-    typedef __vector uint64_t native_type;
-#else
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     typedef detail::array<uint64_t, 2> native_type;
 #endif
 
@@ -166,7 +162,7 @@ public:
 
     SIMDPP_INL uint64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     /// For uinternal use only
     const uint64_t& el(unsigned i) const  { return d_[i]; }
           uint64_t& el(unsigned i)        { return d_[i]; }
@@ -193,9 +189,7 @@ public:
     typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
     typedef uint64x2_t native_type;
-#elif SIMDPP_USE_ALTIVEC
-    typedef uint64<2> native_type;
-#else // NULL
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     typedef detail::array<bool, 2> native_type;
 #endif
 
@@ -223,14 +217,14 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint64<2> unmask() const
     {
-    #if SIMDPP_USE_NULL
+    #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
         return detail::null::unmask_mask<uint64<2> >(*this);
     #else
         return uint64<2>(d_);
     #endif
     }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif

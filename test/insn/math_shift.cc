@@ -15,7 +15,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned i>
 struct Test_shift_l {
     static const unsigned limit = V::num_bits;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
         V b = simdpp::shift_l<i>(a);
         V c = simdpp::shift_l(a, i);
@@ -27,7 +27,7 @@ struct Test_shift_l {
 template<class V, unsigned i>
 struct Test_shift_r {
     static const unsigned limit = V::num_bits;
-    static void test(TestSuite& tc, V a)
+    static void test(TestSuite& tc, const V& a)
     {
         V b = simdpp::shift_r<i>(a);
         V c = simdpp::shift_r(a, i);
@@ -62,13 +62,11 @@ void test_math_shift_n(TestSuite& tc)
     TemplateTestArrayHelper<Test_shift_r, uint32<B/4> >::run(tc, v.u32, vnum);
     TemplateTestArrayHelper<Test_shift_r, int32<B/4> >::run(tc, v.i32, vnum);
 
-#if !(SIMDPP_USE_ALTIVEC)
     // Vectors with 64-bit integer elements
     TemplateTestArrayHelper<Test_shift_l, uint64<B/8> >::run(tc, v.u64, vnum);
     TemplateTestArrayHelper<Test_shift_l, int64<B/8> >::run(tc, v.i64, vnum);
     TemplateTestArrayHelper<Test_shift_r, uint64<B/8> >::run(tc, v.u64, vnum);
     TemplateTestArrayHelper<Test_shift_r, int64<B/8> >::run(tc, v.i64, vnum);
-#endif
 }
 
 void test_math_shift(TestResults& res)

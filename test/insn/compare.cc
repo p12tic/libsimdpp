@@ -37,33 +37,33 @@ void test_compare_n(TestSuite& tc)
 
     //int8x32
     {
-    uint8_n sl[] = {
-        (uint8_n) make_uint(0x11, 0x22, 0x33, 0xff),
-        (uint8_n) make_uint(0xcc, 0xdd, 0xee, 0xff),
-        (uint8_n) make_uint(0x01, 0x00, 0xff, 0xfe),
-    };
-    uint8_n sr[] = {
-        (uint8_n) make_uint(0x22, 0x22, 0x22, 0x22),
-        (uint8_n) make_uint(0xee, 0xee, 0xee, 0xee),
-        (uint8_n) make_uint(0x00, 0x00, 0x00, 0x00),
-    };
+        TestData<uint8_n> sl(
+            make_uint(0x11, 0x22, 0x33, 0xff),
+            make_uint(0xcc, 0xdd, 0xee, 0xff),
+            make_uint(0x01, 0x00, 0xff, 0xfe)
+        );
+        TestData<uint8_n> sr(
+            make_uint(0x22, 0x22, 0x22, 0x22),
+            make_uint(0xee, 0xee, 0xee, 0xee),
+            make_uint(0x00, 0x00, 0x00, 0x00)
+        );
 
-    TEST_COMPARE_TESTER_HELPER(tc, int8_n, sl, sr);
-    TEST_COMPARE_TESTER_HELPER(tc, uint8_n, sl, sr);
+        TEST_COMPARE_TESTER_HELPER(tc, int8_n, sl, sr);
+        TEST_COMPARE_TESTER_HELPER(tc, uint8_n, sl, sr);
     }
 
     //int16_n
     {
-        uint16_n sl[] = {
-            (uint16_n) make_uint(0x1111, 0x2222, 0x3333, 0x3333),
-            (uint16_n) make_uint(0xdddd, 0xeeee, 0xffff, 0xcccc),
-            (uint16_n) make_uint(0x0001, 0x0000, 0xffff, 0xfffe),
-        };
-        uint16_n sr[] = {
-            (uint16_n) make_uint(0x2222, 0x2222, 0x2222, 0x2222),
-            (uint16_n) make_uint(0xeeee, 0xeeee, 0xeeee, 0xeeee),
-            (uint16_n) make_uint(0x0000, 0x0000, 0x0000, 0x0000),
-        };
+        TestData<uint16_n> sl(
+            make_uint(0x1111, 0x2222, 0x3333, 0x3333),
+            make_uint(0xdddd, 0xeeee, 0xffff, 0xcccc),
+            make_uint(0x0001, 0x0000, 0xffff, 0xfffe)
+        );
+        TestData<uint16_n> sr(
+            make_uint(0x2222, 0x2222, 0x2222, 0x2222),
+            make_uint(0xeeee, 0xeeee, 0xeeee, 0xeeee),
+            make_uint(0x0000, 0x0000, 0x0000, 0x0000)
+        );
 
         TEST_COMPARE_TESTER_HELPER(tc, int16_n, sl, sr);
         TEST_COMPARE_TESTER_HELPER(tc, uint16_n, sl, sr);
@@ -71,16 +71,17 @@ void test_compare_n(TestSuite& tc)
 
     //int32_n
     {
-        uint32_n sl[] = {
-            (uint32_n) make_uint(0x11111111, 0x22222222, 0x33333333, 0x33333333),
-            (uint32_n) make_uint(0xdddddddd, 0xeeeeeeee, 0xffffffff, 0xcccccccc),
-            (uint32_n) make_uint(0x00000000, 0x00000001, 0xffffffff, 0xfffffffe),
-        };
-        uint32_n sr[] = {
-            (uint32_n) make_uint(0x22222222, 0x22222222, 0x22222222, 0x22222222),
-            (uint32_n) make_uint(0xeeeeeeee, 0xeeeeeeee, 0xeeeeeeee, 0xeeeeeeee),
-            (uint32_n) make_uint(0x00000000, 0x00000000, 0x00000000, 0x00000000),
-        };
+        TestData<uint32_n> sl(
+            make_uint(0x11111111, 0x22222222, 0x33333333, 0x33333333),
+            make_uint(0xdddddddd, 0xeeeeeeee, 0xffffffff, 0xcccccccc),
+            make_uint(0x00000000, 0x00000001, 0xffffffff, 0xfffffffe)
+        );
+
+        TestData<uint32_n> sr(
+            make_uint(0x22222222, 0x22222222, 0x22222222, 0x22222222),
+            make_uint(0xeeeeeeee, 0xeeeeeeee, 0xeeeeeeee, 0xeeeeeeee),
+            make_uint(0x00000000, 0x00000000, 0x00000000, 0x00000000)
+        );
 
         TEST_COMPARE_TESTER_HELPER(tc, int32_n, sl, sr);
         TEST_COMPARE_TESTER_HELPER(tc, uint32_n, sl, sr);
@@ -90,16 +91,16 @@ void test_compare_n(TestSuite& tc)
 #if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     //int64_n
     {
-        uint64_n sl[] = {
-            (uint64_n) make_uint(0x1111111111111111, 0x2222222222222222, 0x3333333333333333, 0x3333333333333333),
-            (uint64_n) make_uint(0xdddddddddddddddd, 0xeeeeeeeeeeeeeeee, 0xffffffffffffffff, 0xcccccccccccccccc),
-            (uint64_n) make_uint(0x0000000000000000, 0x0000000000000001, 0xffffffffffffffff, 0xfffffffffffffffe),
-        };
-        uint64_n sr[] = {
-            (uint64_n) make_uint(0x2222222222222222),
-            (uint64_n) make_uint(0xeeeeeeeeeeeeeeee),
-            (uint64_n) make_uint(0x0000000000000000),
-        };
+        TestData<uint64_n> sl(
+            make_uint(0x1111111111111111, 0x2222222222222222, 0x3333333333333333, 0x3333333333333333),
+            make_uint(0xdddddddddddddddd, 0xeeeeeeeeeeeeeeee, 0xffffffffffffffff, 0xcccccccccccccccc),
+            make_uint(0x0000000000000000, 0x0000000000000001, 0xffffffffffffffff, 0xfffffffffffffffe)
+        );
+        TestData<uint64_n> sr(
+            make_uint(0x2222222222222222),
+            make_uint(0xeeeeeeeeeeeeeeee),
+            make_uint(0x0000000000000000)
+        );
 
         TEST_COMPARE_TESTER_HELPER(tc, int64_n, sl, sr);
         TEST_COMPARE_TESTER_HELPER(tc, uint64_n, sl, sr);
@@ -114,22 +115,23 @@ void test_compare_n(TestSuite& tc)
 
     //float32_n
     {
-        float32_n sl[] = {
-            (float32_n) make_float(0.0f, 1.0f, 2.0f, inff),
-            (float32_n) make_float(0.0f, 1.0f, 2.0f, inff),
-            (float32_n) make_float(-0.0f, -1.0f, -2.0f, -inff),
-            (float32_n) make_float(0.0f, 1.0f, -inff, inff),
-            (float32_n) make_float(0.0f, 1.0f, -0.0f, -1.0f),
-            (float32_n) make_float(nanf, 0.0, -inff, inff),
-        };
-        float32_n sr[] = {
-            (float32_n) make_float(1.0f, 1.0f, 1.0f, 1.0f),
-            (float32_n) make_float(-1.0f, -1.0f, -1.0f, -1.0f),
-            (float32_n) make_float(-1.0f, -1.0f, -1.0f, -1.0f),
-            (float32_n) make_float(inff, inff, inff, inff),
-            (float32_n) make_float(nanf, nanf, nanf, nanf),
-            (float32_n) make_float(nanf, nanf, nanf, nanf),
-        };
+        TestData<float32_n> sl(
+            make_float(0.0f, 1.0f, 2.0f, inff),
+            make_float(0.0f, 1.0f, 2.0f, inff),
+            make_float(-0.0f, -1.0f, -2.0f, -inff),
+            make_float(0.0f, 1.0f, -inff, inff),
+            make_float(0.0f, 1.0f, -0.0f, -1.0f),
+            make_float(nanf, 0.0, -inff, inff)
+        );
+
+        TestData<float32_n> sr(
+            make_float(1.0f, 1.0f, 1.0f, 1.0f),
+            make_float(-1.0f, -1.0f, -1.0f, -1.0f),
+            make_float(-1.0f, -1.0f, -1.0f, -1.0f),
+            make_float(inff, inff, inff, inff),
+            make_float(nanf, nanf, nanf, nanf),
+            make_float(nanf, nanf, nanf, nanf)
+        );
 
         TEST_COMPARE_TESTER_HELPER(tc, float32_n, sl, sr);
         TEST_ARRAY_HELPER2(tc, float32_n, cmp_neq, sl, sr);
@@ -139,38 +141,39 @@ void test_compare_n(TestSuite& tc)
 
     //float64_n
     {
-        float64_n sl[] = {
-            (float64_n) make_float(0.0, 1.0),
-            (float64_n) make_float(2.0, inf),
-            (float64_n) make_float(0.0, 1.0),
-            (float64_n) make_float(2.0, inf),
-            (float64_n) make_float(-0.0, -1.0),
+        TestData<float64_n> sl(
+            make_float(0.0, 1.0),
+            make_float(2.0, inf),
+            make_float(0.0, 1.0),
+            make_float(2.0, inf),
+            make_float(-0.0, -1.0),
 
-            (float64_n) make_float(-2.0, -inf),
-            (float64_n) make_float(0.0, 1.0),
-            (float64_n) make_float(-inf, inf),
-            (float64_n) make_float(0.0, 1.0),
-            (float64_n) make_float(-0.0, -1.0),
+            make_float(-2.0, -inf),
+            make_float(0.0, 1.0),
+            make_float(-inf, inf),
+            make_float(0.0, 1.0),
+            make_float(-0.0, -1.0),
 
-            (float64_n) make_float(nan, 0.0),
-            (float64_n) make_float(-inf, inf),
-        };
-        float64_n sr[] = {
-            (float64_n) make_float(1.0, 1.0),
-            (float64_n) make_float(.0, 1.0),
-            (float64_n) make_float(-1.0, -1.0),
-            (float64_n) make_float(-1.0, -1.0),
-            (float64_n) make_float(-1.0, -1.0),
+            make_float(nan, 0.0),
+            make_float(-inf, inf)
+        );
 
-            (float64_n) make_float(-1.0, -1.0),
-            (float64_n) make_float(inf, inf),
-            (float64_n) make_float(inf, inf),
-            (float64_n) make_float(nan, nan),
-            (float64_n) make_float(nan, nan),
+        TestData<float64_n> sr(
+            make_float(1.0, 1.0),
+            make_float(.0, 1.0),
+            make_float(-1.0, -1.0),
+            make_float(-1.0, -1.0),
+            make_float(-1.0, -1.0),
 
-            (float64_n) make_float(nan, nan),
-            (float64_n) make_float(nan, nan),
-        };
+            make_float(-1.0, -1.0),
+            make_float(inf, inf),
+            make_float(inf, inf),
+            make_float(nan, nan),
+            make_float(nan, nan),
+
+            make_float(nan, nan),
+            make_float(nan, nan)
+        );
 
         TEST_COMPARE_TESTER_HELPER(tc, float64_n, sl, sr);
         TEST_ARRAY_HELPER2(tc, float64_n, cmp_neq, sl, sr);

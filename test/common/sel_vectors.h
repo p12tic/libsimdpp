@@ -28,16 +28,16 @@ V make_sel_vector(unsigned i)
 */
 template<unsigned BE, unsigned N>
 struct SelVectors {
-    simdpp::int8<BE> i8[N];
-    simdpp::int16<BE/2> i16[N];
-    simdpp::int32<BE/4> i32[N];
-    simdpp::int64<BE/8> i64[N];
-    simdpp::uint8<BE> u8[N];
-    simdpp::uint16<BE/2> u16[N];
-    simdpp::uint32<BE/4> u32[N];
-    simdpp::uint64<BE/8> u64[N];
-    simdpp::float32<BE/4> f32[N];
-    simdpp::float64<BE/8> f64[N];
+    simdpp::int8<BE>* volatile i8;
+    simdpp::int16<BE/2>* volatile i16;
+    simdpp::int32<BE/4>* volatile i32;
+    simdpp::int64<BE/8>* volatile i64;
+    simdpp::uint8<BE>* volatile u8;
+    simdpp::uint16<BE/2>* volatile u16;
+    simdpp::uint32<BE/4>* volatile u32;
+    simdpp::uint64<BE/8>* volatile u64;
+    simdpp::float32<BE/4>* volatile f32;
+    simdpp::float64<BE/8>* volatile f64;
 
     SelVectors() { reset(); }
 
@@ -46,18 +46,39 @@ struct SelVectors {
         using namespace simdpp;
 
         for (unsigned i = 0; i < N; ++i) {
-            u8[i] =  make_sel_vector<uint8<BE> >(i);
-            u16[i] = make_sel_vector<uint16<BE/2> >(i);
-            u32[i] = make_sel_vector<uint32<BE/4> >(i);
-            u64[i] = make_sel_vector<uint64<BE/8> >(i);
-            i8[i] =  make_sel_vector<uint8<BE> >(i);
-            i16[i] = make_sel_vector<uint16<BE/2> >(i);
-            i32[i] = make_sel_vector<uint32<BE/4> >(i);
-            i64[i] = make_sel_vector<uint64<BE/8> >(i);
-            f32[i] = make_sel_vector<float32<BE/4> >(i);
-            f64[i] = make_sel_vector<float64<BE/8> >(i);
+            du8[i] =  make_sel_vector<uint8<BE> >(i);
+            du16[i] = make_sel_vector<uint16<BE/2> >(i);
+            du32[i] = make_sel_vector<uint32<BE/4> >(i);
+            du64[i] = make_sel_vector<uint64<BE/8> >(i);
+            di8[i] =  make_sel_vector<uint8<BE> >(i);
+            di16[i] = make_sel_vector<uint16<BE/2> >(i);
+            di32[i] = make_sel_vector<uint32<BE/4> >(i);
+            di64[i] = make_sel_vector<uint64<BE/8> >(i);
+            df32[i] = make_sel_vector<float32<BE/4> >(i);
+            df64[i] = make_sel_vector<float64<BE/8> >(i);
         }
+        u8 = du8;
+        u16 = du16;
+        u32 = du32;
+        u64 = du64;
+        i8 = di8;
+        i16 = di16;
+        i32 = di32;
+        i64 = di64;
+        f32 = df32;
+        f64 = df64;
     }
+private:
+    simdpp::int8<BE> di8[N];
+    simdpp::int16<BE/2> di16[N];
+    simdpp::int32<BE/4> di32[N];
+    simdpp::int64<BE/8> di64[N];
+    simdpp::uint8<BE> du8[N];
+    simdpp::uint16<BE/2> du16[N];
+    simdpp::uint32<BE/4> du32[N];
+    simdpp::uint64<BE/8> du64[N];
+    simdpp::float32<BE/4> df32[N];
+    simdpp::float64<BE/8> df64[N];
 };
 
 } // namespace SIMDPP_ARCH_NAMESPACE

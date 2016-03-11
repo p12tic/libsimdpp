@@ -137,7 +137,7 @@ void i_load_splat(uint32<N>& v, const void* p0)
 SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     v = detail::null::make_vec<uint64x2, uint64_t>(*v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(v0));
@@ -150,11 +150,6 @@ SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
 #else
     v = vld1q_dup_u64(v0);
 #endif
-#elif SIMDPP_USE_ALTIVEC
-    SIMDPP_ALIGN(16) uint64_t rv[2];
-    rv[0] = *v0;
-    v = load(rv);
-    v = splat<0>(v);
 #endif
 }
 

@@ -17,8 +17,8 @@
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/detail/shuffle/shuffle_mask.h>
-#include <simdpp/neon/detail/shuffle_int32x4.h>
-#include <simdpp/neon/detail/shuffle_int64x2.h>
+#include <simdpp/detail/shuffle/neon_int32x4.h>
+#include <simdpp/detail/shuffle/neon_int64x2.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -59,7 +59,7 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
         return _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     }
 #elif SIMDPP_USE_NEON
-    return (float32<4>) neon::detail::shuffle_int32x4::shuffle2x2<s0,s1>(float32<4>(a), float32<4>(b));
+    return (float32<4>) detail::neon_shuffle_int32x4::shuffle2x2<s0,s1>(float32<4>(a), float32<4>(b));
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> mask = make_shuffle_bytes16_mask<s0, s1>(mask);
     return shuffle_bytes16(a, b, mask);
@@ -149,7 +149,7 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
         return _mm_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
     }
 #elif SIMDPP_USE_NEON64
-    return (float64<2>)neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(uint64<2>(a), uint64<2>(b));
+    return (float64<2>)detail::neon_shuffle_int64x2::shuffle2x2<s0, s1>(uint64<2>(a), uint64<2>(b));
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
@@ -230,14 +230,14 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
     } else if (s0 < 2) { // s1 >= 2
         float32<4> fa, fb; fa = a, fb = b;
         __m128 t = _mm_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
-        return (__m128i) _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
+        return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<4> fa, fb; fa = a, fb = b;
         __m128 t = _mm_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
-        return (__m128i) _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
+        return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     }
 #elif SIMDPP_USE_NEON
-    return neon::detail::shuffle_int32x4::shuffle2x2<s0,s1>(a, b);
+    return detail::neon_shuffle_int32x4::shuffle2x2<s0,s1>(a, b);
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> mask = make_shuffle_bytes16_mask<s0, s1>(mask);
     return shuffle_bytes16(a, b, mask);
@@ -262,11 +262,11 @@ uint32<8> i_shuffle2x2(const uint32<8>& a, const uint32<8>& b)
     } else if (s0 < 2) { // s1 >= 2
         float32<8> fa, fb; fa = a, fb = b;
         __m256 t = _mm256_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
-        return (__m256i) _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<8> fa, fb; fa = a, fb = b;
         __m256 t = _mm256_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
-        return (__m256i) _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
 #endif
@@ -277,9 +277,9 @@ uint32<8> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
 {
     SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_shuffle_epi32(a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm512_shuffle_epi32(a, _MM_PERM_ENUM(_MM_SHUFFLE(s1+2,s0+2,s1,s0)));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_shuffle_epi32(b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm512_shuffle_epi32(b, _MM_PERM_ENUM(_MM_SHUFFLE(s1,s0,s1-2,s0-2)));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_epi32(0xaaaa, a, b);
     } else if (s0 == 2 && s1 == 1) {
@@ -287,11 +287,11 @@ uint32<8> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
     } else if (s0 < 2) { // s1 >= 2
         float32<16> fa, fb; fa = a; fb = b;
         __m512 t = _mm512_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
-        return (__m512i) _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<16> fa, fb; fa = a; fb = b;
         __m512 t = _mm512_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
-        return (__m512i) _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
+        return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
 #endif
@@ -308,7 +308,7 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 {
     SIMDPP_STATIC_ASSERT(s0 < 4 && s1 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64<2> r;
     r.el(0) = s0 < 2 ? a.el(s0) : b.el(s0-2);
     r.el(1) = s1 < 2 ? a.el(s1) : b.el(s1-2);
@@ -340,16 +340,13 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 #endif
     } else if (s0 < 2) { // s1 >= 2
         float64<2> fa, fb; fa = a; fb = b;
-        return (__m128i) _mm_shuffle_pd(fa, fb, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+        return _mm_castpd_si128(_mm_shuffle_pd(fa, fb, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2)));
     } else { // s0 >= 2, s1 < 2
         float64<2> fa, fb; fa = a; fb = b;
-        return (__m128i) _mm_shuffle_pd(fb, fa, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+        return _mm_castpd_si128(_mm_shuffle_pd(fb, fa, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2)));
     }
 #elif SIMDPP_USE_NEON
-    return neon::detail::shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
-#elif SIMDPP_USE_ALTIVEC
-    uint64<2> mask = make_shuffle_bytes16_mask<s0, s1>(mask);
-    return shuffle_bytes16(a, b, mask);
+    return detail::neon_shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif

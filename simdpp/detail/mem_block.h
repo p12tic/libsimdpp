@@ -32,9 +32,9 @@ public:
 
     SIMDPP_INL mem_block() {}
     SIMDPP_INL mem_block(const mem_block& other) { std::memcpy(this, &other, sizeof(other)); }
-    SIMDPP_INL mem_block(V v) { std::memcpy(d_, &v, sizeof(v)); }
+    SIMDPP_INL mem_block(const V& v) { std::memcpy(d_, &v, sizeof(v)); }
 
-    SIMDPP_INL mem_block& operator=(V v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
+    SIMDPP_INL mem_block& operator=(const V& v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
 
     SIMDPP_INL operator V() const { V r; std::memcpy(&r, d_, sizeof(r)); return r; }
 

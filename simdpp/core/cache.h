@@ -36,9 +36,9 @@ SIMDPP_INL void prefetch_read(const void* ptr)
 {
 #if SIMDPP_USE_SSE2
     _mm_prefetch((const char*)ptr, _MM_HINT_T0);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 #if __GNUC__
-    __builtin_prefetch(ptr, 0); // should result in PLD
+    __builtin_prefetch(ptr, 0); // should result in PLD or DST
 #endif
 #endif
     (void) ptr;
@@ -60,9 +60,9 @@ SIMDPP_INL void prefetch_write(const void* ptr)
 {
 #if SIMDPP_USE_SSE2
     _mm_prefetch((const char*)ptr, _MM_HINT_T0);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 #if __GNUC__
-    __builtin_prefetch(ptr, 1); // should result in PLDW
+    __builtin_prefetch(ptr, 1); // should result in PLDW or DSTST
 #endif
 #endif
     (void) ptr;

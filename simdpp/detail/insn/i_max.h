@@ -224,7 +224,7 @@ uint32<N> i_max(const uint32<N>& a, const uint32<N>& b)
 
 SIMDPP_INL int64x2 i_max(const int64x2& a, const int64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::max(a, b);
 #elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     mask_int64x2 mask = cmp_gt(a, b);
@@ -259,7 +259,7 @@ int64<N> i_max(const int64<N>& a, const int64<N>& b)
 
 SIMDPP_INL uint64x2 i_max(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::max(a, b);
 #elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     mask_int64x2 mask = cmp_gt(a, b);

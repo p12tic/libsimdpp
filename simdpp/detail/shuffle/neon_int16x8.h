@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT16x8_H
-#define LIBSIMDPP_NEON_DETAIL_SHUFFLE_INT16x8_H
+#ifndef LIBSIMDPP_DETAIL_SHUFFLE_NEON_INT16x8_H
+#define LIBSIMDPP_DETAIL_SHUFFLE_NEON_INT16x8_H
 #if SIMDPP_USE_NEON
 
 #include <simdpp/core/make_shuffle_bytes_mask.h>
@@ -15,9 +15,8 @@
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
-namespace neon {
 namespace detail {
-namespace shuffle_int16x8 {
+namespace neon_shuffle_int16x8 {
 
 /*
     The code below implements generalized permutations for 4 elements sets
@@ -481,9 +480,8 @@ T permute4(T a)
                  integral_constant<unsigned, s3>{}, a);
 }
 
-} // namespace shuffle_int16x8
+} // namespace neon_shuffle_int16x8
 } // namespace detail
-} // namespace neon
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 

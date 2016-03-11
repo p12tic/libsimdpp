@@ -17,6 +17,7 @@
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
+namespace detail {
 namespace neon {
 
 /** @code
@@ -81,6 +82,7 @@ SIMDPP_INL uint64x2 zip2_hi(const uint64x2& ca, const uint64x2& cb)
 }
 
 } // namespace neon
+} // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 

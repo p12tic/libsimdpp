@@ -74,7 +74,7 @@ int32<N*2> combine(const int32<N,E1>& a1, const int32<N,E2>& a2)
 }
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int64<N*2> combine(const int64<N,E1> a1, const int64<N,E2>& a2)
+int64<N*2> combine(const int64<N,E1>& a1, const int64<N,E2>& a2)
 {
     return detail::insn::i_combine<uint64<N*2> >(uint64<N>(a1.eval()),
                                                 uint64<N>(a2.eval()));

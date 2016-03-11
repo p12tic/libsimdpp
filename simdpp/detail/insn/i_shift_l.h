@@ -141,15 +141,13 @@ uint32<N> i_shift_l(const uint32<N>& a, unsigned count)
 
 SIMDPP_INL uint64x2 i_shift_l(const uint64x2& a, unsigned count)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_sll_epi64(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(count);
     return vshlq_u64(a, shift);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, count);
 #endif
 }
 
@@ -314,7 +312,7 @@ template<unsigned count> SIMDPP_INL
 uint64x2 i_shift_l(const uint64x2& a)
 {
     SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return i_shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     return _mm_slli_epi64(a, count);

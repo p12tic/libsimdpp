@@ -24,9 +24,9 @@ namespace detail {
 namespace insn {
 
 template<class V> SIMDPP_INL
-V v_rsqrt_rh(V x, V a)
+V v_rsqrt_rh(const V& cx, const V& a)
 {
-    V x2, r;
+    V x2, r, x = cx;
 
     x2 = mul(x, x);
     r = mul(a, x2);

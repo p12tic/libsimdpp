@@ -15,7 +15,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/transpose.h>
-#include <simdpp/neon/shuffle.h>
+#include <simdpp/detail/neon/shuffle.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -204,7 +204,7 @@ void i_transpose2(uint32<N>& a0, uint32<N>& a1)
 
 SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_SSE2
     uint64x2 b0;
@@ -213,13 +213,6 @@ SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
     a0 = b0;
 #elif SIMDPP_USE_NEON
     neon::transpose2(a0, a1);
-#elif SIMDPP_USE_ALTIVEC
-    uint64x2 m0 = make_shuffle_bytes16_mask<0,2+0>(m0);
-    uint64x2 m1 = make_shuffle_bytes16_mask<1,2+1>(m1);
-    uint32x4 b0, b1;
-    b0 = shuffle_bytes16(a0, a1, m0);
-    b1 = shuffle_bytes16(a0, a1, m1);
-    a0 = b0;  a1 = b1;
 #endif
 }
 

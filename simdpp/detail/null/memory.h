@@ -77,6 +77,18 @@ void store(void* p, const V& a)
     }
 }
 
+template<class V, class M> SIMDPP_INL
+void store_masked(void* p, const V& a, const M& mask)
+{
+    typedef typename V::element_type T;
+    T* pt = reinterpret_cast<T*>(p);
+    for (unsigned i = 0; i < a.length; ++i) {
+        if (mask.el(i))
+            *pt = a.el(i);
+        pt++;
+    }
+}
+
 template<class V> SIMDPP_INL
 void store_first(void* p, const V& a, unsigned n)
 {

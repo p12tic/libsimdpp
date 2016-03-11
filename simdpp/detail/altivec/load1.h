@@ -17,6 +17,7 @@
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
+namespace detail {
 namespace altivec {
 
 /** Loads a single element from unaligned memory location and places it to the
@@ -101,6 +102,7 @@ SIMDPP_INL float32x4 load1(float32x4& a, const float* p)
 /// @}
 
 } // namespace altivec
+} // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 

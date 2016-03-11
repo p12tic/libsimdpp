@@ -47,10 +47,18 @@ int16<N> to_int16(const int8<N,E>& a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_int16(const uint8<N,E>& a)
+uint16<N> to_uint16(const uint8<N,E>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
+
+#if !SIMDPP_DISABLE_DEPRECATED
+template<unsigned N, class E> SIMDPP_INL
+uint16<N> to_int16(const uint8<N,E>& a)
+{
+    return to_uint16(a);
+}
+#endif
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
