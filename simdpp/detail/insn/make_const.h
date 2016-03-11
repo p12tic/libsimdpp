@@ -463,6 +463,17 @@ void construct_eval(V& v, const expr_vec_make_const<VE, N>& e)
     v = insn::i_make_const_any<V>(e);
 }
 
+template<class V> SIMDPP_INL
+void construct_eval(V& v, const expr_vec_make_ones& e)
+{
+    (void) e;
+    expr_vec_make_const<uint64_t,1> e2;
+    e2.a[0] = -1;
+    typename V::uint_vector_type u;
+    insn::i_make_const(u, e2, 0);
+    v = u;
+}
+
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -166,6 +166,30 @@ V make_uint(uint64_t v0,  uint64_t v1,  uint64_t v2,  uint64_t v3,
 }
 /// @}
 
+/// Creates a vector initialized to zero
+SIMDPP_INL expr_vec_make_const<uint64_t,1> make_zero()
+{
+    return make_uint(0);
+}
+
+template<class V> SIMDPP_INL
+V make_zero()
+{
+    return make_uint<V>(0);
+}
+
+/// Creates a vector initialized to ones
+SIMDPP_INL expr_vec_make_ones make_ones()
+{
+    return expr_vec_make_ones();
+}
+
+template<class V> SIMDPP_INL
+V make_ones()
+{
+    return (V) make_ones();
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 

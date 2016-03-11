@@ -37,6 +37,9 @@ void construct_eval(V& v, const expr_vec_load_u& e);
 template<class V, class VE, unsigned N> SIMDPP_INL
 void construct_eval(V& v, const expr_vec_make_const<VE, N>& e);
 
+template<class V> SIMDPP_INL
+void construct_eval(V& v, const expr_vec_make_ones& e);
+
 template<class V, class E> SIMDPP_INL
 void construct_eval_wrapper(V& v, const E& e)
 {
