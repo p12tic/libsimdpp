@@ -50,7 +50,6 @@ public:
         *this = bit_cast<int8<N>>(d.wrapped().eval()); return *this;
     }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int8<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -59,7 +58,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     SIMDPP_INL const int8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL int8v& vec(unsigned i)             { return d_[i]; }
@@ -108,7 +106,6 @@ public:
         *this = bit_cast<uint8<N>>(d.wrapped().eval()); return *this;
     }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint8<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -117,7 +114,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     SIMDPP_INL const uint8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL uint8v& vec(unsigned i)             { return d_[i]; }

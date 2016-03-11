@@ -69,7 +69,6 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int64<2>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -78,7 +77,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors
@@ -140,7 +138,6 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint64<2>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -149,7 +146,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors

@@ -71,7 +71,6 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int8<16>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -80,7 +79,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors
@@ -90,7 +88,7 @@ public:
 
     SIMDPP_INL int8<16> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL
     /// For internal use only
     const int8_t& el(unsigned i) const  { return d_[i]; }
           int8_t& el(unsigned i)        { return d_[i]; }
@@ -144,7 +142,6 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint8<16>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -153,7 +150,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors
@@ -163,7 +159,7 @@ public:
 
     SIMDPP_INL uint8<16> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL
     /// For uinternal use only
     const uint8_t& el(unsigned i) const  { return d_[i]; }
           uint8_t& el(unsigned i)        { return d_[i]; }
@@ -218,7 +214,7 @@ public:
     #endif
     }
 
-#if SIMDPP_USE_NULL && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif

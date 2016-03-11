@@ -23,7 +23,7 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-#if SIMDPP_USE_AVX || SIMDPP_DOXYGEN
+#if SIMDPP_USE_AVX
 
 /// @ingroup simd_vec_fp
 /// @{
@@ -64,7 +64,6 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL float64<4>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -73,7 +72,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors
@@ -140,7 +138,7 @@ private:
 };
 /// @} -- end ingroup
 
-#endif // SIMDPP_USE_AVX || SIMDPP_DOXYGEN
+#endif // SIMDPP_USE_AVX
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
