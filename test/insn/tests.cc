@@ -76,7 +76,7 @@ inline simdpp::Arch get_arch()
     return simdpp::Arch();
 }
 
-#define SIMDPP_USER_ARCH_INFO get_arch
+#define SIMDPP_USER_ARCH_INFO get_arch()
 
 SIMDPP_MAKE_DISPATCHER_VOID2(main_test_function, TestResults&, const TestOptions&)
 
