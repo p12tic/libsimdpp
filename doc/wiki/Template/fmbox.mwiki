@@ -1,0 +1,37 @@
+<table {{#if:{{{id|}}}|id="{{{id|}}}"}} class="plainlinks fmbox
+{{#switch:{{{type|}}}
+| warning    = fmbox-warning
+| editnotice = fmbox-editnotice
+| system          <!-- system = default -->
+| #default   = fmbox-system
+}} {{{class|}}}" style="{{{style|}}}">
+<tr>
+{{#ifeq:{{{image|}}}|none
+| <!-- No image. -->
+| <td class="mbox-image">
+  {{#if:{{{image|}}}
+  | {{{image}}}
+  | [[File:{{#switch:{{{type|}}}
+    | warning    = Cmbox deletion.png
+    | editnotice = Imbox notice.png
+    | system          <!-- system = default -->
+    | #default   = Imbox notice.png
+    }}|40x40px|link=|alt=]]
+  }}</td>
+}}
+<td class="mbox-text" style="{{{textstyle|}}}"> {{{text}}} </td>
+{{#if:{{{imageright|}}}
+| <td class="mbox-imageright"> {{{imageright}}} </td>
+}}
+</tr>
+</table><!--
+  Detect and report usage with faulty "type" parameter:
+-->{{#switch:{{{type|}}}
+|   <!-- No type fed, is also valid input -->
+| warning
+| editnotice
+| system     =    <!-- Do nothing, valid "type" -->
+| #default   = <div style="text-align: center;">This message box is using an invalid "type={{{type|}}}" parameter and needs fixing.</div>[[Category:Wikipedia message box parameter needs fixing|{{main other|Main:}}{{FULLPAGENAME}}]]<!-- Sort on namespace -->
+}}<noinclude>
+{{documentation|Template:mbox/doc}}
+</noinclude>

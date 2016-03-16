@@ -1,0 +1,3 @@
+{{#if: {{{1|}}} |[[../{{trim|{{{1|}}}}}|{{{2|{{{1}}}}}}]]| {{error|no link given}} }}<noinclude>
+{{documentation | Template:rl/doc}}
+</noinclude>

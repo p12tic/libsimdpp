@@ -1,0 +1,19 @@
+<onlyinclude>{{#vardefine:since|{{#switch:{{{since|}}}
+ |c++98=
+ |c++03=c++03
+ |c++11=c++11
+ |c++14=c++14
+ |c99=c99
+ |c11=c11
+ |libfund_ts=libfund_ts
+ |fs_ts=fs_ts
+ |none=none
+}}}}{{#vardefine:until|{{#switch:{{{until|}}}
+ |c++98=
+ |c++03=c++03
+ |c++11=c++11
+ |c++14=c++14
+ |c99=c99
+ |c11=c11
+ |none=none
+}}}}</onlyinclude>

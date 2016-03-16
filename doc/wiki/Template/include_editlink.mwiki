@@ -1,0 +1,2 @@
+<div class="t-template-editlink" style="{{{style|}}}">
+{{#if:{{{1|}}}|<span class="t-template editsection noprint plainlinks" title="Edit this template">[{{fullurl:Template:{{{1}}}|action=edit}} &#91;edit&#93;]</span>|{{error|no template given}}}}</div><noinclude>{{documentation|Template:include/doc}}</noinclude>

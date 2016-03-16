@@ -1,0 +1,21 @@
+{{#if:{{{1|}}}<!--
+-->| {{#if: {{#pos:{{{1|}}}|//}}<!--
+  -->|{{ambox
+| type  = notice
+| small = {{{small|left}}}
+| text  = Templated example.<br/> The link is {{tt|{{#replace:{{{1|}}}|//|/<PP>/}}}}
+| image = none
+}}<!--
+  -->|{{#vardefine:example-template-name|{{{1|}}}}}<!--
+    -->{{ {{{1|}}}<!--
+      -->|{{trim|{{{2|}}}}}<!--
+      -->|{{trim|{{{3|}}}}}<!--
+      -->|{{trim|{{{4|}}}}}<!--
+      -->|{{trim|{{{5|}}}}}<!--
+      -->|{{trim|{{{6|}}}}}<!--
+      -->|{{trim|{{{7|}}}}}<!--
+    -->}}{{#vardefine:example-template-name}}<!--
+  -->}}<!--
+-->|{{error | no template source given}} }}<noinclude>
+{{documentation | Template:source/doc}}
+</noinclude>

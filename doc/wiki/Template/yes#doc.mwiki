@@ -1,0 +1,18 @@
+This is one of the templates used to provide consistent formatting for frequently used messages in table cells.
+
+{|  class="wikitable"
+|-
+! Template
+! Result
+|-
+| {{tl|yes|''message''|align{{=}}''alignment''{{mark optional}}|style{{=}}''custom_style''{{mark optional}}}}
+| {{yes}}
+|-
+| {{tl|no|''message''|align{{=}}''alignment''{{mark optional}}|style{{=}}''custom_style''{{mark optional}}}}
+| {{no}}
+|-
+| {{tl|n/a|''message''|align{{=}}''alignment''{{mark optional}}|style{{=}}''custom_style''{{mark optional}}}}
+| {{n/a}}
+|}
+
+{{tt|message}} overrides the default text which is "Yes", "No" and "N/A" respectively.

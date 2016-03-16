@@ -1,0 +1,13 @@
+{{#if:{{{1|}}}<!--
+-->|{{#vardefine:dcl-list-template-name|{{{1|}}}}}<!--
+ -->{{ {{{1|}}}<!--
+    -->|{{trim|{{{2|}}}}}<!--
+    -->|{{trim|{{{3|}}}}}<!--
+    -->|{{trim|{{{4|}}}}}<!--
+    -->|{{trim|{{{5|}}}}}<!--
+    -->|{{trim|{{{6|}}}}}<!--
+    -->|{{trim|{{{7|}}}}}<!--
+-->}}{{#vardefine:dcl-list-template-name}}<!--
+-->|{{error | no template source given}} }}<noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

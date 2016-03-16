@@ -1,0 +1,73 @@
+<!--
+  Automatically add {{template sandbox notice}} when on a /sandbox page.
+-->{{#ifeq: {{SUBPAGENAME}} | sandbox
+| <div style="clear: both;"></div>{{template sandbox notice}}
+}}<!--
+  Automatically add {{pp-template}} to protected templates.
+-->{{template other
+| {{#ifeq: {{PROTECTIONLEVEL:move}} | sysop
+  | {{pp-template|docusage=yes}}
+  | {{#if: {{PROTECTIONLEVEL:edit}}
+    | {{pp-template|docusage=yes}}
+    | <!--Not protected, or only semi-move-protected-->
+    }}
+  }}
+}}<!--
+  Start of green doc box.
+-->{{documentation/start box2
+| preload = {{{preload|}}}   <!--Allow custom preloads-->
+| heading = {{{heading|¬}}}   <!--Empty but defined means no header-->
+| heading-style = {{{heading-style|}}}
+| content = {{{content|}}}
+
+<!--Some namespaces must have the /doc, /sandbox and /testcases 
+    in talk space-->
+| docspace = {{documentation/docspace}}
+
+| 1 = {{{1|}}}   <!--Other docname, if fed-->
+
+<!--The namespace is added in /start box2-->
+| template page = {{documentation/template page}}
+
+}}<!-- Start content --><!--
+  Start load the /doc content:
+  Note: The line breaks between this comment and the next line are necessary
+  so  "=== Headings ===" at the start and end of docs are interpreted.
+-->
+{{#if:{{{content|}}}<!--
+-->|{{{content|}}}<!--
+-->|{{#if:{{{1|}}}<!--
+  -->|{{#ifexist:{{{1|}}}<!--
+    -->|{{ {{{1}}} }}<!--
+    -->|<!--
+   -->}}<!--
+  -->|{{#ifexist:{{documentation/docspace}}:{{documentation/template page}}/doc<!--
+    -->|{{ {{documentation/docspace}}:{{documentation/template page}}/doc }}<!--
+    -->|<!--
+   -->}}<!--
+ -->}}
+}}
+<!--
+  End load the /doc content:
+  Note: The line breaks between this comment and the previous line are necessary
+  so  "=== Headings ===" at the start and end of docs are interpreted.
+-->{{documentation/end box2
+| preload = {{{preload|}}}   <!--Allow custom preloads-->
+| content = {{{content|}}}
+| link box = {{{link box|}}}   <!--So "link box=off" works-->
+
+<!--Some namespaces must have the /doc, /sandbox and /testcases 
+    in talk space-->
+| docspace = {{documentation/docspace}}
+
+| 1 = {{{1|}}}   <!--Other docname, if fed-->
+
+<!--The namespace is added in /end box2-->
+| template page = {{documentation/template page}}
+
+}}<!--
+  End of green doc box
+--><noinclude>
+
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

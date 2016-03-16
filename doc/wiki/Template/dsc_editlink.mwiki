@@ -1,0 +1,1 @@
+<onlyinclude>{{#if:{{#var:dcl-list-template-name}}|<span class="editsection noprint plainlinks" title="Edit this template">[{{fullurl:Template:{{#var:dcl-list-template-name}}|action=edit}} &#91;edit&#93;]</span>}}</onlyinclude><noinclude>{{documentation|Template:dsc/doc}}</noinclude>

@@ -1,0 +1,68 @@
+{{nv begin}}
+{{nv h2 | Elementary operations}}
+{{nv col begin}}
+{{nv ln | fp/add }}
+{{nv ln | fp/sub }}
+{{nv col next}}
+{{nv ln | fp/mul }}
+{{nv ln | fp/div }}
+{{nv col next}}
+{{nv ln | fp/fmadd }}
+{{nv ln | fp/fmsub }}
+{{nv col next}}
+{{nv ln | fp/neg }}
+{{nv col end}}
+
+{{nv h2 | Rounding}}
+{{nv col begin}}
+{{nv ln | fp/round }}
+{{nv ln | fp/ceil }}
+{{nv col next}}
+{{nv ln | fp/floor }}
+{{nv ln | fp/trunc }}
+{{nv col end}}
+
+{{nv h2 | Comparisons}}
+{{nv col begin}}
+{{nv ln | fp/cmp_eq }}
+{{nv ln | fp/cmp_neq }}
+{{nv col next}}
+{{nv ln | fp/cmp_lt }}
+{{nv ln | fp/cmp_le }}
+{{nv col next}}
+{{nv ln | fp/cmp_gt }}
+{{nv ln | fp/cmp_ge }}
+{{nv col end}}
+
+{{nv h1 | Reduction}}
+{{nv col begin}}
+{{nv ln | fp/reduce_add }}
+{{nv ln | fp/reduce_min }}
+{{nv col next}}
+{{nv ln | fp/reduce_mul }}
+{{nv ln | fp/reduce_max }}
+{{nv col end}}
+
+{{nv h2 | Miscellaneous}}
+{{nv col begin}}
+{{nv ln | fp/abs }}
+{{nv ln | fp/sign }}
+{{nv col next}}
+{{nv ln | fp/min }}
+{{nv ln | fp/max }}
+{{nv col next}}
+{{nv ln | fp/isnan }}
+{{nv ln | fp/isnan2 }}
+{{nv col end}}
+
+{{nv h2 | Square root and reciprocal}}
+{{nv col begin}}
+{{nv ln | fp/sqrt }}
+{{nv col next}}
+{{nv ln | fp/rcp_e }}
+{{nv ln | fp/rcp_rh }}
+{{nv col next}}
+{{nv ln | fp/rsqrt_e }}
+{{nv ln | fp/rsqrt_rh }}
+{{nv col end}}
+{{nv end}}

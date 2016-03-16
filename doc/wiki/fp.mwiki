@@ -1,0 +1,49 @@
+{{title|Floating-point operations}}
+{{fp/navbar}}
+
+The following simple operations for floating-point computations are provided.
+
+{{dsc begin}}
+{{dsc h1 | Elementary operations}}
+{{dsc tfun | fp/add | performs addition }}
+{{dsc tfun | fp/sub | performs subtraction }}
+{{dsc tfun | fp/mul | performs multiplication }}
+{{dsc tfun | fp/fmadd | performs fused multiply-add }}
+{{dsc tfun | fp/fmsub | performs fused multiply-subtract }}
+{{dsc tfun | fp/div | performs division }}
+
+{{dsc h1 | Rounding}}
+{{dsc tfun | fp/round | rounds values towards nearest integer }}
+{{dsc tfun | fp/ceil | rounds values towards positive infinity }}
+{{dsc tfun | fp/floor | rounds values towards negative infinity }}
+{{dsc tfun | fp/trunc | rounds values towards zero }}
+
+{{dsc h1 | Comparisons}}
+{{dsc tfun | fp/cmp_eq | compares vector elements for equality }}
+{{dsc tfun | fp/cmp_neq | compares vector elements for inequality }}
+{{dsc tfun | fp/cmp_lt | compares vector elements for less than }}
+{{dsc tfun | fp/cmp_le | compares vector elements for less than or equal }}
+{{dsc tfun | fp/cmp_gt | compares vector elements for greater than }}
+{{dsc tfun | fp/cmp_ge | compares vector elements for greater than or equal }}
+
+{{dsc h1 | Miscellaneous}}
+{{dsc tfun | fp/abs | computes absolute value }}
+{{dsc tfun | fp/sign | extracts sign bit }}
+{{dsc tfun | fp/min | selects minimum values }}
+{{dsc tfun | fp/max | selects maximum values }}
+{{dsc tfun | fp/isnan | checks if elements are NaN }}
+{{dsc tfun | fp/isnan2 | checks if elements in two vectors are NaN }}
+
+{{dsc h1 | Square root and reciprocal}}
+{{dsc tfun | fp/sqrt | computes square root }}
+{{dsc tfun | fp/rcp_e | estimates reciprocal }}
+{{dsc tfun | fp/rcp_rh | performs a single Newton-Rhapson iteration improving<br/> reciprocal estimate }}
+{{dsc tfun | fp/rsqrt_e | estimates reciprocal square root }}
+{{dsc tfun | fp/rsqrt_rh | performs a single Newton-Rhapson iteration improving<br/> reciprocal square root estimate }}
+
+{{dsc h1 | Reduction}}
+{{dsc tfun | fp/reduce_add | computes the sum of all elements in the vector }}
+{{dsc tfun | fp/reduce_mul | computes the product of all elements in the vector }}
+{{dsc tfun | fp/reduce_min | computes the minimum of all elements in the vector }}
+{{dsc tfun | fp/reduce_max | computes the maximum of all elements in the vector }}
+{{dsc end}}

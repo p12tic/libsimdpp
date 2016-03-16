@@ -1,0 +1,144 @@
+{{title|Vector types}}
+{{types/navbar}}
+
+This page outlines the available vector types in the library. Several higher-level descriptions are available in the following pages:
+
+*<span style="font-size:1.2em;">[[types/main|Main vector types]]</span>
+
+*<span style="font-size:1.2em;">[[types/hierarchy|Type hierarchy]]</span>
+
+*<span style="font-size:1.2em;">[[types/expr|Vector expressions]]</span>
+
+*<span style="font-size:1.2em;">[[types/promotion|Vector type promotion]]</span>
+
+===Vector types===
+{{dsc begin}}
+{{dsc tclass | types/uint8_void | title=uint8{{small|<N>}} | vector containing unsigned 8-bit integers}}
+{{dsc tclass | types/int8_void | title=int8{{small|<N>}} | vector containing signed 8-bit integers}}
+{{dsc tclass | types/mask_int8_void | title=mask_int8{{small|<N>}} | vector containing masks for 8-bit integers}}
+{{dsc tclass | types/uint16_void | title=uint16{{small|<N>}} | vector containing unsigned 16-bit integers}}
+{{dsc tclass | types/int16_void | title=int16{{small|<N>}} | vector containing signed 16-bit integers}}
+{{dsc tclass | types/mask_int16_void | title=mask_int16{{small|<N>}} | vector containing masks for 16-bit integers}}
+{{dsc tclass | types/uint32_void | title=uint32{{small|<N>}} | vector containing unsigned 32-bit integers}}
+{{dsc tclass | types/int32_void | title=int32{{small|<N>}} | vector containing signed 32-bit integers}}
+{{dsc tclass | types/mask_int32_void | title=mask_int32{{small|<N>}} | vector containing masks for 32-bit integers}}
+{{dsc tclass | types/uint64_void | title=uint64{{small|<N>}} | vector containing unsigned 64-bit integers}}
+{{dsc tclass | types/int64_void | title=int64{{small|<N>}} | vector containing signed 64-bit integers}}
+{{dsc tclass | types/mask_int64_void | title=mask_int64{{small|<N>}} | vector containing masks for 64-bit integers}}
+{{dsc tclass | types/float32_void | title=float32{{small|<N>}} | vector containing 32-bit floating-point numbers}}
+{{dsc tclass | types/mask_float32_void | title=mask_float32{{small|<N>}} | vector containing masks for 32-bit floating-point numbers}}
+{{dsc tclass | types/float64_void | title=float64{{small|<N>}} | vector containing 64-bit floating-point numbers}}
+{{dsc tclass | types/mask_float64_void | title=mask_float64{{small|<N>}} | vector containing masks for 64-bit floating-point numbers}}
+{{dsc end}}
+
+===Categorization types===
+{{dsc begin}}
+{{dsc tclass | types/any_int8 | represents either of {{c|int8}}, {{c|uint8}} or {{c|mask_int8}}}}
+{{dsc tclass | types/any_int16 | represents either of {{c|int16}}, {{c|uint16}} or {{c|mask_int16}}}}
+{{dsc tclass | types/any_int32 | represents either of {{c|int32}}, {{c|uint32}} or {{c|mask_int32}}}}
+{{dsc tclass | types/any_int64 | represents either of {{c|int64}}, {{c|uint64}} or {{c|mask_int64}}}}
+{{dsc tclass | types/any_float32 | represents either of {{c|float32}} or {{c|mask_float32}}}}
+{{dsc tclass | types/any_float64 | represents either of {{c|float64}} or {{c|mask_float64}}}}
+{{dsc tclass | types/any_vec8 | represents {{c|any_int8}} }}
+{{dsc tclass | types/any_vec16 | represents {{c|any_int16}}}}
+{{dsc tclass | types/any_vec32 | represents either {{c|any_int32}} or {{c|any_float32}}}}
+{{dsc tclass | types/any_vec64 | represents either {{c|any_int64}} or {{c|any_float64}}}}
+{{dsc tclass | types/any_vec | represents any vector }}
+{{dsc end}}
+
+===Helper typedefs===
+The following helper typedefs are provided:
+
+{{vset begin}}
+{{vset2 h | Type | Definition}}
+{{vset2 | int8x16 | int8<16> }}
+{{vset2 | int8x32 | int8<32> }}
+{{vset2 | uint8x16 | uint8<16> }}
+{{vset2 | uint8x32 | uint8<32> }}
+{{vset2 | mask_int8x16 | mask_int8<16> }}
+{{vset2 | mask_int8x32 | mask_int8<32> }}
+
+{{vset2 | int16x8 | int16<8> }}
+{{vset2 | int16x16 | int16<16> }}
+{{vset2 | uint16x8 | uint16<8> }}
+{{vset2 | uint16x16 | uint16<16> }}
+{{vset2 | mask_int16x8 | mask_int16<8> }}
+{{vset2 | mask_int16x16 | mask_int16<16> }}
+
+{{vset2 | int32x4 | int32<4> }}
+{{vset2 | int32x8 | int32<8> }}
+{{vset2 | uint32x4 | uint32<4> }}
+{{vset2 | uint32x8 | uint32<8> }}
+{{vset2 | mask_int32x4 | mask_int32<4> }}
+{{vset2 | mask_int32x8 | mask_int32<8> }}
+
+{{vset2 | int64x2 | int64<2> }}
+{{vset2 | int64x4 | int64<4> }}
+{{vset2 | uint64x2 | uint64<2> }}
+{{vset2 | uint64x4 | uint64<4> }}
+{{vset2 | mask_int64x2 | mask_int64<2> }}
+{{vset2 | mask_int64x4 | mask_int64<4> }}
+
+{{vset2 | float32v | float32<SIMDPP_FAST_FLOAT32_SIZE> }}
+{{vset2 | mask_float32v | mask_float32<SIMDPP_FAST_FLOAT32_SIZE> }}
+{{vset2 | float64v | float64<SIMDPP_FAST_FLOAT64_SIZE> }}
+{{vset2 | mask_float64v | mask_float64<SIMDPP_FAST_FLOAT64_SIZE> }}
+
+{{vset2 | int8v | int8<SIMDPP_FAST_INT8_SIZE> }}
+{{vset2 | uint8v | uint8<SIMDPP_FAST_INT8_SIZE> }}
+{{vset2 | mask_int8v | mask_int8<SIMDPP_FAST_INT8_SIZE> }}
+
+{{vset2 | int16v | int16<SIMDPP_FAST_INT16_SIZE> }}
+{{vset2 | uint16v | uint16<SIMDPP_FAST_INT16_SIZE> }}
+{{vset2 | mask_int16v | mask_int16<SIMDPP_FAST_INT16_SIZE> }}
+
+{{vset2 | int32v | int32<SIMDPP_FAST_INT32_SIZE> }}
+{{vset2 | uint32v | uint32<SIMDPP_FAST_INT32_SIZE> }}
+{{vset2 | mask_int32v | mask_int32<SIMDPP_FAST_INT32_SIZE> }}
+
+{{vset2 | int64v | int64<SIMDPP_FAST_INT64_SIZE> }}
+{{vset2 | uint64v | uint64<SIMDPP_FAST_INT64_SIZE> }}
+{{vset2 | mask_int64v | mask_int64<SIMDPP_FAST_INT64_SIZE> }}
+
+{{vset2 | mask_float32v2 | mask_float32<SIMDPP_FAST_FLOAT32_SIZE*2> }}
+{{vset2 | float64v2 | float64<SIMDPP_FAST_FLOAT64_SIZE*2> }}
+{{vset2 | mask_float64v2 | mask_float64<SIMDPP_FAST_FLOAT64_SIZE*2> }}
+
+{{vset2 | int8v2 | int8<SIMDPP_FAST_INT8_SIZE*2> }}
+{{vset2 | uint8v2 | uint8<SIMDPP_FAST_INT8_SIZE*2> }}
+{{vset2 | mask_int8v2 | mask_int8<SIMDPP_FAST_INT8_SIZE*2> }}
+
+{{vset2 | int16v2 | int16<SIMDPP_FAST_INT16_SIZE*2> }}
+{{vset2 | uint16v2 | uint16<SIMDPP_FAST_INT16_SIZE*2> }}
+{{vset2 | mask_int16v2 | mask_int16<SIMDPP_FAST_INT16_SIZE*2> }}
+
+{{vset2 | int32v2 | int32<SIMDPP_FAST_INT32_SIZE*2> }}
+{{vset2 | uint32v2 | uint32<SIMDPP_FAST_INT32_SIZE*2> }}
+{{vset2 | mask_int32v2 | mask_int32<SIMDPP_FAST_INT32_SIZE*2> }}
+
+{{vset2 | int64v2 | int64<SIMDPP_FAST_INT64_SIZE*2> }}
+{{vset2 | uint64v2 | uint64<SIMDPP_FAST_INT64_SIZE*2> }}
+{{vset2 | mask_int64v2 | mask_int64<SIMDPP_FAST_INT64_SIZE*2> }}
+
+{{vset2 | float32v4 | float32<SIMDPP_FAST_FLOAT32_SIZE*4> }}
+{{vset2 | mask_float32v4 | mask_float32<SIMDPP_FAST_FLOAT32_SIZE*4> }}
+{{vset2 | float64v4 | float64<SIMDPP_FAST_FLOAT64_SIZE*4> }}
+{{vset2 | mask_float64v4 | mask_float64<SIMDPP_FAST_FLOAT64_SIZE*4> }}
+
+{{vset2 | int8v4 | int8<SIMDPP_FAST_INT8_SIZE*4> }}
+{{vset2 | uint8v4 | uint8<SIMDPP_FAST_INT8_SIZE*4> }}
+{{vset2 | mask_int8v4 | mask_int8<SIMDPP_FAST_INT8_SIZE*4> }}
+
+{{vset2 | int16v4 | int16<SIMDPP_FAST_INT16_SIZE*4> }}
+{{vset2 | uint16v4 | uint16<SIMDPP_FAST_INT16_SIZE*4> }}
+{{vset2 | mask_int16v4 | mask_int16<SIMDPP_FAST_INT16_SIZE*4> }}
+
+{{vset2 | int32v4 | int32<SIMDPP_FAST_INT32_SIZE*4> }}
+{{vset2 | uint32v4 | uint32<SIMDPP_FAST_INT32_SIZE*4> }}
+{{vset2 | mask_int32v4 | mask_int32<SIMDPP_FAST_INT32_SIZE*4> }}
+
+{{vset2 | int64v4 | int64<SIMDPP_FAST_INT64_SIZE*4> }}
+{{vset2 | uint64v4 | uint64<SIMDPP_FAST_INT64_SIZE*4> }}
+{{vset2 | mask_int64v4 | mask_int64<SIMDPP_FAST_INT64_SIZE*4> }}
+
+{{vset end}}

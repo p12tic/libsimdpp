@@ -1,0 +1,4 @@
+{{dsc | {{dsc member | {{{1|}}} | (destructor) | notes={{cmark virtual}} {{{notes|}}} | nolink={{{nolink|}}} | nobold=true }}<!--
+-->| {{#ifeq:{{{nolink|}}}|true|{{{1|}}}|{{{2|}}}}} <br/> {{dsc mark mem | {{{1|}}} | prot mem vfun | nomem={{{nolink|}}} | inlinemem={{{inlinemem|}}} }} }}<noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

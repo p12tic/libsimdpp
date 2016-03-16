@@ -1,0 +1,3 @@
+<includeonly> <table class="t-rev-begin {{#ifeq:{{{noborder|}}}|true|t-rev-begin-noborder}}"></includeonly><noinclude>
+{{documentation | Template:rev/doc}}
+</noinclude>

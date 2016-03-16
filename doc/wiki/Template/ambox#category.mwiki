@@ -1,0 +1,10 @@
+{{#if:{{{cat|}}}
+ |{{#if:{{{date|}}}
+  |[[Category:{{{cat}}} {{{preposition|from}}} {{{date}}}]]{{#ifexist:Category:{{{cat}}} {{{preposition|from}}} {{{date}}}|
+   |[[Category:Articles with invalid date parameter in template]]
+  }}
+  |[[Category:{{{cat}}}]]
+ }}
+}}{{#if:{{{all|}}}
+ |[[Category:{{{all}}}]]
+}}

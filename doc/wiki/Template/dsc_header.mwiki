@@ -1,0 +1,6 @@
+|- class="t-dsc-header"
+| colspan="2" | <div>{{#if: {{{1|}}} | Defined in header <code><nowiki><</nowiki>{{trim|{{{1}}}}}<nowiki>></nowiki></code> }} </div>
+{{dsc guard}}<!--
+--><noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

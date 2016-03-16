@@ -1,0 +1,4 @@
+{{dsc | {{dsc member | {{{1|}}} | {{{title|}}} | notes={{{notes|}}} | nolink={{{nolink|}}} }}<!--
+-->| {{{2|}}} <br/> {{mark enum}} }}<noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

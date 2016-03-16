@@ -1,0 +1,14 @@
+{{#if:{{{code|}}}
+|<div class="t-example"><!--
+-->{{#if:{{{1|}}}| <p>{{{1|}}}</p>
+
+}}<div class="t-example-live-link"><div class="coliru-btn coliru-btn-run-init">Run this code</div></div>
+{{source | 1={{{code|}}} | lang={{{lang|{{get lang}}}}}}}
+
+{{#if:{{{output|}}} | {{#ifeq: {{{p|}}} | true | Possible output: | Output:}}
+
+{{source | lang=text | 1={{{output}}}}}
+}} 
+</div> | {{todo|reason=no example}}}}<noinclude>
+{{documentation|Template:source/doc}}
+</noinclude>

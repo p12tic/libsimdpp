@@ -1,0 +1,7 @@
+<div class="t-image">
+{{#if:{{{1|}}}
+ |[[Image:{{{1|}}}]]
+ |{{error|No image specified}}
+}}
+{{#if:{{{notes|}}}|<div style="text-align:center;">{{{notes|}}}</div>}}
+</div><noinclude>{{documentation}}</noinclude>

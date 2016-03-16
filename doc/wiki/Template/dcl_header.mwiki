@@ -1,0 +1,8 @@
+<tr class="t-dsc-header">
+<td> <div>{{#if: {{{1|}}} | Defined in header <code>{{dcl list header/link|{{trim|{{{1}}}}}}}</code> }}
+{{#if: {{{2|}}}|<br>Defined in header <code>{{dcl list header/link|{{trim|{{{2}}}}}}}</code>}} </div></td>
+<td></td>
+<td>{{#if: {{{notes|}}} | <div>{{{notes|}}}</div>}}</td><!--
+--><noinclude>
+{{documentation | Template:dcl/doc}}
+</noinclude>

@@ -1,0 +1,13 @@
+<{{#switch:{{lc:{{{tag}}}}}
+ |p=p
+ |span=span
+ |div=div
+ |#default=strong
+}} class="error">{{{message|{{{1}}}}}}</{{#switch:{{lc:{{{tag}}}}}
+ |p=p
+ |span=span
+ |div=div
+ |#default=strong
+}}><noinclude>
+{{documentation}}
+</noinclude>

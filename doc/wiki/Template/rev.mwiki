@@ -1,0 +1,4 @@
+<onlyinclude><tr class="t-rev {{#if:{{{since|}}}|t-since-{{#replace:{{{since}}}|+|x}}}} {{#if:{{{until|}}}|t-until-{{#replace:{{{until}}}|+|x}}}}"><td>{{{1|}}}</td>
+<td>{{#if:{{{since|}}}|{{mark since {{{since|}}}}}{{#if:{{{until|}}}|<br/>}}}}{{#if:{{{until|}}}|{{mark until {{{until|}}}}} }}</td></tr></onlyinclude><noinclude>
+{{documentation | Template:rev/doc}}
+</noinclude>

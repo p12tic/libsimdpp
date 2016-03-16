@@ -1,0 +1,7 @@
+{{#if: {{{rp|}}}
+ | The type {{c|{{{1}}}}} must be such that an object of type {{c|{{{rp}}}}} can be dereferenced and assigned a value of type {{c|{{{1}}}}}.
+ | {{#if: {{{rt|}}}
+    | The type {{c|{{{1}}}}} must be such that an object of type {{c|{{{rt}}}}} can be assigned a value of type {{c|{{{1}}}}}.
+    | {{error|requirement not defined}}
+   }}
+}}<noinclude>{{documentation}}</noinclude>

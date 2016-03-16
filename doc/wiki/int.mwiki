@@ -1,0 +1,39 @@
+{{title|Integer operations}}
+{{int/navbar}}
+
+The following simple operations for integer computations are provided.
+
+{{dsc begin}}
+{{dsc h1 | Elementary operations}}
+{{dsc tfun | int/add | performs addition }}
+{{dsc tfun | int/add_sat | performs saturated addition }}
+{{dsc tfun | int/sub | performs subtraction }}
+{{dsc tfun | int/sub_sat | performs saturated subtration }}
+{{dsc tfun | int/mul_lo | performs multiplication, returns lower half of the result }}
+{{dsc tfun | int/mul_hi | performs multiplication, returns higher half of the result }}
+{{dsc tfun | int/mull | performs multiplication, extends element width }}
+{{dsc tfun | int/neg | performs negation }}
+
+{{dsc h1 | Comparisons}}
+{{dsc tfun | int/cmp_eq | compares vector elements for equality }}
+{{dsc tfun | int/cmp_neq | compares vector elements for inequality }}
+{{dsc tfun | int/cmp_lt | compares vector elements for less than }}
+{{dsc tfun | int/cmp_gt | compares vector elements for greater than }}
+
+{{dsc h1 | Reduction}}
+{{dsc tfun | int/reduce_add | computes the sum of all elements in the vector }}
+{{dsc tfun | int/reduce_mul | computes the product of all elements in the vector }}
+{{dsc tfun | int/reduce_min | computes the minimum of all elements in the vector }}
+{{dsc tfun | int/reduce_max | computes the maximum of all elements in the vector }}
+{{dsc tfun | int/reduce_and | computes bitwise AND of all elements in the vector }}
+{{dsc tfun | int/reduce_or | computes bitwise OR of all elements in the vector }}
+
+{{dsc h1 | Miscellaneous}}
+{{dsc tfun | int/abs | computes absolute value }}
+{{dsc tfun | int/avg | computes rounded average }}
+{{dsc tfun | int/avg_trunc | computes truncated average }}
+{{dsc tfun | int/min | selects minimum values }}
+{{dsc tfun | int/max | selects maximum values }}
+{{dsc tfun | int/shift_l | performs left shift }}
+{{dsc tfun | int/shift_r | performs right shift }}
+{{dsc end}}

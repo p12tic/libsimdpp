@@ -1,0 +1,12 @@
+{{bitwise/navbar}}
+{{title|Bitwise operations}}
+
+The following bitwise logical operations are provided.
+
+{{dsc begin}}
+{{dsc tfun | bitwise/bit_and | computes bitwise AND }}
+{{dsc tfun | bitwise/bit_andnot | computes bitwise AND NOT }}
+{{dsc tfun | bitwise/bit_or | computes bitwise OR }}
+{{dsc tfun | bitwise/bit_not | computes bitwise NOT }}
+{{dsc tfun | bitwise/bit_xor | computes bitwise XOR }}
+{{dsc end}}

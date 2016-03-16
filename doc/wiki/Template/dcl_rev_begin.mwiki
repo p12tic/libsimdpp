@@ -1,0 +1,17 @@
+<onlyinclude></tbody>
+<tbody class="t-dcl-rev {{#if:{{{num|}}}|t-dcl-rev-num}} {{#if:{{{since|}}}{{{until|}}}{{{notes|}}}|t-dcl-rev-notes}} {{#if:{{{since|}}}|t-since-{{#replace:{{{since}}}|+|x}}}} {{#if:{{{until|}}}|t-until-{{#replace:{{{until}}}|+|x}}}}"><!--
+-->{{#if:{{{num|}}}{{{since|}}}{{{until|}}}{{{notes|}}}|
+<tr class="t-dcl-rev-aux">
+<td></td>
+{{#if:{{{num|}}}|<td rowspan="142">({{{num|}}})</td>|<td></td>}}
+{{#if:{{{since|}}}{{{until|}}}{{{notes|}}}|<td rowspan="142"> <!--
+-->{{#if: {{{since|}}}<!--
+  -->|{{mark since {{{since}}}}} {{#if: {{{until|}}}{{{notes|}}}|<br/>}}<!--
+-->}}<!--
+-->{{#if: {{{until|}}}<!--
+  -->|{{mark until {{{until}}}}} {{#if: {{{notes|}}}|<br/>}}<!--
+-->}}{{{notes|}}} </td>|<td></td>}}
+</tr>
+}}</onlyinclude><noinclude>
+{{documentation | Template:dcl/doc}}
+</noinclude>

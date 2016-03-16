@@ -1,0 +1,2 @@
+{{#if: {{{1|}}} |[[cpp/concept/{{trim|{{{1|}}}}}|<code>{{trim|{{{1|}}}}}</code>]]| {{error|no concept given}} }}<noinclude>
+</noinclude>

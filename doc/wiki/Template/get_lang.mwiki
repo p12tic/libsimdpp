@@ -1,0 +1,5 @@
+<onlyinclude>{{#switch:{{#explode:{{PAGENAME}}|/|0}}
+|c=c
+|cpp=cpp
+|cpp
+}}</onlyinclude><noinclude>{{documentation}}</noinclude>

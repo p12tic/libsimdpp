@@ -1,0 +1,23 @@
+{{title|Memory access operations}}
+{{mem/navbar}}
+
+The following memory access operations are provided.
+
+{{dsc begin}}
+{{dsc h1 | Load}}
+{{dsc tfun | mem/load | loads vector from aligned location }}
+{{dsc tfun | mem/load_u | loads vector from unaligned location }}
+{{dsc tfun | mem/load_splat | loads a value to all elements of a vector }}
+{{dsc tfun | mem/load_packed2 | loads element pairs and deinterleaves into two vectors }}
+{{dsc tfun | mem/load_packed3 | loads element triplets and deinterleaves into three vectors }}
+{{dsc tfun | mem/load_packed4 | loads element quadruplets and deinterleaves into four vectors }}
+
+{{dsc h1 | Store}}
+{{dsc tfun | mem/store | stores vector to aligned location }}
+{{dsc tfun | mem/stream | stores vector to aligned location without touching the caches }}
+{{dsc tfun | mem/store_first | stores first N elements of a vector to aligned location }}
+{{dsc tfun | mem/store_last | stores last N elements of a vector to aligned location }}
+{{dsc tfun | mem/store_packed2 | interleaves two vectors and stores resulting element pairs }}
+{{dsc tfun | mem/store_packed3 | interleaves three vectors and stores resulting element triplets }}
+{{dsc tfun | mem/store_packed4 | interleaves four vectors and stores resulting element quadruplets }}
+{{dsc end}}

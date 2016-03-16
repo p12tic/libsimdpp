@@ -1,0 +1,9 @@
+{{#if: {{{1|}}}<!--
+--> | <div class="t-dsc-member-div {{#ifeq:{{{nobold|}}}|true|t-dsc-member-nobold-div}}"><!--
+     --><div>{{#ifeq:{{{nolink|}}} | true | {{#if:{{{2|}}}|{{{2|}}}|{{{1|}}}}} | [[{{{1}}} | {{lines|{{ltt/core|{{{1}}}|{{{2|}}}}}}}]]}}</div><!--
+     -->{{#if:{{{notes|}}}|<div>{{lines|{{{notes}}}}}</div>}}<!--
+   --></div><!--
+--> | {{error | no member given}} <!--
+-->}}<noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

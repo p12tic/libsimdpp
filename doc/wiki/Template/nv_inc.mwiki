@@ -1,0 +1,15 @@
+{{#if:{{{1|}}}<!--
+-->|{{#if:{{trim|{{ {{{1}}} }}}}<!--
+ --> |{{{{{1|}}}<!--
+    -->|{{trim|{{{2|}}}}}<!--
+    -->|{{trim|{{{3|}}}}}<!--
+    -->|{{trim|{{{4|}}}}}<!--
+    -->|{{trim|{{{5|}}}}}<!--
+    -->|{{trim|{{{6|}}}}}<!--
+    -->|{{trim|{{{7|}}}}}<!--
+   -->}}<!--
+  -->|{{error | given template does not exist}}<!--
+-->}}<!--
+-->|{{error | no template source given}} }}<noinclude>
+{{documentation | Template:nv/doc}}
+</noinclude>

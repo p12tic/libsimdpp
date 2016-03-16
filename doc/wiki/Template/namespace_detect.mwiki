@@ -1,0 +1,41 @@
+{{#switch:
+  {{lc:               <!--Lower case the result-->
+    <!--If no or empty "demospace" parameter then detect namespace-->
+    {{#if:{{{demospace|}}} 
+    | {{{demospace}}}
+    | {{#if:{{{page|}}} 
+      | <!--Detect the namespace in the "page" parameter-->
+        {{#ifeq:{{NAMESPACE:{{{page}}} }}|{{TALKSPACE:{{{page}}} }}
+        | talk
+        | {{SUBJECTSPACE:{{{page}}} }} 
+        }}
+      | <!--No "demospace" or "page" parameters, so detect actual namespace-->
+        {{#ifeq:{{NAMESPACE}}|{{TALKSPACE}}
+        | talk
+        | {{SUBJECTSPACE}} 
+        }}
+      }}
+    }}
+  }}
+<!-- Only one of the lines below will be executed -->
+<!-- Respecting empty parameters on purpose -->
+| main        <!--"demospace=main" or {{SUBJECTSPACE}}={{ns:0}}=""-->
+|           = {{{main| {{{other|}}} }}}
+| talk      = {{{talk| {{{other|}}} }}}
+| user      = {{{user| {{{other|}}} }}}
+| wikipedia = {{{wikipedia| {{{other|}}} }}}
+| file
+| image     = {{{file| {{{image| {{{other|}}} }}} }}}
+| mediawiki = {{{mediawiki| {{{other|}}} }}}
+| template  = {{{template| {{{other|}}} }}}
+| help      = {{{help| {{{other|}}} }}}
+| category  = {{{category| {{{other|}}} }}}
+| portal    = {{{portal| {{{other|}}} }}}
+| book      = {{{book| {{{other|}}} }}}
+| other
+| #default  = {{{other|}}}   <!--"demospace=other" or a new namespace-->
+
+}}<!--End switch--><noinclude>
+
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

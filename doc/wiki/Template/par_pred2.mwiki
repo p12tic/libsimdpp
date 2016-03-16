@@ -1,0 +1,10 @@
+{{par | {{{1|}}} | binary predicate {{#if:{{{2|}}}|which returns ​{{c|{{{value|true}}}}} {{{2}}}}}. <br/>
+The signature of the predicate function should be equivalent to the following:
+
+{{cc | bool pred(const Type1 &a, const Type2 &b); }}
+
+The signature does not need to have {{c|const &}}, but the function must not modify the objects passed to it.<br/>
+{{cast req2 | Type1 | Type2 | t1={{{t1|}}} | t2={{{t2|}}} | p1={{{p1|}}} | p2={{{p2|}}}}}
+}}​<noinclude>
+{{documentation | Template:par/doc}}
+</noinclude>
