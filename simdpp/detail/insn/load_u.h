@@ -55,7 +55,10 @@ SIMDPP_INL uint8x16 i_load_u(uint8x16& a, const void* p)
 
 SIMDPP_INL uint16x8 i_load_u(uint16x8& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL
+    detail::null::load(a, p);
+    return a;
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
     a = b;
     return a;
@@ -67,7 +70,10 @@ SIMDPP_INL uint16x8 i_load_u(uint16x8& a, const void* p)
 
 SIMDPP_INL uint32x4 i_load_u(uint32x4& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL
+    detail::null::load(a, p);
+    return a;
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b = i_load_u(b, p);
     a = b;
     return a;
@@ -79,7 +85,10 @@ SIMDPP_INL uint32x4 i_load_u(uint32x4& a, const void* p)
 
 SIMDPP_INL uint64x2 i_load_u(uint64x2& a, const void* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2
+#if SIMDPP_USE_NULL
+    detail::null::load(a, p);
+    return a;
+#elif SIMDPP_USE_SSE2
     uint8x16 b = i_load_u(b, p);
     a = b;
     return a;
