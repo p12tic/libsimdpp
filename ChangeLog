@@ -1,10 +1,13 @@
 
-What's new in v2.0:
+What's new in v2.0~rc1:
 
  * Expression template-based backend
  * Support scalar arguments to certain functions
  * Support for vectors much longer than the native vector type. The only
     limitation is that the length must be a power of 2.
+ * Operator overloads are provided that fully mimic free functions.
+ * New functions: store_masked, store_u, shuffle4x2, shuffle2x2, test_bits_any.
+ * PowerPC Altivec, NEONv2 support. More compilers are now supported.
  * API break: The built-in dispatcher has been rewritten to generate hard
     link-time dependencies on the versioned functions. It is no longer
     susceptible in lazy static variable initialization breaking function
@@ -23,3 +26,8 @@ What's new in v2.0:
     vector.
  * API break: certain functions return "empty" expressions instead of vectors
  * API break: saturated add and sub are now called add_sat and sub_sat
+ * API break: the zero() and ones() member functions of the vector types have
+    been removed.
+ * API break: the functions in the sse:: and neon:: namespaces have been
+    replaced with equivalent functions within the main simdpp namespace
+ * Various other enhancements.
