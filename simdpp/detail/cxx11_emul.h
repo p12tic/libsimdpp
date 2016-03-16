@@ -16,6 +16,7 @@
 #include <simdpp/detail/workarounds.h>
 #include <cmath>
 #include <math.h>
+#include <float.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
