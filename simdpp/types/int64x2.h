@@ -69,7 +69,6 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int64<2>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -78,7 +77,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors
@@ -93,9 +91,6 @@ public:
     const int64_t& el(unsigned i) const  { return d_[i]; }
           int64_t& el(unsigned i)        { return d_[i]; }
 #endif
-
-    static SIMDPP_INL int64<2> zero() { return detail::make_zero(); }
-    static SIMDPP_INL int64<2> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;
@@ -143,7 +138,6 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint64<2>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -152,7 +146,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors
@@ -167,9 +160,6 @@ public:
     const uint64_t& el(unsigned i) const  { return d_[i]; }
           uint64_t& el(unsigned i)        { return d_[i]; }
 #endif
-
-    static SIMDPP_INL uint64<2> zero() { return detail::make_zero(); }
-    static SIMDPP_INL uint64<2> ones() { return detail::make_ones(); }
 
 private:
     native_type d_;

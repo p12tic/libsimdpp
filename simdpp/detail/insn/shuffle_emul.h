@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
 #define LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(SIMDPP_DOXYGEN)
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -77,5 +77,5 @@ float64x4 permute_emul(const float64x4& a)
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
-#endif // SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || defined(SIMDPP_DOXYGEN)
+#endif // SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 #endif

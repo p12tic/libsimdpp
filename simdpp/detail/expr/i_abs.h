@@ -35,7 +35,7 @@ uint8<16> expr_eval(const expr_abs<int8<16,E> >& q)
     return _mm_abs_epi8(a);
 #elif SIMDPP_USE_SSE2
     int8x16 t;
-    t = cmp_lt(a, int8x16::zero());
+    t = cmp_lt(a, 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -75,7 +75,7 @@ uint16<8> expr_eval(const expr_abs<int16<8,E> >& q)
     return _mm_abs_epi16(a);
 #elif SIMDPP_USE_SSE2
     int16x8 t;
-    t = cmp_lt(a, int16x8::zero());
+    t = cmp_lt(a, 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -115,7 +115,7 @@ uint32<4> expr_eval(const expr_abs<int32<4,E> >& q)
     return _mm_abs_epi32(a);
 #elif SIMDPP_USE_SSE2
     int32x4 t;
-    t = cmp_lt(a, int32x4::zero());
+    t = cmp_lt(a, 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -165,7 +165,7 @@ uint64<2> expr_eval(const expr_abs<int64<2,E> >& q)
     int64x2 t;
     ta = (uint32x4) bit_and(a, 0x8000000000000000);
     ta = shift_r<1>(ta);
-    t = cmp_neq(float64x2(ta), float64x2::zero());
+    t = cmp_neq(float64x2(ta), 0);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -189,7 +189,7 @@ uint64<4> expr_eval(const expr_abs<int64<4,E> >& q)
 {
     int64<4> a = q.a.eval();
     int64x4 t;
-    t = _mm256_cmpgt_epi64(int64x4::zero(), a);
+    t = _mm256_cmpgt_epi64((int64x4) make_zero(), a);
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;

@@ -31,8 +31,7 @@ SIMDPP_INL uint8x16 i_bit_not(const uint8x16& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    uint8x16 ones = uint8x16::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xff);
 #elif SIMDPP_USE_NEON
     return vmvnq_u8(a);
 #elif SIMDPP_USE_ALTIVEC
@@ -43,16 +42,9 @@ SIMDPP_INL uint8x16 i_bit_not(const uint8x16& a)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL uint8x32 i_bit_not(const uint8x32& a)
 {
-    uint8x32 ones = uint8x32::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xff);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint8<N> i_bit_not(const uint8<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -76,16 +68,10 @@ SIMDPP_INL uint32<8> i_bit_not(const uint32<8>& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_not(const uint32<16>& a)
 {
-    uint32<16> ones = uint32<16>::ones();
+    uint32<16> ones = make_ones();
     return bit_xor(a, ones);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint32<N> i_bit_not(const uint32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -112,16 +98,9 @@ SIMDPP_INL uint64<4> i_bit_not(const uint64<4>& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_not(const uint64<8>& a)
 {
-    uint64<8> ones = uint64<8>::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xffff);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint64<N> i_bit_not(const uint64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -180,27 +159,6 @@ SIMDPP_INL mask_int64<8> i_bit_not(const mask_int64<8>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int8<N> i_bit_not(const mask_int8<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int8<N>, i_bit_not, a)
-}
-template<unsigned N> SIMDPP_INL
-mask_int16<N> i_bit_not(const mask_int16<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int16<N>, i_bit_not, a)
-}
-template<unsigned N> SIMDPP_INL
-mask_int32<N> i_bit_not(const mask_int32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int32<N>, i_bit_not, a)
-}
-template<unsigned N> SIMDPP_INL
-mask_int64<N> i_bit_not(const mask_int64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int64<N>, i_bit_not, a)
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL float32x4 i_bit_not(const float32x4& a)
@@ -208,8 +166,7 @@ SIMDPP_INL float32x4 i_bit_not(const float32x4& a)
 #if SIMDPP_USE_NULL
     return float32x4(i_bit_not(uint32x4(a)));
 #elif SIMDPP_USE_SSE2
-    uint32x4 ones = uint32x4::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xffffffff);
 #elif SIMDPP_USE_NEON
     return (float32<4>) (uint32<4>) vmvnq_u32((uint32x4)a);
 #elif SIMDPP_USE_ALTIVEC
@@ -220,24 +177,16 @@ SIMDPP_INL float32x4 i_bit_not(const float32x4& a)
 #if SIMDPP_USE_AVX
 SIMDPP_INL float32x8 i_bit_not(const float32x8& a)
 {
-    uint32x8 ones = uint32x8::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xffffffff);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_not(const float32<16>& a)
 {
-    uint32<16> ones = uint32<16>::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xffffffff);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-float32<N> i_bit_not(const float32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -246,8 +195,7 @@ SIMDPP_INL float64x2 i_bit_not(const float64x2& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return float64x2(i_bit_not(uint64x2(a)));
 #elif SIMDPP_USE_SSE2
-    uint64x2 ones = uint64x2::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xffffffffffffffff);
 #elif SIMDPP_USE_NEON64
     return (float64<2>) (uint32<4>) vmvnq_u32((uint32<4>)a);
 #endif
@@ -256,24 +204,16 @@ SIMDPP_INL float64x2 i_bit_not(const float64x2& a)
 #if SIMDPP_USE_AVX
 SIMDPP_INL float64x4 i_bit_not(const float64x4& a)
 {
-    uint64x4 ones = uint64x4::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xffffffffffffffff);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_not(const float64<8>& a)
 {
-    uint64<8> ones = uint64<8>::ones();
-    return bit_xor(a, ones);
+    return bit_xor(a, 0xffffffffffffffff);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-float64<N> i_bit_not(const float64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -300,12 +240,6 @@ SIMDPP_INL mask_float32<16> i_bit_not(const mask_float32<16>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float32<N> i_bit_not(const mask_float32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float32<N>, i_bit_not, a)
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_float64x2 i_bit_not(const mask_float64x2& a)
@@ -331,12 +265,13 @@ SIMDPP_INL mask_float64<8> i_bit_not(const mask_float64<8>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float64<N> i_bit_not(const mask_float64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float64<N>, i_bit_not, a)
-}
+// -----------------------------------------------------------------------------
 
+template<class V> SIMDPP_INL
+V i_bit_not(const V& a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(V, i_bit_not, a)
+}
 
 } // namespace insn
 } // namespace detail

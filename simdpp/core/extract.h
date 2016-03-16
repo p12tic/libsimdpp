@@ -301,11 +301,11 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
     a = bit_and(a, mask);
     uint32x4 s = vec_sum4s((__vector uint8_t)a,
-                           (__vector uint32_t)uint32x4::zero());
+                           (__vector uint32_t)(uint32x4) make_zero());
     uint32x4 shifts = make_uint(0, 0, 8, 8);
     s = (__vector uint32_t) vec_sl((__vector uint32_t)s, (__vector uint32_t) shifts);
     s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
-                          (__vector int32_t)int32x4::zero());
+                          (__vector int32_t)(int32x4) make_zero());
     return extract<7>(uint16x8(s));
 #endif
 }

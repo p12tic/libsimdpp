@@ -112,8 +112,8 @@ SIMDPP_INL uint64x4 i_to_uint64(const uint32x4& a)
     r2 = _mm_cvtepu32_epi64(move4_l<2>(a).eval());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
-    return (uint64x4) combine(zip4_lo(a, uint32x4::zero()),
-                              zip4_hi(a, uint32x4::zero()));
+    return (uint64x4) combine(zip4_lo(a, (uint32x4) make_zero()),
+                              zip4_hi(a, (uint32x4) make_zero()));
 #elif SIMDPP_USE_NEON
     uint64x2 r1, r2;
     r1 = vmovl_u32(vget_low_u32(a));

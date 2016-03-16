@@ -161,7 +161,7 @@ SIMDPP_INL void i_store_masked(char* p, const float64<8>& a, const mask_float64<
 // -----------------------------------------------------------------------------
 
 template<class V, class M>
-void v_store_masked(char* p, const V& a, const M& mask)
+void i_store_masked(char* p, const V& a, const M& mask)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 

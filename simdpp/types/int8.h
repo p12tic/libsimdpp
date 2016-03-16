@@ -50,7 +50,6 @@ public:
         *this = bit_cast<int8<N> >(d.wrapped().eval()); return *this;
     }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL int8<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -59,15 +58,11 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     SIMDPP_INL const int8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL int8v& vec(unsigned i)             { return d_[i]; }
 
     SIMDPP_INL int8<N> eval() const { return *this; }
-
-    static SIMDPP_INL int8<N> zero() { return set_vec(int8v::zero()); }
-    static SIMDPP_INL int8<N> ones() { return set_vec(int8v::ones()); }
 
 private:
     /// Creates a signed int8 vector with the contents set to copy of native
@@ -110,7 +105,6 @@ public:
         *this = bit_cast<uint8<N> >(d.wrapped().eval()); return *this;
     }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL uint8<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -119,15 +113,11 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     SIMDPP_INL const uint8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL uint8v& vec(unsigned i)             { return d_[i]; }
 
     SIMDPP_INL uint8<N> eval() const { return *this; }
-
-    static SIMDPP_INL uint8<N> zero() { return set_vec(uint8v::zero()); }
-    static SIMDPP_INL uint8<N> ones() { return set_vec(uint8v::ones()); }
 
 private:
     /// Creates a unsigned int8 vector with the contents set to copy of native

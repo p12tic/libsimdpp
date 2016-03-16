@@ -2,7 +2,7 @@
 #include <simdpp/simd.h>
 #include <iostream>
 #include <simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h>
-#define SIMDPP_USER_ARCH_INFO ::simdpp::get_arch_gcc_builtin_cpu_supports
+#define SIMDPP_USER_ARCH_INFO ::simdpp::get_arch_gcc_builtin_cpu_supports()
 
 namespace SIMDPP_ARCH_NAMESPACE {
 

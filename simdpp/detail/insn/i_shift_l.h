@@ -32,7 +32,7 @@ SIMDPP_INL uint8x16 i_shift_l(const uint8x16& a, unsigned count)
     return detail::null::shift_l(a, count);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
-    mask = uint16x8::ones();
+    mask = make_ones();
     mask = shift_r(mask, 16-count);
     mask = shift_l(mask, 8);
 
@@ -53,7 +53,7 @@ SIMDPP_INL uint8x16 i_shift_l(const uint8x16& a, unsigned count)
 SIMDPP_INL uint8x32 i_shift_l(const uint8x32& a, unsigned count)
 {
     uint16x16 mask, a16;
-    mask = uint16x16::ones();
+    mask = make_ones();
     mask = shift_r(mask, 16-count);
     mask = shift_l(mask, 8);
 
@@ -63,12 +63,6 @@ SIMDPP_INL uint8x32 i_shift_l(const uint8x32& a, unsigned count)
     return uint8x32(a16);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint8<N> i_shift_l(const uint8<N>& a, unsigned count)
-{
-    SIMDPP_VEC_ARRAY_IMPL2S(uint8<N>, i_shift_l, a, count);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -93,12 +87,6 @@ SIMDPP_INL uint16x16 i_shift_l(const uint16x16& a, unsigned count)
     return _mm256_sll_epi16(a, _mm_cvtsi32_si128(count));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint16<N> i_shift_l(const uint16<N>& a, unsigned count)
-{
-    SIMDPP_VEC_ARRAY_IMPL2S(uint16<N>, i_shift_l, a, count);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -131,12 +119,6 @@ SIMDPP_INL uint32<16> i_shift_l(const uint32<16>& a, unsigned count)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint32<N> i_shift_l(const uint32<N>& a, unsigned count)
-{
-    SIMDPP_VEC_ARRAY_IMPL2S(uint32<N>, i_shift_l, a, count);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint64x2 i_shift_l(const uint64x2& a, unsigned count)
@@ -165,10 +147,12 @@ SIMDPP_INL uint64<8> i_shift_l(const uint64<8>& a, unsigned count)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint64<N> i_shift_l(const uint64<N>& a, unsigned count)
+// -----------------------------------------------------------------------------
+
+template<class V> SIMDPP_INL
+V i_shift_l(const V& a, unsigned count)
 {
-    SIMDPP_VEC_ARRAY_IMPL2S(uint64<N>, i_shift_l, a, count);
+    SIMDPP_VEC_ARRAY_IMPL2S(V, i_shift_l, a, count);
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +195,7 @@ uint8<32> i_shift_l(const uint8<32>& a)
 {
     SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     uint16<16> mask, a16;
-    mask = uint16<16>::ones();
+    mask = make_ones();
     mask = shift_r<16-count>(mask);
     mask = shift_l<8>(mask);
 
@@ -221,13 +205,6 @@ uint8<32> i_shift_l(const uint8<32>& a)
     return uint8<32>(a16);
 }
 #endif
-
-template<unsigned count, unsigned N> SIMDPP_INL
-uint8<N> i_shift_l(const uint8<N>& a)
-{
-    SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_shift_l<count>, a);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -255,13 +232,6 @@ uint16x16 i_shift_l(const uint16x16& a)
     return _mm256_slli_epi16(a, count);
 }
 #endif
-
-template<unsigned count, unsigned N> SIMDPP_INL
-uint16<N> i_shift_l(const uint16<N>& a)
-{
-    SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, i_shift_l<count>, a);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -299,13 +269,6 @@ uint32<16> i_shift_l(const uint32<16>& a)
 }
 #endif
 
-template<unsigned count, unsigned N> SIMDPP_INL
-uint32<N> i_shift_l(const uint32<N>& a)
-{
-    SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_shift_l<count>, a);
-}
-
 // -----------------------------------------------------------------------------
 
 template<unsigned count> SIMDPP_INL
@@ -341,11 +304,12 @@ uint64<8> i_shift_l(const uint64<8>& a)
 }
 #endif
 
-template<unsigned count, unsigned N> SIMDPP_INL
-uint64<N> i_shift_l(const uint64<N>& a)
+// -----------------------------------------------------------------------------
+
+template<unsigned count, class V> SIMDPP_INL
+V i_shift_l(const V& a)
 {
-    SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_shift_l<count>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(V, i_shift_l<count>, a);
 }
 /// @}
 
@@ -362,7 +326,7 @@ struct i_shift_l_wrapper<true, false> {
 template<>
 struct i_shift_l_wrapper<false, true> {
     template<unsigned count, class V>
-    static SIMDPP_INL V run(const V&) { return V::zero(); }
+    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
 };
 
 } // namespace insn

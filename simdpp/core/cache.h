@@ -22,14 +22,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /** Prefetches data to the lowest level cache for reading.
 
-    Currently supported instruction sets:
-
-    * SSE2-AVX2
-    * NEON (GCC)
-
-    If the current architecture is not supported, the function does not have
-    any effects.
-
     @param ptr pointer to the data to prefetch
 */
 SIMDPP_INL void prefetch_read(const void* ptr)
@@ -45,14 +37,6 @@ SIMDPP_INL void prefetch_read(const void* ptr)
 }
 
 /** Prefetches data to the lowest level cache for writing.
-
-    Currently supported instruction sets:
-
-    * SSE2-AVX2
-    * NEON (GCC)
-
-    If the current architecture is not supported, the function does not have
-    any effects.
 
     @param ptr pointer to the data to prefetch
 */

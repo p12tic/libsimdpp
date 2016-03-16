@@ -51,12 +51,6 @@ SIMDPP_INL mask_float32<16> i_cmp_ge(const float32<16>& a, const float32<16>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float32<N> i_cmp_ge(const float32<N>& a, const float32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, i_cmp_ge, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_float64x2 i_cmp_ge(const float64x2& a, const float64x2& b)
@@ -86,12 +80,13 @@ SIMDPP_INL mask_float64<8> i_cmp_ge(const float64<8>& a, const float64<8>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float64<N> i_cmp_ge(const float64<N>& a, const float64<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, i_cmp_ge, a, b);
-}
+// -----------------------------------------------------------------------------
 
+template<class V> SIMDPP_INL
+typename V::mask_vector_type i_cmp_ge(const V& a, const V& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, i_cmp_ge, a, b);
+}
 
 } // namespace insn
 } // namespace detail

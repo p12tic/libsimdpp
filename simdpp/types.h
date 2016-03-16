@@ -41,26 +41,23 @@
 #include <simdpp/types/generic.h>
 #include <simdpp/types/empty_expr.h>
 
-// Used by all types in zero() and ones() as expr_vec_make_const<uint64_t,1>
-#include <simdpp/core/make_uint.h>
-
 #define SIMDPP_VEC_ARRAY_IMPL1(RTYPE, OP, V1)                   \
-    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+    RTYPE r; for (unsigned i = 0; i < r.vec_length; ++i) { \
         r.vec(i) = OP((V1).vec(i)); }                           \
     return r;
 
 #define SIMDPP_VEC_ARRAY_IMPL2(RTYPE, OP, V1, V2)               \
-    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+    RTYPE r; for (unsigned i = 0; i < r.vec_length; ++i) { \
         r.vec(i) = OP((V1).vec(i), (V2).vec(i)); }              \
     return r;
 
 #define SIMDPP_VEC_ARRAY_IMPL2S(RTYPE, OP, V1, A2)              \
-    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+    RTYPE r; for (unsigned i = 0; i < r.vec_length; ++i) { \
         r.vec(i) = OP((V1).vec(i), (A2)); }                     \
     return r;
 
 #define SIMDPP_VEC_ARRAY_IMPL3(RTYPE, OP, V1, V2, V3)           \
-    RTYPE r; for (unsigned i = 0; i < RTYPE::vec_length; ++i) { \
+    RTYPE r; for (unsigned i = 0; i < r.vec_length; ++i) { \
         r.vec(i) = OP((V1).vec(i), (V2).vec(i), (V3).vec(i));   \
     }                                                           \
     return r;

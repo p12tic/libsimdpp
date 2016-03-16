@@ -7,7 +7,7 @@
 
 #ifndef LIBSIMDPP_ALTIVEC_LOAD1_H
 #define LIBSIMDPP_ALTIVEC_LOAD1_H
-#if SIMDPP_USE_ALTIVEC || defined(SIMDPP_DOXYGEN)
+#if SIMDPP_USE_ALTIVEC
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"

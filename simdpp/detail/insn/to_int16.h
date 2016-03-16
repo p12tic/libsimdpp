@@ -41,8 +41,8 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     uint16x8 r1, r2;
-    r1 = zip16_lo(a, uint8x16::zero());
-    r2 = zip16_hi(a, uint8x16::zero());
+    r1 = zip16_lo(a, (uint8x16) make_zero());
+    r2 = zip16_hi(a, (uint8x16) make_zero());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     uint16x16 r;
@@ -51,8 +51,8 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     return r;
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 r1, r2;
-    r1 = zip16_lo(uint8x16::zero(), a);
-    r2 = zip16_hi(uint8x16::zero(), a);
+    r1 = zip16_lo((uint8x16) make_zero(), a);
+    r2 = zip16_hi((uint8x16) make_zero(), a);
     return combine(r1, r2);
 #endif
 }
@@ -96,9 +96,9 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
-    r1 = zip16_lo(int8x16::zero(), a);
+    r1 = zip16_lo((int8x16) make_zero(), a);
     r1 = shift_r(r1, 8);
-    r2 = zip16_hi(int8x16::zero(), a);
+    r2 = zip16_hi((int8x16) make_zero(), a);
     r2 = shift_r(r2, 8);
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON

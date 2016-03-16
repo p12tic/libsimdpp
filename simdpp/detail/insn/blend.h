@@ -60,12 +60,6 @@ SIMDPP_INL uint8<32> i_blend(const uint8<32>& on, const uint8<32>& off, const ui
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint8<N> i_blend(const uint8<N>& on, const uint8<N>& off, const uint8<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // uint8, uint8, mask_int8
 
@@ -84,12 +78,6 @@ SIMDPP_INL uint8<32> i_blend(const uint8<32>& on, const uint8<32>& off, const ma
     return i_blend(on, off, uint8<32>(mask));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint8<N> i_blend(const uint8<N>& on, const uint8<N>& off, const mask_int8<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // mask_int8, mask_int8, mask_int8
@@ -110,12 +98,6 @@ SIMDPP_INL mask_int8<32> i_blend(const mask_int8<32>& on, const mask_int8<32>& o
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int8<N> i_blend(const mask_int8<N>& on, const mask_int8<N>& off, const mask_int8<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(mask_int8<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // uint16, uint16, uint16
 
@@ -130,12 +112,6 @@ SIMDPP_INL uint16<16> i_blend(const uint16<16>& on, const uint16<16>& off, const
     return _mm256_blendv_epi8(off, on, mask);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint16<N> i_blend(const uint16<N>& on, const uint16<N>& off, const uint16<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint16<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // uint16, uint16, mask_int16
@@ -156,12 +132,6 @@ SIMDPP_INL uint16<16> i_blend(const uint16<16>& on, const uint16<16>& off, const
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint16<N> i_blend(const uint16<N>& on, const uint16<N>& off, const mask_int16<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint16<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // mask_int16, mask_int16, mask_int16
 
@@ -180,12 +150,6 @@ SIMDPP_INL mask_int16<16> i_blend(const mask_int16<16>& on, const mask_int16<16>
     return mask_int16<16>(i_blend(uint16<16>(on), uint16<16>(off), uint16<16>(mask)));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int16<N> i_blend(const mask_int16<N>& on, const mask_int16<N>& off, const mask_int16<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(mask_int16<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // uint32, uint32, uint32
@@ -208,12 +172,6 @@ SIMDPP_INL uint32<16> i_blend(const uint32<16>& on, const uint32<16>& off, const
     return _mm512_ternarylogic_epi32(on, off, mask, 0xe4);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint32<N> i_blend(const uint32<N>& on, const uint32<N>& off, const uint32<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint32<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // uint32, uint32, mask_int32
@@ -241,12 +199,6 @@ SIMDPP_INL uint32<16> i_blend(const uint32<16>& on, const uint32<16>& off, const
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint32<N> i_blend(const uint32<N>& on, const uint32<N>& off, const mask_int32<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint32<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // mask_int32, mask_int32, mask_int32
 
@@ -272,12 +224,6 @@ SIMDPP_INL mask_int32<16> i_blend(const mask_int32<16>& on, const mask_int32<16>
     return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int32<N> i_blend(const mask_int32<N>& on, const mask_int32<N>& off, const mask_int32<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(mask_int32<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // float32, float32, float32
@@ -318,12 +264,6 @@ SIMDPP_INL float32<16> i_blend(const float32<16>& on, const float32<16>& off, co
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float32<N> i_blend(const float32<N>& on, const float32<N>& off, const float32<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float32<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // float32, float32, mask_float32
 
@@ -349,12 +289,6 @@ SIMDPP_INL float32<16> i_blend(const float32<16>& on, const float32<16>& off, co
     return _mm512_mask_blend_ps(mask, off, on);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-float32<N> i_blend(const float32<N>& on, const float32<N>& off, const mask_float32<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float32<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // mask_float32, mask_float32, mask_float32
@@ -382,12 +316,6 @@ SIMDPP_INL mask_float32<16> i_blend(const mask_float32<16>& on, const mask_float
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float32<N> i_blend(const mask_float32<N>& on, const mask_float32<N>& off, const mask_float32<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(mask_float32<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // uint64, uint64, uint64
 
@@ -413,12 +341,6 @@ SIMDPP_INL uint64<8> i_blend(const uint64<8>& on, const uint64<8>& off, const ui
     return _mm512_ternarylogic_epi64(on, off, mask, 0xe4);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint64<N> i_blend(const uint64<N>& on, const uint64<N>& off, const uint64<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint64<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // uint64, uint64, mask_int64
@@ -446,12 +368,6 @@ SIMDPP_INL uint64<8> i_blend(const uint64<8>& on, const uint64<8>& off, const ma
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint64<N> i_blend(const uint64<N>& on, const uint64<N>& off, const mask_int64<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(uint64<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // mask_int64, mask_int64, mask_int64
 
@@ -477,12 +393,6 @@ SIMDPP_INL mask_int64<8> i_blend(const mask_int64<8>& on, const mask_int64<8>& o
     return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int64<N> i_blend(const mask_int64<N>& on, const mask_int64<N>& off, const mask_int64<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(mask_int64<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // float64, float64, float64
@@ -519,12 +429,6 @@ SIMDPP_INL float64<8> i_blend(const float64<8>& on, const float64<8>& off, const
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float64<N> i_blend(const float64<N>& on, const float64<N>& off, const float64<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float64<N>, i_blend, on, off, mask)
-}
-
 // -----------------------------------------------------------------------------
 // float64, float64, mask_float64
 
@@ -550,12 +454,6 @@ SIMDPP_INL float64<8> i_blend(const float64<8>& on, const float64<8>& off, const
     return _mm512_mask_blend_pd(mask, off, on);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-float64<N> i_blend(const float64<N>& on, const float64<N>& off, const mask_float64<N>& mask)
-{
-    SIMDPP_VEC_ARRAY_IMPL3(float64<N>, i_blend, on, off, mask)
-}
 
 // -----------------------------------------------------------------------------
 // mask_float64, mask_float64, mask_float64
@@ -583,10 +481,12 @@ SIMDPP_INL mask_float64<8> i_blend(const mask_float64<8>& on, const mask_float64
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float64<N> i_blend(const mask_float64<N>& on, const mask_float64<N>& off, const mask_float64<N>& mask)
+// -----------------------------------------------------------------------------
+
+template<class V1, class V2, class V3> SIMDPP_INL
+V1 i_blend(const V1& on, const V2& off, const V3& mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(mask_float64<N>, i_blend, on, off, mask)
+    SIMDPP_VEC_ARRAY_IMPL3(V1, i_blend, on, off, mask)
 }
 
 

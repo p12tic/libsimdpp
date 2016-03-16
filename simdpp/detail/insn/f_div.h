@@ -63,12 +63,6 @@ SIMDPP_INL float32<16> i_div(const float32<16>& a, const float32<16>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float32<N> i_div(const float32<N>& a, const float32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_div, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
@@ -100,10 +94,12 @@ SIMDPP_INL float64<8> i_div(const float64<8>& a, const float64<8>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float64<N> i_div(const float64<N>& a, const float64<N>& b)
+// -----------------------------------------------------------------------------
+
+template<class V> SIMDPP_INL
+V i_div(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, i_div, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(V, i_div, a, b);
 }
 
 } // namespace insn

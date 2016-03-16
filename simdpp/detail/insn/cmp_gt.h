@@ -46,12 +46,6 @@ SIMDPP_INL mask_int8x32 i_cmp_gt(const int8x32& a, const int8x32& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int8<N> i_cmp_gt(const int8<N>& a, const int8<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, i_cmp_gt, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int8x16 i_cmp_gt(const uint8x16& ca, const uint8x16& cb)
@@ -82,12 +76,6 @@ SIMDPP_INL mask_int8x32 i_cmp_gt(const uint8x32& ca, const uint8x32& cb)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int8<N> i_cmp_gt(const uint8<N>& a, const uint8<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, i_cmp_gt, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int16x8 i_cmp_gt(const int16x8& a, const int16x8& b)
@@ -109,12 +97,6 @@ SIMDPP_INL mask_int16x16 i_cmp_gt(const int16x16& a, const int16x16& b)
     return _mm256_cmpgt_epi16(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int16<N> i_cmp_gt(const int16<N>& a, const int16<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, i_cmp_gt, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -146,12 +128,6 @@ SIMDPP_INL mask_int16x16 i_cmp_gt(const uint16x16& ca, const uint16x16& cb)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int16<N> i_cmp_gt(const uint16<N>& a, const uint16<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, i_cmp_gt, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int32x4 i_cmp_gt(const int32x4& a, const int32x4& b)
@@ -180,12 +156,6 @@ SIMDPP_INL mask_int32<16> i_cmp_gt(const int32<16>& a, const int32<16>& b)
     return _mm512_cmpgt_epi32_mask(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int32<N> i_cmp_gt(const int32<N>& a, const int32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, i_cmp_gt, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -225,12 +195,6 @@ SIMDPP_INL mask_int32<16> i_cmp_gt(const uint32<16>& a, const uint32<16>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int32<N> i_cmp_gt(const uint32<N>& a, const uint32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, i_cmp_gt, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int64x2 i_cmp_gt(const int64x2& a, const int64x2& b)
@@ -262,12 +226,6 @@ SIMDPP_INL mask_int64<8> i_cmp_gt(const int64<8>& a, const int64<8>& b)
     return _mm512_cmp_epi64_mask(a, b, _MM_CMPINT_NLE);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int64<N> i_cmp_gt(const int64<N>& a, const int64<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_gt, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -305,13 +263,6 @@ SIMDPP_INL mask_int64<8> i_cmp_gt(const uint64<8>& a, const uint64<8>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int64<N> i_cmp_gt(const uint64<N>& a, const uint64<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_gt, a, b);
-}
-
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_float32x4 i_cmp_gt(const float32x4& a, const float32x4& b)
@@ -342,12 +293,6 @@ SIMDPP_INL mask_float32<16> i_cmp_gt(const float32<16>& a, const float32<16>& b)
     return _mm512_cmp_ps_mask(a, b, _CMP_GT_OQ);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_float32<N> i_cmp_gt(const float32<N>& a, const float32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, i_cmp_gt, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -380,10 +325,12 @@ SIMDPP_INL mask_float64<8> i_cmp_gt(const float64<8>& a, const float64<8>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float64<N> i_cmp_gt(const float64<N>& a, const float64<N>& b)
+// -----------------------------------------------------------------------------
+
+template<class V> SIMDPP_INL
+typename V::mask_vector_type i_cmp_gt(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, i_cmp_gt, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, i_cmp_gt, a, b);
 }
 
 } // namespace insn

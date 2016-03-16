@@ -68,12 +68,11 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#if (SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP) && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float& el(unsigned id) { return d_[id]; }
     const float& el(unsigned id) const { return d_[id]; }
 #endif
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL float32<4>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -82,7 +81,6 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     /// @{
     /// Access base vectors
@@ -91,17 +89,6 @@ public:
     /// @}
 
     SIMDPP_INL float32<4> eval() const { return *this; }
-
-    /** Creates a float32x4 vector with the contents set to zero
-
-        @code
-        r0 = 0.0f
-        r1 = 0.0f
-        r2 = 0.0f
-        r3 = 0.0f
-        @endcode
-    */
-    static SIMDPP_INL float32<4> zero() { return detail::make_zero(); }
 
 private:
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -164,7 +151,7 @@ public:
     #endif
     }
 
-#if (SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP) && !SIMDPP_DOXYGEN
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif

@@ -42,12 +42,6 @@ SIMDPP_INL mask_int8x32 i_cmp_neq(const uint8x32& a, const uint8x32& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int8<N> i_cmp_neq(const uint8<N>& a, const uint8<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int8<N>, i_cmp_neq, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int16x8 i_cmp_neq(const uint16x8& a, const uint16x8& b)
@@ -67,12 +61,6 @@ SIMDPP_INL mask_int16x16 i_cmp_neq(const uint16x16& a, const uint16x16& b)
     return bit_not(cmp_eq(a, b));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int16<N> i_cmp_neq(const uint16<N>& a, const uint16<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int16<N>, i_cmp_neq, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -105,12 +93,6 @@ SIMDPP_INL mask_int32<16> i_cmp_neq(const mask_int32<16>& a, const mask_int32<16
     return _mm512_kxor(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_int32<N> i_cmp_neq(const uint32<N>& a, const uint32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int32<N>, i_cmp_neq, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -152,12 +134,6 @@ SIMDPP_INL mask_int64<8> i_cmp_neq(const mask_int64<8>& a, const mask_int64<8>& 
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int64<N> i_cmp_neq(const uint64<N>& a, const uint64<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_int64<N>, i_cmp_neq, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_float32x4 i_cmp_neq(const float32x4& a, const float32x4& b)
@@ -191,12 +167,6 @@ SIMDPP_INL mask_float32<16> i_cmp_neq(const mask_float32<16>& a, const mask_floa
     return _mm512_kxor(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_float32<N> i_cmp_neq(const float32<N>& a, const float32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float32<N>, i_cmp_neq, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -234,12 +204,13 @@ SIMDPP_INL mask_float64<8> i_cmp_neq(const mask_float64<8>& a, const mask_float6
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float64<N> i_cmp_neq(const float64<N>& a, const float64<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(mask_float64<N>, i_cmp_neq, a, b);
-}
+// -----------------------------------------------------------------------------
 
+template<class V> SIMDPP_INL
+typename V::mask_vector_type i_cmp_neq(const V& a, const V& b)
+{
+    SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, i_cmp_neq, a, b);
+}
 
 } // namespace insn
 } // namespace detail
