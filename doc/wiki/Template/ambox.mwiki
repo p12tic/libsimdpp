@@ -1,0 +1,50 @@
+{{#ifeq:{{{subst}}}|SUBST
+ |{{#if:{{{name|}}}
+  |{{error|Template {{tlx|{{{name}}}}} has been incorrectly substituted.}}
+ }}
+}}{{#ifeq:{{{small}}}|left
+ |{{ambox/core
+  |small      = left
+  |type       = {{{type|}}}
+  |image      = {{#if:{{{smallimage|}}}
+   |{{{smallimage}}}
+   |{{{image|}}}
+  }}
+  |imageright = {{#if:{{{smallimageright|}}}
+   |{{{smallimageright}}}
+   |{{{imageright|}}}
+  }}
+  |style      = {{{style|}}}
+  |textstyle  = {{{textstyle|}}}
+  |text       = {{#if:{{{smalltext|}}}
+   |{{{smalltext}}} 
+   |{{{text}}} 
+  }}
+ }}
+ |{{ambox/core
+  |type       = {{{type|}}}
+  |image      = {{{image|}}}
+  |imageright = {{{imageright|}}}
+  |style      = {{{style|}}}
+  |textstyle  = {{{textstyle|}}}
+  |text       = {{{text}}}
+  |date       = {{#ifeq:{{FULLROOTPAGENAME}}|Template:{{PAGENAME:{{{name}}}}}
+   |{{#ifeq:{{{date|¬}}}|¬||{{CURRENTMONTHNAME}} {{CURRENTYEAR}}}}
+   |{{{date|}}}
+  }}
+ }}
+}}{{cat handler
+ |main={{ambox/category
+  |cat={{{cat|}}}
+  |date={{{date|}}}
+  |all={{{all|}}}
+ }}
+ |template={{#ifeq:{{BASEPAGENAME}}|{{SUBPAGENAME}}|}}
+}}{{#ifeq:{{FULLPAGENAME}}|Template:{{PAGENAME:{{{name}}}}}
+ |{{#ifeq:{{{doc}}}|no|
+  |{{documentation}}<!-- Transclude documentation on template page -->
+ }}
+}}<noinclude>
+
+{{documentation|Template:mbox/doc}}
+</noinclude>

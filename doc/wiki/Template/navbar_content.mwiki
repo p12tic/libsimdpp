@@ -1,0 +1,10 @@
+{{nv begin}}
+{{nv | [[types | Types]] }}
+{{nv h1 | Operations }}
+{{nv | [[bitwise | Bitwise operations]] }}
+{{nv | [[fp | Floating-point operations]] }}
+{{nv | [[int | Integer operations]] }}
+{{nv | [[mem | Memory access operations]] }}
+{{nv | [[shuffle | Shuffle operations]] }}
+{{nv | [[misc | Miscellaneous operations]] }}
+{{nv end}}

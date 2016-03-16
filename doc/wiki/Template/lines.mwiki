@@ -1,0 +1,3 @@
+<onlyinclude><span class="t-lines"><span>{{#replace:{{#replace:{{#replace:{{{1|}}}|<br>|</span><span>}}|<br/>|</span><span>}}|<br />|</span><span>}}</span></span></onlyinclude><noinclude>
+{{documentation}}
+</noinclude>

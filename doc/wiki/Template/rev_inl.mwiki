@@ -1,0 +1,4 @@
+<span class="t-rev-inl {{#ifeq:{{{noborder|}}}|true|t-rev-inl-noborder}} {{#if:{{{since|}}}|t-since-{{#replace:{{{since}}}|+|x}}}} {{#if:{{{until|}}}|t-until-{{#replace:{{{until}}}|+|x}}}}"><span>{{{1|}}}</span> <!--
+--><span>{{#if:{{{since|}}}|{{mark since {{{since|}}}}}{{#if:{{{until|}}}|<br/>}}}}{{#if:{{{until|}}}|{{mark until {{{until|}}}}} }}</span></span><noinclude>
+{{documentation | Template:rev/doc}}
+</noinclude>

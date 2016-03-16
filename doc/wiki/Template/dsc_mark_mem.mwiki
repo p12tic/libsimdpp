@@ -1,0 +1,6 @@
+<onlyinclude>{{#if: {{#ifeq: {{#titleparts:{{PAGENAME}}|-1}} | {{#titleparts:{{{1}}}|-1}} |no}}
+                    {{#ifeq: {{#titleparts:{{PAGENAME}}}} | {{#titleparts:{{{1}}}|-1}} |no}}
+                    {{#ifeq: {{{nomem|}}}|true|no}} <!-- check if additional description is needed
+-->|{{mark {{{2|mem fun}}} }} <!-- 
+-->|{{mark {{{2|mem fun}}} | mem={{Template:{{#titleparts:{{{1|n//n}}}|{{#ifeq: {{{inlinemem|}}}|true|0|-1}}}}/title|#MAGICTITLESTRING#}} }}
+}}</onlyinclude><noinclude>{{documentation | Template:dsc/doc}}</noinclude>

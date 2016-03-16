@@ -1,0 +1,4 @@
+{{dsc | {{dsc member | {{{1|}}} | {{{title|}}} | notes={{{notes|}}} | nolink={{{nolink|}}} }}<!--
+-->| {{{2|}}} <br/> {{dsc mark mem | {{{1|}}} | mem fun | nomem={{{nolink|}}} | inlinemem={{{inlinemem|}}} }} }}<noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

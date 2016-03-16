@@ -1,0 +1,7 @@
+This is one of the templates used to specify that some type must be convertible to another. All these templates can emit either of the requirements that it must be possible to convert an object of particular type to another type or it must be possible to dereference an object of particular type and then convert it to another type. This behavior depends an the supplied parameters ({{tt|t}} means plain type, {{tt|p}} - type that must be dereferenced first).
+
+{{tl|cast rreq | ''base_type'' | rt{{=}}''type'' {{small|or}} rp{{=}}''pointer_type''}} - ''base_type'' must be convertible to {{c|rt}} or {{c|*rp}}.
+
+{{tl|cast req1 | ''base_type'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type''}} - {{tt|t1}} or {{tt|*p1}} must be convertible to ''base_type''.
+
+{{tl|cast req2 | ''base_type1'' | ''base_type2'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{small|(optional)}}}} - {{tt|t1}} or {{tt|*p1}} must be convertible to ''base_type1'' or {{tt|t2}} or {{tt|*p2}} must be convertible to ''base_type2''. If neither {{tt|t2}} nor {{tt|p2}} is supplied, it is assumed that {{tt|t1}} or {{tt|*p1}} must be convertible to both ''base_type1'' or ''base_type2''.

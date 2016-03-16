@@ -1,0 +1,18 @@
+{{nv | 1= <div class="t-nv-ln-table"><div><!--
+         -->[[{{{1}}}|<span class="t-lines"><span>{{ltt/core|{{{1}}}|{{{2|}}}}}<!--
+-->{{#if:{{{3|}}}|</span><span>{{ltt/core|{{{1}}}|{{{3|}}}}}}}<!--
+-->{{#if:{{{4|}}}|</span><span>{{ltt/core|{{{1}}}|{{{4|}}}}}}}<!--
+-->{{#if:{{{5|}}}|</span><span>{{ltt/core|{{{1}}}|{{{5|}}}}}}}<!--
+-->{{#if:{{{6|}}}|</span><span>{{ltt/core|{{{1}}}|{{{6|}}}}}}}<!--
+-->{{#if:{{{7|}}}|</span><span>{{ltt/core|{{{1}}}|{{{7|}}}}}}}<!--
+-->{{#if:{{{8|}}}|</span><span>{{ltt/core|{{{1}}}|{{{8|}}}}}}}<!--
+-->{{#if:{{{9|}}}|</span><span>{{ltt/core|{{{1}}}|{{{9|}}}}}}}<!--
+-->{{#if:{{{10|}}}|</span><span>{{ltt/core|{{{1}}}|{{{10|}}}}}}}<!--
+-->{{#if:{{{11|}}}|</span><span>{{ltt/core|{{{1}}}|{{{11|}}}}}}}<!--
+-->{{#if:{{{12|}}}|</span><span>{{ltt/core|{{{1}}}|{{{12|}}}}}}}<!--
+-->{{#if:{{{13|}}}|</span><span>{{ltt/core|{{{1}}}|{{{13|}}}}}}}<!--
+-->{{#if:{{{14|}}}|</span><span>{{ltt/core|{{{1}}}|{{{14|}}}}}}}<!--
+-->{{#if:{{{15|}}}|</span><span>{{ltt/core|{{{1}}}|{{{15|}}}}}}}<!--
+-->{{#if:{{{16|}}}|</span><span>{{ltt/core|{{{1}}}|{{{16|}}}}}}}</span></span>]]</div>{{#if:{{{notes|}}}|<div>{{lines|{{{notes}}}}}</div>}}</div>}}<noinclude>
+{{documentation | Template:nv/doc }}
+</noinclude>

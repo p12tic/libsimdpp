@@ -1,0 +1,1 @@
+<onlyinclude>{{#if:{{{1|}}}|<span class="editsection noprint plainlinks" title="Edit this template">[{{fullurl:Template:{{{1}}}|action=edit}} &#91;edit&#93;]</span>|{{error|no template given}}}}</onlyinclude><noinclude>{{documentation|Template:navbar/doc}}</noinclude>

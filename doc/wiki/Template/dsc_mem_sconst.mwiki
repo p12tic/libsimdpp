@@ -1,0 +1,4 @@
+{{dsc | {{dsc member | {{{1|}}} | {{{title|}}} | notes={{cmark static}} {{{notes|}}} | nolink={{{nolink|}}} }}<!--
+-->| {{{2|}}} <br/> {{dsc mark mem | {{{1|}}} | mem sconst | nomem={{{nolink|}}} | inlinemem={{{inlinemem|}}} }} }}<noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

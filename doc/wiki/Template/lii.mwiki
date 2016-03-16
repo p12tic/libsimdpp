@@ -1,0 +1,3 @@
+<includeonly><onlyinclude></div><div class="t-li2">{{#if:{{{1|}}}|<span class="t-li">{{{1|}}})</span>}}</onlyinclude></includeonly><noinclude>
+{{documentation|Template:li/doc}}
+</noinclude>

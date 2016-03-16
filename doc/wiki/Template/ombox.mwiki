@@ -1,0 +1,19 @@
+{{#ifeq:{{{small|}}}|yes
+| {{ombox/core
+  | small = yes
+  | type  = {{{type|}}}
+  | image = {{#if:{{{smallimage|}}}| {{{smallimage}}} | {{{image|}}} }}
+  | imageright = {{#if:{{{smallimageright|}}} | {{{smallimageright}}} | {{{imageright|}}} }}
+  | style = {{{style|}}}
+  | textstyle = {{{textstyle|}}}
+  | text  = {{#if:{{{smalltext|}}}| {{{smalltext}}} | {{{text}}} }}
+  }}
+| {{ombox/core
+  | type  = {{{type|}}}
+  | image = {{{image|}}}
+  | imageright = {{{imageright|}}} 
+  | style = {{{style|}}}
+  | textstyle = {{{textstyle|}}}
+  | text  = {{{text}}}
+  }}
+}}<noinclude>{{documentation|Template:mbox/doc}}<!-- Add categories and interwikis to the /doc subpage, not here! --></noinclude>

@@ -1,0 +1,21 @@
+{{#if:{{{1|}}}<!--
+-->| {{#if: {{#pos:{{{1|}}}|//}}<!--
+  -->|{{ambox
+| type  = notice
+| small = {{{small|left}}}
+| text  = Templated content.<br/> The link is {{tt|{{#replace:{{{1|}}}|//|/<PP>/}}}}
+| image = none
+}}<!--
+  -->| {{include editlink|{{{1|}}}}}<!--
+    -->{{ {{{1|}}}<!--
+      -->|{{trim|{{{2|}}}}}<!--
+      -->|{{trim|{{{3|}}}}}<!--
+      -->|{{trim|{{{4|}}}}}<!--
+      -->|{{trim|{{{5|}}}}}<!--
+      -->|{{trim|{{{6|}}}}}<!--
+      -->|{{trim|{{{7|}}}}}<!--
+    -->}}<!--
+  -->}}<!--
+-->|{{error | no template source given}} }}<noinclude>
+{{documentation | Template:include/doc}}
+</noinclude>

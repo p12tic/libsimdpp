@@ -1,0 +1,18 @@
+This is one of the templates used for syntax highlighting.
+
+{{tl|c | 1{{=}}''code'' | lang{{=}}''language''{{mark optional}} }}
+: Base template that is intended to highlight code inline. ''lang'' is optional; value returned by {{tl|get_lang}} is used by default. Applies a semi-transparent dark background.
+
+{{tl|c/core | 1{{=}}''code'' | lang{{=}}''language''{{mark optional}} }}
+: Same as {{tl|c}} just no background is applied. Intended to be used in other templates only.
+
+{{tl|cc | 1{{=}}''code'' | lang{{=}}''language''{{mark optional}} }}
+: Base template that is intended to highlight larger amounts of code inline. Usually used when the {{tl|c}} template doesn't display the code readable, but {{tl|source}} would waste too much space. ''lang'' is optional; value returned by {{tl|get_lang}} is used by default.
+
+{{tl|source | 1{{=}}''code'' | lang{{=}}''language''{{mark optional}} }}
+: Base template that is intended to highlight large amounts of code. ''lang'' is optional; value returned by {{tl|get_lang}} is used by default.
+
+{{tl|eq fun| lang{{=}}''language''|''code1''|''code2''{{mark optional}}|...|''code4''{{mark optional}}}} - where {{tt|code1}}, {{tt|code2}}, etc. are code for each version of the described template function. If no code is supplied at all, the template results in {{tl|todo}}. ''lang'' is optional; value returned by {{tl|get_lang}} is used by default.
+
+{{tl|example|''description''{{mark optional}}|lang{{=}}''language''{{mark optional}} | code{{=}}''code_to_display''| p{{=}}''true_if_nondeterministic''{{mark optional}}}}
+: Base template for examples. If {{tt|code}} is not present, the template results in {{tl|todo}}. ''lang'' defaults to a value returned by {{tl|get_lang}}. ''output'' specifies the output which is displayed by the code. If the output is not deterministic, ''p'' can be set to {{tt|true}} to indicate this (''Possible output'' is shown instead of just ''Output'').

@@ -1,0 +1,6 @@
+<table class="tmbox" style="text-align: center; {{#if:{{{box-width|}}}|width:{{{box-width}}};}} {{{style|}}}">
+<tr><th style="padding: 0.5em;">[[Image:Replacement filing cabinet.svg|40px]]
+{{{title|Archives}}}
+</th><td style="text-align:left; padding: 0.5em; min-width: 100px;">{{archive list long|num={{{num|}}}|{{#if:{{{root|}}}|root}}={{{root}}} }}
+</td></tr>
+</table>

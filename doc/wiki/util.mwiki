@@ -1,0 +1,50 @@
+{{title|Utilities}}
+{{util/navbar}}
+
+===Alignment===
+{{dsc begin}}
+{{dsc macro fun | nolink=true | SIMDPP_ALIGN(N) | when used immediately before the declaration of a variable, results in it being aligned to {{tt|N}} bytes}}
+{{dsc tclass | util/aligned_allocator | a standard allocator that allocates aligned memory}}
+{{dsc end}}
+
+===Vector size macros===
+{{dsc begin}}
+{{dsc macro const | nolink=true | SIMDPP_FAST_INT8_SIZE | optimal number of elements in {{c|int8}}, {{c|uint8}} and {{c|mask_int8}} vectors}}
+{{dsc macro const | nolink=true | SIMDPP_FAST_INT16_SIZE | optimal number of elements in {{c|int16}}, {{c|uint16}} and {{c|mask_int16}} vectors}}
+{{dsc macro const | nolink=true | SIMDPP_FAST_INT32_SIZE | optimal number of elements in {{c|int32}}, {{c|uint32}} and {{c|mask_int32}} vectors}}
+{{dsc macro const | nolink=true | SIMDPP_FAST_INT64_SIZE | optimal number of elements in {{c|int64}}, {{c|uint64}} and {{c|mask_int64}} vectors}}
+{{dsc macro const | nolink=true | SIMDPP_FAST_FLOAT32_SIZE | optimal number of elements in {{c|float32}} and {{c|mask_float32}} vectors}}
+{{dsc macro const | nolink=true | SIMDPP_FAST_FLOAT64_SIZE | optimal number of elements in {{c|float64}} and {{c|mask_float64}} vectors}}
+{{dsc end}}
+
+===Enabled instruction set===
+
+The following higher-level interface is provided to query enabled instruction sets.
+
+{{dsc begin}}
+{{dsc enum | util/Arch | bitmask type that describes a set of instruction sets }}
+{{dsc fun | util/this_compile_arch | queries currently enabled instruction sets }}
+{{dsc end}}
+
+A low-level, macro-based interface is also provided. It's mostly useful when a fallback to native intrinsics is needed for part of the code path.
+
+The following macros differ from the [[arch/selection|user-defined instruction set selection macros]] in that regardless of what the latter expand to, the former always expand to {{c|0}} or {{c|1}}.
+
+{{dsc begin}}
+{{dsc macro const | nolink=true | SIMDPP_USE_NULL | {{c|1}} if SIMD instruction set is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_SSE2 | {{c|1}} if SSE2 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_SSE3 | {{c|1}} if SSE3 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_SSSE3 | {{c|1}} if SSSE3 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_SSE4_1 | {{c|1}} if SSE4.1 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_AVX | {{c|1}} if AVX is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_FMA3 | {{c|1}} if FMA3 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_FMA4 | {{c|1}} if FMA4 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_XOP | {{c|1}} if XOP is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_AVX2 | {{c|1}} if AVX2 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_AVX512F | {{c|1}} if AVX512F is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_NEON | {{c|1}} if NEON except floating-point support is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_NEON_FLT_SP | {{c|1}} if NEON with floating-point support is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_ALTIVEC | {{c|1}} if Altivec is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_32_BITS | {{c|1}} if compiling for 32-bit architecture, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_64_BITS | {{c|1}} if compiling for 64-bit architecture is available, {{c|0}} otherwise }}
+{{dsc end}}

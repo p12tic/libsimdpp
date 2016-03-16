@@ -1,0 +1,9 @@
+<div class="t-plot">
+{{#if:{{{1|}}}
+|{{#if:{{{left|}}}|<div class="t-plot-left">{{{left}}}</div>}}
+{{#if:{{{right|}}}|<div class="t-plot-right">{{{right}}}</div>}}
+<div class="t-plot-image{{#if:{{{left|}}}|-left}}{{#if:{{{right|}}}|-right}}">[[Image:{{{1|}}}|{{{size|200x200px}}}]]</div>
+{{#if:{{{bottom|}}}|<div class="t-plot-bottom">{{{bottom}}}</div>}}
+|{{error|No image specified}}
+}}
+</div><noinclude>{{documentation}}</noinclude>

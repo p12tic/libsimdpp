@@ -1,0 +1,22 @@
+<onlyinclude>{{#if: {{#pos: #MAGICTITLESTRING# | {{{1|}}}}}<!--
+-->|{{#replace:{{#replace:{{{n|}}}#MAGICTITLESTRING#|::#MAGICTITLESTRING#}}|#MAGICTITLESTRING#}}<!-- remove trailing '::', if any
+-->|{{title|<!--
+  -->{{#if:{{{n|}}}|{{small|{{trim|{{{n}}}}}}}}}{{trim|{{{1|}}}}}<!--
+  -->{{#if:{{{2|}}}|<!--
+    -->, {{#if:{{{n|}}}|{{small|{{trim|{{{n}}}}}}}}}{{trim|{{{2}}}}}<!--
+  -->}}<!--
+  -->{{#if:{{{3|}}}|<!--
+    -->, {{#if:{{{n|}}}|{{small|{{trim|{{{n}}}}}}}}}{{trim|{{{3}}}}}<!--
+  -->}}<!--
+  -->{{#if:{{{4|}}}|<!--
+    -->, {{#if:{{{n|}}}|{{small|{{trim|{{{n}}}}}}}}}{{trim|{{{4}}}}}<!--
+  -->}}<!--
+  -->{{#if:{{{5|}}}|<!--
+    -->, {{#if:{{{n|}}}|{{small|{{trim|{{{n}}}}}}}}}{{trim|{{{5}}}}}<!--
+  -->}}<!--
+  -->{{#if:{{{6|}}}|<!--
+    -->, {{#if:{{{n|}}}|{{small|{{trim|{{{n}}}}}}}}}{{trim|{{{6}}}}}<!--
+  -->}}<!--
+  -->}}<!--
+-->}}</onlyinclude>
+{{documentation | Template:title/doc}}

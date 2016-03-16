@@ -1,0 +1,7 @@
+<tr class="t-dcl-h">
+<td> <div>{{trim| {{{1|}}}}}</div></td>
+<td></td>
+<td></td>
+</tr><noinclude>
+{{documentation | Template:dcl/doc}}
+</noinclude>

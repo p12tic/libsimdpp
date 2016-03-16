@@ -1,0 +1,3 @@
+<includeonly><div class="center" style="width:auto; margin-left:auto; margin-right:auto;">{{{1}}}</div></includeonly><noinclude>
+{{documentation}}
+</noinclude>

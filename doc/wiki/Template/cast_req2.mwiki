@@ -1,0 +1,25 @@
+{{#if:{{{t2|}}}
+ |{{#if:{{{t1|}}} 
+   | <!--t1t2--> The types {{c|{{{1}}}}} and {{c|{{{2}}}}} must be such that objects of types {{c|{{{t1}}}}} and {{c|{{{t2}}}}} can be implicitly converted to {{c|{{{1}}}}} and {{c|{{{2}}}}} respectively.
+   |{{#if:{{{p1|}}}
+     | <!--p1t2--> The type {{c|{{{1}}}}} must be such that an object of type {{c|{{{p1}}}}} can be dereferenced and then implicitly converted to {{c|{{{1}}}}}. The type {{c|{{{2}}}}} must be such that an object of type {{c|{{{t2}}}}} can be implicitly converted to {{c|{{{2}}}}}.
+     | {{error|requirement not defined}}
+    }}
+  }}
+ |{{#if:{{{p2|}}}
+   |{{#if:{{{t1|}}} 
+     | <!--t1p2--> The type {{c|{{{1}}}}} must be such that an object of type {{c|{{{t1}}}}} can be implicitly converted to {{c|{{{1}}}}}. The type {{c|{{{2}}}}} must be such that an object of type {{c|{{{p2}}}}} can be dereferenced and then implicitly converted to {{c|{{{2}}}}}.
+     |{{#if:{{{p1|}}}
+       | <!--p1p2--> The types {{c|{{{1}}}}} and {{c|{{{2}}}}} must be such that objects of types {{c|{{{p1}}}}} and {{c|{{{p2}}}}} can be dereferenced and then implicitly converted to {{c|{{{1}}}}} and {{c|{{{2}}}}} respectively.
+       | {{error|requirement not defined}}
+      }}
+    }}
+   |{{#if:{{{t1|}}} 
+     | <!--t1t1--> The types {{c|{{{1}}}}} and {{c|{{{2}}}}} must be such that an object of type {{c|{{{t1}}}}} can be implicitly converted to both of them.
+     |{{#if:{{{p1|}}}
+       | <!--p1p1--> The types {{c|{{{1}}}}} and {{c|{{{2}}}}} must be such that an object of type {{c|{{{p1}}}}} can be dereferenced and then implicitly converted to both of them.
+       | {{error|requirement not defined}}
+      }}
+    }}
+  }}
+}}<noinclude>{{documentation | content={{cast rreq/doc}}}}</noinclude>

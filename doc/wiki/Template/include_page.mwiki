@@ -1,0 +1,13 @@
+{{#if:{{{1|}}}<!--
+-->|{{include page editlink| {{{1|}}}}}<!--
+ -->{{ {{{1|}}}<!--
+    -->|{{trim|{{{2|}}}}}<!--
+    -->|{{trim|{{{3|}}}}}<!--
+    -->|{{trim|{{{4|}}}}}<!--
+    -->|{{trim|{{{5|}}}}}<!--
+    -->|{{trim|{{{6|}}}}}<!--
+    -->|{{trim|{{{7|}}}}}<!--
+-->}}<!--
+-->|{{error | no template source given}} }}<noinclude>
+{{documentation | Template:include page/doc}}
+</noinclude>

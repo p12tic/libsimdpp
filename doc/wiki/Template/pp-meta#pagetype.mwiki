@@ -1,0 +1,10 @@
+{{#ifeq:{{TALKSPACE}}|{{NAMESPACE}}|talk page|
+{{#switch:{{NAMESPACE}}
+ |{{ns:}}              = article
+ |{{ns:File}}          = file
+ |{{ns:Template}}      = template
+ |{{ns:Category}}      = category
+ |{{ns:Module}}        = module
+ |#default             = page}}}}<noinclude>
+{{doc|content={{NODOC}}}}
+</noinclude>

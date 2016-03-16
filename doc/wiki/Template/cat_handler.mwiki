@@ -1,0 +1,88 @@
+{{#if:
+  {{#ifeq: {{lc: {{{nocat|}}} }} | true
+  | dontcat    <!--"nocat=true", don't categorize-->
+  }}{{#ifeq: {{lc: {{{categories|}}} }} | no
+  | dontcat
+  }}{{#switch: {{lc: {{{category2|¬}}} }}
+  | yes
+  | ¬   =   <!--Not defined-->
+  | #default = dontcat   <!--"category2 = no/'defined but empty'/'anything'"-->
+  }}{{#switch: {{lc: {{{subpage|}}} }}
+  | no = 
+    {{basepage subpage
+    | 
+    | dontcat    <!--"subpage=no" and on a subpage-->
+    | page = {{{page|}}}   <!--For testing-->
+    }}
+  | only = 
+    {{basepage subpage
+    | dontcat    <!--"subpage=only" and not on a subpage-->
+    | page = {{{page|}}}   <!--For testing-->
+    }}
+  }}
+
+|   <!--Don't categorise (result was "dontcat" or "dontcatdontcat" and so on)-->
+| <!--Check blacklist-->
+  {{#switch:
+    {{#ifeq: {{lc: {{{nocat|}}} }} | false
+    |   <!--"nocat=false", skip blacklist check-->
+    | {{#ifeq: {{lc: {{{categories|}}} }} | yes
+      |   <!--Skip blacklist check-->
+      | {{#ifeq: {{lc: {{{category2|}}} }} | yes
+        |   <!--Skip blacklist check-->
+        | {{cat handler/blacklist| page = {{{page|}}} }}   <!--Check blacklist-->
+        }}
+      }}
+    }}
+  | hide = <!--Blacklist returned "hide", don't categorize-->
+  | #default  = 
+    <!--Check if any namespace parameter is defined-->
+    {{#ifeq: h0#384!5nea+w9 | {{{all| {{{main| {{{talk| {{{user| {{{wikipedia| {{{file| {{{mediawiki| {{{template| {{{help| {{{category| {{{portal| {{{book| {{{other| h0#384!5nea+w9 }}} }}} }}} }}} }}} }}} }}} }}} }}} }}} }}} }}} }}}
+    | <!--No namespace parameters fed, basic usage-->
+      {{namespace detect
+      | main = {{{1|}}}
+      | file = {{{1|}}}
+      | help = {{{1|}}}
+      | category = {{{1|}}}
+      | portal = {{{1|}}}
+      | book = {{{1|}}}
+      | page = {{{page|}}}   <!--For testing and demonstration-->
+      }}
+    | <!--Namespace parameters fed, advanced usage.
+          If "data" is a number, return the corresponding 
+          numbered parameter, else return "data".  -->
+      {{{all|}}}{{cat handler/numbered
+      | 1 = {{{1|}}}
+      | 2 = {{{2|}}}
+      | 3 = {{{3|}}}
+      | 4 = {{{4|}}}
+      | 5 = {{{5|}}}
+      | 6 = {{{6|}}}
+      | 7 = {{{7|}}}
+      | 8 = {{{8|}}}
+      | 9 = {{{9|}}}
+      | 10 = {{{10|}}}
+      | data = 
+        <!--Check what namespace, and return the data for it.
+            Respecting empty parameters on purpose.  -->
+        {{namespace detect
+        | main = {{{main| {{{other|}}} }}}
+        | talk = {{{talk| {{{other|}}} }}}
+        | user = {{{user| {{{other|}}} }}}
+        | wikipedia = {{{wikipedia| {{{project| {{{other|}}} }}} }}}
+        | file = {{{file| {{{image| {{{other|}}} }}} }}}
+        | mediawiki = {{{mediawiki| {{{other|}}} }}}
+        | template = {{{template| {{{other|}}} }}}
+        | help = {{{help| {{{other|}}} }}}
+        | category = {{{category| {{{other|}}} }}}
+        | portal = {{{portal| {{{other|}}} }}}
+        | book = {{{book| {{{other|}}} }}}
+        | other = {{{other|}}}  <!--Namespace special or a new namespace-->
+        | page = {{{page|}}}   <!--For testing and demonstration-->
+        }}
+      }}
+    }}
+  }}
+}}<noinclude>
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

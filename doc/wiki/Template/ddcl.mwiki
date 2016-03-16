@@ -1,0 +1,4 @@
+{{dcl begin}}
+{{#if: {{{header|}}} |{{dcl header | {{{header}}}}} }}
+{{dcl | notes={{{notes|}}} | since={{{since|}}} | until={{{until|}}} | {{{1|}}} }}
+{{dcl end}}

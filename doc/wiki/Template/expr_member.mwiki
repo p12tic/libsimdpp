@@ -1,0 +1,30 @@
+{{member | {{small|simdpp::}}{{{1}}}<N,E> |
+
+Inherits from {{c|{{{2}}}}}.
+
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Type | Definition}}
+{{dsc | {{tt|expr_type}} | {{tt|E}} }}
+{{dsc end}}
+
+===Member functions===
+{{member | {{small|{{{1}}}::}}eval |
+{{dcl begin}}
+{{dcl |
+{{{1}}}<N> eval() const;
+}}
+{{dcl end}}
+
+Evaluates the expression and returns the result.
+}}
+{{member | {{small|{{{1}}}::}}operator {{{1}}}<N> |
+{{dcl begin}}
+{{dcl |
+operator {{{1}}}<N>() const;
+}}
+{{dcl end}}
+
+Returns {{c|eval()}}.
+}}
+}}

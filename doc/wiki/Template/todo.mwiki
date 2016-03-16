@@ -1,0 +1,13 @@
+{{ambox
+| type  = notice
+| small = {{{small|left}}}
+| text  = This section is incomplete{{#if:{{{reason|{{{1|}}}}}}|<br>Reason: {{{reason|{{{1}}}}}}}}
+| image = none
+}}<includeonly>{{#switch:{{{reason|{{{1|}}}}}}
+|=[[Category:Todo without reason]]
+|no example=[[Category:Todo no example]]
+|[[Category:Todo with reason]]
+}}</includeonly><noinclude>
+{{documentation}}
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

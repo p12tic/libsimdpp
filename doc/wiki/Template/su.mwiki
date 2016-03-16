@@ -1,0 +1,5 @@
+<span class="t-su {{#if:{{{b|}}}|t-su-b}}" ><!--
+  -->{{{p|}}}<br /><!--
+  -->{{{b|}}}</span><noinclude>
+{{documentation|Template:math/doc}}
+</noinclude>
