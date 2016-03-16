@@ -42,17 +42,6 @@ SIMDPP_INL void i_load_splat(uint8x32& v, const void* p0)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_splat(uint8<N>& v, const void* p0)
-{
-    const uint8_t* v0 = reinterpret_cast<const uint8_t*>(p0);
-    uint8v tv;
-    i_load_splat(tv, v0);
-    for (unsigned i = 0; i < v.vec_length; ++i) {
-        v.vec(i) = tv;
-    }
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_splat(uint16x8& v, const void* p0)
@@ -76,17 +65,6 @@ SIMDPP_INL void i_load_splat(uint16x16& v, const void* p0)
     i_set_splat(v, *reinterpret_cast<const uint16_t*>(p0));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_splat(uint16<N>& v, const void* p0)
-{
-    const uint16_t* v0 = reinterpret_cast<const uint16_t*>(p0);
-    uint16v tv;
-    i_load_splat(tv, v0);
-    for (unsigned i = 0; i < v.vec_length; ++i) {
-        v.vec(i) = tv;
-    }
-}
 
 // -----------------------------------------------------------------------------
 
@@ -120,17 +98,6 @@ SIMDPP_INL void i_load_splat(uint32<16>& v, const void* p0)
     v = _mm512_broadcastd_epi32(_mm_castps_si128(x));
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_splat(uint32<N>& v, const void* p0)
-{
-    const uint32_t* v0 = reinterpret_cast<const uint32_t*>(p0);
-    uint32v tv;
-    i_load_splat(tv, v0);
-    for (unsigned i = 0; i < v.vec_length; ++i) {
-        v.vec(i) = tv;
-    }
-}
 
 // -----------------------------------------------------------------------------
 
@@ -169,17 +136,6 @@ SIMDPP_INL void i_load_splat(uint64<8>& v, const void* p0)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_splat(uint64<N>& v, const void* p0)
-{
-    const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
-    uint64v tv;
-    i_load_splat(tv, v0);
-    for (unsigned i = 0; i < v.vec_length; ++i) {
-        v.vec(i) = tv;
-    }
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_splat(float32x4& v, const void* p0)
@@ -215,17 +171,6 @@ SIMDPP_INL void i_load_splat(float32<16>& v, const void* p0)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_splat(float32<N>& v, const void* p0)
-{
-    const float* v0 = reinterpret_cast<const float*>(p0);
-    float32v tv;
-    i_load_splat(tv, v0);
-    for (unsigned i = 0; i < v.vec_length; ++i) {
-        v.vec(i) = tv;
-    }
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_splat(float64x2& v, const void* p0)
@@ -259,12 +204,13 @@ SIMDPP_INL void i_load_splat(float64<8>& v, const void* p0)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_splat(float64<N>& v, const void* p0)
+// -----------------------------------------------------------------------------
+
+template<class V> SIMDPP_INL
+void i_load_splat(V& v, const void* p0)
 {
-    const double* v0 = reinterpret_cast<const double*>(p0);
-    float64v tv;
-    i_load_splat(tv, v0);
+    typename V::base_vector_type tv;
+    i_load_splat(tv, p0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v.vec(i) = tv;
     }

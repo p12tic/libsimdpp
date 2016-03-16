@@ -27,11 +27,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-// Multi-vector i_store_first is mostly boilerplate
-template<class V> SIMDPP_INL
-void v_store_first(char* p, const V& a, unsigned n);
-
-
 SIMDPP_INL void i_store_first(char* p, const uint8x16& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
@@ -67,13 +62,7 @@ SIMDPP_INL void i_store_first(char* p, const uint8x32& a, unsigned n)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, const uint8<N>& a, unsigned n)
-{
-    v_store_first(p, a, n);
-}
-
-// 16 bits
+// -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_first(char* p, const uint16x8& a, unsigned n)
 {
@@ -92,13 +81,7 @@ SIMDPP_INL void i_store_first(char* p, const uint16x16& a, unsigned n)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, const uint16<N>& a, unsigned n)
-{
-    v_store_first(p, a, n);
-}
-
-// 32 bits
+// -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_first(char* p, const uint32x4& a, unsigned n)
 {
@@ -127,13 +110,7 @@ SIMDPP_INL void i_store_first(char* p, const uint32<16>& a, unsigned n)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, const uint32<N>& a, unsigned n)
-{
-    v_store_first(p, a, n);
-}
-
-// 64 bits
+// -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
 {
@@ -171,13 +148,7 @@ SIMDPP_INL void i_store_first(char* p, const uint64<8>& a, unsigned n)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, const uint64<N>& a, unsigned n)
-{
-    v_store_first(p, a, n);
-}
-
-// 32 bits float
+// -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_first(char* p, const float32x4& a, unsigned n)
 {
@@ -230,13 +201,7 @@ SIMDPP_INL void i_store_first(char* p, const float32<16>& a, unsigned n)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, const float32<N>& a, unsigned n)
-{
-    v_store_first(p, a, n);
-}
-
-// 64 bit float
+// -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_first(char* p, const float64x2& a, unsigned n)
 {
@@ -276,16 +241,10 @@ SIMDPP_INL void i_store_first(char* p, const float64<8>& a, unsigned n)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_first(char* p, const float64<N>& a, unsigned n)
-{
-    v_store_first(p, a, n);
-}
-
 // -----------------------------------------------------------------------------
 
 template<class V> SIMDPP_INL
-void v_store_first(char* p, const V& a, unsigned n)
+void i_store_first(char* p, const V& a, unsigned n)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 

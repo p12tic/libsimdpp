@@ -48,12 +48,6 @@ SIMDPP_INL mask_float32<16> i_isnan(const float32<16>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float32<N> i_isnan(const float32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float32<N>, i_isnan, a);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_float64x2 i_isnan(const float64x2& a)
@@ -83,12 +77,13 @@ SIMDPP_INL mask_float64<8> i_isnan(const float64<8>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float64<N> i_isnan(const float64<N>& a)
+// -----------------------------------------------------------------------------
+
+template<class V> SIMDPP_INL
+typename V::mask_vector_type i_isnan(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float64<N>, i_isnan, a);
+    SIMDPP_VEC_ARRAY_IMPL1(typename V::mask_vector_type, i_isnan, a);
 }
-/// @}
 
 } // namespace insn
 } // namespace detail

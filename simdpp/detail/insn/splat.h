@@ -22,9 +22,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<unsigned s, class V> SIMDPP_INL
-V v_splat(const V& a);
-
 // -----------------------------------------------------------------------------
 
 template<unsigned s> SIMDPP_INL
@@ -45,13 +42,6 @@ uint8x32 i_splat(const uint8x32& a)
 }
 #endif
 
-template<unsigned s, unsigned N> SIMDPP_INL
-uint8<N> i_splat(const uint8<N>& a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return v_splat<s>(a);
-}
-
 // -----------------------------------------------------------------------------
 
 template<unsigned s> SIMDPP_INL
@@ -71,13 +61,6 @@ uint16x16 i_splat(const uint16x16& a)
     return _mm256_broadcastw_epi16(lo);
 }
 #endif
-
-template<unsigned s, unsigned N> SIMDPP_INL
-uint16<N> i_splat(const uint16<N>& a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return v_splat<s>(a);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -111,13 +94,6 @@ uint32<16> i_splat(const uint32<16>& ca)
 }
 #endif
 
-template<unsigned s, unsigned N> SIMDPP_INL
-uint32<N> i_splat(const uint32<N>& a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return v_splat<s>(a);
-}
-
 // -----------------------------------------------------------------------------
 
 template<unsigned s> SIMDPP_INL
@@ -146,13 +122,6 @@ uint64<8> i_splat(const uint64<8>& ca)
     return a;
 }
 #endif
-
-template<unsigned s, unsigned N> SIMDPP_INL
-uint64<N> i_splat(const uint64<N>& a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return v_splat<s>(a);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -184,13 +153,6 @@ float32<16> i_splat(const float32<16>& ca)
     return a;
 }
 #endif
-
-template<unsigned s, unsigned N> SIMDPP_INL
-float32<N> i_splat(const float32<N>& a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return v_splat<s>(a);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -228,19 +190,13 @@ float64<8> i_splat(const float64<8>& ca)
 }
 #endif
 
-template<unsigned s, unsigned N> SIMDPP_INL
-float64<N> i_splat(const float64<N>& a)
-{
-    static_assert(s < N, "Access out of bounds");
-    return v_splat<s>(a);
-}
-
 // -----------------------------------------------------------------------------
 
-// collect some duplicate stuff here
 template<unsigned s, class V> SIMDPP_INL
-V v_splat(const V& a)
+V i_splat(const V& a)
 {
+    static_assert(s < V::length, "Access out of bounds");
+
     using U = typename V::base_vector_type;
     U one = a.vec(s / U::length);
 

@@ -31,8 +31,6 @@ template<class V> SIMDPP_INL
 void v256_load_packed2(V& a, V& b, const char* p);
 template<class V> SIMDPP_INL
 void v512_load_packed2(V& a, V& b, const char* p);
-template<class V> SIMDPP_INL
-void v_load_packed2(V& a, V& b, const char* p);
 
 // -----------------------------------------------------------------------------
 
@@ -57,12 +55,6 @@ SIMDPP_INL void i_load_packed2(uint8x32& a, uint8x32& b, const char* p)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_packed2(uint8<N>& a, uint8<N>& b, const char* p)
-{
-    v_load_packed2(a, b, p);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_packed2(uint16x8& a, uint16x8& b, const char* p)
@@ -85,12 +77,6 @@ SIMDPP_INL void i_load_packed2(uint16x16& a, uint16x16& b, const char* p)
     v256_load_packed2(a, b, p);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed2(uint16<N>& a, uint16<N>& b, const char* p)
-{
-    v_load_packed2(a, b, p);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -122,12 +108,6 @@ SIMDPP_INL void i_load_packed2(uint32<16>& a, uint32<16>& b, const char* p)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_packed2(uint32<N>& a, uint32<N>& b, const char* p)
-{
-    v_load_packed2(a, b, p);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_packed2(uint64x2& a, uint64x2& b, const char* p)
@@ -157,12 +137,6 @@ SIMDPP_INL void i_load_packed2(uint64<8>& a, uint64<8>& b, const char* p)
     v512_load_packed2(a, b, p);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed2(uint64<N>& a, uint64<N>& b, const char* p)
-{
-    v_load_packed2(a, b, p);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -194,13 +168,6 @@ SIMDPP_INL void i_load_packed2(float32<16>& a, float32<16>& b, const char* p)
 }
 #endif
 
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed2(float32<N>& a, float32<N>& b, const char* p)
-{
-    v_load_packed2(a, b, p);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_packed2(float64x2& a, float64x2& b, const char* p)
@@ -230,12 +197,6 @@ SIMDPP_INL void i_load_packed2(float64<8>& a, float64<8>& b, const char* p)
     v512_load_packed2(a, b, p);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed2(float64<N>& a, float64<N>& b, const char* p)
-{
-    v_load_packed2(a, b, p);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -267,7 +228,7 @@ void v512_load_packed2(V& a, V& b, const char* p)
 }
 
 template<class V> SIMDPP_INL
-void v_load_packed2(V& a, V& b, const char* p)
+void i_load_packed2(V& a, V& b, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 

@@ -24,11 +24,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-
-// collect some boilerplate here
-template<class V> SIMDPP_INL
-void v_load_u(V& a, const char* p);
-
 // -----------------------------------------------------------------------------
 
 // Each integer type is handled separately because higher aligment guarantees
@@ -180,41 +175,10 @@ SIMDPP_INL float64<8> i_load_u(float64<8>& a, const void* p)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint8<N>  i_load_u(uint8<N>& a,  const void* p)
-{
-    v_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N> SIMDPP_INL
-uint16<N> i_load_u(uint16<N>& a, const void* p)
-{
-    v_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N> SIMDPP_INL
-uint32<N> i_load_u(uint32<N>& a, const void* p)
-{
-    v_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N> SIMDPP_INL
-uint64<N> i_load_u(uint64<N>& a, const void* p)
-{
-    v_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N> SIMDPP_INL
-float32<N> i_load_u(float32<N>& a, const void* p)
-{
-    v_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-template<unsigned N> SIMDPP_INL
-float64<N> i_load_u(float64<N>& a, const void* p)
-{
-    v_load_u(a, reinterpret_cast<const char*>(p)); return a;
-}
-
 // -----------------------------------------------------------------------------
 
 template<class V> SIMDPP_INL
-void v_load_u(V& a, const char* p)
+V i_load_u(V& a, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
@@ -222,6 +186,7 @@ void v_load_u(V& a, const char* p)
         i_load_u(a.vec(i), p);
         p += veclen;
     }
+    return a;
 }
 
 template<class V>

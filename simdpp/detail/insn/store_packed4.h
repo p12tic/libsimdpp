@@ -31,8 +31,6 @@ template<class V> SIMDPP_INL
 void v256_store_pack4(char* p, const V& ca, const V& cb, const V& cc, const V& dd);
 template<class V> SIMDPP_INL
 void v512_store_pack4(char* p, const V& ca, const V& cb, const V& cc, const V& dd);
-template<class V> SIMDPP_INL
-void v_store_pack4(char* p, const V& ca, const V& cb, const V& cc, const V& dd);
 
 // -----------------------------------------------------------------------------
 
@@ -62,13 +60,6 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_packed4(char* p,
-                     const uint8<N>& a, const uint8<N>& b, const uint8<N>& c, const uint8<N>& d)
-{
-    v_store_pack4(p, a, b, c, d);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_packed4(char* p,
@@ -96,13 +87,6 @@ SIMDPP_INL void i_store_packed4(char* p,
     v256_store_pack4(p, a, b, c, d);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_store_packed4(char* p,
-                     const uint16<N>& a, const uint16<N>& b, const uint16<N>& c, const uint16<N>& d)
-{
-    v_store_pack4(p, a, b, c, d);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -140,13 +124,6 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_packed4(char* p,
-                     const uint32<N>& a, const uint32<N>& b, const uint32<N>& c, const uint32<N>& d)
-{
-    v_store_pack4(p, a, b, c, d);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_packed4(char* p,
@@ -181,13 +158,6 @@ SIMDPP_INL void i_store_packed4(char* p,
     v512_store_pack4(p, a, b, c, d);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_store_packed4(char* p,
-                     const uint64<N>& a, const uint64<N>& b, const uint64<N>& c, const uint64<N>& d)
-{
-    v_store_pack4(p, a, b, c, d);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -226,13 +196,6 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_store_packed4(char* p,
-                     const float32<N>& a, const float32<N>& b, const float32<N>& c, const float32<N>& d)
-{
-    v_store_pack4(p, a, b, c, d);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_packed4(char* p,
@@ -268,13 +231,6 @@ SIMDPP_INL void i_store_packed4(char* p,
     v512_store_pack4(p, a, b, c, d);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_store_packed4(char* p,
-                     const float64<N>& a, const float64<N>& b, const float64<N>& c, const float64<N>& d)
-{
-    v_store_pack4(p, a, b, c, d);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -315,7 +271,7 @@ void v512_store_pack4(char* p, const V& ca, const V& cb, const V& cc, const V& d
 }
 
 template<class V> SIMDPP_INL
-void v_store_pack4(char* p, const V& ca, const V& cb, const V& cc, const V& dd)
+void i_store_packed4(char* p, const V& ca, const V& cb, const V& cc, const V& dd)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
     V a = ca, b = cb, c = cc, d = dd;

@@ -77,11 +77,7 @@ SIMDPP_INL float32<16> i_floor(const float32<16>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float32<N> i_floor(const float32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_floor, a);
-}
+// -----------------------------------------------------------------------------
 
 SIMDPP_INL float64x2 i_floor(const float64x2& a)
 {
@@ -147,10 +143,10 @@ SIMDPP_INL float64<8> i_floor(const float64<8>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float64<N> i_floor(const float64<N>& a)
+template<class V> SIMDPP_INL
+V i_floor(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_floor, a);
+    SIMDPP_VEC_ARRAY_IMPL1(V, i_floor, a);
 }
 
 } // namespace insn

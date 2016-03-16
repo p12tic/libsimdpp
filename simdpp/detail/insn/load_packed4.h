@@ -31,8 +31,6 @@ template<class V> SIMDPP_INL
 void v256_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 template<class V> SIMDPP_INL
 void v512_load_packed4(V& a, V& b, V& c, V& d, const char* p);
-template<class V> SIMDPP_INL
-void v_load_packed4(V& a, V& b, V& c, V& d, const char* p);
 
 // -----------------------------------------------------------------------------
 
@@ -61,13 +59,6 @@ SIMDPP_INL void i_load_packed4(uint8x32& a, uint8x32& b, uint8x32& c, uint8x32& 
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_packed4(uint8<N>& a, uint8<N>& b, uint8<N>& c, uint8<N>& d,
-                    const char* p)
-{
-    v_load_packed4(a, b, c, d, p);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_packed4(uint16x8& a, uint16x8& b,
@@ -94,13 +85,6 @@ SIMDPP_INL void i_load_packed4(uint16x16& a, uint16x16& b, uint16x16& c, uint16x
     v256_load_packed4(a, b, c, d, p);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed4(uint16<N>& a, uint16<N>& b, uint16<N>& c, uint16<N>& d,
-                    const char* p)
-{
-    v_load_packed4(a, b, c, d, p);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -137,13 +121,6 @@ SIMDPP_INL void i_load_packed4(uint32<16>& a, uint32<16>& b, uint32<16>& c, uint
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load_packed4(uint32<N>& a, uint32<N>& b, uint32<N>& c, uint32<N>& d,
-                    const char* p)
-{
-    v_load_packed4(a, b, c, d, p);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_packed4(uint64x2& a, uint64x2& b,
@@ -177,13 +154,6 @@ SIMDPP_INL void i_load_packed4(uint64<8>& a, uint64<8>& b, uint64<8>& c, uint64<
     v512_load_packed4(a, b, c, d, p);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed4(uint64<N>& a, uint64<N>& b, uint64<N>& c, uint64<N>& d,
-                    const char* p)
-{
-    v_load_packed4(a, b, c, d, p);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -220,14 +190,6 @@ SIMDPP_INL void i_load_packed4(float32<16>& a, float32<16>& b, float32<16>& c, f
 }
 #endif
 
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed4(float32<N>& a, float32<N>& b, float32<N>& c, float32<N>& d,
-                  const char* p)
-{
-    v_load_packed4(a, b, c, d, p);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_packed4(float64x2& a, float64x2& b, float64x2& c, float64x2& d,
@@ -262,13 +224,6 @@ SIMDPP_INL void i_load_packed4(float64<8>& a, float64<8>& b, float64<8>& c, floa
     v512_load_packed4(a, b, c, d, p);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-void i_load_packed4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d,
-                    const char* p)
-{
-    v_load_packed4(a, b, c, d, p);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -306,7 +261,7 @@ void v512_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 }
 
 template<class V> SIMDPP_INL
-void v_load_packed4(V& a, V& b, V& c, V& d, const char* p)
+void i_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 

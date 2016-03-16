@@ -46,12 +46,6 @@ SIMDPP_INL uint8x32 i_bit_not(const uint8x32& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint8<N> i_bit_not(const uint8<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_bit_not, a)
-}
-
 // -----------------------------------------------------------------------------
 
 template<unsigned N> SIMDPP_INL
@@ -78,12 +72,6 @@ SIMDPP_INL uint32<16> i_bit_not(const uint32<16>& a)
     return bit_xor(a, ones);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint32<N> i_bit_not(const uint32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -113,12 +101,6 @@ SIMDPP_INL uint64<8> i_bit_not(const uint64<8>& a)
     return bit_xor(a, 0xffff);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint64<N> i_bit_not(const uint64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -177,27 +159,6 @@ SIMDPP_INL mask_int64<8> i_bit_not(const mask_int64<8>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_int8<N> i_bit_not(const mask_int8<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int8<N>, i_bit_not, a)
-}
-template<unsigned N> SIMDPP_INL
-mask_int16<N> i_bit_not(const mask_int16<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int16<N>, i_bit_not, a)
-}
-template<unsigned N> SIMDPP_INL
-mask_int32<N> i_bit_not(const mask_int32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int32<N>, i_bit_not, a)
-}
-template<unsigned N> SIMDPP_INL
-mask_int64<N> i_bit_not(const mask_int64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_int64<N>, i_bit_not, a)
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL float32x4 i_bit_not(const float32x4& a)
@@ -227,12 +188,6 @@ SIMDPP_INL float32<16> i_bit_not(const float32<16>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float32<N> i_bit_not(const float32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_bit_not, a)
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL float64x2 i_bit_not(const float64x2& a)
@@ -260,12 +215,6 @@ SIMDPP_INL float64<8> i_bit_not(const float64<8>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-float64<N> i_bit_not(const float64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_bit_not, a)
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_float32x4 i_bit_not(const mask_float32x4& a)
@@ -290,12 +239,6 @@ SIMDPP_INL mask_float32<16> i_bit_not(const mask_float32<16>& a)
     return _mm512_knot(a);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-mask_float32<N> i_bit_not(const mask_float32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float32<N>, i_bit_not, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -322,12 +265,13 @@ SIMDPP_INL mask_float64<8> i_bit_not(const mask_float64<8>& a)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-mask_float64<N> i_bit_not(const mask_float64<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL1(mask_float64<N>, i_bit_not, a)
-}
+// -----------------------------------------------------------------------------
 
+template<class V> SIMDPP_INL
+V i_bit_not(const V& a)
+{
+    SIMDPP_VEC_ARRAY_IMPL1(V, i_bit_not, a)
+}
 
 } // namespace insn
 } // namespace detail

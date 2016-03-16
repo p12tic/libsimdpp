@@ -49,12 +49,6 @@ SIMDPP_INL uint8x32 i_avg_trunc(const uint8x32& a, const uint8x32& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint8<N> i_avg_trunc(const uint8<N>& a, const uint8<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_avg_trunc, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL int8x16 i_avg_trunc(const int8x16& a, const int8x16& b)
@@ -90,12 +84,6 @@ SIMDPP_INL int8x32 i_avg_trunc(const int8x32& a, const int8x32& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-int8<N> i_avg_trunc(const int8<N>& a, const int8<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(int8<N>, i_avg_trunc, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint16x8 i_avg_trunc(const uint16x8& a, const uint16x8& b)
@@ -119,12 +107,6 @@ SIMDPP_INL uint16x16 i_avg_trunc(const uint16x16& a, const uint16x16& b)
     return v_emul_avg_trunc(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint16<N> i_avg_trunc(const uint16<N>& a, const uint16<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_avg_trunc, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -160,12 +142,6 @@ SIMDPP_INL int16x16 i_avg_trunc(const int16x16& a, const int16x16& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-int16<N> i_avg_trunc(const int16<N>& a, const int16<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(int16<N>, i_avg_trunc, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint32x4 i_avg_trunc(const uint32x4& a, const uint32x4& b)
@@ -196,12 +172,6 @@ SIMDPP_INL uint32<16> i_avg_trunc(const uint32<16>& a, const uint32<16>& b)
     return v_emul_avg_trunc(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint32<N> i_avg_trunc(const uint32<N>& a, const uint32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_avg_trunc, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -234,10 +204,12 @@ SIMDPP_INL int32<16> i_avg_trunc(const int32<16>& a, const int32<16>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-int32<N> i_avg_trunc(const int32<N>& a, const int32<N>& b)
+// -----------------------------------------------------------------------------
+
+template<class V> SIMDPP_INL
+V i_avg_trunc(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(int32<N>, i_avg_trunc, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(V, i_avg_trunc, a, b);
 }
 
 template<class V> SIMDPP_INL

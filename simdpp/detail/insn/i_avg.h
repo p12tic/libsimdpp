@@ -23,9 +23,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-template<class V> SIMDPP_INL V v_emul_avg_u32(const V& a, const V& b);
-template<class V> SIMDPP_INL V v_emul_avg_i32(const V& a, const V& b);
-
+template<class V> SIMDPP_INL
+V v_emul_avg_u32(const V& a, const V& b);
+template<class V> SIMDPP_INL
+V v_emul_avg_i32(const V& a, const V& b);
 
 SIMDPP_INL uint8x16 i_avg(const uint8x16& a, const uint8x16& b)
 {
@@ -50,12 +51,6 @@ SIMDPP_INL uint8x32 i_avg(const uint8x32& a, const uint8x32& b)
     return _mm256_avg_epu8(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint8<N> i_avg(const uint8<N>& a, const uint8<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_avg, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -95,12 +90,6 @@ SIMDPP_INL int8x32 i_avg(const int8x32& a, const int8x32& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-int8<N> i_avg(const int8<N>& a, const int8<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(int8<N>, i_avg, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint16x8 i_avg(const uint16x8& a, const uint16x8& b)
@@ -126,12 +115,6 @@ SIMDPP_INL uint16x16 i_avg(const uint16x16& a, const uint16x16& b)
     return _mm256_avg_epu16(a, b);
 }
 #endif
-
-template<unsigned N> SIMDPP_INL
-uint16<N> i_avg(const uint16<N>& a, const uint16<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_avg, a, b);
-}
 
 // -----------------------------------------------------------------------------
 
@@ -169,12 +152,6 @@ SIMDPP_INL int16x16 i_avg(const int16x16& a, const int16x16& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-int16<N> i_avg(const int16<N>& a, const int16<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(int16<N>, i_avg, a, b);
-}
-
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint32x4 i_avg(const uint32x4& a, const uint32x4& b)
@@ -208,11 +185,7 @@ SIMDPP_INL uint32<16> i_avg(const uint32<16>& a, const uint32<16>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-uint32<N> i_avg(const uint32<N>& a, const uint32<N>& b)
-{
-    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_avg, a, b);
-}
+// -----------------------------------------------------------------------------
 
 SIMDPP_INL int32x4 i_avg(const int32x4& a, const int32x4& b)
 {
@@ -246,10 +219,12 @@ SIMDPP_INL int32<16> i_avg(const int32<16>& a, const int32<16>& b)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-int32<N> i_avg(const int32<N>& a, const int32<N>& b)
+// -----------------------------------------------------------------------------
+
+template<class V> SIMDPP_INL
+V i_avg(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(int32<N>, i_avg, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(V, i_avg, a, b);
 }
 
 // generic implementations

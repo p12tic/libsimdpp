@@ -174,7 +174,7 @@ SIMDPP_INL void i_store(char* p, const float64<8>& a)
 // -----------------------------------------------------------------------------
 
 template<class V> SIMDPP_INL
-void v_store(char* p, const V& a)
+void i_store(char* p, const V& a)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
@@ -184,20 +184,6 @@ void v_store(char* p, const V& a)
         p += veclen;
     }
 }
-
-template<unsigned N> SIMDPP_INL
-void i_store(char* p, const uint8<N>& a) { v_store(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store(char* p, const uint16<N>& a) { v_store(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store(char* p, const uint32<N>& a) { v_store(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store(char* p, const uint64<N>& a) { v_store(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store(char* p, const float32<N>& a){ v_store(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_store(char* p, const float64<N>& a){ v_store(p, a); }
-
 
 } // namespace insn
 } // namespace detail
