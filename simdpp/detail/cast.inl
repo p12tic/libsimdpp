@@ -55,7 +55,7 @@ R cast_memcpy_remask(const T& t)
 {
     typedef typename base_mask_vector_type<R>::type RR;
     RR rr = cast_memcpy<RR>(t.unmask());
-    return cmp_neq(rr, RR::zero());
+    return cmp_neq(rr, (RR) make_zero());
 }
 
 template<>

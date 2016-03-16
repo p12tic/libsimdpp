@@ -1,0 +1,2 @@
+<onlyinclude><span class="t-c">{{#tag:source|{{{code|{{trim|{{{1}}}}}}}}|lang={{{lang|{{{2|{{get_lang}}}}}}}}|enclose=none}}</span></onlyinclude>
+{{documentation | Template:source/doc}}

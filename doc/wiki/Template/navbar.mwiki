@@ -1,0 +1,32 @@
+<div class="t-navbar" style="{{{style|}}}"><!--
+
+-->{{#addbodyclass:cpp-navbar}}<!--
+--><div class="t-navbar-sep">&nbsp;</div><!--
+-->{{#if:{{{heading1|}}} |<div class="t-navbar-head">{{ {{{heading1|}}} }}<!--
+  -->{{#if:{{{content1|}}} |<div class="t-navbar-menu"><div>{{ {{{content1}}} }}<div>{{navbar editlink| {{{content1}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+-->{{#if:{{{heading2|}}} |<div class="t-navbar-head">{{ {{{heading2|}}} }}<!--
+  -->{{#if:{{{content2|}}} |<div class="t-navbar-menu"><div>{{ {{{content2}}} }}<div>{{navbar editlink| {{{content2}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+-->{{#if:{{{heading3|}}} |<div class="t-navbar-head">{{ {{{heading3|}}} }}<!--
+  -->{{#if:{{{content3|}}} |<div class="t-navbar-menu"><div>{{ {{{content3}}} }}<div>{{navbar editlink| {{{content3}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+-->{{#if:{{{heading4|}}} |<div class="t-navbar-head">{{ {{{heading4|}}} }}<!--
+  -->{{#if:{{{content4|}}} |<div class="t-navbar-menu"><div>{{ {{{content4}}} }}<div>{{navbar editlink| {{{content4}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+-->{{#if:{{{heading5|}}} |<div class="t-navbar-head">{{ {{{heading5|}}} }}<!--
+  -->{{#if:{{{content5|}}} |<div class="t-navbar-menu"><div>{{ {{{content5}}} }}<div>{{navbar editlink| {{{content5}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+-->{{#if:{{{heading6|}}} |<div class="t-navbar-head">{{ {{{heading6|}}} }}<!--
+  -->{{#if:{{{content6|}}} |<div class="t-navbar-menu"><div>{{ {{{content6}}} }}<div>{{navbar editlink| {{{content6}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+-->{{#if:{{{heading7|}}} |<div class="t-navbar-head">{{ {{{heading7|}}} }}<!--
+  -->{{#if:{{{content7|}}} |<div class="t-navbar-menu"><div>{{ {{{content7}}} }}<div>{{navbar editlink| {{{content7}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+-->{{#if:{{{heading8|}}} |<div class="t-navbar-head">{{ {{{heading8|}}} }}<!--
+  -->{{#if:{{{content8|}}} |<div class="t-navbar-menu"><div>{{ {{{content8}}} }}<div>{{navbar editlink| {{{content8}}} }}</div></div></div>}}<!--
+--></div><div class="t-navbar-sep">&nbsp;</div>}}<!--
+
+--></div><noinclude>
+{{documentation}}
+</noinclude>

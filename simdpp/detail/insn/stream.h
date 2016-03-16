@@ -22,10 +22,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-
-template<class V> SIMDPP_INL
-void v_stream(char* p, const V& a);
-
 SIMDPP_INL void i_stream(char* p, const uint8<16>& a)
 {
     p = detail::assume_aligned(p, 16);
@@ -177,7 +173,7 @@ SIMDPP_INL void i_stream(char* p, const float64<8>& a)
 // -----------------------------------------------------------------------------
 
 template<class V> SIMDPP_INL
-void v_stream(char* p, const V& a)
+void i_stream(char* p, const V& a)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
@@ -187,19 +183,6 @@ void v_stream(char* p, const V& a)
         p += veclen;
     }
 }
-
-template<unsigned N> SIMDPP_INL
-void i_stream(char* p, const uint8<N>& a) { v_stream(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_stream(char* p, const uint16<N>& a) { v_stream(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_stream(char* p, const uint32<N>& a) { v_stream(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_stream(char* p, const uint64<N>& a) { v_stream(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_stream(char* p, const float32<N>& a){ v_stream(p, a); }
-template<unsigned N> SIMDPP_INL
-void i_stream(char* p, const float64<N>& a){ v_stream(p, a); }
 
 } // namespace insn
 } // namespace detail

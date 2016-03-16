@@ -101,6 +101,7 @@ uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
     return r;
 #elif SIMDPP_USE_SSE2
     switch (shift) {
+    default:
     case 0: return lower;
 #if SIMDPP_USE_SSSE3
     case 1:
@@ -141,6 +142,7 @@ template<unsigned shift> SIMDPP_INL
 uint32<16> i_align4(const uint32<16>& lower, const uint32<16>& upper)
 {
     switch (shift) {
+    default:
     case 0: return lower;
     case 1: return shuffle4x2<1,2,3,4>(lower, upper);
     case 2: return shuffle4x2<2,3,4,5>(lower, upper);
@@ -173,6 +175,7 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
     return r;
 #elif SIMDPP_USE_SSE2
     switch (shift) {
+    default:
     case 0: return lower;
     case 1: return _mm_castpd_si128(_mm_shuffle_pd(_mm_castsi128_pd(lower),
                                                    _mm_castsi128_pd(upper),
@@ -201,6 +204,7 @@ template<unsigned shift> SIMDPP_INL
 uint64<8> i_align2(const uint64<8>& lower, const uint64<8>& upper)
 {
     switch (shift) {
+    default:
     case 0: return lower;
     case 1: return shuffle2x2<1,2>(lower, upper);
     case 2: return upper;
@@ -231,6 +235,7 @@ float32x4 i_align4(const float32x4& lower, const float32x4& upper)
     return r;
 #elif SIMDPP_USE_SSE2
     switch (shift) {
+    default:
     case 0: return lower;
 #if SIMDPP_USE_SSSE3
     case 1:
@@ -261,6 +266,7 @@ template<unsigned shift> SIMDPP_INL
 float32<8> i_align4(const float32<8>& lower, const float32<8>& upper)
 {
     switch (shift) {
+    default:
     case 0: return lower;
 #if SIMDPP_USE_AVX2
     case 1:
@@ -281,6 +287,7 @@ template<unsigned shift> SIMDPP_INL
 float32<16> i_align4(const float32<16>& lower, const float32<16>& upper)
 {
     switch (shift) {
+    default:
     case 0: return lower;
     case 1: return shuffle4x2<1,2,3,4>(lower, upper);
     case 2: return _mm512_shuffle_ps(lower, upper, SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
@@ -313,6 +320,7 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
     return r;
 #elif SIMDPP_USE_SSE2
     switch (shift) {
+    default:
     case 0: return lower;
     case 1: return _mm_shuffle_pd(lower, upper, SIMDPP_SHUFFLE_MASK_2x2(1, 0));
     case 2: return upper;
@@ -333,6 +341,7 @@ template<unsigned shift> SIMDPP_INL
 float64<4> i_align2(const float64<4>& lower, const float64<4>& upper)
 {
     switch (shift) {
+    default:
     case 0: return lower;
     case 1: return _mm256_shuffle_pd(lower, upper, SIMDPP_SHUFFLE_MASK_2x2_2(1, 0));
     case 2: return upper;
@@ -345,6 +354,7 @@ template<unsigned shift> SIMDPP_INL
 float64<8> i_align2(const float64<8>& lower, const float64<8>& upper)
 {
     switch (shift) {
+    default:
     case 0: return lower;
     case 1: return _mm512_shuffle_pd(lower, upper, SIMDPP_SHUFFLE_MASK_2x2_4(1, 0));
     case 2: return upper;

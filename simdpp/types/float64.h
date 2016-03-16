@@ -51,7 +51,6 @@ public:
         *this = bit_cast<float64<N> >(d.wrapped().eval()); return *this;
     }
 
-#ifndef SIMDPP_DOXYGEN
     template<class E> SIMDPP_INL float64<N>(const expr_vec_construct<E>& e)
     {
         detail::construct_eval_wrapper(*this, e.expr());
@@ -60,25 +59,11 @@ public:
     {
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
-#endif
 
     SIMDPP_INL const float64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL float64v& vec(unsigned i)             { return d_[i]; }
 
     SIMDPP_INL float64<N> eval() const { return *this; }
-
-    /** Creates a float64 vector with the contents set to zero
-
-        @code
-        r0 = 0.0f
-        ...
-        rN = 0.0f
-        @endcode
-    */
-    static SIMDPP_INL float64<N> zero()
-    {
-        return set_vec(float64v::zero());
-    }
 
 private:
     /** Creates a float vector from a native vector

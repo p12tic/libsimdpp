@@ -1,0 +1,12 @@
+|- class="t-dsc-hitem"
+{{#if: {{{2|}}}
+|{{!}} {{{1}}}
+{{!}} {{{2}}}<!--
+-->{{dsc editlink|dummy}}
+|{{!}} colspan="2" {{!}} {{{1}}}<!--
+-->{{dsc editlink|dummy}}<!-- dummy parameter to disable a MediaWiki optimization
+-->}}
+{{dsc guard}}
+<noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

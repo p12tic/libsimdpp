@@ -1,0 +1,30 @@
+{{title|Shuffling operations}}
+{{shuffle/navbar}}
+
+The following shuffle operations are provided.
+
+{{dsc begin}}
+{{dsc h1 | Shuffling}}
+{{dsc tfun | shuffle/blend | blends two vectors according to a mask }}
+{{dsc tfun | shuffle/splat | sets all elements to a specific element within vector}}
+{{dsc tfun | shuffle/permute2 | permutes pairs of elements within vector }}
+{{dsc tfun | shuffle/permute4 | permutes quadruples of elements within vector }}
+{{dsc tfun | shuffle/shuffle2x2 | shuffles two vectors at two-element granularity }}
+{{dsc tfun | shuffle/shuffle4x2 | shuffles two vectors at four-element granularity }}
+{{dsc tfun | shuffle/transpose2 | transposes 2x2 blocks within two vectors }}
+{{dsc tfun | shuffle/transpose4 | transposes 4x4 blocks within four vectors }}
+
+{{dsc h1 | Combining and splitting}}
+{{dsc tfun | shuffle/combine | combines two vectors into a vector twice as wide }}
+{{dsc tfun | shuffle/split | splits a vector into two vectors half as wide }}
+
+{{dsc h1 | Shuffling (128 bit granularity)}}
+{{dsc tfun | shuffle/alignX_128 | title=align16<br/>align8<br/>align4<br/>align2 | exctracts a vector from two concatenated vectors}}
+{{dsc tfun | shuffle/moveX_l_128 | title=move16_l<br/>move8_l<br/>move4_l<br/>move2_l | moves elements in the vector to the left}}
+{{dsc tfun | shuffle/moveX_r_128 | title=move16_r<br/>move8_r<br/>move4_r<br/>move2_r | moves elements in the vector to the right}}
+{{dsc tfun | shuffle/splatX_128 | title=splat16<br/>splat8<br/>splat4<br/>splat2 | sets all elements in each group of elements to n-th element in that group}}
+{{dsc tfun | shuffle/zipX_hi_128 | title=zip16_hi<br/>zip8_hi<br/>zip4_hi<br/>zip2_hi | interleaves higher halves of two vectors}}
+{{dsc tfun | shuffle/zipX_lo_128 | title=zip16_lo<br/>zip8_lo<br/>zip4_lo<br/>zip2_lo | interleaves lower halves of two vectors}}
+{{dsc tfun | shuffle/unzipX_hi_128 | title=unzip16_hi<br/>unzip8_hi<br/>unzip4_hi<br/>unzip2_hi | de-interleaves odd(high) elements of two vectors}}
+{{dsc tfun | shuffle/unzipX_lo_128 | title=unzip16_lo<br/>unzip8_lo<br/>unzip4_lo<br/>unzip2_lo | de-interleaves even(lower) elements of two vectors}}
+{{dsc end}}

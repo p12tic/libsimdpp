@@ -1,0 +1,5 @@
+====Scalar arguments====
+
+Several additional overloads are provided to implement implicit conversions from scalar types. Values of the following types are accepted as the first or the second argument: {{c|int32_t}}, {{c|int64_t}}, {{c|uint32_t}}, {{c|uint64_t}}, {{c|float}}, {{c|double}}. Each element of the expanded vector is set to the source value, converting it using standard conversions if needed.
+
+The return type is a vector expression. The vector type is the same as the vector argument except that masks are unmasked to respective non-mask vector types.

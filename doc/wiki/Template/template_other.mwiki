@@ -1,0 +1,15 @@
+{{#switch:
+  <!--If no or empty "demospace" parameter then detect namespace-->
+  {{#if:{{{demospace|}}}
+  | {{lc: {{{demospace}}} }}    <!--Use lower case "demospace"-->
+  | {{#ifeq:{{NAMESPACE}}|{{ns:Template}}
+    | template
+    | other
+    }}
+  }}
+| template = {{{1|}}}
+| other
+| #default = {{{2|}}}
+}}<!--End switch--><noinclude>
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

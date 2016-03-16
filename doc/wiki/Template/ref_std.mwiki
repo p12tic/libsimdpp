@@ -1,0 +1,4 @@
+<onlyinclude>:* {{{section}}} {{{title}}} {{#if:{{{id|}}}|&#91;{{{id}}}&#93; }}{{#if:{{{p|}}}|(p: {{{p}}})}}
+</onlyinclude><noinclude>
+{{documentation | Template:ref std/doc}}
+</noinclude>

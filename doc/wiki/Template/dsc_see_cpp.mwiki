@@ -1,0 +1,9 @@
+{{dsc|{{#if:{{{1|}}}|<div class="t-dsc-see"><span>[[{{{1}}}|C++ documentation]]</span> for <span class="{{#ifeq:{{{nomono|}}}|true||t-dsc-see-tt}}">{{#if:{{{2|}}}<!--
+-->|<span>{{trim|{{{2|}}}}}</span><!--
+-->{{#if:{{{3|}}}|, <span>{{trim|{{{3|}}}}}</span>}}<!--
+-->{{#if:{{{4|}}}|, <span>{{trim|{{{4|}}}}}</span>}}<!--
+-->{{#if:{{{5|}}}|, <span>{{trim|{{{5|}}}}}</span>}}<!--
+-->{{#if:{{{6|}}}|, <span>{{trim|{{{6|}}}}}</span>}}<!--
+-->|<span>{{ltt/core|{{{1}}}}}</span>}}</span></div>|{{error|No link specified}}}}}}<noinclude>
+{{documentation|Template:dsc/doc}}
+</noinclude>

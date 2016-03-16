@@ -1,0 +1,24 @@
+{{title|Operators}}
+{{operator/navbar}}
+
+The library provides the following operators that behave equivalently to the respective free functions.
+
+{{dsc begin}}
+{{dsc tfun | nolink=true | operator+ | performs addition, wraps {{ltt|fp/add|add{{small|(floating-point)}}}} and {{ltt|int/add|add{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator- | performs subtraction, wraps {{ltt|fp/sub|sub{{small|(floating-point)}}}} and {{ltt|int/sub|sub{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator* | performs multiplication, wraps {{ltt|fp/mul|mul{{small|(floating-point)}}}} and {{ltt|int/mul_lo|mul_lo{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator/ | performs division, wraps {{ltt|fp/div|div{{small|(floating-point)}}}} }}
+{{dsc tfun | nolink=true | operator>> | performs shift right, wraps {{ltt|int/shift_r|shift_r{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator<< | performs shift left, wraps  {{ltt|int/shift_l|shift_l{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator& | performs bitwise AND, wraps {{ltt|bitwise/bit_and}} }}
+{{dsc tfun | nolink=true | operator<nowiki>|</nowiki> | performs bitwise OR, wraps {{ltt|bitwise/bit_or}} }}
+{{dsc tfun | nolink=true | operator^ | performs bitwise XOR, wraps {{ltt|bitwise/bit_xor}} }}
+{{dsc tfun | nolink=true | operator~ | performs bitwise NOT, wraps {{ltt|bitwise/bit_not}} }}
+
+{{dsc tfun | nolink=true | operator{{==}} | performs comparison for equality, wraps {{ltt|fp/cmp_eq|cmp_eq{{small|(floating-point)}}}} and {{ltt|int/cmp_eq|cmp_eq{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator<nowiki>|=</nowiki> | performs comparison for inequality, wraps {{ltt|fp/cmp_neq|cmp_neq{{small|(floating-point)}}}} and {{ltt|int/cmp_neq|cmp_neq{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator> | performs comparison for greater than, wraps {{ltt|fp/cmp_gt|cmp_gt{{small|(floating-point)}}}} and {{ltt|int/cmp_gt|cmp_gt{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator>{{=}} | performs comparison for greater than or equal, wraps {{ltt|fp/cmp_ge|cmp_ge{{small|(floating-point)}}}}  }}
+{{dsc tfun | nolink=true | operator< | performs comparison for less than, wraps {{ltt|fp/cmp_lt|cmp_lt{{small|(floating-point)}}}} and {{ltt|int/cmp_lt|cmp_lt{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator<{{=}} | performs comparison for less than or equal, wraps {{ltt|fp/cmp_le|cmp_le{{small|(floating-point)}}}}  }}
+{{dsc end}}

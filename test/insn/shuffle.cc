@@ -194,7 +194,7 @@ void test_shuffle(TestResults& res)
 
     for (unsigned el = 0; el < 16; el++) {
         simdpp::SIMDPP_ARCH_NAMESPACE::detail::mem_block<uint8x16> mu;
-        mu = uint8x16::zero();
+        mu = make_zero();
         mu[el] = 0xff;
         TEST_PUSH(tc, uint16_t, extract_bits_any(uint8x16(mu)));
         mu[el] = 1 << 0;

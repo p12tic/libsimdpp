@@ -1,0 +1,10 @@
+<span class="t-mparen"><!--
+--><span style="font-size: {{mparen/font|{{{lparen|}}}|{{{numrows|}}}}}em">{{mparen/paren|{{{lparen|}}}|{{{numrows|}}}}}</span><!--
+--><span style="{{{style|}}}"><!--
+  -->{{{row1|}}}<!--
+  -->{{#if:{{{row2|}}}|<br/>{{{row2|}}} }}<!--
+  -->{{#if:{{{row3|}}}|<br/>{{{row3|}}} }}<!--
+  -->{{#if:{{{row4|}}}|<br/>{{{row4|}}} }}<!--
+--></span><!--
+--><span style="font-size: {{mparen/font|{{{rparen|}}}|{{{numrows|}}}}}em">{{mparen/paren|{{{rparen|}}}|{{{numrows|}}}}}</span><!--
+--></span>

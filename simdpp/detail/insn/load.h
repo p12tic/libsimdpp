@@ -24,10 +24,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-// collect some boilerplate here
-template<class V> SIMDPP_INL
-void v_load(V& a, const char* p);
-
 SIMDPP_INL void i_load(uint8x16& a, const char* p)
 {
     p = detail::assume_aligned(p, 16);
@@ -132,21 +128,8 @@ SIMDPP_INL void i_load(float64<8>& a, const char* p)
 }
 #endif
 
-template<unsigned N> SIMDPP_INL
-void i_load(uint8<N>& a,  const char* p) { v_load(a, p); }
-template<unsigned N> SIMDPP_INL
-void i_load(uint16<N>& a, const char* p) { v_load(a, p); }
-template<unsigned N> SIMDPP_INL
-void i_load(uint32<N>& a, const char* p) { v_load(a, p); }
-template<unsigned N> SIMDPP_INL
-void i_load(uint64<N>& a, const char* p) { v_load(a, p); }
-template<unsigned N> SIMDPP_INL
-void i_load(float32<N>& a, const char* p){ v_load(a, p); }
-template<unsigned N> SIMDPP_INL
-void i_load(float64<N>& a, const char* p){ v_load(a, p); }
-
 template<class V> SIMDPP_INL
-void v_load(V& a, const char* p)
+void i_load(V& a, const char* p)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 

@@ -22,8 +22,6 @@ namespace simdpp {
     @{
 */
 
-typedef Arch(*GetArchCb)();
-
 /** @def SIMDPP_USER_ARCH_INFO
     The user must define this macro if he wants to use the dispatcher
     infrastructure. The macro must evaluate to a constant expression that could
@@ -83,10 +81,9 @@ inline bool cmp_fnversion(const FnVersion& lhs, const FnVersion& rhs)
 }
 
 inline FnVersion select_version_any(FnVersion* versions, unsigned size,
-                                    const GetArchCb& get_info_cb)
+                                    Arch arch)
 {
     // No need to try to be very efficient here.
-    Arch arch = get_info_cb();
     std::sort(versions, versions + size, cmp_fnversion);
 
     unsigned i;

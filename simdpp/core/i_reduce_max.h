@@ -26,37 +26,37 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 template<unsigned N, class E> SIMDPP_INL
-int16_t reduce_max(const int8<N,E>& a)
+int8_t reduce_max(const int8<N,E>& a)
 {
     return detail::insn::i_reduce_max(a.eval());
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint16_t reduce_max(const uint8<N,E>& a)
+uint8_t reduce_max(const uint8<N,E>& a)
 {
     return detail::insn::i_reduce_max(a.eval());
 }
 
 template<unsigned N, class E> SIMDPP_INL
-int32_t reduce_max(const int16<N,E>& a)
+int16_t reduce_max(const int16<N,E>& a)
 {
     return detail::insn::i_reduce_max(a.eval());
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint32_t reduce_max(const uint16<N,E>& a)
+uint16_t reduce_max(const uint16<N,E>& a)
 {
     return detail::insn::i_reduce_max(a.eval());
 }
 
 template<unsigned N, class E> SIMDPP_INL
-int64_t reduce_max(const int32<N,E>& a)
+int32_t reduce_max(const int32<N,E>& a)
 {
     return detail::insn::i_reduce_max(a.eval());
 }
 
 template<unsigned N, class E> SIMDPP_INL
-uint64_t reduce_max(const uint32<N,E>& a)
+uint32_t reduce_max(const uint32<N,E>& a)
 {
     return detail::insn::i_reduce_max(a.eval());
 }

@@ -81,7 +81,7 @@ template<unsigned s, unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_nomask<V>::empty
         splat(const any_vec<N,V>& a)
 {
-    SIMDPP_STATIC_ASSERT(s < N, "Access out of bounds");
+    SIMDPP_STATIC_ASSERT(s < V::length, "Access out of bounds");
     typename detail::get_expr_nomask<V>::type ra = a.wrapped().eval();
     return detail::insn::i_splat<s>(ra);
 }

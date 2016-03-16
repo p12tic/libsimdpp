@@ -1,0 +1,13 @@
+{{#if:{{{1|}}}|<span id="{{{1|}}}"></span>}}<!--
+-->{{#if:{{{2|}}}|<span id="{{{2|}}}"></span>}}<!--
+-->{{#if:{{{3|}}}|<span id="{{{3|}}}"></span>}}<!--
+-->{{#if:{{{4|}}}|<span id="{{{4|}}}"></span>}}<!--
+-->{{#if:{{{5|}}}|<span id="{{{5|}}}"></span>}}<!--
+-->{{#if:{{{6|}}}|<span id="{{{6|}}}"></span>}}<!--
+-->{{#if:{{{7|}}}|<span id="{{{7|}}}"></span>}}<!--
+-->{{#if:{{{8|}}}|<span id="{{{8|}}}"></span>}}<!--
+-->{{#if:{{{9|}}}|<span id="{{{9|}}}"></span>}}<!--
+-->{{#if:{{{10|}}}|<span id="{{{10|}}}"></span>}}<!--
+-->{{#if:{{{11|}}}|<span class="error">[[Template:Anchor]] (or Anchors): too many anchors, maximum is 10.</span>}}<noinclude>
+{{documentation}}
+</noinclude>

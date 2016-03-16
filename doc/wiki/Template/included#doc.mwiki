@@ -1,0 +1,1 @@
+Used in switch statements that depend on a template argument as a placeholder for the default case - when the template argument is not provided at all. Since this is the case when viewing the template directly, showing a placeholder is less confusing than the alternatives of showing nothing or only some branch of the switch statement.

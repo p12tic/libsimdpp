@@ -1,0 +1,14 @@
+{{dcl/std|since={{{since|}}}|until={{{until|}}}}}<!--
+--><tr class="t-dcl {{#if:{{{since|}}}|t-since-{{#replace:{{{since}}}|+|x}}}} {{#if:{{{until|}}}|t-until-{{#replace:{{{until}}}|+|x}}}}">
+<td {{#if: {{{num|}}}{{{notes|}}}{{#var:since}}{{#var:until}} || class="t-dcl-nopad" }}> <div>{{c/core|{{trim| {{{1|}}}}}}}</div></td>
+<td {{#if: {{{num|}}} || class="t-dcl-nopad" }}> {{#if: {{{num|}}} | ({{{num}}}) }} </td>
+<td {{#if: {{{notes|}}}{{#var:since}}{{#var:until}} || class="t-dcl-nopad" }}> <!--
+-->{{#if: {{#var:since}}<!--
+  -->|{{mark since {{#var:since}}}} {{#if: {{#var:until}}{{{notes|}}}|<br/>}}<!--
+-->}}<!--
+-->{{#if: {{#var:until}}<!--
+  -->|{{mark until {{#var:until}}}} {{#if: {{{notes|}}}|<br/>}}<!--
+-->}}{{{notes|}}} </td>
+</tr><noinclude>
+{{documentation | Template:dcl/doc}}
+</noinclude>

@@ -1,0 +1,161 @@
+{{title|Libsimdpp reference}}
+{| class="mainpagetable" cellspacing=0 style="width:100%; white-space:nowrap;"
+|- class="row rowtop"
+| colspan=4 | <span style="font-size: 2em;">Libsimdpp documentation</span>
+|- class="row"
+| colspan=4  |
+<div style="white-space:normal;">
+libsimdpp is a portable header-only zero-overhead C++ wrapper around
+single-instruction multiple-data (SIMD) intrinsics found in many compilers. The
+library presents a single interface over several instruction sets in such a way
+that the same source code may be compiled for different instruction sets. The
+resulting object files then may be hooked into internal dynamic dispatch
+mechanism.
+
+
+The library resolves differences between instruction sets by implementing the
+missing functionality as a combination of several intrinsics. Moreover, the
+library supplies a lot of additional, commonly used functionality, such as
+various variants of matrix transpositions, interleaving loads/stores, optimized
+compile-time shuffling instructions, etc. Each of these are implemented in the
+most efficient manner for the target instruction set. Finally, it's possible
+to fall back to native intrinsics when necessary, without compromising
+maintanability.
+
+
+The library sits somewhere in the middle between programming directly in
+intrinsics and even higher-level SIMD libraries. As much control as possible
+is given to the developer, so that it's possible to exactly predict what code
+the compiler will generate.
+</div>
+|- class="row"
+|
+
+'''Instruction sets'''
+<div class="mainpagediv">
+[[arch/selection|Instruction set selection]]<br/>
+[[arch/dispatch|Dynamic dispatch]]<br/>
+</div>
+
+'''[[types|Types]]'''
+<div class="mainpagediv">
+[[types/main|Vector types]]<br/>
+[[types/hierarchy|Type hierarchy]]<br/>
+[[types/expr|Vector expressions]]<br/>
+[[types/promotion|Vector type promotion]]<br/>
+</div>
+
+'''[[util | Utilities]]'''
+<div class="mainpagediv">
+{{ltt|util#zzz|SIMDPP_ALIGN}}<br/>
+{{ltt|util/aligned_allocator}}<br/>
+[[util#Vector_size_macros|Vector size macros]]<br/>
+[[util#Enabled_instruction_sets | Enabled instruction set]]
+</div>
+
+|
+
+'''[[bitwise | Bitwise operations]]'''
+<div class="mainpagediv">
+{{ltt|bitwise/bit_and}}&nbsp;&nbsp;{{ltt|bitwise/bit_andnot}} <br/>
+{{ltt|bitwise/bit_or}}&nbsp;&nbsp;{{ltt|bitwise/bit_xor}} <br/>
+{{ltt|bitwise/bit_not}} <br/>
+</div>
+
+'''[[fp | Floating-point operations]]'''
+<div class="mainpagediv">
+{{ltt|fp/add}}&nbsp;&nbsp;{{ltt|fp/sub}} <br/>
+{{ltt|fp/mul}}&nbsp;&nbsp;{{ltt|fp/div}} <br/>
+{{ltt|fp/fmadd}}&nbsp;&nbsp;{{ltt|fp/fmsub}} <br/>
+{{ltt|fp/neg}} <br/>
+{{ltt|fp/round}}&nbsp;&nbsp;{{ltt|fp/trunc}} <br/>
+{{ltt|fp/floor}}&nbsp;&nbsp;{{ltt|fp/ceil}} <br/>
+{{ltt|fp/cmp_eq}}&nbsp;&nbsp;{{ltt|fp/cmp_neq}} <br/>
+{{ltt|fp/cmp_lt}}&nbsp;&nbsp;{{ltt|fp/cmp_gt}} <br/>
+{{ltt|fp/cmp_le}}&nbsp;&nbsp;{{ltt|fp/cmp_ge}} <br/>
+{{ltt|fp/abs}}&nbsp;&nbsp;{{ltt|fp/sign}} <br/>
+{{ltt|fp/min}}&nbsp;&nbsp;{{ltt|fp/max}} <br/>
+{{ltt|fp/isnan}}&nbsp;&nbsp;{{ltt|fp/isnan2}} <br/>
+{{ltt|fp/sqrt}} <br/>
+{{ltt|fp/rcp_e}}&nbsp;&nbsp;{{ltt|fp/rcp_rh}} <br/>
+{{ltt|fp/rsqrt_e}}&nbsp;&nbsp;{{ltt|fp/rsqrt_rh}} <br/>
+{{ltt|fp/reduce_add}}&nbsp;&nbsp;{{ltt|fp/reduce_mul}} <br/>
+{{ltt|fp/reduce_min}}&nbsp;&nbsp;{{ltt|fp/reduce_max}} <br/>
+</div>
+
+'''[[operator | Operators]]'''
+<div class="mainpagediv">
+{{tt|+}}&nbsp;&nbsp;{{tt|-}}&nbsp;&nbsp;
+{{tt|*}}&nbsp;&nbsp;{{tt|/}}&nbsp;&nbsp;
+{{tt|&lt;&lt;}}&nbsp;&nbsp;{{tt|&gt;&gt;}}<br/>
+{{tt|&}}&nbsp;&nbsp;{{tt|{{!}}}}&nbsp;&nbsp;
+{{tt|^}}&nbsp;&nbsp;{{tt|~}}<br/>
+{{tt|{{==}}}}&nbsp;&nbsp;{{tt|!{{=}}}}&nbsp;&nbsp;
+{{tt|>}}&nbsp;&nbsp;{{tt|>{{=}}}}&nbsp;&nbsp;
+{{tt|<}}&nbsp;&nbsp;{{tt|<{{=}}}}<br/>
+</div>
+|
+
+'''[[int | Integer operations]]'''
+
+<div class="mainpagediv">
+{{ltt|int/add}}&nbsp;&nbsp;{{ltt|int/sub}} <br/>
+{{ltt|int/add_sat}}&nbsp;&nbsp;{{ltt|int/sub_sat}} <br/>
+{{ltt|int/mul_lo}}&nbsp;&nbsp;{{ltt|int/mul_hi}} <br/>
+{{ltt|int/mull}}&nbsp;&nbsp;{{ltt|int/neg}} <br/>
+{{ltt|int/cmp_eq}}&nbsp;&nbsp;{{ltt|int/cmp_neq}} <br/>
+{{ltt|int/cmp_lt}}&nbsp;&nbsp;{{ltt|int/cmp_gt}} <br/>
+{{ltt|int/abs}} <br/>
+{{ltt|int/avg}}&nbsp;&nbsp;{{ltt|int/avg_trunc}} <br/>
+{{ltt|int/min}}&nbsp;&nbsp;{{ltt|int/max}} <br/>
+{{ltt|int/shift_l}}&nbsp;&nbsp;{{ltt|int/shift_r}} <br/>
+{{ltt|int/reduce_add}}&nbsp;&nbsp;{{ltt|int/reduce_mul}} <br/>
+{{ltt|int/reduce_min}}&nbsp;&nbsp;{{ltt|int/reduce_max}} <br/>
+{{ltt|int/reduce_and}}&nbsp;&nbsp;{{ltt|int/reduce_or}} <br/>
+</div>
+
+'''[[mem | Memory access operations]]'''
+<div class="mainpagediv">
+{{ltt|mem/load}}&nbsp;&nbsp;{{ltt|mem/load_u}} <br/>
+{{ltt|mem/load_splat}} <br/>
+{{ltt|mem/load_packed2}}<br/>
+{{ltt|mem/load_packed3}} <br/>
+{{ltt|mem/load_packed4}} <br/>
+{{ltt|mem/store}}&nbsp;&nbsp;{{ltt|mem/stream}} <br/>
+{{ltt|mem/store_first}}&nbsp;&nbsp;{{ltt|mem/store_last}} <br/>
+{{ltt|mem/store_packed2}}<br/>
+{{ltt|mem/store_packed3}} <br/>
+{{ltt|mem/store_packed4}} <br/>
+</div>
+
+|
+
+'''[[shuffle | Shuffle operations]]'''
+<div class="mainpagediv">
+{{ltt|shuffle/blend}}&nbsp;&nbsp;{{ltt|shuffle/splat}} <br/>
+{{ltt|shuffle/combine}}&nbsp;&nbsp;{{ltt|shuffle/split}} <br/>
+{{ltt|shuffle/permute2}}&nbsp;&nbsp;{{ltt|shuffle/permute4}} <br/>
+{{ltt|shuffle/shuffle2x2}}&nbsp;&nbsp;{{ltt|shuffle/shuffle4x2}} <br/>
+{{ltt|shuffle/transpose2}}&nbsp;&nbsp;{{ltt|shuffle/transpose4}} <br/><br/>
+&nbsp;&nbsp;Shuffles operating on 128-bit blocks <br/>
+{{ltt | shuffle/alignX_128 | align16&nbsp;align8&nbsp;align4&nbsp;align2 }} <br/>
+{{ltt | shuffle/splatX_128 | splat16&nbsp;splat8&nbsp;splat4&nbsp;splat2 }} <br/>
+{{ltt | shuffle/moveX_l_128 | move16_l&nbsp;move8_l&nbsp;move4_l&nbsp;move2_l }} <br/>
+{{ltt | shuffle/moveX_r_128 | move16_r&nbsp;move8_r&nbsp;move4_r&nbsp;move2_r }} <br/>
+{{ltt | shuffle/zipX_hi_128 | zip16_hi&nbsp;zip8_hi&nbsp;zip4_hi&nbsp;zip2_hi }} <br/>
+{{ltt | shuffle/zipX_lo_128 | zip16_lo&nbsp;zip8_lo&nbsp;zip4_lo&nbsp;zip2_lo }} <br/>
+{{ltt | shuffle/unzipX_hi_128 | unzip16_hi&nbsp;unzip8_hi<br/>unzip4_hi&nbsp;unzip2_hi }} <br/>
+{{ltt | shuffle/unzipX_lo_128 | unzip16_lo&nbsp;unzip8_lo<br/>unzip4_lo&nbsp;unzip2_lo }} <br/>
+</div>
+
+'''[[misc | Miscellaneous operations]]'''
+<div class="mainpagediv">
+{{ltt|misc/make_int}}&nbsp;&nbsp;{{ltt|misc/make_uint}}&nbsp;&nbsp;{{ltt|misc/make_float}} <br/>
+{{ltt|misc/extract}}&nbsp;&nbsp;{{ltt|misc/insert}}&nbsp;&nbsp;{{ltt|misc/splat|splat{{small|(scalar)}}}} <br/>
+{{ltt|misc/bit_cast}}<br/>
+{{ltt|misc/prefetch_read}}&nbsp;&nbsp;{{ltt|misc/prefetch_write}}
+</div>
+
+|- class="row rowbottom"
+| colspan=4|
+|}

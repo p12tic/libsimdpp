@@ -1,0 +1,6 @@
+|- class="t-dsc-header"
+| colspan="2" | <div>{{#if: {{{1|}}} | Defined in {{#ifeq:{{{inline|}}}|true|inline}} namespace <code>{{trim|{{{1}}}}}</code> }} </div>
+{{dsc guard}}<!--
+--><noinclude>
+{{documentation | Template:dsc/doc}}
+</noinclude>

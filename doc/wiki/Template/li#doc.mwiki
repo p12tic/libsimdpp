@@ -1,0 +1,69 @@
+Labeled list templates.
+
+{{tl|li begin}} - starts a labeled list.
+
+{{tl|li end}} - ends a labeled list.
+
+{{tl|li|''label''}}
+
+{{tl|lii|''label''}}
+
+{{tl|liii|''label''}}
+
+Adds an item with a custom label to an ordered list. The {{tt|label}} parameter specifies the label. If it is not specified, no label is added. {{tl|li}}, {{tl|lii}} and {{tl|liii}} differs by the amount of indentation.
+
+===Shorter list syntax===
+Shorter list syntax with almost equivalent behavior is implemented:
+
+<pre><nowiki>
+@1@ text
+@2@ text
+@3-4@ text
+:@5@ text
+:@6@ text
+</nowiki></pre>
+
+is equivalent to:
+
+<pre><nowiki>
+{{li begin}}
+{{li|1}} text
+{{li|2}} text
+{{li|3-4}} text
+{{lii|5}} text
+{{lii|6}} text
+{{li end}}
+</nowiki></pre>
+
+===Example===
+{{source|lang=text|
+<nowiki>
+{{li begin}}
+{{li|1}} item
+
+{{li|2}} item
+
+{{li|3-4}} item
+
+{{lii|1}} item
+{{lii|2-5}} item
+{{lii|6-7}} item
+
+{{li|5}} item
+{{li end}}
+</nowiki>
+}}
+
+{{li begin}}
+{{li|1}} item
+
+{{li|2}} item
+
+{{li|3-4}} item
+
+{{lii|1}} item
+{{lii|2-5}} item
+{{lii|6-7}} item
+
+{{li|5}} item
+{{li end}}

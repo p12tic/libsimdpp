@@ -1,0 +1,97 @@
+This is one of the family of templates used for creation of declaration lists.
+
+{{list/doc}}
+
+{{tl|dcl begin}}
+: starts the declaration list
+
+{{tl|dcl end}}
+: ends the declaration list. This template automatically adds {{tlc|dcl sep}} above the item.
+
+{{tl|dcl rev begin| num{{=}}''num''}}
+: starts versioned declaration list. The {{tt|num}} parameter is optional and may be used for numbering purposes (overrides the ''num'' parameter of the {{tlc|dcl}} templates used within the versioned list (i.e., until {{tlc|dcl rev end}}).
+
+{{tl|dcl rev end}}
+: ends versioned declaration list.
+
+{{tl|dcl header}}
+: adds explanation which header the feature comes from
+
+{{tl|dcl sep}}
+: adds a separator
+
+{{tl|dcl h | ''heading''}}
+: adds a small heading. Useful to split and describe large groups of related declarations.
+
+{{tl|dcl | notes{{=}}''notes'' | num{{=}}''num'' | since{{=}}''since-std'' | until{{=}}''until-std'' |  ''declaration'' }}
+: adds an item to the declaration list. The {{tt|notes}} parameter is optional and may be used to add notes about the feature. The {{tt|num}} parameter is also optional and may be used for numbering purposes. ''declaration'' is the declaration of the feature. This template automatically adds {{tlc|dcl sep}} above the item.
+
+:{{tt|until}} specifies the first standard the definition appears in, {{tt|until}} specifies the first standard that does not include this definition.
+
+===Example===
+
+  <nowiki>
+    {{dcl header | abcd.h}}
+    {{dcl | notes=Faster than {{c|foo_slow}} | num=1 |
+    int foo( char a );
+    }}
+    {{dcl | since=c++11 | num=2 |
+    int foo( char a, int b );
+    }}
+    {{dcl rev begin | num=3}}
+    {{dcl | until=c++11 | 1=
+    int foo( char a, char b = 'a' );
+    }}
+    {{dcl | since=c++11 | until=c++14 | 1=
+    int foo( char a, char b = 'b' );
+    }}
+    {{dcl | since=c++14 | 1=
+    int foo( char a, char b = 'c' );
+    }}
+    {{dcl rev end}}
+    {{dcl rev begin}}
+    {{dcl | until=c++11 | num=4 | 1=
+    int foo( char a, char b = 'a' );
+    }}
+    {{dcl | since=c++11 | until=c++14 | num=5 | 1=
+    int foo( char a, char b = 'b' );
+    }}
+    {{dcl | since=c++14 | num=6 | 1=
+    int foo( char a, char b = 'c' );
+    }}
+    {{dcl rev end}}
+  </nowiki>
+
+The above results in the following:
+
+{{dcl begin}}
+{{dcl header | abcd.h}}
+{{dcl | notes=Faster than {{c|foo_slow}} | num=1 |
+int foo( char a );
+}}
+{{dcl | since=c++11 | num=2 |
+int foo( char a, int b );
+}}
+{{dcl rev begin | num=3}}
+{{dcl | until=c++11 | 1=
+int foo( char a, char b = 'a' );
+}}
+{{dcl | since=c++11 | until=c++14 | 1=
+int foo( char a, char b = 'b' );
+}}
+{{dcl | since=c++14 | 1=
+int foo( char a, char b = 'c' );
+}}
+{{dcl rev end}}
+{{dcl rev begin}}
+{{dcl | until=c++11 | num=4 | 1=
+int foo( char a, char b = 'a' );
+}}
+{{dcl | since=c++11 | until=c++14 | num=5 | 1=
+int foo( char a, char b = 'b' );
+}}
+{{dcl | since=c++14 | num=6 | 1=
+int foo( char a, char b = 'c' );
+}}
+{{dcl rev end}}
+{{dcl end}}

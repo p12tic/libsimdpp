@@ -1,0 +1,9 @@
+<span class="t-mfrac">{{#if:{{{3|}}}
+ |{{{1}}}<table><tr><td>{{{2}}}</td></tr><tr><td>{{{3}}}</td></tr></table>
+ |{{#if:{{{2|}}}
+  |<table><tr><td>{{{1}}}</td></tr><tr><td>{{{2}}}</td></tr></table>
+  |<table><tr><td>1</td></tr><tr><td>{{{1}}}</td></tr></table>
+ }}
+}}</span><noinclude>
+{{documentation|Template:math/doc}}
+</noinclude>

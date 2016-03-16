@@ -1,0 +1,2 @@
+{{tl|include page | ''template'' | ''arg1'' {{mark optional}} | ''arg2'' {{mark optional}} | ... }}
+: includes the ''template'' while passing the given arguments. A convenience link is provided that enables to enter the page for editing the template without accessing the page of the template itself.

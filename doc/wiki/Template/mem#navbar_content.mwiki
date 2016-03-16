@@ -1,0 +1,18 @@
+{{nv begin}}
+{{nv h2 | Load}}
+{{nv ln | mem/load}}
+{{nv ln | mem/load_u}}
+{{nv ln | mem/load_splat}}
+{{nv ln | mem/load_packed2}}
+{{nv ln | mem/load_packed3}}
+{{nv ln | mem/load_packed4}}
+
+{{nv h2 | Store}}
+{{nv ln | mem/store}}
+{{nv ln | mem/stream}}
+{{nv ln | mem/store_first}}
+{{nv ln | mem/store_last}}
+{{nv ln | mem/store_packed2}}
+{{nv ln | mem/store_packed3}}
+{{nv ln | mem/store_packed4}}
+{{nv end}}

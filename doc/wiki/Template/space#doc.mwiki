@@ -1,0 +1,7 @@
+Handles space characters.
+
+{{tl|space|''number''}} - outputs ''number'' of space characters
+
+{{tl|space as|''text''}} - outputs as many space characters as there are characters in ''text''. Useful for indentation of templatized code.
+
+{{tl|trim|''text''}} - trims both leading and trailing whitespace

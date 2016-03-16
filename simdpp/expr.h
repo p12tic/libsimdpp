@@ -128,6 +128,10 @@ struct expr_vec_make_const : expr_vec_construct<expr_vec_make_const<VE,N> > {
     SIMDPP_INL const VE& val(unsigned n) const { return a[n%N]; }
 };
 
+// This expression is needed because it's not possible to use
+// expr_vec_make_const to initialize floating-point vectors to ones
+struct expr_vec_make_ones : expr_vec_construct<expr_vec_make_ones> {};
+
 struct expr_vec_load : expr_vec_construct<expr_vec_load> {
     const char* a;
 

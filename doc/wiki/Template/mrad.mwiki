@@ -1,0 +1,3 @@
+<span class="t-mrad">{{#if:{{{2|}}}|<span>{{{2}}}</span>}}<span>√</span><span>{{{1}}}</span></span><noinclude>
+{{documentation|Template:math/doc}}
+</noinclude>

@@ -1,0 +1,7 @@
+{{#if: {{{p1|}}}
+ | The type {{c|{{{1}}}}} must be such that an object of type {{c|{{{p1}}}}} can be dereferenced and then implicitly converted to {{c|{{{1}}}}}.<!--
+-->| {{#if: {{{t1|}}}<!--
+   -->| The type {{c|{{{1}}}}} must be such that an object of type {{c|{{{t1}}}}} can be implicitly converted to {{c|{{{1}}}}}.<!--
+   -->| {{error|requirement not defined}}<!--
+   -->}}<!--
+-->}}<noinclude>{{documentation | content={{cast rreq/doc}}}}</noinclude>

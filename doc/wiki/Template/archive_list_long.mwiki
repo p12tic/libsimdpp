@@ -1,0 +1,20 @@
+{{#if: {{{num|}}} | {{(!}} cellpadding="0" width="100%" style="text-align: center; background-color: transparent;"
+{{#ifexpr: 1 <= {{{num|0}}} |
+{{!}} [[{{#rel2abs:./Archive 1|{{{root|}}}}}|Archive 1]]
+{{!}} {{#ifexpr: 2 <= {{{num|0}}} | [[{{#rel2abs:./Archive 2|{{{root|}}}}}|Archive 2]]}}
+{{!}} {{#ifexpr: 3 <= {{{num|0}}} | [[{{#rel2abs:./Archive 3|{{{root|}}}}}|Archive 3]]}}
+{{!}}-
+}}
+{{#ifexpr: 4 <= {{{num|0}}} |
+{{!}} [[{{#rel2abs:./Archive 4|{{{root|}}}}}|Archive 4]]
+{{!}} {{#ifexpr: 5 <= {{{num|0}}} | [[{{#rel2abs:./Archive 5|{{{root|}}}}}|Archive 5]]}}
+{{!}} {{#ifexpr: 6 <= {{{num|0}}} |[[{{#rel2abs:./Archive 6|{{{root|}}}}}|Archive 6]]}}
+{{!}}-
+}}
+{{#ifexpr: 7 <= {{{num|0}}} |
+{{!}} [[{{#rel2abs:./Archive 7|{{{root|}}}}}|Archive 7]]
+{{!}} {{#ifexpr: 8 <= {{{num|0}}} |[[{{#rel2abs:./Archive 8|{{{root|}}}}}|Archive 8]]}}
+{{!}} {{#ifexpr: 9 <= {{{num|0}}} |[[{{#rel2abs:./Archive 9|{{{root|}}}}}|Archive 9]]}}
+{{!}}-
+}}
+{{!)}} }}

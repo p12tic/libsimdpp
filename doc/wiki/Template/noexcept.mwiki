@@ -1,0 +1,6 @@
+{{#if:{{{1|}}}
+|<div class="t-noexcept-full">{{ltt|cpp/language/noexcept_spec|noexcept}} specification:&nbsp;&nbsp;{{{notes|}}}
+<div class="t-noexcept-box">{{cc|noexcept({{{1}}})}}</div></div><includeonly>[[Category:conditionally noexcept]]</includeonly>
+|<div class="t-noexcept-inline">{{ltt|cpp/language/noexcept_spec|noexcept}} specification:&nbsp;&nbsp;<div class="t-noexcept-box">{{cc|noexcept}}</div>&nbsp;&nbsp;{{{notes|}}}</div><includeonly>[[Category:unconditionally noexcept]]</includeonly>
+}}<noinclude>
+{{documentation}}</noinclude>

@@ -1,0 +1,61 @@
+<includeonly>{{pp-meta
+|type={{#switch:{{{demolevel|{{#ifeq:{{PROTECTIONLEVEL:edit}}-{{PROTECTIONLEVEL:move}}|-sysop|move|{{PROTECTIONLEVEL:edit}}}}}}}
+   |semi
+   |autoconfirmed=semi
+   |administrator
+   |full
+   |sysop=indef
+   |move=move
+   |#default=indef<!--fallback value-->}}
+|small={{{small|no}}}
+|demospace={{{demospace|}}}
+|demolevel={{#ifeq:{{PAGENAME}}/{{NAMESPACE}}|{{SUBPAGENAME}}/{{ns:Template}}|{{{demolevel|undefined}}}|{{#ifeq:{{lc:{{SUBPAGENAME}}}}|sandbox|sysop|{{{demolevel|undefined}}}}}}}
+|expiry=<!--not applicable-->
+|dispute=no
+|icon-text=This {{#ifeq:{{NAMESPACE}}|{{ns:6}}|image, included in a high-risk template or message,|high-risk template}} is indefinitely {{#switch:{{{demolevel|{{#ifeq:{{PROTECTIONLEVEL:edit}}-{{PROTECTIONLEVEL:move}}|-sysop|move|{{PROTECTIONLEVEL:edit}}}}}}}
+   |semi
+   |autoconfirmed=semi-protected from editing
+   |move=move-protected
+   |administrator
+   |full
+   |sysop
+   |#default=<!--fallback value-->protected from editing}} to prevent vandalism.
+|reason-text=This {{#switch:{{NAMESPACE}}
+  |{{ns:image}}=image, used in one or more high-risk templates{{#switch:{{{demolevel|{{PROTECTIONLEVEL:edit}}}}}
+   |semi
+   |autoconfirmed=
+   |administrator
+   |full
+   |sysop=<nowiki> </nowiki>and/or system messages,
+   |#default=<!--fallback value-->}}
+  |#default=high-risk template
+}} has been {{#switch:{{{demolevel|{{#ifeq:{{PROTECTIONLEVEL:edit}}-{{PROTECTIONLEVEL:move}}|-sysop|move|{{PROTECTIONLEVEL:edit}}}}}}}
+   |semi
+   |autoconfirmed=semi-
+   |move=move-
+   |administrator
+   |full
+   |sysop<!--uses default-->
+   |#default=<!--fallback value-->}}protected{{#ifeq:{{PROTECTIONLEVEL:edit}}-{{PROTECTIONLEVEL:move}}|-sysop||<nowiki> </nowiki>from editing}} to prevent vandalism. {{#switch:{{{demolevel|{{PROTECTIONLEVEL:edit}}}}}
+   |semi
+   |autoconfirmed=
+   |administrator
+   |full
+   |sysop<!--uses default-->
+   |#default={{#switch:{{NAMESPACE}}|{{ns:image}}=<br /><small>'''Do not move this image''' to [[commons:|Wikimedia Commons]].</small>}}}}
+|categories={{{categories|{{#ifeq:{{NAMESPACE}}|{{ns:10}}|{{#switch:{{{demolevel|{{#ifeq:{{PROTECTIONLEVEL:edit}}-{{PROTECTIONLEVEL:move}}|-sysop|move|{{PROTECTIONLEVEL:edit}}}}}}}
+   |semi
+   |autoconfirmed=[[Category:Wikipedia semi-protected templates|{{PAGENAME}}]]{{#ifeq:{{PROTECTIONLEVEL:move}}|sysop|[[Category:Wikipedia move-protected templates|{{PAGENAME}}]]}}
+   |move=[[Category:Wikipedia move-protected templates|{{PAGENAME}}]]
+   |administrator
+   |full
+   |sysop<!--uses default-->
+   |#default=[[Category:Wikipedia protected templates|{{PAGENAME}}]]<!--fallback value-->}}}}{{#ifeq:{{NAMESPACE}}|{{ns:6}}|[[Category:{{#switch:{{{demolevel|{{PROTECTIONLEVEL:edit}}}}}
+   |semi
+   |autoconfirmed=Semi-protected
+   |administrator
+   |full
+   |sysop<!--uses default-->
+   |#default=Protected<!--fallback value-->}} images|{{PAGENAME}}]]}}}}}}}</includeonly><noinclude>
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

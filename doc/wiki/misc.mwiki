@@ -1,0 +1,23 @@
+{{title|Miscellaneous operations}}
+{{misc/navbar}}
+
+The following miscellaneous operations are provided.
+
+{{dsc begin}}
+{{dsc h1 | Constant declaration}}
+{{dsc tfun | misc/make_int | creates a constant of integer elements}}
+{{dsc tfun | misc/make_uint | creates a constant of unsigned integer elements }}
+{{dsc tfun | misc/make_float | creates a constant of floating-point elements }}
+
+{{dsc h1 | Data transfer}}
+{{dsc tfun | misc/extract | extracts an element from a vector }}
+{{dsc tfun | misc/insert | inserts an element to a vector }}
+{{dsc tfun | misc/splat | title=splat{{small|(scalar)}} | sets all elements of a vector to runtime value }}
+
+{{dsc h1 | Casts}}
+{{dsc tfun | misc/bit_cast | casts between unrelated types of the same size}}
+
+{{dsc h1 | Cache operations}}
+{{dsc fun | misc/prefetch_read | prefetches data to lowest level cache for reading }}
+{{dsc fun | misc/prefetch_write | prefetches data to lowest level cache for writing }}
+{{dsc end}}

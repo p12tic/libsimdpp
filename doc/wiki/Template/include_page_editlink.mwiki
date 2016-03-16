@@ -1,0 +1,3 @@
+<div class="t-page-template" style="{{{style|}}}">
+{{#addbodyclass:cpp-page-template}}
+{{#if:{{{1|}}}|<span class="editsection noprint plainlinks" title="Edit this template">[{{fullurl:Template:{{{1}}}|action=edit}} &#91;edit template&#93;]</span>|{{error|no template given}}}}</div><noinclude>{{documentation|Template:include page/doc}}</noinclude>

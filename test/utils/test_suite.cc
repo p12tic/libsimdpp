@@ -141,7 +141,7 @@ template<class T>
 T nextafter_ulps(T from, T to)
 {
     // ignore NaNs
-    if (detail::cxx11::isnan(from) || detail::cxx11::isnan(to))
+    if (::simdpp::detail::cxx11::isnan(from) || ::simdpp::detail::cxx11::isnan(to))
         return from;
 
     // if 'from' is infinity, ignore

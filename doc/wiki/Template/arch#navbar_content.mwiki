@@ -1,0 +1,4 @@
+{{nv begin}}
+{{nv | [[arch/selection|Instruction set selection]]}}
+{{nv | [[arch/dispatch|Dynamic dispatch]]}}
+{{nv end}}
