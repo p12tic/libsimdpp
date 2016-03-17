@@ -16,23 +16,19 @@
 #include <iomanip>
 #include <vector>
 
-#if __linux__
 #include <simdpp/dispatch/get_arch_linux_cpuinfo.h>
-#endif
-#if SIMDPP_X86
 #include <simdpp/dispatch/get_arch_raw_cpuid.h>
-#endif
 #include <simdpp/dispatch/get_arch_string_list.h>
 
 simdpp::Arch get_arch_from_system(bool is_simulator)
 {
     (void) is_simulator;
     std::vector<simdpp::Arch> supported_archs;
-#if __linux__
+#if SIMDPP_HAS_GET_ARCH_LINUX_CPUINFO
     if (!is_simulator)
         supported_archs.push_back(simdpp::get_arch_linux_cpuinfo());
 #endif
-#if SIMDPP_X86
+#if SIMDPP_HAS_GET_ARCH_RAW_CPUID
     supported_archs.push_back(simdpp::get_arch_raw_cpuid());
 #endif
     if (supported_archs.empty()) {
