@@ -8,6 +8,9 @@
 #ifndef LIBSIMDPP_DISPATCH_GET_ARCH_LINUX_CPUINFO_H
 #define LIBSIMDPP_DISPATCH_GET_ARCH_LINUX_CPUINFO_H
 
+#if __linux__ && (__arm__ || __i386__ || __amd64__)
+#define SIMDPP_HAS_GET_ARCH_LINUX_CPUINFO 1
+
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -31,11 +34,11 @@ inline Arch get_arch_linux_cpuinfo()
     std::map<std::string, Arch> features;
     std::string ident;
 
-#if defined(__arm__)
+#if __arm__
     ident = "Features\t";
     features["neon"] = Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP;
 
-#elif defined(__i386__) || defined(__amd64__)
+#elif __i386__ || __amd64__
     Arch a_sse2 = Arch::X86_SSE2;
     Arch a_sse3 = a_sse2 | Arch::X86_SSE3;
     Arch a_ssse3 = a_sse3 | Arch::X86_SSSE3;
@@ -100,4 +103,5 @@ inline Arch get_arch_linux_cpuinfo()
 
 } // namespace simdpp
 
+#endif
 #endif
