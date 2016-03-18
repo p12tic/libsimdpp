@@ -139,7 +139,7 @@ void i_load(V& a, const char* p)
     }
 }
 
-template<class V>
+template<class V> SIMDPP_INL
 V i_load_any(const char* p)
 {
     typename detail::remove_sign<V>::type r;
