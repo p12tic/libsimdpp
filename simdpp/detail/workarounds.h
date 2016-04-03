@@ -42,6 +42,18 @@
 #endif
 #endif
 
+#if SIMDPP_USE_AVX || SIMDPP_USE_AVX2
+#if (__clang_major__ == 3) && (__clang_minor__ == 6)
+/*  See https://llvm.org/bugs/show_bug.cgi?id=23441. Clang does not generate
+    correct floating-point code for basic 256-bit floating-point operations,
+    such as those resulting from _mm256_set_ps, _mm256_load_ps. Due to the
+    nature of affected operations, the bug is almost impossible to work around
+    reliably.
+*/
+#error AVX and AVX2 are not supported on clang 3.6 due to compiler bugs
+#endif
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
