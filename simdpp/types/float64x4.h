@@ -57,8 +57,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    float64<4>(const native_type& d) : d_(d) {}
-    float64<4>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL float64<4>(const native_type& d) : d_(d) {}
+    SIMDPP_INL float64<4>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
