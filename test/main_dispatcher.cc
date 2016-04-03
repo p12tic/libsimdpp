@@ -11,6 +11,13 @@
 #include <string>
 #include <cstdlib>
 
+// Check whether all available getters of supported architecture compiles
+// on all compilers
+#include <simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h>
+#include <simdpp/dispatch/get_arch_linux_cpuinfo.h>
+#include <simdpp/dispatch/get_arch_raw_cpuid.h>
+#include <simdpp/dispatch/get_arch_string_list.h>
+
 static simdpp::Arch g_supported_arch;
 
 simdpp::Arch get_supported_arch()
