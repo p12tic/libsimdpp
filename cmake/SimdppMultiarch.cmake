@@ -145,6 +145,10 @@ set(SIMDPP_X86_AVX_DEFINE "SIMDPP_ARCH_X86_AVX")
 set(SIMDPP_X86_AVX_SUFFIX "-x86_avx")
 set(SIMDPP_X86_AVX_TEST_CODE
     "#include <immintrin.h>
+    #if (__clang_major__ == 3) && (__clang_minor__ == 6)
+    #error Not supported. See simdpp/detail/workarounds.h
+    #endif
+
     int main()
     {
         union {
@@ -169,6 +173,10 @@ set(SIMDPP_X86_AVX2_DEFINE "SIMDPP_ARCH_X86_AVX2")
 set(SIMDPP_X86_AVX2_SUFFIX "-x86_avx2")
 set(SIMDPP_X86_AVX2_TEST_CODE
     "#include <immintrin.h>
+    #if (__clang_major__ == 3) && (__clang_minor__ == 6)
+    #error Not supported. See simdpp/detail/workarounds.h
+    #endif
+
     int main()
     {
         union {
