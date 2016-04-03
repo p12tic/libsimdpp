@@ -57,8 +57,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    int32<8>(const native_type& d) : d_(d) {}
-    int32<8>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL int32<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL int32<8>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type
@@ -116,8 +116,8 @@ public:
 
     /// @{
     /// Construct from the underlying vector type
-    uint32<8>(const native_type& d) : d_(d) {}
-    uint32<8>& operator=(const native_type& d) { d_ = d; return *this; }
+    SIMDPP_INL uint32<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL uint32<8>& operator=(const native_type& d) { d_ = d; return *this; }
     /// @}
 
     /// Convert to the underlying vector type

@@ -29,12 +29,37 @@
 
 #if SIMDPP_USE_AVX512F
 #if (__GNUC__ == 4) && !__INTEL_COMPILER
+/*  See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70059.
+    _mm512_inserti64x4(x, y, 0) and related intrinsics result in wrong code.
+    _mm512_castsi256_si512 is not available in GCC 4.9, thus there's no way
+    to convert between 256-bit and 512-bit vectors.
+*/
 #error "The first supported GCC version for AVX512F is 5.0"
 #endif
 
 #if ((__GNUC__ == 4) || (__GNUC__ == 5)) && !__INTEL_COMPILER
 #define SIMDPP_WORKAROUND_AVX512F_NO_REDUCE 1
 #endif
+#endif
+
+#if SIMDPP_USE_AVX || SIMDPP_USE_AVX2
+#if (__clang_major__ == 3) && (__clang_minor__ == 6)
+/*  See https://llvm.org/bugs/show_bug.cgi?id=23441. Clang does not generate
+    correct floating-point code for basic 256-bit floating-point operations,
+    such as those resulting from _mm256_set_ps, _mm256_load_ps. Due to the
+    nature of affected operations, the bug is almost impossible to work around
+    reliably.
+*/
+#error AVX and AVX2 are not supported on clang 3.6 due to compiler bugs
+#endif
+#endif
+
+#if (__clang_major__ == 3) && (__clang_minor <= 4)
+#define SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS 1
+/*  Clang 3.4 and older may crash when the following intrinsics are used with
+    arguments that are known at compile time: _mm256_sll_epi{16,32,64},
+    _mm256_srl_epi{16,32,64}, _mm256_sra_epi{16,32}
+*/
 #endif
 
 namespace simdpp {

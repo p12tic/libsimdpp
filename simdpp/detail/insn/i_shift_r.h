@@ -130,7 +130,14 @@ SIMDPP_INL int16x8 i_shift_r(const int16x8& a, unsigned count)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL int16x16 i_shift_r(const int16x16& a, unsigned count)
 {
+#if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
+    __m256i r = a;
+    __m128i x = _mm_cvtsi32_si128(count);
+    __asm("vpsraw	%1, %2, %0" : "=x"(r) : "x"(x), "x"(r));
+    return r;
+#else
     return _mm256_sra_epi16(a, _mm_cvtsi32_si128(count));
+#endif
 }
 #endif
 
@@ -154,7 +161,14 @@ SIMDPP_INL uint16x8 i_shift_r(const uint16x8& a, unsigned count)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL uint16x16 i_shift_r(const uint16x16& a, unsigned count)
 {
+#if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
+    __m256i r = a;
+    __m128i x = _mm_cvtsi32_si128(count);
+    __asm("vpsrlw	%1, %2, %0" : "=x"(r) : "x"(x), "x"(r));
+    return r;
+#else
     return _mm256_srl_epi16(a, _mm_cvtsi32_si128(count));
+#endif
 }
 #endif
 
@@ -178,7 +192,14 @@ SIMDPP_INL int32x4 i_shift_r(const int32x4& a, unsigned count)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL int32x8 i_shift_r(const int32x8& a, unsigned count)
 {
+#if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
+    __m256i r = a;
+    __m128i x = _mm_cvtsi32_si128(count);
+    __asm("vpsrad	%1, %2, %0" : "=x"(r) : "x"(x), "x"(r));
+    return r;
+#else
     return _mm256_sra_epi32(a, _mm_cvtsi32_si128(count));
+#endif
 }
 #endif
 
@@ -209,7 +230,14 @@ SIMDPP_INL uint32x4 i_shift_r(const uint32x4& a, unsigned count)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL uint32x8 i_shift_r(const uint32x8& a, unsigned count)
 {
+#if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
+    __m256i r = a;
+    __m128i x = _mm_cvtsi32_si128(count);
+    __asm("vpsrld	%1, %2, %0" : "=x"(r) : "x"(x), "x"(r));
+    return r;
+#else
     return _mm256_srl_epi32(a, _mm_cvtsi32_si128(count));
+#endif
 }
 #endif
 
@@ -307,7 +335,14 @@ SIMDPP_INL uint64x2 i_shift_r(const uint64x2& a, unsigned count)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL uint64x4 i_shift_r(const uint64x4& a, unsigned count)
 {
+#if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
+    __m256i r = a;
+    __m128i x = _mm_cvtsi32_si128(count);
+    __asm("vpsrlq	%1, %2, %0" : "=x"(r) : "x"(x), "x"(r));
+    return r;
+#else
     return _mm256_srl_epi64(a, _mm_cvtsi32_si128(count));
+#endif
 }
 #endif
 

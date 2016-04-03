@@ -197,42 +197,55 @@
 
     #ifdef SIMDPP_ARCH_X86_SSE2
         #define SIMDPP_ARCH_PP_USE_SSE2 1
+        #undef SIMDPP_ARCH_X86_SSE2
     #endif
     #ifdef SIMDPP_ARCH_X86_SSE3
         #define SIMDPP_ARCH_PP_USE_SSE3 1
+        #undef SIMDPP_ARCH_X86_SSE3
     #endif
     #ifdef SIMDPP_ARCH_X86_SSSE3
         #define SIMDPP_ARCH_PP_USE_SSSE3 1
+        #undef SIMDPP_ARCH_X86_SSSE3
     #endif
     #ifdef SIMDPP_ARCH_X86_SSE4_1
         #define SIMDPP_ARCH_PP_USE_SSE4_1 1
+        #undef SIMDPP_ARCH_X86_SSE4_1
     #endif
     #ifdef SIMDPP_ARCH_X86_AVX
         #define SIMDPP_ARCH_PP_USE_AVX 1
+        #undef SIMDPP_ARCH_X86_AVX
     #endif
     #ifdef SIMDPP_ARCH_X86_AVX2
         #define SIMDPP_ARCH_PP_USE_AVX2 1
+        #undef SIMDPP_ARCH_X86_AVX2
     #endif
     #ifdef SIMDPP_ARCH_X86_FMA3
         #define SIMDPP_ARCH_PP_USE_FMA3 1
+        #undef SIMDPP_ARCH_X86_FMA3
     #endif
     #ifdef SIMDPP_ARCH_X86_FMA4
         #define SIMDPP_ARCH_PP_USE_FMA4 1
+        #undef SIMDPP_ARCH_X86_FMA4
     #endif
     #ifdef SIMDPP_ARCH_X86_XOP
         #define SIMDPP_ARCH_PP_USE_XOP 1
+        #undef SIMDPP_ARCH_X86_XOP
     #endif
     #ifdef SIMDPP_ARCH_X86_AVX512F
         #define SIMDPP_ARCH_PP_USE_AVX512F 1
+        #undef SIMDPP_ARCH_X86_AVX512F
     #endif
     #ifdef SIMDPP_ARCH_ARM_NEON
         #define SIMDPP_ARCH_PP_USE_NEON 1
+        #undef SIMDPP_ARCH_ARM_NEON
     #endif
     #ifdef SIMDPP_ARCH_ARM_NEON_FLT_SP
         #define SIMDPP_ARCH_PP_USE_NEON_FLT_SP 1
+        #undef SIMDPP_ARCH_ARM_NEON_FLT_SP
     #endif
     #ifdef SIMDPP_ARCH_POWER_ALTIVEC
         #define SIMDPP_ARCH_PP_USE_ALTIVEC 1
+        #undef SIMDPP_ARCH_POWER_ALTIVEC
     #endif
 #endif
 
