@@ -23,6 +23,8 @@ intrinsics and even higher-level SIMD libraries. As much control as possible
 is given to the developer, so that it's possible to exactly predict what code
 the compiler will generate.
 
+No API-breaking changes are planned for the foreseeable future.
+
 Compiler and instruction set support
 ------------------------------------
 
@@ -54,7 +56,9 @@ version of the library is provided on the
    - ICC: 2013, 2015
 
 Clang 3.3 is not supported on ARM. MSVC and ICC are only supported on x86 and
-x86-64.
+x86-64. Any compiler bugs are either worked-around or support for broken
+instruction set on the particular compiler version is disabled -- the bugs are
+not exposed under any circumstances.
 
 Newer versions of the aforementioned compilers will generally work with either
 C++11 or C++98 version of the library. Older versions of these compilers will

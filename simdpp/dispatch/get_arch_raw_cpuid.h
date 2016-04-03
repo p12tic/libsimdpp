@@ -8,6 +8,9 @@
 #ifndef LIBSIMDPP_DISPATCH_GET_ARCH_RAW_CPUID_H
 #define LIBSIMDPP_DISPATCH_GET_ARCH_RAW_CPUID_H
 
+#if (__i386__ || __amd64__) && (__clang__ || __GNUC__ || __INTEL_COMPILER || _MSC_VER)
+#define SIMDPP_HAS_GET_ARCH_RAW_CPUID 1
+
 #include <simdpp/dispatch/arch.h>
 #include <stdint.h>
 
@@ -21,7 +24,7 @@ namespace detail {
 inline void get_cpuid(unsigned level, unsigned subleaf, unsigned* eax, unsigned* ebx,
                       unsigned* ecx, unsigned* edx)
 {
-#if defined(__clang__) || defined (__INTEL_COMPILER)
+#if __clang__ || __INTEL_COMPILER
     // Older versions of clang don't support subleafs, which leads to inability
     // to detect AVX2 for example. On ICC there's no proper cpuid intrinsic.
 #if __i386__
@@ -121,6 +124,9 @@ inline Arch get_arch_raw_cpuid()
 
     return arch_info;
 }
+
 } // namespace simdpp
+
+#endif // #if (__i386__ || __amd64__) && ...
 
 #endif
