@@ -23,6 +23,8 @@ intrinsics and even higher-level SIMD libraries. As much control as possible
 is given to the developer, so that it's possible to exactly predict what code
 the compiler will generate.
 
+No API-breaking changes are planned for the foreseeable future.
+
 Compiler and instruction set support
 ------------------------------------
 
