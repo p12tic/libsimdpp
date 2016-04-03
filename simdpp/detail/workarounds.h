@@ -54,6 +54,14 @@
 #endif
 #endif
 
+#if (__clang_major__ == 3) && (__clang_minor <= 4)
+#define SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS 1
+/*  Clang 3.4 and older may crash when the following intrinsics are used with
+    arguments that are known at compile time: _mm256_sll_epi{16,32,64},
+    _mm256_srl_epi{16,32,64}, _mm256_sra_epi{16,32}
+*/
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
