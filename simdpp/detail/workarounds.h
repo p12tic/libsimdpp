@@ -29,6 +29,11 @@
 
 #if SIMDPP_USE_AVX512F
 #if (__GNUC__ == 4) && !__INTEL_COMPILER
+/*  See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70059.
+    _mm512_inserti64x4(x, y, 0) and related intrinsics result in wrong code.
+    _mm512_castsi256_si512 is not available in GCC 4.9, thus there's no way
+    to convert between 256-bit and 512-bit vectors.
+*/
 #error "The first supported GCC version for AVX512F is 5.0"
 #endif
 
