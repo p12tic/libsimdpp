@@ -49,7 +49,7 @@ The following instruction sets are supported by the library.
 | Implies SSE3.
 |-
 | x86 AVX2
-| {{ttb|SIMDPP_ARCH_X86_AVX}}
+| {{ttb|SIMDPP_ARCH_X86_AVX2}}
 | 256-bit vectors. Implies AVX
 |-
 | x86 AVX512F
