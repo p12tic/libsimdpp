@@ -11,39 +11,47 @@ foreach(FILE ${HEADERS})
     install(FILES "${FILE}" DESTINATION "${SIMDPP_INCLUDEDIR}/simdpp/${FILE_PATH}")
 endforeach()
 
-simdpp_get_compilable_archs(COMPILABLE_ARCHS)
+# Don't enable header tests by default because configuring it takes excessive
+# amount of time
+set(ENABLE_HEADER_TESTS "0")
 
-set(HEADER_TESTS "")
-add_custom_target(check_headers)
+if(${ENABLE_HEADER_TESTS} STREQUAL "1")
 
-foreach(ARCH ${COMPILABLE_ARCHS})
-    simdpp_get_arch_info(CXX_FLAGS DEFINES_LIST SUFFIX ${ARCH})
-    foreach(FILE ${HEADERS})
+    simdpp_get_compilable_archs(COMPILABLE_ARCHS)
 
-        if("${FILE}" MATCHES ".inl")
-            continue()
-        endif()
+    set(HEADER_TESTS "")
+    add_custom_target(check_headers)
 
-        string(REPLACE "/" "_" TEST "${FILE}")
-        string(REPLACE "." "_" TEST "${TEST}")
-        set(TEST "${TEST}${SUFFIX}")
-        set(TEST_OUT "check_headers/test_header_compiles_${TEST}")
-        string(REPLACE "-" "_" TEST_TARGET "check_headers_${TEST}")
+    foreach(ARCH ${COMPILABLE_ARCHS})
+        simdpp_get_arch_info(CXX_FLAGS DEFINES_LIST SUFFIX ${ARCH})
+        foreach(FILE ${HEADERS})
+
+            if("${FILE}" STREQUAL ".inl")
+                continue()
+            endif()
+
+            string(REPLACE "/" "_" TEST "${FILE}")
+            string(REPLACE "." "_" TEST "${TEST}")
+            set(TEST "${TEST}${SUFFIX}")
+            set(TEST_OUT "check_headers/test_header_compiles_${TEST}")
+            string(REPLACE "-" "_" TEST_TARGET "check_headers_${TEST}")
 
 
-        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/check_headers")
-        separate_arguments(CXX_FLAGS)
-        add_custom_command(
-            OUTPUT ${TEST_OUT}
-            COMMAND ${CMAKE_CXX_COMPILER}
-                    -DLIBSIMDPP_SIMD_H
-                    -I "${CMAKE_SOURCE_DIR}"
-                    ${CXX_FLAGS} -x c++ -std=c++11 -g2 -Wall
-                    ${CMAKE_SOURCE_DIR}/simdpp/${FILE}
-                    -c -o ${CMAKE_BINARY_DIR}/${TEST_OUT}
-            DEPENDS ${FILE} )
-        add_custom_target(${TEST_TARGET} DEPENDS ${TEST_OUT})
-        add_dependencies(check_headers "${TEST_TARGET}")
+            file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/check_headers")
+            separate_arguments(CXX_FLAGS)
+            add_custom_command(
+                OUTPUT ${TEST_OUT}
+                COMMAND ${CMAKE_CXX_COMPILER}
+                        -DLIBSIMDPP_SIMD_H
+                        -I "${CMAKE_SOURCE_DIR}"
+                        ${CXX_FLAGS} -x c++ -std=c++11 -g2 -Wall
+                        ${CMAKE_SOURCE_DIR}/simdpp/${FILE}
+                        -c -o ${CMAKE_BINARY_DIR}/${TEST_OUT}
+                DEPENDS ${FILE} )
+            add_custom_target(${TEST_TARGET} DEPENDS ${TEST_OUT})
+            add_dependencies(check_headers "${TEST_TARGET}")
+        endforeach()
     endforeach()
-endforeach()
+
+endif()
 
