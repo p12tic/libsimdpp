@@ -21,11 +21,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-namespace detail {
-
-
-} // namespace detail
-
 /// @{
 /** Computes bitwise NOT of an integer or floating-point vector
 
