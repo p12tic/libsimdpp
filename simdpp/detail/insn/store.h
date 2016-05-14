@@ -174,10 +174,10 @@ SIMDPP_INL void i_store(char* p, const float64<8>& a)
 // -----------------------------------------------------------------------------
 
 template<class V> SIMDPP_INL
-void i_store(char* p, const V& a)
+void i_store(char* p, const V& ca)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
-
+    typename detail::remove_sign<V>::type a = ca;
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {
         i_store(p, a.vec(i));
@@ -191,4 +191,3 @@ void i_store(char* p, const V& a)
 } // namespace simdpp
 
 #endif
-

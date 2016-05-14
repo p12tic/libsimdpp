@@ -119,11 +119,19 @@ void test_memory_store_n(TestSuite& tc)
     test_store_helper<uint16<B/2>, vnum>(tc, v.u16);
     test_store_helper<uint32<B/4>, vnum>(tc, v.u32);
     test_store_helper<uint64<B/8>, vnum>(tc, v.u64);
+
+    test_store_helper<int8<B>, vnum>(tc, v.i8);
+    test_store_helper<int16<B/2>, vnum>(tc, v.i16);
+    test_store_helper<int32<B/4>, vnum>(tc, v.i32);
+    test_store_helper<int64<B/8>, vnum>(tc, v.i64);
+
     test_store_helper<float32<B/4>, vnum>(tc, v.f32);
     test_store_helper<float64<B/8>, vnum>(tc, v.f64);
 
     test_store_masked<uint32<B/4>>(tc, v.u32);
     test_store_masked<uint64<B/8>>(tc, v.u64);
+    test_store_masked<int32<B/4>>(tc, v.i32);
+    test_store_masked<int64<B/8>>(tc, v.i64);
     test_store_masked<float32<B/4>>(tc, v.f32);
     test_store_masked<float64<B/8>>(tc, v.f64);
 }

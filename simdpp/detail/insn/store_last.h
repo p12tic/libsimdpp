@@ -257,10 +257,11 @@ SIMDPP_INL void i_store_last(char* p, const float64<8>& a, unsigned n)
 // -----------------------------------------------------------------------------
 
 template<class V> SIMDPP_INL
-void i_store_last(char* p, const V& a, unsigned n)
+void i_store_last(char* p, const V& ca, unsigned n)
 {
     unsigned veclen = sizeof(typename V::base_vector_type);
 
+    typename detail::remove_sign<V>::type a = ca;
     p = detail::assume_aligned(p, veclen);
     unsigned el_to_skip = V::length - n;
 
@@ -288,4 +289,3 @@ void i_store_last(char* p, const V& a, unsigned n)
 } // namespace simdpp
 
 #endif
-
