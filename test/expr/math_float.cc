@@ -13,7 +13,7 @@
 
 
 template<class V, unsigned B>
-void test_expr_math_float_v(SeqTestSuite& ts)
+void test_expr_math_float_v(TestReporter& ts)
 {
     SIMDPP_ARCH_NAMESPACE::Vectors<16,16> v;
 
@@ -71,7 +71,7 @@ void test_expr_math_float_v(SeqTestSuite& ts)
 }
 
 
-void test_expr_math_float(SeqTestSuite& ts)
+void test_expr_math_float(TestReporter& ts)
 {
     using namespace simdpp;
 

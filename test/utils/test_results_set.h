@@ -5,8 +5,8 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_TEST_TEST_SUITE_H
-#define LIBSIMDPP_TEST_TEST_SUITE_H
+#ifndef LIBSIMDPP_TEST_TEST_RESULTS_SET_H
+#define LIBSIMDPP_TEST_TEST_RESULTS_SET_H
 
 #include <vector>
 #include <cstring>
@@ -106,7 +106,7 @@ public:
     /// Resets the sequence number
     void reset_seq()                        { seq_ = 1; }
 
-    /// The number of results pushed to the test case
+    /// The number of results pushed to the results set
     std::size_t num_results() const;
 
     /** Allows synchronizing tests in cases when certain architectures do not
@@ -133,30 +133,5 @@ private:
     unsigned curr_results_section_;
     std::vector<std::vector<Result>> results_;
 };
-
-class SeqTestSuite {
-public:
-    SeqTestSuite() : num_failure_(0), num_success_(0) {}
-
-    unsigned num_failure() const { return num_failure_; }
-    unsigned num_success() const { return num_success_; }
-
-    void add_result(bool success)
-    {
-        if (success) {
-            num_success_++;
-        } else {
-            num_failure_++;
-        }
-    }
-
-    bool success() const { return num_failure_ == 0; }
-
-private:
-    unsigned num_failure_;
-    unsigned num_success_;
-};
-
-
 
 #endif

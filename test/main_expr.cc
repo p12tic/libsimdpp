@@ -9,7 +9,7 @@
 
 int main()
 {
-    SeqTestSuite ts;
+    TestReporter ts;
     main_test_function(ts);
     if (!ts.success()) {
         return 1;

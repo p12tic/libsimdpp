@@ -12,6 +12,7 @@
 #include <simdpp/detail/align_v128.h>
 #include <iostream>
 #include "test_results_set.h"
+#include "test_reporter.h"
 #include <cfenv>
 #include <float.h>
 
@@ -497,7 +498,7 @@ struct TemplateTestArrayHelper {
 };
 
 template<class V1, class V2>
-void test_cmp_vectors(SeqTestSuite& ts, const V1& q1, const V2& q2,
+void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
                       unsigned line, const char* file)
 {
     typename simdpp::detail::get_expr_nomask<V1>::type v1 = q1.eval();
@@ -506,7 +507,7 @@ void test_cmp_vectors(SeqTestSuite& ts, const V1& q1, const V2& q2,
                   "Only vectors of same size should be compared");
 
     bool success = std::memcmp(&v1, &v2, sizeof(v1)) == 0;
-    ts.add_result(success);
+    tr.add_result(success);
 
     if (!success) {
         std::cout << "FAIL at line " << line << " of " << file << std::endl;

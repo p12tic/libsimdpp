@@ -8,10 +8,10 @@
 #ifndef SIMDPP_TEST_EXPR_TESTS_H
 #define SIMDPP_TEST_EXPR_TESTS_H
 
-#include "../utils/test_results.h"
+#include "../utils/test_reporter.h"
 
-void main_test_function(SeqTestSuite& ts);
-void test_expr_bitwise(SeqTestSuite& ts);
-void test_expr_math_float(SeqTestSuite& ts);
-void test_expr_math_int(SeqTestSuite& ts);
+void main_test_function(TestReporter& ts);
+void test_expr_bitwise(TestReporter& ts);
+void test_expr_math_float(TestReporter& ts);
+void test_expr_math_int(TestReporter& ts);
 #endif
