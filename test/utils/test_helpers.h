@@ -498,7 +498,7 @@ struct TemplateTestArrayHelper {
 };
 
 template<class V1, class V2>
-void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
+void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2, bool expected_equal,
                       unsigned line, const char* file)
 {
     typename simdpp::detail::get_expr_nomask<V1>::type v1 = q1.eval();
@@ -506,7 +506,8 @@ void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
     static_assert(sizeof(v1) == sizeof(v2),
                   "Only vectors of same size should be compared");
 
-    bool success = std::memcmp(&v1, &v2, sizeof(v1)) == 0;
+    bool success = expected_equal ? std::memcmp(&v1, &v2, sizeof(v1)) == 0 :
+                                    std::memcmp(&v1, &v2, sizeof(v1)) != 0;
     tr.add_result(success);
 
     if (!success) {
@@ -514,6 +515,7 @@ void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
     }
 }
 
-#define TEST_CMP_VEC(TS, V1, V2) do { test_cmp_vectors(TS, V1, V2, __LINE__, __FILE__); } while(0)
+#define TEST_CMP_VEC(TR, V1, V2)    do { test_cmp_vectors(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
+#define TEST_CMPNE_VEC(TR, V1, V2)  do { test_cmp_vectors(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
 
 #endif
