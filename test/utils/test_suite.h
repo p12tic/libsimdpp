@@ -19,28 +19,28 @@ bool test_equal(const TestSuite& a, const char* a_arch,
                 const TestSuite& b, const char* b_arch,
                 std::ostream& err);
 
+// Types of vector elements
+enum VectorType : uint8_t {
+    TYPE_INT8 = 0,
+    TYPE_UINT8,
+    TYPE_INT16,
+    TYPE_UINT16,
+    TYPE_UINT32,
+    TYPE_INT32,
+    TYPE_UINT64,
+    TYPE_INT64,
+    TYPE_FLOAT32,
+    TYPE_FLOAT64
+};
+
 class TestSuite {
 public:
-
-    // Types of vector elements
-    enum Type : uint8_t {
-        TYPE_INT8 = 0,
-        TYPE_UINT8,
-        TYPE_INT16,
-        TYPE_UINT16,
-        TYPE_UINT32,
-        TYPE_INT32,
-        TYPE_UINT64,
-        TYPE_INT64,
-        TYPE_FLOAT32,
-        TYPE_FLOAT64
-    };
 
     // Holds one result vector
     struct Result {
         static const unsigned num_bytes = 32;
 
-        Result(Type atype, unsigned alength, unsigned ael_size, unsigned aline,
+        Result(VectorType atype, unsigned alength, unsigned ael_size, unsigned aline,
                unsigned aseq, unsigned aprec_ulp, bool afp_zero_eq)
         {
             type = atype;
@@ -53,7 +53,7 @@ public:
             data.resize(el_size*length);
         }
 
-        Type type;
+        VectorType type;
         unsigned line;
         unsigned seq;
         unsigned prec_ulp;
@@ -76,7 +76,7 @@ public:
     };
 
     /// Stores the results into the results set.
-    Result& push(Type type, unsigned length, unsigned line);
+    Result& push(VectorType type, unsigned length, unsigned line);
 
     /// Sets the allowed error in ULPs. Only meaningful for floating-point data.
     /// Affects all pushed data until the next call to @a unset_precision
@@ -115,7 +115,7 @@ private:
 
     TestSuite(const char* name, const char* file);
 
-    static std::size_t size_for_type(Type t);
+    static std::size_t size_for_type(VectorType t);
     static unsigned precision_for_result(const Result& res);
 
     const char* name_;

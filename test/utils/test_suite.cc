@@ -25,7 +25,7 @@ TestSuite::TestSuite(const char* name, const char* file) :
     reset_seq();
 }
 
-TestSuite::Result& TestSuite::push(Type type, unsigned length, unsigned line)
+TestSuite::Result& TestSuite::push(VectorType type, unsigned length, unsigned line)
 {
     while (results_.size() <= curr_results_section_)
         results_.push_back(std::vector<Result>());
@@ -65,8 +65,8 @@ std::size_t TestSuite::size_for_type(Type t)
 unsigned TestSuite::precision_for_result(const Result& res)
 {
     switch (res.type) {
-    case TestSuite::TYPE_FLOAT32:
-    case TestSuite::TYPE_FLOAT64:
+    case TYPE_FLOAT32:
+    case TYPE_FLOAT64:
         return res.prec_ulp;
     default:
         return 0;
@@ -247,16 +247,16 @@ bool test_equal(const TestSuite& a, const char* a_arch,
     auto type_str = [&](unsigned type) -> const char*
     {
         switch (type) {
-        case TestSuite::TYPE_UINT8: return "uint86";
-        case TestSuite::TYPE_INT8: return "int86";
-        case TestSuite::TYPE_UINT16: return "uint16";
-        case TestSuite::TYPE_INT16: return "int16";
-        case TestSuite::TYPE_UINT32: return "uint32";
-        case TestSuite::TYPE_INT32: return "int32";
-        case TestSuite::TYPE_UINT64: return "uint64";
-        case TestSuite::TYPE_INT64: return "int64";
-        case TestSuite::TYPE_FLOAT32: return "float32";
-        case TestSuite::TYPE_FLOAT64: return "float64";
+        case TYPE_UINT8: return "uint86";
+        case TYPE_INT8: return "int86";
+        case TYPE_UINT16: return "uint16";
+        case TYPE_INT16: return "int16";
+        case TYPE_UINT32: return "uint32";
+        case TYPE_INT32: return "int32";
+        case TYPE_UINT64: return "uint64";
+        case TYPE_INT64: return "int64";
+        case TYPE_FLOAT32: return "float32";
+        case TYPE_FLOAT64: return "float64";
         default: return "UNDEFINED";
         }
     };
@@ -264,43 +264,43 @@ bool test_equal(const TestSuite& a, const char* a_arch,
     auto fmt_vector = [&](const TestSuite::Result& r, const char* prefix) -> void
     {
         switch (r.type) {
-        case TestSuite::TYPE_UINT8:
+        case TYPE_UINT8:
             fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
             fmt_num(err, r.length, 4, prefix, (const int8_t*)r.d());
             break;
-        case TestSuite::TYPE_INT8:
+        case TYPE_INT8:
             fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
             fmt_num(err, r.length, 4, prefix, (const uint8_t*)r.d());
             break;
-        case TestSuite::TYPE_UINT16:
+        case TYPE_UINT16:
             fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
             fmt_num(err, r.length, 6, prefix, (const int16_t*)r.d());
             break;
-        case TestSuite::TYPE_INT16:
+        case TYPE_INT16:
             fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
             fmt_num(err, r.length, 6, prefix, (const uint16_t*)r.d());
             break;
-        case TestSuite::TYPE_UINT32:
+        case TYPE_UINT32:
             fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
             fmt_num(err, r.length, 11, prefix, (const int32_t*)r.d());
             break;
-        case TestSuite::TYPE_INT32:
+        case TYPE_INT32:
             fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
             fmt_num(err, r.length, 11, prefix, (const uint32_t*)r.d());
             break;
-        case TestSuite::TYPE_UINT64:
+        case TYPE_UINT64:
             fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
             fmt_num(err, r.length, 20, prefix, (const int64_t*)r.d());
             break;
-        case TestSuite::TYPE_INT64:
+        case TYPE_INT64:
             fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
             fmt_num(err, r.length, 20, prefix, (const uint64_t*)r.d());
             break;
-        case TestSuite::TYPE_FLOAT32:
+        case TYPE_FLOAT32:
             fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
             fmt_num(err, r.length, 7, prefix, (const float*)r.d());
             break;
-        case TestSuite::TYPE_FLOAT64:
+        case TYPE_FLOAT64:
             fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
             fmt_num(err, r.length, 17, prefix, (const double*)r.d());
             break;
@@ -315,10 +315,10 @@ bool test_equal(const TestSuite& a, const char* a_arch,
         }
 
         switch (ia.type) {
-        case TestSuite::TYPE_FLOAT32:
+        case TYPE_FLOAT32:
             return cmpeq_arrays((const float*)ia.d(), (const float*)ib.d(), ia.length,
                                 fp_prec, fp_zero_eq);
-        case TestSuite::TYPE_FLOAT64:
+        case TYPE_FLOAT64:
             return cmpeq_arrays((const double*)ia.d(), (const double*)ib.d(), ia.length,
                                 fp_prec, fp_zero_eq);
         default:
