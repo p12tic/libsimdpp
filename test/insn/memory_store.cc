@@ -14,7 +14,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V>
-void test_store_masked(TestSuite& tc, const V* sv)
+void test_store_masked(TestResultsSet& tc, const V* sv)
 {
     using namespace simdpp;
     SIMDPP_ALIGN(16) V rv[1];
@@ -41,7 +41,7 @@ void test_store_masked(TestSuite& tc, const V* sv)
 }
 
 template<class V, unsigned vnum>
-void test_store_helper(TestSuite& tc, const V* sv)
+void test_store_helper(TestResultsSet& tc, const V* sv)
 {
     using namespace simdpp;
 
@@ -107,7 +107,7 @@ void test_store_helper(TestSuite& tc, const V* sv)
 }
 
 template<unsigned B>
-void test_memory_store_n(TestSuite& tc)
+void test_memory_store_n(TestResultsSet& tc)
 {
     using namespace simdpp;
 
@@ -138,7 +138,7 @@ void test_memory_store_n(TestSuite& tc)
 
 void test_memory_store(TestResults& res)
 {
-    TestSuite& tc = NEW_TEST_SUITE(res, "memory_store");
+    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "memory_store");
 
     test_memory_store_n<16>(tc);
     test_memory_store_n<32>(tc);

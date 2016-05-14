@@ -15,7 +15,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned i>
 struct Test_shuffle21 {
     static const unsigned limit = 4;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const unsigned s0 = i / 2 % 2;
         const unsigned s1 = i % 2;
@@ -28,7 +28,7 @@ struct Test_shuffle21 {
 template<class V, unsigned i>
 struct Test_shuffle42 {
     static const unsigned limit = 256;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const unsigned s0 = i / 64 % 4;
         const unsigned s1 = i / 16 % 4;
@@ -41,7 +41,7 @@ struct Test_shuffle42 {
 };
 
 template<unsigned B>
-void test_shuffle_generic_n(TestSuite& tc)
+void test_shuffle_generic_n(TestResultsSet& tc)
 {
     using namespace simdpp;
 
@@ -62,7 +62,7 @@ void test_shuffle_generic_n(TestSuite& tc)
 
 void test_shuffle_generic(TestResults& res)
 {
-    TestSuite& tc = NEW_TEST_SUITE(res, "shuffle_generic");
+    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "shuffle_generic");
 
     test_shuffle_generic_n<16>(tc);
     test_shuffle_generic_n<32>(tc);

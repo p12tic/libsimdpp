@@ -38,14 +38,14 @@ list_contains(HAS_NEON X86_NEON ${NATIVE_ARCHS})
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
 set(TEST1_SOURCES
-    utils/test_suite.cc
+    utils/test_results_set.cc
     main_test1.cc
 )
 
 set(TEST1_HEADERS
-    utils/test_suite.h
     utils/test_helpers.h
     utils/test_results.h
+    utils/test_results_set.h
     insn/tests.h
     common/masks.h
     common/vectors.h

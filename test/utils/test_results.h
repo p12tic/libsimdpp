@@ -8,7 +8,7 @@
 #ifndef LIBSIMDPP_TEST_UTILS_TEST_RESULTS_H
 #define LIBSIMDPP_TEST_UTILS_TEST_RESULTS_H
 
-#include "test_suite.h"
+#include "test_results_set.h"
 #include <vector>
 #include <deque>
 #include <functional>
@@ -20,12 +20,14 @@ struct TestOptions {
     TestOptions() : is_simulator(false) {}
 };
 
+/** Represents all test results for a particular architecture
+*/
 class TestResults {
 public:
     // test case container.
     struct TestCaseCont {
         unsigned id; // insertion number. Used for sorting
-        TestSuite test_suite;
+        TestResultsSet results_set;
     };
 
     TestResults(const char* arch) :
@@ -33,18 +35,18 @@ public:
     {
     }
 
-    TestSuite& new_test_suite(const char* name, const char* file)
+    TestResultsSet& new_results_set(const char* name, const char* file)
     {
-        unsigned id = test_suites_.size();
-        test_suites_.push_back(TestCaseCont{id, TestSuite{name, file}});
-        return test_suites_.back().test_suite;
+        unsigned id = test_sets_.size();
+        test_sets_.push_back(TestCaseCont{id, TestResultsSet{name, file}});
+        return test_sets_.back().results_set;
     }
 
     std::size_t num_results() const
     {
         std::size_t r = 0;
-        for (const auto& i: test_suites_) {
-            r += i.test_suite.num_results();
+        for (const auto& i: test_sets_) {
+            r += i.results_set.num_results();
         }
         return r;
     }
@@ -56,7 +58,7 @@ private:
 
     const char* arch_;
     // use deque because we must never invalidate references to test cases
-    std::deque<TestCaseCont> test_suites_;
+    std::deque<TestCaseCont> test_sets_;
 };
 
 inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream& err)
@@ -69,12 +71,12 @@ inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream&
 
     auto case_cont_cmp = [](const TestCaseCont& lhs, const TestCaseCont& rhs)
     {
-        return std::strcmp(lhs.test_suite.name(), rhs.test_suite.name()) < 0;
+        return std::strcmp(lhs.results_set.name(), rhs.results_set.name()) < 0;
     };
 
     // sort the cases by name
-    std::vector<CaseContRef> a_cases(a.test_suites_.begin(), a.test_suites_.end());
-    std::vector<CaseContRef> b_cases(b.test_suites_.begin(), b.test_suites_.end());
+    std::vector<CaseContRef> a_cases(a.test_sets_.begin(), a.test_sets_.end());
+    std::vector<CaseContRef> b_cases(b.test_sets_.begin(), b.test_sets_.end());
 
     std::sort(a_cases.begin(), a_cases.end(), case_cont_cmp);
     std::sort(b_cases.begin(), b_cases.end(), case_cont_cmp);
@@ -108,8 +110,8 @@ inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream&
     // loop through cases with the same names
     bool ok = true;
     for (const auto& io: to_compare) {
-        bool r = test_equal(io.first.get().test_suite, a.arch_,
-                            io.second.get().test_suite, b.arch_, err);
+        bool r = test_equal(io.first.get().results_set, a.arch_,
+                            io.second.get().results_set, b.arch_, err);
         if (!r) {
             ok = false;
         }

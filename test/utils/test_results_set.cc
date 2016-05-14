@@ -5,7 +5,7 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include "test_suite.h"
+#include "test_results_set.h"
 #include <algorithm>
 #include <cmath>
 #include <iomanip>
@@ -15,7 +15,7 @@
 #include <typeinfo>
 #include <cstdlib>
 
-TestSuite::TestSuite(const char* name, const char* file) :
+TestResultsSet::TestResultsSet(const char* name, const char* file) :
     name_(name),
     file_(file),
     curr_precision_ulp_(0),
@@ -25,7 +25,7 @@ TestSuite::TestSuite(const char* name, const char* file) :
     reset_seq();
 }
 
-TestSuite::Result& TestSuite::push(VectorType type, unsigned length, unsigned line)
+TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length, unsigned line)
 {
     while (results_.size() <= curr_results_section_)
         results_.push_back(std::vector<Result>());
@@ -36,7 +36,7 @@ TestSuite::Result& TestSuite::push(VectorType type, unsigned length, unsigned li
     return curr_part.back();
 }
 
-std::size_t TestSuite::num_results() const
+std::size_t TestResultsSet::num_results() const
 {
     std::size_t r = 0;
     for (const auto& sect: results_) {
@@ -45,7 +45,7 @@ std::size_t TestSuite::num_results() const
     return r;
 }
 
-std::size_t TestSuite::size_for_type(Type t)
+std::size_t TestResultsSet::size_for_type(Type t)
 {
     switch (t) {
     case TYPE_INT8:
@@ -62,7 +62,7 @@ std::size_t TestSuite::size_for_type(Type t)
     }
 }
 
-unsigned TestSuite::precision_for_result(const Result& res)
+unsigned TestResultsSet::precision_for_result(const Result& res)
 {
     switch (res.type) {
     case TYPE_FLOAT32:
@@ -206,8 +206,8 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
     return true;
 }
 
-bool test_equal(const TestSuite& a, const char* a_arch,
-                const TestSuite& b, const char* b_arch,
+bool test_equal(const TestResultsSet& a, const char* a_arch,
+                const TestResultsSet& b, const char* b_arch,
                 std::ostream& err)
 
 {
@@ -261,7 +261,7 @@ bool test_equal(const TestSuite& a, const char* a_arch,
         }
     };
 
-    auto fmt_vector = [&](const TestSuite::Result& r, const char* prefix) -> void
+    auto fmt_vector = [&](const TestResultsSet::Result& r, const char* prefix) -> void
     {
         switch (r.type) {
         case TYPE_UINT8:
@@ -307,7 +307,7 @@ bool test_equal(const TestSuite& a, const char* a_arch,
         }
     };
 
-    auto cmpeq_result = [](const TestSuite::Result& ia, const TestSuite::Result& ib,
+    auto cmpeq_result = [](const TestResultsSet::Result& ia, const TestResultsSet::Result& ib,
                            unsigned fp_prec, unsigned fp_zero_eq) -> bool
     {
         if (std::memcmp(ia.d(), ib.d(), ia.el_size * ia.length) == 0) {
@@ -396,8 +396,8 @@ bool test_equal(const TestSuite& a, const char* a_arch,
                 return false;
             }
 
-            unsigned prec = std::max(TestSuite::precision_for_result(ia),
-                                     TestSuite::precision_for_result(ib));
+            unsigned prec = std::max(TestResultsSet::precision_for_result(ia),
+                                     TestResultsSet::precision_for_result(ib));
 
             bool fp_zero_eq = ia.fp_zero_eq || ib.fp_zero_eq;
 

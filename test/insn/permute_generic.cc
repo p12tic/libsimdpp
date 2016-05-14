@@ -15,7 +15,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned i>
 struct Test_permute2 {
     static const unsigned limit = 4;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const unsigned s0 = i / 2 % 2;
         const unsigned s1 = i % 2;
@@ -28,7 +28,7 @@ struct Test_permute2 {
 template<class V, unsigned i>
 struct Test_permute4 {
     static const unsigned limit = 256;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const unsigned s0 = i / 64 % 4;
         const unsigned s1 = i / 16 % 4;
@@ -41,7 +41,7 @@ struct Test_permute4 {
 };
 
 template<unsigned B>
-void test_permute_generic_n(TestSuite& tc)
+void test_permute_generic_n(TestResultsSet& tc)
 {
     using namespace simdpp;
 
@@ -70,7 +70,7 @@ void test_permute_generic_n(TestSuite& tc)
 
 void test_permute_generic(TestResults& res)
 {
-    TestSuite& tc = NEW_TEST_SUITE(res, "permute_generic");
+    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "permute_generic");
 
     test_permute_generic_n<16>(tc);
     test_permute_generic_n<32>(tc);

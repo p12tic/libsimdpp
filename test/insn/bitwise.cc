@@ -14,7 +14,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V>
-void test_bitwise_type(TestSuite& tc, const V& a, const V& b)
+void test_bitwise_type(TestResultsSet& tc, const V& a, const V& b)
 {
     using namespace simdpp;
 
@@ -34,7 +34,7 @@ void test_bitwise_type(TestSuite& tc, const V& a, const V& b)
 }
 
 template<unsigned B>
-void test_bitwise_n(TestSuite& tc)
+void test_bitwise_n(TestResultsSet& tc)
 {
     using namespace simdpp;
 
@@ -118,7 +118,7 @@ void test_bitwise_n(TestSuite& tc)
 
 void test_bitwise(TestResults& res)
 {
-    TestSuite& tc = NEW_TEST_SUITE(res, "bitwise");
+    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "bitwise");
     test_bitwise_n<16>(tc);
     test_bitwise_n<32>(tc);
     test_bitwise_n<64>(tc);

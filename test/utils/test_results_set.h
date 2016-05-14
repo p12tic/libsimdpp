@@ -13,10 +13,10 @@
 #include <iosfwd>
 #include <cstdint>
 
-class TestSuite;
+class TestResultsSet;
 
-bool test_equal(const TestSuite& a, const char* a_arch,
-                const TestSuite& b, const char* b_arch,
+bool test_equal(const TestResultsSet& a, const char* a_arch,
+                const TestResultsSet& b, const char* b_arch,
                 std::ostream& err);
 
 // Types of vector elements
@@ -33,7 +33,13 @@ enum VectorType : uint8_t {
     TYPE_FLOAT64
 };
 
-class TestSuite {
+/** The class represents test results for certain instruction set. We later
+    compare the results with other instruction sets and assume that all
+    differences are errors. It's possible to set the precision of each test
+    result so that the differencies less than the set precision are not
+    interpreted as errors.
+*/
+class TestResultsSet {
 public:
 
     // Holds one result vector
@@ -109,11 +115,11 @@ public:
 
 private:
     friend class TestResults;
-    friend bool test_equal(const TestSuite& a, const char* a_arch,
-                           const TestSuite& b, const char* b_arch,
+    friend bool test_equal(const TestResultsSet& a, const char* a_arch,
+                           const TestResultsSet& b, const char* b_arch,
                            std::ostream& err);
 
-    TestSuite(const char* name, const char* file);
+    TestResultsSet(const char* name, const char* file);
 
     static std::size_t size_for_type(VectorType t);
     static unsigned precision_for_result(const Result& res);
