@@ -31,7 +31,7 @@ TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length,
         results_.push_back(std::vector<Result>());
 
     auto& curr_part = results_[curr_results_section_];
-    curr_part.emplace_back(type, length, size_for_type(type), file, line, seq_++,
+    curr_part.emplace_back(type, length, element_size_for_type(type), file, line, seq_++,
                            curr_precision_ulp_, curr_fp_zero_equal_);
     return curr_part.back();
 }
@@ -45,7 +45,7 @@ std::size_t TestResultsSet::num_results() const
     return r;
 }
 
-std::size_t TestResultsSet::size_for_type(VectorType t)
+std::size_t element_size_for_type(VectorType t)
 {
     switch (t) {
     case TYPE_INT8:
@@ -62,7 +62,7 @@ std::size_t TestResultsSet::size_for_type(VectorType t)
     }
 }
 
-unsigned TestResultsSet::precision_for_result(const Result& res)
+unsigned precision_for_result(const TestResultsSet::Result& res)
 {
     switch (res.type) {
     case TYPE_FLOAT32:
@@ -208,11 +208,11 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
 
 const char* get_filename_from_results_set(const TestResultsSet& a)
 {
-    if (a.get_results().empty())
+    if (a.results().empty())
         return nullptr;
-    if (a.get_results().front().empty())
+    if (a.results().front().empty())
         return nullptr;
-    return a.get_results().front().front().file;
+    return a.results().front().front().file;
 }
 
 const char* get_filename_from_results_set(const TestResultsSet& a,
@@ -252,7 +252,7 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
     };
     auto fmt_test_case = [&]()
     {
-        err << "  In test case \"" << a.name_ << "\" :\n";
+        err << "  In test case \"" << a.name() << "\" :\n";
     };
     auto fmt_seq = [&](unsigned num)
     {
@@ -349,33 +349,33 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
 
 
     // Handle fatal errors first
-    if (std::strcmp(a.name_, b.name_) != 0) {
+    if (std::strcmp(a.name(), b.name()) != 0) {
         fmt_separator();
         fmt_file(get_filename_from_results_set(a, b));
         err << "FATAL: Test case names do not match: \""
-            << a.name_ << "\" and \""  << b.name_ << "\"\n";
+            << a.name() << "\" and \""  << b.name() << "\"\n";
         fmt_separator();
         return false;
     }
 
-    if (a.results_.size() != b.results_.size()) {
-        if (a.results_.size() == 0 || b.results_.size() == 0) {
+    if (a.results().size() != b.results().size()) {
+        if (a.results().size() == 0 || b.results().size() == 0) {
             return true; // Ignore empty result sets
         }
         fmt_separator();
         fmt_file(get_filename_from_results_set(a, b));
         fmt_test_case();
         err << "FATAL: The number of result sections do not match: "
-            << a.results_.size() << "/" << b.results_.size() << "\n";
+            << a.results().size() << "/" << b.results().size() << "\n";
         fmt_separator();
         return false;
     }
 
     bool ok = true;
     // Compare results
-    for (unsigned is = 0; is < a.results_.size(); is++) {
-        const auto& sect_a = a.results_[is];
-        const auto& sect_b = b.results_[is];
+    for (unsigned is = 0; is < a.results().size(); is++) {
+        const auto& sect_a = a.results()[is];
+        const auto& sect_b = b.results()[is];
 
         if (sect_a.empty() || sect_b.empty())
             continue;
@@ -418,8 +418,8 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
                 return false;
             }
 
-            unsigned prec = std::max(TestResultsSet::precision_for_result(ia),
-                                     TestResultsSet::precision_for_result(ib));
+            unsigned prec = std::max(precision_for_result(ia),
+                                     precision_for_result(ib));
 
             bool fp_zero_eq = ia.fp_zero_eq || ib.fp_zero_eq;
 

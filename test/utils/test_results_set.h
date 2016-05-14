@@ -33,6 +33,9 @@ enum VectorType : uint8_t {
     TYPE_FLOAT64
 };
 
+// Returns size of the element of a vector of given type
+std::size_t element_size_for_type(VectorType t);
+
 /** The class represents test results for certain instruction set. We later
     compare the results with other instruction sets and assume that all
     differences are errors. It's possible to set the precision of each test
@@ -115,18 +118,12 @@ public:
     */
     void sync_archs()                       { curr_results_section_++; reset_seq(); }
 
-    const std::vector<std::vector<Result>>& get_results() const { return results_; }
+    const std::vector<std::vector<Result>>& results() const { return results_; }
 
 private:
     friend class TestResults;
-    friend bool test_equal(const TestResultsSet& a, const char* a_arch,
-                           const TestResultsSet& b, const char* b_arch,
-                           std::ostream& err);
 
     TestResultsSet(const char* name);
-
-    static std::size_t size_for_type(VectorType t);
-    static unsigned precision_for_result(const Result& res);
 
     const char* name_;
     unsigned seq_;
