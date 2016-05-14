@@ -244,7 +244,7 @@ struct Test_shuffle_zbytes16_x16 {
 void test_shuffle_bytes(TestResults& res)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSSE3 || SIMDPP_USE_NEON
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "shuffle_bytes");
+    TestResultsSet& tc = res.new_results_set("shuffle_bytes");
 
     using namespace simdpp;
 

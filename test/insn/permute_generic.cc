@@ -70,7 +70,7 @@ void test_permute_generic_n(TestResultsSet& tc)
 
 void test_permute_generic(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "permute_generic");
+    TestResultsSet& tc = res.new_results_set("permute_generic");
 
     test_permute_generic_n<16>(tc);
     test_permute_generic_n<32>(tc);

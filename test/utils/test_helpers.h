@@ -87,54 +87,54 @@ private:
     the type enum from the type of the supplied argument.
     @{
 */
-inline void test_push_internal(TestResultsSet& t, std::int8_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int8_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_INT8, 1, line).set(0, &data);
+    t.push(TYPE_INT8, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint8_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint8_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_UINT8, 1, line).set(0, &data);
+    t.push(TYPE_UINT8, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::int16_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int16_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_INT16, 1, line).set(0, &data);
+    t.push(TYPE_INT16, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint16_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint16_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_UINT16, 1, line).set(0, &data);
+    t.push(TYPE_UINT16, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::int32_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int32_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_INT32, 1, line).set(0, &data);
+    t.push(TYPE_INT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint32_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint32_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_UINT32, 1, line).set(0, &data);
+    t.push(TYPE_UINT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::int64_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int64_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_INT64, 1, line).set(0, &data);
+    t.push(TYPE_INT64, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint64_t data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint64_t data, const char* file, unsigned line)
 {
-    t.push(TYPE_UINT64, 1, line).set(0, &data);
+    t.push(TYPE_UINT64, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, float data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, float data, const char* file, unsigned line)
 {
-    t.push(TYPE_FLOAT32, 1, line).set(0, &data);
+    t.push(TYPE_FLOAT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, double data, unsigned line)
+inline void test_push_internal(TestResultsSet& t, double data, const char* file, unsigned line)
 {
-    t.push(TYPE_FLOAT64, 1, line).set(0, &data);
+    t.push(TYPE_FLOAT64, 1, file, line).set(0, &data);
 }
 
 template<class V>
@@ -150,60 +150,60 @@ void test_push_internal_vec(TestResultsSet::Result& res, const V& data)
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int8<N>& data, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int8<N>& data, const char* file, unsigned line)
 {
-    test_push_internal_vec(t.push(TYPE_INT8, N, line), data);
+    test_push_internal_vec(t.push(TYPE_INT8, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint8<N>& data, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint8<N>& data, const char* file, unsigned line)
 {
-    test_push_internal_vec(t.push(TYPE_UINT8, N, line), data);
+    test_push_internal_vec(t.push(TYPE_UINT8, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int16<N>& data, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int16<N>& data, const char* file, unsigned line)
 {
-    test_push_internal_vec(t.push(TYPE_INT16, N, line), data);
-}
-
-template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint16<N>& data, unsigned line)
-{
-    test_push_internal_vec(t.push(TYPE_UINT16, N, line), data);
-}
-template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int32<N>& data, unsigned line)
-{
-    test_push_internal_vec(t.push(TYPE_INT32, N, line), data);
+    test_push_internal_vec(t.push(TYPE_INT16, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint32<N>& data, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint16<N>& data, const char* file, unsigned line)
 {
-    test_push_internal_vec(t.push(TYPE_UINT32, N, line), data);
+    test_push_internal_vec(t.push(TYPE_UINT16, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int64<N>& data, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int32<N>& data, const char* file, unsigned line)
 {
-    test_push_internal_vec(t.push(TYPE_INT64, N, line), data);
-}
-
-template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint64<N>& data, unsigned line)
-{
-    test_push_internal_vec(t.push(TYPE_UINT64, N, line), data);
+    test_push_internal_vec(t.push(TYPE_INT32, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::float32<N>& data, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint32<N>& data, const char* file, unsigned line)
 {
-    test_push_internal_vec(t.push(TYPE_FLOAT32, N, line), data);
+    test_push_internal_vec(t.push(TYPE_UINT32, N, file, line), data);
+}
+template<unsigned N>
+void test_push_internal(TestResultsSet& t, const simdpp::int64<N>& data, const char* file, unsigned line)
+{
+    test_push_internal_vec(t.push(TYPE_INT64, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint64<N>& data, const char* file, unsigned line)
 {
-    test_push_internal_vec(t.push(TYPE_FLOAT64, N, line), data);
+    test_push_internal_vec(t.push(TYPE_UINT64, N, file, line), data);
+}
+
+template<unsigned N>
+void test_push_internal(TestResultsSet& t, const simdpp::float32<N>& data, const char* file, unsigned line)
+{
+    test_push_internal_vec(t.push(TYPE_FLOAT32, N, file, line), data);
+}
+
+template<unsigned N>
+void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const char* file, unsigned line)
+{
+    test_push_internal_vec(t.push(TYPE_FLOAT64, N, file, line), data);
 }
 // @}
 } // namespace SIMDPP_ARCH_NAMESPACE
@@ -219,9 +219,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, unsig
     OP - operation to apply to the array or arguments
     R - type to cast the object to be pushed to
 */
-#define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __LINE__); }
-
-#define NEW_TEST_RESULTS_SET(R, NAME) ((R).new_results_set((NAME), __FILE__))
+#define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __FILE__, __LINE__); }
 
 #define TEST_ARRAY_PUSH(TC, T, A)                                       \
 {                                                                       \

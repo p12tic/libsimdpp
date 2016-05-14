@@ -244,7 +244,7 @@ void test_math_int_n(TestResultsSet& tc)
 
 void test_math_int(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "math_int");
+    TestResultsSet& tc = res.new_results_set("math_int");
     test_math_int_n<16>(tc);
     test_math_int_n<32>(tc);
     test_math_int_n<64>(tc);

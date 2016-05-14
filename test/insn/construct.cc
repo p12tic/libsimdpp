@@ -113,7 +113,7 @@ void test_construct_n(TestResultsSet& tc)
 
 void test_construct(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "construct");
+    TestResultsSet& tc = res.new_results_set("construct");
     test_construct_n<16>(tc);
     test_construct_n<32>(tc);
     test_construct_n<64>(tc);

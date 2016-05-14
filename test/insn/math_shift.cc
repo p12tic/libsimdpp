@@ -71,7 +71,7 @@ void test_math_shift_n(TestResultsSet& tc)
 
 void test_math_shift(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "math_shift");
+    TestResultsSet& tc = res.new_results_set("math_shift");
 
     test_math_shift_n<16>(tc);
     test_math_shift_n<32>(tc);

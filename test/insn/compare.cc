@@ -184,7 +184,7 @@ void test_compare_n(TestResultsSet& tc)
 
 void test_compare(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "compare");
+    TestResultsSet& tc = res.new_results_set("compare");
     test_compare_n<16>(tc);
     test_compare_n<32>(tc);
     test_compare_n<64>(tc);

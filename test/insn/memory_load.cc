@@ -100,7 +100,7 @@ void test_memory_load_n(TestResultsSet& tc)
 
 void test_memory_load(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "memory_load");
+    TestResultsSet& tc = res.new_results_set("memory_load");
 
     test_memory_load_n<16>(tc);
     test_memory_load_n<32>(tc);

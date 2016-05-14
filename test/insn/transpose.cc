@@ -63,7 +63,7 @@ void test_transpose_n(TestResultsSet& tc)
 
 void test_transpose(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "transpose");
+    TestResultsSet& tc = res.new_results_set("transpose");
     test_transpose_n<16>(tc);
     test_transpose_n<32>(tc);
     test_transpose_n<64>(tc);

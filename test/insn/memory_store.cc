@@ -138,7 +138,7 @@ void test_memory_store_n(TestResultsSet& tc)
 
 void test_memory_store(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "memory_store");
+    TestResultsSet& tc = res.new_results_set("memory_store");
 
     test_memory_store_n<16>(tc);
     test_memory_store_n<32>(tc);

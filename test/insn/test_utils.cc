@@ -55,7 +55,7 @@ void test_test_utils_n(TestResultsSet& tc)
 
 void test_test_utils(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "test_utils");
+    TestResultsSet& tc = res.new_results_set("test_utils");
     test_test_utils_n<16>(tc);
     test_test_utils_n<32>(tc);
     test_test_utils_n<64>(tc);

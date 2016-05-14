@@ -169,7 +169,7 @@ void test_shuffle_n(TestResultsSet& tc)
 
 void test_shuffle(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "shuffle");
+    TestResultsSet& tc = res.new_results_set("shuffle");
 
     test_shuffle_n<16>(tc);
     test_shuffle_n<32>(tc);

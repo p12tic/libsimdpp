@@ -46,10 +46,12 @@ public:
     struct Result {
         static const unsigned num_bytes = 32;
 
-        Result(VectorType atype, unsigned alength, unsigned ael_size, unsigned aline,
-               unsigned aseq, unsigned aprec_ulp, bool afp_zero_eq)
+        Result(VectorType atype, unsigned alength, unsigned ael_size,
+               const char* afile, unsigned aline, unsigned aseq,
+               unsigned aprec_ulp, bool afp_zero_eq)
         {
             type = atype;
+            file = afile;
             line = aline;
             seq = aseq;
             prec_ulp = aprec_ulp;
@@ -82,7 +84,7 @@ public:
     };
 
     /// Stores the results into the results set.
-    Result& push(VectorType type, unsigned length, unsigned line);
+    Result& push(VectorType type, unsigned length, const char* file, unsigned line);
 
     /// Sets the allowed error in ULPs. Only meaningful for floating-point data.
     /// Affects all pushed data until the next call to @a unset_precision
@@ -113,19 +115,20 @@ public:
     */
     void sync_archs()                       { curr_results_section_++; reset_seq(); }
 
+    const std::vector<std::vector<Result>>& get_results() const { return results_; }
+
 private:
     friend class TestResults;
     friend bool test_equal(const TestResultsSet& a, const char* a_arch,
                            const TestResultsSet& b, const char* b_arch,
                            std::ostream& err);
 
-    TestResultsSet(const char* name, const char* file);
+    TestResultsSet(const char* name);
 
     static std::size_t size_for_type(VectorType t);
     static unsigned precision_for_result(const Result& res);
 
     const char* name_;
-    const char* file_;
     unsigned seq_;
     unsigned curr_precision_ulp_;
     unsigned curr_fp_zero_equal_;

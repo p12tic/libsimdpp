@@ -15,9 +15,8 @@
 #include <typeinfo>
 #include <cstdlib>
 
-TestResultsSet::TestResultsSet(const char* name, const char* file) :
+TestResultsSet::TestResultsSet(const char* name) :
     name_(name),
-    file_(file),
     curr_precision_ulp_(0),
     curr_fp_zero_equal_(false),
     curr_results_section_(0)
@@ -25,13 +24,14 @@ TestResultsSet::TestResultsSet(const char* name, const char* file) :
     reset_seq();
 }
 
-TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length, unsigned line)
+TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length,
+                                             const char* file, unsigned line)
 {
     while (results_.size() <= curr_results_section_)
         results_.push_back(std::vector<Result>());
 
     auto& curr_part = results_[curr_results_section_];
-    curr_part.emplace_back(type, length, size_for_type(type), line, seq_++,
+    curr_part.emplace_back(type, length, size_for_type(type), file, line, seq_++,
                            curr_precision_ulp_, curr_fp_zero_equal_);
     return curr_part.back();
 }
@@ -45,7 +45,7 @@ std::size_t TestResultsSet::num_results() const
     return r;
 }
 
-std::size_t TestResultsSet::size_for_type(Type t)
+std::size_t TestResultsSet::size_for_type(VectorType t)
 {
     switch (t) {
     case TYPE_INT8:
@@ -206,6 +206,24 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
     return true;
 }
 
+const char* get_filename_from_results_set(const TestResultsSet& a)
+{
+    if (a.get_results().empty())
+        return nullptr;
+    if (a.get_results().front().empty())
+        return nullptr;
+    return a.get_results().front().front().file;
+}
+
+const char* get_filename_from_results_set(const TestResultsSet& a,
+                                          const TestResultsSet& b)
+{
+    const char* res = get_filename_from_results_set(a);
+    if (res)
+        return res;
+    return get_filename_from_results_set(b);
+}
+
 bool test_equal(const TestResultsSet& a, const char* a_arch,
                 const TestResultsSet& b, const char* b_arch,
                 std::ostream& err)
@@ -219,15 +237,18 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
     {
         err << "  For architectures: " << a_arch << " and " << b_arch << " :\n";
     };
-    auto fmt_file = [&]()
+    auto fmt_file = [&](const char* file)
     {
         fmt_arch();
-        err << "  In file \"" << a.file_ << "\" :\n";
+        if (file == nullptr) {
+            file = "<unknown>";
+        }
+        err << "  In file \"" << file << "\" :\n";
     };
-    auto fmt_file_line = [&](unsigned line)
+    auto fmt_file_line = [&](const char* file, unsigned line)
     {
         fmt_arch();
-        err << "  In file \"" << a.file_ << "\" at line " << line << " : \n";
+        err << "  In file \"" << file << "\" at line " << line << " : \n";
     };
     auto fmt_test_case = [&]()
     {
@@ -326,10 +347,11 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
         }
     };
 
+
     // Handle fatal errors first
     if (std::strcmp(a.name_, b.name_) != 0) {
         fmt_separator();
-        fmt_file();
+        fmt_file(get_filename_from_results_set(a, b));
         err << "FATAL: Test case names do not match: \""
             << a.name_ << "\" and \""  << b.name_ << "\"\n";
         fmt_separator();
@@ -341,7 +363,7 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
             return true; // Ignore empty result sets
         }
         fmt_separator();
-        fmt_file();
+        fmt_file(get_filename_from_results_set(a, b));
         fmt_test_case();
         err << "FATAL: The number of result sections do not match: "
             << a.results_.size() << "/" << b.results_.size() << "\n";
@@ -360,7 +382,7 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
 
         if (sect_a.size() != sect_b.size()) {
             fmt_separator();
-            fmt_file();
+            fmt_file(sect_a.front().file);
             fmt_test_case();
             err << "FATAL: The number of results in a section do not match: "
                 << " section: " << is << " result count: "
@@ -375,7 +397,7 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
 
             if (ia.line != ib.line) {
                 fmt_separator();
-                fmt_file();
+                fmt_file(ia.file);
                 fmt_test_case();
                 err << "FATAL: Line numbers do not match for items with the same "
                     << "sequence number: section: " << is << " id: " << i
@@ -386,7 +408,7 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
 
             if (ia.type != ib.type) {
                 fmt_separator();
-                fmt_file_line(ia.line);
+                fmt_file_line(ia.file, ia.line);
                 fmt_test_case();
                 err << "FATAL: Types do not match for items with the same "
                     << "sequence number: id: " << i
@@ -403,7 +425,7 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
 
             if (!cmpeq_result(ia, ib, prec, fp_zero_eq)) {
                 fmt_separator();
-                fmt_file_line(ia.line);
+                fmt_file_line(ia.file, ia.line);
                 fmt_test_case();
                 fmt_seq(ia.seq);
                 err << "ERROR: Vectors not equal: \n";

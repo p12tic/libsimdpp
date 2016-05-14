@@ -118,7 +118,7 @@ void test_bitwise_n(TestResultsSet& tc)
 
 void test_bitwise(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "bitwise");
+    TestResultsSet& tc = res.new_results_set("bitwise");
     test_bitwise_n<16>(tc);
     test_bitwise_n<32>(tc);
     test_bitwise_n<64>(tc);

@@ -35,10 +35,10 @@ public:
     {
     }
 
-    TestResultsSet& new_results_set(const char* name, const char* file)
+    TestResultsSet& new_results_set(const char* name)
     {
         unsigned id = test_sets_.size();
-        test_sets_.push_back(TestCaseCont{id, TestResultsSet{name, file}});
+        test_sets_.push_back(TestCaseCont{id, TestResultsSet{name}});
         return test_sets_.back().results_set;
     }
 

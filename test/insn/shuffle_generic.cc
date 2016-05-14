@@ -62,7 +62,7 @@ void test_shuffle_generic_n(TestResultsSet& tc)
 
 void test_shuffle_generic(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "shuffle_generic");
+    TestResultsSet& tc = res.new_results_set("shuffle_generic");
 
     test_shuffle_generic_n<16>(tc);
     test_shuffle_generic_n<32>(tc);

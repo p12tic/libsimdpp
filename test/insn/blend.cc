@@ -121,7 +121,7 @@ void test_blend_n(TestResultsSet& tc)
 
 void test_blend(TestResults& res)
 {
-    TestResultsSet& tc = NEW_TEST_RESULTS_SET(res, "blend");
+    TestResultsSet& tc = res.new_results_set("blend");
     test_blend_n<16>(tc);
     test_blend_n<32>(tc);
     test_blend_n<64>(tc);
