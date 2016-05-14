@@ -13,29 +13,13 @@
 #include <iosfwd>
 #include <cstdint>
 #include "test_reporter.h"
+#include "vector_type.h"
 
 class TestResultsSet;
 
 void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                             const TestResultsSet& b, const char* b_arch,
                             TestReporter& tr);
-
-// Types of vector elements
-enum VectorType : uint8_t {
-    TYPE_INT8 = 0,
-    TYPE_UINT8,
-    TYPE_INT16,
-    TYPE_UINT16,
-    TYPE_UINT32,
-    TYPE_INT32,
-    TYPE_UINT64,
-    TYPE_INT64,
-    TYPE_FLOAT32,
-    TYPE_FLOAT64
-};
-
-// Returns size of the element of a vector of given type
-std::size_t element_size_for_type(VectorType t);
 
 /** The class represents test results for certain instruction set. We later
     compare the results with other instruction sets and assume that all

@@ -36,23 +36,6 @@ TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length,
     return curr_part.back();
 }
 
-std::size_t element_size_for_type(VectorType t)
-{
-    switch (t) {
-    case TYPE_INT8:
-    case TYPE_UINT8: return 1;
-    case TYPE_INT16:
-    case TYPE_UINT16: return 2;
-    case TYPE_UINT32:
-    case TYPE_INT32: return 4;
-    case TYPE_UINT64:
-    case TYPE_INT64: return 8;
-    case TYPE_FLOAT32: return 4;
-    case TYPE_FLOAT64: return 8;
-    default: std::abort();
-    }
-}
-
 unsigned precision_for_result(const TestResultsSet::Result& res)
 {
     switch (res.type) {
