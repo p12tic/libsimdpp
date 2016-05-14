@@ -48,7 +48,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& opts)
 {
-    (void) tr;
     test_test_utils(res);
 
     test_construct(res);
@@ -63,8 +62,8 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
     test_shuffle_generic(res);
     test_shuffle(res);
     test_shuffle_bytes(res);
-    test_memory_load(res);
-    test_memory_store(res);
+    test_memory_load(res, tr);
+    test_memory_store(res, tr);
     test_transpose(res);
 }
 
