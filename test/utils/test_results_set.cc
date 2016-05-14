@@ -36,15 +36,6 @@ TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length,
     return curr_part.back();
 }
 
-std::size_t TestResultsSet::num_results() const
-{
-    std::size_t r = 0;
-    for (const auto& sect: results_) {
-        r += sect.size();
-    }
-    return r;
-}
-
 std::size_t element_size_for_type(VectorType t)
 {
     switch (t) {
@@ -224,18 +215,17 @@ const char* get_filename_from_results_set(const TestResultsSet& a,
     return get_filename_from_results_set(b);
 }
 
-bool test_equal(const TestResultsSet& a, const char* a_arch,
-                const TestResultsSet& b, const char* b_arch,
-                std::ostream& err)
-
+void report_test_comparison(const TestResultsSet& a, const char* a_arch,
+                            const TestResultsSet& b, const char* b_arch,
+                            TestReporter& tr)
 {
     auto fmt_separator = [&]()
     {
-        err << "--------------------------------------------------------------\n";
+        tr.out() << "--------------------------------------------------------------\n";
     };
     auto fmt_arch = [&]()
     {
-        err << "  For architectures: " << a_arch << " and " << b_arch << " :\n";
+        tr.out() << "  For architectures: " << a_arch << " and " << b_arch << " :\n";
     };
     auto fmt_file = [&](const char* file)
     {
@@ -243,25 +233,25 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
         if (file == nullptr) {
             file = "<unknown>";
         }
-        err << "  In file \"" << file << "\" :\n";
+        tr.out() << "  In file \"" << file << "\" :\n";
     };
     auto fmt_file_line = [&](const char* file, unsigned line)
     {
         fmt_arch();
-        err << "  In file \"" << file << "\" at line " << line << " : \n";
+        tr.out() << "  In file \"" << file << "\" at line " << line << " : \n";
     };
     auto fmt_test_case = [&]()
     {
-        err << "  In test case \"" << a.name() << "\" :\n";
+        tr.out() << "  In test case \"" << a.name() << "\" :\n";
     };
     auto fmt_seq = [&](unsigned num)
     {
-        err << "  Sequence number: " << num << "\n"; // start from one
+        tr.out() << "  Sequence number: " << num << "\n"; // start from one
     };
     auto fmt_prec = [&](unsigned prec)
     {
         if (prec > 0) {
-            err << "  Precision: " << prec << "ULP\n";
+            tr.out() << "  Precision: " << prec << "ULP\n";
         }
     };
 
@@ -286,44 +276,44 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
     {
         switch (r.type) {
         case TYPE_UINT8:
-            fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
-            fmt_num(err, r.length, 4, prefix, (const int8_t*)r.d());
+            fmt_hex(tr.out(), r.length, 1, prefix, (const uint8_t*)r.d());
+            fmt_num(tr.out(), r.length, 4, prefix, (const int8_t*)r.d());
             break;
         case TYPE_INT8:
-            fmt_hex(err, r.length, 1, prefix, (const uint8_t*)r.d());
-            fmt_num(err, r.length, 4, prefix, (const uint8_t*)r.d());
+            fmt_hex(tr.out(), r.length, 1, prefix, (const uint8_t*)r.d());
+            fmt_num(tr.out(), r.length, 4, prefix, (const uint8_t*)r.d());
             break;
         case TYPE_UINT16:
-            fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
-            fmt_num(err, r.length, 6, prefix, (const int16_t*)r.d());
+            fmt_hex(tr.out(), r.length, 2, prefix, (const uint16_t*)r.d());
+            fmt_num(tr.out(), r.length, 6, prefix, (const int16_t*)r.d());
             break;
         case TYPE_INT16:
-            fmt_hex(err, r.length, 2, prefix, (const uint16_t*)r.d());
-            fmt_num(err, r.length, 6, prefix, (const uint16_t*)r.d());
+            fmt_hex(tr.out(), r.length, 2, prefix, (const uint16_t*)r.d());
+            fmt_num(tr.out(), r.length, 6, prefix, (const uint16_t*)r.d());
             break;
         case TYPE_UINT32:
-            fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
-            fmt_num(err, r.length, 11, prefix, (const int32_t*)r.d());
+            fmt_hex(tr.out(), r.length, 4, prefix, (const uint32_t*)r.d());
+            fmt_num(tr.out(), r.length, 11, prefix, (const int32_t*)r.d());
             break;
         case TYPE_INT32:
-            fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
-            fmt_num(err, r.length, 11, prefix, (const uint32_t*)r.d());
+            fmt_hex(tr.out(), r.length, 4, prefix, (const uint32_t*)r.d());
+            fmt_num(tr.out(), r.length, 11, prefix, (const uint32_t*)r.d());
             break;
         case TYPE_UINT64:
-            fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
-            fmt_num(err, r.length, 20, prefix, (const int64_t*)r.d());
+            fmt_hex(tr.out(), r.length, 8, prefix, (const uint64_t*)r.d());
+            fmt_num(tr.out(), r.length, 20, prefix, (const int64_t*)r.d());
             break;
         case TYPE_INT64:
-            fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
-            fmt_num(err, r.length, 20, prefix, (const uint64_t*)r.d());
+            fmt_hex(tr.out(), r.length, 8, prefix, (const uint64_t*)r.d());
+            fmt_num(tr.out(), r.length, 20, prefix, (const uint64_t*)r.d());
             break;
         case TYPE_FLOAT32:
-            fmt_hex(err, r.length, 4, prefix, (const uint32_t*)r.d());
-            fmt_num(err, r.length, 7, prefix, (const float*)r.d());
+            fmt_hex(tr.out(), r.length, 4, prefix, (const uint32_t*)r.d());
+            fmt_num(tr.out(), r.length, 7, prefix, (const float*)r.d());
             break;
         case TYPE_FLOAT64:
-            fmt_hex(err, r.length, 8, prefix, (const uint64_t*)r.d());
-            fmt_num(err, r.length, 17, prefix, (const double*)r.d());
+            fmt_hex(tr.out(), r.length, 8, prefix, (const uint64_t*)r.d());
+            fmt_num(tr.out(), r.length, 17, prefix, (const double*)r.d());
             break;
         }
     };
@@ -352,26 +342,27 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
     if (std::strcmp(a.name(), b.name()) != 0) {
         fmt_separator();
         fmt_file(get_filename_from_results_set(a, b));
-        err << "FATAL: Test case names do not match: \""
-            << a.name() << "\" and \""  << b.name() << "\"\n";
+        tr.out() << "FATAL: Test case names do not match: \""
+                 << a.name() << "\" and \""  << b.name() << "\"\n";
         fmt_separator();
-        return false;
+        tr.add_result(false);
+        return;
     }
 
     if (a.results().size() != b.results().size()) {
         if (a.results().size() == 0 || b.results().size() == 0) {
-            return true; // Ignore empty result sets
+            return; // Ignore empty result sets
         }
         fmt_separator();
         fmt_file(get_filename_from_results_set(a, b));
         fmt_test_case();
-        err << "FATAL: The number of result sections do not match: "
-            << a.results().size() << "/" << b.results().size() << "\n";
+        tr.out() << "FATAL: The number of result sections do not match: "
+                 << a.results().size() << "/" << b.results().size() << "\n";
         fmt_separator();
-        return false;
+        tr.add_result(false);
+        return;
     }
 
-    bool ok = true;
     // Compare results
     for (unsigned is = 0; is < a.results().size(); is++) {
         const auto& sect_a = a.results()[is];
@@ -384,11 +375,11 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
             fmt_separator();
             fmt_file(sect_a.front().file);
             fmt_test_case();
-            err << "FATAL: The number of results in a section do not match: "
-                << " section: " << is << " result count: "
-                << sect_a.size() << "/" << sect_b.size() << "\n";
+            tr.out() << "FATAL: The number of results in a section do not match: "
+                     << " section: " << is << " result count: "
+                     << sect_a.size() << "/" << sect_b.size() << "\n";
             fmt_separator();
-            return false;
+            tr.add_result(false);
         }
 
         for (unsigned i = 0; i < sect_a.size(); ++i) {
@@ -399,23 +390,25 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
                 fmt_separator();
                 fmt_file(ia.file);
                 fmt_test_case();
-                err << "FATAL: Line numbers do not match for items with the same "
-                    << "sequence number: section: " << is << " id: " << i
-                    << " line_A: " << ia.line << " line_B: " << ib.line << "\n";
+                tr.out() << "FATAL: Line numbers do not match for items with the same "
+                         << "sequence number: section: " << is << " id: " << i
+                         << " line_A: " << ia.line << " line_B: " << ib.line << "\n";
                 fmt_separator();
-                return false;
+                tr.add_result(false);
+                return;
             }
 
             if (ia.type != ib.type) {
                 fmt_separator();
                 fmt_file_line(ia.file, ia.line);
                 fmt_test_case();
-                err << "FATAL: Types do not match for items with the same "
-                    << "sequence number: id: " << i
-                    << " type_A: " << type_str(ia.type)
-                    << " line_B: " << type_str(ib.type) << "\n";
+                tr.out() << "FATAL: Types do not match for items with the same "
+                         << "sequence number: id: " << i
+                         << " type_A: " << type_str(ia.type)
+                         << " line_B: " << type_str(ib.type) << "\n";
                 fmt_separator();
-                return false;
+                tr.add_result(false);
+                return;
             }
 
             unsigned prec = std::max(precision_for_result(ia),
@@ -428,14 +421,15 @@ bool test_equal(const TestResultsSet& a, const char* a_arch,
                 fmt_file_line(ia.file, ia.line);
                 fmt_test_case();
                 fmt_seq(ia.seq);
-                err << "ERROR: Vectors not equal: \n";
+                tr.out() << "ERROR: Vectors not equal: \n";
                 fmt_vector(ia, "A : ");
                 fmt_vector(ib, "B : ");
                 fmt_prec(prec);
                 fmt_separator();
-                ok = false;
+                tr.add_result(false);
+            } else {
+                tr.add_result(true);
             }
         }
     }
-    return ok;
 }

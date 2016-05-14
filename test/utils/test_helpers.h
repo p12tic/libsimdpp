@@ -510,7 +510,7 @@ void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
     tr.add_result(success);
 
     if (!success) {
-        std::cout << "FAIL at line " << line << " of " << file << std::endl;
+        tr.out() << "FAIL at line " << line << " of " << file << "\n";
     }
 }
 

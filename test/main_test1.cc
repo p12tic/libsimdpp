@@ -6,6 +6,7 @@
 */
 
 #include "utils/test_results.h"
+#include "utils/test_reporter.h"
 #include "insn/tests.h"
 #include <simdpp/simd.h>
 #include <algorithm>
@@ -92,7 +93,8 @@ int main(int argc, char* argv[])
     TestOptions options;
     options.is_simulator = is_simulator;
 
-    std::ostream& err = std::cerr;
+    TestReporter tr(std::cerr);
+
     const auto& arch_list = get_test_archs();
     auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
                                   [](const simdpp::detail::FnVersion& a) -> bool
@@ -101,7 +103,7 @@ int main(int argc, char* argv[])
                                   });
 
     if (null_arch == arch_list.end()) {
-        err << "FATAL: NULL architecture not defined\n";
+        tr.out() << "FATAL: NULL architecture not defined\n";
         return EXIT_FAILURE;
     }
 
@@ -110,30 +112,23 @@ int main(int argc, char* argv[])
     TestResults null_results(null_arch->arch_name);
     reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(null_arch->fun_ptr)(null_results, options);
 
-    err << "Num results: " << null_results.num_results() << '\n';
-
-    bool ok = true;
-
     for (auto it = arch_list.begin(); it != arch_list.end(); it++) {
         if (it->fun_ptr == NULL || it == null_arch) {
             continue;
         }
 
         if (!simdpp::test_arch_subset(current_arch, it->needed_arch)) {
-            err << "Not testing: " << it->arch_name << std::endl;
+            tr.out() << "Not testing: " << it->arch_name << std::endl;
             continue;
         }
-        err << "Testing: " << it->arch_name << std::endl;
+        tr.out() << "Testing: " << it->arch_name << std::endl;
 
         TestResults results(it->arch_name);
         reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(it->fun_ptr)(results, options);
 
-        if (!test_equal(null_results, results, err)) {
-            ok = false;
-        }
+        report_test_comparison(null_results, results, tr);
     }
 
-    if (!ok) {
-        return EXIT_FAILURE;
-    }
+    tr.report_summary();
+    return tr.success() ? EXIT_SUCCESS : EXIT_FAILURE;
 }

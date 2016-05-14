@@ -9,6 +9,7 @@
 #define LIBSIMDPP_TEST_UTILS_TEST_RESULTS_H
 
 #include "test_results_set.h"
+#include "test_reporter.h"
 #include <vector>
 #include <deque>
 #include <functional>
@@ -42,26 +43,17 @@ public:
         return test_sets_.back().results_set;
     }
 
-    std::size_t num_results() const
-    {
-        std::size_t r = 0;
-        for (const auto& i: test_sets_) {
-            r += i.results_set.num_results();
-        }
-        return r;
-    }
-
 private:
 
-    friend bool test_equal(const TestResults& a, const TestResults& b,
-                           std::ostream& err);
+    friend void report_test_comparison(const TestResults& a, const TestResults& b,
+                                       TestReporter& tr);
 
     const char* arch_;
     // use deque because we must never invalidate references to test cases
     std::deque<TestCaseCont> test_sets_;
 };
 
-inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream& err)
+inline void report_test_comparison(const TestResults& a, const TestResults& b, TestReporter& tr)
 {
     using TestCaseCont = TestResults::TestCaseCont;
     using CaseContPair = std::pair<std::reference_wrapper<const TestCaseCont>,
@@ -108,15 +100,10 @@ inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream&
     std::sort(to_compare.begin(), to_compare.end(), ins_cmp);
 
     // loop through cases with the same names
-    bool ok = true;
     for (const auto& io: to_compare) {
-        bool r = test_equal(io.first.get().results_set, a.arch_,
-                            io.second.get().results_set, b.arch_, err);
-        if (!r) {
-            ok = false;
-        }
+        report_test_comparison(io.first.get().results_set, a.arch_,
+                               io.second.get().results_set, b.arch_, tr);
     }
-    return ok;
 }
 
 #endif

@@ -12,12 +12,13 @@
 #include <cstring>
 #include <iosfwd>
 #include <cstdint>
+#include "test_reporter.h"
 
 class TestResultsSet;
 
-bool test_equal(const TestResultsSet& a, const char* a_arch,
-                const TestResultsSet& b, const char* b_arch,
-                std::ostream& err);
+void report_test_comparison(const TestResultsSet& a, const char* a_arch,
+                            const TestResultsSet& b, const char* b_arch,
+                            TestReporter& tr);
 
 // Types of vector elements
 enum VectorType : uint8_t {
@@ -105,9 +106,6 @@ public:
 
     /// Resets the sequence number
     void reset_seq()                        { seq_ = 1; }
-
-    /// The number of results pushed to the results set
-    std::size_t num_results() const;
 
     /** Allows synchronizing tests in cases when certain architectures do not
         execute the test in question. The function must be called before and
