@@ -43,4 +43,16 @@ static inline std::size_t element_size_for_type(VectorType t)
     }
 }
 
+template<class V> struct GetVectorType;
+template<unsigned N, class E> struct GetVectorType<simdpp::uint8<N,E>> { static const unsigned value = TYPE_UINT8; };
+template<unsigned N, class E> struct GetVectorType<simdpp::int8<N,E>> { static const unsigned value = TYPE_INT8; };
+template<unsigned N, class E> struct GetVectorType<simdpp::uint16<N,E>> { static const unsigned value = TYPE_UINT16; };
+template<unsigned N, class E> struct GetVectorType<simdpp::int16<N,E>> { static const unsigned value = TYPE_INT16; };
+template<unsigned N, class E> struct GetVectorType<simdpp::uint32<N,E>> { static const unsigned value = TYPE_UINT32; };
+template<unsigned N, class E> struct GetVectorType<simdpp::int32<N,E>> { static const unsigned value = TYPE_INT32; };
+template<unsigned N, class E> struct GetVectorType<simdpp::float32<N,E>> { static const unsigned value = TYPE_FLOAT32; };
+template<unsigned N, class E> struct GetVectorType<simdpp::uint64<N,E>> { static const unsigned value = TYPE_UINT64; };
+template<unsigned N, class E> struct GetVectorType<simdpp::int64<N,E>> { static const unsigned value = TYPE_INT64; };
+template<unsigned N, class E> struct GetVectorType<simdpp::float64<N,E>> { static const unsigned value = TYPE_FLOAT64; };
+
 #endif
