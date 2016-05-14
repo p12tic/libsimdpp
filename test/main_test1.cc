@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
                                   });
 
     if (null_arch == arch_list.end()) {
-        std::cerr << "FATAL: NULL architecture not defined\n";
+        err << "FATAL: NULL architecture not defined\n";
         return EXIT_FAILURE;
     }
 
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     TestResults null_results(null_arch->arch_name);
     reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(null_arch->fun_ptr)(null_results, options);
 
-    std::cout << "Num results: " << null_results.num_results() << '\n';
+    err << "Num results: " << null_results.num_results() << '\n';
 
     bool ok = true;
 
@@ -120,10 +120,10 @@ int main(int argc, char* argv[])
         }
 
         if (!simdpp::test_arch_subset(current_arch, it->needed_arch)) {
-            std::cout << "Not testing: " << it->arch_name << std::endl;
+            err << "Not testing: " << it->arch_name << std::endl;
             continue;
         }
-        std::cout << "Testing: " << it->arch_name << std::endl;
+        err << "Testing: " << it->arch_name << std::endl;
 
         TestResults results(it->arch_name);
         reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(it->fun_ptr)(results, options);
