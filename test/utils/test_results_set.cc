@@ -52,11 +52,11 @@ template<> struct fix_char_type<uint8_t> { using type = int; };
 template<> struct fix_char_type<int8_t> { using type = int; };
 
 template<class T>
-void fmt_hex(std::ostream& err, unsigned num_elems, unsigned width,
-             const char* prefix, const T* p)
+void print_hex(std::ostream& err, unsigned num_elems, unsigned width,
+               const T* p)
 {
     static_assert(std::is_unsigned<T>::value, "T must be unsigned");
-    err << prefix << "[ " << std::hex << std::setfill('0');
+    err << "[ " << std::hex << std::setfill('0');
     err.precision(width);
     for (unsigned i = 0; i < num_elems; i++, p++) {
         err << std::setw(width*2) << uint64_t(*p);
@@ -64,15 +64,15 @@ void fmt_hex(std::ostream& err, unsigned num_elems, unsigned width,
             err << " ; ";
         }
     }
-    err << " ]\n";
+    err << " ]";
     err << std::dec << std::setfill(' ');
 }
 
 template<class T>
-void fmt_num(std::ostream& err, unsigned num_elems, unsigned precision,
-             const char* prefix, const T* p)
+void print_numeric(std::ostream& err, unsigned num_elems, unsigned precision,
+                   const T* p)
 {
-    err << prefix << "[ ";
+    err << "[ ";
     err.precision(precision);
     for (unsigned i = 0; i < num_elems; i++, p++) {
         err << typename fix_char_type<T>::type(*p);
@@ -80,8 +80,117 @@ void fmt_num(std::ostream& err, unsigned num_elems, unsigned precision,
             err << " ; ";
         }
     }
-    err << " ]\n";
+    err << " ]";
     err << std::dec;
+}
+
+void print_vector_hex(std::ostream& out, unsigned type, unsigned num_elems,
+                      const void* data)
+{
+    switch (type) {
+    case TYPE_UINT8:
+        print_hex(out, num_elems, 1, (const uint8_t*)data);
+        break;
+    case TYPE_INT8:
+        print_hex(out, num_elems, 1, (const uint8_t*)data);
+        break;
+    case TYPE_UINT16:
+        print_hex(out, num_elems, 2, (const uint16_t*)data);
+        break;
+    case TYPE_INT16:
+        print_hex(out, num_elems, 2, (const uint16_t*)data);
+        break;
+    case TYPE_UINT32:
+        print_hex(out, num_elems, 4, (const uint32_t*)data);
+        break;
+    case TYPE_INT32:
+        print_hex(out, num_elems, 4, (const uint32_t*)data);
+        break;
+    case TYPE_UINT64:
+        print_hex(out, num_elems, 8, (const uint64_t*)data);
+        break;
+    case TYPE_INT64:
+        print_hex(out, num_elems, 8, (const uint64_t*)data);
+        break;
+    case TYPE_FLOAT32:
+        print_hex(out, num_elems, 4, (const uint32_t*)data);
+        break;
+    case TYPE_FLOAT64:
+        print_hex(out, num_elems, 8, (const uint64_t*)data);
+        break;
+    }
+}
+
+void print_vector_numeric(std::ostream& out, unsigned type, unsigned num_elems,
+                          const void* data)
+{
+    switch (type) {
+    case TYPE_UINT8:
+        print_numeric(out, num_elems, 4, (const int8_t*)data);
+        break;
+    case TYPE_INT8:
+        print_numeric(out, num_elems, 4, (const uint8_t*)data);
+        break;
+    case TYPE_UINT16:
+        print_numeric(out, num_elems, 6, (const int16_t*)data);
+        break;
+    case TYPE_INT16:
+        print_numeric(out, num_elems, 6, (const uint16_t*)data);
+        break;
+    case TYPE_UINT32:
+        print_numeric(out, num_elems, 11, (const int32_t*)data);
+        break;
+    case TYPE_INT32:
+        print_numeric(out, num_elems, 11, (const uint32_t*)data);
+        break;
+    case TYPE_UINT64:
+        print_numeric(out, num_elems, 20, (const int64_t*)data);
+        break;
+    case TYPE_INT64:
+        print_numeric(out, num_elems, 20, (const uint64_t*)data);
+        break;
+    case TYPE_FLOAT32:
+        print_numeric(out, num_elems, 7, (const float*)data);
+        break;
+    case TYPE_FLOAT64:
+        print_numeric(out, num_elems, 17, (const double*)data);
+        break;
+    }
+}
+
+void print_vector_diff(std::ostream& out, unsigned type, unsigned num_elems,
+                       const void* data_a, const void* data_b)
+{
+    out << "A : ";
+    print_vector_numeric(out, type, num_elems, data_a);
+    out << "\nA : ";
+    print_vector_hex(out, type, num_elems, data_a);
+    out << "\nB : ";
+    print_vector_numeric(out, type, num_elems, data_b);
+    out << "\nB : ";
+    print_vector_hex(out, type, num_elems, data_b);
+    out << "\n";
+}
+
+void print_separator(std::ostream& out)
+{
+    out << "--------------------------------------------------------------\n";
+}
+
+void print_file_info(std::ostream& out, const char* file)
+{
+    if (file == nullptr) {
+        file = "<unknown>";
+    }
+    out << "  In file \"" << file << "\" :\n";
+}
+
+void print_file_info(std::ostream& out, const char* file, unsigned line)
+{
+    if (file == nullptr) {
+        file = "<unknown>";
+    }
+    out << "  In file \"" << file << "\" at line " << line << " : \n";
 }
 
 template<class T>
@@ -202,26 +311,9 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                             const TestResultsSet& b, const char* b_arch,
                             TestReporter& tr)
 {
-    auto fmt_separator = [&]()
-    {
-        tr.out() << "--------------------------------------------------------------\n";
-    };
-    auto fmt_arch = [&]()
+    auto print_arch = [&]()
     {
         tr.out() << "  For architectures: " << a_arch << " and " << b_arch << " :\n";
-    };
-    auto fmt_file = [&](const char* file)
-    {
-        fmt_arch();
-        if (file == nullptr) {
-            file = "<unknown>";
-        }
-        tr.out() << "  In file \"" << file << "\" :\n";
-    };
-    auto fmt_file_line = [&](const char* file, unsigned line)
-    {
-        fmt_arch();
-        tr.out() << "  In file \"" << file << "\" at line " << line << " : \n";
     };
     auto fmt_test_case = [&]()
     {
@@ -255,52 +347,6 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
         }
     };
 
-    auto fmt_vector = [&](const TestResultsSet::Result& r, const char* prefix) -> void
-    {
-        switch (r.type) {
-        case TYPE_UINT8:
-            fmt_hex(tr.out(), r.length, 1, prefix, (const uint8_t*)r.d());
-            fmt_num(tr.out(), r.length, 4, prefix, (const int8_t*)r.d());
-            break;
-        case TYPE_INT8:
-            fmt_hex(tr.out(), r.length, 1, prefix, (const uint8_t*)r.d());
-            fmt_num(tr.out(), r.length, 4, prefix, (const uint8_t*)r.d());
-            break;
-        case TYPE_UINT16:
-            fmt_hex(tr.out(), r.length, 2, prefix, (const uint16_t*)r.d());
-            fmt_num(tr.out(), r.length, 6, prefix, (const int16_t*)r.d());
-            break;
-        case TYPE_INT16:
-            fmt_hex(tr.out(), r.length, 2, prefix, (const uint16_t*)r.d());
-            fmt_num(tr.out(), r.length, 6, prefix, (const uint16_t*)r.d());
-            break;
-        case TYPE_UINT32:
-            fmt_hex(tr.out(), r.length, 4, prefix, (const uint32_t*)r.d());
-            fmt_num(tr.out(), r.length, 11, prefix, (const int32_t*)r.d());
-            break;
-        case TYPE_INT32:
-            fmt_hex(tr.out(), r.length, 4, prefix, (const uint32_t*)r.d());
-            fmt_num(tr.out(), r.length, 11, prefix, (const uint32_t*)r.d());
-            break;
-        case TYPE_UINT64:
-            fmt_hex(tr.out(), r.length, 8, prefix, (const uint64_t*)r.d());
-            fmt_num(tr.out(), r.length, 20, prefix, (const int64_t*)r.d());
-            break;
-        case TYPE_INT64:
-            fmt_hex(tr.out(), r.length, 8, prefix, (const uint64_t*)r.d());
-            fmt_num(tr.out(), r.length, 20, prefix, (const uint64_t*)r.d());
-            break;
-        case TYPE_FLOAT32:
-            fmt_hex(tr.out(), r.length, 4, prefix, (const uint32_t*)r.d());
-            fmt_num(tr.out(), r.length, 7, prefix, (const float*)r.d());
-            break;
-        case TYPE_FLOAT64:
-            fmt_hex(tr.out(), r.length, 8, prefix, (const uint64_t*)r.d());
-            fmt_num(tr.out(), r.length, 17, prefix, (const double*)r.d());
-            break;
-        }
-    };
-
     auto cmpeq_result = [](const TestResultsSet::Result& ia, const TestResultsSet::Result& ib,
                            unsigned fp_prec, unsigned fp_zero_eq) -> bool
     {
@@ -323,11 +369,12 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
 
     // Handle fatal errors first
     if (std::strcmp(a.name(), b.name()) != 0) {
-        fmt_separator();
-        fmt_file(get_filename_from_results_set(a, b));
+        print_separator(tr.out());
+        print_arch();
+        print_file_info(tr.out(), get_filename_from_results_set(a, b));
         tr.out() << "FATAL: Test case names do not match: \""
                  << a.name() << "\" and \""  << b.name() << "\"\n";
-        fmt_separator();
+        print_separator(tr.out());
         tr.add_result(false);
         return;
     }
@@ -336,12 +383,13 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
         if (a.results().size() == 0 || b.results().size() == 0) {
             return; // Ignore empty result sets
         }
-        fmt_separator();
-        fmt_file(get_filename_from_results_set(a, b));
+        print_separator(tr.out());
+        print_arch();
+        print_file_info(tr.out(), get_filename_from_results_set(a, b));
         fmt_test_case();
         tr.out() << "FATAL: The number of result sections do not match: "
                  << a.results().size() << "/" << b.results().size() << "\n";
-        fmt_separator();
+        print_separator(tr.out());
         tr.add_result(false);
         return;
     }
@@ -355,13 +403,14 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
             continue;
 
         if (sect_a.size() != sect_b.size()) {
-            fmt_separator();
-            fmt_file(sect_a.front().file);
+            print_separator(tr.out());
+            print_arch();
+            print_file_info(tr.out(), sect_a.front().file);
             fmt_test_case();
             tr.out() << "FATAL: The number of results in a section do not match: "
                      << " section: " << is << " result count: "
                      << sect_a.size() << "/" << sect_b.size() << "\n";
-            fmt_separator();
+            print_separator(tr.out());
             tr.add_result(false);
         }
 
@@ -370,8 +419,9 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
             const auto& ib = sect_b[i];
 
             if ((ia.line != ib.line) || (ia.type != ib.type) || (ia.length != ib.length)) {
-                fmt_separator();
-                fmt_file_line(ia.file, ia.line);
+                print_separator(tr.out());
+                print_arch();
+                print_file_info(tr.out(), ia.file, ia.line);
                 fmt_test_case();
                 if (ia.line != ib.line) {
                     tr.out() << "FATAL: Line numbers do not match for items with the same "
@@ -391,7 +441,7 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                              << " length_A: " << ia.length
                              << " length_B: " << ib.length << "\n";
                 }
-                fmt_separator();
+                print_separator(tr.out());
                 tr.add_result(false);
                 return;
             }
@@ -402,15 +452,15 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
             bool fp_zero_eq = ia.fp_zero_eq || ib.fp_zero_eq;
 
             if (!cmpeq_result(ia, ib, prec, fp_zero_eq)) {
-                fmt_separator();
-                fmt_file_line(ia.file, ia.line);
+                print_separator(tr.out());
+                print_arch();
+                print_file_info(tr.out(), ia.file, ia.line);
                 fmt_test_case();
                 fmt_seq(ia.seq);
                 tr.out() << "ERROR: Vectors not equal: \n";
-                fmt_vector(ia, "A : ");
-                fmt_vector(ib, "B : ");
+                print_vector_diff(tr.out(), ia.type, ia.length, ia.d(), ib.d());
                 fmt_prec(prec);
-                fmt_separator();
+                print_separator(tr.out());
                 tr.add_result(false);
             } else {
                 tr.add_result(true);

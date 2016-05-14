@@ -21,6 +21,14 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                             const TestResultsSet& b, const char* b_arch,
                             TestReporter& tr);
 
+// Prints two vectors side by side for comparison
+void print_vector_diff(std::ostream& out, unsigned type, unsigned num_elems,
+                       const void* data_a, const void* data_b);
+
+void print_separator(std::ostream& out);
+void print_file_info(std::ostream& out, const char* file);
+void print_file_info(std::ostream& out, const char* file, unsigned line);
+
 /** The class represents test results for certain instruction set. We later
     compare the results with other instruction sets and assume that all
     differences are errors. It's possible to set the precision of each test
