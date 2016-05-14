@@ -369,26 +369,28 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
             const auto& ia = sect_a[i];
             const auto& ib = sect_b[i];
 
-            if (ia.line != ib.line) {
-                fmt_separator();
-                fmt_file(ia.file);
-                fmt_test_case();
-                tr.out() << "FATAL: Line numbers do not match for items with the same "
-                         << "sequence number: section: " << is << " id: " << i
-                         << " line_A: " << ia.line << " line_B: " << ib.line << "\n";
-                fmt_separator();
-                tr.add_result(false);
-                return;
-            }
-
-            if (ia.type != ib.type) {
+            if ((ia.line != ib.line) || (ia.type != ib.type) || (ia.length != ib.length)) {
                 fmt_separator();
                 fmt_file_line(ia.file, ia.line);
                 fmt_test_case();
-                tr.out() << "FATAL: Types do not match for items with the same "
-                         << "sequence number: id: " << i
-                         << " type_A: " << type_str(ia.type)
-                         << " line_B: " << type_str(ib.type) << "\n";
+                if (ia.line != ib.line) {
+                    tr.out() << "FATAL: Line numbers do not match for items with the same "
+                             << "sequence number: section: " << is << " id: " << i
+                             << " line_A: " << ia.line
+                             << " line_B: " << ib.line << "\n";
+                }
+                if (ia.type != ib.type) {
+                    tr.out() << "FATAL: Types do not match for items with the same "
+                             << "sequence number: id: " << i
+                             << " type_A: " << type_str(ia.type)
+                             << " type_B: " << type_str(ib.type) << "\n";
+                }
+                if (ia.length != ib.length) {
+                    tr.out() << "FATAL: Number of elements do not match for "
+                             << "items with the same sequence number: id: " << i
+                             << " length_A: " << ia.length
+                             << " length_B: " << ib.length << "\n";
+                }
                 fmt_separator();
                 tr.add_result(false);
                 return;
