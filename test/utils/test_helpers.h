@@ -501,17 +501,19 @@ template<class V1, class V2>
 void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2, bool expected_equal,
                       unsigned line, const char* file)
 {
-    typename simdpp::detail::get_expr_nomask<V1>::type v1 = q1.eval();
-    typename simdpp::detail::get_expr_nomask<V2>::type v2 = q2.eval();
-    static_assert(sizeof(v1) == sizeof(v2),
-                  "Only vectors of same size should be compared");
+    using V = typename simdpp::detail::get_expr_nomask<V1>::type;
+    V v1, v2;
+    v1 = q1.eval(); v2 = q2.eval();
 
     bool success = expected_equal ? std::memcmp(&v1, &v2, sizeof(v1)) == 0 :
                                     std::memcmp(&v1, &v2, sizeof(v1)) != 0;
     tr.add_result(success);
 
     if (!success) {
-        tr.out() << "FAIL at line " << line << " of " << file << "\n";
+        print_separator(tr.out());
+        print_file_info(tr.out(), file, line);
+        tr.out() << (expected_equal ? "Vectors not equal:\n" : "Vectors equal:\n");
+        print_vector_diff(tr.out(), GetVectorType<V>::value, V::length, &v1, &v2);
     }
 }
 

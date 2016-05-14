@@ -179,6 +179,7 @@ set(TEST_EXPR_SOURCES
     expr/bitwise.cc
     expr/math_float.cc
     expr/math_int.cc
+    utils/test_results_set.cc
 )
 
 add_executable(test_expr EXCLUDE_FROM_ALL
