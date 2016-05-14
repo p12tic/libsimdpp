@@ -46,8 +46,9 @@ static_assert(sizeof(simdpp::float64<8>) == 64, "Incorrect vector size");
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-void main_test_function(TestResults& res, const TestOptions& opts)
+void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& opts)
 {
+    (void) tr;
     test_test_utils(res);
 
     test_construct(res);
@@ -78,13 +79,13 @@ inline simdpp::Arch get_arch()
 
 #define SIMDPP_USER_ARCH_INFO get_arch()
 
-SIMDPP_MAKE_DISPATCHER_VOID2(main_test_function, TestResults&, const TestOptions&)
+SIMDPP_MAKE_DISPATCHER_VOID3(main_test_function, TestResults&, TestReporter&, const TestOptions&)
 
 #if SIMDPP_EMIT_DISPATCHER
 std::vector<simdpp::detail::FnVersion> get_test_archs()
 {
     simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {};
-    SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, void(*)(TestResults&, const TestOptions&))
+    SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, void(*)(TestResults&, TestReporter&, const TestOptions&))
     std::vector<simdpp::detail::FnVersion> result;
     result.assign(versions, versions+SIMDPP_DISPATCH_MAX_ARCHS);
     return result;
