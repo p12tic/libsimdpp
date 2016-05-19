@@ -39,7 +39,7 @@ def add_to_config(filename, fun, op, fun_regex = None):
     config[filename] = Config(filename, fun, op, fun_regex)
 
 add_to_config("i_shift_l.h", "shift_l", "<<", r'\bshift_l\b.*\bcount\b');
-add_to_config("i_shift_r.h", "shift_r", ">>", r'\bshift_l\b.*\bcount\b');
+add_to_config("i_shift_r.h", "shift_r", ">>", r'\bshift_r\b.*\bcount\b');
 add_to_config("cmp_eq.h" , "cmp_eq" , "==");
 add_to_config("cmp_neq.h", "cmp_neq", "!=");
 add_to_config("cmp_ge.h" , "cmp_ge" , ">=");

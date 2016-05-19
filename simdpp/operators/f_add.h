@@ -60,7 +60,7 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 float64<N, expr_add<float64<N,E1>,
                     float64<N,E2> > > operator+(const float64<N,E1>& a, const float64<N,E2>& b)
 {
-    return expr_add<float64<N,E1>, float64<N,E2> > (a, b);
+    return expr_add<float64<N,E1>, float64<N,E2> >(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(operator+, expr_add, float64, float64)

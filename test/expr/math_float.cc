@@ -6,14 +6,14 @@
 */
 
 #include <simdpp/simd.h>
-#include "../utils/test_suite.h"
+#include "../utils/test_results_set.h"
 #include "../utils/test_helpers.h"
 #include "../common/vectors.h"
 #include "../common/masks.h"
 
 
 template<class V, unsigned B>
-void test_expr_math_float_v(SeqTestSuite& ts)
+void test_expr_math_float_v(TestReporter& ts)
 {
     SIMDPP_ARCH_NAMESPACE::Vectors<16,16> v;
 
@@ -71,7 +71,7 @@ void test_expr_math_float_v(SeqTestSuite& ts)
 }
 
 
-void test_expr_math_float(SeqTestSuite& ts)
+void test_expr_math_float(TestReporter& ts)
 {
     using namespace simdpp;
 
