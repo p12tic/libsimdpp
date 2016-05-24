@@ -436,9 +436,20 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
             # Copy the source file and add the required flags
             set(DST_ABS_FILE "${CMAKE_CURRENT_BINARY_DIR}/${SRC_PATH}/${SRC_NAME}_simdpp_${SUFFIX}${SRC_EXT}")
             set(SRC_ABS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
-            configure_file("${SRC_ABS_FILE}" "${DST_ABS_FILE}" COPYONLY)
+
+            # CMake does not support adding per-source-file include directories.
+            # Also when CXX_FLAGS is used for this purpose, CMake does not add
+            # local includes as the dependencies of the result object file thus
+            # does not rebuild the file when these included files are changed.
+            # The work around is to use add_custom_command with IMPLICIT_DEPENDS
+            # option which only works on make-based systems
+            add_custom_command(OUTPUT "${DST_ABS_FILE}"
+                               COMMAND cmake -E copy "${SRC_ABS_FILE}" "${DST_ABS_FILE}"
+                               IMPLICIT_DEPENDS CXX "${SRC_ABS_FILE}")
+
             list(APPEND FILE_LIST "${DST_ABS_FILE}")
-            set_source_files_properties("${DST_ABS_FILE}" PROPERTIES COMPILE_FLAGS ${CXX_FLAGS})
+            set_source_files_properties("${DST_ABS_FILE}" PROPERTIES COMPILE_FLAGS ${CXX_FLAGS}
+                                                                     GENERATED TRUE)
 
             # For the first file that is being processed, set it to emit
             # dispatcher code. The required flags will be added later
