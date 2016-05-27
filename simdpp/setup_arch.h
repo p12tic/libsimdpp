@@ -257,6 +257,8 @@
 // workarounds
 #if __GNUC__
 #define SIMDPP_INL __attribute__((__always_inline__)) inline
+#elif _MSC_VER
+#define SIMDPP_INL __forceinline
 #else
 #define SIMDPP_INL inline
 #endif
