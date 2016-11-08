@@ -42,7 +42,7 @@ inline void get_cpuid(unsigned level, unsigned subleaf, unsigned* eax, unsigned*
     __cpuid_count(level, subleaf, *eax, *ebx, *ecx, *edx);
 #elif _MSC_VER
     uint32_t regs[4];
-    __cpuidex((int*) regs, subleaf, level);
+    __cpuidex((int*) regs, level, subleaf);
     *eax = regs[0];
     *ebx = regs[1];
     *ecx = regs[2];
