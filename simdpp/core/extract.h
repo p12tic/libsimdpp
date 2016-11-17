@@ -162,7 +162,7 @@ uint32_t extract(const uint32x8& a)
     static_assert(id < 4, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
-#elif SIMDPP_USE_AVX
+#elif SIMDPP_USE_AVX2
     return _mm256_extract_epi32(a.operator __m256i(), id);
 #elif SIMDPP_USE_SSE4_1
     if (id < 4) {
