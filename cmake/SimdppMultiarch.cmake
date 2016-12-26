@@ -269,13 +269,18 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
     int main()
     {
         union {
-            volatile char a[64];
+            volatile char data[64];
             __m512 align;
         };
-        __m512 one = _mm512_load_ps((float*)a);
-        one = _mm512_add_ps(one, one);
-        __m512d d = _mm512_castps_pd(one); // weed out GCC < 5.0
-        _mm512_store_ps((float*)a, one);
+        __m512 a = _mm512_load_ps((float*)a);
+        a = _mm512_add_ps(a, a);
+        __m512d d = _mm512_castps_pd(a); // weed out GCC < 5.0
+        _mm512_store_ps((float*)data, a);
+
+        // MSVC 2017 has floating-point functions but not integer
+        __m512i b = _mm512_load_epi32((void*)data);
+        b = _mm512_or_epi32(b, b);
+        _mm512_store_epi32((void*)data, b);
     }"
 )
 
