@@ -148,6 +148,9 @@ set(SIMDPP_X86_AVX_TEST_CODE
     #if (__clang_major__ == 3) && (__clang_minor__ == 6)
     #error Not supported. See simdpp/detail/workarounds.h
     #endif
+    #if (__GNUC__ == 4) && (__GNUC_MINOR__ == 4)
+    #error Not supported. See simdpp/detail/workarounds.h
+    #endif
 
     int main()
     {
