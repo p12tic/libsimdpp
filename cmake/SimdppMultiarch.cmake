@@ -294,6 +294,9 @@ endif()
 set(SIMDPP_ARM_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM_NEON_SUFFIX "-arm_neon")
 set(SIMDPP_ARM_NEON_TEST_CODE
+    #if (__clang_major__ < 3) || ((__clang_major__ == 3) && (__clang_minor__ <= 3))
+    #error NEON is not supported on clang 3.3 and earlier.
+    #endif
     "#include <arm_neon.h>
     int main()
     {
