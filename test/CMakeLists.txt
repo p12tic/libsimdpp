@@ -78,6 +78,15 @@ foreach(SRC ${TEST1_ARCH_SOURCES})
     simdpp_multiarch(TEST1_ARCH_GEN_SOURCES ${SRC} ${COMPILABLE_ARCHS})
 endforeach()
 
+# print compiler detection information
+message(STATUS "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "MSVC: ${MSVC}")
+message(STATUS "Detected compiler:")
+message(STATUS "SIMDPP_CLANG: ${SIMDPP_CLANG}")
+message(STATUS "SIMDPP_GCC: ${SIMDPP_GCC}")
+message(STATUS "SIMDPP_INTEL: ${SIMDPP_INTEL}")
+message(STATUS "SIMDPP_MSVC: ${SIMDPP_MSVC}")
+
 # don't use x87 in any of the tests because it performs calculations with
 # different precision
 if(HAS_SSE2)
