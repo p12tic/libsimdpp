@@ -84,8 +84,9 @@ message(STATUS "MSVC: ${MSVC}")
 message(STATUS "Detected compiler:")
 message(STATUS "SIMDPP_CLANG: ${SIMDPP_CLANG}")
 message(STATUS "SIMDPP_GCC: ${SIMDPP_GCC}")
-message(STATUS "SIMDPP_INTEL: ${SIMDPP_INTEL}")
 message(STATUS "SIMDPP_MSVC: ${SIMDPP_MSVC}")
+message(STATUS "SIMDPP_INTEL: ${SIMDPP_INTEL}")
+message(STATUS "SIMDPP_MSVC_INTEL: ${SIMDPP_MSVC_INTEL}")
 
 # don't use x87 in any of the tests because it performs calculations with
 # different precision
@@ -97,7 +98,7 @@ if(HAS_SSE2)
         set(DEFAULT_FLAGS " -mfpmath=sse -msse2")
     elseif(SIMDPP_INTEL)
         set(DEFAULT_FLAGS " -msse2")
-    elseif(SIMDPP_MSVC)
+    elseif(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
         set(DEFAULT_FLAGS " /arch:SSE2")
     endif()
 
@@ -112,11 +113,13 @@ add_executable(test1 EXCLUDE_FROM_ALL
     ${TEST1_ARCH_GEN_SOURCES}
 )
 
-if(MSVC)
+if(SIMDPP_MSVC)
     if(CMAKE_SIZEOF_VOID_P EQUAL 4)
         # enable _vectorcall on i386 builds (only works on MSVC 2013)
         set_target_properties(test1 PROPERTIES COMPILE_FLAGS "/Gv")
     endif()
+elseif(SIMDPP_MSVC_INTEL)
+    set_target_properties(test1 PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
 else()
     set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -O1 -g1 -Wall -Wextra")
 endif()
@@ -146,7 +149,10 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
     ${TEST_DISPATCHER_ARCH_GEN_SOURCES}
 )
 
-if(NOT MSVC)
+if(SIMDPP_MSVC)
+elseif(SIMDPP_MSVC_INTEL)
+    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
+else()
     set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
 endif()
 
@@ -195,7 +201,10 @@ add_executable(test_expr EXCLUDE_FROM_ALL
     ${TEST_EXPR_SOURCES}
 )
 
-if(NOT MSVC)
+if(SIMDPP_MSVC)
+elseif(SIMDPP_MSVC_INTEL)
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
+else()
     set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
 endif()
 
