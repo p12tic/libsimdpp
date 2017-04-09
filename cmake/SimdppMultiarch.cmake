@@ -29,6 +29,8 @@ elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Intel")
     endif()
 elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
     set(SIMDPP_MSVC 1)
+else()
+    message(FATAL_ERROR "Compiler '${CMAKE_CXX_COMPILER_ID}' not recognized")
 endif()
 
 # ------------------------------------------------------------------------------
