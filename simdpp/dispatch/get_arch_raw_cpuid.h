@@ -20,6 +20,10 @@
 #include <cpuid.h>
 #endif
 
+#if _MSC_VER
+#include <immintrin.h>
+#endif
+
 namespace simdpp {
 namespace detail {
 
