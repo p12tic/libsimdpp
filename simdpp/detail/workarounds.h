@@ -62,6 +62,15 @@
 #endif
 #endif
 
+#if SIMDPP_USE_AVX
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ == 4)
+/*  GCC emits "Error: operand size mismatch for `vmovq'" when compiling
+    256-bit shuffling intrinsics. No workaround has been found yet
+*/
+#error AVX is not supported in GCC 4.4 due to compiler bugs
+#endif
+#endif
+
 #if (__clang_major__ == 3) && (__clang_minor <= 4)
 #define SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS 1
 /*  Clang 3.4 and older may crash when the following intrinsics are used with
