@@ -130,10 +130,10 @@ T perm4(integral_constant<unsigned, s0>,
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 T permute4(T a)
 {
-    return perm4(integral_constant<unsigned, s0>{},
-                 integral_constant<unsigned, s1>{},
-                 integral_constant<unsigned, s2>{},
-                 integral_constant<unsigned, s3>{}, a);
+    return perm4(integral_constant<unsigned, s0>(),
+                 integral_constant<unsigned, s1>(),
+                 integral_constant<unsigned, s2>(),
+                 integral_constant<unsigned, s3>(), a);
 }
 
 // 2-element shuffle: the first two elements must come from a, the last two -
