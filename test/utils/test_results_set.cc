@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <type_traits>
 #include <typeinfo>
 #include <cstdlib>
 
@@ -179,7 +178,7 @@ void print_separator(std::ostream& out)
 
 void print_file_info(std::ostream& out, const char* file)
 {
-    if (file == nullptr) {
+    if (file == NULL) {
         file = "<unknown>";
     }
     out << "  In file \"" << file << "\" :\n";
@@ -187,7 +186,7 @@ void print_file_info(std::ostream& out, const char* file)
 
 void print_file_info(std::ostream& out, const char* file, unsigned line)
 {
-    if (file == nullptr) {
+    if (file == NULL) {
         file = "<unknown>";
     }
     out << "  In file \"" << file << "\" at line " << line << " : \n";
@@ -292,9 +291,9 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
 const char* get_filename_from_results_set(const TestResultsSet& a)
 {
     if (a.results().empty())
-        return nullptr;
+        return NULL;
     if (a.results().front().empty())
-        return nullptr;
+        return NULL;
     return a.results().front().front().file;
 }
 
