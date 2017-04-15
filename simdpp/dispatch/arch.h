@@ -8,7 +8,7 @@
 #ifndef LIBSIMDPP_DISPATCH_ARCH_H
 #define LIBSIMDPP_DISPATCH_ARCH_H
 
-#include <stdint.h>
+#include <simdpp/detail/include_stdint.h>
 
 namespace simdpp {
 

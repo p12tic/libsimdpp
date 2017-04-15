@@ -11,8 +11,8 @@
 #include "../utils/test_helpers.h"
 #include "../utils/test_results.h"
 
-#include <stdint.h>
 #include <iostream>
+#include <simdpp/detail/include_stdint.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 

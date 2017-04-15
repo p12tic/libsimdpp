@@ -16,9 +16,9 @@
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/core/cast.h>
-#include <stdint.h>
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
+#include <simdpp/detail/include_stdint.h>
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {

@@ -13,8 +13,8 @@
 #if SIMDPP_X86 && (__clang__ || __GNUC__ || __INTEL_COMPILER || _MSC_VER)
 #define SIMDPP_HAS_GET_ARCH_RAW_CPUID 1
 
+#include <simdpp/detail/include_stdint.h>
 #include <simdpp/dispatch/arch.h>
-#include <stdint.h>
 
 #if __GNUC__
 #include <cpuid.h>
