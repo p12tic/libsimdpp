@@ -46,10 +46,7 @@ uint8x16 insert(const uint8x16& ca, uint8_t x)
 {
     uint8<16> a = ca;
     static_assert(id < 16, "Position out of range");
-#if SIMDPP_USE_NULL
-    a.el(id) = x;
-    return a;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_insert_epi8(a.operator __m128i(), x, id);
 #elif SIMDPP_USE_SSE2
     uint16_t r = _mm_extract_epi16(a, id/2);
@@ -66,6 +63,9 @@ uint8x16 insert(const uint8x16& ca, uint8_t x)
     detail::mem_block<uint8x16> ax(a);
     ax[id] = x;
     a = ax;
+    return a;
+#else
+    a.el(id) = x;
     return a;
 #endif
 }
@@ -86,10 +86,7 @@ template<unsigned id> SIMDPP_INL
 uint16x8 insert(const uint16x8& ca, uint16_t x)
 {
     uint16<8> a = ca;
-#if SIMDPP_USE_NULL
-    a.el(id) = x;
-    return a;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_insert_epi16(a, x, id);
 #elif SIMDPP_USE_NEON
     return vsetq_lane_u16(x, a, id);
@@ -97,6 +94,9 @@ uint16x8 insert(const uint16x8& ca, uint16_t x)
     detail::mem_block<uint16x8> ax(a);
     ax[id] = x;
     a = ax;
+    return a;
+#else
+    a.el(id) = x;
     return a;
 #endif
 }
@@ -119,10 +119,7 @@ template<unsigned id> SIMDPP_INL
 uint32x4 insert(const uint32x4& ca, uint32_t x)
 {
     uint32<4> a = ca;
-#if SIMDPP_USE_NULL
-    a.el(id) = x;
-    return a;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_insert_epi32(a.operator __m128i(), x, id);
 #elif SIMDPP_USE_SSE2
     uint16_t lo = x & 0xffff;
@@ -137,6 +134,9 @@ uint32x4 insert(const uint32x4& ca, uint32_t x)
     detail::mem_block<uint32x4> ax(a);
     ax[id] = x;
     a = ax;
+    return a;
+#else
+    a.el(id) = x;
     return a;
 #endif
 }
@@ -160,10 +160,7 @@ template<unsigned id> SIMDPP_INL
 uint64x2 insert(const uint64x2& ca, uint64_t x)
 {
     uint64<2> a = ca;
-#if SIMDPP_USE_NULL
-    a.el(id) = x;
-    return a;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
 #if SIMDPP_32_BITS
     uint32x4 a0 = (uint32x4) a;
     a0 = insert<id*2>(a0, uint32_t(x));
@@ -198,6 +195,9 @@ uint64x2 insert(const uint64x2& ca, uint64_t x)
     detail::mem_block<uint64x2> ax(a);
     ax[id] = x;
     a = ax;
+    return a;
+#else
+    a.el(id) = x;
     return a;
 #endif
 }

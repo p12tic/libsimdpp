@@ -43,9 +43,7 @@ template<unsigned id> SIMDPP_INL
 uint8_t extract(const uint8x16& a)
 {
     static_assert(id < 16, "index out of bounds");
-#if SIMDPP_USE_NULL
-    return a.el(id);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     // Explicit cast is needed due to bug in Clang headers (intrinsic
     // implemented as a macro with no appropriate casts) and a bug in Clang
     // (thinks explicit conversion operators have the same rank as the regular
@@ -60,6 +58,8 @@ uint8_t extract(const uint8x16& a)
     detail::mem_block<uint8x16> ax(a);
     vec_ste((__vector uint8_t)a, 0, &ax[id]);
     return ax[id];
+#else
+    return a.el(id);
 #endif
 }
 
@@ -85,9 +85,7 @@ template<unsigned id> SIMDPP_INL
 uint16_t extract(const uint16x8& a)
 {
     static_assert(id < 8, "index out of bounds");
-#if SIMDPP_USE_NULL
-    return a.el(id);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_extract_epi16(a, id);
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u16(a, id);
@@ -95,6 +93,8 @@ uint16_t extract(const uint16x8& a)
     detail::mem_block<uint16x8> ax(a);
     vec_ste((__vector uint16_t)a, 0, &ax[id]);
     return ax[id];
+#else
+    return a.el(id);
 #endif
 }
 
@@ -121,9 +121,7 @@ template<unsigned id> SIMDPP_INL
 uint32_t extract(const uint32x4& a)
 {
     static_assert(id < 4, "index out of bounds");
-#if SIMDPP_USE_NULL
-    return a.el(id);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_extract_epi32(a.operator __m128i(), id);
 #elif SIMDPP_USE_SSE2
     // when id==0, move_l is template-specialized and does nothing
@@ -134,6 +132,8 @@ uint32_t extract(const uint32x4& a)
     detail::mem_block<uint32x4> ax(a);
     vec_ste((__vector uint32_t)a, 0, &ax[id]);
     return ax[id];
+#else
+    return a.el(id);
 #endif
 }
 
@@ -163,9 +163,7 @@ template<unsigned id> SIMDPP_INL
 uint64_t extract(const uint64x2& a)
 {
     static_assert(id < 2, "index out of bounds");
-#if SIMDPP_USE_NULL
-    return a.el(id);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
 #if SIMDPP_32_BITS
     uint32x4 t = uint32x4(a);
     uint64_t r = extract<id*2>(t);
@@ -195,6 +193,8 @@ uint64_t extract(const uint64x2& a)
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint64x2> ax(a);
     return ax[id];
+#else
+    return a.el(id);
 #endif
 }
 
@@ -220,9 +220,7 @@ template<unsigned id> SIMDPP_INL
 float extract(const float32x4& a)
 {
     static_assert(id < 4, "index out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return a.el(id);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return bit_cast<float>(extract<id>(int32x4(a)));
 #elif SIMDPP_USE_NEON
     return vgetq_lane_f32(a, id);
@@ -230,6 +228,8 @@ float extract(const float32x4& a)
     detail::mem_block<float32x4> ax(a);
     vec_ste((__vector float)a, 0, &ax[id]);
     return ax[id];
+#else
+    return a.el(id);
 #endif
 }
 
@@ -247,15 +247,15 @@ template<unsigned id> SIMDPP_INL
 double extract(const float64x2& a)
 {
     static_assert(id < 2, "index out of bounds");
-#if SIMDPP_USE_NULL
-    return a.el(id);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return bit_cast<double>(extract<id>(int64x2(a)));
 #elif SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float64x2> ax(a);
     return a.el(id);
 #elif SIMDPP_USE_NEON64
     return vgetq_lane_f64(a, id);
+#else
+    return a.el(id);
 #endif
 }
 
@@ -278,15 +278,7 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
 {
     uint8<16> a = ca;
     // extract_bits_impl depends on the exact implementation of this function
-#if SIMDPP_USE_NULL
-    uint16_t r = 0;
-    for (unsigned i = 0; i < a.length; i++) {
-        uint8_t x = ca.el(i);
-        x = x & 1;
-        r = (r >> 1) | (uint16_t(x) << 15);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_movemask_epi8(a);
 #elif SIMDPP_USE_NEON
     uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
@@ -307,6 +299,14 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
                           (__vector int32_t)(int32x4) make_zero());
     return extract<7>(uint16x8(s));
+#else
+    uint16_t r = 0;
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
+        x = x & 1;
+        r = (r >> 1) | (uint16_t(x) << 15);
+    }
+    return r;
 #endif
 }
 
@@ -328,15 +328,7 @@ uint16_t extract_bits(const uint8x16& ca)
 {
     uint8<16> a = ca;
     static_assert(id < 8, "index out of bounds");
-#if SIMDPP_USE_NULL
-    uint16_t r = 0;
-    for (unsigned i = 0; i < a.length; i++) {
-        uint8_t x = ca.el(i);
-        x = (x >> id) & 1;
-        r = (r >> 1) | (uint16_t(x) << 15);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     a = shift_l<7-id>((uint16x8) a);
     return extract_bits_any(a);
 #elif SIMDPP_USE_NEON
@@ -350,6 +342,14 @@ uint16_t extract_bits(const uint8x16& ca)
                                  4-int(id), 5-int(id), 6-int(id), 7-int(id));
     a = vec_rl((__vector uint8_t)a, (__vector uint8_t)rot_mask);
     return extract_bits_any(a);
+#else
+    uint16_t r = 0;
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
+        x = (x >> id) & 1;
+        r = (r >> 1) | (uint16_t(x) << 15);
+    }
+    return r;
 #endif
 }
 
