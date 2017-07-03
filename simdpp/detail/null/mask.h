@@ -7,7 +7,6 @@
 
 #ifndef LIBSIMDPP_DETAIL_NULL_MASK_H
 #define LIBSIMDPP_DETAIL_NULL_MASK_H
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -42,5 +41,4 @@ V unmask_mask(const M& m)
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
-#endif
 #endif

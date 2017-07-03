@@ -7,7 +7,6 @@
 
 #ifndef LIBSIMDPP_DETAIL_NULL_SET_H
 #define LIBSIMDPP_DETAIL_NULL_SET_H
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -102,5 +101,4 @@ V make_vec(E v0, E v1, E v2, E v3, E v4, E v5, E v6, E v7,
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
-#endif
 #endif

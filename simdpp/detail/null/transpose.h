@@ -7,7 +7,6 @@
 
 #ifndef LIBSIMDPP_DETAIL_NULL_TRANSPOSE_H
 #define LIBSIMDPP_DETAIL_NULL_TRANSPOSE_H
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -47,5 +46,4 @@ void transpose4(V& a0, V& a1, V& a2, V& a3)
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
-#endif
 #endif
