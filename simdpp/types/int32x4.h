@@ -21,6 +21,12 @@
 #include <simdpp/detail/null/mask.h>
 #include <cstdint>
 
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#define SIMDPP_DEFAULT_ARRAY 0
+#else
+#define SIMDPP_DEFAULT_ARRAY 1
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -43,7 +49,7 @@ public:
     using native_type = int32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector int32_t;
-#else
+#elif SIMDPP_DEFAULT_ARRAY
     using native_type = detail::array<int32_t, 4>;
 #endif
 
@@ -88,7 +94,7 @@ public:
 
     SIMDPP_INL int32<4> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL
+#if SIMDPP_DEFAULT_ARRAY
     /// For internal use only
     const int32_t& el(unsigned i) const  { return d_[i]; }
           int32_t& el(unsigned i)        { return d_[i]; }
@@ -159,7 +165,7 @@ public:
 
     SIMDPP_INL uint32<4> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL
+#if SIMDPP_DEFAULT_ARRAY
     /// For uinternal use only
     const uint32_t& el(unsigned i) const  { return d_[i]; }
           uint32_t& el(unsigned i)        { return d_[i]; }
@@ -198,7 +204,7 @@ public:
     SIMDPP_INL mask_int32<4>(const __vector __bool int& d) : d_((__vector uint32_t)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if !(SIMDPP_DEFAULT_ARRAY)
     SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d) {}
 #endif
 
@@ -216,14 +222,14 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint32<4> unmask() const
     {
-    #if SIMDPP_USE_NULL
+    #if SIMDPP_DEFAULT_ARRAY
         return detail::null::unmask_mask<uint32<4>>(*this);
     #else
         return uint32<4>(d_);
     #endif
     }
 
-#if SIMDPP_USE_NULL
+#if SIMDPP_DEFAULT_ARRAY
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
@@ -241,5 +247,7 @@ private:
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
+
+#undef SIMDPP_DEFAULT_ARRAY
 
 #endif

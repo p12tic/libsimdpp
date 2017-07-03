@@ -21,6 +21,12 @@
 #include <simdpp/detail/array.h>
 #include <simdpp/detail/null/mask.h>
 
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
+#define SIMDPP_DEFAULT_ARRAY 0
+#else
+#define SIMDPP_DEFAULT_ARRAY 1
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -40,7 +46,7 @@ public:
     using native_type = __m128d;
 #elif SIMDPP_USE_NEON64
     using native_type = float64x2_t;
-#else
+#elif SIMDPP_DEFAULT_ARRAY
     using native_type = detail::array<double, 2>;
 #endif
 
@@ -84,7 +90,7 @@ public:
 
     SIMDPP_INL float64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_DEFAULT_ARRAY
     /// For internal use only
     const double& el(unsigned i) const { return d_[i]; }
           double& el(unsigned i)       { return d_[i]; }
@@ -112,7 +118,7 @@ public:
     using native_type = __m128d;
 #elif SIMDPP_USE_NEON64
     using native_type = float64x2_t;
-#else // NULL, NEON 32bit, ALTIVEC
+#elif SIMDPP_DEFAULT_ARRAY
     using native_type = detail::array<bool, 2>;
 #endif
 
@@ -122,7 +128,7 @@ public:
 
     SIMDPP_INL mask_float64<2>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
+#if !SIMDPP_DEFAULT_ARRAY
     SIMDPP_INL mask_float64<2>(const float64<2>& d) : d_(d) {}
 #endif
 
@@ -140,14 +146,14 @@ public:
     /// Access the underlying type
     SIMDPP_INL float64<2> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    #if SIMDPP_DEFAULT_ARRAY
         return detail::null::unmask_mask<float64<2>>(*this);
     #else
         return float64<2>(d_);
     #endif
     }
 
-#if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64)
+#if SIMDPP_DEFAULT_ARRAY
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
@@ -164,5 +170,7 @@ private:
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
+
+#undef SIMDPP_DEFAULT_ARRAY
 
 #endif

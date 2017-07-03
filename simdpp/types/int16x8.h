@@ -21,6 +21,12 @@
 #include <simdpp/detail/null/mask.h>
 #include <cstdint>
 
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#define SIMDPP_DEFAULT_ARRAY 0
+#else
+#define SIMDPP_DEFAULT_ARRAY 1
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -43,7 +49,7 @@ public:
     using native_type = int16x8_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector int16_t;
-#else
+#elif SIMDPP_DEFAULT_ARRAY
     using native_type = detail::array<int16_t, 8>;
 #endif
 
@@ -88,7 +94,7 @@ public:
 
     SIMDPP_INL int16<8> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL
+#if SIMDPP_DEFAULT_ARRAY
     /// For internal use only
     const int16_t& el(unsigned i) const  { return d_[i]; }
           int16_t& el(unsigned i)        { return d_[i]; }
@@ -114,7 +120,7 @@ public:
     using native_type = uint16x8_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint16_t;
-#else
+#elif SIMDPP_DEFAULT_ARRAY
     using native_type = detail::array<uint16_t, 8>;
 #endif
 
@@ -159,7 +165,7 @@ public:
 
     SIMDPP_INL uint16<8> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL
+#if SIMDPP_DEFAULT_ARRAY
     /// For uinternal use only
     const uint16_t& el(unsigned i) const  { return d_[i]; }
           uint16_t& el(unsigned i)        { return d_[i]; }
@@ -184,7 +190,7 @@ public:
     using native_type = uint16x8_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint16_t;
-#else
+#elif SIMDPP_DEFAULT_ARRAY
     using native_type = detail::array<bool, 8>;
 #endif
 
@@ -198,7 +204,7 @@ public:
     SIMDPP_INL mask_int16<8>(const __vector __bool short& d) : d_((__vector uint16_t)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if !SIMDPP_DEFAULT_ARRAY
     SIMDPP_INL mask_int16<8>(const uint16<8>& d) : d_(d) {}
 #endif
 
@@ -207,14 +213,14 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint16<8> unmask() const
     {
-    #if SIMDPP_USE_NULL
+    #if SIMDPP_DEFAULT_ARRAY
         return detail::null::unmask_mask<uint16<8>>(*this);
     #else
         return uint16<8>(d_);
     #endif
     }
 
-#if SIMDPP_USE_NULL
+#if SIMD_DEFAULT_ARRAY
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
@@ -232,5 +238,7 @@ private:
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
+
+#undef SIMDPP_DEFAULT_ARRAY
 
 #endif

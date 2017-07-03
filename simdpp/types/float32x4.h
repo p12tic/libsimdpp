@@ -21,6 +21,12 @@
 #include <simdpp/detail/array.h>
 #include <simdpp/detail/null/mask.h>
 
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_ALTIVEC
+#define SIMDPP_DEFAULT_ARRAY 0
+#else
+#define SIMDPP_DEFAULT_ARRAY 1
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
@@ -41,7 +47,7 @@ public:
     using native_type = float32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector float;
-#else // NULL && (NEON && !FLT_SP)
+#elif SIMDPP_DEFAULT_ARRAY
     using native_type = detail::array<float, 4>;
 #endif
 
@@ -68,7 +74,7 @@ public:
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#ifdef SIMDPP_DEFAULT_ARRAY
     float& el(unsigned id) { return d_[id]; }
     const float& el(unsigned id) const { return d_[id]; }
 #endif
@@ -91,7 +97,7 @@ public:
     SIMDPP_INL float32<4> eval() const { return *this; }
 
 private:
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_DEFAULT_ARRAY
     SIMDPP_ALIGN(16) native_type d_;
 #else
     native_type d_;
@@ -144,14 +150,14 @@ public:
     /// Access the underlying type
     SIMDPP_INL float32<4> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+    #if SIMDPP_DEFAULT_ARRAY
         return detail::null::unmask_mask<float32<4>>(*this);
     #else
         return float32<4>(d_);
     #endif
     }
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_DEFAULT_ARRAY
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif
@@ -169,5 +175,7 @@ private:
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
+
+#undef SIMDPP_DEFAULT_ARRAY
 
 #endif
