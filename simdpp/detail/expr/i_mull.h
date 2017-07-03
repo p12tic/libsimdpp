@@ -60,13 +60,7 @@ int32<8> expr_eval(const expr_mull<int16<8,E1>,
 {
     int16<8> a = q.a.eval();
     int16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    int32x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r.vec(i/4).el(i%4) = int32_t(a.el(i)) * b.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     int16x8 lo = _mm_mullo_epi16(a, b);
     int16x8 hi = _mm_mulhi_epi16(a, b);
     return (int32x8)combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
@@ -78,6 +72,12 @@ int32<8> expr_eval(const expr_mull<int16<8,E1>,
     int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
     int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
     return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
+#else
+    int32x8 r;
+    for (unsigned i = 0; i < 8; i++) {
+        r.vec(i/4).el(i%4) = int32_t(a.el(i)) * b.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -117,13 +117,7 @@ uint32<8> expr_eval(const expr_mull<uint16<8,E1>,
 {
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    int32x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r.vec(i/4).el(i%4) = uint32_t(a.el(i)) * b.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     int16x8 lo = _mm_mullo_epi16(a, b);
     int16x8 hi = _mm_mulhi_epu16(a, b);
     return (uint32x8) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
@@ -135,6 +129,12 @@ uint32<8> expr_eval(const expr_mull<uint16<8,E1>,
     uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
     uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
     return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
+#else
+    int32x8 r;
+    for (unsigned i = 0; i < 8; i++) {
+        r.vec(i/4).el(i%4) = uint32_t(a.el(i)) * b.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -174,14 +174,7 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
 {
     int32<4> a = q.a.eval();
     int32<4> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    int64x4 r;
-    r.vec(0).el(0) = int64_t(a.el(0)) * b.el(0);
-    r.vec(0).el(1) = int64_t(a.el(1)) * b.el(1);
-    r.vec(1).el(0) = int64_t(a.el(2)) * b.el(2);
-    r.vec(1).el(1) = int64_t(a.el(3)) * b.el(3);
-    return r;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     int32x4 al, ah, bl, bh;
     int64x2 rl, rh;
     al = zip4_lo(a, a);
@@ -196,7 +189,12 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
     int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
     return combine(lo, hi);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
+    int64x4 r;
+    r.vec(0).el(0) = int64_t(a.el(0)) * b.el(0);
+    r.vec(0).el(1) = int64_t(a.el(1)) * b.el(1);
+    r.vec(1).el(0) = int64_t(a.el(2)) * b.el(2);
+    r.vec(1).el(1) = int64_t(a.el(3)) * b.el(3);
+    return r;
 #endif
 }
 
@@ -239,14 +237,7 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
 {
     uint32<4> a = q.a.eval();
     uint32<4> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    uint64x4 r;
-    r.vec(0).el(0) = uint64_t(a.el(0)) * b.el(0);
-    r.vec(0).el(1) = uint64_t(a.el(1)) * b.el(1);
-    r.vec(1).el(0) = uint64_t(a.el(2)) * b.el(2);
-    r.vec(1).el(1) = uint64_t(a.el(3)) * b.el(3);
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint32x4 al, ah, bl, bh;
     uint64x2 rl, rh;
     al = zip4_lo(a, a);
@@ -268,6 +259,13 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     r.vec(0).el(1) = (uint64_t) ba[1] * bb[1];
     r.vec(1).el(0) = (uint64_t) ba[2] * bb[2];
     r.vec(1).el(1) = (uint64_t) ba[3] * bb[3];
+    return r;
+#else
+    uint64x4 r;
+    r.vec(0).el(0) = uint64_t(a.el(0)) * b.el(0);
+    r.vec(0).el(1) = uint64_t(a.el(1)) * b.el(1);
+    r.vec(1).el(0) = uint64_t(a.el(2)) * b.el(2);
+    r.vec(1).el(1) = uint64_t(a.el(3)) * b.el(3);
     return r;
 #endif
 }

@@ -29,9 +29,7 @@ float32<4> expr_eval(const expr_fmadd<float32<4,E1>,
     float32<4> a = q.a.eval();
     float32<4> b = q.b.eval();
     float32<4> c = q.c.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::fmadd(a, b, c);
-#elif SIMDPP_USE_FMA3
+#if SIMDPP_USE_FMA3
     return _mm_fmadd_ps(a, b, c);
 #elif SIMDPP_USE_FMA4
     return _mm_macc_ps(a, b, c);
@@ -39,7 +37,7 @@ float32<4> expr_eval(const expr_fmadd<float32<4,E1>,
     // FIXME: also in vfpv4
     return vfmaq_f32(a, b, c);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
+    return detail::null::fmadd(a, b, c);
 #endif
 }
 
@@ -97,9 +95,7 @@ float64<2> expr_eval(const expr_fmadd<float64<2,E1>,
     float64<2> a = q.a.eval();
     float64<2> b = q.b.eval();
     float64<2> c = q.c.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::fmadd(a, b, c);
-#elif SIMDPP_USE_FMA3
+#if SIMDPP_USE_FMA3
     return _mm_fmadd_pd(a, b, c);
 #elif SIMDPP_USE_FMA4
     return _mm_macc_pd(a, b, c);
@@ -107,7 +103,7 @@ float64<2> expr_eval(const expr_fmadd<float64<2,E1>,
     // FIXME: also in vfpv4
     return vfmaq_f64(a, b, c);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
+    return detail::null::fmadd(a, b, c);
 #endif
 }
 

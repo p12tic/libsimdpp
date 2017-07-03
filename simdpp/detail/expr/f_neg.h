@@ -24,13 +24,13 @@ template<class R, class E> SIMDPP_INL
 float32<4> expr_eval(const expr_neg<float32<4,E>>& q)
 {
     float32<4> a = q.a.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     // reversion of the sign bit required even for NaNs and zeros
     return bit_xor(a, 0x80000000);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vnegq_f32(a);
+#else
+    return detail::null::neg(a);
 #endif
 }
 
@@ -66,12 +66,12 @@ template<class R, class E> SIMDPP_INL
 float64x2 expr_eval(const expr_neg<float64<2,E>>& q)
 {
     float64x2 a = q.a.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return bit_xor(a, 0x8000000000000000);
 #elif SIMDPP_USE_NEON64
     return vnegq_f64(a);
+#else
+    return detail::null::neg(a);
 #endif
 }
 

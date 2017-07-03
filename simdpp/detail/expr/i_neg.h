@@ -25,12 +25,12 @@ template<class R, class E> SIMDPP_INL
 int8<16> expr_eval(const expr_neg<int8<16,E>>& q)
 {
     int8<16> a = q.a.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(0, a);
 #elif SIMDPP_USE_NEON
     return vnegq_s8(a);
+#else
+    return detail::null::neg(a);
 #endif
 }
 
@@ -56,12 +56,12 @@ template<class R, class E> SIMDPP_INL
 int16<8> expr_eval(const expr_neg<int16<8,E>>& q)
 {
     int16<8> a = q.a.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(0, a);
 #elif SIMDPP_USE_NEON
     return vnegq_s16(a);
+#else
+    return detail::null::neg(a);
 #endif
 }
 
@@ -87,12 +87,12 @@ template<class R, class E> SIMDPP_INL
 int32<4> expr_eval(const expr_neg<int32<4,E>>& q)
 {
     int32<4> a = q.a.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return sub(0, a);
 #elif SIMDPP_USE_NEON
     return vnegq_s32(a);
+#else
+    return detail::null::neg(a);
 #endif
 }
 
@@ -127,10 +127,10 @@ template<class R, class E> SIMDPP_INL
 int64<2> expr_eval(const expr_neg<int64<2,E>>& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     return sub(0, a);
+#else
+    return detail::null::neg(a);
 #endif
 }
 

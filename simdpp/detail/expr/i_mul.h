@@ -31,15 +31,15 @@ uint16<8> expr_eval(const expr_mul_lo<uint16<8,E1>,
 {
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::mul(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_mullo_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vmulq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_mladd((__vector uint16_t)a, (__vector uint16_t)b,
                      (__vector uint16_t)(uint16x8) make_zero());
+#else
+    return detail::null::mul(a, b);
 #endif
 }
 
@@ -71,13 +71,7 @@ int16<8> expr_eval(const expr_mul_hi<int16<8,E1>,
 {
     int16<8> a = q.a.eval();
     int16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    uint16<8> r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (int32_t(a.el(i)) * b.el(i)) >> 16;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_mulhi_epi16(a, b);
 #elif SIMDPP_USE_NEON
     int32x4 lo = vmull_s16(vget_low_s16(a), vget_low_s16(b));
@@ -87,6 +81,12 @@ int16<8> expr_eval(const expr_mul_hi<int16<8,E1>,
     int16<16> ab;
     ab = mull(a, b);
     return unzip8_lo(ab.vec(0), ab.vec(1));
+#else
+    uint16<8> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int32_t(a.el(i)) * b.el(i)) >> 16;
+    }
+    return r;
 #endif
 }
 
@@ -118,13 +118,7 @@ uint16<8> expr_eval(const expr_mul_hi<uint16<8,E1>,
 {
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    uint16<8> r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (uint32_t(a.el(i)) * b.el(i)) >> 16;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_mulhi_epu16(a, b);
 #elif SIMDPP_USE_NEON
     uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
@@ -134,6 +128,12 @@ uint16<8> expr_eval(const expr_mul_hi<uint16<8,E1>,
     uint16<16> ab;
     ab = mull(a, b);
     return unzip8_lo(ab.vec(0), ab.vec(1));
+#else
+    uint16<8> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint32_t(a.el(i)) * b.el(i)) >> 16;
+    }
+    return r;
 #endif
 }
 
@@ -165,9 +165,7 @@ uint32<4> expr_eval(const expr_mul_lo<uint32<4,E1>,
 {
     uint32<4> a = q.a.eval();
     uint32<4> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::mul(a, b);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_mullo_epi32(a, b);
 #elif SIMDPP_USE_SSE2
     uint32x4 a1, b1;
@@ -200,6 +198,8 @@ uint32<4> expr_eval(const expr_mul_lo<uint32<4,E1>,
     h_ab = shift_l<16>(add(h_ab, h_ba));
     h_ab = add(h_ab, l_ab);
     return h_ab;
+#else
+    return detail::null::mul(a, b);
 #endif
 }
 

@@ -29,9 +29,7 @@ template<class R, class E> SIMDPP_INL
 uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
 {
     int8<16> a = q.a.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::abs(a);
-#elif SIMDPP_USE_SSSE3
+#if SIMDPP_USE_SSSE3
     return _mm_abs_epi8(a);
 #elif SIMDPP_USE_SSE2
     int8x16 t;
@@ -44,6 +42,8 @@ uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
     return (__vector uint8_t) vec_abs((__vector int8_t)a);
+#else
+    return detail::null::abs(a);
 #endif
 }
 
@@ -69,9 +69,7 @@ template<class R, class E> SIMDPP_INL
 uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
 {
     int16<8> a = q.a.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::abs(a);
-#elif SIMDPP_USE_SSSE3
+#if SIMDPP_USE_SSSE3
     return _mm_abs_epi16(a);
 #elif SIMDPP_USE_SSE2
     int16x8 t;
@@ -84,6 +82,8 @@ uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
     return (__vector uint16_t) vec_abs((__vector int16_t)a);
+#else
+    return detail::null::abs(a);
 #endif
 }
 
@@ -109,9 +109,7 @@ template<class R, class E> SIMDPP_INL
 uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
 {
     int32<4> a = q.a.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::abs(a);
-#elif SIMDPP_USE_SSSE3
+#if SIMDPP_USE_SSSE3
     return _mm_abs_epi32(a);
 #elif SIMDPP_USE_SSE2
     int32x4 t;
@@ -124,6 +122,8 @@ uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
     return (__vector uint32_t) vec_abs((__vector int32_t)a);
+#else
+    return detail::null::abs(a);
 #endif
 }
 
@@ -158,9 +158,7 @@ template<class R, class E> SIMDPP_INL
 uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::abs(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint32x4 ta;
     int64x2 t;
     ta = (uint32x4) bit_and(a, 0x8000000000000000);
@@ -180,6 +178,8 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
+#else
+    return detail::null::abs(a);
 #endif
 }
 

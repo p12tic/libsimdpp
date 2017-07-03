@@ -26,14 +26,14 @@ int8<16> expr_eval(const expr_add_sat<int8<16,E1>,
 {
     int8<16> a = q.a.eval();
     int8<16> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::add_sat(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_adds_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector int8_t)a, (__vector int8_t)b);
+#else
+    return detail::null::add_sat(a, b);
 #endif
 }
 
@@ -65,14 +65,14 @@ int16<8> expr_eval(const expr_add_sat<int16<8,E1>,
 {
     int16<8> a = q.a.eval();
     int16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::add_sat(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_adds_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector int16_t)a, (__vector int16_t)b);
+#else
+    return detail::null::add_sat(a, b);
 #endif
 }
 
@@ -104,14 +104,14 @@ uint8<16> expr_eval(const expr_add_sat<uint8<16,E1>,
 {
     uint8<16> a = q.a.eval();
     uint8<16> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::add_sat(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_adds_epu8(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector uint8_t)a, (__vector uint8_t)b);
+#else
+    return detail::null::add_sat(a, b);
 #endif
 }
 
@@ -143,14 +143,14 @@ uint16<8> expr_eval(const expr_add_sat<uint16<8,E1>,
 {
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::add_sat(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_adds_epu16(a, b);
 #elif SIMDPP_USE_NEON
     return vqaddq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector uint16_t)a, (__vector uint16_t)b);
+#else
+    return detail::null::add_sat(a, b);
 #endif
 }
 

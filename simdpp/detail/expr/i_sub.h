@@ -27,14 +27,14 @@ uint8<16> expr_eval(const expr_sub<uint8<16,E1>,
 {
     uint8<16> a = q.a.eval();
     uint8<16> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::sub(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sub_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sub((__vector uint8_t)a, (__vector uint8_t)b);
+#else
+    return detail::null::sub(a, b);
 #endif
 }
 
@@ -66,14 +66,14 @@ uint16<8> expr_eval(const expr_sub<uint16<8,E1>,
 {
     uint16<8> a = q.a.eval();
     uint16<8> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::sub(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sub_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sub((__vector uint16_t)a, (__vector uint16_t)b);
+#else
+    return detail::null::sub(a, b);
 #endif
 }
 
@@ -105,14 +105,14 @@ uint32<4> expr_eval(const expr_sub<uint32<4,E1>,
 {
     uint32<4> a = q.a.eval();
     uint32<4> b = q.b.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::sub(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sub_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sub((__vector uint32_t)a, (__vector uint32_t)b);
+#else
+    return detail::null::sub(a, b);
 #endif
 }
 
@@ -155,12 +155,12 @@ uint64<2> expr_eval(const expr_sub<uint64<2,E1>,
 {
     uint64<2> a = q.a.eval();
     uint64<2> b = q.b.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::sub(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sub_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u64(a, b);
+#else
+    return detail::null::sub(a, b);
 #endif
 }
 
