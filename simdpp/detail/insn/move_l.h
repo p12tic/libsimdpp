@@ -27,9 +27,7 @@ template<unsigned shift> SIMDPP_INL
 uint8x16 i_move16_l(const uint8x16& a)
 {
     static_assert(shift <= 16, "Selector out of range");
-#if SIMDPP_USE_NULL
-    return detail::null::move_n_l<shift>(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_srli_si128(a, shift);
 #elif SIMDPP_USE_NEON
     uint8x16 z = make_zero();
@@ -37,6 +35,8 @@ uint8x16 i_move16_l(const uint8x16& a)
 #elif SIMDPP_USE_ALTIVEC
     // return align<shift>(a, (uint8x16) make_zero());
     return vec_sld((__vector uint8_t)a, (__vector uint8_t)(uint8x16) make_zero(), shift);
+#else
+    return detail::null::move_n_l<shift>(a);
 #endif
 }
 

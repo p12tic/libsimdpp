@@ -24,9 +24,7 @@ namespace insn {
 
 SIMDPP_INL mask_float32x4 i_cmp_le(const float32x4& a, const float32x4& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::cmp_le(a, b);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_LE_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmple_ps(a, b);
@@ -34,6 +32,8 @@ SIMDPP_INL mask_float32x4 i_cmp_le(const float32x4& a, const float32x4& b)
     return vreinterpretq_f32_u32(vcleq_f32(a, b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmple((__vector float)a, (__vector float)b);
+#else
+    return detail::null::cmp_le(a, b);
 #endif
 }
 
@@ -55,14 +55,14 @@ SIMDPP_INL mask_float32<16> i_cmp_le(const float32<16>& a, const float32<16>& b)
 
 SIMDPP_INL mask_float64x2 i_cmp_le(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_le(a, b);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_LE_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmple_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vreinterpretq_f64_u64(vcleq_f64(a, b));
+#else
+    return detail::null::cmp_le(a, b);
 #endif
 }
 

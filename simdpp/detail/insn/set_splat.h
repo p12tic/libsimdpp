@@ -26,9 +26,7 @@ SIMDPP_INL void i_set_splat(uint32x4&, uint32_t);
 
 SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
 {
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint8x16>(v0);
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
     v = _mm_broadcastb_epi8(v);
@@ -45,6 +43,8 @@ SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<uint8x16>(v0);
 #endif
 }
 
@@ -70,9 +70,7 @@ void i_set_splat(uint8<N>& v, uint8_t v0)
 
 SIMDPP_INL void i_set_splat(uint16x8& v, uint16_t v0)
 {
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint16x8>(v0);
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
     v = _mm_broadcastw_epi16(v);
@@ -89,6 +87,8 @@ SIMDPP_INL void i_set_splat(uint16x8& v, uint16_t v0)
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<uint16x8>(v0);
 #endif
 }
 
@@ -114,9 +114,7 @@ void i_set_splat(uint16<N>& v, uint16_t v0)
 
 SIMDPP_INL void i_set_splat(uint32x4& v, uint32_t v0)
 {
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint32x4>(v0);
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     v = _mm_cvtsi32_si128(v0);
     v = _mm_broadcastd_epi32(v);
 #elif SIMDPP_USE_SSE2
@@ -129,6 +127,8 @@ SIMDPP_INL void i_set_splat(uint32x4& v, uint32_t v0)
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<uint32x4>(v0);
 #endif
 }
 
@@ -161,9 +161,7 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
 
 SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<uint64x2>(v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
     uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
@@ -175,6 +173,8 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #endif
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u64(v0);
+#else
+    v = detail::null::make_vec<uint64x2>(v0);
 #endif
 }
 
@@ -214,9 +214,7 @@ void i_set_splat(uint64<N>& v, uint64_t v0)
 
 SIMDPP_INL void i_set_splat(float32x4& v, float v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    v = detail::null::make_vec<float32x4>(v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_set1_ps(v0);        // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON
     v = vsetq_lane_f32(v0, v, 0);
@@ -226,6 +224,8 @@ SIMDPP_INL void i_set_splat(float32x4& v, float v0)
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<float32x4>(v0);
 #endif
 }
 
@@ -259,12 +259,12 @@ void i_set_splat(float32<N>& v, float v0)
 
 SIMDPP_INL void i_set_splat(float64x2& v, double v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<float64x2>(v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_set1_pd(v0);            // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON64
     v = vdupq_n_f64(v0);
+#else
+    v = detail::null::make_vec<float64x2>(v0);
 #endif
 }
 

@@ -25,14 +25,14 @@ namespace insn {
 SIMDPP_INL void i_stream(char* p, const uint8<16>& a)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store(p, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_stream_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
     store(p, a);
 #elif SIMDPP_USE_ALTIVEC
     vec_st((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
+#else
+    detail::null::store(p, a);
 #endif
 }
 
@@ -113,14 +113,14 @@ SIMDPP_INL void i_stream(char* p, const float32x4& a)
 {
     float* q = reinterpret_cast<float*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store(q, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_stream_ps(q, a);
 #elif SIMDPP_USE_NEON
     store(q, a);
 #elif SIMDPP_USE_ALTIVEC
     vec_st((__vector float)a, 0, q);
+#else
+    detail::null::store(q, a);
 #endif
 }
 
@@ -145,12 +145,12 @@ SIMDPP_INL void i_stream(char* p, const float32<16>& a)
 SIMDPP_INL void i_stream(char* p, const float64x2& a)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::store(p, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_stream_pd(reinterpret_cast<double*>(p), a);
 #elif SIMDPP_USE_NEON64
     store(p, a);
+#else
+    detail::null::store(p, a);
 #endif
 }
 

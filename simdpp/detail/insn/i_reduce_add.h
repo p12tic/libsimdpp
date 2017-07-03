@@ -26,13 +26,7 @@ namespace insn {
 
 SIMDPP_INL uint16_t i_reduce_add(const uint8x16& a)
 {
-#if SIMDPP_USE_NULL
-    uint16_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r += a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_XOP
+#if SIMDPP_USE_XOP
     uint16x8 sum = _mm_haddq_epu8(a);
     return extract<0>(sum) + extract<4>(sum);
 #elif SIMDPP_USE_SSE2
@@ -51,6 +45,12 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8x16& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#else
+    uint16_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r += a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -66,15 +66,7 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8x32& a)
 template<unsigned N>
 SIMDPP_INL uint16_t i_reduce_add(const uint8<N>& a)
 {
-#if SIMDPP_USE_NULL
-    uint16_t r = 0;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r += a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     uint16x16 r = make_zero();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         uint16x16 sum = _mm256_sad_epu8(a.vec(j), _mm256_setzero_si256());
@@ -112,6 +104,14 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8<N>& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#else
+    uint16_t r = 0;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r += a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 
@@ -119,13 +119,7 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8<N>& a)
 
 SIMDPP_INL int16_t i_reduce_add(const int8x16& a)
 {
-#if SIMDPP_USE_NULL
-    int16_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r += a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_XOP
+#if SIMDPP_USE_XOP
     uint16x8 sum = _mm_haddq_epi8(a);
     return extract<0>(sum) + extract<4>(sum);
 #elif SIMDPP_USE_SSE2
@@ -143,6 +137,12 @@ SIMDPP_INL int16_t i_reduce_add(const int8x16& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#else
+    int16_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r += a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -156,15 +156,7 @@ SIMDPP_INL int16_t i_reduce_add(const int8x32& a)
 template<unsigned N>
 SIMDPP_INL uint16_t i_reduce_add(const int8<N>& a)
 {
-#if SIMDPP_USE_NULL
-    int16_t r = 0;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r += a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_XOP
+#if SIMDPP_USE_XOP
     int16x8 r = make_zero();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         int16x8 sum = _mm_haddq_epi8(a.vec(j));
@@ -192,6 +184,14 @@ SIMDPP_INL uint16_t i_reduce_add(const int8<N>& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#else
+    int16_t r = 0;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r += a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 
@@ -199,13 +199,7 @@ SIMDPP_INL uint16_t i_reduce_add(const int8<N>& a)
 
 SIMDPP_INL uint32_t i_reduce_add(const uint16x8& a)
 {
-#if SIMDPP_USE_NULL
-    uint32_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r += a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_XOP
+#if SIMDPP_USE_XOP
     uint32x4 sum = _mm_haddq_epu16(a); // sum in the 0 and 2 elements
     sum = add(sum, move4_l<2>(sum));
     return extract<0>(sum);
@@ -230,6 +224,12 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16x8& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum) + 0x8000 * a.length;
+#else
+    uint32_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r += a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -250,15 +250,7 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16x16& a)
 template<unsigned N>
 SIMDPP_INL uint32_t i_reduce_add(const uint16<N>& a)
 {
-#if SIMDPP_USE_NULL
-    uint32_t r = 0;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r += a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     uint32x8 sum = make_zero();
     uint16x16 ones = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
@@ -308,6 +300,14 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16<N>& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum) + 0x8000 * a.length;
+#else
+    uint32_t r = 0;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r += a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 
@@ -315,13 +315,7 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16<N>& a)
 
 SIMDPP_INL int32_t i_reduce_add(const int16x8& a)
 {
-#if SIMDPP_USE_NULL
-    int32_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r += a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_XOP
+#if SIMDPP_USE_XOP
     int32x4 sum = _mm_haddq_epi16(a); // sum in the 0 and 2 elements
     sum = add(sum, move4_l<2>(sum));
     return extract<0>(sum);
@@ -344,6 +338,12 @@ SIMDPP_INL int32_t i_reduce_add(const int16x8& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#else
+    int32_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r += a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -363,15 +363,7 @@ SIMDPP_INL int32_t i_reduce_add(const int16x16& a)
 template<unsigned N>
 SIMDPP_INL int32_t i_reduce_add(const int16<N>& a)
 {
-#if SIMDPP_USE_NULL
-    int32_t r = 0;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r += a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     int32x8 sum = make_zero();
     int16x16 ones = make_int(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
@@ -418,6 +410,14 @@ SIMDPP_INL int32_t i_reduce_add(const int16<N>& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#else
+    int32_t r = 0;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r += a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 
@@ -484,13 +484,7 @@ SIMDPP_INL uint32_t i_reduce_add(const uint32<N>& a)
 
 SIMDPP_INL uint64_t i_reduce_add(const uint64x2& a)
 {
-#if SIMDPP_USE_NULL
-    uint64_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r += a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint64x2 sum = a;
     sum = add(sum, move2_l<1>(sum));
     return extract<0>(sum);
@@ -499,6 +493,12 @@ SIMDPP_INL uint64_t i_reduce_add(const uint64x2& a)
     return vget_lane_u64(r, 0);
 #elif SIMDPP_USE_ALTIVEC
     return extract<0>(a) + extract<1>(a);
+#else
+    uint64_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r += a.el(i);
+    }
+    return r;
 #endif
 }
 

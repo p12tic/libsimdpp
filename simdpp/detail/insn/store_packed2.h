@@ -36,15 +36,15 @@ void v512_store_pack2(char* p, const V& ca, const V& cb);
 SIMDPP_INL void i_store_packed2(char* p, const uint8x16& a, const uint8x16& b)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint8x16x2_t t;
     t.val[0] = a;
     t.val[1] = b;
     vst2q_u8(reinterpret_cast<uint8_t*>(p), t);
+#else
+    detail::null::store_packed2(p, a, b);
 #endif
 }
 
@@ -60,15 +60,15 @@ SIMDPP_INL void i_store_packed2(char* p, const uint8x32& a, const uint8x32& b)
 SIMDPP_INL void i_store_packed2(char* p, const uint16x8& a, const uint16x8& b)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint16x8x2_t t;
     t.val[0] = a;
     t.val[1] = b;
     vst2q_u16(reinterpret_cast<uint16_t*>(p), t);
+#else
+    detail::null::store_packed2(p, a, b);
 #endif
 }
 
@@ -84,15 +84,15 @@ SIMDPP_INL void i_store_packed2(char* p, const uint16x16& a, const uint16x16& b)
 SIMDPP_INL void i_store_packed2(char* p, const uint32x4& a, const uint32x4& b)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint32x4x2_t t;
     t.val[0] = a;
     t.val[1] = b;
     vst2q_u32(reinterpret_cast<uint32_t*>(p), t);
+#else
+    detail::null::store_packed2(p, a, b);
 #endif
 }
 
@@ -145,15 +145,15 @@ SIMDPP_INL void i_store_packed2(char* p, const uint64<8>& a, const uint64<8>& b)
 SIMDPP_INL void i_store_packed2(char* p, const float32x4& a, const float32x4& b)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     float32x4x2_t t;
     t.val[0] = a;
     t.val[1] = b;
     vst2q_f32(reinterpret_cast<float*>(p), t);
+#else
+    detail::null::store_packed2(p, a, b);
 #endif
 }
 

@@ -27,9 +27,7 @@ namespace insn {
 
 SIMDPP_INL bool i_test_bits_any(const uint32<4>& a)
 {
-#if SIMDPP_USE_NULL
-    return null::test_bits_any(a);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return !_mm_testz_si128(a, a);
 #elif SIMDPP_USE_SSE2
     uint32<4> r = _mm_cmpeq_epi32(a, _mm_setzero_si128());
@@ -41,6 +39,8 @@ SIMDPP_INL bool i_test_bits_any(const uint32<4>& a)
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> z = make_uint(0);
     return vec_any_gt((__vector uint32_t)a, (__vector uint32_t)z);
+#else
+    return null::test_bits_any(a);
 #endif
 }
 

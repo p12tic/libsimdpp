@@ -37,9 +37,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint16x8 i_permute4(const uint16x8& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL
-    return detail::null::permute<s0,s1,s2,s3>(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint16<8> b = a;
     b = _mm_shufflelo_epi16(b, _MM_SHUFFLE(s3, s2, s1, s0));
     b = _mm_shufflehi_epi16(b, _MM_SHUFFLE(s3, s2, s1, s0));
@@ -50,6 +48,8 @@ uint16x8 i_permute4(const uint16x8& a)
     // TODO optimize
     uint16x8 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
     return permute_bytes16(a, mask);
+#else
+    return detail::null::permute<s0,s1,s2,s3>(a);
 #endif
 }
 
@@ -78,9 +78,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32x4 i_permute4(const uint32x4& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL
-    return detail::null::permute<s0,s1,s2,s3>(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_shuffle_epi32(a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
     return detail::neon_shuffle_int32x4::permute4<s0,s1,s2,s3>(a);
@@ -88,6 +86,8 @@ uint32x4 i_permute4(const uint32x4& a)
     // TODO optimize
     uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
     return permute_bytes16(a, mask);
+#else
+    return detail::null::permute<s0,s1,s2,s3>(a);
 #endif
 }
 
@@ -122,9 +122,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float32x4 i_permute4(const float32x4& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL
-    return detail::null::permute<s0,s1,s2,s3>(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_shuffle_ps(a, a, _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
     return float32x4(detail::neon_shuffle_int32x4::permute4<s0,s1,s2,s3>(int32x4(a)));
@@ -132,6 +130,8 @@ float32x4 i_permute4(const float32x4& a)
     // TODO optimize
     uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
     return permute_bytes16(a, mask);
+#else
+    return detail::null::permute<s0,s1,s2,s3>(a);
 #endif
 }
 
@@ -166,17 +166,17 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint64x4 i_permute4(const uint64x4& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_AVX2
+    return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+    return permute_emul<s0,s1,s2,s3>(a);
+#else
     uint64x4 r;
     r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
     r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
     r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
     r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
     return r;
-#elif SIMDPP_USE_AVX2
-    return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
-    return permute_emul<s0,s1,s2,s3>(a);
 #endif
 }
 
@@ -202,17 +202,17 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float64x4 i_permute4(const float64x4& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_AVX2
+    return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
+    return permute_emul<s0,s1,s2,s3>(a);
+#else
     float64x4 r;
     r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
     r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
     r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
     r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
     return r;
-#elif SIMDPP_USE_AVX2
-    return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
-    return permute_emul<s0,s1,s2,s3>(a);
 #endif
 }
 

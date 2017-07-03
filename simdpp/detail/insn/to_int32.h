@@ -28,13 +28,7 @@ namespace insn {
 
 SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
 {
-#if SIMDPP_USE_NULL
-    int32x8 r;
-    for (unsigned i = 0; i < 8; i++) {
-        r.vec(i/4).el(i%4) = int32_t(a.vec(0).el(i));
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     return  _mm256_cvtepi16_epi32(a);
 #elif SIMDPP_USE_SSE4_1
     int32x8 r;
@@ -57,6 +51,12 @@ SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
     b0 = vec_unpackh((__vector int16_t)a.vec(0));
     b1 = vec_unpackl((__vector int16_t)a.vec(0));
     return combine(b0, b1);
+#else
+    int32x8 r;
+    for (unsigned i = 0; i < 8; i++) {
+        r.vec(i/4).el(i%4) = int32_t(a.vec(0).el(i));
+    }
+    return r;
 #endif
 }
 
@@ -90,13 +90,7 @@ int32<N> i_to_int32(const int16<N>& a)
 
 SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
 {
-#if SIMDPP_USE_NULL
-    int32x4 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = int32_t(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_cvttps_epi32(a);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<float32x4> mf(a);
@@ -110,6 +104,12 @@ SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
     return vcvtq_s32_f32(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cts((__vector float)a, 0);
+#else
+    int32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = int32_t(a.el(i));
+    }
+    return r;
 #endif
 }
 

@@ -29,16 +29,16 @@ template<class V> SIMDPP_INL V v_emul_avg_trunc_i32(const V& a, const V& b);
 
 SIMDPP_INL uint8x16 i_avg_trunc(const uint8x16& a, const uint8x16& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    return v_emul_avg_trunc(a, b);
+#elif SIMDPP_USE_NEON
+    return vhaddq_u8(a, b);
+#else
     uint8x16 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = (uint16_t(a.el(i)) + b.el(i)) >> 1;
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return v_emul_avg_trunc(a, b);
-#elif SIMDPP_USE_NEON
-    return vhaddq_u8(a, b);
 #endif
 }
 
@@ -53,13 +53,7 @@ SIMDPP_INL uint8x32 i_avg_trunc(const uint8x32& a, const uint8x32& b)
 
 SIMDPP_INL int8x16 i_avg_trunc(const int8x16& a, const int8x16& b)
 {
-#if SIMDPP_USE_NULL
-    int8x16 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (int16_t(a.el(i)) + b.el(i)) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 a2, b2, r;
     a2 = bit_xor(a, 0x80); // add
     b2 = bit_xor(b, 0x80); // add
@@ -68,6 +62,12 @@ SIMDPP_INL int8x16 i_avg_trunc(const int8x16& a, const int8x16& b)
     return r;
 #elif SIMDPP_USE_NEON
     return vhaddq_s8(a, b);
+#else
+    int8x16 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int16_t(a.el(i)) + b.el(i)) >> 1;
+    }
+    return r;
 #endif
 }
 
@@ -88,16 +88,16 @@ SIMDPP_INL int8x32 i_avg_trunc(const int8x32& a, const int8x32& b)
 
 SIMDPP_INL uint16x8 i_avg_trunc(const uint16x8& a, const uint16x8& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    return v_emul_avg_trunc(a, b);
+#elif SIMDPP_USE_NEON
+    return vhaddq_u16(a, b);
+#else
     uint16x8 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = (uint32_t(a.el(i)) + b.el(i)) >> 1;
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return v_emul_avg_trunc(a, b);
-#elif SIMDPP_USE_NEON
-    return vhaddq_u16(a, b);
 #endif
 }
 
@@ -112,13 +112,7 @@ SIMDPP_INL uint16x16 i_avg_trunc(const uint16x16& a, const uint16x16& b)
 
 SIMDPP_INL int16x8 i_avg_trunc(const int16x8& a, const int16x8& b)
 {
-#if SIMDPP_USE_NULL
-    int16x8 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (int32_t(a.el(i)) + b.el(i)) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint16x8 a2, b2, r;
     a2 = bit_xor(a, 0x8000); // add
     b2 = bit_xor(b, 0x8000); // add
@@ -127,6 +121,12 @@ SIMDPP_INL int16x8 i_avg_trunc(const int16x8& a, const int16x8& b)
     return r;
 #elif SIMDPP_USE_NEON
     return vhaddq_s16(a, b);
+#else
+    int16x8 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int32_t(a.el(i)) + b.el(i)) >> 1;
+    }
+    return r;
 #endif
 }
 
@@ -146,16 +146,16 @@ SIMDPP_INL int16x16 i_avg_trunc(const int16x16& a, const int16x16& b)
 
 SIMDPP_INL uint32x4 i_avg_trunc(const uint32x4& a, const uint32x4& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    return v_emul_avg_trunc(a, b);
+#elif SIMDPP_USE_NEON
+    return vhaddq_u32(a, b);
+#else
     uint32x4 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = (uint64_t(a.el(i)) + b.el(i)) >> 1;
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return v_emul_avg_trunc(a, b);
-#elif SIMDPP_USE_NEON
-    return vhaddq_u32(a, b);
 #endif
 }
 
@@ -177,16 +177,16 @@ SIMDPP_INL uint32<16> i_avg_trunc(const uint32<16>& a, const uint32<16>& b)
 
 SIMDPP_INL int32x4 i_avg_trunc(const int32x4& a, const int32x4& b)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    return v_emul_avg_trunc_i32(a, b);
+#elif SIMDPP_USE_NEON
+    return vhaddq_s32(a, b);
+#else
     int32x4 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = (int64_t(a.el(i)) + b.el(i)) >> 1;
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return v_emul_avg_trunc_i32(a, b);
-#elif SIMDPP_USE_NEON
-    return vhaddq_s32(a, b);
 #endif
 }
 

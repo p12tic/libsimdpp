@@ -28,13 +28,7 @@ namespace insn {
 
 SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
 {
-#if SIMDPP_USE_NULL
-    uint16x16 r;
-    for (unsigned i = 0; i < 16; i++) {
-        r.vec(i/8).el(i%8) = uint16_t(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     uint16x8 r1, r2;
     r1 = _mm_cvtepu8_epi16(a);
     r2 = _mm_cvtepu8_epi16(move16_l<8>(a).eval());
@@ -54,6 +48,12 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     r1 = zip16_lo((uint8x16) make_zero(), a);
     r2 = zip16_hi((uint8x16) make_zero(), a);
     return combine(r1, r2);
+#else
+    uint16x16 r;
+    for (unsigned i = 0; i < 16; i++) {
+        r.vec(i/8).el(i%8) = uint16_t(a.el(i));
+    }
+    return r;
 #endif
 }
 
@@ -83,13 +83,7 @@ uint16<N> i_to_uint16(const uint8<N>& a)
 
 SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
 {
-#if SIMDPP_USE_NULL
-    int16x16 r;
-    for (unsigned i = 0; i < 16; i++) {
-        r.vec(i/8).el(i%8) = int16_t(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     int16x8 r1, r2;
     r1 = _mm_cvtepi8_epi16(a);
     r2 = _mm_cvtepi8_epi16(move16_l<8>(a).eval());
@@ -110,6 +104,12 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     int16x16 r;
     r.vec(0) = vec_unpackh((__vector int8_t)a.vec(0));
     r.vec(1) = vec_unpackl((__vector int8_t)a.vec(0));
+    return r;
+#else
+    int16x16 r;
+    for (unsigned i = 0; i < 16; i++) {
+        r.vec(i/8).el(i%8) = int16_t(a.el(i));
+    }
     return r;
 #endif
 }

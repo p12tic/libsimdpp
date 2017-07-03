@@ -51,10 +51,7 @@ void i_make_const(float32<4>& v, const expr_vec_make_const<VE,2>& e, unsigned)
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(float32<4>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    v = detail::null::make_vec<float32<4>, float>(e.val(off+0), e.val(off+1),
-                                                  e.val(off+2), e.val(off+3));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_set_ps(e.val(off+3), e.val(off+2), e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON
     detail::mem_block<float32<4>> x;
@@ -66,6 +63,9 @@ void i_make_const(float32<4>& v, const expr_vec_make_const<VE,N>& e, unsigned of
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector float){ float(e.val(off+0)), float(e.val(off+1)),
                           float(e.val(off+2)), float(e.val(off+3)) };
+#else
+    v = detail::null::make_vec<float32<4>, float>(e.val(off+0), e.val(off+1),
+                                                  e.val(off+2), e.val(off+3));
 #endif
 }
 
@@ -95,15 +95,15 @@ void i_make_const(float32<16>& v, const expr_vec_make_const<VE,N>& e, unsigned o
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(float64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<float64<2>, double>(e.val(off+0), e.val(off+1));
-#elif SIMDPP_USE_NEON64
+#if SIMDPP_USE_NEON64
     detail::mem_block<float64<2>> x;
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     v = x;
 #elif SIMDPP_USE_SSE2
     v = _mm_set_pd(e.val(off+1), e.val(off+0));
+#else
+    v = detail::null::make_vec<float64<2>, double>(e.val(off+0), e.val(off+1));
 #endif
 }
 
@@ -165,13 +165,7 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,8>& e, unsigned off
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint8<16>, uint8_t>(
-            e.val(off+0), e.val(off+1), e.val(off+2), e.val(off+3),
-            e.val(off+4), e.val(off+5), e.val(off+6), e.val(off+7),
-            e.val(off+8), e.val(off+9), e.val(off+10), e.val(off+11),
-            e.val(off+12), e.val(off+13), e.val(off+14), e.val(off+15));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_set_epi8(e.val(off+15), e.val(off+14), e.val(off+13), e.val(off+12),
                      e.val(off+11), e.val(off+10), e.val(off+9),  e.val(off+8),
                      e.val(off+7),  e.val(off+6),  e.val(off+5),  e.val(off+4),
@@ -190,6 +184,12 @@ void i_make_const(uint8<16>& v, const expr_vec_make_const<VE,N>& e, unsigned off
         uint8_t(e.val(off+8)),  uint8_t(e.val(off+9)),  uint8_t(e.val(off+10)), uint8_t(e.val(off+11)),
         uint8_t(e.val(off+12)), uint8_t(e.val(off+13)), uint8_t(e.val(off+14)), uint8_t(e.val(off+15))
     };
+#else
+    v = detail::null::make_vec<uint8<16>, uint8_t>(
+            e.val(off+0), e.val(off+1), e.val(off+2), e.val(off+3),
+            e.val(off+4), e.val(off+5), e.val(off+6), e.val(off+7),
+            e.val(off+8), e.val(off+9), e.val(off+10), e.val(off+11),
+            e.val(off+12), e.val(off+13), e.val(off+14), e.val(off+15));
 #endif
 }
 
@@ -242,10 +242,7 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,4>& e, unsigned off
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint16<8>, uint16_t>(e.val(off+0), e.val(off+1), e.val(off+2), e.val(off+3),
-                                            e.val(off+4), e.val(off+5), e.val(off+6), e.val(off+7));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_set_epi16(e.val(off+7), e.val(off+6), e.val(off+5), e.val(off+4),
                       e.val(off+3), e.val(off+2), e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON
@@ -258,6 +255,9 @@ void i_make_const(uint16<8>& v, const expr_vec_make_const<VE,N>& e, unsigned off
         uint16_t(e.val(off+0)), uint16_t(e.val(off+1)), uint16_t(e.val(off+2)), uint16_t(e.val(off+3)),
         uint16_t(e.val(off+4)), uint16_t(e.val(off+5)), uint16_t(e.val(off+6)), uint16_t(e.val(off+7))
     };
+#else
+    v = detail::null::make_vec<uint16<8>, uint16_t>(e.val(off+0), e.val(off+1), e.val(off+2), e.val(off+3),
+                                            e.val(off+4), e.val(off+5), e.val(off+6), e.val(off+7));
 #endif
 }
 
@@ -298,9 +298,7 @@ void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,2>& e, unsigned off
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint32<4>, uint32_t>(e.val(off+0), e.val(off+1), e.val(off+2), e.val(off+3));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_set_epi32(e.val(off+3), e.val(off+2), e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON
     detail::mem_block<uint32<4>> x;
@@ -310,6 +308,8 @@ void i_make_const(uint32<4>& v, const expr_vec_make_const<VE,N>& e, unsigned off
 #elif SIMDPP_USE_ALTIVEC
     v = (__vector uint32_t) { uint32_t(e.val(off+0)), uint32_t(e.val(off+1)),
                               uint32_t(e.val(off+2)), uint32_t(e.val(off+3)) };
+#else
+    v = detail::null::make_vec<uint32<4>, uint32_t>(e.val(off+0), e.val(off+1), e.val(off+2), e.val(off+3));
 #endif
 }
 
@@ -347,9 +347,7 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,1>& e, unsigned off
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<uint64<2>, uint64_t>(e.val(off+0), e.val(off+1));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS && _MSC_VER
     // MSVC does not support _mm_set_epi64x in 32-bit mode
     uint64_t v1 = e.val(off+1);
@@ -363,6 +361,8 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     v = x;
+#else
+    v = detail::null::make_vec<uint64<2>, uint64_t>(e.val(off+0), e.val(off+1));
 #endif
 }
 

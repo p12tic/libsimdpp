@@ -32,17 +32,7 @@ template<unsigned shift> SIMDPP_INL
 uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
 {
     uint8x16 lower = clower, upper = cupper;
-#if SIMDPP_USE_NULL
-    uint8x16 r;
-    //use int to disable warnings wrt. comparison result always being true/false
-    for (int i = 0; i < (int)(16-shift); i++) {
-        r.el(i) = lower.el(i + shift);
-    }
-    for (unsigned i = 16-shift; i < 16; i++) {
-        r.el(i) = upper.el(i - 16 + shift);
-    }
-    return r;
-#elif SIMDPP_USE_SSSE3
+#if SIMDPP_USE_SSSE3
     return _mm_alignr_epi8(upper, lower, shift);
 #elif SIMDPP_USE_SSE2
     uint8x16 a;
@@ -58,6 +48,16 @@ uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
     return vextq_u8(lower, upper, shift % 16);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, (unsigned)shift);
+#else
+    uint8x16 r;
+    //use int to disable warnings wrt. comparison result always being true/false
+    for (int i = 0; i < (int)(16-shift); i++) {
+        r.el(i) = lower.el(i + shift);
+    }
+    for (unsigned i = 16-shift; i < 16; i++) {
+        r.el(i) = upper.el(i - 16 + shift);
+    }
+    return r;
 #endif
 }
 
@@ -89,17 +89,7 @@ uint16<N> i_align8(const uint16<N>& lower, const uint16<N>& upper)
 template<unsigned shift> SIMDPP_INL
 uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
 {
-#if SIMDPP_USE_NULL
-    uint32x4 r;
-    //use int to disable warnings wrt. comparison result always being true/false
-    for (int i = 0; i < (int)(4-shift); i++) {
-        r.el(i) = lower.el(i + shift);
-    }
-    for (unsigned i = 4-shift; i < 4; i++) {
-        r.el(i) = upper.el(i - 4 + shift);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     switch (shift) {
     default:
     case 0: return lower;
@@ -126,6 +116,16 @@ uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
 #elif SIMDPP_USE_ALTIVEC
     return (__vector uint32_t) vec_sld((__vector uint8_t)(uint8x16)lower,
                                        (__vector uint8_t)(uint8x16)upper, (unsigned)shift*4);
+#else
+    uint32x4 r;
+    //use int to disable warnings wrt. comparison result always being true/false
+    for (int i = 0; i < (int)(4-shift); i++) {
+        r.el(i) = lower.el(i + shift);
+    }
+    for (unsigned i = 4-shift; i < 4; i++) {
+        r.el(i) = upper.el(i - 4 + shift);
+    }
+    return r;
 #endif
 }
 
@@ -163,17 +163,7 @@ uint32<N> i_align4(const uint32<N>& lower, const uint32<N>& upper)
 template<unsigned shift> SIMDPP_INL
 uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    uint64x2 r;
-    //use int to disable warnings wrt. comparison result always being true/false
-    for (int i = 0; i < (int)(2-shift); i++) {
-        r.el(i) = lower.el(i + shift);
-    }
-    for (unsigned i = 2-shift; i < 2; i++) {
-        r.el(i) = upper.el(i - 2 + shift);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     switch (shift) {
     default:
     case 0: return lower;
@@ -188,6 +178,16 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
     if (shift == 2)
         return upper;
     return vextq_u64(lower, upper, shift % 2);
+#else
+    uint64x2 r;
+    //use int to disable warnings wrt. comparison result always being true/false
+    for (int i = 0; i < (int)(2-shift); i++) {
+        r.el(i) = lower.el(i + shift);
+    }
+    for (unsigned i = 2-shift; i < 2; i++) {
+        r.el(i) = upper.el(i - 2 + shift);
+    }
+    return r;
 #endif
 }
 
@@ -223,17 +223,7 @@ uint64<N> i_align2(const uint64<N>& lower, const uint64<N>& upper)
 template<unsigned shift> SIMDPP_INL
 float32x4 i_align4(const float32x4& lower, const float32x4& upper)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float32x4 r;
-    //use int to disable warnings wrt. comparison result always being true/false
-    for (int i = 0; i < (int)(4-shift); i++) {
-        r.el(i) = lower.el(i + shift);
-    }
-    for (unsigned i = 4-shift; i < 4; i++) {
-        r.el(i) = upper.el(i - 4 + shift);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     switch (shift) {
     default:
     case 0: return lower;
@@ -258,6 +248,16 @@ float32x4 i_align4(const float32x4& lower, const float32x4& upper)
 #elif SIMDPP_USE_ALTIVEC
     return (__vector float) vec_sld((__vector uint8_t)(uint8x16)lower,
                                     (__vector uint8_t)(uint8x16)upper, (unsigned)shift*4);
+#else
+    float32x4 r;
+    //use int to disable warnings wrt. comparison result always being true/false
+    for (int i = 0; i < (int)(4-shift); i++) {
+        r.el(i) = lower.el(i + shift);
+    }
+    for (unsigned i = 4-shift; i < 4; i++) {
+        r.el(i) = upper.el(i - 4 + shift);
+    }
+    return r;
 #endif
 }
 

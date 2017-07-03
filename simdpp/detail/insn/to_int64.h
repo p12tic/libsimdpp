@@ -25,14 +25,7 @@ namespace insn {
 
 SIMDPP_INL int64x4 i_to_int64(const int32x4& a)
 {
-#if SIMDPP_USE_NULL
-    int64x4 r;
-    r.vec(0).el(0) = int64_t(a.el(0));
-    r.vec(0).el(1) = int64_t(a.el(1));
-    r.vec(1).el(0) = int64_t(a.el(2));
-    r.vec(1).el(1) = int64_t(a.el(3));
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     return _mm256_cvtepi32_epi64(a);
 #elif SIMDPP_USE_SSE4_1
     uint64x2 r1, r2;
@@ -55,6 +48,13 @@ SIMDPP_INL int64x4 i_to_int64(const int32x4& a)
     r.vec(0).el(1) = b[1];
     r.vec(1).el(0) = b[2];
     r.vec(1).el(1) = b[3];
+    return r;
+#else
+    int64x4 r;
+    r.vec(0).el(0) = int64_t(a.el(0));
+    r.vec(0).el(1) = int64_t(a.el(1));
+    r.vec(1).el(0) = int64_t(a.el(2));
+    r.vec(1).el(1) = int64_t(a.el(3));
     return r;
 #endif
 }
@@ -97,14 +97,7 @@ int64<N> i_to_int64(const int32<N>& a)
 
 SIMDPP_INL uint64x4 i_to_uint64(const uint32x4& a)
 {
-#if SIMDPP_USE_NULL
-    uint64x4 r;
-    r.vec(0).el(0) = uint64_t(a.el(0));
-    r.vec(0).el(1) = uint64_t(a.el(1));
-    r.vec(1).el(0) = uint64_t(a.el(2));
-    r.vec(1).el(1) = uint64_t(a.el(3));
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     return _mm256_cvtepu32_epi64(a);
 #elif SIMDPP_USE_SSE4_1
     uint64x2 r1, r2;
@@ -126,6 +119,13 @@ SIMDPP_INL uint64x4 i_to_uint64(const uint32x4& a)
     r.vec(0).el(1) = b[1];
     r.vec(1).el(0) = b[2];
     r.vec(1).el(1) = b[3];
+    return r;
+#else
+    uint64x4 r;
+    r.vec(0).el(0) = uint64_t(a.el(0));
+    r.vec(0).el(1) = uint64_t(a.el(1));
+    r.vec(1).el(0) = uint64_t(a.el(2));
+    r.vec(1).el(1) = uint64_t(a.el(3));
     return r;
 #endif
 }

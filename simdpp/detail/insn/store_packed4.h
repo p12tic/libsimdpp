@@ -38,9 +38,7 @@ SIMDPP_INL void i_store_packed4(char* p,
                                 const uint8x16& a, const uint8x16& b, const uint8x16& c, const uint8x16& d)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint8x16x4_t t;
@@ -49,6 +47,8 @@ SIMDPP_INL void i_store_packed4(char* p,
     t.val[2] = c;
     t.val[3] = d;
     vst4q_u8(reinterpret_cast<uint8_t*>(p), t);
+#else
+    detail::null::store_packed4(p, a, b, c, d);
 #endif
 }
 
@@ -66,9 +66,7 @@ SIMDPP_INL void i_store_packed4(char* p,
                                 const uint16x8& a, const uint16x8& b, const uint16x8& c, const uint16x8& d)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint16x8x4_t t;
@@ -77,6 +75,8 @@ SIMDPP_INL void i_store_packed4(char* p,
     t.val[2] = c;
     t.val[3] = d;
     vst4q_u16(reinterpret_cast<uint16_t*>(p), t);
+#else
+    detail::null::store_packed4(p, a, b, c, d);
 #endif
 }
 
@@ -94,9 +94,7 @@ SIMDPP_INL void i_store_packed4(char* p,
                                 const uint32x4& a, const uint32x4& b, const uint32x4& c, const uint32x4& d)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint32x4x4_t t;
@@ -105,6 +103,8 @@ SIMDPP_INL void i_store_packed4(char* p,
     t.val[2] = c;
     t.val[3] = d;
     vst4q_u32(reinterpret_cast<uint32_t*>(p), t);
+#else
+    detail::null::store_packed4(p, a, b, c, d);
 #endif
 }
 
@@ -165,9 +165,7 @@ SIMDPP_INL void i_store_packed4(char* p,
                                 const float32x4& a, const float32x4& b, const float32x4& c, const float32x4& d)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     float32x4x4_t t;
@@ -176,6 +174,8 @@ SIMDPP_INL void i_store_packed4(char* p,
     t.val[2] = c;
     t.val[3] = d;
     vst4q_f32(reinterpret_cast<float*>(p), t);
+#else
+    detail::null::store_packed4(p, a, b, c, d);
 #endif
 }
 
@@ -202,9 +202,7 @@ SIMDPP_INL void i_store_packed4(char* p,
                                 const float64x2& a, const float64x2& b, const float64x2& c, const float64x2& d)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON64
     float64x2x4_t t;
@@ -213,6 +211,8 @@ SIMDPP_INL void i_store_packed4(char* p,
     t.val[2] = c;
     t.val[3] = d;
     vst4q_f64(reinterpret_cast<double*>(p), t);
+#else
+    detail::null::store_packed4(p, a, b, c, d);
 #endif
 }
 

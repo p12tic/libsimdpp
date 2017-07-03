@@ -27,13 +27,7 @@ namespace insn {
 
 SIMDPP_INL float i_reduce_add(const float32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r += a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     float32x4 sum2 = _mm_movehl_ps(a, a);
     float32x4 sum = add(a, sum2);
     sum = add(sum, permute2<1,0>(sum));
@@ -52,6 +46,12 @@ SIMDPP_INL float i_reduce_add(const float32x4& a)
     b = add(b, move4_l<1>(b));
     b = add(b, move4_l<2>(b));
     return extract<0>(b);
+#else
+    float r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r += a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -91,13 +91,7 @@ SIMDPP_INL float i_reduce_add(const float32<N>& a)
 
 SIMDPP_INL double i_reduce_add(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    double r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r += a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     float64x2 b = add(a, permute2<1,1>(a));
     return _mm_cvtsd_f64(b);
 #elif SIMDPP_USE_SSE3
@@ -105,6 +99,12 @@ SIMDPP_INL double i_reduce_add(const float64x2& a)
 #elif SIMDPP_USE_NEON64
     float64x2_t a2 = vpaddq_f64(a, a);
     return vgetq_lane_f64(a2, 0);
+#else
+    double r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r += a.el(i);
+    }
+    return r;
 #endif
 }
 

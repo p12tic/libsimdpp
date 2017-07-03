@@ -26,13 +26,7 @@ namespace insn {
 
 SIMDPP_INL float32x4 i_sqrt(const float32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float32x4 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = std::sqrt(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a);
 #elif SIMPDP_USE_NEON64
     return vsqrtq_f32(a);
@@ -41,6 +35,12 @@ SIMDPP_INL float32x4 i_sqrt(const float32x4& a)
     x = rsqrt_e(a);
     x = rsqrt_rh(x, a);
     return mul(a, x);
+#else
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = std::sqrt(a.el(i));
+    }
+    return r;
 #endif
 }
 
@@ -68,16 +68,16 @@ float32<N> i_sqrt(const float32<N>& a)
 
 SIMDPP_INL float64x2 i_sqrt(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2
+    return _mm_sqrt_pd(a);
+#elif SIMDPP_USE_NEON64
+    return vsqrtq_f64(a);
+#else
     float64x2 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = std::sqrt(a.el(i));
     }
     return r;
-#elif SIMDPP_USE_SSE2
-    return _mm_sqrt_pd(a);
-#elif SIMDPP_USE_NEON64
-    return vsqrtq_f64(a);
 #endif
 }
 

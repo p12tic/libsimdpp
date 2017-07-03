@@ -32,13 +32,7 @@ namespace insn {
 
 SIMDPP_INL float32x4 i_floor(const float32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float32x4 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = std::floor(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_floor_ps(a);
 #elif SIMDPP_USE_NEON64
     return vrndmq_f32(a);
@@ -60,6 +54,12 @@ SIMDPP_INL float32x4 i_floor(const float32x4& a)
     return blend(fa, a, mask);
 #elif SIMDPP_USE_ALTIVEC
     return vec_floor((__vector float)a);
+#else
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = std::floor(a.el(i));
+    }
+    return r;
 #endif
 }
 
@@ -81,13 +81,7 @@ SIMDPP_INL float32<16> i_floor(const float32<16>& a)
 
 SIMDPP_INL float64x2 i_floor(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    float64x2 r;
-    for (unsigned i = 0; i < r.length; ++i) {
-        r.el(i) = std::floor(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_floor_pd(a);
 #elif SIMDPP_USE_SSE2
     float64x2 af = abs(a);
@@ -126,6 +120,12 @@ SIMDPP_INL float64x2 i_floor(const float64x2& a)
     return blend(a2, a, mask_range);
 #elif SIMDPP_USE_NEON64
     return vrndnq_f64(a);
+#else
+    float64x2 r;
+    for (unsigned i = 0; i < r.length; ++i) {
+        r.el(i) = std::floor(a.el(i));
+    }
+    return r;
 #endif
 }
 

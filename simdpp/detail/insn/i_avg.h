@@ -30,18 +30,18 @@ V v_emul_avg_i32(const V& a, const V& b);
 
 SIMDPP_INL uint8x16 i_avg(const uint8x16& a, const uint8x16& b)
 {
-#if SIMDPP_USE_NULL
-    uint8x16 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (uint16_t(a.el(i)) + b.el(i) + 1) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_avg_epu8(a, b);
 #elif SIMDPP_USE_NEON
     return vrhaddq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector uint8_t)a, (__vector uint8_t)b);
+#else
+    uint8x16 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint16_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #endif
 }
 
@@ -56,13 +56,7 @@ SIMDPP_INL uint8x32 i_avg(const uint8x32& a, const uint8x32& b)
 
 SIMDPP_INL int8x16 i_avg(const int8x16& a, const int8x16& b)
 {
-#if SIMDPP_USE_NULL
-    int8x16 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (int16_t(a.el(i)) + b.el(i) + 1) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint8x16 a2, b2, bias, r;
     bias = make_uint(0x80);
     a2 = bit_xor(a, bias); // add
@@ -74,6 +68,12 @@ SIMDPP_INL int8x16 i_avg(const int8x16& a, const int8x16& b)
     return vrhaddq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector int8_t)a, (__vector int8_t)b);
+#else
+    int8x16 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int16_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #endif
 }
 
@@ -94,18 +94,18 @@ SIMDPP_INL int8x32 i_avg(const int8x32& a, const int8x32& b)
 
 SIMDPP_INL uint16x8 i_avg(const uint16x8& a, const uint16x8& b)
 {
-#if SIMDPP_USE_NULL
-    uint16x8 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (uint32_t(a.el(i)) + b.el(i) + 1) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_avg_epu16(a, b);
 #elif SIMDPP_USE_NEON
     return vrhaddq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector uint16_t)a, (__vector uint16_t)b);
+#else
+    uint16x8 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint32_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #endif
 }
 
@@ -120,13 +120,7 @@ SIMDPP_INL uint16x16 i_avg(const uint16x16& a, const uint16x16& b)
 
 SIMDPP_INL int16x8 i_avg(const int16x8& a, const int16x8& b)
 {
-#if SIMDPP_USE_NULL
-    int16x8 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (int32_t(a.el(i)) + b.el(i) + 1) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint16x8 a2, b2, r;
     a2 = bit_xor(a, 0x8000); // add
     b2 = bit_xor(b, 0x8000); // add
@@ -137,6 +131,12 @@ SIMDPP_INL int16x8 i_avg(const int16x8& a, const int16x8& b)
     return vrhaddq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector int16_t)a, (__vector int16_t)b);
+#else
+    int16x8 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int32_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #endif
 }
 
@@ -156,18 +156,18 @@ SIMDPP_INL int16x16 i_avg(const int16x16& a, const int16x16& b)
 
 SIMDPP_INL uint32x4 i_avg(const uint32x4& a, const uint32x4& b)
 {
-#if SIMDPP_USE_NULL
-    uint32x4 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (uint64_t(a.el(i)) + b.el(i) + 1) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return v_emul_avg_u32(a, b);
 #elif SIMDPP_USE_NEON
     return vrhaddq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector uint32_t)a, (__vector uint32_t)b);
+#else
+    uint32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (uint64_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #endif
 }
 
@@ -189,19 +189,19 @@ SIMDPP_INL uint32<16> i_avg(const uint32<16>& a, const uint32<16>& b)
 
 SIMDPP_INL int32x4 i_avg(const int32x4& a, const int32x4& b)
 {
-#if SIMDPP_USE_NULL
-    int32x4 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = (int64_t(a.el(i)) + b.el(i) + 1) >> 1;
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return v_emul_avg_i32(a, b);
 
 #elif SIMDPP_USE_NEON
     return vrhaddq_s32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector int32_t)a, (__vector int32_t)b);
+#else
+    int32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = (int64_t(a.el(i)) + b.el(i) + 1) >> 1;
+    }
+    return r;
 #endif
 }
 

@@ -24,18 +24,18 @@ namespace insn {
 
 SIMDPP_INL uint8x16 i_bit_not(const uint8x16& a)
 {
-#if SIMDPP_USE_NULL
-    uint8x16 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = ~a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return bit_xor(a, 0xff);
 #elif SIMDPP_USE_NEON
     return vmvnq_u8(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_nor((__vector uint8_t)a, (__vector uint8_t)a);
+#else
+    uint8x16 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = ~a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -163,14 +163,14 @@ SIMDPP_INL mask_int64<8> i_bit_not(const mask_int64<8>& a)
 
 SIMDPP_INL float32x4 i_bit_not(const float32x4& a)
 {
-#if SIMDPP_USE_NULL
-    return float32x4(i_bit_not(uint32x4(a)));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return bit_xor(a, 0xffffffff);
 #elif SIMDPP_USE_NEON
     return (float32<4>) (uint32<4>) vmvnq_u32((uint32x4)a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_nor((__vector float)a, (__vector float)a);
+#else
+    return float32x4(i_bit_not(uint32x4(a)));
 #endif
 }
 
@@ -192,12 +192,12 @@ SIMDPP_INL float32<16> i_bit_not(const float32<16>& a)
 
 SIMDPP_INL float64x2 i_bit_not(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return float64x2(i_bit_not(uint64x2(a)));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return bit_xor(a, 0xffffffffffffffff);
 #elif SIMDPP_USE_NEON64
     return (float64<2>) (uint32<4>) vmvnq_u32((uint32<4>)a);
+#else
+    return float64x2(i_bit_not(uint64x2(a)));
 #endif
 }
 

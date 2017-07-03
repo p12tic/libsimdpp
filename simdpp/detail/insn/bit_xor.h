@@ -24,14 +24,14 @@ namespace insn {
 // uint8, uint8
 SIMDPP_INL uint8x16 i_bit_xor(const uint8x16& a, const uint8x16& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::bit_xor(a, uint8x16(b));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_xor_si128(a, b);
 #elif SIMDPP_USE_NEON
     return veorq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_xor((__vector uint8_t)a, (__vector uint8_t)b);
+#else
+    return detail::null::bit_xor(a, uint8x16(b));
 #endif
 }
 
@@ -192,14 +192,14 @@ SIMDPP_INL mask_int64<8> i_bit_xor(const mask_int64<8>& a, const mask_int64<8>& 
 
 SIMDPP_INL float32x4 i_bit_xor(const float32x4& a, const float32x4& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::bit_xor(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_xor_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vreinterpretq_f32_s32(veorq_s32(vreinterpretq_s32_f32(a), vreinterpretq_s32_f32(b)));
 #elif SIMDPP_USE_ALTIVEC
     return vec_xor((__vector float)a, (__vector float)b);
+#else
+    return detail::null::bit_xor(a, b);
 #endif
 }
 
@@ -248,13 +248,13 @@ SIMDPP_INL mask_float32<16> i_bit_xor(const mask_float32<16>& a, const mask_floa
 
 SIMDPP_INL float64x2 i_bit_xor(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::bit_xor(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_xor_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vreinterpretq_f64_u64(veorq_u64(vreinterpretq_u64_f64(a),
                                            vreinterpretq_u64_f64(b)));
+#else
+    return detail::null::bit_xor(a, b);
 #endif
 }
 

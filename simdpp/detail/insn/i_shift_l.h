@@ -28,9 +28,7 @@ namespace insn {
 
 SIMDPP_INL uint8x16 i_shift_l(const uint8x16& a, unsigned count)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint16x8 mask, a16;
     mask = make_ones();
     mask = shift_r(mask, 16-count);
@@ -46,6 +44,8 @@ SIMDPP_INL uint8x16 i_shift_l(const uint8x16& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = splat(count);
     return vec_sl((__vector uint8_t)a, (__vector uint8_t)shift);
+#else
+    return detail::null::shift_l(a, count);
 #endif
 }
 
@@ -68,9 +68,7 @@ SIMDPP_INL uint8x32 i_shift_l(const uint8x32& a, unsigned count)
 
 SIMDPP_INL uint16x8 i_shift_l(const uint16x8& a, unsigned count)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sll_epi16(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int16x8 shift = splat(count);
@@ -78,6 +76,8 @@ SIMDPP_INL uint16x8 i_shift_l(const uint16x8& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = splat(count);
     return vec_sl((__vector uint16_t)a, (__vector uint16_t)shift);
+#else
+    return detail::null::shift_l(a, count);
 #endif
 }
 
@@ -99,9 +99,7 @@ SIMDPP_INL uint16x16 i_shift_l(const uint16x16& a, unsigned count)
 
 SIMDPP_INL uint32x4 i_shift_l(const uint32x4& a, unsigned count)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sll_epi32(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int32x4 shift = splat(count);
@@ -109,6 +107,8 @@ SIMDPP_INL uint32x4 i_shift_l(const uint32x4& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = splat(count);
     return vec_sl((__vector uint32_t)a, (__vector uint32_t)shift);
+#else
+    return detail::null::shift_l(a, count);
 #endif
 }
 
@@ -137,13 +137,13 @@ SIMDPP_INL uint32<16> i_shift_l(const uint32<16>& a, unsigned count)
 
 SIMDPP_INL uint64x2 i_shift_l(const uint64x2& a, unsigned count)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sll_epi64(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(count);
     return vshlq_u64(a, shift);
+#else
+    return detail::null::shift_l(a, count);
 #endif
 }
 
@@ -195,9 +195,7 @@ template<unsigned count> SIMDPP_INL
 uint8x16 i_shift_l(const uint8x16& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-#if SIMDPP_USE_NULL
-    return i_shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     /*  SSE2-SSE4.1 and AVX-AVX2 instruction sets lack 8-bit shift. We emulate
         it using 16-bit shift.
     */
@@ -207,6 +205,8 @@ uint8x16 i_shift_l(const uint8x16& a)
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = make_uint(count);
     return vec_sl((__vector uint8_t)a, (__vector uint8_t)shift);
+#else
+    return i_shift_l(a, count);
 #endif
 }
 
@@ -233,15 +233,15 @@ template<unsigned count> SIMDPP_INL
 uint16x8 i_shift_l(const uint16x8& a)
 {
     static_assert(count <= 16, "Shift out of bounds");
-#if SIMDPP_USE_NULL
-    return i_shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_slli_epi16(a, count);
 #elif SIMDPP_USE_NEON
     return vshlq_n_u16(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = make_uint(count);
     return vec_sl((__vector uint16_t)a, (__vector uint16_t)shift);
+#else
+    return i_shift_l(a, count);
 #endif
 }
 
@@ -260,15 +260,15 @@ template<unsigned count> SIMDPP_INL
 uint32x4 i_shift_l(const uint32x4& a)
 {
     static_assert(count <= 32, "Shift out of bounds");
-#if SIMDPP_USE_NULL
-    return i_shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_slli_epi32(a, count);
 #elif SIMDPP_USE_NEON
     return vshlq_n_u32(a, count);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = make_uint(count);
     return vec_sl((__vector uint32_t)a, (__vector uint32_t)shift);
+#else
+    return i_shift_l(a, count);
 #endif
 }
 

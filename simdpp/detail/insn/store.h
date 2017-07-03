@@ -24,14 +24,14 @@ namespace insn {
 SIMDPP_INL void i_store(char* p, const uint8x16& a)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store(p, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_store_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
     vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u8(a));
 #elif SIMDPP_USE_ALTIVEC
     vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
+#else
+    detail::null::store(p, a);
 #endif
 }
 
@@ -112,14 +112,14 @@ SIMDPP_INL void i_store(char* p, const float32x4& a)
 {
     float* q = reinterpret_cast<float*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::store(q, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_store_ps(q, a);
 #elif SIMDPP_USE_NEON
     vst1q_f32(q, a);
 #elif SIMDPP_USE_ALTIVEC
     vec_stl((__vector float)a, 0, q);
+#else
+    detail::null::store(q, a);
 #endif
 }
 
@@ -146,12 +146,12 @@ SIMDPP_INL void i_store(char* p, const float64x2& a)
 {
     double* q = reinterpret_cast<double*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::store(q, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_store_pd(q, a);
 #elif SIMDPP_USE_NEON64
     vst1q_f64(q, a);
+#else
+    detail::null::store(q, a);
 #endif
 }
 

@@ -27,9 +27,7 @@ namespace insn {
 SIMDPP_INL uint8x16 i_unzip16_lo(const uint8x16& ca, const uint8x16& cb)
 {
     uint8<16> a = ca, b = cb;
-#if SIMDPP_USE_NULL
-    return detail::null::unzip16_lo(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint16x8 mask, r;
     mask = make_ones();
     mask = _mm_srli_epi16(mask, 8);
@@ -43,6 +41,8 @@ SIMDPP_INL uint8x16 i_unzip16_lo(const uint8x16& ca, const uint8x16& cb)
     uint8x16 mask = make_shuffle_bytes16_mask<0,2,4,6,8,10,12,14,
                                               16,18,20,22,24,26,28,30>(mask);
     return shuffle_bytes16(a, b, mask);
+#else
+    return detail::null::unzip16_lo(a, b);
 #endif
 }
 
@@ -71,9 +71,7 @@ uint8<N> i_unzip16_lo(const uint8<N>& a, const uint8<N>& b)
 SIMDPP_INL uint16x8 i_unzip8_lo(const uint16x8& ca, const uint16x8& cb)
 {
     uint16<8> a = ca, b = cb;
-#if SIMDPP_USE_NULL
-    return detail::null::unzip8_lo(a, b);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     uint32x4 mask, r;
     mask = make_ones();
     mask = _mm_srli_epi32(mask, 16);
@@ -94,6 +92,8 @@ SIMDPP_INL uint16x8 i_unzip8_lo(const uint16x8& ca, const uint16x8& cb)
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 mask = make_shuffle_bytes16_mask<0,2,4,6,8,10,12,14>(mask);
     return shuffle_bytes16(a, b, mask);
+#else
+    return detail::null::unzip8_lo(a, b);
 #endif
 }
 
@@ -121,15 +121,15 @@ uint16<N> i_unzip8_lo(const uint16<N>& a, const uint16<N>& b)
 
 SIMDPP_INL uint32x4 i_unzip4_lo(const uint32x4& a, const uint32x4& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::unzip4_lo(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON
     return vuzpq_u32(a, b).val[0];
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
     return shuffle_bytes16(a, b, mask);
+#else
+    return detail::null::unzip4_lo(a, b);
 #endif
 }
 
@@ -165,15 +165,15 @@ uint64<N> i_unzip2_lo(const uint64<N>& a, const uint64<N>& b)
 
 SIMDPP_INL float32x4 i_unzip4_lo(const float32x4& a, const float32x4& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::unzip4_lo(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return shuffle2<0,2,0,2>(a,b);
 #elif SIMDPP_USE_NEON
     return vuzpq_f32(a, b).val[0];
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
     return shuffle_bytes16(a, b, mask);
+#else
+    return detail::null::unzip4_lo(a, b);
 #endif
 }
 

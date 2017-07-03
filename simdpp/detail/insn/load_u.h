@@ -32,9 +32,7 @@ namespace insn {
 // Pentium 4 era processors.
 SIMDPP_INL void i_load_u(uint8x16& a, const char* p)
 {
-#if SIMDPP_USE_NULL
-    detail::null::load(a, p);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     a = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
 #elif SIMDPP_USE_NEON
     a = vld1q_u8(reinterpret_cast<const uint8_t*>(p));
@@ -46,40 +44,40 @@ SIMDPP_INL void i_load_u(uint8x16& a, const char* p)
     mask = vec_lvsl(0, q);
     a = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
                  (__vector uint8_t)mask);
+#else
+    detail::null::load(a, p);
 #endif
 }
 
 SIMDPP_INL void i_load_u(uint16x8& a, const char* p)
 {
-#if SIMDPP_USE_NULL
-    detail::null::load(a, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b;
     i_load_u(b, p);
     a = b;
 #elif SIMDPP_USE_NEON
     a = vld1q_u16(reinterpret_cast<const uint16_t*>(p));
+#else
+    detail::null::load(a, p);
 #endif
 }
 
 SIMDPP_INL void i_load_u(uint32x4& a, const char* p)
 {
-#if SIMDPP_USE_NULL
-    detail::null::load(a, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b;
     i_load_u(b, p);
     a = b;
 #elif SIMDPP_USE_NEON
     a = vld1q_u32(reinterpret_cast<const uint32_t*>(p));
+#else
+    detail::null::load(a, p);
 #endif
 }
 
 SIMDPP_INL void i_load_u(uint64x2& a, const char* p)
 {
-#if SIMDPP_USE_NULL
-    detail::null::load(a, p);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint8x16 b;
     i_load_u(b, p);
     a = b;
@@ -87,15 +85,15 @@ SIMDPP_INL void i_load_u(uint64x2& a, const char* p)
     detail::null::load(a, p);
 #elif SIMDPP_USE_NEON
     a = vld1q_u64(reinterpret_cast<const uint64_t*>(p));
+#else
+    detail::null::load(a, p);
 #endif
 }
 
 SIMDPP_INL void i_load_u(float32x4& a, const char* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::load(a, q);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     a = _mm_loadu_ps(q);
 #elif SIMDPP_USE_NEON
     a = vld1q_f32(q);
@@ -103,6 +101,8 @@ SIMDPP_INL void i_load_u(float32x4& a, const char* p)
     uint32x4 b; (void) q;
     i_load_u(b, p);
     a = b;
+#else
+    detail::null::load(a, q);
 #endif
 }
 

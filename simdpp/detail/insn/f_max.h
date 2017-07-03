@@ -23,14 +23,14 @@ namespace insn {
 
 SIMDPP_INL float32x4 i_max(const float32x4& a, const float32x4& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::max(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_max_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vmaxq_f32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_max((__vector float)a, (__vector float)b);
+#else
+    return detail::null::max(a, b);
 #endif
 }
 
@@ -58,12 +58,12 @@ float32<N> i_max(const float32<N>& a, const float32<N>& b)
 
 SIMDPP_INL float64x2 i_max(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::max(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_max_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vmaxq_f64(a, b);
+#else
+    return detail::null::max(a, b);
 #endif
 }
 

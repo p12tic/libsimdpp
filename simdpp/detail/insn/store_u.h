@@ -26,9 +26,7 @@ namespace insn {
 
 SIMDPP_INL void i_store_u(char* p, const uint8<16>& a)
 {
-#if SIMDPP_USE_NULL
-    detail::null::store(p, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_storeu_si128(reinterpret_cast<__m128i*>(p), a);
 #elif SIMDPP_USE_NEON
     vst1q_u8(reinterpret_cast<uint8_t*>(p), a);
@@ -46,6 +44,8 @@ SIMDPP_INL void i_store_u(char* p, const uint8<16>& a)
     LSQ = vec_perm((__vector uint8_t)a, edges, align);  // misalign the data (LSQ)
     vec_st(LSQ, 15, q);                                 // Store the LSQ part first
     vec_st(MSQ, 0, q);                                  // Store the MSQ part
+#else
+    detail::null::store(p, a);
 #endif
 }
 
@@ -79,27 +79,27 @@ SIMDPP_INL void i_store_u(char* p, const uint64<2>& a)
 SIMDPP_INL void i_store_u(char* p, const float32x4& a)
 {
     float* q = reinterpret_cast<float*>(p);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::store(q, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_storeu_ps(q, a);
 #elif SIMDPP_USE_NEON
     vst1q_f32(q, a);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 b = bit_cast<uint32x4>(a.eval());
     i_store_u(reinterpret_cast<char*>(q), b);
+#else
+    detail::null::store(q, a);
 #endif
 }
 
 SIMDPP_INL void i_store_u(char* p, const float64x2& a)
 {
     double* q = reinterpret_cast<double*>(p);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::store(q, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_storeu_pd(q, a);
 #elif SIMDPP_USE_NEON64
     vst1q_f64(q, a);
+#else
+    detail::null::store(q, a);
 #endif
 }
 

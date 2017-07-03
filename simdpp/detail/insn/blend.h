@@ -31,9 +31,7 @@ namespace insn {
 SIMDPP_INL uint8<16> i_blend(const uint8<16>& con, const uint8<16>& coff, const uint8<16>& mask)
 {
     uint8<16> on = con, off = coff;
-#if SIMDPP_USE_NULL
-    return detail::null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     return _mm_blendv_epi8(off, on, mask);
 #elif SIMDPP_USE_XOP
     return _mm_cmov_si128(on, off, mask);
@@ -50,6 +48,8 @@ SIMDPP_INL uint8<16> i_blend(const uint8<16>& con, const uint8<16>& coff, const 
 #elif SIMDPP_USE_ALTIVEC
     return vec_sel((__vector uint8_t)off, (__vector uint8_t)on,
                    (__vector uint8_t)mask);
+#else
+    return detail::null::blend(on, off, mask);
 #endif
 }
 
@@ -231,9 +231,7 @@ SIMDPP_INL mask_int32<16> i_blend(const mask_int32<16>& on, const mask_int32<16>
 SIMDPP_INL float32<4> i_blend(const float32<4>& con, const float32<4>& coff, const float32<4>& mask)
 {
     float32<4> on = con, off = coff;
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_blendv_ps(off, on, mask);
 #elif SIMDPP_USE_SSE2
     float32x4 r;
@@ -246,6 +244,8 @@ SIMDPP_INL float32<4> i_blend(const float32<4>& con, const float32<4>& coff, con
 #elif SIMDPP_USE_ALTIVEC
     return vec_sel((__vector float)off, (__vector float)on,
                    (__vector float)mask);
+#else
+    return detail::null::blend(on, off, mask);
 #endif
 }
 
@@ -400,9 +400,7 @@ SIMDPP_INL mask_int64<8> i_blend(const mask_int64<8>& on, const mask_int64<8>& o
 SIMDPP_INL float64<2> i_blend(const float64<2>& con, const float64<2>& coff, const float64<2>& mask)
 {
     float64<2> on = con, off = coff;
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::blend(on, off, mask);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_blendv_pd(off, on, mask);
 #elif SIMDPP_USE_SSE2
     float64x2 r;
@@ -412,6 +410,8 @@ SIMDPP_INL float64<2> i_blend(const float64<2>& con, const float64<2>& coff, con
     return r;
 #elif SIMDPP_USE_NEON64
     return vbslq_f64(uint64<2>(mask), on, off);
+#else
+    return detail::null::blend(on, off, mask);
 #endif
 }
 

@@ -16,10 +16,8 @@
 #include <simdpp/core/f_sub.h>
 #include <simdpp/core/f_mul.h>
 #include <simdpp/core/make_float.h>
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    #include <cmath>
-    #include <simdpp/detail/null/math.h>
-#endif
+#include <cmath>
+#include <simdpp/detail/null/math.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -30,15 +28,7 @@ namespace insn {
 SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
 {
     float32<4> x = cx;
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float32x4 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        float ix = x.el(i);
-        float ia = a.el(i);
-        r.el(i) = ix*(2.0f - ix*ia);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     float32x4 r;
 
     r = mul(a, x);
@@ -59,6 +49,14 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
     r = vec_nmsub((__vector float)x, (__vector float)a, (__vector float)c2);
     x = mul(x, r);
     return x;
+#else
+    float32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        float ix = x.el(i);
+        float ia = a.el(i);
+        r.el(i) = ix*(2.0f - ix*ia);
+    }
+    return r;
 #endif
 }
 

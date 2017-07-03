@@ -26,14 +26,14 @@ namespace insn {
 // uint8, uint8
 SIMDPP_INL uint8<16> i_bit_or(const uint8<16>& a, const uint8<16>& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::bit_or(uint8x16(a), uint8x16(b));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_or_si128(a, b);
 #elif SIMDPP_USE_NEON
     return vorrq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_or((__vector uint8_t)a, (__vector uint8_t)b);
+#else
+    return detail::null::bit_or(uint8x16(a), uint8x16(b));
 #endif
 }
 
@@ -194,15 +194,15 @@ SIMDPP_INL mask_int64<8> i_bit_or(const mask_int64<8>& a, const mask_int64<8>& b
 // float32, float32
 SIMDPP_INL float32<4> i_bit_or(const float32<4>& a, const float32<4>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::bit_or(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_or_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vreinterpretq_f32_u32(vorrq_u32(vreinterpretq_u32_f32(a),
                                            vreinterpretq_u32_f32(b)));
 #elif SIMDPP_USE_ALTIVEC
     return vec_or((__vector float)a, (__vector float)b);
+#else
+    return detail::null::bit_or(a, b);
 #endif
 }
 
@@ -249,13 +249,13 @@ SIMDPP_INL mask_float32<16> i_bit_or(const mask_float32<16>& a, const mask_float
 // float64, float64
 SIMDPP_INL float64<2> i_bit_or(const float64<2>& a, const float64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::bit_or(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_or_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vreinterpretq_f64_u64(vorrq_u64(vreinterpretq_u64_f64(a),
                                            vreinterpretq_u64_f64(b)));
+#else
+    return detail::null::bit_or(a, b);
 #endif
 }
 

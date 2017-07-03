@@ -37,14 +37,14 @@ void v512_load_packed2(V& a, V& b, const char* p);
 SIMDPP_INL void i_load_packed2(uint8x16& a, uint8x16& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u8(reinterpret_cast<const uint8_t*>(p));
     a = r.val[0];
     b = r.val[1];
+#else
+    detail::null::load_packed2(a, b, p);
 #endif
 }
 
@@ -60,14 +60,14 @@ SIMDPP_INL void i_load_packed2(uint8x32& a, uint8x32& b, const char* p)
 SIMDPP_INL void i_load_packed2(uint16x8& a, uint16x8& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u16(reinterpret_cast<const uint16_t*>(p));
     a = r.val[0];
     b = r.val[1];
+#else
+    detail::null::load_packed2(a, b, p);
 #endif
 }
 
@@ -83,14 +83,14 @@ SIMDPP_INL void i_load_packed2(uint16x16& a, uint16x16& b, const char* p)
 SIMDPP_INL void i_load_packed2(uint32x4& a, uint32x4& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL
-    detail::null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_u32(reinterpret_cast<const uint32_t*>(p));
     a = r.val[0];
     b = r.val[1];
+#else
+    detail::null::load_packed2(a, b, p);
 #endif
 }
 
@@ -143,14 +143,14 @@ SIMDPP_INL void i_load_packed2(uint64<8>& a, uint64<8>& b, const char* p)
 SIMDPP_INL void i_load_packed2(float32x4& a, float32x4& b, const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::load_packed2(a, b, p);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     v128_load_packed2(a, b, p);
 #elif SIMDPP_USE_NEON
     auto r = vld2q_f32(reinterpret_cast<const float*>(p));
     a = r.val[0];
     b = r.val[1];
+#else
+    detail::null::load_packed2(a, b, p);
 #endif
 }
 

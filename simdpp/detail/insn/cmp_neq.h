@@ -98,9 +98,7 @@ SIMDPP_INL mask_int32<16> i_cmp_neq(const mask_int32<16>& a, const mask_int32<16
 
 SIMDPP_INL mask_int64x2 i_cmp_neq(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_neq(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comneq_epi64(a, b);
 #elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON
     return bit_not(cmp_eq(a, b));
@@ -112,6 +110,8 @@ SIMDPP_INL mask_int64x2 i_cmp_neq(const uint64x2& a, const uint64x2& b)
     // combine the results. Each 32-bit half is ORed with the neighbouring pair
     r32 = bit_or(r32, r32s);
     return r32;
+#else
+    return detail::null::cmp_neq(a, b);
 #endif
 }
 
@@ -138,14 +138,14 @@ SIMDPP_INL mask_int64<8> i_cmp_neq(const mask_int64<8>& a, const mask_int64<8>& 
 
 SIMDPP_INL mask_float32x4 i_cmp_neq(const float32x4& a, const float32x4& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::cmp_neq(a, b);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_NEQ_UQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpneq_ps(a, b);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return bit_not(cmp_eq(a, b));
+#else
+    return detail::null::cmp_neq(a, b);
 #endif
 }
 

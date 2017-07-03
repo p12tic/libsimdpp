@@ -27,13 +27,7 @@ namespace insn {
 
 SIMDPP_INL float i_reduce_max(const float32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r = r > a.el(i) ? r : a.el(i); // TODO nan
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     float32x4 b = _mm_movehl_ps(a, a);
     b = max(a, b);
     b = max(b, permute2<1,1>(b));
@@ -47,6 +41,12 @@ SIMDPP_INL float i_reduce_max(const float32x4& a)
     b = max(b, move4_l<1>(b));
     b = max(b, move4_l<2>(b));
     return extract<0>(b);
+#else
+    float r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r = r > a.el(i) ? r : a.el(i); // TODO nan
+    }
+    return r;
 #endif
 }
 

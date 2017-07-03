@@ -54,12 +54,12 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64x2 i_permute2(const uint64x2& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::permute<s0,s1>(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return (uint64x2) i_permute4<s0*2, s0*2+1, s1*2, s1*2+1>(int32x4(a));
 #elif SIMDPP_USE_NEON
     return detail::neon_shuffle_int64x2::permute2<s0,s1>(a);
+#else
+    return detail::null::permute<s0,s1>(a);
 #endif
 }
 

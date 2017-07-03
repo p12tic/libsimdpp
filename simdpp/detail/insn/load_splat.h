@@ -23,15 +23,15 @@ namespace insn {
 SIMDPP_INL void i_load_splat(uint8x16& v, const void* p0)
 {
     const uint8_t* v0 = reinterpret_cast<const uint8_t*>(p0);
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint8x16>(*v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     i_set_splat(v, *v0);
 #elif SIMDPP_USE_NEON
     v = vld1q_dup_u8(v0);
 #elif SIMDPP_USE_ALTIVEC
     v = altivec::load1_u(v, v0);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<uint8x16>(*v0);
 #endif
 }
 
@@ -47,15 +47,15 @@ SIMDPP_INL void i_load_splat(uint8x32& v, const void* p0)
 SIMDPP_INL void i_load_splat(uint16x8& v, const void* p0)
 {
     const uint16_t* v0 = reinterpret_cast<const uint16_t*>(p0);
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint16x8>(*v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     i_set_splat(v, *v0);
 #elif SIMDPP_USE_NEON
     v = vld1q_dup_u16(v0);
 #elif SIMDPP_USE_ALTIVEC
     v = altivec::load1_u(v, v0);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<uint16x8>(*v0);
 #endif
 }
 
@@ -71,9 +71,7 @@ SIMDPP_INL void i_load_splat(uint16x16& v, const void* p0)
 SIMDPP_INL void i_load_splat(uint32x4& v, const void* p0)
 {
     const uint32_t* v0 = reinterpret_cast<const uint32_t*>(p0);
-#if SIMDPP_USE_NULL
-    v = detail::null::make_vec<uint32x4>(*v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_cvtsi32_si128(*v0);
     v = permute4<0,0,0,0>(v);
 #elif SIMDPP_USE_NEON
@@ -81,6 +79,8 @@ SIMDPP_INL void i_load_splat(uint32x4& v, const void* p0)
 #elif SIMDPP_USE_ALTIVEC
     v = altivec::load1_u(v, v0);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<uint32x4>(*v0);
 #endif
 }
 
@@ -104,9 +104,7 @@ SIMDPP_INL void i_load_splat(uint32<16>& v, const void* p0)
 SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
 {
     const uint64_t* v0 = reinterpret_cast<const uint64_t*>(p0);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<uint64x2>(*v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(v0));
     v = permute2<0,0>(v);
 #elif SIMDPP_USE_NEON
@@ -117,6 +115,8 @@ SIMDPP_INL void i_load_splat(uint64x2& v, const void* p0)
 #else
     v = vld1q_dup_u64(v0);
 #endif
+#else
+    v = detail::null::make_vec<uint64x2>(*v0);
 #endif
 }
 
@@ -141,9 +141,7 @@ SIMDPP_INL void i_load_splat(uint64<8>& v, const void* p0)
 SIMDPP_INL void i_load_splat(float32x4& v, const void* p0)
 {
     const float* v0 = reinterpret_cast<const float*>(p0);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    v = detail::null::make_vec<float32x4>(*v0);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     v = _mm_broadcast_ss(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_load_ss(v0);
@@ -153,6 +151,8 @@ SIMDPP_INL void i_load_splat(float32x4& v, const void* p0)
 #elif SIMDPP_USE_ALTIVEC
     v = altivec::load1_u(v, v0);
     v = splat<0>(v);
+#else
+    v = detail::null::make_vec<float32x4>(*v0);
 #endif
 }
 
@@ -177,15 +177,15 @@ SIMDPP_INL void i_load_splat(float64x2& v, const void* p0)
 {
     const double* v0 = reinterpret_cast<const double*>(p0);
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<float64x2>(*v0);
-#elif SIMDPP_USE_SSE3
+#if SIMDPP_USE_SSE3
     v = _mm_loaddup_pd(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_load_sd(v0);
     v = permute2<0,0>(v);
 #elif SIMDPP_USE_NEON64
     v = vld1q_dup_f64(v0);
+#else
+    v = detail::null::make_vec<float64x2>(*v0);
 #endif
 }
 

@@ -27,9 +27,7 @@ namespace insn {
 
 SIMDPP_INL int8x16 i_min(const int8x16& a, const int8x16& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::min(a, b);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_min_epi8(a, b);
 #elif SIMDPP_USE_SSE2
     int8x16 ca = bit_xor(a, 0x80);
@@ -40,6 +38,8 @@ SIMDPP_INL int8x16 i_min(const int8x16& a, const int8x16& b)
     return vminq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_min((__vector int8_t)a, (__vector int8_t)b);
+#else
+    return detail::null::min(a, b);
 #endif
 }
 
@@ -60,14 +60,14 @@ int8<N> i_min(const int8<N>& a, const int8<N>& b)
 
 SIMDPP_INL uint8x16 i_min(const uint8x16& a, const uint8x16& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::min(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_min_epu8(a, b);
 #elif SIMDPP_USE_NEON
     return vminq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_min((__vector uint8_t)a, (__vector uint8_t)b);
+#else
+    return detail::null::min(a, b);
 #endif
 }
 
@@ -88,14 +88,14 @@ uint8<N> i_min(const uint8<N>& a, const uint8<N>& b)
 
 SIMDPP_INL int16x8 i_min(const int16x8& a, const int16x8& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::min(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_min_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vminq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_min((__vector int16_t)a, (__vector int16_t)b);
+#else
+    return detail::null::min(a, b);
 #endif
 }
 
@@ -116,9 +116,7 @@ int16<N> i_min(const int16<N>& a, const int16<N>& b)
 
 SIMDPP_INL uint16x8 i_min(const uint16x8& a, const uint16x8& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::min(a, b);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_min_epu16(a, b);
 #elif SIMDPP_USE_SSE2
     int16x8 ca = bit_xor(a, 0x8000);
@@ -129,6 +127,8 @@ SIMDPP_INL uint16x8 i_min(const uint16x8& a, const uint16x8& b)
     return vminq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_min((__vector uint16_t)a, (__vector uint16_t)b);
+#else
+    return detail::null::min(a, b);
 #endif
 }
 
@@ -149,9 +149,7 @@ uint16<N> i_min(const uint16<N>& a, const uint16<N>& b)
 
 SIMDPP_INL int32x4 i_min(const int32x4& a, const int32x4& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::min(a, b);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_min_epi32(a, b);
 #elif SIMDPP_USE_SSE2
     mask_int32x4 mask = cmp_lt(a, b);
@@ -160,6 +158,8 @@ SIMDPP_INL int32x4 i_min(const int32x4& a, const int32x4& b)
     return vminq_s32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_min((__vector int32_t)a, (__vector int32_t)b);
+#else
+    return detail::null::min(a, b);
 #endif
 }
 
@@ -187,9 +187,7 @@ int32<N> i_min(const int32<N>& a, const int32<N>& b)
 
 SIMDPP_INL uint32x4 i_min(const uint32x4& a, const uint32x4& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::min(a, b);
-#elif SIMDPP_USE_SSE4_1
+#if SIMDPP_USE_SSE4_1
     return _mm_min_epu32(a, b);
 #elif SIMDPP_USE_SSE2
     mask_int32x4 mask = cmp_lt(a, b);
@@ -198,6 +196,8 @@ SIMDPP_INL uint32x4 i_min(const uint32x4& a, const uint32x4& b)
     return vminq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_min((__vector uint32_t)a, (__vector uint32_t)b);
+#else
+    return detail::null::min(a, b);
 #endif
 }
 

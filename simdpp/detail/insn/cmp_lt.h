@@ -25,14 +25,14 @@ namespace insn {
 
 SIMDPP_INL mask_int8x16 i_cmp_lt(const int8x16& a, const int8x16& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_cmplt_epi8(a, b);
 #elif SIMDPP_USE_NEON
     return vcltq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt((__vector int8_t)a, (__vector int8_t)b);
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -48,9 +48,7 @@ SIMDPP_INL mask_int8x32 i_cmp_lt(const int8x32& a, const int8x32& b)
 SIMDPP_INL mask_int8x16 i_cmp_lt(const uint8x16& ca, const uint8x16& cb)
 {
     uint8<16> a = ca, b = cb;
-#if SIMDPP_USE_NULL
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu8(a, b);
 #elif SIMDPP_USE_SSE2
     a = bit_xor(a, 0x80); // sub
@@ -60,6 +58,8 @@ SIMDPP_INL mask_int8x16 i_cmp_lt(const uint8x16& ca, const uint8x16& cb)
     return vcltq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt((__vector uint8_t)a, (__vector uint8_t)b);
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -77,14 +77,14 @@ SIMDPP_INL mask_int8x32 i_cmp_lt(const uint8x32& ca, const uint8x32& cb)
 
 SIMDPP_INL mask_int16x8 i_cmp_lt(const int16x8& a, const int16x8& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_cmplt_epi16(a, b);
 #elif SIMDPP_USE_NEON
     return vcltq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt((__vector int16_t)a, (__vector int16_t)b);
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -100,9 +100,7 @@ SIMDPP_INL mask_int16x16 i_cmp_lt(const int16x16& a, const int16x16& b)
 SIMDPP_INL mask_int16x8 i_cmp_lt(const uint16x8& ca, const uint16x8& cb)
 {
     uint16<8> a = ca, b = cb;
-#if SIMDPP_USE_NULL
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu16(a, b);
 #elif SIMDPP_USE_SSE2
     uint16x8 bias = make_uint(0x8000);
@@ -113,6 +111,8 @@ SIMDPP_INL mask_int16x8 i_cmp_lt(const uint16x8& ca, const uint16x8& cb)
     return vcltq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt((__vector uint16_t)a, (__vector uint16_t)b);
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -130,14 +130,14 @@ SIMDPP_INL mask_int16x16 i_cmp_lt(const uint16x16& ca, const uint16x16& cb)
 
 SIMDPP_INL mask_int32x4 i_cmp_lt(const int32x4& a, const int32x4& b)
 {
-#if SIMDPP_USE_NULL
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_cmplt_epi32(a, b);
 #elif SIMDPP_USE_NEON
     return vcltq_s32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt((__vector int32_t)a, (__vector int32_t)b);
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -162,9 +162,7 @@ SIMDPP_INL mask_int32<16> i_cmp_lt(const int32<16>& a, const int32<16>& b)
 SIMDPP_INL mask_int32x4 i_cmp_lt(const uint32x4& ca, const uint32x4& cb)
 {
     uint32<4> a = ca, b = cb;
-#if SIMDPP_USE_NULL
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu32(a, b);
 #elif SIMDPP_USE_SSE2
     a = bit_xor(a, 0x80000000); // sub
@@ -174,6 +172,8 @@ SIMDPP_INL mask_int32x4 i_cmp_lt(const uint32x4& ca, const uint32x4& cb)
     return vcltq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt((__vector uint32_t)a, (__vector uint32_t)b);
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -265,9 +265,7 @@ SIMDPP_INL mask_int64<8> i_cmp_lt(const uint64<8>& a, const uint64<8>& b)
 
 SIMDPP_INL mask_float32x4 i_cmp_lt(const float32x4& a, const float32x4& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_cmp_ps(a, b, _CMP_LT_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmplt_ps(a, b);
@@ -275,6 +273,8 @@ SIMDPP_INL mask_float32x4 i_cmp_lt(const float32x4& a, const float32x4& b)
     return vreinterpretq_f32_u32(vcltq_f32(a, b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt((__vector float)a, (__vector float)b);
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -296,14 +296,14 @@ SIMDPP_INL mask_float32<16> i_cmp_lt(const float32<16>& a, const float32<16>& b)
 
 SIMDPP_INL mask_float64x2 i_cmp_lt(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_LT_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmplt_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vreinterpretq_f64_u64(vcltq_f64(a, b));
+#else
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 

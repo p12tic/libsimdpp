@@ -25,18 +25,18 @@ namespace insn {
 
 SIMDPP_INL uint8_t i_reduce_or(const uint8x16& a)
 {
-#if SIMDPP_USE_NULL
-    uint8_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r |= a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     uint8x16 r = bit_or(a, move16_l<8>(a));
     r = bit_or(r, move16_l<4>(r));
     r = bit_or(r, move16_l<2>(r));
     r = bit_or(r, move16_l<1>(r));
     return extract<0>(r);
+#else
+    uint8_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r |= a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -77,17 +77,17 @@ SIMDPP_INL uint8_t i_reduce_or(const uint8<N>& a)
 
 SIMDPP_INL uint16_t i_reduce_or(const uint16x8& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    uint16x8 r = bit_or(a, move8_l<4>(a));
+    r = bit_or(r, move8_l<2>(r));
+    r = bit_or(r, move8_l<1>(r));
+    return extract<0>(r);
+#else
     uint16_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r |= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    uint16x8 r = bit_or(a, move8_l<4>(a));
-    r = bit_or(r, move8_l<2>(r));
-    r = bit_or(r, move8_l<1>(r));
-    return extract<0>(r);
 #endif
 }
 
@@ -127,16 +127,16 @@ SIMDPP_INL uint16_t i_reduce_or(const uint16<N>& a)
 
 SIMDPP_INL uint32_t i_reduce_or(const uint32x4& a)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    uint32x4 r = bit_or(a, move4_l<2>(a));
+    r = bit_or(r, move4_l<1>(r));
+    return extract<0>(r);
+#else
     uint32_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r |= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    uint32x4 r = bit_or(a, move4_l<2>(a));
-    r = bit_or(r, move4_l<1>(r));
-    return extract<0>(r);
 #endif
 }
 
@@ -186,15 +186,15 @@ SIMDPP_INL uint32_t i_reduce_or(const uint32<N>& a)
 
 SIMDPP_INL uint64_t i_reduce_or(const uint64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+    uint64x2 r = bit_or(a, move2_l<1>(a));
+    return extract<0>(r);
+#else
     uint64_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r |= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
-    uint64x2 r = bit_or(a, move2_l<1>(a));
-    return extract<0>(r);
 #endif
 }
 

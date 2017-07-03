@@ -29,13 +29,7 @@ namespace insn {
 
 SIMDPP_INL uint32_t i_reduce_mul(const uint16x8& a)
 {
-#if SIMDPP_USE_NULL
-    uint32_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r *= a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint32x4 ca = (uint32x4)a;
     // shift data zeroing out bits
     uint32x4 al = shift_r<16>(ca);
@@ -57,6 +51,12 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16x8& a)
     uint32x4 r = vec_mule((__vector uint16_t)a2, (__vector uint16_t)a);
     mem_block<uint32x4> b = r;
     return b[0] * b[1] * b[2] * b[3];
+#else
+    uint32_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r *= a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -81,15 +81,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16x16& a)
 template<unsigned N>
 SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
 {
-#if SIMDPP_USE_NULL
-    uint32_t r = 1;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r *= a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     uint32x8 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         uint32x8 ca = (uint32x8) a.vec(j);
@@ -137,6 +129,14 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
         r *= i_reduce_mul(a.vec(j));
     }
     return r;
+#else
+    uint32_t r = 1;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r *= a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 
@@ -144,13 +144,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
 
 SIMDPP_INL int32_t i_reduce_mul(const int16x8& a)
 {
-#if SIMDPP_USE_NULL
-    int32_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r *= a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint32x4 ca = (uint32x4) a;
     // shift data zeroing out bits
     uint32x4 al = shift_r<16>(ca);
@@ -172,6 +166,12 @@ SIMDPP_INL int32_t i_reduce_mul(const int16x8& a)
     int32x4 r = vec_mule((__vector int16_t)a2, (__vector int16_t)a);
     mem_block<int32x4> b = r;
     return b[0] * b[1] * b[2] * b[3];
+#else
+    int32_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r *= a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -196,15 +196,7 @@ SIMDPP_INL int32_t i_reduce_mul(const int16x16& a)
 template<unsigned N>
 SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
 {
-#if SIMDPP_USE_NULL
-    uint32_t r = 1;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r *= a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     uint32x8 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         uint32x8 ca = (uint32x8) a.vec(j);
@@ -252,6 +244,14 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
         r *= i_reduce_mul(a.vec(j));
     }
     return r;
+#else
+    uint32_t r = 1;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r *= a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 
@@ -259,13 +259,7 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
 
 SIMDPP_INL uint32_t i_reduce_mul(const uint32x4& a)
 {
-#if SIMDPP_USE_NULL
-    uint32_t r = a.el(0);
-    for (unsigned i = 1; i < a.length; i++) {
-        r *= a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint32x4 r = _mm_mul_epu32(a, move4_l<1>(a).eval());
     r = _mm_mul_epu32(r, move4_l<2>(r).eval());
     return extract<0>(r);
@@ -277,6 +271,12 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32x4& a)
 #elif SIMDPP_USE_ALTIVEC
     mem_block<uint32x4> b = a;
     return b[0] * b[1] * b[2] * b[3];
+#else
+    uint32_t r = a.el(0);
+    for (unsigned i = 1; i < a.length; i++) {
+        r *= a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -304,15 +304,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32<16>& a)
 template<unsigned N>
 SIMDPP_INL uint32_t i_reduce_mul(const uint32<N>& a)
 {
-#if SIMDPP_USE_NULL
-    uint32_t r = 1;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r *= a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2
     uint32x8 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         uint32x8 ai = a.vec(j);
@@ -343,6 +335,14 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32<N>& a)
     uint32_t r = i_reduce_mul(a.vec(0));
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r *= i_reduce_mul(a.vec(j));
+    }
+    return r;
+#else
+    uint32_t r = 1;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r *= a.vec(j).el(i);
+        }
     }
     return r;
 #endif
