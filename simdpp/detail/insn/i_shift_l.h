@@ -296,14 +296,12 @@ template<unsigned count> SIMDPP_INL
 uint64x2 i_shift_l(const uint64x2& a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return i_shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_slli_epi64(a, count);
 #elif SIMDPP_USE_NEON
     return vshlq_n_u64(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    return i_shift_l(a, count);
 #endif
 }
 

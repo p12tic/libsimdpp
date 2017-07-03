@@ -24,7 +24,16 @@ namespace insn {
 
 SIMDPP_INL uint8x16 i_permute_zbytes16(const uint8x16& a, const uint8x16& mask)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_SSSE3 || SIMDPP_USE_NEON
+    return permute_bytes16(a, mask);
+#elif SIMDPP_USE_ALTIVEC
+    int8x16 a0 = a;
+    int8x16 zero_mask = mask;
+    zero_mask = shift_r<7>(zero_mask); // shift in the sign bit
+    a0 = i_permute_bytes16(a0, mask);
+    a0 = bit_andnot(a0, zero_mask);
+    return a0;
+#else
     uint8x16 ai = a;
     uint8x16 mi = mask;
     uint8x16 r;
@@ -35,17 +44,6 @@ SIMDPP_INL uint8x16 i_permute_zbytes16(const uint8x16& a, const uint8x16& mask)
         r.el(i) = zero ? 0 : ai.el(j);
     }
     return r;
-#elif SIMDPP_USE_SSSE3 || SIMDPP_USE_NEON
-    return permute_bytes16(a, mask);
-#elif SIMDPP_USE_ALTIVEC
-    int8x16 a0 = a;
-    int8x16 zero_mask = mask;
-    zero_mask = shift_r<7>(zero_mask); // shift in the sign bit
-    a0 = i_permute_bytes16(a0, mask);
-    a0 = bit_andnot(a0, zero_mask);
-    return a0;
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, mask);
 #endif
 }
 

@@ -47,9 +47,7 @@ void v_sse_transpose32x4(V& a0, V& a1, V& a2, V& a3);
 */
 SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
 {
-#if SIMDPP_USE_NULL
-    detail::null::transpose2(a0, a1);
-#elif SIMDPP_USE_NEON
+#if SIMDPP_USE_NEON
     auto r = vtrnq_u8(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
@@ -63,7 +61,7 @@ SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
     b1 = shuffle_bytes16(a0, a1, m1);
     a0 = b0;  a1 = b1;
 #else
-    SIMDPP_NOT_IMPLEMENTED2(a0, a1);
+    detail::null::transpose2(a0, a1);
 #endif
 }
 

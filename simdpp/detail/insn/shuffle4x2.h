@@ -50,14 +50,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
 {
     static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float32<4> r;
-    r.el(0) = s0 < 4 ? a.el(s0) : b.el(s0-4);
-    r.el(1) = s1 < 4 ? a.el(s1) : b.el(s1-4);
-    r.el(2) = s2 < 4 ? a.el(s2) : b.el(s2-4);
-    r.el(3) = s3 < 4 ? a.el(s3) : b.el(s3-4);
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return sse_shuffle4x2_float32::do_shuffle<s0, s1, s2, s3>(a, b);
 #elif SIMDPP_USE_NEON_FLT_SP
     return (float32<4>)detail::neon_shuffle_int32x4::shuffle4x2<s0, s1, s2, s3>(uint32<4>(a), uint32<4>(b));
@@ -65,7 +58,12 @@ float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
     uint32<4> mask = make_shuffle_bytes16_mask<s0, s1, s2, s3>(mask);
     return shuffle_bytes16(a, b, mask);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
+    float32<4> r;
+    r.el(0) = s0 < 4 ? a.el(s0) : b.el(s0-4);
+    r.el(1) = s1 < 4 ? a.el(s1) : b.el(s1-4);
+    r.el(2) = s2 < 4 ? a.el(s2) : b.el(s2-4);
+    r.el(3) = s3 < 4 ? a.el(s3) : b.el(s3-4);
+    return r;
 #endif
 }
 
@@ -135,14 +133,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
 {
     static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
-#if SIMDPP_USE_NULL
-    uint32<4> r;
-    r.el(0) = s0 < 4 ? a.el(s0) : b.el(s0-4);
-    r.el(1) = s1 < 4 ? a.el(s1) : b.el(s1-4);
-    r.el(2) = s2 < 4 ? a.el(s2) : b.el(s2-4);
-    r.el(3) = s3 < 4 ? a.el(s3) : b.el(s3-4);
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return sse_shuffle4x2_int32::do_shuffle<s0, s1, s2, s3>(a, b);
 #elif SIMDPP_USE_NEON
     return detail::neon_shuffle_int32x4::shuffle4x2<s0, s1, s2, s3>(a, b);
@@ -150,7 +141,12 @@ uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
     uint32<4> mask = make_shuffle_bytes16_mask<s0, s1, s2, s3>(mask);
     return shuffle_bytes16(a, b, mask);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
+    uint32<4> r;
+    r.el(0) = s0 < 4 ? a.el(s0) : b.el(s0-4);
+    r.el(1) = s1 < 4 ? a.el(s1) : b.el(s1-4);
+    r.el(2) = s2 < 4 ? a.el(s2) : b.el(s2-4);
+    r.el(3) = s3 < 4 ? a.el(s3) : b.el(s3-4);
+    return r;
 #endif
 }
 

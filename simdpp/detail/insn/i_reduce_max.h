@@ -382,20 +382,18 @@ SIMDPP_INL int32_t i_reduce_max(const int32<N>& a)
 
 SIMDPP_INL uint64_t i_reduce_max(const uint64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    uint64_t r = a.el(0);
-    for (unsigned i = 0; i < a.length; i++) {
-        r = r > a.el(i) ? r : a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     uint64x2 r = max(a, move2_l<1>(a));
     return extract<0>(r);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32
     mem_block<uint64x2> b = a;
     return b[0] > b[1] ? b[0] : b[1];
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    uint64_t r = a.el(0);
+    for (unsigned i = 0; i < a.length; i++) {
+        r = r > a.el(i) ? r : a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -423,15 +421,7 @@ SIMDPP_INL uint64_t i_reduce_max(const uint64<8>& a)
 template<unsigned N>
 SIMDPP_INL uint64_t i_reduce_max(const uint64<N>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    uint64_t r = std::numeric_limits<uint64_t>::min();;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r = r > a.vec(j).el(i) ? r : a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     uint64v r = a.vec(0);
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = max(r, a.vec(j));
@@ -447,7 +437,13 @@ SIMDPP_INL uint64_t i_reduce_max(const uint64<N>& a)
     }
     return r;
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    uint64_t r = std::numeric_limits<uint64_t>::min();;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r = r > a.vec(j).el(i) ? r : a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 
@@ -455,20 +451,18 @@ SIMDPP_INL uint64_t i_reduce_max(const uint64<N>& a)
 
 SIMDPP_INL int64_t i_reduce_max(const int64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    int64_t r = a.el(0);
-    for (unsigned i = 0; i < a.length; i++) {
-        r = r > a.el(i) ? r : a.el(i);
-    }
-    return r;
-#elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     int64x2 r = max(a, move2_l<1>(a));
     return extract<0>(r);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32
     mem_block<int64x2> b = a;
     return b[0] > b[1] ? b[0] : b[1];
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    int64_t r = a.el(0);
+    for (unsigned i = 0; i < a.length; i++) {
+        r = r > a.el(i) ? r : a.el(i);
+    }
+    return r;
 #endif
 }
 
@@ -496,15 +490,7 @@ SIMDPP_INL int64_t i_reduce_max(const int64<8>& a)
 template<unsigned N>
 SIMDPP_INL int64_t i_reduce_max(const int64<N>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    int64_t r = std::numeric_limits<int64_t>::min();;
-    for (unsigned j = 0; j < a.vec_length; ++j) {
-        for (unsigned i = 0; i < a.base_length; i++) {
-            r = r > a.vec(j).el(i) ? r : a.vec(j).el(i);
-        }
-    }
-    return r;
-#elif SIMDPP_USE_AXV2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_AXV2 || SIMDPP_USE_NEON64
     int64v r = a.vec(0);
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = max(r, a.vec(j));
@@ -520,7 +506,13 @@ SIMDPP_INL int64_t i_reduce_max(const int64<N>& a)
     }
     return r;
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    int64_t r = std::numeric_limits<int64_t>::min();;
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        for (unsigned i = 0; i < a.base_length; i++) {
+            r = r > a.vec(j).el(i) ? r : a.vec(j).el(i);
+        }
+    }
+    return r;
 #endif
 }
 

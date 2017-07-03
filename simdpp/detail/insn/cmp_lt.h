@@ -198,16 +198,14 @@ SIMDPP_INL mask_int32<16> i_cmp_lt(const uint32<16>& a, const uint32<16>& b)
 
 SIMDPP_INL mask_int64x2 i_cmp_lt(const int64x2& a, const int64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epi64(a, b);
 #elif SIMDPP_USE_AVX2
     return _mm_cmpgt_epi64(b, a);
 #elif SIMDPP_USE_NEON64
     return vcltq_s64(a, b);
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 
@@ -229,9 +227,7 @@ SIMDPP_INL mask_int64<8> i_cmp_lt(const int64<8>& a, const int64<8>& b)
 
 SIMDPP_INL mask_int64x2 i_cmp_lt(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu64(a, b);
 #elif SIMDPP_USE_AVX2
     uint64<2> ca = bit_xor(a, 0x8000000000000000); // sub
@@ -240,7 +236,7 @@ SIMDPP_INL mask_int64x2 i_cmp_lt(const uint64x2& a, const uint64x2& b)
 #elif SIMDPP_USE_NEON64
     return vcltq_u64(a, b);
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 

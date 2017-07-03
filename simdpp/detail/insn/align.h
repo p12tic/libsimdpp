@@ -308,17 +308,7 @@ float32<N> i_align4(const float32<N>& lower, const float32<N>& upper)
 template<unsigned shift> SIMDPP_INL
 float64x2 i_align2(const float64x2& lower, const float64x2& upper)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
-    float64x2 r;
-    //use int to disable warnings wrt. comparison result always being true/false
-    for (int i = 0; i < (int)(2-shift); i++) {
-        r.el(i) = lower.el(i + shift);
-    }
-    for (unsigned i = 2-shift; i < 2; i++) {
-        r.el(i) = upper.el(i - 2 + shift);
-    }
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     switch (shift) {
     default:
     case 0: return lower;
@@ -332,7 +322,15 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
         return upper;
     return vextq_f64(lower, upper, shift);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(float64<shift+4>, lower, upper);
+    float64x2 r;
+    //use int to disable warnings wrt. comparison result always being true/false
+    for (int i = 0; i < (int)(2-shift); i++) {
+        r.el(i) = lower.el(i + shift);
+    }
+    for (unsigned i = 2-shift; i < 2; i++) {
+        r.el(i) = upper.el(i - 2 + shift);
+    }
+    return r;
 #endif
 }
 

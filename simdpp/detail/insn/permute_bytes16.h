@@ -22,17 +22,7 @@ namespace insn {
 
 SIMDPP_INL uint8x16 i_permute_bytes16(const uint8x16& a, const uint8x16& mask)
 {
-#if SIMDPP_USE_NULL
-    uint8x16 ai = a;
-    uint8x16 mi = mask;
-    uint8x16 r;
-
-    for (unsigned i = 0; i < 16; i++) {
-        unsigned j = mi.el(i) & 0x0f;
-        r.el(i) = ai.el(j);
-    }
-    return r;
-#elif SIMDPP_USE_SSSE3
+#if SIMDPP_USE_SSSE3
     return _mm_shuffle_epi8(a, mask);
 #elif SIMDPP_USE_NEON32
     uint8x8x2_t table = {{vget_low_u8(a), vget_high_u8(a)}};
@@ -45,7 +35,15 @@ SIMDPP_INL uint8x16 i_permute_bytes16(const uint8x16& a, const uint8x16& mask)
     return vec_perm((__vector uint8_t)a, (__vector uint8_t)a,
                     (__vector uint8_t)mask);
 #else
-    return SIMDPP_NOT_IMPLEMENTED2(a, mask);
+    uint8x16 ai = a;
+    uint8x16 mi = mask;
+    uint8x16 r;
+
+    for (unsigned i = 0; i < 16; i++) {
+        unsigned j = mi.el(i) & 0x0f;
+        r.el(i) = ai.el(j);
+    }
+    return r;
 #endif
 }
 

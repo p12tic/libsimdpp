@@ -149,14 +149,7 @@ int32<N> i_to_int32(const float32<N>& a)
 
 SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int32x4> r;
-    r[0] = int32_t(a.vec(0).el(0));
-    r[1] = int32_t(a.vec(0).el(1));
-    r[2] = int32_t(a.vec(1).el(0));
-    r[3] = int32_t(a.vec(1).el(1));
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     int32x4 r, r1, r2;
     float64x2 a1, a2;
     split(a, a1, a2);
@@ -172,7 +165,12 @@ SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
     int32<4> r = vcombine_s32(vqmovn_s64(r1), vqmovn_s64(r2));
     return r;
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    detail::mem_block<int32x4> r;
+    r[0] = int32_t(a.vec(0).el(0));
+    r[1] = int32_t(a.vec(0).el(1));
+    r[2] = int32_t(a.vec(1).el(0));
+    r[3] = int32_t(a.vec(1).el(1));
+    return r;
 #endif
 }
 
