@@ -31,7 +31,7 @@ namespace detail {
 inline void get_cpuid(unsigned level, unsigned subleaf, unsigned* eax, unsigned* ebx,
                       unsigned* ecx, unsigned* edx)
 {
-#if __clang__ || __INTEL_COMPILER
+#if __clang__ || (__INTEL_COMPILER && !_MSC_VER)
     // Older versions of clang don't support subleafs, which leads to inability
     // to detect AVX2 for example. On ICC there's no proper cpuid intrinsic.
 #if SIMDPP_32_BITS
