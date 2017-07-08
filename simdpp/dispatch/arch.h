@@ -12,10 +12,6 @@
 
 namespace simdpp {
 
-/** @defgroup simd_dispatcher Dispatching support
-    @{
-*/
-
 /** Identifies supported instruction set. This type is a bitmask type
 
     Note: the exact values may change release to release.
@@ -62,7 +58,6 @@ enum class Arch : std::uint32_t {
 };
 
 /// Bitwise operators for @c Arch
-/// @{
 inline Arch& operator|=(Arch& x, const Arch& y)
 {
     using T = std::uint32_t;
@@ -94,7 +89,6 @@ inline Arch operator~(const Arch& x)
     using T = std::uint32_t;
     return static_cast<Arch>(~static_cast<T>(x));
 }
-/// @}
 
 /// Checks if the bits set in @a required is a subset of bits set in @a current.
 inline bool test_arch_subset(Arch current, Arch required)
@@ -104,8 +98,6 @@ inline bool test_arch_subset(Arch current, Arch required)
     }
     return false;
 }
-
-/// @} -- end defgroup
 
 } // namespace simdpp
 

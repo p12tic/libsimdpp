@@ -23,9 +23,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX512F
 
-/// @defgroup simd_vec_fp
-/// @{
-
 /// Class representing float32x16 vector
 template<>
 class float32<16, void> : public any_float32<16, float32<16,void>> {
@@ -52,11 +49,9 @@ public:
         *this = bit_cast<float32<16>>(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL float32<16>(const native_type& d) : d_(d) {}
     SIMDPP_INL float32<16>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -70,11 +65,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const float32<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL float32<16>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL float32<16> eval() const { return *this; }
 
@@ -130,8 +123,6 @@ public:
 private:
     native_type d_;
 };
-
-/// @} -- end defgroup
 
 #endif // SIMDPP_USE_AVX512F
 

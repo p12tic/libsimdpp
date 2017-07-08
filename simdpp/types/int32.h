@@ -21,9 +21,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @ingroup simd_vec_int
-/// @{
-
 /** Class representing an signed @a int64 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
@@ -175,8 +172,6 @@ public:
 private:
     mask_int32v d_[mask_int32::vec_length];
 };
-
-/// @} -- end ingroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

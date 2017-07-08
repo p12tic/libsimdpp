@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Selects 32-bit floating-point values from two vectors. The first two values
     in each four consecutive values must come from @a a, the last two - from @a
     b. The selector values must be in range [0; 3].

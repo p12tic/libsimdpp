@@ -18,10 +18,6 @@
 
 namespace simdpp {
 
-/** @defgroup simd_dispatcher Dispatching support
-    @{
-*/
-
 /** @def SIMDPP_USER_ARCH_INFO
     The user must define this macro if he wants to use the dispatcher
     infrastructure. The macro must evaluate to a constant expression that could
@@ -44,8 +40,6 @@ namespace simdpp {
     The @c simdpp/dispatch/get_arch_*.h files provide several ready
     implementations of CPU features detection.
 */
-
-/// @} -- end defgroup
 
 namespace detail {
 

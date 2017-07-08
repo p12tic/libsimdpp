@@ -53,7 +53,6 @@
     best function on first call. The initialization does not introduce race
     conditions when done concurrently.
 */
-/// @{
 #if SIMDPP_EMIT_DISPATCHER
 
 
@@ -961,7 +960,6 @@ namespace SIMDPP_ARCH_NAMESPACE {                                             \
 } /* namespace SIMDPP_ARCH_NAMESPACE */                                       \
 
 #endif
-/// @}
 
 #endif
 

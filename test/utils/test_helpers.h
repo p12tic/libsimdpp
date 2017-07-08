@@ -86,7 +86,6 @@ private:
 /*  A bunch of overloads that wrap the TestSuite::push() method. The push()
     method accepts a type enum plus a pointer; the wrapper overloads determine
     the type enum from the type of the supplied argument.
-    @{
 */
 inline void test_push_internal(TestResultsSet& t, std::int8_t data, const char* file, unsigned line)
 {
@@ -206,7 +205,6 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const
 {
     test_push_internal_vec(t.push(TYPE_FLOAT64, N, file, line), data);
 }
-// @}
 } // namespace SIMDPP_ARCH_NAMESPACE
 
 // we are supposed to call this from within the test function which is in

@@ -19,8 +19,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-
-/// @{
 /** Broadcasts the specified 8-bit value to all elements within 128-bit lanes.
 
     @code
@@ -56,9 +54,7 @@ uint8<N, expr_splat16<s,uint8<N,E>>> splat16(const uint8<N,E>& a)
     static_assert(s < 16, "Access out of bounds");
     return { { a } };
 }
-/// @}
 
-/// @{
 /** Broadcasts the specified 16-bit value to all elements within 128-bit lanes.
 
     @code
@@ -91,9 +87,7 @@ uint16<N, expr_splat8<s,uint16<N,E>>> splat8(const uint16<N,E>& a)
     static_assert(s < 8, "Access out of bounds");
     return { { a } };
 }
-/// @}
 
-/// @{
 /** Broadcasts the specified 32-bit value to all elements within 128-bit lanes.
 
     @code
@@ -119,9 +113,7 @@ uint32<N, expr_splat4<s,uint32<N,E>>> splat4(const uint32<N,E>& a)
     static_assert(s < 4, "Access out of bounds");
     return { { a } };
 }
-/// @}
 
-/// @{
 /** Broadcasts the specified 64-bit value to all elements within 128-bit lanes.
 
     @code
@@ -149,9 +141,7 @@ uint64<N, expr_splat2<s,uint64<N,E>>> splat2(const uint64<N,E>& a)
     static_assert(s < 2, "Access out of bounds");
     return { { a } };
 }
-/// @}
 
-/// @{
 /** Broadcasts the specified 32-bit value to all elements within 128-bit lanes.
 
     @code
@@ -170,9 +160,7 @@ float32<N, expr_splat4<s,float32<N,E>>> splat4(const float32<N,E>& a)
     static_assert(s < 4, "Access out of bounds");
     return { { a } };
 }
-/// @}
 
-/// @{
 /** Broadcasts the specified 64-bit value to all elements within 128-bit lanes.
 
     @code
@@ -193,7 +181,6 @@ float64<N, expr_splat2<s,float64<N,E>>> splat2(const float64<N,E>& a)
     static_assert(s < 2, "Access out of bounds");
     return { { a } };
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

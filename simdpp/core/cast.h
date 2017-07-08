@@ -38,8 +38,7 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigne
 
 } // namespace detail
 
-/** @ingroup simd_convert
-    Casts between unrelated types. No changes to the stored values are
+/** Casts between unrelated types. No changes to the stored values are
     performed.
 
     Conversions between vector and non-vector types are not allowed.

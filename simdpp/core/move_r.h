@@ -18,8 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-
-/// @{
 /** Moves the 8-bit elements in a vector to the right by @a shift positions.
 
     @code

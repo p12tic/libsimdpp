@@ -24,7 +24,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
 // FIXME: move to adv
-/// @{
 /** Divides one 8-bit unsigned number by another. The precision of the operation
     is configurable: only P least significant bits of both numerator and
     denumerator are considered.
@@ -124,7 +123,6 @@ uint16x8 div_p(const uint16x8& num, const uint16x8& den)
     return q;
 #endif
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

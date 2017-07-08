@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Combines two vectors into one twice as large. This function is useful when
     the ISA supports multiple vector sizes and the user does some operations
     with vectors that are narrower than the widest native vector.
@@ -91,13 +90,8 @@ float64<N*2> combine(const float64<N,E1>& a1, const float64<N,E2>& a2)
 {
     return detail::insn::i_combine<float64<N*2>>(a1.eval(), a2.eval());
 }
-/// @}
-
-/// @} -- end defgroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
 #endif
-
-/// @}
