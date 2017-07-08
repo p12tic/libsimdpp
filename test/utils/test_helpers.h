@@ -20,7 +20,10 @@
 inline void set_round_to_zero()
 {
 #if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4996) // disable security warning
     _controlfp(_MCW_RC, _RC_CHOP);
+#pragma warning(pop)
 #else
     std::fesetround(FE_TOWARDZERO);
 #endif
@@ -32,7 +35,10 @@ inline void set_round_to_zero()
 inline void set_round_to_nearest()
 {
 #if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4996) // disable security warning
     _controlfp(_MCW_RC, _RC_NEAR);
+#pragma warning(pop)
 #else
     std::fesetround(FE_TONEAREST);
 #endif
