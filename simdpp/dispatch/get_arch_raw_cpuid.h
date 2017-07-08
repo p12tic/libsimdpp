@@ -21,6 +21,7 @@
 #endif
 
 #if _MSC_VER
+#include <intrin.h>     // __cpuidex on MSVC 2017
 #include <immintrin.h>
 #endif
 
