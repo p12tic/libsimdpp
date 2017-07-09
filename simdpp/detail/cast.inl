@@ -97,6 +97,7 @@ struct cast_wrapper<CAST_TYPE_VECTOR_TO_MASK> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
+        (void) t; (void) r;
         static_assert(!std::is_same<T,T>::value, // fake dependency
                       "Conversion from non-mask type to a mask type is not allowed");
     }
