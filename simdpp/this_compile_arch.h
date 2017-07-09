@@ -60,6 +60,9 @@ inline Arch this_compile_arch()
 #if SIMDPP_USE_NEON_FLT_SP
     res |= Arch::ARM_NEON_FLT_SP;
 #endif
+#if SIMDPP_USE_ALTIVEC
+    res |= Arch::POWER_ALTIVEC;
+#endif
     return res;
 }
 
