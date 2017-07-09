@@ -501,7 +501,10 @@ SIMDPP_INL int32_t i_reduce_add(const int16<N>& a)
         int32x4 isum = _mm_haddq_epi16(a.vec(j));
         sum = add(sum, isum);
     }
-    return reduce_add(sum);
+    // _mm_haddq_epi16 computes 64-bit results.
+    // 1 and 3 32-bit elements may be nonzero
+    sum = add(sum, move4_l<2>(sum));
+    return extract<0>(sum);
 #elif SIMDPP_USE_SSE2
     int32x4 sum = make_zero();
     int16x8 ones = make_int(1);
