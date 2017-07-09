@@ -206,9 +206,12 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #else
     uint32_t v0lo = v0;
     uint32_t v0hi = v0 >> 32;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
     v4i32 vr;
     vr = __msa_insert_w(vr, 0, v0lo);
     vr = __msa_insert_w(vr, 1, v0hi);
+#pragma GCC diagnostic pop
     v = (int32<4>) vr;
     v = (v2u64) __msa_splat_d((v2i64)(v2u64) v, 0);
 #endif
