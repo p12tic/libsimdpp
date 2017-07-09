@@ -83,15 +83,13 @@ SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, con
 #if SIMDPP_USE_AVX2
 SIMDPP_INL uint8x32 i_shuffle_zbytes16(const uint8x32& a, const uint8x32& b, const uint8x32& mask)
 {
-    int8x32 sel, set_zero, ai, bi, r;
+    int8x32 sel, ai, bi, r;
     sel = mask;
-    set_zero = cmp_lt(sel, 0);
     sel = _mm256_slli_epi16(sel, 3);
 
     ai = _mm256_shuffle_epi8(a, mask);
     bi = _mm256_shuffle_epi8(b, mask);
     r = _mm256_blendv_epi8(ai, bi, sel);
-    r = bit_andnot(r, set_zero);
     return r;
 }
 #endif
