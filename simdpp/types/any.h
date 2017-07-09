@@ -13,13 +13,10 @@
 #endif
 
 #include <simdpp/types/fwd.h>
-#include <stdint.h>
+#include <simdpp/detail/include_stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
-
-/// @ingroup simd_vec_any
-/// @{
 
 /** Represents any vector that has @a B bytes of data. The exact vector type is
     @a V.
@@ -29,11 +26,9 @@ struct any_vec {
     static const unsigned length_bytes = B;
     typedef V type;
 
-    /// @{
     /// Returns the wrapped vector
     SIMDPP_INL V& wrapped() { return static_cast<V&>(*this); }
     SIMDPP_INL const V& wrapped() const { return static_cast<const V&>(*this); }
-    /// @}
 };
 
 template<unsigned N, class V> struct any_vec8 : any_vec<N, V>
@@ -142,8 +137,6 @@ struct any_int64 : any_vec64<N, V>
     static const unsigned num_bits = 64;
     static const uint_element_type all_bits = 0xffffffffffffffff;
 };
-
-/// @} -- end ingroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -8,13 +8,9 @@
 #ifndef LIBSIMDPP_DISPATCH_ARCH_H
 #define LIBSIMDPP_DISPATCH_ARCH_H
 
-#include <stdint.h>
+#include <simdpp/detail/include_stdint.h>
 
 namespace simdpp {
-
-/** @defgroup simd_dispatcher Dispatching support
-    @{
-*/
 
 /** Identifies supported instruction set. This type is a bitmask type
 
@@ -72,7 +68,6 @@ private:
 };
 
 /// Bitwise operators for @c Arch
-/// @{
 inline Arch& operator|=(Arch& x, const Arch& y)
 {
     typedef uint32_t T;
@@ -86,7 +81,6 @@ inline Arch& operator&=(Arch& x, const Arch& y)
     x = static_cast<Arch>(static_cast<T>(x) & static_cast<T>(y));
     return x;
 }
-/// @}
 
 /// Checks if the bits set in @a required is a subset of bits set in @a current.
 inline bool test_arch_subset(Arch current, Arch required)
@@ -96,8 +90,6 @@ inline bool test_arch_subset(Arch current, Arch required)
     }
     return false;
 }
-
-/// @} -- end defgroup
 
 } // namespace simdpp
 

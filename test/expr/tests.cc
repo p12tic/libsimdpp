@@ -7,7 +7,7 @@
 
 #include "tests.h"
 
-void main_test_function(SeqTestSuite& ts)
+void main_test_function(TestReporter& ts)
 {
     test_expr_bitwise(ts);
     test_expr_math_float(ts);

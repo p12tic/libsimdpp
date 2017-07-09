@@ -44,25 +44,37 @@ typename detail::get_expr2<V1, V2>::empty
 // support scalar arguments
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        operator^(const uint32_t& a, const any_vec<N,V>& b)
+        operator^(const unsigned& a, const any_vec<N,V>& b)
 {
     return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        operator^(const uint64_t& a, const any_vec<N,V>& b)
+        operator^(const unsigned long& a, const any_vec<N,V>& b)
 {
     return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        operator^(const int32_t& a, const any_vec<N,V>& b)
+        operator^(const unsigned long long& a, const any_vec<N,V>& b)
 {
     return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
-        operator^(const int64_t& a, const any_vec<N,V>& b)
+        operator^(const int& a, const any_vec<N,V>& b)
+{
+    return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        operator^(const long& a, const any_vec<N,V>& b)
+{
+    return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
+        operator^(const long long& a, const any_vec<N,V>& b)
 {
     return operator^(detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(a), b);
 }
@@ -70,25 +82,37 @@ typename detail::get_expr2<typename detail::get_expr_nomask<V>::type, V>::empty
 
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        operator^(const any_vec<N,V>& a, const uint32_t& b)
+        operator^(const any_vec<N,V>& a, const unsigned& b)
 {
     return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        operator^(const any_vec<N,V>& a, const uint64_t& b)
+        operator^(const any_vec<N,V>& a, const unsigned long& b)
 {
     return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        operator^(const any_vec<N,V>& a, const int32_t& b)
+        operator^(const any_vec<N,V>& a, const unsigned long long& b)
 {
     return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
-        operator^(const any_vec<N,V>& a, const int64_t& b)
+        operator^(const any_vec<N,V>& a, const int& b)
+{
+    return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        operator^(const any_vec<N,V>& a, const long& b)
+{
+    return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
+}
+template<unsigned N, class V> SIMDPP_INL
+typename detail::get_expr2<V, typename detail::get_expr_nomask<V>::type>::empty
+        operator^(const any_vec<N,V>& a, const long long& b)
 {
     return operator^(a, detail::make_const_bitwise<typename detail::get_expr_nomask<V>::type>(b));
 }

@@ -16,16 +16,13 @@
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/core/cast.h>
-#include <stdint.h>
 #include <simdpp/detail/construct_eval.h>
 #include <simdpp/detail/array.h>
+#include <simdpp/detail/include_stdint.h>
 #include <simdpp/detail/null/mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
-
-/// @ingroup simd_vec_int
-/// @{
 
 /** Class representing 16x 8-bit signed integer vector
 */
@@ -62,11 +59,9 @@ public:
         *this = bit_cast<int8<16> >(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL int8<16>(const native_type& d) : d_(d) {}
     SIMDPP_INL int8<16>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -80,11 +75,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const int8<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL int8<16>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL int8<16> eval() const { return *this; }
 
@@ -133,11 +126,9 @@ public:
         *this = bit_cast<uint8<16> >(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL uint8<16>(const native_type& d) : d_(d) {}
     SIMDPP_INL uint8<16>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -151,11 +142,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const uint8<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint8<16>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL uint8<16> eval() const { return *this; }
 
@@ -227,8 +216,6 @@ public:
 private:
     native_type d_;
 };
-
-/// @} -- end ingroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -43,17 +43,19 @@ The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the
 [cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch.
 
+Supported compilers:
+
  - C++11 version:
-   - GCC: 4.8-5.3
-   - Clang: 3.3-3.8
-   - MSVC: 2013
-   - ICC: 2013, 2015
+   - GCC: 4.8-6.x
+   - Clang: 3.3-4.0
+   - MSVC: 2013, 2015, 2017
+   - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
 
  - C++98 version
-   - GCC: 4.4-5.3
-   - Clang: 3.3-3.8
-   - MSVC: 2013
-   - ICC: 2013, 2015
+   - GCC: 4.4-6.x
+   - Clang: 3.3-4.0
+   - MSVC: 2013, 2015, 2017
+   - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
 
 Clang 3.3 is not supported on ARM. MSVC and ICC are only supported on x86 and
 x86-64. Any compiler bugs are either worked-around or support for broken

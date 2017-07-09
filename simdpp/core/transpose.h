@@ -23,11 +23,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/** @defgroup simd_transpose Operations: transpose matrices consisting of
-    several vectors
-    @{
-*/
-
 /** Transposes four 2x2 16-bit matrices within two int16x8 vectors
 
     Mask or expression vectors are not supported.
@@ -317,8 +312,6 @@ void transpose4(float32<N>& a0, float32<N>& a1,
 {
     detail::insn::i_transpose4(a0, a1, a2, a3);
 }
-
-/// @} -- end defgroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

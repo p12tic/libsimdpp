@@ -14,7 +14,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 template<unsigned B>
-void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
+void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
 {
     (void) opts;
 
@@ -83,8 +83,11 @@ void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
 
         tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
+#if !defined(_MSC_VER) || _MSC_VER >= 1800
+        // std::fma which we're testing against is only available since MSVC 2013
         TEST_ALL_COMB_HELPER3(tc, float32_n, fmadd, s, 4);
         TEST_ALL_COMB_HELPER3(tc, float32_n, fmsub, s, 4);
+#endif
 #endif
         tc.sync_archs();
 
@@ -158,8 +161,10 @@ void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
 
         tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
-        // Certain simulators can't handle NaNs and infinity in this instruction
+#if !defined(_MSC_VER) || _MSC_VER >= 1800
+        // std::fma which we're testing against is only available since MSVC 2013
         if (opts.is_simulator) {
+            // Certain simulators can't handle NaNs and infinity in this instruction
 
             TestData<float64_n> snan(
                 make_float(1.0, 2.0),
@@ -179,6 +184,7 @@ void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
             TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, s, 8);
         }
 #endif
+#endif
         tc.sync_archs();
 
         // Depending on the reduction order precision errors may occur.
@@ -193,7 +199,7 @@ void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
 
 void test_math_fp(TestResults& res, const TestOptions& opts)
 {
-    TestSuite& ts = NEW_TEST_SUITE(res, "math_fp");
+    TestResultsSet& ts = res.new_results_set("math_fp");
     test_math_fp_n<16>(ts, opts);
     test_math_fp_n<32>(ts, opts);
     test_math_fp_n<64>(ts, opts);

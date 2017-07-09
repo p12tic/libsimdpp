@@ -168,6 +168,9 @@
 
 // Include headers relevant for the enabled instruction sets.
 #if SIMDPP_USE_SSE2
+    #if (_MSC_VER == 1500)  // VS 2008 needs this header to work
+        #include <intrin.h>
+    #endif
     #include <xmmintrin.h>
     #include <emmintrin.h>
 #endif
@@ -257,6 +260,8 @@
 // workarounds
 #if __GNUC__
 #define SIMDPP_INL __attribute__((__always_inline__)) inline
+#elif _MSC_VER
+#define SIMDPP_INL __forceinline
 #else
 #define SIMDPP_INL inline
 #endif

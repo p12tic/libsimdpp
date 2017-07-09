@@ -15,7 +15,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<unsigned B>
-void test_test_utils_n(TestSuite& tc)
+void test_test_utils_n(TestResultsSet& tc)
 {
     using namespace simdpp;
 
@@ -55,7 +55,7 @@ void test_test_utils_n(TestSuite& tc)
 
 void test_test_utils(TestResults& res)
 {
-    TestSuite& tc = NEW_TEST_SUITE(res, "test_utils");
+    TestResultsSet& tc = res.new_results_set("test_utils");
     test_test_utils_n<16>(tc);
     test_test_utils_n<32>(tc);
     test_test_utils_n<64>(tc);

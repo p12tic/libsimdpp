@@ -17,15 +17,12 @@
 #include <simdpp/types/any.h>
 #include <simdpp/core/cast.h>
 #include <simdpp/detail/construct_eval.h>
-#include <stdint.h>
+#include <simdpp/detail/include_stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX2
-
-/// @ingroup simd_vec_int
-/// @{
 
 /** Class representing 16x 16-bit signed integer vector
 */
@@ -56,11 +53,9 @@ public:
         *this = bit_cast<int16<16> >(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL int16<16>(const native_type& d) : d_(d) {}
     SIMDPP_INL int16<16>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -74,11 +69,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const int16<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL int16<16>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL int16<16> eval() const { return *this; }
 
@@ -115,11 +108,9 @@ public:
         *this = bit_cast<uint16<16> >(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL uint16<16>(const native_type& d) : d_(d) {}
     SIMDPP_INL uint16<16>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -133,11 +124,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const uint16<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint16<16>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL uint16<16> eval() const { return *this; }
 
@@ -186,8 +175,6 @@ public:
 private:
     native_type d_;
 };
-
-/// @} -- end ingroup
 
 #endif // SIMDPP_USE_AVX2
 

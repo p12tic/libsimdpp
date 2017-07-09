@@ -12,10 +12,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <stdint.h>
 #include <simdpp/types.h>
 #include <simdpp/core/make_uint.h>
 #include <simdpp/detail/array.h>
+#include <simdpp/detail/include_stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -94,9 +94,6 @@ uint8x8 get_shuffle_bytex8_16()
 }
 
 } // namespace detail
-
-/// @ingroup simd_shuffle
-/// @{
 
 /** Makes a mask to shuffle an int8x16 vector using @c permute_bytes16,
     @c shuffle_bytes16, @c permute_zbytes16 or @c shuffle_zbytes16 functions.
@@ -569,8 +566,6 @@ uint64<N> make_shuffle_bytes16_mask(uint64<N> &mask)
                                   b1[4], b1[5], b1[6], b1[7]);
     return mask;
 }
-
-/// @} -- end ingroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

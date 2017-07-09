@@ -8,7 +8,8 @@
 #ifndef LIBSIMDPP_TEST_UTILS_TEST_RESULTS_H
 #define LIBSIMDPP_TEST_UTILS_TEST_RESULTS_H
 
-#include "test_suite.h"
+#include "test_results_set.h"
+#include "test_reporter.h"
 #include <vector>
 #include <deque>
 #include <functional>
@@ -20,14 +21,16 @@ struct TestOptions {
     TestOptions() : is_simulator(false) {}
 };
 
+/** Represents all test results for a particular architecture
+*/
 class TestResults {
 public:
     // test case container.
     struct TestCaseCont {
         unsigned id; // insertion number. Used for sorting
-        TestSuite test_suite;
+        TestResultsSet results_set;
 
-        TestCaseCont(unsigned i, const TestSuite& t) : id(i), test_suite(t) {}
+        TestCaseCont(unsigned i, const TestResultsSet& t) : id(i), results_set(t) {}
     };
 
     TestResults(const char* arch) :
@@ -35,31 +38,23 @@ public:
     {
     }
 
-    TestSuite& new_test_suite(const char* name, const char* file)
+    TestResultsSet& new_results_set(const char* name)
     {
-        unsigned id = test_suites_.size();
-        test_suites_.push_back(TestCaseCont(id, TestSuite(name, file)));
-        return test_suites_.back().test_suite;
-    }
-
-    std::size_t num_results() const
-    {
-        std::size_t r = 0;
-        for (unsigned i = 0; i < test_suites_.size(); ++i) {
-            r += test_suites_[i].test_suite.num_results();
-        }
-        return r;
+        unsigned id = test_sets_.size();
+        test_sets_.push_back(TestCaseCont(id, TestResultsSet(name)));
+        return test_sets_.back().results_set;
     }
 
 private:
 
-    friend bool test_equal(const TestResults& a, const TestResults& b,
-                           std::ostream& err);
+    friend void report_test_comparison(const TestResults& a, const TestResults& b,
+                                       TestReporter& tr);
 
     const char* arch_;
     // use deque because we must never invalidate references to test cases
-    std::deque<TestCaseCont> test_suites_;
+    std::deque<TestCaseCont> test_sets_;
 };
+
 
 typedef TestResults::TestCaseCont TestCaseCont;
 typedef const TestCaseCont* CaseContRef;
@@ -67,7 +62,7 @@ typedef std::pair<CaseContRef, CaseContRef> CaseContPair;
 
 inline bool case_cont_cmp(const TestCaseCont* lhs, const TestCaseCont* rhs)
 {
-    return std::strcmp(lhs->test_suite.name(), rhs->test_suite.name()) < 0;
+    return std::strcmp(lhs->results_set.name(), rhs->results_set.name()) < 0;
 }
 
 inline bool ins_cmp(const CaseContPair& lhs, const CaseContPair& rhs)
@@ -75,16 +70,16 @@ inline bool ins_cmp(const CaseContPair& lhs, const CaseContPair& rhs)
     return lhs.first->id < rhs.first->id;
 }
 
-inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream& err)
+inline void report_test_comparison(const TestResults& a, const TestResults& b, TestReporter& tr)
 {
     // sort the cases by name
     std::vector<CaseContRef> a_cases;
-    for (unsigned i = 0; i < a.test_suites_.size(); ++i) {
-        a_cases.push_back(&(a.test_suites_[i]));
+    for (unsigned i = 0; i < a.test_sets_.size(); ++i) {
+        a_cases.push_back(&(a.test_sets_[i]));
     }
     std::vector<CaseContRef> b_cases;
-    for (unsigned i = 0; i < b.test_suites_.size(); ++i) {
-        b_cases.push_back(&(b.test_suites_[i]));
+    for (unsigned i = 0; i < b.test_sets_.size(); ++i) {
+        b_cases.push_back(&(b.test_sets_[i]));
     }
 
     std::sort(a_cases.begin(), a_cases.end(), case_cont_cmp);
@@ -113,16 +108,11 @@ inline bool test_equal(const TestResults& a, const TestResults& b, std::ostream&
     std::sort(to_compare.begin(), to_compare.end(), ins_cmp);
 
     // loop through cases with the same names
-    bool ok = true;
     for (unsigned i = 0; i < to_compare.size(); ++i) {
         const CaseContPair& io = to_compare[i];
-        bool r = test_equal(io.first->test_suite, a.arch_,
-                            io.second->test_suite, b.arch_, err);
-        if (!r) {
-            ok = false;
-        }
+        report_test_comparison(io.first->results_set, a.arch_,
+                               io.second->results_set, b.arch_, tr);
     }
-    return ok;
 }
 
 #endif

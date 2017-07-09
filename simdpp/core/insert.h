@@ -24,10 +24,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @defgroup simd_insert_extract Operations: insert or extract a single element from a vector
-/// @{
-
-/// @{
 /** Inserts an element into int8x16 vector at the position identified by @a id.
 
     @code
@@ -245,11 +241,7 @@ float64x2 insert(const float64x2& a, double x)
     return float64x2(insert<id>(int64x2(a), bit_cast<int64_t>(x)));
 }
 
-/// @} -- end defgroup
-
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
 #endif
-
-/// @}

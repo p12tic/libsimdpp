@@ -86,7 +86,6 @@ typename V::mask_vector_type i_isnan2(const V& a, const V& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, i_isnan2, a, b);
 }
-/// @}
 
 } // namespace insn
 } // namespace detail
