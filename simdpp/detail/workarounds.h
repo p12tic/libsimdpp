@@ -71,7 +71,15 @@
 #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ && \
     !defined(__INTEL_COMPILER) && !defined(__clang__)
 // Internal compiler errors or wrong behaviour on various SIMD memory operations
-#error GCC 5.0 are older not supported on PPC little-endian due to compiler bugs.
+#error GCC 5.x and older not supported on PPC little-endian due to compiler bugs.
+#endif
+#endif
+
+#if SIMDPP_USE_VSX_206
+#if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ && \
+    !defined(__INTEL_COMPILER) && !defined(__clang__)
+// Internal compiler errors or wrong behaviour on various SIMD memory operations
+#error GCC 5.x and older not supported on VSX big-endian due to compiler bugs.
 #endif
 #endif
 

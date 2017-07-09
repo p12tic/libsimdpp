@@ -443,6 +443,13 @@ set(SIMDPP_POWER_VSX_206_TEST_CODE
     #endif
     #endif
 
+    #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    #if !defined(__INTEL_COMPILER) && !defined(__clang__)
+    // Internal compiler errors or wrong behaviour on various SIMD memory operations
+    #error GCC 5.x and older not supported on VSX big-endian. See simdpp/detail/workarounds.h
+    #endif
+    #endif
+
     int main()
     {
         volatile unsigned char a[16];
@@ -462,6 +469,12 @@ set(SIMDPP_POWER_VSX_207_TEST_CODE
     #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     #if !defined(__INTEL_COMPILER) && !defined(__clang__)
     #error GCC 5.0 and older are not supported on PPC little-endian. See simdpp/detail/workarounds.h
+    #endif
+    #endif
+
+    #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    #if !defined(__INTEL_COMPILER) && !defined(__clang__)
+    #error GCC 5.x and older not supported on VSX big-endian. See simdpp/detail/workarounds.h
     #endif
     #endif
 
