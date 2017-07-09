@@ -13,9 +13,11 @@
 #include <iostream>
 #include "test_results_set.h"
 #include "test_reporter.h"
-#include <fenv.h>
+#if _MSC_VER
 #include <float.h>
-
+#else
+#include <fenv.h>
+#endif
 
 inline void set_round_to_zero()
 {
