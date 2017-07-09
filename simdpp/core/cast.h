@@ -45,9 +45,9 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigne
 template<class R, class T>
 void bit_cast_impl(const T& t, R& r)
 {
-    r = detail::cast_wrapper<is_mask<R>::value,
-                             is_mask<T>::value,
-                             detail::cast_mask_override<R,T>::value>::template run<R>(t);
+    detail::cast_wrapper<is_mask<R>::value,
+                         is_mask<T>::value,
+                         detail::cast_mask_override<R,T>::value>::run(t, r);
 }
 
 template<class T>

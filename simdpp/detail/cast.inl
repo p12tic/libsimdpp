@@ -32,71 +32,70 @@ template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type 
 #pragma intrinsic(memcpy)
 #endif
 
-template<class R, class T> SIMDPP_INL
-R cast_memcpy(const T& t)
+template<class T, class R> SIMDPP_INL
+void cast_memcpy(const T& t, R& r)
 {
     static_assert(sizeof(R) == sizeof(T), "Size mismatch");
-    R r;
     ::memcpy(&r, &t, sizeof(R));
-    return r;
 }
 
-template<class R, class T> SIMDPP_INL
-R cast_memcpy_unmask(const T& t)
+template<class T, class R> SIMDPP_INL
+void cast_memcpy_unmask(const T& t, R& r)
 {
     using TT = typename base_mask_vector_type<T>::type;
     TT tt = t.unmask();
-    return cast_memcpy<R>(tt);
+    cast_memcpy(tt, r);
 }
 
-template<class R, class T> SIMDPP_INL
-R cast_memcpy_remask(const T& t)
+template<class T, class R> SIMDPP_INL
+void cast_memcpy_remask(const T& t, R& r)
 {
-    using RR = typename base_mask_vector_type<R>::type;
-    RR rr = cast_memcpy<RR>(t.unmask());
-    return cmp_neq(rr, (RR) make_zero());
+    using BaseMaskVector = typename base_mask_vector_type<R>::type;
+    BaseMaskVector rr;
+    cast_memcpy(t.unmask(), rr);
+    r = cmp_neq(rr, (BaseMaskVector) make_zero());
 }
 
 template<>
 struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
-    template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    template<class T, class R> SIMDPP_INL
+    static void run(const T& t, R& r)
     {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        return cast_memcpy<R>(t);
+        cast_memcpy(t, r);
     }
 };
 
 template<>
 struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    static void run(const T& t, R& r)
     {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        return cast_memcpy_unmask<R>(t);
+        cast_memcpy_unmask(t, r);
     }
 };
 
 template<>
 struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    static void run(const T& t, R& r)
     {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        return cast_memcpy_remask<R>(t);
+        cast_memcpy_remask(t, r);
     }
 };
 
 template<unsigned MaskCastOverride>
 struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T&)
+    static void run(const T& t, R& r)
     {
         static_assert(!std::is_same<T,T>::value, // fake dependency
                       "Conversion from non-mask type to a mask type is not allowed");
@@ -106,18 +105,18 @@ struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
 template<unsigned MaskCastOverride>
 struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/, MaskCastOverride> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    static void run(const T& t, R& r)
     {
-        return cast_memcpy_unmask<R>(t);
+        cast_memcpy_unmask(t, r);
     }
 };
 
 template<unsigned MaskCastOverride>
 struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    static void run(const T& t, R& r)
     {
-        return cast_memcpy<R>(t);
+        cast_memcpy(t, r);
     }
 };
 
