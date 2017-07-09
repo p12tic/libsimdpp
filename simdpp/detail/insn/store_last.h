@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/align.h>
 #include <simdpp/core/blend.h>
+#include <simdpp/core/cmp_gt.h>
 #include <simdpp/core/load.h>
 #include <simdpp/core/load_u.h>
 #include <simdpp/core/move_l.h>
@@ -35,7 +36,13 @@ SIMDPP_INL void i_store_last(char* p, const uint8x16& a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_last(p, a, n);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 mask = vec_lvsl(n, (const uint8_t*)NULL);
+    mask = cmp_gt(mask, 0x10);
+    uint8x16 b = load(p);
+    b = blend(a, b, mask);
+    store(p, b);
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     static const uint8_t mask_d[32] = {0,0,0,0,0,0,0,0,
                                        0,0,0,0,0,0,0,0,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
