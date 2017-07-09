@@ -34,7 +34,6 @@ void v256_split(A a, R& r1, R& r2)
 
 } // namespcae detail
 
-/// @{
 /** Splits a vector into two vectors half as wide. This function is useful when
     the ISA supports multiple vector sizes and the user does some operations
     with vectors that are narrower than the widest native vector.
@@ -115,7 +114,6 @@ void split(const float64<N>& a, float64<N/2>& r1, float64<N/2>& r2)
 {
     detail::insn::i_split(a, r1, r2);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

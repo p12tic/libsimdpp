@@ -32,7 +32,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-/// @{
 /** Concatenates @a a and @a b and stores the elements of the resulting array
     as follows:
      * every (2n)-th element is stored to @a a
@@ -75,9 +74,7 @@ void mem_unpack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
     qb.wrapped() = unzip128_hi(c1, c2);
 }
 #endif
-/// @}
 
-/// @{
 /** Generic implementation of mem_unpack3. The 128-bit lanes are processed
     independently
 */
@@ -288,7 +285,6 @@ void v_mem_unpack3_impl64_128(T& a, T& b, T& c)
     d2 = shuffle1<0,1>(b, c);
     a = d0; b = d1; c = d2;
 }
-/// @}
 
 template<class V> SIMDPP_INL
 void v_mem_unpack3_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb, any_vec<16,V>& qc)
@@ -344,7 +340,6 @@ void v_mem_unpack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V
 }
 #endif
 
-/// @{
 /** Concatenates @a a, @a b and @a c and stores the elements of the resulting
     array as follows:
      * every (3n)-th element is stored to @a a
@@ -394,9 +389,7 @@ void mem_unpack3(float64<N>& a, float64<N>& b, float64<N>& c)
     v_mem_unpack3_shuffle128(a, b, c);
     v_mem_unpack3_impl64_128(a, b, c);
 }
-/// @}
 
-/// @{
 /** Generic implementation of mem_unpack4. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
@@ -498,8 +491,6 @@ void v_mem_unpack4_impl64_128(T& a, T& b, T& c, T& d)
     b = c;
     c = t;
 }
-/// @}
-
 
 template<class V> SIMDPP_INL
 void v_mem_unpack4_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb,
@@ -559,7 +550,6 @@ void v_mem_unpack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
 }
 #endif
 
-/// @{
 /** Concatenates @a a, @a b, @a c and @a d and stores the elements of the
     resulting array as follows:
      * every (4n)-th element is stored to @a a
@@ -612,9 +602,7 @@ void mem_unpack4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d)
     v_mem_unpack4_shuffle128(a, b, c, d);
     v_mem_unpack4_impl64_128(a, b, c, d);
 }
-/// @}
 
-/// @{
 /** Concatenates the given vectors and stores the elements of the resulting
     array as follows:
      * every (3n)-th element of the first 48 elements is stored to @a a
@@ -700,7 +688,6 @@ SIMDPP_INL void mem_unpack6(uint16x8& a, uint16x8& b, uint16x8& c,
     e = zip8_lo(u2, u5);
     f = zip8_hi(u2, u5);
 }
-/// @}
 
 } // namespace insn
 } // namespace detail

@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Selects bytes from a vector according to a mask, optionally selecting zero.
     Each byte within the mask defines which element to select:
      * Bit 7 results in the result byte being zeroed, if set.
@@ -71,7 +70,6 @@ float64<N> permute_zbytes16(const float64<N>& a, const uint64<N>& mask)
 {
     return detail::insn::i_permute_zbytes16(a, mask);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -18,8 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-
-/// @{
 /** Permutes the 16-bit values within each 4 consecutive values of the vector.
     The selector values must be in range [0; 3].
 

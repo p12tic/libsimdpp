@@ -23,9 +23,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #if SIMDPP_USE_AVX512F
 
-/// @ingroup simd_vec_int
-/// @{
-
 /** Class representing 4x 64-bit signed integer vector
 */
 template<>
@@ -55,11 +52,9 @@ public:
         *this = bit_cast<int64<8> >(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL int64<8>(const native_type& d) : d_(d) {}
     SIMDPP_INL int64<8>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -73,11 +68,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const int64<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL int64<8>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL int64<8> eval() const { return *this; }
 
@@ -114,11 +107,9 @@ public:
         *this = bit_cast<uint64<8> >(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL uint64<8>(const native_type& d) : d_(d) {}
     SIMDPP_INL uint64<8>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -132,11 +123,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const uint64<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint64<8>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL uint64<8> eval() const { return *this; }
 
@@ -191,8 +180,6 @@ public:
 private:
     native_type d_;
 };
-
-/// @} -- end ingroup
 
 #endif // SIMDPP_USE_AVX512F
 

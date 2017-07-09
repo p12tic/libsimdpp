@@ -18,8 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-
-/// @{
 /** Performs a fused multiply-sutract operation
 
     @code
@@ -50,7 +48,6 @@ float64<N, expr_fmsub<float64<N,E1>,
 {
     return expr_fmsub<float64<N,E1>, float64<N,E2>, float64<N,E3> >(a, b, c);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

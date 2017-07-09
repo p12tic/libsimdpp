@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Creates a vector from signed integer values known at compile-time.
     The result of this function may be assigned or converted to a vector of any
     type: standard conversions are used to convert the arguments. All
@@ -160,7 +159,6 @@ V make_int(int64_t v0,  int64_t v1,  int64_t v2,  int64_t v3,
     a.a[12] = v12;  a.a[13] = v13;  a.a[14] = v14;  a.a[15] = v15;
     return detail::insn::i_make_const_any<V>(a);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

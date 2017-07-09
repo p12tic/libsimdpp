@@ -16,10 +16,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/** @defgroup simd_cache Operations: prefetch
-    @{
-*/
-
 /** Prefetches data to the lowest level cache for reading.
 
     @param ptr pointer to the data to prefetch
@@ -51,9 +47,6 @@ SIMDPP_INL void prefetch_write(const void* ptr)
 #endif
     (void) ptr;
 }
-
-/// @}
-
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

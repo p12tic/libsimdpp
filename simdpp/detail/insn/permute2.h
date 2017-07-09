@@ -131,7 +131,6 @@ float64<N> i_permute2(const float64<N>& a)
     SIMDPP_STATIC_ASSERT(s0 < 2 && s1 < 2, "Selector out of range");
     SIMDPP_VEC_ARRAY_IMPL1(float64<N>, (i_permute2<s0,s1>), a);
 }
-/// @}
 
 } // namespace insn
 } // namespace detail
