@@ -45,8 +45,8 @@ void test_bitwise_n(TestResultsSet& tc)
     using float32_n = float32<B/4>;
     using float64_n = float64<B/8>;
 
-    uint64_n a = make_uint(0x0f0ff0f0ffff0000, 0x0f0ff0f0ffff0000);
-    uint64_n b = make_uint(0xffffffffffffffff, 0x0000000000000000);
+    uint32_n a = make_uint(0x0f0ff0f0, 0xffff0000, 0x0f0ff0f0, 0xffff0000);
+    uint32_n b = make_uint(0xffffffff, 0xffffffff, 0x00000000, 0x00000000);
 
     test_bitwise_type<uint8_n>(tc, (uint8_n)a, (uint8_n)b);
     test_bitwise_type<uint16_n>(tc, (uint16_n)a, (uint16_n)b);
