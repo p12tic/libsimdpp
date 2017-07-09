@@ -75,6 +75,34 @@
 #endif
 #endif
 
+#if SIMDPP_USE_AVX512F && (__clang_major__ == 3)
+// Clang does not have _MM_CMPINT_* definitions up to Clang 4.0.
+#ifndef _MM_CMPINT_EQ
+#define _MM_CMPINT_EQ 0
+#endif
+#ifndef _MM_CMPINT_LT
+#define _MM_CMPINT_LT 1
+#endif
+#ifndef _MM_CMPINT_LE
+#define _MM_CMPINT_LE 2
+#endif
+#ifndef _MM_CMPINT_FALSE
+#define _MM_CMPINT_FALSE 3
+#endif
+#ifndef _MM_CMPINT_NEQ
+#define _MM_CMPINT_NEQ 4
+#endif
+#ifndef _MM_CMPINT_NLT
+#define _MM_CMPINT_NLT 5
+#endif
+#ifndef _MM_CMPINT_NLE
+#define _MM_CMPINT_NLE 6
+#endif
+#ifndef _MM_CMPINT_TRUE
+#define _MM_CMPINT_TRUE 7
+#endif
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
