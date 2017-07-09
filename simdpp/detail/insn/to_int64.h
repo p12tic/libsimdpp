@@ -39,7 +39,7 @@ SIMDPP_INL int64x4 i_to_int64(const int32x4& a)
     r1 = _mm_cvtepi32_epi64(a);
     r2 = _mm_cvtepi32_epi64(move4_l<2>(a).eval());
     return combine(r1, r2);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     int32x4 sign = shift_r<31>(a);
     int64x2 lo, hi;
     lo = zip4_lo(a, sign);
@@ -50,12 +50,6 @@ SIMDPP_INL int64x4 i_to_int64(const int32x4& a)
     r1 = vmovl_s32(vget_low_s32(a));
     r2 = vmovl_s32(vget_high_s32(a));
     return combine(r1, r2);
-#elif SIMDPP_USE_VSX_207
-    int32x4 sign = shift_r<31>(a);
-    int64x2 lo, hi;
-    lo = zip4_lo(sign, a);
-    hi = zip4_hi(sign, a);
-    return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
     int64x4 r;
     mem_block<int32x4> b = a;
@@ -119,13 +113,9 @@ SIMDPP_INL uint64x4 i_to_uint64(const uint32x4& a)
     r1 = _mm_cvtepu32_epi64(a);
     r2 = _mm_cvtepu32_epi64(move4_l<2>(a).eval());
     return combine(r1, r2);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     return (uint64x4) combine(zip4_lo(a, (uint32x4) make_zero()),
                               zip4_hi(a, (uint32x4) make_zero()));
-#elif SIMDPP_USE_VSX_207
-    return (uint64x4) combine(zip4_lo((uint32x4) make_zero(), a),
-                              zip4_hi((uint32x4) make_zero(), a));
-
 #elif SIMDPP_USE_NEON
     uint64x2 r1, r2;
     r1 = vmovl_u32(vget_low_u32(a));

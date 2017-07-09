@@ -43,10 +43,15 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
     r2 = vcvtq_f64_s64(vmovl_s32(vget_high_s32(a)));
     return combine(r1, r2);
 #elif SIMDPP_USE_VSX_206
-    int32x4 u, lo, hi;
-    u = shift_r(a, 31);
-    lo = zip4_lo(u, a);
-    hi = zip4_hi(u, a);
+    int32x4 sign, lo, hi;
+    sign = shift_r(a, 31);
+#if UNITY_BIG_ENDIAN
+    lo = zip4_lo(sign, a);
+    hi = zip4_hi(sign, a);
+#else
+    lo = zip4_lo(a, sign);
+    hi = zip4_hi(a, sign);
+#endif
 
     float64x2 f_lo, f_hi;
     f_lo = vec_ctf((__vector int64_t)(__vector int32_t) lo, 0);
