@@ -236,6 +236,20 @@
 #define SIMDPP_USE_NEON_FLT_SP 1
 #endif
 
+#if SIMDPP_USE_ALTIVEC
+    #ifndef __BYTE_ORDER__
+        #error "Could not determine byte order"
+    #elif __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+        #define SIMDPP_LITTLE_ENDIAN 1
+        #define SIMDPP_BIG_ENDIAN 0
+    #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+        #define SIMDPP_LITTLE_ENDIAN 0
+        #define SIMDPP_BIG_ENDIAN 1
+    #else
+        #error "Could not determine byte order"
+    #endif
+#endif
+
 #define SIMDPP_USE_NEON32 (SIMDPP_USE_NEON && SIMDPP_32_BITS)
 #define SIMDPP_USE_NEON64 (SIMDPP_USE_NEON && SIMDPP_64_BITS)
 #define SIMDPP_USE_NEON32_FLT_SP (SIMDPP_USE_NEON_FLT_SP && SIMDPP_32_BITS)
