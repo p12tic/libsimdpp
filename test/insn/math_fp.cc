@@ -45,24 +45,21 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
         TEST_ALL_COMB_HELPER2(tc, float32_n, sub, s, 4);
 
 #if __PPC__
-        if (opts.is_simulator) {
-            // QEMU does not multiply or divide special values well
-            TestData<float32_n> s2(
-                make_float(1.0f, 2.0f, 3.0f, 4.0f),
-                make_float(-1.0f, -2.0f, -3.0f, -4.0f),
-                make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
-                make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f)
-            );
-            TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s2, 4);
-            tc.set_precision(1);
-            TEST_ALL_COMB_HELPER2(tc, float32_n, div, s2, 4);
-            tc.unset_precision();
-        } else {
-            TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s, 4);
-            tc.set_precision(1);
-            TEST_ALL_COMB_HELPER2(tc, float32_n, div, s, 4);
-            tc.unset_precision();
-        }
+        // on PPC Altivec the following operations return non-standard results:
+        //  - +0.0 * -0.0 -> +0.0 (correct -0.0)
+        //  - 1.0 / 0.0 -> nan (correct inf)
+        //  - 1.0 / inf -> nan (correct 0.0)
+        TestData<float32_n> s2(
+            make_float(1.0f, 2.0f, 3.0f, 4.0f),
+            make_float(-1.0f, -2.0f, -3.0f, -4.0f),
+            make_float(67500000.0f, 67500001.0f, 67500002.0f, 67500003.0f),
+            make_float(-67500000.0f, -67500001.0f, -67500002.0f, -67500003.0f)
+        );
+        TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s2, 4);
+
+        tc.set_precision(1);
+        TEST_ALL_COMB_HELPER2(tc, float32_n, div, s2, 4);
+        tc.unset_precision();
 #else
         TEST_ALL_COMB_HELPER2(tc, float32_n, mul, s, 4);
         tc.set_precision(1);
