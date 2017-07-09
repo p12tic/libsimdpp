@@ -1,6 +1,15 @@
+What's new in v2.0 development master:
+ * Added support for MIPS MSA instruction set.
+ * Added support for PowerPC VSX v2.06 and v2.07 instruction sets.
+ * Added support for x86 AVX512BW and AVX512DQ instruction sets.
+ * Added support for 64-bit little-endian PowerPC.
+ * Various bug fixes.
+
 What's new in v2.0:
 
  * Various bug fixes.
+ * Intel compiler is now supported on Windows. Newer versions of other compilers
+ are now supported.
 
 What's new in v2.0~rc2:
 
