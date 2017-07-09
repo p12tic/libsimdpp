@@ -71,6 +71,14 @@
 */
 #endif
 
+#if SIMDPP_USE_ALTIVEC
+#if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ && \
+    !defined(__INTEL_COMPILER) && !defined(__clang__)
+// Internal compiler errors or wrong behaviour on various SIMD memory operations
+#error GCC 5.0 are older not supported on PPC little-endian due to compiler bugs.
+#endif
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {

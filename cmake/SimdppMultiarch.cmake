@@ -414,6 +414,13 @@ set(SIMDPP_POWER_ALTIVEC_DEFINE "SIMDPP_ARCH_POWER_ALTIVEC")
 set(SIMDPP_POWER_ALTIVEC_SUFFIX "-power_altivec")
 set(SIMDPP_POWER_ALTIVEC_TEST_CODE
     "#include <altivec.h>
+
+    #if defined(__GNUC__) && (__GNUC__ < 6) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
+    #if !defined(__INTEL_COMPILER) && !defined(__clang__)
+    #error GCC 5.0 and older are not supported on PPC little-endian. See simdpp/detail/workarounds.h
+    #endif
+    #endif
+
     int main()
     {
         volatile unsigned char a[16];
@@ -429,6 +436,13 @@ set(SIMDPP_POWER_VSX_206_DEFINE "SIMDPP_ARCH_POWER_VSX_206")
 set(SIMDPP_POWER_VSX_206_SUFFIX "-power_vsx_2.06")
 set(SIMDPP_POWER_VSX_206_TEST_CODE
     "#include <altivec.h>
+
+    #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    #if !defined(__INTEL_COMPILER) && !defined(__clang__)
+    #error GCC 5.0 and older are not supported on PPC little-endian. See simdpp/detail/workarounds.h
+    #endif
+    #endif
+
     int main()
     {
         volatile unsigned char a[16];
@@ -444,6 +458,13 @@ set(SIMDPP_POWER_VSX_207_DEFINE "SIMDPP_ARCH_POWER_VSX_207")
 set(SIMDPP_POWER_VSX_207_SUFFIX "-power_vsx_2.07")
 set(SIMDPP_POWER_VSX_207_TEST_CODE
     "#include <altivec.h>
+
+    #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    #if !defined(__INTEL_COMPILER) && !defined(__clang__)
+    #error GCC 5.0 and older are not supported on PPC little-endian. See simdpp/detail/workarounds.h
+    #endif
+    #endif
+
     int main()
     {
         volatile unsigned char a[16];
