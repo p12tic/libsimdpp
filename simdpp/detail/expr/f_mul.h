@@ -38,6 +38,8 @@ float32<4> expr_eval(const expr_mul<float32<4,E1>,
 #elif SIMDPP_USE_ALTIVEC
     return vec_madd((__vector float)a, (__vector float)b,
                     (__vector float)(float32x4) make_zero());
+#elif SIMDPP_USE_MSA
+    return __msa_fmul_w(a, b);
 #endif
 }
 
@@ -86,6 +88,8 @@ float64<2> expr_eval(const expr_mul<float64<2,E1>,
     return vmulq_f64(a, b);
 #elif SIMDPP_USE_VSX_206
     return vec_mul((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_MSA
+    return __msa_fmul_d(a, b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::mul(a, b);
 #endif

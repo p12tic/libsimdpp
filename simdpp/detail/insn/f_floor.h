@@ -42,7 +42,7 @@ SIMDPP_INL float32x4 i_floor(const float32x4& a)
     return _mm_floor_ps(a);
 #elif SIMDPP_USE_NEON64
     return vrndmq_f32(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_MSA
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
     mask_float32x4 mask_range = cmp_le(ba, 8388607.0f);
@@ -83,7 +83,7 @@ SIMDPP_INL float64x2 i_floor(const float64x2& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_floor_pd(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     float64x2 af = abs(a);
     // check if the value is not too large or is a nan
     mask_float64x2 mask_range = cmp_le(af, 4503599627370495.0);

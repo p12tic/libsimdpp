@@ -32,6 +32,8 @@ SIMDPP_INL uint8x16 i_bit_xor(const uint8x16& a, const uint8x16& b)
     return veorq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_xor((__vector uint8_t)a, (__vector uint8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_xor_v(a, b);
 #endif
 }
 
@@ -226,6 +228,8 @@ SIMDPP_INL float32x4 i_bit_xor(const float32x4& a, const float32x4& b)
     return _mm_xor_ps(a, b);
 #elif SIMDPP_USE_NEON
     return vreinterpretq_f32_s32(veorq_s32(vreinterpretq_s32_f32(a), vreinterpretq_s32_f32(b)));
+#elif SIMDPP_USE_MSA
+    return (float32<4>) i_bit_xor(uint8<16>(a), uint8<16>(b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_xor((__vector float)a, (__vector float)b);
 #endif
@@ -287,6 +291,8 @@ SIMDPP_INL float64x2 i_bit_xor(const float64x2& a, const float64x2& b)
                                            vreinterpretq_u64_f64(b)));
 #elif SIMDPP_USE_VSX_206
     return vec_xor((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_MSA
+    return (float64<2>) i_bit_xor(uint8<16>(a), uint8<16>(b));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_xor(a, b);
 #endif

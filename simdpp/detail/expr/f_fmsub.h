@@ -37,6 +37,8 @@ float32<4> expr_eval(const expr_fmsub<float32<4,E1>,
 #elif SIMDPP_USE_NEON64
     // FIXME: also in vfpv4
     return vfmsq_f32(a, b, c);
+#elif SIMDPP_USE_MSA
+    return __msa_fmsub_w(c, a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
@@ -104,6 +106,8 @@ float64<2> expr_eval(const expr_fmsub<float64<2,E1>,
 #elif SIMDPP_USE_NEON64
     // FIXME: also in vfpv4
     return vfmsq_f64(a, b, c);
+#elif SIMDPP_USE_MSA
+    return __msa_fmsub_d(c, a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif

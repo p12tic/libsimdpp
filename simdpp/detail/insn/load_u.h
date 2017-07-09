@@ -46,6 +46,8 @@ SIMDPP_INL void i_load_u(uint8x16& a, const char* p)
     mask = vec_lvsl(0, q);
     a = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
                  (__vector uint8_t)mask);
+#elif SIMDPP_USE_MSA
+    a = (v16u8) __msa_ld_b(p, 0);
 #endif
 }
 
@@ -59,6 +61,8 @@ SIMDPP_INL void i_load_u(uint16x8& a, const char* p)
     a = b;
 #elif SIMDPP_USE_NEON
     a = vld1q_u16(reinterpret_cast<const uint16_t*>(p));
+#elif SIMDPP_USE_MSA
+    a = (v8u16) __msa_ld_h(p, 0);
 #endif
 }
 
@@ -74,6 +78,8 @@ SIMDPP_INL void i_load_u(uint32x4& a, const char* p)
     a = b;
 #elif SIMDPP_USE_NEON
     a = vld1q_u32(reinterpret_cast<const uint32_t*>(p));
+#elif SIMDPP_USE_MSA
+    a = (v4u32) __msa_ld_w(p, 0);
 #endif
 }
 
@@ -99,6 +105,8 @@ SIMDPP_INL void i_load_u(uint64x2& a, const char* p)
     detail::null::load(a, p);
 #elif SIMDPP_USE_NEON
     a = vld1q_u64(reinterpret_cast<const uint64_t*>(p));
+#elif SIMDPP_USE_MSA
+    a = (v2u64) __msa_ld_d(p, 0);
 #endif
 }
 
@@ -117,6 +125,8 @@ SIMDPP_INL void i_load_u(float32x4& a, const char* p)
     uint32x4 b; (void) q;
     i_load_u(b, p);
     a = b;
+#elif SIMDPP_USE_MSA
+    a = (v4f32) __msa_ld_w(q, 0);
 #endif
 }
 
@@ -129,6 +139,8 @@ SIMDPP_INL void i_load_u(float64x2& a, const char* p)
     a = vld1q_f64(q);
 #elif SIMDPP_USE_VSX_206
     a = vec_vsx_ld(0, q);
+#elif SIMDPP_USE_MSA
+    a = (v2f64) __msa_ld_d(q, 0);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     detail::null::load(a, q);
 #else

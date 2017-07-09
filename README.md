@@ -39,6 +39,8 @@ The library supports the following architectures and instruction sets:
  - ARM, ARM64: NEON
  - PowerPC 32-bit big-endian: Altivec, VSX v2.06, VSX v2.07
  - PowerPC 64-bit little-endian: Altivec, VSX v2.06, VSX v2.07
+ - MIPS 32-bit little-endian: MSA
+ - MIPS 64-bit little-endian: MSA
 
 The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the

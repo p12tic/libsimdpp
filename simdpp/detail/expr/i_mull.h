@@ -16,7 +16,9 @@
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/detail/subvec_insert.h>
+#include <simdpp/core/to_int32.h>
 #include <simdpp/core/to_int64.h>
+#include <simdpp/core/i_mul.h>
 #include <simdpp/core/combine.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
@@ -75,6 +77,12 @@ int32<8> expr_eval(const expr_mull<int16<8,E1>,
     int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
     int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
     return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
+#elif SIMDPP_USE_MSA
+    int32<8> a32 = to_int32(a);
+    int32<8> b32 = to_int32(b);
+    a32.vec(0) = __msa_mulv_w(a32.vec(0), b32.vec(0));
+    a32.vec(1) = __msa_mulv_w(a32.vec(1), b32.vec(1));
+    return a32;
 #endif
 }
 
@@ -148,6 +156,12 @@ uint32<8> expr_eval(const expr_mull<uint16<8,E1>,
     uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
     uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
     return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
+#elif SIMDPP_USE_MSA
+    int32<8> a32 = (int32<8>) to_uint32(a);
+    int32<8> b32 = (int32<8>) to_uint32(b);
+    a32.vec(0) = __msa_mulv_w(a32.vec(0), b32.vec(0));
+    a32.vec(1) = __msa_mulv_w(a32.vec(1), b32.vec(1));
+    return uint32<8>(a32);
 #endif
 }
 
@@ -234,6 +248,12 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
     asm("vmulosw	%0, %1, %2" : "=wa"(vhi) : "wa"(va), "wa"(vb));
     int64x2 lo = vlo, hi = vhi;
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
+#elif SIMDPP_USE_MSA
+    int64<4> a64 = to_int64(a);
+    int64<4> b64 = to_int64(b);
+    a64.vec(0) = __msa_mulv_d(a64.vec(0), b64.vec(0));
+    a64.vec(1) = __msa_mulv_d(a64.vec(1), b64.vec(1));
+    return a64;
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
 #endif
@@ -318,6 +338,12 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     r.vec(1).el(0) = (uint64_t) ba[2] * bb[2];
     r.vec(1).el(1) = (uint64_t) ba[3] * bb[3];
     return r;
+#elif SIMDPP_USE_MSA
+    int64<4> a64 = (int64<4>) to_uint64(a);
+    int64<4> b64 = (int64<4>) to_uint64(b);
+    a64.vec(0) = __msa_mulv_d(a64.vec(0), b64.vec(0));
+    a64.vec(1) = __msa_mulv_d(a64.vec(1), b64.vec(1));
+    return (uint64<4>) a64;
 #endif
 }
 

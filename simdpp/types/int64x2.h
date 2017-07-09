@@ -40,6 +40,8 @@ public:
     using native_type = int64x2_t;
 #elif SIMDPP_USE_VSX_207
     using native_type = __vector int64_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v2i64;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     using native_type = detail::array<int64_t, 2>;
 #endif
@@ -107,6 +109,8 @@ public:
     using native_type = uint64x2_t;
 #elif SIMDPP_USE_VSX_207
     using native_type = __vector uint64_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v2u64;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     using native_type = detail::array<uint64_t, 2>;
 #endif
@@ -174,6 +178,8 @@ public:
     using native_type = uint64x2_t;
 #elif SIMDPP_USE_VSX_207
     using native_type = __vector uint64_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v2u64;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     using native_type = detail::array<bool, 2>;
 #endif

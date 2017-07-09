@@ -41,6 +41,8 @@ SIMDPP_INL bool i_test_bits_any(const uint32<4>& a)
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> z = make_uint(0);
     return vec_any_gt((__vector uint32_t)a, (__vector uint32_t)z);
+#elif SIMDPP_USE_MSA
+    return __msa_test_bnz_v((uint8<16>) a);
 #endif
 }
 

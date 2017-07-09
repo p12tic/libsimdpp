@@ -40,6 +40,8 @@ public:
     using native_type = int32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector int32_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v4i32;
 #else
     using native_type = detail::array<int32_t, 4>;
 #endif
@@ -107,6 +109,8 @@ public:
     using native_type = uint32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint32_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v4u32;
 #else
     using native_type = detail::array<uint32_t, 4>;
 #endif
@@ -173,6 +177,8 @@ public:
     using native_type = uint32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint32_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v4u32;
 #else
     using native_type = detail::array<bool, 4>;
 #endif

@@ -18,6 +18,7 @@
 #include <simdpp/core/i_mul.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/make_uint.h>
+#include <simdpp/core/to_int32.h>
 #include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
@@ -66,6 +67,12 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16x8& a)
     uint32x4 r = vec_mule((__vector uint16_t)a2, (__vector uint16_t)a);
     mem_block<uint32x4> b = r;
     return b[0] * b[1] * b[2] * b[3];
+#elif SIMDPP_USE_MSA
+    uint32<8> a32 = to_uint32(a);
+    uint32<4> r = mul_lo(a32.vec(0), a32.vec(1));
+    r = mul_lo(r, move4_l<2>(r));
+    r = mul_lo(r, move4_l<1>(r));
+    return extract<0>(r);
 #endif
 }
 
@@ -176,6 +183,15 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
         r *= i_reduce_mul(a.vec(j));
     }
     return r;
+#elif SIMDPP_USE_MSA
+    uint32x4 prod = make_uint(1);
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        uint32<8> a32 = to_uint32(a.vec(j));
+        prod = mul_lo(prod, mul_lo(a32.vec(0), a32.vec(1)));
+    }
+    prod = mul_lo(prod, move4_l<2>(prod));
+    prod = mul_lo(prod, move4_l<1>(prod));
+    return extract<0>(prod);
 #endif
 }
 
@@ -211,6 +227,12 @@ SIMDPP_INL int32_t i_reduce_mul(const int16x8& a)
     int32x4 r = vec_mule((__vector int16_t)a2, (__vector int16_t)a);
     mem_block<int32x4> b = r;
     return b[0] * b[1] * b[2] * b[3];
+#elif SIMDPP_USE_MSA
+    int32<8> a32 = to_int32(a);
+    int32<4> r = mul_lo(a32.vec(0), a32.vec(1));
+    r = mul_lo(r, move4_l<2>(r));
+    r = mul_lo(r, move4_l<1>(r));
+    return extract<0>(r);
 #endif
 }
 
@@ -321,6 +343,15 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
         r *= i_reduce_mul(a.vec(j));
     }
     return r;
+#elif SIMDPP_USE_MSA
+    int32x4 prod = make_uint(1);
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        int32<8> a32 = to_int32(a.vec(j));
+        prod = mul_lo(prod, mul_lo(a32.vec(0), a32.vec(1)));
+    }
+    prod = mul_lo(prod, move4_l<2>(prod));
+    prod = mul_lo(prod, move4_l<1>(prod));
+    return extract<0>(prod);
 #endif
 }
 
@@ -338,7 +369,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32x4& a)
     uint32x4 r = _mm_mul_epu32(a, move4_l<1>(a).eval());
     r = _mm_mul_epu32(r, move4_l<2>(r).eval());
     return extract<0>(r);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_MSA
     uint32x4 r = a;
     r = mul_lo(r, move4_l<2>(r));
     r = mul_lo(r, move4_l<1>(r));
@@ -400,7 +431,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32<N>& a)
     }
     r = _mm_mul_epu32(r, move4_l<2>(r).eval());
     return extract<0>(r);
-#elif SIMDPP_USE_NEON
+#elif SIMDPP_USE_NEON || SIMDPP_USE_MSA
     uint32x4 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         prod = mul_lo(prod, a.vec(j));

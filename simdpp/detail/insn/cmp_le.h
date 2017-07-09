@@ -34,6 +34,8 @@ SIMDPP_INL mask_float32x4 i_cmp_le(const float32x4& a, const float32x4& b)
     return vreinterpretq_f32_u32(vcleq_f32(a, b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmple((__vector float)a, (__vector float)b);
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_fcle_w(a, b);
 #endif
 }
 
@@ -63,6 +65,8 @@ SIMDPP_INL mask_float64x2 i_cmp_le(const float64x2& a, const float64x2& b)
     return vreinterpretq_f64_u64(vcleq_f64(a, b));
 #elif SIMDPP_USE_VSX_206
     return (__vector double) vec_cmple((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_MSA
+    return (v2f64) __msa_fcle_d(a, b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_le(a, b);
 #endif

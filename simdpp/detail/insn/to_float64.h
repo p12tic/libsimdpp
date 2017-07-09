@@ -52,6 +52,12 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
     f_lo = vec_ctf((__vector int64_t)(__vector int32_t) lo, 0);
     f_hi = vec_ctf((__vector int64_t)(__vector int32_t) hi, 0);
     return combine(f_lo, f_hi);
+#elif SIMDPP_USE_MSA
+    int64x4 a64 = to_int64(a);
+    float64x4 r;
+    r.vec(0) = __msa_ffint_s_d(a64.vec(0));
+    r.vec(1) = __msa_ffint_s_d(a64.vec(1));
+    return r;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> ax(a);
     float64x4 r;
@@ -125,6 +131,11 @@ SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
     lo_f = __builtin_vsx_xvcvspdp((__vector float) lo);
     hi_f = __builtin_vsx_xvcvspdp((__vector float) hi);
     return combine(lo_f, hi_f);
+#elif SIMDPP_USE_MSA
+    float64<2> lo, hi;
+    lo = __msa_fexupl_d(a);
+    hi = __msa_fexupr_d(a);
+    return combine(lo, hi);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
     float64x4 r;

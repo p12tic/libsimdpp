@@ -19,6 +19,7 @@
 #include <simdpp/detail/shuffle/neon_int16x8.h>
 #include <simdpp/detail/shuffle/neon_int32x4.h>
 #include <simdpp/detail/shuffle/neon_int64x2.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -50,6 +51,8 @@ uint16x8 i_permute4(const uint16x8& a)
     // TODO optimize
     uint16x8 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
     return permute_bytes16(a, mask);
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_shf_h((v8i16)(v8u16)a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s2,s3));
 #endif
 }
 
@@ -100,6 +103,8 @@ uint32x4 i_permute4(const uint32x4& a)
     // TODO optimize
     uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
     return permute_bytes16(a, mask);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_shf_w((v4i32)(v4u32)a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s2,s3));
 #endif
 }
 
@@ -144,6 +149,8 @@ float32x4 i_permute4(const float32x4& a)
     // TODO optimize
     uint32x4 mask = make_shuffle_bytes16_mask<s0,s1,s2,s3>(mask);
     return permute_bytes16(a, mask);
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_shf_w((v4i32)(v4f32)a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s2,s3));
 #endif
 }
 
@@ -180,7 +187,7 @@ uint64x4 i_permute4(const uint64x4& a)
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
     return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     return permute_emul<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64x4 r;
@@ -216,7 +223,7 @@ float64x4 i_permute4(const float64x4& a)
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_USE_AVX2
     return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     return permute_emul<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     float64x4 r;

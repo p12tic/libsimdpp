@@ -31,7 +31,7 @@ SIMDPP_INL uint8_t i_reduce_and(const uint8x16& a)
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint8x16 r = bit_and(a, move16_l<8>(a));
     r = bit_and(r, move16_l<4>(r));
     r = bit_and(r, move16_l<2>(r));
@@ -88,7 +88,7 @@ SIMDPP_INL uint16_t i_reduce_and(const uint16x8& a)
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16x8 r = bit_and(a, move8_l<4>(a));
     r = bit_and(r, move8_l<2>(r));
     r = bit_and(r, move8_l<1>(r));
@@ -144,7 +144,7 @@ SIMDPP_INL uint32_t i_reduce_and(const uint32x4& a)
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 r = bit_and(a, move4_l<2>(a));
     r = bit_and(r, move4_l<1>(r));
     return extract<0>(r);
@@ -197,7 +197,7 @@ SIMDPP_INL uint32_t i_reduce_and(const uint32<N>& a)
 
 SIMDPP_INL uint64_t i_reduce_and(const uint64x2& a)
 {
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     uint64x2 r = bit_and(a, move2_l<1>(a));
     return extract<0>(r);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC

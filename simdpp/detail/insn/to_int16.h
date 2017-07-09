@@ -39,7 +39,7 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     r1 = _mm_cvtepu8_epi16(a);
     r2 = _mm_cvtepu8_epi16(move16_l<8>(a).eval());
     return combine(r1, r2);
-#elif SIMDPP_USE_SSE2 || (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN)
+#elif SIMDPP_USE_SSE2 || (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN) || SIMDPP_USE_MSA
     uint16x8 r1, r2;
     r1 = zip16_lo(a, (uint8x16) make_zero());
     r2 = zip16_hi(a, (uint8x16) make_zero());
@@ -49,7 +49,7 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     r.vec(0) = vmovl_u8(vget_low_u8(a));
     r.vec(1) = vmovl_u8(vget_high_u8(a));
     return r;
-#elif SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN
+#elif (SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN)
     uint16x8 r1, r2;
     r1 = zip16_lo((uint8x16) make_zero(), a);
     r2 = zip16_hi((uint8x16) make_zero(), a);
@@ -113,15 +113,21 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
     r1 = zip16_lo((int8x16) make_zero(), a);
-    r1 = shift_r(r1, 8);
+    r1 = shift_r<8>(r1);
     r2 = zip16_hi((int8x16) make_zero(), a);
-    r2 = shift_r(r2, 8);
+    r2 = shift_r<8>(r2);
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;
     r.vec(0) = vmovl_s8(vget_low_s8(a));
     r.vec(1) = vmovl_s8(vget_high_s8(a));
     return r;
+#elif SIMDPP_USE_MSA
+    int8x16 sign = shift_r<8>(a);
+    int16x8 lo, hi;
+    lo = zip16_lo(a, sign);
+    hi = zip16_hi(a, sign);
+    return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
     int16x16 r;
     r.vec(0) = vec_unpackh((__vector int8_t)a.vec(0));

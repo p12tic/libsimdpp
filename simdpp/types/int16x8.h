@@ -40,6 +40,8 @@ public:
     using native_type = int16x8_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector int16_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v8i16;
 #else
     using native_type = detail::array<int16_t, 8>;
 #endif
@@ -107,6 +109,8 @@ public:
     using native_type = uint16x8_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint16_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v8u16;
 #else
     using native_type = detail::array<uint16_t, 8>;
 #endif
@@ -173,6 +177,8 @@ public:
     using native_type = uint16x8_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint16_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v8u16;
 #else
     using native_type = detail::array<bool, 8>;
 #endif

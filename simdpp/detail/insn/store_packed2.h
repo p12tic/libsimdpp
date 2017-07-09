@@ -38,7 +38,7 @@ SIMDPP_INL void i_store_packed2(char* p, const uint8x16& a, const uint8x16& b)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint8x16x2_t t;
@@ -69,7 +69,7 @@ SIMDPP_INL void i_store_packed2(char* p, const uint16x8& a, const uint16x8& b)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint16x8x2_t t;
@@ -100,7 +100,7 @@ SIMDPP_INL void i_store_packed2(char* p, const uint32x4& a, const uint32x4& b)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint32x4x2_t t;
@@ -133,7 +133,7 @@ SIMDPP_INL void i_store_packed2(char* p, const uint64x2& a, const uint64x2& b)
     t.val[0] = a;
     t.val[1] = b;
     vst2q_u64(reinterpret_cast<uint64_t*>(p), t);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_packed2(p, a, b);
@@ -161,7 +161,7 @@ SIMDPP_INL void i_store_packed2(char* p, const float32x4& a, const float32x4& b)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::store_packed2(p, a, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     float32x4x2_t t;
@@ -194,7 +194,7 @@ SIMDPP_INL void i_store_packed2(char* p, const float64x2& a, const float64x2& b)
     t.val[0] = a;
     t.val[1] = b;
     vst2q_f64(reinterpret_cast<double*>(p), t);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::null::store_packed2(p, a, b);

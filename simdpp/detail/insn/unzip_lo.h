@@ -47,6 +47,8 @@ SIMDPP_INL uint8x16 i_unzip16_lo(const uint8x16& ca, const uint8x16& cb)
 #else
     return vec_pack((__vector uint16_t)(__vector uint8_t)a, (__vector uint16_t)(__vector uint8_t)b);
 #endif
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_pckev_b((v16i8)(v16u8) b, (v16i8)(v16u8) a);
 #endif
 }
 
@@ -116,6 +118,8 @@ SIMDPP_INL uint16x8 i_unzip8_lo(const uint16x8& ca, const uint16x8& cb)
 #else
     return vec_pack((__vector uint32_t)(__vector uint16_t)a, (__vector uint32_t)(__vector uint16_t)b);
 #endif
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_pckev_h((v8i16)(v8u16) b, (v8i16)(v8u16) a);
 #endif
 }
 
@@ -165,6 +169,8 @@ SIMDPP_INL uint32x4 i_unzip4_lo(const uint32x4& a, const uint32x4& b)
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
     return shuffle_bytes16(a, b, mask);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_pckev_w((v4i32)(v4u32) b, (v4i32)(v4u32) a);
 #endif
 }
 
@@ -209,6 +215,8 @@ SIMDPP_INL float32x4 i_unzip4_lo(const float32x4& a, const float32x4& b)
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 mask = make_shuffle_bytes16_mask<0,2,4,6>(mask);
     return shuffle_bytes16(a, b, mask);
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_pckev_w((v4i32)(v4f32) b, (v4i32)(v4f32) a);
 #endif
 }
 

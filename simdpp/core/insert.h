@@ -63,6 +63,8 @@ uint8x16 insert(const uint8x16& ca, uint8_t x)
     ax[id] = x;
     a = ax;
     return a;
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_insert_b((v16i8)(v16u8) a, id, x);
 #endif
 }
 
@@ -94,6 +96,8 @@ uint16x8 insert(const uint16x8& ca, uint16_t x)
     ax[id] = x;
     a = ax;
     return a;
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_insert_h((v8i16)(v8u16) a, id, x);
 #endif
 }
 
@@ -134,6 +138,8 @@ uint32x4 insert(const uint32x4& ca, uint32_t x)
     ax[id] = x;
     a = ax;
     return a;
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_insert_w((v4i32)(v4u32) a, id, x);
 #endif
 }
 
@@ -195,6 +201,16 @@ uint64x2 insert(const uint64x2& ca, uint64_t x)
     ax[id] = x;
     a = ax;
     return a;
+#elif SIMDPP_USE_MSA
+#if SIMDPP_64_BITS
+    return (v2u64) __msa_insert_d((v2i64)(v2u64) a, id, x);
+#else
+    int32<4> a32;
+    a32 = a;
+    a32 = __msa_insert_w(a32, id*2, x);
+    a32 = __msa_insert_w(a32, id*2+1, x >> 32);
+    return (uint64<2>) a32;
+#endif
 #endif
 }
 

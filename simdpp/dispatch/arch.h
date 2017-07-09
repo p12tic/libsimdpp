@@ -64,7 +64,10 @@ enum class Arch : std::uint32_t {
     POWER_VSX_206 = 1 << 1,
 
     /// Indicates POWER VSX support available since Power ISA 2.07
-    POWER_VSX_207 = 1 << 2
+    POWER_VSX_207 = 1 << 2,
+
+    /// Indicates MIPS MSA support
+    MIPS_MSA = 1 << 0
 };
 
 /// Bitwise operators for @c Arch

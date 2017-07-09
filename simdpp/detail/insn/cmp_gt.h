@@ -36,6 +36,8 @@ SIMDPP_INL mask_int8x16 i_cmp_gt(const int8x16& a, const int8x16& b)
     return vcgtq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector int8_t)a, (__vector int8_t)b);
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_clt_s_b(b, a);
 #endif
 }
 
@@ -70,6 +72,8 @@ SIMDPP_INL mask_int8x16 i_cmp_gt(const uint8x16& ca, const uint8x16& cb)
     return vcgtq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector uint8_t)a, (__vector uint8_t)b);
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_clt_u_b(b, a);
 #endif
 }
 
@@ -102,6 +106,8 @@ SIMDPP_INL mask_int16x8 i_cmp_gt(const int16x8& a, const int16x8& b)
     return vcgtq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector int16_t)a, (__vector int16_t)b);
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_clt_s_h(b, a);
 #endif
 }
 
@@ -136,6 +142,8 @@ SIMDPP_INL mask_int16x8 i_cmp_gt(const uint16x8& ca, const uint16x8& cb)
     return vcgtq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector uint16_t)a, (__vector uint16_t)b);
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_clt_u_h(b, a);
 #endif
 }
 
@@ -168,6 +176,8 @@ SIMDPP_INL mask_int32x4 i_cmp_gt(const int32x4& a, const int32x4& b)
     return vcgtq_s32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector int32_t)a, (__vector int32_t)b);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_clt_s_w(b, a);
 #endif
 }
 
@@ -202,6 +212,8 @@ SIMDPP_INL mask_int32x4 i_cmp_gt(const uint32x4& ca, const uint32x4& cb)
     return vcgtq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector uint32_t)a, (__vector uint32_t)b);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_clt_u_w(b, a);
 #endif
 }
 
@@ -235,6 +247,8 @@ SIMDPP_INL mask_int64x2 i_cmp_gt(const int64x2& a, const int64x2& b)
     return vcgtq_s64(a, b);
 #elif SIMDPP_USE_VSX_207
     return (__vector uint64_t) vec_cmpgt((__vector int64_t) a, (__vector int64_t) b);
+#elif SIMDPP_USE_MSA
+    return (v2u64) __msa_clt_s_d(b, a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_gt(a, b);
 #else
@@ -271,6 +285,8 @@ SIMDPP_INL mask_int64x2 i_cmp_gt(const uint64x2& a, const uint64x2& b)
     return vcgtq_u64(a, b);
 #elif SIMDPP_USE_VSX_207
     return (__vector uint64_t) vec_cmpgt((__vector uint64_t) a, (__vector uint64_t) b);
+#elif SIMDPP_USE_MSA
+    return (v2u64) __msa_clt_u_d(b, a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_gt(a, b);
 #else
@@ -309,6 +325,8 @@ SIMDPP_INL mask_float32x4 i_cmp_gt(const float32x4& a, const float32x4& b)
     return vreinterpretq_f32_u32(vcgtq_f32(a, b));
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmpgt((__vector float)a, (__vector float)b);
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_fclt_w(b, a);
 #endif
 }
 
@@ -338,6 +356,8 @@ SIMDPP_INL mask_float64x2 i_cmp_gt(const float64x2& a, const float64x2& b)
     return vreinterpretq_f64_u64(vcgtq_f64(a, b));
 #elif SIMDPP_USE_VSX_206
     return (__vector double) vec_cmpgt((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_MSA
+    return (v2f64) __msa_fclt_d(b, a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_gt(a, b);
 #endif

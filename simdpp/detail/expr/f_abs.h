@@ -26,7 +26,7 @@ float32<4> expr_eval(const expr_abs<float32<4,E>>& q)
     float32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::abs(a);
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     return bit_and(a, 0x7fffffff);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vabsq_f32(a);
@@ -67,7 +67,7 @@ template<class R, class E> SIMDPP_INL
 float64x2 expr_eval(const expr_abs<float64<2,E>>& q)
 {
     float64x2 a = q.a.eval();
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     return bit_and(a, 0x7fffffffffffffff);
 #elif SIMDPP_USE_NEON64
     return vabsq_f64(a);

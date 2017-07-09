@@ -48,6 +48,8 @@ SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
     x = rcp_rh(x, b);
     x = rcp_rh(x, b); // TODO: check how many approximation steps are needed
     return mul(a, x);
+#elif SIMDPP_USE_MSA
+    return __msa_fdiv_w(a, b);
 #endif
 }
 
@@ -75,6 +77,8 @@ SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
     return vdivq_f64(a, b);
 #elif SIMDPP_USE_VSX_206
     return vec_div((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_MSA
+    return __msa_fdiv_d(a, b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     float64x2 r;
     for (unsigned i = 0; i < a.length; i++) {

@@ -38,6 +38,8 @@ SIMDPP_INL float32x4 i_rcp_e(const float32x4& a)
     return vrecpeq_f32(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_re((__vector float)a);
+#elif SIMDPP_USE_MSA
+    return __msa_frcp_w(a);
 #endif
 }
 

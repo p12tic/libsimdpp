@@ -33,6 +33,8 @@ int8<16> expr_eval(const expr_sub_sat<int8<16,E1>,
     return vqsubq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_subs((__vector int8_t)a, (__vector int8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_subs_s_b(a, b);
 #endif
 }
 
@@ -83,6 +85,8 @@ int16<8> expr_eval(const expr_sub_sat<int16<8,E1>,
     return vqsubq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_subs((__vector int16_t)a, (__vector int16_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_subs_s_h(a, b);
 #endif
 }
 
@@ -133,6 +137,8 @@ uint8<16> expr_eval(const expr_sub_sat<uint8<16,E1>,
     return vqsubq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_subs((__vector uint8_t)a, (__vector uint8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_subs_u_b(a, b);
 #endif
 }
 
@@ -183,6 +189,8 @@ uint16<8> expr_eval(const expr_sub_sat<uint16<8,E1>,
     return vqsubq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_subs((__vector uint16_t)a, (__vector uint16_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_subs_u_h(a, b);
 #endif
 }
 

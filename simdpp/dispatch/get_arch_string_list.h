@@ -66,6 +66,8 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     features.emplace_back("altivec", Arch::POWER_ALTIVEC);
     features.emplace_back("vsx_206", Arch::POWER_VSX_206);
     features.emplace_back("vsx_207", Arch::POWER_VSX_207);
+#elif SIMDPP_MIPS
+    features.emplace_back("msa", Arch::MIPS_MSA);
 #else
     return res;
 #endif

@@ -44,6 +44,9 @@ uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
     return (__vector uint8_t) vec_abs((__vector int8_t)a);
+#elif SIMDPP_USE_MSA
+    int8<16> zero = make_zero();
+    return (v16u8) __msa_add_a_b(a, zero);
 #endif
 }
 
@@ -93,6 +96,9 @@ uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
     return (__vector uint16_t) vec_abs((__vector int16_t)a);
+#elif SIMDPP_USE_MSA
+    int16<8> zero = make_zero();
+    return (v8u16) __msa_add_a_h(a, zero);
 #endif
 }
 
@@ -142,6 +148,9 @@ uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
     return (__vector uint32_t) vec_abs((__vector int32_t)a);
+#elif SIMDPP_USE_MSA
+    int32<4> zero = make_zero();
+    return (v4u32) __msa_add_a_w(a, zero);
 #endif
 }
 
@@ -199,6 +208,9 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 #elif SIMDPP_USE_VSX_207
     // expands to 3 instructions
     return (__vector uint64_t) vec_abs((__vector int64_t)a);
+#elif SIMDPP_USE_MSA
+    int64<2> zero = make_zero();
+    return (v2u64) __msa_add_a_d(a, zero);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::abs(a);
 #endif

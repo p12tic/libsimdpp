@@ -58,6 +58,9 @@ uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
     return vextq_u8(lower, upper, shift % 16);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, (unsigned)shift);
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_sld_b((v16i8)(v16u8)upper,
+                               (v16i8)(v16u8)lower, shift);
 #endif
 }
 
@@ -83,13 +86,35 @@ uint8<N> i_align16(const uint8<N>& lower, const uint8<N>& upper)
     SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_align16<shift>, lower, upper);
 }
 
-// generic implementations
+// -----------------------------------------------------------------------------
+
+template<unsigned shift> SIMDPP_INL
+uint16<8> i_align8(const uint16<8>& lower, const uint16<8>& upper)
+{
+    return uint16<8>(i_align16<shift*2>(uint8<16>(lower),
+                                        uint8<16>(upper)));
+}
+
+#if SIMDPP_USE_AVX2
+template<unsigned shift> SIMDPP_INL
+uint16<16> i_align8(const uint16<16>& lower, const uint16<16>& upper)
+{
+    return _mm256_alignr_epi8(upper, lower, shift*2);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned shift> SIMDPP_INL
+uint16<32> i_align8(const uint16<32>& lower, const uint16<32>& upper)
+{
+    return _mm512_alignr_epi8(upper, lower, shift*2);
+}
+#endif
 
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint16<N> i_align8(const uint16<N>& lower, const uint16<N>& upper)
 {
-    return uint16<N>(i_align16<shift*2>(uint8<N*2>(lower),
-                                        uint8<N*2>(upper)));
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_align8<shift>, lower, upper);
 }
 
 // -----------------------------------------------------------------------------
@@ -134,6 +159,9 @@ uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
 #elif SIMDPP_USE_ALTIVEC
     return (__vector uint32_t) vec_sld((__vector uint8_t)(uint8x16)lower,
                                        (__vector uint8_t)(uint8x16)upper, (unsigned)shift*4);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_sld_b((v16i8)(v4u32)upper,
+                               (v16i8)(v4u32)lower, shift*4);
 #endif
 }
 
@@ -199,6 +227,9 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
         r.el(i) = upper.el(i - 2 + shift);
     }
     return r;
+#elif SIMDPP_USE_MSA
+    return (v2u64) __msa_sld_b((v16i8)(v2u64)upper,
+                               (v16i8)(v2u64)lower, shift*8);
 #endif
 }
 
@@ -269,6 +300,9 @@ float32x4 i_align4(const float32x4& lower, const float32x4& upper)
 #elif SIMDPP_USE_ALTIVEC
     return (__vector float) vec_sld((__vector uint8_t)(uint8x16)lower,
                                     (__vector uint8_t)(uint8x16)upper, (unsigned)shift*4);
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_sld_b((v16i8)(v4f32)upper,
+                               (v16i8)(v4f32)lower, shift*4);
 #endif
 }
 
@@ -345,6 +379,9 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
         r.el(i) = upper.el(i - 2 + shift);
     }
     return r;
+#elif SIMDPP_USE_MSA
+    return (v2f64) __msa_sld_b((v16i8)(v2f64)upper,
+                               (v16i8)(v2f64)lower, shift*8);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(float64<shift+4>, lower, upper);
 #endif

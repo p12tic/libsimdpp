@@ -57,7 +57,7 @@ SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
     auto r = vtrnq_u8(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint8x16 m0 = make_shuffle_bytes16_mask<0,16+0, 2,16+2, 4,16+4, 6,16+6,
                                             8,16+8, 10,16+10, 12,16+12, 14,16+14>(m0);
     uint8x16 m1 = make_shuffle_bytes16_mask<1,16+1, 3,16+3, 5,16+5, 7,16+7,
@@ -83,7 +83,7 @@ SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
 */
 SIMDPP_INL uint8x16 transpose_inplace(const uint8x16& a)
 {
-#if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     // the compiler will take this out of any loops automatically
     uint8x16 idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,
                             2, 6, 10,14, 3, 7, 11,15);
@@ -95,11 +95,11 @@ SIMDPP_INL uint8x16 transpose_inplace(const uint8x16& a)
 
 SIMDPP_INL uint8x32 transpose_inplace(const uint8x32& a)
 {
-#if SIMDPP_USE_AVX2 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_AVX2
     uint8x32 idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,
                              2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);
-#elif SIMDPP_USE_SSSE3
+#elif SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
     SIMDPP_VEC_ARRAY_IMPL1(uint8x32, transpose_inplace, a);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
@@ -129,7 +129,7 @@ SIMDPP_INL void i_transpose2(uint16x8& a0, uint16x8& a1)
     auto r = vtrnq_u16(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16x8 m0 = make_shuffle_bytes16_mask<0,8+0, 2,8+2, 4,8+4, 6,8+6>(m0);
     uint16x8 m1 = make_shuffle_bytes16_mask<1,8+1, 3,8+3, 5,8+5, 7,8+7>(m1);
     uint16x8 b0, b1;
@@ -183,7 +183,7 @@ SIMDPP_INL void i_transpose2(uint32x4& a0, uint32x4& a1)
     auto r = vtrnq_u32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 m0 = make_shuffle_bytes16_mask<0,4+0, 2,4+2>(m0);
     uint32x4 m1 = make_shuffle_bytes16_mask<1,4+1, 3,4+3>(m1);
     uint32x4 b0, b1;
@@ -225,7 +225,7 @@ void i_transpose2(uint32<N>& a0, uint32<N>& a1)
 
 SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
 {
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_207
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     uint64x2 b0;
     b0 = zip2_lo(a0, a1);
     a1 = zip2_hi(a0, a1);
@@ -279,7 +279,7 @@ SIMDPP_INL void i_transpose2(float32x4& a0, float32x4& a1)
     auto r = vtrnq_f32(a0, a1);
     a0 = r.val[0];
     a1 = r.val[1];
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 m0 = make_shuffle_bytes16_mask<0,4+0, 2,4+2>(m0);
     uint32x4 m1 = make_shuffle_bytes16_mask<1,4+1, 3,4+3>(m1);
     float32x4 b0, b1;
@@ -321,7 +321,7 @@ void i_transpose2(float32<N>& a0, float32<N>& a1)
 
 SIMDPP_INL void i_transpose2(float64x2& a0, float64x2& a1)
 {
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     float64x2 b0;
     b0 = zip2_lo(a0, a1);
     a1 = zip2_hi(a0, a1);
@@ -383,7 +383,7 @@ SIMDPP_INL void i_transpose4(uint8x16& a0, uint8x16& a1,
     detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     v_sse_transpose8x4<uint8<16>, uint16<8>, uint32<4>>(a0, a1, a2, a3);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16x8 b0, b1, b2, b3;
     i_transpose2(a0, a1);  // 8-bit transpose
     i_transpose2(a2, a3);
@@ -426,7 +426,7 @@ SIMDPP_INL void i_transpose4(uint16x8& a0, uint16x8& a1,
     detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     v_sse_transpose16x4<uint16<8>, uint32<4>, uint64<2>>(a0, a1, a2, a3);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 b0, b1, b2, b3;
     i_transpose2(a0, a1);  // 16-bit transpose
     i_transpose2(a2, a3);
@@ -468,7 +468,7 @@ SIMDPP_INL void i_transpose4(uint32x4& a0, uint32x4& a1,
     detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
     v_sse_transpose32x4<uint32<4>, uint64<2>>(a0, a1, a2, a3);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint64x2 b0, b1, b2, b3;
     i_transpose2(a0, a1);  // 32-bit transpose
     i_transpose2(a2, a3);

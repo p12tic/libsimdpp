@@ -34,6 +34,8 @@ int8<16> expr_eval(const expr_add_sat<int8<16,E1>,
     return vqaddq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector int8_t)a, (__vector int8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_adds_s_b(a, b);
 #endif
 }
 
@@ -84,6 +86,8 @@ int16<8> expr_eval(const expr_add_sat<int16<8,E1>,
     return vqaddq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector int16_t)a, (__vector int16_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_adds_s_h(a, b);
 #endif
 }
 
@@ -134,6 +138,8 @@ uint8<16> expr_eval(const expr_add_sat<uint8<16,E1>,
     return vqaddq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector uint8_t)a, (__vector uint8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_adds_u_b(a, b);
 #endif
 }
 
@@ -184,6 +190,8 @@ uint16<8> expr_eval(const expr_add_sat<uint16<8,E1>,
     return vqaddq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_adds((__vector uint16_t)a, (__vector uint16_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_adds_u_h(a, b);
 #endif
 }
 

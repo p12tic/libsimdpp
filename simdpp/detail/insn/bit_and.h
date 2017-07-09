@@ -34,6 +34,8 @@ SIMDPP_INL uint8<16> i_bit_and(const uint8<16>& a, const uint8<16>& b)
     return vandq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_and((__vector uint8_t)a, (__vector uint8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_and_v(a, b);
 #endif
 }
 
@@ -331,6 +333,8 @@ SIMDPP_INL float32<4> i_bit_and(const float32<4>& a, const float32<4>& b)
                                            vreinterpretq_u32_f32(b)));
 #elif SIMDPP_USE_ALTIVEC
     return vec_and((__vector float)a, (__vector float)b);
+#elif SIMDPP_USE_MSA
+    return (float32<4>)(uint8<16>) __msa_and_v((uint8<16>) a, (uint8<16>) b);
 #endif
 }
 
@@ -413,6 +417,8 @@ SIMDPP_INL float64<2> i_bit_and(const float64<2>& a, const float64<2>& b)
                                            vreinterpretq_u64_f64(b)));
 #elif SIMDPP_USE_VSX_206
     return vec_and((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_MSA
+    return (float64<2>)(uint8<16>) __msa_and_v((uint8<16>) a, (uint8<16>) b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::bit_and(a, b);
 #endif

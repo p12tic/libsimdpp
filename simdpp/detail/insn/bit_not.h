@@ -36,6 +36,8 @@ SIMDPP_INL uint8x16 i_bit_not(const uint8x16& a)
     return vmvnq_u8(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_nor((__vector uint8_t)a, (__vector uint8_t)a);
+#elif SIMDPP_USE_MSA
+    return __msa_nor_v(a, a);
 #endif
 }
 
@@ -182,14 +184,14 @@ SIMDPP_INL mask_int16<32> i_bit_not(const mask_int16<32>& a)
 
 SIMDPP_INL float32x4 i_bit_not(const float32x4& a)
 {
-#if SIMDPP_USE_NULL
-    return float32x4(i_bit_not(uint32x4(a)));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return bit_xor(a, 0xffffffff);
 #elif SIMDPP_USE_NEON
     return (float32<4>) (uint32<4>) vmvnq_u32((uint32x4)a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_nor((__vector float)a, (__vector float)a);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_MSA
+    return float32x4(i_bit_not(uint32x4(a)));
 #endif
 }
 
@@ -217,7 +219,7 @@ SIMDPP_INL float64x2 i_bit_not(const float64x2& a)
     return (float64<2>) (uint32<4>) vmvnq_u32((uint32<4>)a);
 #elif SIMDPP_USE_VSX_206
     return vec_nor((__vector double) a, (__vector double) a);
-#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return float64x2(i_bit_not(uint64x2(a)));
 #endif
 }

@@ -41,6 +41,8 @@ SIMDPP_INL uint8x16 i_avg_trunc(const uint8x16& a, const uint8x16& b)
     return v_emul_avg_trunc(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_u8(a, b);
+#elif SIMDPP_USE_MSA
+    return __msa_ave_u_b(a, b);
 #endif
 }
 
@@ -72,6 +74,8 @@ SIMDPP_INL int8x16 i_avg_trunc(const int8x16& a, const int8x16& b)
     return v_emul_avg_trunc_i8(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_s8(a, b);
+#elif SIMDPP_USE_MSA
+    return __msa_ave_s_b(a, b);
 #endif
 }
 
@@ -103,6 +107,8 @@ SIMDPP_INL uint16x8 i_avg_trunc(const uint16x8& a, const uint16x8& b)
     return v_emul_avg_trunc(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_u16(a, b);
+#elif SIMDPP_USE_MSA
+    return __msa_ave_u_h(a, b);
 #endif
 }
 
@@ -134,6 +140,8 @@ SIMDPP_INL int16x8 i_avg_trunc(const int16x8& a, const int16x8& b)
     return v_emul_avg_trunc_i16(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_s16(a, b);
+#elif SIMDPP_USE_MSA
+    return __msa_ave_s_h(a, b);
 #endif
 }
 
@@ -165,6 +173,8 @@ SIMDPP_INL uint32x4 i_avg_trunc(const uint32x4& a, const uint32x4& b)
     return v_emul_avg_trunc(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_u32(a, b);
+#elif SIMDPP_USE_MSA
+    return __msa_ave_u_w(a, b);
 #endif
 }
 
@@ -196,6 +206,8 @@ SIMDPP_INL int32x4 i_avg_trunc(const int32x4& a, const int32x4& b)
     return v_emul_avg_trunc_i32(a, b);
 #elif SIMDPP_USE_NEON
     return vhaddq_s32(a, b);
+#elif SIMDPP_USE_MSA
+    return __msa_ave_s_w(a, b);
 #endif
 }
 

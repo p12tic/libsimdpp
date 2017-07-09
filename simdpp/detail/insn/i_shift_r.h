@@ -51,6 +51,9 @@ SIMDPP_INL int8x16 i_shift_r(const int8x16& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = splat(count);
     return vec_sra((__vector int8_t)a, (__vector uint8_t)shift);
+#elif SIMDPP_USE_MSA
+    int8x16 shift = splat(count);
+    return __msa_sra_b(a, shift);
 #endif
 }
 
@@ -108,6 +111,9 @@ SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = splat(count);
     return vec_sr((__vector uint8_t)a, (__vector uint8_t)shift);
+#elif SIMDPP_USE_MSA
+    int8x16 shift = splat(count);
+    return (v16u8) __msa_srl_b((v16i8)(v16u8) a, shift);
 #endif
 }
 
@@ -155,6 +161,9 @@ SIMDPP_INL int16x8 i_shift_r(const int16x8& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = splat(count);
     return vec_sra((__vector int16_t)a, (__vector uint16_t)shift);
+#elif SIMDPP_USE_MSA
+    int16x8 shift = splat(count);
+    return __msa_sra_h(a, shift);
 #endif
 }
 
@@ -193,6 +202,9 @@ SIMDPP_INL uint16x8 i_shift_r(const uint16x8& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = splat(count);
     return vec_sr((__vector uint16_t)a, (__vector uint16_t)shift);
+#elif SIMDPP_USE_MSA
+    int16x8 shift = splat(count);
+    return (v8u16) __msa_srl_h((v8i16)(v8u16) a, shift);
 #endif
 }
 
@@ -231,6 +243,9 @@ SIMDPP_INL int32x4 i_shift_r(const int32x4& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = splat(count);
     return vec_sra((__vector int32_t)a, (__vector uint32_t)shift);
+#elif SIMDPP_USE_MSA
+    int32x4 shift = splat(count);
+    return __msa_sra_w(a, shift);
 #endif
 }
 
@@ -269,6 +284,9 @@ SIMDPP_INL uint32x4 i_shift_r(const uint32x4& a, unsigned count)
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = splat(count);
     return vec_sr((__vector uint32_t)a, (__vector uint32_t)shift);
+#elif SIMDPP_USE_MSA
+    int32x4 shift = splat(count);
+    return (v4u32) __msa_srl_w((v4i32)(v4u32) a, shift);
 #endif
 }
 
@@ -325,6 +343,9 @@ SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
 #elif SIMDPP_USE_VSX_207
     uint64x2 shift = splat(count);
     return vec_sra((__vector int64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_MSA
+    int32x4 shift = splat(count);
+    return __msa_sra_d(a, (int64<2>) shift);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::shift_r(a, count);
 #endif
@@ -376,6 +397,9 @@ SIMDPP_INL uint64x2 i_shift_r(const uint64x2& a, unsigned count)
 #elif SIMDPP_USE_VSX_207
     uint64x2 shift = splat(count);
     return vec_sr((__vector uint64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_MSA
+    int32x4 shift = splat(count);
+    return (v2u64) __msa_srl_d((v2i64)(v2u64) a, (int64<2>) shift);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::shift_r(a, count);
 #endif
@@ -439,6 +463,8 @@ int8x16 i_shift_r(const int8x16& a)
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = make_uint(count);
     return vec_sra((__vector int8_t)a, (__vector uint8_t)shift);
+#elif SIMDPP_USE_MSA
+    return __msa_srai_b(a, count);
 #endif
 }
 
@@ -505,6 +531,8 @@ uint8x16 i_shift_r(const uint8x16& a)
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 shift = make_uint(count);
     return vec_sr((__vector uint8_t)a, (__vector uint8_t)shift);
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_srli_b((v16i8)(v16u8) a, count);
 #endif
 }
 
@@ -541,6 +569,8 @@ int16x8 i_shift_r(const int16x8& a)
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = make_uint(count);
     return vec_sra((__vector int16_t)a, (__vector uint16_t)shift);
+#elif SIMDPP_USE_MSA
+    return __msa_srai_h(a, count);
 #endif
 }
 
@@ -577,6 +607,8 @@ uint16x8 i_shift_r(const uint16x8& a)
 #elif SIMDPP_USE_ALTIVEC
     uint16x8 shift = make_uint(count);
     return vec_sr((__vector uint16_t)a, (__vector uint16_t)shift);
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_srli_h((v8i16)(v8u16) a, count);
 #endif
 }
 
@@ -613,6 +645,8 @@ int32x4 i_shift_r(const int32x4& a)
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = make_uint(count);
     return vec_sra((__vector int32_t)a, (__vector uint32_t)shift);
+#elif SIMDPP_USE_MSA
+    return __msa_srai_w(a, count);
 #endif
 }
 
@@ -649,6 +683,8 @@ uint32x4 i_shift_r(const uint32x4& a)
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 shift = make_uint(count);
     return vec_sr((__vector uint32_t)a, (__vector uint32_t)shift);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_srli_w((v4i32)(v4u32) a, count);
 #endif
 }
 
@@ -681,6 +717,8 @@ int64x2 i_shift_r(const int64x2& a)
 #elif SIMDPP_USE_VSX_207
     uint64x2 shift = splat(count);
     return vec_sra((__vector int64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_MSA
+    return __msa_srai_d(a, count);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     return i_shift_r(a, count);
 #else
@@ -718,6 +756,8 @@ uint64x2 i_shift_r(const uint64x2& a)
 #elif SIMDPP_USE_VSX_207
     uint64x2 shift = splat(count);
     return vec_sr((__vector uint64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_MSA
+    return (v2u64) __msa_srli_d((v2i64)(v2u64) a, count);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return i_shift_r(a, count);
 #else

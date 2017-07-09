@@ -40,6 +40,8 @@ public:
     using native_type = int8x16_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector int8_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v16i8;
 #else
     using native_type = detail::array<int8_t, 16>;
 #endif
@@ -107,6 +109,8 @@ public:
     using native_type = uint8x16_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint8_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v16u8;
 #else
     using native_type = detail::array<uint8_t, 16>;
 #endif
@@ -173,6 +177,8 @@ public:
     using native_type = uint8x16_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector uint8_t;
+#elif SIMDPP_USE_MSA
+    using native_type = v16u8;
 #else
     using native_type = detail::array<bool, 16>;
 #endif
@@ -187,7 +193,7 @@ public:
     SIMDPP_INL mask_int8<16>(const __vector __bool char& d) : d_((__vector uint8_t)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_ALTIVEC
     SIMDPP_INL mask_int8<16>(const uint8<16>& d) : d_(d) {}
 #endif
 

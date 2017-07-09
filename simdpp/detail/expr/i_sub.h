@@ -35,6 +35,8 @@ uint8<16> expr_eval(const expr_sub<uint8<16,E1>,
     return vsubq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sub((__vector uint8_t)a, (__vector uint8_t)b);
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_subv_b((v16i8)(v16u8)a, (v16i8)(v16u8)b);
 #endif
 }
 
@@ -85,6 +87,8 @@ uint16<8> expr_eval(const expr_sub<uint16<8,E1>,
     return vsubq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sub((__vector uint16_t)a, (__vector uint16_t)b);
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_subv_h((v8i16)(v8u16)a, (v8i16)(v8u16)b);
 #endif
 }
 
@@ -135,6 +139,8 @@ uint32<4> expr_eval(const expr_sub<uint32<4,E1>,
     return vsubq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sub((__vector uint32_t)a, (__vector uint32_t)b);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_subv_w((v4i32)(v4u32)a, (v4i32)(v4u32)b);
 #endif
 }
 
@@ -183,6 +189,8 @@ uint64<2> expr_eval(const expr_sub<uint64<2,E1>,
     return vsubq_u64(a, b);
 #elif SIMDPP_USE_VSX_207
     return vec_sub((__vector uint64_t) a, (__vector uint64_t) b);
+#elif SIMDPP_USE_MSA
+    return (v2u64) __msa_subv_d((v2i64)(v2u64)a, (v2i64)(v2u64)b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::sub(a, b);
 #endif

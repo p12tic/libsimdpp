@@ -124,7 +124,7 @@ SIMDPP_INL mask_int64x2 i_cmp_neq(const uint64x2& a, const uint64x2& b)
 {
 #if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comneq_epi64(a, b);
-#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     return bit_not(cmp_eq(a, b));
 #elif SIMDPP_USE_SSE2
     uint64x2 r32, r32s;
@@ -170,6 +170,8 @@ SIMDPP_INL mask_float32x4 i_cmp_neq(const float32x4& a, const float32x4& b)
     return _mm_cmpneq_ps(a, b);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return bit_not(cmp_eq(a, b));
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_fcune_w(a, b);
 #endif
 }
 
@@ -202,6 +204,8 @@ SIMDPP_INL mask_float64x2 i_cmp_neq(const float64x2& a, const float64x2& b)
     return _mm_cmpneq_pd(a, b);
 #elif SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206
     return bit_not(cmp_eq(a, b));
+#elif SIMDPP_USE_MSA
+    return (v2f64) __msa_fcune_d(a, b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::cmp_neq(a, b);
 #else

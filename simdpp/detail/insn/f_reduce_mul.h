@@ -42,7 +42,7 @@ SIMDPP_INL float i_reduce_mul(const float32x4& a)
     float32x2_t a2 = vmul_f32(vget_low_f32(a), vget_high_f32(a));
     a2 = vmul_f32(a2, vext_f32(a2, a2, 1));
     return vget_lane_f32(a2, 0);
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     float32x4 b = a;
     b = mul(b, move4_l<1>(b));
     b = mul(b, move4_l<2>(b));
@@ -90,7 +90,7 @@ SIMDPP_INL double i_reduce_mul(const float64x2& a)
 #elif SIMDPP_USE_NEON64
     float64x1_t a2 = vmul_f64(vget_low_f64(a), vget_high_f64(a));
     return vget_lane_f64(a2, 0);
-#elif SIMDPP_USE_VSX_206
+#elif SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     float64x2 b = mul(a, permute2<1,1>(a));
     return extract<0>(b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC

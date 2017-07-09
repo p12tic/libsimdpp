@@ -50,6 +50,8 @@ SIMDPP_INL uint8<16> i_blend(const uint8<16>& con, const uint8<16>& coff, const 
 #elif SIMDPP_USE_ALTIVEC
     return vec_sel((__vector uint8_t)off, (__vector uint8_t)on,
                    (__vector uint8_t)mask);
+#elif SIMDPP_USE_MSA
+    return __msa_bsel_v(mask, off, on);
 #endif
 }
 
@@ -288,6 +290,9 @@ SIMDPP_INL float32<4> i_blend(const float32<4>& con, const float32<4>& coff, con
 #elif SIMDPP_USE_ALTIVEC
     return vec_sel((__vector float)off, (__vector float)on,
                    (__vector float)mask);
+#elif SIMDPP_USE_MSA
+    return (float32<4>)(uint8<16>) __msa_bsel_v((uint8<16>) mask,
+                                                (uint8<16>) off, (uint8<16>) on);
 #endif
 }
 
@@ -455,6 +460,9 @@ SIMDPP_INL float64<2> i_blend(const float64<2>& con, const float64<2>& coff, con
 #elif SIMDPP_USE_VSX_206
     return vec_sel((__vector double) off, (__vector double) on,
                    (__vector double) mask);
+#elif SIMDPP_USE_MSA
+    return (float64<2>)(uint8<16>) __msa_bsel_v((uint8<16>) mask,
+                                                (uint8<16>) off, (uint8<16>) on);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::blend(on, off, mask);
 #endif

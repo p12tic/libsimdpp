@@ -37,6 +37,9 @@ uint8x16 i_move16_l(const uint8x16& a)
 #elif SIMDPP_USE_ALTIVEC
     // return align<shift>(a, (uint8x16) make_zero());
     return vec_sld((__vector uint8_t)a, (__vector uint8_t)(uint8x16) make_zero(), shift);
+#elif SIMDPP_USE_MSA
+    uint8x16 zero = make_zero();
+    return (v16u8) __msa_sldi_b((v16i8)(v16u8)zero, (v16i8)(v16u8)a, shift);
 #endif
 }
 
@@ -226,7 +229,7 @@ float32<N> i_move4_l(const float32<N>& a)
 template<unsigned shift> SIMDPP_INL
 float64<2> i_move2_l(const float64<2>& a)
 {
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     return (float64<2>) i_move16_l<shift*8>(uint8<16>(a));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::move_n_l<shift>(a);

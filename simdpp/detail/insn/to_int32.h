@@ -53,6 +53,12 @@ SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
     r.vec(0) = vmovl_s16(vget_low_s16(a.vec(0)));
     r.vec(1) = vmovl_s16(vget_high_s16(a.vec(1)));
     return r;
+#elif SIMDPP_USE_MSA
+    int16x8 sign = shift_r<16>(a);
+    int32x4 lo, hi;
+    lo = zip8_lo(a, sign);
+    hi = zip8_hi(a, sign);
+    return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
     int32x4 b0, b1;
     b0 = vec_unpackh((__vector int16_t)a.vec(0));
@@ -121,6 +127,8 @@ SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
     return mi;
 #elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_s32_f32(a);
+#elif SIMDPP_USE_MSA
+    return __msa_ftrunc_s_w(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_cts((__vector float)a, 0);
 #endif
@@ -183,6 +191,11 @@ SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
     r2 = (__vector int32_t) vec_cts((__vector double)a.vec(1), 0);
     r = unzip4_lo(r1, r2);
     return r;
+#elif SIMDPP_USE_MSA
+    int64<2> r1, r2;
+    r1 = __msa_ftrunc_s_d(a.vec(0));
+    r2 = __msa_ftrunc_s_d(a.vec(1));
+    return unzip4_lo((int32<4>)r1, (int32<4>)r2);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
     r[0] = int32_t(a.vec(0).el(0));

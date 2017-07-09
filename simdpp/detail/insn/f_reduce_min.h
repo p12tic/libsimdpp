@@ -42,7 +42,7 @@ SIMDPP_INL float i_reduce_min(const float32x4& a)
     float32x2_t a2 = vpmin_f32(vget_low_f32(a), vget_high_f32(a));
     a2 = vpmin_f32(a2, a2);
     return vget_lane_f32(a2, 0);
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     float32x4 b = min(a, move4_l<1>(a));
     b = min(b, move4_l<2>(b));
     return extract<0>(b);
@@ -89,7 +89,7 @@ SIMDPP_INL double i_reduce_min(const float64x2& a)
 #elif SIMDPP_USE_NEON64
     float64x2_t a2 = vpminq_f64(a, a);
     return vgetq_lane_f64(a2, 0);
-#elif SIMDPP_USE_VSX_206
+#elif SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     float64x2 b = min(a, permute2<1,1>(a));
     return extract<0>(b);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC

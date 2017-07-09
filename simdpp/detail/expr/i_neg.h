@@ -27,7 +27,7 @@ int8<16> expr_eval(const expr_neg<int8<16,E>>& q)
     int8<16> a = q.a.eval();
 #if SIMDPP_USE_NULL
     return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return sub(0, a);
 #elif SIMDPP_USE_NEON
     return vnegq_s8(a);
@@ -67,7 +67,7 @@ int16<8> expr_eval(const expr_neg<int16<8,E>>& q)
     int16<8> a = q.a.eval();
 #if SIMDPP_USE_NULL
     return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return sub(0, a);
 #elif SIMDPP_USE_NEON
     return vnegq_s16(a);
@@ -107,7 +107,7 @@ int32<4> expr_eval(const expr_neg<int32<4,E>>& q)
     int32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL
     return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return sub(0, a);
 #elif SIMDPP_USE_NEON
     return vnegq_s32(a);
@@ -145,7 +145,7 @@ template<class R, class E> SIMDPP_INL
 int64<2> expr_eval(const expr_neg<int64<2,E>>& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     return sub(0, a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::neg(a);

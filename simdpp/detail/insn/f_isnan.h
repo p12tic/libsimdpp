@@ -31,6 +31,8 @@ SIMDPP_INL mask_float32x4 i_isnan(const float32x4& a)
     return (mask_float32x4) _mm_cmpunord_ps(a, a);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return cmp_neq(a, a);
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_fcun_w(a, a);
 #endif
 }
 
@@ -58,6 +60,8 @@ SIMDPP_INL mask_float64x2 i_isnan(const float64x2& a)
     return _mm_cmpunord_pd(a, a);
 #elif SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206
     return cmp_neq(a, a);
+#elif SIMDPP_USE_MSA
+    return (v2f64) __msa_fcun_d(a, a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::isnan(a);
 #endif

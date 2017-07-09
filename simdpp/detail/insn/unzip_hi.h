@@ -42,6 +42,8 @@ SIMDPP_INL uint8x16 i_unzip16_hi(const uint8x16& ca, const uint8x16& cb)
                                               17,19,21,23,25,27,29,31>(mask);
     return shuffle_bytes16(a, b, mask);
 #endif
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_pckod_b((v16i8)(v16u8) b, (v16i8)(v16u8) a);
 #endif
 }
 
@@ -94,6 +96,8 @@ SIMDPP_INL uint16x8 i_unzip8_hi(const uint16x8& ca, const uint16x8& cb)
     uint16x8 mask = make_shuffle_bytes16_mask<1,3,5,7,9,11,13,15>(mask);
     return shuffle_bytes16(a, b, mask);
 #endif
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_pckod_h((v8i16)(v8u16) b, (v8i16)(v8u16) a);
 #endif
 }
 
@@ -135,6 +139,8 @@ SIMDPP_INL uint32x4 i_unzip4_hi(const uint32x4& a, const uint32x4& b)
     return shuffle2<1,3,1,3>(a, b);
 #elif SIMDPP_USE_NEON
     return vuzpq_u32(a, b).val[1];
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_pckod_w((v4i32)(v4u32) b, (v4i32)(v4u32) a);
 #endif
 }
 
@@ -178,6 +184,8 @@ SIMDPP_INL float32x4 i_unzip4_hi(const float32x4& a, const float32x4& b)
     return vuzpq_f32(a, b).val[1];
 #elif SIMDPP_USE_ALTIVEC
     return float32x4(i_unzip4_hi((uint32x4)a, (uint32x4)b));
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_pckod_w((v4i32)(v4f32) b, (v4i32)(v4f32) a);
 #endif
 }
 

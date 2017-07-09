@@ -393,6 +393,21 @@ set(SIMDPP_ARM64_NEON_TEST_CODE
     }"
 )
 
+list(APPEND SIMDPP_ARCHS_PRI "MIPS_MSA")
+set(SIMDPP_MIPS_MSA_CXX_FLAGS "-mips64r5 -mmsa -mhard-float -mfp64 -mnan=legacy")
+set(SIMDPP_MIPS_MSA_DEFINE "SIMDPP_ARCH_MIPS_MSA")
+set(SIMDPP_MIPS_MSA_SUFFIX "-mips_msa")
+set(SIMDPP_MIPS_MSA_TEST_CODE
+    "#include <msa.h>
+    int main()
+    {
+        volatile unsigned char a[16];
+        v16i8 v = __msa_ld_b(a, 0);
+        v = __msa_add_a_b(v, v);
+        __msa_st_b(v, a, 0);
+    }"
+)
+
 list(APPEND SIMDPP_ARCHS_PRI "POWER_ALTIVEC")
 set(SIMDPP_POWER_ALTIVEC_CXX_FLAGS "-maltivec")
 set(SIMDPP_POWER_ALTIVEC_DEFINE "SIMDPP_ARCH_POWER_ALTIVEC")
@@ -516,7 +531,7 @@ endfunction()
 #   X86_AVX, X86_AVX2, X86_FMA3, X86_FMA4,
 #   X86_AVX512F, X86_AVX512BW, X86_AVX512DQ, X86_XOP,
 #   ARM_NEON, ARM_NEON_FLT_SP, ARM64_NEON,
-#   POWER_ALTIVEC, POWER_VSX_206, POWER_VSX_207
+#   MIPS_MSA, POWER_ALTIVEC, POWER_VSX_206, POWER_VSX_207
 #
 function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
@@ -657,6 +672,9 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
     endif()
     if(DEFINED ARCH_SUPPORTED_ARM64_NEON)
         list(APPEND ALL_ARCHS "ARM64_NEON")
+    endif()
+    if(DEFINED ARCH_SUPPORTED_MIPS_MSA)
+        list(APPEND ALL_ARCHS "MIPS_MSA")
     endif()
     if(DEFINED ARCH_SUPPORTED_POWER_ALTIVEC)
         list(APPEND ALL_ARCHS "POWER_ALTIVEC")

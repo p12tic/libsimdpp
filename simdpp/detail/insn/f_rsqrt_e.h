@@ -38,6 +38,8 @@ SIMDPP_INL float32x4 i_rsqrt_e(const float32x4& a)
     return vrsqrteq_f32(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_rsqrte((__vector float)a);
+#elif SIMDPP_USE_MSA
+    return __msa_frsqrt_w(a);
 #endif
 }
 

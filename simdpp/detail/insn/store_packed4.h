@@ -40,7 +40,7 @@ SIMDPP_INL void i_store_packed4(char* p,
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint8x16x4_t t;
@@ -76,7 +76,7 @@ SIMDPP_INL void i_store_packed4(char* p,
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint16x8x4_t t;
@@ -112,7 +112,7 @@ SIMDPP_INL void i_store_packed4(char* p,
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     uint32x4x4_t t;
@@ -152,7 +152,7 @@ SIMDPP_INL void i_store_packed4(char* p,
     t.val[2] = c;
     t.val[3] = d;
     vst4q_u64(reinterpret_cast<uint64_t*>(p), t);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_packed4(p, a, b, c, d);
@@ -183,7 +183,7 @@ SIMDPP_INL void i_store_packed4(char* p,
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::store_packed4(p, a, b, c, d);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON
     float32x4x4_t t;
@@ -218,7 +218,7 @@ SIMDPP_INL void i_store_packed4(char* p,
                                 const float64x2& a, const float64x2& b, const float64x2& c, const float64x2& d)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     v128_store_pack4(p, a, b, c, d);
 #elif SIMDPP_USE_NEON64
     float64x2x4_t t;

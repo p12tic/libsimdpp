@@ -32,6 +32,8 @@ SIMDPP_INL void i_store(char* p, const uint8x16& a)
     vst1q_u64(reinterpret_cast<uint64_t*>(p), vreinterpretq_u64_u8(a));
 #elif SIMDPP_USE_ALTIVEC
     vec_stl((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
+#elif SIMDPP_USE_MSA
+    __msa_st_b((v16i8)(v16u8) a, p, 0);
 #endif
 }
 
@@ -135,6 +137,8 @@ SIMDPP_INL void i_store(char* p, const float32x4& a)
     vst1q_f32(q, a);
 #elif SIMDPP_USE_ALTIVEC
     vec_stl((__vector float)a, 0, q);
+#elif SIMDPP_USE_MSA
+    __msa_st_w((v4i32)(v4f32) a, q, 0);
 #endif
 }
 
@@ -167,6 +171,8 @@ SIMDPP_INL void i_store(char* p, const float64x2& a)
     vst1q_f64(q, a);
 #elif SIMDPP_USE_VSX_206
     vec_stl((__vector double)a, 0, q);
+#elif SIMDPP_USE_MSA
+    __msa_st_d((v2i64)(v2f64) a, q, 0);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::null::store(q, a);
 #endif

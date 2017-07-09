@@ -75,6 +75,10 @@ SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, con
     a0 = i_shuffle_bytes16(a0, b0, mask);
     a0 = bit_andnot(a0, zero_mask);
     return a0;
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_vshf_b((v16i8)(v16u8)mask,
+                                (v16i8)(v16u8)b,
+                                (v16i8)(v16u8)a);
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, mask);
 #endif

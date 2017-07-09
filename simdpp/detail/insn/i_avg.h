@@ -42,6 +42,8 @@ SIMDPP_INL uint8x16 i_avg(const uint8x16& a, const uint8x16& b)
     return vrhaddq_u8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector uint8_t)a, (__vector uint8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_aver_u_b(a, b);
 #endif
 }
 
@@ -81,6 +83,8 @@ SIMDPP_INL int8x16 i_avg(const int8x16& a, const int8x16& b)
     return vrhaddq_s8(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector int8_t)a, (__vector int8_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_aver_s_b(a, b);
 #endif
 }
 
@@ -126,6 +130,8 @@ SIMDPP_INL uint16x8 i_avg(const uint16x8& a, const uint16x8& b)
     return vrhaddq_u16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector uint16_t)a, (__vector uint16_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_aver_u_h(a, b);
 #endif
 }
 
@@ -164,6 +170,8 @@ SIMDPP_INL int16x8 i_avg(const int16x8& a, const int16x8& b)
     return vrhaddq_s16(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector int16_t)a, (__vector int16_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_aver_s_h(a, b);
 #endif
 }
 
@@ -207,6 +215,8 @@ SIMDPP_INL uint32x4 i_avg(const uint32x4& a, const uint32x4& b)
     return vrhaddq_u32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector uint32_t)a, (__vector uint32_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_aver_u_w(a, b);
 #endif
 }
 
@@ -241,6 +251,8 @@ SIMDPP_INL int32x4 i_avg(const int32x4& a, const int32x4& b)
     return vrhaddq_s32(a, b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_avg((__vector int32_t)a, (__vector int32_t)b);
+#elif SIMDPP_USE_MSA
+    return __msa_aver_s_w(a, b);
 #endif
 }
 

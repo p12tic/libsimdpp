@@ -34,7 +34,7 @@ SIMDPP_INL uint8_t i_reduce_max(const uint8x16& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint8x16 r = max(a, move16_l<8>(a));
     r = max(r, move16_l<4>(r));
     r = max(r, move16_l<2>(r));
@@ -91,7 +91,7 @@ SIMDPP_INL int8_t i_reduce_max(const int8x16& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     int8x16 r = a;
     r = max(r, move16_l<8>(r));
     r = max(r, move16_l<4>(r));
@@ -162,7 +162,7 @@ SIMDPP_INL uint16_t i_reduce_max(const uint16x8& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16x8 r = max(a, move8_l<4>(a));
     r = max(r, move8_l<2>(r));
     r = max(r, move8_l<1>(r));
@@ -230,7 +230,7 @@ SIMDPP_INL int16_t i_reduce_max(const int16x8& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     int16x8 r = max(a, move8_l<4>(a));
     r = max(r, move8_l<2>(r));
     r = max(r, move8_l<1>(r));
@@ -286,7 +286,7 @@ SIMDPP_INL uint32_t i_reduce_max(const uint32x4& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 r = max(a, move4_l<2>(a));
     r = max(r, move4_l<1>(r));
     return extract<0>(r);
@@ -352,7 +352,7 @@ SIMDPP_INL int32_t i_reduce_max(const int32x4& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     int32x4 r = max(a, move4_l<2>(a));
     r = max(r, move4_l<1>(r));
     return extract<0>(r);
@@ -446,7 +446,7 @@ SIMDPP_INL uint64_t i_reduce_max(const uint64<8>& a)
 template<unsigned N>
 SIMDPP_INL uint64_t i_reduce_max(const uint64<N>& a)
 {
-#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207
+#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     uint64v r = a.vec(0);
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = max(r, a.vec(j));
@@ -478,7 +478,7 @@ SIMDPP_INL uint64_t i_reduce_max(const uint64<N>& a)
 
 SIMDPP_INL int64_t i_reduce_max(const int64x2& a)
 {
-#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207
+#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     int64x2 r = max(a, move2_l<1>(a));
     return extract<0>(r);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON32
@@ -519,7 +519,7 @@ SIMDPP_INL int64_t i_reduce_max(const int64<8>& a)
 template<unsigned N>
 SIMDPP_INL int64_t i_reduce_max(const int64<N>& a)
 {
-#if SIMDPP_USE_AXV2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207
+#if SIMDPP_USE_AXV2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     int64v r = a.vec(0);
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = max(r, a.vec(j));

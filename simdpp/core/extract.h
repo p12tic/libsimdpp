@@ -16,6 +16,7 @@
 #include <simdpp/core/cast.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/i_shift_l.h>
+#include <simdpp/core/i_sub.h>
 #include <simdpp/core/make_int.h>
 #include <simdpp/detail/insn/split.h>
 #include <simdpp/detail/mem_block.h>
@@ -56,13 +57,19 @@ uint8_t extract(const uint8x16& a)
     detail::mem_block<uint8x16> ax(a);
     vec_ste((__vector uint8_t)a, 0, &ax[id]);
     return ax[id];
+#elif SIMDPP_USE_MSA
+    return __msa_copy_u_b((v16i8)(v16u8) a, id);
 #endif
 }
 
 template<unsigned id> SIMDPP_INL
 int8_t extract(const int8x16& a)
 {
+#if SIMDPP_USE_MSA
+    return __msa_copy_s_b(a, id);
+#else
     return extract<id>(uint8x16(a));
+#endif
 }
 
 /** Extracts the @a id-th element from int16x8 vector
@@ -89,13 +96,20 @@ uint16_t extract(const uint16x8& a)
     detail::mem_block<uint16x8> ax(a);
     vec_ste((__vector uint16_t)a, 0, &ax[id]);
     return ax[id];
+#elif SIMDPP_USE_MSA
+    return __msa_copy_u_h((v8i16)(v8u16) a, id);
 #endif
 }
 
 template<unsigned id> SIMDPP_INL
 int16_t extract(const int16x8& a)
 {
+    static_assert(id < 8, "index out of bounds");
+#if SIMDPP_USE_MSA
+    return __msa_copy_s_h(a, id);
+#else
     return extract<id>(uint16x8(a));
+#endif
 }
 
 /** Extracts the @a id-th element from int32x4 vector
@@ -126,13 +140,20 @@ uint32_t extract(const uint32x4& a)
     detail::mem_block<uint32x4> ax(a);
     vec_ste((__vector uint32_t)a, 0, &ax[id]);
     return ax[id];
+#elif SIMDPP_USE_MSA
+    return __msa_copy_u_w((v4i32)(v4u32) a, id);
 #endif
 }
 
 template<unsigned id> SIMDPP_INL
 int32_t extract(const int32x4& a)
 {
+    static_assert(id < 4, "index out of bounds");
+#if SIMDPP_USE_MSA
+    return __msa_copy_s_w(a, id);
+#else
     return extract<id>(uint32x4(a));
+#endif
 }
 
 /** Extracts an element from int64x2 vector
@@ -185,13 +206,34 @@ uint64_t extract(const uint64x2& a)
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint64x2> ax(a);
     return ax[id];
+#elif SIMDPP_USE_MSA
+#if SIMDPP_64_BITS
+    return __msa_copy_u_d((v2i64)(v2u64) a, id);
+#else
+    v4i32 a32 = (int32<4>) a;
+    uint64_t lo = __msa_copy_u_w(a32, id*2);
+    uint64_t hi = __msa_copy_u_w(a32, id*2+1);
+    return lo | (hi << 32);
+#endif
 #endif
 }
 
 template<unsigned id> SIMDPP_INL
 int64_t extract(const int64x2& a)
 {
+    static_assert(id < 2, "index out of bounds");
+#if SIMDPP_USE_MSA
+#if SIMDPP_64_BITS
+    return __msa_copy_s_d(a, id);
+#else
+    v4i32 a32 = (int32<4>) a;
+    int64_t lo = __msa_copy_s_w(a32, id*2);
+    int64_t hi = __msa_copy_s_w(a32, id*2+1);
+    return lo | (hi << 32);
+#endif
+#else
     return extract<id>(uint64x2(a));
+#endif
 }
 
 /** Extracts an element from float32x4 vector
@@ -215,7 +257,7 @@ float extract(const float32x4& a)
     return bit_cast<float>(extract<id>(int32x4(a)));
 #elif SIMDPP_USE_NEON
     return vgetq_lane_f32(a, id);
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     detail::mem_block<float32x4> ax(a);
     return ax[id];
 #endif
@@ -239,7 +281,7 @@ double extract(const float64x2& a)
     return a.el(id);
 #elif SIMDPP_USE_SSE2
     return bit_cast<double>(extract<id>(int64x2(a)));
-#elif SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     detail::mem_block<float64x2> ax(a);
     return ax[id];
 #elif SIMDPP_USE_NEON64
@@ -286,6 +328,8 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     uint8x8_t r = vzip_u8(vget_low_u8(a8), vget_high_u8(a8)).val[0];
     return vget_lane_u16(vreinterpret_u16_u8(r), 0);
 #elif SIMDPP_USE_ALTIVEC
+    // Note: the implementation of extract_bits depends of the exact behavior
+    // of this function
     uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
     a = bit_and(a, mask);
     uint32x4 s = vec_sum4s((__vector uint8_t)a,
@@ -295,6 +339,17 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
                           (__vector int32_t)(int32x4) make_zero());
     return extract<7>(uint16x8(s));
+#elif SIMDPP_USE_MSA
+    // Note: the implementation of extract_bits depends of the exact behavior
+    // of this function
+    uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+
+    a = bit_and(a, mask);
+    uint16<8> a16 = __msa_hadd_u_h((v16u8)a, (v16u8)a);
+    uint32<4> a32 = __msa_hadd_u_w((v8u16)a16, (v8u16)a16);
+    a = (v16u8) __msa_hadd_u_d((v4u32)a32, (v4u32)a32);
+    a = bit_or(a, move16_l<7>(a));
+    return extract<0>((uint16<8>)a);
 #endif
 }
 
@@ -337,6 +392,14 @@ uint16_t extract_bits(const uint8x16& ca)
     uint8x16 rot_mask = make_int(0-int(id), 1-int(id), 2-int(id), 3-int(id),
                                  4-int(id), 5-int(id), 6-int(id), 7-int(id));
     a = vec_rl((__vector uint8_t)a, (__vector uint8_t)rot_mask);
+    return extract_bits_any(a);
+#elif SIMDPP_USE_MSA
+    int8x16 shifts = make_int(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                              4-int(id), 5-int(id), 6-int(id), 7-int(id));
+    uint8<16> a_l = (v16u8) __msa_sll_b((v16i8)(v16u8) a, shifts);
+    shifts = sub((int8<16>) make_zero(), shifts);
+    uint8<16> a_r = (v16u8) __msa_srl_b((v16i8)(v16u8) a, shifts);
+    a = bit_or(a_l, a_r);
     return extract_bits_any(a);
 #endif
 }

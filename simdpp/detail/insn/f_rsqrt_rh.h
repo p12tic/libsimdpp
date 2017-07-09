@@ -49,7 +49,7 @@ SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
         r.el(i) = ix * (3.0f - ia*ix*ix) * 0.5f;
     }
     return r;
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     return v_rsqrt_rh(x, a);
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x2, r;

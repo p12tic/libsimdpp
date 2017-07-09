@@ -26,7 +26,7 @@ float32<4> expr_eval(const expr_neg<float32<4,E>>& q)
     float32<4> a = q.a.eval();
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     // reversion of the sign bit required even for NaNs and zeros
     return bit_xor(a, 0x80000000);
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -66,7 +66,7 @@ template<class R, class E> SIMDPP_INL
 float64x2 expr_eval(const expr_neg<float64<2,E>>& q)
 {
     float64x2 a = q.a.eval();
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     return bit_xor(a, 0x8000000000000000);
 #elif SIMDPP_USE_NEON64
     return vnegq_f64(a);

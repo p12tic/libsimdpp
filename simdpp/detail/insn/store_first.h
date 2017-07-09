@@ -39,7 +39,8 @@ SIMDPP_INL void i_store_first(char* p, const uint8x16& a, unsigned n)
     uint8x16 b = load(p);
     b = blend(a, b, mask);
     store(p, b);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA
+    // for MSA we can't use __msa_sld_b because it does not work with shift==16
     static const uint8_t mask_d[32] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
                                        0,0,0,0,0,0,0,0,
@@ -99,7 +100,7 @@ SIMDPP_INL void i_store_first(char* p, const uint16x8& a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     i_store_first(p, (uint8x16)a, n*2);
 #endif
 }
@@ -125,7 +126,7 @@ SIMDPP_INL void i_store_first(char* p, const uint32x4& a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     i_store_first(p, (uint8x16)a, n*4);
 #endif
 }
@@ -165,6 +166,8 @@ SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
         uint64_t* q = reinterpret_cast<uint64_t*>(p);
         *q = vec_extract((__vector uint64_t) a, 0);
     }
+#elif SIMDPP_USE_MSA
+    i_store_first(p, uint8<16>(a), n*8);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_first(p, a, n);
 #endif
@@ -195,7 +198,7 @@ SIMDPP_INL void i_store_first(char* p, const uint64<8>& a, unsigned n)
 SIMDPP_INL void i_store_first(char* p, const float32x4& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON_NO_FLT_SP || SIMDPP_USE_MSA
     i_store_first(p, int32x4(a), n);
 #elif SIMDPP_USE_AVX && !SIMDPP_USE_AMD
     static const int32_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
@@ -261,6 +264,8 @@ SIMDPP_INL void i_store_first(char* p, const float64x2& a, unsigned n)
         double* q = reinterpret_cast<double*>(p);
         *q = vec_extract((__vector double) a, 0);
     }
+#elif SIMDPP_USE_MSA
+    i_store_first(p, (uint64x2)a, n);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::null::store_first(p, a, n);
 #endif

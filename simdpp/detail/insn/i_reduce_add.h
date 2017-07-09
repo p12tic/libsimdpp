@@ -70,6 +70,12 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8x16& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#elif SIMDPP_USE_MSA
+    uint16<8> s16 = __msa_hadd_u_h(a, a);
+    uint32<4> s32 = __msa_hadd_u_w(s16, s16);
+    s32 = (uint64<2>) __msa_hadd_u_d(s32, s32);
+    s32 = add(s32, move4_l<2>(s32));
+    return extract<0>(s32);
 #endif
 }
 
@@ -146,6 +152,16 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8<N>& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#elif SIMDPP_USE_MSA
+    uint16<8> r = make_zero();
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        uint16x8 sum = __msa_hadd_u_h(a.vec(j), a.vec(j));
+        r = add(r, sum);
+    }
+    uint32<4> s32 = __msa_hadd_u_w(r, r);
+    s32 = (uint64<2>) __msa_hadd_u_d(s32, s32);
+    s32 = add(s32, move4_l<2>(s32));
+    return extract<0>(s32);
 #endif
 }
 
@@ -177,6 +193,12 @@ SIMDPP_INL int16_t i_reduce_add(const int8x16& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#elif SIMDPP_USE_MSA
+    int16<8> s16 = __msa_hadd_s_h(a, a);
+    int32<4> s32 = __msa_hadd_s_w(s16, s16);
+    s32 = (int64<2>) __msa_hadd_s_d(s32, s32);
+    s32 = add(s32, move4_l<2>(s32));
+    return extract<0>(s32);
 #endif
 }
 
@@ -235,6 +257,16 @@ SIMDPP_INL uint16_t i_reduce_add(const int8<N>& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#elif SIMDPP_USE_MSA
+    int16<8> r = make_zero();
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        int16x8 sum = __msa_hadd_s_h(a.vec(j), a.vec(j));
+        r = add(r, sum);
+    }
+    int32<4> s32 = __msa_hadd_s_w(r, r);
+    s32 = (int64<2>) __msa_hadd_s_d(s32, s32);
+    s32 = add(s32, move4_l<2>(s32));
+    return extract<0>(s32);
 #endif
 }
 
@@ -273,6 +305,11 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16x8& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum) + 0x8000 * a.length;
+#elif SIMDPP_USE_MSA
+    uint32<4> s32 = __msa_hadd_u_w(a, a);
+    s32 = (uint64<2>) __msa_hadd_u_d(s32, s32);
+    s32 = add(s32, move4_l<2>(s32));
+    return extract<0>(s32);
 #endif
 }
 
@@ -363,6 +400,15 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16<N>& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum) + 0x8000 * a.length;
+#elif SIMDPP_USE_MSA
+    uint32<4> r = make_zero();
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        uint32<4> sum = __msa_hadd_u_w(a.vec(j), a.vec(j));
+        r = add(r, sum);
+    }
+    r = (uint64<2>) __msa_hadd_u_d(r, r);
+    r = add(r, move4_l<2>(r));
+    return extract<0>(r);
 #endif
 }
 
@@ -396,6 +442,11 @@ SIMDPP_INL int32_t i_reduce_add(const int16x8& a)
     sum = add(sum, move4_l<2>(sum));
     sum = add(sum, move4_l<1>(sum));
     return extract<0>(sum);
+#elif SIMDPP_USE_MSA
+    int32<4> s32 = __msa_hadd_s_w(a, a);
+    s32 = (int64<2>) __msa_hadd_s_d(s32, s32);
+    s32 = add(s32, move4_l<2>(s32));
+    return extract<0>(s32);
 #endif
 }
 
@@ -472,6 +523,15 @@ SIMDPP_INL int32_t i_reduce_add(const int16<N>& a)
         sum = vec_sum4s((__vector int16_t)a.vec(j), (__vector int32_t)sum);
     }
     return reduce_add(sum);
+#elif SIMDPP_USE_MSA
+    int32<4> r = make_zero();
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        int32<4> sum = __msa_hadd_s_w(a.vec(j), a.vec(j));
+        r = add(r, sum);
+    }
+    r = (int64<2>) __msa_hadd_s_d(r, r);
+    r = add(r, move4_l<2>(r));
+    return extract<0>(r);
 #endif
 }
 
@@ -485,6 +545,11 @@ SIMDPP_INL uint32_t i_reduce_add(const uint32x4& a)
         r += a.el(i);
     }
     return r;
+#elif SIMDPP_USE_MSA
+    uint32x4 sum = a;
+    sum = (uint64<2>) __msa_hadd_u_d(sum, sum);
+    sum = add(sum, move4_l<2>(sum));
+    return extract<0>(sum);
 #else
     uint32x4 sum = a;
     sum = add(sum, move4_l<2>(sum));
@@ -551,7 +616,7 @@ SIMDPP_INL uint64_t i_reduce_add(const uint64x2& a)
 #elif SIMDPP_USE_NEON
     uint64x1_t r = vadd_u64(vget_low_u64(a), vget_high_u64(a));
     return vget_lane_u64(r, 0);
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return extract<0>(a) + extract<1>(a);
 #endif
 }

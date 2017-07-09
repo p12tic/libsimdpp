@@ -96,6 +96,11 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_NEON_FLT_SP
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_MSA
+    #define SIMDPP_DISPATCH_$num$_NS_ID_MSA SIMDPP_INSN_ID_MSA
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_MSA
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_ALTIVEC
     #define SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC SIMDPP_INSN_ID_ALTIVEC
     #else
@@ -112,7 +117,7 @@ single_arch_template = '''
     #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_207
     #endif
 
-    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE19(arch,         $n$
+    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE20(arch,         $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NULL,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE3,                                   $n$
@@ -128,6 +133,7 @@ single_arch_template = '''
         SIMDPP_DISPATCH_$num$_NS_ID_XOP,                                    $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NEON,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NEON_FLT_SP,                            $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_MSA,                                    $n$
         SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC,                                $n$
         SIMDPP_DISPATCH_$num$_NS_ID_VSX_206,                                $n$
         SIMDPP_DISPATCH_$num$_NS_ID_VSX_207)

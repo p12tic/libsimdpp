@@ -38,7 +38,7 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
         r.el(i) = ix*(2.0f - ix*ia);
     }
     return r;
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     float32x4 r;
 
     r = mul(a, x);

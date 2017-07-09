@@ -51,6 +51,8 @@ SIMDPP_INL float32x4 i_to_float32(const int32x4& a)
     return vcvtq_f32_s32(a);
 #elif SIMDPP_USE_ALTIVEC
     return vec_ctf((__vector int32_t)a, 0);
+#elif SIMDPP_USE_MSA
+    return __msa_ffint_s_w(a);
 #endif
 }
 
@@ -109,6 +111,8 @@ SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
     hi = __builtin_vsx_xvcvdpsp((__vector double) a.vec(1));
     shuffle_mask = make_shuffle_bytes16_mask<0,2,4,6>(shuffle_mask);
     return shuffle_bytes16(lo, hi, shuffle_mask);
+#elif SIMDPP_USE_MSA
+    return __msa_fexdo_w(a.vec(0), a.vec(1));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
     r[0] = float(a.vec(0).el(0));

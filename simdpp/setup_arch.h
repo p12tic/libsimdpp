@@ -105,6 +105,11 @@
 #else
 #define SIMDPP_USE_VSX_207 0
 #endif
+#if SIMDPP_ARCH_PP_USE_MSA
+#define SIMDPP_USE_MSA 1
+#else
+#define SIMDPP_USE_MSA 0
+#endif
 
 // Generate SIMDPP_ARCH_NAMESPACE. It's a human-readable identifier depending
 // on the enabled instruction sets
@@ -198,14 +203,20 @@
 #else
 #define SIMDPP_NS_ID_VSX_207
 #endif
+#if SIMDPP_ARCH_PP_NS_USE_MSA
+#define SIMDPP_NS_ID_MSA SIMDPP_INSN_ID_MSA
+#else
+#define SIMDPP_NS_ID_MSA
+#endif
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE19(arch, \
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE20(arch, \
 	SIMDPP_NS_ID_NULL, SIMDPP_NS_ID_SSE2, SIMDPP_NS_ID_SSE3,                \
     SIMDPP_NS_ID_SSSE3, SIMDPP_NS_ID_SSE4_1, SIMDPP_NS_ID_AVX,              \
     SIMDPP_NS_ID_AVX2, SIMDPP_NS_ID_AVX512F, SIMDPP_NS_ID_AVX512BW,         \
     SIMDPP_NS_ID_AVX512DQ, SIMDPP_NS_ID_FMA3, SIMDPP_NS_ID_FMA4,            \
     SIMDPP_NS_ID_XOP, SIMDPP_NS_ID_NEON, SIMDPP_NS_ID_NEON_FLT_SP,          \
-    SIMDPP_NS_ID_ALTIVEC, SIMDPP_NS_ID_VSX_206, SIMDPP_NS_ID_VSX_207)
+    SIMDPP_NS_ID_ALTIVEC, SIMDPP_NS_ID_VSX_206, SIMDPP_NS_ID_VSX_207,       \
+    SIMDPP_NS_ID_MSA)
 
 // Include headers relevant for the enabled instruction sets.
 #if SIMDPP_USE_SSE2
@@ -263,6 +274,10 @@
     #undef bool
 #endif
 
+#if SIMDPP_USE_MSA
+    #include <msa.h>
+#endif
+
 // helper macros
 #if __amd64__ || __x86_64__ || _M_AMD64 || __aarch64__ || __powerpc64__
 #define SIMDPP_64_BITS 1
@@ -302,6 +317,8 @@
 #define SIMDPP_ARM 1
 #elif __powerpc__ || __powerpc64__
 #define SIMDPP_PPC 1
+#elif __mips__
+#define SIMDPP_MIPS 1
 #endif
 
 /** @def SIMDPP_ARCH_NAME

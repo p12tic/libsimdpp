@@ -38,6 +38,8 @@ public:
     using native_type = float32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector float;
+#elif SIMDPP_USE_MSA
+    using native_type = v4f32;
 #else // NULL && (NEON && !FLT_SP)
     using native_type = detail::array<float, 4>;
 #endif
@@ -106,6 +108,8 @@ public:
     using native_type = float32x4_t;
 #elif SIMDPP_USE_ALTIVEC
     using native_type = __vector float;
+#elif SIMDPP_USE_MSA
+    using native_type = v4f32;
 #else // NULL || (NEON && !FLT_SP)
     using native_type = detail::array<bool, 4>;
 #endif

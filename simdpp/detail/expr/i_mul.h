@@ -40,6 +40,8 @@ uint16<8> expr_eval(const expr_mul_lo<uint16<8,E1>,
 #elif SIMDPP_USE_ALTIVEC
     return vec_mladd((__vector uint16_t)a, (__vector uint16_t)b,
                      (__vector uint16_t)(uint16x8) make_zero());
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_mulv_h((v8i16)(v8u16) a, (v8i16)(v8u16) b);
 #endif
 }
 
@@ -94,7 +96,7 @@ int16<8> expr_eval(const expr_mul_hi<int16<8,E1>,
     int32x4 lo = vmull_s16(vget_low_s16(a), vget_low_s16(b));
     int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
     return unzip8_hi(int16x8(lo), int16x8(hi));
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     int16<16> ab;
     ab = mull(a, b);
     return unzip8_lo(ab.vec(0), ab.vec(1));
@@ -152,7 +154,7 @@ uint16<8> expr_eval(const expr_mul_hi<uint16<8,E1>,
     uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
     uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
     return unzip8_hi(uint16x8(lo), uint16x8(hi));
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16<16> ab;
     ab = mull(a, b);
     return unzip8_lo(ab.vec(0), ab.vec(1));
@@ -240,6 +242,8 @@ uint32<4> expr_eval(const expr_mul_lo<uint32<4,E1>,
     h_ab = shift_l<16>(add(h_ab, h_ba));
     h_ab = add(h_ab, l_ab);
     return h_ab;
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_mulv_w((v4i32)(v4u32) a, (v4i32)(v4u32) b);
 #endif
 }
 

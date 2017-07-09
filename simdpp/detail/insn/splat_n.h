@@ -77,6 +77,8 @@ uint8x16 i_splat16(const uint8x16& ca)
     }
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector uint8_t)a, s);
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_splat_b((v16i8)(v16u8) a, s);
 #endif
 }
 
@@ -144,6 +146,8 @@ uint16x8 i_splat8(const uint16x8& a)
     }
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector uint16_t)a, s);
+#elif SIMDPP_USE_MSA
+    return (v8u16) __msa_splat_h((v8i16)(v8u16) a, s);
 #endif
 }
 
@@ -214,6 +218,8 @@ uint32x4 i_splat4(const uint32x4& a)
     }
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector uint32_t)a, s);
+#elif SIMDPP_USE_MSA
+    return (v4u32) __msa_splat_w((v4i32)(v4u32) a, s);
 #endif
 }
 
@@ -264,6 +270,8 @@ uint64x2 i_splat2(const uint64x2& a)
     return (uint64x2_t) vdupq_lane_u64(z, 0);
 #elif SIMDPP_USE_VSX_207
     return vec_splat((__vector uint64_t)a, s);
+#elif SIMDPP_USE_MSA
+    return (v2u64) __msa_splat_d((v2i64)(v2u64) a, s);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::splat<s>(a);
 #endif
@@ -314,6 +322,8 @@ float32x4 i_splat4(const float32x4& a)
         float32x2_t z = vget_high_f32(a);
         return (float32x4_t) vdupq_lane_f32(z, (s < 2 ? 0 : s-2) );
     }
+#elif SIMDPP_USE_MSA
+    return (v4f32) __msa_splat_w((v4i32)(v4f32) a, s);
 #elif SIMDPP_USE_ALTIVEC
     return vec_splat((__vector float)a, s);
 #endif
@@ -354,6 +364,8 @@ float64x2 i_splat2(const float64x2& a)
     return permute2<s,s>(a);
 #elif SIMDPP_USE_VSX_206
     return vec_splat((__vector double)a, s);
+#elif SIMDPP_USE_MSA
+    return (v2f64) __msa_splat_d((v2i64)(v2f64) a, s);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     return detail::null::splat<s>(a);
 #endif
