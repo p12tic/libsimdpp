@@ -42,6 +42,21 @@ template<unsigned N>
 struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
 #endif
 
+template<class R, class T>
+void bit_cast_impl(const T& t, R& r)
+{
+    r = detail::cast_wrapper<is_mask<R>::value,
+                             is_mask<T>::value,
+                             detail::cast_mask_override<R,T>::value>::template run<R>(t);
+}
+
+template<class T>
+void bit_cast_impl(const T& t, T& r)
+{
+    // Simple implementation for the common case
+    r = t;
+}
+
 } // namespace detail
 
 /** Casts between unrelated types. No changes to the stored values are
@@ -63,9 +78,9 @@ R bit_cast(const T& t)
 {
     static_assert(is_vector<R>::value == is_vector<T>::value,
                   "bit_cast can't convert between vector and non-vector types");
-    return detail::cast_wrapper<is_mask<R>::value,
-                                is_mask<T>::value,
-                                detail::cast_mask_override<R,T>::value>::template run<R>(t);
+    R r;
+    detail::bit_cast_impl(t, r);
+    return r;
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
