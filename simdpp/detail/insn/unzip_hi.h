@@ -35,7 +35,13 @@ SIMDPP_INL uint8x16 i_unzip16_hi(const uint8x16& ca, const uint8x16& cb)
 #elif SIMDPP_USE_NEON
     return vuzpq_u8(a, b).val[1];
 #elif SIMDPP_USE_ALTIVEC
+#if SIMDPP_BIG_ENDIAN
     return vec_pack((__vector uint16_t)(__vector uint8_t)a, (__vector uint16_t)(__vector uint8_t)b);
+#else
+    uint8x16 mask = make_shuffle_bytes16_mask<1,3,5,7,9,11,13,15,
+                                              17,19,21,23,25,27,29,31>(mask);
+    return shuffle_bytes16(a, b, mask);
+#endif
 #endif
 }
 
@@ -71,7 +77,12 @@ SIMDPP_INL uint16x8 i_unzip8_hi(const uint16x8& ca, const uint16x8& cb)
 #elif SIMDPP_USE_NEON
     return vuzpq_u16(a, b).val[1];
 #elif SIMDPP_USE_ALTIVEC
+#if SIMDPP_BIG_ENDIAN
     return vec_pack((__vector uint32_t)(__vector uint16_t)a, (__vector uint32_t)(__vector uint16_t)b);
+#else
+    uint16x8 mask = make_shuffle_bytes16_mask<1,3,5,7,9,11,13,15>(mask);
+    return shuffle_bytes16(a, b, mask);
+#endif
 #endif
 }
 
