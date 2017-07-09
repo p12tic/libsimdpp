@@ -33,11 +33,19 @@ SIMDPP_INL void i_store_first(char* p, const uint8x16& a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_first(p, a, n);
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN
     uint8x16 mask = vec_lvsr(n, (const uint8_t*)NULL);
     mask = cmp_lt(mask, 0x10);
     uint8x16 b = load(p);
     b = blend(a, b, mask);
+    store(p, b);
+#elif SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN
+    uint8<16> mask = make_ones();
+    uint8<16> shift = vec_splats((unsigned char)(n << 3));
+    mask = vec_slo((__vector uint8_t)mask, (__vector uint8_t)shift);
+
+    uint8x16 b = load(p);
+    b = blend(b, a, mask);
     store(p, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA
     // for MSA we can't use __msa_sld_b because it does not work with shift==16

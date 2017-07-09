@@ -36,11 +36,19 @@ SIMDPP_INL void i_store_last(char* p, const uint8x16& a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store_last(p, a, n);
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN
     uint8x16 mask = vec_lvsl(n, (const uint8_t*)NULL);
     mask = cmp_gt(mask, 0x0f);
     uint8x16 b = load(p);
     b = blend(a, b, mask);
+    store(p, b);
+#elif SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN
+    uint8<16> mask = make_ones();
+    uint8<16> shift = vec_splats((unsigned char)(n << 3));
+    mask = vec_sro((__vector uint8_t)mask, (__vector uint8_t)shift);
+
+    uint8x16 b = load(p);
+    b = blend(b, a, mask);
     store(p, b);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     static const uint8_t mask_d[32] = {0,0,0,0,0,0,0,0,
