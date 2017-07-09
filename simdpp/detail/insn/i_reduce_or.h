@@ -49,6 +49,15 @@ SIMDPP_INL uint8_t i_reduce_or(const uint8x32& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8_t i_reduce_or(const uint8<64>& a)
+{
+    uint8<32> r = detail::extract256<0>(a);
+    r = bit_or(r, detail::extract256<1>(a));
+    return i_reduce_or(r);
+}
+#endif
+
 template<unsigned N>
 SIMDPP_INL uint8_t i_reduce_or(const uint8<N>& a)
 {
@@ -92,6 +101,15 @@ SIMDPP_INL uint16_t i_reduce_or(const uint16x16& a)
 {
     uint16x8 r = detail::extract128<0>(a);
     r = bit_or(r, detail::extract128<1>(a));
+    return i_reduce_or(r);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16_t i_reduce_or(const uint16<32>& a)
+{
+    uint16<16> r = detail::extract256<0>(a);
+    r = bit_or(r, detail::extract256<1>(a));
     return i_reduce_or(r);
 }
 #endif

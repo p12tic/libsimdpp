@@ -72,6 +72,20 @@ SIMDPP_INL uint8x32 i_shift_l(const uint8x32& a, unsigned count)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_shift_l(const uint8<64>& a, unsigned count)
+{
+    uint16<32> mask, a16;
+    uint16_t mask1 = (0x00ff >> (8-count)) << 8;
+
+    a16 = a;
+    mask = splat(mask1);
+    a16 = shift_l(a16, count);
+    a16 = bit_andnot(a16, mask);
+    return uint8<64>(a16);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint16x8 i_shift_l(const uint16x8& a, unsigned count)
@@ -100,6 +114,13 @@ SIMDPP_INL uint16x16 i_shift_l(const uint16x16& a, unsigned count)
 #else
     return _mm256_sll_epi16(a, _mm_cvtsi32_si128(count));
 #endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<32> i_shift_l(const uint16<32>& a, unsigned count)
+{
+    return _mm512_sll_epi16(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -220,7 +241,15 @@ uint8<32> i_shift_l(const uint8<32>& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     return sse_shift_l_8<count>(a);
+}
+#endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned count> SIMDPP_INL
+uint8<64> i_shift_l(const uint8<64>& a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    return sse_shift_l_8<count>(a);
 }
 #endif
 
@@ -248,6 +277,15 @@ uint16x16 i_shift_l(const uint16x16& a)
 {
     static_assert(count <= 16, "Shift out of bounds");
     return _mm256_slli_epi16(a, count);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned count> SIMDPP_INL
+uint16<32> i_shift_l(const uint16<32>& a)
+{
+    static_assert(count < 16, "Shift out of bounds");
+    return _mm512_slli_epi16(a, count);
 }
 #endif
 

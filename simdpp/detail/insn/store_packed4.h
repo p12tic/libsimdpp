@@ -60,6 +60,14 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_store_packed4(char* p,
+                                const uint8<64>& a, const uint8<64>& b, const uint8<64>& c, const uint8<64>& d)
+{
+    v512_store_pack4(p, a, b, c, d);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_packed4(char* p,
@@ -85,6 +93,14 @@ SIMDPP_INL void i_store_packed4(char* p,
                                 const uint16x16& a, const uint16x16& b, const uint16x16& c, const uint16x16& d)
 {
     v256_store_pack4(p, a, b, c, d);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_store_packed4(char* p,
+                                const uint16<32>& a, const uint16<32>& b, const uint16<32>& c, const uint16<32>& d)
+{
+    v512_store_pack4(p, a, b, c, d);
 }
 #endif
 

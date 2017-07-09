@@ -35,7 +35,7 @@ Compiler and instruction set support
 The library supports the following architectures and instruction sets:
 
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
-XOP
+ AVX-512BW, XOP
  - ARM, ARM64: NEON
  - PowerPC: Altivec
 

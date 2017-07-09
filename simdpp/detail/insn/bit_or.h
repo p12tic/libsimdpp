@@ -44,6 +44,13 @@ SIMDPP_INL uint8<32> i_bit_or(const uint8<32>& a, const uint8<32>& b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_bit_or(const uint8<64>& a, const uint8<64>& b)
+{
+    return _mm512_or_si512(a, b);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 // mask_int8, mask_int8
 SIMDPP_INL mask_int8<16> i_bit_or(const mask_int8<16>& a, const mask_int8<16>& b)
@@ -62,6 +69,20 @@ SIMDPP_INL mask_int8<32> i_bit_or(const mask_int8<32>& a, const mask_int8<32>& b
 }
 #endif
 
+#if SIMDPP_USE_AVX512
+SIMDPP_INL mask_int8<32> i_bit_or(const mask_int8<32>& a, const mask_int8<32>& b)
+{
+    return _mm512_kor(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int8<64> i_bit_or(const mask_int8<64>& a, const mask_int8<64>& b)
+{
+    return _mm512_kor(a, b);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 // uint16, uint16
 SIMDPP_INL uint16<8> i_bit_or(const uint16<8>& a, const uint16<8>& b)
@@ -73,6 +94,13 @@ SIMDPP_INL uint16<8> i_bit_or(const uint16<8>& a, const uint16<8>& b)
 SIMDPP_INL uint16<16> i_bit_or(const uint16<16>& a, const uint16<16>& b)
 {
     return _mm256_or_si256(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<32> i_bit_or(const uint16<32>& a, const uint16<32>& b)
+{
+    return _mm512_or_si512(a, b);
 }
 #endif
 
@@ -91,6 +119,13 @@ SIMDPP_INL mask_int16<8> i_bit_or(const mask_int16<8>& a, const mask_int16<8>& b
 SIMDPP_INL mask_int16<16> i_bit_or(const mask_int16<16>& a, const mask_int16<16>& b)
 {
     return (mask_int16<16>) (uint16<16>) i_bit_or(uint16<16>(a), uint16<16>(b));
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int16<32> i_bit_or(const mask_int16<32>& a, const mask_int16<32>& b)
+{
+    return _mm512_kor(a, b);
 }
 #endif
 

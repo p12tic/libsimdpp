@@ -46,6 +46,13 @@ SIMDPP_INL mask_int8x32 i_cmp_gt(const int8x32& a, const int8x32& b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int8<64> i_cmp_gt(const int8<64>& a, const int8<64>& b)
+{
+    return _mm512_cmpgt_epi8_mask(a, b);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int8x16 i_cmp_gt(const uint8x16& ca, const uint8x16& cb)
@@ -76,6 +83,13 @@ SIMDPP_INL mask_int8x32 i_cmp_gt(const uint8x32& ca, const uint8x32& cb)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int8<64> i_cmp_gt(const uint8<64>& a, const uint8<64>& b)
+{
+    return _mm512_cmpgt_epu8_mask(a, b);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int16x8 i_cmp_gt(const int16x8& a, const int16x8& b)
@@ -95,6 +109,13 @@ SIMDPP_INL mask_int16x8 i_cmp_gt(const int16x8& a, const int16x8& b)
 SIMDPP_INL mask_int16x16 i_cmp_gt(const int16x16& a, const int16x16& b)
 {
     return _mm256_cmpgt_epi16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int16<32> i_cmp_gt(const int16<32>& a, const int16<32>& b)
+{
+    return _mm512_cmpgt_epi16_mask(a, b);
 }
 #endif
 
@@ -125,6 +146,13 @@ SIMDPP_INL mask_int16x16 i_cmp_gt(const uint16x16& ca, const uint16x16& cb)
     a = bit_xor(a, 0x8000); // sub
     b = bit_xor(b, 0x8000); // sub
     return _mm256_cmpgt_epi16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int16<32> i_cmp_gt(const uint16<32>& a, const uint16<32>& b)
+{
+    return _mm512_cmplt_epu16_mask(a, b);
 }
 #endif
 

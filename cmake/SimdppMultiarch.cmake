@@ -293,7 +293,7 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
             volatile char data[64];
             __m512 align;
         };
-        __m512 a = _mm512_load_ps((float*)a);
+        __m512 a = _mm512_load_ps((float*)data);
         a = _mm512_add_ps(a, a);
         __m512d d = _mm512_castps_pd(a); // weed out GCC < 5.0
         _mm512_store_ps((float*)data, a);
@@ -302,6 +302,27 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         __m512i b = _mm512_load_epi32((void*)data);
         b = _mm512_or_epi32(b, b);
         _mm512_store_epi32((void*)data, b);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "X86_AVX512BW")
+if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
+    set(SIMDPP_X86_AVX512BW_CXX_FLAGS "-mavx512bw")
+    #unsupported on MSVC
+endif()
+set(SIMDPP_X86_AVX512BW_DEFINE "SIMDPP_ARCH_X86_AVX512BW")
+set(SIMDPP_X86_AVX512BW_SUFFIX "-x86_avx512bw")
+set(SIMDPP_X86_AVX512BW_TEST_CODE
+    "#include <immintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[64];
+            __m512i align;
+        };
+        __m512i one = _mm512_load_si512((void*)a);
+        one = _mm512_add_epi16(one, one); // only in AVX-512BW
+        _mm512_store_si512((void*)a, one);
     }"
 )
 
@@ -440,7 +461,8 @@ endfunction()
 #
 #   The following identifiers are currently supported:
 #   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1, X86_AVX, X86_AVX2, X86_FMA3,
-#   X86_FMA4, X86_XOP, ARM_NEON, ARM_NEON_FLT_SP, ARM64_NEON
+#   X86_FMA4, X86_AVX512F, X86_AVX512BW, X86_XOP, ARM_NEON, ARM_NEON_FLT_SP,
+#   ARM64_NEON
 #
 function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
@@ -546,6 +568,9 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
         endif()
         if(DEFINED ARCH_SUPPORTED_X86_AVX512F)
             list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3")
+            if(DEFINED ARCH_SUPPORTED_X86_AVX512BW)
+                list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_AVX512BW")
+            endif()
         endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_FMA4)
@@ -556,6 +581,9 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_AVX512F)
         list(APPEND ALL_ARCHS "X86_AVX512F")
+        if(DEFINED ARCH_SUPPORTED_X86_AVX512BW)
+            list(APPEND ALL_ARCHS "X86_AVX512F,X86_AVX512BW")
+        endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_XOP)
         list(APPEND ALL_ARCHS "X86_XOP")

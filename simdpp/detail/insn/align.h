@@ -69,6 +69,14 @@ uint8x32 i_align16(const uint8x32& lower, const uint8x32& upper)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned shift> SIMDPP_INL
+uint8<64> i_align16(const uint8<64>& lower, const uint8<64>& upper)
+{
+    return _mm512_alignr_epi8(upper, lower, shift);
+}
+#endif
+
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_align16(const uint8<N>& lower, const uint8<N>& upper)
 {

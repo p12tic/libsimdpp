@@ -208,6 +208,37 @@ void i_make_const(uint8<32>& v, const expr_vec_make_const<VE,N>& e, unsigned off
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint32_t make_uint32_uint8(uint8_t a1, uint8_t a2, uint8_t a3, uint8_t a4)
+{
+    return (a1 & 0xff) | ((a2 & 0xff) << 8) | ((a3 & 0xff) << 16) | ((a4 & 0xff) << 24);
+}
+
+template<class VE, unsigned N> SIMDPP_INL
+void i_make_const(uint8<64>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
+{
+    v = _mm512_set_epi32(
+            make_uint32_uint8(e.val(off+60), e.val(off+61), e.val(off+62), e.val(off+63)),
+            make_uint32_uint8(e.val(off+56), e.val(off+57), e.val(off+58), e.val(off+59)),
+            make_uint32_uint8(e.val(off+52), e.val(off+53), e.val(off+54), e.val(off+55)),
+            make_uint32_uint8(e.val(off+48), e.val(off+49), e.val(off+50), e.val(off+51)),
+            make_uint32_uint8(e.val(off+44), e.val(off+45), e.val(off+46), e.val(off+47)),
+            make_uint32_uint8(e.val(off+40), e.val(off+41), e.val(off+32), e.val(off+43)),
+            make_uint32_uint8(e.val(off+36), e.val(off+37), e.val(off+38), e.val(off+39)),
+            make_uint32_uint8(e.val(off+32), e.val(off+33), e.val(off+34), e.val(off+35)),
+            make_uint32_uint8(e.val(off+28), e.val(off+29), e.val(off+30), e.val(off+31)),
+            make_uint32_uint8(e.val(off+24), e.val(off+25), e.val(off+26), e.val(off+27)),
+            make_uint32_uint8(e.val(off+20), e.val(off+21), e.val(off+22), e.val(off+23)),
+            make_uint32_uint8(e.val(off+16), e.val(off+17), e.val(off+18), e.val(off+19)),
+            make_uint32_uint8(e.val(off+12), e.val(off+13), e.val(off+14), e.val(off+15)),
+            make_uint32_uint8(e.val(off+8), e.val(off+9), e.val(off+10), e.val(off+11)),
+            make_uint32_uint8(e.val(off+4), e.val(off+5), e.val(off+6), e.val(off+7)),
+            make_uint32_uint8(e.val(off+0), e.val(off+1), e.val(off+2), e.val(off+3))
+        );
+}
+#endif
+
+
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_NEON
@@ -269,6 +300,35 @@ void i_make_const(uint16<16>& v, const expr_vec_make_const<VE,N>& e, unsigned of
                          e.val(off+11), e.val(off+10), e.val(off+9),  e.val(off+8),
                          e.val(off+7),  e.val(off+6),  e.val(off+5),  e.val(off+4),
                          e.val(off+3),  e.val(off+2),  e.val(off+1),  e.val(off+0));
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint32_t make_uint32_uint16(uint16_t a1, uint16_t a2)
+{
+    return (a1 & 0xffff) | ((a2 & 0xffff) << 16);
+}
+
+template<class VE, unsigned N> SIMDPP_INL
+void i_make_const(uint16<32>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
+{
+    v = _mm512_set_epi32(
+            make_uint32_uint16(e.val(off+30), e.val(off+31)),
+            make_uint32_uint16(e.val(off+28), e.val(off+29)),
+            make_uint32_uint16(e.val(off+26), e.val(off+27)),
+            make_uint32_uint16(e.val(off+24), e.val(off+25)),
+            make_uint32_uint16(e.val(off+22), e.val(off+23)),
+            make_uint32_uint16(e.val(off+20), e.val(off+21)),
+            make_uint32_uint16(e.val(off+18), e.val(off+19)),
+            make_uint32_uint16(e.val(off+16), e.val(off+17)),
+            make_uint32_uint16(e.val(off+14), e.val(off+15)),
+            make_uint32_uint16(e.val(off+12), e.val(off+13)),
+            make_uint32_uint16(e.val(off+10), e.val(off+11)),
+            make_uint32_uint16(e.val(off+8), e.val(off+9)),
+            make_uint32_uint16(e.val(off+6), e.val(off+7)),
+            make_uint32_uint16(e.val(off+4), e.val(off+5)),
+            make_uint32_uint16(e.val(off+2), e.val(off+3)),
+            make_uint32_uint16(e.val(off+0), e.val(off+1)));
 }
 #endif
 

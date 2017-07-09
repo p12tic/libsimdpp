@@ -104,6 +104,11 @@ SIMDPP_INL bool i_test_bits_any(const float32<16>& a) { return i_test_bits_any(u
 SIMDPP_INL bool i_test_bits_any(const float64<8>& a) { return i_test_bits_any(uint32<16>(a)); }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL bool i_test_bits_any(const uint8<64>& a) { return i_test_bits_any(uint32<16>(a)); }
+SIMDPP_INL bool i_test_bits_any(const uint16<32>& a) { return i_test_bits_any(uint32<16>(a)); }
+#endif
+
 template<unsigned N, class V>
 SIMDPP_INL bool i_test_bits_any(const any_vec<N,V>& a)
 {

@@ -45,6 +45,8 @@ enum class Arch : std::uint32_t {
     X86_XOP = 1 << 9,
     /// Indicates x86 AVX-512F suppotr
     X86_AVX512F = 1 << 10,
+    /// Indicates x86 AVX-512BW suppotr
+    X86_AVX512BW = 1 << 11,
 
     /// Indicates ARM NEON support (SP and DP floating-point math is executed
     /// on VFP)

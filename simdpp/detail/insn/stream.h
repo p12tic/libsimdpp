@@ -44,6 +44,14 @@ SIMDPP_INL void i_stream(char* p, const uint8<32>& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_stream(char* p, const uint8<64>& a)
+{
+    p = detail::assume_aligned(p, 64);
+    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_stream(char* p, const uint16<8>& a)
@@ -55,6 +63,14 @@ SIMDPP_INL void i_stream(char* p, const uint16<8>& a)
 SIMDPP_INL void i_stream(char* p, const uint16<16>& a)
 {
     i_stream(p, uint8<32>(a));
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_stream(char* p, const uint16<32>& a)
+{
+    p = detail::assume_aligned(p, 64);
+    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a);
 }
 #endif
 

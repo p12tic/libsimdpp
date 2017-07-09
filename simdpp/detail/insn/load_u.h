@@ -148,6 +148,18 @@ SIMDPP_INL void i_load_u(float64x4& a, const char* p)
     a = _mm256_loadu_pd(reinterpret_cast<const double*>(p));
 }
 #endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_load_u(uint8<64>& a, const char* p)
+{
+    a = _mm512_loadu_si512(p);
+}
+SIMDPP_INL void i_load_u(uint16<32>& a,  const char* p)
+{
+    a = _mm512_loadu_si512(p);
+}
+#endif
+
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load_u(uint32<16>& a, const char* p)
 {

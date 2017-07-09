@@ -92,6 +92,20 @@ SIMDPP_INL uint8x32 i_shuffle_bytes16(const uint8x32& a, const uint8x32& b, cons
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_shuffle_bytes16(const uint8<64>& a, const uint8<64>& b, const uint8<64>& mask)
+{
+    uint8<64> sel_mask, ai, bi, r;
+    sel_mask = make_uint(0x10);
+    __mmask64 sel = _mm512_test_epi8_mask(mask, sel_mask);
+
+    ai = _mm512_shuffle_epi8(a, mask);
+    bi = _mm512_shuffle_epi8(b, mask);
+    r = _mm512_mask_blend_epi8(sel, ai, bi);
+    return r;
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_shuffle_bytes16(const uint8<N>& a, const uint8<N>& b, const uint8<N>& mask)
 {

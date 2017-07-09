@@ -28,6 +28,14 @@ SIMDPP_INL void i_split(const uint8<32>& a,  uint8<16>& r1, uint8<16>& r2)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_split(const uint8<64>& a, uint8<32>& r1, uint8<32>& r2)
+{
+    r1 = _mm512_castsi512_si256(a);
+    r2 = _mm512_extracti64x4_epi64(a, 1);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
@@ -35,6 +43,14 @@ SIMDPP_INL void i_split(const uint16<16>& a, uint16<8>& r1, uint16<8>& r2)
 {
     r1 = _mm256_castsi256_si128(a);
     r2 = _mm256_extracti128_si256(a, 1);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_split(const uint16<32>& a, uint16<16>& r1, uint16<16>& r2)
+{
+    r1 = _mm512_castsi512_si256(a);
+    r2 = _mm512_extracti64x4_epi64(a, 1);
 }
 #endif
 

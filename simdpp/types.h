@@ -18,8 +18,10 @@
 #include <simdpp/types/any.h>
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int8x32.h>
+#include <simdpp/types/int8x64.h>
 #include <simdpp/types/int16x8.h>
 #include <simdpp/types/int16x16.h>
+#include <simdpp/types/int16x32.h>
 #include <simdpp/types/int32x4.h>
 #include <simdpp/types/int32x8.h>
 #include <simdpp/types/int32x16.h>

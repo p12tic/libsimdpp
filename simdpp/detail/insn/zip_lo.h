@@ -44,6 +44,13 @@ SIMDPP_INL uint8x32 i_zip16_lo(const uint8x32& a, const uint8x32& b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_zip16_lo(const uint8<64>& a, const uint8<64>& b)
+{
+    return _mm512_unpacklo_epi8(a, b);
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_zip16_lo(const uint8<N>& a, const uint8<N>& b)
 {
@@ -69,6 +76,13 @@ SIMDPP_INL uint16x8 i_zip8_lo(const uint16x8& a, const uint16x8& b)
 SIMDPP_INL uint16x16 i_zip8_lo(const uint16x16& a, const uint16x16& b)
 {
     return _mm256_unpacklo_epi16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<32> i_zip8_lo(const uint16<32>& a, const uint16<32>& b)
+{
+    return _mm512_unpacklo_epi16(a, b);
 }
 #endif
 

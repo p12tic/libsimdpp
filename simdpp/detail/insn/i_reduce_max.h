@@ -52,6 +52,15 @@ SIMDPP_INL uint8_t i_reduce_max(const uint8<32>& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8_t i_reduce_max(const uint8<64>& a)
+{
+    uint8<32> r = detail::extract256<0>(a);
+    r = max(r, detail::extract256<1>(a));
+    return i_reduce_max(r);
+}
+#endif
+
 template<unsigned N>
 SIMDPP_INL uint8_t i_reduce_max(const uint8<N>& a)
 {
@@ -174,6 +183,15 @@ SIMDPP_INL uint16_t i_reduce_max(const uint16x16& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16_t i_reduce_max(const uint16<32>& a)
+{
+    uint16<16> r = detail::extract256<0>(a);
+    r = max(r, detail::extract256<1>(a));
+    return i_reduce_max(r);
+}
+#endif
+
 template<unsigned N>
 SIMDPP_INL uint16_t i_reduce_max(const uint16<N>& a)
 {
@@ -225,6 +243,15 @@ SIMDPP_INL int16_t i_reduce_max(const int16x16& a)
 {
     int16x8 r = detail::extract128<0>(a);
     r = max(r, detail::extract128<1>(a));
+    return i_reduce_max(r);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int16_t i_reduce_max(const int16<32>& a)
+{
+    int16<16> r = detail::extract256<0>(a);
+    r = max(r, detail::extract256<1>(a));
     return i_reduce_max(r);
 }
 #endif

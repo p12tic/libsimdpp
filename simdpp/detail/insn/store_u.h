@@ -138,6 +138,18 @@ SIMDPP_INL void i_store_u(char* p, const float64x4& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_store_u(char* p, const uint8<64>& a)
+{
+    _mm512_storeu_si512(reinterpret_cast<__m512i*>(p), a);
+}
+
+SIMDPP_INL void i_store_u(char* p, const uint16<32>& a)
+{
+    _mm512_storeu_si512(reinterpret_cast<__m512i*>(p), a);
+}
+#endif
+
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_store_u(char* p, const uint32<16>& a)
 {

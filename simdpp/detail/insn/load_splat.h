@@ -42,6 +42,13 @@ SIMDPP_INL void i_load_splat(uint8x32& v, const void* p0)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_load_splat(uint8<64>& v, const void* p0)
+{
+    i_set_splat(v, *reinterpret_cast<const uint8_t*>(p0));
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_splat(uint16x8& v, const void* p0)
@@ -61,6 +68,13 @@ SIMDPP_INL void i_load_splat(uint16x8& v, const void* p0)
 
 #if SIMDPP_USE_AVX2
 SIMDPP_INL void i_load_splat(uint16x16& v, const void* p0)
+{
+    i_set_splat(v, *reinterpret_cast<const uint16_t*>(p0));
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_load_splat(uint16<32>& v, const void* p0)
 {
     i_set_splat(v, *reinterpret_cast<const uint16_t*>(p0));
 }

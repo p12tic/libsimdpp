@@ -55,6 +55,13 @@ SIMDPP_INL void i_load_packed2(uint8x32& a, uint8x32& b, const char* p)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_load_packed2(uint8<64>& a, uint8<64>& b, const char* p)
+{
+    v512_load_packed2(a, b, p);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_load_packed2(uint16x8& a, uint16x8& b, const char* p)
@@ -75,6 +82,13 @@ SIMDPP_INL void i_load_packed2(uint16x8& a, uint16x8& b, const char* p)
 SIMDPP_INL void i_load_packed2(uint16x16& a, uint16x16& b, const char* p)
 {
     v256_load_packed2(a, b, p);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_load_packed2(uint16<32>& a, uint16<32>& b, const char* p)
+{
+    v512_load_packed2(a, b, p);
 }
 #endif
 

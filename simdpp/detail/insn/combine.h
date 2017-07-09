@@ -30,6 +30,17 @@ uint8<32> i_combine(const uint8<16>& a, const uint8<16>& b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<class V = void> SIMDPP_INL
+uint8<64> i_combine(const uint8<32>& a, const uint8<32>& b)
+{
+    uint8<64> r;
+    r = _mm512_castsi256_si512(a);
+    r = _mm512_inserti64x4(r, b, 1);
+    return r;
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
@@ -39,6 +50,17 @@ uint16<16> i_combine(const uint16<8>& a, const uint16<8>& b)
     uint16<16> r;
     r = _mm256_castsi128_si256(a);
     r = _mm256_inserti128_si256(r, b, 1);
+    return r;
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<class V = void> SIMDPP_INL
+uint16<32> i_combine(const uint16<16>& a, const uint16<16>& b)
+{
+    uint16<32> r;
+    r = _mm512_castsi256_si512(a);
+    r = _mm512_inserti64x4(r, b, 1);
     return r;
 }
 #endif

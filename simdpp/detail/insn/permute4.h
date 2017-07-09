@@ -65,6 +65,18 @@ uint16x16 i_permute4(const uint16x16& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+uint16<32> i_permute4(const uint16<32>& a)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    uint16<32> r = a;
+    r = _mm512_shufflelo_epi16(r, SIMDPP_SHUFFLE_MASK_4x4(s0, s1, s2, s3));
+    r = _mm512_shufflehi_epi16(r, SIMDPP_SHUFFLE_MASK_4x4(s0, s1, s2, s3));
+    return r;
+}
+#endif
+
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_INL
 uint16<N> i_permute4(const uint16<N>& a)
 {

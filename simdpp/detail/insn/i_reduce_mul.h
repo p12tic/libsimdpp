@@ -22,10 +22,19 @@
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
+
+// forward declarations
+template<unsigned N, class E> SIMDPP_INL
+int32_t reduce_mul(const int16<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+uint32_t reduce_mul(const uint16<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+int32_t reduce_mul(const int32<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+uint32_t reduce_mul(const uint32<N,E>& a);
+
 namespace detail {
 namespace insn {
-
-// -----------------------------------------------------------------------------
 
 SIMDPP_INL uint32_t i_reduce_mul(const uint16x8& a)
 {
@@ -78,6 +87,21 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16x16& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint32_t i_reduce_mul(const uint16<32>& a)
+{
+    uint32<16> ca = (uint32<16>) a;
+    // shift data zeroing out bits
+    uint32<16> al = shift_r<16>(ca);
+    uint32<16> ah = shift_l<16>(ca);
+    // due to zeroing bits in previous steps, the result can be OR'ed
+    uint32<16> lo = _mm512_mullo_epi16(ca, al);
+    uint32<16> hi = _mm512_mulhi_epu16(ca, ah);
+    uint32<16> r = bit_or(lo, hi);
+    return reduce_add(r);
+}
+#endif
+
 template<unsigned N>
 SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
 {
@@ -89,6 +113,21 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
         }
     }
     return r;
+#elif SIMDPP_USE_AVX512BW
+    uint32<16> prod = make_uint(1);
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        uint32<16> ca = (uint32<16>) a.vec(j);
+        // shift data zeroing out bits
+        uint32<16> al = shift_r<16>(ca);
+        uint32<16> ah = shift_l<16>(ca);
+        // due to zoreing bits in previous steps, the result can be OR'ed
+        uint32<16> lo = _mm512_mullo_epi16(ca, al);
+        uint32<16> hi = _mm512_mulhi_epu16(ca, ah);
+        uint32<16> iprod = bit_or(lo, hi);
+        iprod = _mm512_mul_epu32(iprod, move4_l<1>(iprod).eval());
+        prod = _mm512_mul_epu32(prod, iprod);
+    }
+    return reduce_mul(prod);
 #elif SIMDPP_USE_AVX2
     uint32x8 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
@@ -193,6 +232,21 @@ SIMDPP_INL int32_t i_reduce_mul(const int16x16& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int32_t i_reduce_mul(const int16<32>& a)
+{
+    uint32<16> ca = (uint32<16>) a;
+    // shift data zeroing out bits
+    uint32<16> al = shift_r<16>(ca);
+    uint32<16> ah = shift_l<16>(ca);
+    // due to zoreing bits in previous steps, the result can be OR'ed
+    uint32<16> lo = _mm512_mullo_epi16(ca, al);
+    uint32<16> hi = _mm512_mulhi_epi16(ca, ah);
+    uint32<16> r = bit_or(lo, hi);
+    return reduce_mul(r);
+}
+#endif
+
 template<unsigned N>
 SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
 {
@@ -204,6 +258,21 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
         }
     }
     return r;
+#elif SIMDPP_USE_AVX512BW
+    uint32<16> prod = make_uint(1);
+    for (unsigned j = 0; j < a.vec_length; ++j) {
+        uint32<16> ca = (uint32<16>) a.vec(j);
+        // shift data zeroing out bits
+        uint32<16> al = shift_r<16>(ca);
+        uint32<16> ah = shift_l<16>(ca);
+        // due to zoreing bits in previous steps, the result can be OR'ed
+        uint32<16> lo = _mm512_mullo_epi16(ca, al);
+        uint32<16> hi = _mm512_mulhi_epi16(ca, ah);
+        uint32<16> iprod = bit_or(lo, hi);
+        iprod = _mm512_mul_epu32(iprod, move4_l<1>(iprod).eval());
+        prod = _mm512_mul_epu32(prod, iprod);
+    }
+    return reduce_mul(prod);
 #elif SIMDPP_USE_AVX2
     uint32x8 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {

@@ -60,11 +60,27 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL uint16<32> i_to_uint16(const uint8<32>& a)
 {
+#if SIMDPP_USE_AVX512BW
+    return _mm512_cvtepu8_epi16(a);
+#else
     uint16<16> r0, r1;
     uint8<16> a0, a1;
     split(a, a0, a1);
     r0 = _mm256_cvtepu8_epi16(a0);
     r1 = _mm256_cvtepu8_epi16(a1);
+    return combine(r0, r1);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<64> i_to_uint16(const uint8<64>& a)
+{
+    uint16<32> r0, r1;
+    uint8<32> a0, a1;
+    split(a, a0, a1);
+    r0 = _mm512_cvtepu8_epi16(a0);
+    r1 = _mm512_cvtepu8_epi16(a1);
     return combine(r0, r1);
 }
 #endif
@@ -117,11 +133,27 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL int16<32> i_to_int16(const int8<32>& a)
 {
+#if SIMDPP_USE_AVX512BW
+    return _mm512_cvtepi8_epi16(a);
+#else
     int16<16> r0, r1;
     int8<16> a0, a1;
     split(a, a0, a1);
     r0 = _mm256_cvtepi8_epi16(a0);
     r1 = _mm256_cvtepi8_epi16(a1);
+    return combine(r0, r1);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int16<64> i_to_int16(const int8<64>& a)
+{
+    int16<32> r0, r1;
+    int8<32> a0, a1;
+    split(a, a0, a1);
+    r0 = _mm512_cvtepi8_epi16(a0);
+    r1 = _mm512_cvtepi8_epi16(a1);
     return combine(r0, r1);
 }
 #endif

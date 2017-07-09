@@ -46,6 +46,13 @@ SIMDPP_INL uint8x32 i_bit_not(const uint8x32& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_bit_not(const uint8<64>& a)
+{
+    return bit_xor(a, 0xff);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 template<unsigned N> SIMDPP_INL
@@ -154,6 +161,18 @@ SIMDPP_INL mask_int32<16> i_bit_not(const mask_int32<16>& a)
 }
 
 SIMDPP_INL mask_int64<8> i_bit_not(const mask_int64<8>& a)
+{
+    return _mm512_knot(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int8<64> i_bit_not(const mask_int8<64>& a)
+{
+    return _mm512_knot(a);
+}
+
+SIMDPP_INL mask_int16<32> i_bit_not(const mask_int16<32>& a)
 {
     return _mm512_knot(a);
 }

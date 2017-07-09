@@ -60,7 +60,7 @@ void mem_pack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
     qb.wrapped() = shuffle1_128<1,1>(c1, c2);
 }
 
-#if SIMDPP_USE_AVX512F
+#if SIMDPP_USE_AVX512F || SIMDPP_USE_AVX512BW
 template<class V> SIMDPP_INL
 void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 {

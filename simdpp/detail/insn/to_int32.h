@@ -76,6 +76,18 @@ SIMDPP_INL int32<16> i_to_int32(const int16<16>& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int32<32> i_to_int32(const int16<32>& a)
+{
+    int32<16> r0, r1;
+    int16<16> a0, a1;
+    split(a, a0, a1);
+    r0 = _mm512_cvtepi16_epi32(a0);
+    r1 = _mm512_cvtepi16_epi32(a1);
+    return combine(r0, r1);
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 int32<N> i_to_int32(const int16<N>& a)
 {

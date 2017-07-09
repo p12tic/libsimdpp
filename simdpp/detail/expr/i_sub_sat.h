@@ -47,6 +47,17 @@ int8<32> expr_eval(const expr_sub_sat<int8<32,E1>,
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+int8<64> expr_eval(const expr_sub_sat<int8<64,E1>,
+                                      int8<64,E2>>& q)
+{
+    int8<64> a = q.a.eval();
+    int8<64> b = q.b.eval();
+    return _mm512_subs_epi8(a, b);
+}
+#endif
+
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
 int8<N> expr_eval(const expr_sub_sat<int8<N,E1>,
                                      int8<N,E2>>& q)
@@ -83,6 +94,17 @@ int16<16> expr_eval(const expr_sub_sat<int16<16,E1>,
     int16<16> a = q.a.eval();
     int16<16> b = q.b.eval();
     return _mm256_subs_epi16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+int16<32> expr_eval(const expr_sub_sat<int16<32,E1>,
+                                       int16<32,E2>>& q)
+{
+    int16<32> a = q.a.eval();
+    int16<32> b = q.b.eval();
+    return _mm512_subs_epi16(a, b);
 }
 #endif
 
@@ -125,6 +147,17 @@ uint8<32> expr_eval(const expr_sub_sat<uint8<32,E1>,
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+uint8<64> expr_eval(const expr_sub_sat<uint8<64,E1>,
+                                       uint8<64,E2>>& q)
+{
+    uint8<64> a = q.a.eval();
+    uint8<64> b = q.b.eval();
+    return _mm512_subs_epu8(a, b);
+}
+#endif
+
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
 uint8<N> expr_eval(const expr_sub_sat<uint8<N,E1>,
                                       uint8<N,E2>>& q)
@@ -161,6 +194,17 @@ uint16<16> expr_eval(const expr_sub_sat<uint16<16,E1>,
     uint16<16> a = q.a.eval();
     uint16<16> b = q.b.eval();
     return _mm256_subs_epu16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+uint16<32> expr_eval(const expr_sub_sat<uint16<32,E1>,
+                                        uint16<32,E2>>& q)
+{
+    uint16<32> a = q.a.eval();
+    uint16<32> b = q.b.eval();
+    return _mm512_subs_epu16(a, b);
 }
 #endif
 

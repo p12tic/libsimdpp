@@ -49,6 +49,15 @@ uint8x32 i_move16_r(const uint8x32& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned shift> SIMDPP_INL
+uint8<64> i_move16_r(const uint8<64>& a)
+{
+    static_assert(shift <= 16, "Selector out of range");
+    return _mm512_bslli_epi128(a, shift);
+}
+#endif
+
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_move16_r(const uint8<N>& a)
 {
@@ -74,6 +83,15 @@ uint16<16> i_move8_r(const uint16<16>& a)
 {
     static_assert(shift <= 8, "Selector out of range");
     return _mm256_slli_si256(a, shift*2);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned shift> SIMDPP_INL
+uint16<32> i_move8_r(const uint16<32>& a)
+{
+    static_assert(shift <= 8, "Selector out of range");
+    return _mm512_bslli_epi128(a, shift*2);
 }
 #endif
 

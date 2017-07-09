@@ -109,6 +109,17 @@ SIMDPP_INL void i_load(float64x4& a, const char* p)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_load(uint8<64>& a, const char* p)
+{
+    a = _mm512_load_epi32(p);
+}
+SIMDPP_INL void i_load(uint16<32>& a, const char* p)
+{
+    a = _mm512_load_epi32(p);
+}
+#endif
+
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL void i_load(uint32<16>& a,  const char* p)
 {

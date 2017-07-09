@@ -64,6 +64,20 @@ SIMDPP_INL uint8x32 i_unzip16_lo(const uint8x32& ca, const uint8x32& cb)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_unzip16_lo(const uint8<64>& ca, const uint8<64>& cb)
+{
+    uint8<64> a = ca, b = cb;
+    uint16<32> mask, r;
+    mask = make_ones();
+    mask = _mm512_srli_epi16(mask, 8);
+    a = bit_and(a, mask);
+    b = bit_and(b, mask);
+    r = _mm512_packus_epi16(a, b);
+    return uint8<64>(r);
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_unzip16_lo(const uint8<N>& a, const uint8<N>& b)
 {
@@ -116,6 +130,19 @@ SIMDPP_INL uint16x16 i_unzip8_lo(const uint16x16& ca, const uint16x16& cb)
     b = bit_and(b, mask);
     r = _mm256_packus_epi32(a, b);
     return uint16x16(r);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<32> i_unzip8_lo(const uint16<32>& ca, const uint16<32>& cb)
+{
+    uint16<32> a = ca, b = cb;
+    uint32<16> mask, r;
+    mask = make_uint(0xffff, 0x0000);
+    a = bit_and(a, mask);
+    b = bit_and(b, mask);
+    r = _mm512_packus_epi32(a, b);
+    return uint16<32>(r);
 }
 #endif
 

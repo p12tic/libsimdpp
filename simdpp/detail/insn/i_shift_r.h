@@ -70,6 +70,22 @@ SIMDPP_INL int8x32 i_shift_r(const int8x32& a, unsigned count)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int8<64> i_shift_r(const int8<64>& a, unsigned count)
+{
+    uint16<32> hi, lo;
+    lo = hi = a;
+
+    lo = shift_l<8>(lo);
+    lo = shift_r(int16<32>(lo), count);
+    lo = shift_r<8>(lo);
+
+    hi = shift_r(int16<32>(hi), 8+count);
+    hi = shift_l<8>(hi);
+    return (int8<64>) bit_or(lo, hi);    //higher part of lo is already clear
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
@@ -110,6 +126,21 @@ SIMDPP_INL uint8x32 i_shift_r(const uint8x32& a, unsigned count)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_shift_r(const uint8<64>& a, unsigned count)
+{
+    unsigned shift = 8 - count;
+    uint16_t mask1 = (0xff >> shift) << shift;
+    uint16<32> mask, a16;
+    mask = splat(mask1);
+
+    a16 = a;
+    a16 = shift_r(a16, count);
+    a16 = bit_andnot(a16, mask);
+    return uint8<64>(a16);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL int16x8 i_shift_r(const int16x8& a, unsigned count)
@@ -141,6 +172,13 @@ SIMDPP_INL int16x16 i_shift_r(const int16x16& a, unsigned count)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int16<32> i_shift_r(const int16<32>& a, unsigned count)
+{
+    return _mm512_sra_epi16(a, _mm_cvtsi32_si128(count));
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL uint16x8 i_shift_r(const uint16x8& a, unsigned count)
@@ -169,6 +207,13 @@ SIMDPP_INL uint16x16 i_shift_r(const uint16x16& a, unsigned count)
 #else
     return _mm256_srl_epi16(a, _mm_cvtsi32_si128(count));
 #endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<32> i_shift_r(const uint16<32>& a, unsigned count)
+{
+    return _mm512_srl_epi16(a, _mm_cvtsi32_si128(count));
 }
 #endif
 
@@ -411,6 +456,24 @@ int8x32 i_shift_r(const int8x32& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned count> SIMDPP_INL
+int8<64> i_shift_r(const int8<64>& a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    uint16<32> hi, lo;
+    lo = hi = a;
+
+    lo = shift_l<8>(lo);
+    lo = shift_r<count>(int16<32>(lo));
+    lo = shift_r<8>(lo);
+
+    hi = shift_r<8+count>(int16<32>(hi));
+    hi = shift_l<8>(hi);
+    return (int8<64>) bit_or(lo, hi);    //higher part of lo is already clear
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 template<unsigned count, unsigned N> SIMDPP_INL
@@ -447,7 +510,15 @@ uint8x32 i_shift_r(const uint8x32& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
     return sse_shift_r_u8<count>(a);
+}
+#endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned count> SIMDPP_INL
+uint8<64> i_shift_r(const uint8<64>& a)
+{
+    static_assert(count <= 8, "Shift out of bounds");
+    return sse_shift_r_u8<count>(a);
 }
 #endif
 
@@ -478,6 +549,15 @@ int16x16 i_shift_r(const int16x16& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned count> SIMDPP_INL
+int16<32> i_shift_r(const int16<32>& a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    return _mm512_srai_epi16(a, count);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 template<unsigned count> SIMDPP_INL
@@ -502,6 +582,15 @@ uint16x16 i_shift_r(const uint16x16& a)
 {
     static_assert(count <= 16, "Shift out of bounds");
     return _mm256_srli_epi16(a, count);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned count> SIMDPP_INL
+uint16<32> i_shift_r(const uint16<32>& a)
+{
+    static_assert(count <= 16, "Shift out of bounds");
+    return _mm512_srli_epi16(a, count);
 }
 #endif
 

@@ -50,6 +50,13 @@ SIMDPP_INL int8x32 i_min(const int8x32& a, const int8x32& b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int8<64> i_min(const int8<64>& a, const int8<64>& b)
+{
+    return _mm512_min_epi8(a, b);
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 int8<N> i_min(const int8<N>& a, const int8<N>& b)
 {
@@ -78,6 +85,13 @@ SIMDPP_INL uint8x32 i_min(const uint8x32& a, const uint8x32& b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_min(const uint8<64>& a, const uint8<64>& b)
+{
+    return _mm512_min_epu8(a, b);
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_min(const uint8<N>& a, const uint8<N>& b)
 {
@@ -103,6 +117,13 @@ SIMDPP_INL int16x8 i_min(const int16x8& a, const int16x8& b)
 SIMDPP_INL int16x16 i_min(const int16x16& a, const int16x16& b)
 {
     return _mm256_min_epi16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int16<32> i_min(const int16<32>& a, const int16<32>& b)
+{
+    return _mm512_min_epi16(a, b);
 }
 #endif
 
@@ -136,6 +157,13 @@ SIMDPP_INL uint16x8 i_min(const uint16x8& a, const uint16x8& b)
 SIMDPP_INL uint16x16 i_min(const uint16x16& a, const uint16x16& b)
 {
     return _mm256_min_epu16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<32> i_min(const uint16<32>& a, const uint16<32>& b)
+{
+    return _mm512_min_epu16(a, b);
 }
 #endif
 

@@ -42,6 +42,18 @@ SIMDPP_INL mask_int8x32 i_cmp_neq(const uint8x32& a, const uint8x32& b)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int8<64> i_cmp_neq(const uint8<64>& a, const uint8<64>& b)
+{
+    return _mm512_cmpneq_epi8_mask(a, b);
+}
+
+SIMDPP_INL mask_int8<64> i_cmp_neq(const mask_int8<64>& a, const mask_int8<64>& b)
+{
+    return _mm512_kxor(a, b);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL mask_int16x8 i_cmp_neq(const uint16x8& a, const uint16x8& b)
@@ -59,6 +71,18 @@ SIMDPP_INL mask_int16x8 i_cmp_neq(const uint16x8& a, const uint16x8& b)
 SIMDPP_INL mask_int16x16 i_cmp_neq(const uint16x16& a, const uint16x16& b)
 {
     return bit_not(cmp_eq(a, b));
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL mask_int16<32> i_cmp_neq(const uint16<32>& a, const uint16<32>& b)
+{
+    return _mm512_cmpneq_epi16_mask(a, b);
+}
+
+SIMDPP_INL mask_int16<32> i_cmp_neq(const mask_int16<32>& a, const mask_int16<32>& b)
+{
+    return _mm512_kxor(a, b);
 }
 #endif
 

@@ -56,6 +56,14 @@ SIMDPP_INL void i_set_splat(uint8x32& v, uint8_t v0)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_set_splat(uint8<64>& v, uint8_t v0)
+{
+    uint8x16 a = _mm_cvtsi32_si128(v0);
+    v = _mm512_broadcastb_epi8(a);
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 void i_set_splat(uint8<N>& v, uint8_t v0)
 {
@@ -97,6 +105,14 @@ SIMDPP_INL void i_set_splat(uint16x16& v, uint16_t v0)
 {
     uint16x8 a = _mm_cvtsi32_si128(v0);
     v = _mm256_broadcastw_epi16(a);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_set_splat(uint16<32>& v, uint16_t v0)
+{
+    uint16x8 a = _mm_cvtsi32_si128(v0);
+    v = _mm512_broadcastw_epi16(a);
 }
 #endif
 

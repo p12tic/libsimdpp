@@ -46,6 +46,21 @@ namespace detail {
         case 3: r[384..511] = b[384..511]
 @endcode
 */
+#if SIMDPP_USE_AVX512BW
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+uint8<64> shuffle2_128(const uint8<64>& a, const uint8<64>& b)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_i32x4(a, b, (s3<<6) + (s2<<4) + (s1<<2) + s0);
+}
+
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+uint16<32> shuffle2_128(const uint16<32>& a, const uint16<32>& b)
+{
+    static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+    return _mm512_shuffle_i32x4(a, b, (s3<<6) + (s2<<4) + (s1<<2) + s0);
+}
+#endif
 #if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint32<16> shuffle2_128(const uint32<16>& a, const uint32<16>& b)

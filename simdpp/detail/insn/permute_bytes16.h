@@ -56,6 +56,13 @@ SIMDPP_INL uint8x32 i_permute_bytes16(const uint8x32& a, const uint8x32& mask)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_permute_bytes16(const uint8<64>& a, const uint8<64>& mask)
+{
+    return _mm512_shuffle_epi8(a, mask);
+}
+#endif
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_permute_bytes16(const uint8<N>& a, const uint8<N>& mask)
 {

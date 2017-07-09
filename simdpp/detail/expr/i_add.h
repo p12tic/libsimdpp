@@ -48,6 +48,17 @@ uint8<32> expr_eval(const expr_add<uint8<32,E1>,
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+uint8<64> expr_eval(const expr_add<uint8<64,E1>,
+                                   uint8<64,E2>>& q)
+{
+    uint8<64> a = q.a.eval();
+    uint8<64> b = q.b.eval();
+    return _mm512_add_epi8(a, b);
+}
+#endif
+
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
 uint8<N> expr_eval(const expr_add<uint8<N,E1>,
                                   uint8<N,E2>>& q)
@@ -84,6 +95,17 @@ uint16<16> expr_eval(const expr_add<uint16<16,E1>,
     uint16<16> a = q.a.eval();
     uint16<16> b = q.b.eval();
     return _mm256_add_epi16(a, b);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+uint16<32> expr_eval(const expr_add<uint16<32,E1>,
+                                    uint16<32,E2>>& q)
+{
+    uint16<32> a = q.a.eval();
+    uint16<32> b = q.b.eval();
+    return _mm512_add_epi16(a, b);
 }
 #endif
 

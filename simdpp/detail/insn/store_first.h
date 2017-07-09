@@ -69,6 +69,29 @@ SIMDPP_INL void i_store_first(char* p, const uint8x32& a, unsigned n)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_store_first(char* p, const uint8<64>& a, unsigned n)
+{
+    static const uint8_t mask_d[128] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                                        0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,
+                                        0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0};
+
+    uint8<64> mask = load_u(mask_d + 64 - n);
+    uint8<64> b = load(p);
+    b = blend(a, b, mask);
+    store(p, b);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 SIMDPP_INL void i_store_first(char* p, const uint16x8& a, unsigned n)
@@ -85,6 +108,13 @@ SIMDPP_INL void i_store_first(char* p, const uint16x8& a, unsigned n)
 SIMDPP_INL void i_store_first(char* p, const uint16x16& a, unsigned n)
 {
     i_store_first(p, uint8x32(a), n*2);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_store_first(char* p, const uint16<32>& a, unsigned n)
+{
+    i_store_first(p, uint8<64>(a), n*2);
 }
 #endif
 

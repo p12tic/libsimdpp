@@ -42,6 +42,18 @@ uint8x32 i_splat(const uint8x32& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned s> SIMDPP_INL
+uint8<64> i_splat(const uint8<64>& a)
+{
+    static_assert(s < 64, "Access out of bounds");
+    uint8<16> lo;
+    lo = detail::extract128<s / 16>(a);
+    lo = move16_l<s % 16>(lo);
+    return _mm512_broadcastb_epi8(lo);
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
 template<unsigned s> SIMDPP_INL
@@ -59,6 +71,18 @@ uint16x16 i_splat(const uint16x16& a)
     lo = s < 8 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move8_l<s % 8>(lo);
     return _mm256_broadcastw_epi16(lo);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned s> SIMDPP_INL
+uint16<32> i_splat(const uint16<32>& a)
+{
+    static_assert(s < 32, "Access out of bounds");
+    uint16<8> lo;
+    lo = detail::extract128<s / 8>(a);
+    lo = move8_l<s % 8>(lo);
+    return _mm512_broadcastw_epi16(lo);
 }
 #endif
 

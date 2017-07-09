@@ -96,6 +96,22 @@ int32<16> expr_eval(const expr_mull<int16<16,E1>,
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+int32<32> expr_eval(const expr_mull<int16<32,E1>,
+                                    int16<32,E2>>& q)
+{
+    int16<32> a = q.a.eval();
+    int16<32> b = q.b.eval();
+    int64<8> idx = make_uint(0, 4, 1, 5, 2, 6, 3, 7);
+    a = _mm512_permutexvar_epi64(idx, a);
+    b = _mm512_permutexvar_epi64(idx, b);
+    int16<32> lo = _mm512_mullo_epi16(a, b);
+    int16<32> hi = _mm512_mulhi_epi16(a, b);
+    return (int32<32>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
+}
+#endif
+
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
 int32<N> expr_eval(const expr_mull<int16<N,E1>,
                                    int16<N,E2>>& q)
@@ -150,6 +166,22 @@ uint32<16> expr_eval(const expr_mull<uint16<16,E1>,
     int16x16 lo = _mm256_mullo_epi16(a, b);
     int16x16 hi = _mm256_mulhi_epu16(a, b);
     return (uint32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<class R, class E1, class E2> SIMDPP_INL
+uint32<32> expr_eval(const expr_mull<uint16<32,E1>,
+                                     uint16<32,E2>>& q)
+{
+    uint16<32> a = q.a.eval();
+    uint16<32> b = q.b.eval();
+    uint64<8> idx = make_uint(0, 4, 1, 5, 2, 6, 3, 7);
+    a = _mm512_permutexvar_epi64(idx, a);
+    b = _mm512_permutexvar_epi64(idx, b);
+    uint16<32> lo = _mm512_mullo_epi16(a, b);
+    uint16<32> hi = _mm512_mulhi_epu16(a, b);
+    return (uint32<32>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif
 

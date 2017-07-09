@@ -56,6 +56,21 @@ SIMDPP_INL float64x2 extract128(const float64x4& a)
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+template<unsigned s>
+SIMDPP_INL uint8<16> extract128(const uint8<64>& a)
+{
+    return _mm512_extracti32x4_epi32(a, s);
+}
+template<unsigned s>
+SIMDPP_INL int8<16> extract128(const int8<64>& a) { return (int8<16>) extract128<s>(uint8<64>(a)); }
+
+template<unsigned s>
+SIMDPP_INL uint16<8> extract128(const uint16<32>& a) { return (uint16<8>) extract128<s>(uint8<64>(a)); }
+template<unsigned s>
+SIMDPP_INL int16<8> extract128(const int16<32>& a) { return (int16<8>) extract128<s>(uint8<64>(a)); }
+#endif
+
 #if SIMDPP_USE_AVX512F
 template<unsigned s>
 SIMDPP_INL uint32x4 extract128(const uint32<16>& a)
@@ -107,6 +122,32 @@ template<unsigned s>
 SIMDPP_INL float64<4> extract256(const float64<8>& a)
 {
     return _mm512_extractf64x4_pd(a, s);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned s>
+SIMDPP_INL uint8<32> extract256(const uint8<64>& a)
+{
+    return _mm512_extracti64x4_epi64(a, s);
+}
+
+template<unsigned s>
+SIMDPP_INL uint16<16> extract256(const uint16<32>& a)
+{
+    return _mm512_extracti64x4_epi64(a, s);
+}
+
+template<unsigned s>
+SIMDPP_INL int8<32> extract256(const int8<64>& a)
+{
+    return _mm512_extracti64x4_epi64(a, s);
+}
+
+template<unsigned s>
+SIMDPP_INL int16<16> extract256(const int16<32>& a)
+{
+    return _mm512_extracti64x4_epi64(a, s);
 }
 #endif
 
