@@ -97,9 +97,15 @@ int16<8> expr_eval(const expr_mul_hi<int16<8,E1>,
     int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
     return unzip8_hi(int16x8(lo), int16x8(hi));
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
+#if SIMDPP_BIG_ENDIAN
     int16<16> ab;
     ab = mull(a, b);
     return unzip8_lo(ab.vec(0), ab.vec(1));
+#else
+    int16<16> ab;
+    ab = mull(a, b);
+    return unzip8_hi(ab.vec(0), ab.vec(1));
+#endif
 #endif
 }
 
@@ -154,10 +160,14 @@ uint16<8> expr_eval(const expr_mul_hi<uint16<8,E1>,
     uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
     uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
     return unzip8_hi(uint16x8(lo), uint16x8(hi));
-#elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
+#elif SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN
     uint16<16> ab;
     ab = mull(a, b);
     return unzip8_lo(ab.vec(0), ab.vec(1));
+#elif (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN) || SIMDPP_USE_MSA
+    uint16<16> ab;
+    ab = mull(a, b);
+    return unzip8_hi(ab.vec(0), ab.vec(1));
 #endif
 }
 
