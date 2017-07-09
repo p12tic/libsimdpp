@@ -43,12 +43,15 @@ void test_expr_math_float_v(TestReporter& ts)
         TEST_CMP_VEC(ts, sub(sub(b, c), a), sub(sub(b, c).eval(), a));
         TEST_CMP_VEC(ts, mul(a, mul(b, c)), mul(a, mul(b, c).eval()));
         TEST_CMP_VEC(ts, mul(mul(b, c), a), mul(mul(b, c).eval(), a));
+#if !defined(_MSC_VER) || _MSC_VER >= 1800
+        // std::fma which we're testing against is only available since MSVC 2013
         TEST_CMP_VEC(ts, fmadd(a, d, fmadd(b, c, a)), fmadd(a, d, fmadd(b, c, a).eval()));
         TEST_CMP_VEC(ts, fmadd(a, fmadd(b, c, a), d), fmadd(a, fmadd(b, c, a).eval(), d));
         TEST_CMP_VEC(ts, fmadd(fmadd(b, c, a), a, d), fmadd(fmadd(b, c, a).eval(), a, d));
         TEST_CMP_VEC(ts, fmsub(a, d, fmsub(b, c, a)), fmsub(a, d, fmsub(b, c, a).eval()));
         TEST_CMP_VEC(ts, fmsub(a, fmsub(b, c, a), d), fmsub(a, fmsub(b, c, a).eval(), d));
         TEST_CMP_VEC(ts, fmsub(fmsub(b, c, a), a, d), fmsub(fmsub(b, c, a).eval(), a, d));
+#endif
         TEST_CMP_VEC(ts, abs(mul(a, b)), abs(mul(a, b).eval()));
         TEST_CMP_VEC(ts, neg(mul(a, b)), neg(mul(a, b).eval()));
 
