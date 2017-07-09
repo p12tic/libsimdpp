@@ -42,23 +42,17 @@ SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
     r.vec(0) = _mm_cvtepi16_epi32(a);
     r.vec(1) = _mm_cvtepi16_epi32(move8_l<4>(a).eval());
     return r;
-#elif SIMDPP_USE_SSE2
-    int16x8 b0, b1, sign;
-    sign = shift_r<15>(a);
-    b0 = zip8_lo(a, sign);
-    b1 = zip8_hi(a, sign);
-    return uint32x8(combine(b0, b1));
-#elif SIMDPP_USE_NEON
-    int32x8 r;
-    r.vec(0) = vmovl_s16(vget_low_s16(a.vec(0)));
-    r.vec(1) = vmovl_s16(vget_high_s16(a.vec(1)));
-    return r;
-#elif SIMDPP_USE_MSA
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     int16x8 sign = shift_r<15>(a);
     int32x4 lo, hi;
     lo = zip8_lo(a, sign);
     hi = zip8_hi(a, sign);
     return combine(lo, hi);
+#elif SIMDPP_USE_NEON
+    int32x8 r;
+    r.vec(0) = vmovl_s16(vget_low_s16(a.vec(0)));
+    r.vec(1) = vmovl_s16(vget_high_s16(a.vec(1)));
+    return r;
 #elif SIMDPP_USE_ALTIVEC
     int32x4 b0, b1;
     b0 = vec_unpackh((__vector int16_t)a.vec(0));
