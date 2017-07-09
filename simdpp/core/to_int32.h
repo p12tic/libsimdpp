@@ -39,7 +39,7 @@ int32<N> to_int32(const int16<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint32<N> to_uint32(const uint16<N,E>& a)
 {
-    return (uint32<N>) detail::insn::i_to_int32(int16<N>(a.eval())); // FIXME
+    return detail::insn::i_to_uint32(a.eval());
 }
 
 #if !SIMDPP_DISABLE_DEPRECATED
