@@ -35,7 +35,7 @@ SIMDPP_INL void i_store_first(char* p, const uint8x16& a, unsigned n)
     detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 mask = vec_lvsr(n, (const uint8_t*)NULL);
-    mask = cmp_gt(mask, 0x10);
+    mask = cmp_lt(mask, 0x11);
     uint8x16 b = load(p);
     b = blend(a, b, mask);
     store(p, b);
