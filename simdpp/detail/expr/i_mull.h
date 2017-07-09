@@ -239,15 +239,14 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
     int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
     return combine(lo, hi);
 #elif SIMDPP_USE_VSX_207
-    __vector int32_t va = a, vb = b;
-    __vector int64_t vlo, vhi;
-    // BUG: GCC does not have support for vmulesw and vmulosw yet
-    // int64x2 lo = vec_vmulesw((__vector int32_t)a, (__vector int32_t)b);
-    // int64x2 hi = vec_vmulosw((__vector int32_t)a, (__vector int32_t)b);
-    asm("vmulesw	%0, %1, %2" : "=wa"(vlo) : "wa"(va), "wa"(vb));
-    asm("vmulosw	%0, %1, %2" : "=wa"(vhi) : "wa"(va), "wa"(vb));
-    int64x2 lo = vlo, hi = vhi;
+#if defined(__GNUC__) && (__GNUC__ < 8)
+    // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
+    SIMDPP_NOT_IMPLEMENTED2(a, b);
+#else
+    int64x2 lo = vec_vmulesw((__vector int32_t)a, (__vector int32_t)b);
+    int64x2 hi = vec_vmulosw((__vector int32_t)a, (__vector int32_t)b);
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
+#endif
 #elif SIMDPP_USE_MSA
     int64<4> a64 = to_int64(a);
     int64<4> b64 = to_int64(b);
@@ -320,15 +319,14 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
     return combine(lo, hi);
 #elif SIMDPP_USE_VSX_207
-    __vector uint32_t va = a, vb = b;
-    __vector uint64_t vlo, vhi;
-    // BUG: GCC does not have support for vmuleuw and vmulouw yet
-    // int64x2 lo = vec_vmuleuw((__vector int32_t)a, (__vector int32_t)b);
-    // int64x2 hi = vec_vmulouw((__vector int32_t)a, (__vector int32_t)b);
-    asm("vmuleuw	%0, %1, %2" : "=wa"(vlo) : "wa"(va), "wa"(vb));
-    asm("vmulouw	%0, %1, %2" : "=wa"(vhi) : "wa"(va), "wa"(vb));
-    uint64x2 lo = vlo, hi = vhi;
+#if defined(__GNUC__) && (__GNUC__ < 8)
+    // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
+    SIMDPP_NOT_IMPLEMENTED2(a, b);
+#else
+    uint64x2 lo = vec_vmuleuw((__vector uint32_t)a, (__vector uint32_t)b);
+    uint64x2 hi = vec_vmulouw((__vector uint32_t)a, (__vector uint32_t)b);
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
+#endif
 #elif SIMDPP_USE_ALTIVEC
     mem_block<uint32<4>> ba = a;
     mem_block<uint32<4>> bb = b;

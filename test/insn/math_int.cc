@@ -156,7 +156,7 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_ALL_COMB_HELPER2(tc, int32_n, avg_trunc, s, 4);
 
         tc.sync_archs();
-#if SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
+#if SIMDPP_USE_NEON || (defined(__GNUC__) && (__GNUC__ >= 8) && SIMDPP_USE_VSX_207) || SIMDPP_USE_MSA
         TEST_ALL_COMB_HELPER2_T(tc, int64<B/4>, int32_n, mull, s, 4);
 #endif
         tc.sync_archs();
@@ -167,7 +167,11 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_ALL_COMB_HELPER2(tc, uint32_n, max, s, 4);
         TEST_ALL_COMB_HELPER2(tc, uint32_n, avg, s, 4);
         TEST_ALL_COMB_HELPER2(tc, uint32_n, avg_trunc, s, 4);
+
+        tc.sync_archs();
+#if !(defined(__GNUC__) && (__GNUC__ < 8) && SIMDPP_USE_VSX_207)
         TEST_ALL_COMB_HELPER2_T(tc, uint64<B/4>, uint32_n, mull, s, 4);
+#endif
         tc.sync_archs();
 #if !(SIMDPP_USE_ALTIVEC)
         TEST_ALL_COMB_HELPER2_T(tc, uint32_n, uint32_n, mul_lo, s, 4);
