@@ -48,7 +48,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     instruction is needed for each vector multiplication on average.
 */
 
-/// @{
 /** Multiplies signed 16-bit values and expands the results to 32 bits.
 
     @par 128-bit version:

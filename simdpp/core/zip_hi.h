@@ -18,8 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-
-/// @{
 /** Interleaves the higher halves of two vectors.
 
     @code
@@ -72,7 +70,6 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     rb = b.wrapped().eval();
     return detail::insn::i_zip2_hi(ra, rb);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -18,8 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-
-/// @{
 /** Moves the elements in an int8x16 vector to the left by @a shift positions.
 
     @code

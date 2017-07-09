@@ -19,7 +19,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Broadcasts the specified element to all elements.
 
     @code
@@ -85,7 +84,6 @@ typename detail::get_expr_nomask<V>::empty
     typename detail::get_expr_nomask<V>::type ra = a.wrapped().eval();
     return detail::insn::i_splat<s>(ra);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

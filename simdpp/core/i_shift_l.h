@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Shifts 8-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -51,9 +50,7 @@ uint8<N,expr_empty> shift_l(const uint8<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-/// @}
 
-/// @{
 /** Shifts 16-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -83,9 +80,7 @@ uint16<N,expr_empty> shift_l(const uint16<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-/// @}
 
-/// @{
 /** Shifts 32-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -115,9 +110,7 @@ uint32<N,expr_empty> shift_l(const uint32<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-/// @}
 
-/// @{
 /** Shifts 64-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -147,9 +140,7 @@ uint64<N,expr_empty> shift_l(const uint64<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
-/// @}
 
-/// @{
 /** Shifts 8-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -181,9 +172,7 @@ uint8<N,expr_empty> shift_l(const uint8<N,E>& a)
     SIMDPP_STATIC_ASSERT(count <= 8, "Shift out of bounds");
     return detail::insn::i_shift_l_wrapper<count == 0, count == 8>::template run<count>(a.eval());
 }
-/// @}
 
-/// @{
 /** Shifts 16-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -213,9 +202,7 @@ uint16<N,expr_empty> shift_l(const uint16<N,E>& a)
     SIMDPP_STATIC_ASSERT(count <= 16, "Shift out of bounds");
     return detail::insn::i_shift_l_wrapper<count == 0, count == 16>::template run<count>(a.eval());
 }
-/// @}
 
-/// @{
 /** Shifts 32-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -245,9 +232,7 @@ uint32<N,expr_empty> shift_l(const uint32<N,E>& a)
     SIMDPP_STATIC_ASSERT(count <= 32, "Shift out of bounds");
     return detail::insn::i_shift_l_wrapper<count == 0, count == 32>::template run<count>(a.eval());
 }
-/// @}
 
-/// @{
 /** Shifts 64-bit values left by @a count bits while shifting in zeros.
 
     @code
@@ -276,7 +261,6 @@ uint64<N,expr_empty> shift_l(const uint64<N,E>& a)
     SIMDPP_STATIC_ASSERT(count <= 64, "Shift out of bounds");
     return detail::insn::i_shift_l_wrapper<count == 0, count == 64>::template run<count>(a.eval());
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -47,7 +47,6 @@ V permute_half(const V& a0, const V& a1)
     }
 }
 
-/// @{
 /** Permutes 4 64-bit elements within 256-bit vector using 2 element shuffling
     functions.
 */
@@ -70,7 +69,6 @@ float64x4 permute_emul(const float64x4& a)
     r1 = permute_half<s2,s3>(a0, a1);
     return combine(r0, r1);
 }
-/// @}
 
 } // namespace insn
 } // namespace detail

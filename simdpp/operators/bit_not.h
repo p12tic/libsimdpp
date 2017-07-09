@@ -21,7 +21,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Computes bitwise NOT of an integer or floating-point vector
 
     @code
@@ -50,7 +49,6 @@ mask_int64<N, expr_bit_not<mask_int64<N,E> > > operator~(mask_int64<N,E> a)
 {
     return { { a } };
 }
-/// @}
 
 
 template<unsigned N, class E> SIMDPP_INL
@@ -63,7 +61,7 @@ mask_float64<N, expr_bit_not<mask_float64<N,E> > > operator~(mask_float64<N,E> a
 {
     return { { a } };
 }
-/// @}*/
+*/
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

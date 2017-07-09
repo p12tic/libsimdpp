@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Loads a value from a register and broadcasts it to all elements of a vector.
     The argument value is converted to the element of the resulting vector using
     standard conversions.
@@ -47,7 +46,6 @@ template<class V> SIMDPP_INL V splat(long x) { return detail::splat_impl<V>(x); 
 template<class V> SIMDPP_INL V splat(long long x) { return detail::splat_impl<V>(x); }
 template<class V> SIMDPP_INL V splat(float x) { return detail::splat_impl<V>(x); }
 template<class V> SIMDPP_INL V splat(double x) { return detail::splat_impl<V>(x); }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

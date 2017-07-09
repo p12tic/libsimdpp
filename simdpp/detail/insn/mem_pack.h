@@ -31,7 +31,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-/// @{
 /** Interleaves the elements of @a a and @a b in such way that:
      * every (2n)-th element comes from @a a
      * every (2n+1)-th element comes from @a b
@@ -77,9 +76,7 @@ void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
     qb.wrapped() = permute4_128<0,2,1,3>(d2);
 }
 #endif
-/// @}
 
-/// @{
 /** Generic implementation of mem_pack3. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
@@ -360,7 +357,6 @@ void v_mem_pack3_impl64_128(T& a, T& b, T& c)
     d2 = shuffle1<1,1>(b, c);
     a = d0;  b = d1;  c = d2;
 }
-/// @}
 
 template<class V> SIMDPP_INL
 void v_mem_pack3_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb, any_vec<16,V>& qc)
@@ -413,7 +409,6 @@ void v_mem_pack3_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb, any_vec<64,V>&
 }
 #endif
 
-/// @{
 /** Interleaves the elements of @a a, @a b and @a c in such way that:
      * every (3n)-th element comes from @a a
      * every (3n+1)-th element comes from @a b
@@ -462,9 +457,7 @@ void mem_pack3(float64<N>& a, float64<N>& b, float64<N>& c)
     v_mem_pack3_impl64_128(a, b, c);
     v_mem_pack3_shuffle128(a, b, c);
 }
-/// @}
 
-/// @{
 /** Generic implementation of mem_pack4. The 256-bit version applies 128-bit
     operations to each half of each vector separately.
 */
@@ -567,8 +560,6 @@ void v_mem_pack4_impl64_128(T& a, T& b, T& c, T& d)
     c = t;
 }
 
-/// @}
-
 template<class V> SIMDPP_INL
 void v_mem_pack4_shuffle128(any_vec<16,V>& qa, any_vec<16,V>& qb,
                             any_vec<16,V>& qc, any_vec<16,V>& qd)
@@ -630,7 +621,6 @@ void v_mem_pack4_shuffle128(any_vec<64,V>& qa, any_vec<64,V>& qb,
 }
 #endif
 
-/// @{
 /** Interleaves the elements of @a a, @a b, @a c and @a d in such way that:
      * every (4n)-th element comes from @a a
      * every (4n+1)-th element comes from @a b
@@ -680,7 +670,6 @@ void mem_pack4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d)
     v_mem_pack4_impl64_128(a, b, c, d);
     v_mem_pack4_shuffle128(a, b, c, d);
 }
-/// @}
 
 } // namespace insn
 } // namespace detail

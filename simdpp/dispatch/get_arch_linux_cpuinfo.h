@@ -22,8 +22,7 @@
 
 namespace simdpp {
 
-/** @ingroup simdpp_dispatcher
-    Retrieves supported architecture from Linux /proc/cpuinfo file.
+/** Retrieves supported architecture from Linux /proc/cpuinfo file.
 
     Works on X86 and ARM.
 */

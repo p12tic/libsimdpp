@@ -23,10 +23,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @ingroup simd_insert_extract
-/// @{
-
-/// @{
 /** Extracts the @a id-th element from int8x16 vector
 
     @code
@@ -68,9 +64,7 @@ int8_t extract(const int8x16& a)
 {
     return extract<id>(uint8x16(a));
 }
-/// @}
 
-/// @{
 /** Extracts the @a id-th element from int16x8 vector
 
     @code
@@ -103,9 +97,7 @@ int16_t extract(const int16x8& a)
 {
     return extract<id>(uint16x8(a));
 }
-/// @}
 
-/// @{
 /** Extracts the @a id-th element from int32x4 vector
 
     @code
@@ -142,9 +134,7 @@ int32_t extract(const int32x4& a)
 {
     return extract<id>(uint32x4(a));
 }
-/// @}
 
-/// @{
 /** Extracts an element from int64x2 vector
 
     @code
@@ -203,7 +193,6 @@ int64_t extract(const int64x2& a)
 {
     return extract<id>(uint64x2(a));
 }
-/// @}
 
 /** Extracts an element from float32x4 vector
 
@@ -352,8 +341,6 @@ uint16_t extract_bits(const uint8x16& ca)
     return extract_bits_any(a);
 #endif
 }
-
-/// @} -- end ingroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
