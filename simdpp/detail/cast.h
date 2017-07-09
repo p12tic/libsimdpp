@@ -26,8 +26,18 @@ enum {
     CAST_MASK_UNMASK,
     CAST_MASK_REMASK
 };
+
+enum {
+    CAST_TYPE_VECTOR_TO_VECTOR,
+    CAST_TYPE_MASK_TO_VECTOR,
+    CAST_TYPE_VECTOR_TO_MASK,
+    CAST_TYPE_MASK_TO_MASK_MEMCPY,
+    CAST_TYPE_MASK_TO_MASK_UNMASK,
+    CAST_TYPE_MASK_TO_MASK_REMASK
+};
+
 // defined in cast.inl
-template<bool IsRMask, bool IsLMask, unsigned MaskCastOverride> struct cast_wrapper;
+template<unsigned CastType> struct cast_wrapper;
 
 
 } // namespace detail

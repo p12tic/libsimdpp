@@ -57,7 +57,7 @@ void cast_memcpy_remask(const T& t, R& r)
 }
 
 template<>
-struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
+struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_MEMCPY> {
     template<class T, class R> SIMDPP_INL
     static void run(const T& t, R& r)
     {
@@ -69,7 +69,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
 };
 
 template<>
-struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
+struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_UNMASK> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
@@ -81,7 +81,7 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
 };
 
 template<>
-struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
+struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_REMASK> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
@@ -92,8 +92,8 @@ struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
     }
 };
 
-template<unsigned MaskCastOverride>
-struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
+template<>
+struct cast_wrapper<CAST_TYPE_VECTOR_TO_MASK> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
@@ -102,8 +102,8 @@ struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
     }
 };
 
-template<unsigned MaskCastOverride>
-struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/, MaskCastOverride> {
+template<>
+struct cast_wrapper<CAST_TYPE_MASK_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
@@ -111,8 +111,8 @@ struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/, MaskCastOverride> {
     }
 };
 
-template<unsigned MaskCastOverride>
-struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
+template<>
+struct cast_wrapper<CAST_TYPE_VECTOR_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
