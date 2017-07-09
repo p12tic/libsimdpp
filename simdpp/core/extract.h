@@ -338,7 +338,11 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
     s = (__vector uint32_t) vec_sl((__vector uint32_t)s, (__vector uint32_t) shifts);
     s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
                           (__vector int32_t)(int32x4) make_zero());
+#if SIMDPP_BIG_ENDIAN
     return extract<7>(uint16x8(s));
+#else
+    return extract<6>(uint16x8(s));
+#endif
 #elif SIMDPP_USE_MSA
     // Note: the implementation of extract_bits depends of the exact behavior
     // of this function
