@@ -45,11 +45,7 @@ SIMDPP_INL uint16_t i_reduce_or(const uint8x32& a)
 {
     uint8x16 r = detail::extract128<0>(a);
     r = bit_or(r, detail::extract128<1>(a));
-    r = bit_or(r, move16_l<8>(r));
-    r = bit_or(r, move16_l<4>(r));
-    r = bit_or(r, move16_l<2>(r));
-    r = bit_or(r, move16_l<1>(r));
-    return extract<0>(r);
+    return i_reduce_or(r);
 }
 #endif
 
@@ -96,10 +92,7 @@ SIMDPP_INL uint16_t i_reduce_or(const uint16x16& a)
 {
     uint16x8 r = detail::extract128<0>(a);
     r = bit_or(r, detail::extract128<1>(a));
-    r = bit_or(r, move8_l<4>(r));
-    r = bit_or(r, move8_l<2>(r));
-    r = bit_or(r, move8_l<1>(r));
-    return extract<0>(r);
+    return i_reduce_or(r);
 }
 #endif
 

@@ -21,6 +21,25 @@
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
+
+// forward declarations
+template<unsigned N, class E> SIMDPP_INL
+int16_t reduce_add(const int8<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+uint16_t reduce_add(const uint8<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+int32_t reduce_add(const int16<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+uint32_t reduce_add(const uint16<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+int32_t reduce_add(const int32<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+uint32_t reduce_add(const uint32<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+int64_t reduce_add(const int64<N,E>& a);
+template<unsigned N, class E> SIMDPP_INL
+uint64_t reduce_add(const uint64<N,E>& a);
+
 namespace detail {
 namespace insn {
 
@@ -239,11 +258,7 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16x16& a)
     uint16x16 ones = make_uint(1);
     uint16x16 ca = bit_xor(a, 0x8000);
     uint32x8 sum = _mm256_madd_epi16(ca, ones);
-    // phadd is slower option on intel processors
-    uint32x4 sum2 = add(detail::extract128<0>(sum), detail::extract128<1>(sum));
-    sum2 = add(sum2, move4_l<2>(sum2));
-    sum2 = add(sum2, move4_l<1>(sum2));
-    return extract<0>(sum2) + 0x8000 * a.length;
+    return reduce_add(sum) + 0x8000 * a.length;
 }
 #endif
 
@@ -266,10 +281,7 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16<N>& a)
         uint32x8 isum = _mm256_madd_epi16(ca, ones);
         sum = add(sum, isum);
     }
-    uint32x4 sum2 = add(detail::extract128<0>(sum), detail::extract128<1>(sum));
-    sum2 = add(sum2, move4_l<2>(sum2));
-    sum2 = add(sum2, move4_l<1>(sum2));
-    return extract<0>(sum2) + 0x8000 * a.length;
+    return reduce_add(sum) + 0x8000 * a.length;
 #elif SIMDPP_USE_XOP
     uint32x4 sum = make_zero();
     for (unsigned j = 0; j < a.vec_length; ++j) {
@@ -328,10 +340,7 @@ SIMDPP_INL int32_t i_reduce_add(const int16x8& a)
 #elif SIMDPP_USE_SSE2
     int16x8 ones = make_uint(1);
     int32x4 sum = _mm_madd_epi16(a, ones);
-    // phadd is slower option on intel processors
-    sum = add(sum, move4_l<2>(sum));
-    sum = add(sum, move4_l<1>(sum));
-    return extract<0>(sum);
+    return reduce_add(sum);
 #elif SIMDPP_USE_NEON
     int32x4 a2 = vpaddlq_s16(a);
     int64x2 a3 = vpaddlq_s32(a2);
@@ -352,11 +361,7 @@ SIMDPP_INL int32_t i_reduce_add(const int16x16& a)
 {
     int16x16 ones = make_uint(1);
     int32x8 sum = _mm256_madd_epi16(a, ones);
-    // phadd is slower option on intel processors
-    int32x4 sum2 = add(detail::extract128<0>(sum), detail::extract128<1>(sum));
-    sum2 = add(sum2, move4_l<2>(sum2));
-    sum2 = add(sum2, move4_l<1>(sum2));
-    return extract<0>(sum2);
+    return reduce_add(sum);
 }
 #endif
 
@@ -378,18 +383,14 @@ SIMDPP_INL int32_t i_reduce_add(const int16<N>& a)
         int32x8 isum = _mm256_madd_epi16(a.vec(j), ones);
         sum = add(sum, isum);
     }
-    int32x4 sum2 = add(detail::extract128<0>(sum), detail::extract128<1>(sum));
-    sum2 = add(sum2, move4_l<2>(sum2));
-    sum2 = add(sum2, move4_l<1>(sum2));
-    return extract<0>(sum2);
+    return reduce_add(sum);
 #elif SIMDPP_USE_XOP
     int32x4 sum = make_zero();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         int32x4 isum = _mm_haddq_epi16(a.vec(j));
         sum = add(sum, isum);
     }
-    sum = add(sum, move4_l<2>(sum));
-    return extract<0>(sum);
+    return reduce_add(sum);
 #elif SIMDPP_USE_SSE2
     int32x4 sum = make_zero();
     int16x8 ones = make_int(1);
@@ -397,27 +398,20 @@ SIMDPP_INL int32_t i_reduce_add(const int16<N>& a)
         int32x4 isum = _mm_madd_epi16(a.vec(j), ones);
         sum = add(sum, isum);
     }
-    sum = add(sum, move4_l<2>(sum));
-    sum = add(sum, move4_l<1>(sum));
-    return extract<0>(sum);
+    return reduce_add(sum);
 #elif SIMDPP_USE_NEON
     int32x4 sum = make_zero();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         int32x4 isum = vpaddlq_s16(a.vec(j));
         sum = add(sum, isum);
     }
-    int64x2 sum2 = vpaddlq_s32(sum);
-    sum = sum2;
-    int32x2_t sum3 = vadd_s32(vget_low_s32(sum), vget_high_s32(sum));
-    return vget_lane_s32(sum3, 0);
+    return reduce_add(sum);
 #elif SIMDPP_USE_ALTIVEC
     int32x4 sum = make_zero();
     for (unsigned j = 0; j < a.vec_length; ++j) {
         sum = vec_sum4s((__vector int16_t)a.vec(j), (__vector int32_t)sum);
     }
-    sum = add(sum, move4_l<2>(sum));
-    sum = add(sum, move4_l<1>(sum));
-    return extract<0>(sum);
+    return reduce_add(sum);
 #endif
 }
 

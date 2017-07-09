@@ -48,11 +48,7 @@ SIMDPP_INL uint16_t i_reduce_max(const uint8x32& a)
 {
     uint8x16 r = detail::extract128<0>(a);
     r = max(r, detail::extract128<1>(a));
-    r = max(r, move16_l<8>(r));
-    r = max(r, move16_l<4>(r));
-    r = max(r, move16_l<2>(r));
-    r = max(r, move16_l<1>(r));
-    return extract<0>(r);
+    return i_reduce_max(r);
 }
 #endif
 
@@ -86,29 +82,35 @@ SIMDPP_INL int8_t i_reduce_max(const int8x16& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2
-    // no instruction for int8 max available, only for uint8
-    uint8x16 ca = bit_xor(a, 0x80);
-    return i_reduce_max(ca) ^ 0x80;
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    int8x16 r = max(a, move16_l<8>(a));
-    r = max(r, move16_l<4>(r));
-    r = max(r, move16_l<2>(r));
-    r = max(r, move16_l<1>(r));
-    return extract<0>(r);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-SIMDPP_INL int16_t i_reduce_max(const int8x32& a)
-{
-    int8x16 r = detail::extract128<0>(a);
-    r = max(r, detail::extract128<1>(a));
+#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    int8x16 r = a;
     r = max(r, move16_l<8>(r));
     r = max(r, move16_l<4>(r));
     r = max(r, move16_l<2>(r));
     r = max(r, move16_l<1>(r));
     return extract<0>(r);
+#elif SIMDPP_USE_SSE2
+    // no instruction for int8 max available, only for uint8
+    uint8x16 ca = bit_xor(a, 0x80);
+    return i_reduce_max(ca) ^ 0x80;
+#endif
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL int8_t i_reduce_max(const int8<32>& a)
+{
+    int8x16 r = detail::extract128<0>(a);
+    r = max(r, detail::extract128<1>(a));
+    return i_reduce_max(r);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL int8_t i_reduce_max(const int8<64>& a)
+{
+    int8<32> r = detail::extract256<0>(a);
+    r = max(r, detail::extract256<1>(a));
+    return i_reduce_max(r);
 }
 #endif
 
@@ -151,15 +153,15 @@ SIMDPP_INL uint16_t i_reduce_max(const uint16x8& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2
-    // no instruction for uint16 max available, only for int16
-    int16x8 ca = bit_xor(a, 0x8000);
-    return i_reduce_max(ca) ^ 0x8000;
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     uint16x8 r = max(a, move8_l<4>(a));
     r = max(r, move8_l<2>(r));
     r = max(r, move8_l<1>(r));
     return extract<0>(r);
+#elif SIMDPP_USE_SSE2
+    // no instruction for uint16 max available, only for int16
+    int16x8 ca = bit_xor(a, 0x8000);
+    return i_reduce_max(ca) ^ 0x8000;
 #endif
 }
 
@@ -168,10 +170,7 @@ SIMDPP_INL uint16_t i_reduce_max(const uint16x16& a)
 {
     uint16x8 r = detail::extract128<0>(a);
     r = max(r, detail::extract128<1>(a));
-    r = max(r, move8_l<4>(r));
-    r = max(r, move8_l<2>(r));
-    r = max(r, move8_l<1>(r));
-    return extract<0>(r);
+    return i_reduce_max(r);
 }
 #endif
 
@@ -226,10 +225,7 @@ SIMDPP_INL int16_t i_reduce_max(const int16x16& a)
 {
     int16x8 r = detail::extract128<0>(a);
     r = max(r, detail::extract128<1>(a));
-    r = max(r, move8_l<4>(r));
-    r = max(r, move8_l<2>(r));
-    r = max(r, move8_l<1>(r));
-    return extract<0>(r);
+    return i_reduce_max(r);
 }
 #endif
 
