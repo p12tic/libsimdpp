@@ -213,6 +213,13 @@ uint32<4> expr_eval(const expr_mul_lo<uint32<4,E1>,
     return a;
 #elif SIMDPP_USE_NEON
     return vmulq_u32(a, b);
+#elif SIMDPP_USE_VSX_207
+    __vector uint32_t va = a, vb = b;
+    __vector uint32_t vr;
+    // BUG: GCC does not have support for vmuluwm yet
+    // return vec_vmuluwm(a, b);
+    asm("vmuluwm	%0, %1, %2" : "=wa"(vr) : "wa"(va), "wa"(vb));
+    return vr;
 #elif SIMDPP_USE_ALTIVEC
     // implement in terms of 16-bit multiplies
     //   *  ah  al

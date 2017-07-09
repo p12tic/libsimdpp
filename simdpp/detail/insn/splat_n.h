@@ -248,9 +248,7 @@ template<unsigned s> SIMDPP_INL
 uint64x2 i_splat2(const uint64x2& a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::splat<s>(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (s == 0) {
         return permute2<0,0>(a);
     } else {
@@ -264,6 +262,10 @@ uint64x2 i_splat2(const uint64x2& a)
         z = vget_high_u64(a);
     }
     return (uint64x2_t) vdupq_lane_u64(z, 0);
+#elif SIMDPP_USE_VSX_207
+    return vec_splat((__vector uint64_t)a, s);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::splat<s>(a);
 #endif
 }
 
@@ -348,10 +350,12 @@ template<unsigned s> SIMDPP_INL
 float64x2 i_splat2(const float64x2& a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
-    return detail::null::splat<s>(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
     return permute2<s,s>(a);
+#elif SIMDPP_USE_VSX_206
+    return vec_splat((__vector double)a, s);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
+    return detail::null::splat<s>(a);
 #endif
 }
 

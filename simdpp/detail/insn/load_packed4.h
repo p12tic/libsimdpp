@@ -142,16 +142,16 @@ SIMDPP_INL void i_load_packed4(uint32<16>& a, uint32<16>& b, uint32<16>& c, uint
 SIMDPP_INL void i_load_packed4(uint64x2& a, uint64x2& b,
                                uint64x2& c, uint64x2& d, const char* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    detail::null::load_packed4(a, b, c, d, p);
-#elif SIMDPP_USE_NEON64
+#if SIMDPP_USE_NEON64
     auto r = vld4q_u64(reinterpret_cast<const uint64_t*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];
     d = r.val[3];
-#else
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
     v128_load_packed4(a, b, c, d, p);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    detail::null::load_packed4(a, b, c, d, p);
 #endif
 }
 
@@ -212,16 +212,16 @@ SIMDPP_INL void i_load_packed4(float64x2& a, float64x2& b, float64x2& c, float64
                                const char* p)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::load_packed4(a, b, c, d, p);
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206
+    v128_load_packed4(a, b, c, d, p);
 #elif SIMDPP_USE_NEON64
     auto r = vld4q_f64(reinterpret_cast<const double*>(p));
     a = r.val[0];
     b = r.val[1];
     c = r.val[2];
     d = r.val[3];
-#elif SIMDPP_USE_SSE2
-    v128_load_packed4(a, b, c, d, p);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::null::load_packed4(a, b, c, d, p);
 #endif
 }
 

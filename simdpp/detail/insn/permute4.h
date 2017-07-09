@@ -178,17 +178,17 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint64x4 i_permute4(const uint64x4& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_AVX2
+    return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+    return permute_emul<s0,s1,s2,s3>(a);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64x4 r;
     r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
     r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
     r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
     r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
     return r;
-#elif SIMDPP_USE_AVX2
-    return _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
-    return permute_emul<s0,s1,s2,s3>(a);
 #endif
 }
 
@@ -214,17 +214,17 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float64x4 i_permute4(const float64x4& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_AVX2
+    return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206
+    return permute_emul<s0,s1,s2,s3>(a);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     float64x4 r;
     r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
     r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
     r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
     r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
     return r;
-#elif SIMDPP_USE_AVX2
-    return _mm256_permute4x64_pd(a, _MM_SHUFFLE(s3, s2, s1, s0));
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
-    return permute_emul<s0,s1,s2,s3>(a);
 #endif
 }
 

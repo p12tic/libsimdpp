@@ -579,7 +579,7 @@ SIMDPP_INL uint64_t i_reduce_add(const uint64<8>& a)
 template<unsigned N>
 SIMDPP_INL uint64_t i_reduce_add(const uint64<N>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     uint64_t r = 0;
     for (unsigned j = 0; j < a.vec_length; ++j) {
         for (unsigned i = 0; i < a.base_length; i++) {

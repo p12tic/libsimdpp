@@ -160,9 +160,7 @@ SIMDPP_INL void i_store_last(char* p, const uint32<16>& a, unsigned n)
 SIMDPP_INL void i_store_last(char* p, const uint64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    detail::null::store_last(p, a, n);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (n == 1) {
         uint64x2 b = move2_l<1>(a);
         _mm_store_sd(reinterpret_cast<double*>(p+8), _mm_castsi128_pd(b));
@@ -171,6 +169,13 @@ SIMDPP_INL void i_store_last(char* p, const uint64x2& a, unsigned n)
     if (n == 1) {
         neon::store_lane<1,1>(p+8, a);
     }
+#elif SIMDPP_USE_VSX_207
+    if (n == 1) {
+        uint64_t* q = reinterpret_cast<uint64_t*>(p) + 1;
+        *q = vec_extract((__vector uint64_t) a, 1);
+    }
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    detail::null::store_last(p, a, n);
 #endif
 }
 
@@ -255,9 +260,7 @@ SIMDPP_INL void i_store_last(char* p, const float64x2& a, unsigned n)
 {
     double* q = reinterpret_cast<double*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::store_last(p, a, n);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (n == 1) {
         float64x2 b = zip2_hi(a, a);
         _mm_store_sd(q+1, b);
@@ -266,6 +269,12 @@ SIMDPP_INL void i_store_last(char* p, const float64x2& a, unsigned n)
     if (n == 1) {
         vst1_f64(q+1, vget_high_f64(a));
     }
+#elif SIMDPP_USE_VSX_206
+    if (n == 1) {
+        *(q+1) = vec_extract((__vector double) a, 1);
+    }
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    detail::null::store_last(p, a, n);
 #endif
 }
 

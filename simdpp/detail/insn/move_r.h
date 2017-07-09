@@ -148,7 +148,7 @@ uint32<N> i_move4_r(const uint32<N>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<2> i_move2_r(const uint64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::move_n_r<shift>(a);
 #else
     return (uint64<2>) i_move16_r<shift*8>(uint8<16>(a));
@@ -226,10 +226,10 @@ float32<N> i_move4_r(const float32<N>& a)
 template<unsigned shift> SIMDPP_INL
 float64<2> i_move2_r(const float64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::move_n_r<shift>(a);
-#else
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206
     return (float64<2>) i_move16_r<shift*8>(uint8<16>(a));
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    return detail::null::move_n_r<shift>(a);
 #endif
 }
 

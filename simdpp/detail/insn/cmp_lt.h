@@ -226,14 +226,16 @@ SIMDPP_INL mask_int32<16> i_cmp_lt(const uint32<16>& a, const uint32<16>& b)
 
 SIMDPP_INL mask_int64x2 i_cmp_lt(const int64x2& a, const int64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epi64(a, b);
 #elif SIMDPP_USE_AVX2
     return _mm_cmpgt_epi64(b, a);
 #elif SIMDPP_USE_NEON64
     return vcltq_s64(a, b);
+#elif SIMDPP_USE_VSX_207
+    return (__vector uint64_t) vec_cmplt((__vector int64_t) a, (__vector int64_t) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::cmp_lt(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -257,9 +259,7 @@ SIMDPP_INL mask_int64<8> i_cmp_lt(const int64<8>& a, const int64<8>& b)
 
 SIMDPP_INL mask_int64x2 i_cmp_lt(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
+#if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comlt_epu64(a, b);
 #elif SIMDPP_USE_AVX2
     uint64<2> ca = bit_xor(a, 0x8000000000000000); // sub
@@ -267,6 +267,10 @@ SIMDPP_INL mask_int64x2 i_cmp_lt(const uint64x2& a, const uint64x2& b)
     return _mm_cmpgt_epi64(cb, ca);
 #elif SIMDPP_USE_NEON64
     return vcltq_u64(a, b);
+#elif SIMDPP_USE_VSX_207
+    return (__vector uint64_t) vec_cmplt((__vector uint64_t) a, (__vector uint64_t) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::cmp_lt(a, b);
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
 #endif
@@ -324,14 +328,16 @@ SIMDPP_INL mask_float32<16> i_cmp_lt(const float32<16>& a, const float32<16>& b)
 
 SIMDPP_INL mask_float64x2 i_cmp_lt(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_lt(a, b);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_LT_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmplt_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vreinterpretq_f64_u64(vcltq_f64(a, b));
+#elif SIMDPP_USE_VSX_206
+    return (__vector double) vec_cmplt((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    return detail::null::cmp_lt(a, b);
 #endif
 }
 

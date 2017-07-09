@@ -21,7 +21,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 namespace detail {
 
-// on NEON mask-mask conversions may need unmasking or remasking
+// on certain architectures mask-mask conversions may need unmasking or remasking
 template<class R, class T> struct cast_mask_override { static const unsigned value = CAST_MASK_MEMCPY; };
 #if SIMDPP_USE_NEON_NO_FLT_SP
 template<unsigned N>
@@ -34,6 +34,12 @@ template<unsigned N>
 struct cast_mask_override<mask_int64<N>, mask_float64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
 template<unsigned N>
 struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigned value = CAST_MASK_REMASK; };
+#endif
+#if SIMDPP_USE_VSX_206 && !SIMDPP_USE_VSX_207
+template<unsigned N>
+struct cast_mask_override<mask_int64<N>, mask_float64<N>> { static const unsigned value = CAST_MASK_REMASK; };
+template<unsigned N>
+struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
 #endif
 
 } // namespace detail

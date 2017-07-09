@@ -18,6 +18,8 @@
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
+#include <simdpp/core/make_shuffle_bytes_mask.h>
+#include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/core/detail/subvec_extract.h>
 
@@ -87,14 +89,7 @@ float32<N> i_to_float32(const int32<N>& a)
 
 SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<float32x4> r;
-    r[0] = float(a.vec(0).el(0));
-    r[1] = float(a.vec(0).el(1));
-    r[2] = float(a.vec(1).el(0));
-    r[3] = float(a.vec(1).el(1));
-    return r;
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm256_cvtpd_ps(a);
 #elif SIMDPP_USE_SSE2
     float32x4 r1, r2;
@@ -106,6 +101,20 @@ SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
     float32<4> r;
     r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0)),
                           a.vec(1));
+    return r;
+#elif SIMDPP_USE_VSX_206
+    float32<4> lo, hi;
+    uint32<4> shuffle_mask;
+    lo = __builtin_vsx_xvcvdpsp((__vector double) a.vec(0));
+    hi = __builtin_vsx_xvcvdpsp((__vector double) a.vec(1));
+    shuffle_mask = make_shuffle_bytes16_mask<0,2,4,6>(shuffle_mask);
+    return shuffle_bytes16(lo, hi, shuffle_mask);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<float32x4> r;
+    r[0] = float(a.vec(0).el(0));
+    r[1] = float(a.vec(0).el(1));
+    r[2] = float(a.vec(1).el(0));
+    r[3] = float(a.vec(1).el(1));
     return r;
 #endif
 }

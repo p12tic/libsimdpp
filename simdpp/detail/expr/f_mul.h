@@ -33,6 +33,8 @@ float32<4> expr_eval(const expr_mul<float32<4,E1>,
     return _mm_mul_ps(a,b);
 #elif SIMDPP_USE_NEON_FLT_SP
     return vmulq_f32(a, b);
+#elif SIMDPP_USE_VSX_206
+    return vec_mul((__vector float) a, (__vector float) b);
 #elif SIMDPP_USE_ALTIVEC
     return vec_madd((__vector float)a, (__vector float)b,
                     (__vector float)(float32x4) make_zero());
@@ -78,12 +80,14 @@ float64<2> expr_eval(const expr_mul<float64<2,E1>,
 {
     float64<2> a = q.a.eval();
     float64<2> b = q.b.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::mul(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_mul_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vmulq_f64(a, b);
+#elif SIMDPP_USE_VSX_206
+    return vec_mul((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    return detail::null::mul(a, b);
 #endif
 }
 

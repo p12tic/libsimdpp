@@ -49,7 +49,10 @@ SIMDPP_INL bool i_test_bits_any(const uint8<16>& a) { return i_test_bits_any(uin
 
 SIMDPP_INL bool i_test_bits_any(const uint64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_VSX_207
+    uint64<2> z = make_zero();
+    return vec_any_gt((__vector uint64_t)a, (__vector uint64_t)z);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return null::test_bits_any(a);
 #else
     return i_test_bits_any(uint32<4>(a));
@@ -67,7 +70,9 @@ SIMDPP_INL bool i_test_bits_any(const float32<4>& a)
 
 SIMDPP_INL bool i_test_bits_any(const float64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_VSX_206
+    return i_test_bits_any(uint32<4>(a));
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return null::test_bits_any(a);
 #else
     return i_test_bits_any(uint32<4>(a));

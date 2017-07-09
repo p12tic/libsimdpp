@@ -68,16 +68,18 @@ float32<N> i_sqrt(const float32<N>& a)
 
 SIMDPP_INL float64x2 i_sqrt(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2
+    return _mm_sqrt_pd(a);
+#elif SIMDPP_USE_NEON64
+    return vsqrtq_f64(a);
+#elif SIMDPP_USE_VSX_206
+    return vec_sqrt((__vector double) a);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     float64x2 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = std::sqrt(a.el(i));
     }
     return r;
-#elif SIMDPP_USE_SSE2
-    return _mm_sqrt_pd(a);
-#elif SIMDPP_USE_NEON64
-    return vsqrtq_f64(a);
 #endif
 }
 

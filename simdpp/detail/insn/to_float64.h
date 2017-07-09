@@ -14,13 +14,13 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/combine.h>
-#include <simdpp/detail/mem_block.h>
+#include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/detail/subvec_insert.h>
 #include <simdpp/detail/extract128.h>
-#include <simdpp/core/detail/vec_insert.h>
+#include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -30,15 +30,7 @@ namespace insn {
 
 SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int32x4> ax(a);
-    float64x4 r;
-    r.vec(0).el(0) = double(ax[0]);
-    r.vec(0).el(1) = double(ax[1]);
-    r.vec(1).el(0) = double(ax[2]);
-    r.vec(1).el(1) = double(ax[3]);
-    return r;
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm256_cvtepi32_pd(a);
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
@@ -50,6 +42,24 @@ SIMDPP_INL float64x4 i_to_float64(const int32x4& a)
     r1 = vcvtq_f64_s64(vmovl_s32(vget_low_s32(a)));
     r2 = vcvtq_f64_s64(vmovl_s32(vget_high_s32(a)));
     return combine(r1, r2);
+#elif SIMDPP_USE_VSX_206
+    int32x4 u, lo, hi;
+    u = shift_r(a, 31);
+    lo = zip4_lo(u, a);
+    hi = zip4_hi(u, a);
+
+    float64x2 f_lo, f_hi;
+    f_lo = vec_ctf((__vector int64_t)(__vector int32_t) lo, 0);
+    f_hi = vec_ctf((__vector int64_t)(__vector int32_t) hi, 0);
+    return combine(f_lo, f_hi);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::mem_block<int32x4> ax(a);
+    float64x4 r;
+    r.vec(0).el(0) = double(ax[0]);
+    r.vec(0).el(1) = double(ax[1]);
+    r.vec(1).el(0) = double(ax[2]);
+    r.vec(1).el(1) = double(ax[3]);
+    return r;
 #endif
 }
 
@@ -95,15 +105,7 @@ float64<N> i_to_float64(const int32<N>& a)
 
 SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<float32x4> ax(a);
-    float64x4 r;
-    r.vec(0).el(0) = double(ax[0]);
-    r.vec(0).el(1) = double(ax[1]);
-    r.vec(1).el(0) = double(ax[2]);
-    r.vec(1).el(1) = double(ax[3]);
-    return r;
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm256_cvtps_pd(a);
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
@@ -115,6 +117,22 @@ SIMDPP_INL float64x4 i_to_float64(const float32x4& a)
     r1 = vcvt_f64_f32(vget_low_f32(a));
     r2 = vcvt_high_f64_f32(a);
     return combine(r1, r2);
+#elif SIMDPP_USE_VSX_206
+    float32<4> lo, hi;
+    lo = zip4_lo(a, (float32<4>) make_zero());
+    hi = zip4_hi(a, (float32<4>) make_zero());
+    float64<2> lo_f, hi_f;
+    lo_f = __builtin_vsx_xvcvspdp((__vector float) lo);
+    hi_f = __builtin_vsx_xvcvspdp((__vector float) hi);
+    return combine(lo_f, hi_f);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    detail::mem_block<float32x4> ax(a);
+    float64x4 r;
+    r.vec(0).el(0) = double(ax[0]);
+    r.vec(0).el(1) = double(ax[1]);
+    r.vec(1).el(0) = double(ax[2]);
+    r.vec(1).el(1) = double(ax[3]);
+    return r;
 #endif
 }
 

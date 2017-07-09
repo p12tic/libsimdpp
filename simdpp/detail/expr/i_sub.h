@@ -177,12 +177,14 @@ uint64<2> expr_eval(const expr_sub<uint64<2,E1>,
 {
     uint64<2> a = q.a.eval();
     uint64<2> b = q.b.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::sub(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sub_epi64(a, b);
 #elif SIMDPP_USE_NEON
     return vsubq_u64(a, b);
+#elif SIMDPP_USE_VSX_207
+    return vec_sub((__vector uint64_t) a, (__vector uint64_t) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::sub(a, b);
 #endif
 }
 

@@ -37,7 +37,8 @@ The library supports the following architectures and instruction sets:
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
  AVX-512BW, AVX-512DQ, XOP
  - ARM, ARM64: NEON
- - PowerPC: Altivec
+ - PowerPC 32-bit big-endian: Altivec, VSX v2.06, VSX v2.07
+ - PowerPC 64-bit little-endian: Altivec, VSX v2.06, VSX v2.07
 
 The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the

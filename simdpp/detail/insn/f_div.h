@@ -40,6 +40,8 @@ SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
     x = rcp_rh(x, b);
     x = rcp_rh(x, b);
     return mul(a, x);
+#elif SIMDPP_USE_VSX_206
+    return vec_div((__vector float) a, (__vector float) b);
 #elif SIMDPP_USE_ALTIVEC
     float32x4 x;
     x = rcp_e(b);
@@ -67,16 +69,18 @@ SIMDPP_INL float32<16> i_div(const float32<16>& a, const float32<16>& b)
 
 SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2
+    return _mm_div_pd(a, b);
+#elif SIMDPP_USE_NEON64
+    return vdivq_f64(a, b);
+#elif SIMDPP_USE_VSX_206
+    return vec_div((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     float64x2 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = a.el(i) / b.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2
-    return _mm_div_pd(a, b);
-#elif SIMDPP_USE_NEON64
-    return vdivq_f64(a, b);
 #endif
 }
 

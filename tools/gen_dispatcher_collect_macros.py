@@ -101,8 +101,18 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_VSX_206
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_206 SIMDPP_INSN_ID_VSX_206
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_206
+    #endif
+    #if SIMDPP_ARCH_PP_NS_USE_VSX_207
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_207 SIMDPP_INSN_ID_VSX_207
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_207
+    #endif
 
-    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE17(arch,         $n$
+    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE19(arch,         $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NULL,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE3,                                   $n$
@@ -118,7 +128,9 @@ single_arch_template = '''
         SIMDPP_DISPATCH_$num$_NS_ID_XOP,                                    $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NEON,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NEON_FLT_SP,                            $n$
-        SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC)
+        SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC,                                $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_VSX_206,                                $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_VSX_207)
 
     #define SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)          $n$
         ARRAY[$num$-1] = SIMDPP_DISPATCH_$num$_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));

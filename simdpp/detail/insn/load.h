@@ -43,7 +43,7 @@ SIMDPP_INL void i_load(uint32x4& a, const char* p) { uint8x16 r; i_load(r, p); a
 
 SIMDPP_INL void i_load(uint64x2& a, const char* p)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     const uint64_t* q = reinterpret_cast<const uint64_t*>(p);
     q = detail::assume_aligned(q, 16);
     detail::null::load(a, q);
@@ -71,12 +71,14 @@ SIMDPP_INL void i_load(float64x2& a, const char* p)
 {
     const double* q = reinterpret_cast<const double*>(p);
     q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
-    detail::null::load(a, q);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     a = _mm_load_pd(q);
 #elif SIMDPP_USE_NEON64
     a = vld1q_f64(q);
+#elif SIMDPP_USE_VSX_206
+    a = vec_ld(0, reinterpret_cast<const __vector double*>(q));
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
+    detail::null::load(a, q);
 #endif
 }
 

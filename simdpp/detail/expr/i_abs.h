@@ -176,9 +176,7 @@ template<class R, class E> SIMDPP_INL
 uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 {
     int64<2> a = q.a.eval();
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::abs(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     uint32x4 ta;
     int64x2 t;
     ta = (uint32x4) bit_and(a, 0x8000000000000000);
@@ -198,6 +196,11 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
+#elif SIMDPP_USE_VSX_207
+    // expands to 3 instructions
+    return (__vector uint64_t) vec_abs((__vector int64_t)a);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::abs(a);
 #endif
 }
 

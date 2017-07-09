@@ -225,15 +225,15 @@ void i_transpose2(uint32<N>& a0, uint32<N>& a1)
 
 SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    detail::null::transpose2(a0, a1);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_207
     uint64x2 b0;
     b0 = zip2_lo(a0, a1);
     a1 = zip2_hi(a0, a1);
     a0 = b0;
 #elif SIMDPP_USE_NEON
     neon::transpose2(a0, a1);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    detail::null::transpose2(a0, a1);
 #endif
 }
 
@@ -321,9 +321,7 @@ void i_transpose2(float32<N>& a0, float32<N>& a1)
 
 SIMDPP_INL void i_transpose2(float64x2& a0, float64x2& a1)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::transpose2(a0, a1);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206
     float64x2 b0;
     b0 = zip2_lo(a0, a1);
     a1 = zip2_hi(a0, a1);
@@ -333,6 +331,8 @@ SIMDPP_INL void i_transpose2(float64x2& a0, float64x2& a1)
     b0 = a0;  b1 = a1;
     i_transpose2(b0, b1);
     a0 = b0;  a1 = b1;
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    detail::null::transpose2(a0, a1);
 #endif
 }
 

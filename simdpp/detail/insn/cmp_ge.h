@@ -55,14 +55,16 @@ SIMDPP_INL mask_float32<16> i_cmp_ge(const float32<16>& a, const float32<16>& b)
 
 SIMDPP_INL mask_float64x2 i_cmp_ge(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::cmp_ge(a, b);
-#elif SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_GE_OQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpge_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vreinterpretq_f64_u64(vcgeq_f64(a, b));
+#elif SIMDPP_USE_VSX_206
+    return (__vector double) vec_cmpge((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    return detail::null::cmp_ge(a, b);
 #endif
 }
 

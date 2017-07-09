@@ -197,15 +197,15 @@ SIMDPP_INL uint32_t i_reduce_and(const uint32<N>& a)
 
 SIMDPP_INL uint64_t i_reduce_and(const uint64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
+    uint64x2 r = bit_and(a, move2_l<1>(a));
+    return extract<0>(r);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
-    uint64x2 r = bit_and(a, move2_l<1>(a));
-    return extract<0>(r);
 #endif
 }
 
@@ -233,7 +233,7 @@ SIMDPP_INL uint64_t i_reduce_and(const uint64<8>& a)
 template<unsigned N>
 SIMDPP_INL uint64_t i_reduce_and(const uint64<N>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     uint64_t r = 0xffffffffffffffff;
     for (unsigned j = 0; j < a.vec_length; ++j) {
         for (unsigned i = 0; i < a.base_length; i++) {

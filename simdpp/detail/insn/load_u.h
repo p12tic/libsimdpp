@@ -66,6 +66,8 @@ SIMDPP_INL void i_load_u(uint32x4& a, const char* p)
 {
 #if SIMDPP_USE_NULL
     detail::null::load(a, p);
+#elif SIMDPP_USE_VSX_206
+    a = vec_vsx_ld(0, reinterpret_cast<const uint32_t*>(p));
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
     uint8x16 b;
     i_load_u(b, p);
@@ -83,6 +85,16 @@ SIMDPP_INL void i_load_u(uint64x2& a, const char* p)
     uint8x16 b;
     i_load_u(b, p);
     a = b;
+#elif SIMDPP_USE_VSX_207
+#if SIMDPP_64_BITS
+    a = (__vector uint64_t) vec_vsx_ld(0, reinterpret_cast<const uint64_t*>(p));
+#else
+    // BUG: GCC does not support vec_vsx_ld in 32-bit mode even when
+    // VSX 2.07 is enabled
+    uint8x16 r;
+    i_load_u(r, p);
+    a = r;
+#endif
 #elif SIMDPP_USE_ALTIVEC
     detail::null::load(a, p);
 #elif SIMDPP_USE_NEON
@@ -99,6 +111,8 @@ SIMDPP_INL void i_load_u(float32x4& a, const char* p)
     a = _mm_loadu_ps(q);
 #elif SIMDPP_USE_NEON
     a = vld1q_f32(q);
+#elif SIMDPP_USE_VSX_206
+    a = vec_vsx_ld(0, q);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 b; (void) q;
     i_load_u(b, p);
@@ -109,12 +123,14 @@ SIMDPP_INL void i_load_u(float32x4& a, const char* p)
 SIMDPP_INL void i_load_u(float64x2& a, const char* p)
 {
     const double* q = reinterpret_cast<const double*>(p);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
-    detail::null::load(a, q);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     a = _mm_loadu_pd(q);
 #elif SIMDPP_USE_NEON64
     a = vld1q_f64(q);
+#elif SIMDPP_USE_VSX_206
+    a = vec_vsx_ld(0, q);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
+    detail::null::load(a, q);
 #else
     SIMDPP_NOT_IMPLEMENTED2(a, p);
 #endif

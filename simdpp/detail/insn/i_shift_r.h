@@ -297,9 +297,7 @@ SIMDPP_INL uint32<16> i_shift_r(const uint32<16>& a, unsigned count)
 
 SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::shift_r(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (count > 31) {
         int32x4 s, v;
         v = a;
@@ -324,6 +322,11 @@ SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(-int(count));
     return vshlq_s64(a, shift);
+#elif SIMDPP_USE_VSX_207
+    uint64x2 shift = splat(count);
+    return vec_sra((__vector int64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::shift_r(a, count);
 #endif
 }
 
@@ -365,15 +368,16 @@ SIMDPP_INL int64<8> i_shift_r(const int64<8>& a, unsigned count)
 
 SIMDPP_INL uint64x2 i_shift_r(const uint64x2& a, unsigned count)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::shift_r(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_srl_epi64(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(-int(count));
     return vshlq_u64(a, shift);
-#else
-    return SIMDPP_NOT_IMPLEMENTED2(a, count);
+#elif SIMDPP_USE_VSX_207
+    uint64x2 shift = splat(count);
+    return vec_sr((__vector uint64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::shift_r(a, count);
 #endif
 }
 
@@ -672,10 +676,13 @@ template<unsigned count> SIMDPP_INL
 int64x2 i_shift_r(const int64x2& a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
-    return i_shift_r(a, count);
-#elif SIMDPP_USE_NEON
+#if SIMDPP_USE_NEON
     return vshrq_n_s64(a, count);
+#elif SIMDPP_USE_VSX_207
+    uint64x2 shift = splat(count);
+    return vec_sra((__vector int64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC
+    return i_shift_r(a, count);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif
@@ -704,12 +711,15 @@ template<unsigned count> SIMDPP_INL
 uint64x2 i_shift_r(const uint64x2& a)
 {
     static_assert(count <= 64, "Shift out of bounds");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return i_shift_r(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_srli_epi64(a, count);
 #elif SIMDPP_USE_NEON
     return vshrq_n_u64(a, count);
+#elif SIMDPP_USE_VSX_207
+    uint64x2 shift = splat(count);
+    return vec_sr((__vector uint64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return i_shift_r(a, count);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
 #endif

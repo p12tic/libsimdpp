@@ -69,6 +69,12 @@ inline Arch this_compile_arch()
 #if SIMDPP_USE_ALTIVEC
     res |= Arch::POWER_ALTIVEC;
 #endif
+#if SIMDPP_USE_VSX_206
+    res |= Arch::POWER_VSX_206;
+#endif
+#if SIMDPP_USE_VSX_207
+    res |= Arch::POWER_VSX_207;
+#endif
     return res;
 }
 

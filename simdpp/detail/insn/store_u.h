@@ -62,6 +62,8 @@ SIMDPP_INL void i_store_u(char* p, const uint32<4>& a)
 {
 #if SIMDPP_USE_NEON
     vst1q_u32(reinterpret_cast<uint32_t*>(p), a);
+#elif SIMDPP_USE_VSX_206
+    vec_vsx_st((__vector uint32_t) a, 0, reinterpret_cast<__vector uint32_t*>(p));
 #else
     i_store_u(p, uint8<16>(a));
 #endif
@@ -71,6 +73,9 @@ SIMDPP_INL void i_store_u(char* p, const uint64<2>& a)
 {
 #if SIMDPP_USE_NEON
     vst1q_u64(reinterpret_cast<uint64_t*>(p), a);
+#elif SIMDPP_USE_VSX_207
+    vec_vsx_st((__vector uint32_t)(__vector uint64_t) a, 0,
+               reinterpret_cast<__vector uint32_t*>(p));
 #else
     i_store_u(p, uint8<16>(a));
 #endif
@@ -85,6 +90,8 @@ SIMDPP_INL void i_store_u(char* p, const float32x4& a)
     _mm_storeu_ps(q, a);
 #elif SIMDPP_USE_NEON
     vst1q_f32(q, a);
+#elif SIMDPP_USE_VSX_206
+    vec_vsx_st((__vector float) a, 0, q);
 #elif SIMDPP_USE_ALTIVEC
     uint32x4 b = bit_cast<uint32x4>(a.eval());
     i_store_u(reinterpret_cast<char*>(q), b);
@@ -94,12 +101,14 @@ SIMDPP_INL void i_store_u(char* p, const float32x4& a)
 SIMDPP_INL void i_store_u(char* p, const float64x2& a)
 {
     double* q = reinterpret_cast<double*>(p);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::store(q, a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     _mm_storeu_pd(q, a);
 #elif SIMDPP_USE_NEON64
     vst1q_f64(q, a);
+#elif SIMDPP_USE_VSX_206
+    vec_vsx_st((__vector double) a, 0, q);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    detail::null::store(q, a);
 #endif
 }
 

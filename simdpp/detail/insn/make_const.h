@@ -95,15 +95,18 @@ void i_make_const(float32<16>& v, const expr_vec_make_const<VE,N>& e, unsigned o
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(float64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<float64<2>, double>(e.val(off+0), e.val(off+1));
+#if SIMDPP_USE_SSE2
+    v = _mm_set_pd(e.val(off+1), e.val(off+0));
 #elif SIMDPP_USE_NEON64
     detail::mem_block<float64<2>> x;
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     v = x;
-#elif SIMDPP_USE_SSE2
-    v = _mm_set_pd(e.val(off+1), e.val(off+0));
+#elif SIMDPP_USE_VSX_206
+    __vector double r = { double(e.val(off+0)), double(e.val(off+1)) };
+    v = r;
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    v = detail::null::make_vec<float64<2>, double>(e.val(off+0), e.val(off+1));
 #endif
 }
 
@@ -407,9 +410,7 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,1>& e, unsigned off
 template<class VE, unsigned N> SIMDPP_INL
 void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<uint64<2>, uint64_t>(e.val(off+0), e.val(off+1));
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS && _MSC_VER
     // MSVC does not support _mm_set_epi64x in 32-bit mode
     uint64_t v1 = e.val(off+1);
@@ -423,6 +424,11 @@ void i_make_const(uint64<2>& v, const expr_vec_make_const<VE,N>& e, unsigned off
     x[0] = e.val(off+0);
     x[1] = e.val(off+1);
     v = x;
+#elif SIMDPP_USE_VSX_207
+    __vector uint64_t r = { (uint64_t)e.val(off+0), (uint64_t)e.val(off+1) };
+    v = r;
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    v = detail::null::make_vec<uint64<2>, uint64_t>(e.val(off+0), e.val(off+1));
 #endif
 }
 

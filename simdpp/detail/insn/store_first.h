@@ -35,7 +35,7 @@ SIMDPP_INL void i_store_first(char* p, const uint8x16& a, unsigned n)
     detail::null::store_first(p, a, n);
 #elif SIMDPP_USE_ALTIVEC
     uint8x16 mask = vec_lvsr(n, (const uint8_t*)NULL);
-    mask = cmp_lt(mask, 0x11);
+    mask = cmp_lt(mask, 0x10);
     uint8x16 b = load(p);
     b = blend(a, b, mask);
     store(p, b);
@@ -152,9 +152,7 @@ SIMDPP_INL void i_store_first(char* p, const uint32<16>& a, unsigned n)
 SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    detail::null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (n == 1) {
         _mm_store_sd(reinterpret_cast<double*>(p), _mm_castsi128_pd(a));
     }
@@ -162,6 +160,13 @@ SIMDPP_INL void i_store_first(char* p, const uint64x2& a, unsigned n)
     if (n == 1) {
         neon::store_lane<0,1>(p, a);
     }
+#elif SIMDPP_USE_VSX_207
+    if (n == 1) {
+        uint64_t* q = reinterpret_cast<uint64_t*>(p);
+        *q = vec_extract((__vector uint64_t) a, 0);
+    }
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    detail::null::store_first(p, a, n);
 #endif
 }
 
@@ -243,9 +248,7 @@ SIMDPP_INL void i_store_first(char* p, const float32<16>& a, unsigned n)
 SIMDPP_INL void i_store_first(char* p, const float64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::null::store_first(p, a, n);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (n == 1) {
         _mm_store_sd(reinterpret_cast<double*>(p), a);
     }
@@ -253,6 +256,13 @@ SIMDPP_INL void i_store_first(char* p, const float64x2& a, unsigned n)
     if (n == 1) {
         vst1_f64(reinterpret_cast<double*>(p), vget_low_f64(a));
     }
+#elif SIMDPP_USE_VSX_206
+    if (n == 1) {
+        double* q = reinterpret_cast<double*>(p);
+        *q = vec_extract((__vector double) a, 0);
+    }
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    detail::null::store_first(p, a, n);
 #endif
 }
 

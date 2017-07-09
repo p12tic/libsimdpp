@@ -407,6 +407,37 @@ set(SIMDPP_POWER_ALTIVEC_TEST_CODE
         vec_st(v, 0, a);
     }"
 )
+
+list(APPEND SIMDPP_ARCHS_PRI "POWER_VSX_206")
+set(SIMDPP_POWER_VSX_206_CXX_FLAGS "-mvsx")
+set(SIMDPP_POWER_VSX_206_DEFINE "SIMDPP_ARCH_POWER_VSX_206")
+set(SIMDPP_POWER_VSX_206_SUFFIX "-power_vsx_2.06")
+set(SIMDPP_POWER_VSX_206_TEST_CODE
+    "#include <altivec.h>
+    int main()
+    {
+        volatile unsigned char a[16];
+        vector unsigned char v = vec_vsx_ld(0, a);
+        v = vec_add(v, v);
+        vec_vsx_st(v, 0, a);
+    }"
+)
+
+list(APPEND SIMDPP_ARCHS_PRI "POWER_VSX_207")
+set(SIMDPP_POWER_VSX_207_CXX_FLAGS "-mvsx -mcpu=power8")
+set(SIMDPP_POWER_VSX_207_DEFINE "SIMDPP_ARCH_POWER_VSX_207")
+set(SIMDPP_POWER_VSX_207_SUFFIX "-power_vsx_2.07")
+set(SIMDPP_POWER_VSX_207_TEST_CODE
+    "#include <altivec.h>
+    int main()
+    {
+        volatile unsigned char a[16];
+        vector unsigned char v = vec_vsx_ld(0, a);
+        v = vec_vpopcnt(v);
+        vec_vsx_st(v, 0, a);
+    }"
+)
+
 set(SIMDPP_ARCHS "${SIMDPP_ARCHS_PRI};${SIMDPP_ARCHS_SEC}")
 
 # ------------------------------------------------------------------------------
@@ -485,6 +516,7 @@ endfunction()
 #   X86_AVX, X86_AVX2, X86_FMA3, X86_FMA4,
 #   X86_AVX512F, X86_AVX512BW, X86_AVX512DQ, X86_XOP,
 #   ARM_NEON, ARM_NEON_FLT_SP, ARM64_NEON,
+#   POWER_ALTIVEC, POWER_VSX_206, POWER_VSX_207
 #
 function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
@@ -628,6 +660,12 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
     endif()
     if(DEFINED ARCH_SUPPORTED_POWER_ALTIVEC)
         list(APPEND ALL_ARCHS "POWER_ALTIVEC")
+    endif()
+    if(DEFINED ARCH_SUPPORTED_POWER_VSX_206)
+        list(APPEND ALL_ARCHS "POWER_VSX_206")
+    endif()
+    if(DEFINED ARCH_SUPPORTED_POWER_VSX_207)
+        list(APPEND ALL_ARCHS "POWER_VSX_207")
     endif()
     set(${ALL_ARCHS_VAR} "${ALL_ARCHS}" PARENT_SCOPE)
 endfunction()

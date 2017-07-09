@@ -58,7 +58,13 @@ enum class Arch : std::uint32_t {
     ARM_NEON_FLT_SP = 1 << 1,
 
     /// Indicates POWER ALTIVEC support.
-    POWER_ALTIVEC = 1 << 0
+    POWER_ALTIVEC = 1 << 0,
+
+    /// Indicates POWER VSX support available since Power ISA 2.06
+    POWER_VSX_206 = 1 << 1,
+
+    /// Indicates POWER VSX support available since Power ISA 2.07
+    POWER_VSX_207 = 1 << 2
 };
 
 /// Bitwise operators for @c Arch

@@ -127,12 +127,7 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    float64<2> r;
-    r.el(0) = s0 < 2 ? a.el(s0) : b.el(s0-2);
-    r.el(1) = s1 < 2 ? a.el(s1) : b.el(s1-2);
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
         return _mm_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
     } else if (s0 >= 2 && s1 >= 2) {
@@ -150,6 +145,22 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
     }
 #elif SIMDPP_USE_NEON64
     return (float64<2>)detail::neon_shuffle_int64x2::shuffle2x2<s0, s1>(uint64<2>(a), uint64<2>(b));
+#elif SIMDPP_USE_VSX_206
+    __vector double da = a, db = b;
+    if (s0 < 2 && s1 < 2) {
+        return vec_xxpermdi(da, da, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+    } else if (s0 >= 2 && s1 >= 2) {
+        return vec_xxpermdi(db, db, SIMDPP_SHUFFLE_MASK_2x2(s0-2,s1-2));
+    } else if (s0 < 2) { // s1 >= 2
+        return vec_xxpermdi(da, db, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+    } else { // s0 >= 2, s1 < 2
+        return vec_xxpermdi(db, da, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+    }
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    float64<2> r;
+    r.el(0) = s0 < 2 ? a.el(s0) : b.el(s0-2);
+    r.el(1) = s1 < 2 ? a.el(s1) : b.el(s1-2);
+    return r;
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
@@ -308,12 +319,7 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    uint64<2> r;
-    r.el(0) = s0 < 2 ? a.el(s0) : b.el(s0-2);
-    r.el(1) = s1 < 2 ? a.el(s1) : b.el(s1-2);
-    return r;
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
         return _mm_shuffle_epi32(a, _MM_SHUFFLE(s1*2+1,s1*2,s0*2+1,s0*2));
     } else if (s0 >= 2 && s1 >= 2) {
@@ -347,6 +353,22 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
     }
 #elif SIMDPP_USE_NEON
     return detail::neon_shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
+#elif SIMDPP_USE_VSX_207
+    __vector uint64_t da = a, db = b;
+    if (s0 < 2 && s1 < 2) {
+        return vec_xxpermdi(da, da, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+    } else if (s0 >= 2 && s1 >= 2) {
+        return vec_xxpermdi(db, db, SIMDPP_SHUFFLE_MASK_2x2(s0-2,s1-2));
+    } else if (s0 < 2) { // s1 >= 2
+        return vec_xxpermdi(da, db, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+    } else { // s0 >= 2, s1 < 2
+        return vec_xxpermdi(db, da, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+    }
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    uint64<2> r;
+    r.el(0) = s0 < 2 ? a.el(s0) : b.el(s0-2);
+    r.el(1) = s1 < 2 ? a.el(s1) : b.el(s1-2);
+    return r;
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif

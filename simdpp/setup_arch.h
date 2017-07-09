@@ -95,6 +95,16 @@
 #else
 #define SIMDPP_USE_ALTIVEC 0
 #endif
+#if SIMDPP_ARCH_PP_USE_VSX_206
+#define SIMDPP_USE_VSX_206 1
+#else
+#define SIMDPP_USE_VSX_206 0
+#endif
+#if SIMDPP_ARCH_PP_USE_VSX_207
+#define SIMDPP_USE_VSX_207 1
+#else
+#define SIMDPP_USE_VSX_207 0
+#endif
 
 // Generate SIMDPP_ARCH_NAMESPACE. It's a human-readable identifier depending
 // on the enabled instruction sets
@@ -178,14 +188,24 @@
 #else
 #define SIMDPP_NS_ID_ALTIVEC
 #endif
+#if SIMDPP_ARCH_PP_NS_USE_VSX_206
+#define SIMDPP_NS_ID_VSX_206 SIMDPP_INSN_ID_VSX_206
+#else
+#define SIMDPP_NS_ID_VSX_206
+#endif
+#if SIMDPP_ARCH_PP_NS_USE_VSX_207
+#define SIMDPP_NS_ID_VSX_207 SIMDPP_INSN_ID_VSX_207
+#else
+#define SIMDPP_NS_ID_VSX_207
+#endif
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE17(arch, \
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE19(arch, \
 	SIMDPP_NS_ID_NULL, SIMDPP_NS_ID_SSE2, SIMDPP_NS_ID_SSE3,                \
     SIMDPP_NS_ID_SSSE3, SIMDPP_NS_ID_SSE4_1, SIMDPP_NS_ID_AVX,              \
     SIMDPP_NS_ID_AVX2, SIMDPP_NS_ID_AVX512F, SIMDPP_NS_ID_AVX512BW,         \
     SIMDPP_NS_ID_AVX512DQ, SIMDPP_NS_ID_FMA3, SIMDPP_NS_ID_FMA4,            \
     SIMDPP_NS_ID_XOP, SIMDPP_NS_ID_NEON, SIMDPP_NS_ID_NEON_FLT_SP,          \
-    SIMDPP_NS_ID_ALTIVEC)
+    SIMDPP_NS_ID_ALTIVEC, SIMDPP_NS_ID_VSX_206, SIMDPP_NS_ID_VSX_207)
 
 // Include headers relevant for the enabled instruction sets.
 #if SIMDPP_USE_SSE2

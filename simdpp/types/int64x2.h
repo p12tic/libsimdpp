@@ -38,6 +38,8 @@ public:
     using native_type = __m128i;
 #elif SIMDPP_USE_NEON
     using native_type = int64x2_t;
+#elif SIMDPP_USE_VSX_207
+    using native_type = __vector int64_t;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     using native_type = detail::array<int64_t, 2>;
 #endif
@@ -79,7 +81,7 @@ public:
 
     SIMDPP_INL int64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     /// For internal use only
     const int64_t& el(unsigned i) const  { return d_[i]; }
           int64_t& el(unsigned i)        { return d_[i]; }
@@ -103,6 +105,8 @@ public:
     using native_type = __m128i;
 #elif SIMDPP_USE_NEON
     using native_type = uint64x2_t;
+#elif SIMDPP_USE_VSX_207
+    using native_type = __vector uint64_t;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     using native_type = detail::array<uint64_t, 2>;
 #endif
@@ -144,7 +148,7 @@ public:
 
     SIMDPP_INL uint64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     /// For uinternal use only
     const uint64_t& el(unsigned i) const  { return d_[i]; }
           uint64_t& el(unsigned i)        { return d_[i]; }
@@ -168,6 +172,8 @@ public:
     using native_type = __m128i;
 #elif SIMDPP_USE_NEON
     using native_type = uint64x2_t;
+#elif SIMDPP_USE_VSX_207
+    using native_type = __vector uint64_t;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     using native_type = detail::array<bool, 2>;
 #endif
@@ -178,7 +184,7 @@ public:
 
     SIMDPP_INL mask_int64<2>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207
     SIMDPP_INL mask_int64<2>(const uint64<2>& d) : d_(d) {}
 #endif
 
@@ -196,14 +202,14 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint64<2> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
         return detail::null::unmask_mask<uint64<2>>(*this);
     #else
         return uint64<2>(d_);
     #endif
     }
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     bool& el(unsigned id) { return d_[id]; }
     const bool& el(unsigned id) const { return d_[id]; }
 #endif

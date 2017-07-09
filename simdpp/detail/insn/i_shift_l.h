@@ -166,13 +166,16 @@ SIMDPP_INL uint32<16> i_shift_l(const uint32<16>& a, unsigned count)
 
 SIMDPP_INL uint64x2 i_shift_l(const uint64x2& a, unsigned count)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::shift_l(a, count);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_sll_epi64(a, _mm_cvtsi32_si128(count));
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(count);
     return vshlq_u64(a, shift);
+#elif SIMDPP_USE_VSX_207
+    uint64x2 shift = splat(count);
+    return vec_sl((__vector uint64_t)a, (__vector uint64_t)shift);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    return detail::null::shift_l(a, count);
 #endif
 }
 

@@ -247,7 +247,7 @@ SIMDPP_INL mask_int32<16> i_bit_and(const mask_int32<16>& a, const mask_int32<16
 // uint64, uint64
 SIMDPP_INL uint64<2> i_bit_and(const uint64<2>& a, const uint64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::bit_and(a, b);
 #else
     return uint64<2>(i_bit_and(uint8<16>(a), uint8<16>(b)));
@@ -272,7 +272,7 @@ SIMDPP_INL uint64<8> i_bit_and(const uint64<8>& a, const uint64<8>& b)
 // uint64, mask_int64
 SIMDPP_INL uint64<2> i_bit_and(const uint64<2>& a, const mask_int64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::bit_and_vm(a, b);
 #else
     return i_bit_and(a, uint64<2>(b));
@@ -297,7 +297,7 @@ SIMDPP_INL uint64<8> i_bit_and(const uint64<8>& a, const mask_int64<8>& b)
 // mask_int64, mask_int64
 SIMDPP_INL mask_int64<2> i_bit_and(const mask_int64<2>& a, const mask_int64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::bit_and_mm(a, b);
 #else
     return (mask_int64<2>) (uint64<2>) i_bit_and(uint8<16>(a), uint8<16>(b));
@@ -406,13 +406,15 @@ SIMDPP_INL mask_float32<16> i_bit_and(const mask_float32<16>& a, const mask_floa
 // float64, float64
 SIMDPP_INL float64<2> i_bit_and(const float64<2>& a, const float64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::bit_and(a, b);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     return _mm_and_pd(a, b);
 #elif SIMDPP_USE_NEON64
     return vreinterpretq_f64_u64(vandq_u64(vreinterpretq_u64_f64(a),
                                            vreinterpretq_u64_f64(b)));
+#elif SIMDPP_USE_VSX_206
+    return vec_and((__vector double) a, (__vector double) b);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    return detail::null::bit_and(a, b);
 #endif
 }
 
@@ -463,7 +465,7 @@ SIMDPP_INL float64<8> i_bit_and(const float64<8>& a, const mask_float64<8>& b)
 // mask_float64, mask_float64
 SIMDPP_INL mask_float64<2> i_bit_and(const mask_float64<2>& a, const mask_float64<2>& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_206)
     return detail::null::bit_and_mm(a, b);
 #else
     return mask_float64<2>(i_bit_and(float64<2>(a), float64<2>(b)));

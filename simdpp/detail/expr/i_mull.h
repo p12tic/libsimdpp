@@ -31,10 +31,10 @@ namespace detail {
     selected for multiplication. Trying to abstract this incurs definite
     overhead.
 
-     - SSE2-SSE4.1 and AVX2 provide only instructions with interfaces similar
-        to mul_lo and mul_hi. The result vectors must be interleaved to obtain
-        contiguous result values. Multiplying 2 vectors always incurs
-        overhead of at least two interleaving instructions.
+     - SSE2-SSE4.1, AVX2, ALTIVEC and VSX provide only instructions with
+        interfaces similar to mul_lo and mul_hi. The result vectors must be
+        interleaved to obtain contiguous result values. Multiplying 2 vectors
+        always incurs overhead of at least two interleaving instructions.
 
      - AVX512 only provides 32-bit integer support. Widening multiplication
         can be done only by using PMULDQ, which takes odd elements and produces
@@ -45,9 +45,6 @@ namespace detail {
      - NEON, NEONv2 provide instructions that take elements of either the lower
         or higher halves of two 128-bit vectors and multiply them. No
         additional overhead is incurred to obtain contiguous result values.
-
-     - ALTIVEC hav multiply odd and multiply even instructions. No additional
-        overhead is incurred to obtain contiguous result values.
 
     The abstraction below uses the NEON model. No additional overhead is
     incurred on SSE/AVX and NEON. On ALTIVEC, a single additional permute
@@ -227,6 +224,16 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
     int64x2 lo = vmull_s32(vget_low_s32(a), vget_low_s32(b));
     int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
     return combine(lo, hi);
+#elif SIMDPP_USE_VSX_207
+    __vector int32_t va = a, vb = b;
+    __vector int64_t vlo, vhi;
+    // BUG: GCC does not have support for vmulesw and vmulosw yet
+    // int64x2 lo = vec_vmulesw((__vector int32_t)a, (__vector int32_t)b);
+    // int64x2 hi = vec_vmulosw((__vector int32_t)a, (__vector int32_t)b);
+    asm("vmulesw	%0, %1, %2" : "=wa"(vlo) : "wa"(va), "wa"(vb));
+    asm("vmulosw	%0, %1, %2" : "=wa"(vhi) : "wa"(va), "wa"(vb));
+    int64x2 lo = vlo, hi = vhi;
+    return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
 #endif
@@ -292,6 +299,16 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
     uint64x2 lo = vmull_u32(vget_low_u32(a), vget_low_u32(b));
     uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
     return combine(lo, hi);
+#elif SIMDPP_USE_VSX_207
+    __vector uint32_t va = a, vb = b;
+    __vector uint64_t vlo, vhi;
+    // BUG: GCC does not have support for vmuleuw and vmulouw yet
+    // int64x2 lo = vec_vmuleuw((__vector int32_t)a, (__vector int32_t)b);
+    // int64x2 hi = vec_vmulouw((__vector int32_t)a, (__vector int32_t)b);
+    asm("vmuleuw	%0, %1, %2" : "=wa"(vlo) : "wa"(va), "wa"(vb));
+    asm("vmulouw	%0, %1, %2" : "=wa"(vhi) : "wa"(va), "wa"(vb));
+    uint64x2 lo = vlo, hi = vhi;
+    return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #elif SIMDPP_USE_ALTIVEC
     mem_block<uint32<4>> ba = a;
     mem_block<uint32<4>> bb = b;
