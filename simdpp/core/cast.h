@@ -29,7 +29,7 @@ struct cast_mask_override<mask_float32<N>, mask_int32<N>> { static const unsigne
 template<unsigned N>
 struct cast_mask_override<mask_int32<N>, mask_float32<N>> { static const unsigned value = CAST_MASK_REMASK; };
 #endif
-#if SIMDPP_USE_NEON
+#if SIMDPP_USE_NEON && SIMDPP_32_BITS
 template<unsigned N>
 struct cast_mask_override<mask_int64<N>, mask_float64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
 template<unsigned N>
