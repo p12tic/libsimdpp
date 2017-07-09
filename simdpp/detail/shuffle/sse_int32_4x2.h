@@ -44,12 +44,18 @@ struct impl_selector {
 #else
     static const bool is5_blend = false;
 #endif
+#if SIMDPP_USE_SSSE3
+    static const bool is6_align = (s0==s1-1) && (s1==s2-1) && (s2==s3-1);
+#else
+    static const bool is6_align = false;
+#endif
 
     static const int impl = is1_zip_lo1 ? 1 :
                             is2_zip_lo2 ? 2 :
                             is3_zip_hi1 ? 3 :
                             is4_zip_hi2 ? 4 :
-                            is5_blend ? 5 : 6;
+                            is5_blend ? 5 :
+                            is6_align ? 6 : 7;
 };
 
 template<unsigned N> struct shuffle_impl {};
@@ -147,7 +153,31 @@ template<> struct shuffle_impl<5> {
 };
 #endif
 
+#if SIMDPP_USE_SSSE3
 template<> struct shuffle_impl<6> {
+    template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+    static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
+    {
+        return _mm_alignr_epi8(b, a, s0*4);
+    }
+#if SIMDPP_USE_AVX2
+    template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+    static uint32<8> run(const uint32<8>& a, const uint32<8>& b)
+    {
+        return _mm256_alignr_epi8(b, a, s0*4);
+    }
+#endif
+#if SIMDPP_USE_AVX512F
+    template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+    static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
+    {
+        return _mm512_alignr_epi32(b, a, s0);
+    }
+#endif
+};
+#endif
+
+template<> struct shuffle_impl<7> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
     {
