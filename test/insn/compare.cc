@@ -30,8 +30,10 @@ void test_compare_n(TestResultsSet& tc)
     using int16_n = int16<B/2>;
     using uint32_n = uint32<B/4>;
     using int32_n = int32<B/4>;
+#if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     using uint64_n = uint64<B/8>;
     using int64_n = int64<B/8>;
+#endif
     using float32_n = float32<B/4>;
     using float64_n = float64<B/8>;
 
