@@ -199,11 +199,11 @@ SIMDPP_INL void i_load_u(uint64<8>& a,  const char* p)
 }
 SIMDPP_INL void i_load_u(float32<16>& a, const char* p)
 {
-    a = _mm512_loadu_ps(p);
+    a = _mm512_loadu_ps(reinterpret_cast<const float*>(p));
 }
 SIMDPP_INL void i_load_u(float64<8>& a, const char* p)
 {
-    a = _mm512_loadu_pd(p);
+    a = _mm512_loadu_pd(reinterpret_cast<const double*>(p));
 }
 #endif
 

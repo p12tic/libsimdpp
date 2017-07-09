@@ -139,11 +139,11 @@ SIMDPP_INL void i_load(uint64<8>& a,  const char* p)
 }
 SIMDPP_INL void i_load(float32<16>& a, const char* p)
 {
-    a = _mm512_load_ps(p);
+    a = _mm512_load_ps(reinterpret_cast<const float*>(p));
 }
 SIMDPP_INL void i_load(float64<8>& a, const char* p)
 {
-    a = _mm512_load_pd(p);
+    a = _mm512_load_pd(reinterpret_cast<const double*>(p));
 }
 #endif
 
