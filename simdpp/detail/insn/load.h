@@ -34,7 +34,7 @@ SIMDPP_INL void i_load(uint8x16& a, const char* p)
 #elif SIMDPP_USE_NEON
     a = vreinterpretq_u8_u64(vld1q_u64(reinterpret_cast<const uint64_t*>(p)));
 #elif SIMDPP_USE_ALTIVEC
-    a = vec_ldl(0, reinterpret_cast<const uint8_t*>(p));
+    a = vec_ld(0, reinterpret_cast<const uint8_t*>(p));
 #endif
 }
 
@@ -63,7 +63,7 @@ SIMDPP_INL void i_load(float32x4& a, const char* p)
 #elif SIMDPP_USE_NEON
     a = vld1q_f32(q);
 #elif SIMDPP_USE_ALTIVEC
-    a = vec_ldl(0, q);
+    a = vec_ld(0, q);
 #endif
 }
 
