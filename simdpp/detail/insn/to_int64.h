@@ -49,7 +49,7 @@ SIMDPP_INL int64x4 i_to_int64(const int32x4& a)
     r2 = vmovl_s32(vget_high_s32(a));
     return combine(r1, r2);
 #elif SIMDPP_USE_MSA
-    int32x4 sign = shift_r<32>(a);
+    int32x4 sign = shift_r<31>(a);
     int64x2 lo, hi;
     lo = zip4_lo(a, sign);
     hi = zip4_hi(a, sign);

@@ -237,7 +237,7 @@ uint8<N> sse_shift_l_8(const uint8<N>& a)
 template<unsigned count> SIMDPP_INL
 uint8x16 i_shift_l(const uint8x16& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    static_assert(count < 8, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_l(a, count);
 #elif SIMDPP_USE_SSE2
@@ -256,7 +256,7 @@ uint8x16 i_shift_l(const uint8x16& a)
 template<unsigned count> SIMDPP_INL
 uint8<32> i_shift_l(const uint8<32>& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    static_assert(count < 8, "Shift out of bounds");
     return sse_shift_l_8<count>(a);
 }
 #endif
@@ -265,7 +265,7 @@ uint8<32> i_shift_l(const uint8<32>& a)
 template<unsigned count> SIMDPP_INL
 uint8<64> i_shift_l(const uint8<64>& a)
 {
-    static_assert(count <= 8, "Shift out of bounds");
+    static_assert(count < 8, "Shift out of bounds");
     return sse_shift_l_8<count>(a);
 }
 #endif
@@ -275,7 +275,7 @@ uint8<64> i_shift_l(const uint8<64>& a)
 template<unsigned count> SIMDPP_INL
 uint16x8 i_shift_l(const uint16x8& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    static_assert(count < 16, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_l(a, count);
 #elif SIMDPP_USE_SSE2
@@ -294,7 +294,7 @@ uint16x8 i_shift_l(const uint16x8& a)
 template<unsigned count> SIMDPP_INL
 uint16x16 i_shift_l(const uint16x16& a)
 {
-    static_assert(count <= 16, "Shift out of bounds");
+    static_assert(count < 16, "Shift out of bounds");
     return _mm256_slli_epi16(a, count);
 }
 #endif
@@ -313,7 +313,7 @@ uint16<32> i_shift_l(const uint16<32>& a)
 template<unsigned count> SIMDPP_INL
 uint32x4 i_shift_l(const uint32x4& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    static_assert(count < 32, "Shift out of bounds");
 #if SIMDPP_USE_NULL
     return i_shift_l(a, count);
 #elif SIMDPP_USE_SSE2
@@ -332,7 +332,7 @@ uint32x4 i_shift_l(const uint32x4& a)
 template<unsigned count> SIMDPP_INL
 uint32x8 i_shift_l(const uint32x8& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    static_assert(count < 32, "Shift out of bounds");
     return _mm256_slli_epi32(a, count);
 }
 #endif
@@ -341,7 +341,7 @@ uint32x8 i_shift_l(const uint32x8& a)
 template<unsigned count> SIMDPP_INL
 uint32<16> i_shift_l(const uint32<16>& a)
 {
-    static_assert(count <= 32, "Shift out of bounds");
+    static_assert(count < 32, "Shift out of bounds");
     return _mm512_slli_epi32(a, count);
 }
 #endif
@@ -351,7 +351,7 @@ uint32<16> i_shift_l(const uint32<16>& a)
 template<unsigned count> SIMDPP_INL
 uint64x2 i_shift_l(const uint64x2& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    static_assert(count < 64, "Shift out of bounds");
 #if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return i_shift_l(a, count);
 #elif SIMDPP_USE_SSE2
@@ -369,7 +369,7 @@ uint64x2 i_shift_l(const uint64x2& a)
 template<unsigned count> SIMDPP_INL
 uint64x4 i_shift_l(const uint64x4& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    static_assert(count < 64, "Shift out of bounds");
     return _mm256_slli_epi64(a, count);
 }
 #endif
@@ -378,7 +378,7 @@ uint64x4 i_shift_l(const uint64x4& a)
 template<unsigned count> SIMDPP_INL
 uint64<8> i_shift_l(const uint64<8>& a)
 {
-    static_assert(count <= 64, "Shift out of bounds");
+    static_assert(count < 64, "Shift out of bounds");
     return _mm512_slli_epi64(a, count);
 }
 #endif
@@ -391,20 +391,15 @@ V i_shift_l(const V& a)
     SIMDPP_VEC_ARRAY_IMPL1(V, i_shift_l<count>, a);
 }
 
-template<bool no_shift, bool full_shift>
+template<bool no_shift>
 struct i_shift_l_wrapper {
     template<unsigned count, class V>
     static SIMDPP_INL V run(const V& arg) { return i_shift_l<count>(arg); }
 };
 template<>
-struct i_shift_l_wrapper<true, false> {
+struct i_shift_l_wrapper<true> {
     template<unsigned count, class V>
     static SIMDPP_INL V run(const V& arg) { return arg; }
-};
-template<>
-struct i_shift_l_wrapper<false, true> {
-    template<unsigned count, class V>
-    static SIMDPP_INL V run(const V&) { return (V) make_zero(); }
 };
 
 } // namespace insn

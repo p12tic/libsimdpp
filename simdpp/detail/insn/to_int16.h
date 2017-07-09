@@ -123,7 +123,7 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     r.vec(1) = vmovl_s8(vget_high_s8(a));
     return r;
 #elif SIMDPP_USE_MSA
-    int8x16 sign = shift_r<8>(a);
+    int8x16 sign = shift_r<7>(a);
     int16x8 lo, hi;
     lo = zip16_lo(a, sign);
     hi = zip16_hi(a, sign);
