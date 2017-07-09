@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** De-interleaves the even(higher) elements of two vectors
 
     For example, in case of int8x16:
@@ -135,7 +134,6 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     rb = b.wrapped().eval();
     return detail::insn::i_unzip2_hi(ra, rb);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

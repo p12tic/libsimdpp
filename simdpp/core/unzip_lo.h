@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** De-interleaves the odd(lower) elements of two int8x16 vectors
 
     For example, in case of int8x16:
@@ -139,7 +138,6 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     rb = b.wrapped().eval();
     return detail::insn::i_unzip2_lo(ra, rb);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

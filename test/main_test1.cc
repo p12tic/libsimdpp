@@ -6,6 +6,7 @@
 */
 
 #include "utils/test_results.h"
+#include "utils/test_reporter.h"
 #include "insn/tests.h"
 #include <simdpp/simd.h>
 #include <algorithm>
@@ -71,6 +72,13 @@ bool find_arch_null(const simdpp::detail::FnVersion& a)
     return a.arch_name && std::strcmp(a.arch_name, "arch_null") == 0;
 }
 
+void invoke_test_run_function(const simdpp::detail::FnVersion& fn,
+                              TestResults& res, TestReporter& reporter,
+                              const TestOptions& options)
+{
+    reinterpret_cast<void(*)(TestResults&, TestReporter&, const TestOptions&)>(fn.fun_ptr)(res, reporter, options);
+}
+
 /*  We test libsimdpp by comparing the results of the same computations done in
     different 'architectures'. That is, we build a list of results for each
     instruction set available plus the 'null' instruction set (simple,
@@ -92,27 +100,20 @@ int main(int argc, char* argv[])
     TestOptions options;
     options.is_simulator = is_simulator;
 
-    std::ostream& err = std::cerr;
+    TestReporter tr(std::cerr);
+
     const auto& arch_list = get_test_archs();
-    auto null_arch = std::find_if(arch_list.begin(), arch_list.end(),
-                                  [](const simdpp::detail::FnVersion& a) -> bool
-                                  {
-                                      return a.arch_name && std::strcmp(a.arch_name, "arch_null") == 0;
-                                  });
+    auto null_arch = std::find_if(arch_list.begin(), arch_list.end(), find_arch_null);
 
     if (null_arch == arch_list.end()) {
-        std::cerr << "FATAL: NULL architecture not defined\n";
+        tr.out() << "FATAL: NULL architecture not defined\n";
         return EXIT_FAILURE;
     }
 
     set_round_to_nearest();
 
     TestResults null_results(null_arch->arch_name);
-    reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(null_arch->fun_ptr)(null_results, options);
-
-    std::cout << "Num results: " << null_results.num_results() << '\n';
-
-    bool ok = true;
+    invoke_test_run_function(*null_arch, null_results, tr, options);
 
     for (auto it = arch_list.begin(); it != arch_list.end(); it++) {
         if (it->fun_ptr == NULL || it == null_arch) {
@@ -120,20 +121,17 @@ int main(int argc, char* argv[])
         }
 
         if (!simdpp::test_arch_subset(current_arch, it->needed_arch)) {
-            std::cout << "Not testing: " << it->arch_name << std::endl;
+            tr.out() << "Not testing: " << it->arch_name << std::endl;
             continue;
         }
-        std::cout << "Testing: " << it->arch_name << std::endl;
+        tr.out() << "Testing: " << it->arch_name << std::endl;
 
         TestResults results(it->arch_name);
-        reinterpret_cast<void(*)(TestResults&, const TestOptions&)>(it->fun_ptr)(results, options);
+        invoke_test_run_function(*it, results, tr, options);
 
-        if (!test_equal(null_results, results, err)) {
-            ok = false;
-        }
+        report_test_comparison(null_results, results, tr);
     }
 
-    if (!ok) {
-        return EXIT_FAILURE;
-    }
+    tr.report_summary();
+    return tr.success() ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -24,9 +24,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @ingroup simd_vec_fp
-/// @{
-
 /// Class representing float64x2 vector
 template<>
 class float64<2, void> : public any_float64<2, float64<2,void>> {
@@ -58,11 +55,9 @@ public:
         *this = bit_cast<float64<2>>(d.wrapped().eval()); return *this;
     }
 
-    /// @{
     /// Construct from the underlying vector type
     SIMDPP_INL float64<2>(const native_type& d) : d_(d) {}
     SIMDPP_INL float64<2>& operator=(const native_type& d) { d_ = d; return *this; }
-    /// @}
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
@@ -76,11 +71,9 @@ public:
         detail::construct_eval_wrapper(*this, e.expr()); return *this;
     }
 
-    /// @{
     /// Access base vectors
     SIMDPP_INL const float64<2>& vec(unsigned) const { return *this; }
     SIMDPP_INL float64<2>& vec(unsigned)       { return *this; }
-    /// @}
 
     SIMDPP_INL float64<2> eval() const { return *this; }
 
@@ -160,7 +153,6 @@ public:
 private:
     native_type d_;
 };
-/// @} -- end ingroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

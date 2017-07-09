@@ -6,14 +6,14 @@
 */
 
 #include <simdpp/simd.h>
-#include "../utils/test_suite.h"
+#include "../utils/test_results_set.h"
 #include "../utils/test_helpers.h"
 #include "../common/vectors.h"
 #include "../common/masks.h"
 
 
 template<class V, unsigned B>
-void test_expr_math_int_v(SeqTestSuite& ts)
+void test_expr_math_int_v(TestReporter& ts)
 {
     SIMDPP_ARCH_NAMESPACE::Vectors<16,16> v;
 
@@ -34,6 +34,10 @@ void test_expr_math_int_v(SeqTestSuite& ts)
         TEST_CMP_VEC(ts, mul_lo(a, sub(b, c)), a * (b - c));
         //TEST_CMP_VEC(ts, mul_lo(a, neg(b)), a * neg(b));
         TEST_CMP_VEC(ts, mul_lo(a, sub(b, bit_not(c))), a * (b - ~c));
+        TEST_CMP_VEC(ts, shift_l(a, 4), a << 4);
+        TEST_CMP_VEC(ts, shift_r(a, 4), a >> 4);
+        TEST_CMP_VEC(ts, shift_l<4>(a), a << 4);
+        TEST_CMP_VEC(ts, shift_r<4>(a), a >> 4);
 
         // expressions
         TEST_CMP_VEC(ts, add(a, add(b, c)), add(a, add(b, c).eval()));
@@ -68,7 +72,7 @@ void test_expr_math_int_v(SeqTestSuite& ts)
 }
 
 
-void test_expr_math_int(SeqTestSuite& ts)
+void test_expr_math_int(TestReporter& ts)
 {
     using namespace simdpp;
 

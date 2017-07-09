@@ -20,7 +20,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace neon {
 
-/// @{
 /** Stores @a n elements of a 128-bit vector starting from the @a pos-th one.
     @a p must be aligned to 16 bytes.
 
@@ -98,7 +97,6 @@ void store_lane(void* p, const float32x4& a)
 {
     store_lane<pos,n>(p, uint32x4(a));
 }
-/// @}
 
 } // namespace neon
 } // namespace detail

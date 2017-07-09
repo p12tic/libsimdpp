@@ -6,13 +6,14 @@
 */
 
 #include "expr/tests.h"
+#include <iostream>
+#include <cstdlib>
 
 int main()
 {
-    SeqTestSuite ts;
+    TestReporter ts(std::cerr);
     main_test_function(ts);
-    if (!ts.success()) {
-        return 1;
-    }
-    return 0;
+    ts.report_summary();
+
+    return ts.success() ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Creates a vector from unsigned integer values known at compile-time.
     The result of this function may be assigned or converted to a vector of any
     type: standard conversions are used to convert the arguments. All
@@ -164,7 +163,6 @@ V make_uint(uint64_t v0,  uint64_t v1,  uint64_t v2,  uint64_t v3,
     a.a[12] = v12;  a.a[13] = v13;  a.a[14] = v14;  a.a[15] = v15;
     return detail::insn::i_make_const_any<V>(a);
 }
-/// @}
 
 /// Creates a vector initialized to zero
 SIMDPP_INL expr_vec_make_const<uint64_t,1> make_zero()

@@ -37,7 +37,7 @@ struct Shuffle_width {
 template<class V, unsigned i>
 struct Test_move_r {
     static const unsigned limit = Shuffle_width<V>::value + 1;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         V r = move_v128_r<i>(a);
         TEST_PUSH(tc, V, r);
@@ -47,7 +47,7 @@ struct Test_move_r {
 template<class V, unsigned i>
 struct Test_move_l {
     static const unsigned limit = Shuffle_width<V>::value + 1;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         V r = move_v128_l<i>(a);
         TEST_PUSH(tc, V, r);
@@ -57,7 +57,7 @@ struct Test_move_l {
 template<class V, unsigned i>
 struct Test_splat2 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         V r = simdpp::splat2<i>(a);
         TEST_PUSH(tc, V, r);
@@ -67,7 +67,7 @@ struct Test_splat2 {
 template<class V, unsigned i>
 struct Test_splat4 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         V r = simdpp::splat4<i>(a);
         TEST_PUSH(tc, V, r);
@@ -77,7 +77,7 @@ struct Test_splat4 {
 template<class V, unsigned i>
 struct Test_splat8 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         V r = simdpp::splat8<i>(a);
         TEST_PUSH(tc, V, r);
@@ -87,7 +87,7 @@ struct Test_splat8 {
 template<class V, unsigned i>
 struct Test_splat16 {
     static const unsigned limit = Shuffle_width<V>::value;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         V r = simdpp::splat16<i>(a);
         TEST_PUSH(tc, V, r);
@@ -97,7 +97,7 @@ struct Test_splat16 {
 template<class V, unsigned i>
 struct Test_splat {
     static const unsigned limit = V::length;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         V r = simdpp::splat<i>(a);
         TEST_PUSH(tc, V, r);
@@ -107,7 +107,7 @@ struct Test_splat {
 template<class V, unsigned i>
 struct Test_align {
     static const unsigned limit = Shuffle_width<V>::value + 1;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         V r = simdpp::detail::align_v128<i>(a, b);
         TEST_PUSH(tc, V, r);
@@ -117,7 +117,7 @@ struct Test_align {
 template<class V, unsigned i>
 struct Test_insert_extract {
     static const unsigned limit = V::length;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         V r = simdpp::insert<i>(a, simdpp::extract<i>(b));
         TEST_PUSH(tc, V, r);
@@ -125,7 +125,7 @@ struct Test_insert_extract {
 };
 
 template<class V>
-void test_shuffle_type(TestSuite &tc, const V& v1, const V& v2)
+void test_shuffle_type(TestResultsSet &tc, const V& v1, const V& v2)
 {
     TEST_PUSH(tc, V, simdpp::detail::insn::zip128_lo(v1, v2));
     TEST_PUSH(tc, V, simdpp::detail::insn::zip128_hi(v1, v2));
@@ -139,7 +139,7 @@ void test_shuffle_type(TestSuite &tc, const V& v1, const V& v2)
 }
 
 template<unsigned B>
-void test_shuffle_n(TestSuite& tc)
+void test_shuffle_n(TestResultsSet& tc)
 {
     using namespace simdpp;
 
@@ -169,7 +169,7 @@ void test_shuffle_n(TestSuite& tc)
 
 void test_shuffle(TestResults& res)
 {
-    TestSuite& tc = NEW_TEST_SUITE(res, "shuffle");
+    TestResultsSet& tc = res.new_results_set("shuffle");
 
     test_shuffle_n<16>(tc);
     test_shuffle_n<32>(tc);

@@ -192,7 +192,6 @@ print('''/*  Copyright (C) 2013  Povilas Kanapickas <povilas@radix.lt>
     best function on first call. The initialization does not introduce race
     conditions when done concurrently.
 */
-/// @{
 #if SIMDPP_EMIT_DISPATCHER
 ''')
 do_template(template_emit_dispatcher)
@@ -202,7 +201,6 @@ print('''
 do_template(template_not_emit_dispatcher)
 print('''
 #endif
-/// @}
 
 #endif
 ''')

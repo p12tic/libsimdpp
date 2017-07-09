@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Selects bytes from a vector according to a mask. Each byte within the
     mask defines which element to select:
      * Bits 7-4 must be zero or the behavior is undefined
@@ -66,7 +65,6 @@ float64<N> permute_bytes16(const float64<N>& a, const uint64<N>& mask)
 {
     return detail::insn::i_permute_bytes16(a, mask);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

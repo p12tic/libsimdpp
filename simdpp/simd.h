@@ -184,6 +184,7 @@
 #include <simdpp/operators/cmp_le.h>
 #include <simdpp/operators/cmp_lt.h>
 #include <simdpp/operators/f_add.h>
+#include <simdpp/operators/f_div.h>
 #include <simdpp/operators/f_mul.h>
 #include <simdpp/operators/f_sub.h>
 #include <simdpp/operators/i_add.h>

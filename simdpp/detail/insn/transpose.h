@@ -25,7 +25,6 @@ namespace insn {
 template<class V, class D> SIMDPP_INL
 void v_sse_transpose32x4(V& a0, V& a1, V& a2, V& a3);
 
-/// @{
 /** Transposes eight 2x2 8-bit matrices within two int8x16 vectors
 
     @code
@@ -67,7 +66,6 @@ SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
 #endif
 }
 
-/// @{
 /** Helper function.
 
     @code
@@ -102,8 +100,6 @@ SIMDPP_INL uint8x32 transpose_inplace(const uint8x32& a)
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
 }
-/// @}
-
 
 SIMDPP_INL void i_transpose2(uint16x8& a0, uint16x8& a1)
 {

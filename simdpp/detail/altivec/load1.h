@@ -30,7 +30,6 @@ namespace altivec {
 
     @icost{ALTIVEC, 2}
 */
-/// @{
 SIMDPP_INL uint8x16 load1_u(uint8x16& a, const uint8_t* p)
 {
     a = vec_lde(0, p);
@@ -64,7 +63,6 @@ SIMDPP_INL float32x4 load1_u(float32x4& a, const float* p)
     a = (__vector float) vec_perm((__vector uint8_t)r, (__vector uint8_t)r, perm);
     return a;
 }
-/// @}
 
 /** Loads a single element from a memory location and places it to the vector.
     The position of the element is determined by the last 4 address @a p bits.
@@ -75,7 +73,6 @@ SIMDPP_INL float32x4 load1_u(float32x4& a, const float* p)
     a[i] = *p
     @endcode
 */
-/// @{
 SIMDPP_INL uint8x16 load1(uint8x16& a, const uint8_t* p)
 {
     a = vec_lde(0, p);
@@ -99,7 +96,6 @@ SIMDPP_INL float32x4 load1(float32x4& a, const float* p)
     a = vec_lde(0, p);
     return a;
 }
-/// @}
 
 } // namespace altivec
 } // namespace detail

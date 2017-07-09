@@ -18,8 +18,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-
-/// @{
 /** Shuffles 128 bit parts within the vectors.
 
 @code
@@ -74,9 +72,7 @@ float64<8> shuffle2_128(const float64<8>& a, const float64<8>& b)
     return _mm512_shuffle_f64x2(a, b, (s3<<6) + (s2<<4) + (s1<<2) + s0);
 }
 #endif
-/// @}
 
-/// @{
 /** Shuffles 128 bit parts within the vectors.
 
     For larger than 256-bits vectors the same operation is applied to each
@@ -168,7 +164,6 @@ float64<8> shuffle1_128(const float64<8>& a, const float64<8>& b)
     return shuffle2_128<s0,s1,s0+2,s1+2>(a, b);
 }
 #endif
-/// @}
 
 #if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, class V> SIMDPP_INL

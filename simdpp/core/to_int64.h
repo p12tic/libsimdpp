@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Extends the values of a signed int32x4 vector to 64-bits
 
     @code

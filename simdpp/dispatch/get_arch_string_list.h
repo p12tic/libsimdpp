@@ -15,8 +15,7 @@
 
 namespace simdpp {
 
-/** @ingroup simdpp_dispatcher
-    Retrieves supported architecture from given string list. The architecture
+/** Retrieves supported architecture from given string list. The architecture
     names are the same as ids specified in simdpp/detail/insn_id.h
 */
 inline Arch get_arch_string_list(const char* const strings[], int count, const char* prefix)

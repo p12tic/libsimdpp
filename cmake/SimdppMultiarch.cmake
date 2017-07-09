@@ -13,17 +13,24 @@ set(SIMDPP_GCC 0)
 set(SIMDPP_CLANG 0)
 set(SIMDPP_MSVC 0)
 set(SIMDPP_INTEL 0)
+set(SIMDPP_MSVC_INTEL 0)
 
-if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(SIMDPP_CLANG 1)
-elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Apple")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Apple")
     set(SIMDPP_CLANG 1)
-elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     set(SIMDPP_GCC 1)
-elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Intel")
-    set(SIMDPP_INTEL 1)
-elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+    if(MSVC)
+        set(SIMDPP_MSVC_INTEL 1)
+    else()
+        set(SIMDPP_INTEL 1)
+    endif()
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(SIMDPP_MSVC 1)
+else()
+    message(FATAL_ERROR "Compiler '${CMAKE_CXX_COMPILER_ID}' not recognized")
 endif()
 
 # ------------------------------------------------------------------------------
@@ -50,7 +57,7 @@ endif()
 list(APPEND SIMDPP_ARCHS_PRI "X86_SSE2")
 if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
     set(SIMDPP_X86_SSE2_CXX_FLAGS "-msse2")
-elseif(SIMDPP_MSVC)
+elseif(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
     set(SIMDPP_X86_SSE2_CXX_FLAGS "/arch:SSE2")
 endif()
 set(SIMDPP_X86_SSE2_DEFINE "SIMDPP_ARCH_X86_SSE2")
@@ -74,6 +81,8 @@ if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
     set(SIMDPP_X86_SSE3_CXX_FLAGS "-msse3")
 elseif(SIMDPP_MSVC)
     set(SIMDPP_X86_SSE3_CXX_FLAGS "/arch:SSE2")
+elseif(SIMDPP_MSVC_INTEL)
+    set(SIMDPP_X86_SSE3_CXX_FLAGS "/arch:SSE3")
 endif()
 set(SIMDPP_X86_SSE3_DEFINE "SIMDPP_ARCH_X86_SSE3")
 set(SIMDPP_X86_SSE3_SUFFIX "-x86_sse3")
@@ -96,6 +105,8 @@ if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
     set(SIMDPP_X86_SSSE3_CXX_FLAGS "-mssse3")
 elseif(SIMDPP_MSVC)
     set(SIMDPP_X86_SSSE3_CXX_FLAGS "/arch:SSE2")
+elseif(SIMDPP_MSVC_INTEL)
+    set(SIMDPP_X86_SSSE3_CXX_FLAGS "/arch:SSSE3")
 endif()
 set(SIMDPP_X86_SSSE3_DEFINE "SIMDPP_ARCH_X86_SSSE3")
 set(SIMDPP_X86_SSSE3_SUFFIX "-x86_ssse3")
@@ -118,6 +129,8 @@ if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
     set(SIMDPP_X86_SSE4_1_CXX_FLAGS "-msse4.1")
 elseif(SIMDPP_MSVC)
     set(SIMDPP_X86_SSE4_1_CXX_FLAGS "/arch:SSE2")
+elseif(SIMDPP_MSVC_INTEL)
+    set(SIMDPP_X86_SSE4_1_CXX_FLAGS "/arch:SSE4.1")
 endif()
 set(SIMDPP_X86_SSE4_1_DEFINE "SIMDPP_ARCH_X86_SSE4_1")
 set(SIMDPP_X86_SSE4_1_SUFFIX "-x86_sse4_1")
@@ -138,7 +151,7 @@ set(SIMDPP_X86_SSE4_1_TEST_CODE
 list(APPEND SIMDPP_ARCHS_PRI "X86_AVX")
 if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
     set(SIMDPP_X86_AVX_CXX_FLAGS "-mavx")
-elseif(SIMDPP_MSVC)
+elseif(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
     set(SIMDPP_X86_AVX_CXX_FLAGS "/arch:AVX")
 endif()
 set(SIMDPP_X86_AVX_DEFINE "SIMDPP_ARCH_X86_AVX")
@@ -146,6 +159,9 @@ set(SIMDPP_X86_AVX_SUFFIX "-x86_avx")
 set(SIMDPP_X86_AVX_TEST_CODE
     "#include <immintrin.h>
     #if (__clang_major__ == 3) && (__clang_minor__ == 6)
+    #error Not supported. See simdpp/detail/workarounds.h
+    #endif
+    #if (__GNUC__ == 4) && (__GNUC_MINOR__ == 4)
     #error Not supported. See simdpp/detail/workarounds.h
     #endif
 
@@ -168,6 +184,8 @@ elseif(SIMDPP_INTEL)
     set(SIMDPP_X86_AVX2_CXX_FLAGS "-march=core-avx2")
 elseif(SIMDPP_MSVC)
     set(SIMDPP_X86_AVX2_CXX_FLAGS "/arch:AVX")
+elseif(SIMDPP_MSVC_INTEL)
+    set(SIMDPP_X86_AVX2_CXX_FLAGS "/arch:CORE-AVX2")
 endif()
 set(SIMDPP_X86_AVX2_DEFINE "SIMDPP_ARCH_X86_AVX2")
 set(SIMDPP_X86_AVX2_SUFFIX "-x86_avx2")
@@ -194,7 +212,7 @@ if(SIMDPP_CLANG OR SIMDPP_GCC)
     set(SIMDPP_X86_FMA3_CXX_FLAGS "-mfma")
 elseif(SIMDPP_INTEL)
     set(SIMDPP_X86_FMA3_CXX_FLAGS "-march=core-avx2")
-elseif(SIMDPP_MSVC)
+elseif(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
     set(SIMDPP_X86_FMA3_CXX_FLAGS "/arch:AVX")
 endif()
 set(SIMDPP_X86_FMA3_DEFINE "SIMDPP_ARCH_X86_FMA3")
@@ -217,7 +235,7 @@ list(APPEND SIMDPP_ARCHS_PRI "X86_FMA4")
 if(SIMDPP_CLANG OR SIMDPP_GCC)
     # intel does not support FMA4
     set(SIMDPP_X86_FMA4_CXX_FLAGS "-mfma4")
-elseif(SIMDPP_MSVC)
+elseif(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
     set(SIMDPP_X86_FMA4_CXX_FLAGS "/arch:AVX")
 endif()
 set(SIMDPP_X86_FMA4_DEFINE "SIMDPP_ARCH_X86_FMA4")
@@ -260,6 +278,9 @@ set(SIMDPP_X86_XOP_TEST_CODE
 list(APPEND SIMDPP_ARCHS_PRI "X86_AVX512F")
 if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
     set(SIMDPP_X86_AVX512F_CXX_FLAGS "-mavx512f")
+elseif(SIMDPP_MSVC_INTEL)
+    set(SIMDPP_X86_AVX512F_CXX_FLAGS "/arch:CORE-AVX512")
+else()
     #unsupported on MSVC
 endif()
 set(SIMDPP_X86_AVX512F_DEFINE "SIMDPP_ARCH_X86_AVX512F")
@@ -269,13 +290,18 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
     int main()
     {
         union {
-            volatile char a[64];
+            volatile char data[64];
             __m512 align;
         };
-        __m512 one = _mm512_load_ps((float*)a);
-        one = _mm512_add_ps(one, one);
-        __m512d d = _mm512_castps_pd(one); // weed out GCC < 5.0
-        _mm512_store_ps((float*)a, one);
+        __m512 a = _mm512_load_ps((float*)a);
+        a = _mm512_add_ps(a, a);
+        __m512d d = _mm512_castps_pd(a); // weed out GCC < 5.0
+        _mm512_store_ps((float*)data, a);
+
+        // MSVC 2017 has floating-point functions but not integer
+        __m512i b = _mm512_load_epi32((void*)data);
+        b = _mm512_or_epi32(b, b);
+        _mm512_store_epi32((void*)data, b);
     }"
 )
 
@@ -286,6 +312,9 @@ endif()
 set(SIMDPP_ARM_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM_NEON_SUFFIX "-arm_neon")
 set(SIMDPP_ARM_NEON_TEST_CODE
+    #if (__clang_major__ < 3) || ((__clang_major__ == 3) && (__clang_minor__ <= 3))
+    #error NEON is not supported on clang 3.3 and earlier.
+    #endif
     "#include <arm_neon.h>
     int main()
     {
@@ -436,9 +465,20 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
             # Copy the source file and add the required flags
             set(DST_ABS_FILE "${CMAKE_CURRENT_BINARY_DIR}/${SRC_PATH}/${SRC_NAME}_simdpp_${SUFFIX}${SRC_EXT}")
             set(SRC_ABS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
-            configure_file("${SRC_ABS_FILE}" "${DST_ABS_FILE}" COPYONLY)
+
+            # CMake does not support adding per-source-file include directories.
+            # Also when CXX_FLAGS is used for this purpose, CMake does not add
+            # local includes as the dependencies of the result object file thus
+            # does not rebuild the file when these included files are changed.
+            # The work around is to use add_custom_command with IMPLICIT_DEPENDS
+            # option which only works on make-based systems
+            add_custom_command(OUTPUT "${DST_ABS_FILE}"
+                               COMMAND cmake -E copy "${SRC_ABS_FILE}" "${DST_ABS_FILE}"
+                               IMPLICIT_DEPENDS CXX "${SRC_ABS_FILE}")
+
             list(APPEND FILE_LIST "${DST_ABS_FILE}")
-            set_source_files_properties("${DST_ABS_FILE}" PROPERTIES COMPILE_FLAGS ${CXX_FLAGS})
+            set_source_files_properties("${DST_ABS_FILE}" PROPERTIES COMPILE_FLAGS ${CXX_FLAGS}
+                                                                     GENERATED TRUE)
 
             # For the first file that is being processed, set it to emit
             # dispatcher code. The required flags will be added later

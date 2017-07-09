@@ -18,8 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-
-/// @{
 /** Converts the 32-bit integer values to 64-bit float values.
 
     SSE specific:

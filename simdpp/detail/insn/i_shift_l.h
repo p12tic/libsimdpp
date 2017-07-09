@@ -332,7 +332,6 @@ V i_shift_l(const V& a)
 {
     SIMDPP_VEC_ARRAY_IMPL1(V, i_shift_l<count>, a);
 }
-/// @}
 
 template<bool no_shift, bool full_shift>
 struct i_shift_l_wrapper {

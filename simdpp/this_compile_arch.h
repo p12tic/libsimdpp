@@ -18,10 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/** @defgroup simd_dispatcher Dispatching support
-    @{
-*/
-
 /** Returns the instruction set flags that will be required by the currently
     compiled code
 */
@@ -66,8 +62,6 @@ inline Arch this_compile_arch()
 #endif
     return res;
 }
-
-/// @} -- end defgroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

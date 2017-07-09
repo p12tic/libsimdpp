@@ -23,9 +23,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @ingroup simd_vec_fp
-/// @{
-
 /** Class representing a @a float64 vector of arbitrary length. The vector
     always contains at least one native vector.
 */
@@ -124,8 +121,6 @@ public:
 private:
     mask_float64v d_[mask_float64::vec_length];
 };
-
-/// @} -- end ingroup
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

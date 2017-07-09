@@ -18,7 +18,6 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/// @{
 /** Selects bytes from two vectors according to a mask. Each byte within the
     mask defines which element to select:
      * Bits 7-5 must be zero or the behavior is undefined
@@ -74,7 +73,6 @@ float64<N> shuffle_bytes16(const float64<N>& a, const float64<N>& b, const uint6
 {
     return detail::insn::i_shuffle_bytes16(a, b, mask);
 }
-/// @}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

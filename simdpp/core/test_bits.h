@@ -35,5 +35,3 @@ bool test_bits_any(const any_vec<N,V>& a)
 } // namespace simdpp
 
 #endif
-
-/// @}

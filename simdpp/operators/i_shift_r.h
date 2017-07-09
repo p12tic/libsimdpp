@@ -19,6 +19,208 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
+/** Shifts signed 8-bit values right by @a count bits while shifting in the
+    sign bit.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+
+    @par 128-bit version:
+    @icost{SSE2-AVX2, 6}
+    @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 12}
+    @icost{AVX2, 6}
+    @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
+*/
+template<unsigned N, class E> SIMDPP_INL
+int8<N,expr_empty> operator>>(const int8<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
+/** Shifts unsigned 8-bit values right by @a count bits while shifting in zeros.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+
+    @par 128-bit version:
+    @icost{SSE2-AVX2, 4-5}
+    @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 8-9}
+    @icost{AVX2, 4-5}
+    @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
+*/
+template<unsigned N, class E> SIMDPP_INL
+uint8<N,expr_empty> operator>>(const uint8<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
+/** Shifts signed 16-bit values right by @a count bits while shifting in the
+    sign bit.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+
+    @par 128-bit version:
+    @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
+*/
+template<unsigned N, class E> SIMDPP_INL
+int16<N,expr_empty> operator>>(const int16<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
+/** Shifts unsigned 16-bit values right by @a count bits while shifting in
+    zeros.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+
+    @par 128-bit version:
+    @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
+*/
+template<unsigned N, class E> SIMDPP_INL
+uint16<N,expr_empty> operator>>(const uint16<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
+/** Shifts signed 32-bit values right by @a count bits while shifting in the
+    sign bit.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+    @icost{NEON, 2}
+
+    @par 128-bit version:
+    @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
+*/
+template<unsigned N, class E> SIMDPP_INL
+int32<N,expr_empty> operator>>(const int32<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
+/** Shifts unsigned 32-bit values right by @a count bits while shifting in
+    zeros.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+
+    @par 128-bit version:
+    @icost{NEON, 1-2}
+    @icost{ALTIVEC, 1-4}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 2-3}
+    @icost{ALTIVEC, 2-5}
+*/
+template<unsigned N, class E> SIMDPP_INL
+uint32<N,expr_empty> operator>>(const uint32<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
+/** Shifts signed 64-bit values right by @a count bits while shifting in the
+    sign bit.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+
+    @par 128-bit version:
+    @icost{SSE2-AVX2, 4-6}
+    @icost{NEON, 2}
+    @unimp{ALTIVEC}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 8-10}
+    @icost{AVX2, 4-6}
+    @icost{NEON, 3}
+    @unimp{ALTIVEC}
+*/
+template<unsigned N, class E> SIMDPP_INL
+int64<N,expr_empty> operator>>(const int64<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
+/** Shifts unsigned 64-bit values right by @a count bits while shifting in
+    zeros.
+
+    @code
+    r0 = a0 >> count
+    ...
+    rN = aN >> count
+    @endcode
+
+    @par 128-bit version:
+    @icost{NEON, 1-2}
+    @unimp{ALTIVEC}
+
+    @par 256-bit version:
+    @icost{SSE2-AVX, 2}
+    @icost{NEON, 2-3}
+    @unimp{ALTIVEC}
+*/
+template<unsigned N, class E> SIMDPP_INL
+uint64<N,expr_empty> operator>>(const uint64<N,E>& a, unsigned count)
+{
+    return detail::insn::i_shift_r(a.eval(), count);
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
