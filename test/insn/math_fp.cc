@@ -82,8 +82,10 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
 
         tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
+        tc.set_fp_zero_equal();
         TEST_ALL_COMB_HELPER3(tc, float32_n, fmadd, s, 4);
         TEST_ALL_COMB_HELPER3(tc, float32_n, fmsub, s, 4);
+        tc.unset_fp_zero_equal();
 #endif
         tc.sync_archs();
 
@@ -157,6 +159,7 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
 
         tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
+        tc.set_fp_zero_equal();
         // Certain simulators can't handle NaNs and infinity in this instruction
         if (opts.is_simulator) {
 
@@ -177,6 +180,7 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
             TEST_ALL_COMB_HELPER3(tc, float64_n, fmadd, s, 8);
             TEST_ALL_COMB_HELPER3(tc, float64_n, fmsub, s, 8);
         }
+        tc.unset_fp_zero_equal();
 #endif
         tc.sync_archs();
 
