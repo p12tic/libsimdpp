@@ -81,6 +81,11 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_$num$_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -97,7 +102,7 @@ single_arch_template = '''
     #define SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE16(arch,         $n$
+    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE17(arch,         $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NULL,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE3,                                   $n$
@@ -107,6 +112,7 @@ single_arch_template = '''
         SIMDPP_DISPATCH_$num$_NS_ID_AVX2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX512F,                                $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX512BW,                               $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ,                               $n$
         SIMDPP_DISPATCH_$num$_NS_ID_FMA3,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_FMA4,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_XOP,                                    $n$

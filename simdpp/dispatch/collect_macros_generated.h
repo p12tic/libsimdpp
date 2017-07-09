@@ -87,6 +87,11 @@
     #else
     #define SIMDPP_DISPATCH_1_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_1_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_1_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_1_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -103,7 +108,7 @@
     #define SIMDPP_DISPATCH_1_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_1_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_1_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_1_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_1_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_1_NS_ID_SSE3,                                         \
@@ -113,6 +118,7 @@
         SIMDPP_DISPATCH_1_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_1_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_1_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_1_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_1_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_1_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_1_NS_ID_XOP,                                          \
@@ -198,6 +204,11 @@
     #else
     #define SIMDPP_DISPATCH_2_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_2_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_2_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_2_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -214,7 +225,7 @@
     #define SIMDPP_DISPATCH_2_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_2_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_2_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_2_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_2_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_2_NS_ID_SSE3,                                         \
@@ -224,6 +235,7 @@
         SIMDPP_DISPATCH_2_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_2_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_2_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_2_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_2_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_2_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_2_NS_ID_XOP,                                          \
@@ -309,6 +321,11 @@
     #else
     #define SIMDPP_DISPATCH_3_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_3_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_3_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_3_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -325,7 +342,7 @@
     #define SIMDPP_DISPATCH_3_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_3_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_3_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_3_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_3_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_3_NS_ID_SSE3,                                         \
@@ -335,6 +352,7 @@
         SIMDPP_DISPATCH_3_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_3_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_3_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_3_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_3_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_3_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_3_NS_ID_XOP,                                          \
@@ -420,6 +438,11 @@
     #else
     #define SIMDPP_DISPATCH_4_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_4_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_4_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_4_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -436,7 +459,7 @@
     #define SIMDPP_DISPATCH_4_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_4_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_4_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_4_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_4_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_4_NS_ID_SSE3,                                         \
@@ -446,6 +469,7 @@
         SIMDPP_DISPATCH_4_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_4_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_4_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_4_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_4_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_4_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_4_NS_ID_XOP,                                          \
@@ -531,6 +555,11 @@
     #else
     #define SIMDPP_DISPATCH_5_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_5_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_5_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_5_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -547,7 +576,7 @@
     #define SIMDPP_DISPATCH_5_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_5_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_5_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_5_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_5_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_5_NS_ID_SSE3,                                         \
@@ -557,6 +586,7 @@
         SIMDPP_DISPATCH_5_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_5_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_5_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_5_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_5_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_5_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_5_NS_ID_XOP,                                          \
@@ -642,6 +672,11 @@
     #else
     #define SIMDPP_DISPATCH_6_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_6_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_6_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_6_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -658,7 +693,7 @@
     #define SIMDPP_DISPATCH_6_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_6_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_6_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_6_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_6_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_6_NS_ID_SSE3,                                         \
@@ -668,6 +703,7 @@
         SIMDPP_DISPATCH_6_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_6_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_6_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_6_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_6_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_6_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_6_NS_ID_XOP,                                          \
@@ -753,6 +789,11 @@
     #else
     #define SIMDPP_DISPATCH_7_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_7_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_7_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_7_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -769,7 +810,7 @@
     #define SIMDPP_DISPATCH_7_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_7_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_7_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_7_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_7_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_7_NS_ID_SSE3,                                         \
@@ -779,6 +820,7 @@
         SIMDPP_DISPATCH_7_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_7_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_7_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_7_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_7_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_7_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_7_NS_ID_XOP,                                          \
@@ -864,6 +906,11 @@
     #else
     #define SIMDPP_DISPATCH_8_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_8_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_8_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_8_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -880,7 +927,7 @@
     #define SIMDPP_DISPATCH_8_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_8_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_8_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_8_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_8_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_8_NS_ID_SSE3,                                         \
@@ -890,6 +937,7 @@
         SIMDPP_DISPATCH_8_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_8_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_8_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_8_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_8_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_8_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_8_NS_ID_XOP,                                          \
@@ -975,6 +1023,11 @@
     #else
     #define SIMDPP_DISPATCH_9_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_9_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_9_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_9_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -991,7 +1044,7 @@
     #define SIMDPP_DISPATCH_9_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_9_NAMESPACE SIMDPP_PP_PASTE16(arch,               \
+    #define SIMDPP_DISPATCH_9_NAMESPACE SIMDPP_PP_PASTE17(arch,               \
         SIMDPP_DISPATCH_9_NS_ID_NULL,                                         \
         SIMDPP_DISPATCH_9_NS_ID_SSE2,                                         \
         SIMDPP_DISPATCH_9_NS_ID_SSE3,                                         \
@@ -1001,6 +1054,7 @@
         SIMDPP_DISPATCH_9_NS_ID_AVX2,                                         \
         SIMDPP_DISPATCH_9_NS_ID_AVX512F,                                      \
         SIMDPP_DISPATCH_9_NS_ID_AVX512BW,                                     \
+        SIMDPP_DISPATCH_9_NS_ID_AVX512DQ,                                     \
         SIMDPP_DISPATCH_9_NS_ID_FMA3,                                         \
         SIMDPP_DISPATCH_9_NS_ID_FMA4,                                         \
         SIMDPP_DISPATCH_9_NS_ID_XOP,                                          \
@@ -1086,6 +1140,11 @@
     #else
     #define SIMDPP_DISPATCH_10_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_10_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_10_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_10_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -1102,7 +1161,7 @@
     #define SIMDPP_DISPATCH_10_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_10_NAMESPACE SIMDPP_PP_PASTE16(arch,              \
+    #define SIMDPP_DISPATCH_10_NAMESPACE SIMDPP_PP_PASTE17(arch,              \
         SIMDPP_DISPATCH_10_NS_ID_NULL,                                        \
         SIMDPP_DISPATCH_10_NS_ID_SSE2,                                        \
         SIMDPP_DISPATCH_10_NS_ID_SSE3,                                        \
@@ -1112,6 +1171,7 @@
         SIMDPP_DISPATCH_10_NS_ID_AVX2,                                        \
         SIMDPP_DISPATCH_10_NS_ID_AVX512F,                                     \
         SIMDPP_DISPATCH_10_NS_ID_AVX512BW,                                    \
+        SIMDPP_DISPATCH_10_NS_ID_AVX512DQ,                                    \
         SIMDPP_DISPATCH_10_NS_ID_FMA3,                                        \
         SIMDPP_DISPATCH_10_NS_ID_FMA4,                                        \
         SIMDPP_DISPATCH_10_NS_ID_XOP,                                         \
@@ -1197,6 +1257,11 @@
     #else
     #define SIMDPP_DISPATCH_11_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_11_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_11_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_11_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -1213,7 +1278,7 @@
     #define SIMDPP_DISPATCH_11_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_11_NAMESPACE SIMDPP_PP_PASTE16(arch,              \
+    #define SIMDPP_DISPATCH_11_NAMESPACE SIMDPP_PP_PASTE17(arch,              \
         SIMDPP_DISPATCH_11_NS_ID_NULL,                                        \
         SIMDPP_DISPATCH_11_NS_ID_SSE2,                                        \
         SIMDPP_DISPATCH_11_NS_ID_SSE3,                                        \
@@ -1223,6 +1288,7 @@
         SIMDPP_DISPATCH_11_NS_ID_AVX2,                                        \
         SIMDPP_DISPATCH_11_NS_ID_AVX512F,                                     \
         SIMDPP_DISPATCH_11_NS_ID_AVX512BW,                                    \
+        SIMDPP_DISPATCH_11_NS_ID_AVX512DQ,                                    \
         SIMDPP_DISPATCH_11_NS_ID_FMA3,                                        \
         SIMDPP_DISPATCH_11_NS_ID_FMA4,                                        \
         SIMDPP_DISPATCH_11_NS_ID_XOP,                                         \
@@ -1308,6 +1374,11 @@
     #else
     #define SIMDPP_DISPATCH_12_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_12_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_12_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_12_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -1324,7 +1395,7 @@
     #define SIMDPP_DISPATCH_12_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_12_NAMESPACE SIMDPP_PP_PASTE16(arch,              \
+    #define SIMDPP_DISPATCH_12_NAMESPACE SIMDPP_PP_PASTE17(arch,              \
         SIMDPP_DISPATCH_12_NS_ID_NULL,                                        \
         SIMDPP_DISPATCH_12_NS_ID_SSE2,                                        \
         SIMDPP_DISPATCH_12_NS_ID_SSE3,                                        \
@@ -1334,6 +1405,7 @@
         SIMDPP_DISPATCH_12_NS_ID_AVX2,                                        \
         SIMDPP_DISPATCH_12_NS_ID_AVX512F,                                     \
         SIMDPP_DISPATCH_12_NS_ID_AVX512BW,                                    \
+        SIMDPP_DISPATCH_12_NS_ID_AVX512DQ,                                    \
         SIMDPP_DISPATCH_12_NS_ID_FMA3,                                        \
         SIMDPP_DISPATCH_12_NS_ID_FMA4,                                        \
         SIMDPP_DISPATCH_12_NS_ID_XOP,                                         \
@@ -1419,6 +1491,11 @@
     #else
     #define SIMDPP_DISPATCH_13_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_13_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_13_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_13_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -1435,7 +1512,7 @@
     #define SIMDPP_DISPATCH_13_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_13_NAMESPACE SIMDPP_PP_PASTE16(arch,              \
+    #define SIMDPP_DISPATCH_13_NAMESPACE SIMDPP_PP_PASTE17(arch,              \
         SIMDPP_DISPATCH_13_NS_ID_NULL,                                        \
         SIMDPP_DISPATCH_13_NS_ID_SSE2,                                        \
         SIMDPP_DISPATCH_13_NS_ID_SSE3,                                        \
@@ -1445,6 +1522,7 @@
         SIMDPP_DISPATCH_13_NS_ID_AVX2,                                        \
         SIMDPP_DISPATCH_13_NS_ID_AVX512F,                                     \
         SIMDPP_DISPATCH_13_NS_ID_AVX512BW,                                    \
+        SIMDPP_DISPATCH_13_NS_ID_AVX512DQ,                                    \
         SIMDPP_DISPATCH_13_NS_ID_FMA3,                                        \
         SIMDPP_DISPATCH_13_NS_ID_FMA4,                                        \
         SIMDPP_DISPATCH_13_NS_ID_XOP,                                         \
@@ -1530,6 +1608,11 @@
     #else
     #define SIMDPP_DISPATCH_14_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_14_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_14_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_14_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -1546,7 +1629,7 @@
     #define SIMDPP_DISPATCH_14_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_14_NAMESPACE SIMDPP_PP_PASTE16(arch,              \
+    #define SIMDPP_DISPATCH_14_NAMESPACE SIMDPP_PP_PASTE17(arch,              \
         SIMDPP_DISPATCH_14_NS_ID_NULL,                                        \
         SIMDPP_DISPATCH_14_NS_ID_SSE2,                                        \
         SIMDPP_DISPATCH_14_NS_ID_SSE3,                                        \
@@ -1556,6 +1639,7 @@
         SIMDPP_DISPATCH_14_NS_ID_AVX2,                                        \
         SIMDPP_DISPATCH_14_NS_ID_AVX512F,                                     \
         SIMDPP_DISPATCH_14_NS_ID_AVX512BW,                                    \
+        SIMDPP_DISPATCH_14_NS_ID_AVX512DQ,                                    \
         SIMDPP_DISPATCH_14_NS_ID_FMA3,                                        \
         SIMDPP_DISPATCH_14_NS_ID_FMA4,                                        \
         SIMDPP_DISPATCH_14_NS_ID_XOP,                                         \
@@ -1641,6 +1725,11 @@
     #else
     #define SIMDPP_DISPATCH_15_NS_ID_AVX512BW
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_15_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_15_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_15_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -1657,7 +1746,7 @@
     #define SIMDPP_DISPATCH_15_NS_ID_ALTIVEC
     #endif
 
-    #define SIMDPP_DISPATCH_15_NAMESPACE SIMDPP_PP_PASTE16(arch,              \
+    #define SIMDPP_DISPATCH_15_NAMESPACE SIMDPP_PP_PASTE17(arch,              \
         SIMDPP_DISPATCH_15_NS_ID_NULL,                                        \
         SIMDPP_DISPATCH_15_NS_ID_SSE2,                                        \
         SIMDPP_DISPATCH_15_NS_ID_SSE3,                                        \
@@ -1667,6 +1756,7 @@
         SIMDPP_DISPATCH_15_NS_ID_AVX2,                                        \
         SIMDPP_DISPATCH_15_NS_ID_AVX512F,                                     \
         SIMDPP_DISPATCH_15_NS_ID_AVX512BW,                                    \
+        SIMDPP_DISPATCH_15_NS_ID_AVX512DQ,                                    \
         SIMDPP_DISPATCH_15_NS_ID_FMA3,                                        \
         SIMDPP_DISPATCH_15_NS_ID_FMA4,                                        \
         SIMDPP_DISPATCH_15_NS_ID_XOP,                                         \

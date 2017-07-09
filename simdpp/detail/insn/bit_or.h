@@ -251,7 +251,11 @@ SIMDPP_INL float32<8> i_bit_or(const float32<8>& a, const float32<8>& b)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_or(const float32<16>& a, const float32<16>& b)
 {
+#if SIMDPP_USE_AVX512DQ
+    return _mm512_or_ps(a, b);
+#else
     return (float32<16>) i_bit_or(uint32<16>(a), uint32<16>(b));
+#endif
 }
 #endif
 
@@ -304,7 +308,11 @@ SIMDPP_INL float64<4> i_bit_or(const float64<4>& a, const float64<4>& b)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_or(const float64<8>& a, const float64<8>& b)
 {
+#if SIMDPP_USE_AVX512DQ
+    return _mm512_or_pd(a, b);
+#else
     return (float64<8>) i_bit_or(uint64<8>(a), uint64<8>(b));
+#endif
 }
 #endif
 

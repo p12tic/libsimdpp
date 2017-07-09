@@ -13,16 +13,16 @@
 // Concatenates x1 and x2. The concatenation is performed before the arguments
 // are evaluated
 #define SIMDPP_PP_CAT2(x1, x2) x1 ## x2
-#define SIMDPP_PP_CAT16(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16) \
-    x1 ## x2 ## x3 ## x4 ## x5 ## x6 ## x7 ## x8 ## x9 ## x10 ## x11 ## x12 ## x13 ## x14 ## x15 ## x16
+#define SIMDPP_PP_CAT17(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17) \
+    x1 ## x2 ## x3 ## x4 ## x5 ## x6 ## x7 ## x8 ## x9 ## x10 ## x11 ## x12 ## x13 ## x14 ## x15 ## x16 ## x17
 
 // Forces evaluation of the argument
 #define SIMDPP_PP_PASTE1(x1) x1
 
 // Evaluates the arguments and concatenates the result
 #define SIMDPP_PP_PASTE2(x1, x2) SIMDPP_PP_CAT2(x1, x2)
-#define SIMDPP_PP_PASTE16(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16) \
-    SIMDPP_PP_CAT16(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16)
+#define SIMDPP_PP_PASTE17(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17) \
+    SIMDPP_PP_CAT17(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17)
 
 #define SIMDPP_STRINGIFY2(x) #x
 #define SIMDPP_STRINGIFY(x) SIMDPP_STRINGIFY2(x)

@@ -167,7 +167,9 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint64<8> unmask() const
     {
-    #if SIMDPP_USE_AVX512F
+    #if SIMDPP_USE_AVX512DQ
+        return _mm512_movm_epi64(d_);
+    #elif SIMDPP_USE_AVX512F
         return _mm512_maskz_set1_epi64(d_, 0xffffffffffffffff);
     #endif
     }

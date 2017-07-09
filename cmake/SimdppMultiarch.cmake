@@ -326,6 +326,27 @@ set(SIMDPP_X86_AVX512BW_TEST_CODE
     }"
 )
 
+list(APPEND SIMDPP_ARCHS_PRI "X86_AVX512DQ")
+if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
+    set(SIMDPP_X86_AVX512DQ_CXX_FLAGS "-mavx512dq")
+    #unsupported on MSVC
+endif()
+set(SIMDPP_X86_AVX512DQ_DEFINE "SIMDPP_ARCH_X86_AVX512DQ")
+set(SIMDPP_X86_AVX512DQ_SUFFIX "-x86_avx512dq")
+set(SIMDPP_X86_AVX512DQ_TEST_CODE
+    "#include <immintrin.h>
+    int main()
+    {
+        union {
+            volatile char a[64];
+            __m512 align;
+        };
+        __m512 one = _mm512_load_ps((float*)a);
+        one = _mm512_and_ps(one, one); // only in AVX512-DQ
+        _mm512_store_ps((float*)a, one);
+    }"
+)
+
 list(APPEND SIMDPP_ARCHS_PRI "ARM_NEON")
 if(SIMDPP_CLANG OR SIMDPP_GCC)
     set(SIMDPP_ARM_NEON_CXX_FLAGS "-mfpu=neon")
@@ -460,9 +481,10 @@ endfunction()
 #   identifiers is supplied.
 #
 #   The following identifiers are currently supported:
-#   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1, X86_AVX, X86_AVX2, X86_FMA3,
-#   X86_FMA4, X86_AVX512F, X86_AVX512BW, X86_XOP, ARM_NEON, ARM_NEON_FLT_SP,
-#   ARM64_NEON
+#   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1,
+#   X86_AVX, X86_AVX2, X86_FMA3, X86_FMA4,
+#   X86_AVX512F, X86_AVX512BW, X86_AVX512DQ, X86_XOP,
+#   ARM_NEON, ARM_NEON_FLT_SP, ARM64_NEON,
 #
 function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
     if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_FILE}")
@@ -570,6 +592,9 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
             list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3")
             if(DEFINED ARCH_SUPPORTED_X86_AVX512BW)
                 list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_AVX512BW")
+                if(DEFINED ARCH_SUPPORTED_X86_AVX512DQ)
+                    list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_AVX512BW,X86_AVX512DQ")
+                endif()
             endif()
         endif()
     endif()
@@ -583,6 +608,9 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
         list(APPEND ALL_ARCHS "X86_AVX512F")
         if(DEFINED ARCH_SUPPORTED_X86_AVX512BW)
             list(APPEND ALL_ARCHS "X86_AVX512F,X86_AVX512BW")
+            if(DEFINED ARCH_SUPPORTED_X86_AVX512DQ)
+                list(APPEND ALL_ARCHS "X86_AVX512F,X86_AVX512BW,X86_AVX512DQ")
+            endif()
         endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_XOP)
