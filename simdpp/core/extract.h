@@ -217,7 +217,6 @@ float extract(const float32x4& a)
     return vgetq_lane_f32(a, id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
-    vec_ste((__vector float)a, 0, &ax[id]);
     return ax[id];
 #endif
 }
@@ -242,7 +241,7 @@ double extract(const float64x2& a)
     return bit_cast<double>(extract<id>(int64x2(a)));
 #elif SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float64x2> ax(a);
-    return a.el(id);
+    return ax[id];
 #elif SIMDPP_USE_NEON64
     return vgetq_lane_f64(a, id);
 #endif
