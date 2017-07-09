@@ -36,10 +36,6 @@
 */
 #error "The first supported GCC version for AVX512F is 5.0"
 #endif
-
-#if ((__GNUC__ == 4) || (__GNUC__ == 5)) && !defined(__INTEL_COMPILER) && !defined(__clang__)
-#define SIMDPP_WORKAROUND_AVX512F_NO_REDUCE 1
-#endif
 #endif
 
 #if SIMDPP_USE_AVX || SIMDPP_USE_AVX2

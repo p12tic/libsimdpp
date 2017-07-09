@@ -312,11 +312,7 @@ SIMDPP_INL uint32_t i_reduce_min(const uint32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32_t i_reduce_min(const uint32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_min((uint32<8>)min(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_min_epu32(a);
-#endif
 }
 #endif
 
@@ -371,11 +367,7 @@ SIMDPP_INL int32_t i_reduce_min(const int32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL int32_t i_reduce_min(const int32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_min((int32<8>)min(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_min_epi32(a);
-#endif
 }
 #endif
 
@@ -433,11 +425,7 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64x4& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64_t i_reduce_min(const uint64<8>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_min((uint64<4>)min(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_min_epu64(a);
-#endif
 }
 #endif
 
@@ -506,11 +494,7 @@ SIMDPP_INL int64_t i_reduce_min(const int64x4& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL int64_t i_reduce_min(const int64<8>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_min((int64<4>)min(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_min_epi64(a);
-#endif
 }
 #endif
 

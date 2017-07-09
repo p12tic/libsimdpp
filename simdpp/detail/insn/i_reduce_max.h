@@ -314,11 +314,7 @@ SIMDPP_INL uint32_t i_reduce_max(const uint32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32_t i_reduce_max(const uint32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_max((uint32<8>)max(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_max_epu32(a);
-#endif
 }
 #endif
 
@@ -373,11 +369,7 @@ SIMDPP_INL int32_t i_reduce_max(const int32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL int32_t i_reduce_max(const int32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_max((int32<8>)max(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_max_epi32(a);
-#endif
 }
 #endif
 
@@ -435,11 +427,7 @@ SIMDPP_INL uint64_t i_reduce_max(const uint64x4& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64_t i_reduce_max(const uint64<8>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_max((uint64<4>)max(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_max_epu64(a);
-#endif
 }
 #endif
 
@@ -508,11 +496,7 @@ SIMDPP_INL int64_t i_reduce_max(const int64x4& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL int64_t i_reduce_max(const int64<8>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_max((int64<4>)max(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_max_epi64(a);
-#endif
 }
 #endif
 

@@ -63,11 +63,7 @@ SIMDPP_INL float i_reduce_max(const float32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL float i_reduce_max(const float32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_max(max(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_max_ps(a);
-#endif
 }
 #endif
 
@@ -115,11 +111,7 @@ SIMDPP_INL double i_reduce_max(const float64x4& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL double i_reduce_max(const float64<8>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_max(max(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_max_pd(a);
-#endif
 }
 #endif
 

@@ -393,11 +393,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32_t i_reduce_mul(const uint32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_mul(mul_lo(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_mul_epi32(a);
-#endif
 }
 #endif
 

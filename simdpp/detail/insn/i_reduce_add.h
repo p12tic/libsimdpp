@@ -574,11 +574,7 @@ SIMDPP_INL uint32_t i_reduce_add(const uint32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32_t i_reduce_add(const uint32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_add(add(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_add_epi32(a);
-#endif
 }
 #endif
 
@@ -636,11 +632,7 @@ SIMDPP_INL uint64_t i_reduce_add(const uint64x4& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64_t i_reduce_add(const uint64<8>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_add(add(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_add_epi64(a);
-#endif
 }
 #endif
 
