@@ -30,6 +30,15 @@ SIMDPP_INL uint8x16 i_shift_l(const uint8x16& a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return detail::null::shift_l(a, count);
+#elif SIMDPP_USE_AVX2
+    uint16x8 mask, a16;
+    uint16_t mask1 = (0x00ff >> (8-count)) << 8;
+
+    a16 = a;
+    mask = splat(mask1);
+    a16 = shift_l(a16, count);
+    a16 = bit_andnot(a16, mask);
+    return uint8x16(a16);
 #elif SIMDPP_USE_SSE2
     uint16x8 mask, a16;
     mask = make_ones();
@@ -53,14 +62,13 @@ SIMDPP_INL uint8x16 i_shift_l(const uint8x16& a, unsigned count)
 SIMDPP_INL uint8x32 i_shift_l(const uint8x32& a, unsigned count)
 {
     uint16x16 mask, a16;
-    mask = make_ones();
-    mask = shift_r(mask, 16-count);
-    mask = shift_l(mask, 8);
+    uint16_t mask1 = (0x00ff >> (8-count)) << 8;
 
     a16 = a;
+    mask = splat(mask1);
     a16 = shift_l(a16, count);
     a16 = bit_andnot(a16, mask);
-    return uint8x32(a16);
+    return uint8<32>(a16);
 }
 #endif
 
@@ -179,16 +187,15 @@ V i_shift_l(const V& a, unsigned count)
 // -----------------------------------------------------------------------------
 
 template<unsigned count, unsigned N> SIMDPP_INL
-uint8<N> shift_l_8(const uint8<N>& a)
+uint8<N> sse_shift_l_8(const uint8<N>& a)
 {
-#if SIMDPP_USE_SSE2
-    uint8<N> mask = shift_u8_mask<8-count, uint8<N>>()();
+    uint8_t mask1 = 0xff >> count;
+    uint8<N> mask = make_uint(mask1);
+
     uint16<N/2> a16 = (uint16<N/2>) bit_and(a, mask);
     a16 = shift_l<count>(a16);
+
     return uint8<N>(a16);
-#else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(uint8<N>, a);
-#endif
 }
 
 template<unsigned count> SIMDPP_INL
@@ -198,10 +205,7 @@ uint8x16 i_shift_l(const uint8x16& a)
 #if SIMDPP_USE_NULL
     return i_shift_l(a, count);
 #elif SIMDPP_USE_SSE2
-    /*  SSE2-SSE4.1 and AVX-AVX2 instruction sets lack 8-bit shift. We emulate
-        it using 16-bit shift.
-    */
-    return shift_l_8<count>(a);
+    return sse_shift_l_8<count>(a);
 #elif SIMDPP_USE_NEON
     return vshlq_n_u8(a, count);
 #elif SIMDPP_USE_ALTIVEC
@@ -215,15 +219,8 @@ template<unsigned count> SIMDPP_INL
 uint8<32> i_shift_l(const uint8<32>& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-    uint16<16> mask, a16;
-    mask = make_ones();
-    mask = shift_r<16-count>(mask);
-    mask = shift_l<8>(mask);
+    return sse_shift_l_8<count>(a);
 
-    a16 = a;
-    a16 = shift_l<count>(a16);
-    a16 = bit_andnot(a16, mask);
-    return uint8<32>(a16);
 }
 #endif
 

@@ -98,10 +98,10 @@ SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
 #if SIMDPP_USE_AVX2
 SIMDPP_INL uint8x32 i_shift_r(const uint8x32& a, unsigned count)
 {
+    unsigned shift = 8 - count;
+    uint16_t mask1 = (0xff >> shift) << shift;
     uint16x16 mask, a16;
-    mask = make_ones();
-    mask = shift_l(mask, 16-count);
-    mask = shift_r<8>(mask);
+    mask = splat(mask1);
 
     a16 = a;
     a16 = shift_r(a16, count);
@@ -413,6 +413,18 @@ int8x32 i_shift_r(const int8x32& a)
 
 // -----------------------------------------------------------------------------
 
+template<unsigned count, unsigned N> SIMDPP_INL
+uint8<N> sse_shift_r_u8(const uint8<N>& a)
+{
+    uint8_t mask1 = (0xff << count) & 0xff;
+    uint8<N> mask = make_uint(mask1);
+
+    uint16<N/2> a16 = (uint16<N/2>) bit_and(a, mask);
+    a16 = shift_r<count>(a16);
+
+    return uint8<N>(a16);
+}
+
 template<unsigned count> SIMDPP_INL
 uint8x16 i_shift_r(const uint8x16& a)
 {
@@ -420,10 +432,7 @@ uint8x16 i_shift_r(const uint8x16& a)
 #if SIMDPP_USE_NULL
     return i_shift_r(a, count);
 #elif SIMDPP_USE_SSE2
-    /*  SSE2-SSE4.1 and AVX-AVx2 instruction sets lack 8-bit shift. The
-        optimization below emulates it using 16-bit shift
-    */
-    return shift_r_u8<count>(a);
+    return sse_shift_r_u8<count>(a);
 #elif SIMDPP_USE_NEON
     return vshrq_n_u8(a, count);
 #elif SIMDPP_USE_ALTIVEC
@@ -437,15 +446,8 @@ template<unsigned count> SIMDPP_INL
 uint8x32 i_shift_r(const uint8x32& a)
 {
     static_assert(count <= 8, "Shift out of bounds");
-    uint16<16> mask, a16;
-    mask = make_ones();
-    mask = shift_l<16-count>(mask);
-    mask = shift_r<8>(mask);
+    return sse_shift_r_u8<count>(a);
 
-    a16 = a;
-    a16 = shift_r<count>(a16);
-    a16 = bit_andnot(a16, mask);
-    return uint8x32(a16);
 }
 #endif
 
@@ -652,19 +654,6 @@ V i_shift_r(const V& a)
 }
 
 // -----------------------------------------------------------------------------
-
-template<unsigned count, unsigned N> SIMDPP_INL
-uint8<N> shift_r_u8(const uint8<N>& a)
-{
-#if SIMDPP_USE_SSE2
-    uint8<N> mask = shift_u8_mask<count, uint8<N>>()();
-    uint16<N/2> a16 = (uint16<N/2>) bit_andnot(a, mask);
-    a16 = i_shift_r<count>(a16);
-    return uint8<N>(a16);
-#else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(int64<count>, a);
-#endif
-}
 
 template<bool no_shift, bool full_shift>
 struct i_shift_r_wrapper {
