@@ -93,7 +93,7 @@ float32<8> i_shuffle2x2(const float32<8>& a, const float32<8>& b)
 
 #if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
-float32<8> i_shuffle2x2(const float32<16>& a, const float32<16>& b)
+float32<16> i_shuffle2x2(const float32<16>& a, const float32<16>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
@@ -273,7 +273,7 @@ uint32<8> i_shuffle2x2(const uint32<8>& a, const uint32<8>& b)
 
 #if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
-uint32<8> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
+uint32<16> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
