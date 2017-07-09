@@ -35,7 +35,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N,
 typename detail::get_expr2_nomask<V1, V2>::empty
     shuffle4x2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     typename detail::get_expr2_nomask_nosign<V1,V2,void>::type a0 = a.wrapped().eval(),
                                                                b0 = b.wrapped().eval();
@@ -62,7 +62,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N,
 typename detail::get_expr2_nomask<V1, V2>::empty
     shuffle4x2(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
+#if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     static_assert(s0 < 8 && s1 < 8 && s2 < 8 && s3 < 8, "Selector out of range");
     typename detail::get_expr2_nomask_nosign<V1,V2,void>::type a0 = a.wrapped().eval(),
                                                                b0 = b.wrapped().eval();
