@@ -155,13 +155,13 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
 #elif SIMDPP_USE_VSX_206
     __vector double da = a, db = b;
     if (s0 < 2 && s1 < 2) {
-        return vec_xxpermdi(da, da, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+        return vec_xxpermdi(da, da, SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return vec_xxpermdi(db, db, SIMDPP_SHUFFLE_MASK_2x2(s0-2,s1-2));
+        return vec_xxpermdi(db, db, SIMDPP_VSX_SHUFFLE_MASK_2x2(s0-2,s1-2));
     } else if (s0 < 2) { // s1 >= 2
-        return vec_xxpermdi(da, db, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+        return vec_xxpermdi(da, db, SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1-2));
     } else { // s0 >= 2, s1 < 2
-        return vec_xxpermdi(db, da, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+        return vec_xxpermdi(db, da, SIMDPP_VSX_SHUFFLE_MASK_2x2(s1, s0-2));
     }
 #elif SIMDPP_USE_MSA
     uint64<2> mask = make_uint(s0, s1);
@@ -376,13 +376,13 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
 #elif SIMDPP_USE_VSX_207
     __vector uint64_t da = a, db = b;
     if (s0 < 2 && s1 < 2) {
-        return vec_xxpermdi(da, da, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+        return vec_xxpermdi(da, da, SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return vec_xxpermdi(db, db, SIMDPP_SHUFFLE_MASK_2x2(s0-2,s1-2));
+        return vec_xxpermdi(db, db, SIMDPP_VSX_SHUFFLE_MASK_2x2(s0-2,s1-2));
     } else if (s0 < 2) { // s1 >= 2
-        return vec_xxpermdi(da, db, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+        return vec_xxpermdi(da, db, SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1-2));
     } else { // s0 >= 2, s1 < 2
-        return vec_xxpermdi(db, da, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+        return vec_xxpermdi(db, da, SIMDPP_VSX_SHUFFLE_MASK_2x2(s1, s0-2));
     }
 #elif SIMDPP_USE_MSA
     uint64<2> mask = make_uint(s0, s1);

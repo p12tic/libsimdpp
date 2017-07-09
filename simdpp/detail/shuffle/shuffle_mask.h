@@ -12,6 +12,12 @@
     #error "This file must be included through simd.h"
 #endif
 
+#if SIMDPP_LITTLE_ENDIAN
+#define SIMDPP_VSX_SHUFFLE_MASK_2x2(x0, x1) (((x0) << 1) | (x1))
+#else
+#define SIMDPP_VSX_SHUFFLE_MASK_2x2(x0, x1) (((x1) << 1) | (x0))
+#endif
+
 #define SIMDPP_SHUFFLE_MASK_2x2(x0, x1) (((x1) << 1) | (x0))
 #define SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1) ((SIMDPP_SHUFFLE_MASK_2x2(x0, x1) << 2) | SIMDPP_SHUFFLE_MASK_2x2(x0, x1))
 #define SIMDPP_SHUFFLE_MASK_2x2_4(x0, x1) ((SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1) << 4) | SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1))

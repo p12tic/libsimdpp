@@ -61,7 +61,7 @@ uint64x2 i_permute2(const uint64x2& a)
     return detail::neon_shuffle_int64x2::permute2<s0,s1>(a);
 #elif SIMDPP_USE_VSX_207
     return vec_xxpermdi((__vector uint64_t) a, (__vector uint64_t) a,
-                        SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+                        SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::permute<s0,s1>(a);
 #endif
@@ -102,7 +102,7 @@ float64x2 i_permute2(const float64x2& a)
     return _mm_shuffle_pd(a, a, _MM_SHUFFLE2(s1, s0));
 #elif SIMDPP_USE_VSX_206
     return vec_xxpermdi((__vector double) a, (__vector double) a,
-                        SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+                        SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1));
 #elif SIMDPP_USE_NEON64 || SIMDPP_USE_MSA
     return float64x2(i_permute2<s0,s1>(int64x2(a)));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
