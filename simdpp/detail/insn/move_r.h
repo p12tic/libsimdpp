@@ -35,8 +35,7 @@ uint8x16 i_move16_r(const uint8x16& a)
     return vextq_u8(z, a, 16-shift);
 #elif SIMDPP_USE_ALTIVEC
     // return align<16-shift>((uint8x16) make_zero(), a);
-    return vec_sld((__vector uint8_t)(uint8x16) make_zero(),
-                   (__vector uint8_t)a, 16-shift);
+    return vec_sld_biendian<16-shift>((uint8<16>)make_zero(), a);
 #elif SIMDPP_USE_MSA
     uint8x16 zero = make_zero();
     return (v16u8) __msa_sldi_b((v16i8)(v16u8)a, (v16i8)(v16u8)zero, 16-shift);

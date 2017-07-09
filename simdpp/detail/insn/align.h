@@ -26,7 +26,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-
 // base 8x16 implementation
 template<unsigned shift> SIMDPP_INL
 uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
@@ -57,7 +56,7 @@ uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
         return upper;
     return vextq_u8(lower, upper, shift % 16);
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, (unsigned)shift);
+    return vec_sld_biendian<shift>(lower, upper);
 #elif SIMDPP_USE_MSA
     return (v16u8) __msa_sld_b((v16i8)(v16u8)upper,
                                (v16i8)(v16u8)lower, shift);
@@ -157,8 +156,7 @@ uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
         return upper;
     return vextq_u32(lower, upper, shift);
 #elif SIMDPP_USE_ALTIVEC
-    return (__vector uint32_t) vec_sld((__vector uint8_t)(uint8x16)lower,
-                                       (__vector uint8_t)(uint8x16)upper, (unsigned)shift*4);
+    return (uint32<4>) vec_sld_biendian<shift*4>((uint8<16>)lower, (uint8<16>)upper);
 #elif SIMDPP_USE_MSA
     return (v4u32) __msa_sld_b((v16i8)(v4u32)upper,
                                (v16i8)(v4u32)lower, shift*4);
@@ -215,8 +213,8 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
         return upper;
     return vextq_u64(lower, upper, shift % 2);
 #elif SIMDPP_USE_VSX_207
-    return (__vector uint64_t) vec_sld((__vector uint8_t)(uint8x16)lower,
-                                       (__vector uint8_t)(uint8x16)upper, (unsigned)shift*8);
+    return (uint64<2>) vec_sld_biendian<shift*8>((uint8<16>) lower,
+                                                 (uint8<16>) upper);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64x2 r;
     //use int to disable warnings wrt. comparison result always being true/false
@@ -298,8 +296,7 @@ float32x4 i_align4(const float32x4& lower, const float32x4& upper)
         return upper;
     return vextq_f32(lower, upper, shift);
 #elif SIMDPP_USE_ALTIVEC
-    return (__vector float) vec_sld((__vector uint8_t)(uint8x16)lower,
-                                    (__vector uint8_t)(uint8x16)upper, (unsigned)shift*4);
+    return (float32<4>) vec_sld_biendian<shift*4>((uint8<16>)lower, (uint8<16>)upper);
 #elif SIMDPP_USE_MSA
     return (v4f32) __msa_sld_b((v16i8)(v4f32)upper,
                                (v16i8)(v4f32)lower, shift*4);
@@ -367,8 +364,8 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
         return upper;
     return vextq_f64(lower, upper, shift);
 #elif SIMDPP_USE_VSX_206
-    return (__vector double) vec_sld((__vector uint8_t)(uint8x16)lower,
-                                     (__vector uint8_t)(uint8x16)upper, (unsigned)shift*8);
+    return (float64<2>) vec_sld_biendian<shift*8>((uint8<16>)lower,
+                                                  (uint8<16>)upper);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
     float64x2 r;
     //use int to disable warnings wrt. comparison result always being true/false
