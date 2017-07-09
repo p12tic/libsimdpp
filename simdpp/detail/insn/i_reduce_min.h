@@ -43,7 +43,7 @@ SIMDPP_INL uint8_t i_reduce_min(const uint8x16& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16_t i_reduce_min(const uint8x32& a)
+SIMDPP_INL uint8_t i_reduce_min(const uint8<32>& a)
 {
     uint8x16 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
