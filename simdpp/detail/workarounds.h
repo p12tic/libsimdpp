@@ -17,18 +17,18 @@
 #endif
 
 #if SIMDPP_USE_NEON64
-#if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 8)
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 8) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 #define vreinterpretq_f64_u64(x) ((float64x2_t) (uint64x2_t) (x))
 #define vreinterpretq_u64_f64(x) ((uint64x2_t) (float64x2_t) (x))
 #endif
 
-#if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9)
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 #define vmul_f64(x, y) ((float64x1_t)( ((float64x1_t)(x)) * ((float64x1_t)(y)) ))
 #endif
 #endif
 
 #if SIMDPP_USE_AVX512F
-#if (__GNUC__ == 4) && !__INTEL_COMPILER
+#if (__GNUC__ == 4) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 /*  See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70059.
     _mm512_inserti64x4(x, y, 0) and related intrinsics result in wrong code.
     _mm512_castsi256_si512 is not available in GCC 4.9, thus there's no way
@@ -37,7 +37,7 @@
 #error "The first supported GCC version for AVX512F is 5.0"
 #endif
 
-#if ((__GNUC__ == 4) || (__GNUC__ == 5)) && !__INTEL_COMPILER
+#if ((__GNUC__ == 4) || (__GNUC__ == 5)) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 #define SIMDPP_WORKAROUND_AVX512F_NO_REDUCE 1
 #endif
 #endif
@@ -55,7 +55,7 @@
 #endif
 
 #if SIMDPP_USE_AVX
-#if (__GNUC__ == 4) && (__GNUC_MINOR__ == 4)
+#if (__GNUC__ == 4) && (__GNUC_MINOR__ == 4) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 /*  GCC emits "Error: operand size mismatch for `vmovq'" when compiling
     256-bit shuffling intrinsics. No workaround has been found yet
 */
