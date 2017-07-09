@@ -19,7 +19,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
 #include <simdpp/detail/mem_block.h>
-#include <simdpp/core/detail/vec_extract.h>
+#include <simdpp/core/detail/subvec_extract.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -78,7 +78,7 @@ float32<N> i_to_float32(const int32<N>& a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r.vec(i) = i_to_float32(detail::vec_extract<float32<N>::base_length>(a, i));
+        r.vec(i) = i_to_float32(detail::subvec_extract<float32<N>::base_length>(a, i));
     }
     return r;
 }
@@ -139,7 +139,7 @@ float32<N> i_to_float32(const float64<N>& a)
 {
     float32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r.vec(i) = i_to_float32(detail::vec_extract<float32<N>::base_length>(a, i));
+        r.vec(i) = i_to_float32(detail::subvec_extract<float32<N>::base_length>(a, i));
     }
     return r;
 }

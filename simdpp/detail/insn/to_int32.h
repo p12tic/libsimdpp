@@ -19,7 +19,7 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/core/detail/vec_insert.h>
+#include <simdpp/core/detail/subvec_insert.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -93,7 +93,7 @@ int32<N> i_to_int32(const int16<N>& a)
 {
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_int32(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_int32(a.vec(i)), i);
     }
     return r;
 }
@@ -152,7 +152,7 @@ int32<N> i_to_int32(const float32<N>& a)
 {
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_int32(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_int32(a.vec(i)), i);
     }
     return r;
 }
@@ -217,7 +217,7 @@ int32<N> i_to_int32(const float64<N>& a)
 {
     int32<N> r;
     for (unsigned i = 0; i < r.vec_length; ++i) {
-        r.vec(i) = i_to_int32(detail::vec_extract<int32<N>::base_length>(a, i));
+        r.vec(i) = i_to_int32(detail::subvec_extract<int32<N>::base_length>(a, i));
     }
     return r;
 }

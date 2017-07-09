@@ -88,7 +88,7 @@ int64<N> i_to_int64(const int32<N>& a)
 {
     int64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_int64(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_int64(a.vec(i)), i);
     }
     return r;
 }
@@ -159,7 +159,7 @@ uint64<N> i_to_uint64(const uint32<N>& a)
 {
     uint64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_uint64(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_uint64(a.vec(i)), i);
     }
     return r;
 }

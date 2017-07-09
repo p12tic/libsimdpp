@@ -16,6 +16,9 @@
 #include <simdpp/core/combine.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/core/move_l.h>
+#include <simdpp/core/zip_lo.h>
+#include <simdpp/core/zip_hi.h>
+#include <simdpp/core/detail/subvec_insert.h>
 #include <simdpp/detail/extract128.h>
 #include <simdpp/core/detail/vec_insert.h>
 
@@ -83,7 +86,7 @@ float64<N> i_to_float64(const int32<N>& a)
 {
     float64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_float64(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_float64(a.vec(i)), i);
     }
     return r;
 }
@@ -148,7 +151,7 @@ float64<N> i_to_float64(const float32<N>& a)
 {
     float64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_float64(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_float64(a.vec(i)), i);
     }
     return r;
 }

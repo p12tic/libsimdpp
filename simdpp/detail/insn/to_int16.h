@@ -19,7 +19,7 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/core/detail/vec_insert.h>
+#include <simdpp/core/detail/subvec_insert.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -90,7 +90,7 @@ uint16<N> i_to_uint16(const uint8<N>& a)
 {
     uint16<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_uint16(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_uint16(a.vec(i)), i);
     }
     return r;
 }
@@ -163,7 +163,7 @@ int16<N> i_to_int16(const int8<N>& a)
 {
     int16<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, i_to_int16(a.vec(i)), i);
+        detail::subvec_insert(r, i_to_int16(a.vec(i)), i);
     }
     return r;
 }

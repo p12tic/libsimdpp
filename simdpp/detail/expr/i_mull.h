@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/not_implemented.h>
-#include <simdpp/core/detail/vec_insert.h>
+#include <simdpp/core/detail/subvec_insert.h>
 #include <simdpp/core/to_int64.h>
 #include <simdpp/core/combine.h>
 #include <simdpp/core/zip_hi.h>
@@ -120,7 +120,7 @@ int32<N> expr_eval(const expr_mull<int16<N,E1>,
     int16<N> b = q.b.eval();
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }
@@ -193,7 +193,7 @@ uint32<N> expr_eval(const expr_mull<uint16<N,E1>,
     uint16<N> b = q.b.eval();
     uint32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }
@@ -258,7 +258,7 @@ int64<N> expr_eval(const expr_mull<int32<N,E1>,
     int32<N> b = q.b.eval();
     int64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }
@@ -352,7 +352,7 @@ uint64<N> expr_eval(const expr_mull<uint32<N,E1>,
     uint32<N> b = q.b.eval();
     uint64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::vec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
     }
     return r;
 }
