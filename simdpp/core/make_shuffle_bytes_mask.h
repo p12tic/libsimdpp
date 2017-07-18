@@ -12,10 +12,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <stdint.h>
 #include <simdpp/types.h>
 #include <simdpp/core/make_uint.h>
 #include <simdpp/detail/array.h>
+#include <simdpp/detail/include_stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

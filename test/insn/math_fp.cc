@@ -14,7 +14,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 
 template<unsigned B>
-void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
+void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
 {
     (void) opts;
 
@@ -193,7 +193,7 @@ void test_math_fp_n(TestSuite& tc, const TestOptions& opts)
 
 void test_math_fp(TestResults& res, const TestOptions& opts)
 {
-    TestSuite& ts = NEW_TEST_SUITE(res, "math_fp");
+    TestResultsSet& ts = res.new_results_set("math_fp");
     test_math_fp_n<16>(ts, opts);
     test_math_fp_n<32>(ts, opts);
     test_math_fp_n<64>(ts, opts);

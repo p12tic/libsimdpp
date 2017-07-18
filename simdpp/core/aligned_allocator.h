@@ -10,8 +10,8 @@
 
 #include <memory>
 #include <cstddef>
-#include <stdint.h>
 #include <stdexcept>
+#include <simdpp/detail/include_stdint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

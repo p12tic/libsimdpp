@@ -6,12 +6,13 @@
 */
 
 #include <simdpp/simd.h>
-#include "../utils/test_suite.h"
+#include "../utils/test_results_set.h"
 #include "../utils/test_helpers.h"
+#include "../utils/test_reporter.h"
 #include "../common/vectors.h"
 #include "../common/masks.h"
 
-void test_expr_bitwise(SeqTestSuite& ts)
+void test_expr_bitwise(TestReporter& ts)
 {
     SIMDPP_ARCH_NAMESPACE::Vectors<16,16> v;
 

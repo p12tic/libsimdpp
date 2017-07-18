@@ -18,7 +18,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<class V, unsigned i>
 struct Test_permute_bytes16_x2 {
     static const unsigned limit = 2;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = i;
 
@@ -32,7 +32,7 @@ struct Test_permute_bytes16_x2 {
 template<class V, unsigned i>
 struct Test_permute_bytes16_x4 {
     static const unsigned limit = 4;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = i;
 
@@ -46,7 +46,7 @@ struct Test_permute_bytes16_x4 {
 template<class V, unsigned i>
 struct Test_permute_bytes16_x8 {
     static const unsigned limit = 8;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = i;
 
@@ -60,7 +60,7 @@ struct Test_permute_bytes16_x8 {
 template<class V, unsigned i>
 struct Test_permute_bytes16_x16 {
     static const unsigned limit = 16;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = i;
 
@@ -74,7 +74,7 @@ struct Test_permute_bytes16_x16 {
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x2 {
     static const unsigned limit = 2;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
 
@@ -88,7 +88,7 @@ struct Test_shuffle_bytes16_x2 {
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x4 {
     static const unsigned limit = 4;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
 
@@ -102,7 +102,7 @@ struct Test_shuffle_bytes16_x4 {
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x8 {
     static const unsigned limit = 8;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
 
@@ -116,7 +116,7 @@ struct Test_shuffle_bytes16_x8 {
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x16 {
     static const unsigned limit = 16;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
 
@@ -130,7 +130,7 @@ struct Test_shuffle_bytes16_x16 {
 template<class V, unsigned i>
 struct Test_permute_zbytes16_x2 {
     static const unsigned limit = 3;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
 
@@ -144,7 +144,7 @@ struct Test_permute_zbytes16_x2 {
 template<class V, unsigned i>
 struct Test_permute_zbytes16_x4 {
     static const unsigned limit = 5;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
 
@@ -158,7 +158,7 @@ struct Test_permute_zbytes16_x4 {
 template<class V, unsigned i>
 struct Test_permute_zbytes16_x8 {
     static const unsigned limit = 9;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
 
@@ -172,7 +172,7 @@ struct Test_permute_zbytes16_x8 {
 template<class V, unsigned i>
 struct Test_permute_zbytes16_x16 {
     static const unsigned limit = 17;
-    static void test(TestSuite& tc, const V& a)
+    static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
 
@@ -186,7 +186,7 @@ struct Test_permute_zbytes16_x16 {
 template<class V, unsigned i>
 struct Test_shuffle_zbytes16_x2 {
     static const unsigned limit = 5;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
 
@@ -200,7 +200,7 @@ struct Test_shuffle_zbytes16_x2 {
 template<class V, unsigned i>
 struct Test_shuffle_zbytes16_x4 {
     static const unsigned limit = 9;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
 
@@ -214,7 +214,7 @@ struct Test_shuffle_zbytes16_x4 {
 template<class V, unsigned i>
 struct Test_shuffle_zbytes16_x8 {
     static const unsigned limit = 17;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
 
@@ -228,7 +228,7 @@ struct Test_shuffle_zbytes16_x8 {
 template<class V, unsigned i>
 struct Test_shuffle_zbytes16_x16 {
     static const unsigned limit = 33;
-    static void test(TestSuite& tc, const V& a, const V& b)
+    static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
 
@@ -244,7 +244,7 @@ struct Test_shuffle_zbytes16_x16 {
 void test_shuffle_bytes(TestResults& res)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSSE3 || SIMDPP_USE_NEON
-    TestSuite& tc = NEW_TEST_SUITE(res, "shuffle_bytes");
+    TestResultsSet& tc = res.new_results_set("shuffle_bytes");
 
     using namespace simdpp;
 

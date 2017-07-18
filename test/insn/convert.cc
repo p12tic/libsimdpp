@@ -12,7 +12,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<unsigned B>
-void test_convert_n(TestSuite& ts)
+void test_convert_n(TestResultsSet& ts)
 {
     using namespace simdpp;
 
@@ -121,7 +121,7 @@ void test_convert_n(TestSuite& ts)
 
 void test_convert(TestResults& res)
 {
-    TestSuite& ts = NEW_TEST_SUITE(res, "convert");
+    TestResultsSet& ts = res.new_results_set("convert");
     test_convert_n<16>(ts);
     test_convert_n<32>(ts);
     test_convert_n<64>(ts);
