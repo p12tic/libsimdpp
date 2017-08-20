@@ -357,6 +357,38 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8x16& ca)
 #endif
 }
 
+/** Extracts a bit from each byte of each element of a int8x32 vector.
+
+This operation is only sensible if each byte within the vector is either
+0x00 or 0xff.
+
+@code
+r = ((a[0] & 0x??) ? 0x01 : 0) |
+    ((a[1] & 0x??) ? 0x02 : 0) |
+    ...
+@endcode
+*/
+SIMDPP_INL uint32_t extract_bits_any(const uint8x32& ca)
+    {
+        uint8<32> a = ca;
+        // extract_bits_impl depends on the exact implementation of this function
+#if SIMDPP_USE_NULL
+        uint32_t r = 0;
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
+        x = x & 1;
+        r = (r >> 1) | (uint32_t(x) << 31);
+    }
+    return r;
+#elif SIMDPP_USE_SSE2
+    uint8<16> A,B;
+    split(a, A, B);
+    return (extract_bits_any(A) << 16) + extract_bits_any(B);
+#elif SIMDPP_USE_AVX2
+        return _mm256_movemask_epi8(a);
+#endif
+    }
+
 /** Extracts specific bit from each byte of each element of a int8x16 vector.
 
     The default template argument selects the bits from each byte in most
