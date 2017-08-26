@@ -52,6 +52,12 @@ uint16_t extract_bits(const uint8<16>& a)
     static_assert(id < 8, "index out of bounds");
     return detail::insn::i_extract_bits<id>(a);
 }
+template<unsigned id> SIMDPP_INL
+uint32_t extract_bits(const uint8<32>& a)
+{
+    static_assert(id < 8, "index out of bounds");
+    return detail::insn::i_extract_bits<id>(a);
+}
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

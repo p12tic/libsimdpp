@@ -127,6 +127,20 @@ uint16_t i_extract_bits(const uint8<16>& ca)
 #endif
 }
 
+template<unsigned id> SIMDPP_INL
+uint32_t i_extract_bits(const uint8<32>& ca)
+{
+    uint8<32> a = ca;
+#if SIMDPP_USE_AVX2
+    a = shift_l<7-id>((uint16<16>) a);
+    return i_extract_bits_any(a);
+#else
+    uint8<16> lo, hi;
+    split(a, lo, hi);
+    return i_extract_bits<id>(lo) | (i_extract_bits<id>(hi) << 16);
+#endif
+}
+
 } // namespace insn
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
