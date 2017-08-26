@@ -220,7 +220,7 @@ template<unsigned N>
 SIMDPP_INL uint16_t i_reduce_add(const int8<N>& a)
 {
 #if SIMDPP_USE_NULL
-    int16_t r = 0;
+    uint16_t r = 0;
     for (unsigned j = 0; j < a.vec_length; ++j) {
         for (unsigned i = 0; i < a.base_length; i++) {
             r += a.vec(j).el(i);
@@ -582,7 +582,7 @@ template<unsigned N>
 SIMDPP_INL uint32_t i_reduce_add(const uint32<N>& a)
 {
 #if SIMDPP_USE_NULL
-    uint64_t r = 0;
+    uint32_t r = 0;
     for (unsigned j = 0; j < a.vec_length; ++j) {
         for (unsigned i = 0; i < a.base_length; i++) {
             r += a.vec(j).el(i);
