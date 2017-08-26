@@ -127,6 +127,10 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_AVX2;
         if (ebx & (1 << 16) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512F;
+        if (ebx & (1 << 30) && xsave_xrstore_avail)
+            arch_info |= Arch::X86_AVX512BW;
+        if (ebx & (1 << 17) && xsave_xrstore_avail)
+            arch_info |= Arch::X86_AVX512DQ;
     }
 
     return arch_info;
