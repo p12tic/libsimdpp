@@ -111,6 +111,15 @@
 #endif
 #endif
 
+#if SIMDPP_USE_AVX512BW
+#if (__clang_major__ == 4) && (__clang_minor__ == 0)
+// Internal compiler errors when trying to select wrong instruction for specific
+// combination of shuffles. Not possible to work around as shuffle detection is
+// quite clever.
+#error Clang 4.0 is not supported on AVX512BW due to compiler bugs.
+#endif
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {

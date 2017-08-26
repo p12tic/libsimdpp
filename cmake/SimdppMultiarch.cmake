@@ -287,6 +287,11 @@ set(SIMDPP_X86_AVX512F_DEFINE "SIMDPP_ARCH_X86_AVX512F")
 set(SIMDPP_X86_AVX512F_SUFFIX "-x86_avx512f")
 set(SIMDPP_X86_AVX512F_TEST_CODE
     "#include <immintrin.h>
+
+    #if (__clang_major__ == 4) && (__clang_minor__ == 0)
+    #error Not supported. See simdpp/detail/workarounds.h
+    #endif
+
     int main()
     {
         union {

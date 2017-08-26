@@ -77,6 +77,8 @@ simdpp/detail/workarounds.h for more details.
 
  - AVX512F is not supported on GCC 5.x and older; not supported on MSVC yet.
 
+ - AVX512BW is not supported on Clang 4.0 and older.
+
  - NEON is not supported on Clang 3.3 or older.
 
  - Altivec on little-endian PPC is not suppported on GCC 5.x and older.
