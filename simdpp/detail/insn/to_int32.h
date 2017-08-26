@@ -116,11 +116,17 @@ SIMDPP_INL uint32<8> i_to_uint32(const uint16<8>& a)
     r.vec(0) = _mm_cvtepu16_epi32(a);
     r.vec(1) = _mm_cvtepu16_epi32(move8_l<4>(a).eval());
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN)
     uint16<8> zero = make_zero();
     uint32<8> r;
     r.vec(0) = zip8_lo(a, zero);
     r.vec(1) = zip8_hi(a, zero);
+    return r;
+#elif (SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN)
+    uint16<8> zero = make_zero();
+    uint32<8> r;
+    r.vec(0) = zip8_lo(zero, a);
+    r.vec(1) = zip8_hi(zero, a);
     return r;
 #elif SIMDPP_USE_NEON
     uint32<8> r;
