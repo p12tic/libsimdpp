@@ -56,6 +56,30 @@ uint8x16 i_insert(const uint8x16& ca, uint8_t x)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
+template<unsigned id> SIMDPP_INL
+uint8<32> i_insert(const uint8<32>& a, uint8_t x)
+{
+    __m256i val = a;
+    __m128i val128 = _mm256_extracti128_si256(val, id / 16);
+    val128 = _mm_insert_epi8(val128, x, id % 16);
+    return _mm256_inserti128_si256(val, val128, id / 16);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned id> SIMDPP_INL
+uint8<64> i_insert(const uint8<64>& a, uint8_t x)
+{
+    __m512i val = a;
+    __m128i val128 = _mm512_extracti32x4_epi32(val, id / 16);
+    val128 = _mm_insert_epi8(val128, x, id % 16);
+    return _mm512_inserti32x4(val, val128, id / 16);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
 template<unsigned id> SIMDPP_INL
 uint16x8 i_insert(const uint16x8& ca, uint16_t x)
 {
@@ -76,6 +100,30 @@ uint16x8 i_insert(const uint16x8& ca, uint16_t x)
     return (v8u16) __msa_insert_h((v8i16)(v8u16) a, id, x);
 #endif
 }
+
+#if SIMDPP_USE_AVX2
+template<unsigned id> SIMDPP_INL
+uint16<16> i_insert(const uint16<16>& a, uint16_t x)
+{
+    __m256i val = a;
+    __m128i val128 = _mm256_extracti128_si256(val, id / 8);
+    val128 = _mm_insert_epi16(val128, x, id % 8);
+    return _mm256_inserti128_si256(val, val128, id / 8);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned id> SIMDPP_INL
+uint16<32> i_insert(const uint16<32>& a, uint16_t x)
+{
+    __m512i val = a;
+    __m128i val128 = _mm512_extracti32x4_epi32(val, id / 8);
+    val128 = _mm_insert_epi16(val128, x, id % 8);
+    return _mm512_inserti32x4(val, val128, id / 8);
+}
+#endif
+
+// -----------------------------------------------------------------------------
 
 template<unsigned id> SIMDPP_INL
 uint32x4 i_insert(const uint32x4& ca, uint32_t x)
@@ -104,6 +152,30 @@ uint32x4 i_insert(const uint32x4& ca, uint32_t x)
     return (v4u32) __msa_insert_w((v4i32)(v4u32) a, id, x);
 #endif
 }
+
+#if SIMDPP_USE_AVX2
+template<unsigned id> SIMDPP_INL
+uint32<8> i_insert(const uint32<8>& a, uint32_t x)
+{
+    __m256i val = a;
+    __m128i val128 = _mm256_extracti128_si256(val, id / 4);
+    val128 = _mm_insert_epi32(val128, x, id % 4);
+    return _mm256_inserti128_si256(val, val128, id / 4);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+uint32<16> i_insert(const uint32<16>& a, uint32_t x)
+{
+    __m512i val = a;
+    __m128i val128 = _mm512_extracti32x4_epi32(val, id / 4);
+    val128 = _mm_insert_epi32(val128, x, id % 4);
+    return _mm512_inserti32x4(val, val128, id / 4);
+}
+#endif
+
+// -----------------------------------------------------------------------------
 
 template<unsigned id> SIMDPP_INL
 uint64x2 i_insert(const uint64x2& ca, uint64_t x)
@@ -161,6 +233,30 @@ uint64x2 i_insert(const uint64x2& ca, uint64_t x)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
+template<unsigned id> SIMDPP_INL
+uint64<4> i_insert(const uint64<4>& a, uint64_t x)
+{
+    __m256i val = a;
+    uint64<2> val128 = _mm256_extracti128_si256(val, id / 2);
+    val128 = i_insert<id % 2>(val128, x);
+    return _mm256_inserti128_si256(val, val128, id / 2);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+uint64<8> i_insert(const uint64<8>& a, uint64_t x)
+{
+    __m512i val = a;
+    uint64<2> val128 = _mm512_extracti32x4_epi32(val, id / 2);
+    val128 = i_insert<id % 2>(val128, x);
+    return _mm512_inserti32x4(val, val128, id / 2);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
 template<unsigned id> SIMDPP_INL
 float32x4 i_insert(const float32x4& a, float x)
 {
@@ -171,10 +267,68 @@ float32x4 i_insert(const float32x4& a, float x)
 #endif
 }
 
+#if SIMDPP_USE_AVX
+template<unsigned id> SIMDPP_INL
+float32<8> i_insert(const float32<8>& a, float x)
+{
+    __m256 val = a;
+    __m128 val128 = _mm256_extractf128_ps(val, id / 4);
+    val128 = i_insert<id % 4>((float32<4>) val128, x);
+    return _mm256_insertf128_ps(val, val128, id / 4);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+float32<16> i_insert(const float32<16>& a, float x)
+{
+    __m512 val = a;
+    __m128 val128 = _mm512_extractf32x4_ps(val, id / 4);
+    val128 = i_insert<id % 4>((float32<4>) val128, x);
+    return _mm512_insertf32x4(val, val128, id / 4);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
 template<unsigned id> SIMDPP_INL
 float64x2 i_insert(const float64x2& a, double x)
 {
     return float64<2>(i_insert<id>(uint64<2>(a), bit_cast<int64_t>(x)));
+}
+
+#if SIMDPP_USE_AVX
+template<unsigned id> SIMDPP_INL
+float64<4> i_insert(const float64<4>& a, double x)
+{
+    __m256d val = a;
+    __m128d val128 = _mm256_extractf128_pd(val, id / 2);
+    val128 = i_insert<id % 2>((float64<2>) val128, x);
+    return _mm256_insertf128_pd(val, val128, id / 2);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+float64<8> i_insert(const float64<8>& a, double x)
+{
+    __m512 val = _mm512_castpd_ps(a);
+    __m128 val128 = _mm512_extractf32x4_ps(val, id / 2);
+    val128 = _mm_castpd_ps(i_insert<id % 2>((float64<2>) _mm_castps_pd(val128), x));
+    return _mm512_castps_pd(_mm512_insertf32x4(val, val128, id / 2));
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id, class V, class E> SIMDPP_INL
+V i_insert(const V& ca, E el)
+{
+    V a = ca;
+    typename V::base_vector_type base = a.vec(id / V::base_length);
+    base = i_insert<id % V::base_length>(base, (typename V::element_type) el);
+    a.vec(id / V::base_length) = base;
+    return a;
 }
 
 } // namespace insn
