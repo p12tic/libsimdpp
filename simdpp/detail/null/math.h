@@ -20,6 +20,17 @@
 #include <cstdlib>
 #include <limits>
 
+// On certain versions of MSVC min and max are defined as macros.
+#if _MSC_VER
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
