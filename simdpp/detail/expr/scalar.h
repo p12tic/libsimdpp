@@ -45,7 +45,7 @@ R expr_eval(const expr_scalar<EL>& q)
 {
     typename detail::remove_sign<R>::type r;
     expr_vec_make_const<typename R::element_type, 1> e;
-    e.a[0] = reinterpret_cast<const EL&>(q);
+    e.a[0] = static_cast<typename R::element_type>(reinterpret_cast<const EL&>(q));
     insn::i_make_const(r, e, 0);
     return R(r);
 }
