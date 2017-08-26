@@ -105,7 +105,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<32>& a)
     uint32<16> lo = _mm512_mullo_epi16(ca, al);
     uint32<16> hi = _mm512_mulhi_epu16(ca, ah);
     uint32<16> r = bit_or(lo, hi);
-    return reduce_add(r);
+    return reduce_mul(r);
 }
 #endif
 
