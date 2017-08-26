@@ -142,7 +142,8 @@ SIMDPP_INL uint16<32> i_unzip8_lo(const uint16<32>& ca, const uint16<32>& cb)
 {
     uint16<32> a = ca, b = cb;
     uint32<16> mask, r;
-    mask = make_uint(0xffff, 0x0000);
+    mask = make_ones();
+    mask = _mm512_srli_epi32(mask, 16);
     a = bit_and(a, mask);
     b = bit_and(b, mask);
     r = _mm512_packus_epi32(a, b);
