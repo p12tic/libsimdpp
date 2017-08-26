@@ -81,6 +81,7 @@ foreach(SRC ${TEST1_ARCH_SOURCES})
 endforeach()
 
 # print compiler detection information
+message(STATUS "Checking detected compiler for tests...")
 message(STATUS "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
 message(STATUS "MSVC: ${MSVC}")
 message(STATUS "Detected compiler:")
