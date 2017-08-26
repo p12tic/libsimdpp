@@ -175,6 +175,7 @@ uint32<8> i_align4(const uint32<8>& lower, const uint32<8>& upper)
 template<unsigned shift> SIMDPP_INL
 uint32<16> i_align4(const uint32<16>& lower, const uint32<16>& upper)
 {
+    // note that _mm512_alignr_epi32 operates on entire vector
     switch (shift) {
     default:
     case 0: return lower;

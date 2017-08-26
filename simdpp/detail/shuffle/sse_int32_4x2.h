@@ -171,7 +171,10 @@ template<> struct shuffle_impl<6> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {
-        return _mm512_alignr_epi32(b, a, s0);
+        // note that _mm512_alignr_epi32 operates on entire vector
+        __m512i ap = _mm512_alignr_epi32(a, a, s0);
+        const int mask = SIMDPP_SHUFFLE_MASK_4x2_4(s0>3, s0>2, s0>1, s0>0);
+        return _mm512_mask_alignr_epi32(ap, mask, b, b, (s0+12)%16);
     }
 #endif
 };
