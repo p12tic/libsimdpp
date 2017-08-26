@@ -74,7 +74,7 @@ SIMDPP_INL uint8<32> i_bit_and(const uint8<32>& a, const mask_int8<32>& b)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint8<64> i_bit_and(const uint8<64>& a, const mask_int8<64>& b)
 {
-    return i_bit_and(a, uint8<64>(b));
+    return _mm512_maskz_mov_epi8(b, a);
 }
 #endif
 
@@ -145,7 +145,7 @@ SIMDPP_INL uint16<16> i_bit_and(const uint16<16>& a, const mask_int16<16>& b)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint16<32> i_bit_and(const uint16<32>& a, const mask_int16<32>& b)
 {
-    return i_bit_and(a, uint16<32>(b));
+    return _mm512_maskz_mov_epi16(b, a);
 }
 #endif
 
