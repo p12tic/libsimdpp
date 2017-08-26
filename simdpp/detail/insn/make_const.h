@@ -238,7 +238,7 @@ void i_make_const(uint8<64>& v, const expr_vec_make_const<VE,N>& e, unsigned off
             make_uint32_uint8(e.val(off+52), e.val(off+53), e.val(off+54), e.val(off+55)),
             make_uint32_uint8(e.val(off+48), e.val(off+49), e.val(off+50), e.val(off+51)),
             make_uint32_uint8(e.val(off+44), e.val(off+45), e.val(off+46), e.val(off+47)),
-            make_uint32_uint8(e.val(off+40), e.val(off+41), e.val(off+32), e.val(off+43)),
+            make_uint32_uint8(e.val(off+40), e.val(off+41), e.val(off+42), e.val(off+43)),
             make_uint32_uint8(e.val(off+36), e.val(off+37), e.val(off+38), e.val(off+39)),
             make_uint32_uint8(e.val(off+32), e.val(off+33), e.val(off+34), e.val(off+35)),
             make_uint32_uint8(e.val(off+28), e.val(off+29), e.val(off+30), e.val(off+31)),
