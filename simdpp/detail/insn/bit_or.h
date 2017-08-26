@@ -71,17 +71,10 @@ SIMDPP_INL mask_int8<32> i_bit_or(const mask_int8<32>& a, const mask_int8<32>& b
 }
 #endif
 
-#if SIMDPP_USE_AVX512
-SIMDPP_INL mask_int8<32> i_bit_or(const mask_int8<32>& a, const mask_int8<32>& b)
-{
-    return _mm512_kor(a, b);
-}
-#endif
-
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int8<64> i_bit_or(const mask_int8<64>& a, const mask_int8<64>& b)
 {
-    return _mm512_kor(a, b);
+    return (__mmask64)a | (__mmask64)b;
 }
 #endif
 
@@ -127,7 +120,7 @@ SIMDPP_INL mask_int16<16> i_bit_or(const mask_int16<16>& a, const mask_int16<16>
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int16<32> i_bit_or(const mask_int16<32>& a, const mask_int16<32>& b)
 {
-    return _mm512_kor(a, b);
+    return (__mmask32)a | (__mmask32)b;
 }
 #endif
 

@@ -171,12 +171,12 @@ SIMDPP_INL mask_int64<8> i_bit_not(const mask_int64<8>& a)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int8<64> i_bit_not(const mask_int8<64>& a)
 {
-    return _mm512_knot(a);
+    return ~(__mmask64)a;
 }
 
 SIMDPP_INL mask_int16<32> i_bit_not(const mask_int16<32>& a)
 {
-    return _mm512_knot(a);
+    return ~(__mmask32)a;
 }
 #endif
 

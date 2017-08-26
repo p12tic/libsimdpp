@@ -117,7 +117,7 @@ SIMDPP_INL mask_int8<32> i_blend(const mask_int8<32>& on, const mask_int8<32>& o
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int8<64> i_blend(const mask_int8<64>& on, const mask_int8<64>& off, const mask_int8<64>& mask)
 {
-    return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
+    return ((__mmask64) on & (__mmask64) mask) | ((__mmask64)off & ~((__mmask64)mask));
 }
 #endif
 
@@ -191,7 +191,7 @@ SIMDPP_INL mask_int16<16> i_blend(const mask_int16<16>& on, const mask_int16<16>
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int16<32> i_blend(const mask_int16<32>& on, const mask_int16<32>& off, const mask_int16<32>& mask)
 {
-    return _mm512_kor(_mm512_kand(on, mask), _mm512_kandn(mask, off));
+    return ((__mmask32) on & (__mmask32) mask) | ((__mmask32)off & ~((__mmask32)mask));
 }
 #endif
 
