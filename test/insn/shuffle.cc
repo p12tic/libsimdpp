@@ -136,6 +136,7 @@ void test_shuffle_type(TestResultsSet &tc, const V& v1, const V& v2)
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);
     TemplateTestHelper<Test_splat, V>::run(tc, v1);
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
+    TemplateTestHelper<Test_insert_extract, V>::run(tc, v1, v2);
 }
 
 template<unsigned B>
@@ -205,19 +206,6 @@ void test_shuffle(TestResults& res)
     test_shuffle_n<64>(tc);
 
     using namespace simdpp;
-
-    Vectors<16,4> v;
-
-    TemplateTestHelper<Test_insert_extract, uint8<16>>::run(tc, v.u8[0], v.u8[1]);
-    TemplateTestHelper<Test_insert_extract, int8<16>>::run(tc, v.i8[0], v.i8[1]);
-    TemplateTestHelper<Test_insert_extract, uint16<8>>::run(tc, v.u16[0], v.u16[1]);
-    TemplateTestHelper<Test_insert_extract, int16<8>>::run(tc, v.i16[0], v.i16[1]);
-    TemplateTestHelper<Test_insert_extract, uint32<4>>::run(tc, v.u32[0], v.u32[1]);
-    TemplateTestHelper<Test_insert_extract, int32<4>>::run(tc, v.i32[0], v.i32[1]);
-    TemplateTestHelper<Test_insert_extract, uint64<2>>::run(tc, v.u64[0], v.u64[1]);
-    TemplateTestHelper<Test_insert_extract, int64<2>>::run(tc, v.i64[0], v.i64[1]);
-    TemplateTestHelper<Test_insert_extract, float32<4>>::run(tc, v.f32[0], v.f32[1]);
-    TemplateTestHelper<Test_insert_extract, float64<2>>::run(tc, v.f64[0], v.f64[1]);
 
     // extract bits
     test_extract_bits<uint16_t, uint8<16>>(tc);
