@@ -3,6 +3,7 @@ What's new in v2.0 development master:
  * Added support for PowerPC VSX v2.06 and v2.07 instruction sets.
  * Added support for x86 AVX512BW and AVX512DQ instruction sets.
  * Added support for 64-bit little-endian PowerPC.
+ * Added support for arbitrary width vectors in extract()
  * Various bug fixes.
 
 What's new in v2.0:

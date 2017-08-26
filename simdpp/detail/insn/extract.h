@@ -27,9 +27,8 @@ namespace detail {
 namespace insn {
 
 template<unsigned id> SIMDPP_INL
-uint8_t i_extract(const uint8x16& a)
+uint8_t i_extract(const uint8<16>& a)
 {
-    static_assert(id < 16, "index out of bounds");
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
@@ -52,8 +51,28 @@ uint8_t i_extract(const uint8x16& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-int8_t i_extract(const int8x16& a)
+uint8_t i_extract(const uint8<32>& a)
+{
+    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 16);
+    return _mm_extract_epi8(val, id % 16);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned id> SIMDPP_INL
+uint8_t i_extract(const uint8<64>& a)
+{
+    __m128i val = _mm512_extracti32x4_epi32(a, id / 16);
+    return _mm_extract_epi8(val, id % 16);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+int8_t i_extract(const int8<16>& a)
 {
 #if SIMDPP_USE_MSA
     return __msa_copy_s_b(a, id);
@@ -62,10 +81,29 @@ int8_t i_extract(const int8x16& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-uint16_t i_extract(const uint16x8& a)
+int8_t i_extract(const int8<32>& a)
 {
-    static_assert(id < 8, "index out of bounds");
+    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 16);
+    return _mm_extract_epi8(val, id % 16);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned id> SIMDPP_INL
+int8_t i_extract(const int8<64>& a)
+{
+    __m128i val = _mm512_extracti32x4_epi32(a, id / 16);
+    return _mm_extract_epi8(val, id % 16);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+uint16_t i_extract(const uint16<8>& a)
+{
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
@@ -81,10 +119,29 @@ uint16_t i_extract(const uint16x8& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-int16_t i_extract(const int16x8& a)
+uint16_t i_extract(const uint16<16>& a)
 {
-    static_assert(id < 8, "index out of bounds");
+    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 8);
+    return _mm_extract_epi16(val, id % 8);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned id> SIMDPP_INL
+uint16_t i_extract(const uint16<32>& a)
+{
+    __m128i val = _mm512_extracti32x4_epi32(a, id / 8);
+    return _mm_extract_epi16(val, id % 8);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+int16_t i_extract(const int16<8>& a)
+{
 #if SIMDPP_USE_MSA
     return __msa_copy_s_h(a, id);
 #else
@@ -92,10 +149,29 @@ int16_t i_extract(const int16x8& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-uint32_t i_extract(const uint32x4& a)
+int16_t i_extract(const int16<16>& a)
 {
-    static_assert(id < 4, "index out of bounds");
+    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 8);
+    return _mm_extract_epi16(val, id % 8);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned id> SIMDPP_INL
+int16_t i_extract(const int16<32>& a)
+{
+    __m128i val = _mm512_extracti32x4_epi32(a, id / 8);
+    return _mm_extract_epi16(val, id % 8);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+uint32_t i_extract(const uint32<4>& a)
+{
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
@@ -114,10 +190,29 @@ uint32_t i_extract(const uint32x4& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-int32_t i_extract(const int32x4& a)
+uint32_t i_extract(const uint32<8>& a)
 {
-    static_assert(id < 4, "index out of bounds");
+    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 4);
+    return _mm_extract_epi32(val, id % 4);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+uint32_t i_extract(const uint32<16>& a)
+{
+    __m128i val = _mm512_extracti32x4_epi32(a, id / 4);
+    return _mm_extract_epi32(val, id % 4);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+int32_t i_extract(const int32<4>& a)
+{
 #if SIMDPP_USE_MSA
     return __msa_copy_s_w(a, id);
 #else
@@ -125,10 +220,29 @@ int32_t i_extract(const int32x4& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-uint64_t i_extract(const uint64x2& a)
+int32_t i_extract(const int32<8>& a)
 {
-    static_assert(id < 2, "index out of bounds");
+    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 4);
+    return _mm_extract_epi32(val, id % 4);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+int32_t i_extract(const int32<16>& a)
+{
+    __m128i val = _mm512_extracti32x4_epi32(a, id / 4);
+    return _mm_extract_epi32(val, id % 4);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+uint64_t i_extract(const uint64<2>& a)
+{
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
@@ -173,10 +287,29 @@ uint64_t i_extract(const uint64x2& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-int64_t i_extract(const int64x2& a)
+uint64_t i_extract(const uint64<4>& a)
 {
-    static_assert(id < 2, "index out of bounds");
+    uint64<2> val = _mm256_extracti128_si256(a.operator __m256i(), id / 2);
+    return i_extract<id % 2>(val);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+uint64_t i_extract(const uint64<8>& a)
+{
+    uint64<2> val = _mm512_extracti32x4_epi32(a, id / 2);
+    return i_extract<id % 2>(val);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+int64_t i_extract(const int64<2>& a)
+{
 #if SIMDPP_USE_MSA
 #if SIMDPP_64_BITS
     return __msa_copy_s_d(a, id);
@@ -191,10 +324,29 @@ int64_t i_extract(const int64x2& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX2
 template<unsigned id> SIMDPP_INL
-float i_extract(const float32x4& a)
+int64_t i_extract(const int64<4>& a)
 {
-    static_assert(id < 4, "index out of bounds");
+    uint64<2> val = _mm256_extracti128_si256(a.operator __m256i(), id / 2);
+    return i_extract<id % 2>(val);
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+int64_t i_extract(const int64<8>& a)
+{
+    uint64<2> val = _mm512_extracti32x4_epi32(a, id / 2);
+    return i_extract<id % 2>(val);
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+float i_extract(const float32<4>& a)
+{
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return a.el(id);
 #elif SIMDPP_USE_SSE2
@@ -207,10 +359,29 @@ float i_extract(const float32x4& a)
 #endif
 }
 
+#if SIMDPP_USE_AVX
 template<unsigned id> SIMDPP_INL
-double i_extract(const float64x2& a)
+float i_extract(const float32<8>& a)
 {
-    static_assert(id < 2, "index out of bounds");
+    __m128 val = _mm256_extractf128_ps(a.operator __m256(), id / 4);
+    return bit_cast<float>(_mm_extract_epi32(_mm_castps_si128(val), id % 4));
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+float i_extract(const float32<16>& a)
+{
+    __m128 val = _mm512_extractf32x4_ps(a.operator __m512(), id / 4);
+    return bit_cast<float>(_mm_extract_epi32(_mm_castps_si128(val), id % 4));
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id> SIMDPP_INL
+double i_extract(const float64<2>& a)
+{
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
@@ -221,6 +392,33 @@ double i_extract(const float64x2& a)
 #elif SIMDPP_USE_NEON64
     return vgetq_lane_f64(a, id);
 #endif
+}
+
+#if SIMDPP_USE_AVX
+template<unsigned id> SIMDPP_INL
+double i_extract(const float64<4>& a)
+{
+    __m128d val = _mm256_extractf128_pd(a.operator __m256d(), id / 2);
+    return bit_cast<double>(i_extract<id % 2>((uint64<2>)_mm_castpd_si128(val)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+template<unsigned id> SIMDPP_INL
+double i_extract(const float64<8>& a)
+{
+    __m128 val = _mm512_extractf32x4_ps(_mm512_castpd_ps(a), id / 2);
+    return bit_cast<double>(i_extract<id % 2>((uint64<2>)_mm_castps_si128(val)));
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+template<unsigned id, class V> SIMDPP_INL
+typename V::element_type i_extract(const V& a)
+{
+    typename V::base_vector_type base = a.vec(id / V::base_length);
+    return i_extract<id % V::base_length>(base);
 }
 
 } // namespace insn
