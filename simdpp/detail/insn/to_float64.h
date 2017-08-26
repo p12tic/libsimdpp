@@ -94,10 +94,8 @@ SIMDPP_INL float64<8> i_to_float64(const int32x8& a)
 SIMDPP_INL float64<16> i_to_float64(const int32<16>& a)
 {
     float64<8> r1, r2;
-    int32<8> a1, a2;
-    split(a, a1, a2);
-    r1 = _mm512_cvtepi32_pd(a1);
-    r2 = _mm512_cvtepi32_pd(a2);
+    r1 = _mm512_cvtepi32_pd(_mm512_castsi512_si256(a));
+    r2 = _mm512_cvtepi32_pd(_mm512_extracti64x4_epi64(a, 1));
     return combine(r1, r2);
 }
 #endif

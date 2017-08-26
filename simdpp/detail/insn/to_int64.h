@@ -76,11 +76,9 @@ SIMDPP_INL int64<8> i_to_int64(const int32<8>& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL int64<16> i_to_int64(const int32<16>& a)
 {
-    int32<8> a1, a2;
     int64<8> r1, r2;
-    split(a, a1, a2);
-    r1 = _mm512_cvtepi32_epi64(a1);
-    r2 = _mm512_cvtepi32_epi64(a2);
+    r1 = _mm512_cvtepi32_epi64(_mm512_castsi512_si256(a));
+    r2 = _mm512_cvtepi32_epi64(_mm512_extracti64x4_epi64(a, 1));
     return combine(r1, r2);
 }
 #endif
