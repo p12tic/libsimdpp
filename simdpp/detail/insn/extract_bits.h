@@ -1,0 +1,125 @@
+/*  Copyright (C) 2011-2017  Povilas Kanapickas <povilas@radix.lt>
+
+    Distributed under the Boost Software License, Version 1.0.
+        (See accompanying file LICENSE_1_0.txt or copy at
+            http://www.boost.org/LICENSE_1_0.txt)
+*/
+
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_EXTRACT_BITS_H
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_EXTRACT_BITS_H
+
+#ifndef LIBSIMDPP_SIMD_H
+    #error "This file must be included through simd.h"
+#endif
+
+#include <simdpp/types.h>
+#include <simdpp/core/bit_and.h>
+#include <simdpp/core/bit_or.h>
+#include <simdpp/core/extract.h>
+#include <simdpp/core/i_shift_l.h>
+#include <simdpp/core/i_sub.h>
+#include <simdpp/core/make_uint.h>
+#include <simdpp/core/move_l.h>
+
+namespace simdpp {
+namespace SIMDPP_ARCH_NAMESPACE {
+namespace detail {
+namespace insn {
+
+SIMDPP_INL uint16_t i_extract_bits_any(const uint8<16>& ca)
+{
+    uint8<16> a = ca;
+#if SIMDPP_USE_NULL
+    uint16_t r = 0;
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
+        x = x & 1;
+        r = (r >> 1) | (uint16_t(x) << 15);
+    }
+    return r;
+#elif SIMDPP_USE_SSE2
+    // Note that i_extract_bits depends on the exact implementation of this
+    // function.
+    return _mm_movemask_epi8(a);
+#elif SIMDPP_USE_NEON
+    uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+
+    a = bit_and(a, mask);
+    uint16<8> a16 = vpaddlq_u8(a);
+    uint32<4> a32 = vpaddlq_u16(a16);
+    uint8<16> a8 = (uint8<16>) (uint64<2>) vpaddlq_u32(a32);
+    uint8x8_t r = vzip_u8(vget_low_u8(a8), vget_high_u8(a8)).val[0];
+    return vget_lane_u16(vreinterpret_u16_u8(r), 0);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+    a = bit_and(a, mask);
+    uint32x4 s = vec_sum4s((__vector uint8_t)a,
+                           (__vector uint32_t)(uint32x4) make_zero());
+    uint32x4 shifts = make_uint(0, 0, 8, 8);
+    s = (__vector uint32_t) vec_sl((__vector uint32_t)s, (__vector uint32_t) shifts);
+    s = (int32x4)vec_sums((__vector int32_t)(int32x4)s,
+                          (__vector int32_t)(int32x4) make_zero());
+#if SIMDPP_BIG_ENDIAN
+    return extract<7>(uint16x8(s));
+#else
+    return extract<6>(uint16x8(s));
+#endif
+#elif SIMDPP_USE_MSA
+    // Note: the implementation of extract_bits depends of the exact behavior
+    // of this function
+    uint8x16 mask = make_uint(0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80);
+
+    a = bit_and(a, mask);
+    uint16<8> a16 = __msa_hadd_u_h((v16u8)a, (v16u8)a);
+    uint32<4> a32 = __msa_hadd_u_w((v8u16)a16, (v8u16)a16);
+    a = (v16u8) __msa_hadd_u_d((v4u32)a32, (v4u32)a32);
+    a = bit_or(a, move16_l<7>(a));
+    return extract<0>((uint16<8>)a);
+#endif
+}
+
+template<unsigned id> SIMDPP_INL
+uint16_t i_extract_bits(const uint8<16>& ca)
+{
+    uint8<16> a = ca;
+#if SIMDPP_USE_NULL
+    uint16_t r = 0;
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
+        x = (x >> id) & 1;
+        r = (r >> 1) | (uint16_t(x) << 15);
+    }
+    return r;
+#elif SIMDPP_USE_SSE2
+    a = shift_l<7-id>((uint16x8) a);
+    return i_extract_bits_any(a);
+#elif SIMDPP_USE_NEON
+    int8x16 shift_mask = make_int(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                                  4-int(id), 5-int(id), 6-int(id), 7-int(id));
+
+    a = vshlq_u8(a, shift_mask);
+    return i_extract_bits_any(a);
+#elif SIMDPP_USE_ALTIVEC
+    uint8x16 rot_mask = make_int(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                                 4-int(id), 5-int(id), 6-int(id), 7-int(id));
+    a = vec_rl((__vector uint8_t)a, (__vector uint8_t)rot_mask);
+    return i_extract_bits_any(a);
+#elif SIMDPP_USE_MSA
+    int8x16 shifts = make_int(0-int(id), 1-int(id), 2-int(id), 3-int(id),
+                              4-int(id), 5-int(id), 6-int(id), 7-int(id));
+    uint8<16> a_l = (v16u8) __msa_sll_b((v16i8)(v16u8) a, shifts);
+    shifts = sub((int8<16>) make_zero(), shifts);
+    uint8<16> a_r = (v16u8) __msa_srl_b((v16i8)(v16u8) a, shifts);
+    a = bit_or(a_l, a_r);
+    return i_extract_bits_any(a);
+#endif
+}
+
+} // namespace insn
+} // namespace detail
+} // namespace SIMDPP_ARCH_NAMESPACE
+} // namespace simdpp
+
+#endif
+
+

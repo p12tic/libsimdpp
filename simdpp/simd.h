@@ -36,6 +36,7 @@
 #include <simdpp/core/cmp_lt.h>
 #include <simdpp/core/cmp_neq.h>
 #include <simdpp/core/extract.h>
+#include <simdpp/core/extract_bits.h>
 #include <simdpp/core/f_abs.h>
 #include <simdpp/core/f_add.h>
 #include <simdpp/core/f_ceil.h>
