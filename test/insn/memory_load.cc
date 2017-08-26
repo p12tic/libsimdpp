@@ -25,7 +25,7 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr, void* sv_p)
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack
-    SIMDPP_ALIGN(16) V rv[vnum];
+    SIMDPP_ALIGN(sizeof(V)) V rv[vnum];
 
     auto rzero = [&](V* r)
     {
