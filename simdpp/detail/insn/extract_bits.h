@@ -78,6 +78,18 @@ SIMDPP_INL uint16_t i_extract_bits_any(const uint8<16>& ca)
 #endif
 }
 
+SIMDPP_INL uint32_t i_extract_bits_any(const uint8<32>& ca)
+{
+    uint8<32> a = ca;
+#if SIMDPP_USE_AVX2
+    return _mm256_movemask_epi8(a);
+#else
+    uint8<16> lo, hi;
+    split(a, lo, hi);
+    return i_extract_bits_any(lo) | (i_extract_bits_any(hi) << 16);
+#endif
+}
+
 template<unsigned id> SIMDPP_INL
 uint16_t i_extract_bits(const uint8<16>& ca)
 {

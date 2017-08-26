@@ -35,6 +35,10 @@ SIMDPP_INL uint16_t extract_bits_any(const uint8<16>& a)
 {
     return detail::insn::i_extract_bits_any(a);
 }
+SIMDPP_INL uint32_t extract_bits_any(const uint8<32>& a)
+{
+    return detail::insn::i_extract_bits_any(a);
+}
 
 /** Extracts specific bit from each byte of each element of a int8x16 vector.
 
