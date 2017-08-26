@@ -118,7 +118,7 @@ SIMDPP_INL mask_int16x16 i_cmp_lt(const int16x16& a, const int16x16& b)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int16<32> i_cmp_lt(const int16<32>& a, const int16<32>& b)
 {
-    return _mm512_cmplt_epi16_mask(b, a);
+    return _mm512_cmplt_epi16_mask(a, b);
 }
 #endif
 

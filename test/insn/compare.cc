@@ -17,6 +17,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     TEST_ARRAY_HELPER2(TC, T, cmp_eq, L, R);                        \
     TEST_ARRAY_HELPER2(TC, T, cmp_lt, L, R);                        \
     TEST_ARRAY_HELPER2(TC, T, cmp_gt, L, R);                        \
+    TEST_ARRAY_HELPER2(TC, T, cmp_ge, L, R);                        \
+    TEST_ARRAY_HELPER2(TC, T, cmp_le, L, R);                        \
 }
 
 template<unsigned B>

@@ -160,7 +160,7 @@ SIMDPP_INL mask_int16x16 i_cmp_gt(const uint16x16& ca, const uint16x16& cb)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int16<32> i_cmp_gt(const uint16<32>& a, const uint16<32>& b)
 {
-    return _mm512_cmplt_epu16_mask(a, b);
+    return _mm512_cmpgt_epu16_mask(a, b);
 }
 #endif
 
