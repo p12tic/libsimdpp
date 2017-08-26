@@ -17,6 +17,7 @@
 #include <simdpp/core/combine.h>
 #include <simdpp/core/split.h>
 #include <simdpp/detail/insn/shuffle2x2.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 
 #if SIMDPP_USE_AVX2
 
@@ -181,16 +182,8 @@ template<> struct shuffle_impl<9> {
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
         const unsigned bl_mask = (s0<4 ? 0 : 0x3) | (s1<4 ? 0 : 0xc) | (s2<4 ? 0 : 0x30) | (s3<4 ? 0 : 0xc0);
-        const unsigned int s00 = s0 < 4 ? s0 : 0;
-        const unsigned int s01 = s1 < 4 ? s1 : 1;
-        const unsigned int s02 = s2 < 4 ? s2 : 2;
-        const unsigned int s03 = s3 < 4 ? s3 : 3;
-        const unsigned int s10 = s0 >= 4 ? s0-4 : 0;
-        const unsigned int s11 = s1 >= 4 ? s1-4 : 1;
-        const unsigned int s12 = s2 >= 4 ? s2-4 : 2;
-        const unsigned int s13 = s3 >= 4 ? s3-4 : 3;
-        __m256i ta = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(s03,s02,s01,s00));
-        __m256i tb = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(s13,s12,s11,s10));
+        __m256i ta = _mm256_permute4x64_epi64(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256i tb = _mm256_permute4x64_epi64(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
         return _mm256_blend_epi32(ta, tb, bl_mask);
     }
 };

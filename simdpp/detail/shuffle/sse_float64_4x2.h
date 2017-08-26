@@ -211,16 +211,8 @@ template<> struct shuffle_impl<9> {
     static float64<4> run(const float64<4>& a, const float64<4>& b)
     {
         const unsigned bl_mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        const unsigned int s00 = s0 < 4 ? s0 : 0;
-        const unsigned int s01 = s1 < 4 ? s1 : 1;
-        const unsigned int s02 = s2 < 4 ? s2 : 2;
-        const unsigned int s03 = s3 < 4 ? s3 : 3;
-        const unsigned int s10 = s0 >= 4 ? s0-4 : 0;
-        const unsigned int s11 = s1 >= 4 ? s1-4 : 1;
-        const unsigned int s12 = s2 >= 4 ? s2-4 : 2;
-        const unsigned int s13 = s3 >= 4 ? s3-4 : 3;
-        __m256d ta = _mm256_permute4x64_pd(a, _MM_SHUFFLE(s03,s02,s01,s00));
-        __m256d tb = _mm256_permute4x64_pd(b, _MM_SHUFFLE(s13,s12,s11,s10));
+        __m256d ta = _mm256_permute4x64_pd(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256d tb = _mm256_permute4x64_pd(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
         return _mm256_blend_pd(ta, tb, bl_mask);
     }
 };

@@ -16,9 +16,9 @@
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/detail/not_implemented.h>
-#include <simdpp/detail/shuffle/shuffle_mask.h>
 #include <simdpp/detail/shuffle/neon_int32x4.h>
 #include <simdpp/detail/shuffle/neon_int64x2.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -42,9 +42,9 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
     return r;
 #elif SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_ps(a, a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm_shuffle_ps(a, a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_ps(b, b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm_shuffle_ps(b, b, SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
 #if SIMDPP_USE_SSE4_1
     } else if (s0 == 0 && s1 == 3) {
         return _mm_blend_ps(a, b, 0xa);
@@ -52,10 +52,10 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
         return _mm_blend_ps(b, a, 0xa);
 #endif
     } else if (s0 < 2) { // s1 >= 2
-        __m128 t = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
+        __m128 t = _mm_shuffle_ps(a, b, SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     } else { // s0 >= 2, s1 < 2
-        __m128 t = _mm_shuffle_ps(b, a, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
+        __m128 t = _mm_shuffle_ps(b, a, SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     }
 #elif SIMDPP_USE_NEON
@@ -81,18 +81,18 @@ float32<8> i_shuffle2x2(const float32<8>& a, const float32<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm256_permute_ps(a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm256_permute_ps(a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm256_permute_ps(b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm256_permute_ps(b, SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
     } else if (s0 == 0 && s1 == 3) {
         return _mm256_blend_ps(a, b, 0xaa);
     } else if (s0 == 2 && s1 == 1) {
         return _mm256_blend_ps(b, a, 0xaa);
     } else if (s0 < 2) { // s1 >= 2
-        __m256 t = _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
+        __m256 t = _mm256_shuffle_ps(a, b, SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     } else { // s0 >= 2, s1 < 2
-        __m256 t = _mm256_shuffle_ps(b, a, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
+        __m256 t = _mm256_shuffle_ps(b, a, SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     }
 }
@@ -104,18 +104,18 @@ float32<16> i_shuffle2x2(const float32<16>& a, const float32<16>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_permute_ps(a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm512_permute_ps(a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_permute_ps(b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm512_permute_ps(b, SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_ps(0xaaaa, a, b);
     } else if (s0 == 2 && s1 == 1) {
         return _mm512_mask_blend_ps(0xaaaa, b, a);
     } else if (s0 < 2) { // s1 >= 2
-        __m512 t = _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
+        __m512 t = _mm512_shuffle_ps(a, b, SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     } else { // s0 >= 2, s1 < 2
-        __m512 t = _mm512_shuffle_ps(b, a, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
+        __m512 t = _mm512_shuffle_ps(b, a, SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     }
 }
@@ -241,9 +241,9 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
     return r;
 #elif SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_epi32(a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_epi32(b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
 #if SIMDPP_USE_SSE4_1
     } else if (s0 == 0 && s1 == 3) {
         return _mm_blend_epi16(a, b, 0xcc);
@@ -252,11 +252,11 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
 #endif
     } else if (s0 < 2) { // s1 >= 2
         float32<4> fa, fb; fa = a, fb = b;
-        __m128 t = _mm_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
+        __m128 t = _mm_shuffle_ps(fa, fb, SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<4> fa, fb; fa = a, fb = b;
-        __m128 t = _mm_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
+        __m128 t = _mm_shuffle_ps(fb, fa, SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     }
 #elif SIMDPP_USE_NEON
@@ -283,20 +283,20 @@ uint32<8> i_shuffle2x2(const uint32<8>& a, const uint32<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm256_shuffle_epi32(a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm256_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm256_shuffle_epi32(b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm256_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
     } else if (s0 == 0 && s1 == 3) {
         return _mm256_blend_epi32(a, b, 0xa);
     } else if (s0 == 2 && s1 == 1) {
         return _mm256_blend_epi32(b, a, 0xa);
     } else if (s0 < 2) { // s1 >= 2
         float32<8> fa, fb; fa = a, fb = b;
-        __m256 t = _mm256_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
+        __m256 t = _mm256_shuffle_ps(fa, fb, SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<8> fa, fb; fa = a, fb = b;
-        __m256 t = _mm256_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
+        __m256 t = _mm256_shuffle_ps(fb, fa, SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
@@ -308,20 +308,20 @@ uint32<16> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_shuffle_epi32(a, _MM_PERM_ENUM(_MM_SHUFFLE(s1+2,s0+2,s1,s0)));
+        return _mm512_shuffle_epi32(a, _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2)));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_shuffle_epi32(b, _MM_PERM_ENUM(_MM_SHUFFLE(s1,s0,s1-2,s0-2)));
+        return _mm512_shuffle_epi32(b, _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1)));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_epi32(0xaaaa, a, b);
     } else if (s0 == 2 && s1 == 1) {
         return _mm512_mask_blend_epi32(0xaaaa, b, a);
     } else if (s0 < 2) { // s1 >= 2
         float32<16> fa, fb; fa = a; fb = b;
-        __m512 t = _mm512_shuffle_ps(fa, fb, _MM_SHUFFLE(s1-1,s1-2,s0+1,s0));
+        __m512 t = _mm512_shuffle_ps(fa, fb, SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<16> fa, fb; fa = a; fb = b;
-        __m512 t = _mm512_shuffle_ps(fb, fa, _MM_SHUFFLE(s0-1,s0-2,s1+1,s1));
+        __m512 t = _mm512_shuffle_ps(fb, fa, SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
@@ -341,9 +341,9 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_epi32(a, _MM_SHUFFLE(s1*2+1,s1*2,s0*2+1,s0*2));
+        return _mm_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_epi32(b, _MM_SHUFFLE(s1*2+1,s1*2,s0*2+1,s0*2));
+        return _mm_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
     } else if (s0 == 0 && s1 == 2) {
         return _mm_unpacklo_epi64(a, b);
     } else if (s0 == 2 && s1 == 0) {
@@ -406,9 +406,9 @@ uint64<4> i_shuffle2x2(const uint64<4>& a, const uint64<4>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm256_shuffle_epi32(a, _MM_SHUFFLE(s1*2+1,s1*2,s0*2+1,s0*2));
+        return _mm256_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm256_shuffle_epi32(b, _MM_SHUFFLE(s1*2+1,s1*2,s0*2+1,s0*2));
+        return _mm256_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
     } else if (s0 == 0 && s1 == 2) {
         return _mm256_unpacklo_epi64(a, b);
     } else if (s0 == 2 && s1 == 0) {
@@ -435,9 +435,9 @@ uint64<8> i_shuffle2x2(const uint64<8>& a, const uint64<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_permutex_epi64(a, _MM_SHUFFLE(s1+2,s0+2,s1,s0));
+        return _mm512_permutex_epi64(a, SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_permutex_epi64(b, _MM_SHUFFLE(s1,s0,s1-2,s0-2));
+        return _mm512_permutex_epi64(b, SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
     } else if (s0 == 0 && s1 == 2) {
         return _mm512_unpacklo_epi64(a, b);
     } else if (s0 == 2 && s1 == 0) {

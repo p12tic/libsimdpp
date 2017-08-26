@@ -99,7 +99,7 @@ float64x2 i_permute2(const float64x2& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_SSE2
-    return _mm_shuffle_pd(a, a, _MM_SHUFFLE2(s1, s0));
+    return _mm_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
 #elif SIMDPP_USE_VSX_206
     return vec_xxpermdi((__vector double) a, (__vector double) a,
                         SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1));
