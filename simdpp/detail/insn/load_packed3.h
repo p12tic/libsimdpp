@@ -94,7 +94,7 @@ SIMDPP_INL void i_load_packed3(uint16x16& a, uint16x16& b, uint16x16& c,
 SIMDPP_INL void i_load_packed3(uint16<32>& a, uint16<32>& b, uint16<32>& c,
                                const char* p)
 {
-    v256_load_packed3(a, b, c, p);
+    v512_load_packed3(a, b, c, p);
 }
 #endif
 
