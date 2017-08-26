@@ -22,10 +22,10 @@
 #define SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1) ((SIMDPP_SHUFFLE_MASK_2x2(x0, x1) << 2) | SIMDPP_SHUFFLE_MASK_2x2(x0, x1))
 #define SIMDPP_SHUFFLE_MASK_2x2_4(x0, x1) ((SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1) << 4) | SIMDPP_SHUFFLE_MASK_2x2_2(x0, x1))
 
-#define SIMDPP_SHUFFLE_MASK_4x2(x0, x1, x2, x3) (((x3) << 3) | ((x2) << 2) | ((x1) << 1) | x0)
+#define SIMDPP_SHUFFLE_MASK_4x2(x0, x1, x2, x3) (((x3) << 3) | ((x2) << 2) | ((x1) << 1) | (x0))
 #define SIMDPP_SHUFFLE_MASK_4x2_2(x0, x1, x2, x3) ((SIMDPP_SHUFFLE_MASK_4x2(x0, x1, x2, x3) << 4) | SIMDPP_SHUFFLE_MASK_4x2(x0, x1, x2, x3))
 #define SIMDPP_SHUFFLE_MASK_4x2_4(x0, x1, x2, x3) ((SIMDPP_SHUFFLE_MASK_4x2_2(x0, x1, x2, x3) << 8) | SIMDPP_SHUFFLE_MASK_4x2_2(x0, x1, x2, x3))
 
-#define SIMDPP_SHUFFLE_MASK_4x4(x0, x1, x2, x3) (((x3) << 6) | ((x2) << 4) | ((x1) << 2) | x0)
+#define SIMDPP_SHUFFLE_MASK_4x4(x0, x1, x2, x3) (((x3) << 6) | ((x2) << 4) | ((x1) << 2) | (x0))
 
 #endif
