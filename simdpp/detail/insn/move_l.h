@@ -143,6 +143,7 @@ uint32<16> i_move4_l(const uint32<16>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
     switch (shift) {
+    default:
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_epi32(0x7777, a, _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 2, 1)));
     case 2: return _mm512_maskz_shuffle_epi32(0x3333, a, _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 2)));
@@ -221,6 +222,7 @@ float32<16> i_move4_l(const float32<16>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
     switch (shift) {
+    default:
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_ps(0x7777, a, a, _MM_SHUFFLE(3, 3, 2, 1));
     case 2: return _mm512_maskz_shuffle_ps(0x3333, a, a, _MM_SHUFFLE(3, 3, 3, 2));
@@ -263,6 +265,7 @@ float64<8> i_move2_l(const float64<8>& a)
 {
     static_assert(shift <= 2, "Selector out of range");
     switch (shift) {
+    default:
     case 0: return a;
     case 1: return _mm512_maskz_shuffle_pd(0x55, a, a, SIMDPP_SHUFFLE_MASK_2x2_4(1, 1));
     case 2: return make_zero();

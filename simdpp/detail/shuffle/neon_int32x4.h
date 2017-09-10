@@ -59,6 +59,7 @@ H shf2x2(H a, H b)
 {
     const unsigned sel = s0*4 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return dup_lo(a);
     case 1:  /*01*/ return a;
     case 2:  /*02*/ return vzip_u32(a, b).val[0];
@@ -84,6 +85,7 @@ H shf_1x2(H a, H b)
 {
     const unsigned sel = s0*2 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return vzip_u32(a, b).val[0];;
     case 1:  /*01*/ return rev(vext_u32(b, a, 1));
     case 2:  /*10*/ return vext_u32(a, b, 1);
@@ -95,6 +97,7 @@ template<unsigned sel>
 H sel_lo_hi(T a, T b)
 {
     switch (sel) {
+    default:
     case 0: return lo(a);
     case 1: return hi(a);
     case 2: return lo(b);

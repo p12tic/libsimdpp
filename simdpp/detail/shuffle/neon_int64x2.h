@@ -39,6 +39,7 @@ T permute2(T a)
 {
     const unsigned sel = s0*2 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return co(lo(a), lo(a));
     case 1:  /*01*/ return a;
     case 2:  /*10*/ return co(hi(a), lo(a));
@@ -52,6 +53,7 @@ T shuffle1(T a, T b)
 {
     const unsigned sel = s0*2 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return co(lo(a), lo(b));
     case 1:  /*01*/ return co(lo(a), hi(b));
     case 2:  /*10*/ return co(hi(a), lo(b));
@@ -64,6 +66,7 @@ T shuffle2x2(const T& a, const T& b)
 {
     const unsigned sel = s0*4 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return co(lo(a), lo(a));
     case 1:  /*01*/ return a;
     case 2:  /*02*/ return co(lo(a), lo(b));
@@ -100,6 +103,7 @@ T permute2(const T& a)
 {
     const unsigned sel = s0*2 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return vzip1q_u64(a, a);
     case 1:  /*01*/ return a;
     case 2:  /*10*/ return vextq_u64(a, a, 1);
@@ -113,6 +117,7 @@ T shuffle1(const T& a, const T& b)
 {
     const unsigned sel = s0*2 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return vzip1q_u64(a, b);
     case 1:  /*01*/ return move_hi(a, b);
     case 2:  /*10*/ return vextq_u64(a, b, 1);
@@ -125,6 +130,7 @@ T shuffle2x2(const T& a, const T& b)
 {
     const unsigned sel = s0*4 + s1;
     switch (sel) {
+    default:
     case 0:  /*00*/ return vzip1q_u64(a, a);
     case 1:  /*01*/ return a;
     case 2:  /*02*/ return vzip1q_u64(a, b);
