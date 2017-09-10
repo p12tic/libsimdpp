@@ -59,11 +59,7 @@ template<class T>
 class TestData {
 public:
 
-    template<class... UArgs>
-    TestData(const UArgs&... args)
-    {
-        add(args...);
-    }
+    TestData() : ptr_(nullptr) {}
 
     template<class U>
     void add(const U& u)
@@ -71,13 +67,6 @@ public:
         T t = (T) u;
         data_.push_back(t);
         ptr_ = &data_.front();
-    }
-
-    template<class U, class... UArgs>
-    void add(const U& u, const UArgs&... args)
-    {
-        add(u);
-        add(args...);
     }
 
     unsigned size() const { return data_.size(); }

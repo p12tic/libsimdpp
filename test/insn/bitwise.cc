@@ -34,13 +34,13 @@ void test_bitwise_type(TestResultsSet& tc)
     TEST_ALL_COMB_HELPER2(tc, V, bit_xor, s, V::num_bits / 8);
     TEST_ALL_COMB_HELPER1(tc, V, bit_not, s, V::num_bits / 8);
 
-    TestData<V> sl(
-        make_uint(0),
-        make_uint(0, 0, 0, 1),
-        make_uint(0, 0, 1, 0),
-        make_uint(0, 1, 0, 0),
-        make_uint(1, 0, 0, 0)
-    );
+    TestData<V> sl;
+    sl.add(make_uint(0));
+    sl.add(make_uint(0, 0, 0, 1));
+    sl.add(make_uint(0, 0, 1, 0));
+    sl.add(make_uint(0, 1, 0, 0));
+    sl.add(make_uint(1, 0, 0, 0));
+
     TEST_ARRAY_HELPER1_T(tc, bool, V, test_bits_any, sl);
 }
 

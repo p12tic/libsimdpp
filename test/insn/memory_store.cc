@@ -20,13 +20,12 @@ void test_store_masked(TestResultsSet& tc, TestReporter& tr, const V* sv)
     SIMDPP_ALIGN(16) V rv[1];
 
     tc.reset_seq();
-    TestData<V> mask_data(
-        make_int(0, 0, 0, 0),
-        make_int(1, 0, 0, 0),
-        make_int(0, 1, 0, 0),
-        make_int(0, 0, 1, 0),
-        make_int(0, 0, 0, 1)
-    );
+    TestData<V> mask_data;
+    mask_data.add(make_int(0, 0, 0, 0));
+    mask_data.add(make_int(1, 0, 0, 0));
+    mask_data.add(make_int(0, 1, 0, 0));
+    mask_data.add(make_int(0, 0, 1, 0));
+    mask_data.add(make_int(0, 0, 0, 1));
 
     for (unsigned j = 0; j < mask_data.size(); ++j) {
         typename V::mask_vector_type mask;
