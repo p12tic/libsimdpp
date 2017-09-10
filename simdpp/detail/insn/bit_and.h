@@ -488,7 +488,7 @@ SIMDPP_INL mask_float64<4> i_bit_and(const mask_float64<4>& a, const mask_float6
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL mask_float64<8> i_bit_and(const mask_float64<8>& a, const mask_float64<8>& b)
 {
-    return __mmask16(_mm512_kand(__mmask8(a), __mmask8(b)));
+    return _mm512_kand(__mmask8(a), __mmask8(b));
 }
 #endif
 

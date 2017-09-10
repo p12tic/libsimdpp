@@ -51,14 +51,30 @@ SIMDPP_INL uint8x32 i_bit_not(const uint8x32& a)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint8<64> i_bit_not(const uint8<64>& a)
 {
-    return bit_xor(a, 0xff);
+    return _mm512_ternarylogic_epi32(a, a, a, 0x1);
 }
 #endif
 
 // -----------------------------------------------------------------------------
 
-template<unsigned N> SIMDPP_INL
-uint16<N> i_bit_not(const uint16<N>& a) { return uint16<N>(i_bit_not(uint8<N*2>(a))); }
+SIMDPP_INL uint16<8> i_bit_not(const uint16<8>& a)
+{
+    return uint16<8>(i_bit_not(uint8<16>(a)));
+}
+
+#if SIMDPP_USE_AVX2
+SIMDPP_INL uint16<16> i_bit_not(const uint16<16>& a)
+{
+    return uint16<16>(i_bit_not(uint8<32>(a)));
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16<32> i_bit_not(const uint16<32>& a)
+{
+    return _mm512_ternarylogic_epi32(a, a, a, 0x1);
+}
+#endif
 
 // -----------------------------------------------------------------------------
 
@@ -77,8 +93,7 @@ SIMDPP_INL uint32<8> i_bit_not(const uint32<8>& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint32<16> i_bit_not(const uint32<16>& a)
 {
-    uint32<16> ones = make_ones();
-    return bit_xor(a, ones);
+    return _mm512_ternarylogic_epi32(a, a, a, 0x1);
 }
 #endif
 
@@ -107,7 +122,7 @@ SIMDPP_INL uint64<4> i_bit_not(const uint64<4>& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL uint64<8> i_bit_not(const uint64<8>& a)
 {
-    return bit_xor(a, 0xffff);
+    return _mm512_ternarylogic_epi64(a, a, a, 0x1);
 }
 #endif
 
@@ -205,7 +220,9 @@ SIMDPP_INL float32x8 i_bit_not(const float32x8& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL float32<16> i_bit_not(const float32<16>& a)
 {
-    return bit_xor(a, 0xffffffff);
+    uint32<16> b; b = a;
+    b = _mm512_ternarylogic_epi32(b, b, b, 0x1);
+    return float32<16>(b);
 }
 #endif
 
@@ -234,7 +251,9 @@ SIMDPP_INL float64x4 i_bit_not(const float64x4& a)
 #if SIMDPP_USE_AVX512F
 SIMDPP_INL float64<8> i_bit_not(const float64<8>& a)
 {
-    return bit_xor(a, 0xffffffffffffffff);
+    uint64<8> b; b = a;
+    b = _mm512_ternarylogic_epi64(b, b, b, 0x1);
+    return float64<8>(b);
 }
 #endif
 
