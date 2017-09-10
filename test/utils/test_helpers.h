@@ -331,12 +331,14 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const
     }}}                                                                 \
 }
 
-/**
-    Used to test functions that depend on a template parameter. Essentially
-    implements a for loop realised in templates.
 
-    The template calls F<V, i>::test(tc, a) for each i from 0 to F<V, 0>::limit.
-*/
+// Implements TemplateTestHelper functionality. Template recursion is optimized
+// by potentially putting a large number of test template instantiations into a
+// single instantiation of TemplateTestHelperImpl.
+enum {
+    TemplateTestHelperImpl_InstBatchSize = 30
+};
+
 template<template<class, unsigned> class F, class V, bool large, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl;
 
@@ -346,14 +348,16 @@ struct TemplateTestHelperImpl<F, V, false, i, limit> {
     static void run(TestResultsSet& tc, const V& a)
     {
         F<V, i>::test(tc, a);
-        const bool is_large = i + 30 < limit;
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a);
     }
 
     static void run(TestResultsSet& tc, const V& a, const V& b)
     {
         F<V, i>::test(tc, a, b);
-        const bool is_large = i + 30 < limit;
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a, b);
     }
 };
@@ -394,8 +398,9 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         F<V, i+27>::test(tc, a);
         F<V, i+28>::test(tc, a);
         F<V, i+29>::test(tc, a);
-        const bool is_large = i + 60 < limit;
-        TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a);
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size*2 < limit;
+        TemplateTestHelperImpl<F, V, is_large, i+batch_size, limit>::run(tc, a);
     }
 
     static void run(TestResultsSet& tc, const V& a, const V& b)
@@ -431,8 +436,9 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         F<V, i+27>::test(tc, a, b);
         F<V, i+28>::test(tc, a, b);
         F<V, i+29>::test(tc, a, b);
-        const bool is_large = i + 60 < limit;
-        TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a, b);
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size*2 < limit;
+        TemplateTestHelperImpl<F, V, is_large, i+batch_size, limit>::run(tc, a, b);
     }
 };
 
@@ -448,6 +454,12 @@ struct TemplateTestHelperImpl<F, V, false, i, i> {
     static void run(TestResultsSet&, const V&, const V&) {}
 };
 
+/**
+    Used to test functions that depend on a template parameter. Essentially
+    implements a for loop realised in templates.
+
+    The template calls F<V, i>::test(tc, a) for each i from 0 to F<V, 0>::limit.
+*/
 template<template<class, unsigned> class F, class V>
 struct TemplateTestHelper {
     static void run(TestResultsSet& tc, const V& a)
