@@ -35,9 +35,16 @@ SIMDPP_INL bool i_test_bits_any(const uint32<4>& a)
     uint32<4> r = _mm_cmpeq_epi32(a, _mm_setzero_si128());
     return _mm_movemask_epi8(r) != 0xffff;
 #elif SIMDPP_USE_NEON
+#if SIMDPP_64_BITS
+    uint64<2> r;
+    r = a;
+    r = bit_or(r, move2_l<1>(r));
+    return extract<0>(r) != 0;
+#else
     uint32x4 r = bit_or(a, move4_l<2>(a));
     r = bit_or(r, move4_l<1>(r));
     return extract<0>(r) != 0;
+#endif
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> z = make_uint(0);
     return vec_any_gt((__vector uint32_t)a, (__vector uint32_t)z);
