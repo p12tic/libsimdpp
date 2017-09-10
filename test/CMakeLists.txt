@@ -106,8 +106,10 @@ if(HAS_SSE2)
     endif()
 
     foreach(GENSRC ${TEST1_ARCH_GEN_SOURCES})
-        set_property(SOURCE "${GENSRC}" APPEND_STRING PROPERTY COMPILE_FLAGS
-                     "${DEFAULT_FLAGS}")
+        get_property(CURRENT_COMPILE_FLAGS
+                     SOURCE "${GENSRC}" PROPERTY COMPILE_FLAGS)
+        set_property(SOURCE "${GENSRC}" PROPERTY COMPILE_FLAGS
+                     "${DEFAULT_FLAGS} ${CURRENT_COMPILE_FLAGS}")
     endforeach()
 endif()
 
