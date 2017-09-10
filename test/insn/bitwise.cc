@@ -13,15 +13,26 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-template<class V>
-void test_bitwise_type(TestResultsSet& tc, const V& a, const V& b)
+template<class V, class V32I>
+void test_bitwise_type(TestResultsSet& tc)
 {
     using namespace simdpp;
 
-    TEST_PUSH(tc, V, bit_and(a, b));
-    TEST_PUSH(tc, V, bit_andnot(a, b));
-    TEST_PUSH(tc, V, bit_or(a, b));
-    TEST_PUSH(tc, V, bit_xor(a, b));
+    TestData<V32I> s;
+    s.add(make_uint(0xffff0000, 0x00000000, 0xff000000, 0x00000000));
+    s.add(make_uint(0x00ffff00, 0x00000000, 0x0000ff00, 0x00000000));
+    s.add(make_uint(0x0000ffff, 0x00000000, 0x000000ff, 0x00000000));
+    s.add(make_uint(0x0000ffff, 0xffffffff, 0x00ffffff, 0xffffffff));
+    s.add(make_uint(0xff0000ff, 0xffffffff, 0xffff00ff, 0xffffffff));
+    s.add(make_uint(0xffff0000, 0xffffffff, 0xffffff00, 0xffffffff));
+    s.add(make_uint(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff));
+    s.add(make_uint(0x00000000, 0x00000000, 0x00000000, 0x00000000));
+
+    TEST_ALL_COMB_HELPER2(tc, V, bit_and, s, V::num_bits / 8);
+    TEST_ALL_COMB_HELPER2(tc, V, bit_andnot, s, V::num_bits / 8);
+    TEST_ALL_COMB_HELPER2(tc, V, bit_or, s, V::num_bits / 8);
+    TEST_ALL_COMB_HELPER2(tc, V, bit_xor, s, V::num_bits / 8);
+    TEST_ALL_COMB_HELPER1(tc, V, bit_not, s, V::num_bits / 8);
 
     TestData<V> sl(
         make_uint(0),
@@ -45,15 +56,12 @@ void test_bitwise_n(TestResultsSet& tc)
     using float32_n = float32<B/4>;
     using float64_n = float64<B/8>;
 
-    uint32_n a = make_uint(0x0f0ff0f0, 0xffff0000, 0x0f0ff0f0, 0xffff0000);
-    uint32_n b = make_uint(0xffffffff, 0xffffffff, 0x00000000, 0x00000000);
-
-    test_bitwise_type<uint8_n>(tc, (uint8_n)a, (uint8_n)b);
-    test_bitwise_type<uint16_n>(tc, (uint16_n)a, (uint16_n)b);
-    test_bitwise_type<uint32_n>(tc, (uint32_n)a, (uint32_n)b);
-    test_bitwise_type<uint64_n>(tc, (uint64_n)a, (uint64_n)b);
-    test_bitwise_type<float32_n>(tc, (float32_n)a, (float32_n)b);
-    test_bitwise_type<float64_n>(tc, (float64_n)a, (float64_n)b);
+    test_bitwise_type<uint8_n, uint32_n>(tc);
+    test_bitwise_type<uint16_n, uint32_n>(tc);
+    test_bitwise_type<uint32_n, uint32_n>(tc);
+    test_bitwise_type<uint64_n, uint32_n>(tc);
+    test_bitwise_type<float32_n, uint32_n>(tc);
+    test_bitwise_type<float64_n, uint32_n>(tc);
     tc.reset_seq();
 
     // masks
