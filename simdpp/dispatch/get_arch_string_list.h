@@ -47,10 +47,12 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     Arch a_sse4_1 = a_ssse3 | Arch::X86_SSE4_1;
     Arch a_avx = a_sse4_1 | Arch::X86_AVX;
     Arch a_avx2 = a_avx | Arch::X86_AVX2;
-    Arch a_avx512f = a_avx2 | Arch::X86_AVX512F;
     Arch a_fma3 = a_sse3 | Arch::X86_FMA3;
     Arch a_fma4 = a_sse3 | Arch::X86_FMA4;
     Arch a_xop = a_sse3 | Arch::X86_XOP;
+    Arch a_avx512f = a_avx2 | Arch::X86_AVX512F;
+    Arch a_avx512bw = a_avx512f | Arch::X86_AVX512BW;
+    Arch a_avx512dq = a_avx512f | Arch::X86_AVX512DQ;
 
     features.emplace_back("sse2", a_sse2);
     features.emplace_back("sse3", a_sse3);
@@ -58,10 +60,12 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     features.emplace_back("sse4.1", a_sse4_1);
     features.emplace_back("avx", a_avx);
     features.emplace_back("avx2", a_avx2);
-    features.emplace_back("avx512f", a_avx512f);
     features.emplace_back("fma", a_fma3);
     features.emplace_back("fma4", a_fma4);
     features.emplace_back("xop", a_xop);
+    features.emplace_back("avx512f", a_avx512f);
+    features.emplace_back("avx512bw", a_avx512bw);
+    features.emplace_back("avx512dq", a_avx512dq);
 #elif SIMDPP_PPC
     Arch a_altivec = Arch::POWER_ALTIVEC;
     Arch a_vsx_206 = a_altivec | Arch::POWER_VSX_206;
