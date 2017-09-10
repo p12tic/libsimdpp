@@ -33,16 +33,16 @@ SIMDPP_INL float i_reduce_add(const float32x4& a)
         r += a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2
-    float32x4 sum2 = _mm_movehl_ps(a, a);
-    float32x4 sum = add(a, sum2);
-    sum = add(sum, permute2<1,0>(sum));
-    return _mm_cvtss_f32(sum);
 #elif SIMDPP_USE_SSE3
     float32x4 b = a;
     b = _mm_hadd_ps(b, b);
     b = _mm_hadd_ps(b, b);
     return _mm_cvtss_f32(b);
+#elif SIMDPP_USE_SSE2
+    float32x4 sum2 = _mm_movehl_ps(a, a);
+    float32x4 sum = add(a, sum2);
+    sum = add(sum, permute2<1,0>(sum));
+    return _mm_cvtss_f32(sum);
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x2_t a2 = vpadd_f32(vget_low_f32(a), vget_high_f32(a));
     a2 = vpadd_f32(a2, a2);
@@ -87,11 +87,11 @@ SIMDPP_INL float i_reduce_add(const float32<N>& a)
 
 SIMDPP_INL double i_reduce_add(const float64x2& a)
 {
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE3
+    return _mm_cvtsd_f64(_mm_hadd_pd(a, a));
+#elif SIMDPP_USE_SSE2
     float64x2 b = add(a, permute2<1,1>(a));
     return _mm_cvtsd_f64(b);
-#elif SIMDPP_USE_SSE3
-    return _mm_cvtsd_f64(_mm_hadd_pd(a, a));
 #elif SIMDPP_USE_NEON64
     float64x2_t a2 = vpaddq_f64(a, a);
     return vgetq_lane_f64(a2, 0);
