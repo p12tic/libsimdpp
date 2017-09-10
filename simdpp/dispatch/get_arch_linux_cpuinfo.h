@@ -47,6 +47,9 @@ inline Arch get_arch_linux_cpuinfo()
     Arch a_fma3 = a_sse3 | Arch::X86_FMA3;
     Arch a_fma4 = a_sse3 | Arch::X86_FMA4;
     Arch a_xop = a_sse3 | Arch::X86_XOP;
+    Arch a_avx512f = a_avx2 | Arch::X86_AVX512F;
+    Arch a_avx512bw = a_avx512f | Arch::X86_AVX512BW;
+    Arch a_avx512dq = a_avx512f | Arch::X86_AVX512DQ;
 
     ident = "flags\t";
     features["sse2"] = a_sse2;
@@ -58,6 +61,9 @@ inline Arch get_arch_linux_cpuinfo()
     features["fma"] = a_fma3;
     features["fma4"] = a_fma4;
     features["xop"] = a_xop;
+    features["avx512f"] = a_avx512f;
+    features["avx512bw"] = a_avx512bw;
+    features["avx512dq"] = a_avx512dq;
 #else
     return res;
 #endif
