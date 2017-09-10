@@ -57,10 +57,10 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     features.emplace_back("sse2", a_sse2);
     features.emplace_back("sse3", a_sse3);
     features.emplace_back("ssse3", a_ssse3);
-    features.emplace_back("sse4.1", a_sse4_1);
+    features.emplace_back("sse4p1", a_sse4_1);
     features.emplace_back("avx", a_avx);
     features.emplace_back("avx2", a_avx2);
-    features.emplace_back("fma", a_fma3);
+    features.emplace_back("fma3", a_fma3);
     features.emplace_back("fma4", a_fma4);
     features.emplace_back("xop", a_xop);
     features.emplace_back("avx512f", a_avx512f);
