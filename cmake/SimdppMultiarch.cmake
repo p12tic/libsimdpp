@@ -603,7 +603,7 @@ function(simdpp_multiarch FILE_LIST_VAR SRC_FILE)
             # The work around is to use add_custom_command with IMPLICIT_DEPENDS
             # option which only works on make-based systems
             add_custom_command(OUTPUT "${DST_ABS_FILE}"
-                               COMMAND cmake -E copy "${SRC_ABS_FILE}" "${DST_ABS_FILE}"
+                               COMMAND ${CMAKE_COMMAND} -E copy "${SRC_ABS_FILE}" "${DST_ABS_FILE}"
                                IMPLICIT_DEPENDS CXX "${SRC_ABS_FILE}")
 
             list(APPEND FILE_LIST "${DST_ABS_FILE}")
