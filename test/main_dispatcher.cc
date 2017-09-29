@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include "utils/test_helpers.h"
 
 // Check whether all available getters of supported architecture compiles
 // on all compilers
@@ -76,31 +77,25 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    TestReporter tr(std::cerr);
+
     Arch selected = test_dispatcher();
     if (selected != g_supported_arch) {
-        std::cerr << "Wrong architecture selected: \n"
-                  << "  Supported: "
-                  << std::hex << static_cast<unsigned>(g_supported_arch)
-                  << "\n  Selected: "
-                  << std::hex << static_cast<unsigned>(selected) << "\n";
+        tr.out() << "Wrong architecture selected: \n"
+                 << "  Supported: "
+                 << std::hex << static_cast<unsigned>(g_supported_arch)
+                 << "\n  Selected: "
+                 << std::hex << static_cast<unsigned>(selected) << "\n";
+        tr.add_result(false);
         return EXIT_FAILURE;
     }
+    tr.add_result(true);
 
-    unsigned err = 0;
-    if (test_dispatcher1(1) != 1) {
-        err |= 1;
-    }
-    if (test_dispatcher2(1, 2) != 1+2) {
-        err |= 2;
-    }
-    if (test_dispatcher3(1, 2, 3) != 1+2+3) {
-        err |= 4;
-    }
-    if (test_dispatcher4(1, 2, 3, 4) != 1+2+3+4) {
-        err |= 8;
-    }
-    if (err != 0) {
-        std::cout << "ERR: " << err << "\n";
-        return EXIT_FAILURE;
-    }
+    TEST_EQUAL(tr, 1, test_dispatcher1(1));
+    TEST_EQUAL(tr, 1+2, test_dispatcher2(1, 2));
+    TEST_EQUAL(tr, 1+2+3, test_dispatcher3(1, 2, 3));
+    TEST_EQUAL(tr, 1+2+3+4, test_dispatcher4(1, 2, 3, 4));
+
+    tr.report_summary();
+    return tr.success() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
