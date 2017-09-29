@@ -137,6 +137,7 @@ add_dependencies(check test1)
 
 set(TEST_DISPATCHER_SOURCES
     main_dispatcher.cc
+    utils/test_results_set.cc
 )
 
 set(TEST_DISPATCHER_ARCH_SOURCES

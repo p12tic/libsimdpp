@@ -21,13 +21,60 @@
 
 static simdpp::Arch g_supported_arch;
 
+int g_test_dispatcher_val;
+
 simdpp::Arch get_supported_arch()
 {
     return g_supported_arch;
 }
 
-/*  We test the dispatcher by compiling a
-*/
+template<class T>
+void test_dispatcher_template_pair_for_type(TestReporter& tr)
+{
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_template_pair(std::pair<T, T>(1, 2));
+    TEST_EQUAL(tr, 1+2, g_test_dispatcher_val);
+
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_template_pair2(std::pair<T, T>(1, 2),
+                                        std::pair<T, T>(3, 4));
+    TEST_EQUAL(tr, 1+2+3+4, g_test_dispatcher_val);
+
+    std::pair<T, T> pair;
+    pair = test_dispatcher_ret_template_pair(std::pair<T, T>(1, 2));
+    TEST_EQUAL(tr, (T)1, pair.first);
+    TEST_EQUAL(tr, (T)2, pair.second);
+
+    pair = test_dispatcher_ret_template_pair2(std::pair<T, T>(1, 2),
+                                              std::pair<T, T>(3, 4));
+    TEST_EQUAL(tr, (T)(1+3), pair.first);
+    TEST_EQUAL(tr, (T)(2+4), pair.second);
+}
+
+template<class T, class U>
+void test_dispatcher_template2_pair_for_type(TestReporter& tr)
+{
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_template2_pair(std::pair<T, U>(1, 2));
+    TEST_EQUAL(tr, 1+2, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_template2_pair2(std::pair<T, U>(1, 2),
+                                        std::pair<T, U>(3, 4));
+    TEST_EQUAL(tr, 1+2+3+4, g_test_dispatcher_val);
+
+    std::pair<T, U> pair;
+    pair = test_dispatcher_ret_template2_pair(std::pair<T, U>(1, 2));
+    TEST_EQUAL(tr, (T)1, pair.first);
+    TEST_EQUAL(tr, (U)2, pair.second);
+
+    pair = test_dispatcher_ret_template2_pair2(std::pair<T, U>(1, 2),
+                                              std::pair<T, U>(3, 4));
+    TEST_EQUAL(tr, (T)(1+3), pair.first);
+    TEST_EQUAL(tr, (U)(2+4), pair.second);
+}
+
 int main(int argc, char** argv)
 {
     using simdpp::Arch;
@@ -79,7 +126,7 @@ int main(int argc, char** argv)
 
     TestReporter tr(std::cerr);
 
-    Arch selected = test_dispatcher();
+    Arch selected = test_dispatcher_get_arch();
     if (selected != g_supported_arch) {
         tr.out() << "Wrong architecture selected: \n"
                  << "  Supported: "
@@ -91,10 +138,87 @@ int main(int argc, char** argv)
     }
     tr.add_result(true);
 
-    TEST_EQUAL(tr, 1, test_dispatcher1(1));
-    TEST_EQUAL(tr, 1+2, test_dispatcher2(1, 2));
-    TEST_EQUAL(tr, 1+2+3, test_dispatcher3(1, 2, 3));
-    TEST_EQUAL(tr, 1+2+3+4, test_dispatcher4(1, 2, 3, 4));
+    TEST_EQUAL(tr, 42, test_dispatcher_old_ret0());
+    TEST_EQUAL(tr, 1, test_dispatcher_old_ret1(1));
+    TEST_EQUAL(tr, 1+2, test_dispatcher_old_ret2(1, 2));
+    TEST_EQUAL(tr, 1+2+3, test_dispatcher_old_ret3(1, 2, 3));
+    TEST_EQUAL(tr, 1+2+3+4, test_dispatcher_old_ret4(1, 2, 3, 4));
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_old_void0();
+    TEST_EQUAL(tr, 42, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_old_void1(1);
+    TEST_EQUAL(tr, 1, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_old_void2(1, 2);
+    TEST_EQUAL(tr, 1+2, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_old_void3(1, 2, 3);
+    TEST_EQUAL(tr, 1+2+3, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_old_void4(1, 2, 3, 4);
+    TEST_EQUAL(tr, 1+2+3+4, g_test_dispatcher_val);
+
+    TEST_EQUAL(tr, 42, test_dispatcher_ret0());
+    TEST_EQUAL(tr, 1, test_dispatcher_ret1(1));
+    TEST_EQUAL(tr, 1+2, test_dispatcher_ret2(1, 2));
+    TEST_EQUAL(tr, 1+2+3, test_dispatcher_ret3(1, 2, 3));
+    TEST_EQUAL(tr, 1+2+3+4, test_dispatcher_ret4(1, 2, 3, 4));
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void0();
+    TEST_EQUAL(tr, 42, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void1(1);
+    TEST_EQUAL(tr, 1, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void2(1, 2);
+    TEST_EQUAL(tr, 1+2, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void3(1, 2, 3);
+    TEST_EQUAL(tr, 1+2+3, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void4(1, 2, 3, 4);
+    TEST_EQUAL(tr, 1+2+3+4, g_test_dispatcher_val);
+
+    void* voidptr = reinterpret_cast<void*>(uintptr_t(1234));
+    void* voidptr2 = test_dispatcher_ret_voidptr(voidptr);
+    TEST_EQUAL(tr, voidptr, voidptr2);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_pair(std::pair<int, int>(1, 2));
+    TEST_EQUAL(tr, 1+2, g_test_dispatcher_val);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_pair2(std::pair<int, int>(1, 2),
+                               std::pair<int, int>(3, 4));
+    TEST_EQUAL(tr, 1+2+3+4, g_test_dispatcher_val);
+
+    std::pair<int, int> intpair;
+    intpair = test_dispatcher_ret_pair(std::pair<int, int>(1, 2));
+    TEST_EQUAL(tr, 1, intpair.first);
+    TEST_EQUAL(tr, 2, intpair.second);
+
+    intpair = test_dispatcher_ret_pair2(std::pair<int, int>(1, 2),
+                                        std::pair<int, int>(3, 4));
+    TEST_EQUAL(tr, 1+3, intpair.first);
+    TEST_EQUAL(tr, 2+4, intpair.second);
+
+    test_dispatcher_template_pair_for_type<int>(tr);
+    test_dispatcher_template_pair_for_type<char>(tr);
+    test_dispatcher_template2_pair_for_type<int, int>(tr);
+    test_dispatcher_template2_pair_for_type<char, int>(tr);
+    test_dispatcher_template2_pair_for_type<int, char>(tr);
+    test_dispatcher_template2_pair_for_type<char, char>(tr);
 
     tr.report_summary();
     return tr.success() ? EXIT_SUCCESS : EXIT_FAILURE;
