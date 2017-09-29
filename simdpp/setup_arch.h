@@ -218,6 +218,12 @@
     SIMDPP_NS_ID_ALTIVEC, SIMDPP_NS_ID_VSX_206, SIMDPP_NS_ID_VSX_207,       \
     SIMDPP_NS_ID_MSA)
 
+#define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_ARCH_NAMESPACE
+#define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 0
+#include <simdpp/dispatch/preprocess_single_compile_arch.h>
+#undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+#undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
 // Include headers relevant for the enabled instruction sets.
 #if SIMDPP_USE_SSE2
     #include <xmmintrin.h>

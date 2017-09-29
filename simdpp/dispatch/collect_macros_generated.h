@@ -144,6 +144,12 @@
         SIMDPP_DISPATCH_1_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_1_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_1_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_1_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[1-1] = SIMDPP_DISPATCH_1_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_1_FN_DECLARE(NAME,FUN_TYPE)                       \
@@ -278,6 +284,12 @@
         SIMDPP_DISPATCH_2_NS_ID_ALTIVEC,                                      \
         SIMDPP_DISPATCH_2_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_2_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_2_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_2_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[2-1] = SIMDPP_DISPATCH_2_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
@@ -414,6 +426,12 @@
         SIMDPP_DISPATCH_3_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_3_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_3_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_3_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[3-1] = SIMDPP_DISPATCH_3_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_3_FN_DECLARE(NAME,FUN_TYPE)                       \
@@ -548,6 +566,12 @@
         SIMDPP_DISPATCH_4_NS_ID_ALTIVEC,                                      \
         SIMDPP_DISPATCH_4_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_4_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_4_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_4_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[4-1] = SIMDPP_DISPATCH_4_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
@@ -684,6 +708,12 @@
         SIMDPP_DISPATCH_5_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_5_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_5_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_5_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[5-1] = SIMDPP_DISPATCH_5_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_5_FN_DECLARE(NAME,FUN_TYPE)                       \
@@ -818,6 +848,12 @@
         SIMDPP_DISPATCH_6_NS_ID_ALTIVEC,                                      \
         SIMDPP_DISPATCH_6_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_6_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_6_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_6_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[6-1] = SIMDPP_DISPATCH_6_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
@@ -954,6 +990,12 @@
         SIMDPP_DISPATCH_7_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_7_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_7_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_7_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[7-1] = SIMDPP_DISPATCH_7_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_7_FN_DECLARE(NAME,FUN_TYPE)                       \
@@ -1088,6 +1130,12 @@
         SIMDPP_DISPATCH_8_NS_ID_ALTIVEC,                                      \
         SIMDPP_DISPATCH_8_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_8_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_8_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_8_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[8-1] = SIMDPP_DISPATCH_8_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
@@ -1224,6 +1272,12 @@
         SIMDPP_DISPATCH_9_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_9_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_9_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_9_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         ARRAY[9-1] = SIMDPP_DISPATCH_9_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_9_FN_DECLARE(NAME,FUN_TYPE)                       \
@@ -1358,6 +1412,12 @@
         SIMDPP_DISPATCH_10_NS_ID_ALTIVEC,                                     \
         SIMDPP_DISPATCH_10_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_10_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_10_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_10_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         ARRAY[10-1] = SIMDPP_DISPATCH_10_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
@@ -1494,6 +1554,12 @@
         SIMDPP_DISPATCH_11_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_11_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_11_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_11_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         ARRAY[11-1] = SIMDPP_DISPATCH_11_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_11_FN_DECLARE(NAME,FUN_TYPE)                      \
@@ -1628,6 +1694,12 @@
         SIMDPP_DISPATCH_12_NS_ID_ALTIVEC,                                     \
         SIMDPP_DISPATCH_12_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_12_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_12_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_12_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         ARRAY[12-1] = SIMDPP_DISPATCH_12_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
@@ -1764,6 +1836,12 @@
         SIMDPP_DISPATCH_13_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_13_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_13_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_13_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         ARRAY[13-1] = SIMDPP_DISPATCH_13_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_13_FN_DECLARE(NAME,FUN_TYPE)                      \
@@ -1899,6 +1977,12 @@
         SIMDPP_DISPATCH_14_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_14_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_14_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_14_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         ARRAY[14-1] = SIMDPP_DISPATCH_14_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_14_FN_DECLARE(NAME,FUN_TYPE)                      \
@@ -2033,6 +2117,12 @@
         SIMDPP_DISPATCH_15_NS_ID_ALTIVEC,                                     \
         SIMDPP_DISPATCH_15_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_15_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_15_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_15_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         ARRAY[15-1] = SIMDPP_DISPATCH_15_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));

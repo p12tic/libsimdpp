@@ -138,6 +138,12 @@ single_arch_template = '''
         SIMDPP_DISPATCH_$num$_NS_ID_VSX_206,                                $n$
         SIMDPP_DISPATCH_$num$_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_$num$_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)          $n$
         ARRAY[$num$-1] = SIMDPP_DISPATCH_$num$_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
     #define SIMDPP_DISPATCH_$num$_FN_DECLARE(NAME,FUN_TYPE)                 $n$
