@@ -8,15 +8,17 @@
 #ifndef LIBSIMDPP_DISPATCH_MAKE_DISPATCHER_H
 #define LIBSIMDPP_DISPATCH_MAKE_DISPATCHER_H
 
-#if SIMDPP_EMIT_DISPATCHER
-#include <simdpp/dispatch/collect_macros_generated.h>
 #include <simdpp/dispatch/macros_generated.h>
-#include <simdpp/detail/preprocessor/punctuation/comma_if.hpp>
 #include <simdpp/detail/preprocessor/punctuation/remove_parens.hpp>
-#include <simdpp/detail/preprocessor/tuple/rem.hpp>
-#include <simdpp/detail/preprocessor/seq/for_each_i.hpp>
-#include <simdpp/detail/preprocessor/seq/elem.hpp>
+#include <simdpp/detail/preprocessor/seq/for_each.hpp>
 #include <simdpp/detail/preprocessor/variadic/to_seq.hpp>
+
+#if SIMDPP_EMIT_DISPATCHER
+#include <simdpp/detail/preprocessor/punctuation/comma_if.hpp>
+#include <simdpp/detail/preprocessor/seq/elem.hpp>
+#include <simdpp/detail/preprocessor/seq/for_each_i.hpp>
+#include <simdpp/detail/preprocessor/tuple/rem.hpp>
+#include <simdpp/dispatch/collect_macros_generated.h>
 
 // When debugging this code, it's a good idea to familiarize yourself with
 // advanced preprocessor techniques first. Several resources follow:
@@ -238,9 +240,45 @@ SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       
 */
 #define SIMDPP_MAKE_DISPATCHER(DESC)                                            \
     SIMDPP_PP_CAT(SIMDPP_DETAIL_MAKE_DISPATCHER, SIMDPP_PP_SEQ_SIZE(DESC))(DESC)
-
 #else // #if SIMDPP_EMIT_DISPATCHER
 #define SIMDPP_MAKE_DISPATCHER(DESC)
+#endif
+
+#define SIMDPP_DETAIL_SIGNATURE_EACH(r, data, x) SIMDPP_PP_REMOVE_PARENS(x) ;
+#define SIMDPP_DETAIL_SIGNATURES(signatures) SIMDPP_PP_SEQ_FOR_EACH(SIMDPP_DETAIL_SIGNATURE_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ signatures)
+
+#if SIMDPP_EMIT_DISPATCHER
+/** Defines a one or more template instantiations for a dispatcher. Accepts one
+    or more parenthesized token groups separated by commas defining one or more
+    full template instantiations. For example:
+    SIMDPP_INSTANTIATE_DISPATCHER((template void foo<int>(int x))
+
+    or
+
+    SIMDPP_INSTANTIATE_DISPATCHER(
+        (template void foo<int>(int x)),
+        (template void foo<char>(char x))
+    )
+
+    The macro forces instantiation of the dispatch function defined by the
+    SIMDPP_MAKE_DISPATCHER macro and also of the functions referenced by the
+    dispatcher function. The latter is necessary because the dispatcher is
+    compiled into a only single object file out of the set of multiversioned
+    object files. The referenced functions be instantiated in all of them.
+*/
+// Implementation note: we can't accept the signatures as a sequence, e.g.
+// (a)(b)(c), because SIMDPP_PP_SEQ_FOR_EACH does not support sequence elements
+// containing commas at the top level
+#define SIMDPP_INSTANTIATE_DISPATCHER(...)                                      \
+SIMDPP_DETAIL_SIGNATURES((__VA_ARGS__))                                         \
+namespace SIMDPP_ARCH_NAMESPACE {                                               \
+    SIMDPP_DETAIL_SIGNATURES((__VA_ARGS__))                                     \
+}
+#else // SIMDPP_EMIT_DISPATCHER
+#define SIMDPP_INSTANTIATE_DISPATCHER(...)                                      \
+namespace SIMDPP_ARCH_NAMESPACE {                                               \
+    SIMDPP_DETAIL_SIGNATURES((__VA_ARGS__))                                     \
+}
 #endif
 
 #endif // LIBSIMDPP_DISPATCH_MAKE_DISPATCHER_H
