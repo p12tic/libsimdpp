@@ -145,18 +145,24 @@ single_arch_template = '''
     #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)          $n$
-        ARRAY[$num$-1] = SIMDPP_DISPATCH_$num$_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(NAME,FUN_TYPE)                 $n$
+        {   /* the following will fail if the overload is not available */  $n$
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_$num$_NAMESPACE::NAME;      $n$
+            ARRAY[$num$-1] = ::simdpp::SIMDPP_DISPATCH_$num$_NAMESPACE::detail::create_fn_version(fun_ptr); $n$
+        }
+
+    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(SIGNATURE)                     $n$
         namespace SIMDPP_DISPATCH_$num$_NAMESPACE {                         $n$
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                               $n$
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(SIGNATURE)
 #endif'''
 
 single_fn_register_template = '    SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)   $n$'
-single_fn_declare_template = '    SIMDPP_DISPATCH_$num$_FN_DECLARE(NAME,FUN_TYPE)   $n$'
+single_fn_declare_template = '''\
+        SIMDPP_DISPATCH_$num$_FN_DECLARE(SIGNATURE)                         $n$'''
 
 # print the actual file
 
@@ -178,6 +184,7 @@ print('''/*  Copyright (C) 2015  Povilas Kanapickas <povilas@radix.lt>
 #endif
 
 #if SIMDPP_EMIT_DISPATCHER
+#include <simdpp/detail/preprocessor/punctuation/remove_parens.hpp>
 ''')
 
 print('#define SIMDPP_DISPATCH_MAX_ARCHS ' + str(num_archs) + '\n')
@@ -188,7 +195,7 @@ for i in range(1, num_archs+1):
 
 print('''
 
-#define SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME,FUN_TYPE)                    \\''')
+#define SIMDPP_DISPATCH_DECLARE_FUNCTIONS(SIGNATURE)                        \\''')
 for i in range(1, num_archs+1):
     vars = { 'num' : str(i) }
     output_template(single_fn_declare_template, vars)

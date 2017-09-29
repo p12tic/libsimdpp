@@ -200,6 +200,7 @@
 */
 #ifndef SIMDPP_NO_DISPATCHER
 #include <simdpp/dispatch/dispatcher.h>
+#include <simdpp/dispatch/make_dispatcher.h>
 #endif
 
 namespace simdpp {
