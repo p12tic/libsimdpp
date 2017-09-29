@@ -5,7 +5,7 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#include <simdpp/detail/preprocessor.h>
+#include <simdpp/detail/preprocessor/stringize.hpp>
 #include <simdpp/dispatch/arch.h>
 #include <simdpp/dispatch/dispatcher.h>
 
@@ -112,7 +112,7 @@ static inline simdpp::detail::FnVersion create_fn_version(FunPtr fun_ptr)
     simdpp::detail::FnVersion res;
     res.needed_arch = simdpp::SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE::detail::this_compile_arch();
     res.fun_ptr = reinterpret_cast<simdpp::detail::VoidFunPtr>(fun_ptr);
-    res.arch_name = SIMDPP_STRINGIFY(SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE);
+    res.arch_name = SIMDPP_PP_STRINGIZE(SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE);
     return res;
 }
 

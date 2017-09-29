@@ -46,6 +46,8 @@
 */
 
 #include <simdpp/detail/preprocessor.h>
+#include <simdpp/detail/preprocessor/cat.hpp>
+#include <simdpp/detail/preprocessor/facilities/expand.hpp>
 #include <simdpp/detail/insn_id.h>
 
 // Undef output macros
@@ -172,20 +174,20 @@
 #ifdef SIMDPP_ARCH_PP_LIST
 
     #define SIMDPP_ARCH_CREATE_MASK2(x0,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,...)    \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x0) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x1) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x2) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x3) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x4) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x5) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x6) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x7) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x8) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x9) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x10) | \
-        SIMDPP_PP_PASTE1(SIMDPP_PREFIX_##x11)
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x0) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x1) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x2) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x3) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x4) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x5) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x6) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x7) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x8) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x9) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x10) | \
+        SIMDPP_PP_CAT(SIMDPP_PREFIX_, x11)
 
-    #define SIMDPP_ARCH_PP_CREATE_MASK(...) SIMDPP_PP_PASTE1( SIMDPP_ARCH_CREATE_MASK2(__VA_ARGS__,0,0,0,0,0,0,0,0,0,0,0,0) )
+    #define SIMDPP_ARCH_PP_CREATE_MASK(...) SIMDPP_PP_EXPAND( SIMDPP_ARCH_CREATE_MASK2(__VA_ARGS__,0,0,0,0,0,0,0,0,0,0,0,0) )
     #define SIMDPP_ARCH_PP_MASK SIMDPP_ARCH_PP_CREATE_MASK(SIMDPP_ARCH_PP_LIST)
 
     #if ((SIMDPP_ARCH_PP_MASK) & SIMDPP_INSN_MASK_SSE2) == SIMDPP_INSN_MASK_SSE2

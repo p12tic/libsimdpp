@@ -9,6 +9,7 @@
 #define LIBSIMDPP_SIMD_SETUP_ARCH_H
 
 #include <simdpp/detail/preprocessor.h>
+#include <simdpp/detail/preprocessor/stringize.hpp>
 
 // Set up macros for current architecture. Note that this file may be included
 // multiple times, more information on the caveats are within the file.
@@ -330,7 +331,7 @@
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required
 */
-#define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
+#define SIMDPP_ARCH_NAME SIMDPP_PP_STRINGIZE(SIMDPP_ARCH_NAMESPACE)
 
 // workarounds
 #if __GNUC__
