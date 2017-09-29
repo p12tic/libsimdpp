@@ -42,7 +42,7 @@ public:
     struct Result {
         static const unsigned num_bytes = 32;
 
-        Result(VectorType atype, unsigned alength, unsigned ael_size,
+        Result(ElementType atype, unsigned alength, unsigned ael_size,
                const char* afile, unsigned aline, unsigned aseq,
                unsigned aprec_ulp, bool afp_zero_eq)
         {
@@ -57,7 +57,7 @@ public:
             data.resize(el_size*length);
         }
 
-        VectorType type;
+        ElementType type;
         unsigned line;
         unsigned seq;
         unsigned prec_ulp;
@@ -80,7 +80,7 @@ public:
     };
 
     /// Stores the results into the results set.
-    Result& push(VectorType type, unsigned length, const char* file, unsigned line);
+    Result& push(ElementType type, unsigned length, const char* file, unsigned line);
 
     /// Sets the allowed error in ULPs. Only meaningful for floating-point data.
     /// Affects all pushed data until the next call to @a unset_precision

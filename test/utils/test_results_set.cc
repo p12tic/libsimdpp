@@ -24,7 +24,7 @@ TestResultsSet::TestResultsSet(const char* name) :
     reset_seq();
 }
 
-TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length,
+TestResultsSet::Result& TestResultsSet::push(ElementType type, unsigned length,
                                              const char* file, unsigned line)
 {
     while (results_.size() <= curr_results_section_)

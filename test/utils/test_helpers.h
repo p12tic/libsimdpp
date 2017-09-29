@@ -518,7 +518,7 @@ void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2, bool expecte
         print_separator(tr.out());
         print_file_info(tr.out(), file, line);
         tr.out() << (expected_equal ? "Vectors not equal:\n" : "Vectors equal:\n");
-        print_vector_diff(tr.out(), GetVectorType<V>::value, V::length, &v1, &v2);
+        print_vector_diff(tr.out(), GetElementType<V>::value, V::length, &v1, &v2);
     }
 }
 
