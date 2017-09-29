@@ -15,6 +15,10 @@
     #error "This file must be included through simd.h"
 #endif
 
+// We rely on setup_arch.h being included before this file to undefine
+// all SIMDPP_ARCH_* macros
+#include <simdpp/setup_arch.h>
+
 #if SIMDPP_EMIT_DISPATCHER
 #include <simdpp/detail/preprocessor/punctuation/remove_parens.hpp>
 

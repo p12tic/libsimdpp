@@ -21,11 +21,16 @@
     1)  If SIMDPP_ARCH_PP_LIST is not defined, then the instruction sets should
         be supplied via SIMDPP_ARCH_* macros. If particular macro expands to
         non-zero value then the given instruction set and any subsets are
-        enabled.
+        enabled. After processing the information supplied via SIMDPP_ARCH_*
+        this file undefines all these macros.
 
     2)  If SIMDPP_ARCH_PP_LIST is defined, then it supplies a list of enabled
         instruction sets. The macro should be defined to a comma-separated list
         of identifiers, each equivalent to one of SIMDPP_ARCH_* macro names.
+
+    Note that if SIMDPP_ARCH_PP_LIST is defined, then all SIMDPP_ARCH_* macros
+    themselves must not be defined, as they cause unintended expansions within
+    tihs file.
 
     The output data:
 
