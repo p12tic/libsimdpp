@@ -158,8 +158,8 @@ void print_vector_numeric(std::ostream& out, unsigned type, unsigned num_elems,
     }
 }
 
-void print_vector_diff(std::ostream& out, unsigned type, unsigned num_elems,
-                       const void* data_a, const void* data_b)
+void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
+                     const void* data_a, const void* data_b)
 {
     out << "A : ";
     print_vector_numeric(out, type, num_elems, data_a);
@@ -458,7 +458,7 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                 fmt_test_case();
                 fmt_seq(ia.seq);
                 tr.out() << "ERROR: Vectors not equal: \n";
-                print_vector_diff(tr.out(), ia.type, ia.length, ia.d(), ib.d());
+                print_data_diff(tr.out(), ia.type, ia.length, ia.d(), ib.d());
                 fmt_prec(prec);
                 print_separator(tr.out());
                 tr.add_result(false);

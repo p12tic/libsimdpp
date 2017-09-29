@@ -13,7 +13,7 @@
 #include <iosfwd>
 #include <cstdint>
 #include "test_reporter.h"
-#include "vector_type.h"
+#include "element_type.h"
 
 class TestResultsSet;
 
@@ -22,8 +22,8 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                             TestReporter& tr);
 
 // Prints two vectors side by side for comparison
-void print_vector_diff(std::ostream& out, unsigned type, unsigned num_elems,
-                       const void* data_a, const void* data_b);
+void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
+                     const void* data_a, const void* data_b);
 
 void print_separator(std::ostream& out);
 void print_file_info(std::ostream& out, const char* file);
