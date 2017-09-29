@@ -163,7 +163,7 @@
 
     #define SIMDPP_DISPATCH_1_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_1_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -309,7 +309,7 @@
 
     #define SIMDPP_DISPATCH_2_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_2_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -455,7 +455,7 @@
 
     #define SIMDPP_DISPATCH_3_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_3_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -601,7 +601,7 @@
 
     #define SIMDPP_DISPATCH_4_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_4_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -747,7 +747,7 @@
 
     #define SIMDPP_DISPATCH_5_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_5_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -893,7 +893,7 @@
 
     #define SIMDPP_DISPATCH_6_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_6_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -1039,7 +1039,7 @@
 
     #define SIMDPP_DISPATCH_7_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_7_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -1185,7 +1185,7 @@
 
     #define SIMDPP_DISPATCH_8_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_8_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -1331,7 +1331,7 @@
 
     #define SIMDPP_DISPATCH_9_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_9_NAMESPACE {                               \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -1477,7 +1477,7 @@
 
     #define SIMDPP_DISPATCH_10_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_10_NAMESPACE {                              \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -1623,7 +1623,7 @@
 
     #define SIMDPP_DISPATCH_11_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_11_NAMESPACE {                              \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -1769,7 +1769,7 @@
 
     #define SIMDPP_DISPATCH_12_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_12_NAMESPACE {                              \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -1915,7 +1915,7 @@
 
     #define SIMDPP_DISPATCH_13_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_13_NAMESPACE {                              \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -2061,7 +2061,7 @@
 
     #define SIMDPP_DISPATCH_14_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_14_NAMESPACE {                              \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
@@ -2207,7 +2207,7 @@
 
     #define SIMDPP_DISPATCH_15_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_15_NAMESPACE {                              \
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                                 \
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else

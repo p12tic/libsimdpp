@@ -152,7 +152,7 @@ single_arch_template = '''
 
     #define SIMDPP_DISPATCH_$num$_FN_DECLARE(SIGNATURE)                     $n$
         namespace SIMDPP_DISPATCH_$num$_NAMESPACE {                         $n$
-            SIMDPP_PP_STRIP_PAREN(SIGNATURE);                               $n$
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                             $n$
         }
     #undef SIMDPP_ARCH_PP_LIST
 #else
