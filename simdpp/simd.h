@@ -131,6 +131,8 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/detail/cast.h>
 #include <simdpp/detail/cast.inl>
+#include <simdpp/detail/to_mask.h>
+#include <simdpp/detail/to_mask.inl>
 
 #include <simdpp/detail/altivec/load1.h>
 
