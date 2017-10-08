@@ -241,7 +241,7 @@ int64<4> expr_eval_mull(const int32<4,E1>& qa,
 #elif SIMDPP_USE_VSX_207
 #if defined(__GNUC__) && (__GNUC__ < 8)
     // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
-    SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
 #else
     int64x2 lo = vec_vmulesw(a.native(), b.native());
     int64x2 hi = vec_vmulosw(a.native(), b.native());
@@ -321,7 +321,7 @@ uint64<4> expr_eval_mull(const uint32<4,E1>& qa,
 #elif SIMDPP_USE_VSX_207
 #if defined(__GNUC__) && (__GNUC__ < 8)
     // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
-    SIMDPP_NOT_IMPLEMENTED2(a, b);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
 #else
     uint64x2 lo = vec_vmuleuw(a.native(), b.native());
     uint64x2 hi = vec_vmulouw(a.native(), b.native());
