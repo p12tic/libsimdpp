@@ -142,10 +142,6 @@
 
 #define SIMDPP_DETAIL_RETURN_TOKEN() return
 
-/*#undef SIMDPP_DETAIL_TYPES
-#undef SIMDPP_DETAIL_FORWARD
-#undef SIMDPP_DETAIL_ARGS
-*/
 #define SIMDPP_DETAIL_MAKE_DISPATCHER_IMPL(TEMPLATE_PREFIX, R, NAME, ARGS, TEMPLATE_SUFFIX)             \
                                                                                 \
 SIMDPP_DISPATCH_DECLARE_FUNCTIONS(                                              \
