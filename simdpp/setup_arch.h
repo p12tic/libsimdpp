@@ -326,13 +326,19 @@
 */
 #define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
 
-// workarounds
+// misc macros
 #if __GNUC__
 #define SIMDPP_INL __attribute__((__always_inline__)) inline
 #elif _MSC_VER
 #define SIMDPP_INL __forceinline
 #else
 #define SIMDPP_INL inline
+#endif
+
+#if defined(__GNUC__) || defined(__clang__)
+#define SIMDPP_DEPRECATED(msg) __attribute__ ((deprecated(msg)))
+#else
+#define SIMDPP_DEPRECATED(msg)
 #endif
 
 #if __GNUC__

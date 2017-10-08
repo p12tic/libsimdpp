@@ -66,7 +66,10 @@ public:
     SIMDPP_INL int8<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
     SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL int8<16>(const expr_vec_construct<E>& e)
@@ -136,7 +139,10 @@ public:
     SIMDPP_INL uint8<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
     SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL uint8<16>(const expr_vec_construct<E>& e)
@@ -200,7 +206,10 @@ public:
 #endif
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
     SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
