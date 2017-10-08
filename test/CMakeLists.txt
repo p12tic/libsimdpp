@@ -230,5 +230,10 @@ add_custom_target(create_dir_for_compile_fail
                   COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/compile_fail")
 add_dependencies(check create_dir_for_compile_fail)
 add_test(NAME test_compile_fail
-         COMMAND ${CMAKE_COMMAND} ${libsimdpp_SOURCE_DIR}/test/compile_fail "-Dlibsimdpp_SOURCE_DIR=${libsimdpp_SOURCE_DIR}"
+         COMMAND ${CMAKE_COMMAND} ${libsimdpp_SOURCE_DIR}/test/compile_fail
+            -G "${CMAKE_GENERATOR}"
+            -T "${CMAKE_GENERATOR_TOOLSET}"
+            "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+            "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+            "-Dlibsimdpp_SOURCE_DIR=${libsimdpp_SOURCE_DIR}"
          WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/compile_fail)
