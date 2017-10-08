@@ -216,6 +216,30 @@ std::pair<T, U> test_dispatcher_ret_template2_pair2(const std::pair<T, U>& pair1
     return std::make_pair(pair1.first + pair2.first, pair1.second + pair2.second);
 }
 
+template<class T>
+void test_dispatcher_void_template_nondeductible()
+{
+    g_test_dispatcher_val = sizeof(T);
+}
+
+template<class T, class U>
+void test_dispatcher_void_template2_nondeductible()
+{
+    g_test_dispatcher_val = sizeof(T) + sizeof(U);
+}
+
+template<class T>
+std::pair<T, T> test_dispatcher_ret_template_nondeductible()
+{
+    return std::pair<T, T>(sizeof(T), sizeof(T));
+}
+
+template<class T, class U>
+std::pair<T, U> test_dispatcher_ret_template2_nondeductible()
+{
+    return std::pair<T, U>(sizeof(T), sizeof(U));
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
 
 SIMDPP_MAKE_DISPATCHER_RET0(test_dispatcher_get_arch, simdpp::Arch)
@@ -345,4 +369,44 @@ SIMDPP_INSTANTIATE_DISPATCHER(
     (template std::pair<char, char>
         test_dispatcher_ret_template2_pair2<char, char>(const std::pair<char, char>& pair1,
                                                         const std::pair<char, char>& pair2))
+)
+
+SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>)
+                       (void) (test_dispatcher_void_template_nondeductible) ())
+
+SIMDPP_INSTANTIATE_DISPATCHER(
+    (template void test_dispatcher_void_template_nondeductible<char>()),
+    (template void test_dispatcher_void_template_nondeductible<int>())
+)
+
+SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T,U>)
+                       (void) (test_dispatcher_void_template2_nondeductible) ())
+
+SIMDPP_INSTANTIATE_DISPATCHER(
+    (template void test_dispatcher_void_template2_nondeductible<char, char>()),
+    (template void test_dispatcher_void_template2_nondeductible<char, int>()),
+    (template void test_dispatcher_void_template2_nondeductible<int, char>()),
+    (template void test_dispatcher_void_template2_nondeductible<int, int>())
+)
+
+SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>)
+                       (std::pair<T, T>) (test_dispatcher_ret_template_nondeductible) ())
+
+SIMDPP_INSTANTIATE_DISPATCHER(
+    (template std::pair<char, char> test_dispatcher_ret_template_nondeductible<char>()),
+    (template std::pair<int, int> test_dispatcher_ret_template_nondeductible<int>())
+)
+
+SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T,U>)
+                       (std::pair<T, U>) (test_dispatcher_ret_template2_nondeductible) ())
+
+SIMDPP_INSTANTIATE_DISPATCHER(
+    (template std::pair<char, char>
+        test_dispatcher_ret_template2_nondeductible<char, char>()),
+    (template std::pair<char, int>
+        test_dispatcher_ret_template2_nondeductible<char, int>()),
+    (template std::pair<int, char>
+        test_dispatcher_ret_template2_nondeductible<int, char>()),
+    (template std::pair<int, int>
+        test_dispatcher_ret_template2_nondeductible<int, int>())
 )

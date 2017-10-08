@@ -50,6 +50,14 @@ void test_dispatcher_template_pair_for_type(TestReporter& tr)
                                               std::pair<T, T>(3, 4));
     TEST_EQUAL(tr, (T)(1+3), pair.first);
     TEST_EQUAL(tr, (T)(2+4), pair.second);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_template_nondeductible<T>();
+    TEST_EQUAL(tr, (int)sizeof(T), g_test_dispatcher_val);
+
+    pair = test_dispatcher_ret_template_nondeductible<T>();
+    TEST_EQUAL(tr, (T)(sizeof(T)), pair.first);
+    TEST_EQUAL(tr, (T)(sizeof(T)), pair.second);
 }
 
 template<class T, class U>
@@ -73,6 +81,14 @@ void test_dispatcher_template2_pair_for_type(TestReporter& tr)
                                               std::pair<T, U>(3, 4));
     TEST_EQUAL(tr, (T)(1+3), pair.first);
     TEST_EQUAL(tr, (U)(2+4), pair.second);
+
+    g_test_dispatcher_val = 0;
+    test_dispatcher_void_template2_nondeductible<T, U>();
+    TEST_EQUAL(tr, (int)(sizeof(T) + sizeof(U)), g_test_dispatcher_val);
+
+    pair = test_dispatcher_ret_template2_nondeductible<T, U>();
+    TEST_EQUAL(tr, (T)(sizeof(T)), pair.first);
+    TEST_EQUAL(tr, (U)(sizeof(U)), pair.second);
 }
 
 int main(int argc, char** argv)

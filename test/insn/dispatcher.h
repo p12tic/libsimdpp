@@ -68,4 +68,14 @@ template<class T, class U>
 std::pair<T, U> test_dispatcher_ret_template2_pair(const std::pair<T, U>& pair);
 template<class T, class U>
 std::pair<T, U> test_dispatcher_ret_template2_pair2(const std::pair<T, U>& pair1,
-                                                   const std::pair<T, U>& pair2);
+                                                    const std::pair<T, U>& pair2);
+
+template<class T>
+void test_dispatcher_void_template_nondeductible();
+template<class T, class U>
+void test_dispatcher_void_template2_nondeductible();
+
+template<class T>
+std::pair<T, T> test_dispatcher_ret_template_nondeductible();
+template<class T, class U>
+std::pair<T, U> test_dispatcher_ret_template2_nondeductible();
