@@ -19,40 +19,54 @@ struct expr_empty {};
 template<class VE>
 struct expr_scalar_bitwise {
     const VE& e;
+
+    template<class R> R eval() const;
 };
 
 template<class VE>
 struct expr_scalar {
     const VE& e;
+
+    template<class R> R eval() const;
 };
 
 template<class E1, class E2>
 struct expr_bit_and {
     const E1& a;
     const E2& b;
+
+    template<class R> R eval() const;
 };
 
 template<class E1, class E2>
 struct expr_bit_andnot {
     const E1& a;
     const E2& b;
+
+    template<class R> R eval() const;
 };
 
 template<class E>
 struct expr_bit_not {
     const E& a;
+
+    template<class R> R eval() const;
 };
 
 template<class E1, class E2>
 struct expr_bit_or {
     const E1& a;
     const E2& b;
+
+    template<class R> R eval() const;
 };
 
 template<class E1, class E2>
 struct expr_bit_xor {
     const E1& a;
     const E2& b;
+
+    template<class R> R eval() const;
 };
 
 template<class E1, class E2, class E3>
@@ -60,27 +74,150 @@ struct expr_blend {
     const E1& on;
     const E2& off;
     const E3& mask;
+
+    template<class R> R eval() const;
 };
 
 template<unsigned S, class E>
 struct expr_splat2 {
     const E& a;
+
+    template<class R> R eval() const;
 };
 
 template<unsigned S, class E>
 struct expr_splat4 {
     const E& a;
+
+    template<class R> R eval() const;
 };
 
 template<unsigned S, class E>
 struct expr_splat8 {
     const E& a;
+
+    template<class R> R eval() const;
 };
 
 template<unsigned S, class E>
 struct expr_splat16 {
     const E& a;
+
+    template<class R> R eval() const;
 };
+
+template<class E1, class E2>
+struct expr_add {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2>
+struct expr_add_sat {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2>
+struct expr_sub {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2>
+struct expr_sub_sat {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E>
+struct expr_abs {
+    const E& a;
+
+    template<class R> R eval() const;
+};
+
+template<class E>
+struct expr_neg {
+    const E& a;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2>
+struct expr_mul {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2>
+struct expr_mul_lo {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2>
+struct expr_mul_hi {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2>
+struct expr_mull {
+    const E1& a;
+    const E2& b;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2, class E3>
+struct expr_fmadd { // a * b + c
+    const E1& a;
+    const E2& b;
+    const E3& c;
+
+    template<class R> R eval() const;
+};
+
+template<class E1, class E2, class E3>
+struct expr_fmsub { // a * b - c
+    const E1& a;
+    const E2& b;
+    const E3& c;
+
+    template<class R> R eval() const;
+};
+
+template<unsigned S, class E>
+struct expr_imm_shift_l {
+    const E& a;
+    static const unsigned shift = S;
+
+    template<class R> R eval() const;
+};
+
+template<unsigned S, class E>
+struct expr_imm_shift_r {
+    const E& a;
+    static const unsigned shift = S;
+
+    template<class R> R eval() const;
+};
+
 
 template<class E>
 struct expr_vec_construct {
@@ -121,89 +258,6 @@ struct expr_vec_load_u : expr_vec_construct<expr_vec_load_u> {
     expr_vec_load_u(const char* x) : a(x) {}
 };
 
-template<class E1, class E2>
-struct expr_add {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E1, class E2>
-struct expr_add_sat {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E1, class E2>
-struct expr_sub {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E1, class E2>
-struct expr_sub_sat {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E>
-struct expr_abs {
-    const E& a;
-};
-
-template<class E>
-struct expr_neg {
-    const E& a;
-};
-
-template<class E1, class E2>
-struct expr_mul {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E1, class E2>
-struct expr_mul_lo {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E1, class E2>
-struct expr_mul_hi {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E1, class E2>
-struct expr_mull {
-    const E1& a;
-    const E2& b;
-};
-
-template<class E1, class E2, class E3>
-struct expr_fmadd { // a * b + c
-    const E1& a;
-    const E2& b;
-    const E3& c;
-};
-
-template<class E1, class E2, class E3>
-struct expr_fmsub { // a * b - c
-    const E1& a;
-    const E2& b;
-    const E3& c;
-};
-
-template<unsigned S, class E>
-struct expr_imm_shift_l {
-    const E& a;
-    static const unsigned shift = S;
-};
-
-template<unsigned S, class E>
-struct expr_imm_shift_r {
-    const E& a;
-    static const unsigned shift = S;
-};
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

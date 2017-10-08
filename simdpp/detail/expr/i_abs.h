@@ -26,9 +26,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class E> SIMDPP_INL
-uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
+uint8<16> expr_eval_abs(const int8<16,E>& qa)
 {
-    int8<16> a = q.a.eval();
+    int8<16> a = qa.eval();
 #if SIMDPP_USE_NULL
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
@@ -52,35 +52,35 @@ uint8<16> expr_eval(const expr_abs<int8<16,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-uint8<32> expr_eval(const expr_abs<int8<32,E>>& q)
+uint8<32> expr_eval_abs(const int8<32,E>& qa)
 {
-    int8<32> a = q.a.eval();
+    int8<32> a = qa.eval();
     return _mm256_abs_epi8(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
 template<class R, class E> SIMDPP_INL
-uint8<64> expr_eval(const expr_abs<int8<64,E>>& q)
+uint8<64> expr_eval_abs(const int8<64,E>& qa)
 {
-    int8<64> a = q.a.eval();
+    int8<64> a = qa.eval();
     return _mm512_abs_epi8(a);
 }
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-uint8<N> expr_eval(const expr_abs<int8<N,E>>& q)
+uint8<N> expr_eval_abs(const int8<N,E>& qa)
 {
-    int8<N> a = q.a.eval();
+    int8<N> a = qa.eval();
     SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, abs, a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<class R, class E> SIMDPP_INL
-uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
+uint16<8> expr_eval_abs(const int16<8,E>& qa)
 {
-    int16<8> a = q.a.eval();
+    int16<8> a = qa.eval();
 #if SIMDPP_USE_NULL
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
@@ -104,35 +104,35 @@ uint16<8> expr_eval(const expr_abs<int16<8,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-uint16<16> expr_eval(const expr_abs<int16<16,E>>& q)
+uint16<16> expr_eval_abs(const int16<16,E>& qa)
 {
-    int16<16> a = q.a.eval();
+    int16<16> a = qa.eval();
     return _mm256_abs_epi16(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
 template<class R, class E> SIMDPP_INL
-uint16<32> expr_eval(const expr_abs<int16<32,E>>& q)
+uint16<32> expr_eval_abs(const int16<32,E>& qa)
 {
-    int16<32> a = q.a.eval();
+    int16<32> a = qa.eval();
     return _mm512_abs_epi16(a);
 }
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-uint16<N> expr_eval(const expr_abs<int16<N,E>>& q)
+uint16<N> expr_eval_abs(const int16<N,E>& qa)
 {
-    int16<N> a = q.a.eval();
+    int16<N> a = qa.eval();
     SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, abs, a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<class R, class E> SIMDPP_INL
-uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
+uint32<4> expr_eval_abs(const int32<4,E>& qa)
 {
-    int32<4> a = q.a.eval();
+    int32<4> a = qa.eval();
 #if SIMDPP_USE_NULL
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
@@ -156,35 +156,35 @@ uint32<4> expr_eval(const expr_abs<int32<4,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-uint32<8> expr_eval(const expr_abs<int32<8,E>>& q)
+uint32<8> expr_eval_abs(const int32<8,E>& qa)
 {
-    int32<8> a = q.a.eval();
+    int32<8> a = qa.eval();
     return _mm256_abs_epi32(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
-uint32<16> expr_eval(const expr_abs<int32<16,E>>& q)
+uint32<16> expr_eval_abs(const int32<16,E>& qa)
 {
-    int32<16> a = q.a.eval();
+    int32<16> a = qa.eval();
     return _mm512_abs_epi32(a);
 }
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-uint32<N> expr_eval(const expr_abs<int32<N,E>>& q)
+uint32<N> expr_eval_abs(const int32<N,E>& qa)
 {
-    int32<N> a = q.a.eval();
+    int32<N> a = qa.eval();
     SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, abs, a);
 }
 
 // -----------------------------------------------------------------------------
 
 template<class R, class E> SIMDPP_INL
-uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
+uint64<2> expr_eval_abs(const int64<2,E>& qa)
 {
-    int64<2> a = q.a.eval();
+    int64<2> a = qa.eval();
 #if SIMDPP_USE_SSE2
     uint32x4 ta;
     int64x2 t;
@@ -218,9 +218,9 @@ uint64<2> expr_eval(const expr_abs<int64<2,E>>& q)
 
 #if SIMDPP_USE_AVX2
 template<class R, class E> SIMDPP_INL
-uint64<4> expr_eval(const expr_abs<int64<4,E>>& q)
+uint64<4> expr_eval_abs(const int64<4,E>& qa)
 {
-    int64<4> a = q.a.eval();
+    int64<4> a = qa.eval();
     int64x4 t;
     t = _mm256_cmpgt_epi64((int64x4) make_zero(), a);
     a = bit_xor(a, t);
@@ -231,17 +231,17 @@ uint64<4> expr_eval(const expr_abs<int64<4,E>>& q)
 
 #if SIMDPP_USE_AVX512F
 template<class R, class E> SIMDPP_INL
-uint64<8> expr_eval(const expr_abs<int64<8,E>>& q)
+uint64<8> expr_eval_abs(const int64<8,E>& qa)
 {
-    int64<8> a = q.a.eval();
+    int64<8> a = qa.eval();
     return _mm512_abs_epi64(a);
 }
 #endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-uint64<N> expr_eval(const expr_abs<int64<N,E>>& q)
+uint64<N> expr_eval_abs(const int64<N,E>& qa)
 {
-    int64<N> a = q.a.eval();
+    int64<N> a = qa.eval();
     SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, abs, a);
 }
 

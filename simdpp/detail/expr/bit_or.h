@@ -20,9 +20,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class E1, class E2> SIMDPP_INL
-R expr_eval(const expr_bit_or<E1, E2>& q)
+R expr_eval_bit_or(const E1& qa, const E2& qb)
 {
-    return (R) insn::i_bit_or(q.a.eval(), q.b.eval());
+    return (R) insn::i_bit_or(qa.eval(), qb.eval());
 }
 
 } // namespace detail

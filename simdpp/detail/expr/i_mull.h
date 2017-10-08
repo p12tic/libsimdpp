@@ -54,11 +54,11 @@ namespace detail {
 */
 
 template<class R, class E1, class E2> SIMDPP_INL
-int32<8> expr_eval(const expr_mull<int16<8,E1>,
-                                   int16<8,E2>>& q)
+int32<8> expr_eval_mull(const int16<8,E1>& qa,
+                        const int16<8,E2>& qb)
 {
-    int16<8> a = q.a.eval();
-    int16<8> b = q.b.eval();
+    int16<8> a = qa.eval();
+    int16<8> b = qb.eval();
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
@@ -88,11 +88,11 @@ int32<8> expr_eval(const expr_mull<int16<8,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class R, class E1, class E2> SIMDPP_INL
-int32<16> expr_eval(const expr_mull<int16<16,E1>,
-                                    int16<16,E2>>& q)
+int32<16> expr_eval_mull(const int16<16,E1>& qa,
+                         const int16<16,E2>& qb)
 {
-    int16<16> a = q.a.eval();
-    int16<16> b = q.b.eval();
+    int16<16> a = qa.eval();
+    int16<16> b = qb.eval();
     a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
     b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
     int16x16 lo = _mm256_mullo_epi16(a, b);
@@ -103,11 +103,11 @@ int32<16> expr_eval(const expr_mull<int16<16,E1>,
 
 #if SIMDPP_USE_AVX512BW
 template<class R, class E1, class E2> SIMDPP_INL
-int32<32> expr_eval(const expr_mull<int16<32,E1>,
-                                    int16<32,E2>>& q)
+int32<32> expr_eval_mull(const int16<32,E1>& qa,
+                         const int16<32,E2>& qb)
 {
-    int16<32> a = q.a.eval();
-    int16<32> b = q.b.eval();
+    int16<32> a = qa.eval();
+    int16<32> b = qb.eval();
     int64<8> idx = make_uint(0, 4, 1, 5, 2, 6, 3, 7);
     a = _mm512_permutexvar_epi64(idx, a);
     b = _mm512_permutexvar_epi64(idx, b);
@@ -118,11 +118,11 @@ int32<32> expr_eval(const expr_mull<int16<32,E1>,
 #endif
 
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-int32<N> expr_eval(const expr_mull<int16<N,E1>,
-                                   int16<N,E2>>& q)
+int32<N> expr_eval_mull(const int16<N,E1>& qa,
+                        const int16<N,E2>& qb)
 {
-    int16<N> a = q.a.eval();
-    int16<N> b = q.b.eval();
+    int16<N> a = qa.eval();
+    int16<N> b = qb.eval();
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
         detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
@@ -133,11 +133,11 @@ int32<N> expr_eval(const expr_mull<int16<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class R, class E1, class E2> SIMDPP_INL
-uint32<8> expr_eval(const expr_mull<uint16<8,E1>,
-                                    uint16<8,E2>>& q)
+uint32<8> expr_eval_mull(const uint16<8,E1>& qa,
+                         const uint16<8,E2>& qb)
 {
-    uint16<8> a = q.a.eval();
-    uint16<8> b = q.b.eval();
+    uint16<8> a = qa.eval();
+    uint16<8> b = qb.eval();
 #if SIMDPP_USE_NULL
     int32x8 r;
     for (unsigned i = 0; i < 8; i++) {
@@ -167,11 +167,11 @@ uint32<8> expr_eval(const expr_mull<uint16<8,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class R, class E1, class E2> SIMDPP_INL
-uint32<16> expr_eval(const expr_mull<uint16<16,E1>,
-                                     uint16<16,E2>>& q)
+uint32<16> expr_eval_mull(const uint16<16,E1>& qa,
+                          const uint16<16,E2>& qb)
 {
-    uint16<16> a = q.a.eval();
-    uint16<16> b = q.b.eval();
+    uint16<16> a = qa.eval();
+    uint16<16> b = qb.eval();
     a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
     b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
     int16x16 lo = _mm256_mullo_epi16(a, b);
@@ -182,11 +182,11 @@ uint32<16> expr_eval(const expr_mull<uint16<16,E1>,
 
 #if SIMDPP_USE_AVX512BW
 template<class R, class E1, class E2> SIMDPP_INL
-uint32<32> expr_eval(const expr_mull<uint16<32,E1>,
-                                     uint16<32,E2>>& q)
+uint32<32> expr_eval_mull(const uint16<32,E1>& qa,
+                          const uint16<32,E2>& qb)
 {
-    uint16<32> a = q.a.eval();
-    uint16<32> b = q.b.eval();
+    uint16<32> a = qa.eval();
+    uint16<32> b = qb.eval();
     uint64<8> idx = make_uint(0, 4, 1, 5, 2, 6, 3, 7);
     a = _mm512_permutexvar_epi64(idx, a);
     b = _mm512_permutexvar_epi64(idx, b);
@@ -197,11 +197,11 @@ uint32<32> expr_eval(const expr_mull<uint16<32,E1>,
 #endif
 
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N> expr_eval(const expr_mull<uint16<N,E1>,
-                                    uint16<N,E2>>& q)
+uint32<N> expr_eval_mull(const uint16<N,E1>& qa,
+                         const uint16<N,E2>& qb)
 {
-    uint16<N> a = q.a.eval();
-    uint16<N> b = q.b.eval();
+    uint16<N> a = qa.eval();
+    uint16<N> b = qb.eval();
     uint32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
         detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
@@ -212,11 +212,11 @@ uint32<N> expr_eval(const expr_mull<uint16<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class R, class E1, class E2> SIMDPP_INL
-int64<4> expr_eval(const expr_mull<int32<4,E1>,
-                                   int32<4,E2>>& q)
+int64<4> expr_eval_mull(const int32<4,E1>& qa,
+                        const int32<4,E2>& qb)
 {
-    int32<4> a = q.a.eval();
-    int32<4> b = q.b.eval();
+    int32<4> a = qa.eval();
+    int32<4> b = qb.eval();
 #if SIMDPP_USE_NULL
     int64x4 r;
     r.vec(0).el(0) = int64_t(a.el(0)) * b.el(0);
@@ -260,11 +260,11 @@ int64<4> expr_eval(const expr_mull<int32<4,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class R, class E1, class E2> SIMDPP_INL
-int64<8> expr_eval(const expr_mull<int32<8,E1>,
-                                   int32<8,E2>>& q)
+int64<8> expr_eval_mull(const int32<8,E1>& qa,
+                        const int32<8,E2>& qb)
 {
-    int32<8> a = q.a.eval();
-    int32<8> b = q.b.eval();
+    int32<8> a = qa.eval();
+    int32<8> b = qb.eval();
     int32x4 al, ah, bl, bh;
     int64x4 rl, rh;
     split(a, al, ah);
@@ -277,11 +277,11 @@ int64<8> expr_eval(const expr_mull<int32<8,E1>,
 #endif
 
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-int64<N> expr_eval(const expr_mull<int32<N,E1>,
-                                   int32<N,E2>>& q)
+int64<N> expr_eval_mull(const int32<N,E1>& qa,
+                        const int32<N,E2>& qb)
 {
-    int32<N> a = q.a.eval();
-    int32<N> b = q.b.eval();
+    int32<N> a = qa.eval();
+    int32<N> b = qb.eval();
     int64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
         detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
@@ -292,11 +292,11 @@ int64<N> expr_eval(const expr_mull<int32<N,E1>,
 // -----------------------------------------------------------------------------
 
 template<class R, class E1, class E2> SIMDPP_INL
-uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
-                                    uint32<4,E2>>& q)
+uint64<4> expr_eval_mull(const uint32<4,E1>& qa,
+                         const uint32<4,E2>& qb)
 {
-    uint32<4> a = q.a.eval();
-    uint32<4> b = q.b.eval();
+    uint32<4> a = qa.eval();
+    uint32<4> b = qb.eval();
 #if SIMDPP_USE_NULL
     uint64x4 r;
     r.vec(0).el(0) = uint64_t(a.el(0)) * b.el(0);
@@ -347,11 +347,11 @@ uint64<4> expr_eval(const expr_mull<uint32<4,E1>,
 
 #if SIMDPP_USE_AVX2
 template<class R, class E1, class E2> SIMDPP_INL
-uint64<8> expr_eval(const expr_mull<uint32<8,E1>,
-                                    uint32<8,E2>>& q)
+uint64<8> expr_eval_mull(const uint32<8,E1>& qa,
+                         const uint32<8,E2>& qb)
 {
-    uint32<8> a = q.a.eval();
-    uint32<8> b = q.b.eval();
+    uint32<8> a = qa.eval();
+    uint32<8> b = qb.eval();
     uint32x4 al, ah, bl, bh;
     uint64x4 rl, rh;
 
@@ -367,11 +367,11 @@ uint64<8> expr_eval(const expr_mull<uint32<8,E1>,
 
 #if SIMDPP_USE_AVX512F
 template<class R, class E1, class E2> SIMDPP_INL
-uint64<16> expr_eval(const expr_mull<uint32<16,E1>,
-                                     uint32<16,E2>>& q)
+uint64<16> expr_eval_mull(const uint32<16,E1>& qa,
+                          const uint32<16,E2>& qb)
 {
-    uint32<16> a = q.a.eval();
-    uint32<16> b = q.b.eval();
+    uint32<16> a = qa.eval();
+    uint32<16> b = qb.eval();
     uint32<8> al, ah, bl, bh;
     uint64<8> rl, rh;
 
@@ -386,11 +386,11 @@ uint64<16> expr_eval(const expr_mull<uint32<16,E1>,
 #endif
 
 template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint64<N> expr_eval(const expr_mull<uint32<N,E1>,
-                                    uint32<N,E2>>& q)
+uint64<N> expr_eval_mull(const uint32<N,E1>& qa,
+                         const uint32<N,E2>& qb)
 {
-    uint32<N> a = q.a.eval();
-    uint32<N> b = q.b.eval();
+    uint32<N> a = qa.eval();
+    uint32<N> b = qb.eval();
     uint64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
         detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);

@@ -172,7 +172,7 @@
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int8x32.h>
 #include <simdpp/types/traits.h>
-#include <simdpp/types/generic.inl>
+#include <simdpp/expr.inl>
 
 #include <simdpp/operators/bit_and.h>
 #include <simdpp/operators/bit_or.h>

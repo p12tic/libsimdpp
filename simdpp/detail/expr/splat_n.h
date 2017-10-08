@@ -19,45 +19,45 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned N, unsigned s, class E> SIMDPP_INL
-uint8<N> expr_eval(const expr_splat16<s,uint8<N,E>>& q)
+template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
+uint8<N> expr_eval_splat16(const uint8<N,E>& qa)
 {
-    uint8<N> a = q.a.eval();
+    uint8<N> a = qa.eval();
     return insn::i_splat16<s>(a);
 }
 
-template<class R, unsigned N, unsigned s, class E> SIMDPP_INL
-uint16<N> expr_eval(const expr_splat8<s,uint16<N,E>>& q)
+template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
+uint16<N> expr_eval_splat8(const uint16<N,E>& qa)
 {
-    uint16<N> a = q.a.eval();
+    uint16<N> a = qa.eval();
     return insn::i_splat8<s>(a);
 }
 
-template<class R, unsigned N, unsigned s, class E> SIMDPP_INL
-uint32<N> expr_eval(const expr_splat4<s,uint32<N,E>>& q)
+template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
+uint32<N> expr_eval_splat4(const uint32<N,E>& qa)
 {
-    uint32<N> a = q.a.eval();
+    uint32<N> a = qa.eval();
     return insn::i_splat4<s>(a);
 }
 
-template<class R, unsigned N, unsigned s, class E> SIMDPP_INL
-uint64<N> expr_eval(const expr_splat2<s,uint64<N,E>>& q)
+template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
+uint64<N> expr_eval_splat2(const uint64<N,E>& qa)
 {
-    uint64<N> a = q.a.eval();
+    uint64<N> a = qa.eval();
     return insn::i_splat2<s>(a);
 }
 
-template<class R, unsigned N, unsigned s, class E> SIMDPP_INL
-float32<N> expr_eval(const expr_splat4<s,float32<N,E>>& q)
+template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
+float32<N> expr_eval_splat4(const float32<N,E>& qa)
 {
-    float32<N> a = q.a.eval();
+    float32<N> a = qa.eval();
     return insn::i_splat4<s>(a);
 }
 
-template<class R, unsigned N, unsigned s, class E> SIMDPP_INL
-float64<N> expr_eval(const expr_splat2<s,float64<N,E>>& q)
+template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
+float64<N> expr_eval_splat2(const float64<N,E>& qa)
 {
-    float64<N> a = q.a.eval();
+    float64<N> a = qa.eval();
     return insn::i_splat2<s>(a);
 }
 
