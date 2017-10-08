@@ -206,7 +206,7 @@ SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       
 #define SIMDPP_DETAIL_MAKE_DISPATCHER7(DESC) SIMDPP_ERROR_INCORRECT_NUMBER_OF_ARGUMENTS
 
 /** Builds a dispatcher for a specific non-member function. The same macro is
-    used for functions with or without return value and with different parameter
+    used for functions with or without return value, with different parameter
     counts and for template functions.
 
     The function accepts a sequence of 3 or 5 parenthesized token groups. Each
