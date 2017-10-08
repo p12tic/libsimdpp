@@ -56,7 +56,7 @@ void bit_cast_impl(const T& t, R& r)
             // remaining cases deal with is_mask_t && is_mask_r
             (mask_mask_cast_override == CAST_MASK_REMASK) ? CAST_TYPE_MASK_TO_MASK_REMASK :
             (mask_mask_cast_override == CAST_MASK_UNMASK) ? CAST_TYPE_MASK_TO_MASK_UNMASK :
-                                                            CAST_TYPE_MASK_TO_MASK_MEMCPY;
+                                                            CAST_TYPE_MASK_TO_MASK_BITWISE;
 
     static_assert(is_vector<T>::value == is_vector<R>::value,
                   "bit_cast can't convert between vector and non-vector types");
