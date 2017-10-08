@@ -47,7 +47,10 @@ void i_load_u(uint8x16& a, const char* p)
     uint8x16 l1, l2, mask;
     l1 = vec_ld(0, q);
     l2 = vec_ld(16, q);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
     mask = vec_lvsl(0, q);
+#pragma GCC diagnostic pop
     a = vec_perm(l1.native(), l2.native(), mask.native());
 #elif SIMDPP_USE_MSA
     a = (v16u8) __msa_ld_b(p, 0);

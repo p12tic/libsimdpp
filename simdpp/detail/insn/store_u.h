@@ -43,9 +43,12 @@ void i_store_u(char* p, const uint8<16>& a)
     __vector uint8_t edgeAlign, align;
     MSQ = vec_ld(0, q);                                 // most significant quadword
     LSQ = vec_ld(15, q);                                // least significant quadword
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
     edgeAlign = vec_lvsl(0, q);                         // permute map to extract edges
     edges = vec_perm(LSQ, MSQ, edgeAlign);              // extract the edges
     align = vec_lvsr(0, q);                             // permute map to misalign data
+#pragma GCC diagnostic pop
     MSQ = vec_perm(edges, a.native(), align);           // misalign the data (MSQ)
     LSQ = vec_perm(a.native(), edges, align);           // misalign the data (LSQ)
     vec_st(LSQ, 15, q);                                 // Store the LSQ part first
