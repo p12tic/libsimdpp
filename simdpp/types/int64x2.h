@@ -85,8 +85,8 @@ public:
 
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     /// For internal use only
-    const int64_t& el(unsigned i) const  { return d_[i]; }
-          int64_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const int64_t& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL int64_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -154,8 +154,8 @@ public:
 
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     /// For uinternal use only
-    const uint64_t& el(unsigned i) const  { return d_[i]; }
-          uint64_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const uint64_t& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL uint64_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -216,8 +216,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int64<2>& vec(unsigned) const { return *this; }

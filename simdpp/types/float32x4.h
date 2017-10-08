@@ -66,8 +66,8 @@ public:
     SIMDPP_INL operator native_type() const { return d_; }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float& el(unsigned id) { return d_[id]; }
-    const float& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL float& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const float& el(unsigned id) const { return d_[id]; }
 #endif
 
     template<class E> SIMDPP_INL float32<4>(const expr_vec_construct<E>& e)
@@ -149,8 +149,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_float32<4>& vec(unsigned) const { return *this; }

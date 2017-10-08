@@ -85,8 +85,8 @@ public:
 
 #if SIMDPP_USE_NULL
     /// For internal use only
-    const int8_t& el(unsigned i) const  { return d_[i]; }
-          int8_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const int8_t& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL int8_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -154,8 +154,8 @@ public:
 
 #if SIMDPP_USE_NULL
     /// For uinternal use only
-    const uint8_t& el(unsigned i) const  { return d_[i]; }
-          uint8_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const uint8_t& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL uint8_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -210,8 +210,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int8<16>& vec(unsigned) const { return *this; }

@@ -83,8 +83,8 @@ public:
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_206)
     /// For internal use only
-    const double& el(unsigned i) const { return d_[i]; }
-          double& el(unsigned i)       { return d_[i]; }
+    SIMDPP_INL const double& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL double& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -149,8 +149,8 @@ public:
     }
 
 #if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA)
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_float64<2>& vec(unsigned) const { return *this; }
