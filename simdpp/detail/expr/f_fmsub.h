@@ -31,14 +31,14 @@ float32<4> expr_eval_fmsub(const float32<4,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::fmsub(a, b, c);
 #elif SIMDPP_USE_FMA3
-    return _mm_fmsub_ps(a, b, c);
+    return _mm_fmsub_ps(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_FMA4
-    return _mm_msub_ps(a, b, c);
+    return _mm_msub_ps(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_NEON64
     // FIXME: also in vfpv4
-    return vfmsq_f32(a, b, c);
+    return vfmsq_f32(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_MSA
-    return __msa_fmsub_w(c, a, b);
+    return __msa_fmsub_w(c.native(), a.native(), b.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
@@ -54,9 +54,9 @@ float32<8> expr_eval_fmsub(const float32<8,E1>& qa,
     float32<8> b = qb.eval();
     float32<8> c = qc.eval();
 #if SIMDPP_USE_FMA3
-    return _mm256_fmsub_ps(a, b, c);
+    return _mm256_fmsub_ps(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_FMA4
-    return _mm256_msub_ps(a, b, c);
+    return _mm256_msub_ps(a.native(), b.native(), c.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
@@ -72,7 +72,7 @@ float32<16> expr_eval_fmsub(const float32<16,E1>& qa,
     float32<16> a = qa.eval();
     float32<16> b = qb.eval();
     float32<16> c = qc.eval();
-    return _mm512_fmsub_ps(a, b, c);
+    return _mm512_fmsub_ps(a.native(), b.native(), c.native());
 }
 #endif
 
@@ -100,14 +100,14 @@ float64<2> expr_eval_fmsub(const float64<2,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::fmsub(a, b, c);
 #elif SIMDPP_USE_FMA3
-    return _mm_fmsub_pd(a, b, c);
+    return _mm_fmsub_pd(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_FMA4
-    return _mm_msub_pd(a, b, c);
+    return _mm_msub_pd(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_NEON64
     // FIXME: also in vfpv4
-    return vfmsq_f64(a, b, c);
+    return vfmsq_f64(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_MSA
-    return __msa_fmsub_d(c, a, b);
+    return __msa_fmsub_d(c.native(), a.native(), b.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
@@ -123,9 +123,9 @@ float64<4> expr_eval_fmsub(const float64<4,E1>& qa,
     float64<4> b = qb.eval();
     float64<4> c = qc.eval();
 #if SIMDPP_USE_FMA3
-    return _mm256_fmsub_pd(a, b, c);
+    return _mm256_fmsub_pd(a.native(), b.native(), c.native());
 #elif SIMDPP_USE_FMA4
-    return _mm256_msub_pd(a, b, c);
+    return _mm256_msub_pd(a.native(), b.native(), c.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE3(R, a, b, c);
 #endif
@@ -141,7 +141,7 @@ float64<8> expr_eval_fmsub(const float64<8,E1>& qa,
     float64<8> a = qa.eval();
     float64<8> b = qb.eval();
     float64<8> c = qc.eval();
-    return _mm512_fmsub_pd(a, b, c);
+    return _mm512_fmsub_pd(a.native(), b.native(), c.native());
 }
 #endif
 

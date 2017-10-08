@@ -155,7 +155,7 @@ public:
     SIMDPP_INL mask_int8<32>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX2
-    SIMDPP_INL mask_int8<32>(const uint8<32>& d) : d_(d) {}
+    SIMDPP_INL mask_int8<32>(const uint8<32>& d) : d_(d.native()) {}
 #endif
 
     /// Convert to the underlying vector type

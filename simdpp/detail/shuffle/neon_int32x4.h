@@ -29,8 +29,8 @@ using H = uint32x2_t;       // half vector
 
 
 /// Returns the lower/higher part of a vector. Cost: 0
-SIMDPP_INL H lo(T a)   { return vget_low_u32(a); }
-SIMDPP_INL H hi(T a)   { return vget_high_u32(a); }
+SIMDPP_INL H lo(T a)   { return vget_low_u32(a.native()); }
+SIMDPP_INL H hi(T a)   { return vget_high_u32(a.native()); }
 
 /// Cost: 1
 template<unsigned N> SIMDPP_INL
@@ -45,7 +45,7 @@ SIMDPP_INL T co(H lo, H hi){ return vcombine_u32(lo, hi); }
 
 /// Reverses the elements in half-vector or half-vectors in a vector. Cost: 1
 SIMDPP_INL H rev(H a)      { return vrev64_u32(a); }
-SIMDPP_INL T rev(T a)      { return vrev64q_u32(a); }
+SIMDPP_INL T rev(T a)      { return vrev64q_u32(a.native()); }
 
 /// Duplicates the lower/higher element in the half-vector. Cost: 1
 SIMDPP_INL H dup_lo(H a)   { return vdup_lane_u32(a, 0); }

@@ -156,7 +156,7 @@ public:
     SIMDPP_INL mask_int16<16>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX2
-    SIMDPP_INL mask_int16<16>(const uint16<16>& d) : d_(d) {}
+    SIMDPP_INL mask_int16<16>(const uint16<16>& d) : d_(d.native()) {}
 #endif
 
     /// Convert to the underlying vector type

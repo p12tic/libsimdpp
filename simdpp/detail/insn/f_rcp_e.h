@@ -34,13 +34,13 @@ float32x4 i_rcp_e(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_rcp_ps(a);
+    return _mm_rcp_ps(a.native());
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vrecpeq_f32(a);
+    return vrecpeq_f32(a.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_re((__vector float)a);
+    return vec_re(a.native());
 #elif SIMDPP_USE_MSA
-    return __msa_frcp_w(a);
+    return __msa_frcp_w(a.native());
 #endif
 }
 
@@ -48,7 +48,7 @@ float32x4 i_rcp_e(const float32x4& a)
 static SIMDPP_INL
 float32x8 i_rcp_e(const float32x8& a)
 {
-    return _mm256_rcp_ps(a);
+    return _mm256_rcp_ps(a.native());
 }
 #endif
 
@@ -57,7 +57,7 @@ static SIMDPP_INL
 float32<16> i_rcp_e(const float32<16>& a)
 {
     // TODO: document precision
-    return _mm512_rcp14_ps(a);
+    return _mm512_rcp14_ps(a.native());
 }
 #endif
 

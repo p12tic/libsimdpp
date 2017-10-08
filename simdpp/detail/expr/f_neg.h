@@ -30,7 +30,7 @@ float32<4> expr_eval_neg(const float32<4,E>& qa)
     // reversion of the sign bit required even for NaNs and zeros
     return bit_xor(a, 0x80000000);
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vnegq_f32(a);
+    return vnegq_f32(a.native());
 #endif
 }
 
@@ -69,7 +69,7 @@ float64x2 expr_eval_neg(const float64<2,E>& qa)
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     return bit_xor(a, 0x8000000000000000);
 #elif SIMDPP_USE_NEON64
-    return vnegq_f64(a);
+    return vnegq_f64(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::neg(a);
 #endif

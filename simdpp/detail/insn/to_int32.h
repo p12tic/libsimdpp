@@ -37,11 +37,11 @@ int32x8 i_to_int32(const int16x8& a)
     }
     return r;
 #elif SIMDPP_USE_AVX2
-    return  _mm256_cvtepi16_epi32(a);
+    return  _mm256_cvtepi16_epi32(a.native());
 #elif SIMDPP_USE_SSE4_1
     int32x8 r;
-    r.vec(0) = _mm_cvtepi16_epi32(a);
-    r.vec(1) = _mm_cvtepi16_epi32(move8_l<4>(a).eval());
+    r.vec(0) = _mm_cvtepi16_epi32(a.native());
+    r.vec(1) = _mm_cvtepi16_epi32(move8_l<4>(a).eval().native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     int16x8 sign = shift_r<15>(a);
@@ -51,13 +51,13 @@ int32x8 i_to_int32(const int16x8& a)
     return combine(lo, hi);
 #elif SIMDPP_USE_NEON
     int32x8 r;
-    r.vec(0) = vmovl_s16(vget_low_s16(a.vec(0)));
-    r.vec(1) = vmovl_s16(vget_high_s16(a.vec(1)));
+    r.vec(0) = vmovl_s16(vget_low_s16(a.vec(0).native()));
+    r.vec(1) = vmovl_s16(vget_high_s16(a.vec(1).native()));
     return r;
 #elif SIMDPP_USE_ALTIVEC
     int32x4 b0, b1;
-    b0 = vec_unpackh((__vector int16_t)a.vec(0));
-    b1 = vec_unpackl((__vector int16_t)a.vec(0));
+    b0 = vec_unpackh((__vector int16_t)a.vec(0).native());
+    b1 = vec_unpackl((__vector int16_t)a.vec(0).native());
     return combine(b0, b1);
 #endif
 }
@@ -67,13 +67,13 @@ static SIMDPP_INL
 int32<16> i_to_int32(const int16<16>& a)
 {
 #if SIMDPP_USE_AVX512F
-    return _mm512_cvtepi16_epi32(a);
+    return _mm512_cvtepi16_epi32(a.native());
 #else
     int32<8> r0, r1;
     int16<8> a0, a1;
     split(a, a0, a1);
-    r0 = _mm256_cvtepi16_epi32(a0);
-    r1 = _mm256_cvtepi16_epi32(a1);
+    r0 = _mm256_cvtepi16_epi32(a0.native());
+    r1 = _mm256_cvtepi16_epi32(a1.native());
     return combine(r0, r1);
 #endif
 }
@@ -85,8 +85,8 @@ SIMDPP_INL int32<32> i_to_int32(const int16<32>& a)
     int32<16> r0, r1;
     int16<16> a0, a1;
     split(a, a0, a1);
-    r0 = _mm512_cvtepi16_epi32(a0);
-    r1 = _mm512_cvtepi16_epi32(a1);
+    r0 = _mm512_cvtepi16_epi32(a0.native());
+    r1 = _mm512_cvtepi16_epi32(a1.native());
     return combine(r0, r1);
 }
 #endif
@@ -113,11 +113,11 @@ uint32<8> i_to_uint32(const uint16<8>& a)
     }
     return r;
 #elif SIMDPP_USE_AVX2
-    return  _mm256_cvtepu16_epi32(a);
+    return  _mm256_cvtepu16_epi32(a.native());
 #elif SIMDPP_USE_SSE4_1
     uint32<8> r;
-    r.vec(0) = _mm_cvtepu16_epi32(a);
-    r.vec(1) = _mm_cvtepu16_epi32(move8_l<4>(a).eval());
+    r.vec(0) = _mm_cvtepu16_epi32(a.native());
+    r.vec(1) = _mm_cvtepu16_epi32(move8_l<4>(a).eval().native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN)
     uint16<8> zero = make_zero();
@@ -133,8 +133,8 @@ uint32<8> i_to_uint32(const uint16<8>& a)
     return r;
 #elif SIMDPP_USE_NEON
     uint32<8> r;
-    r.vec(0) = vmovl_u16(vget_low_u16(a.vec(0)));
-    r.vec(1) = vmovl_u16(vget_high_u16(a.vec(1)));
+    r.vec(0) = vmovl_u16(vget_low_u16(a.vec(0).native()));
+    r.vec(1) = vmovl_u16(vget_high_u16(a.vec(1).native()));
     return r;
 #endif
 }
@@ -143,13 +143,13 @@ uint32<8> i_to_uint32(const uint16<8>& a)
 SIMDPP_INL uint32<16> i_to_uint32(const uint16<16>& a)
 {
 #if SIMDPP_USE_AVX512F
-    return _mm512_cvtepu16_epi32(a);
+    return _mm512_cvtepu16_epi32(a.native());
 #else
     uint32<16> r;
     uint16<8> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm256_cvtepu16_epi32(a0);
-    r.vec(1) = _mm256_cvtepu16_epi32(a1);
+    r.vec(0) = _mm256_cvtepu16_epi32(a0.native());
+    r.vec(1) = _mm256_cvtepu16_epi32(a1.native());
     return r;
 #endif
 }
@@ -161,8 +161,8 @@ SIMDPP_INL uint32<32> i_to_uint32(const uint16<32>& a)
     uint32<32> r;
     uint16<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepu16_epi32(a0);
-    r.vec(1) = _mm512_cvtepu16_epi32(a1);
+    r.vec(0) = _mm512_cvtepu16_epi32(a0.native());
+    r.vec(1) = _mm512_cvtepu16_epi32(a1.native());
     return r;
 }
 #endif
@@ -189,7 +189,7 @@ int32x4 i_to_int32(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_cvttps_epi32(a);
+    return _mm_cvttps_epi32(a.native());
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<float32x4> mf(a);
     detail::mem_block<int32x4> mi;
@@ -199,11 +199,11 @@ int32x4 i_to_int32(const float32x4& a)
     mi[3] = int(mf[3]);
     return mi;
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vcvtq_s32_f32(a);
+    return vcvtq_s32_f32(a.native());
 #elif SIMDPP_USE_MSA
-    return __msa_ftrunc_s_w(a);
+    return __msa_ftrunc_s_w(a.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_cts((__vector float)a, 0);
+    return vec_cts(a.native(), 0);
 #endif
 }
 
@@ -212,9 +212,9 @@ static SIMDPP_INL
 int32x8 i_to_int32(const float32x8& a)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_cvttps_epi32(a);
+    return _mm256_cvttps_epi32(a.native());
 #else
-    __m256i r = _mm256_cvttps_epi32(a);
+    __m256i r = _mm256_cvttps_epi32(a.native());
     uint32<4> r1, r2;
     r1 = _mm256_castsi256_si128(r);
     r2 = _mm256_extractf128_si256(r, 1);
@@ -227,7 +227,7 @@ int32x8 i_to_int32(const float32x8& a)
 static SIMDPP_INL
 uint32<16> i_to_int32(const float32<16>& a)
 {
-    return _mm512_cvttps_epi32(a);
+    return _mm512_cvttps_epi32(a.native());
 }
 #endif
 
@@ -250,27 +250,27 @@ int32x4 i_to_int32(const float64x4& a)
     int32x4 r, r1, r2;
     float64x2 a1, a2;
     split(a, a1, a2);
-    r1 = _mm_cvttpd_epi32(a1);
-    r2 = _mm_cvttpd_epi32(a2);
+    r1 = _mm_cvttpd_epi32(a1.native());
+    r2 = _mm_cvttpd_epi32(a2.native());
     r = zip2_lo(int64<2>(r1), int64<2>(r2));
     return r;
 #elif SIMDPP_USE_NEON64
-    int64<2> r1, r2;
-    r1 = vcvtq_s64_f64(a.vec(0));
-    r2 = vcvtq_s64_f64(a.vec(1));
+    int64x2_t r1, r2;
+    r1 = vcvtq_s64_f64(a.vec(0).native());
+    r2 = vcvtq_s64_f64(a.vec(1).native());
     // FIXME: saturation
     int32<4> r = vcombine_s32(vqmovn_s64(r1), vqmovn_s64(r2));
     return r;
 #elif SIMDPP_USE_VSX_206
     int32<4> r, r1, r2;
-    r1 = (__vector int32_t) vec_cts((__vector double)a.vec(0), 0);
-    r2 = (__vector int32_t) vec_cts((__vector double)a.vec(1), 0);
+    r1 = (__vector int32_t) vec_cts(a.vec(0).native(), 0);
+    r2 = (__vector int32_t) vec_cts(a.vec(1).native(), 0);
     r = unzip4_lo(r1, r2);
     return r;
 #elif SIMDPP_USE_MSA
     int64<2> r1, r2;
-    r1 = __msa_ftrunc_s_d(a.vec(0));
-    r2 = __msa_ftrunc_s_d(a.vec(1));
+    r1 = __msa_ftrunc_s_d(a.vec(0).native());
+    r2 = __msa_ftrunc_s_d(a.vec(1).native());
     return unzip4_lo((int32<4>)r1, (int32<4>)r2);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> r;
@@ -289,11 +289,11 @@ static SIMDPP_INL
 int32<8> i_to_int32(const float64<8>& a)
 {
 #if SIMDPP_USE_AVX512F
-    return _mm512_cvtpd_epi32(a);
+    return _mm512_cvtpd_epi32(a.native());
 #else
     int32<4> r1, r2;
-    r1 = _mm256_cvtpd_epi32(a.vec(0));
-    r2 = _mm256_cvtpd_epi32(a.vec(1));
+    r1 = _mm256_cvtpd_epi32(a.vec(0).native());
+    r2 = _mm256_cvtpd_epi32(a.vec(1).native());
     return combine(r1, r2);
 #endif
 }
@@ -304,8 +304,8 @@ static SIMDPP_INL
 int32<16> i_to_int32(const float64<16>& a)
 {
     int32<8> r0, r1;
-    r0 = _mm512_cvtpd_epi32(a.vec(0));
-    r1 = _mm512_cvtpd_epi32(a.vec(1));
+    r0 = _mm512_cvtpd_epi32(a.vec(0).native());
+    r1 = _mm512_cvtpd_epi32(a.vec(1).native());
     return combine(r0, r1);
 }
 #endif

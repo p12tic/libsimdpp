@@ -87,20 +87,20 @@ template<> struct shuffle_impl<1> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        return _mm_unpacklo_ps(a, b);
+        return _mm_unpacklo_ps(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        return _mm256_unpacklo_ps(a, b);
+        return _mm256_unpacklo_ps(a.native(), b.native());
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        return _mm512_unpacklo_ps(a, b);
+        return _mm512_unpacklo_ps(a.native(), b.native());
     }
 #endif
 };
@@ -119,20 +119,20 @@ template<> struct shuffle_impl<3> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        return _mm_unpackhi_ps(a, b);
+        return _mm_unpackhi_ps(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        return _mm256_unpackhi_ps(a, b);
+        return _mm256_unpackhi_ps(a.native(), b.native());
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        return _mm512_unpackhi_ps(a, b);
+        return _mm512_unpackhi_ps(a.native(), b.native());
     }
 #endif
 };
@@ -152,20 +152,20 @@ template<> struct shuffle_impl<5> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        return _mm_blend_ps(a, b, SIMDPP_SHUFFLE_MASK_4x2(s0/4, s1/4, s2/4, s3/4));
+        return _mm_blend_ps(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x2(s0/4, s1/4, s2/4, s3/4));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        return _mm256_blend_ps(a, b, SIMDPP_SHUFFLE_MASK_4x2_2(s0/4, s1/4, s2/4, s3/4));
+        return _mm256_blend_ps(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x2_2(s0/4, s1/4, s2/4, s3/4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        return _mm512_mask_blend_ps(SIMDPP_SHUFFLE_MASK_4x2_4(s0/4, s1/4, s2/4, s3/4), a, b);
+        return _mm512_mask_blend_ps(SIMDPP_SHUFFLE_MASK_4x2_4(s0/4, s1/4, s2/4, s3/4), a.native(), b.native());
     }
 #endif
 };
@@ -176,20 +176,20 @@ template<> struct shuffle_impl<6> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        return _mm_shuffle_ps(a, b, _MM_SHUFFLE(s3-4, s2-4, s1, s0));
+        return _mm_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3-4, s2-4, s1, s0));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        return _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s3-4, s2-4, s1, s0));
+        return _mm256_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3-4, s2-4, s1, s0));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        return _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s3-4, s2-4, s1, s0));
+        return _mm512_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3-4, s2-4, s1, s0));
     }
 #endif
 };
@@ -199,20 +199,20 @@ template<> struct shuffle_impl<7> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        return _mm_shuffle_ps(b, a, _MM_SHUFFLE(s3, s2, s1-4, s0-4));
+        return _mm_shuffle_ps(b.native(), a.native(), _MM_SHUFFLE(s3, s2, s1-4, s0-4));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        return _mm256_shuffle_ps(b, a, _MM_SHUFFLE(s3, s2, s1-4, s0-4));
+        return _mm256_shuffle_ps(b.native(), a.native(), _MM_SHUFFLE(s3, s2, s1-4, s0-4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        return _mm512_shuffle_ps(b, a, _MM_SHUFFLE(s3, s2, s1-4, s0-4));
+        return _mm512_shuffle_ps(b.native(), a.native(), _MM_SHUFFLE(s3, s2, s1-4, s0-4));
     }
 #endif
 };
@@ -226,7 +226,7 @@ float32<4> select2_hi(const float32<4>& a, const float32<4>& b)
                           (s0==5||s1==5 ? 2 : 0) |
                           (s0==6||s1==6 ? 4 : 0) |
                           (s0==7||s1==7 ? 8 : 0);
-    return _mm_blend_ps(a, b, mask);
+    return _mm_blend_ps(a.native(), b.native(), mask);
 }
 #endif
 #if SIMDPP_USE_AVX
@@ -237,7 +237,7 @@ float32<8> select2_hi(const float32<8>& a, const float32<8>& b)
                           (s0==5||s1==5 ? 2 : 0) |
                           (s0==6||s1==6 ? 4 : 0) |
                           (s0==7||s1==7 ? 8 : 0);
-    return _mm256_blend_ps(a, b, mask | mask << 4);
+    return _mm256_blend_ps(a.native(), b.native(), mask | mask << 4);
 }
 #endif
 #if SIMDPP_USE_AVX512F
@@ -249,7 +249,7 @@ float32<16> select2_hi(const float32<16>& a, const float32<16>& b)
                           (s0==6||s1==6 ? 4 : 0) |
                           (s0==7||s1==7 ? 8 : 0);
     const unsigned mask2 = mask | mask << 4 | mask << 8 | mask << 12;
-    return _mm512_mask_blend_ps(mask2, a, b);
+    return _mm512_mask_blend_ps(mask2, a.native(), b.native());
 }
 #endif
 
@@ -259,24 +259,24 @@ template<> struct shuffle_impl<8> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab1 = select2_hi<s0,s1>(a, b);
-        return _mm_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
+        __m128 ab1 = select2_hi<s0,s1>(a, b).native();
+        return _mm_shuffle_ps(ab1, b.native(), _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
     }
 #endif
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab1 = select2_hi<s0,s1>(a, b);
-        return _mm256_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
+        __m256 ab1 = select2_hi<s0,s1>(a, b).native();
+        return _mm256_shuffle_ps(ab1, b.native(), _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab1 = select2_hi<s0,s1>(a, b);
-        return _mm512_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
+        __m512 ab1 = select2_hi<s0,s1>(a, b).native();
+        return _mm512_shuffle_ps(ab1, b.native(), _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
     }
 #endif
 };
@@ -287,24 +287,24 @@ template<> struct shuffle_impl<9> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab1 = select2_hi<s0,s1>(a, b);
-        return _mm_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1%4, s0%4));
+        __m128 ab1 = select2_hi<s0,s1>(a, b).native();
+        return _mm_shuffle_ps(ab1, a.native(), _MM_SHUFFLE(s3, s2, s1%4, s0%4));
     }
 #endif
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab1 = select2_hi<s0,s1>(a, b);
-        return _mm256_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1%4, s0%4));
+        __m256 ab1 = select2_hi<s0,s1>(a, b).native();
+        return _mm256_shuffle_ps(ab1, a.native(), _MM_SHUFFLE(s3, s2, s1%4, s0%4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab1 = select2_hi<s0,s1>(a, b);
-        return _mm512_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1%4, s0%4));
+        __m512 ab1 = select2_hi<s0,s1>(a, b).native();
+        return _mm512_shuffle_ps(ab1, a.native(), _MM_SHUFFLE(s3, s2, s1%4, s0%4));
     }
 #endif
 };
@@ -314,23 +314,23 @@ template<> struct shuffle_impl<10> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab1 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        return _mm_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1/4?3:1, s0/4?2:0));
+        __m128 ab1 = _mm_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        return _mm_shuffle_ps(ab1, b.native(), _MM_SHUFFLE(s3-4, s2-4, s1/4?3:1, s0/4?2:0));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab1 = _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        return _mm256_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1/4?3:1, s0/4?2:0));
+        __m256 ab1 = _mm256_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        return _mm256_shuffle_ps(ab1, b.native(), _MM_SHUFFLE(s3-4, s2-4, s1/4?3:1, s0/4?2:0));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab1 = _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        return _mm512_shuffle_ps(ab1, b, _MM_SHUFFLE(s3-4, s2-4, s1/4?3:1, s0/4?2:0));
+        __m512 ab1 = _mm512_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        return _mm512_shuffle_ps(ab1, b.native(), _MM_SHUFFLE(s3-4, s2-4, s1/4?3:1, s0/4?2:0));
     }
 #endif
 };
@@ -340,23 +340,23 @@ template<> struct shuffle_impl<11> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab1 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        return _mm_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1/4?3:1, s0/4?2:0));
+        __m128 ab1 = _mm_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        return _mm_shuffle_ps(ab1, a.native(), _MM_SHUFFLE(s3, s2, s1/4?3:1, s0/4?2:0));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab1 = _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        return _mm256_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1/4?3:1, s0/4?2:0));
+        __m256 ab1 = _mm256_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        return _mm256_shuffle_ps(ab1, a.native(), _MM_SHUFFLE(s3, s2, s1/4?3:1, s0/4?2:0));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab1 = _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        return _mm512_shuffle_ps(ab1, a, _MM_SHUFFLE(s3, s2, s1/4?3:1, s0/4?2:0));
+        __m512 ab1 = _mm512_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        return _mm512_shuffle_ps(ab1, a.native(), _MM_SHUFFLE(s3, s2, s1/4?3:1, s0/4?2:0));
     }
 #endif
 };
@@ -368,24 +368,24 @@ template<> struct shuffle_impl<12> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab2 = select2_hi<s2, s3>(a, b);
-        return _mm_shuffle_ps(b, ab2, _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
+        __m128 ab2 = select2_hi<s2, s3>(a, b).native();
+        return _mm_shuffle_ps(b.native(), ab2, _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
     }
 #endif
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab2 = select2_hi<s2, s3>(a, b);
-        return _mm256_shuffle_ps(b, ab2, _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
+        __m256 ab2 = select2_hi<s2, s3>(a, b).native();
+        return _mm256_shuffle_ps(b.native(), ab2, _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab2 = select2_hi<s2, s3>(a, b);
-        return _mm512_shuffle_ps(b, ab2, _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
+        __m512 ab2 = select2_hi<s2, s3>(a, b).native();
+        return _mm512_shuffle_ps(b.native(), ab2, _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
     }
 #endif
 };
@@ -396,24 +396,24 @@ template<> struct shuffle_impl<13> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab2 = select2_hi<s2, s3>(a, b);
-        return _mm_shuffle_ps(a, ab2, _MM_SHUFFLE(s3%4, s2%4, s1, s0));
+        __m128 ab2 = select2_hi<s2, s3>(a, b).native();
+        return _mm_shuffle_ps(a.native(), ab2, _MM_SHUFFLE(s3%4, s2%4, s1, s0));
     }
 #endif
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab2 = select2_hi<s2, s3>(a, b);
-        return _mm256_shuffle_ps(a, ab2, _MM_SHUFFLE(s3%4, s2%4, s1, s0));
+        __m256 ab2 = select2_hi<s2, s3>(a, b).native();
+        return _mm256_shuffle_ps(a.native(), ab2, _MM_SHUFFLE(s3%4, s2%4, s1, s0));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab2 = select2_hi<s2, s3>(a, b);
-        return _mm512_shuffle_ps(a, ab2, _MM_SHUFFLE(s3%4, s2%4, s1, s0));
+        __m512 ab2 = select2_hi<s2, s3>(a, b).native();
+        return _mm512_shuffle_ps(a.native(), ab2, _MM_SHUFFLE(s3%4, s2%4, s1, s0));
     }
 #endif
 };
@@ -423,23 +423,23 @@ template<> struct shuffle_impl<14> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab2 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm_shuffle_ps(b, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1-4, s0-4));
+        __m128 ab2 = _mm_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        return _mm_shuffle_ps(b.native(), ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1-4, s0-4));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab2 = _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm256_shuffle_ps(b, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1-4, s0-4));
+        __m256 ab2 = _mm256_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        return _mm256_shuffle_ps(b.native(), ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1-4, s0-4));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab2 = _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm512_shuffle_ps(b, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1-4, s0-4));
+        __m512 ab2 = _mm512_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        return _mm512_shuffle_ps(b.native(), ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1-4, s0-4));
     }
 #endif
 };
@@ -449,23 +449,23 @@ template<> struct shuffle_impl<15> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab2 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm_shuffle_ps(a, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1, s0));
+        __m128 ab2 = _mm_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        return _mm_shuffle_ps(a.native(), ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1, s0));
     }
 #if SIMDPP_USE_AVX
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab2 = _mm256_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm256_shuffle_ps(a, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1, s0));
+        __m256 ab2 = _mm256_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        return _mm256_shuffle_ps(a.native(), ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1, s0));
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab2 = _mm512_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
-        return _mm512_shuffle_ps(a, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1, s0));
+        __m512 ab2 = _mm512_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        return _mm512_shuffle_ps(a.native(), ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1, s0));
     }
 #endif
 };
@@ -476,12 +476,12 @@ template<> struct shuffle_impl<16> {
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
 #if SIMDPP_USE_SSE4_1
-        __m128 ap = _mm_shuffle_ps(a, a, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
-        __m128 bp = _mm_shuffle_ps(b, b, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        __m128 ap = _mm_shuffle_ps(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        __m128 bp = _mm_shuffle_ps(b.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
         return _mm_blend_ps(ap, bp, SIMDPP_SHUFFLE_MASK_4x2(s0/4,s1/4,s2/4,s3/4));
 #else
-        __m128 ab1 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        __m128 ab2 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        __m128 ab1 = _mm_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        __m128 ab2 = _mm_shuffle_ps(a.native(), b.native(), _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
         return _mm_shuffle_ps(ab1, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1/4?3:1, s0/4?2:0));
 #endif
     }
@@ -489,8 +489,8 @@ template<> struct shuffle_impl<16> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ap = _mm256_shuffle_ps(a, a, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
-        __m256 bp = _mm256_shuffle_ps(b, b, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        __m256 ap = _mm256_shuffle_ps(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        __m256 bp = _mm256_shuffle_ps(b.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
         return _mm256_blend_ps(ap, bp, SIMDPP_SHUFFLE_MASK_4x2_2(s0/4,s1/4,s2/4,s3/4));
     }
 #endif
@@ -498,9 +498,9 @@ template<> struct shuffle_impl<16> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ap = _mm512_shuffle_ps(a, a, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        __m512 ap = _mm512_shuffle_ps(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
         const int mask = SIMDPP_SHUFFLE_MASK_4x2_4(s0/4,s1/4,s2/4,s3/4);
-        return _mm512_mask_shuffle_ps(ap, mask, b, b, SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
+        return _mm512_mask_shuffle_ps(ap, mask, b.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4));
     }
 #endif
 };

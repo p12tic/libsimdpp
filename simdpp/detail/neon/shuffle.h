@@ -31,10 +31,10 @@ static SIMDPP_INL
 void swap_lo(uint64x2& a, uint64x2& b)
 {
     uint64x1_t ah, bh, al, bl;
-    al = vget_low_u64(a);
-    bl = vget_low_u64(b);
-    ah = vget_high_u64(a);
-    bh = vget_high_u64(b);
+    al = vget_low_u64(a.native());
+    bl = vget_low_u64(b.native());
+    ah = vget_high_u64(a.native());
+    bh = vget_high_u64(b.native());
     a = vcombine_u64(bl, ah);
     b = vcombine_u64(al, bh);
 }
@@ -50,10 +50,10 @@ static SIMDPP_INL
 void swap_hi(uint64x2& a, uint64x2& b)
 {
     uint64x1_t ah, bh, al, bl;
-    al = vget_low_u64(a);
-    bl = vget_low_u64(b);
-    ah = vget_high_u64(a);
-    bh = vget_high_u64(b);
+    al = vget_low_u64(a.native());
+    bl = vget_low_u64(b.native());
+    ah = vget_high_u64(a.native());
+    bh = vget_high_u64(b.native());
     a = vcombine_u64(al, bh);
     b = vcombine_u64(bl, ah);
 }
@@ -62,10 +62,10 @@ static SIMDPP_INL
 void transpose2(uint64x2& a, uint64x2& b)
 {
     uint64x1_t ah, bh, al, bl;
-    al = vget_low_u64(a);
-    bl = vget_low_u64(b);
-    ah = vget_high_u64(a);
-    bh = vget_high_u64(b);
+    al = vget_low_u64(a.native());
+    bl = vget_low_u64(b.native());
+    ah = vget_high_u64(a.native());
+    bh = vget_high_u64(b.native());
     a = vcombine_u64(al, bl);
     b = vcombine_u64(ah, bh);
 }

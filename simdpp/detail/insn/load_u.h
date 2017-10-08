@@ -45,8 +45,7 @@ void i_load_u(uint8x16& a, const char* p)
     l1 = vec_ld(0, q);
     l2 = vec_ld(16, q);
     mask = vec_lvsl(0, q);
-    a = vec_perm((__vector uint8_t)l1, (__vector uint8_t)l2,
-                 (__vector uint8_t)mask);
+    a = vec_perm(l1.native(), l2.native(), mask.native());
 #elif SIMDPP_USE_MSA
     a = (v16u8) __msa_ld_b(p, 0);
 #endif

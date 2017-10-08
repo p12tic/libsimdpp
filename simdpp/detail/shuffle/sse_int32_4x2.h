@@ -65,20 +65,20 @@ template<> struct shuffle_impl<1> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
     {
-        return _mm_unpacklo_epi32(a, b);
+        return _mm_unpacklo_epi32(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX2
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<8> run(const uint32<8>& a, const uint32<8>& b)
     {
-        return _mm256_unpacklo_epi32(a, b);
+        return _mm256_unpacklo_epi32(a.native(), b.native());
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {
-        return _mm512_unpacklo_epi32(a, b);
+        return _mm512_unpacklo_epi32(a.native(), b.native());
     }
 #endif
 };
@@ -97,20 +97,20 @@ template<> struct shuffle_impl<3> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
     {
-        return _mm_unpackhi_epi32(a, b);
+        return _mm_unpackhi_epi32(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX2
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<8> run(const uint32<8>& a, const uint32<8>& b)
     {
-        return _mm256_unpackhi_epi32(a, b);
+        return _mm256_unpackhi_epi32(a.native(), b.native());
     }
 #endif
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {
-        return _mm512_unpackhi_epi32(a, b);
+        return _mm512_unpackhi_epi32(a.native(), b.native());
     }
 #endif
 };
@@ -131,14 +131,14 @@ template<> struct shuffle_impl<5> {
     static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
     {
         const unsigned mask = (s0<4 ? 0 : 0x3) | (s1<4 ? 0 : 0xc) | (s2<4 ? 0 : 0x30) | (s3<4 ? 0 : 0xc0);
-        return _mm_blend_epi16(a, b, mask);
+        return _mm_blend_epi16(a.native(), b.native(), mask);
     }
 #if SIMDPP_USE_AVX2
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<8> run(const uint32<8>& a, const uint32<8>& b)
     {
         const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        return _mm256_blend_epi32(a, b, mask | mask << 4);
+        return _mm256_blend_epi32(a.native(), b.native(), mask | mask << 4);
     }
 #endif
 #if SIMDPP_USE_AVX512F
@@ -147,7 +147,7 @@ template<> struct shuffle_impl<5> {
     {
         const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
         const unsigned mask2 = mask | mask << 4 | mask << 8 | mask << 12;
-        return _mm512_mask_blend_epi32(mask2, a, b);
+        return _mm512_mask_blend_epi32(mask2, a.native(), b.native());
     }
 #endif
 };
@@ -158,13 +158,13 @@ template<> struct shuffle_impl<6> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
     {
-        return _mm_alignr_epi8(b, a, s0*4);
+        return _mm_alignr_epi8(b.native(), a.native(), s0*4);
     }
 #if SIMDPP_USE_AVX2
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<8> run(const uint32<8>& a, const uint32<8>& b)
     {
-        return _mm256_alignr_epi8(b, a, s0*4);
+        return _mm256_alignr_epi8(b.native(), a.native(), s0*4);
     }
 #endif
 #if SIMDPP_USE_AVX512F
@@ -172,9 +172,9 @@ template<> struct shuffle_impl<6> {
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {
         // note that _mm512_alignr_epi32 operates on entire vector
-        __m512i ap = _mm512_alignr_epi32(a, a, s0);
+        __m512i ap = _mm512_alignr_epi32(a.native(), a.native(), s0);
         const int mask = SIMDPP_SHUFFLE_MASK_4x2_4(s0>3, s0>2, s0>1, s0>0);
-        return _mm512_mask_alignr_epi32(ap, mask, b, b, (s0+12)%16);
+        return _mm512_mask_alignr_epi32(ap, mask, b.native(), b.native(), (s0+12)%16);
     }
 #endif
 };
@@ -185,18 +185,18 @@ template<> struct shuffle_impl<7> {
     static uint32<4> run(const uint32<4>& a, const uint32<4>& b)
     {
 #if SIMDPP_USE_AVX2
-        __m128i pa = _mm_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
-        __m128i pb = _mm_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m128i pa = _mm_shuffle_epi32(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m128i pb = _mm_shuffle_epi32(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
         return _mm_blend_epi32(pa, pb, SIMDPP_SHUFFLE_MASK_4x2(s0/4,s1/4,s2/4,s3/4));
 #elif SIMDPP_USE_SSE4_1
-        __m128i pa = _mm_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
-        __m128i pb = _mm_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m128i pa = _mm_shuffle_epi32(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m128i pb = _mm_shuffle_epi32(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
         return _mm_blend_epi16(pa, pb, SIMDPP_SHUFFLE_MASK_4x4(s0/4*0x3,s1/4*0x3,s2/4*0x3,s3/4*0x3));
 #else
-        __m128 ca = _mm_castsi128_ps(a);
-        __m128 cb = _mm_castsi128_ps(b);
-        __m128 ab1 = _mm_shuffle_ps(ca, cb, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
-        __m128 ab2 = _mm_shuffle_ps(ca, cb, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
+        __m128 na = _mm_castsi128_ps(a.native());
+        __m128 nb = _mm_castsi128_ps(b.native());
+        __m128 ab1 = _mm_shuffle_ps(na, nb, _MM_SHUFFLE(s1%4, s0%4, s1%4, s0%4));
+        __m128 ab2 = _mm_shuffle_ps(na, nb, _MM_SHUFFLE(s3%4, s2%4, s3%4, s2%4));
         float32<4> r = _mm_shuffle_ps(ab1, ab2, _MM_SHUFFLE(s3/4?3:1, s2/4?2:0, s1/4?3:1, s0/4?2:0));
         return uint32<4>(r);
 #endif
@@ -205,8 +205,8 @@ template<> struct shuffle_impl<7> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<8> run(const uint32<8>& a, const uint32<8>& b)
     {
-        __m256i pa = _mm256_shuffle_epi32(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
-        __m256i pb = _mm256_shuffle_epi32(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256i pa = _mm256_shuffle_epi32(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256i pb = _mm256_shuffle_epi32(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
         return _mm256_blend_epi32(pa, pb, SIMDPP_SHUFFLE_MASK_4x2_2(s0/4,s1/4,s2/4,s3/4));
     }
 #endif
@@ -214,9 +214,9 @@ template<> struct shuffle_impl<7> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint32<16> run(const uint32<16>& a, const uint32<16>& b)
     {
-        __m512i ap = _mm512_shuffle_epi32(a, _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4)));
+        __m512i ap = _mm512_shuffle_epi32(a.native(), _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4)));
         const int mask = SIMDPP_SHUFFLE_MASK_4x2_4(s0/4,s1/4,s2/4,s3/4);
-        return _mm512_mask_shuffle_epi32(ap, mask, b, _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4)));
+        return _mm512_mask_shuffle_epi32(ap, mask, b.native(), _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0%4,s1%4,s2%4,s3%4)));
     }
 #endif
 };

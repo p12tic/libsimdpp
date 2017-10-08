@@ -30,7 +30,7 @@ int8<16> expr_eval_neg(const int8<16,E>& qa)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return sub(0, a);
 #elif SIMDPP_USE_NEON
-    return vnegq_s8(a);
+    return vnegq_s8(a.native());
 #endif
 }
 
@@ -70,7 +70,7 @@ int16<8> expr_eval_neg(const int16<8,E>& qa)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return sub(0, a);
 #elif SIMDPP_USE_NEON
-    return vnegq_s16(a);
+    return vnegq_s16(a.native());
 #endif
 }
 
@@ -110,7 +110,7 @@ int32<4> expr_eval_neg(const int32<4,E>& qa)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return sub(0, a);
 #elif SIMDPP_USE_NEON
-    return vnegq_s32(a);
+    return vnegq_s32(a.native());
 #endif
 }
 

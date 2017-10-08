@@ -66,9 +66,9 @@ float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
     return shuffle_bytes16(a, b, mask);
 #elif SIMDPP_USE_MSA
     uint32<4> mask = make_uint(s0,s1,s2,s3);
-    return (v4f32) __msa_vshf_w((v4i32)(v4u32)mask,
-                                (v4i32)(v4f32)b,
-                                (v4i32)(v4f32)a);
+    return (v4f32) __msa_vshf_w((v4i32) mask.native(),
+                                (v4i32) b.native(),
+                                (v4i32) a.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
@@ -156,9 +156,9 @@ uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
     return shuffle_bytes16(a, b, mask);
 #elif SIMDPP_USE_MSA
     uint32<4> mask = make_uint(s0,s1,s2,s3);
-    return (v4u32) __msa_vshf_w((v4i32)(v4u32)mask,
-                                (v4i32)(v4u32)b,
-                                (v4i32)(v4u32)a);
+    return (v4u32) __msa_vshf_w((v4i32) mask.native(),
+                                (v4i32) b.native(),
+                                (v4i32) a.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif

@@ -125,7 +125,7 @@ public:
 #endif
 
 #if SIMDPP_USE_SSE2
-    SIMDPP_INL mask_float32<4>(const float32<4>& d) : d_(d) {}
+    SIMDPP_INL mask_float32<4>(const float32<4>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float32<4>(const mask_int32<4,E>& d)

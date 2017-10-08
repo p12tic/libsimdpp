@@ -39,9 +39,9 @@ float32x4 i_trunc(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_round_ps(a, 3); // 3 = i_truncate
+    return _mm_round_ps(a.native(), 3); // 3 = i_truncate
 #elif SIMDPP_USE_NEON64
-    return vrndq_f32(a); // FIXME: in ARM8 A32 too
+    return vrndq_f32(a.native()); // FIXME: in ARM8 A32 too
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_MSA
     //check if the value is not too large
     float32x4 af = abs(a);
@@ -58,7 +58,7 @@ float32x4 i_trunc(const float32x4& a)
     //combine the results
     return blend(fa, a, mask);     // takes care of NaNs
 #elif SIMDPP_USE_ALTIVEC
-    return vec_trunc((__vector float)a);
+    return vec_trunc(a.native());
 #endif
 }
 
@@ -66,7 +66,7 @@ float32x4 i_trunc(const float32x4& a)
 static SIMDPP_INL
 float32x8 i_trunc(const float32x8& a)
 {
-    return _mm256_round_ps(a, 3); // 3 = i_truncate
+    return _mm256_round_ps(a.native(), 3); // 3 = i_truncate
 }
 #endif
 
@@ -74,7 +74,7 @@ float32x8 i_trunc(const float32x8& a)
 static SIMDPP_INL
 float32<16> i_trunc(const float32<16>& a)
 {
-    return _mm512_roundscale_ps(a, 0x13); // scale by 1, truncate
+    return _mm512_roundscale_ps(a.native(), 0x13); // scale by 1, truncate
 }
 #endif
 
@@ -84,7 +84,7 @@ static SIMDPP_INL
 float64x2 i_trunc(const float64x2& a)
 {
 #if SIMDPP_USE_SSE4_1
-    return _mm_round_pd(a, 3);
+    return _mm_round_pd(a.native(), 3);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     float64x2 af = abs(a);
     // check if the value is not too large or is a nan
@@ -107,9 +107,9 @@ float64x2 i_trunc(const float64x2& a)
     a2 = bit_andnot(a2, mask_zero);
     return blend(a2, a, mask_range);
 #elif SIMDPP_USE_NEON64
-    return vrndq_f64(a);
+    return vrndq_f64(a.native());
 #elif SIMDPP_USE_VSX_206
-    return vec_trunc((__vector double) a);
+    return vec_trunc(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     float64x2 r;
     for (unsigned i = 0; i < r.length; ++i) {
@@ -123,7 +123,7 @@ float64x2 i_trunc(const float64x2& a)
 static SIMDPP_INL
 float64x4 i_trunc(const float64x4& a)
 {
-    return _mm256_round_pd(a, 3); // 3 = i_truncate
+    return _mm256_round_pd(a.native(), 3); // 3 = i_truncate
 }
 #endif
 
@@ -131,7 +131,7 @@ float64x4 i_trunc(const float64x4& a)
 static SIMDPP_INL
 float64<8> i_trunc(const float64<8>& a)
 {
-    return _mm512_roundscale_pd(a, 0x13); // scale by 1, truncate
+    return _mm512_roundscale_pd(a.native(), 0x13); // scale by 1, truncate
 }
 #endif
 

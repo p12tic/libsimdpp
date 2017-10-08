@@ -42,7 +42,7 @@ uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
     }
     return r;
 #elif SIMDPP_USE_SSSE3
-    return _mm_alignr_epi8(upper, lower, shift);
+    return _mm_alignr_epi8(upper.native(), lower.native(), shift);
 #elif SIMDPP_USE_SSE2
     uint8x16 a;
     lower = move16_l<shift>(lower);
@@ -54,12 +54,12 @@ uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
         return lower;
     if (shift == 16)
         return upper;
-    return vextq_u8(lower, upper, shift % 16);
+    return vextq_u8(lower.native(), upper.native(), shift % 16);
 #elif SIMDPP_USE_ALTIVEC
     return vec_sld_biendian<shift>(lower, upper);
 #elif SIMDPP_USE_MSA
-    return (v16u8) __msa_sld_b((v16i8)(v16u8)upper,
-                               (v16i8)(v16u8)lower, shift);
+    return (v16u8) __msa_sld_b((v16i8)upper.native(),
+                               (v16i8)lower.native(), shift);
 #endif
 }
 
@@ -67,7 +67,7 @@ uint8x16 i_align16(const uint8x16& clower, const uint8x16& cupper)
 template<unsigned shift> SIMDPP_INL
 uint8x32 i_align16(const uint8x32& lower, const uint8x32& upper)
 {
-    return _mm256_alignr_epi8(upper, lower, shift);
+    return _mm256_alignr_epi8(upper.native(), lower.native(), shift);
 }
 #endif
 
@@ -75,7 +75,7 @@ uint8x32 i_align16(const uint8x32& lower, const uint8x32& upper)
 template<unsigned shift> SIMDPP_INL
 uint8<64> i_align16(const uint8<64>& lower, const uint8<64>& upper)
 {
-    return _mm512_alignr_epi8(upper, lower, shift);
+    return _mm512_alignr_epi8(upper.native(), lower.native(), shift);
 }
 #endif
 
@@ -98,7 +98,7 @@ uint16<8> i_align8(const uint16<8>& lower, const uint16<8>& upper)
 template<unsigned shift> SIMDPP_INL
 uint16<16> i_align8(const uint16<16>& lower, const uint16<16>& upper)
 {
-    return _mm256_alignr_epi8(upper, lower, shift*2);
+    return _mm256_alignr_epi8(upper.native(), lower.native(), shift*2);
 }
 #endif
 
@@ -106,7 +106,7 @@ uint16<16> i_align8(const uint16<16>& lower, const uint16<16>& upper)
 template<unsigned shift> SIMDPP_INL
 uint16<32> i_align8(const uint16<32>& lower, const uint16<32>& upper)
 {
-    return _mm512_alignr_epi8(upper, lower, shift*2);
+    return _mm512_alignr_epi8(upper.native(), lower.native(), shift*2);
 }
 #endif
 
@@ -138,10 +138,10 @@ uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
 #if SIMDPP_USE_SSSE3
     case 1:
     case 2:
-    case 3: return _mm_alignr_epi8(upper, lower, shift*4);
+    case 3: return _mm_alignr_epi8(upper.native(), lower.native(), shift*4);
 #else
-    case 2: return _mm_castps_si128(_mm_shuffle_ps(_mm_castsi128_ps(lower),
-                                                   _mm_castsi128_ps(upper),
+    case 2: return _mm_castps_si128(_mm_shuffle_ps(_mm_castsi128_ps(lower.native()),
+                                                   _mm_castsi128_ps(upper.native()),
                                                    SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1)));
     case 1:
     case 3: return bit_or(move4_l<shift>(lower),
@@ -154,12 +154,12 @@ uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
         return lower;
     if (shift == 4)
         return upper;
-    return vextq_u32(lower, upper, shift);
+    return vextq_u32(lower.native(), upper.native(), shift);
 #elif SIMDPP_USE_ALTIVEC
     return (uint32<4>) vec_sld_biendian<shift*4>((uint8<16>)lower, (uint8<16>)upper);
 #elif SIMDPP_USE_MSA
-    return (v4u32) __msa_sld_b((v16i8)(v4u32)upper,
-                               (v16i8)(v4u32)lower, shift*4);
+    return (v4u32) __msa_sld_b((v16i8)upper.native(),
+                               (v16i8)lower.native(), shift*4);
 #endif
 }
 
@@ -167,7 +167,7 @@ uint32x4 i_align4(const uint32x4& lower, const uint32x4& upper)
 template<unsigned shift> SIMDPP_INL
 uint32<8> i_align4(const uint32<8>& lower, const uint32<8>& upper)
 {
-    return _mm256_alignr_epi8(upper, lower, shift*4);
+    return _mm256_alignr_epi8(upper.native(), lower.native(), shift*4);
 }
 #endif
 
@@ -202,8 +202,8 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
     switch (shift) {
     default:
     case 0: return lower;
-    case 1: return _mm_castpd_si128(_mm_shuffle_pd(_mm_castsi128_pd(lower),
-                                                   _mm_castsi128_pd(upper),
+    case 1: return _mm_castpd_si128(_mm_shuffle_pd(_mm_castsi128_pd(lower.native()),
+                                                   _mm_castsi128_pd(upper.native()),
                                                    SIMDPP_SHUFFLE_MASK_2x2(1,0)));
     case 2: return upper;
     }
@@ -212,7 +212,7 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
         return lower;
     if (shift == 2)
         return upper;
-    return vextq_u64(lower, upper, shift % 2);
+    return vextq_u64(lower.native(), upper.native(), shift % 2);
 #elif SIMDPP_USE_VSX_207
     return (uint64<2>) vec_sld_biendian<shift*8>((uint8<16>) lower,
                                                  (uint8<16>) upper);
@@ -227,8 +227,8 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
     }
     return r;
 #elif SIMDPP_USE_MSA
-    return (v2u64) __msa_sld_b((v16i8)(v2u64)upper,
-                               (v16i8)(v2u64)lower, shift*8);
+    return (v2u64) __msa_sld_b((v16i8) upper.native(),
+                               (v16i8) lower.native(), shift*8);
 #endif
 }
 
@@ -236,7 +236,7 @@ uint64x2 i_align2(const uint64x2& lower, const uint64x2& upper)
 template<unsigned shift> SIMDPP_INL
 uint64<4> i_align2(const uint64<4>& lower, const uint64<4>& upper)
 {
-    return _mm256_alignr_epi8(upper, lower, shift*8);
+    return _mm256_alignr_epi8(upper.native(), lower.native(), shift*8);
 }
 #endif
 
@@ -280,14 +280,14 @@ float32x4 i_align4(const float32x4& lower, const float32x4& upper)
     case 0: return lower;
 #if SIMDPP_USE_SSSE3
     case 1:
-    case 3: return _mm_castsi128_ps(_mm_alignr_epi8(_mm_castps_si128(upper),
-                                                    _mm_castps_si128(lower), shift*4));
+    case 3: return _mm_castsi128_ps(_mm_alignr_epi8(_mm_castps_si128(upper.native()),
+                                                    _mm_castps_si128(lower.native()), shift*4));
 #else
     case 1:
     case 3: return bit_or(move4_l<shift>(lower),
                           move4_r<4-shift>(upper));
 #endif
-    case 2: return _mm_shuffle_ps(lower, upper, SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
+    case 2: return _mm_shuffle_ps(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
     case 4: return upper;
     }
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -295,12 +295,12 @@ float32x4 i_align4(const float32x4& lower, const float32x4& upper)
         return lower;
     if (shift == 4)
         return upper;
-    return vextq_f32(lower, upper, shift);
+    return vextq_f32(lower.native(), upper.native(), shift);
 #elif SIMDPP_USE_ALTIVEC
     return (float32<4>) vec_sld_biendian<shift*4>((uint8<16>)lower, (uint8<16>)upper);
 #elif SIMDPP_USE_MSA
-    return (v4f32) __msa_sld_b((v16i8)(v4f32)upper,
-                               (v16i8)(v4f32)lower, shift*4);
+    return (v4f32) __msa_sld_b((v16i8)upper.native(),
+                               (v16i8)lower.native(), shift*4);
 #endif
 }
 
@@ -313,13 +313,13 @@ float32<8> i_align4(const float32<8>& lower, const float32<8>& upper)
     case 0: return lower;
 #if SIMDPP_USE_AVX2
     case 1:
-    case 3: return _mm256_castsi256_ps(_mm256_alignr_epi8(_mm256_castps_si256(upper),
-                                                          _mm256_castps_si256(lower), shift*4));
+    case 3: return _mm256_castsi256_ps(_mm256_alignr_epi8(_mm256_castps_si256(upper.native()),
+                                                          _mm256_castps_si256(lower.native()), shift*4));
 #else
     case 1: return shuffle4x2<1,2,3,4>(lower, upper);
     case 3: return shuffle4x2<3,4,5,6>(lower, upper);
 #endif
-    case 2: return _mm256_shuffle_ps(lower, upper, SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
+    case 2: return _mm256_shuffle_ps(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
     case 4: return upper;
     }
 }
@@ -333,7 +333,7 @@ float32<16> i_align4(const float32<16>& lower, const float32<16>& upper)
     default:
     case 0: return lower;
     case 1: return shuffle4x2<1,2,3,4>(lower, upper);
-    case 2: return _mm512_shuffle_ps(lower, upper, SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
+    case 2: return _mm512_shuffle_ps(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
     case 3: return shuffle4x2<3,4,5,6>(lower, upper);
     case 4: return upper;
     }
@@ -355,7 +355,7 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
     switch (shift) {
     default:
     case 0: return lower;
-    case 1: return _mm_shuffle_pd(lower, upper, SIMDPP_SHUFFLE_MASK_2x2(1, 0));
+    case 1: return _mm_shuffle_pd(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_2x2(1, 0));
     case 2: return upper;
     }
 #elif SIMDPP_USE_NEON64
@@ -363,7 +363,7 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
         return lower;
     if (shift == 2)
         return upper;
-    return vextq_f64(lower, upper, shift);
+    return vextq_f64(lower.native(), upper.native(), shift);
 #elif SIMDPP_USE_VSX_206
     return (float64<2>) vec_sld_biendian<shift*8>((uint8<16>)lower,
                                                   (uint8<16>)upper);
@@ -378,8 +378,8 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
     }
     return r;
 #elif SIMDPP_USE_MSA
-    return (v2f64) __msa_sld_b((v16i8)(v2f64)upper,
-                               (v16i8)(v2f64)lower, shift*8);
+    return (v2f64) __msa_sld_b((v16i8) upper.native(),
+                               (v16i8) lower.native(), shift*8);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(float64<shift+4>, lower, upper);
 #endif
@@ -392,7 +392,7 @@ float64<4> i_align2(const float64<4>& lower, const float64<4>& upper)
     switch (shift) {
     default:
     case 0: return lower;
-    case 1: return _mm256_shuffle_pd(lower, upper, SIMDPP_SHUFFLE_MASK_2x2_2(1, 0));
+    case 1: return _mm256_shuffle_pd(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_2x2_2(1, 0));
     case 2: return upper;
     }
 }
@@ -405,7 +405,7 @@ float64<8> i_align2(const float64<8>& lower, const float64<8>& upper)
     switch (shift) {
     default:
     case 0: return lower;
-    case 1: return _mm512_shuffle_pd(lower, upper, SIMDPP_SHUFFLE_MASK_2x2_4(1, 0));
+    case 1: return _mm512_shuffle_pd(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_2x2_4(1, 0));
     case 2: return upper;
     }
 }

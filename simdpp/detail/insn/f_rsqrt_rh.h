@@ -56,7 +56,7 @@ float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
     float32x4 x2, r;
 
     x2 = mul(x, x);
-    r = vrsqrtsq_f32(a, x2);
+    r = vrsqrtsq_f32(a.native(), x2.native());
     x = mul(x, r);
 
     return x;
@@ -67,7 +67,7 @@ float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 
     x2 = mul(x, x);
     // r = (c3 - a*x2)
-    r = vec_nmsub((__vector float)a, (__vector float)x2, (__vector float)c3);
+    r = vec_nmsub(a.native(), x2.native(), c3.native());
     xp5 = mul(x, 0.5);
     r = mul(xp5, r);
 

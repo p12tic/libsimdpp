@@ -36,18 +36,18 @@ uint8_t i_extract(const uint8<16>& a)
     // implemented as a macro with no appropriate casts) and a bug in Clang
     // (thinks explicit conversion operators have the same rank as the regular
     // ones)
-    return _mm_extract_epi8(a.operator __m128i(), id);
+    return _mm_extract_epi8(a.native(), id);
 #elif SIMDPP_USE_SSE2
     unsigned shift = (id % 2 == 1) ? 8 : 0;
-    return _mm_extract_epi16(a, id/2) >> shift;
+    return _mm_extract_epi16(a.native(), id/2) >> shift;
 #elif SIMDPP_USE_NEON
-    return vgetq_lane_u8(a, id);
+    return vgetq_lane_u8(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint8x16> ax(a);
-    vec_ste((__vector uint8_t)a, 0, &ax[id]);
+    vec_ste(a.native(), 0, &ax[id]);
     return ax[id];
 #elif SIMDPP_USE_MSA
-    return __msa_copy_u_b((v16i8)(v16u8) a, id);
+    return __msa_copy_u_b((v16i8) a.native(), id);
 #endif
 }
 
@@ -55,7 +55,7 @@ uint8_t i_extract(const uint8<16>& a)
 template<unsigned id> SIMDPP_INL
 uint8_t i_extract(const uint8<32>& a)
 {
-    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 16);
+    __m128i val = _mm256_extracti128_si256(a.native(), id / 16);
     return _mm_extract_epi8(val, id % 16);
 }
 #endif
@@ -64,7 +64,7 @@ uint8_t i_extract(const uint8<32>& a)
 template<unsigned id> SIMDPP_INL
 uint8_t i_extract(const uint8<64>& a)
 {
-    __m128i val = _mm512_extracti32x4_epi32(a, id / 16);
+    __m128i val = _mm512_extracti32x4_epi32(a.native(), id / 16);
     return _mm_extract_epi8(val, id % 16);
 }
 #endif
@@ -75,7 +75,7 @@ template<unsigned id> SIMDPP_INL
 int8_t i_extract(const int8<16>& a)
 {
 #if SIMDPP_USE_MSA
-    return __msa_copy_s_b(a, id);
+    return __msa_copy_s_b(a.native(), id);
 #else
     return i_extract<id>(uint8x16(a));
 #endif
@@ -85,7 +85,7 @@ int8_t i_extract(const int8<16>& a)
 template<unsigned id> SIMDPP_INL
 int8_t i_extract(const int8<32>& a)
 {
-    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 16);
+    __m128i val = _mm256_extracti128_si256(a.native(), id / 16);
     return _mm_extract_epi8(val, id % 16);
 }
 #endif
@@ -94,7 +94,7 @@ int8_t i_extract(const int8<32>& a)
 template<unsigned id> SIMDPP_INL
 int8_t i_extract(const int8<64>& a)
 {
-    __m128i val = _mm512_extracti32x4_epi32(a, id / 16);
+    __m128i val = _mm512_extracti32x4_epi32(a.native(), id / 16);
     return _mm_extract_epi8(val, id % 16);
 }
 #endif
@@ -107,15 +107,15 @@ uint16_t i_extract(const uint16<8>& a)
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
-    return _mm_extract_epi16(a, id);
+    return _mm_extract_epi16(a.native(), id);
 #elif SIMDPP_USE_NEON
-    return vgetq_lane_u16(a, id);
+    return vgetq_lane_u16(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint16x8> ax(a);
-    vec_ste((__vector uint16_t)a, 0, &ax[id]);
+    vec_ste(a.native(), 0, &ax[id]);
     return ax[id];
 #elif SIMDPP_USE_MSA
-    return __msa_copy_u_h((v8i16)(v8u16) a, id);
+    return __msa_copy_u_h((v8i16) a.native(), id);
 #endif
 }
 
@@ -123,7 +123,7 @@ uint16_t i_extract(const uint16<8>& a)
 template<unsigned id> SIMDPP_INL
 uint16_t i_extract(const uint16<16>& a)
 {
-    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 8);
+    __m128i val = _mm256_extracti128_si256(a.native(), id / 8);
     return _mm_extract_epi16(val, id % 8);
 }
 #endif
@@ -132,7 +132,7 @@ uint16_t i_extract(const uint16<16>& a)
 template<unsigned id> SIMDPP_INL
 uint16_t i_extract(const uint16<32>& a)
 {
-    __m128i val = _mm512_extracti32x4_epi32(a, id / 8);
+    __m128i val = _mm512_extracti32x4_epi32(a.native(), id / 8);
     return _mm_extract_epi16(val, id % 8);
 }
 #endif
@@ -143,7 +143,7 @@ template<unsigned id> SIMDPP_INL
 int16_t i_extract(const int16<8>& a)
 {
 #if SIMDPP_USE_MSA
-    return __msa_copy_s_h(a, id);
+    return __msa_copy_s_h(a.native(), id);
 #else
     return i_extract<id>(uint16x8(a));
 #endif
@@ -153,7 +153,7 @@ int16_t i_extract(const int16<8>& a)
 template<unsigned id> SIMDPP_INL
 int16_t i_extract(const int16<16>& a)
 {
-    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 8);
+    __m128i val = _mm256_extracti128_si256(a.native(), id / 8);
     return _mm_extract_epi16(val, id % 8);
 }
 #endif
@@ -162,7 +162,7 @@ int16_t i_extract(const int16<16>& a)
 template<unsigned id> SIMDPP_INL
 int16_t i_extract(const int16<32>& a)
 {
-    __m128i val = _mm512_extracti32x4_epi32(a, id / 8);
+    __m128i val = _mm512_extracti32x4_epi32(a.native(), id / 8);
     return _mm_extract_epi16(val, id % 8);
 }
 #endif
@@ -175,18 +175,18 @@ uint32_t i_extract(const uint32<4>& a)
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE4_1
-    return _mm_extract_epi32(a.operator __m128i(), id);
+    return _mm_extract_epi32(a.native(), id);
 #elif SIMDPP_USE_SSE2
     // when id==0, move_l is template-specialized and does nothing
-    return _mm_cvtsi128_si32(move4_l<id>(a).eval());
+    return _mm_cvtsi128_si32(move4_l<id>(a).eval().native());
 #elif SIMDPP_USE_NEON
-    return vgetq_lane_u32(a, id);
+    return vgetq_lane_u32(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint32x4> ax(a);
-    vec_ste((__vector uint32_t)a, 0, &ax[id]);
+    vec_ste(a.native(), 0, &ax[id]);
     return ax[id];
 #elif SIMDPP_USE_MSA
-    return __msa_copy_u_w((v4i32)(v4u32) a, id);
+    return __msa_copy_u_w((v4i32) a.native(), id);
 #endif
 }
 
@@ -194,7 +194,7 @@ uint32_t i_extract(const uint32<4>& a)
 template<unsigned id> SIMDPP_INL
 uint32_t i_extract(const uint32<8>& a)
 {
-    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 4);
+    __m128i val = _mm256_extracti128_si256(a.native(), id / 4);
     return _mm_extract_epi32(val, id % 4);
 }
 #endif
@@ -203,7 +203,7 @@ uint32_t i_extract(const uint32<8>& a)
 template<unsigned id> SIMDPP_INL
 uint32_t i_extract(const uint32<16>& a)
 {
-    __m128i val = _mm512_extracti32x4_epi32(a, id / 4);
+    __m128i val = _mm512_extracti32x4_epi32(a.native(), id / 4);
     return _mm_extract_epi32(val, id % 4);
 }
 #endif
@@ -214,7 +214,7 @@ template<unsigned id> SIMDPP_INL
 int32_t i_extract(const int32<4>& a)
 {
 #if SIMDPP_USE_MSA
-    return __msa_copy_s_w(a, id);
+    return __msa_copy_s_w(a.native(), id);
 #else
     return i_extract<id>(uint32x4(a));
 #endif
@@ -224,7 +224,7 @@ int32_t i_extract(const int32<4>& a)
 template<unsigned id> SIMDPP_INL
 int32_t i_extract(const int32<8>& a)
 {
-    __m128i val = _mm256_extracti128_si256(a.operator __m256i(), id / 4);
+    __m128i val = _mm256_extracti128_si256(a.native(), id / 4);
     return _mm_extract_epi32(val, id % 4);
 }
 #endif
@@ -233,7 +233,7 @@ int32_t i_extract(const int32<8>& a)
 template<unsigned id> SIMDPP_INL
 int32_t i_extract(const int32<16>& a)
 {
-    __m128i val = _mm512_extracti32x4_epi32(a, id / 4);
+    __m128i val = _mm512_extracti32x4_epi32(a.native(), id / 4);
     return _mm_extract_epi32(val, id % 4);
 }
 #endif
@@ -252,7 +252,7 @@ uint64_t i_extract(const uint64<2>& a)
     r |= uint64_t(i_extract<id*2+1>(t)) << 32;
     return r;
 #else
-    return _mm_extract_epi64(a.operator __m128i(), id);
+    return _mm_extract_epi64(a.native(), id);
 #endif
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS
@@ -268,18 +268,18 @@ uint64_t i_extract(const uint64<2>& a)
     if (id != 0) {
         t = move2_l<id>(t);
     }
-    return _mm_cvtsi128_si64(t);
+    return _mm_cvtsi128_si64(t.native());
 #endif
 #elif SIMDPP_USE_NEON
-    return vgetq_lane_u64(a, id);
+    return vgetq_lane_u64(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint64x2> ax(a);
     return ax[id];
 #elif SIMDPP_USE_MSA
 #if SIMDPP_64_BITS
-    return __msa_copy_u_d((v2i64)(v2u64) a, id);
+    return __msa_copy_u_d((v2i64) a.native(), id);
 #else
-    v4i32 a32 = (int32<4>) a;
+    v4i32 a32 = (v4i32) a.native();
     uint64_t lo = __msa_copy_u_w(a32, id*2);
     uint64_t hi = __msa_copy_u_w(a32, id*2+1);
     return lo | (hi << 32);
@@ -291,7 +291,7 @@ uint64_t i_extract(const uint64<2>& a)
 template<unsigned id> SIMDPP_INL
 uint64_t i_extract(const uint64<4>& a)
 {
-    uint64<2> val = _mm256_extracti128_si256(a.operator __m256i(), id / 2);
+    uint64<2> val = _mm256_extracti128_si256(a.native(), id / 2);
     return i_extract<id % 2>(val);
 }
 #endif
@@ -300,7 +300,7 @@ uint64_t i_extract(const uint64<4>& a)
 template<unsigned id> SIMDPP_INL
 uint64_t i_extract(const uint64<8>& a)
 {
-    uint64<2> val = _mm512_extracti32x4_epi32(a, id / 2);
+    uint64<2> val = _mm512_extracti32x4_epi32(a.native(), id / 2);
     return i_extract<id % 2>(val);
 }
 #endif
@@ -314,7 +314,7 @@ int64_t i_extract(const int64<2>& a)
 #if SIMDPP_64_BITS
     return __msa_copy_s_d(a, id);
 #else
-    v4i32 a32 = (int32<4>) a;
+    v4i32 a32 = (v4i32) a.native();
     int64_t lo = __msa_copy_s_w(a32, id*2);
     int64_t hi = __msa_copy_s_w(a32, id*2+1);
     return lo | (hi << 32);
@@ -328,7 +328,7 @@ int64_t i_extract(const int64<2>& a)
 template<unsigned id> SIMDPP_INL
 int64_t i_extract(const int64<4>& a)
 {
-    uint64<2> val = _mm256_extracti128_si256(a.operator __m256i(), id / 2);
+    uint64<2> val = _mm256_extracti128_si256(a.native(), id / 2);
     return i_extract<id % 2>(val);
 }
 #endif
@@ -337,7 +337,7 @@ int64_t i_extract(const int64<4>& a)
 template<unsigned id> SIMDPP_INL
 int64_t i_extract(const int64<8>& a)
 {
-    uint64<2> val = _mm512_extracti32x4_epi32(a, id / 2);
+    uint64<2> val = _mm512_extracti32x4_epi32(a.native(), id / 2);
     return i_extract<id % 2>(val);
 }
 #endif
@@ -352,7 +352,7 @@ float i_extract(const float32<4>& a)
 #elif SIMDPP_USE_SSE2
     return bit_cast<float>(i_extract<id>(int32x4(a)));
 #elif SIMDPP_USE_NEON
-    return vgetq_lane_f32(a, id);
+    return vgetq_lane_f32(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     detail::mem_block<float32x4> ax(a);
     return ax[id];
@@ -363,7 +363,7 @@ float i_extract(const float32<4>& a)
 template<unsigned id> SIMDPP_INL
 float i_extract(const float32<8>& a)
 {
-    __m128 val = _mm256_extractf128_ps(a.operator __m256(), id / 4);
+    __m128 val = _mm256_extractf128_ps(a.native(), id / 4);
     return bit_cast<float>(_mm_extract_epi32(_mm_castps_si128(val), id % 4));
 }
 #endif
@@ -372,7 +372,7 @@ float i_extract(const float32<8>& a)
 template<unsigned id> SIMDPP_INL
 float i_extract(const float32<16>& a)
 {
-    __m128 val = _mm512_extractf32x4_ps(a.operator __m512(), id / 4);
+    __m128 val = _mm512_extractf32x4_ps(a.native(), id / 4);
     return bit_cast<float>(_mm_extract_epi32(_mm_castps_si128(val), id % 4));
 }
 #endif
@@ -390,7 +390,7 @@ double i_extract(const float64<2>& a)
     detail::mem_block<float64x2> ax(a);
     return ax[id];
 #elif SIMDPP_USE_NEON64
-    return vgetq_lane_f64(a, id);
+    return vgetq_lane_f64(a.native(), id);
 #endif
 }
 
@@ -398,7 +398,7 @@ double i_extract(const float64<2>& a)
 template<unsigned id> SIMDPP_INL
 double i_extract(const float64<4>& a)
 {
-    __m128d val = _mm256_extractf128_pd(a.operator __m256d(), id / 2);
+    __m128d val = _mm256_extractf128_pd(a.native(), id / 2);
     return bit_cast<double>(i_extract<id % 2>((uint64<2>)_mm_castpd_si128(val)));
 }
 #endif
@@ -407,7 +407,7 @@ double i_extract(const float64<4>& a)
 template<unsigned id> SIMDPP_INL
 double i_extract(const float64<8>& a)
 {
-    __m128 val = _mm512_extractf32x4_ps(_mm512_castpd_ps(a), id / 2);
+    __m128 val = _mm512_extractf32x4_ps(_mm512_castpd_ps(a.native()), id / 2);
     return bit_cast<double>(i_extract<id % 2>((uint64<2>)_mm_castps_si128(val)));
 }
 #endif

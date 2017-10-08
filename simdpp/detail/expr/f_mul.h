@@ -30,16 +30,16 @@ float32<4> expr_eval_mul(const float32<4,E1>& qa,
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::mul(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_mul_ps(a,b);
+    return _mm_mul_ps(a.native(), b.native());
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vmulq_f32(a, b);
+    return vmulq_f32(a.native(), b.native());
 #elif SIMDPP_USE_VSX_206
-    return vec_mul((__vector float) a, (__vector float) b);
+    return vec_mul(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_madd((__vector float)a, (__vector float)b,
-                    (__vector float)(float32x4) make_zero());
+    float32<4> zero = make_zero();
+    return vec_madd(a.native(), b.native(), zero.native());
 #elif SIMDPP_USE_MSA
-    return __msa_fmul_w(a, b);
+    return __msa_fmul_w(a.native(), b.native());
 #endif
 }
 
@@ -50,7 +50,7 @@ float32<8> expr_eval_mul(const float32<8,E1>& qa,
 {
     float32<8> a = qa.eval();
     float32<8> b = qb.eval();
-    return _mm256_mul_ps(a, b);
+    return _mm256_mul_ps(a.native(), b.native());
 }
 #endif
 
@@ -61,7 +61,7 @@ float32<16> expr_eval_mul(const float32<16,E1>& qa,
 {
     float32<16> a = qa.eval();
     float32<16> b = qb.eval();
-    return _mm512_mul_ps(a, b);
+    return _mm512_mul_ps(a.native(), b.native());
 }
 #endif
 
@@ -83,13 +83,13 @@ float64<2> expr_eval_mul(const float64<2,E1>& qa,
     float64<2> a = qa.eval();
     float64<2> b = qb.eval();
 #if SIMDPP_USE_SSE2
-    return _mm_mul_pd(a, b);
+    return _mm_mul_pd(a.native(), b.native());
 #elif SIMDPP_USE_NEON64
-    return vmulq_f64(a, b);
+    return vmulq_f64(a.native(), b.native());
 #elif SIMDPP_USE_VSX_206
-    return vec_mul((__vector double) a, (__vector double) b);
+    return vec_mul(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_fmul_d(a, b);
+    return __msa_fmul_d(a.native(), b.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::mul(a, b);
 #endif
@@ -102,7 +102,7 @@ float64<4> expr_eval_mul(const float64<4,E1>& qa,
 {
     float64<4> a = qa.eval();
     float64<4> b = qb.eval();
-    return _mm256_mul_pd(a, b);
+    return _mm256_mul_pd(a.native(), b.native());
 }
 #endif
 
@@ -113,7 +113,7 @@ float64<8> expr_eval_mul(const float64<8,E1>& qa,
 {
     float64<8> a = qa.eval();
     float64<8> b = qb.eval();
-    return _mm512_mul_pd(a, b);
+    return _mm512_mul_pd(a.native(), b.native());
 }
 #endif
 

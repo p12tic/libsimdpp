@@ -42,9 +42,9 @@ float32x4 i_ceil(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_ceil_ps(a);
+    return _mm_ceil_ps(a.native());
 #elif SIMDPP_USE_NEON64
-    return vrndpq_f32(a); // FIXME: ARMv8
+    return vrndpq_f32(a.native()); // FIXME: ARMv8
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_MSA
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
@@ -63,7 +63,7 @@ float32x4 i_ceil(const float32x4& a)
     //combine the results
     return blend(fa, a, mask);
 #elif SIMDPP_USE_ALTIVEC
-    return vec_ceil((__vector float)a);
+    return vec_ceil(a.native());
 #endif
 }
 
@@ -71,7 +71,7 @@ float32x4 i_ceil(const float32x4& a)
 static SIMDPP_INL
 float32x8 i_ceil(const float32x8& a)
 {
-    return _mm256_ceil_ps(a);
+    return _mm256_ceil_ps(a.native());
 }
 #endif
 
@@ -79,7 +79,7 @@ float32x8 i_ceil(const float32x8& a)
 static SIMDPP_INL
 float32<16> i_ceil(const float32<16>& a)
 {
-    return _mm512_ceil_ps(a);
+    return _mm512_ceil_ps(a.native());
 }
 #endif
 
@@ -89,7 +89,7 @@ static SIMDPP_INL
 float64x2 i_ceil(const float64x2& a)
 {
 #if SIMDPP_USE_SSE4_1
-    return _mm_ceil_pd(a);
+    return _mm_ceil_pd(a.native());
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     float64x2 af = abs(a);
     // check if the value is not too large or is a nan
@@ -126,9 +126,9 @@ float64x2 i_ceil(const float64x2& a)
 
     return blend(a2, a, mask_range);
 #elif SIMDPP_USE_NEON64
-    return vrndpq_f64(a);
+    return vrndpq_f64(a.native());
 #elif SIMDPP_USE_VSX_206
-    return vec_ceil((__vector double) a);
+    return vec_ceil(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     float64x2 r;
     for (unsigned i = 0; i < r.length; ++i) {
@@ -142,7 +142,7 @@ float64x2 i_ceil(const float64x2& a)
 static SIMDPP_INL
 float64x4 i_ceil(const float64x4& a)
 {
-    return _mm256_ceil_pd(a);
+    return _mm256_ceil_pd(a.native());
 }
 #endif
 
@@ -150,7 +150,7 @@ float64x4 i_ceil(const float64x4& a)
 static SIMDPP_INL
 float64<8> i_ceil(const float64<8>& a)
 {
-    return _mm512_ceil_pd(a);
+    return _mm512_ceil_pd(a.native());
 }
 #endif
 

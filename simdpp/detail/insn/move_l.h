@@ -27,10 +27,10 @@ template<unsigned shift> SIMDPP_INL
 uint8<16> vec_sld_biendian(const uint8<16>& lower, const uint8<16>& upper)
 {
 #if SIMDPP_BIG_ENDIAN
-    return vec_sld((__vector uint8_t)lower, (__vector uint8_t)upper, shift);
+    return vec_sld(lower.native(), upper.native(), shift);
 #else
     // by default GCC adjusts vec_sld element order to match endianness of the target
-    return vec_sld((__vector uint8_t)upper, (__vector uint8_t)lower, 16 - shift);
+    return vec_sld(upper.native(), lower.native(), 16 - shift);
 #endif
 }
 #endif
@@ -42,16 +42,16 @@ uint8x16 i_move16_l(const uint8x16& a)
 #if SIMDPP_USE_NULL
     return detail::null::move_n_l<shift>(a);
 #elif SIMDPP_USE_SSE2
-    return _mm_srli_si128(a, shift);
+    return _mm_srli_si128(a.native(), shift);
 #elif SIMDPP_USE_NEON
     uint8x16 z = make_zero();
-    return vextq_u8(a, z, shift);
+    return vextq_u8(a.native(), z.native(), shift);
 #elif SIMDPP_USE_ALTIVEC
     // return align<shift>(a, (uint8x16) make_zero());
     return vec_sld_biendian<shift>((uint8<16>)a, (uint8<16>)make_zero());
 #elif SIMDPP_USE_MSA
     uint8x16 zero = make_zero();
-    return (v16u8) __msa_sldi_b((v16i8)(v16u8)zero, (v16i8)(v16u8)a, shift);
+    return (v16u8) __msa_sldi_b((v16i8)zero.native(), (v16i8)a.native(), shift);
 #endif
 }
 
@@ -60,7 +60,7 @@ template<unsigned shift> SIMDPP_INL
 uint8x32 i_move16_l(const uint8x32& a)
 {
     static_assert(shift <= 16, "Selector out of range");
-    return _mm256_srli_si256(a, shift);
+    return _mm256_srli_si256(a.native(), shift);
 }
 #endif
 
@@ -69,7 +69,7 @@ template<unsigned shift> SIMDPP_INL
 uint8<64> i_move16_l(const uint8<64>& a)
 {
     static_assert(shift <= 16, "Selector out of range");
-    return _mm512_bsrli_epi128(a, shift);
+    return _mm512_bsrli_epi128(a.native(), shift);
 }
 #endif
 
@@ -97,7 +97,7 @@ template<unsigned shift> SIMDPP_INL
 uint16<16> i_move8_l(const uint16<16>& a)
 {
     static_assert(shift <= 8, "Selector out of range");
-    return _mm256_srli_si256(a, shift*2);
+    return _mm256_srli_si256(a.native(), shift*2);
 }
 #endif
 
@@ -106,7 +106,7 @@ template<unsigned shift> SIMDPP_INL
 uint16<32> i_move8_l(const uint16<32>& a)
 {
     static_assert(shift <= 8, "Selector out of range");
-    return _mm512_bsrli_epi128(a, shift*2);
+    return _mm512_bsrli_epi128(a.native(), shift*2);
 }
 #endif
 
@@ -133,7 +133,7 @@ template<unsigned shift> SIMDPP_INL
 uint32<8> i_move4_l(const uint32<8>& a)
 {
     static_assert(shift <= 4, "Selector out of range");
-    return _mm256_srli_si256(a, shift*4);
+    return _mm256_srli_si256(a.native(), shift*4);
 }
 #endif
 
@@ -145,9 +145,9 @@ uint32<16> i_move4_l(const uint32<16>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_epi32(0x7777, a, _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 2, 1)));
-    case 2: return _mm512_maskz_shuffle_epi32(0x3333, a, _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 2)));
-    case 3: return _mm512_maskz_shuffle_epi32(0x1111, a, _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 3)));
+    case 1: return _mm512_maskz_shuffle_epi32(0x7777, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 2, 1)));
+    case 2: return _mm512_maskz_shuffle_epi32(0x3333, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 2)));
+    case 3: return _mm512_maskz_shuffle_epi32(0x1111, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 3)));
     case 4: return make_zero();
     }
 }
@@ -176,7 +176,7 @@ template<unsigned shift> SIMDPP_INL
 uint64<4> i_move2_l(const uint64<4>& a)
 {
     static_assert(shift <= 2, "Selector out of range");
-    return _mm256_srli_si256(a, shift*8);
+    return _mm256_srli_si256(a.native(), shift*8);
 }
 #endif
 
@@ -224,9 +224,9 @@ float32<16> i_move4_l(const float32<16>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_ps(0x7777, a, a, _MM_SHUFFLE(3, 3, 2, 1));
-    case 2: return _mm512_maskz_shuffle_ps(0x3333, a, a, _MM_SHUFFLE(3, 3, 3, 2));
-    case 3: return _mm512_maskz_shuffle_ps(0x1111, a, a, _MM_SHUFFLE(3, 3, 3, 3));
+    case 1: return _mm512_maskz_shuffle_ps(0x7777, a.native(), a.native(), _MM_SHUFFLE(3, 3, 2, 1));
+    case 2: return _mm512_maskz_shuffle_ps(0x3333, a.native(), a.native(), _MM_SHUFFLE(3, 3, 3, 2));
+    case 3: return _mm512_maskz_shuffle_ps(0x1111, a.native(), a.native(), _MM_SHUFFLE(3, 3, 3, 3));
     case 4: return make_zero();
     }
 }
@@ -267,7 +267,7 @@ float64<8> i_move2_l(const float64<8>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_pd(0x55, a, a, SIMDPP_SHUFFLE_MASK_2x2_4(1, 1));
+    case 1: return _mm512_maskz_shuffle_pd(0x55, a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_4(1, 1));
     case 2: return make_zero();
     }
 }

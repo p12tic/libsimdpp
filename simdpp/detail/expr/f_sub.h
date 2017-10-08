@@ -28,13 +28,13 @@ float32<4> expr_eval_sub(const float32<4,E1>& qa,
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_sub_ps(a,b);
+    return _mm_sub_ps(a.native(), b.native());
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vsubq_f32(a, b);
+    return vsubq_f32(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sub((__vector float)a, (__vector float)b);
+    return vec_sub(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_fsub_w(a, b);
+    return __msa_fsub_w(a.native(), b.native());
 #endif
 }
 
@@ -45,7 +45,7 @@ float32<8> expr_eval_sub(const float32<8,E1>& qa,
 {
     float32<8> a = qa.eval();
     float32<8> b = qb.eval();
-    return _mm256_sub_ps(a, b);
+    return _mm256_sub_ps(a.native(), b.native());
 }
 #endif
 
@@ -56,7 +56,7 @@ float32<16> expr_eval_sub(const float32<16,E1>& qa,
 {
     float32<16> a = qa.eval();
     float32<16> b = qb.eval();
-    return _mm512_sub_ps(a, b);
+    return _mm512_sub_ps(a.native(), b.native());
 }
 #endif
 
@@ -78,15 +78,15 @@ float64<2> expr_eval_sub(const float64<2,E1>& qa,
     float64<2> a = qa.eval();
     float64<2> b = qb.eval();
 #if SIMDPP_USE_SSE2
-    return _mm_sub_pd(a, b);
+    return _mm_sub_pd(a.native(), b.native());
 #elif SIMDPP_USE_NEON64
-    return vsubq_f64(a, b);
+    return vsubq_f64(a.native(), b.native());
 #elif SIMDPP_USE_VSX_206
-    return vec_sub((__vector double)a, (__vector double)b);
+    return vec_sub(a.native(), b.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_MSA
-    return __msa_fsub_d(a, b);
+    return __msa_fsub_d(a.native(), b.native());
 #endif
 }
 
@@ -97,7 +97,7 @@ float64<4> expr_eval_sub(const float64<4,E1>& qa,
 {
     float64<4> a = qa.eval();
     float64<4> b = qb.eval();
-    return _mm256_sub_pd(a, b);
+    return _mm256_sub_pd(a.native(), b.native());
 }
 #endif
 
@@ -108,7 +108,7 @@ float64<8> expr_eval_sub(const float64<8,E1>& qa,
 {
     float64<8> a = qa.eval();
     float64<8> b = qb.eval();
-    return _mm512_sub_pd(a, b);
+    return _mm512_sub_pd(a.native(), b.native());
 }
 #endif
 

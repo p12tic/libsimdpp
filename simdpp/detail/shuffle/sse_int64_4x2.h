@@ -67,13 +67,13 @@ template<> struct shuffle_impl<1> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
-        return _mm256_unpacklo_epi64(a, b);
+        return _mm256_unpacklo_epi64(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint64<8> run(const uint64<8>& a, const uint64<8>& b)
     {
-        return _mm512_unpacklo_epi64(a, b);
+        return _mm512_unpacklo_epi64(a.native(), b.native());
     }
 #endif
 };
@@ -92,13 +92,13 @@ template<> struct shuffle_impl<3> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
-        return _mm256_unpackhi_epi64(a, b);
+        return _mm256_unpackhi_epi64(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static uint64<8> run(const uint64<8>& a, const uint64<8>& b)
     {
-        return _mm512_unpackhi_epi64(a, b);
+        return _mm512_unpackhi_epi64(a.native(), b.native());
     }
 #endif
 };
@@ -118,7 +118,7 @@ template<> struct shuffle_impl<5> {
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
         const unsigned mask = (s0<4 ? 0 : 0x3) | (s1<4 ? 0 : 0xc) | (s2<4 ? 0 : 0x30) | (s3<4 ? 0 : 0xc0);
-        return _mm256_blend_epi32(a, b, mask);
+        return _mm256_blend_epi32(a.native(), b.native(), mask);
     }
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
@@ -126,7 +126,7 @@ template<> struct shuffle_impl<5> {
     {
         const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
         const unsigned mask2 = mask | mask << 4;
-        return _mm512_mask_blend_epi64(mask2, a, b);
+        return _mm512_mask_blend_epi64(mask2, a.native(), b.native());
     }
 #endif
 };
@@ -136,8 +136,8 @@ template<> struct shuffle_impl<6> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
-        uint64<4> c = _mm256_blend_epi32(a, b, 0x33);
-        return _mm256_permute4x64_epi64(c, _MM_SHUFFLE(2,3,0,1));
+        __m256i n = _mm256_blend_epi32(a.native(), b.native(), 0x33);
+        return _mm256_permute4x64_epi64(n, _MM_SHUFFLE(2,3,0,1));
     }
 };
 
@@ -146,8 +146,8 @@ template<> struct shuffle_impl<7> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
-        uint64<4> c = _mm256_blend_epi32(a, b, 0xcc);
-        return _mm256_permute4x64_epi64(c, _MM_SHUFFLE(2,3,0,1));
+        __m256i n = _mm256_blend_epi32(a.native(), b.native(), 0xcc);
+        return _mm256_permute4x64_epi64(n, _MM_SHUFFLE(2,3,0,1));
     }
 };
 
@@ -159,8 +159,10 @@ template<> struct shuffle_impl<8> {
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
         uint8<16> mask = make_uint(s0, s1, s2, s3);
-        //FIXME GCC bug return _mm256_permutex2var_epi64(a, _mm256_cvtepi8_epi64(mask), b);
-        return _mm512_castsi512_si256(_mm512_permutex2var_epi64(_mm512_castsi256_si512(a), _mm512_cvtepi8_epi64(mask), _mm512_castsi256_si512(b)));
+        //FIXME GCC bug return _mm256_permutex2var_epi64(a.native(), _mm256_cvtepi8_epi64(mask.native()), b.native());
+        return _mm512_castsi512_si256(_mm512_permutex2var_epi64(_mm512_castsi256_si512(a.native()),
+                                                                _mm512_cvtepi8_epi64(mask.native()),
+                                                                _mm512_castsi256_si512(b.native())));
     }
 
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
@@ -171,7 +173,7 @@ template<> struct shuffle_impl<8> {
         const unsigned p2 = s2<4 ? s2 : s2+4;
         const unsigned p3 = s3<4 ? s3 : s3+4;
         uint8<16> mask = make_uint(p0, p1, p2, p3, p0+4, p1+4, p2+4, p3+4);
-        return _mm512_permutex2var_epi64(a, _mm512_cvtepi8_epi64(mask), b);
+        return _mm512_permutex2var_epi64(a.native(), _mm512_cvtepi8_epi64(mask.native()), b.native());
     }
 };
 #endif
@@ -182,8 +184,8 @@ template<> struct shuffle_impl<9> {
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
         const unsigned bl_mask = (s0<4 ? 0 : 0x3) | (s1<4 ? 0 : 0xc) | (s2<4 ? 0 : 0x30) | (s3<4 ? 0 : 0xc0);
-        __m256i ta = _mm256_permute4x64_epi64(a, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
-        __m256i tb = _mm256_permute4x64_epi64(b, SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256i ta = _mm256_permute4x64_epi64(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256i tb = _mm256_permute4x64_epi64(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
         return _mm256_blend_epi32(ta, tb, bl_mask);
     }
 };

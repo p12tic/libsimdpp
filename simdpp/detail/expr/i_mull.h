@@ -66,22 +66,22 @@ int32<8> expr_eval_mull(const int16<8,E1>& qa,
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    int16x8 lo = _mm_mullo_epi16(a, b);
-    int16x8 hi = _mm_mulhi_epi16(a, b);
+    int16x8 lo = _mm_mullo_epi16(a.native(), b.native());
+    int16x8 hi = _mm_mulhi_epi16(a.native(), b.native());
     return (int32x8)combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 #elif SIMDPP_USE_NEON
-    int32x4 lo = vmull_s16(vget_low_s16(a), vget_low_s16(b));
-    int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
+    int32x4 lo = vmull_s16(vget_low_s16(a.native()), vget_low_s16(b.native()));
+    int32x4 hi = vmull_s16(vget_high_s16(a.native()), vget_high_s16(b.native()));
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
-    int32x4 lo = vec_mule((__vector int16_t)a, (__vector int16_t)b);
-    int32x4 hi = vec_mulo((__vector int16_t)a, (__vector int16_t)b);
+    int32x4 lo = vec_mule(a.native(), b.native());
+    int32x4 hi = vec_mulo(a.native(), b.native());
     return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
 #elif SIMDPP_USE_MSA
     int32<8> a32 = to_int32(a);
     int32<8> b32 = to_int32(b);
-    a32.vec(0) = __msa_mulv_w(a32.vec(0), b32.vec(0));
-    a32.vec(1) = __msa_mulv_w(a32.vec(1), b32.vec(1));
+    a32.vec(0) = __msa_mulv_w(a32.vec(0).native(), b32.vec(0).native());
+    a32.vec(1) = __msa_mulv_w(a32.vec(1).native(), b32.vec(1).native());
     return a32;
 #endif
 }
@@ -93,10 +93,10 @@ int32<16> expr_eval_mull(const int16<16,E1>& qa,
 {
     int16<16> a = qa.eval();
     int16<16> b = qb.eval();
-    a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
-    b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
-    int16x16 lo = _mm256_mullo_epi16(a, b);
-    int16x16 hi = _mm256_mulhi_epi16(a, b);
+    a = _mm256_permute4x64_epi64(a.native(), _MM_SHUFFLE(3,1,2,0));
+    b = _mm256_permute4x64_epi64(b.native(), _MM_SHUFFLE(3,1,2,0));
+    int16x16 lo = _mm256_mullo_epi16(a.native(), b.native());
+    int16x16 hi = _mm256_mulhi_epi16(a.native(), b.native());
     return (int32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif
@@ -109,10 +109,10 @@ int32<32> expr_eval_mull(const int16<32,E1>& qa,
     int16<32> a = qa.eval();
     int16<32> b = qb.eval();
     int64<8> idx = make_uint(0, 4, 1, 5, 2, 6, 3, 7);
-    a = _mm512_permutexvar_epi64(idx, a);
-    b = _mm512_permutexvar_epi64(idx, b);
-    int16<32> lo = _mm512_mullo_epi16(a, b);
-    int16<32> hi = _mm512_mulhi_epi16(a, b);
+    a = _mm512_permutexvar_epi64(idx.native(), a.native());
+    b = _mm512_permutexvar_epi64(idx.native(), b.native());
+    int16<32> lo = _mm512_mullo_epi16(a.native(), b.native());
+    int16<32> hi = _mm512_mulhi_epi16(a.native(), b.native());
     return (int32<32>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif
@@ -145,22 +145,22 @@ uint32<8> expr_eval_mull(const uint16<8,E1>& qa,
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    int16x8 lo = _mm_mullo_epi16(a, b);
-    int16x8 hi = _mm_mulhi_epu16(a, b);
+    int16x8 lo = _mm_mullo_epi16(a.native(), b.native());
+    int16x8 hi = _mm_mulhi_epu16(a.native(), b.native());
     return (uint32x8) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 #elif SIMDPP_USE_NEON
-    uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
-    uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
+    uint32x4 lo = vmull_u16(vget_low_u16(a.native()), vget_low_u16(b.native()));
+    uint32x4 hi = vmull_u16(vget_high_u16(a.native()), vget_high_u16(b.native()));
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
-    uint32x4 lo = vec_mule((__vector uint16_t)a, (__vector uint16_t)b);
-    uint32x4 hi = vec_mulo((__vector uint16_t)a, (__vector uint16_t)b);
+    uint32x4 lo = vec_mule(a.native(), b.native());
+    uint32x4 hi = vec_mulo(a.native(), b.native());
     return combine(zip4_lo(lo, hi), zip4_hi(lo, hi));
 #elif SIMDPP_USE_MSA
     int32<8> a32 = (int32<8>) to_uint32(a);
     int32<8> b32 = (int32<8>) to_uint32(b);
-    a32.vec(0) = __msa_mulv_w(a32.vec(0), b32.vec(0));
-    a32.vec(1) = __msa_mulv_w(a32.vec(1), b32.vec(1));
+    a32.vec(0) = __msa_mulv_w(a32.vec(0).native(), b32.vec(0).native());
+    a32.vec(1) = __msa_mulv_w(a32.vec(1).native(), b32.vec(1).native());
     return uint32<8>(a32);
 #endif
 }
@@ -172,10 +172,10 @@ uint32<16> expr_eval_mull(const uint16<16,E1>& qa,
 {
     uint16<16> a = qa.eval();
     uint16<16> b = qb.eval();
-    a = _mm256_permute4x64_epi64(a, _MM_SHUFFLE(3,1,2,0));
-    b = _mm256_permute4x64_epi64(b, _MM_SHUFFLE(3,1,2,0));
-    int16x16 lo = _mm256_mullo_epi16(a, b);
-    int16x16 hi = _mm256_mulhi_epu16(a, b);
+    a = _mm256_permute4x64_epi64(a.native(), _MM_SHUFFLE(3,1,2,0));
+    b = _mm256_permute4x64_epi64(b.native(), _MM_SHUFFLE(3,1,2,0));
+    int16x16 lo = _mm256_mullo_epi16(a.native(), b.native());
+    int16x16 hi = _mm256_mulhi_epu16(a.native(), b.native());
     return (uint32<16>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif
@@ -188,10 +188,10 @@ uint32<32> expr_eval_mull(const uint16<32,E1>& qa,
     uint16<32> a = qa.eval();
     uint16<32> b = qb.eval();
     uint64<8> idx = make_uint(0, 4, 1, 5, 2, 6, 3, 7);
-    a = _mm512_permutexvar_epi64(idx, a);
-    b = _mm512_permutexvar_epi64(idx, b);
-    uint16<32> lo = _mm512_mullo_epi16(a, b);
-    uint16<32> hi = _mm512_mulhi_epu16(a, b);
+    a = _mm512_permutexvar_epi64(idx.native(), a.native());
+    b = _mm512_permutexvar_epi64(idx.native(), b.native());
+    uint16<32> lo = _mm512_mullo_epi16(a.native(), b.native());
+    uint16<32> hi = _mm512_mulhi_epu16(a.native(), b.native());
     return (uint32<32>) combine(zip8_lo(lo, hi), zip8_hi(lo, hi));
 }
 #endif
@@ -231,27 +231,27 @@ int64<4> expr_eval_mull(const int32<4,E1>& qa,
     bl = zip4_lo(b, b);
     ah = zip4_hi(a, a);
     bh = zip4_hi(b, b);
-    rl = _mm_mul_epi32(al, bl);
-    rh = _mm_mul_epi32(ah, bh);
+    rl = _mm_mul_epi32(al.native(), bl.native());
+    rh = _mm_mul_epi32(ah.native(), bh.native());
     return combine(rl, rh);
 #elif SIMDPP_USE_NEON
-    int64x2 lo = vmull_s32(vget_low_s32(a), vget_low_s32(b));
-    int64x2 hi = vmull_s32(vget_high_s32(a), vget_high_s32(b));
+    int64x2 lo = vmull_s32(vget_low_s32(a.native()), vget_low_s32(b.native()));
+    int64x2 hi = vmull_s32(vget_high_s32(a.native()), vget_high_s32(b.native()));
     return combine(lo, hi);
 #elif SIMDPP_USE_VSX_207
 #if defined(__GNUC__) && (__GNUC__ < 8)
     // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
     SIMDPP_NOT_IMPLEMENTED2(a, b);
 #else
-    int64x2 lo = vec_vmulesw((__vector int32_t)a, (__vector int32_t)b);
-    int64x2 hi = vec_vmulosw((__vector int32_t)a, (__vector int32_t)b);
+    int64x2 lo = vec_vmulesw(a.native(), b.native());
+    int64x2 hi = vec_vmulosw(a.native(), b.native());
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #endif
 #elif SIMDPP_USE_MSA
     int64<4> a64 = to_int64(a);
     int64<4> b64 = to_int64(b);
-    a64.vec(0) = __msa_mulv_d(a64.vec(0), b64.vec(0));
-    a64.vec(1) = __msa_mulv_d(a64.vec(1), b64.vec(1));
+    a64.vec(0) = __msa_mulv_d(a64.vec(0).native(), b64.vec(0).native());
+    a64.vec(1) = __msa_mulv_d(a64.vec(1).native(), b64.vec(1).native());
     return a64;
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
@@ -270,8 +270,8 @@ int64<8> expr_eval_mull(const int32<8,E1>& qa,
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm256_mul_epi32(to_int64(al).eval(), to_int64(bl).eval());
-    rh = _mm256_mul_epi32(to_int64(ah).eval(), to_int64(bh).eval());
+    rl = _mm256_mul_epi32(to_int64(al).eval().native(), to_int64(bl).eval().native());
+    rh = _mm256_mul_epi32(to_int64(ah).eval().native(), to_int64(bh).eval().native());
     return combine(rl, rh);
 }
 #endif
@@ -311,20 +311,20 @@ uint64<4> expr_eval_mull(const uint32<4,E1>& qa,
     bl = zip4_lo(b, b);
     ah = zip4_hi(a, a);
     bh = zip4_hi(b, b);
-    rl = _mm_mul_epu32(al, bl);
-    rh = _mm_mul_epu32(ah, bh);
+    rl = _mm_mul_epu32(al.native(), bl.native());
+    rh = _mm_mul_epu32(ah.native(), bh.native());
     return combine(rl, rh);
 #elif SIMDPP_USE_NEON
-    uint64x2 lo = vmull_u32(vget_low_u32(a), vget_low_u32(b));
-    uint64x2 hi = vmull_u32(vget_high_u32(a), vget_high_u32(b));
+    uint64x2 lo = vmull_u32(vget_low_u32(a.native()), vget_low_u32(b.native()));
+    uint64x2 hi = vmull_u32(vget_high_u32(a.native()), vget_high_u32(b.native()));
     return combine(lo, hi);
 #elif SIMDPP_USE_VSX_207
 #if defined(__GNUC__) && (__GNUC__ < 8)
     // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
     SIMDPP_NOT_IMPLEMENTED2(a, b);
 #else
-    uint64x2 lo = vec_vmuleuw((__vector uint32_t)a, (__vector uint32_t)b);
-    uint64x2 hi = vec_vmulouw((__vector uint32_t)a, (__vector uint32_t)b);
+    uint64x2 lo = vec_vmuleuw(a.native(), b.native());
+    uint64x2 hi = vec_vmulouw(a.native(), b.native());
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #endif
 #elif SIMDPP_USE_ALTIVEC
@@ -339,8 +339,8 @@ uint64<4> expr_eval_mull(const uint32<4,E1>& qa,
 #elif SIMDPP_USE_MSA
     int64<4> a64 = (int64<4>) to_uint64(a);
     int64<4> b64 = (int64<4>) to_uint64(b);
-    a64.vec(0) = __msa_mulv_d(a64.vec(0), b64.vec(0));
-    a64.vec(1) = __msa_mulv_d(a64.vec(1), b64.vec(1));
+    a64.vec(0) = __msa_mulv_d(a64.vec(0).native(), b64.vec(0).native());
+    a64.vec(1) = __msa_mulv_d(a64.vec(1).native(), b64.vec(1).native());
     return (uint64<4>) a64;
 #endif
 }
@@ -358,8 +358,8 @@ uint64<8> expr_eval_mull(const uint32<8,E1>& qa,
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm256_mul_epu32(to_uint64(al).eval(), to_uint64(bl).eval());
-    rh = _mm256_mul_epu32(to_uint64(ah).eval(), to_uint64(bh).eval());
+    rl = _mm256_mul_epu32(to_uint64(al).eval().native(), to_uint64(bl).eval().native());
+    rh = _mm256_mul_epu32(to_uint64(ah).eval().native(), to_uint64(bh).eval().native());
 
     return combine(rl, rh);
 }
@@ -378,8 +378,8 @@ uint64<16> expr_eval_mull(const uint32<16,E1>& qa,
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm512_mul_epu32(to_int64(al).eval(), to_int64(bl).eval());
-    rh = _mm512_mul_epu32(to_int64(ah).eval(), to_int64(bh).eval());
+    rl = _mm512_mul_epu32(to_int64(al).eval().native(), to_int64(bl).eval().native());
+    rh = _mm512_mul_epu32(to_int64(ah).eval().native(), to_int64(bh).eval().native());
 
     return combine(rl, rh);
 }

@@ -37,7 +37,7 @@ uint8x16 load1_u(uint8x16& a, const uint8_t* p)
     // The format of vec_lvs{l,r} is compatible with the one accepted by
     // shuffle_bytes16
     __vector uint8_t perm = vec_lvsl(0, p);
-    a = (__vector uint8_t) vec_perm((__vector uint8_t)a, (__vector uint8_t)a, perm);
+    a = (__vector uint8_t) vec_perm(a.native(), a.native(), perm);
     return a;
 }
 
@@ -46,7 +46,8 @@ uint16x8 load1_u(uint16x8& a, const uint16_t* p)
 {
     __vector uint16_t r = vec_lde(0, p);
     __vector uint8_t perm = vec_lvsl(0, p);
-    a = (__vector uint16_t) vec_perm((__vector uint8_t)r, (__vector uint8_t)r, perm);
+    a = (__vector uint16_t) vec_perm((__vector uint8_t)r,
+                                     (__vector uint8_t)r, perm);
     return a;
 }
 
@@ -55,7 +56,8 @@ uint32x4 load1_u(uint32x4& a, const uint32_t* p)
 {
     __vector uint32_t r = vec_lde(0, p);
     __vector uint8_t perm = vec_lvsl(0, p);
-    a = (__vector uint32_t) vec_perm((__vector uint8_t)r, (__vector uint8_t)r, perm);
+    a = (__vector uint32_t) vec_perm((__vector uint8_t)r,
+                                     (__vector uint8_t)r, perm);
     return a;
 }
 
@@ -64,7 +66,8 @@ float32x4 load1_u(float32x4& a, const float* p)
 {
     __vector float r = vec_lde(0, p);
     __vector uint8_t perm = vec_lvsl(0, p);
-    a = (__vector float) vec_perm((__vector uint8_t)r, (__vector uint8_t)r, perm);
+    a = (__vector float) vec_perm((__vector uint8_t)r,
+                                  (__vector uint8_t)r, perm);
     return a;
 }
 

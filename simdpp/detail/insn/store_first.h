@@ -43,7 +43,7 @@ void i_store_first(char* p, const uint8x16& a, unsigned n)
 #elif SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN
     uint8<16> mask = make_ones();
     uint8<16> shift = vec_splats((unsigned char)(n << 3));
-    mask = vec_slo((__vector uint8_t)mask, (__vector uint8_t)shift);
+    mask = vec_slo(mask.native(), shift.native());
 
     uint8x16 b = load(p);
     b = blend(b, a, mask);
@@ -151,7 +151,7 @@ void i_store_first(char* p, const uint32x8& a, unsigned n)
     static const int32_t mask_d[16] = { -1, -1, -1, -1, -1, -1, -1, -1,
                                         0, 0, 0, 0, 0, 0, 0, 0 };
     uint32<8> mask = load_u(mask_d + 8-n);
-    _mm256_maskstore_epi32(reinterpret_cast<int*>(p), mask, a);
+    _mm256_maskstore_epi32(reinterpret_cast<int*>(p), mask.native(), a.native());
 }
 #endif
 
@@ -159,7 +159,7 @@ void i_store_first(char* p, const uint32x8& a, unsigned n)
 static SIMDPP_INL
 void i_store_first(char* p, const uint32<16>& a, unsigned n)
 {
-    _mm512_mask_store_epi32(p, 0xffff >> (16-n), a);
+    _mm512_mask_store_epi32(p, 0xffff >> (16-n), a.native());
 }
 #endif
 
@@ -171,7 +171,7 @@ void i_store_first(char* p, const uint64x2& a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2
     if (n == 1) {
-        _mm_store_sd(reinterpret_cast<double*>(p), _mm_castsi128_pd(a));
+        _mm_store_sd(reinterpret_cast<double*>(p), _mm_castsi128_pd(a.native()));
     }
 #elif SIMDPP_USE_NEON
     if (n == 1) {
@@ -180,7 +180,7 @@ void i_store_first(char* p, const uint64x2& a, unsigned n)
 #elif SIMDPP_USE_VSX_207
     if (n == 1) {
         uint64_t* q = reinterpret_cast<uint64_t*>(p);
-        *q = vec_extract((__vector uint64_t) a, 0);
+        *q = vec_extract(a.native(), 0);
     }
 #elif SIMDPP_USE_MSA
     i_store_first(p, uint8<16>(a), n*8);
@@ -196,9 +196,9 @@ void i_store_first(char* p, const uint64x4& a, unsigned n)
     static const int64_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     uint64<4> mask = load_u(mask_d + 4-n);
 #if __INTEL_COMPILER
-    _mm256_maskstore_epi64(reinterpret_cast<__int64*>(p), mask, a);
+    _mm256_maskstore_epi64(reinterpret_cast<__int64*>(p), mask.native(), a.native());
 #else
-    _mm256_maskstore_epi64(reinterpret_cast<long long*>(p), mask, a);
+    _mm256_maskstore_epi64(reinterpret_cast<long long*>(p), mask.native(), a.native());
 #endif
 }
 #endif
@@ -207,7 +207,7 @@ void i_store_first(char* p, const uint64x4& a, unsigned n)
 static SIMDPP_INL
 void i_store_first(char* p, const uint64<8>& a, unsigned n)
 {
-    _mm512_mask_store_epi64(p, 0xff >> (8-n), a);
+    _mm512_mask_store_epi64(p, 0xff >> (8-n), a.native());
 }
 #endif
 
@@ -222,7 +222,7 @@ void i_store_first(char* p, const float32x4& a, unsigned n)
 #elif SIMDPP_USE_AVX && !SIMDPP_USE_AMD
     static const int32_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     float32x4 mask = load_u(mask_d + 4-n);
-    _mm_maskstore_ps(reinterpret_cast<float*>(p), _mm_castps_si128(mask), a);
+    _mm_maskstore_ps(reinterpret_cast<float*>(p), _mm_castps_si128(mask.native()), a.native());
 #elif SIMDPP_USE_SSE2
     static const int32_t mask_d[8] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     float32x4 mask = load_u(mask_d + 4-n);
@@ -250,7 +250,7 @@ void i_store_first(char* p, const float32x8& a, unsigned n)
 
     float32x8 mask = load_u(mask_d + 8-n);
 #if !SIMDPP_USE_AMD
-    _mm256_maskstore_ps(reinterpret_cast<float*>(p), _mm256_castps_si256(mask), a);
+    _mm256_maskstore_ps(reinterpret_cast<float*>(p), _mm256_castps_si256(mask.native()), a.native());
 #else
     float32x8 b = load(p);
     b = blend(a, b, mask);
@@ -263,7 +263,7 @@ void i_store_first(char* p, const float32x8& a, unsigned n)
 static SIMDPP_INL
 void i_store_first(char* p, const float32<16>& a, unsigned n)
 {
-    _mm512_mask_store_ps(p, 0xffff >> (16-n), a);
+    _mm512_mask_store_ps(p, 0xffff >> (16-n), a.native());
 }
 #endif
 
@@ -275,16 +275,16 @@ void i_store_first(char* p, const float64x2& a, unsigned n)
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2
     if (n == 1) {
-        _mm_store_sd(reinterpret_cast<double*>(p), a);
+        _mm_store_sd(reinterpret_cast<double*>(p), a.native());
     }
 #elif SIMDPP_USE_NEON64
     if (n == 1) {
-        vst1_f64(reinterpret_cast<double*>(p), vget_low_f64(a));
+        vst1_f64(reinterpret_cast<double*>(p), vget_low_f64(a.native()));
     }
 #elif SIMDPP_USE_VSX_206
     if (n == 1) {
         double* q = reinterpret_cast<double*>(p);
-        *q = vec_extract((__vector double) a, 0);
+        *q = vec_extract(a.native(), 0);
     }
 #elif SIMDPP_USE_MSA
     i_store_first(p, (uint64x2)a, n);
@@ -300,7 +300,7 @@ void i_store_first(char* p, const float64x4& a, unsigned n)
     static const int64_t mask_d[16] = { -1, -1, -1, -1, 0, 0, 0, 0 };
     float64x4 mask = load_u(mask_d + 4-n);
 #if !SIMDPP_USE_AMD
-    _mm256_maskstore_pd(reinterpret_cast<double*>(p), _mm256_castpd_si256(mask), a);
+    _mm256_maskstore_pd(reinterpret_cast<double*>(p), _mm256_castpd_si256(mask.native()), a.native());
 #else
     float64x4 b = load(p);
     b = blend(a, b, mask);
@@ -313,7 +313,7 @@ void i_store_first(char* p, const float64x4& a, unsigned n)
 static SIMDPP_INL
 void i_store_first(char* p, const float64<8>& a, unsigned n)
 {
-    _mm512_mask_store_pd(p, 0xff >> (8-n), a);
+    _mm512_mask_store_pd(p, 0xff >> (8-n), a.native());
 }
 #endif
 

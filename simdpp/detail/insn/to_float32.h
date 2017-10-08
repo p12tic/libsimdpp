@@ -39,7 +39,7 @@ float32x4 i_to_float32(const int32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_cvtepi32_ps(a);
+    return _mm_cvtepi32_ps(a.native());
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<int32x4> mi(a);
     detail::mem_block<float32x4> mf;
@@ -49,11 +49,11 @@ float32x4 i_to_float32(const int32x4& a)
     mf[3] = float(mi[3]);
     return mf;
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vcvtq_f32_s32(a);
+    return vcvtq_f32_s32(a.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_ctf((__vector int32_t)a, 0);
+    return vec_ctf(a.native(), 0);
 #elif SIMDPP_USE_MSA
-    return __msa_ffint_s_w(a);
+    return __msa_ffint_s_w(a.native());
 #endif
 }
 
@@ -62,11 +62,11 @@ static SIMDPP_INL
 float32x8 i_to_float32(const int32x8& a)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_cvtepi32_ps(a);
+    return _mm256_cvtepi32_ps(a.native());
 #else
     __m256i a1;
-    a1 = _mm256_castsi128_si256(a.vec(0));
-    a1 = _mm256_insertf128_si256(a1, a.vec(1), 1);
+    a1 = _mm256_castsi128_si256(a.vec(0).native());
+    a1 = _mm256_insertf128_si256(a1, a.vec(1).native(), 1);
     return _mm256_cvtepi32_ps(a1);
 #endif
 }
@@ -76,7 +76,7 @@ float32x8 i_to_float32(const int32x8& a)
 static SIMDPP_INL
 float32<16> i_to_float32(const int32<16>& a)
 {
-    return _mm512_cvtepi32_ps(a);
+    return _mm512_cvtepi32_ps(a.native());
 }
 #endif
 
@@ -96,27 +96,27 @@ static SIMDPP_INL
 float32x4 i_to_float32(const float64x4& a)
 {
 #if SIMDPP_USE_AVX
-    return _mm256_cvtpd_ps(a);
+    return _mm256_cvtpd_ps(a.native());
 #elif SIMDPP_USE_SSE2
     float32x4 r1, r2;
-    r1 = _mm_cvtpd_ps(a.vec(0));
-    r2 = _mm_cvtpd_ps(a.vec(1));
+    r1 = _mm_cvtpd_ps(a.vec(0).native());
+    r2 = _mm_cvtpd_ps(a.vec(1).native());
     r2 = move4_l<2>(r2);
     return bit_or(r1, r2);
 #elif SIMDPP_USE_NEON64
     float32<4> r;
-    r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0)),
-                          a.vec(1));
+    r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0).native()),
+                          a.vec(1).native());
     return r;
 #elif SIMDPP_USE_VSX_206
     float32<4> lo, hi;
     uint32<4> shuffle_mask;
-    lo = __builtin_vsx_xvcvdpsp((__vector double) a.vec(0));
-    hi = __builtin_vsx_xvcvdpsp((__vector double) a.vec(1));
+    lo = __builtin_vsx_xvcvdpsp(a.vec(0).native());
+    hi = __builtin_vsx_xvcvdpsp(a.vec(1).native());
     shuffle_mask = make_shuffle_bytes16_mask<0,2,4,6>(shuffle_mask);
     return shuffle_bytes16(lo, hi, shuffle_mask);
 #elif SIMDPP_USE_MSA
-    return __msa_fexdo_w(a.vec(0), a.vec(1));
+    return __msa_fexdo_w(a.vec(0).native(), a.vec(1).native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
     r[0] = float(a.vec(0).el(0));
@@ -132,7 +132,7 @@ static SIMDPP_INL
 float32x8 i_to_float32(const float64<8>& a)
 {
 #if SIMDPP_USE_AVX512F
-    return _mm512_cvt_roundpd_ps(a, (_MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC));
+    return _mm512_cvt_roundpd_ps(a.native(), (_MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC));
 #else
     float32x4 r1, r2;
     r1 = i_to_float32(a.vec(0));

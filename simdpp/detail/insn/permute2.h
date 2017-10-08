@@ -60,7 +60,7 @@ uint64x2 i_permute2(const uint64x2& a)
 #elif SIMDPP_USE_NEON
     return detail::neon_shuffle_int64x2::permute2<s0,s1>(a);
 #elif SIMDPP_USE_VSX_207
-    return vec_xxpermdi((__vector uint64_t) a, (__vector uint64_t) a,
+    return vec_xxpermdi(a.native(), a.native(),
                         SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::permute<s0,s1>(a);
@@ -99,9 +99,9 @@ float64x2 i_permute2(const float64x2& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_SSE2
-    return _mm_shuffle_pd(a, a, SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+    return _mm_shuffle_pd(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
 #elif SIMDPP_USE_VSX_206
-    return vec_xxpermdi((__vector double) a, (__vector double) a,
+    return vec_xxpermdi(a.native(), a.native(),
                         SIMDPP_VSX_SHUFFLE_MASK_2x2(s0, s1));
 #elif SIMDPP_USE_NEON64 || SIMDPP_USE_MSA
     return float64x2(i_permute2<s0,s1>(int64x2(a)));
@@ -116,9 +116,9 @@ float64x4 i_permute2(const float64x4& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_AVX2
-    return _mm256_permute4x64_pd(a, s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
+    return _mm256_permute4x64_pd(a.native(), s0 | s1<<2 | (s0+2)<<4 | (s1+2)<<6);
 #else // SIMDPP_USE_AVX
-    return _mm256_permute_pd(a, s0 | s1<<1 | s0<<2 | s1<<3);
+    return _mm256_permute_pd(a.native(), s0 | s1<<1 | s0<<2 | s1<<3);
 #endif
 }
 #endif
@@ -128,7 +128,7 @@ template<unsigned s0, unsigned s1> SIMDPP_INL
 float64<8> i_permute2(const float64<8>& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    return _mm512_permute_pd(a, s0 | s1<<1 | s0<<2 | s1<<3 | s0<<4 | s1<<5 | s0<<6 | s1<<7);
+    return _mm512_permute_pd(a.native(), s0 | s1<<1 | s0<<2 | s1<<3 | s0<<4 | s1<<5 | s0<<6 | s1<<7);
 }
 #endif
 

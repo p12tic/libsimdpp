@@ -196,7 +196,7 @@ public:
 #endif
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d) {}
+    SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_int32<4>(const mask_float32<4,E>& d)

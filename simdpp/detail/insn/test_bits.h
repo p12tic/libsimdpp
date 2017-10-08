@@ -31,10 +31,10 @@ bool i_test_bits_any(const uint32<4>& a)
 #if SIMDPP_USE_NULL
     return null::test_bits_any(a);
 #elif SIMDPP_USE_SSE4_1
-    return !_mm_testz_si128(a, a);
+    return !_mm_testz_si128(a.native(), a.native());
 #elif SIMDPP_USE_SSE2
-    uint32<4> r = _mm_cmpeq_epi32(a, _mm_setzero_si128());
-    return _mm_movemask_epi8(r) != 0xffff;
+    uint32<4> r = _mm_cmpeq_epi32(a.native(), _mm_setzero_si128());
+    return _mm_movemask_epi8(r.native()) != 0xffff;
 #elif SIMDPP_USE_NEON
 #if SIMDPP_64_BITS
     uint64<2> r;
@@ -48,9 +48,9 @@ bool i_test_bits_any(const uint32<4>& a)
 #endif
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> z = make_uint(0);
-    return vec_any_gt((__vector uint32_t)a, (__vector uint32_t)z);
+    return vec_any_gt(a.native(), z.native());
 #elif SIMDPP_USE_MSA
-    return __msa_test_bnz_v((uint8<16>) a);
+    return __msa_test_bnz_v((v16u8) a.native());
 #endif
 }
 
@@ -64,7 +64,7 @@ bool i_test_bits_any(const uint64<2>& a)
 {
 #if SIMDPP_USE_VSX_207
     uint64<2> z = make_zero();
-    return vec_any_gt((__vector uint64_t)a, (__vector uint64_t)z);
+    return vec_any_gt(a.native(), z.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return null::test_bits_any(a);
 #else
@@ -98,33 +98,33 @@ bool i_test_bits_any(const float64<2>& a)
 static SIMDPP_INL
 bool i_test_bits_any(const float32<8>& a)
 {
-    return !_mm256_testz_si256(_mm256_castps_si256(a),
-                               _mm256_castps_si256(a));
+    return !_mm256_testz_si256(_mm256_castps_si256(a.native()),
+                               _mm256_castps_si256(a.native()));
 }
 static SIMDPP_INL
 bool i_test_bits_any(const float64<4>& a)
 {
-    return !_mm256_testz_si256(_mm256_castpd_si256(a),
-                               _mm256_castpd_si256(a));
+    return !_mm256_testz_si256(_mm256_castpd_si256(a.native()),
+                               _mm256_castpd_si256(a.native()));
 }
 #endif
 
 #if SIMDPP_USE_AVX2
 static SIMDPP_INL
-bool i_test_bits_any(const uint8<32>& a) { return !_mm256_testz_si256(a, a); }
+bool i_test_bits_any(const uint8<32>& a) { return !_mm256_testz_si256(a.native(), a.native()); }
 static SIMDPP_INL
-bool i_test_bits_any(const uint16<16>& a) { return !_mm256_testz_si256(a, a); }
+bool i_test_bits_any(const uint16<16>& a) { return !_mm256_testz_si256(a.native(), a.native()); }
 static SIMDPP_INL
-bool i_test_bits_any(const uint32<8>& a) { return !_mm256_testz_si256(a, a); }
+bool i_test_bits_any(const uint32<8>& a) { return !_mm256_testz_si256(a.native(), a.native()); }
 static SIMDPP_INL
-bool i_test_bits_any(const uint64<4>& a) { return !_mm256_testz_si256(a, a); }
+bool i_test_bits_any(const uint64<4>& a) { return !_mm256_testz_si256(a.native(), a.native()); }
 #endif
 
 #if SIMDPP_USE_AVX512F
 static SIMDPP_INL
 bool i_test_bits_any(const uint32<16>& a)
 {
-    return _mm512_test_epi64_mask(a, a) != 0;
+    return _mm512_test_epi64_mask(a.native(), a.native()) != 0;
 }
 static SIMDPP_INL
 bool i_test_bits_any(const uint64<8>& a) { return i_test_bits_any(uint32<16>(a)); }

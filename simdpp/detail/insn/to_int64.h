@@ -34,11 +34,11 @@ int64x4 i_to_int64(const int32x4& a)
     r.vec(1).el(1) = int64_t(a.el(3));
     return r;
 #elif SIMDPP_USE_AVX2
-    return _mm256_cvtepi32_epi64(a);
+    return _mm256_cvtepi32_epi64(a.native());
 #elif SIMDPP_USE_SSE4_1
     uint64x2 r1, r2;
-    r1 = _mm_cvtepi32_epi64(a);
-    r2 = _mm_cvtepi32_epi64(move4_l<2>(a).eval());
+    r1 = _mm_cvtepi32_epi64(a.native());
+    r2 = _mm_cvtepi32_epi64(move4_l<2>(a).eval().native());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     int32x4 sign = shift_r<31>(a);
@@ -48,8 +48,8 @@ int64x4 i_to_int64(const int32x4& a)
     return combine(lo, hi);
 #elif SIMDPP_USE_NEON
     int64x2 r1, r2;
-    r1 = vmovl_s32(vget_low_s32(a));
-    r2 = vmovl_s32(vget_high_s32(a));
+    r1 = vmovl_s32(vget_low_s32(a.native()));
+    r2 = vmovl_s32(vget_high_s32(a.native()));
     return combine(r1, r2);
 #elif SIMDPP_USE_ALTIVEC
     int64x4 r;
@@ -69,8 +69,8 @@ int64<8> i_to_int64(const int32<8>& a)
     int32<4> a1, a2;
     int64<4> r1, r2;
     split(a, a1, a2);
-    r1 = _mm256_cvtepi32_epi64(a1);
-    r2 = _mm256_cvtepi32_epi64(a2);
+    r1 = _mm256_cvtepi32_epi64(a1.native());
+    r2 = _mm256_cvtepi32_epi64(a2.native());
     return combine(r1, r2);
 }
 #endif
@@ -80,8 +80,8 @@ static SIMDPP_INL
 int64<16> i_to_int64(const int32<16>& a)
 {
     int64<8> r1, r2;
-    r1 = _mm512_cvtepi32_epi64(_mm512_castsi512_si256(a));
-    r2 = _mm512_cvtepi32_epi64(_mm512_extracti64x4_epi64(a, 1));
+    r1 = _mm512_cvtepi32_epi64(_mm512_castsi512_si256(a.native()));
+    r2 = _mm512_cvtepi32_epi64(_mm512_extracti64x4_epi64(a.native(), 1));
     return combine(r1, r2);
 }
 #endif
@@ -109,19 +109,19 @@ uint64x4 i_to_uint64(const uint32x4& a)
     r.vec(1).el(1) = uint64_t(a.el(3));
     return r;
 #elif SIMDPP_USE_AVX2
-    return _mm256_cvtepu32_epi64(a);
+    return _mm256_cvtepu32_epi64(a.native());
 #elif SIMDPP_USE_SSE4_1
     uint64x2 r1, r2;
-    r1 = _mm_cvtepu32_epi64(a);
-    r2 = _mm_cvtepu32_epi64(move4_l<2>(a).eval());
+    r1 = _mm_cvtepu32_epi64(a.native());
+    r2 = _mm_cvtepu32_epi64(move4_l<2>(a).eval().native());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     return (uint64x4) combine(zip4_lo(a, (uint32x4) make_zero()),
                               zip4_hi(a, (uint32x4) make_zero()));
 #elif SIMDPP_USE_NEON
     uint64x2 r1, r2;
-    r1 = vmovl_u32(vget_low_u32(a));
-    r2 = vmovl_u32(vget_high_u32(a));
+    r1 = vmovl_u32(vget_low_u32(a.native()));
+    r2 = vmovl_u32(vget_high_u32(a.native()));
     return combine(r1, r2);
 #elif SIMDPP_USE_ALTIVEC
     uint64x4 r;
@@ -141,8 +141,8 @@ uint64<8> i_to_uint64(const uint32<8>& a)
     uint32<4> a1, a2;
     uint64<4> r1, r2;
     split(a, a1, a2);
-    r1 = _mm256_cvtepu32_epi64(a1);
-    r2 = _mm256_cvtepu32_epi64(a2);
+    r1 = _mm256_cvtepu32_epi64(a1.native());
+    r2 = _mm256_cvtepu32_epi64(a2.native());
     return combine(r1, r2);
 }
 #endif
@@ -154,8 +154,8 @@ uint64<16> i_to_uint64(const uint32<16>& a)
     uint32<8> a1, a2;
     uint64<8> r1, r2;
     split(a, a1, a2);
-    r1 = _mm512_cvtepu32_epi64(a1);
-    r2 = _mm512_cvtepu32_epi64(a2);
+    r1 = _mm512_cvtepu32_epi64(a1.native());
+    r2 = _mm512_cvtepu32_epi64(a2.native());
     return combine(r1, r2);
 }
 #endif

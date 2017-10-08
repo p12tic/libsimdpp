@@ -27,13 +27,13 @@ float32x4 i_min(const float32x4& a, const float32x4& b)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::min(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_min_ps(a, b);
+    return _mm_min_ps(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vminq_f32(a, b);
+    return vminq_f32(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_min((__vector float)a, (__vector float)b);
+    return vec_min(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_fmin_w(a, b);
+    return __msa_fmin_w(a.native(), b.native());
 #endif
 }
 
@@ -41,7 +41,7 @@ float32x4 i_min(const float32x4& a, const float32x4& b)
 static SIMDPP_INL
 float32x8 i_min(const float32x8& a, const float32x8& b)
 {
-    return _mm256_min_ps(a, b);
+    return _mm256_min_ps(a.native(), b.native());
 }
 #endif
 
@@ -49,7 +49,7 @@ float32x8 i_min(const float32x8& a, const float32x8& b)
 static SIMDPP_INL
 float32<16> i_min(const float32<16>& a, const float32<16>& b)
 {
-    return _mm512_min_ps(a, b);
+    return _mm512_min_ps(a.native(), b.native());
 }
 #endif
 
@@ -65,13 +65,13 @@ static SIMDPP_INL
 float64x2 i_min(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_SSE2
-    return _mm_min_pd(a, b);
+    return _mm_min_pd(a.native(), b.native());
 #elif SIMDPP_USE_NEON64
-    return vminq_f64(a, b);
+    return vminq_f64(a.native(), b.native());
 #elif SIMDPP_USE_VSX_206
-    return vec_min((__vector double) a, (__vector double) b);
+    return vec_min(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_fmin_d(a, b);
+    return __msa_fmin_d(a.native(), b.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::min(a, b);
 #endif
@@ -81,7 +81,7 @@ float64x2 i_min(const float64x2& a, const float64x2& b)
 static SIMDPP_INL
 float64x4 i_min(const float64x4& a, const float64x4& b)
 {
-    return _mm256_min_pd(a, b);
+    return _mm256_min_pd(a.native(), b.native());
 }
 #endif
 
@@ -89,7 +89,7 @@ float64x4 i_min(const float64x4& a, const float64x4& b)
 static SIMDPP_INL
 float64<8> i_min(const float64<8>& a, const float64<8>& b)
 {
-    return _mm512_min_pd(a, b);
+    return _mm512_min_pd(a.native(), b.native());
 }
 #endif
 

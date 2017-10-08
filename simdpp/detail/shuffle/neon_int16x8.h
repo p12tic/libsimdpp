@@ -38,8 +38,8 @@ using H = uint16x4_t;       // half vector
 template<unsigned n> SIMDPP_INL
 T bcast(T a)
 {
-    H h1 = vget_low_u16(a);
-    H h2 = vget_high_u16(a);
+    H h1 = vget_low_u16(a.native());
+    H h2 = vget_high_u16(a.native());
     h1 = vdup_lane_u16(h1, n);
     h2 = vdup_lane_u16(h2, n);
     return vcombine_u16(h1, h2);
@@ -57,9 +57,9 @@ T sel(T a, T b)
         (s1 > 0 ? 0xffffLL << 16 : 0) |
         (s2 > 0 ? 0xffffLL << 32 : 0) |
         (s3 > 0 ? 0xffffLL << 48 : 0);
-    T mask = T(uint64x2(vmovq_n_u64(um)));
+    uint16x8_t mask = vreinterpretq_u16_u64(vmovq_n_u64(um));
 
-    return vbslq_u16(mask, b, a);
+    return vbslq_u16(mask, b.native(), a.native());
 }
 
 /** Within each 4-element set moves the elements to the left or right. The
@@ -69,34 +69,34 @@ T sel(T a, T b)
 template<unsigned shift> SIMDPP_INL
 T mov_r(T a)
 {
-    return vreinterpretq_u16_u64(vshlq_n_u64(vreinterpretq_u64_u16(a), shift*16));
+    return vreinterpretq_u16_u64(vshlq_n_u64(vreinterpretq_u64_u16(a.native()), shift*16));
 }
 
 template<unsigned shift> SIMDPP_INL
 T mov_l(T a)
 {
-    return vreinterpretq_u16_u64(vshrq_n_u64(vreinterpretq_u64_u16(a), shift*16));
+    return vreinterpretq_u16_u64(vshrq_n_u64(vreinterpretq_u64_u16(a.native()), shift*16));
 }
 
 /// Within each 4-element set: r0 = a3; r1 = a2; r2 = a1; r3 = a0; - 3210
 /// Cost: 1
 SIMDPP_INL T rev41(T a)
 {
-    return vrev64q_u16(a);
+    return vrev64q_u16(a.native());
 }
 
 /// Within each 4-element set: r0 = a2; r1 = a3; r2 = a0; r3 = a1; - 2301
 /// Cost: 1
 SIMDPP_INL T rev42(T a)
 {
-    return vreinterpretq_u16_u32(vrev64q_u32(vreinterpretq_u32_u16(a)));
+    return vreinterpretq_u16_u32(vrev64q_u32(vreinterpretq_u32_u16(a.native())));
 }
 
 /// Within each 4-element set: r0 = a1; r1 = a0; r2 = a3; r3 = a2; - 1032
 /// Cost: 1
 SIMDPP_INL T rev21(T a)
 {
-    return vrev32q_u16(a);
+    return vrev32q_u16(a.native());
 }
 
 /// Within each 4-element set: r0 = a0; r1 = a0; r2 = a2; r3 = a2; - 0022
@@ -104,7 +104,7 @@ SIMDPP_INL T rev21(T a)
 SIMDPP_INL T dup_lo(T a)
 {
     T b = a;
-    return vtrnq_u16(a, b).val[0];
+    return vtrnq_u16(a.native(), b.native()).val[0];
 }
 
 /// Within each 4-element set: r0 = a1; r1 = a1; r2 = a3; r3 = a3; - 1133
@@ -112,7 +112,7 @@ SIMDPP_INL T dup_lo(T a)
 SIMDPP_INL T dup_hi(T a)
 {
     T b = a;
-    return vtrnq_u16(a, b).val[1];
+    return vtrnq_u16(a.native(), b.native()).val[1];
 }
 
 /// Within each 4-element set: r0 = a0; r1 = a1; r2 = a0; r3 = a1; - 0101
@@ -121,7 +121,7 @@ SIMDPP_INL T dup2_lo(T a)
 {
     uint32x4_t i;
     uint32x2_t lo, hi;
-    i = vreinterpretq_u32_u16(a);
+    i = vreinterpretq_u32_u16(a.native());
     lo = vget_low_u32(i);
     hi = vget_high_u32(i);
     lo = vdup_lane_u32(lo, 0);
@@ -135,7 +135,7 @@ SIMDPP_INL T dup2_hi(T a)
 {
     uint32x4_t i;
     uint32x2_t lo, hi;
-    i = vreinterpretq_u32_u16(a);
+    i = vreinterpretq_u32_u16(a.native());
     lo = vget_low_u32(i);
     hi = vget_high_u32(i);
     lo = vdup_lane_u32(lo, 1);
@@ -147,8 +147,8 @@ SIMDPP_INL T dup2_hi(T a)
 /// Cost: 3
 SIMDPP_INL T dup_unpack_lo(T a)
 {
-    H lo = vget_low_u16(a);
-    H hi = vget_high_u16(a);
+    H lo = vget_low_u16(a.native());
+    H hi = vget_high_u16(a.native());
     H rlo = vzip_u16(lo, lo).val[0];
     H rhi = vzip_u16(hi, hi).val[0];
     return vcombine_u16(rlo, rhi);
@@ -158,8 +158,8 @@ SIMDPP_INL T dup_unpack_lo(T a)
 /// Cost: 3
 SIMDPP_INL T dup_unpack_hi(T a)
 {
-    H lo = vget_low_u16(a);
-    H hi = vget_high_u16(a);
+    H lo = vget_low_u16(a.native());
+    H hi = vget_high_u16(a.native());
     H rlo = vzip_u16(lo, lo).val[1];
     H rhi = vzip_u16(hi, hi).val[1];
     return vcombine_u16(rlo, rhi);

@@ -97,7 +97,7 @@ public:
     SIMDPP_INL mask_float32<8>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX
-    SIMDPP_INL mask_float32<8>(const float32<8>& d) : d_(d) {}
+    SIMDPP_INL mask_float32<8>(const float32<8>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float32<8>(const mask_int32<8,E>& d)

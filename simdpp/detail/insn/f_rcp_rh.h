@@ -49,7 +49,7 @@ float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
     return x;
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x4 r;
-    r = vrecpsq_f32(a, x);
+    r = vrecpsq_f32(a.native(), x.native());
     x = mul(x, r);
 
     return x;
@@ -57,7 +57,7 @@ float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
     float32x4 r, c2;
     c2 = make_float(2.0f);
     // -(x*a-c2)
-    r = vec_nmsub((__vector float)x, (__vector float)a, (__vector float)c2);
+    r = vec_nmsub(x.native(), a.native(), c2.native());
     x = mul(x, r);
     return x;
 #endif

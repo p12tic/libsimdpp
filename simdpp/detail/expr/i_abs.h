@@ -32,7 +32,7 @@ uint8<16> expr_eval_abs(const int8<16,E>& qa)
 #if SIMDPP_USE_NULL
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
-    return _mm_abs_epi8(a);
+    return _mm_abs_epi8(a.native());
 #elif SIMDPP_USE_SSE2
     int8x16 t;
     t = cmp_lt(a, 0);
@@ -40,13 +40,13 @@ uint8<16> expr_eval_abs(const int8<16,E>& qa)
     a = sub(a, t);
     return a;
 #elif SIMDPP_USE_NEON
-    return int8x16(vabsq_s8(a));
+    return int8x16(vabsq_s8(a.native()));
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
-    return (__vector uint8_t) vec_abs((__vector int8_t)a);
+    return (__vector uint8_t) vec_abs(a.native());
 #elif SIMDPP_USE_MSA
     int8<16> zero = make_zero();
-    return (v16u8) __msa_add_a_b(a, zero);
+    return (v16u8) __msa_add_a_b(a.native(), zero.native());
 #endif
 }
 
@@ -55,7 +55,7 @@ template<class R, class E> SIMDPP_INL
 uint8<32> expr_eval_abs(const int8<32,E>& qa)
 {
     int8<32> a = qa.eval();
-    return _mm256_abs_epi8(a);
+    return _mm256_abs_epi8(a.native());
 }
 #endif
 
@@ -64,7 +64,7 @@ template<class R, class E> SIMDPP_INL
 uint8<64> expr_eval_abs(const int8<64,E>& qa)
 {
     int8<64> a = qa.eval();
-    return _mm512_abs_epi8(a);
+    return _mm512_abs_epi8(a.native());
 }
 #endif
 
@@ -84,7 +84,7 @@ uint16<8> expr_eval_abs(const int16<8,E>& qa)
 #if SIMDPP_USE_NULL
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
-    return _mm_abs_epi16(a);
+    return _mm_abs_epi16(a.native());
 #elif SIMDPP_USE_SSE2
     int16x8 t;
     t = cmp_lt(a, 0);
@@ -92,13 +92,13 @@ uint16<8> expr_eval_abs(const int16<8,E>& qa)
     a = sub(a, t);
     return a;
 #elif SIMDPP_USE_NEON
-    return int16x8(vabsq_s16(a));
+    return int16x8(vabsq_s16(a.native()));
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
-    return (__vector uint16_t) vec_abs((__vector int16_t)a);
+    return (__vector uint16_t) vec_abs(a.native());
 #elif SIMDPP_USE_MSA
     int16<8> zero = make_zero();
-    return (v8u16) __msa_add_a_h(a, zero);
+    return (v8u16) __msa_add_a_h(a.native(), zero.native());
 #endif
 }
 
@@ -107,7 +107,7 @@ template<class R, class E> SIMDPP_INL
 uint16<16> expr_eval_abs(const int16<16,E>& qa)
 {
     int16<16> a = qa.eval();
-    return _mm256_abs_epi16(a);
+    return _mm256_abs_epi16(a.native());
 }
 #endif
 
@@ -116,7 +116,7 @@ template<class R, class E> SIMDPP_INL
 uint16<32> expr_eval_abs(const int16<32,E>& qa)
 {
     int16<32> a = qa.eval();
-    return _mm512_abs_epi16(a);
+    return _mm512_abs_epi16(a.native());
 }
 #endif
 
@@ -136,7 +136,7 @@ uint32<4> expr_eval_abs(const int32<4,E>& qa)
 #if SIMDPP_USE_NULL
     return detail::null::abs(a);
 #elif SIMDPP_USE_SSSE3
-    return _mm_abs_epi32(a);
+    return _mm_abs_epi32(a.native());
 #elif SIMDPP_USE_SSE2
     int32x4 t;
     t = cmp_lt(a, 0);
@@ -144,13 +144,13 @@ uint32<4> expr_eval_abs(const int32<4,E>& qa)
     a = sub(a, t);
     return a;
 #elif SIMDPP_USE_NEON
-    return int32x4(vabsq_s32(a));
+    return int32x4(vabsq_s32(a.native()));
 #elif SIMDPP_USE_ALTIVEC
     // expands to 3 instructions
-    return (__vector uint32_t) vec_abs((__vector int32_t)a);
+    return (__vector uint32_t) vec_abs(a.native());
 #elif SIMDPP_USE_MSA
     int32<4> zero = make_zero();
-    return (v4u32) __msa_add_a_w(a, zero);
+    return (v4u32) __msa_add_a_w(a.native(), zero.native());
 #endif
 }
 
@@ -159,7 +159,7 @@ template<class R, class E> SIMDPP_INL
 uint32<8> expr_eval_abs(const int32<8,E>& qa)
 {
     int32<8> a = qa.eval();
-    return _mm256_abs_epi32(a);
+    return _mm256_abs_epi32(a.native());
 }
 #endif
 
@@ -168,7 +168,7 @@ template<class R, class E> SIMDPP_INL
 uint32<16> expr_eval_abs(const int32<16,E>& qa)
 {
     int32<16> a = qa.eval();
-    return _mm512_abs_epi32(a);
+    return _mm512_abs_epi32(a.native());
 }
 #endif
 
@@ -207,10 +207,10 @@ uint64<2> expr_eval_abs(const int64<2,E>& qa)
     return a;
 #elif SIMDPP_USE_VSX_207
     // expands to 3 instructions
-    return (__vector uint64_t) vec_abs((__vector int64_t)a);
+    return (__vector uint64_t) vec_abs(a.native());
 #elif SIMDPP_USE_MSA
     int64<2> zero = make_zero();
-    return (v2u64) __msa_add_a_d(a, zero);
+    return (v2u64) __msa_add_a_d(a.native(), zero.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::abs(a);
 #endif
@@ -222,7 +222,8 @@ uint64<4> expr_eval_abs(const int64<4,E>& qa)
 {
     int64<4> a = qa.eval();
     int64x4 t;
-    t = _mm256_cmpgt_epi64((int64x4) make_zero(), a);
+    int64x4 zero = make_zero();
+    t = _mm256_cmpgt_epi64(zero.native(), a.native());
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
@@ -234,7 +235,7 @@ template<class R, class E> SIMDPP_INL
 uint64<8> expr_eval_abs(const int64<8,E>& qa)
 {
     int64<8> a = qa.eval();
-    return _mm512_abs_epi64(a);
+    return _mm512_abs_epi64(a.native());
 }
 #endif
 

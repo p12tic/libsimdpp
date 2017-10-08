@@ -30,13 +30,13 @@ uint8<16> expr_eval_sub(const uint8<16,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_sub_epi8(a, b);
+    return _mm_sub_epi8(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vsubq_u8(a, b);
+    return vsubq_u8(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sub((__vector uint8_t)a, (__vector uint8_t)b);
+    return vec_sub(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v16u8) __msa_subv_b((v16i8)(v16u8)a, (v16i8)(v16u8)b);
+    return (v16u8) __msa_subv_b((v16i8) a.native(), (v16i8) b.native());
 #endif
 }
 
@@ -47,7 +47,7 @@ uint8<32> expr_eval_sub(const uint8<32,E1>& qa,
 {
     uint8<32> a = qa.eval();
     uint8<32> b = qb.eval();
-    return _mm256_sub_epi8(a, b);
+    return _mm256_sub_epi8(a.native(), b.native());
 }
 #endif
 
@@ -58,7 +58,7 @@ uint8<64> expr_eval_sub(const uint8<64,E1>& qa,
 {
     uint8<64> a = qa.eval();
     uint8<64> b = qb.eval();
-    return _mm512_sub_epi8(a, b);
+    return _mm512_sub_epi8(a.native(), b.native());
 }
 #endif
 
@@ -82,13 +82,13 @@ uint16<8> expr_eval_sub(const uint16<8,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_sub_epi16(a, b);
+    return _mm_sub_epi16(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vsubq_u16(a, b);
+    return vsubq_u16(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sub((__vector uint16_t)a, (__vector uint16_t)b);
+    return vec_sub(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v8u16) __msa_subv_h((v8i16)(v8u16)a, (v8i16)(v8u16)b);
+    return (v8u16) __msa_subv_h((v8i16) a.native(), (v8i16) b.native());
 #endif
 }
 
@@ -99,7 +99,7 @@ uint16<16> expr_eval_sub(const uint16<16,E1>& qa,
 {
     uint16<16> a = qa.eval();
     uint16<16> b = qb.eval();
-    return _mm256_sub_epi16(a, b);
+    return _mm256_sub_epi16(a.native(), b.native());
 }
 #endif
 
@@ -110,7 +110,7 @@ uint16<32> expr_eval_sub(const uint16<32,E1>& qa,
 {
     uint16<32> a = qa.eval();
     uint16<32> b = qb.eval();
-    return _mm512_sub_epi16(a, b);
+    return _mm512_sub_epi16(a.native(), b.native());
 }
 #endif
 
@@ -134,13 +134,13 @@ uint32<4> expr_eval_sub(const uint32<4,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::sub(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_sub_epi32(a, b);
+    return _mm_sub_epi32(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vsubq_u32(a, b);
+    return vsubq_u32(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sub((__vector uint32_t)a, (__vector uint32_t)b);
+    return vec_sub(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v4u32) __msa_subv_w((v4i32)(v4u32)a, (v4i32)(v4u32)b);
+    return (v4u32) __msa_subv_w((v4i32)a.native(), (v4i32)b.native());
 #endif
 }
 
@@ -151,7 +151,7 @@ uint32<8> expr_eval_sub(const uint32<8,E1>& qa,
 {
     uint32<8> a = qa.eval();
     uint32<8> b = qb.eval();
-    return _mm256_sub_epi32(a, b);
+    return _mm256_sub_epi32(a.native(), b.native());
 }
 #endif
 
@@ -162,7 +162,7 @@ uint32<16> expr_eval_sub(const uint32<16,E1>& qa,
 {
     uint32<16> a = qa.eval();
     uint32<16> b = qb.eval();
-    return _mm512_sub_epi32(a, b);
+    return _mm512_sub_epi32(a.native(), b.native());
 }
 #endif
 
@@ -184,13 +184,13 @@ uint64<2> expr_eval_sub(const uint64<2,E1>& qa,
     uint64<2> a = qa.eval();
     uint64<2> b = qb.eval();
 #if SIMDPP_USE_SSE2
-    return _mm_sub_epi64(a, b);
+    return _mm_sub_epi64(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vsubq_u64(a, b);
+    return vsubq_u64(a.native(), b.native());
 #elif SIMDPP_USE_VSX_207
-    return vec_sub((__vector uint64_t) a, (__vector uint64_t) b);
+    return vec_sub(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v2u64) __msa_subv_d((v2i64)(v2u64)a, (v2i64)(v2u64)b);
+    return (v2u64) __msa_subv_d((v2i64) a.native(), (v2i64) b.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::sub(a, b);
 #endif
@@ -203,7 +203,7 @@ uint64<4> expr_eval_sub(const uint64<4,E1>& qa,
 {
     uint64<4> a = qa.eval();
     uint64<4> b = qb.eval();
-    return _mm256_sub_epi64(a, b);
+    return _mm256_sub_epi64(a.native(), b.native());
 }
 #endif
 
@@ -214,7 +214,7 @@ uint64<8> expr_eval_sub(const uint64<8,E1>& qa,
 {
     uint64<8> a = qa.eval();
     uint64<8> b = qb.eval();
-    return _mm512_sub_epi64(a, b);
+    return _mm512_sub_epi64(a.native(), b.native());
 }
 #endif
 

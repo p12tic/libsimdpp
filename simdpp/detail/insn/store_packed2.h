@@ -43,8 +43,8 @@ void i_store_packed2(char* p, const uint8x16& a, const uint8x16& b)
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint8x16x2_t t;
-    t.val[0] = a;
-    t.val[1] = b;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
     vst2q_u8(reinterpret_cast<uint8_t*>(p), t);
 #endif
 }
@@ -76,8 +76,8 @@ void i_store_packed2(char* p, const uint16x8& a, const uint16x8& b)
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint16x8x2_t t;
-    t.val[0] = a;
-    t.val[1] = b;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
     vst2q_u16(reinterpret_cast<uint16_t*>(p), t);
 #endif
 }
@@ -109,8 +109,8 @@ void i_store_packed2(char* p, const uint32x4& a, const uint32x4& b)
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     uint32x4x2_t t;
-    t.val[0] = a;
-    t.val[1] = b;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
     vst2q_u32(reinterpret_cast<uint32_t*>(p), t);
 #endif
 }
@@ -138,8 +138,8 @@ void i_store_packed2(char* p, const uint64x2& a, const uint64x2& b)
 {
 #if SIMDPP_USE_NEON64
     uint64x2x2_t t;
-    t.val[0] = a;
-    t.val[1] = b;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
     vst2q_u64(reinterpret_cast<uint64_t*>(p), t);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);
@@ -176,8 +176,8 @@ void i_store_packed2(char* p, const float32x4& a, const float32x4& b)
     v128_store_pack2(p, a, b);
 #elif SIMDPP_USE_NEON
     float32x4x2_t t;
-    t.val[0] = a;
-    t.val[1] = b;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
     vst2q_f32(reinterpret_cast<float*>(p), t);
 #endif
 }
@@ -205,8 +205,8 @@ void i_store_packed2(char* p, const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_NEON64
     float64x2x2_t t;
-    t.val[0] = a;
-    t.val[1] = b;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
     vst2q_f64(reinterpret_cast<double*>(p), t);
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     v128_store_pack2(p, a, b);

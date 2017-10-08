@@ -34,14 +34,14 @@ uint16<8> expr_eval_mul_lo(const uint16<8,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::mul(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_mullo_epi16(a, b);
+    return _mm_mullo_epi16(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vmulq_u16(a, b);
+    return vmulq_u16(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_mladd((__vector uint16_t)a, (__vector uint16_t)b,
-                     (__vector uint16_t)(uint16x8) make_zero());
+    return vec_mladd(a.native(), b.native(),
+                     ((uint16x8) make_zero()).native());
 #elif SIMDPP_USE_MSA
-    return (v8u16) __msa_mulv_h((v8i16)(v8u16) a, (v8i16)(v8u16) b);
+    return (v8u16) __msa_mulv_h((v8i16) a.native(), (v8i16) b.native());
 #endif
 }
 
@@ -52,7 +52,7 @@ uint16<16> expr_eval_mul_lo(const uint16<16,E1>& qa,
 {
     uint16<16> a = qa.eval();
     uint16<16> b = qb.eval();
-    return _mm256_mullo_epi16(a, b);
+    return _mm256_mullo_epi16(a.native(), b.native());
 }
 #endif
 
@@ -63,7 +63,7 @@ uint16<32> expr_eval_mul_lo(const uint16<32,E1>& qa,
 {
     uint16<32> a = qa.eval();
     uint16<32> b = qb.eval();
-    return _mm512_mullo_epi16(a, b);
+    return _mm512_mullo_epi16(a.native(), b.native());
 }
 #endif
 
@@ -91,10 +91,10 @@ int16<8> expr_eval_mul_hi(const int16<8,E1>& qa,
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_mulhi_epi16(a, b);
+    return _mm_mulhi_epi16(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    int32x4 lo = vmull_s16(vget_low_s16(a), vget_low_s16(b));
-    int32x4 hi = vmull_s16(vget_high_s16(a), vget_high_s16(b));
+    int32x4 lo = vmull_s16(vget_low_s16(a.native()), vget_low_s16(b.native()));
+    int32x4 hi = vmull_s16(vget_high_s16(a.native()), vget_high_s16(b.native()));
     return unzip8_hi(int16x8(lo), int16x8(hi));
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
 #if SIMDPP_BIG_ENDIAN
@@ -116,7 +116,7 @@ int16<16> expr_eval_mul_hi(const int16<16,E1>& qa,
 {
     int16<16> a = qa.eval();
     int16<16> b = qb.eval();
-    return _mm256_mulhi_epi16(a, b);
+    return _mm256_mulhi_epi16(a.native(), b.native());
 }
 #endif
 
@@ -127,7 +127,7 @@ int16<32> expr_eval_mul_hi(const int16<32,E1>& qa,
 {
     int16<32> a = qa.eval();
     int16<32> b = qb.eval();
-    return _mm512_mulhi_epi16(a, b);
+    return _mm512_mulhi_epi16(a.native(), b.native());
 }
 #endif
 
@@ -155,10 +155,10 @@ uint16<8> expr_eval_mul_hi(const uint16<8,E1>& qa,
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_mulhi_epu16(a, b);
+    return _mm_mulhi_epu16(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    uint32x4 lo = vmull_u16(vget_low_u16(a), vget_low_u16(b));
-    uint32x4 hi = vmull_u16(vget_high_u16(a), vget_high_u16(b));
+    uint32x4 lo = vmull_u16(vget_low_u16(a.native()), vget_low_u16(b.native()));
+    uint32x4 hi = vmull_u16(vget_high_u16(a.native()), vget_high_u16(b.native()));
     return unzip8_hi(uint16x8(lo), uint16x8(hi));
 #elif SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN
     uint16<16> ab;
@@ -178,7 +178,7 @@ uint16<16> expr_eval_mul_hi(const uint16<16,E1>& qa,
 {
     uint16<16> a = qa.eval();
     uint16<16> b = qb.eval();
-    return _mm256_mulhi_epu16(a, b);
+    return _mm256_mulhi_epu16(a.native(), b.native());
 }
 #endif
 
@@ -189,7 +189,7 @@ uint16<32> expr_eval_mul_hi(const uint16<32,E1>& qa,
 {
     uint16<32> a = qa.eval();
     uint16<32> b = qb.eval();
-    return _mm512_mulhi_epu16(a, b);
+    return _mm512_mulhi_epu16(a.native(), b.native());
 }
 #endif
 
@@ -213,18 +213,18 @@ uint32<4> expr_eval_mul_lo(const uint32<4,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::mul(a, b);
 #elif SIMDPP_USE_SSE4_1
-    return _mm_mullo_epi32(a, b);
+    return _mm_mullo_epi32(a.native(), b.native());
 #elif SIMDPP_USE_SSE2
     uint32x4 a1, b1;
     a1 = move4_l<1>(a);
     b1 = move4_l<1>(b);
-    a = _mm_mul_epu32(a, b);
-    a1 = _mm_mul_epu32(a1, b1);
-    a = shuffle2<0,2,0,2>(a, a1); // additional latency unavoidable
+    a = _mm_mul_epu32(a.native(), b.native());
+    a1 = _mm_mul_epu32(a1.native(), b1.native());
+    a = shuffle2<0,2,0,2>(a, a1); // moves to FP domain, additional latency unavoidable
     a = permute4<0,2,1,3>(a);
     return a;
 #elif SIMDPP_USE_NEON
-    return vmulq_u32(a, b);
+    return vmulq_u32(a.native(), b.native());
 #elif SIMDPP_USE_VSX_207
     __vector uint32_t va = a, vb = b;
     __vector uint32_t vr;
@@ -245,15 +245,15 @@ uint32<4> expr_eval_mul_lo(const uint32<4,E1>& qa,
     uint16<8> sa = move8_l<1>(ra);
     uint16<8> sb = move8_l<1>(rb);
 
-    uint32<4> l_ab = vec_mulo((__vector uint16_t) ra, (__vector uint16_t) rb);
-    uint32<4> h_ab = vec_mulo((__vector uint16_t) ra, (__vector uint16_t) sb);
-    uint32<4> h_ba = vec_mulo((__vector uint16_t) sa, (__vector uint16_t) rb);
+    uint32<4> l_ab = vec_mulo(ra.native(), rb.native());
+    uint32<4> h_ab = vec_mulo(ra.native(), sb.native());
+    uint32<4> h_ba = vec_mulo(sa.native(), rb.native());
 
     h_ab = shift_l<16>(add(h_ab, h_ba));
     h_ab = add(h_ab, l_ab);
     return h_ab;
 #elif SIMDPP_USE_MSA
-    return (v4u32) __msa_mulv_w((v4i32)(v4u32) a, (v4i32)(v4u32) b);
+    return (v4u32) __msa_mulv_w((v4i32) a.native(), (v4i32) b.native());
 #endif
 }
 
@@ -264,7 +264,7 @@ uint32<8> expr_eval_mul_lo(const uint32<8,E1>& qa,
 {
     uint32<8> a = qa.eval();
     uint32<8> b = qb.eval();
-    return _mm256_mullo_epi32(a, b);
+    return _mm256_mullo_epi32(a.native(), b.native());
 }
 #endif
 
@@ -275,7 +275,7 @@ uint32<16> expr_eval_mul_lo(const uint32<16,E1>& qa,
 {
     uint32<16> a = qa.eval();
     uint32<16> b = qb.eval();
-    return _mm512_mullo_epi32(a, b);
+    return _mm512_mullo_epi32(a.native(), b.native());
 }
 #endif
 

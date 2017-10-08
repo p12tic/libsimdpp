@@ -196,7 +196,7 @@ public:
 #endif
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    SIMDPP_INL mask_int16<8>(const uint16<8>& d) : d_(d) {}
+    SIMDPP_INL mask_int16<8>(const uint16<8>& d) : d_(d.native()) {}
 #endif
 
     /// Convert to the underlying vector type

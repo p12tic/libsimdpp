@@ -156,12 +156,12 @@ void i_load_packed3(uint64x2& a, uint64x2& b, uint64x2& c, const char* p)
     c0 = load(p+32);
 
     int64x1_t al, bl, cl, ah, bh, ch;
-    al = vget_low_u64(a0);
-    ah = vget_high_u64(a0);
-    bl = vget_low_u64(b0);
-    bh = vget_high_u64(b0);
-    cl = vget_low_u64(c0);
-    ch = vget_high_u64(c0);
+    al = vget_low_u64(a0.native());
+    ah = vget_high_u64(a0.native());
+    bl = vget_low_u64(b0.native());
+    bh = vget_high_u64(b0.native());
+    cl = vget_low_u64(c0.native());
+    ch = vget_high_u64(c0.native());
     a = vcombine_u64(al, bh);
     b = vcombine_u64(ah, cl);
     c = vcombine_u64(bl, ch);

@@ -35,12 +35,12 @@ float i_reduce_max(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    float32x4 b = _mm_movehl_ps(a, a);
+    float32x4 b = _mm_movehl_ps(a.native(), a.native());
     b = max(a, b);
     b = max(b, permute2<1,1>(b));
-    return _mm_cvtss_f32(b);
+    return _mm_cvtss_f32(b.native());
 #elif SIMDPP_USE_NEON_FLT_SP
-    float32x2_t a2 = vpmax_f32(vget_low_f32(a), vget_high_f32(a));
+    float32x2_t a2 = vpmax_f32(vget_low_f32(a.native()), vget_high_f32(a.native()));
     a2 = vpmax_f32(a2, a2);
     return vget_lane_f32(a2, 0);
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
@@ -86,9 +86,9 @@ double i_reduce_max(const float64x2& a)
 {
 #if SIMDPP_USE_SSE2
     float64x2 b = max(a, permute2<1,1>(a));
-    return _mm_cvtsd_f64(b);
+    return _mm_cvtsd_f64(b.native());
 #elif SIMDPP_USE_NEON64
-    float64x2_t a2 = vpmaxq_f64(a, a);
+    float64x2_t a2 = vpmaxq_f64(a.native(), a.native());
     return vgetq_lane_f64(a2, 0);
 #elif SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     float64x2 b = max(a, permute2<1,1>(a));

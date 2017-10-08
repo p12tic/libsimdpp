@@ -28,13 +28,13 @@ int8<16> expr_eval_sub_sat(const int8<16,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_subs_epi8(a, b);
+    return _mm_subs_epi8(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vqsubq_s8(a, b);
+    return vqsubq_s8(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector int8_t)a, (__vector int8_t)b);
+    return vec_subs(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_subs_s_b(a, b);
+    return __msa_subs_s_b(a.native(), b.native());
 #endif
 }
 
@@ -45,7 +45,7 @@ int8<32> expr_eval_sub_sat(const int8<32,E1>& qa,
 {
     int8<32> a = qa.eval();
     int8<32> b = qb.eval();
-    return _mm256_subs_epi8(a, b);
+    return _mm256_subs_epi8(a.native(), b.native());
 }
 #endif
 
@@ -56,7 +56,7 @@ int8<64> expr_eval_sub_sat(const int8<64,E1>& qa,
 {
     int8<64> a = qa.eval();
     int8<64> b = qb.eval();
-    return _mm512_subs_epi8(a, b);
+    return _mm512_subs_epi8(a.native(), b.native());
 }
 #endif
 
@@ -80,13 +80,13 @@ int16<8> expr_eval_sub_sat(const int16<8,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_subs_epi16(a, b);
+    return _mm_subs_epi16(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vqsubq_s16(a, b);
+    return vqsubq_s16(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector int16_t)a, (__vector int16_t)b);
+    return vec_subs(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_subs_s_h(a, b);
+    return __msa_subs_s_h(a.native(), b.native());
 #endif
 }
 
@@ -97,7 +97,7 @@ int16<16> expr_eval_sub_sat(const int16<16,E1>& qa,
 {
     int16<16> a = qa.eval();
     int16<16> b = qb.eval();
-    return _mm256_subs_epi16(a, b);
+    return _mm256_subs_epi16(a.native(), b.native());
 }
 #endif
 
@@ -108,7 +108,7 @@ int16<32> expr_eval_sub_sat(const int16<32,E1>& qa,
 {
     int16<32> a = qa.eval();
     int16<32> b = qb.eval();
-    return _mm512_subs_epi16(a, b);
+    return _mm512_subs_epi16(a.native(), b.native());
 }
 #endif
 
@@ -132,13 +132,13 @@ uint8<16> expr_eval_sub_sat(const uint8<16,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_subs_epu8(a, b);
+    return _mm_subs_epu8(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vqsubq_u8(a, b);
+    return vqsubq_u8(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector uint8_t)a, (__vector uint8_t)b);
+    return vec_subs(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_subs_u_b(a, b);
+    return __msa_subs_u_b(a.native(), b.native());
 #endif
 }
 
@@ -149,7 +149,7 @@ uint8<32> expr_eval_sub_sat(const uint8<32,E1>& qa,
 {
     uint8<32> a = qa.eval();
     uint8<32> b = qb.eval();
-    return _mm256_subs_epu8(a, b);
+    return _mm256_subs_epu8(a.native(), b.native());
 }
 #endif
 
@@ -160,7 +160,7 @@ uint8<64> expr_eval_sub_sat(const uint8<64,E1>& qa,
 {
     uint8<64> a = qa.eval();
     uint8<64> b = qb.eval();
-    return _mm512_subs_epu8(a, b);
+    return _mm512_subs_epu8(a.native(), b.native());
 }
 #endif
 
@@ -184,13 +184,13 @@ uint16<8> expr_eval_sub_sat(const uint16<8,E1>& qa,
 #if SIMDPP_USE_NULL
     return detail::null::sub_sat(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_subs_epu16(a, b);
+    return _mm_subs_epu16(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vqsubq_u16(a, b);
+    return vqsubq_u16(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_subs((__vector uint16_t)a, (__vector uint16_t)b);
+    return vec_subs(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return __msa_subs_u_h(a, b);
+    return __msa_subs_u_h(a.native(), b.native());
 #endif
 }
 
@@ -201,7 +201,7 @@ uint16<16> expr_eval_sub_sat(const uint16<16,E1>& qa,
 {
     uint16<16> a = qa.eval();
     uint16<16> b = qb.eval();
-    return _mm256_subs_epu16(a, b);
+    return _mm256_subs_epu16(a.native(), b.native());
 }
 #endif
 
@@ -212,7 +212,7 @@ uint16<32> expr_eval_sub_sat(const uint16<32,E1>& qa,
 {
     uint16<32> a = qa.eval();
     uint16<32> b = qb.eval();
-    return _mm512_subs_epu16(a, b);
+    return _mm512_subs_epu16(a.native(), b.native());
 }
 #endif
 

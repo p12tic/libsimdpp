@@ -43,9 +43,9 @@ void i_store_packed3(char* p, const uint8x16& a, const uint8x16& b, const uint8x
     v128_store_pack3(p, a, b, c);
 #elif SIMDPP_USE_NEON
     uint8x16x3_t t;
-    t.val[0] = a;
-    t.val[1] = b;
-    t.val[2] = c;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
+    t.val[2] = c.native();
     vst3q_u8(reinterpret_cast<uint8_t*>(p), t);
 #endif
 }
@@ -78,9 +78,9 @@ void i_store_packed3(char* p, const uint16x8& a, const uint16x8& b, const uint16
     v128_store_pack3(p, a, b, c);
 #elif SIMDPP_USE_NEON
     uint16x8x3_t t;
-    t.val[0] = a;
-    t.val[1] = b;
-    t.val[2] = c;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
+    t.val[2] = c.native();
     vst3q_u16(reinterpret_cast<uint16_t*>(p), t);
 #endif
 }
@@ -113,9 +113,9 @@ void i_store_packed3(char* p, const uint32x4& a, const uint32x4& b, const uint32
     v128_store_pack3(p, a, b, c);
 #elif SIMDPP_USE_NEON
     uint32x4x3_t t;
-    t.val[0] = a;
-    t.val[1] = b;
-    t.val[2] = c;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
+    t.val[2] = c.native();
     vst3q_u32(reinterpret_cast<uint32_t*>(p), t);
 #endif
 }
@@ -147,18 +147,18 @@ void i_store_packed3(char* p, const uint64x2& a, const uint64x2& b, const uint64
 #elif SIMDPP_USE_NEON32
     uint64_t* q = reinterpret_cast<uint64_t*>(p);
     uint64x1x2_t t1, t2, t3;
-    t1.val[0] = vget_low_u64(a);  t1.val[1] = vget_low_u64(b);
-    t2.val[0] = vget_low_u64(c);  t2.val[1] = vget_high_u64(a);
-    t3.val[0] = vget_high_u64(b);  t3.val[1] = vget_high_u64(c);
+    t1.val[0] = vget_low_u64(a.native());   t1.val[1] = vget_low_u64(b.native());
+    t2.val[0] = vget_low_u64(c.native());   t2.val[1] = vget_high_u64(a.native());
+    t3.val[0] = vget_high_u64(b.native());  t3.val[1] = vget_high_u64(c.native());
 
     vst2_u64(q, t1);
     vst2_u64(q+2, t2);
     vst2_u64(q+4, t3);
 #elif SIMDPP_USE_NEON64
     uint64x2x3_t t;
-    t.val[0] = a;
-    t.val[1] = b;
-    t.val[2] = c;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
+    t.val[2] = c.native();
     vst3q_u64(reinterpret_cast<uint64_t*>(p), t);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     detail::null::store_packed3(p, a, b, c);
@@ -193,9 +193,9 @@ void i_store_packed3(char* p, const float32x4& a, const float32x4& b, const floa
     v128_store_pack3(p, a, b, c);
 #elif SIMDPP_USE_NEON
     float32x4x3_t t;
-    t.val[0] = a;
-    t.val[1] = b;
-    t.val[2] = c;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
+    t.val[2] = c.native();
     vst3q_f32(reinterpret_cast<float*>(p), t);
 #endif
 }
@@ -226,9 +226,9 @@ void i_store_packed3(char* p, const float64x2& a, const float64x2& b, const floa
     v128_store_pack3(p, a, b, c);
 #elif SIMDPP_USE_NEON64
     float64x2x3_t t;
-    t.val[0] = a;
-    t.val[1] = b;
-    t.val[2] = c;
+    t.val[0] = a.native();
+    t.val[1] = b.native();
+    t.val[2] = c.native();
     vst3q_f64(reinterpret_cast<double*>(p), t);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     detail::null::store_packed3(p, a, b, c);

@@ -125,7 +125,7 @@ public:
     SIMDPP_INL mask_float64<2>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
-    SIMDPP_INL mask_float64<2>(const float64<2>& d) : d_(d) {}
+    SIMDPP_INL mask_float64<2>(const float64<2>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float64<2>(const mask_int64<2,E>& d)

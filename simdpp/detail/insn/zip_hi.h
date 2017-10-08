@@ -28,15 +28,15 @@ uint8x16 i_zip16_hi(const uint8x16& a, const uint8x16& b)
 #if SIMDPP_USE_NULL
     return detail::null::zip16_hi(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi8(a, b);
+    return _mm_unpackhi_epi8(a.native(), b.native());
 #elif SIMDPP_USE_NEON
     // the compiler will optimize multiple vzip instructions if both zip_hi
     // and zip_hi are used on the same arguments
-    return vzipq_u8(a, b).val[1];
+    return vzipq_u8(a.native(), b.native()).val[1];
 #elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector uint8_t)a, (__vector uint8_t)b);
+    return vec_mergel(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v16u8) __msa_ilvl_b((v16i8)(v16u8) b, (v16i8)(v16u8) a);
+    return (v16u8) __msa_ilvl_b((v16i8) b.native(), (v16i8) a.native());
 #endif
 }
 
@@ -44,14 +44,14 @@ uint8x16 i_zip16_hi(const uint8x16& a, const uint8x16& b)
 static SIMDPP_INL
 uint8x32 i_zip16_hi(const uint8x32& a, const uint8x32& b)
 {
-    return _mm256_unpackhi_epi8(a, b);
+    return _mm256_unpackhi_epi8(a.native(), b.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint8<64> i_zip16_hi(const uint8<64>& a, const uint8<64>& b)
 {
-    return _mm512_unpackhi_epi8(a, b);
+    return _mm512_unpackhi_epi8(a.native(), b.native());
 }
 #endif
 
@@ -69,13 +69,13 @@ uint16x8 i_zip8_hi(const uint16x8& a, const uint16x8& b)
 #if SIMDPP_USE_NULL
     return detail::null::zip8_hi(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi16(a, b);
+    return _mm_unpackhi_epi16(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vzipq_u16(a, b).val[1];
+    return vzipq_u16(a.native(), b.native()).val[1];
 #elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector uint16_t)a, (__vector uint16_t)b);
+    return vec_mergel(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v8u16) __msa_ilvl_h((v8i16)(v8u16) b, (v8i16)(v8u16) a);
+    return (v8u16) __msa_ilvl_h((v8i16) b.native(), (v8i16) a.native());
 #endif
 }
 
@@ -83,14 +83,14 @@ uint16x8 i_zip8_hi(const uint16x8& a, const uint16x8& b)
 static SIMDPP_INL
 uint16x16 i_zip8_hi(const uint16x16& a, const uint16x16& b)
 {
-    return _mm256_unpackhi_epi16(a, b);
+    return _mm256_unpackhi_epi16(a.native(), b.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint16<32> i_zip8_hi(const uint16<32>& a, const uint16<32>& b)
 {
-    return _mm512_unpackhi_epi16(a, b);
+    return _mm512_unpackhi_epi16(a.native(), b.native());
 }
 #endif
 
@@ -108,13 +108,13 @@ uint32x4 i_zip4_hi(const uint32x4& a, const uint32x4& b)
 #if SIMDPP_USE_NULL
     return detail::null::zip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi32(a, b);
+    return _mm_unpackhi_epi32(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vzipq_u32(a, b).val[1];
+    return vzipq_u32(a.native(), b.native()).val[1];
 #elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector uint32_t)a, (__vector uint32_t)b);
+    return vec_mergel(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v4u32) __msa_ilvl_w((v4i32)(v4u32) b, (v4i32)(v4u32) a);
+    return (v4u32) __msa_ilvl_w((v4i32) b.native(), (v4i32) a.native());
 #endif
 }
 
@@ -122,7 +122,7 @@ uint32x4 i_zip4_hi(const uint32x4& a, const uint32x4& b)
 static SIMDPP_INL
 uint32x8 i_zip4_hi(const uint32x8& a, const uint32x8& b)
 {
-    return _mm256_unpackhi_epi32(a, b);
+    return _mm256_unpackhi_epi32(a.native(), b.native());
 }
 #endif
 
@@ -130,7 +130,7 @@ uint32x8 i_zip4_hi(const uint32x8& a, const uint32x8& b)
 static SIMDPP_INL
 uint32<16> i_zip4_hi(const uint32<16>& a, const uint32<16>& b)
 {
-    return _mm512_unpackhi_epi32(a, b);
+    return _mm512_unpackhi_epi32(a.native(), b.native());
 }
 #endif
 
@@ -146,15 +146,15 @@ static SIMDPP_INL
 uint64x2 i_zip2_hi(const uint64x2& a, const uint64x2& b)
 {
 #if SIMDPP_USE_SSE2
-    return _mm_unpackhi_epi64(a, b);
+    return _mm_unpackhi_epi64(a.native(), b.native());
 #elif SIMDPP_USE_NEON
     return neon::zip2_hi(a, b);
 #elif SIMDPP_USE_VSX_207
-    return vec_mergel((__vector uint64_t) a, (__vector uint64_t) b);
+    return vec_mergel(a.native(), b.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     return detail::null::zip2_hi(a, b);
 #elif SIMDPP_USE_MSA
-    return (v2u64) __msa_ilvl_d((v2i64)(v2u64) b, (v2i64)(v2u64) a);
+    return (v2u64) __msa_ilvl_d((v2i64) b.native(), (v2i64) a.native());
 #endif
 }
 
@@ -162,7 +162,7 @@ uint64x2 i_zip2_hi(const uint64x2& a, const uint64x2& b)
 static SIMDPP_INL
 uint64x4 i_zip2_hi(const uint64x4& a, const uint64x4& b)
 {
-    return _mm256_unpackhi_epi64(a, b);
+    return _mm256_unpackhi_epi64(a.native(), b.native());
 }
 #endif
 
@@ -170,7 +170,7 @@ uint64x4 i_zip2_hi(const uint64x4& a, const uint64x4& b)
 static SIMDPP_INL
 uint64<8> i_zip2_hi(const uint64<8>& a, const uint64<8>& b)
 {
-    return _mm512_unpackhi_epi64(a, b);
+    return _mm512_unpackhi_epi64(a.native(), b.native());
 }
 #endif
 
@@ -188,13 +188,13 @@ float32x4 i_zip4_hi(const float32x4& a, const float32x4& b)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::zip4_hi(a, b);
 #elif SIMDPP_USE_SSE2
-    return _mm_unpackhi_ps(a, b);
+    return _mm_unpackhi_ps(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vzipq_f32(a, b).val[1];
+    return vzipq_f32(a.native(), b.native()).val[1];
 #elif SIMDPP_USE_ALTIVEC
-    return vec_mergel((__vector float)a, (__vector float)b);
+    return vec_mergel(a.native(), b.native());
 #elif SIMDPP_USE_MSA
-    return (v4f32) __msa_ilvl_w((v4i32)(v4f32) b, (v4i32)(v4f32) a);
+    return (v4f32) __msa_ilvl_w((v4i32) b.native(), (v4i32) a.native());
 #endif
 }
 
@@ -202,7 +202,7 @@ float32x4 i_zip4_hi(const float32x4& a, const float32x4& b)
 static SIMDPP_INL
 float32x8 i_zip4_hi(const float32x8& a, const float32x8& b)
 {
-    return _mm256_unpackhi_ps(a, b);
+    return _mm256_unpackhi_ps(a.native(), b.native());
 }
 #endif
 
@@ -210,7 +210,7 @@ float32x8 i_zip4_hi(const float32x8& a, const float32x8& b)
 static SIMDPP_INL
 float32<16> i_zip4_hi(const float32<16>& a, const float32<16>& b)
 {
-    return _mm512_unpackhi_ps(a, b);
+    return _mm512_unpackhi_ps(a.native(), b.native());
 }
 #endif
 
@@ -226,17 +226,17 @@ static SIMDPP_INL
 float64x2 i_zip2_hi(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_SSE2
-    return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b),
-                                       _mm_castpd_ps(a)));
+    return _mm_castps_pd(_mm_movehl_ps(_mm_castpd_ps(b.native()),
+                                       _mm_castpd_ps(a.native())));
 #elif SIMDPP_USE_NEON64
-    return vtrn2q_f64(a, b);
+    return vtrn2q_f64(a.native(), b.native());
 #elif SIMDPP_USE_VSX_206
-    return (__vector double) vec_mergel((__vector uint64_t)(__vector double) a,
-                                        (__vector uint64_t)(__vector double) b);
+    return (__vector double) vec_mergel((__vector uint64_t)a.native(),
+                                        (__vector uint64_t)b.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
     return detail::null::zip2_hi(a, b);
 #elif SIMDPP_USE_MSA
-    return (v2f64) __msa_ilvl_d((v2i64)(v2f64) b, (v2i64)(v2f64) a);
+    return (v2f64) __msa_ilvl_d((v2i64) b.native(), (v2i64) a.native());
 #endif
 }
 
@@ -244,7 +244,7 @@ float64x2 i_zip2_hi(const float64x2& a, const float64x2& b)
 static SIMDPP_INL
 float64x4 i_zip2_hi(const float64x4& a, const float64x4& b)
 {
-    return _mm256_unpackhi_pd(a, b);
+    return _mm256_unpackhi_pd(a.native(), b.native());
 }
 #endif
 
@@ -252,7 +252,7 @@ float64x4 i_zip2_hi(const float64x4& a, const float64x4& b)
 static SIMDPP_INL
 float64<8> i_zip2_hi(const float64<8>& a, const float64<8>& b)
 {
-    return _mm512_unpackhi_pd(a, b);
+    return _mm512_unpackhi_pd(a.native(), b.native());
 }
 #endif
 

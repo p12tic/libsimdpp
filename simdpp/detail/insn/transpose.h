@@ -55,7 +55,7 @@ void i_transpose2(uint8x16& a0, uint8x16& a1)
 #if SIMDPP_USE_NULL
     detail::null::transpose2(a0, a1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u8(a0, a1);
+    auto r = vtrnq_u8(a0.native(), a1.native());
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
@@ -131,7 +131,7 @@ void i_transpose2(uint16x8& a0, uint16x8& a1)
     a0 = shuffle2<0,2,0,2>(b0, b1);
     a1 = shuffle2<1,3,1,3>(b0, b1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u16(a0, a1);
+    auto r = vtrnq_u16(a0.native(), a1.native());
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
@@ -187,7 +187,7 @@ void i_transpose2(uint32x4& a0, uint32x4& a1)
     a0 = zip2_lo(b0, b1);
     a1 = zip2_hi(b0, b1);
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_u32(a0, a1);
+    auto r = vtrnq_u32(a0.native(), a1.native());
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
@@ -289,7 +289,7 @@ void i_transpose2(float32x4& a0, float32x4& a1)
     a0 = bit_cast<float32x4>(zip2_lo(b0, b1));
     a1 = bit_cast<float32x4>(zip2_hi(b0, b1));
 #elif SIMDPP_USE_NEON
-    auto r = vtrnq_f32(a0, a1);
+    auto r = vtrnq_f32(a0.native(), a1.native());
     a0 = r.val[0];
     a1 = r.val[1];
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA

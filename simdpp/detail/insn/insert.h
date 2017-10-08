@@ -34,25 +34,25 @@ uint8x16 i_insert(const uint8x16& ca, uint8_t x)
     a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_insert_epi8(a.operator __m128i(), x, id);
+    return _mm_insert_epi8(a.native(), x, id);
 #elif SIMDPP_USE_SSE2
-    uint16_t r = _mm_extract_epi16(a, id/2);
+    uint16_t r = _mm_extract_epi16(a.native(), id/2);
     if (id % 2 == 1) {
         r = (r & 0x00ff) | (x << 8);
     } else {
         r = (r & 0xff00) | x;
     }
-    a = _mm_insert_epi16(a, r, id/2);
+    a = _mm_insert_epi16(a.native(), r, id/2);
     return a;
 #elif SIMDPP_USE_NEON
-    return vsetq_lane_u8(x, a, id);
+    return vsetq_lane_u8(x, a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint8x16> ax(a);
     ax[id] = x;
     a = ax;
     return a;
 #elif SIMDPP_USE_MSA
-    return (v16u8) __msa_insert_b((v16i8)(v16u8) a, id, x);
+    return (v16u8) __msa_insert_b((v16i8) a.native(), id, x);
 #endif
 }
 
@@ -60,7 +60,7 @@ uint8x16 i_insert(const uint8x16& ca, uint8_t x)
 template<unsigned id> SIMDPP_INL
 uint8<32> i_insert(const uint8<32>& a, uint8_t x)
 {
-    __m256i val = a;
+    __m256i val = a.native();
     __m128i val128 = _mm256_extracti128_si256(val, id / 16);
     val128 = _mm_insert_epi8(val128, x, id % 16);
     return _mm256_inserti128_si256(val, val128, id / 16);
@@ -71,7 +71,7 @@ uint8<32> i_insert(const uint8<32>& a, uint8_t x)
 template<unsigned id> SIMDPP_INL
 uint8<64> i_insert(const uint8<64>& a, uint8_t x)
 {
-    __m512i val = a;
+    __m512i val = a.native();
     __m128i val128 = _mm512_extracti32x4_epi32(val, id / 16);
     val128 = _mm_insert_epi8(val128, x, id % 16);
     return _mm512_inserti32x4(val, val128, id / 16);
@@ -88,16 +88,16 @@ uint16x8 i_insert(const uint16x8& ca, uint16_t x)
     a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE2
-    return _mm_insert_epi16(a, x, id);
+    return _mm_insert_epi16(a.native(), x, id);
 #elif SIMDPP_USE_NEON
-    return vsetq_lane_u16(x, a, id);
+    return vsetq_lane_u16(x, a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint16x8> ax(a);
     ax[id] = x;
     a = ax;
     return a;
 #elif SIMDPP_USE_MSA
-    return (v8u16) __msa_insert_h((v8i16)(v8u16) a, id, x);
+    return (v8u16) __msa_insert_h((v8i16) a.native(), id, x);
 #endif
 }
 
@@ -105,7 +105,7 @@ uint16x8 i_insert(const uint16x8& ca, uint16_t x)
 template<unsigned id> SIMDPP_INL
 uint16<16> i_insert(const uint16<16>& a, uint16_t x)
 {
-    __m256i val = a;
+    __m256i val = a.native();
     __m128i val128 = _mm256_extracti128_si256(val, id / 8);
     val128 = _mm_insert_epi16(val128, x, id % 8);
     return _mm256_inserti128_si256(val, val128, id / 8);
@@ -116,7 +116,7 @@ uint16<16> i_insert(const uint16<16>& a, uint16_t x)
 template<unsigned id> SIMDPP_INL
 uint16<32> i_insert(const uint16<32>& a, uint16_t x)
 {
-    __m512i val = a;
+    __m512i val = a.native();
     __m128i val128 = _mm512_extracti32x4_epi32(val, id / 8);
     val128 = _mm_insert_epi16(val128, x, id % 8);
     return _mm512_inserti32x4(val, val128, id / 8);
@@ -133,7 +133,7 @@ uint32x4 i_insert(const uint32x4& ca, uint32_t x)
     a.el(id) = x;
     return a;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_insert_epi32(a.operator __m128i(), x, id);
+    return _mm_insert_epi32(a.native(), x, id);
 #elif SIMDPP_USE_SSE2
     uint16_t lo = x & 0xffff;
     uint16_t hi = x >> 16;
@@ -142,14 +142,14 @@ uint32x4 i_insert(const uint32x4& ca, uint32_t x)
     a1 = i_insert<id*2+1>(a1, hi);
     return uint32<4>(a1);
 #elif SIMDPP_USE_NEON
-    return vsetq_lane_u32(x, a, id);
+    return vsetq_lane_u32(x, a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint32x4> ax(a);
     ax[id] = x;
     a = ax;
     return a;
 #elif SIMDPP_USE_MSA
-    return (v4u32) __msa_insert_w((v4i32)(v4u32) a, id, x);
+    return (v4u32) __msa_insert_w((v4i32) a.native(), id, x);
 #endif
 }
 
@@ -157,7 +157,7 @@ uint32x4 i_insert(const uint32x4& ca, uint32_t x)
 template<unsigned id> SIMDPP_INL
 uint32<8> i_insert(const uint32<8>& a, uint32_t x)
 {
-    __m256i val = a;
+    __m256i val = a.native();
     __m128i val128 = _mm256_extracti128_si256(val, id / 4);
     val128 = _mm_insert_epi32(val128, x, id % 4);
     return _mm256_inserti128_si256(val, val128, id / 4);
@@ -168,7 +168,7 @@ uint32<8> i_insert(const uint32<8>& a, uint32_t x)
 template<unsigned id> SIMDPP_INL
 uint32<16> i_insert(const uint32<16>& a, uint32_t x)
 {
-    __m512i val = a;
+    __m512i val = a.native();
     __m128i val128 = _mm512_extracti32x4_epi32(val, id / 4);
     val128 = _mm_insert_epi32(val128, x, id % 4);
     return _mm512_inserti32x4(val, val128, id / 4);
@@ -191,7 +191,7 @@ uint64x2 i_insert(const uint64x2& ca, uint64_t x)
     a0 = i_insert<id*2+1>(a0, uint32_t(x >> 32));
     return (uint64x2) a0;
 #else
-    return _mm_insert_epi64(a.operator __m128i(), x, id);
+    return _mm_insert_epi64(a.native(), x, id);
 #endif
 #elif SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS
@@ -214,7 +214,7 @@ uint64x2 i_insert(const uint64x2& ca, uint64_t x)
     return a;
 #endif
 #elif SIMDPP_USE_NEON
-    return vsetq_lane_u64(x, a, id);
+    return vsetq_lane_u64(x, a.native(), id);
 #elif SIMDPP_USE_ALTIVEC
     detail::mem_block<uint64x2> ax(a);
     ax[id] = x;
@@ -222,12 +222,12 @@ uint64x2 i_insert(const uint64x2& ca, uint64_t x)
     return a;
 #elif SIMDPP_USE_MSA
 #if SIMDPP_64_BITS
-    return (v2u64) __msa_insert_d((v2i64)(v2u64) a, id, x);
+    return (v2u64) __msa_insert_d((v2i64) a.native(), id, x);
 #else
     int32<4> a32;
     a32 = a;
-    a32 = __msa_insert_w(a32, id*2, x);
-    a32 = __msa_insert_w(a32, id*2+1, x >> 32);
+    a32 = __msa_insert_w(a32.native(), id*2, x);
+    a32 = __msa_insert_w(a32.native(), id*2+1, x >> 32);
     return (uint64<2>) a32;
 #endif
 #endif
@@ -237,10 +237,10 @@ uint64x2 i_insert(const uint64x2& ca, uint64_t x)
 template<unsigned id> SIMDPP_INL
 uint64<4> i_insert(const uint64<4>& a, uint64_t x)
 {
-    __m256i val = a;
+    __m256i val = a.native();
     uint64<2> val128 = _mm256_extracti128_si256(val, id / 2);
     val128 = i_insert<id % 2>(val128, x);
-    return _mm256_inserti128_si256(val, val128, id / 2);
+    return _mm256_inserti128_si256(val, val128.native(), id / 2);
 }
 #endif
 
@@ -248,10 +248,10 @@ uint64<4> i_insert(const uint64<4>& a, uint64_t x)
 template<unsigned id> SIMDPP_INL
 uint64<8> i_insert(const uint64<8>& a, uint64_t x)
 {
-    __m512i val = a;
+    __m512i val = a.native();
     uint64<2> val128 = _mm512_extracti32x4_epi32(val, id / 2);
     val128 = i_insert<id % 2>(val128, x);
-    return _mm512_inserti32x4(val, val128, id / 2);
+    return _mm512_inserti32x4(val, val128.native(), id / 2);
 }
 #endif
 
@@ -261,7 +261,7 @@ template<unsigned id> SIMDPP_INL
 float32x4 i_insert(const float32x4& a, float x)
 {
 #if SIMDPP_USE_NEON_FLT_SP
-    return vsetq_lane_f32(x, a, id);
+    return vsetq_lane_f32(x, a.native(), id);
 #else
     return float32<4>(i_insert<id>(uint32<4>(a), bit_cast<uint32_t>(x)));
 #endif
@@ -271,10 +271,10 @@ float32x4 i_insert(const float32x4& a, float x)
 template<unsigned id> SIMDPP_INL
 float32<8> i_insert(const float32<8>& a, float x)
 {
-    __m256 val = a;
-    __m128 val128 = _mm256_extractf128_ps(val, id / 4);
-    val128 = i_insert<id % 4>((float32<4>) val128, x);
-    return _mm256_insertf128_ps(val, val128, id / 4);
+    __m256 val = a.native();
+    float32<4> val128 = _mm256_extractf128_ps(val, id / 4);
+    val128 = i_insert<id % 4>(val128, x);
+    return _mm256_insertf128_ps(val, val128.native(), id / 4);
 }
 #endif
 
@@ -282,10 +282,10 @@ float32<8> i_insert(const float32<8>& a, float x)
 template<unsigned id> SIMDPP_INL
 float32<16> i_insert(const float32<16>& a, float x)
 {
-    __m512 val = a;
-    __m128 val128 = _mm512_extractf32x4_ps(val, id / 4);
-    val128 = i_insert<id % 4>((float32<4>) val128, x);
-    return _mm512_insertf32x4(val, val128, id / 4);
+    __m512 val = a.native();
+    float32<4> val128 = _mm512_extractf32x4_ps(val, id / 4);
+    val128 = i_insert<id % 4>(val128, x);
+    return _mm512_insertf32x4(val, val128.native(), id / 4);
 }
 #endif
 
@@ -301,10 +301,10 @@ float64x2 i_insert(const float64x2& a, double x)
 template<unsigned id> SIMDPP_INL
 float64<4> i_insert(const float64<4>& a, double x)
 {
-    __m256d val = a;
-    __m128d val128 = _mm256_extractf128_pd(val, id / 2);
-    val128 = i_insert<id % 2>((float64<2>) val128, x);
-    return _mm256_insertf128_pd(val, val128, id / 2);
+    __m256d val = a.native();
+    float64<2> val128 = _mm256_extractf128_pd(val, id / 2);
+    val128 = i_insert<id % 2>(val128, x);
+    return _mm256_insertf128_pd(val, val128.native(), id / 2);
 }
 #endif
 
@@ -312,10 +312,10 @@ float64<4> i_insert(const float64<4>& a, double x)
 template<unsigned id> SIMDPP_INL
 float64<8> i_insert(const float64<8>& a, double x)
 {
-    __m512 val = _mm512_castpd_ps(a);
-    __m128 val128 = _mm512_extractf32x4_ps(val, id / 2);
-    val128 = _mm_castpd_ps(i_insert<id % 2>((float64<2>) _mm_castps_pd(val128), x));
-    return _mm512_castps_pd(_mm512_insertf32x4(val, val128, id / 2));
+    __m512 val = _mm512_castpd_ps(a.native());
+    float64<2> val128 = _mm_castps_pd(_mm512_extractf32x4_ps(val, id / 2));
+    val128 = i_insert<id % 2>(val128, x);
+    return _mm512_castps_pd(_mm512_insertf32x4(val, _mm_castpd_ps(val128.native()), id / 2));
 }
 #endif
 

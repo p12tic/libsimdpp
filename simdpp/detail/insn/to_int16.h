@@ -36,8 +36,8 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     return r;
 #elif SIMDPP_USE_SSE4_1
     uint16x8 r1, r2;
-    r1 = _mm_cvtepu8_epi16(a);
-    r2 = _mm_cvtepu8_epi16(move16_l<8>(a).eval());
+    r1 = _mm_cvtepu8_epi16(a.native());
+    r2 = _mm_cvtepu8_epi16(move16_l<8>(a).eval().native());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2 || (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN) || SIMDPP_USE_MSA
     uint16x8 r1, r2;
@@ -46,8 +46,8 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     uint16x16 r;
-    r.vec(0) = vmovl_u8(vget_low_u8(a));
-    r.vec(1) = vmovl_u8(vget_high_u8(a));
+    r.vec(0) = vmovl_u8(vget_low_u8(a.native()));
+    r.vec(1) = vmovl_u8(vget_high_u8(a.native()));
     return r;
 #elif (SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN)
     uint16x8 r1, r2;
@@ -61,13 +61,13 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
 SIMDPP_INL uint16<32> i_to_uint16(const uint8<32>& a)
 {
 #if SIMDPP_USE_AVX512BW
-    return _mm512_cvtepu8_epi16(a);
+    return _mm512_cvtepu8_epi16(a.native());
 #else
     uint16<16> r0, r1;
     uint8<16> a0, a1;
     split(a, a0, a1);
-    r0 = _mm256_cvtepu8_epi16(a0);
-    r1 = _mm256_cvtepu8_epi16(a1);
+    r0 = _mm256_cvtepu8_epi16(a0.native());
+    r1 = _mm256_cvtepu8_epi16(a1.native());
     return combine(r0, r1);
 #endif
 }
@@ -79,8 +79,8 @@ SIMDPP_INL uint16<64> i_to_uint16(const uint8<64>& a)
     uint16<32> r0, r1;
     uint8<32> a0, a1;
     split(a, a0, a1);
-    r0 = _mm512_cvtepu8_epi16(a0);
-    r1 = _mm512_cvtepu8_epi16(a1);
+    r0 = _mm512_cvtepu8_epi16(a0.native());
+    r1 = _mm512_cvtepu8_epi16(a1.native());
     return combine(r0, r1);
 }
 #endif
@@ -107,8 +107,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return r;
 #elif SIMDPP_USE_SSE4_1
     int16x8 r1, r2;
-    r1 = _mm_cvtepi8_epi16(a);
-    r2 = _mm_cvtepi8_epi16(move16_l<8>(a).eval());
+    r1 = _mm_cvtepi8_epi16(a.native());
+    r2 = _mm_cvtepi8_epi16(move16_l<8>(a).eval().native());
     return combine(r1, r2);
 #elif SIMDPP_USE_SSE2
     int16x8 r1, r2;
@@ -119,8 +119,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;
-    r.vec(0) = vmovl_s8(vget_low_s8(a));
-    r.vec(1) = vmovl_s8(vget_high_s8(a));
+    r.vec(0) = vmovl_s8(vget_low_s8(a.native()));
+    r.vec(1) = vmovl_s8(vget_high_s8(a.native()));
     return r;
 #elif SIMDPP_USE_MSA
     int8x16 sign = shift_r<7>(a);
@@ -130,8 +130,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
     int16x16 r;
-    r.vec(0) = vec_unpackh((__vector int8_t)a.vec(0));
-    r.vec(1) = vec_unpackl((__vector int8_t)a.vec(0));
+    r.vec(0) = vec_unpackh(a.vec(0).native());
+    r.vec(1) = vec_unpackl(a.vec(0).native());
     return r;
 #endif
 }
@@ -140,13 +140,13 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
 SIMDPP_INL int16<32> i_to_int16(const int8<32>& a)
 {
 #if SIMDPP_USE_AVX512BW
-    return _mm512_cvtepi8_epi16(a);
+    return _mm512_cvtepi8_epi16(a.native());
 #else
     int16<16> r0, r1;
     int8<16> a0, a1;
     split(a, a0, a1);
-    r0 = _mm256_cvtepi8_epi16(a0);
-    r1 = _mm256_cvtepi8_epi16(a1);
+    r0 = _mm256_cvtepi8_epi16(a0.native());
+    r1 = _mm256_cvtepi8_epi16(a1.native());
     return combine(r0, r1);
 #endif
 }
@@ -158,8 +158,8 @@ SIMDPP_INL int16<64> i_to_int16(const int8<64>& a)
     int16<32> r0, r1;
     int8<32> a0, a1;
     split(a, a0, a1);
-    r0 = _mm512_cvtepi8_epi16(a0);
-    r1 = _mm512_cvtepi8_epi16(a1);
+    r0 = _mm512_cvtepi8_epi16(a0.native());
+    r1 = _mm512_cvtepi8_epi16(a1.native());
     return combine(r0, r1);
 }
 #endif

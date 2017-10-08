@@ -29,9 +29,9 @@ float32<4> expr_eval_abs(const float32<4,E>& qa)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     return bit_and(a, 0x7fffffff);
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vabsq_f32(a);
+    return vabsq_f32(a.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_abs((__vector float)a);
+    return vec_abs(a.native());
 #endif
 }
 
@@ -70,9 +70,9 @@ float64x2 expr_eval_abs(const float64<2,E>& qa)
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     return bit_and(a, 0x7fffffffffffffff);
 #elif SIMDPP_USE_NEON64
-    return vabsq_f64(a);
+    return vabsq_f64(a.native());
 #elif SIMDPP_USE_VSX_206
-    return vec_abs((__vector double)a);
+    return vec_abs(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     return detail::null::abs(a);
 #endif
