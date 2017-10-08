@@ -258,80 +258,106 @@ SIMDPP_MAKE_DISPATCHER_VOID4(test_dispatcher_old_void4, int, int, int, int)
 SIMDPP_MAKE_DISPATCHER((int)(test_dispatcher_ret0)())
 SIMDPP_MAKE_DISPATCHER((int)(test_dispatcher_ret1)((int) arg))
 SIMDPP_MAKE_DISPATCHER((int)(test_dispatcher_ret2)((int) arg, (int) arg2))
-SIMDPP_MAKE_DISPATCHER((int)(test_dispatcher_ret3)((int) arg, (int) arg2, (int) arg3))
-SIMDPP_MAKE_DISPATCHER((int)(test_dispatcher_ret4)((int) arg, (int) arg2, (int) arg3, (int) arg4))
+SIMDPP_MAKE_DISPATCHER((int)(test_dispatcher_ret3)((int) arg, (int) arg2,
+                                                   (int) arg3))
+SIMDPP_MAKE_DISPATCHER((int)(test_dispatcher_ret4)((int) arg, (int) arg2,
+                                                   (int) arg3, (int) arg4))
 
 SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void0)())
 SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void1)((int) arg))
 SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void2)((int) arg, (int) arg2))
-SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void3)((int) arg, (int) arg2, (int) arg3))
-SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void4)((int) arg, (int) arg2, (int) arg3, (int) arg4))
+SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void3)((int) arg, (int) arg2,
+                                                     (int) arg3))
+SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void4)((int) arg, (int) arg2,
+                                                     (int) arg3, (int) arg4))
 
 SIMDPP_MAKE_DISPATCHER((void*)(test_dispatcher_ret_voidptr)((void*) x))
 
 SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void_pair)
                        ((const std::pair<int, int>&) pair))
 SIMDPP_MAKE_DISPATCHER((void)(test_dispatcher_void_pair2)
-                       ((const std::pair<int, int>&) pair, (const std::pair<int, int>&) pair2))
+                       ((const std::pair<int, int>&) pair,
+                        (const std::pair<int, int>&) pair2))
 
 SIMDPP_MAKE_DISPATCHER((std::pair<int, int>)(test_dispatcher_ret_pair)
                        ((const std::pair<int, int>&) pair))
 SIMDPP_MAKE_DISPATCHER((std::pair<int, int>)(test_dispatcher_ret_pair2)
-                       ((const std::pair<int, int>&) pair, (const std::pair<int, int>&) pair2))
+                       ((const std::pair<int, int>&) pair,
+                        (const std::pair<int, int>&) pair2))
 
-SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>) (void) (test_dispatcher_void_template_pair)
+SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>)
+                       (void) (test_dispatcher_void_template_pair)
                        ((const std::pair<T, T>&) pair))
 
 SIMDPP_INSTANTIATE_DISPATCHER(
-    (template void test_dispatcher_void_template_pair<int>(const std::pair<int, int>& pair)),
-    (template void test_dispatcher_void_template_pair<char>(const std::pair<char, char>& pair))
+    (template void
+        test_dispatcher_void_template_pair<int>(const std::pair<int, int>& pair)),
+    (template void
+        test_dispatcher_void_template_pair<char>(const std::pair<char, char>& pair))
 )
 
 
-SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>) (void) (test_dispatcher_void_template_pair2)
+SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>)
+                       (void) (test_dispatcher_void_template_pair2)
                        ((const std::pair<T, T>&) pair, (const std::pair<T, T>&) pair2))
 
 SIMDPP_INSTANTIATE_DISPATCHER(
-    (template void test_dispatcher_void_template_pair2<int>(const std::pair<int, int>& pair1,
-                                                            const std::pair<int, int>& pair2)),
-    (template void test_dispatcher_void_template_pair2<char>(const std::pair<char, char>& pair1,
-                                                             const std::pair<char, char>& pair2))
+    (template void
+        test_dispatcher_void_template_pair2<int>(const std::pair<int, int>& pair1,
+                                                 const std::pair<int, int>& pair2)),
+    (template void
+        test_dispatcher_void_template_pair2<char>(const std::pair<char, char>& pair1,
+                                                  const std::pair<char, char>& pair2))
 )
 
 
-SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>) (void) (test_dispatcher_void_template2_pair)
+SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>)
+                       (void) (test_dispatcher_void_template2_pair)
                        ((const std::pair<T, U>&) pair))
 
 SIMDPP_INSTANTIATE_DISPATCHER(
-    (template void test_dispatcher_void_template2_pair<int, int>(const std::pair<int, int>& pair)),
-    (template void test_dispatcher_void_template2_pair<char, int>(const std::pair<char, int>& pair)),
-    (template void test_dispatcher_void_template2_pair<int, char>(const std::pair<int, char>& pair)),
-    (template void test_dispatcher_void_template2_pair<char, char>(const std::pair<char, char>& pair))
+    (template void
+        test_dispatcher_void_template2_pair<int, int>(const std::pair<int, int>& pair)),
+    (template void
+        test_dispatcher_void_template2_pair<char, int>(const std::pair<char, int>& pair)),
+    (template void
+        test_dispatcher_void_template2_pair<int, char>(const std::pair<int, char>& pair)),
+    (template void
+        test_dispatcher_void_template2_pair<char, char>(const std::pair<char, char>& pair))
 )
 
-SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>) (void) (test_dispatcher_void_template2_pair2)
+SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>)
+                       (void) (test_dispatcher_void_template2_pair2)
                        ((const std::pair<T, U>&) pair, (const std::pair<T, U>&) pair2))
 
 SIMDPP_INSTANTIATE_DISPATCHER(
-    (template void test_dispatcher_void_template2_pair2<int, int>(const std::pair<int, int>& pair1,
-                                                                  const std::pair<int, int>& pair2)),
-    (template void test_dispatcher_void_template2_pair2<char, int>(const std::pair<char, int>& pair1,
-                                                                   const std::pair<char, int>& pair2)),
-    (template void test_dispatcher_void_template2_pair2<int, char>(const std::pair<int, char>& pair1,
-                                                                    const std::pair<int, char>& pair2)),
-    (template void test_dispatcher_void_template2_pair2<char, char>(const std::pair<char, char>& pair1,
-                                                                    const std::pair<char, char>& pair2))
+    (template void
+        test_dispatcher_void_template2_pair2<int, int>(const std::pair<int, int>& pair1,
+                                                       const std::pair<int, int>& pair2)),
+    (template void
+        test_dispatcher_void_template2_pair2<char, int>(const std::pair<char, int>& pair1,
+                                                        const std::pair<char, int>& pair2)),
+    (template void
+        test_dispatcher_void_template2_pair2<int, char>(const std::pair<int, char>& pair1,
+                                                        const std::pair<int, char>& pair2)),
+    (template void
+        test_dispatcher_void_template2_pair2<char, char>(const std::pair<char, char>& pair1,
+                                                         const std::pair<char, char>& pair2))
 )
 
-SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>) (std::pair<T, T>) (test_dispatcher_ret_template_pair)
+SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>)
+                       (std::pair<T, T>) (test_dispatcher_ret_template_pair)
                        ((const std::pair<T, T>&) pair))
 
 SIMDPP_INSTANTIATE_DISPATCHER(
-    (template std::pair<int, int> test_dispatcher_ret_template_pair<int>(const std::pair<int, int>& pair)),
-    (template std::pair<char, char> test_dispatcher_ret_template_pair<char>(const std::pair<char, char>& pair))
+    (template std::pair<int, int>
+        test_dispatcher_ret_template_pair<int>(const std::pair<int, int>& pair)),
+    (template std::pair<char, char>
+        test_dispatcher_ret_template_pair<char>(const std::pair<char, char>& pair))
 )
 
-SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>) (std::pair<T, T>) (test_dispatcher_ret_template_pair2)
+SIMDPP_MAKE_DISPATCHER((template<class T>) (<T>)
+                       (std::pair<T, T>) (test_dispatcher_ret_template_pair2)
                        ((const std::pair<T, T>&) pair, (const std::pair<T, T>&) pair2))
 
 SIMDPP_INSTANTIATE_DISPATCHER(
@@ -343,17 +369,23 @@ SIMDPP_INSTANTIATE_DISPATCHER(
                                                  const std::pair<char, char>& pair2))
 )
 
-SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>) (std::pair<T, U>) (test_dispatcher_ret_template2_pair)
+SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>)
+                       (std::pair<T, U>) (test_dispatcher_ret_template2_pair)
                        ((const std::pair<T, U>&) pair))
 
 SIMDPP_INSTANTIATE_DISPATCHER(
-    (template std::pair<int, int> test_dispatcher_ret_template2_pair<int, int>(const std::pair<int, int>& pair)),
-    (template std::pair<char, int> test_dispatcher_ret_template2_pair<char, int>(const std::pair<char, int>& pair)),
-    (template std::pair<int, char> test_dispatcher_ret_template2_pair<int, char>(const std::pair<int, char>& pair)),
-    (template std::pair<char, char> test_dispatcher_ret_template2_pair<char, char>(const std::pair<char, char>& pair))
+    (template std::pair<int, int>
+        test_dispatcher_ret_template2_pair<int, int>(const std::pair<int, int>& pair)),
+    (template std::pair<char, int>
+        test_dispatcher_ret_template2_pair<char, int>(const std::pair<char, int>& pair)),
+    (template std::pair<int, char>
+        test_dispatcher_ret_template2_pair<int, char>(const std::pair<int, char>& pair)),
+    (template std::pair<char, char>
+        test_dispatcher_ret_template2_pair<char, char>(const std::pair<char, char>& pair))
 )
 
-SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>) (std::pair<T, U>) (test_dispatcher_ret_template2_pair2)
+SIMDPP_MAKE_DISPATCHER((template<class T, class U>) (<T, U>)
+                       (std::pair<T, U>) (test_dispatcher_ret_template2_pair2)
                        ((const std::pair<T, U>&) pair, (const std::pair<T, U>&) pair2))
 
 SIMDPP_INSTANTIATE_DISPATCHER(

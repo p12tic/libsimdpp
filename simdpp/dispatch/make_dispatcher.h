@@ -38,8 +38,12 @@
 
 #define SIMDPP_DETAIL_IGNORE_PARENS(x) SIMDPP_PP_EAT x
 
-#define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(x) SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_ADD_COMMA x,)
-#define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(...) SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(__VA_ARGS__)
+#define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(x)                             \
+    SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_ADD_COMMA x,)
+
+#define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(...)          \
+    SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(__VA_ARGS__)
+
 #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(x, ...) SIMDPP_PP_REM x
 #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_ADD_COMMA(...) (__VA_ARGS__),
 
@@ -68,22 +72,33 @@
                   SIMDPP_PP_EAT                                                 \
                  )(T)
 
-#define SIMDPP_DETAIL_TYPES_EACH(r, data, i, x) SIMDPP_PP_COMMA_IF(i) SIMDPP_DETAIL_EXTRACT_TYPE(x)
-#define SIMDPP_DETAIL_ARGS_EACH(r, data, i, x) SIMDPP_PP_COMMA_IF(i) SIMDPP_DETAIL_EXTRACT_ARG(x)
-#define SIMDPP_DETAIL_FORWARD_EACH(r, data, i, x) SIMDPP_PP_COMMA_IF(i) SIMDPP_DETAIL_EXTRACT_FORWARD(x)
+#define SIMDPP_DETAIL_TYPES_EACH(r, data, i, x)                                 \
+    SIMDPP_PP_COMMA_IF(i) SIMDPP_DETAIL_EXTRACT_TYPE(x)
+
+#define SIMDPP_DETAIL_ARGS_EACH(r, data, i, x)                                  \
+    SIMDPP_PP_COMMA_IF(i) SIMDPP_DETAIL_EXTRACT_ARG(x)
+
+#define SIMDPP_DETAIL_FORWARD_EACH(r, data, i, x)                               \
+    SIMDPP_PP_COMMA_IF(i) SIMDPP_DETAIL_EXTRACT_FORWARD(x)
 
 // The following 3 macros expand a given function argument list with the
 // following format '(A) a, (B) b, (C) c' into different results.
 
 // Will expand to 'A, B, C'
-#define SIMDPP_DETAIL_TYPES(args) SIMDPP_PP_SEQ_FOR_EACH_I(SIMDPP_DETAIL_TYPES_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ args)
+#define SIMDPP_DETAIL_TYPES(args)                                               \
+    SIMDPP_PP_SEQ_FOR_EACH_I(SIMDPP_DETAIL_TYPES_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ args)
+
 // Will expand to 'A a, B b, C c'
-#define SIMDPP_DETAIL_ARGS(args) SIMDPP_PP_SEQ_FOR_EACH_I(SIMDPP_DETAIL_ARGS_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ args)
+#define SIMDPP_DETAIL_ARGS(args)                                                \
+    SIMDPP_PP_SEQ_FOR_EACH_I(SIMDPP_DETAIL_ARGS_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ args)
+
 // Will expand to 'a, b, c'
-#define SIMDPP_DETAIL_FORWARD(args) SIMDPP_PP_SEQ_FOR_EACH_I(SIMDPP_DETAIL_FORWARD_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ args)
+#define SIMDPP_DETAIL_FORWARD(args)                                             \
+    SIMDPP_PP_SEQ_FOR_EACH_I(SIMDPP_DETAIL_FORWARD_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ args)
 
 // Will expand to 1 if argument contains SIMDPP_PP_PROBE macro anywhere, 0 otherwise
-#define SIMDPP_PP_PROBE_TO_BOOL(...) SIMDPP_PP_PROBE_TO_BOOL_MSVC_DEFER(SIMDPP_PP_PROBE_TO_BOOL_I, (__VA_ARGS__, 0))
+#define SIMDPP_PP_PROBE_TO_BOOL(...)                                            \
+    SIMDPP_PP_PROBE_TO_BOOL_MSVC_DEFER(SIMDPP_PP_PROBE_TO_BOOL_I, (__VA_ARGS__, 0))
 #define SIMDPP_PP_PROBE_TO_BOOL_MSVC_DEFER(macro, args) macro args
 #define SIMDPP_PP_PROBE_TO_BOOL_I(n1, n2, ...) n2
 #define SIMDPP_PP_PROBE() ~, 1, 0
@@ -91,7 +106,7 @@
 // Given a single argument R, potentially consisting of multiple tokens,
 // expands to SIMDPP_PP_PROBE() if R is empty, otherwise expands to nothing.
 #define SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY(R)                                    \
-    SIMDPP_PP_IIF(SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_IS_EMPTY_PROBE R ()), \
+    SIMDPP_PP_IIF(SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_IS_EMPTY_PROBE R ()),   \
                   SIMDPP_PP_PROBE,                                              \
                   SIMDPP_PP_EMPTY                                               \
                  )()
@@ -155,7 +170,8 @@ SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       
     static FunPtr selected = nullptr;                                           \
     if (selected == nullptr) {                                                  \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {};   \
-        SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, (NAME SIMDPP_PP_REMOVE_PARENS(TEMPLATE_ARGS)), FunPtr) \
+        SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions,                             \
+            (NAME SIMDPP_PP_REMOVE_PARENS(TEMPLATE_ARGS)), FunPtr)              \
         ::simdpp::detail::FnVersion version =                                   \
             ::simdpp::detail::select_version_any(versions,                      \
                 SIMDPP_DISPATCH_MAX_ARCHS, SIMDPP_USER_ARCH_INFO);              \
@@ -246,7 +262,9 @@ SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       
 #endif
 
 #define SIMDPP_DETAIL_SIGNATURE_EACH(r, data, x) SIMDPP_PP_REMOVE_PARENS(x) ;
-#define SIMDPP_DETAIL_SIGNATURES(signatures) SIMDPP_PP_SEQ_FOR_EACH(SIMDPP_DETAIL_SIGNATURE_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ signatures)
+#define SIMDPP_DETAIL_SIGNATURES(signatures)                                    \
+    SIMDPP_PP_SEQ_FOR_EACH(SIMDPP_DETAIL_SIGNATURE_EACH, data,                  \
+                           SIMDPP_PP_VARIADIC_TO_SEQ signatures)
 
 #if SIMDPP_EMIT_DISPATCHER
 /** Defines a one or more template instantiations for a dispatcher. Accepts one
