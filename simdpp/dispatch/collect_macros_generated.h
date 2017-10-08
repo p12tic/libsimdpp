@@ -157,7 +157,7 @@
 
     #define SIMDPP_DISPATCH_1_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_1_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_1_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[1-1] = ::simdpp::SIMDPP_DISPATCH_1_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -303,7 +303,7 @@
 
     #define SIMDPP_DISPATCH_2_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_2_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_2_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[2-1] = ::simdpp::SIMDPP_DISPATCH_2_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -449,7 +449,7 @@
 
     #define SIMDPP_DISPATCH_3_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_3_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_3_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[3-1] = ::simdpp::SIMDPP_DISPATCH_3_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -595,7 +595,7 @@
 
     #define SIMDPP_DISPATCH_4_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_4_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_4_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[4-1] = ::simdpp::SIMDPP_DISPATCH_4_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -741,7 +741,7 @@
 
     #define SIMDPP_DISPATCH_5_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_5_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_5_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[5-1] = ::simdpp::SIMDPP_DISPATCH_5_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -887,7 +887,7 @@
 
     #define SIMDPP_DISPATCH_6_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_6_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_6_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[6-1] = ::simdpp::SIMDPP_DISPATCH_6_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -1033,7 +1033,7 @@
 
     #define SIMDPP_DISPATCH_7_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_7_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_7_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[7-1] = ::simdpp::SIMDPP_DISPATCH_7_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -1179,7 +1179,7 @@
 
     #define SIMDPP_DISPATCH_8_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_8_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_8_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[8-1] = ::simdpp::SIMDPP_DISPATCH_8_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -1325,7 +1325,7 @@
 
     #define SIMDPP_DISPATCH_9_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_9_NAMESPACE::NAME;            \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_9_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);            \
             ARRAY[9-1] = ::simdpp::SIMDPP_DISPATCH_9_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -1471,7 +1471,7 @@
 
     #define SIMDPP_DISPATCH_10_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_10_NAMESPACE::NAME;           \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_10_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);           \
             ARRAY[10-1] = ::simdpp::SIMDPP_DISPATCH_10_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -1617,7 +1617,7 @@
 
     #define SIMDPP_DISPATCH_11_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_11_NAMESPACE::NAME;           \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_11_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);           \
             ARRAY[11-1] = ::simdpp::SIMDPP_DISPATCH_11_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -1763,7 +1763,7 @@
 
     #define SIMDPP_DISPATCH_12_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_12_NAMESPACE::NAME;           \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_12_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);           \
             ARRAY[12-1] = ::simdpp::SIMDPP_DISPATCH_12_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -1909,7 +1909,7 @@
 
     #define SIMDPP_DISPATCH_13_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_13_NAMESPACE::NAME;           \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_13_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);           \
             ARRAY[13-1] = ::simdpp::SIMDPP_DISPATCH_13_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -2055,7 +2055,7 @@
 
     #define SIMDPP_DISPATCH_14_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_14_NAMESPACE::NAME;           \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_14_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);           \
             ARRAY[14-1] = ::simdpp::SIMDPP_DISPATCH_14_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 
@@ -2201,7 +2201,7 @@
 
     #define SIMDPP_DISPATCH_15_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
         {   /* the following will fail if the overload is not available */    \
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_15_NAMESPACE::NAME;           \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_15_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);           \
             ARRAY[15-1] = ::simdpp::SIMDPP_DISPATCH_15_NAMESPACE::detail::create_fn_version(fun_ptr);\
         }
 

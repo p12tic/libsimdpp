@@ -146,7 +146,7 @@
 #undef SIMDPP_DETAIL_FORWARD
 #undef SIMDPP_DETAIL_ARGS
 */
-#define SIMDPP_DETAIL_MAKE_DISPATCHER_IMPL(TEMPLATE_PREFIX, R, NAME, ARGS)             \
+#define SIMDPP_DETAIL_MAKE_DISPATCHER_IMPL(TEMPLATE_PREFIX, R, NAME, ARGS, TEMPLATE_SUFFIX)             \
                                                                                 \
 SIMDPP_DISPATCH_DECLARE_FUNCTIONS(                                              \
     (SIMDPP_PP_REMOVE_PARENS(TEMPLATE_PREFIX)                                   \
@@ -159,7 +159,7 @@ SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       
     static FunPtr selected = nullptr;                                           \
     if (selected == nullptr) {                                                  \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {};   \
-        SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, NAME, FunPtr)               \
+        SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, (NAME SIMDPP_PP_REMOVE_PARENS(TEMPLATE_SUFFIX)), FunPtr)               \
         ::simdpp::detail::FnVersion version =                                   \
             ::simdpp::detail::select_version_any(versions,                      \
                 SIMDPP_DISPATCH_MAX_ARCHS, SIMDPP_USER_ARCH_INFO);              \
@@ -177,18 +177,27 @@ SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       
         (),                                                                     \
         (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(DESC)),                         \
         SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(DESC)), \
-        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC)))))
+        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC)))), \
+        ())
 
 #define SIMDPP_DETAIL_MAKE_DISPATCHER4(DESC)                                    \
     SIMDPP_DETAIL_MAKE_DISPATCHER_IMPL(                                         \
         (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(DESC)),                         \
         (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(DESC))), \
         SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC))), \
-        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC))))))
+        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC))))), \
+        ())
+#define SIMDPP_DETAIL_MAKE_DISPATCHER5(DESC)                                  \
+  SIMDPP_DETAIL_MAKE_DISPATCHER_IMPL(                                         \
+        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(DESC)),                         \
+        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(DESC))), \
+        SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC))), \
+        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC))))), \
+        (SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(SIMDPP_DETAIL_IGNORE_PARENS(DESC)))))))
 
 
-#define SIMDPP_DETAIL_MAKE_DISPATCHER5(DESC) SIMDPP_ERROR_INCORRECT_NUMBER_OF_ARGUMENTS
 #define SIMDPP_DETAIL_MAKE_DISPATCHER6(DESC) SIMDPP_ERROR_INCORRECT_NUMBER_OF_ARGUMENTS
+#define SIMDPP_DETAIL_MAKE_DISPATCHER7(DESC) SIMDPP_ERROR_INCORRECT_NUMBER_OF_ARGUMENTS
 
 /** Builds a dispatcher for a specific non-member function. The same macro is
     used for functions with or without return value, with different parameter
