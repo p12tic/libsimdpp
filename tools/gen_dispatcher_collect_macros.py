@@ -146,7 +146,7 @@ single_arch_template = '''
 
     #define SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)          $n$
         {   /* the following will fail if the overload is not available */  $n$
-            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_$num$_NAMESPACE::NAME;      $n$
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_$num$_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME); $n$
             ARRAY[$num$-1] = ::simdpp::SIMDPP_DISPATCH_$num$_NAMESPACE::detail::create_fn_version(fun_ptr); $n$
         }
 
