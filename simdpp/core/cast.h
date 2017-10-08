@@ -42,7 +42,7 @@ template<unsigned N>
 struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
 #endif
 
-template<class R, class T>
+template<class R, class T> SIMDPP_INL
 void bit_cast_impl(const T& t, R& r)
 {
     const bool is_mask_r = is_mask<R>::value;
@@ -64,7 +64,7 @@ void bit_cast_impl(const T& t, R& r)
     detail::cast_wrapper<cast_type>::run(t, r);
 }
 
-template<class T>
+template<class T> SIMDPP_INL
 void bit_cast_impl(const T& t, T& r)
 {
     // Simple implementation for the common case

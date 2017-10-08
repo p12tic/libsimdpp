@@ -28,15 +28,31 @@ template<unsigned N> struct base_mask_vector_type<mask_int64<N>> { using type = 
 template<unsigned N> struct base_mask_vector_type<mask_float32<N>> { using type = float32<N>; };
 template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type = float64<N>; };
 
-#if _MSC_VER
-#pragma intrinsic(memcpy)
-#endif
+template<class T, class R>
+struct cast_helper {
 
+    SIMDPP_INL cast_helper(const T& t) : t_(t) {}
+    SIMDPP_INL R convert() { return r_; }
+
+    union {
+        T t_;
+        R r_;
+    };
+};
+
+/*  Note that in this function we are invoking undefined behavior that happens
+    to work in all compilers the library supports. The only non-undefined way
+    to do bitwise data transfer between unrelated types without breaking strict
+    aliasing rules is the memcpy() function. Unfortunately some compilers can't
+    fully optimize out the overhead of the function which leads to unnecessary
+    data movement to the stack.
+*/
 template<class T, class R> SIMDPP_INL
 void cast_memcpy(const T& t, R& r)
 {
     static_assert(sizeof(R) == sizeof(T), "Size mismatch");
-    ::memcpy(&r, &t, sizeof(R));
+    cast_helper<T, R> helper(t);
+    r = helper.convert();
 }
 
 template<class T, class R> SIMDPP_INL
