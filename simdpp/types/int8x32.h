@@ -58,6 +58,7 @@ public:
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL int8<32>(const expr_vec_construct<E>& e)
     {
@@ -113,6 +114,7 @@ public:
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL uint8<32>(const expr_vec_construct<E>& e)
     {
@@ -156,7 +158,9 @@ public:
     SIMDPP_INL mask_int8<32>(const uint8<32>& d) : d_(d) {}
 #endif
 
+    /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL uint8<32> unmask() const

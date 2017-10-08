@@ -65,6 +65,7 @@ public:
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL float64<2>(const expr_vec_construct<E>& e)
     {
@@ -136,7 +137,9 @@ public:
         *this = bit_cast<mask_float64<2>>(d.eval()); return *this;
     }
 
+    /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL float64<2> unmask() const

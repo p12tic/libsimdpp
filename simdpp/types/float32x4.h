@@ -64,6 +64,7 @@ public:
 
     /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
+    SIMDPP_INL native_type native() const { return d_; }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     SIMDPP_INL float& el(unsigned id) { return d_[id]; }
@@ -136,7 +137,9 @@ public:
         *this = bit_cast<mask_float32<4>>(d.eval()); return *this;
     }
 
+    /// Convert to the underlying vector type
     SIMDPP_INL operator native_type() const { return d_; }
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL float32<4> unmask() const
