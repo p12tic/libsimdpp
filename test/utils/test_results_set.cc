@@ -158,9 +158,27 @@ void print_vector_numeric(std::ostream& out, unsigned type, unsigned num_elems,
     }
 }
 
+const char* vector_type_to_str(unsigned type)
+{
+    switch (type) {
+    case TYPE_UINT8: return "uint86";
+    case TYPE_INT8: return "int86";
+    case TYPE_UINT16: return "uint16";
+    case TYPE_INT16: return "int16";
+    case TYPE_UINT32: return "uint32";
+    case TYPE_INT32: return "int32";
+    case TYPE_UINT64: return "uint64";
+    case TYPE_INT64: return "int64";
+    case TYPE_FLOAT32: return "float32";
+    case TYPE_FLOAT64: return "float64";
+    default: return "UNDEFINED";
+    }
+}
+
 void print_vector_diff(std::ostream& out, unsigned type, unsigned num_elems,
                        const void* data_a, const void* data_b)
 {
+    out << "type: " << vector_type_to_str(type) << "\n";
     out << "A : ";
     print_vector_numeric(out, type, num_elems, data_a);
     out << "\nA : ";
@@ -330,23 +348,6 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
         }
     };
 
-    auto type_str = [&](unsigned type) -> const char*
-    {
-        switch (type) {
-        case TYPE_UINT8: return "uint86";
-        case TYPE_INT8: return "int86";
-        case TYPE_UINT16: return "uint16";
-        case TYPE_INT16: return "int16";
-        case TYPE_UINT32: return "uint32";
-        case TYPE_INT32: return "int32";
-        case TYPE_UINT64: return "uint64";
-        case TYPE_INT64: return "int64";
-        case TYPE_FLOAT32: return "float32";
-        case TYPE_FLOAT64: return "float64";
-        default: return "UNDEFINED";
-        }
-    };
-
     auto cmpeq_result = [](const TestResultsSet::Result& ia, const TestResultsSet::Result& ib,
                            unsigned fp_prec, unsigned fp_zero_eq) -> bool
     {
@@ -432,8 +433,8 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                 if (ia.type != ib.type) {
                     tr.out() << "FATAL: Types do not match for items with the same "
                              << "sequence number: id: " << i
-                             << " type_A: " << type_str(ia.type)
-                             << " type_B: " << type_str(ib.type) << "\n";
+                             << " type_A: " << vector_type_to_str(ia.type)
+                             << " type_B: " << vector_type_to_str(ib.type) << "\n";
                 }
                 if (ia.length != ib.length) {
                     tr.out() << "FATAL: Number of elements do not match for "
