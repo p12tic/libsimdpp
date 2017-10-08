@@ -39,6 +39,9 @@ void i_load_u(uint8x16& a, const char* p)
     a = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
 #elif SIMDPP_USE_NEON
     a = vld1q_u8(reinterpret_cast<const uint8_t*>(p));
+#elif SIMDPP_USE_VSX_206
+    const uint8_t* q = reinterpret_cast<const uint8_t*>(p);
+    a = vec_vsx_ld(0, q);
 #elif SIMDPP_USE_ALTIVEC
     const uint8_t* q = reinterpret_cast<const uint8_t*>(p);
     uint8x16 l1, l2, mask;

@@ -33,6 +33,9 @@ void i_store_u(char* p, const uint8<16>& a)
     _mm_storeu_si128(reinterpret_cast<__m128i*>(p), a.native());
 #elif SIMDPP_USE_NEON
     vst1q_u8(reinterpret_cast<uint8_t*>(p), a.native());
+#elif SIMDPP_USE_VSX_206
+    uint8_t* q = reinterpret_cast<uint8_t*>(p);
+    vec_vsx_st(a.native(), 0, q);
 #elif SIMDPP_USE_ALTIVEC
     // From https://web.archive.org/web/20110305043420/http://developer.apple.com/hardwaredrivers/ve/alignment.html
     uint8_t* q = reinterpret_cast<uint8_t*>(p);
