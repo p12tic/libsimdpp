@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/cast.h>
-#include <simdpp/core/cmp_neq.h>
+#include <simdpp/detail/to_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -69,7 +69,7 @@ void cast_bitwise_remask(const T& t, R& r)
     using BaseMaskVector = typename base_mask_vector_type<R>::type;
     BaseMaskVector rr;
     cast_bitwise(t.unmask(), rr);
-    r = cmp_neq(rr, (BaseMaskVector) make_zero());
+    r = to_mask(rr);
 }
 
 template<>

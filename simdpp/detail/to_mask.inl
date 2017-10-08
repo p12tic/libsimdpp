@@ -102,10 +102,10 @@ mask_int32<16> to_mask(const uint32<16>& a)
 static SIMDPP_INL
 mask_int64<2> to_mask(const uint64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return cmp_neq(a, (uint64<2>) make_zero());
-#else
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     return a.native();
+#else
+    return cmp_neq(a, (uint64<2>) make_zero());
 #endif
 }
 
