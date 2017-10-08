@@ -18,14 +18,14 @@ struct expr_empty {};
 
 template<class VE>
 struct expr_scalar_bitwise {
-    const VE& e;
+    VE e;
 
     template<class R> R eval() const;
 };
 
 template<class VE>
 struct expr_scalar {
-    const VE& e;
+    VE e;
 
     template<class R> R eval() const;
 };
