@@ -37,7 +37,8 @@ uint32_t reduce_mul(const uint32<N,E>& a);
 namespace detail {
 namespace insn {
 
-SIMDPP_INL uint32_t i_reduce_mul(const uint16x8& a)
+static SIMDPP_INL
+uint32_t i_reduce_mul(const uint16x8& a)
 {
 #if SIMDPP_USE_NULL
     uint32_t r = a.el(0);
@@ -77,7 +78,8 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32_t i_reduce_mul(const uint16x16& a)
+static SIMDPP_INL
+uint32_t i_reduce_mul(const uint16x16& a)
 {
     uint32x8 ca = (uint32x8) a;
     // shift data zeroing out bits
@@ -197,7 +199,8 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32_t i_reduce_mul(const int16x8& a)
+static SIMDPP_INL
+int32_t i_reduce_mul(const int16x8& a)
 {
 #if SIMDPP_USE_NULL
     int32_t r = a.el(0);
@@ -237,7 +240,8 @@ SIMDPP_INL int32_t i_reduce_mul(const int16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32_t i_reduce_mul(const int16x16& a)
+static SIMDPP_INL
+int32_t i_reduce_mul(const int16x16& a)
 {
     uint32x8 ca = (uint32x8) a;
     // shift data zeroing out bits
@@ -357,7 +361,8 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32_t i_reduce_mul(const uint32x4& a)
+static SIMDPP_INL
+uint32_t i_reduce_mul(const uint32x4& a)
 {
 #if SIMDPP_USE_NULL
     uint32_t r = a.el(0);
@@ -381,7 +386,8 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32x4& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32_t i_reduce_mul(const uint32x8& a)
+static SIMDPP_INL
+uint32_t i_reduce_mul(const uint32x8& a)
 {
     uint32x8 ra = _mm256_mul_epu32(a, move4_l<1>(a).eval());
     uint32x4 r = _mm_mul_epu32(detail::extract128<0>(ra), detail::extract128<1>(ra));
@@ -391,7 +397,8 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32_t i_reduce_mul(const uint32<16>& a)
+static SIMDPP_INL
+uint32_t i_reduce_mul(const uint32<16>& a)
 {
     return i_reduce_mul(mul_lo(extract256<0>(a), extract256<1>(a)));
 }

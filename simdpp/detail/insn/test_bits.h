@@ -25,7 +25,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL bool i_test_bits_any(const uint32<4>& a)
+static SIMDPP_INL
+bool i_test_bits_any(const uint32<4>& a)
 {
 #if SIMDPP_USE_NULL
     return null::test_bits_any(a);
@@ -53,10 +54,13 @@ SIMDPP_INL bool i_test_bits_any(const uint32<4>& a)
 #endif
 }
 
-SIMDPP_INL bool i_test_bits_any(const uint16<8>& a) { return i_test_bits_any(uint32<4>(a)); }
-SIMDPP_INL bool i_test_bits_any(const uint8<16>& a) { return i_test_bits_any(uint32<4>(a)); }
+static SIMDPP_INL
+bool i_test_bits_any(const uint16<8>& a) { return i_test_bits_any(uint32<4>(a)); }
+static SIMDPP_INL
+bool i_test_bits_any(const uint8<16>& a) { return i_test_bits_any(uint32<4>(a)); }
 
-SIMDPP_INL bool i_test_bits_any(const uint64<2>& a)
+static SIMDPP_INL
+bool i_test_bits_any(const uint64<2>& a)
 {
 #if SIMDPP_USE_VSX_207
     uint64<2> z = make_zero();
@@ -68,7 +72,8 @@ SIMDPP_INL bool i_test_bits_any(const uint64<2>& a)
 #endif
 }
 
-SIMDPP_INL bool i_test_bits_any(const float32<4>& a)
+static SIMDPP_INL
+bool i_test_bits_any(const float32<4>& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return null::test_bits_any(a);
@@ -77,7 +82,8 @@ SIMDPP_INL bool i_test_bits_any(const float32<4>& a)
 #endif
 }
 
-SIMDPP_INL bool i_test_bits_any(const float64<2>& a)
+static SIMDPP_INL
+bool i_test_bits_any(const float64<2>& a)
 {
 #if SIMDPP_USE_VSX_206
     return i_test_bits_any(uint32<4>(a));
@@ -89,12 +95,14 @@ SIMDPP_INL bool i_test_bits_any(const float64<2>& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL bool i_test_bits_any(const float32<8>& a)
+static SIMDPP_INL
+bool i_test_bits_any(const float32<8>& a)
 {
     return !_mm256_testz_si256(_mm256_castps_si256(a),
                                _mm256_castps_si256(a));
 }
-SIMDPP_INL bool i_test_bits_any(const float64<4>& a)
+static SIMDPP_INL
+bool i_test_bits_any(const float64<4>& a)
 {
     return !_mm256_testz_si256(_mm256_castpd_si256(a),
                                _mm256_castpd_si256(a));
@@ -102,20 +110,28 @@ SIMDPP_INL bool i_test_bits_any(const float64<4>& a)
 #endif
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL bool i_test_bits_any(const uint8<32>& a) { return !_mm256_testz_si256(a, a); }
-SIMDPP_INL bool i_test_bits_any(const uint16<16>& a) { return !_mm256_testz_si256(a, a); }
-SIMDPP_INL bool i_test_bits_any(const uint32<8>& a) { return !_mm256_testz_si256(a, a); }
-SIMDPP_INL bool i_test_bits_any(const uint64<4>& a) { return !_mm256_testz_si256(a, a); }
+static SIMDPP_INL
+bool i_test_bits_any(const uint8<32>& a) { return !_mm256_testz_si256(a, a); }
+static SIMDPP_INL
+bool i_test_bits_any(const uint16<16>& a) { return !_mm256_testz_si256(a, a); }
+static SIMDPP_INL
+bool i_test_bits_any(const uint32<8>& a) { return !_mm256_testz_si256(a, a); }
+static SIMDPP_INL
+bool i_test_bits_any(const uint64<4>& a) { return !_mm256_testz_si256(a, a); }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL bool i_test_bits_any(const uint32<16>& a)
+static SIMDPP_INL
+bool i_test_bits_any(const uint32<16>& a)
 {
     return _mm512_test_epi64_mask(a, a) != 0;
 }
-SIMDPP_INL bool i_test_bits_any(const uint64<8>& a) { return i_test_bits_any(uint32<16>(a)); }
-SIMDPP_INL bool i_test_bits_any(const float32<16>& a) { return i_test_bits_any(uint32<16>(a)); }
-SIMDPP_INL bool i_test_bits_any(const float64<8>& a) { return i_test_bits_any(uint32<16>(a)); }
+static SIMDPP_INL
+bool i_test_bits_any(const uint64<8>& a) { return i_test_bits_any(uint32<16>(a)); }
+static SIMDPP_INL
+bool i_test_bits_any(const float32<16>& a) { return i_test_bits_any(uint32<16>(a)); }
+static SIMDPP_INL
+bool i_test_bits_any(const float64<8>& a) { return i_test_bits_any(uint32<16>(a)); }
 #endif
 
 #if SIMDPP_USE_AVX512BW

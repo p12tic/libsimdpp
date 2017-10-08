@@ -18,7 +18,8 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-SIMDPP_INL const void* assume_aligned_impl(const void* x, unsigned bytes)
+static SIMDPP_INL
+const void* assume_aligned_impl(const void* x, unsigned bytes)
 {
 #if (__GNUC__ == 4) && (__GNUC_MINOR__ > 7) && !defined(__clang__)
     // since GCC(>4.7.0)

@@ -24,7 +24,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL void i_store_u(char* p, const uint8<16>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint8<16>& a)
 {
 #if SIMDPP_USE_NULL
     detail::null::store(p, a);
@@ -51,7 +52,8 @@ SIMDPP_INL void i_store_u(char* p, const uint8<16>& a)
 #endif
 }
 
-SIMDPP_INL void i_store_u(char* p, const uint16<8>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint16<8>& a)
 {
 #if SIMDPP_USE_NEON
     vst1q_u16(reinterpret_cast<uint16_t*>(p), a);
@@ -62,7 +64,8 @@ SIMDPP_INL void i_store_u(char* p, const uint16<8>& a)
 #endif
 }
 
-SIMDPP_INL void i_store_u(char* p, const uint32<4>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint32<4>& a)
 {
 #if SIMDPP_USE_NEON
     vst1q_u32(reinterpret_cast<uint32_t*>(p), a);
@@ -75,7 +78,8 @@ SIMDPP_INL void i_store_u(char* p, const uint32<4>& a)
 #endif
 }
 
-SIMDPP_INL void i_store_u(char* p, const uint64<2>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint64<2>& a)
 {
 #if SIMDPP_USE_NEON
     vst1q_u64(reinterpret_cast<uint64_t*>(p), a);
@@ -89,7 +93,8 @@ SIMDPP_INL void i_store_u(char* p, const uint64<2>& a)
 #endif
 }
 
-SIMDPP_INL void i_store_u(char* p, const float32x4& a)
+static SIMDPP_INL
+void i_store_u(char* p, const float32x4& a)
 {
     float* q = reinterpret_cast<float*>(p);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -108,7 +113,8 @@ SIMDPP_INL void i_store_u(char* p, const float32x4& a)
 #endif
 }
 
-SIMDPP_INL void i_store_u(char* p, const float64x2& a)
+static SIMDPP_INL
+void i_store_u(char* p, const float64x2& a)
 {
     double* q = reinterpret_cast<double*>(p);
 #if SIMDPP_USE_SSE2
@@ -126,34 +132,40 @@ SIMDPP_INL void i_store_u(char* p, const float64x2& a)
 
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_u(char* p, const uint8<32>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint8<32>& a)
 {
     _mm256_storeu_si256(reinterpret_cast<__m256i*>(p), a);
 }
 
-SIMDPP_INL void i_store_u(char* p, const uint16<16>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint16<16>& a)
 {
     _mm256_storeu_si256(reinterpret_cast<__m256i*>(p), a);
 }
 
-SIMDPP_INL void i_store_u(char* p, const uint32<8>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint32<8>& a)
 {
     _mm256_storeu_si256(reinterpret_cast<__m256i*>(p), a);
 }
 
-SIMDPP_INL void i_store_u(char* p, const uint64<4>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint64<4>& a)
 {
     _mm256_storeu_si256(reinterpret_cast<__m256i*>(p), a);
 }
 #endif
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_u(char* p, const float32x8& a)
+static SIMDPP_INL
+void i_store_u(char* p, const float32x8& a)
 {
     _mm256_storeu_ps(reinterpret_cast<float*>(p), a);
 }
 
-SIMDPP_INL void i_store_u(char* p, const float64x4& a)
+static SIMDPP_INL
+void i_store_u(char* p, const float64x4& a)
 {
     _mm256_storeu_pd(reinterpret_cast<double*>(p), a);
 }
@@ -172,22 +184,26 @@ SIMDPP_INL void i_store_u(char* p, const uint16<32>& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_u(char* p, const uint32<16>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint32<16>& a)
 {
     _mm512_storeu_si512(reinterpret_cast<__m512i*>(p), a);
 }
 
-SIMDPP_INL void i_store_u(char* p, const uint64<8>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const uint64<8>& a)
 {
     _mm512_storeu_si512(reinterpret_cast<__m512i*>(p), a);
 }
 
-SIMDPP_INL void i_store_u(char* p, const float32<16>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const float32<16>& a)
 {
     _mm512_storeu_ps(p, a);
 }
 
-SIMDPP_INL void i_store_u(char* p, const float64<8>& a)
+static SIMDPP_INL
+void i_store_u(char* p, const float64<8>& a)
 {
     _mm512_storeu_pd(p, a);
 }

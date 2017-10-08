@@ -33,8 +33,8 @@ void v512_store_pack3(char* p, const V& ca, const V& cb, const V& cc);
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint8x16& a, const uint8x16& b, const uint8x16& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint8x16& a, const uint8x16& b, const uint8x16& c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -51,16 +51,16 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint8x32& a, const uint8x32& b, const uint8x32& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint8x32& a, const uint8x32& b, const uint8x32& c)
 {
     v256_store_pack3(p, a, b, c);
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint8<64>& a, const uint8<64>& b, const uint8<64>& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint8<64>& a, const uint8<64>& b, const uint8<64>& c)
 {
     v512_store_pack3(p, a, b, c);
 }
@@ -68,8 +68,8 @@ SIMDPP_INL void i_store_packed3(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint16x8& a, const uint16x8& b, const uint16x8& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint16x8& a, const uint16x8& b, const uint16x8& c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -86,16 +86,16 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint16x16& a, const uint16x16& b, const uint16x16& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint16x16& a, const uint16x16& b, const uint16x16& c)
 {
     v256_store_pack3(p, a, b, c);
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint16<32>& a, const uint16<32>& b, const uint16<32>& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint16<32>& a, const uint16<32>& b, const uint16<32>& c)
 {
     v512_store_pack3(p, a, b, c);
 }
@@ -103,8 +103,8 @@ SIMDPP_INL void i_store_packed3(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint32x4& a, const uint32x4& b, const uint32x4& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint32x4& a, const uint32x4& b, const uint32x4& c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -121,16 +121,16 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint32x8& a, const uint32x8& b, const uint32x8& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint32x8& a, const uint32x8& b, const uint32x8& c)
 {
     v256_store_pack3(p, a, b, c);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint32<16>& a, const uint32<16>& b, const uint32<16>& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint32<16>& a, const uint32<16>& b, const uint32<16>& c)
 {
     v512_store_pack3(p, a, b, c);
 }
@@ -138,8 +138,8 @@ SIMDPP_INL void i_store_packed3(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint64x2& a, const uint64x2& b, const uint64x2& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint64x2& a, const uint64x2& b, const uint64x2& c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
@@ -166,16 +166,16 @@ SIMDPP_INL void i_store_packed3(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint64x4& a, const uint64x4& b, const uint64x4& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint64x4& a, const uint64x4& b, const uint64x4& c)
 {
     v256_store_pack3(p, a, b, c);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed3(char* p,
-                                const uint64<8>& a, const uint64<8>& b, const uint64<8>& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const uint64<8>& a, const uint64<8>& b, const uint64<8>& c)
 {
     v512_store_pack3(p, a, b, c);
 }
@@ -183,7 +183,8 @@ SIMDPP_INL void i_store_packed3(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed3(char* p, const float32x4& a, const float32x4& b, const float32x4& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const float32x4& a, const float32x4& b, const float32x4& c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -200,16 +201,16 @@ SIMDPP_INL void i_store_packed3(char* p, const float32x4& a, const float32x4& b,
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_packed3(char* p,
-                                const float32x8& a, const float32x8& b, const float32x8& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const float32x8& a, const float32x8& b, const float32x8& c)
 {
     v256_store_pack3(p, a, b, c);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed3(char* p,
-                                const float32<16>& a, const float32<16>& b, const float32<16>& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const float32<16>& a, const float32<16>& b, const float32<16>& c)
 {
     v512_store_pack3(p, a, b, c);
 }
@@ -217,7 +218,8 @@ SIMDPP_INL void i_store_packed3(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed3(char* p, const float64x2& a, const float64x2& b, const float64x2& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const float64x2& a, const float64x2& b, const float64x2& c)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
@@ -234,16 +236,16 @@ SIMDPP_INL void i_store_packed3(char* p, const float64x2& a, const float64x2& b,
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_packed3(char* p,
-                                const float64x4& a, const float64x4& b, const float64x4& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const float64x4& a, const float64x4& b, const float64x4& c)
 {
     v256_store_pack3(p, a, b, c);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed3(char* p,
-                                const float64<8>& a, const float64<8>& b, const float64<8>& c)
+static SIMDPP_INL
+void i_store_packed3(char* p, const float64<8>& a, const float64<8>& b, const float64<8>& c)
 {
     v512_store_pack3(p, a, b, c);
 }

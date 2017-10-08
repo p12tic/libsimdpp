@@ -30,7 +30,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_floor(const float32x4& a)
+static SIMDPP_INL
+float32x4 i_floor(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -64,14 +65,16 @@ SIMDPP_INL float32x4 i_floor(const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_floor(const float32x8& a)
+static SIMDPP_INL
+float32x8 i_floor(const float32x8& a)
 {
     return _mm256_floor_ps(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_floor(const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_floor(const float32<16>& a)
 {
     return _mm512_floor_ps(a);
 }
@@ -79,7 +82,8 @@ SIMDPP_INL float32<16> i_floor(const float32<16>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_floor(const float64x2& a)
+static SIMDPP_INL
+float64x2 i_floor(const float64x2& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_floor_pd(a);
@@ -132,14 +136,16 @@ SIMDPP_INL float64x2 i_floor(const float64x2& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_floor(const float64x4& a)
+static SIMDPP_INL
+float64x4 i_floor(const float64x4& a)
 {
     return _mm256_floor_pd(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float64<8> i_floor(const float64<8>& a)
+static SIMDPP_INL
+float64<8> i_floor(const float64<8>& a)
 {
     return _mm512_floor_pd(a);
 }

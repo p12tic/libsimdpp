@@ -29,7 +29,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_trunc(const float32x4& a)
+static SIMDPP_INL
+float32x4 i_trunc(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -62,14 +63,16 @@ SIMDPP_INL float32x4 i_trunc(const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_trunc(const float32x8& a)
+static SIMDPP_INL
+float32x8 i_trunc(const float32x8& a)
 {
     return _mm256_round_ps(a, 3); // 3 = i_truncate
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_trunc(const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_trunc(const float32<16>& a)
 {
     return _mm512_roundscale_ps(a, 0x13); // scale by 1, truncate
 }
@@ -77,7 +80,8 @@ SIMDPP_INL float32<16> i_trunc(const float32<16>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_trunc(const float64x2& a)
+static SIMDPP_INL
+float64x2 i_trunc(const float64x2& a)
 {
 #if SIMDPP_USE_SSE4_1
     return _mm_round_pd(a, 3);
@@ -116,14 +120,16 @@ SIMDPP_INL float64x2 i_trunc(const float64x2& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_trunc(const float64x4& a)
+static SIMDPP_INL
+float64x4 i_trunc(const float64x4& a)
 {
     return _mm256_round_pd(a, 3); // 3 = i_truncate
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float64<8> i_trunc(const float64<8>& a)
+static SIMDPP_INL
+float64<8> i_trunc(const float64<8>& a)
 {
     return _mm512_roundscale_pd(a, 0x13); // scale by 1, truncate
 }

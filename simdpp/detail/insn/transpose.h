@@ -49,7 +49,8 @@ void v_sse_transpose32x4(V& a0, V& a1, V& a2, V& a3);
     The lower and higher 128-bit halves are processed as if 128-bit instruction
     was applied to each of them separately.
 */
-SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
+static SIMDPP_INL
+void i_transpose2(uint8x16& a0, uint8x16& a1)
 {
 #if SIMDPP_USE_NULL
     detail::null::transpose2(a0, a1);
@@ -81,7 +82,8 @@ SIMDPP_INL void i_transpose2(uint8x16& a0, uint8x16& a1)
 
     Needs SSSE3
 */
-SIMDPP_INL uint8x16 transpose_inplace(const uint8x16& a)
+static SIMDPP_INL
+uint8x16 transpose_inplace(const uint8x16& a)
 {
 #if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     // the compiler will take this out of any loops automatically
@@ -93,7 +95,8 @@ SIMDPP_INL uint8x16 transpose_inplace(const uint8x16& a)
 #endif
 }
 
-SIMDPP_INL uint8x32 transpose_inplace(const uint8x32& a)
+static SIMDPP_INL
+uint8x32 transpose_inplace(const uint8x32& a)
 {
 #if SIMDPP_USE_AVX2
     uint8x32 idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,
@@ -107,7 +110,8 @@ SIMDPP_INL uint8x32 transpose_inplace(const uint8x32& a)
 }
 
 #if SIMDPP_USE_AVX512BW
-SIMDPP_INL uint8<64> transpose_inplace(const uint8<64>& a)
+static SIMDPP_INL
+uint8<64> transpose_inplace(const uint8<64>& a)
 {
     uint8<64> idx = make_uint(0, 4, 8, 12, 1, 5, 9, 13,
                               2, 6, 10,14, 3, 7, 11,15);
@@ -115,7 +119,8 @@ SIMDPP_INL uint8<64> transpose_inplace(const uint8<64>& a)
 }
 #endif
 
-SIMDPP_INL void i_transpose2(uint16x8& a0, uint16x8& a1)
+static SIMDPP_INL
+void i_transpose2(uint16x8& a0, uint16x8& a1)
 {
 #if SIMDPP_USE_NULL
     detail::null::transpose2(a0, a1);
@@ -140,7 +145,8 @@ SIMDPP_INL void i_transpose2(uint16x8& a0, uint16x8& a1)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose2(uint16x16& a0, uint16x16& a1)
+static SIMDPP_INL
+void i_transpose2(uint16x16& a0, uint16x16& a1)
 {
     uint32x8 b0, b1;
     b0 = zip8_lo(a0, a1);
@@ -169,7 +175,8 @@ void i_transpose2(uint16<N>& a0, uint16<N>& a1)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose2(uint32x4& a0, uint32x4& a1)
+static SIMDPP_INL
+void i_transpose2(uint32x4& a0, uint32x4& a1)
 {
 #if SIMDPP_USE_NULL
     detail::null::transpose2(a0, a1);
@@ -194,7 +201,8 @@ SIMDPP_INL void i_transpose2(uint32x4& a0, uint32x4& a1)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose2(uint32x8& a0, uint32x8& a1)
+static SIMDPP_INL
+void i_transpose2(uint32x8& a0, uint32x8& a1)
 {
     uint64x4 b0, b1;
     b0 = zip4_lo(a0, a1);
@@ -205,7 +213,8 @@ SIMDPP_INL void i_transpose2(uint32x8& a0, uint32x8& a1)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_transpose2(uint32<16>& a0, uint32<16>& a1)
+static SIMDPP_INL
+void i_transpose2(uint32<16>& a0, uint32<16>& a1)
 {
     uint64<8> b0, b1;
     b0 = zip4_lo(a0, a1);
@@ -223,7 +232,8 @@ void i_transpose2(uint32<N>& a0, uint32<N>& a1)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
+static SIMDPP_INL
+void i_transpose2(uint64x2& a0, uint64x2& a1)
 {
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     uint64x2 b0;
@@ -238,7 +248,8 @@ SIMDPP_INL void i_transpose2(uint64x2& a0, uint64x2& a1)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose2(uint64x4& a0, uint64x4& a1)
+static SIMDPP_INL
+void i_transpose2(uint64x4& a0, uint64x4& a1)
 {
     uint64x4 b0;
     b0 = zip2_lo(a0, a1);
@@ -248,7 +259,8 @@ SIMDPP_INL void i_transpose2(uint64x4& a0, uint64x4& a1)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_transpose2(uint64<8>& a0, uint64<8>& a1)
+static SIMDPP_INL
+void i_transpose2(uint64<8>& a0, uint64<8>& a1)
 {
     uint64<8> b0;
     b0 = zip2_lo(a0, a1);
@@ -265,7 +277,8 @@ void i_transpose2(uint64<N>& a0, uint64<N>& a1)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose2(float32x4& a0, float32x4& a1)
+static SIMDPP_INL
+void i_transpose2(float32x4& a0, float32x4& a1)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     detail::null::transpose2(a0, a1);
@@ -290,7 +303,8 @@ SIMDPP_INL void i_transpose2(float32x4& a0, float32x4& a1)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_transpose2(float32x8& a0, float32x8& a1)
+static SIMDPP_INL
+void i_transpose2(float32x8& a0, float32x8& a1)
 {
     float64x4 b0, b1;
     b0 = zip4_lo(a0, a1);
@@ -301,7 +315,8 @@ SIMDPP_INL void i_transpose2(float32x8& a0, float32x8& a1)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_transpose2(float32<16>& a0, float32<16>& a1)
+static SIMDPP_INL
+void i_transpose2(float32<16>& a0, float32<16>& a1)
 {
     float64<8> b0, b1;
     b0 = zip4_lo(a0, a1);
@@ -319,7 +334,8 @@ void i_transpose2(float32<N>& a0, float32<N>& a1)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose2(float64x2& a0, float64x2& a1)
+static SIMDPP_INL
+void i_transpose2(float64x2& a0, float64x2& a1)
 {
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     float64x2 b0;
@@ -337,7 +353,8 @@ SIMDPP_INL void i_transpose2(float64x2& a0, float64x2& a1)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_transpose2(float64x4& a0, float64x4& a1)
+static SIMDPP_INL
+void i_transpose2(float64x4& a0, float64x4& a1)
 {
     float64x4 b0;
     b0 = zip2_lo(a0, a1);
@@ -347,7 +364,8 @@ SIMDPP_INL void i_transpose2(float64x4& a0, float64x4& a1)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_transpose2(float64<8>& a0, float64<8>& a1)
+static SIMDPP_INL
+void i_transpose2(float64<8>& a0, float64<8>& a1)
 {
     float64<8> b0;
     b0 = zip2_lo(a0, a1);
@@ -364,16 +382,19 @@ void i_transpose2(float64<N>& a0, float64<N>& a1)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose4(uint32x4& a0, uint32x4& a1,
-                             uint32x4& a2, uint32x4& a3);
+static SIMDPP_INL
+void i_transpose4(uint32x4& a0, uint32x4& a1,
+                  uint32x4& a2, uint32x4& a3);
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose4(uint32x8& a0, uint32x8& a1,
-                             uint32x8& a2, uint32x8& a3);
+static SIMDPP_INL
+void i_transpose4(uint32x8& a0, uint32x8& a1,
+                  uint32x8& a2, uint32x8& a3);
 #endif
 
-SIMDPP_INL void i_transpose4(uint8x16& a0, uint8x16& a1,
-                             uint8x16& a2, uint8x16& a3)
+static SIMDPP_INL
+void i_transpose4(uint8x16& a0, uint8x16& a1,
+                  uint8x16& a2, uint8x16& a3)
 {
     // [a0,a1,a2,a3 ... ]
     // [b0,b1,b2,b3 ... ]
@@ -396,16 +417,18 @@ SIMDPP_INL void i_transpose4(uint8x16& a0, uint8x16& a1,
 
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose4(uint8x32& a0, uint8x32& a1,
-                             uint8x32& a2, uint8x32& a3)
+static SIMDPP_INL
+void i_transpose4(uint8x32& a0, uint8x32& a1,
+                  uint8x32& a2, uint8x32& a3)
 {
     v_sse_transpose8x4<uint8<32>, uint16<16>, uint32<8>>(a0, a1, a2, a3);
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
-SIMDPP_INL void i_transpose4(uint8<64>& a0, uint8<64>& a1,
-                             uint8<64>& a2, uint8<64>& a3)
+static SIMDPP_INL
+void i_transpose4(uint8<64>& a0, uint8<64>& a1,
+                  uint8<64>& a2, uint8<64>& a3)
 {
     v_sse_transpose8x4<uint8<64>, uint16<32>, uint32<16>>(a0, a1, a2, a3);
 }
@@ -419,8 +442,9 @@ void i_transpose4(uint8<N>& a0, uint8<N>& a1, uint8<N>& a2, uint8<N>& a3)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose4(uint16x8& a0, uint16x8& a1,
-                             uint16x8& a2, uint16x8& a3)
+static SIMDPP_INL
+void i_transpose4(uint16x8& a0, uint16x8& a1,
+                  uint16x8& a2, uint16x8& a3)
 {
 #if SIMDPP_USE_NULL
     detail::null::transpose4(a0, a1, a2, a3);
@@ -438,7 +462,8 @@ SIMDPP_INL void i_transpose4(uint16x8& a0, uint16x8& a1,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose4(uint16x16& a0, uint16x16& a1,
+static SIMDPP_INL
+void i_transpose4(uint16x16& a0, uint16x16& a1,
                              uint16x16& a2, uint16x16& a3)
 {
     v_sse_transpose16x4<uint16<16>, uint32<8>, uint64<4>>(a0, a1, a2, a3);
@@ -461,8 +486,9 @@ void i_transpose4(uint16<N>& a0, uint16<N>& a1, uint16<N>& a2, uint16<N>& a3)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose4(uint32x4& a0, uint32x4& a1,
-                             uint32x4& a2, uint32x4& a3)
+static SIMDPP_INL
+void i_transpose4(uint32x4& a0, uint32x4& a1,
+                  uint32x4& a2, uint32x4& a3)
 {
 #if SIMDPP_USE_NULL
     detail::null::transpose4(a0, a1, a2, a3);
@@ -480,16 +506,18 @@ SIMDPP_INL void i_transpose4(uint32x4& a0, uint32x4& a1,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose4(uint32x8& a0, uint32x8& a1,
-                             uint32x8& a2, uint32x8& a3)
+static SIMDPP_INL
+void i_transpose4(uint32x8& a0, uint32x8& a1,
+                  uint32x8& a2, uint32x8& a3)
 {
     v_sse_transpose32x4<uint32<8>, uint64<4>>(a0, a1, a2, a3);
 }
 #endif
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_transpose4(uint32<16>& a0, uint32<16>& a1,
-                             uint32<16>& a2, uint32<16>& a3)
+static SIMDPP_INL
+void i_transpose4(uint32<16>& a0, uint32<16>& a1,
+                  uint32<16>& a2, uint32<16>& a3)
 {
     v_sse_transpose32x4<uint32<16>, uint64<8>>(a0, a1, a2, a3);
 }
@@ -503,8 +531,9 @@ void i_transpose4(uint32<N>& a0, uint32<N>& a1, uint32<N>& a2, uint32<N>& a3)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_transpose4(float32x4& a0, float32x4& a1,
-                             float32x4& a2, float32x4& a3)
+static SIMDPP_INL
+void i_transpose4(float32x4& a0, float32x4& a1,
+                  float32x4& a2, float32x4& a3)
 {
 #if SIMDPP_USE_SSE2
     v_sse_transpose32x4<float32<4>, float64<2>>(a0, a1, a2, a3);
@@ -517,16 +546,18 @@ SIMDPP_INL void i_transpose4(float32x4& a0, float32x4& a1,
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_transpose4(float32x8& a0, float32x8& a1,
-                             float32x8& a2, float32x8& a3)
+static SIMDPP_INL
+void i_transpose4(float32x8& a0, float32x8& a1,
+                  float32x8& a2, float32x8& a3)
 {
     v_sse_transpose32x4<float32<8>, float64<4>>(a0, a1, a2, a3);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_transpose4(float32<16>& a0, float32<16>& a1,
-                             float32<16>& a2, float32<16>& a3)
+static SIMDPP_INL
+void i_transpose4(float32<16>& a0, float32<16>& a1,
+                  float32<16>& a2, float32<16>& a3)
 {
     v_sse_transpose32x4<float32<16>, float64<8>>(a0, a1, a2, a3);
 }

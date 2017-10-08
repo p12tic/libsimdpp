@@ -24,7 +24,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL int8x16 i_max(const int8x16& a, const int8x16& b)
+static SIMDPP_INL
+int8x16 i_max(const int8x16& a, const int8x16& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::max(a, b);
@@ -45,7 +46,8 @@ SIMDPP_INL int8x16 i_max(const int8x16& a, const int8x16& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int8x32 i_max(const int8x32& a, const int8x32& b)
+static SIMDPP_INL
+int8x32 i_max(const int8x32& a, const int8x32& b)
 {
     return _mm256_max_epi8(a, b);
 }
@@ -66,7 +68,8 @@ int8<N> i_max(const int8<N>& a, const int8<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint8x16 i_max(const uint8x16& a, const uint8x16& b)
+static SIMDPP_INL
+uint8x16 i_max(const uint8x16& a, const uint8x16& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::max(a, b);
@@ -82,7 +85,8 @@ SIMDPP_INL uint8x16 i_max(const uint8x16& a, const uint8x16& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 i_max(const uint8x32& a, const uint8x32& b)
+static SIMDPP_INL
+uint8x32 i_max(const uint8x32& a, const uint8x32& b)
 {
     return _mm256_max_epu8(a, b);
 }
@@ -103,7 +107,8 @@ uint8<N> i_max(const uint8<N>& a, const uint8<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int16x8 i_max(const int16x8& a, const int16x8& b)
+static SIMDPP_INL
+int16x8 i_max(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::max(a, b);
@@ -119,7 +124,8 @@ SIMDPP_INL int16x8 i_max(const int16x8& a, const int16x8& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int16x16 i_max(const int16x16& a, const int16x16& b)
+static SIMDPP_INL
+int16x16 i_max(const int16x16& a, const int16x16& b)
 {
     return _mm256_max_epi16(a, b);
 }
@@ -140,7 +146,8 @@ int16<N> i_max(const int16<N>& a, const int16<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint16x8 i_max(const uint16x8& a, const uint16x8& b)
+static SIMDPP_INL
+uint16x8 i_max(const uint16x8& a, const uint16x8& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::max(a, b);
@@ -161,7 +168,8 @@ SIMDPP_INL uint16x8 i_max(const uint16x8& a, const uint16x8& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16x16 i_max(const uint16x16& a, const uint16x16& b)
+static SIMDPP_INL
+uint16x16 i_max(const uint16x16& a, const uint16x16& b)
 {
     return _mm256_max_epu16(a, b);
 }
@@ -182,7 +190,8 @@ uint16<N> i_max(const uint16<N>& a, const uint16<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_max(const int32x4& a, const int32x4& b)
+static SIMDPP_INL
+int32x4 i_max(const int32x4& a, const int32x4& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::max(a, b);
@@ -201,14 +210,16 @@ SIMDPP_INL int32x4 i_max(const int32x4& a, const int32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32x8 i_max(const int32x8& a, const int32x8& b)
+static SIMDPP_INL
+int32x8 i_max(const int32x8& a, const int32x8& b)
 {
     return _mm256_max_epi32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int32<16> i_max(const int32<16>& a, const int32<16>& b)
+static SIMDPP_INL
+int32<16> i_max(const int32<16>& a, const int32<16>& b)
 {
     return _mm512_max_epi32(a, b);
 }
@@ -222,7 +233,8 @@ int32<N> i_max(const int32<N>& a, const int32<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32x4 i_max(const uint32x4& a, const uint32x4& b)
+static SIMDPP_INL
+uint32x4 i_max(const uint32x4& a, const uint32x4& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::max(a, b);
@@ -241,14 +253,16 @@ SIMDPP_INL uint32x4 i_max(const uint32x4& a, const uint32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32x8 i_max(const uint32x8& a, const uint32x8& b)
+static SIMDPP_INL
+uint32x8 i_max(const uint32x8& a, const uint32x8& b)
 {
     return _mm256_max_epu32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32<16> i_max(const uint32<16>& a, const uint32<16>& b)
+static SIMDPP_INL
+uint32<16> i_max(const uint32<16>& a, const uint32<16>& b)
 {
     return _mm512_max_epu32(a, b);
 }
@@ -262,7 +276,8 @@ uint32<N> i_max(const uint32<N>& a, const uint32<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int64x2 i_max(const int64x2& a, const int64x2& b)
+static SIMDPP_INL
+int64x2 i_max(const int64x2& a, const int64x2& b)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     mask_int64x2 mask = cmp_gt(a, b);
@@ -279,7 +294,8 @@ SIMDPP_INL int64x2 i_max(const int64x2& a, const int64x2& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int64x4 i_max(const int64x4& a, const int64x4& b)
+static SIMDPP_INL
+int64x4 i_max(const int64x4& a, const int64x4& b)
 {
     mask_int64x4 mask = cmp_gt(a, b);
     return blend(a, b, mask);
@@ -287,7 +303,8 @@ SIMDPP_INL int64x4 i_max(const int64x4& a, const int64x4& b)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int64<8> i_max(const int64<8>& a, const int64<8>& b)
+static SIMDPP_INL
+int64<8> i_max(const int64<8>& a, const int64<8>& b)
 {
     return _mm512_max_epi64(a, b);
 }
@@ -301,7 +318,8 @@ int64<N> i_max(const int64<N>& a, const int64<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint64x2 i_max(const uint64x2& a, const uint64x2& b)
+static SIMDPP_INL
+uint64x2 i_max(const uint64x2& a, const uint64x2& b)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     mask_int64x2 mask = cmp_gt(a, b);
@@ -318,7 +336,8 @@ SIMDPP_INL uint64x2 i_max(const uint64x2& a, const uint64x2& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint64x4 i_max(const uint64x4& a, const uint64x4& b)
+static SIMDPP_INL
+uint64x4 i_max(const uint64x4& a, const uint64x4& b)
 {
     mask_int64x4 mask = cmp_gt(a, b);
     return blend(a, b, mask);
@@ -326,7 +345,8 @@ SIMDPP_INL uint64x4 i_max(const uint64x4& a, const uint64x4& b)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint64<8> i_max(const uint64<8>& a, const uint64<8>& b)
+static SIMDPP_INL
+uint64<8> i_max(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_max_epu64(a, b);
 }

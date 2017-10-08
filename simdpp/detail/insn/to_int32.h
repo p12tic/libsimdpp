@@ -27,7 +27,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
+static SIMDPP_INL
+int32x8 i_to_int32(const int16x8& a)
 {
 #if SIMDPP_USE_NULL
     int32x8 r;
@@ -62,7 +63,8 @@ SIMDPP_INL int32x8 i_to_int32(const int16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32<16> i_to_int32(const int16<16>& a)
+static SIMDPP_INL
+int32<16> i_to_int32(const int16<16>& a)
 {
 #if SIMDPP_USE_AVX512F
     return _mm512_cvtepi16_epi32(a);
@@ -101,7 +103,8 @@ int32<N> i_to_int32(const int16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32<8> i_to_uint32(const uint16<8>& a)
+static SIMDPP_INL
+uint32<8> i_to_uint32(const uint16<8>& a)
 {
 #if SIMDPP_USE_NULL
     uint32<8> r;
@@ -176,7 +179,8 @@ uint32<N> i_to_uint32(const uint16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
+static SIMDPP_INL
+int32x4 i_to_int32(const float32x4& a)
 {
 #if SIMDPP_USE_NULL
     int32x4 r;
@@ -204,7 +208,8 @@ SIMDPP_INL int32x4 i_to_int32(const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL int32x8 i_to_int32(const float32x8& a)
+static SIMDPP_INL
+int32x8 i_to_int32(const float32x8& a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cvttps_epi32(a);
@@ -219,7 +224,8 @@ SIMDPP_INL int32x8 i_to_int32(const float32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32<16> i_to_int32(const float32<16>& a)
+static SIMDPP_INL
+uint32<16> i_to_int32(const float32<16>& a)
 {
     return _mm512_cvttps_epi32(a);
 }
@@ -237,7 +243,8 @@ int32<N> i_to_int32(const float32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
+static SIMDPP_INL
+int32x4 i_to_int32(const float64x4& a)
 {
 #if SIMDPP_USE_SSE2
     int32x4 r, r1, r2;
@@ -278,7 +285,8 @@ SIMDPP_INL int32x4 i_to_int32(const float64x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL int32<8> i_to_int32(const float64<8>& a)
+static SIMDPP_INL
+int32<8> i_to_int32(const float64<8>& a)
 {
 #if SIMDPP_USE_AVX512F
     return _mm512_cvtpd_epi32(a);
@@ -292,7 +300,8 @@ SIMDPP_INL int32<8> i_to_int32(const float64<8>& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int32<16> i_to_int32(const float64<16>& a)
+static SIMDPP_INL
+int32<16> i_to_int32(const float64<16>& a)
 {
     int32<8> r0, r1;
     r0 = _mm512_cvtpd_epi32(a.vec(0));

@@ -22,7 +22,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
+static SIMDPP_INL
+float32x4 i_div(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -54,14 +55,16 @@ SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_div(const float32x8& a, const float32x8& b)
+static SIMDPP_INL
+float32x8 i_div(const float32x8& a, const float32x8& b)
 {
     return _mm256_div_ps(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_div(const float32<16>& a, const float32<16>& b)
+static SIMDPP_INL
+float32<16> i_div(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_div_ps(a, b);
 }
@@ -69,7 +72,8 @@ SIMDPP_INL float32<16> i_div(const float32<16>& a, const float32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
+static SIMDPP_INL
+float64x2 i_div(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_SSE2
     return _mm_div_pd(a, b);
@@ -89,14 +93,16 @@ SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_div(const float64x4& a, const float64x4& b)
+static SIMDPP_INL
+float64x4 i_div(const float64x4& a, const float64x4& b)
 {
     return _mm256_div_pd(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float64<8> i_div(const float64<8>& a, const float64<8>& b)
+static SIMDPP_INL
+float64<8> i_div(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_div_pd(a, b);
 }

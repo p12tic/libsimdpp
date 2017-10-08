@@ -24,7 +24,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL void i_load(uint8x16& a, const char* p)
+static SIMDPP_INL
+void i_load(uint8x16& a, const char* p)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -40,10 +41,13 @@ SIMDPP_INL void i_load(uint8x16& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load(uint16x8& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
-SIMDPP_INL void i_load(uint32x4& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
+static SIMDPP_INL
+void i_load(uint16x8& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
+static SIMDPP_INL
+void i_load(uint32x4& a, const char* p) { uint8x16 r; i_load(r, p); a = r;  }
 
-SIMDPP_INL void i_load(uint64x2& a, const char* p)
+static SIMDPP_INL
+void i_load(uint64x2& a, const char* p)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     const uint64_t* q = reinterpret_cast<const uint64_t*>(p);
@@ -54,7 +58,8 @@ SIMDPP_INL void i_load(uint64x2& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load(float32x4& a, const char* p)
+static SIMDPP_INL
+void i_load(float32x4& a, const char* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
     q = detail::assume_aligned(q, 16);
@@ -71,7 +76,8 @@ SIMDPP_INL void i_load(float32x4& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load(float64x2& a, const char* p)
+static SIMDPP_INL
+void i_load(float64x2& a, const char* p)
 {
     const double* q = reinterpret_cast<const double*>(p);
     q = detail::assume_aligned(q, 16);
@@ -89,29 +95,35 @@ SIMDPP_INL void i_load(float64x2& a, const char* p)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_load(uint8x32& a,  const char* p)
+static SIMDPP_INL
+void i_load(uint8x32& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-SIMDPP_INL void i_load(uint16x16& a, const char* p)
+static SIMDPP_INL
+void i_load(uint16x16& a, const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-SIMDPP_INL void i_load(uint32x8& a,  const char* p)
+static SIMDPP_INL
+void i_load(uint32x8& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
-SIMDPP_INL void i_load(uint64x4& a,  const char* p)
+static SIMDPP_INL
+void i_load(uint64x4& a,  const char* p)
 {
     a = _mm256_load_si256(reinterpret_cast<const __m256i*>(p));
 }
 #endif
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_load(float32x8& a, const char* p)
+static SIMDPP_INL
+void i_load(float32x8& a, const char* p)
 {
     a = _mm256_load_ps(reinterpret_cast<const float*>(p));
 }
-SIMDPP_INL void i_load(float64x4& a, const char* p)
+static SIMDPP_INL
+void i_load(float64x4& a, const char* p)
 {
     a = _mm256_load_pd(reinterpret_cast<const double*>(p));
 }
@@ -129,19 +141,23 @@ SIMDPP_INL void i_load(uint16<32>& a, const char* p)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_load(uint32<16>& a,  const char* p)
+static SIMDPP_INL
+void i_load(uint32<16>& a,  const char* p)
 {
     a = _mm512_load_epi32(p);
 }
-SIMDPP_INL void i_load(uint64<8>& a,  const char* p)
+static SIMDPP_INL
+void i_load(uint64<8>& a,  const char* p)
 {
     a = _mm512_load_epi64(p);
 }
-SIMDPP_INL void i_load(float32<16>& a, const char* p)
+static SIMDPP_INL
+void i_load(float32<16>& a, const char* p)
 {
     a = _mm512_load_ps(reinterpret_cast<const float*>(p));
 }
-SIMDPP_INL void i_load(float64<8>& a, const char* p)
+static SIMDPP_INL
+void i_load(float64<8>& a, const char* p)
 {
     a = _mm512_load_pd(reinterpret_cast<const double*>(p));
 }

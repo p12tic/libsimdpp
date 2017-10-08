@@ -37,7 +37,8 @@ V v_rsqrt_rh(const V& cx, const V& a)
     return r;
 }
 
-SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
+static SIMDPP_INL
+float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 {
     // x_n = x*(3-d*x*x)/2
     float32<4> x = cx;
@@ -75,14 +76,16 @@ SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rsqrt_rh(const float32x8& x, const float32x8& a)
+static SIMDPP_INL
+float32x8 i_rsqrt_rh(const float32x8& x, const float32x8& a)
 {
     return v_rsqrt_rh(x, a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_rsqrt_rh(const float32<16>& x, const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_rsqrt_rh(const float32<16>& x, const float32<16>& a)
 {
     return v_rsqrt_rh(x, a);
 }

@@ -30,7 +30,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL int8x16 i_shift_r(const int8x16& a, unsigned count)
+static SIMDPP_INL
+int8x16 i_shift_r(const int8x16& a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
@@ -58,7 +59,8 @@ SIMDPP_INL int8x16 i_shift_r(const int8x16& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int8x32 i_shift_r(const int8x32& a, unsigned count)
+static SIMDPP_INL
+int8x32 i_shift_r(const int8x32& a, unsigned count)
 {
     uint16x16 hi, lo;
     lo = hi = a;
@@ -91,7 +93,8 @@ SIMDPP_INL int8<64> i_shift_r(const int8<64>& a, unsigned count)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
+static SIMDPP_INL
+uint8x16 i_shift_r(const uint8x16& a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
@@ -118,7 +121,8 @@ SIMDPP_INL uint8x16 i_shift_r(const uint8x16& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 i_shift_r(const uint8x32& a, unsigned count)
+static SIMDPP_INL
+uint8x32 i_shift_r(const uint8x32& a, unsigned count)
 {
     unsigned shift = 8 - count;
     uint16_t mask1 = (0xff >> shift) << shift;
@@ -149,7 +153,8 @@ SIMDPP_INL uint8<64> i_shift_r(const uint8<64>& a, unsigned count)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int16x8 i_shift_r(const int16x8& a, unsigned count)
+static SIMDPP_INL
+int16x8 i_shift_r(const int16x8& a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
@@ -168,7 +173,8 @@ SIMDPP_INL int16x8 i_shift_r(const int16x8& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int16x16 i_shift_r(const int16x16& a, unsigned count)
+static SIMDPP_INL
+int16x16 i_shift_r(const int16x16& a, unsigned count)
 {
 #if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
     __m256i r = a;
@@ -190,7 +196,8 @@ SIMDPP_INL int16<32> i_shift_r(const int16<32>& a, unsigned count)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint16x8 i_shift_r(const uint16x8& a, unsigned count)
+static SIMDPP_INL
+uint16x8 i_shift_r(const uint16x8& a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
@@ -209,7 +216,8 @@ SIMDPP_INL uint16x8 i_shift_r(const uint16x8& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16x16 i_shift_r(const uint16x16& a, unsigned count)
+static SIMDPP_INL
+uint16x16 i_shift_r(const uint16x16& a, unsigned count)
 {
 #if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
     __m256i r = a;
@@ -231,7 +239,8 @@ SIMDPP_INL uint16<32> i_shift_r(const uint16<32>& a, unsigned count)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_shift_r(const int32x4& a, unsigned count)
+static SIMDPP_INL
+int32x4 i_shift_r(const int32x4& a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
@@ -250,7 +259,8 @@ SIMDPP_INL int32x4 i_shift_r(const int32x4& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32x8 i_shift_r(const int32x8& a, unsigned count)
+static SIMDPP_INL
+int32x8 i_shift_r(const int32x8& a, unsigned count)
 {
 #if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
     __m256i r = a;
@@ -264,7 +274,8 @@ SIMDPP_INL int32x8 i_shift_r(const int32x8& a, unsigned count)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int32<16> i_shift_r(const int32<16>& a, unsigned count)
+static SIMDPP_INL
+int32<16> i_shift_r(const int32<16>& a, unsigned count)
 {
     return _mm512_sra_epi32(a, _mm_cvtsi32_si128(count));
 }
@@ -272,7 +283,8 @@ SIMDPP_INL int32<16> i_shift_r(const int32<16>& a, unsigned count)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32x4 i_shift_r(const uint32x4& a, unsigned count)
+static SIMDPP_INL
+uint32x4 i_shift_r(const uint32x4& a, unsigned count)
 {
 #if SIMDPP_USE_NULL
     return detail::null::shift_r(a, count);
@@ -291,7 +303,8 @@ SIMDPP_INL uint32x4 i_shift_r(const uint32x4& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32x8 i_shift_r(const uint32x8& a, unsigned count)
+static SIMDPP_INL
+uint32x8 i_shift_r(const uint32x8& a, unsigned count)
 {
 #if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
     __m256i r = a;
@@ -305,7 +318,8 @@ SIMDPP_INL uint32x8 i_shift_r(const uint32x8& a, unsigned count)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32<16> i_shift_r(const uint32<16>& a, unsigned count)
+static SIMDPP_INL
+uint32<16> i_shift_r(const uint32<16>& a, unsigned count)
 {
     return _mm512_srl_epi32(a, _mm_cvtsi32_si128(count));
 }
@@ -313,7 +327,8 @@ SIMDPP_INL uint32<16> i_shift_r(const uint32<16>& a, unsigned count)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
+static SIMDPP_INL
+int64x2 i_shift_r(const int64x2& a, unsigned count)
 {
 #if SIMDPP_USE_SSE2
     if (count > 31) {
@@ -352,7 +367,8 @@ SIMDPP_INL int64x2 i_shift_r(const int64x2& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int64x4 i_shift_r(const int64x4& a, unsigned count)
+static SIMDPP_INL
+int64x4 i_shift_r(const int64x4& a, unsigned count)
 {
     // a copy of the 128-bit implementation
     if (count > 31) {
@@ -379,7 +395,8 @@ SIMDPP_INL int64x4 i_shift_r(const int64x4& a, unsigned count)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int64<8> i_shift_r(const int64<8>& a, unsigned count)
+static SIMDPP_INL
+int64<8> i_shift_r(const int64<8>& a, unsigned count)
 {
     return _mm512_sra_epi64(a, _mm_cvtsi32_si128(count));
 }
@@ -387,7 +404,8 @@ SIMDPP_INL int64<8> i_shift_r(const int64<8>& a, unsigned count)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint64x2 i_shift_r(const uint64x2& a, unsigned count)
+static SIMDPP_INL
+uint64x2 i_shift_r(const uint64x2& a, unsigned count)
 {
 #if SIMDPP_USE_SSE2
     return _mm_srl_epi64(a, _mm_cvtsi32_si128(count));
@@ -406,7 +424,8 @@ SIMDPP_INL uint64x2 i_shift_r(const uint64x2& a, unsigned count)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint64x4 i_shift_r(const uint64x4& a, unsigned count)
+static SIMDPP_INL
+uint64x4 i_shift_r(const uint64x4& a, unsigned count)
 {
 #if SIMDPP_WORKAROUND_AVX2_SHIFT_INTRINSICS
     __m256i r = a;
@@ -420,7 +439,8 @@ SIMDPP_INL uint64x4 i_shift_r(const uint64x4& a, unsigned count)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint64<8> i_shift_r(const uint64<8>& a, unsigned count)
+static SIMDPP_INL
+uint64<8> i_shift_r(const uint64<8>& a, unsigned count)
 {
     return _mm512_srl_epi64(a, _mm_cvtsi32_si128(count));
 }

@@ -23,7 +23,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL void i_store_masked(char* p, const uint32<4>& a, const mask_int32<4>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const uint32<4>& a, const mask_int32<4>& mask)
 {
 #if SIMDPP_USE_NULL
     null::store_masked(p, a, mask);
@@ -39,14 +40,16 @@ SIMDPP_INL void i_store_masked(char* p, const uint32<4>& a, const mask_int32<4>&
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_masked(char* p, const uint32<8>& a, const mask_int32<8>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const uint32<8>& a, const mask_int32<8>& mask)
 {
     _mm256_maskstore_epi32(reinterpret_cast<int*>(p), mask, a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_masked(char* p, const uint32<16>& a, const mask_int32<16>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const uint32<16>& a, const mask_int32<16>& mask)
 {
     _mm512_mask_store_epi32(reinterpret_cast<int*>(p), mask, a);
 }
@@ -54,7 +57,8 @@ SIMDPP_INL void i_store_masked(char* p, const uint32<16>& a, const mask_int32<16
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_masked(char* p, const uint64<2>& a, const mask_int64<2>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const uint64<2>& a, const mask_int64<2>& mask)
 {
 #if SIMDPP_USE_AVX2
 #if __INTEL_COMPILER
@@ -74,7 +78,8 @@ SIMDPP_INL void i_store_masked(char* p, const uint64<2>& a, const mask_int64<2>&
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_masked(char* p, const uint64<4>& a, const mask_int64<4>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const uint64<4>& a, const mask_int64<4>& mask)
 {
 #if __INTEL_COMPILER
     _mm256_maskstore_epi64(reinterpret_cast<__int64*>(p), mask, a);
@@ -85,7 +90,8 @@ SIMDPP_INL void i_store_masked(char* p, const uint64<4>& a, const mask_int64<4>&
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_masked(char* p, const uint64<8>& a, const mask_int64<8>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const uint64<8>& a, const mask_int64<8>& mask)
 {
 #if __INTEL_COMPILER
     _mm512_mask_store_epi64(reinterpret_cast<__int64*>(p), mask, a);
@@ -97,7 +103,8 @@ SIMDPP_INL void i_store_masked(char* p, const uint64<8>& a, const mask_int64<8>&
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_masked(char* p, const float32<4>& a, const mask_float32<4>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const float32<4>& a, const mask_float32<4>& mask)
 {
 #if SIMDPP_USE_NULL
     null::store_masked(p, a, mask);
@@ -112,7 +119,8 @@ SIMDPP_INL void i_store_masked(char* p, const float32<4>& a, const mask_float32<
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_masked(char* p, const float32<8>& a, const mask_float32<8>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const float32<8>& a, const mask_float32<8>& mask)
 {
     _mm256_maskstore_ps(reinterpret_cast<float*>(p),
                         _mm256_castps_si256(mask), a);
@@ -120,7 +128,8 @@ SIMDPP_INL void i_store_masked(char* p, const float32<8>& a, const mask_float32<
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_masked(char* p, const float32<16>& a, const mask_float32<16>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const float32<16>& a, const mask_float32<16>& mask)
 {
     _mm512_mask_store_ps(reinterpret_cast<float*>(p), mask, a);
 }
@@ -128,7 +137,8 @@ SIMDPP_INL void i_store_masked(char* p, const float32<16>& a, const mask_float32
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_masked(char* p, const float64<2>& a, const mask_float64<2>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const float64<2>& a, const mask_float64<2>& mask)
 {
 #if SIMDPP_USE_AVX
     _mm_maskstore_pd(reinterpret_cast<double*>(p),
@@ -143,7 +153,8 @@ SIMDPP_INL void i_store_masked(char* p, const float64<2>& a, const mask_float64<
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_masked(char* p, const float64<4>& a, const mask_float64<4>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const float64<4>& a, const mask_float64<4>& mask)
 {
     _mm256_maskstore_pd(reinterpret_cast<double*>(p),
                         _mm256_castpd_si256(mask), a);
@@ -152,7 +163,8 @@ SIMDPP_INL void i_store_masked(char* p, const float64<4>& a, const mask_float64<
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_masked(char* p, const float64<8>& a, const mask_float64<8>& mask)
+static SIMDPP_INL
+void i_store_masked(char* p, const float64<8>& a, const mask_float64<8>& mask)
 {
     _mm512_mask_store_pd(reinterpret_cast<double*>(p), mask, a);
 }

@@ -22,13 +22,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class Int> SIMDPP_INL void scalar_convert(Int& d, uint64_t x) { d = static_cast<Int>(x); }
-SIMDPP_INL void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
-SIMDPP_INL void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
+static SIMDPP_INL
+void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
+static SIMDPP_INL
+void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
 
-SIMDPP_INL uint64_t cast_int(int32_t x) { return uint32_t(x); }
-SIMDPP_INL uint64_t cast_int(int64_t x) { return x; }
-SIMDPP_INL uint64_t cast_int(uint32_t x) { return x; }
-SIMDPP_INL uint64_t cast_int(uint64_t x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(int32_t x) { return uint32_t(x); }
+static SIMDPP_INL
+uint64_t cast_int(int64_t x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(uint32_t x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(uint64_t x) { return x; }
 
 template<class V> SIMDPP_INL
 V make_const_bitwise(uint64_t t)

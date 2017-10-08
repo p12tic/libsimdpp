@@ -34,8 +34,10 @@ void v512_store_pack4(char* p, const V& ca, const V& cb, const V& cc, const V& d
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint8x16& a, const uint8x16& b, const uint8x16& c, const uint8x16& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint8x16& a, const uint8x16& b,
+                     const uint8x16& c, const uint8x16& d)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -53,16 +55,20 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint8x32& a, const uint8x32& b, const uint8x32& c, const uint8x32& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint8x32& a, const uint8x32& b,
+                     const uint8x32& c, const uint8x32& d)
 {
     v256_store_pack4(p, a, b, c, d);
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint8<64>& a, const uint8<64>& b, const uint8<64>& c, const uint8<64>& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint8<64>& a, const uint8<64>& b,
+                     const uint8<64>& c, const uint8<64>& d)
 {
     v512_store_pack4(p, a, b, c, d);
 }
@@ -70,8 +76,10 @@ SIMDPP_INL void i_store_packed4(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint16x8& a, const uint16x8& b, const uint16x8& c, const uint16x8& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint16x8& a, const uint16x8& b,
+                     const uint16x8& c, const uint16x8& d)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -89,16 +97,20 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint16x16& a, const uint16x16& b, const uint16x16& c, const uint16x16& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint16x16& a, const uint16x16& b,
+                     const uint16x16& c, const uint16x16& d)
 {
     v256_store_pack4(p, a, b, c, d);
 }
 #endif
 
 #if SIMDPP_USE_AVX512BW
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint16<32>& a, const uint16<32>& b, const uint16<32>& c, const uint16<32>& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint16<32>& a, const uint16<32>& b,
+                     const uint16<32>& c, const uint16<32>& d)
 {
     v512_store_pack4(p, a, b, c, d);
 }
@@ -106,8 +118,10 @@ SIMDPP_INL void i_store_packed4(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint32x4& a, const uint32x4& b, const uint32x4& c, const uint32x4& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint32x4& a, const uint32x4& b,
+                     const uint32x4& c, const uint32x4& d)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -125,16 +139,20 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint32x8& a, const uint32x8& b, const uint32x8& c, const uint32x8& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint32x8& a, const uint32x8& b,
+                     const uint32x8& c, const uint32x8& d)
 {
     v256_store_pack4(p, a, b, c, d);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint32<16>& a, const uint32<16>& b, const uint32<16>& c, const uint32<16>& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint32<16>& a, const uint32<16>& b,
+                     const uint32<16>& c, const uint32<16>& d)
 {
     v512_store_pack4(p, a, b, c, d);
 }
@@ -142,8 +160,10 @@ SIMDPP_INL void i_store_packed4(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint64x2& a, const uint64x2& b, const uint64x2& c, const uint64x2& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint64x2& a, const uint64x2& b,
+                     const uint64x2& c, const uint64x2& d)
 {
 #if SIMDPP_USE_NEON64
     uint64x2x4_t t;
@@ -160,16 +180,20 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint64x4& a, const uint64x4& b, const uint64x4& c, const uint64x4& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint64x4& a, const uint64x4& b,
+                     const uint64x4& c, const uint64x4& d)
 {
     v256_store_pack4(p, a, b, c, d);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed4(char* p,
-                                const uint64<8>& a, const uint64<8>& b, const uint64<8>& c, const uint64<8>& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const uint64<8>& a, const uint64<8>& b,
+                     const uint64<8>& c, const uint64<8>& d)
 {
     v512_store_pack4(p, a, b, c, d);
 }
@@ -177,8 +201,10 @@ SIMDPP_INL void i_store_packed4(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed4(char* p,
-                                const float32x4& a, const float32x4& b, const float32x4& c, const float32x4& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const float32x4& a, const float32x4& b,
+                     const float32x4& c, const float32x4& d)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -196,17 +222,20 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_packed4(char* p,
-                                const float32x8& a, const float32x8& b, const float32x8& c, const float32x8& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const float32x8& a, const float32x8& b,
+                     const float32x8& c, const float32x8& d)
 {
     v256_store_pack4(p, a, b, c, d);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed4(char* p,
-                                const float32<16>& a, const float32<16>& b,
-                                const float32<16>& c, const float32<16>& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const float32<16>& a, const float32<16>& b,
+                     const float32<16>& c, const float32<16>& d)
 {
     v512_store_pack4(p, a, b, c, d);
 }
@@ -214,8 +243,10 @@ SIMDPP_INL void i_store_packed4(char* p,
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_packed4(char* p,
-                                const float64x2& a, const float64x2& b, const float64x2& c, const float64x2& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const float64x2& a, const float64x2& b,
+                     const float64x2& c, const float64x2& d)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
@@ -233,16 +264,20 @@ SIMDPP_INL void i_store_packed4(char* p,
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_packed4(char* p,
-                                const float64x4& a, const float64x4& b, const float64x4& c, const float64x4& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const float64x4& a, const float64x4& b,
+                     const float64x4& c, const float64x4& d)
 {
     v256_store_pack4(p, a, b, c, d);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_packed4(char* p,
-                                const float64<8>& a, const float64<8>& b, const float64<8>& c, const float64<8>& d)
+static SIMDPP_INL
+void i_store_packed4(char* p,
+                     const float64<8>& a, const float64<8>& b,
+                     const float64<8>& c, const float64<8>& d)
 {
     v512_store_pack4(p, a, b, c, d);
 }

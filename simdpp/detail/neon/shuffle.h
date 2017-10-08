@@ -27,7 +27,8 @@ namespace neon {
     b1 = b1
     @endcode
 */
-SIMDPP_INL void swap_lo(uint64x2& a, uint64x2& b)
+static SIMDPP_INL
+void swap_lo(uint64x2& a, uint64x2& b)
 {
     uint64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
@@ -45,7 +46,8 @@ SIMDPP_INL void swap_lo(uint64x2& a, uint64x2& b)
     b1 = a1
     @endcode
 */
-SIMDPP_INL void swap_hi(uint64x2& a, uint64x2& b)
+static SIMDPP_INL
+void swap_hi(uint64x2& a, uint64x2& b)
 {
     uint64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
@@ -56,7 +58,8 @@ SIMDPP_INL void swap_hi(uint64x2& a, uint64x2& b)
     b = vcombine_u64(bl, ah);
 }
 
-SIMDPP_INL void transpose2(uint64x2& a, uint64x2& b)
+static SIMDPP_INL
+void transpose2(uint64x2& a, uint64x2& b)
 {
     uint64x1_t ah, bh, al, bl;
     al = vget_low_u64(a);
@@ -67,14 +70,16 @@ SIMDPP_INL void transpose2(uint64x2& a, uint64x2& b)
     b = vcombine_u64(ah, bh);
 }
 
-SIMDPP_INL uint64x2 zip2_lo(const uint64x2& ca, const uint64x2& cb)
+static SIMDPP_INL
+uint64x2 zip2_lo(const uint64x2& ca, const uint64x2& cb)
 {
     uint64<2> a = ca, b = cb;
     transpose2(a, b);
     return a;
 }
 
-SIMDPP_INL uint64x2 zip2_hi(const uint64x2& ca, const uint64x2& cb)
+static SIMDPP_INL
+uint64x2 zip2_hi(const uint64x2& ca, const uint64x2& cb)
 {
     uint64<2> a = ca, b = cb;
     transpose2(a, b);

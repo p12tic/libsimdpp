@@ -24,7 +24,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_sqrt(const float32x4& a)
+static SIMDPP_INL
+float32x4 i_sqrt(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -47,14 +48,16 @@ SIMDPP_INL float32x4 i_sqrt(const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_sqrt(const float32x8& a)
+static SIMDPP_INL
+float32x8 i_sqrt(const float32x8& a)
 {
     return _mm256_sqrt_ps(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_sqrt(const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_sqrt(const float32<16>& a)
 {
     return _mm512_sqrt_ps(a);
 }
@@ -68,7 +71,8 @@ float32<N> i_sqrt(const float32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_sqrt(const float64x2& a)
+static SIMDPP_INL
+float64x2 i_sqrt(const float64x2& a)
 {
 #if SIMDPP_USE_SSE2
     return _mm_sqrt_pd(a);
@@ -88,14 +92,16 @@ SIMDPP_INL float64x2 i_sqrt(const float64x2& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_sqrt(const float64x4& a)
+static SIMDPP_INL
+float64x4 i_sqrt(const float64x4& a)
 {
     return _mm256_sqrt_pd(a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float64<8> i_sqrt(const float64<8>& a)
+static SIMDPP_INL
+float64<8> i_sqrt(const float64<8>& a)
 {
     return _mm512_sqrt_pd(a);
 }

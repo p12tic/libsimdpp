@@ -30,7 +30,8 @@ namespace altivec {
 
     @icost{ALTIVEC, 2}
 */
-SIMDPP_INL uint8x16 load1_u(uint8x16& a, const uint8_t* p)
+static SIMDPP_INL
+uint8x16 load1_u(uint8x16& a, const uint8_t* p)
 {
     a = vec_lde(0, p);
     // The format of vec_lvs{l,r} is compatible with the one accepted by
@@ -40,7 +41,8 @@ SIMDPP_INL uint8x16 load1_u(uint8x16& a, const uint8_t* p)
     return a;
 }
 
-SIMDPP_INL uint16x8 load1_u(uint16x8& a, const uint16_t* p)
+static SIMDPP_INL
+uint16x8 load1_u(uint16x8& a, const uint16_t* p)
 {
     __vector uint16_t r = vec_lde(0, p);
     __vector uint8_t perm = vec_lvsl(0, p);
@@ -48,7 +50,8 @@ SIMDPP_INL uint16x8 load1_u(uint16x8& a, const uint16_t* p)
     return a;
 }
 
-SIMDPP_INL uint32x4 load1_u(uint32x4& a, const uint32_t* p)
+static SIMDPP_INL
+uint32x4 load1_u(uint32x4& a, const uint32_t* p)
 {
     __vector uint32_t r = vec_lde(0, p);
     __vector uint8_t perm = vec_lvsl(0, p);
@@ -56,7 +59,8 @@ SIMDPP_INL uint32x4 load1_u(uint32x4& a, const uint32_t* p)
     return a;
 }
 
-SIMDPP_INL float32x4 load1_u(float32x4& a, const float* p)
+static SIMDPP_INL
+float32x4 load1_u(float32x4& a, const float* p)
 {
     __vector float r = vec_lde(0, p);
     __vector uint8_t perm = vec_lvsl(0, p);
@@ -73,25 +77,29 @@ SIMDPP_INL float32x4 load1_u(float32x4& a, const float* p)
     a[i] = *p
     @endcode
 */
-SIMDPP_INL uint8x16 load1(uint8x16& a, const uint8_t* p)
+static SIMDPP_INL
+uint8x16 load1(uint8x16& a, const uint8_t* p)
 {
     a = vec_lde(0, p);
     return a;
 }
 
-SIMDPP_INL uint16x8 load1(uint16x8& a, const uint16_t* p)
+static SIMDPP_INL
+uint16x8 load1(uint16x8& a, const uint16_t* p)
 {
     a = vec_lde(0, p);
     return a;
 }
 
-SIMDPP_INL uint32x4 load1(uint32x4& a, const uint32_t* p)
+static SIMDPP_INL
+uint32x4 load1(uint32x4& a, const uint32_t* p)
 {
     a = vec_lde(0, p);
     return a;
 }
 
-SIMDPP_INL float32x4 load1(float32x4& a, const float* p)
+static SIMDPP_INL
+float32x4 load1(float32x4& a, const float* p)
 {
     a = vec_lde(0, p);
     return a;

@@ -25,7 +25,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL uint8_t i_reduce_min(const uint8x16& a)
+static SIMDPP_INL
+uint8_t i_reduce_min(const uint8x16& a)
 {
 #if SIMDPP_USE_NULL
     uint8_t r = a.el(0);
@@ -43,7 +44,8 @@ SIMDPP_INL uint8_t i_reduce_min(const uint8x16& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8_t i_reduce_min(const uint8<32>& a)
+static SIMDPP_INL
+uint8_t i_reduce_min(const uint8<32>& a)
 {
     uint8x16 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -82,7 +84,8 @@ SIMDPP_INL uint8_t i_reduce_min(const uint8<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int8_t i_reduce_min(const int8x16& a)
+static SIMDPP_INL
+int8_t i_reduce_min(const int8x16& a)
 {
 #if SIMDPP_USE_NULL
     int8_t r = a.el(0);
@@ -104,7 +107,8 @@ SIMDPP_INL int8_t i_reduce_min(const int8x16& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int8_t i_reduce_min(const int8x32& a)
+static SIMDPP_INL
+int8_t i_reduce_min(const int8x32& a)
 {
     int8x16 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -150,9 +154,11 @@ SIMDPP_INL int8_t i_reduce_min(const int8<N>& a)
 }
 
 // -----------------------------------------------------------------------------
-SIMDPP_INL int16_t i_reduce_min(const int16x8& a);
+static SIMDPP_INL
+int16_t i_reduce_min(const int16x8& a);
 
-SIMDPP_INL uint16_t i_reduce_min(const uint16x8& a)
+static SIMDPP_INL
+uint16_t i_reduce_min(const uint16x8& a)
 {
 #if SIMDPP_USE_NULL
     uint16_t r = a.el(0);
@@ -173,7 +179,8 @@ SIMDPP_INL uint16_t i_reduce_min(const uint16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16_t i_reduce_min(const uint16x16& a)
+static SIMDPP_INL
+uint16_t i_reduce_min(const uint16x16& a)
 {
     uint16x8 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -220,7 +227,8 @@ SIMDPP_INL uint16_t i_reduce_min(const uint16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int16_t i_reduce_min(const int16x8& a)
+static SIMDPP_INL
+int16_t i_reduce_min(const int16x8& a)
 {
 #if SIMDPP_USE_NULL
     int16_t r = a.el(0);
@@ -237,7 +245,8 @@ SIMDPP_INL int16_t i_reduce_min(const int16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int16_t i_reduce_min(const int16x16& a)
+static SIMDPP_INL
+int16_t i_reduce_min(const int16x16& a)
 {
     int16x8 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -276,7 +285,8 @@ SIMDPP_INL int16_t i_reduce_min(const int16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32_t i_reduce_min(const uint32x4& a)
+static SIMDPP_INL
+uint32_t i_reduce_min(const uint32x4& a)
 {
 #if SIMDPP_USE_NULL
     uint32_t r = a.el(0);
@@ -299,7 +309,8 @@ SIMDPP_INL uint32_t i_reduce_min(const uint32x4& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32_t i_reduce_min(const uint32x8& a)
+static SIMDPP_INL
+uint32_t i_reduce_min(const uint32x8& a)
 {
     uint32x4 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -310,7 +321,8 @@ SIMDPP_INL uint32_t i_reduce_min(const uint32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32_t i_reduce_min(const uint32<16>& a)
+static SIMDPP_INL
+uint32_t i_reduce_min(const uint32<16>& a)
 {
     return i_reduce_min((uint32<8>)min(extract256<0>(a), extract256<1>(a)));
 }
@@ -338,7 +350,8 @@ SIMDPP_INL uint32_t i_reduce_min(const uint32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32_t i_reduce_min(const int32x4& a)
+static SIMDPP_INL
+int32_t i_reduce_min(const int32x4& a)
 {
 #if SIMDPP_USE_NULL
     int32_t r = a.el(0);
@@ -354,7 +367,8 @@ SIMDPP_INL int32_t i_reduce_min(const int32x4& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32_t i_reduce_min(const int32x8& a)
+static SIMDPP_INL
+int32_t i_reduce_min(const int32x8& a)
 {
     int32x4 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -365,7 +379,8 @@ SIMDPP_INL int32_t i_reduce_min(const int32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int32_t i_reduce_min(const int32<16>& a)
+static SIMDPP_INL
+int32_t i_reduce_min(const int32<16>& a)
 {
     return i_reduce_min((int32<8>)min(extract256<0>(a), extract256<1>(a)));
 }
@@ -393,7 +408,8 @@ SIMDPP_INL int32_t i_reduce_min(const int32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint64_t i_reduce_min(const uint64x2& a)
+static SIMDPP_INL
+uint64_t i_reduce_min(const uint64x2& a)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
     uint64x2 r = min(a, move2_l<1>(a));
@@ -413,7 +429,8 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64x2& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint64_t i_reduce_min(const uint64x4& a)
+static SIMDPP_INL
+uint64_t i_reduce_min(const uint64x4& a)
 {
     uint64x2 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -423,7 +440,8 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64x4& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint64_t i_reduce_min(const uint64<8>& a)
+static SIMDPP_INL
+uint64_t i_reduce_min(const uint64<8>& a)
 {
     return i_reduce_min((uint64<4>)min(extract256<0>(a), extract256<1>(a)));
 }
@@ -462,7 +480,8 @@ SIMDPP_INL uint64_t i_reduce_min(const uint64<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int64_t i_reduce_min(const int64x2& a)
+static SIMDPP_INL
+int64_t i_reduce_min(const int64x2& a)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     int64x2 r = min(a, move2_l<1>(a));
@@ -482,7 +501,8 @@ SIMDPP_INL int64_t i_reduce_min(const int64x2& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int64_t i_reduce_min(const int64x4& a)
+static SIMDPP_INL
+int64_t i_reduce_min(const int64x4& a)
 {
     int64x2 r = detail::extract128<0>(a);
     r = min(r, detail::extract128<1>(a));
@@ -492,7 +512,8 @@ SIMDPP_INL int64_t i_reduce_min(const int64x4& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int64_t i_reduce_min(const int64<8>& a)
+static SIMDPP_INL
+int64_t i_reduce_min(const int64<8>& a)
 {
     return i_reduce_min((int64<4>)min(extract256<0>(a), extract256<1>(a)));
 }

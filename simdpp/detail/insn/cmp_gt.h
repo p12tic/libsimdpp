@@ -26,7 +26,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL mask_int8x16 i_cmp_gt(const int8x16& a, const int8x16& b)
+static SIMDPP_INL
+mask_int8x16 i_cmp_gt(const int8x16& a, const int8x16& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_gt(a, b);
@@ -42,7 +43,8 @@ SIMDPP_INL mask_int8x16 i_cmp_gt(const int8x16& a, const int8x16& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int8x32 i_cmp_gt(const int8x32& a, const int8x32& b)
+static SIMDPP_INL
+mask_int8x32 i_cmp_gt(const int8x32& a, const int8x32& b)
 {
     return _mm256_cmpgt_epi8(a, b);
 }
@@ -57,7 +59,8 @@ SIMDPP_INL mask_int8<64> i_cmp_gt(const int8<64>& a, const int8<64>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_int8x16 i_cmp_gt(const uint8x16& ca, const uint8x16& cb)
+static SIMDPP_INL
+mask_int8x16 i_cmp_gt(const uint8x16& ca, const uint8x16& cb)
 {
     uint8<16> a = ca, b = cb;
 #if SIMDPP_USE_NULL
@@ -78,7 +81,8 @@ SIMDPP_INL mask_int8x16 i_cmp_gt(const uint8x16& ca, const uint8x16& cb)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int8x32 i_cmp_gt(const uint8x32& ca, const uint8x32& cb)
+static SIMDPP_INL
+mask_int8x32 i_cmp_gt(const uint8x32& ca, const uint8x32& cb)
 {
     uint8<32> a = ca, b = cb;
     a = bit_xor(a, 0x80); // sub
@@ -96,7 +100,8 @@ SIMDPP_INL mask_int8<64> i_cmp_gt(const uint8<64>& a, const uint8<64>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_int16x8 i_cmp_gt(const int16x8& a, const int16x8& b)
+static SIMDPP_INL
+mask_int16x8 i_cmp_gt(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_gt(a, b);
@@ -112,7 +117,8 @@ SIMDPP_INL mask_int16x8 i_cmp_gt(const int16x8& a, const int16x8& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int16x16 i_cmp_gt(const int16x16& a, const int16x16& b)
+static SIMDPP_INL
+mask_int16x16 i_cmp_gt(const int16x16& a, const int16x16& b)
 {
     return _mm256_cmpgt_epi16(a, b);
 }
@@ -127,7 +133,8 @@ SIMDPP_INL mask_int16<32> i_cmp_gt(const int16<32>& a, const int16<32>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_int16x8 i_cmp_gt(const uint16x8& ca, const uint16x8& cb)
+static SIMDPP_INL
+mask_int16x8 i_cmp_gt(const uint16x8& ca, const uint16x8& cb)
 {
     uint16<8> a = ca, b = cb;
 #if SIMDPP_USE_NULL
@@ -148,7 +155,8 @@ SIMDPP_INL mask_int16x8 i_cmp_gt(const uint16x8& ca, const uint16x8& cb)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int16x16 i_cmp_gt(const uint16x16& ca, const uint16x16& cb)
+static SIMDPP_INL
+mask_int16x16 i_cmp_gt(const uint16x16& ca, const uint16x16& cb)
 {
     uint16<16> a = ca, b = cb;
     a = bit_xor(a, 0x8000); // sub
@@ -166,7 +174,8 @@ SIMDPP_INL mask_int16<32> i_cmp_gt(const uint16<32>& a, const uint16<32>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_int32x4 i_cmp_gt(const int32x4& a, const int32x4& b)
+static SIMDPP_INL
+mask_int32x4 i_cmp_gt(const int32x4& a, const int32x4& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_gt(a, b);
@@ -182,14 +191,16 @@ SIMDPP_INL mask_int32x4 i_cmp_gt(const int32x4& a, const int32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int32x8 i_cmp_gt(const int32x8& a, const int32x8& b)
+static SIMDPP_INL
+mask_int32x8 i_cmp_gt(const int32x8& a, const int32x8& b)
 {
     return _mm256_cmpgt_epi32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_int32<16> i_cmp_gt(const int32<16>& a, const int32<16>& b)
+static SIMDPP_INL
+mask_int32<16> i_cmp_gt(const int32<16>& a, const int32<16>& b)
 {
     return _mm512_cmpgt_epi32_mask(a, b);
 }
@@ -197,7 +208,8 @@ SIMDPP_INL mask_int32<16> i_cmp_gt(const int32<16>& a, const int32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_int32x4 i_cmp_gt(const uint32x4& ca, const uint32x4& cb)
+static SIMDPP_INL
+mask_int32x4 i_cmp_gt(const uint32x4& ca, const uint32x4& cb)
 {
     uint32<4> a = ca, b = cb;
 #if SIMDPP_USE_NULL
@@ -218,7 +230,8 @@ SIMDPP_INL mask_int32x4 i_cmp_gt(const uint32x4& ca, const uint32x4& cb)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int32x8 i_cmp_gt(const uint32x8& ca, const uint32x8& cb)
+static SIMDPP_INL
+mask_int32x8 i_cmp_gt(const uint32x8& ca, const uint32x8& cb)
 {
     uint32<8> a = ca, b = cb;
     a = bit_xor(a, 0x80000000); // sub
@@ -228,7 +241,8 @@ SIMDPP_INL mask_int32x8 i_cmp_gt(const uint32x8& ca, const uint32x8& cb)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_int32<16> i_cmp_gt(const uint32<16>& a, const uint32<16>& b)
+static SIMDPP_INL
+mask_int32<16> i_cmp_gt(const uint32<16>& a, const uint32<16>& b)
 {
     // FIXME: BUG: GCC does not have _mm512_cmpgt_epu32_mask
     return _mm512_cmp_epu32_mask(a, b, _MM_CMPINT_NLE);
@@ -237,7 +251,8 @@ SIMDPP_INL mask_int32<16> i_cmp_gt(const uint32<16>& a, const uint32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_int64x2 i_cmp_gt(const int64x2& a, const int64x2& b)
+static SIMDPP_INL
+mask_int64x2 i_cmp_gt(const int64x2& a, const int64x2& b)
 {
 #if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comgt_epi64(a, b);
@@ -257,14 +272,16 @@ SIMDPP_INL mask_int64x2 i_cmp_gt(const int64x2& a, const int64x2& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int64x4 i_cmp_gt(const int64x4& a, const int64x4& b)
+static SIMDPP_INL
+mask_int64x4 i_cmp_gt(const int64x4& a, const int64x4& b)
 {
     return _mm256_cmpgt_epi64(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_int64<8> i_cmp_gt(const int64<8>& a, const int64<8>& b)
+static SIMDPP_INL
+mask_int64<8> i_cmp_gt(const int64<8>& a, const int64<8>& b)
 {
     // GCC does not have _mm512_cmpgt_epi64_mask
     return _mm512_cmp_epi64_mask(a, b, _MM_CMPINT_NLE);
@@ -273,7 +290,8 @@ SIMDPP_INL mask_int64<8> i_cmp_gt(const int64<8>& a, const int64<8>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_int64x2 i_cmp_gt(const uint64x2& a, const uint64x2& b)
+static SIMDPP_INL
+mask_int64x2 i_cmp_gt(const uint64x2& a, const uint64x2& b)
 {
 #if SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comgt_epu64(a, b);
@@ -295,7 +313,8 @@ SIMDPP_INL mask_int64x2 i_cmp_gt(const uint64x2& a, const uint64x2& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL mask_int64x4 i_cmp_gt(const uint64x4& ca, const uint64x4& cb)
+static SIMDPP_INL
+mask_int64x4 i_cmp_gt(const uint64x4& ca, const uint64x4& cb)
 {
     uint64<4> a = ca, b = cb;
     a = bit_xor(a, 0x8000000000000000); // sub
@@ -305,7 +324,8 @@ SIMDPP_INL mask_int64x4 i_cmp_gt(const uint64x4& ca, const uint64x4& cb)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_int64<8> i_cmp_gt(const uint64<8>& a, const uint64<8>& b)
+static SIMDPP_INL
+mask_int64<8> i_cmp_gt(const uint64<8>& a, const uint64<8>& b)
 {
     return _mm512_cmp_epu64_mask(a, b, _MM_CMPINT_NLE);
 }
@@ -313,7 +333,8 @@ SIMDPP_INL mask_int64<8> i_cmp_gt(const uint64<8>& a, const uint64<8>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_float32x4 i_cmp_gt(const float32x4& a, const float32x4& b)
+static SIMDPP_INL
+mask_float32x4 i_cmp_gt(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::cmp_gt(a, b);
@@ -331,14 +352,16 @@ SIMDPP_INL mask_float32x4 i_cmp_gt(const float32x4& a, const float32x4& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL mask_float32x8 i_cmp_gt(const float32x8& a, const float32x8& b)
+static SIMDPP_INL
+mask_float32x8 i_cmp_gt(const float32x8& a, const float32x8& b)
 {
     return _mm256_cmp_ps(a, b, _CMP_GT_OQ);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_float32<16> i_cmp_gt(const float32<16>& a, const float32<16>& b)
+static SIMDPP_INL
+mask_float32<16> i_cmp_gt(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_GT_OQ);
 }
@@ -346,7 +369,8 @@ SIMDPP_INL mask_float32<16> i_cmp_gt(const float32<16>& a, const float32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_float64x2 i_cmp_gt(const float64x2& a, const float64x2& b)
+static SIMDPP_INL
+mask_float64x2 i_cmp_gt(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_GT_OQ);
@@ -364,14 +388,16 @@ SIMDPP_INL mask_float64x2 i_cmp_gt(const float64x2& a, const float64x2& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL mask_float64x4 i_cmp_gt(const float64x4& a, const float64x4& b)
+static SIMDPP_INL
+mask_float64x4 i_cmp_gt(const float64x4& a, const float64x4& b)
 {
     return _mm256_cmp_pd(a, b, _CMP_GT_OQ);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_float64<8> i_cmp_gt(const float64<8>& a, const float64<8>& b)
+static SIMDPP_INL
+mask_float64<8> i_cmp_gt(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_GT_OQ);
 }

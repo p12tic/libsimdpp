@@ -31,7 +31,8 @@ namespace insn {
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_last(char* p, const uint8x16& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint8x16& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -71,7 +72,8 @@ SIMDPP_INL void i_store_last(char* p, const uint8x16& a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_last(char* p, const uint8x32& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint8x32& a, unsigned n)
 {
     p = detail::assume_aligned(p, 32);
     static const uint8_t mask_d[64] = {0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,
@@ -113,7 +115,8 @@ SIMDPP_INL void i_store_last(char* p, const uint8<64>& a, unsigned n)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_last(char* p, const uint16x8& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint16x8& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -124,7 +127,8 @@ SIMDPP_INL void i_store_last(char* p, const uint16x8& a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_last(char* p, const uint16x16& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint16x16& a, unsigned n)
 {
     i_store_last(p, uint8x32(a), n*2);
 }
@@ -139,7 +143,8 @@ SIMDPP_INL void i_store_last(char* p, const uint16<32>& a, unsigned n)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_last(char* p, const uint32x4& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint32x4& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
@@ -154,7 +159,8 @@ SIMDPP_INL void i_store_last(char* p, const uint32x4& a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_last(char* p, const uint32x8& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint32x8& a, unsigned n)
 {
     static const int32_t mask_d[16] = {0, 0, 0, 0, 0, 0, 0, 0,
                                       -1, -1, -1, -1, -1, -1, -1, -1};
@@ -164,7 +170,8 @@ SIMDPP_INL void i_store_last(char* p, const uint32x8& a, unsigned n)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_last(char* p, const uint32<16>& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint32<16>& a, unsigned n)
 {
     _mm512_mask_store_epi32(p, 0xffff << (16-n), a);
 }
@@ -172,7 +179,8 @@ SIMDPP_INL void i_store_last(char* p, const uint32<16>& a, unsigned n)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_last(char* p, const uint64x2& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint64x2& a, unsigned n)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2
@@ -197,7 +205,8 @@ SIMDPP_INL void i_store_last(char* p, const uint64x2& a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_store_last(char* p, const uint64x4& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint64x4& a, unsigned n)
 {
     static const int64_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
     uint64<4> mask = load_u(mask_d + n);
@@ -210,7 +219,8 @@ SIMDPP_INL void i_store_last(char* p, const uint64x4& a, unsigned n)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_last(char* p, const uint64<8>& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const uint64<8>& a, unsigned n)
 {
     _mm512_mask_store_epi64(p, 0xff << (8-n), a);
 }
@@ -218,7 +228,8 @@ SIMDPP_INL void i_store_last(char* p, const uint64<8>& a, unsigned n)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_last(char* p, const float32x4& ca, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const float32x4& ca, unsigned n)
 {
     float32<4> a = ca;
     p = detail::assume_aligned(p, 16);
@@ -247,7 +258,8 @@ SIMDPP_INL void i_store_last(char* p, const float32x4& ca, unsigned n)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_last(char* p, const float32x8& ca, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const float32x8& ca, unsigned n)
 {
     float32<8> a = ca;
     static const int32_t mask_d[16] = { 0, 0, 0, 0, 0, 0, 0, 0,
@@ -265,7 +277,8 @@ SIMDPP_INL void i_store_last(char* p, const float32x8& ca, unsigned n)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_last(char* p, const float32<16>& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const float32<16>& a, unsigned n)
 {
     _mm512_mask_store_ps(p, 0xffff << (16-n), a);
 }
@@ -273,7 +286,8 @@ SIMDPP_INL void i_store_last(char* p, const float32<16>& a, unsigned n)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_store_last(char* p, const float64x2& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const float64x2& a, unsigned n)
 {
     double* q = reinterpret_cast<double*>(p);
     q = detail::assume_aligned(q, 16);
@@ -298,7 +312,8 @@ SIMDPP_INL void i_store_last(char* p, const float64x2& a, unsigned n)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_store_last(char* p, const float64x4& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const float64x4& a, unsigned n)
 {
     static const int64_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
     float64x4 mask = load_u(mask_d + n);
@@ -314,7 +329,8 @@ SIMDPP_INL void i_store_last(char* p, const float64x4& a, unsigned n)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_store_last(char* p, const float64<8>& a, unsigned n)
+static SIMDPP_INL
+void i_store_last(char* p, const float64<8>& a, unsigned n)
 {
     _mm512_mask_store_pd(p, 0xff << (8-n), a);
 }

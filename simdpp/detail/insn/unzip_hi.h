@@ -22,7 +22,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL uint8x16 i_unzip16_hi(const uint8x16& ca, const uint8x16& cb)
+static SIMDPP_INL
+uint8x16 i_unzip16_hi(const uint8x16& ca, const uint8x16& cb)
 {
     uint8<16> a = ca, b = cb;
 #if SIMDPP_USE_NULL
@@ -48,7 +49,8 @@ SIMDPP_INL uint8x16 i_unzip16_hi(const uint8x16& ca, const uint8x16& cb)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 i_unzip16_hi(const uint8x32& ca, const uint8x32& cb)
+static SIMDPP_INL
+uint8x32 i_unzip16_hi(const uint8x32& ca, const uint8x32& cb)
 {
     uint8<32> a = ca, b = cb;
     a = _mm256_srai_epi16(a, 8);
@@ -77,7 +79,8 @@ uint8<N> i_unzip16_hi(const uint8<N>& a, const uint8<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint16x8 i_unzip8_hi(const uint16x8& ca, const uint16x8& cb)
+static SIMDPP_INL
+uint16x8 i_unzip8_hi(const uint16x8& ca, const uint16x8& cb)
 {
     uint16<8> a = ca, b = cb;
 #if SIMDPP_USE_NULL
@@ -102,7 +105,8 @@ SIMDPP_INL uint16x8 i_unzip8_hi(const uint16x8& ca, const uint16x8& cb)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16x16 i_unzip8_hi(const uint16x16& ca, const uint16x16& cb)
+static SIMDPP_INL
+uint16x16 i_unzip8_hi(const uint16x16& ca, const uint16x16& cb)
 {
     uint16<16> a = ca, b = cb;
     a = _mm256_srai_epi32(a, 16);
@@ -131,7 +135,8 @@ uint16<N> i_unzip8_hi(const uint16<N>& a, const uint16<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32x4 i_unzip4_hi(const uint32x4& a, const uint32x4& b)
+static SIMDPP_INL
+uint32x4 i_unzip4_hi(const uint32x4& a, const uint32x4& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::unzip4_hi(a, b);
@@ -145,14 +150,16 @@ SIMDPP_INL uint32x4 i_unzip4_hi(const uint32x4& a, const uint32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32x8 i_unzip4_hi(const uint32x8& a, const uint32x8& b)
+static SIMDPP_INL
+uint32x8 i_unzip4_hi(const uint32x8& a, const uint32x8& b)
 {
     return shuffle2<1,3,1,3>(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32<16> i_unzip4_hi(const uint32<16>& a, const uint32<16>& b)
+static SIMDPP_INL
+uint32<16> i_unzip4_hi(const uint32<16>& a, const uint32<16>& b)
 {
     return shuffle2<1,3,1,3>(a, b);
 }
@@ -174,7 +181,8 @@ uint64<N> i_unzip2_hi(const uint64<N>& a, const uint64<N>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float32x4 i_unzip4_hi(const float32x4& a, const float32x4& b)
+static SIMDPP_INL
+float32x4 i_unzip4_hi(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::unzip4_hi(a, b);
@@ -190,14 +198,16 @@ SIMDPP_INL float32x4 i_unzip4_hi(const float32x4& a, const float32x4& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_unzip4_hi(const float32x8& a, const float32x8& b)
+static SIMDPP_INL
+float32x8 i_unzip4_hi(const float32x8& a, const float32x8& b)
 {
     return shuffle2<1,3,1,3>(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_unzip4_hi(const float32<16>& a, const float32<16>& b)
+static SIMDPP_INL
+float32<16> i_unzip4_hi(const float32<16>& a, const float32<16>& b)
 {
     return shuffle2<1,3,1,3>(a, b);
 }

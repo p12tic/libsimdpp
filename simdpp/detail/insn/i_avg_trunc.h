@@ -29,7 +29,8 @@ template<class V> SIMDPP_INL V v_emul_avg_trunc_i16(const V& a, const V& b);
 template<class V> SIMDPP_INL V v_emul_avg_trunc_i32(const V& a, const V& b);
 
 
-SIMDPP_INL uint8x16 i_avg_trunc(const uint8x16& a, const uint8x16& b)
+static SIMDPP_INL
+uint8x16 i_avg_trunc(const uint8x16& a, const uint8x16& b)
 {
 #if SIMDPP_USE_NULL
     uint8x16 r;
@@ -47,7 +48,8 @@ SIMDPP_INL uint8x16 i_avg_trunc(const uint8x16& a, const uint8x16& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 i_avg_trunc(const uint8x32& a, const uint8x32& b)
+static SIMDPP_INL
+uint8x32 i_avg_trunc(const uint8x32& a, const uint8x32& b)
 {
     return v_emul_avg_trunc(a, b);
 }
@@ -62,7 +64,8 @@ SIMDPP_INL uint8<64> i_avg_trunc(const uint8<64>& a, const uint8<64>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int8x16 i_avg_trunc(const int8x16& a, const int8x16& b)
+static SIMDPP_INL
+int8x16 i_avg_trunc(const int8x16& a, const int8x16& b)
 {
 #if SIMDPP_USE_NULL
     int8x16 r;
@@ -80,7 +83,8 @@ SIMDPP_INL int8x16 i_avg_trunc(const int8x16& a, const int8x16& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int8x32 i_avg_trunc(const int8x32& a, const int8x32& b)
+static SIMDPP_INL
+int8x32 i_avg_trunc(const int8x32& a, const int8x32& b)
 {
     return v_emul_avg_trunc_i8(a, b);
 }
@@ -95,7 +99,8 @@ SIMDPP_INL int8<64> i_avg_trunc(const int8<64>& a, const int8<64>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint16x8 i_avg_trunc(const uint16x8& a, const uint16x8& b)
+static SIMDPP_INL
+uint16x8 i_avg_trunc(const uint16x8& a, const uint16x8& b)
 {
 #if SIMDPP_USE_NULL
     uint16x8 r;
@@ -113,7 +118,8 @@ SIMDPP_INL uint16x8 i_avg_trunc(const uint16x8& a, const uint16x8& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16x16 i_avg_trunc(const uint16x16& a, const uint16x16& b)
+static SIMDPP_INL
+uint16x16 i_avg_trunc(const uint16x16& a, const uint16x16& b)
 {
     return v_emul_avg_trunc(a, b);
 }
@@ -128,7 +134,8 @@ SIMDPP_INL uint16<32> i_avg_trunc(const uint16<32>& a, const uint16<32>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int16x8 i_avg_trunc(const int16x8& a, const int16x8& b)
+static SIMDPP_INL
+int16x8 i_avg_trunc(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_NULL
     int16x8 r;
@@ -146,7 +153,8 @@ SIMDPP_INL int16x8 i_avg_trunc(const int16x8& a, const int16x8& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int16x16 i_avg_trunc(const int16x16& a, const int16x16& b)
+static SIMDPP_INL
+int16x16 i_avg_trunc(const int16x16& a, const int16x16& b)
 {
     return v_emul_avg_trunc_i16(a, b);
 }
@@ -161,7 +169,8 @@ SIMDPP_INL int16<32> i_avg_trunc(const int16<32>& a, const int16<32>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32x4 i_avg_trunc(const uint32x4& a, const uint32x4& b)
+static SIMDPP_INL
+uint32x4 i_avg_trunc(const uint32x4& a, const uint32x4& b)
 {
 #if SIMDPP_USE_NULL
     uint32x4 r;
@@ -179,14 +188,16 @@ SIMDPP_INL uint32x4 i_avg_trunc(const uint32x4& a, const uint32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32x8 i_avg_trunc(const uint32x8& a, const uint32x8& b)
+static SIMDPP_INL
+uint32x8 i_avg_trunc(const uint32x8& a, const uint32x8& b)
 {
     return v_emul_avg_trunc(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32<16> i_avg_trunc(const uint32<16>& a, const uint32<16>& b)
+static SIMDPP_INL
+uint32<16> i_avg_trunc(const uint32<16>& a, const uint32<16>& b)
 {
     return v_emul_avg_trunc(a, b);
 }
@@ -194,7 +205,8 @@ SIMDPP_INL uint32<16> i_avg_trunc(const uint32<16>& a, const uint32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_avg_trunc(const int32x4& a, const int32x4& b)
+static SIMDPP_INL
+int32x4 i_avg_trunc(const int32x4& a, const int32x4& b)
 {
 #if SIMDPP_USE_NULL
     int32x4 r;
@@ -212,14 +224,16 @@ SIMDPP_INL int32x4 i_avg_trunc(const int32x4& a, const int32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32x8 i_avg_trunc(const int32x8& a, const int32x8& b)
+static SIMDPP_INL
+int32x8 i_avg_trunc(const int32x8& a, const int32x8& b)
 {
     return v_emul_avg_trunc_i32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int32<16> i_avg_trunc(const int32<16>& a, const int32<16>& b)
+static SIMDPP_INL
+int32<16> i_avg_trunc(const int32<16>& a, const int32<16>& b)
 {
     return v_emul_avg_trunc_i32(a, b);
 }

@@ -23,7 +23,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL mask_float32x4 i_isnan2(const float32x4& a, const float32x4& b)
+static SIMDPP_INL
+mask_float32x4 i_isnan2(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::isnan2(a, b);
@@ -39,14 +40,16 @@ SIMDPP_INL mask_float32x4 i_isnan2(const float32x4& a, const float32x4& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL mask_float32x8 i_isnan2(const float32x8& a, const float32x8& b)
+static SIMDPP_INL
+mask_float32x8 i_isnan2(const float32x8& a, const float32x8& b)
 {
     return _mm256_cmp_ps(a, b, _CMP_UNORD_Q);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_float32<16> i_isnan2(const float32<16>& a, const float32<16>& b)
+static SIMDPP_INL
+mask_float32<16> i_isnan2(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_UNORD_Q);
 }
@@ -54,7 +57,8 @@ SIMDPP_INL mask_float32<16> i_isnan2(const float32<16>& a, const float32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_float64x2 i_isnan2(const float64x2& a, const float64x2& b)
+static SIMDPP_INL
+mask_float64x2 i_isnan2(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_UNORD_Q);
@@ -70,14 +74,16 @@ SIMDPP_INL mask_float64x2 i_isnan2(const float64x2& a, const float64x2& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL mask_float64x4 i_isnan2(const float64x4& a, const float64x4& b)
+static SIMDPP_INL
+mask_float64x4 i_isnan2(const float64x4& a, const float64x4& b)
 {
     return _mm256_cmp_pd(a, b, _CMP_UNORD_Q);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_float64<8> i_isnan2(const float64<8>& a, const float64<8>& b)
+static SIMDPP_INL
+mask_float64<8> i_isnan2(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_UNORD_Q);
 }

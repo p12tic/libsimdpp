@@ -43,7 +43,8 @@ uint64_t reduce_add(const uint64<N,E>& a);
 namespace detail {
 namespace insn {
 
-SIMDPP_INL uint16_t i_reduce_add(const uint8x16& a)
+static SIMDPP_INL
+uint16_t i_reduce_add(const uint8x16& a)
 {
 #if SIMDPP_USE_NULL
     uint16_t r = a.el(0);
@@ -80,7 +81,8 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8x16& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16_t i_reduce_add(const uint8x32& a)
+static SIMDPP_INL
+uint16_t i_reduce_add(const uint8x32& a)
 {
     uint16x16 sum2 = _mm256_sad_epu8(a, _mm256_setzero_si256()); // results are in 0,2,4,6 elements
     uint16x8 sum = add(detail::extract128<0>(sum2), detail::extract128<1>(sum2));
@@ -167,7 +169,8 @@ SIMDPP_INL uint16_t i_reduce_add(const uint8<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int16_t i_reduce_add(const int8x16& a)
+static SIMDPP_INL
+int16_t i_reduce_add(const int8x16& a)
 {
 #if SIMDPP_USE_NULL
     int16_t r = a.el(0);
@@ -203,7 +206,8 @@ SIMDPP_INL int16_t i_reduce_add(const int8x16& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int16_t i_reduce_add(const int8x32& a)
+static SIMDPP_INL
+int16_t i_reduce_add(const int8x32& a)
 {
     return i_reduce_add(uint8x32(bit_xor(a, 0x80))) - a.length*0x80;
 }
@@ -272,7 +276,8 @@ SIMDPP_INL uint16_t i_reduce_add(const int8<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32_t i_reduce_add(const uint16x8& a)
+static SIMDPP_INL
+uint32_t i_reduce_add(const uint16x8& a)
 {
 #if SIMDPP_USE_NULL
     uint32_t r = a.el(0);
@@ -314,7 +319,8 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32_t i_reduce_add(const uint16x16& a)
+static SIMDPP_INL
+uint32_t i_reduce_add(const uint16x16& a)
 {
     uint16x16 ones = make_uint(1);
     uint16x16 ca = bit_xor(a, 0x8000);
@@ -414,7 +420,8 @@ SIMDPP_INL uint32_t i_reduce_add(const uint16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32_t i_reduce_add(const int16x8& a)
+static SIMDPP_INL
+int32_t i_reduce_add(const int16x8& a)
 {
 #if SIMDPP_USE_NULL
     int32_t r = a.el(0);
@@ -451,7 +458,8 @@ SIMDPP_INL int32_t i_reduce_add(const int16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32_t i_reduce_add(const int16x16& a)
+static SIMDPP_INL
+int32_t i_reduce_add(const int16x16& a)
 {
     int16x16 ones = make_uint(1);
     int32x8 sum = _mm256_madd_epi16(a, ones);
@@ -540,7 +548,8 @@ SIMDPP_INL int32_t i_reduce_add(const int16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32_t i_reduce_add(const uint32x4& a)
+static SIMDPP_INL
+uint32_t i_reduce_add(const uint32x4& a)
 {
 #if SIMDPP_USE_NULL
     uint32_t r = a.el(0);
@@ -562,7 +571,8 @@ SIMDPP_INL uint32_t i_reduce_add(const uint32x4& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32_t i_reduce_add(const uint32x8& a)
+static SIMDPP_INL
+uint32_t i_reduce_add(const uint32x8& a)
 {
     uint32x4 sum = add(detail::extract128<0>(a), detail::extract128<1>(a));
     sum = add(sum, move4_l<2>(sum));
@@ -572,7 +582,8 @@ SIMDPP_INL uint32_t i_reduce_add(const uint32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32_t i_reduce_add(const uint32<16>& a)
+static SIMDPP_INL
+uint32_t i_reduce_add(const uint32<16>& a)
 {
     return i_reduce_add(add(extract256<0>(a), extract256<1>(a)));
 }
@@ -600,7 +611,8 @@ SIMDPP_INL uint32_t i_reduce_add(const uint32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint64_t i_reduce_add(const uint64x2& a)
+static SIMDPP_INL
+uint64_t i_reduce_add(const uint64x2& a)
 {
 #if SIMDPP_USE_NULL
     uint64_t r = a.el(0);
@@ -621,7 +633,8 @@ SIMDPP_INL uint64_t i_reduce_add(const uint64x2& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint64_t i_reduce_add(const uint64x4& a)
+static SIMDPP_INL
+uint64_t i_reduce_add(const uint64x4& a)
 {
     uint64x2 sum = add(detail::extract128<0>(a), detail::extract128<1>(a));
     sum = add(sum, move2_l<1>(sum));
@@ -630,7 +643,8 @@ SIMDPP_INL uint64_t i_reduce_add(const uint64x4& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint64_t i_reduce_add(const uint64<8>& a)
+static SIMDPP_INL
+uint64_t i_reduce_add(const uint64<8>& a)
 {
     return i_reduce_add(add(extract256<0>(a), extract256<1>(a)));
 }

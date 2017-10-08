@@ -27,7 +27,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
+static SIMDPP_INL
+float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
 {
     float32<4> x = cx;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -63,7 +64,8 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
+static SIMDPP_INL
+float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
 {
     float32x8 r, x = cx;
 
@@ -76,7 +78,8 @@ SIMDPP_INL float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_rcp_rh(const float32<16>& cx, const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_rcp_rh(const float32<16>& cx, const float32<16>& a)
 {
     float32<16> r, x = cx;
 

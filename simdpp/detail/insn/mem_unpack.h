@@ -614,7 +614,8 @@ void mem_unpack4(float64<N>& a, float64<N>& b, float64<N>& c, float64<N>& d)
 
     n = [0, <number of elements in vector> - 1]
 */
-SIMDPP_INL void mem_unpack6(uint8x16& a, uint8x16& b, uint8x16& c,
+static SIMDPP_INL
+void mem_unpack6(uint8x16& a, uint8x16& b, uint8x16& c,
                             uint8x16& d, uint8x16& e, uint8x16& f)
 {
     uint8x16 t0, t1, t2, t3, t4, t5;
@@ -662,7 +663,8 @@ SIMDPP_INL void mem_unpack6(uint8x16& a, uint8x16& b, uint8x16& c,
     f = zip16_hi(t2, t5);
 }
 
-SIMDPP_INL void mem_unpack6(uint16x8& a, uint16x8& b, uint16x8& c,
+static SIMDPP_INL
+void mem_unpack6(uint16x8& a, uint16x8& b, uint16x8& c,
                             uint16x8& d, uint16x8& e, uint16x8& f)
 {
     uint16x8 t0, t1, t2, t3, t4, t5;

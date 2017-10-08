@@ -29,7 +29,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_to_float32(const int32x4& a)
+static SIMDPP_INL
+float32x4 i_to_float32(const int32x4& a)
 {
 #if SIMDPP_USE_NULL
     float32x4 r;
@@ -57,7 +58,8 @@ SIMDPP_INL float32x4 i_to_float32(const int32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_to_float32(const int32x8& a)
+static SIMDPP_INL
+float32x8 i_to_float32(const int32x8& a)
 {
 #if SIMDPP_USE_AVX2
     return _mm256_cvtepi32_ps(a);
@@ -71,7 +73,8 @@ SIMDPP_INL float32x8 i_to_float32(const int32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_to_float32(const int32<16>& a)
+static SIMDPP_INL
+float32<16> i_to_float32(const int32<16>& a)
 {
     return _mm512_cvtepi32_ps(a);
 }
@@ -89,7 +92,8 @@ float32<N> i_to_float32(const int32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
+static SIMDPP_INL
+float32x4 i_to_float32(const float64x4& a)
 {
 #if SIMDPP_USE_AVX
     return _mm256_cvtpd_ps(a);
@@ -124,7 +128,8 @@ SIMDPP_INL float32x4 i_to_float32(const float64x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_to_float32(const float64<8>& a)
+static SIMDPP_INL
+float32x8 i_to_float32(const float64<8>& a)
 {
 #if SIMDPP_USE_AVX512F
     return _mm512_cvt_roundpd_ps(a, (_MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC));
@@ -138,7 +143,8 @@ SIMDPP_INL float32x8 i_to_float32(const float64<8>& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_to_float32(const float64<16>& a)
+static SIMDPP_INL
+float32<16> i_to_float32(const float64<16>& a)
 {
     float32<8> r1, r2;
     r1 = i_to_float32(a.vec(0));

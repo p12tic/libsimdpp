@@ -28,7 +28,8 @@ V v_emul_avg_u32(const V& a, const V& b);
 template<class V> SIMDPP_INL
 V v_emul_avg_i32(const V& a, const V& b);
 
-SIMDPP_INL uint8x16 i_avg(const uint8x16& a, const uint8x16& b)
+static SIMDPP_INL
+uint8x16 i_avg(const uint8x16& a, const uint8x16& b)
 {
 #if SIMDPP_USE_NULL
     uint8x16 r;
@@ -48,7 +49,8 @@ SIMDPP_INL uint8x16 i_avg(const uint8x16& a, const uint8x16& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 i_avg(const uint8x32& a, const uint8x32& b)
+static SIMDPP_INL
+uint8x32 i_avg(const uint8x32& a, const uint8x32& b)
 {
     return _mm256_avg_epu8(a, b);
 }
@@ -63,7 +65,8 @@ SIMDPP_INL uint8<64> i_avg(const uint8<64>& a, const uint8<64>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int8x16 i_avg(const int8x16& a, const int8x16& b)
+static SIMDPP_INL
+int8x16 i_avg(const int8x16& a, const int8x16& b)
 {
 #if SIMDPP_USE_NULL
     int8x16 r;
@@ -89,7 +92,8 @@ SIMDPP_INL int8x16 i_avg(const int8x16& a, const int8x16& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int8x32 i_avg(const int8x32& a, const int8x32& b)
+static SIMDPP_INL
+int8x32 i_avg(const int8x32& a, const int8x32& b)
 {
     uint8x32 a2, b2, bias, r;
     bias = make_uint(0x80);
@@ -116,7 +120,8 @@ SIMDPP_INL int8<64>i_avg(const int8<64>& a, const int8<64>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint16x8 i_avg(const uint16x8& a, const uint16x8& b)
+static SIMDPP_INL
+uint16x8 i_avg(const uint16x8& a, const uint16x8& b)
 {
 #if SIMDPP_USE_NULL
     uint16x8 r;
@@ -136,7 +141,8 @@ SIMDPP_INL uint16x8 i_avg(const uint16x8& a, const uint16x8& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16x16 i_avg(const uint16x16& a, const uint16x16& b)
+static SIMDPP_INL
+uint16x16 i_avg(const uint16x16& a, const uint16x16& b)
 {
     return _mm256_avg_epu16(a, b);
 }
@@ -151,7 +157,8 @@ SIMDPP_INL uint16<32> i_avg(const uint16<32>& a, const uint16<32>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int16x8 i_avg(const int16x8& a, const int16x8& b)
+static SIMDPP_INL
+int16x8 i_avg(const int16x8& a, const int16x8& b)
 {
 #if SIMDPP_USE_NULL
     int16x8 r;
@@ -176,7 +183,8 @@ SIMDPP_INL int16x8 i_avg(const int16x8& a, const int16x8& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int16x16 i_avg(const int16x16& a, const int16x16& b)
+static SIMDPP_INL
+int16x16 i_avg(const int16x16& a, const int16x16& b)
 {
     uint16x16 a2, b2, r;
     a2 = bit_xor(a, 0x8000); // add
@@ -201,7 +209,8 @@ SIMDPP_INL int16<32> i_avg(const int16<32>& a, const int16<32>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32x4 i_avg(const uint32x4& a, const uint32x4& b)
+static SIMDPP_INL
+uint32x4 i_avg(const uint32x4& a, const uint32x4& b)
 {
 #if SIMDPP_USE_NULL
     uint32x4 r;
@@ -221,14 +230,16 @@ SIMDPP_INL uint32x4 i_avg(const uint32x4& a, const uint32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32x8 i_avg(const uint32x8& a, const uint32x8& b)
+static SIMDPP_INL
+uint32x8 i_avg(const uint32x8& a, const uint32x8& b)
 {
     return v_emul_avg_u32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32<16> i_avg(const uint32<16>& a, const uint32<16>& b)
+static SIMDPP_INL
+uint32<16> i_avg(const uint32<16>& a, const uint32<16>& b)
 {
     return v_emul_avg_u32(a, b);
 }
@@ -236,7 +247,8 @@ SIMDPP_INL uint32<16> i_avg(const uint32<16>& a, const uint32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL int32x4 i_avg(const int32x4& a, const int32x4& b)
+static SIMDPP_INL
+int32x4 i_avg(const int32x4& a, const int32x4& b)
 {
 #if SIMDPP_USE_NULL
     int32x4 r;
@@ -257,14 +269,16 @@ SIMDPP_INL int32x4 i_avg(const int32x4& a, const int32x4& b)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL int32x8 i_avg(const int32x8& a, const int32x8& b)
+static SIMDPP_INL
+int32x8 i_avg(const int32x8& a, const int32x8& b)
 {
     return v_emul_avg_i32(a, b);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL int32<16> i_avg(const int32<16>& a, const int32<16>& b)
+static SIMDPP_INL
+int32<16> i_avg(const int32<16>& a, const int32<16>& b)
 {
     return v_emul_avg_i32(a, b);
 }

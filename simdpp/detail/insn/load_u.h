@@ -30,7 +30,8 @@ namespace insn {
 // offer better performance on e.g. ARM. Note, we don't use LDDQU on SSE,
 // because it has usage restrictions and offers improved performance only on
 // Pentium 4 era processors.
-SIMDPP_INL void i_load_u(uint8x16& a, const char* p)
+static SIMDPP_INL
+void i_load_u(uint8x16& a, const char* p)
 {
 #if SIMDPP_USE_NULL
     detail::null::load(a, p);
@@ -51,7 +52,8 @@ SIMDPP_INL void i_load_u(uint8x16& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load_u(uint16x8& a, const char* p)
+static SIMDPP_INL
+void i_load_u(uint16x8& a, const char* p)
 {
 #if SIMDPP_USE_NULL
     detail::null::load(a, p);
@@ -66,7 +68,8 @@ SIMDPP_INL void i_load_u(uint16x8& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load_u(uint32x4& a, const char* p)
+static SIMDPP_INL
+void i_load_u(uint32x4& a, const char* p)
 {
 #if SIMDPP_USE_NULL
     detail::null::load(a, p);
@@ -83,7 +86,8 @@ SIMDPP_INL void i_load_u(uint32x4& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load_u(uint64x2& a, const char* p)
+static SIMDPP_INL
+void i_load_u(uint64x2& a, const char* p)
 {
 #if SIMDPP_USE_NULL
     detail::null::load(a, p);
@@ -110,7 +114,8 @@ SIMDPP_INL void i_load_u(uint64x2& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load_u(float32x4& a, const char* p)
+static SIMDPP_INL
+void i_load_u(float32x4& a, const char* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -130,7 +135,8 @@ SIMDPP_INL void i_load_u(float32x4& a, const char* p)
 #endif
 }
 
-SIMDPP_INL void i_load_u(float64x2& a, const char* p)
+static SIMDPP_INL
+void i_load_u(float64x2& a, const char* p)
 {
     const double* q = reinterpret_cast<const double*>(p);
 #if SIMDPP_USE_SSE2
@@ -149,29 +155,35 @@ SIMDPP_INL void i_load_u(float64x2& a, const char* p)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void  i_load_u(uint8x32& a,  const char* p)
+static SIMDPP_INL
+void  i_load_u(uint8x32& a,  const char* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
 }
-SIMDPP_INL void i_load_u(uint16x16& a, const char* p)
+static SIMDPP_INL
+void i_load_u(uint16x16& a, const char* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
 }
-SIMDPP_INL void i_load_u(uint32x8& a,  const char* p)
+static SIMDPP_INL
+void i_load_u(uint32x8& a,  const char* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
 }
-SIMDPP_INL void i_load_u(uint64x4& a,  const char* p)
+static SIMDPP_INL
+void i_load_u(uint64x4& a,  const char* p)
 {
     a = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
 }
 #endif
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_load_u(float32x8& a, const char* p)
+static SIMDPP_INL
+void i_load_u(float32x8& a, const char* p)
 {
     a = _mm256_loadu_ps(reinterpret_cast<const float*>(p));
 }
-SIMDPP_INL void i_load_u(float64x4& a, const char* p)
+static SIMDPP_INL
+void i_load_u(float64x4& a, const char* p)
 {
     a = _mm256_loadu_pd(reinterpret_cast<const double*>(p));
 }
@@ -189,19 +201,23 @@ SIMDPP_INL void i_load_u(uint16<32>& a,  const char* p)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_load_u(uint32<16>& a, const char* p)
+static SIMDPP_INL
+void i_load_u(uint32<16>& a, const char* p)
 {
     a = _mm512_loadu_si512(p);
 }
-SIMDPP_INL void i_load_u(uint64<8>& a,  const char* p)
+static SIMDPP_INL
+void i_load_u(uint64<8>& a,  const char* p)
 {
     a = _mm512_loadu_si512(p);
 }
-SIMDPP_INL void i_load_u(float32<16>& a, const char* p)
+static SIMDPP_INL
+void i_load_u(float32<16>& a, const char* p)
 {
     a = _mm512_loadu_ps(reinterpret_cast<const float*>(p));
 }
-SIMDPP_INL void i_load_u(float64<8>& a, const char* p)
+static SIMDPP_INL
+void i_load_u(float64<8>& a, const char* p)
 {
     a = _mm512_loadu_pd(reinterpret_cast<const double*>(p));
 }

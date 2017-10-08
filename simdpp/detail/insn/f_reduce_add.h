@@ -25,7 +25,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float i_reduce_add(const float32x4& a)
+static SIMDPP_INL
+float i_reduce_add(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float r = a.el(0);
@@ -56,7 +57,8 @@ SIMDPP_INL float i_reduce_add(const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float i_reduce_add(const float32x8& a)
+static SIMDPP_INL
+float i_reduce_add(const float32x8& a)
 {
     float32x4 ah = detail::extract128<1>(a);
     float32x4 al = detail::extract128<0>(a);
@@ -68,7 +70,8 @@ SIMDPP_INL float i_reduce_add(const float32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float i_reduce_add(const float32<16>& a)
+static SIMDPP_INL
+float i_reduce_add(const float32<16>& a)
 {
     return i_reduce_add(add(extract256<0>(a), extract256<1>(a)));
 }
@@ -85,7 +88,8 @@ SIMDPP_INL float i_reduce_add(const float32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL double i_reduce_add(const float64x2& a)
+static SIMDPP_INL
+double i_reduce_add(const float64x2& a)
 {
 #if SIMDPP_USE_SSE3
     return _mm_cvtsd_f64(_mm_hadd_pd(a, a));
@@ -108,7 +112,8 @@ SIMDPP_INL double i_reduce_add(const float64x2& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL double i_reduce_add(const float64x4& a)
+static SIMDPP_INL
+double i_reduce_add(const float64x4& a)
 {
     float64x2 ah = detail::extract128<1>(a);
     float64x2 al = detail::extract128<0>(a);
@@ -119,7 +124,8 @@ SIMDPP_INL double i_reduce_add(const float64x4& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL double i_reduce_add(const float64<8>& a)
+static SIMDPP_INL
+double i_reduce_add(const float64<8>& a)
 {
     return i_reduce_add(add(extract256<0>(a), extract256<1>(a)));
 }

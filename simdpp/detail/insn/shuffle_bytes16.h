@@ -24,7 +24,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL uint8x16 i_shuffle_bytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
+static SIMDPP_INL
+uint8x16 i_shuffle_bytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -83,7 +84,8 @@ SIMDPP_INL uint8x16 i_shuffle_bytes16(const uint8x16& a, const uint8x16& b, cons
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 i_shuffle_bytes16(const uint8x32& a, const uint8x32& b, const uint8x32& mask)
+static SIMDPP_INL
+uint8x32 i_shuffle_bytes16(const uint8x32& a, const uint8x32& b, const uint8x32& mask)
 {
     int16x16 sel, ai, bi, r;
     sel = mask;

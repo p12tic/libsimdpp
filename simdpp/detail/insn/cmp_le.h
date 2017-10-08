@@ -269,7 +269,8 @@ SIMDPP_INL mask_int64<8> i_cmp_le(const uint64<8>& a, const uint64<8>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_float32<4> i_cmp_le(const float32<4>& a, const float32<4>& b)
+static SIMDPP_INL
+mask_float32<4> i_cmp_le(const float32<4>& a, const float32<4>& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::cmp_le(a, b);
@@ -287,14 +288,16 @@ SIMDPP_INL mask_float32<4> i_cmp_le(const float32<4>& a, const float32<4>& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL mask_float32<8> i_cmp_le(const float32<8>& a, const float32<8>& b)
+static SIMDPP_INL
+mask_float32<8> i_cmp_le(const float32<8>& a, const float32<8>& b)
 {
     return _mm256_cmp_ps(a, b, _CMP_LE_OQ);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_float32<16> i_cmp_le(const float32<16>& a, const float32<16>& b)
+static SIMDPP_INL
+mask_float32<16> i_cmp_le(const float32<16>& a, const float32<16>& b)
 {
     return _mm512_cmp_ps_mask(a, b, _CMP_LE_OQ);
 }
@@ -302,7 +305,8 @@ SIMDPP_INL mask_float32<16> i_cmp_le(const float32<16>& a, const float32<16>& b)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL mask_float64<2> i_cmp_le(const float64<2>& a, const float64<2>& b)
+static SIMDPP_INL
+mask_float64<2> i_cmp_le(const float64<2>& a, const float64<2>& b)
 {
 #if SIMDPP_USE_AVX
     return _mm_cmp_pd(a, b, _CMP_LE_OQ);
@@ -320,14 +324,16 @@ SIMDPP_INL mask_float64<2> i_cmp_le(const float64<2>& a, const float64<2>& b)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL mask_float64<4> i_cmp_le(const float64<4>& a, const float64<4>& b)
+static SIMDPP_INL
+mask_float64<4> i_cmp_le(const float64<4>& a, const float64<4>& b)
 {
     return _mm256_cmp_pd(a, b, _CMP_LE_OQ);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL mask_float64<8> i_cmp_le(const float64<8>& a, const float64<8>& b)
+static SIMDPP_INL
+mask_float64<8> i_cmp_le(const float64<8>& a, const float64<8>& b)
 {
     return _mm512_cmp_pd_mask(a, b, _CMP_LE_OQ);
 }

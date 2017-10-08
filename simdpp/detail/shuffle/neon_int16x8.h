@@ -205,7 +205,8 @@ T fallback(T a)
     return permute_bytes16(a, mask);
 }
 
-SIMDPP_INL T perm4(_0,_0,_0,_0, T a) { return bcast<0>(a); }
+static SIMDPP_INL
+T perm4(_0,_0,_0,_0, T a) { return bcast<0>(a); }
 SIMDPP_INL T perm4(_0,_0,_0,_1, T a) { return sel<0,0,0,1>(bcast<0>(a), swap1<1,3>(a)); }
 SIMDPP_INL T perm4(_0,_0,_0,_2, T a) { return sel<0,0,0,1>(bcast<0>(a), swap1<2,3>(a)); }
 SIMDPP_INL T perm4(_0,_0,_0,_3, T a) { return sel<1,1,1,0>(a, bcast<0>(a)); }
