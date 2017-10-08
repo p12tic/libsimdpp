@@ -203,6 +203,7 @@ set(TEST_EXPR_SOURCES
     main_expr.cc
     expr/tests.cc
     expr/bitwise.cc
+    expr/compare.cc
     expr/math_float.cc
     expr/math_int.cc
     utils/test_results_set.cc
