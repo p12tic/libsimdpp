@@ -88,6 +88,7 @@ mask_int64<N,expr_empty> cmp_le(const uint64<N,E1>& a,
 {
     return detail::insn::i_cmp_le(a.eval(), b.eval());
 }
+SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_le, mask_int64, uint64)
 
 /** Compares the values of two float32x4 vectors for less-than or equal
 
