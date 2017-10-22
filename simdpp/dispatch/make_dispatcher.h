@@ -36,15 +36,50 @@
 // that are needed but are missing. In case a header becomes no longer used,
 // please remove it from the repository.
 
-#define SIMDPP_DETAIL_IGNORE_PARENS(x) SIMDPP_PP_EAT x
+// The implementation has been affected by the following MSVC preprocessor
+// bugs / non-standard behavior:
+//
+// - MSVC treats expanded variadic arguments as single token in other function
+// argument lists. SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS has been used as a
+// workaround in these cases.
+//
+// - MSVC does not accept empty token as valid argument in function macros. In
+// cases when this matter, SIMDPP_PP_EMPTY() was passed after the real
+// arguments.
+//
+// - MSVC is eager to expand function macros before its arguments are fully
+// expanded. This has been worked around with placing one or more
+// SIMDPP_PP_EMPTY between the function macro and its argument list to defer
+// the expansion.
+//
+// - MSVC sometimes stops the expansion of macros even when the expansion should
+// continue. This is worked around by wrapping the code in SIMDPP_PP_EXPAND
+
+#define SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS(macro, args) macro args
+
+#if ~SIMDPP_PP_CONFIG_FLAGS() & SIMDPP_PP_CONFIG_MSVC()
+    #define SIMDPP_DETAIL_IGNORE_PARENS(x) SIMDPP_PP_EAT x
+#else
+    #define SIMDPP_DETAIL_IGNORE_PARENS_DEFER(x) SIMDPP_PP_EAT x
+    #define SIMDPP_DETAIL_IGNORE_PARENS(x) SIMDPP_DETAIL_IGNORE_PARENS_DEFER(x)
+#endif
 
 #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST(x)                             \
     SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_ADD_COMMA x,)
 
-#define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(...)          \
-    SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(__VA_ARGS__)
+#if ~SIMDPP_PP_CONFIG_FLAGS() & SIMDPP_PP_CONFIG_MSVC()
+    #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(...)      \
+        SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(__VA_ARGS__)
 
-#define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(x, ...) SIMDPP_PP_REM x
+    #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(x, ...) SIMDPP_PP_REM x
+#else
+    #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST_DEFER(...)      \
+        SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS(SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST, (__VA_ARGS__))
+
+    #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_STRIP_REST(x, ...)         \
+        SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS(SIMDPP_PP_REM, x)
+#endif
+
 #define SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST_ADD_COMMA(...) (__VA_ARGS__),
 
 // We can't just use SIMDPP_DETAIL_EXTRACT_PARENS_IGNORE_REST or
@@ -97,40 +132,85 @@
     SIMDPP_PP_SEQ_FOR_EACH_I(SIMDPP_DETAIL_FORWARD_EACH, data, SIMDPP_PP_VARIADIC_TO_SEQ args)
 
 // Will expand to 1 if argument contains SIMDPP_PP_PROBE macro anywhere, 0 otherwise
-#define SIMDPP_PP_PROBE_TO_BOOL(...)                                            \
-    SIMDPP_PP_PROBE_TO_BOOL_MSVC_DEFER(SIMDPP_PP_PROBE_TO_BOOL_I, (__VA_ARGS__, 0))
-#define SIMDPP_PP_PROBE_TO_BOOL_MSVC_DEFER(macro, args) macro args
+#if ~SIMDPP_PP_CONFIG_FLAGS() & SIMDPP_PP_CONFIG_MSVC()
+    #define SIMDPP_PP_PROBE_TO_BOOL(...)                                        \
+        SIMDPP_PP_PROBE_TO_BOOL_I(__VA_ARGS__, 0)
+
+#else
+    // Note that we can't use SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS because this
+    // would interfere with the expansion of that macro itself
+
+    #define SIMDPP_PP_PROBE_TO_BOOL(...)                                        \
+        SIMDPP_PP_PROBE_TO_BOOL_MSVC_DEFER(SIMDPP_PP_PROBE_TO_BOOL_I, (__VA_ARGS__, 0))
+    #define SIMDPP_PP_PROBE_TO_BOOL_MSVC_DEFER(macro, args) macro args
+#endif
+
 #define SIMDPP_PP_PROBE_TO_BOOL_I(n1, n2, ...) n2
 #define SIMDPP_PP_PROBE() ~, 1, 0
 
 // Given a single argument R, potentially consisting of multiple tokens,
 // expands to SIMDPP_PP_PROBE() if R is empty, otherwise expands to nothing.
-#define SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY(R)                                    \
-    SIMDPP_PP_IIF(SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_IS_EMPTY_PROBE R ()),   \
-                  SIMDPP_PP_PROBE,                                              \
-                  SIMDPP_PP_EMPTY                                               \
-                 )()
+#if ~SIMDPP_PP_CONFIG_FLAGS() & SIMDPP_PP_CONFIG_MSVC()
+    #define SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY(R)                                \
+        SIMDPP_PP_IIF(                                                          \
+            SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_IS_EMPTY_PROBE R ()),         \
+            SIMDPP_PP_PROBE,                                                    \
+            SIMDPP_PP_EMPTY                                                     \
+        )()
+#else
+    #define SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY(R)                                \
+        SIMDPP_PP_IIF SIMDPP_PP_EMPTY()(                                        \
+            SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_IS_EMPTY_PROBE R ()),         \
+            SIMDPP_PP_PROBE,                                                    \
+            SIMDPP_PP_EMPTY                                                     \
+        )()
+#endif
+
 #define SIMDPP_DETAIL_IS_EMPTY_PROBE(...) SIMDPP_PP_PROBE()
 
 // Given a single argument R, potentially consisting of multiple tokens or
 // parenthesized token groups, expands to nothing if R starts with a parenthesis.
 // Otherwise expands to SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY with R
 // passed as an argument.
-#define SIMDPP_DETAIL_PROBE_IF_VOID_1PAREN(R)                                   \
-    SIMDPP_PP_IIF(SIMDPP_PP_IS_BEGIN_PARENS(R),                                 \
-                  SIMDPP_PP_EAT,                                                \
-                  SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY                             \
-                 )(R)
+#if ~SIMDPP_PP_CONFIG_FLAGS() & SIMDPP_PP_CONFIG_MSVC()
+    #define SIMDPP_DETAIL_PROBE_IF_VOID_1PAREN(R)                               \
+        SIMDPP_PP_IIF(SIMDPP_PP_IS_BEGIN_PARENS(R),                             \
+                      SIMDPP_PP_EAT,                                            \
+                      SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY                         \
+                     )(R)
+#else
+    // R might be empty token, thus workarounds are needed (see top of the file)
+
+    #define SIMDPP_DETAIL_PROBE_IF_VOID_1PAREN(R)                               \
+        SIMDPP_PP_IIF(SIMDPP_PP_IS_BEGIN_PARENS(R),                             \
+                      SIMDPP_PP_EAT,                                            \
+                      SIMDPP_DETAIL_PROBE_IF_VOID_EMPTY                         \
+                     )(R SIMDPP_PP_EMPTY())
+#endif
 
 // Given a single argument R, potentially consisting of multiple tokens or
 // parenthesized token groups, expands to nothing if R starts with a 'void'
 // token. Otherwise expands to SIMDPP_DETAIL_PROBE_IF_VOID_1PAREN
 // passing R with the first 'void' token removed as an argument.
-#define SIMDPP_DETAIL_PROBE_IF_VOID_1PARAM(R)                                   \
-    SIMDPP_PP_IIF(SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_STARTS_WITH_VOID_PROBE(R)), \
-                  SIMDPP_DETAIL_PROBE_IF_VOID_1PAREN,                           \
-                  SIMDPP_PP_EAT                                                 \
-                 )(SIMDPP_PP_CAT(SIMDPP_DETAIL_STARTS_WITH_VOID_STRIP_, R))
+
+#if ~SIMDPP_PP_CONFIG_FLAGS() & SIMDPP_PP_CONFIG_MSVC()
+    #define SIMDPP_DETAIL_PROBE_IF_VOID_1PARAM(R)                               \
+        SIMDPP_PP_IIF(                                                          \
+            SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_STARTS_WITH_VOID_PROBE(R)),   \
+            SIMDPP_DETAIL_PROBE_IF_VOID_1PAREN,                                 \
+            SIMDPP_PP_EAT                                                       \
+        )(SIMDPP_PP_CAT(SIMDPP_DETAIL_STARTS_WITH_VOID_STRIP_, R))
+#else
+    // SIMDPP_PP_IIF is expanded one expansion too early and R might be empty
+    // token, thus workarounds are needed (see top of the file)
+
+    #define SIMDPP_DETAIL_PROBE_IF_VOID_1PARAM(R)                               \
+        SIMDPP_PP_IIF SIMDPP_PP_EMPTY()(                                        \
+            SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_STARTS_WITH_VOID_PROBE(R SIMDPP_PP_EMPTY())), \
+            SIMDPP_DETAIL_PROBE_IF_VOID_1PAREN,                                 \
+            SIMDPP_PP_EAT                                                       \
+        )(SIMDPP_PP_CAT(SIMDPP_DETAIL_STARTS_WITH_VOID_STRIP_, R) SIMDPP_PP_EMPTY SIMDPP_PP_EMPTY()())
+#endif
 
 #define SIMDPP_DETAIL_STARTS_WITH_VOID_CHECK_void SIMDPP_PP_PROBE()
 #define SIMDPP_DETAIL_STARTS_WITH_VOID_STRIP_void
@@ -149,11 +229,30 @@
 
 // Given a parenthesized list of arguments R, expands to nothing if R is
 // parenthesized void token, otherwise expands to return token
-#define SIMDPP_DETAIL_RETURN_IF_NOT_VOID(R)                                     \
-    SIMDPP_PP_IIF(SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_PROBE_IF_VOID(R)),      \
-                  SIMDPP_PP_EMPTY,                                              \
-                  SIMDPP_DETAIL_RETURN_TOKEN                                    \
-                 )()
+#if ~SIMDPP_PP_CONFIG_FLAGS() & SIMDPP_PP_CONFIG_MSVC()
+
+    #define SIMDPP_DETAIL_RETURN_IF_NOT_VOID(R)                                 \
+        SIMDPP_PP_IIF(SIMDPP_PP_PROBE_TO_BOOL(SIMDPP_DETAIL_PROBE_IF_VOID(R)),  \
+                      SIMDPP_PP_EMPTY,                                          \
+                      SIMDPP_DETAIL_RETURN_TOKEN                                \
+                     )()
+#else
+    // The following problems have been worked around on MSVC (see top of the
+    // file):
+    //  - SIMDPP_PP_IIF is expanded two expansions too early
+    //  - the result of SIMDPP_DETAIL_PROBE_IF_VOID is not passed back to
+    // SIMDPP_PP_PROBE_TO_BOOL properly
+    //  - the final SIMDPP_PP_IIF is not expanded for some reason.
+
+    #define SIMDPP_DETAIL_RETURN_IF_NOT_VOID(R)                                 \
+        SIMDPP_PP_EXPAND(                                                       \
+            SIMDPP_PP_IIF SIMDPP_PP_EMPTY SIMDPP_PP_EMPTY()()(                  \
+                SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS(SIMDPP_PP_PROBE_TO_BOOL, (SIMDPP_DETAIL_PROBE_IF_VOID(R))),  \
+                SIMDPP_PP_EMPTY,                                                \
+                SIMDPP_DETAIL_RETURN_TOKEN                                      \
+            )()                                                                 \
+        )
+#endif
 
 #define SIMDPP_DETAIL_RETURN_TOKEN() return
 
