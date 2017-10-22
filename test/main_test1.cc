@@ -47,7 +47,7 @@ simdpp::Arch get_arch_from_system(bool is_simulator)
         }
     }
     std::cerr << "Evaluated architecture bit set: " << std::hex
-              << (unsigned) result << "\n";
+              << (unsigned) result << "\n" << std::dec;
     return result;
 }
 

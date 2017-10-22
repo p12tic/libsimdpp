@@ -69,7 +69,7 @@ public:
         ptr_ = &data_.front();
     }
 
-    unsigned size() const { return data_.size(); }
+    size_t size() const { return data_.size(); }
     const T* data() const { return ptr_; }
 
 private:
@@ -518,11 +518,30 @@ void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2, bool expecte
         print_separator(tr.out());
         print_file_info(tr.out(), file, line);
         tr.out() << (expected_equal ? "Vectors not equal:\n" : "Vectors equal:\n");
-        print_vector_diff(tr.out(), GetVectorType<V>::value, V::length, &v1, &v2);
+        print_data_diff(tr.out(), GetElementType<V>::value, V::length, &v1, &v2);
     }
 }
 
 #define TEST_CMP_VEC(TR, V1, V2)    do { test_cmp_vectors(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
 #define TEST_CMPNE_VEC(TR, V1, V2)  do { test_cmp_vectors(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
+
+template<class T>
+inline void test_cmp_equal(TestReporter& tr, const T& a1, const T& a2,
+                           bool expected_equal, unsigned line, const char* file)
+{
+    bool success = expected_equal ? std::memcmp(&a1, &a2, sizeof(a1)) == 0 :
+                                    std::memcmp(&a1, &a2, sizeof(a1)) != 0;
+    tr.add_result(success);
+
+    if (!success) {
+        print_separator(tr.out());
+        print_file_info(tr.out(), file, line);
+        tr.out() << (expected_equal ? "Data not equal:\n" : "Data equal:\n");
+        print_data_diff(tr.out(), GetElementType<T>::value, 1, &a1, &a2);
+    }
+}
+
+#define TEST_EQUAL(TR, V1, V2)      do { test_cmp_equal(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
+#define TEST_NOT_EQUAL(TR, V1, V2)  do { test_cmp_equal(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
 
 #endif

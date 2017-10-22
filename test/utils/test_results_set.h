@@ -13,7 +13,7 @@
 #include <iosfwd>
 #include <cstdint>
 #include "test_reporter.h"
-#include "vector_type.h"
+#include "element_type.h"
 
 class TestResultsSet;
 
@@ -22,8 +22,8 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                             TestReporter& tr);
 
 // Prints two vectors side by side for comparison
-void print_vector_diff(std::ostream& out, unsigned type, unsigned num_elems,
-                       const void* data_a, const void* data_b);
+void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
+                     const void* data_a, const void* data_b);
 
 void print_separator(std::ostream& out);
 void print_file_info(std::ostream& out, const char* file);
@@ -42,7 +42,7 @@ public:
     struct Result {
         static const unsigned num_bytes = 32;
 
-        Result(VectorType atype, unsigned alength, unsigned ael_size,
+        Result(ElementType atype, unsigned alength, unsigned ael_size,
                const char* afile, unsigned aline, unsigned aseq,
                unsigned aprec_ulp, bool afp_zero_eq)
         {
@@ -57,7 +57,7 @@ public:
             data.resize(el_size*length);
         }
 
-        VectorType type;
+        ElementType type;
         unsigned line;
         unsigned seq;
         unsigned prec_ulp;
@@ -80,7 +80,7 @@ public:
     };
 
     /// Stores the results into the results set.
-    Result& push(VectorType type, unsigned length, const char* file, unsigned line);
+    Result& push(ElementType type, unsigned length, const char* file, unsigned line);
 
     /// Sets the allowed error in ULPs. Only meaningful for floating-point data.
     /// Affects all pushed data until the next call to @a unset_precision

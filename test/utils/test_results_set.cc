@@ -24,7 +24,7 @@ TestResultsSet::TestResultsSet(const char* name) :
     reset_seq();
 }
 
-TestResultsSet::Result& TestResultsSet::push(VectorType type, unsigned length,
+TestResultsSet::Result& TestResultsSet::push(ElementType type, unsigned length,
                                              const char* file, unsigned line)
 {
     while (results_.size() <= curr_results_section_)
@@ -175,8 +175,8 @@ const char* vector_type_to_str(unsigned type)
     }
 }
 
-void print_vector_diff(std::ostream& out, unsigned type, unsigned num_elems,
-                       const void* data_a, const void* data_b)
+void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
+                     const void* data_a, const void* data_b)
 {
     out << "type: " << vector_type_to_str(type) << "\n";
     out << "A : ";
@@ -459,7 +459,7 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                 fmt_test_case();
                 fmt_seq(ia.seq);
                 tr.out() << "ERROR: Vectors not equal: \n";
-                print_vector_diff(tr.out(), ia.type, ia.length, ia.d(), ib.d());
+                print_data_diff(tr.out(), ia.type, ia.length, ia.d(), ib.d());
                 fmt_prec(prec);
                 print_separator(tr.out());
                 tr.add_result(false);

@@ -88,7 +88,8 @@ SIMDPP_MAKE_DISPATCHER_VOID3(main_test_function, TestResults&, TestReporter&, co
 std::vector<simdpp::detail::FnVersion> get_test_archs()
 {
     simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {};
-    SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, void(*)(TestResults&, TestReporter&, const TestOptions&))
+    using FunPtr = void(*)(TestResults&, TestReporter&, const TestOptions&);
+    SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, FunPtr)
     std::vector<simdpp::detail::FnVersion> result;
     result.assign(versions, versions+SIMDPP_DISPATCH_MAX_ARCHS);
     return result;

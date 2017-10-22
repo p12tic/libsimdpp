@@ -9,6 +9,7 @@
 #define LIBSIMDPP_SIMD_SETUP_ARCH_H
 
 #include <simdpp/detail/preprocessor.h>
+#include <simdpp/detail/preprocessor/stringize.hpp>
 
 // Set up macros for current architecture. Note that this file may be included
 // multiple times, more information on the caveats are within the file.
@@ -218,6 +219,12 @@
     SIMDPP_NS_ID_ALTIVEC, SIMDPP_NS_ID_VSX_206, SIMDPP_NS_ID_VSX_207,       \
     SIMDPP_NS_ID_MSA)
 
+#define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_ARCH_NAMESPACE
+#define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 0
+#include <simdpp/dispatch/preprocess_single_compile_arch.h>
+#undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+#undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
 // Include headers relevant for the enabled instruction sets.
 #if SIMDPP_USE_SSE2
     #include <xmmintrin.h>
@@ -324,7 +331,7 @@
 /** @def SIMDPP_ARCH_NAME
     Usable in contexts where a string is required
 */
-#define SIMDPP_ARCH_NAME SIMDPP_STRINGIFY(SIMDPP_ARCH_NAMESPACE)
+#define SIMDPP_ARCH_NAME SIMDPP_PP_STRINGIZE(SIMDPP_ARCH_NAMESPACE)
 
 // misc macros
 #if __GNUC__

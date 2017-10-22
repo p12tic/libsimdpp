@@ -15,7 +15,12 @@
     #error "This file must be included through simd.h"
 #endif
 
+// We rely on setup_arch.h being included before this file to undefine
+// all SIMDPP_ARCH_* macros
+#include <simdpp/setup_arch.h>
+
 #if SIMDPP_EMIT_DISPATCHER
+#include <simdpp/detail/preprocessor/punctuation/remove_parens.hpp>
 
 #define SIMDPP_DISPATCH_MAX_ARCHS 15
 
@@ -144,15 +149,26 @@
         SIMDPP_DISPATCH_1_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_1_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_1_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_1_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[1-1] = SIMDPP_DISPATCH_1_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_1_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_1_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[1-1] = ::simdpp::SIMDPP_DISPATCH_1_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_1_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_1_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_1_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_1_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_1_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH2
@@ -279,15 +295,26 @@
         SIMDPP_DISPATCH_2_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_2_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_2_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_2_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[2-1] = SIMDPP_DISPATCH_2_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_2_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_2_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[2-1] = ::simdpp::SIMDPP_DISPATCH_2_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_2_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_2_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_2_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_2_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_2_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH3
@@ -414,15 +441,26 @@
         SIMDPP_DISPATCH_3_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_3_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_3_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_3_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[3-1] = SIMDPP_DISPATCH_3_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_3_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_3_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[3-1] = ::simdpp::SIMDPP_DISPATCH_3_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_3_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_3_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_3_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_3_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_3_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH4
@@ -549,15 +587,26 @@
         SIMDPP_DISPATCH_4_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_4_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_4_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_4_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[4-1] = SIMDPP_DISPATCH_4_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_4_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_4_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[4-1] = ::simdpp::SIMDPP_DISPATCH_4_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_4_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_4_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_4_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_4_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_4_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH5
@@ -684,15 +733,26 @@
         SIMDPP_DISPATCH_5_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_5_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_5_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_5_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[5-1] = SIMDPP_DISPATCH_5_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_5_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_5_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[5-1] = ::simdpp::SIMDPP_DISPATCH_5_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_5_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_5_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_5_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_5_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_5_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH6
@@ -819,15 +879,26 @@
         SIMDPP_DISPATCH_6_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_6_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_6_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_6_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[6-1] = SIMDPP_DISPATCH_6_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_6_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_6_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[6-1] = ::simdpp::SIMDPP_DISPATCH_6_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_6_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_6_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_6_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_6_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_6_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH7
@@ -954,15 +1025,26 @@
         SIMDPP_DISPATCH_7_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_7_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_7_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_7_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[7-1] = SIMDPP_DISPATCH_7_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_7_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_7_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[7-1] = ::simdpp::SIMDPP_DISPATCH_7_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_7_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_7_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_7_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_7_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_7_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH8
@@ -1089,15 +1171,26 @@
         SIMDPP_DISPATCH_8_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_8_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_8_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_8_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[8-1] = SIMDPP_DISPATCH_8_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_8_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_8_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[8-1] = ::simdpp::SIMDPP_DISPATCH_8_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_8_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_8_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_8_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_8_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_8_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH9
@@ -1224,15 +1317,26 @@
         SIMDPP_DISPATCH_9_NS_ID_VSX_206,                                      \
         SIMDPP_DISPATCH_9_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_9_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_9_FN_REGISTER(ARRAY,NAME,FUN_TYPE)                \
-        ARRAY[9-1] = SIMDPP_DISPATCH_9_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_9_FN_DECLARE(NAME,FUN_TYPE)                       \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_9_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[9-1] = ::simdpp::SIMDPP_DISPATCH_9_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_9_FN_DECLARE(SIGNATURE)                           \
         namespace SIMDPP_DISPATCH_9_NAMESPACE {                               \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_9_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_9_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_9_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH10
@@ -1359,15 +1463,26 @@
         SIMDPP_DISPATCH_10_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_10_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_10_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_10_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
-        ARRAY[10-1] = SIMDPP_DISPATCH_10_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_10_FN_DECLARE(NAME,FUN_TYPE)                      \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_10_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[10-1] = ::simdpp::SIMDPP_DISPATCH_10_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_10_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_10_NAMESPACE {                              \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_10_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_10_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_10_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH11
@@ -1494,15 +1609,26 @@
         SIMDPP_DISPATCH_11_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_11_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_11_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_11_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
-        ARRAY[11-1] = SIMDPP_DISPATCH_11_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_11_FN_DECLARE(NAME,FUN_TYPE)                      \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_11_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[11-1] = ::simdpp::SIMDPP_DISPATCH_11_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_11_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_11_NAMESPACE {                              \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_11_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_11_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_11_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH12
@@ -1629,15 +1755,26 @@
         SIMDPP_DISPATCH_12_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_12_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_12_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_12_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
-        ARRAY[12-1] = SIMDPP_DISPATCH_12_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_12_FN_DECLARE(NAME,FUN_TYPE)                      \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_12_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[12-1] = ::simdpp::SIMDPP_DISPATCH_12_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_12_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_12_NAMESPACE {                              \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_12_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_12_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_12_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH13
@@ -1764,15 +1901,26 @@
         SIMDPP_DISPATCH_13_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_13_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_13_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_13_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
-        ARRAY[13-1] = SIMDPP_DISPATCH_13_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_13_FN_DECLARE(NAME,FUN_TYPE)                      \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_13_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[13-1] = ::simdpp::SIMDPP_DISPATCH_13_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_13_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_13_NAMESPACE {                              \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_13_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_13_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_13_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH14
@@ -1899,15 +2047,26 @@
         SIMDPP_DISPATCH_14_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_14_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_14_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_14_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
-        ARRAY[14-1] = SIMDPP_DISPATCH_14_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_14_FN_DECLARE(NAME,FUN_TYPE)                      \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_14_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[14-1] = ::simdpp::SIMDPP_DISPATCH_14_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_14_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_14_NAMESPACE {                              \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_14_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_14_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_14_FN_DECLARE(SIGNATURE)
 #endif
 
 #ifdef SIMDPP_DISPATCH_ARCH15
@@ -2034,34 +2193,45 @@
         SIMDPP_DISPATCH_15_NS_ID_VSX_206,                                     \
         SIMDPP_DISPATCH_15_NS_ID_VSX_207)
 
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_15_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
+
     #define SIMDPP_DISPATCH_15_FN_REGISTER(ARRAY,NAME,FUN_TYPE)               \
-        ARRAY[15-1] = SIMDPP_DISPATCH_15_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_15_FN_DECLARE(NAME,FUN_TYPE)                      \
+        {   /* the following will fail if the overload is not available */    \
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_15_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME);\
+            ARRAY[15-1] = ::simdpp::SIMDPP_DISPATCH_15_NAMESPACE::detail::create_fn_version(fun_ptr);\
+        }
+
+    #define SIMDPP_DISPATCH_15_FN_DECLARE(SIGNATURE)                          \
         namespace SIMDPP_DISPATCH_15_NAMESPACE {                              \
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                               \
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_15_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_15_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_15_FN_DECLARE(SIGNATURE)
 #endif
 
 
-#define SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME,FUN_TYPE)                    \
-    SIMDPP_DISPATCH_1_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_2_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_3_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_4_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_5_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_6_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_7_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_8_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_9_FN_DECLARE(NAME,FUN_TYPE)                               \
-    SIMDPP_DISPATCH_10_FN_DECLARE(NAME,FUN_TYPE)                              \
-    SIMDPP_DISPATCH_11_FN_DECLARE(NAME,FUN_TYPE)                              \
-    SIMDPP_DISPATCH_12_FN_DECLARE(NAME,FUN_TYPE)                              \
-    SIMDPP_DISPATCH_13_FN_DECLARE(NAME,FUN_TYPE)                              \
-    SIMDPP_DISPATCH_14_FN_DECLARE(NAME,FUN_TYPE)                              \
-    SIMDPP_DISPATCH_15_FN_DECLARE(NAME,FUN_TYPE)                              \
+#define SIMDPP_DISPATCH_DECLARE_FUNCTIONS(SIGNATURE)                        \
+        SIMDPP_DISPATCH_1_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_2_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_3_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_4_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_5_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_6_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_7_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_8_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_9_FN_DECLARE(SIGNATURE)                               \
+        SIMDPP_DISPATCH_10_FN_DECLARE(SIGNATURE)                              \
+        SIMDPP_DISPATCH_11_FN_DECLARE(SIGNATURE)                              \
+        SIMDPP_DISPATCH_12_FN_DECLARE(SIGNATURE)                              \
+        SIMDPP_DISPATCH_13_FN_DECLARE(SIGNATURE)                              \
+        SIMDPP_DISPATCH_14_FN_DECLARE(SIGNATURE)                              \
+        SIMDPP_DISPATCH_15_FN_DECLARE(SIGNATURE)                              \
 
 
 #define SIMDPP_DISPATCH_COLLECT_FUNCTIONS(ARRAY,NAME,FUN_TYPE)              \

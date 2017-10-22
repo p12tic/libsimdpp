@@ -199,11 +199,10 @@
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher
     mechanism is not needed, the user can define the @c SIMDPP_NO_DISPATCHER.
-    On cxx98 branch, this results in the library not depending on boost.
 */
 #ifndef SIMDPP_NO_DISPATCHER
-#include <simdpp/this_compile_arch.h>
 #include <simdpp/dispatch/dispatcher.h>
+#include <simdpp/dispatch/make_dispatcher.h>
 #endif
 
 namespace simdpp {
