@@ -69,7 +69,7 @@ public:
         ptr_ = &data_.front();
     }
 
-    unsigned size() const { return data_.size(); }
+    size_t size() const { return data_.size(); }
     const T* data() const { return ptr_; }
 
 private:
