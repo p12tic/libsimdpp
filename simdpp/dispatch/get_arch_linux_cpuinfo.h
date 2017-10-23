@@ -1,4 +1,4 @@
-/*  Copyright (C) 2013  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2017  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -8,7 +8,7 @@
 #ifndef LIBSIMDPP_DISPATCH_GET_ARCH_LINUX_CPUINFO_H
 #define LIBSIMDPP_DISPATCH_GET_ARCH_LINUX_CPUINFO_H
 
-#if __linux__ && (__arm__ || __i386__ || __amd64__)
+#if __linux__ && (__arm__ || __aarch64__ || __i386__ || __amd64__)
 #define SIMDPP_HAS_GET_ARCH_LINUX_CPUINFO 1
 
 #include <algorithm>
@@ -36,6 +36,10 @@ inline Arch get_arch_linux_cpuinfo()
 #if __arm__
     ident = "Features\t";
     features["neon"] = Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP;
+
+#elif __aarch64__
+    ident = "Features\t";
+    features["asimd"] = Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP;
 
 #elif __i386__ || __amd64__
     Arch a_sse2 = Arch::X86_SSE2;
