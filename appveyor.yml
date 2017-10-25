@@ -29,7 +29,7 @@ clone_folder: c:\projects\libsimdpp
 
 before_build:
 - cd c:\projects\libsimdpp
-- rmdir build /s
+- rmdir build /s /q && exit 0
 - mkdir build
 - cd build
 - cmake ..
