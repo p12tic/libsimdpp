@@ -49,16 +49,26 @@ template<class V> struct GetElementType {
                                   sizeof(V) == 2 ? TYPE_UINT16 :
                                   sizeof(V) == 4 ? TYPE_UINT32 : TYPE_UINT64;
 };
-template<unsigned N, class E> struct GetElementType<simdpp::uint8<N,E>> { static const unsigned value = TYPE_UINT8; };
-template<unsigned N, class E> struct GetElementType<simdpp::int8<N,E>> { static const unsigned value = TYPE_INT8; };
-template<unsigned N, class E> struct GetElementType<simdpp::uint16<N,E>> { static const unsigned value = TYPE_UINT16; };
-template<unsigned N, class E> struct GetElementType<simdpp::int16<N,E>> { static const unsigned value = TYPE_INT16; };
-template<unsigned N, class E> struct GetElementType<simdpp::uint32<N,E>> { static const unsigned value = TYPE_UINT32; };
-template<unsigned N, class E> struct GetElementType<simdpp::int32<N,E>> { static const unsigned value = TYPE_INT32; };
-template<unsigned N, class E> struct GetElementType<simdpp::float32<N,E>> { static const unsigned value = TYPE_FLOAT32; };
-template<unsigned N, class E> struct GetElementType<simdpp::uint64<N,E>> { static const unsigned value = TYPE_UINT64; };
-template<unsigned N, class E> struct GetElementType<simdpp::int64<N,E>> { static const unsigned value = TYPE_INT64; };
-template<unsigned N, class E> struct GetElementType<simdpp::float64<N,E>> { static const unsigned value = TYPE_FLOAT64; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::uint8<N,E>> { static const unsigned value = TYPE_UINT8; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::int8<N,E>> { static const unsigned value = TYPE_INT8; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::uint16<N,E>> { static const unsigned value = TYPE_UINT16; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::int16<N,E>> { static const unsigned value = TYPE_INT16; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::uint32<N,E>> { static const unsigned value = TYPE_UINT32; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::int32<N,E>> { static const unsigned value = TYPE_INT32; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::float32<N,E>> { static const unsigned value = TYPE_FLOAT32; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::uint64<N,E>> { static const unsigned value = TYPE_UINT64; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::int64<N,E>> { static const unsigned value = TYPE_INT64; };
+template<unsigned N, class E>
+struct GetElementType<simdpp::float64<N,E>> { static const unsigned value = TYPE_FLOAT64; };
 
 template<> struct GetElementType<uint8_t>  { static const unsigned value = TYPE_UINT8; };
 template<> struct GetElementType<int8_t>   { static const unsigned value = TYPE_INT8; };

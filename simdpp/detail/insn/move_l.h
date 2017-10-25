@@ -145,9 +145,12 @@ uint32<16> i_move4_l(const uint32<16>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_epi32(0x7777, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 2, 1)));
-    case 2: return _mm512_maskz_shuffle_epi32(0x3333, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 2)));
-    case 3: return _mm512_maskz_shuffle_epi32(0x1111, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 3)));
+    case 1: return _mm512_maskz_shuffle_epi32(0x7777, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 2, 1)));
+    case 2: return _mm512_maskz_shuffle_epi32(0x3333, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 2)));
+    case 3: return _mm512_maskz_shuffle_epi32(0x1111, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(3, 3, 3, 3)));
     case 4: return make_zero();
     }
 }
@@ -224,9 +227,12 @@ float32<16> i_move4_l(const float32<16>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_ps(0x7777, a.native(), a.native(), _MM_SHUFFLE(3, 3, 2, 1));
-    case 2: return _mm512_maskz_shuffle_ps(0x3333, a.native(), a.native(), _MM_SHUFFLE(3, 3, 3, 2));
-    case 3: return _mm512_maskz_shuffle_ps(0x1111, a.native(), a.native(), _MM_SHUFFLE(3, 3, 3, 3));
+    case 1: return _mm512_maskz_shuffle_ps(0x7777, a.native(), a.native(),
+                                           _MM_SHUFFLE(3, 3, 2, 1));
+    case 2: return _mm512_maskz_shuffle_ps(0x3333, a.native(), a.native(),
+                                           _MM_SHUFFLE(3, 3, 3, 2));
+    case 3: return _mm512_maskz_shuffle_ps(0x1111, a.native(), a.native(),
+                                           _MM_SHUFFLE(3, 3, 3, 3));
     case 4: return make_zero();
     }
 }
@@ -267,7 +273,8 @@ float64<8> i_move2_l(const float64<8>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_pd(0x55, a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_4(1, 1));
+    case 1: return _mm512_maskz_shuffle_pd(0x55, a.native(), a.native(),
+                                           SIMDPP_SHUFFLE_MASK_2x2_4(1, 1));
     case 2: return make_zero();
     }
 }

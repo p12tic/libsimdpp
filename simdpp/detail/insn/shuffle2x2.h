@@ -42,9 +42,11 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
     return r;
 #elif SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_ps(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
+        return _mm_shuffle_ps(a.native(), a.native(),
+                              SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_ps(b.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
+        return _mm_shuffle_ps(b.native(), b.native(),
+                              SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
 #if SIMDPP_USE_SSE4_1
     } else if (s0 == 0 && s1 == 3) {
         return _mm_blend_ps(a.native(), b.native(), 0xa);
@@ -52,10 +54,12 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
         return _mm_blend_ps(b.native(), a.native(), 0xa);
 #endif
     } else if (s0 < 2) { // s1 >= 2
-        __m128 t = _mm_shuffle_ps(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
+        __m128 t = _mm_shuffle_ps(a.native(), b.native(),
+                                  SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     } else { // s0 >= 2, s1 < 2
-        __m128 t = _mm_shuffle_ps(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
+        __m128 t = _mm_shuffle_ps(b.native(), a.native(),
+                                  SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     }
 #elif SIMDPP_USE_NEON
@@ -89,10 +93,12 @@ float32<8> i_shuffle2x2(const float32<8>& a, const float32<8>& b)
     } else if (s0 == 2 && s1 == 1) {
         return _mm256_blend_ps(b.native(), a.native(), 0xaa);
     } else if (s0 < 2) { // s1 >= 2
-        __m256 t = _mm256_shuffle_ps(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
+        __m256 t = _mm256_shuffle_ps(a.native(), b.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     } else { // s0 >= 2, s1 < 2
-        __m256 t = _mm256_shuffle_ps(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
+        __m256 t = _mm256_shuffle_ps(b.native(), a.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     }
 }
@@ -112,10 +118,12 @@ float32<16> i_shuffle2x2(const float32<16>& a, const float32<16>& b)
     } else if (s0 == 2 && s1 == 1) {
         return _mm512_mask_blend_ps(0xaaaa, b.native(), a.native());
     } else if (s0 < 2) { // s1 >= 2
-        __m512 t = _mm512_shuffle_ps(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
+        __m512 t = _mm512_shuffle_ps(a.native(), b.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     } else { // s0 >= 2, s1 < 2
-        __m512 t = _mm512_shuffle_ps(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
+        __m512 t = _mm512_shuffle_ps(b.native(), a.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0));
     }
 }
@@ -136,9 +144,11 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_pd(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
+        return _mm_shuffle_pd(a.native(), a.native(),
+                              SIMDPP_SHUFFLE_MASK_2x2(s0, s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_pd(b.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2(s0-2,s1-2));
+        return _mm_shuffle_pd(b.native(), b.native(),
+                              SIMDPP_SHUFFLE_MASK_2x2(s0-2,s1-2));
 #if SIMDPP_USE_SSE4_1
     } else if (s0 == 0 && s1 == 3) {
         return _mm_blend_pd(a.native(), b.native(), 0x2);
@@ -146,9 +156,11 @@ float64<2> i_shuffle2x2(const float64<2>& a, const float64<2>& b)
         return _mm_blend_pd(b.native(), a.native(), 0x2);
 #endif
     } else if (s0 < 2) { // s1 >= 2
-        return _mm_shuffle_pd(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+        return _mm_shuffle_pd(a.native(), b.native(),
+                              SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
     } else { // s0 >= 2, s1 < 2
-        return _mm_shuffle_pd(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+        return _mm_shuffle_pd(b.native(), a.native(),
+                              SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
     }
 #elif SIMDPP_USE_NEON64
     return (float64<2>)detail::neon_shuffle_int64x2::shuffle2x2<s0, s1>(uint64<2>(a), uint64<2>(b));
@@ -184,17 +196,21 @@ float64<4> i_shuffle2x2(const float64<4>& a, const float64<4>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm256_shuffle_pd(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1));
+        return _mm256_shuffle_pd(a.native(), a.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm256_shuffle_pd(b.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s0-2,s1-2));
+        return _mm256_shuffle_pd(b.native(), b.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_2(s0-2,s1-2));
     } else if (s0 == 0 && s1 == 3) {
         return _mm256_blend_pd(a.native(), b.native(), 0xa);
     } else if (s0 == 2 && s1 == 1) {
         return _mm256_blend_pd(b.native(), a.native(), 0xa);
     } else if (s0 < 2) { // s1 >= 2
-        return _mm256_shuffle_pd(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1-2));
+        return _mm256_shuffle_pd(a.native(), b.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_2(s0,s1-2));
     } else { // s0 >= 2, s1 < 2
-        return _mm256_shuffle_pd(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-2));
+        return _mm256_shuffle_pd(b.native(), a.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-2));
     }
 }
 #endif
@@ -205,17 +221,21 @@ float64<8> i_shuffle2x2(const float64<8>& a, const float64<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_shuffle_pd(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_4(s0,s1));
+        return _mm512_shuffle_pd(a.native(), a.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_4(s0,s1));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_shuffle_pd(b.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2_4(s0-2,s1-2));
+        return _mm512_shuffle_pd(b.native(), b.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_4(s0-2,s1-2));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_pd(0xaa, a.native(), b.native());
     } else if (s0 == 2 && s1 == 1) {
         return _mm512_mask_blend_pd(0xaa, b.native(), a.native());
     } else if (s0 < 2) { // s1 >= 2
-        return _mm512_shuffle_pd(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2_4(s0,s1-2));
+        return _mm512_shuffle_pd(a.native(), b.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_4(s0,s1-2));
     } else { // s0 >= 2, s1 < 2
-        return _mm512_shuffle_pd(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_4(s1,s0-2));
+        return _mm512_shuffle_pd(b.native(), a.native(),
+                                 SIMDPP_SHUFFLE_MASK_2x2_4(s1,s0-2));
     }
 }
 #endif
@@ -241,9 +261,11 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
     return r;
 #elif SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_epi32(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2);
+        return _mm_shuffle_epi32(a.native(), mask);
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_epi32(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1);
+        return _mm_shuffle_epi32(b.native(), mask);
 #if SIMDPP_USE_SSE4_1
     } else if (s0 == 0 && s1 == 3) {
         return _mm_blend_epi16(a.native(), b.native(), 0xcc);
@@ -252,11 +274,13 @@ uint32<4> i_shuffle2x2(const uint32<4>& a, const uint32<4>& b)
 #endif
     } else if (s0 < 2) { // s1 >= 2
         float32<4> fa, fb; fa = a, fb = b;
-        __m128 t = _mm_shuffle_ps(fa.native(), fb.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
+        __m128 t = _mm_shuffle_ps(fa.native(), fb.native(),
+                                  SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<4> fa, fb; fa = a, fb = b;
-        __m128 t = _mm_shuffle_ps(fb.native(), fa.native(), SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
+        __m128 t = _mm_shuffle_ps(fb.native(), fa.native(),
+                                  SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm_castps_si128(_mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0)));
     }
 #elif SIMDPP_USE_NEON
@@ -283,20 +307,24 @@ uint32<8> i_shuffle2x2(const uint32<8>& a, const uint32<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm256_shuffle_epi32(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2);
+        return _mm256_shuffle_epi32(a.native(), mask);
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm256_shuffle_epi32(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1);
+        return _mm256_shuffle_epi32(b.native(), mask);
     } else if (s0 == 0 && s1 == 3) {
         return _mm256_blend_epi32(a.native(), b.native(), 0xa);
     } else if (s0 == 2 && s1 == 1) {
         return _mm256_blend_epi32(b.native(), a.native(), 0xa);
     } else if (s0 < 2) { // s1 >= 2
         float32<8> fa, fb; fa = a, fb = b;
-        __m256 t = _mm256_shuffle_ps(fa.native(), fb.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
+        __m256 t = _mm256_shuffle_ps(fa.native(), fb.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<8> fa, fb; fa = a, fb = b;
-        __m256 t = _mm256_shuffle_ps(fb.native(), fa.native(), SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
+        __m256 t = _mm256_shuffle_ps(fb.native(), fa.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm256_castps_si256(_mm256_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
@@ -308,20 +336,24 @@ uint32<16> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_shuffle_epi32(a.native(), _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2)));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2);
+        return _mm512_shuffle_epi32(a.native(), _MM_PERM_ENUM(mask));
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_shuffle_epi32(b.native(), _MM_PERM_ENUM(SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1)));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1);
+        return _mm512_shuffle_epi32(b.native(), _MM_PERM_ENUM(mask));
     } else if (s0 == 0 && s1 == 3) {
         return _mm512_mask_blend_epi32(0xaaaa, a.native(), b.native());
     } else if (s0 == 2 && s1 == 1) {
         return _mm512_mask_blend_epi32(0xaaaa, b.native(), a.native());
     } else if (s0 < 2) { // s1 >= 2
         float32<16> fa, fb; fa = a; fb = b;
-        __m512 t = _mm512_shuffle_ps(fa.native(), fb.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
+        __m512 t = _mm512_shuffle_ps(fa.native(), fb.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s0,s0+1,s1-2,s1-1));
         return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     } else { // s0 >= 2, s1 < 2
         float32<16> fa, fb; fa = a; fb = b;
-        __m512 t = _mm512_shuffle_ps(fb.native(), fa.native(), SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
+        __m512 t = _mm512_shuffle_ps(fb.native(), fa.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(s1,s1+1,s0-2,s0-1));
         return _mm512_castps_si512(_mm512_permute_ps(t, _MM_SHUFFLE(3,1,2,0)));
     }
 }
@@ -341,9 +373,11 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
 #if SIMDPP_USE_SSE2
     if (s0 < 2 && s1 < 2) {
-        return _mm_shuffle_epi32(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1);
+        return _mm_shuffle_epi32(a.native(), mask);
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm_shuffle_epi32(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1);
+        return _mm_shuffle_epi32(b.native(), mask);
     } else if (s0 == 0 && s1 == 2) {
         return _mm_unpacklo_epi64(a.native(), b.native());
     } else if (s0 == 2 && s1 == 0) {
@@ -367,11 +401,13 @@ uint64<2> i_shuffle2x2(const uint64<2>& a, const uint64<2>& b)
     } else if (s0 < 2) { // s1 >= 2
         __m128d na = _mm_castsi128_pd(a.native());
         __m128d nb = _mm_castsi128_pd(b.native());
-        return _mm_castpd_si128(_mm_shuffle_pd(na, nb, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2)));
+        __m128d res = _mm_shuffle_pd(na, nb, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-2));
+        return _mm_castpd_si128(res);
     } else { // s0 >= 2, s1 < 2
         __m128d na = _mm_castsi128_pd(a.native());
         __m128d nb = _mm_castsi128_pd(b.native());
-        return _mm_castpd_si128(_mm_shuffle_pd(nb, na, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2)));
+        __m128d res = _mm_shuffle_pd(nb, na, SIMDPP_SHUFFLE_MASK_2x2(s1, s0-2));
+        return _mm_castpd_si128(res);
     }
 #elif SIMDPP_USE_NEON
     return detail::neon_shuffle_int64x2::shuffle2x2<s0, s1>(a, b);
@@ -408,9 +444,11 @@ uint64<4> i_shuffle2x2(const uint64<4>& a, const uint64<4>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm256_shuffle_epi32(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1);
+        return _mm256_shuffle_epi32(a.native(), mask);
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm256_shuffle_epi32(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0*2, s0*2+1, s1*2, s1*2+1);
+        return _mm256_shuffle_epi32(b.native(), mask);
     } else if (s0 == 0 && s1 == 2) {
         return _mm256_unpacklo_epi64(a.native(), b.native());
     } else if (s0 == 2 && s1 == 0) {
@@ -437,9 +475,11 @@ uint64<8> i_shuffle2x2(const uint64<8>& a, const uint64<8>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
     if (s0 < 2 && s1 < 2) {
-        return _mm512_permutex_epi64(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0,s1,s0+2,s1+2);
+        return _mm512_permutex_epi64(a.native(), mask);
     } else if (s0 >= 2 && s1 >= 2) {
-        return _mm512_permutex_epi64(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1));
+        const unsigned mask = SIMDPP_SHUFFLE_MASK_4x4(s0-2,s1-2,s0,s1);
+        return _mm512_permutex_epi64(b.native(), mask);
     } else if (s0 == 0 && s1 == 2) {
         return _mm512_unpacklo_epi64(a.native(), b.native());
     } else if (s0 == 2 && s1 == 0) {
@@ -455,11 +495,13 @@ uint64<8> i_shuffle2x2(const uint64<8>& a, const uint64<8>& b)
     } else if (s0 < 2) { // s1 >= 2
         __m512d na = _mm512_castsi512_pd(a.native());
         __m512d nb = _mm512_castsi512_pd(b.native());
-        return _mm512_castpd_si512(_mm512_shuffle_pd(na, nb, SIMDPP_SHUFFLE_MASK_2x2_4(s0, s1-2)));
+        __m512d res = _mm512_shuffle_pd(na, nb, SIMDPP_SHUFFLE_MASK_2x2_4(s0, s1-2));
+        return _mm512_castpd_si512(res);
     } else { // s0 >= 2, s1 < 2
         __m512d na = _mm512_castsi512_pd(a.native());
         __m512d nb = _mm512_castsi512_pd(b.native());
-        return _mm512_castpd_si512(_mm512_shuffle_pd(nb, na, SIMDPP_SHUFFLE_MASK_2x2_4(s1, s0-2)));
+        __m512d res = _mm512_shuffle_pd(nb, na, SIMDPP_SHUFFLE_MASK_2x2_4(s1, s0-2));
+        return _mm512_castpd_si512(res);
     }
     /* GCC BUG
     } else if (s0 == 1 && s1 == 2) {

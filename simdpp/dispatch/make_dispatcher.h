@@ -247,7 +247,9 @@
     #define SIMDPP_DETAIL_RETURN_IF_NOT_VOID(R)                                 \
         SIMDPP_PP_EXPAND(                                                       \
             SIMDPP_PP_IIF SIMDPP_PP_EMPTY SIMDPP_PP_EMPTY()()(                  \
-                SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS(SIMDPP_PP_PROBE_TO_BOOL, (SIMDPP_DETAIL_PROBE_IF_VOID(R))),  \
+                SIMDPP_DETAIL_MSVC_DEFER_MACRO_ARGS(                            \
+                    SIMDPP_PP_PROBE_TO_BOOL, (SIMDPP_DETAIL_PROBE_IF_VOID(R))   \
+                ),                                                              \
                 SIMDPP_PP_EMPTY,                                                \
                 SIMDPP_DETAIL_RETURN_TOKEN                                      \
             )()                                                                 \

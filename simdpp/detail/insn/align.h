@@ -280,14 +280,18 @@ float32x4 i_align4(const float32x4& lower, const float32x4& upper)
     case 0: return lower;
 #if SIMDPP_USE_SSSE3
     case 1:
-    case 3: return _mm_castsi128_ps(_mm_alignr_epi8(_mm_castps_si128(upper.native()),
-                                                    _mm_castps_si128(lower.native()), shift*4));
+    case 3: {
+        __m128i res = _mm_alignr_epi8(_mm_castps_si128(upper.native()),
+                                      _mm_castps_si128(lower.native()), shift*4);
+        return _mm_castsi128_ps(res);
+    }
 #else
     case 1:
     case 3: return bit_or(move4_l<shift>(lower),
                           move4_r<4-shift>(upper));
 #endif
-    case 2: return _mm_shuffle_ps(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
+    case 2: return _mm_shuffle_ps(lower.native(), upper.native(),
+                                  SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
     case 4: return upper;
     }
 #elif SIMDPP_USE_NEON_FLT_SP
@@ -313,13 +317,17 @@ float32<8> i_align4(const float32<8>& lower, const float32<8>& upper)
     case 0: return lower;
 #if SIMDPP_USE_AVX2
     case 1:
-    case 3: return _mm256_castsi256_ps(_mm256_alignr_epi8(_mm256_castps_si256(upper.native()),
-                                                          _mm256_castps_si256(lower.native()), shift*4));
+    case 3: {
+        __m256i res = _mm256_alignr_epi8(_mm256_castps_si256(upper.native()),
+                                         _mm256_castps_si256(lower.native()), shift*4);
+        return _mm256_castsi256_ps(res);
+    }
 #else
     case 1: return shuffle4x2<1,2,3,4>(lower, upper);
     case 3: return shuffle4x2<3,4,5,6>(lower, upper);
 #endif
-    case 2: return _mm256_shuffle_ps(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
+    case 2: return _mm256_shuffle_ps(lower.native(), upper.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
     case 4: return upper;
     }
 }
@@ -333,7 +341,8 @@ float32<16> i_align4(const float32<16>& lower, const float32<16>& upper)
     default:
     case 0: return lower;
     case 1: return shuffle4x2<1,2,3,4>(lower, upper);
-    case 2: return _mm512_shuffle_ps(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
+    case 2: return _mm512_shuffle_ps(lower.native(), upper.native(),
+                                     SIMDPP_SHUFFLE_MASK_4x4(2,3,0,1));
     case 3: return shuffle4x2<3,4,5,6>(lower, upper);
     case 4: return upper;
     }
@@ -355,7 +364,8 @@ float64x2 i_align2(const float64x2& lower, const float64x2& upper)
     switch (shift) {
     default:
     case 0: return lower;
-    case 1: return _mm_shuffle_pd(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_2x2(1, 0));
+    case 1: return _mm_shuffle_pd(lower.native(), upper.native(),
+                                  SIMDPP_SHUFFLE_MASK_2x2(1, 0));
     case 2: return upper;
     }
 #elif SIMDPP_USE_NEON64
@@ -392,7 +402,8 @@ float64<4> i_align2(const float64<4>& lower, const float64<4>& upper)
     switch (shift) {
     default:
     case 0: return lower;
-    case 1: return _mm256_shuffle_pd(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_2x2_2(1, 0));
+    case 1: return _mm256_shuffle_pd(lower.native(), upper.native(),
+                                     SIMDPP_SHUFFLE_MASK_2x2_2(1, 0));
     case 2: return upper;
     }
 }
@@ -405,7 +416,8 @@ float64<8> i_align2(const float64<8>& lower, const float64<8>& upper)
     switch (shift) {
     default:
     case 0: return lower;
-    case 1: return _mm512_shuffle_pd(lower.native(), upper.native(), SIMDPP_SHUFFLE_MASK_2x2_4(1, 0));
+    case 1: return _mm512_shuffle_pd(lower.native(), upper.native(),
+                                     SIMDPP_SHUFFLE_MASK_2x2_4(1, 0));
     case 2: return upper;
     }
 }

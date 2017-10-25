@@ -151,11 +151,13 @@ template<> struct shuffle_impl<6> {
             __m128d a1 = _mm256_castpd256_pd128(a.native());
             __m128d b1 = _mm256_castpd256_pd128(b.native());
             a1 = _mm_shuffle_pd(a1, b1, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-4));
-            __m256d t = _mm256_shuffle_pd(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s2-2,s3-6));
+            __m256d t = _mm256_shuffle_pd(a.native(), b.native(),
+                                          SIMDPP_SHUFFLE_MASK_2x2_2(s2-2,s3-6));
             t = _mm256_insertf128_pd(t, a1, 0);
             return t;
         } else {
-            return _mm256_shuffle_pd(a.native(), b.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s0, s1-4));
+            return _mm256_shuffle_pd(a.native(), b.native(),
+                                     SIMDPP_SHUFFLE_MASK_2x2_2(s0, s1-4));
         }
     }
 };
@@ -169,11 +171,13 @@ template<> struct shuffle_impl<7> {
             __m128d a1 = _mm256_castpd256_pd128(a.native());
             __m128d b1 = _mm256_castpd256_pd128(b.native());
             a1 = _mm_shuffle_pd(b1, a1, SIMDPP_SHUFFLE_MASK_2x2(s1,s0-4));
-            __m256d t = _mm256_shuffle_pd(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s3-2,s2-6));
+            __m256d t = _mm256_shuffle_pd(b.native(), a.native(),
+                                          SIMDPP_SHUFFLE_MASK_2x2_2(s3-2,s2-6));
             t = _mm256_insertf128_pd(t, a1, 0);
             return t;
         } else {
-            return _mm256_shuffle_pd(b.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-4));
+            return _mm256_shuffle_pd(b.native(), a.native(),
+                                     SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-4));
         }
     }
 };

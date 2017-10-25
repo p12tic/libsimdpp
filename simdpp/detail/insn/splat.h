@@ -143,7 +143,8 @@ uint64<8> i_splat(const uint64<8>& ca)
     static_assert(s < 8, "Access out of bounds");
     uint64<8> a = ca;
     a = permute2<s%2,s%2>(a);
-    a = _mm512_shuffle_i64x2(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s/2, s/2, s/2, s/2)); // TODO extract
+    a = _mm512_shuffle_i64x2(a.native(), a.native(),
+                             SIMDPP_SHUFFLE_MASK_4x4(s/2, s/2, s/2, s/2)); // TODO extract
     return a;
 }
 #endif
@@ -174,7 +175,8 @@ float32<16> i_splat(const float32<16>& ca)
     static_assert(s < 16, "Access out of bounds");
     float32<16> a = ca;
     a = permute4<s%4,s%4,s%4,s%4>(a);
-    a = _mm512_shuffle_f32x4(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s/4, s/4, s/4, s/4));
+    a = _mm512_shuffle_f32x4(a.native(), a.native(),
+                             SIMDPP_SHUFFLE_MASK_4x4(s/4, s/4, s/4, s/4));
     return a;
 }
 #endif
@@ -210,7 +212,8 @@ float64<8> i_splat(const float64<8>& ca)
     static_assert(s < 8, "Access out of bounds");
     float64<8> a = ca;
     a = permute2<s%2,s%2>(a);
-    a = _mm512_shuffle_f64x2(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_4x4(s/2, s/2, s/2, s/2)); // TODO extract
+    a = _mm512_shuffle_f64x2(a.native(), a.native(),
+                             SIMDPP_SHUFFLE_MASK_4x4(s/2, s/2, s/2, s/2)); // TODO extract
     return a;
 }
 #endif

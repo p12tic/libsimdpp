@@ -249,7 +249,8 @@ float32x4 i_bit_xor(const float32x4& a, const float32x4& b)
 #elif SIMDPP_USE_SSE2
     return _mm_xor_ps(a.native(), b.native());
 #elif SIMDPP_USE_NEON
-    return vreinterpretq_f32_s32(veorq_s32(vreinterpretq_s32_f32(a.native()), vreinterpretq_s32_f32(b.native())));
+    return vreinterpretq_f32_s32(veorq_s32(vreinterpretq_s32_f32(a.native()),
+                                           vreinterpretq_s32_f32(b.native())));
 #elif SIMDPP_USE_MSA
     return (float32<4>) i_bit_xor(uint8<16>(a), uint8<16>(b));
 #elif SIMDPP_USE_ALTIVEC

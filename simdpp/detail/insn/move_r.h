@@ -132,9 +132,12 @@ uint32<16> i_move4_r(const uint32<16>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_epi32(0xeeee, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(2, 1, 0, 0)));
-    case 2: return _mm512_maskz_shuffle_epi32(0xcccc, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(1, 0, 0, 0)));
-    case 3: return _mm512_maskz_shuffle_epi32(0x8888, a.native(), _MM_PERM_ENUM(_MM_SHUFFLE(0, 0, 0, 0)));
+    case 1: return _mm512_maskz_shuffle_epi32(0xeeee, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(2, 1, 0, 0)));
+    case 2: return _mm512_maskz_shuffle_epi32(0xcccc, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(1, 0, 0, 0)));
+    case 3: return _mm512_maskz_shuffle_epi32(0x8888, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(0, 0, 0, 0)));
     case 4: return make_zero();
     }
 }
@@ -211,9 +214,12 @@ float32<16> i_move4_r(const float32<16>& a)
     switch (shift) {
     default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_ps(0xeeee, a.native(), a.native(), _MM_SHUFFLE(2, 1, 0, 0));
-    case 2: return _mm512_maskz_shuffle_ps(0xcccc, a.native(), a.native(), _MM_SHUFFLE(1, 0, 0, 0));
-    case 3: return _mm512_maskz_shuffle_ps(0x8888, a.native(), a.native(), _MM_SHUFFLE(0, 0, 0, 0));
+    case 1: return _mm512_maskz_shuffle_ps(0xeeee, a.native(), a.native(),
+                                           _MM_SHUFFLE(2, 1, 0, 0));
+    case 2: return _mm512_maskz_shuffle_ps(0xcccc, a.native(), a.native(),
+                                           _MM_SHUFFLE(1, 0, 0, 0));
+    case 3: return _mm512_maskz_shuffle_ps(0x8888, a.native(), a.native(),
+                                           _MM_SHUFFLE(0, 0, 0, 0));
     case 4: return make_zero();
     }
 }

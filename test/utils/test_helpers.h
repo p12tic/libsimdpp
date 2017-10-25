@@ -82,52 +82,62 @@ private:
     method accepts a type enum plus a pointer; the wrapper overloads determine
     the type enum from the type of the supplied argument.
 */
-inline void test_push_internal(TestResultsSet& t, std::int8_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int8_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT8, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint8_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint8_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT8, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::int16_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int16_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT16, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint16_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint16_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT16, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::int32_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int32_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint32_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint32_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::int64_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::int64_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT64, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, std::uint64_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, std::uint64_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT64, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, float data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, float data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_FLOAT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, double data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, double data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_FLOAT64, 1, file, line).set(0, &data);
 }
@@ -145,58 +155,68 @@ void test_push_internal_vec(TestResultsSet::Result& res, const V& data)
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int8<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int8<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT8, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint8<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint8<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT8, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int16<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int16<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT16, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint16<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint16<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT16, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int32<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int32<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT32, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint32<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint32<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT32, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int64<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int64<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT64, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint64<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint64<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT64, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::float32<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::float32<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_FLOAT32, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_FLOAT64, N, file, line), data);
 }
@@ -213,7 +233,8 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const
     OP - operation to apply to the array or arguments
     R - type to cast the object to be pushed to
 */
-#define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __FILE__, __LINE__); }
+#define TEST_PUSH(TC,T,D)                                                       \
+    { test_push_internal((TC), (T)(D), __FILE__, __LINE__); }
 
 #define TEST_ARRAY_PUSH(TC, T, A)                                       \
 {                                                                       \
@@ -339,10 +360,12 @@ enum {
     TemplateTestHelperImpl_InstBatchSize = 30
 };
 
-template<template<class, unsigned> class F, class V, bool large, unsigned i, unsigned limit>
+template<template<class, unsigned> class F,
+         class V, bool large, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl;
 
-template<template<class, unsigned> class F, class V, unsigned i, unsigned limit>
+template<template<class, unsigned> class F,
+         class V, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl<F, V, false, i, limit> {
 
     static void run(TestResultsSet& tc, const V& a)
@@ -503,7 +526,8 @@ struct TemplateTestArrayHelper {
 };
 
 template<class V1, class V2>
-void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2, bool expected_equal,
+void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
+                      bool expected_equal,
                       unsigned line, const char* file)
 {
     using V = typename simdpp::detail::get_expr_nomask<V1>::type;
@@ -522,8 +546,11 @@ void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2, bool expecte
     }
 }
 
-#define TEST_CMP_VEC(TR, V1, V2)    do { test_cmp_vectors(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
-#define TEST_CMPNE_VEC(TR, V1, V2)  do { test_cmp_vectors(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
+#define TEST_CMP_VEC(TR, V1, V2)                                                \
+    do { test_cmp_vectors(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
+
+#define TEST_CMPNE_VEC(TR, V1, V2)                                              \
+    do { test_cmp_vectors(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
 
 template<class T>
 inline void test_cmp_equal(TestReporter& tr, const T& a1, const T& a2,
@@ -541,7 +568,10 @@ inline void test_cmp_equal(TestReporter& tr, const T& a1, const T& a2,
     }
 }
 
-#define TEST_EQUAL(TR, V1, V2)      do { test_cmp_equal(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
-#define TEST_NOT_EQUAL(TR, V1, V2)  do { test_cmp_equal(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
+#define TEST_EQUAL(TR, V1, V2)                                                  \
+    do { test_cmp_equal(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
+
+#define TEST_NOT_EQUAL(TR, V1, V2)                                              \
+    do { test_cmp_equal(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
 
 #endif

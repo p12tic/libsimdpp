@@ -61,7 +61,8 @@ inline void get_cpuid(unsigned level, unsigned subleaf, unsigned* eax, unsigned*
 
 inline uint64_t get_xcr(unsigned level)
 {
-#if (defined (_MSC_FULL_VER) && _MSC_FULL_VER >= 160040000) || (defined (__INTEL_COMPILER) && __INTEL_COMPILER >= 1200) // Microsoft or Intel compiler supporting _xgetbv intrinsic
+#if (defined (_MSC_FULL_VER) && _MSC_FULL_VER >= 160040000) ||                  \
+    (defined (__INTEL_COMPILER) && __INTEL_COMPILER >= 1200)
     return _xgetbv(level);
 #elif defined(__GNUC__) || defined(__clang__)
     uint32_t eax, edx;

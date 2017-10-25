@@ -238,7 +238,8 @@ void i_store_last(char* p, const float32x4& ca, unsigned n)
 #elif SIMDPP_USE_AVX && !SIMDPP_USE_AMD
     static const int32_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
     float32x4 mask = load_u(mask_d + n);
-    _mm_maskstore_ps(reinterpret_cast<float*>(p), _mm_castps_si128(mask.native()), a.native());
+    _mm_maskstore_ps(reinterpret_cast<float*>(p),
+                     _mm_castps_si128(mask.native()), a.native());
 #elif SIMDPP_USE_SSE2
     static const int32_t mask_d[8] = { 0, 0, 0, 0, -1, -1, -1, -1 };
     float32x4 mask = load_u(mask_d + n);
@@ -267,7 +268,8 @@ void i_store_last(char* p, const float32x8& ca, unsigned n)
 
     float32x8 mask = load_u(mask_d + n);
 #if !SIMDPP_USE_AMD
-    _mm256_maskstore_ps(reinterpret_cast<float*>(p), _mm256_castps_si256(mask.native()), a.native());
+    _mm256_maskstore_ps(reinterpret_cast<float*>(p),
+                        _mm256_castps_si256(mask.native()), a.native());
 #else
     float32x8 old = load(p);
     a = blend(a, old, mask);
@@ -319,7 +321,8 @@ void i_store_last(char* p, const float64x4& a, unsigned n)
     float64x4 mask = load_u(mask_d + n);
 
 #if !SIMDPP_USE_AMD
-    _mm256_maskstore_pd(reinterpret_cast<double*>(p), _mm256_castpd_si256(mask.native()), a.native());
+    _mm256_maskstore_pd(reinterpret_cast<double*>(p),
+                        _mm256_castpd_si256(mask.native()), a.native());
 #else
     float64x4 old = load(p);
     a = blend(a, old, mask);
