@@ -1,0 +1,25 @@
+dist: trusty
+sudo: false
+language:
+ - cpp
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env:
+         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+
+    - os: osx
+      osx_image: xcode7.3
+
+before_install:
+- eval "${MATRIX_EVAL}"
+
+script:
+- mkdir build && cd build && cmake .. && make check -j2
