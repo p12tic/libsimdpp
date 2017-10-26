@@ -36,9 +36,9 @@ before_build:
 
 build_script:
 - cd c:\projects\libsimdpp\build
-- cmake -build . -target test1
-- cmake -build . -target test_dispatcher
-- cmake -build . -target test_expr
+- cmake --build . --target test1
+- cmake --build . --target test_dispatcher
+- cmake --build . --target test_expr
 
 
 # Tests configuration
@@ -46,4 +46,4 @@ build_script:
 
 test_script:
 - cd c:\projects\libsimdpp\build
-- cmake -build . -target check
+- cmake --build . --target check
