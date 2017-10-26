@@ -126,7 +126,9 @@ if(SIMDPP_MSVC)
 elseif(SIMDPP_MSVC_INTEL)
     set_target_properties(test1 PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
 else()
-    set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -O1 -g1 -Wall -Wextra")
+    # Xcode clang linker spends very long time in deduplication pass when
+    # linking the test executable unless -fvisibility-inlines-hidden is passed.
+    set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -O1 -g1 -Wall -Wextra -fvisibility-inlines-hidden")
 endif()
 target_compile_definitions(test1 PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
 
@@ -160,7 +162,7 @@ if(SIMDPP_MSVC)
 elseif(SIMDPP_MSVC_INTEL)
     set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
 else()
-    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
+    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall -fvisibility-inlines-hidden")
 endif()
 target_compile_definitions(test_dispatcher PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
 
@@ -220,7 +222,7 @@ if(SIMDPP_MSVC)
 elseif(SIMDPP_MSVC_INTEL)
     set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
 else()
-    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall")
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall -fvisibility-inlines-hidden")
 endif()
 target_compile_definitions(test_expr PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
 
