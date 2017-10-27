@@ -1,0 +1,29 @@
+{{simdpp/title|test_bits_any}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+bool test_bits_any( const any_vec<N,V1>& a );
+}}
+{{dcl end}}
+
+Checks whether any bits are set in the given vector.
+
+===Parameters===
+{{par begin}}
+{{par | a | a vector to analyze}}
+{{par end}}
+
+===Return value===
+{{c|true}} if any bits in the given vector are set, {{c|false}} otherwise.
+
+===Equivalent operation===
+{{source|1=
+r = (bool)(a0 & a1 & a2 & ... & aN)
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc tfun | int/reduce_add | computes the sum of all elements in the vector }}
+{{dsc tfun | int/reduce_or | computes bitwise OR of all elements in the vector }}
+{{dsc end}}

@@ -8,6 +8,7 @@
 {{nv ln | misc/extract }}
 {{nv ln | misc/insert }}
 {{nv ln | misc/splat | splat{{small|(scalar)}}}}
+{{nv ln | misc/test_bits_any }}
 
 {{nv h2 | Casts}}
 {{nv ln | misc/bit_cast }}
