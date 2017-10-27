@@ -28,11 +28,11 @@ void test_bitwise_type(TestResultsSet& tc)
     s.add(make_uint(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff));
     s.add(make_uint(0x00000000, 0x00000000, 0x00000000, 0x00000000));
 
-    TEST_ALL_COMB_HELPER2(tc, V, bit_and, s, V::num_bits / 8);
-    TEST_ALL_COMB_HELPER2(tc, V, bit_andnot, s, V::num_bits / 8);
-    TEST_ALL_COMB_HELPER2(tc, V, bit_or, s, V::num_bits / 8);
-    TEST_ALL_COMB_HELPER2(tc, V, bit_xor, s, V::num_bits / 8);
-    TEST_ALL_COMB_HELPER1(tc, V, bit_not, s, V::num_bits / 8);
+    TEST_ALL_COMB_HELPER2(tc, V, bit_and, s);
+    TEST_ALL_COMB_HELPER2(tc, V, bit_andnot, s);
+    TEST_ALL_COMB_HELPER2(tc, V, bit_or, s);
+    TEST_ALL_COMB_HELPER2(tc, V, bit_xor, s);
+    TEST_ALL_COMB_HELPER1(tc, V, bit_not, s);
 
     TestData<V> sl;
     sl.add(make_uint(0));
