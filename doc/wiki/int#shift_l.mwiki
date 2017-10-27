@@ -11,7 +11,11 @@ Ret<N, _DETAIL_> shift_l( const Vec1<N,E1>& a );
 }}
 {{dcl end}}
 
-Shifts values in the given integer vector left by {{tt|shift}} bits. Zero bits are shifted in. The implementation behaves as if the following set of overloads is provided:
+Shifts values in the given integer vector left by {{tt|shift}} bits. Zero bits are shifted in.
+
+The number of bits to shift must be between {{tt|0}} and {{tt|e_bits - 1}} inclusive, where {{tt|e_bits}} is the number of bits in the element type.
+
+The implementation behaves as if the following set of overloads is provided:
 
 {{vset begin}}
 {{vset2 h | Ret | Vec1 }}
@@ -34,7 +38,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|a << shift}}. The number of bits to shift must be between {{tt|0}} and {{tt|e_bits - 1}} inclusive, where {{tt|e_bits}} is the number of bits in the element type.
+A [[types/expr|vector expression]] evaluating to {{tt|a << shift}}.
 
 ===Equivalent operation===
 {{source|1=
