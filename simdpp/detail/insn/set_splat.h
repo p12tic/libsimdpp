@@ -273,8 +273,7 @@ void i_set_splat(float32x4& v, float v0)
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_ps(v0);        // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON
-    v = vsetq_lane_f32(v0, v.native(), 0);
-    v = splat<0>(v);
+    v = vdupq_n_f32(v0);
 #elif SIMDPP_USE_ALTIVEC
     SIMDPP_ALIGN(16) float rv[4];
     rv[0] = v0;
