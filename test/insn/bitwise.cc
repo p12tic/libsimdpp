@@ -14,7 +14,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, class V32I>
-void test_bitwise_type(TestResultsSet& tc)
+void test_bitwise_type(TestResultsSet& tc, TestReporter& tr)
 {
     using namespace simdpp;
 
@@ -40,12 +40,21 @@ void test_bitwise_type(TestResultsSet& tc)
     sl.add(make_uint(0, 0, 1, 0));
     sl.add(make_uint(0, 1, 0, 0));
     sl.add(make_uint(1, 0, 0, 0));
+    sl.add(make_uint(1, 1, 1, 1));
 
     TEST_PUSH_ARRAY_OP1_T(tc, bool, V, test_bits_any, sl);
+
+    TEST_EQUAL_ALL_COMB_OP2_EXPLICIT(tr, V,
+                                     test_bits_any(bit_and(ARG1, ARG2).eval()),
+                                     test_bits_any(bit_and(ARG1, ARG2)), sl);
+
+    TEST_EQUAL_ALL_COMB_OP2_EXPLICIT(tr, V,
+                                     test_bits_any(bit_andnot(ARG1, ARG2).eval()),
+                                     test_bits_any(bit_andnot(ARG1, ARG2)), sl);
 }
 
 template<unsigned B>
-void test_bitwise_n(TestResultsSet& tc)
+void test_bitwise_n(TestResultsSet& tc, TestReporter& tr)
 {
     using namespace simdpp;
 
@@ -56,12 +65,12 @@ void test_bitwise_n(TestResultsSet& tc)
     using float32_n = float32<B/4>;
     using float64_n = float64<B/8>;
 
-    test_bitwise_type<uint8_n, uint32_n>(tc);
-    test_bitwise_type<uint16_n, uint32_n>(tc);
-    test_bitwise_type<uint32_n, uint32_n>(tc);
-    test_bitwise_type<uint64_n, uint32_n>(tc);
-    test_bitwise_type<float32_n, uint32_n>(tc);
-    test_bitwise_type<float64_n, uint32_n>(tc);
+    test_bitwise_type<uint8_n, uint32_n>(tc, tr);
+    test_bitwise_type<uint16_n, uint32_n>(tc, tr);
+    test_bitwise_type<uint32_n, uint32_n>(tc, tr);
+    test_bitwise_type<uint64_n, uint32_n>(tc, tr);
+    test_bitwise_type<float32_n, uint32_n>(tc, tr);
+    test_bitwise_type<float64_n, uint32_n>(tc, tr);
     tc.reset_seq();
 
     // masks
@@ -124,12 +133,12 @@ void test_bitwise_n(TestResultsSet& tc)
     }
 }
 
-void test_bitwise(TestResults& res)
+void test_bitwise(TestResults& res, TestReporter& tr)
 {
     TestResultsSet& tc = res.new_results_set("bitwise");
-    test_bitwise_n<16>(tc);
-    test_bitwise_n<32>(tc);
-    test_bitwise_n<64>(tc);
+    test_bitwise_n<16>(tc, tr);
+    test_bitwise_n<32>(tc, tr);
+    test_bitwise_n<64>(tc, tr);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

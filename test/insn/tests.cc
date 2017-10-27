@@ -57,7 +57,7 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
     test_memory_store(res, tr);
 
     test_blend(res);
-    test_bitwise(res);
+    test_bitwise(res, tr);
     test_permute_generic(res);
     test_shuffle_generic(res);
     test_shuffle(res);
