@@ -307,10 +307,11 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         __m512d d = _mm512_castps_pd(a); // weed out GCC < 5.0
         _mm512_store_ps((float*)data, a);
 
-        // MSVC 2017 has floating-point functions but not integer
+        // Certain versions of MSVC 2017 miss various subsets of intrinsics
         __m512i b = _mm512_load_epi32((void*)data);
         b = _mm512_or_epi32(b, b);
         _mm512_store_epi32((void*)data, b);
+        a = _mm512_ceil_ps(a);
     }"
 )
 
