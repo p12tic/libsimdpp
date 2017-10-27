@@ -308,15 +308,19 @@ void i_set_splat(float32<16>& v, float v0)
 template<unsigned N> SIMDPP_INL
 void i_set_splat(float32<N>& v, float v0)
 {
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
     // GCC thinks tv is not initialized
     float32v tv;
     i_set_splat(tv, v0);
     for (unsigned i = 0; i < v.vec_length; ++i) {
         v.vec(i) = tv;
     }
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
+#endif
 }
 
 // -----------------------------------------------------------------------------
@@ -376,13 +380,17 @@ void i_set_splat(float64<N>& v, double v0)
 template<class V, class VE> SIMDPP_INL
 V i_splat_any(const VE& x)
 {
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
     // GCC thinks r is not initialized
     typename detail::remove_sign<V>::type r;
     insn::i_set_splat(r, x);
     return V(r);
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
+#endif
 }
 
 } // namespace insn
