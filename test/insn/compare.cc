@@ -14,11 +14,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 #define TEST_COMPARE_TESTER_HELPER(TC, T, L, R)                     \
 {                                                                   \
-    TEST_ARRAY_HELPER2(TC, T, cmp_eq, L, R);                        \
-    TEST_ARRAY_HELPER2(TC, T, cmp_lt, L, R);                        \
-    TEST_ARRAY_HELPER2(TC, T, cmp_gt, L, R);                        \
-    TEST_ARRAY_HELPER2(TC, T, cmp_ge, L, R);                        \
-    TEST_ARRAY_HELPER2(TC, T, cmp_le, L, R);                        \
+    TEST_PUSH_ARRAY_OP2(TC, T, cmp_eq, L, R);                        \
+    TEST_PUSH_ARRAY_OP2(TC, T, cmp_lt, L, R);                        \
+    TEST_PUSH_ARRAY_OP2(TC, T, cmp_gt, L, R);                        \
+    TEST_PUSH_ARRAY_OP2(TC, T, cmp_ge, L, R);                        \
+    TEST_PUSH_ARRAY_OP2(TC, T, cmp_le, L, R);                        \
 }
 
 template<unsigned B>
@@ -131,9 +131,9 @@ void test_compare_n(TestResultsSet& tc)
         sr.add(make_float(nanf, nanf, nanf, nanf));
 
         TEST_COMPARE_TESTER_HELPER(tc, float32_n, sl, sr);
-        TEST_ARRAY_HELPER2(tc, float32_n, cmp_neq, sl, sr);
-        TEST_ARRAY_HELPER2(tc, float32_n, cmp_le, sl, sr);
-        TEST_ARRAY_HELPER2(tc, float32_n, cmp_ge, sl, sr);
+        TEST_PUSH_ARRAY_OP2(tc, float32_n, cmp_neq, sl, sr);
+        TEST_PUSH_ARRAY_OP2(tc, float32_n, cmp_le, sl, sr);
+        TEST_PUSH_ARRAY_OP2(tc, float32_n, cmp_ge, sl, sr);
     }
 
     //float64_n
@@ -171,9 +171,9 @@ void test_compare_n(TestResultsSet& tc)
         sr.add(make_float(nan, nan));
 
         TEST_COMPARE_TESTER_HELPER(tc, float64_n, sl, sr);
-        TEST_ARRAY_HELPER2(tc, float64_n, cmp_neq, sl, sr);
-        TEST_ARRAY_HELPER2(tc, float64_n, cmp_le, sl, sr);
-        TEST_ARRAY_HELPER2(tc, float64_n, cmp_ge, sl, sr);
+        TEST_PUSH_ARRAY_OP2(tc, float64_n, cmp_neq, sl, sr);
+        TEST_PUSH_ARRAY_OP2(tc, float64_n, cmp_le, sl, sr);
+        TEST_PUSH_ARRAY_OP2(tc, float64_n, cmp_ge, sl, sr);
     }
 }
 

@@ -60,27 +60,27 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
         store(rv+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
+        TEST_PUSH_ARRAY(tc, V, rv);
         TEST_EQUAL(tr, sv[0], rv[i]);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
         store_u(rv+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
+        TEST_PUSH_ARRAY(tc, V, rv);
         TEST_NOT_EQUAL(tr, zero, rv[i]);
     }
 
     for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
         rzero(rv);
         store_u(rdata+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
+        TEST_PUSH_ARRAY(tc, V, rv);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
         stream(rv+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
+        TEST_PUSH_ARRAY(tc, V, rv);
         TEST_EQUAL(tr, sv[0], rv[i]);
 
     }
@@ -107,20 +107,20 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
 
     rzero(rv);
     store_packed2(rv, sv[0], sv[1]);
-    TEST_ARRAY_PUSH(tc, V, rv);
+    TEST_PUSH_ARRAY(tc, V, rv);
     TEST_NOT_EQUAL(tr, zero, rv[0]);
     TEST_NOT_EQUAL(tr, zero, rv[1]);
 
     rzero(rv);
     store_packed3(rv, sv[0], sv[1], sv[2]);
-    TEST_ARRAY_PUSH(tc, V, rv);
+    TEST_PUSH_ARRAY(tc, V, rv);
     TEST_NOT_EQUAL(tr, zero, rv[0]);
     TEST_NOT_EQUAL(tr, zero, rv[1]);
     TEST_NOT_EQUAL(tr, zero, rv[2]);
 
     rzero(rv);
     store_packed4(rv, sv[0], sv[1], sv[2], sv[3]);
-    TEST_ARRAY_PUSH(tc, V, rv);
+    TEST_PUSH_ARRAY(tc, V, rv);
     TEST_NOT_EQUAL(tr, zero, rv[0]);
     TEST_NOT_EQUAL(tr, zero, rv[1]);
     TEST_NOT_EQUAL(tr, zero, rv[2]);

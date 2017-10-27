@@ -28,11 +28,11 @@ void test_bitwise_type(TestResultsSet& tc)
     s.add(make_uint(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff));
     s.add(make_uint(0x00000000, 0x00000000, 0x00000000, 0x00000000));
 
-    TEST_ALL_COMB_HELPER2(tc, V, bit_and, s);
-    TEST_ALL_COMB_HELPER2(tc, V, bit_andnot, s);
-    TEST_ALL_COMB_HELPER2(tc, V, bit_or, s);
-    TEST_ALL_COMB_HELPER2(tc, V, bit_xor, s);
-    TEST_ALL_COMB_HELPER1(tc, V, bit_not, s);
+    TEST_PUSH_ALL_COMB_OP2(tc, V, bit_and, s);
+    TEST_PUSH_ALL_COMB_OP2(tc, V, bit_andnot, s);
+    TEST_PUSH_ALL_COMB_OP2(tc, V, bit_or, s);
+    TEST_PUSH_ALL_COMB_OP2(tc, V, bit_xor, s);
+    TEST_PUSH_ALL_COMB_OP1(tc, V, bit_not, s);
 
     TestData<V> sl;
     sl.add(make_uint(0));
@@ -41,7 +41,7 @@ void test_bitwise_type(TestResultsSet& tc)
     sl.add(make_uint(0, 1, 0, 0));
     sl.add(make_uint(1, 0, 0, 0));
 
-    TEST_ARRAY_HELPER1_T(tc, bool, V, test_bits_any, sl);
+    TEST_PUSH_ARRAY_OP1_T(tc, bool, V, test_bits_any, sl);
 }
 
 template<unsigned B>

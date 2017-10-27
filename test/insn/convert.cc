@@ -41,8 +41,8 @@ void test_convert_n(TestResultsSet& ts)
     s.add(make_uint(0x00, 0x11, 0x22, 0x33));
     s.add(make_uint(0xcc, 0xdd, 0xee, 0xff));
 
-    TEST_ARRAY_HELPER1_T(ts, int16_2n,  int8_n, to_int16, s);
-    TEST_ARRAY_HELPER1_T(ts, uint16_2n, uint8_n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, int16_2n,  int8_n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n, uint8_n, to_uint16, s);
     }
 
     //int16
@@ -51,8 +51,8 @@ void test_convert_n(TestResultsSet& ts)
     s.add(make_uint(0x0000, 0x1111, 0x2222, 0x3333));
     s.add(make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff));
 
-    TEST_ARRAY_HELPER1_T(ts, int32_2n,  int16_n, to_int32, s);
-    TEST_ARRAY_HELPER1_T(ts, uint32_2n, uint16_n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, int32_2n,  int16_n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_2n, uint16_n, to_uint32, s);
     }
 
     //int32
@@ -63,8 +63,8 @@ void test_convert_n(TestResultsSet& ts)
     s.add(make_uint(0xcccccccc, 0xeeeeeeee));
     s.add(make_uint(0xdddddddd, 0xffffffff));
 
-    TEST_ARRAY_HELPER1_T(ts, int64_2n,  int32_n, to_int64, s);
-    TEST_ARRAY_HELPER1_T(ts, uint64_2n, uint32_n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, int64_2n,  int32_n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_2n, uint32_n, to_uint64, s);
     }
 
     {
@@ -79,8 +79,8 @@ void test_convert_n(TestResultsSet& ts)
 
     ts.set_precision(1);
     set_round_to_zero(); // set consistent mode on SSE2
-    TEST_ARRAY_HELPER1_T(ts, float32_n,  int32_n, to_float32, s);
-    TEST_ARRAY_HELPER1_T(ts, float64_2n, int32_n, to_float64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_n,  int32_n, to_float32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_2n, int32_n, to_float64, s);
     set_round_to_nearest();
     ts.unset_precision();
     }
@@ -98,7 +98,7 @@ void test_convert_n(TestResultsSet& ts)
     s.add(make_float(-63100000.0, -63100001.0));
     s.add(make_float(-63100002.0, -63100003.0));
 
-    TEST_ARRAY_HELPER1_T(ts, int32_n, float32_n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, int32_n, float32_n, to_int32, s);
     }
 
     //float64
@@ -114,7 +114,7 @@ void test_convert_n(TestResultsSet& ts)
     s.add(make_float(-63100000.0, -63100001.0));
     s.add(make_float(-63100002.0, -63100003.0));
 
-    TEST_ARRAY_HELPER1_T(ts, int32_n, float64_2n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, int32_n, float64_2n, to_int32, s);
     }
 }
 

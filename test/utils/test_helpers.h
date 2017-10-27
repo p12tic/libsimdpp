@@ -236,7 +236,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 #define TEST_PUSH(TC,T,D)                                                       \
     { test_push_internal((TC), (T)(D), __FILE__, __LINE__); }
 
-#define TEST_ARRAY_PUSH(TC, T, A)                                       \
+#define TEST_PUSH_ARRAY(TC, T, A)                                       \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
@@ -245,7 +245,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
-#define TEST_ARRAY_HELPER1(TC, T, OP, A)                                \
+#define TEST_PUSH_ARRAY_OP1(TC, T, OP, A)                               \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
@@ -254,7 +254,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
-#define TEST_ARRAY_HELPER1_T(TC, R, T, OP, A)                           \
+#define TEST_PUSH_ARRAY_OP1_T(TC, R, T, OP, A)                          \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
@@ -263,7 +263,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
-#define TEST_ARRAY_HELPER2(TC, T, OP, A, B)                             \
+#define TEST_PUSH_ARRAY_OP2(TC, T, OP, A, B)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
@@ -274,7 +274,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 }
 
 // tests OP on all pairs of elements within array A
-#define TEST_ALL_COMB_HELPER1(TC, T, OP, A)                             \
+#define TEST_PUSH_ALL_COMB_OP1(TC, T, OP, A)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
@@ -287,7 +287,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER1_T(TC, R, T, OP, A)                        \
+#define TEST_PUSH_ALL_COMB_OP1_T(TC, R, T, OP, A)                       \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
@@ -300,7 +300,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER2(TC, T, OP, A)                             \
+#define TEST_PUSH_ALL_COMB_OP2(TC, T, OP, A)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
@@ -316,7 +316,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER2_T(TC, R, T, OP, A)                        \
+#define TEST_PUSH_ALL_COMB_OP2_T(TC, R, T, OP, A)                       \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
@@ -332,7 +332,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER3(TC, T, OP, A)                             \
+#define TEST_PUSH_ALL_COMB_OP3(TC, T, OP, A)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i0 = 0; i0 < (A).size(); i0++) {                      \
