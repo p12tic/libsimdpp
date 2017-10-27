@@ -35,6 +35,8 @@ uint8_t i_reduce_max(const uint8x16& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
+#elif SIMDPP_USE_NEON64
+    return vmaxvq_u8(a.native());
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint8x16 r = max(a, move16_l<8>(a));
     r = max(r, move16_l<4>(r));
@@ -94,6 +96,8 @@ int8_t i_reduce_max(const int8x16& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
+#elif SIMDPP_USE_NEON64
+    return vmaxvq_s8(a.native());
 #elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     int8x16 r = a;
     r = max(r, move16_l<8>(r));
@@ -168,6 +172,8 @@ uint16_t i_reduce_max(const uint16x8& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
+#elif SIMDPP_USE_NEON64
+    return vmaxvq_u16(a.native());
 #elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16x8 r = max(a, move8_l<4>(a));
     r = max(r, move8_l<2>(r));
@@ -238,6 +244,8 @@ int16_t i_reduce_max(const int16x8& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
+#elif SIMDPP_USE_NEON64
+    return vmaxvq_s16(a.native());
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     int16x8 r = max(a, move8_l<4>(a));
     r = max(r, move8_l<2>(r));
@@ -296,6 +304,8 @@ uint32_t i_reduce_max(const uint32x4& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
+#elif SIMDPP_USE_NEON64
+    return vmaxvq_u32(a.native());
 #elif SIMDPP_USE_SSE4_1 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 r = max(a, move4_l<2>(a));
     r = max(r, move4_l<1>(r));
@@ -361,6 +371,8 @@ int32_t i_reduce_max(const int32x4& a)
         r = r > a.el(i) ? r : a.el(i);
     }
     return r;
+#elif SIMDPP_USE_NEON64
+    return vmaxvq_s32(a.native());
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     int32x4 r = max(a, move4_l<2>(a));
     r = max(r, move4_l<1>(r));
