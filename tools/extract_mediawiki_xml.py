@@ -6,43 +6,15 @@
 #   (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
+import argparse
 import lxml.etree as e
-import sys
 import os
 import shutil
+import sys
 
-if len(sys.argv) != 3:
-    print("Please provide the source xml as the first argument and the output "
-"directory as the second")
-    sys.exit(1)
-
-in_fn = sys.argv[1]
-out_dir = sys.argv[2]
-
-if not os.path.exists(in_fn):
-    print("Could not find the source file")
-    sys.exit(1)
-
-if out_dir == '' or out_dir == '.':
-    print("The output directory can not be the current directory")
-    sys.exit(1)
-
-data = open(in_fn, 'r').read().replace(' xmlns=', ' xmlns_ignore=')
-if os.path.exists(out_dir):
-    shutil.rmtree(out_dir)
-os.makedirs(out_dir)
-
-p = e.XMLParser(huge_tree=True)
-el = e.fromstring(data, parser=p)
-
-print('Parsed; ')
-
-for page in el.iter():
-    if page.tag != 'page':
-        continue
+def extract_single_page(page, dest_root):
 
     title = page.xpath('title')[0].text
-
     revisions = page.xpath('revision')
 
     revs=[]
@@ -63,15 +35,55 @@ for page in el.iter():
 
     if title.count(':') > 1:
         print("Invalid title: " + title)
-        continue
+        return None
 
     pathnames = title.replace(':', '/').split('/')
     pathnames = [ p for p in pathnames if p != '' ]
-    dest_dir = out_dir + '/' + '/'.join(pathnames[:-1])
-    dest_path = out_dir + '/' + '/'.join(pathnames) + '.mwiki'
+    dest_dir = dest_root + '/' + '/'.join(pathnames[:-1])
+    dest_path = dest_root + '/' + '/'.join(pathnames) + '.mwiki'
 
     if dest_dir != '' and not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
 
     open(dest_path, 'w').write(last_text)
-    print(dest_path)
+    return dest_path
+
+def extract_mediawiki_xml(src_xml_path, dest_root):
+
+    data = open(src_xml_path, 'r').read().replace(' xmlns=', ' xmlns_ignore=')
+    if os.path.exists(dest_root):
+        shutil.rmtree(dest_root)
+    os.makedirs(dest_root)
+
+    p = e.XMLParser(huge_tree=True)
+    el = e.fromstring(data, parser=p)
+
+    print('Parsed XML ')
+
+    for page in el.iter():
+        if page.tag != 'page':
+            continue
+        dest_path = extract_single_page(page, dest_root)
+
+        if dest_path is not None:
+            print('Extracted {0}'.format(dest_path))
+
+def main():
+    parser = argparse.ArgumentParser(prog='extract_mediawiki_xml')
+    parser.add_argument('source_xml', type=str, help='Source XML file')
+    parser.add_argument('destination_dir', type=str,
+                        help='Destination directory to place results to')
+    args = parser.parse_args()
+
+    if not os.path.exists(args.source_xml):
+        print("Could not find the source file")
+        sys.exit(1)
+
+    if args.destination_dir == '' or args.destination_dir == '.':
+        print("The output directory can not be the current directory")
+        sys.exit(1)
+
+    extract_mediawiki_xml(args.source_xml, args.destination_dir)
+
+if __name__ == '__main__':
+    main()
