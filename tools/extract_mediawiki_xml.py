@@ -31,7 +31,6 @@ def extract_single_page(page, dest_root):
         last_text = ''
 
     title = title.replace(' ', '_')
-    title = title.replace('/', '#')
 
     if title.count(':') > 1:
         print("Invalid title: " + title)
