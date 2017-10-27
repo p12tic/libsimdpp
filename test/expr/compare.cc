@@ -24,24 +24,24 @@ void test_expr_compare_v(TestReporter& ts)
         V b = load(v.pu8+(i*4+1)*B);
 
         // operators
-        TEST_CMP_VEC(ts, cmp_eq(a, b), a == b);
-        TEST_CMP_VEC(ts, cmp_lt(a, b), a < b);
-        TEST_CMP_VEC(ts, cmp_le(a, b), a <= b);
-        TEST_CMP_VEC(ts, cmp_gt(a, b), a > b);
-        TEST_CMP_VEC(ts, cmp_ge(a, b), a >= b);
+        TEST_EQUAL(ts, cmp_eq(a, b), a == b);
+        TEST_EQUAL(ts, cmp_lt(a, b), a < b);
+        TEST_EQUAL(ts, cmp_le(a, b), a <= b);
+        TEST_EQUAL(ts, cmp_gt(a, b), a > b);
+        TEST_EQUAL(ts, cmp_ge(a, b), a >= b);
 
         // scalar arguments not implemented yet
-        TEST_CMP_VEC(ts, cmp_eq(a, make_int<V>(2)), a == 2);
-        TEST_CMP_VEC(ts, cmp_lt(a, make_int<V>(2)), a < 2);
-        TEST_CMP_VEC(ts, cmp_le(a, make_int<V>(2)), a <= 2);
-        TEST_CMP_VEC(ts, cmp_gt(a, make_int<V>(2)), a > 2);
-        TEST_CMP_VEC(ts, cmp_ge(a, make_int<V>(2)), a >= 2);
+        TEST_EQUAL(ts, cmp_eq(a, make_int<V>(2)), a == 2);
+        TEST_EQUAL(ts, cmp_lt(a, make_int<V>(2)), a < 2);
+        TEST_EQUAL(ts, cmp_le(a, make_int<V>(2)), a <= 2);
+        TEST_EQUAL(ts, cmp_gt(a, make_int<V>(2)), a > 2);
+        TEST_EQUAL(ts, cmp_ge(a, make_int<V>(2)), a >= 2);
 
-        TEST_CMP_VEC(ts, cmp_eq(a, make_float<V>(2.2)), a == 2.2);
-        TEST_CMP_VEC(ts, cmp_lt(a, make_float<V>(2.2)), a < 2.2);
-        TEST_CMP_VEC(ts, cmp_le(a, make_float<V>(2.2)), a <= 2.2);
-        TEST_CMP_VEC(ts, cmp_gt(a, make_float<V>(2.2)), a > 2.2);
-        TEST_CMP_VEC(ts, cmp_ge(a, make_float<V>(2.2)), a >= 2.2);
+        TEST_EQUAL(ts, cmp_eq(a, make_float<V>(2.2)), a == 2.2);
+        TEST_EQUAL(ts, cmp_lt(a, make_float<V>(2.2)), a < 2.2);
+        TEST_EQUAL(ts, cmp_le(a, make_float<V>(2.2)), a <= 2.2);
+        TEST_EQUAL(ts, cmp_gt(a, make_float<V>(2.2)), a > 2.2);
+        TEST_EQUAL(ts, cmp_ge(a, make_float<V>(2.2)), a >= 2.2);
     }
 }
 

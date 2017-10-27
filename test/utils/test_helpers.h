@@ -526,9 +526,9 @@ struct TemplateTestArrayHelper {
 };
 
 template<class V1, class V2>
-void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
-                      bool expected_equal,
-                      unsigned line, const char* file)
+void test_cmp_equal_impl(std::true_type /*is_V1_vector*/, TestReporter& tr,
+                         const V1& q1, const V2& q2,
+                         bool expected_equal, unsigned line, const char* file)
 {
     using V = typename simdpp::detail::get_expr_nomask<V1>::type;
     V v1, v2;
@@ -546,16 +546,12 @@ void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2,
     }
 }
 
-#define TEST_CMP_VEC(TR, V1, V2)                                                \
-    do { test_cmp_vectors(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
-
-#define TEST_CMPNE_VEC(TR, V1, V2)                                              \
-    do { test_cmp_vectors(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
-
-template<class T>
-inline void test_cmp_equal(TestReporter& tr, const T& a1, const T& a2,
-                           bool expected_equal, unsigned line, const char* file)
+template<class T1, class T2>
+void test_cmp_equal_impl(std::false_type /*is_T1_vector*/, TestReporter& tr,
+                         const T1& a1, const T2& a2,
+                         bool expected_equal, unsigned line, const char* file)
 {
+    static_assert(sizeof(T1) == sizeof(T2), "Data type sizes must be equal");
     bool success = expected_equal ? std::memcmp(&a1, &a2, sizeof(a1)) == 0 :
                                     std::memcmp(&a1, &a2, sizeof(a1)) != 0;
     tr.add_result(success);
@@ -564,8 +560,18 @@ inline void test_cmp_equal(TestReporter& tr, const T& a1, const T& a2,
         print_separator(tr.out());
         print_file_info(tr.out(), file, line);
         tr.out() << (expected_equal ? "Data not equal:\n" : "Data equal:\n");
-        print_data_diff(tr.out(), GetElementType<T>::value, 1, &a1, &a2);
+        print_data_diff(tr.out(), GetElementType<T1>::value, 1, &a1, &a2);
     }
+}
+
+template<class T1, class T2>
+void test_cmp_equal(TestReporter& tr, const T1& a1, const T2& a2,
+                    bool expected_equal, unsigned line, const char* file)
+{
+    static_assert(simdpp::is_vector<T1>::value == simdpp::is_vector<T2>::value,
+                  "Invalid types for comparison");
+    test_cmp_equal_impl(simdpp::is_vector<T1>(), tr, a1, a2, expected_equal,
+                        line, file);
 }
 
 #define TEST_EQUAL(TR, V1, V2)                                                  \

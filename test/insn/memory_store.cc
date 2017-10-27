@@ -36,7 +36,7 @@ void test_store_masked(TestResultsSet& tc, TestReporter& tr, const V* sv)
         store_masked(rv, sv[0], mask);
         TEST_PUSH(tc, V, rv[0]);
 
-        TEST_CMP_VEC(tr, bit_and(sv[0], mask), rv[0]);
+        TEST_EQUAL(tr, bit_and(sv[0], mask), rv[0]);
     }
 
 }
@@ -61,14 +61,14 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
         rzero(rv);
         store(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
-        TEST_CMP_VEC(tr, sv[0], rv[i]);
+        TEST_EQUAL(tr, sv[0], rv[i]);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv);
         store_u(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
-        TEST_CMPNE_VEC(tr, zero, rv[i]);
+        TEST_NOT_EQUAL(tr, zero, rv[i]);
     }
 
     for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
@@ -81,7 +81,7 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
         rzero(rv);
         stream(rv+i, sv[0]);
         TEST_ARRAY_PUSH(tc, V, rv);
-        TEST_CMP_VEC(tr, sv[0], rv[i]);
+        TEST_EQUAL(tr, sv[0], rv[i]);
 
     }
 
@@ -91,7 +91,7 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
         store_first(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
         if (i > 1) { // the first element may be zero
-            TEST_CMPNE_VEC(tr, zero, rv[0]);
+            TEST_NOT_EQUAL(tr, zero, rv[0]);
         }
     }
 
@@ -101,30 +101,30 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
         store_last(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
         if (i > 0) {
-            TEST_CMPNE_VEC(tr, zero, rv[0]);
+            TEST_NOT_EQUAL(tr, zero, rv[0]);
         }
     }
 
     rzero(rv);
     store_packed2(rv, sv[0], sv[1]);
     TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
 
     rzero(rv);
     store_packed3(rv, sv[0], sv[1], sv[2]);
     TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
-    TEST_CMPNE_VEC(tr, zero, rv[2]);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
+    TEST_NOT_EQUAL(tr, zero, rv[2]);
 
     rzero(rv);
     store_packed4(rv, sv[0], sv[1], sv[2], sv[3]);
     TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
-    TEST_CMPNE_VEC(tr, zero, rv[2]);
-    TEST_CMPNE_VEC(tr, zero, rv[3]);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
+    TEST_NOT_EQUAL(tr, zero, rv[2]);
+    TEST_NOT_EQUAL(tr, zero, rv[3]);
 }
 
 template<unsigned B>
