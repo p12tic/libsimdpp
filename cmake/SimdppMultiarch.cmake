@@ -670,18 +670,26 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
 
     set(ALL_ARCHS "NONE_NULL")
     if(DEFINED ARCH_SUPPORTED_X86_SSE2)
+        # all x86_64 processors
         list(APPEND ALL_ARCHS "X86_SSE2")
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_SSE3)
+        # Since Prescott, Merom (Core architecture)
+        # Since later K8 steppings, fully supported since K10
         list(APPEND ALL_ARCHS "X86_SSE3")
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_SSSE3)
+        # Since Merom (Core architecture)
+        # Since Bobcat and Bulldozer
         list(APPEND ALL_ARCHS "X86_SSSE3")
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_SSE4_1)
+        # Since Penryl (45 nm Merom shrink)
+        # Since Bulldozer
         list(APPEND ALL_ARCHS "X86_SSE4_1")
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_AVX)
+        # Since Sandy Bridge, Bulldozer, Jaguar
         list(APPEND ALL_ARCHS "X86_AVX")
 
         if(DEFINED ARCH_SUPPORTED_X86_FMA3)
@@ -689,23 +697,38 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
             list(APPEND ALL_ARCHS "X86_AVX,X86_FMA3")
         endif()
         if(DEFINED ARCH_SUPPORTED_X86_FMA4)
+            # Since Bulldozer until Zen. Jaguar does not support FMA4 nor FMA3
             list(APPEND ALL_ARCHS "X86_AVX,X86_FMA4")
         endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_AVX2)
+        # Since Haswell and Zen
+        # All Intel and AMD CPUs that support AVX2 also support FMA3,
+        # thus separate X86_AVX2 config is not needed.
         if(DEFINED ARCH_SUPPORTED_X86_FMA3)
             list(APPEND ALL_ARCHS "X86_AVX2,X86_FMA3")
         endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_FMA3)
+        # Since Haswell, Piledriver (later Bulldozer variant)
+        # All Intel and AMD CPUs that support FMA3 also support AVX, thus
+        # separate X86_FMA3 config is not needed
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_FMA4)
+        # Since Bulldozer until Zen
+        # All AMD CPUs that support FMA4 also support AVX, thus
+        # separate X86_FMA4 config is not needed
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_AVX512F)
+        # Since Knights Landing, Skylake-X
+        # All Intel CPUs that support AVX512F also support FMA3,
+        # thus separate X86_512F config is not needed.
         list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3")
 
         if(DEFINED ARCH_SUPPORTED_X86_AVX512BW)
             if(DEFINED ARCH_SUPPORTED_X86_AVX512DQ)
+                # All Intel processors that support AVX512BW also support
+                # AVX512DQ
                 list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_AVX512BW,X86_AVX512DQ")
             endif()
         endif()
