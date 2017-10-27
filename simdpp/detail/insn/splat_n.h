@@ -67,6 +67,8 @@ uint8x16 i_splat16(const uint8x16& ca)
     }
     uint16x8 b = _mm_or_si128(n1, n2);
     return (uint8<16>) i_splat8<s/2>(b);
+#elif SIMDPP_USE_NEON64
+    return vdupq_laneq_u8(a.native(), s);
 #elif SIMDPP_USE_NEON
     if (s < 8) {
         uint8x8_t z = vget_low_u8(a.native());
@@ -136,6 +138,8 @@ uint16x8 i_splat8(const uint16x8& a)
         b = _mm_shufflehi_epi16(a.native(), _MM_SHUFFLE(s2,s2,s2,s2));
         return (uint16<8>) permute2<1,1>(b);
     }
+#elif SIMDPP_USE_NEON64
+    return vdupq_laneq_u16(a.native(), s);
 #elif SIMDPP_USE_NEON
     if (s < 4) {
         uint16x4_t z = vget_low_u16(a.native());
@@ -206,6 +210,8 @@ uint32x4 i_splat4(const uint32x4& a)
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     return permute4<s,s,s,s>(a);
+#elif SIMDPP_USE_NEON64
+    return vdupq_laneq_u32(a.native(), s);
 #elif SIMDPP_USE_NEON
     if (s < 2) {
         uint32x2_t z = vget_low_u32(a.native());
@@ -260,6 +266,8 @@ uint64x2 i_splat2(const uint64x2& a)
     } else {
         return permute2<1,1>(a);
     }
+#elif SIMDPP_USE_NEON64
+    return vdupq_laneq_u64(a.native(), s);
 #elif SIMDPP_USE_NEON
     uint64x1_t z;
     if (s == 0) {
@@ -312,6 +320,8 @@ float32x4 i_splat4(const float32x4& a)
     return detail::null::splat<s>(a);
 #elif SIMDPP_USE_SSE2
     return permute4<s,s,s,s>(a);
+#elif SIMDPP_USE_NEON64
+    return vdupq_laneq_f32(a.native(), s);
 #elif SIMDPP_USE_NEON
     if (s < 2) {
         float32x2_t z = vget_low_f32(a.native());
@@ -360,8 +370,10 @@ template<unsigned s> SIMDPP_INL
 float64x2 i_splat2(const float64x2& a)
 {
     static_assert(s < 2, "Access out of bounds");
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_SSE2
     return permute2<s,s>(a);
+#elif SIMDPP_USE_NEON64
+    return vdupq_laneq_f64(a.native(), s);
 #elif SIMDPP_USE_VSX_206
     return vec_splat(a.native(), s);
 #elif SIMDPP_USE_MSA
