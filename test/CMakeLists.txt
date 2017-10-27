@@ -39,12 +39,12 @@ list_contains(HAS_NEON X86_NEON ${NATIVE_ARCHS})
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
 
-set(TEST1_SOURCES
+set(TEST_INSN_SOURCES
     utils/test_results_set.cc
-    main_test1.cc
+    main_insn.cc
 )
 
-set(TEST1_HEADERS
+set(TEST_INSN_HEADERS
     utils/test_helpers.h
     utils/test_results.h
     utils/test_results_set.h
@@ -54,7 +54,7 @@ set(TEST1_HEADERS
     common/aligned_allocator.h
 )
 
-set(TEST1_ARCH_SOURCES
+set(TEST_INSN_ARCH_SOURCES
     insn/bitwise.cc
     insn/blend.cc
     insn/compare.cc
@@ -74,10 +74,10 @@ set(TEST1_ARCH_SOURCES
     insn/transpose.cc
 )
 
-set(TEST1_ARCH_GEN_SOURCES "")
+set(TEST_INSN_ARCH_GEN_SOURCES "")
 
-foreach(SRC ${TEST1_ARCH_SOURCES})
-    simdpp_multiarch(TEST1_ARCH_GEN_SOURCES ${SRC} ${COMPILABLE_ARCHS})
+foreach(SRC ${TEST_INSN_ARCH_SOURCES})
+    simdpp_multiarch(TEST_INSN_ARCH_GEN_SOURCES ${SRC} ${COMPILABLE_ARCHS})
 endforeach()
 
 # print compiler detection information
@@ -105,7 +105,7 @@ if(HAS_SSE2)
         set(DEFAULT_FLAGS " /arch:SSE2")
     endif()
 
-    foreach(GENSRC ${TEST1_ARCH_GEN_SOURCES})
+    foreach(GENSRC ${TEST_INSN_ARCH_GEN_SOURCES})
         get_property(CURRENT_COMPILE_FLAGS
                      SOURCE "${GENSRC}" PROPERTY COMPILE_FLAGS)
         set_property(SOURCE "${GENSRC}" PROPERTY COMPILE_FLAGS
@@ -113,27 +113,27 @@ if(HAS_SSE2)
     endforeach()
 endif()
 
-add_executable(test1 EXCLUDE_FROM_ALL
-    ${TEST1_SOURCES}
-    ${TEST1_ARCH_GEN_SOURCES}
+add_executable(test_insn EXCLUDE_FROM_ALL
+    ${TEST_INSN_SOURCES}
+    ${TEST_INSN_ARCH_GEN_SOURCES}
 )
 
 if(SIMDPP_MSVC)
     if(CMAKE_SIZEOF_VOID_P EQUAL 4)
         # enable _vectorcall on i386 builds (only works on MSVC 2013)
-        set_target_properties(test1 PROPERTIES COMPILE_FLAGS "/Gv")
+        set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "/Gv")
     endif()
 elseif(SIMDPP_MSVC_INTEL)
-    set_target_properties(test1 PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
+    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
 else()
     # Xcode clang linker spends very long time in deduplication pass when
     # linking the test executable unless -fvisibility-inlines-hidden is passed.
-    set_target_properties(test1 PROPERTIES COMPILE_FLAGS "-std=c++11 -O1 -g1 -Wall -Wextra -fvisibility-inlines-hidden")
+    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-std=c++11 -O1 -g1 -Wall -Wextra -fvisibility-inlines-hidden")
 endif()
-target_compile_definitions(test1 PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
+target_compile_definitions(test_insn PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
 
-add_test(s_test1 test1)
-add_dependencies(check test1)
+add_test(s_test_insn test_insn)
+add_dependencies(check test_insn)
 
 # ------------------------------------------------------------------------------
 # Dispatcher test

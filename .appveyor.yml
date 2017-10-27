@@ -36,7 +36,7 @@ before_build:
 
 build_script:
 - cd c:\projects\libsimdpp\build
-- cmake --build . --target test1
+- cmake --build . --target test_insn
 - cmake --build . --target test_dispatcher
 - cmake --build . --target test_expr
 
