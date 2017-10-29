@@ -174,7 +174,7 @@ uint32<4> i_popcnt(const uint32<4>& a)
         r.el(i) = detail::null::el_popcnt32(a.el(i));
     }
     return r;
-#elif SIMDPP_USE_POPCNT_INSN
+#elif SIMDPP_USE_X86_POPCNT_INSN
     // slightly faster than the vectorized version
     unsigned a0 = _mm_popcnt_u32(extract<0>(a));
     unsigned a1 = _mm_popcnt_u32(extract<1>(a));
@@ -246,7 +246,7 @@ uint64<2> i_popcnt(const uint64<2>& a)
         r.el(i) = detail::null::el_popcnt64(a.el(i));
     }
     return r;
-#elif SIMDPP_USE_POPCNT_INSN
+#elif SIMDPP_USE_X86_POPCNT_INSN
     unsigned a0 = _mm_popcnt_u64(extract<0>(a));
     unsigned a1 = _mm_popcnt_u64(extract<1>(a));
     uint16<8> r = _mm_cvtsi32_si128(a0);
@@ -273,7 +273,7 @@ uint64<2> i_popcnt(const uint64<2>& a)
 static SIMDPP_INL
 uint64<4> i_popcnt(const uint64<4>& a)
 {
-#if SIMDPP_USE_POPCNT_INSN
+#if SIMDPP_USE_X86_POPCNT_INSN
     uint64<2> a0, a1;
     split(a, a0, a1);
     a0 = i_popcnt(a0);

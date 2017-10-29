@@ -59,7 +59,7 @@ static inline Arch this_compile_arch()
 #if SIMDPP_ARCH_PP_USE_SSE4_1
     res |= Arch::X86_SSE4_1;
 #endif
-#if SIMDPP_USE_POPCNT_INSN
+#if SIMDPP_ARCH_PP_USE_X86_POPCNT_INSN
     res |= Arch::X86_POPCNT_INSN;
 #endif
 #if SIMDPP_ARCH_PP_USE_AVX
