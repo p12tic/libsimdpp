@@ -5,7 +5,7 @@ What's new in v2.1 development master:
  * Added support for x86 AVX512BW and AVX512DQ instruction sets.
  * Added support for 64-bit little-endian PowerPC.
  * Added support for arbitrary width vectors in extract() and insert()
- * New functions: popcnt
+ * New functions: popcnt, reduce_popcnt
  * Deprecation: implicit conversion operators to native vector types has been
     deprecated and a replacement method has been provided instead. The implicit
     conversion operators may lead to wrong code being accepted without a

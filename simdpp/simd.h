@@ -80,6 +80,7 @@
 #include <simdpp/core/i_reduce_min.h>
 #include <simdpp/core/i_reduce_mul.h>
 #include <simdpp/core/i_reduce_or.h>
+#include <simdpp/core/i_reduce_popcnt.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_sub.h>

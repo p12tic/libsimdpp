@@ -67,7 +67,9 @@ void test_popcnt_type(TestResultsSet& tc)
     s.add(make_uint(0xffff0000, 0xffffffff, 0xffffff00, 0xffffffff));
     s.add(make_uint(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff));
     s.add(make_uint(0x00000000, 0x00000000, 0x00000000, 0x00000000));
+
     TEST_PUSH_ARRAY_OP1(tc, V, popcnt, s);
+    TEST_PUSH_ARRAY_OP1_T(tc, unsigned, V, reduce_popcnt, s);
 }
 
 template<unsigned B>
