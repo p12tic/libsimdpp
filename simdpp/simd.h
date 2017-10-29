@@ -73,6 +73,7 @@
 #include <simdpp/core/i_mul.h>
 #include <simdpp/core/i_mull.h>
 #include <simdpp/core/i_neg.h>
+#include <simdpp/core/i_popcnt.h>
 #include <simdpp/core/i_reduce_add.h>
 #include <simdpp/core/i_reduce_and.h>
 #include <simdpp/core/i_reduce_max.h>

@@ -53,6 +53,23 @@ void test_bitwise_type(TestResultsSet& tc, TestReporter& tr)
                                      test_bits_any(bit_andnot(ARG1, ARG2)), sl);
 }
 
+template<class V, class V32I>
+void test_popcnt_type(TestResultsSet& tc)
+{
+    using namespace simdpp;
+
+    TestData<V32I> s;
+    s.add(make_uint(0xffff0000, 0x00000000, 0xff000000, 0x00000000));
+    s.add(make_uint(0x00ffff00, 0x00000000, 0x0000ff00, 0x00000000));
+    s.add(make_uint(0x0000ffff, 0x00000000, 0x000000ff, 0x00000000));
+    s.add(make_uint(0x0000ffff, 0xffffffff, 0x00ffffff, 0xffffffff));
+    s.add(make_uint(0xff0000ff, 0xffffffff, 0xffff00ff, 0xffffffff));
+    s.add(make_uint(0xffff0000, 0xffffffff, 0xffffff00, 0xffffffff));
+    s.add(make_uint(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff));
+    s.add(make_uint(0x00000000, 0x00000000, 0x00000000, 0x00000000));
+    TEST_PUSH_ARRAY_OP1(tc, V, popcnt, s);
+}
+
 template<unsigned B>
 void test_bitwise_n(TestResultsSet& tc, TestReporter& tr)
 {
@@ -71,12 +88,17 @@ void test_bitwise_n(TestResultsSet& tc, TestReporter& tr)
     test_bitwise_type<uint64_n, uint32_n>(tc, tr);
     test_bitwise_type<float32_n, uint32_n>(tc, tr);
     test_bitwise_type<float64_n, uint32_n>(tc, tr);
-    tc.reset_seq();
+
+    test_popcnt_type<uint8_n, uint32_n>(tc);
+    test_popcnt_type<uint16_n, uint32_n>(tc);
+    test_popcnt_type<uint32_n, uint32_n>(tc);
+    test_popcnt_type<uint64_n, uint32_n>(tc);
 
     // masks
     Vectors<B,4> v;
     Masks<B,4> m;
 
+    tc.reset_seq();
     for (unsigned i = 0; i < 4; i++) {
         for (unsigned j = 0; j < 4; j++) {
 
