@@ -247,8 +247,17 @@ uint64<2> i_popcnt(const uint64<2>& a)
     }
     return r;
 #elif SIMDPP_USE_X86_POPCNT_INSN
-    unsigned a0 = _mm_popcnt_u64(extract<0>(a));
-    unsigned a1 = _mm_popcnt_u64(extract<1>(a));
+    unsigned a0, a1;
+#if SIMDPP_64_BITS
+    a0 = _mm_popcnt_u64(extract<0>(a));
+    a1 = _mm_popcnt_u64(extract<1>(a));
+#else
+    uint32<4> a32; a32 = a;
+    a0 =  _mm_popcnt_u32(extract<0>(a32));
+    a0 += _mm_popcnt_u32(extract<1>(a32));
+    a1 =  _mm_popcnt_u32(extract<2>(a32));
+    a1 += _mm_popcnt_u32(extract<3>(a32));
+#endif
     uint16<8> r = _mm_cvtsi32_si128(a0);
     r = insert<4>(r, a1);
     return (uint64<2>) r;
@@ -273,7 +282,7 @@ uint64<2> i_popcnt(const uint64<2>& a)
 static SIMDPP_INL
 uint64<4> i_popcnt(const uint64<4>& a)
 {
-#if SIMDPP_USE_X86_POPCNT_INSN
+#if SIMDPP_USE_X86_POPCNT_INSN && SIMDPP_64_BITS
     uint64<2> a0, a1;
     split(a, a0, a1);
     a0 = i_popcnt(a0);
