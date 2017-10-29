@@ -1,5 +1,5 @@
 {{simdpp/title|reduce_or{{small|(integer)}}}}
-{{fp/navbar}}
+{{int/navbar}}
 {{dcl begin}}
 {{dcl | 
 template<unsigned N, class E1>
