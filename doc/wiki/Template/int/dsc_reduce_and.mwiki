@@ -1,0 +1,1 @@
+{{dsc tfun | int/reduce_and | computes bitwise AND of all elements in the vector }}

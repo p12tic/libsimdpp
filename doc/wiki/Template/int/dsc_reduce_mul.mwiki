@@ -1,0 +1,1 @@
+{{dsc tfun | int/reduce_mul | computes the product of all elements in the vector }}

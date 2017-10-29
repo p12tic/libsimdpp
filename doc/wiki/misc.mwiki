@@ -5,21 +5,21 @@ The following miscellaneous operations are provided.
 
 {{dsc begin}}
 {{dsc h1 | Constant declaration}}
-{{dsc tfun | misc/make_int | creates a constant of integer elements}}
-{{dsc tfun | misc/make_uint | creates a constant of unsigned integer elements }}
-{{dsc tfun | misc/make_float | creates a constant of floating-point elements }}
+{{dsc inc | misc/dsc make_int }}
+{{dsc inc | misc/dsc make_uint }}
+{{dsc inc | misc/dsc make_float }}
 
 {{dsc h1 | Data transfer}}
-{{dsc tfun | misc/extract | extracts an element from a vector }}
-{{dsc tfun | misc/insert | inserts an element to a vector }}
-{{dsc tfun | misc/splat | title=splat{{small|(scalar)}} | sets all elements of a vector to runtime value }}
-{{dsc tfun | misc/test_bits_any | checks whether any bits are set in the given vector }}
-{{dsc tfun | misc/for_each | applies a function to all elements in the vector }}
+{{dsc inc | misc/dsc extract }}
+{{dsc inc | misc/dsc insert }}
+{{dsc inc | misc/dsc splat }}
+{{dsc inc | misc/dsc test_bits_any }}
+{{dsc inc | misc/dsc for_each }}
 
 {{dsc h1 | Casts}}
-{{dsc tfun | misc/bit_cast | casts between unrelated types of the same size}}
+{{dsc inc | misc/dsc bit_cast }}
 
 {{dsc h1 | Cache operations}}
-{{dsc fun | misc/prefetch_read | prefetches data to lowest level cache for reading }}
-{{dsc fun | misc/prefetch_write | prefetches data to lowest level cache for writing }}
+{{dsc inc | misc/dsc prefetch_read }}
+{{dsc inc | misc/dsc prefetch_write }}
 {{dsc end}}

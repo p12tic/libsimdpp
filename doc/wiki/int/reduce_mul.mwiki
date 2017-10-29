@@ -31,4 +31,7 @@ r = a0 * ... * aN
 }}
 
 ===See also===
-{{todo}}
+{{dsc begin}}
+{{dsc inc | int/dsc mul_lo }}
+{{dsc inc | int/dsc mull }}
+{{dsc end}}

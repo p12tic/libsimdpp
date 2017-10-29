@@ -27,3 +27,8 @@ function(extract<1>(v));
 ...
 function(extract<N>(v));
 }}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | misc/dsc splat }}
+{{dsc end}}

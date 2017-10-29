@@ -49,4 +49,6 @@ rN = aN - bN
 }}
 
 ===See also===
-{{todo}}
+{{dsc begin}}
+{{dsc inc | int/dsc reduce_sub }}
+{{dsc end}}

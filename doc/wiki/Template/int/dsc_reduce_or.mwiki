@@ -1,0 +1,1 @@
+{{dsc tfun | int/reduce_or | computes bitwise OR of all elements in the vector }}

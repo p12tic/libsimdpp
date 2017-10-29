@@ -41,4 +41,8 @@ rN = aN * bN
 }}
 
 ===See also===
-{{todo}}
+{{dsc begin}}
+{{dsc inc | int/dsc mul_hi }}
+{{dsc inc | int/dsc reduce_mul }}
+{{dsc inc | int/dsc mull }}
+{{dsc end}}
