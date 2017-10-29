@@ -349,7 +349,7 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
     };
 
     auto cmpeq_result = [](const TestResultsSet::Result& ia, const TestResultsSet::Result& ib,
-                           unsigned fp_prec, unsigned fp_zero_eq) -> bool
+                           unsigned fp_prec, bool fp_zero_eq) -> bool
     {
         if (std::memcmp(ia.d(), ib.d(), ia.el_size * ia.length) == 0) {
             return true;

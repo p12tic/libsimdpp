@@ -53,7 +53,7 @@ uint32_t i_reduce_popcnt(const uint32<4>& a)
     return reduce_add(a64);
 #elif SIMDPP_USE_SSE2
     uint64<2> r = popcnt((uint64<2>)a);
-    return reduce_add(r);
+    return (uint32_t) reduce_add(r);
 #else
     uint32<4> r = popcnt(a);
     return reduce_add(r);

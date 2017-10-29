@@ -32,7 +32,7 @@ uint8x16 i_permute_zbytes16(const uint8x16& a, const uint8x16& mask)
 
     for (unsigned i = 0; i < 16; i++) {
         unsigned j = mi.el(i) & 0x0f;
-        bool zero = mi.el(i) & 0x80;
+        bool zero = (bool)(mi.el(i) & 0x80);
         r.el(i) = zero ? 0 : ai.el(j);
     }
     return r;

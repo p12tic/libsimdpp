@@ -118,7 +118,7 @@ private:
     const char* name_;
     unsigned seq_;
     unsigned curr_precision_ulp_;
-    unsigned curr_fp_zero_equal_;
+    bool curr_fp_zero_equal_;
 
     unsigned curr_results_section_;
     std::vector<std::vector<Result>> results_;
