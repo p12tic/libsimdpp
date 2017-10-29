@@ -1,4 +1,5 @@
 What's new in v2.1 development master:
+ * Various bug fixes
  * Added support for MIPS MSA instruction set.
  * Added support for PowerPC VSX v2.06 and v2.07 instruction sets.
  * Added support for x86 AVX512BW and AVX512DQ instruction sets.

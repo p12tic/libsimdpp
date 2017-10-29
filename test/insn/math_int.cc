@@ -170,9 +170,7 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_PUSH_ALL_COMB_OP2_T(tc, uint64<B/4>, uint32_n, mull, s);
 #endif
         tc.sync_archs();
-#if !(SIMDPP_USE_ALTIVEC)
         TEST_PUSH_ALL_COMB_OP2_T(tc, uint32_n, uint32_n, mul_lo, s);
-#endif
         tc.sync_archs();
 
         TEST_PUSH_ARRAY_OP1(tc, int32_n, neg, s);

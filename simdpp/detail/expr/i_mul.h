@@ -241,13 +241,22 @@ uint32<4> expr_eval_mul_lo(const uint32<4,E1>& qa,
     //+ (ah*bl)    <-  h_ab
     //+ (al*bh)    <-  h_ba
 
-    uint16<8> ra = a, rb = b;
-    uint16<8> sa = move8_l<1>(ra);
-    uint16<8> sb = move8_l<1>(rb);
+    uint16<8> ra, rb; ra = a, rb = b;
+#if SIMDPP_BIG_ENDIAN
+    uint16<8> sa = move8_r<1>(ra);
+    uint16<8> sb = move8_r<1>(rb);
 
     uint32<4> l_ab = vec_mulo(ra.native(), rb.native());
     uint32<4> h_ab = vec_mulo(ra.native(), sb.native());
     uint32<4> h_ba = vec_mulo(sa.native(), rb.native());
+#else
+    uint16<8> sa = move8_l<1>(ra);
+    uint16<8> sb = move8_l<1>(rb);
+
+    uint32<4> l_ab = vec_mule(ra.native(), rb.native());
+    uint32<4> h_ab = vec_mule(ra.native(), sb.native());
+    uint32<4> h_ba = vec_mule(sa.native(), rb.native());
+#endif
 
     h_ab = shift_l<16>(add(h_ab, h_ba));
     h_ab = add(h_ab, l_ab);
