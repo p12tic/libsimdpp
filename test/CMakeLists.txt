@@ -21,7 +21,7 @@ macro(list_contains VAR VALUE)
     endforeach()
 endmacro()
 
-# ---------------
+# ------------------------------------------------------------------------------
 # check available architectures
 
 list_contains(HAS_SSE2 X86_SSE2 ${NATIVE_ARCHS})
@@ -35,9 +35,11 @@ list_contains(HAS_AVX512BW X86_AVX512BW ${NATIVE_ARCHS})
 list_contains(HAS_AVX512DQ X86_AVX512DQ ${NATIVE_ARCHS})
 list_contains(HAS_NEON X86_NEON ${NATIVE_ARCHS})
 
-# ---------------
+# ------------------------------------------------------------------------------
 
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
+# We need to specify test configuration to be able to test compilation failure
+# tests on MSVC.
+add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -C Debug --verbose)
 
 set(TEST_INSN_SOURCES
     utils/test_results_set.cc
@@ -233,13 +235,11 @@ add_custom_target(create_dir_for_compile_fail
                   COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/compile_fail")
 add_dependencies(check create_dir_for_compile_fail)
 
-if(NOT SIMDPP_MSVC)
-    add_test(NAME test_compile_fail
-             COMMAND ${CMAKE_COMMAND} ${libsimdpp_SOURCE_DIR}/test/compile_fail
-                -G "${CMAKE_GENERATOR}"
-                -T "${CMAKE_GENERATOR_TOOLSET}"
-                "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
-                "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
-                "-Dlibsimdpp_SOURCE_DIR=${libsimdpp_SOURCE_DIR}"
-             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/compile_fail)
- endif()
+add_test(NAME test_compile_fail
+         COMMAND ${CMAKE_COMMAND} ${libsimdpp_SOURCE_DIR}/test/compile_fail
+            -G "${CMAKE_GENERATOR}"
+            -T "${CMAKE_GENERATOR_TOOLSET}"
+            "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+            "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+            "-Dlibsimdpp_SOURCE_DIR=${libsimdpp_SOURCE_DIR}"
+         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/compile_fail)
