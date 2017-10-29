@@ -152,7 +152,7 @@ the compiler will generate.
 <div class="mainpagediv">
 {{ltt|misc/make_int}}&nbsp;&nbsp;{{ltt|misc/make_uint}}&nbsp;&nbsp;{{ltt|misc/make_float}} <br/>
 {{ltt|misc/extract}}&nbsp;&nbsp;{{ltt|misc/insert}}&nbsp;&nbsp;{{ltt|misc/splat|splat{{small|(scalar)}}}} <br/>
-{{ltt|misc/test_bits_any}}<br/>
+{{ltt|misc/for_each}}&nbsp;&nbsp;{{ltt|misc/test_bits_any}}<br/>
 {{ltt|misc/bit_cast}}<br/>
 {{ltt|misc/prefetch_read}}&nbsp;&nbsp;{{ltt|misc/prefetch_write}}
 </div>
