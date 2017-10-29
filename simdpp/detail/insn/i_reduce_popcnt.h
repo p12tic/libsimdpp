@@ -44,6 +44,9 @@ uint32_t i_reduce_popcnt(const uint32<4>& a)
     uint64<2> a64; a64 = a;
     a64 = popcnt(a64);
     return reduce_add(a64);
+#elif SIMDPP_USE_SSE2
+    uint64<2> r = popcnt((uint64<2>)a);
+    return reduce_add(r);
 #else
     uint32<4> r = popcnt(a);
     return reduce_add(r);
@@ -59,7 +62,7 @@ uint32_t i_reduce_popcnt(const uint32<8>& a)
     split(a, a0, a1);
     return i_reduce_popcnt(a0) + i_reduce_popcnt(a1);
 #else
-    uint32<8> r = popcnt(a);
+    uint64<4> r = popcnt((uint64<4>)a);
     return reduce_add(r);
 #endif
 }
@@ -75,7 +78,7 @@ uint32_t i_reduce_popcnt(const uint32<16>& a)
     return i_reduce_popcnt(a0) + i_reduce_popcnt(a1);
 #else
     // TODO: support AVX512VPOPCNTDQ
-    uint32<16> r = popcnt(a);
+    uint64<8> r = popcnt((uint64<8>)a);
     return reduce_add(r);
 #endif
 }

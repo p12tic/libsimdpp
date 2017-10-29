@@ -252,6 +252,9 @@ uint64<2> i_popcnt(const uint64<2>& a)
     uint16<8> r = _mm_cvtsi32_si128(a0);
     r = insert<4>(r, a1);
     return (uint64<2>) r;
+#elif SIMDPP_USE_SSE2
+    uint8<16> p8 = v_emul_popcnt_u8((uint8<16>) a);
+    return _mm_sad_epu8(p8.native(), _mm_setzero_si128());
 #elif SIMDPP_USE_NEON
     uint8x16_t p8 = vcntq_u8(vreinterpretq_u8_u64(a.native()));
     uint16x8_t p16 = vpaddlq_u8(p8);
@@ -270,11 +273,16 @@ uint64<2> i_popcnt(const uint64<2>& a)
 static SIMDPP_INL
 uint64<4> i_popcnt(const uint64<4>& a)
 {
+#if SIMDPP_USE_POPCNT_INSN
     uint64<2> a0, a1;
     split(a, a0, a1);
     a0 = i_popcnt(a0);
     a1 = i_popcnt(a1);
     return combine(a0, a1);
+#else
+    uint8<32> p8 = v_emul_popcnt_u8((uint8<32>) a);
+    return _mm256_sad_epu8(p8.native(), _mm256_setzero_si256());
+#endif
 }
 #endif
 
@@ -283,7 +291,12 @@ static SIMDPP_INL
 uint64<8> i_popcnt(const uint64<8>& a)
 {
     // TODO: support AVX512VPOPCNTDQ
+#if SIMDPP_USE_AVX512BW
+    uint8<64> p8 = v_emul_popcnt_u8((uint8<64>) a);
+    return _mm512_sad_epu8(p8.native(), _mm512_setzero_si512());
+#else
     return v_emul_popcnt_u64(a);
+#endif
 }
 #endif
 
