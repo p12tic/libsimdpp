@@ -146,7 +146,7 @@ set(TEST_DISPATCHER_SOURCES
 )
 
 set(TEST_DISPATCHER_ARCH_SOURCES
-    insn/dispatcher.cc
+    dispatcher/dispatcher.cc
 )
 
 set(TEST_DISPATCHER_ARCH_GEN_SOURCES "")
