@@ -153,7 +153,7 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_PUSH_ALL_COMB_OP2(tc, int32_n, avg_trunc, s);
 
         tc.sync_archs();
-#if SIMDPP_USE_NEON || (defined(__GNUC__) && (__GNUC__ >= 8) && SIMDPP_USE_VSX_207) || SIMDPP_USE_MSA
+#if SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
         TEST_PUSH_ALL_COMB_OP2_T(tc, int64<B/4>, int32_n, mull, s);
 #endif
         tc.sync_archs();
@@ -166,9 +166,7 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, avg_trunc, s);
 
         tc.sync_archs();
-#if !(defined(__GNUC__) && (__GNUC__ < 8) && SIMDPP_USE_VSX_207)
         TEST_PUSH_ALL_COMB_OP2_T(tc, uint64<B/4>, uint32_n, mull, s);
-#endif
         tc.sync_archs();
         TEST_PUSH_ALL_COMB_OP2_T(tc, uint32_n, uint32_n, mul_lo, s);
         tc.sync_archs();

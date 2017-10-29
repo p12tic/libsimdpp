@@ -241,12 +241,21 @@ int64<4> expr_eval_mull(const int32<4,E1>& qa,
 #elif SIMDPP_USE_VSX_207
 #if defined(__GNUC__) && (__GNUC__ < 8)
     // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
+    __vector int32_t va = a.native(), vb = b.native();
+    __vector int64_t vlo, vhi;
+#if SIMDPP_BIG_ENDIAN
+    asm("vmulesw %0, %1, %2" : "=v"(vlo) : "v"(va), "v"(vb));
+    asm("vmulosw %0, %1, %2" : "=v"(vhi) : "v"(va), "v"(vb));
+#else
+    asm("vmulosw %0, %1, %2" : "=v"(vlo) : "v"(va), "v"(vb));
+    asm("vmulesw %0, %1, %2" : "=v"(vhi) : "v"(va), "v"(vb));
+#endif
+    int64<2> lo = vlo, hi = vhi;
 #else
     int64x2 lo = vec_vmulesw(a.native(), b.native());
     int64x2 hi = vec_vmulosw(a.native(), b.native());
-    return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #endif
+    return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #elif SIMDPP_USE_MSA
     int64<4> a64 = to_int64(a);
     int64<4> b64 = to_int64(b);
@@ -321,12 +330,21 @@ uint64<4> expr_eval_mull(const uint32<4,E1>& qa,
 #elif SIMDPP_USE_VSX_207
 #if defined(__GNUC__) && (__GNUC__ < 8)
     // BUG: GCC 7 and earlied don't implement 32-bit integer multiplication
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(R, a, b);
+    __vector uint32_t va = a.native(), vb = b.native();
+    __vector uint64_t vlo, vhi;
+#if SIMDPP_BIG_ENDIAN
+    asm("vmuleuw %0, %1, %2" : "=v"(vlo) : "v"(va), "v"(vb));
+    asm("vmulouw %0, %1, %2" : "=v"(vhi) : "v"(va), "v"(vb));
+#else
+    asm("vmulouw %0, %1, %2" : "=v"(vlo) : "v"(va), "v"(vb));
+    asm("vmuleuw %0, %1, %2" : "=v"(vhi) : "v"(va), "v"(vb));
+#endif
+    uint64<2> lo = vlo, hi = vhi;
 #else
     uint64x2 lo = vec_vmuleuw(a.native(), b.native());
     uint64x2 hi = vec_vmulouw(a.native(), b.native());
-    return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #endif
+    return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #elif SIMDPP_USE_ALTIVEC
     mem_block<uint32<4>> ba = a;
     mem_block<uint32<4>> bb = b;
