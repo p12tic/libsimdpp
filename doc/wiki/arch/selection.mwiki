@@ -32,6 +32,10 @@ The following instruction sets are supported by the library.
 | {{ttb|SIMDPP_ARCH_X86_SSE4_1}}
 | Implies SSSE3
 |-
+| x86 {{tt|popcnt}} instruction
+| {{ttb|SIMDPP_ARCH_X86_POPCNT_INSN}}
+| Implies SSSE3. This does not directly correspond to the ABM instruction set as Intel provides the instruction in SSE 4.2 already.
+|-
 | x86 AVX
 | {{ttb|SIMDPP_ARCH_X86_AVX}}
 | 256-bit vectors for floating-point values, 128-bit vectors for integers. Implies SSE4.1

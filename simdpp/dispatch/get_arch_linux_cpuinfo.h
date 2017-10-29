@@ -46,6 +46,7 @@ inline Arch get_arch_linux_cpuinfo()
     Arch a_sse3 = a_sse2 | Arch::X86_SSE3;
     Arch a_ssse3 = a_sse3 | Arch::X86_SSSE3;
     Arch a_sse4_1 = a_ssse3 | Arch::X86_SSE4_1;
+    Arch a_popcnt = Arch::X86_POPCNT_INSN;
     Arch a_avx = a_sse4_1 | Arch::X86_AVX;
     Arch a_avx2 = a_avx | Arch::X86_AVX2;
     Arch a_fma3 = a_sse3 | Arch::X86_FMA3;
@@ -62,6 +63,7 @@ inline Arch get_arch_linux_cpuinfo()
     features["sse4_1"] = a_sse4_1;
     features["avx"] = a_avx;
     features["avx2"] = a_avx2;
+    features["popcnt"] = a_popcnt;
     features["fma"] = a_fma3;
     features["fma4"] = a_fma4;
     features["xop"] = a_xop;

@@ -46,6 +46,11 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_SSE4_1
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_POPCNT_INSN
+    #define SIMDPP_DISPATCH_$num$_NS_ID_POPCNT_INSN SIMDPP_INSN_ID_POPCNT_INSN
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_POPCNT_INSN
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_AVX
     #define SIMDPP_DISPATCH_$num$_NS_ID_AVX SIMDPP_INSN_ID_AVX
     #else
@@ -117,12 +122,13 @@ single_arch_template = '''
     #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_207
     #endif
 
-    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE20(arch,         $n$
+    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE21(arch,         $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NULL,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE3,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSSE3,                                  $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE4_1,                                 $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_POPCNT_INSN,                            $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX,                                    $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX512F,                                $n$

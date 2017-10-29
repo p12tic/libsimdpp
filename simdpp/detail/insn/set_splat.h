@@ -401,7 +401,7 @@ void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
     v = insn::i_splat_any<V>(e.a);
 }
 
-template<class V, class VE>
+template<class V, class VE> SIMDPP_INL
 V splat_impl(const VE& x)
 {
     static_assert(is_vector<V>::value && !is_mask<V>::value,

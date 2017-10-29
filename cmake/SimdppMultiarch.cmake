@@ -148,6 +148,28 @@ set(SIMDPP_X86_SSE4_1_TEST_CODE
     }"
 )
 
+list(APPEND SIMDPP_ARCHS_PRI "X86_POPCNT_INSN")
+if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
+    set(SIMDPP_X86_POPCNT_INSN_CXX_FLAGS "-mssse3 -mpopcnt")
+elseif(SIMDPP_MSVC)
+    set(SIMDPP_X86_POPCNT_INSN_CXX_FLAGS "/arch:SSE4.2")
+elseif(SIMDPP_MSVC_INTEL)
+    set(SIMDPP_X86_POPCNT_INSN_CXX_FLAGS "/arch:SSE4.2")
+endif()
+set(SIMDPP_X86_POPCNT_INSN_DEFINE "SIMDPP_ARCH_X86_POPCNT_INSN")
+set(SIMDPP_X86_POPCNT_INSN_SUFFIX "-x86_popcnt")
+set(SIMDPP_X86_POPCNT_INSN_TEST_CODE
+    "#include <nmmintrin.h>
+    int main()
+    {
+        union {
+            volatile unsigned x;
+        };
+        x = _mm_popcnt_u32(x);
+    }"
+)
+###
+
 list(APPEND SIMDPP_ARCHS_PRI "X86_AVX")
 if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
     set(SIMDPP_X86_AVX_CXX_FLAGS "-mavx")
@@ -689,25 +711,34 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
         # Since Bulldozer
         list(APPEND ALL_ARCHS "X86_SSE4_1")
     endif()
+    if(DEFINED ARCH_SUPPORTED_X86_POPCNT_INSN)
+        # Since Nehalem and K10.
+
+        # NOTE: These two architectures are the only that support popcnt and
+        # don't support AVX. There's no full overlap of the instruction set
+        # support in these architectures, thus these two separate configs were
+        # omitted from the default instruction set matrix.
+    endif()
     if(DEFINED ARCH_SUPPORTED_X86_AVX)
         # Since Sandy Bridge, Bulldozer, Jaguar
-        list(APPEND ALL_ARCHS "X86_AVX")
+        list(APPEND ALL_ARCHS "X86_AVX,X86_POPCNT_INSN")
 
         if(DEFINED ARCH_SUPPORTED_X86_FMA3)
             # Since Haswell, Piledriver (later Bulldozer variant)
-            list(APPEND ALL_ARCHS "X86_AVX,X86_FMA3")
+            # All CPUs in this range support popcnt
         endif()
         if(DEFINED ARCH_SUPPORTED_X86_FMA4)
             # Since Bulldozer until Zen. Jaguar does not support FMA4 nor FMA3
-            list(APPEND ALL_ARCHS "X86_AVX,X86_FMA4")
+            # All CPUs in this range support popcnt
+            list(APPEND ALL_ARCHS "X86_AVX,X86_FMA4,X86_POPCNT_INSN")
         endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_AVX2)
         # Since Haswell and Zen
-        # All Intel and AMD CPUs that support AVX2 also support FMA3,
+        # All Intel and AMD CPUs that support AVX2 also support FMA3 and POPCNT,
         # thus separate X86_AVX2 config is not needed.
         if(DEFINED ARCH_SUPPORTED_X86_FMA3)
-            list(APPEND ALL_ARCHS "X86_AVX2,X86_FMA3")
+            list(APPEND ALL_ARCHS "X86_AVX2,X86_FMA3,X86_POPCNT_INSN")
         endif()
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_FMA3)
@@ -722,15 +753,15 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
     endif()
     if(DEFINED ARCH_SUPPORTED_X86_AVX512F)
         # Since Knights Landing, Skylake-X
-        # All Intel CPUs that support AVX512F also support FMA3,
+        # All Intel CPUs that support AVX512F also support FMA3 and POPCNT,
         # thus separate X86_512F config is not needed.
-        list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3")
+        list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_POPCNT_INSN")
 
         if(DEFINED ARCH_SUPPORTED_X86_AVX512BW)
             if(DEFINED ARCH_SUPPORTED_X86_AVX512DQ)
                 # All Intel processors that support AVX512BW also support
                 # AVX512DQ
-                list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_AVX512BW,X86_AVX512DQ")
+                list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_POPCNT_INSN,X86_AVX512BW,X86_AVX512DQ")
             endif()
         endif()
     endif()
