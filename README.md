@@ -1,6 +1,9 @@
 
-Overview
---------
+libsimdpp
+=========
+
+[![Travis build status](https://travis-ci.org/p12tic/libsimdpp.svg?branch=master)](https://travis-ci.org/p12tic/libsimdpp "Travis build status")
+[![Appveyor build status](https://img.shields.io/appveyor/ci/p12tic/libsimdpp/master.svg)](https://ci.appveyor.com/project/p12tic/libsimdpp "Appveyor build status")
 
 libsimdpp is a portable header-only zero-overhead C++ wrapper around
 single-instruction multiple-data (SIMD) intrinsics found in many compilers. The
