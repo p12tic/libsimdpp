@@ -17,7 +17,13 @@ template<class V>
 void test_store_masked(TestResultsSet& tc, TestReporter& tr, const V* sv)
 {
     using namespace simdpp;
-    SIMDPP_ALIGN(16) V rv[1];
+
+    // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
+    // necessarily aligned to 16 bytes on the stack.
+    // NOTE: MSVC 2013 does not support constant expressions within
+    // SIMDPP_ALIGN, thus we're aligning to the alignment of the largest V
+    // is going to be instantiated with
+    SIMDPP_ALIGN(64) V rv[1];
 
     tc.reset_seq();
     TestData<V> mask_data;
@@ -48,8 +54,16 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
     V zero = make_zero();
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
-    // necessarily aligned to 16 bytes on the stack
+    // necessarily aligned to 16 bytes on the stack.
+    // NOTE: MSVC 2013 does not support constant expressions within
+    // SIMDPP_ALIGN, thus we're aligning to the alignment of the largest V
+    // is going to be instantiated with
+#if SIMDPP_USE_ALTIVEC
+    // Force-aligning to 64 bytes exposes a bug in GCC on Altivec
     SIMDPP_ALIGN(16) V rv[vnum];
+#else
+    SIMDPP_ALIGN(64) V rv[vnum];
+#endif
     auto rdata = reinterpret_cast<typename V::element_type*>(rv);
 
     auto rzero = [](V* r)

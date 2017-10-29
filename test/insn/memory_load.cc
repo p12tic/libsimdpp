@@ -24,8 +24,11 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr, void* sv_p)
     std::memcpy(sv, sv_p, sizeof(V) * vnum);
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
-    // necessarily aligned to 16 bytes on the stack
-    SIMDPP_ALIGN(sizeof(V)) V rv[vnum];
+    // necessarily aligned to 16 bytes on the stack.
+    // NOTE: MSVC 2013 does not support constant expressions within
+    // SIMDPP_ALIGN, thus we're aligning to the alignment of the largest V
+    // is going to be instantiated with
+    SIMDPP_ALIGN(64) V rv[vnum];
 
     auto rzero = [&](V* r)
     {
