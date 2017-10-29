@@ -16,7 +16,6 @@
 #include <simdpp/core/extract.h>
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/make_uint.h>
-#include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/extract128.h>
 
 namespace simdpp {

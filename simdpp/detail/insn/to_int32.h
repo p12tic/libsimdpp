@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/combine.h>
+#include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/not_implemented.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>

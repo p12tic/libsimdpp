@@ -10,6 +10,7 @@
 
 #include <simdpp/simd.h>
 #include <simdpp/detail/align_v128.h>
+#include <simdpp/detail/mem_block.h>
 #include <iostream>
 #include "test_results_set.h"
 #include "test_reporter.h"

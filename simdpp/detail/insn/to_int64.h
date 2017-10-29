@@ -17,6 +17,7 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/combine.h>
+#include <simdpp/detail/mem_block.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
