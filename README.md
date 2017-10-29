@@ -52,12 +52,14 @@ Supported compilers:
  - C++11 version:
    - GCC: 4.8-7.x
    - Clang: 3.3-4.0
+   - Xcode 7.0-9.x
    - MSVC: 2013, 2015, 2017
    - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
 
  - C++98 version
    - GCC: 4.4-7.x
    - Clang: 3.3-4.0
+   - Xcode 7.0-9.x
    - MSVC: 2013, 2015, 2017
    - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
 

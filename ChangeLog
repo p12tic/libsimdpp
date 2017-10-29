@@ -6,6 +6,7 @@ What's new in v2.1 development master:
  * Added support for 64-bit little-endian PowerPC.
  * Added support for arbitrary width vectors in extract() and insert()
  * New functions: popcnt, reduce_popcnt
+ * Xcode is now supported.
  * Deprecation: implicit conversion operators to native vector types has been
     deprecated and a replacement method has been provided instead. The implicit
     conversion operators may lead to wrong code being accepted without a
