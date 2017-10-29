@@ -58,6 +58,10 @@ def sync_single_page(page, direction, dest_root):
             os.makedirs(dest_dir)
 
         with open(dest_path, 'w') as file:
+            if not text.endswith('\n'):
+                # MediaWiki strips trailing whitespace, re-add it so that lack
+                # of it does not fight with editors
+                text = text + '\n'
             file.write(text)
         print('Downloaded {0}'.format(dest_path))
 
