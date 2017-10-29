@@ -62,6 +62,7 @@ set(TEST_INSN_ARCH_SOURCES
     insn/compare.cc
     insn/construct.cc
     insn/convert.cc
+    insn/for_each.cc
     insn/math_fp.cc
     insn/math_int.cc
     insn/math_shift.cc

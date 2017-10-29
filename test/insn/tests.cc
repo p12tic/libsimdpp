@@ -69,6 +69,8 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
     test_compare(res);
     test_math_shift(res);
     test_transpose(res);
+
+    test_for_each(res, tr);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

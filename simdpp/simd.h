@@ -62,6 +62,7 @@
 #include <simdpp/core/f_sqrt.h>
 #include <simdpp/core/f_sub.h>
 #include <simdpp/core/f_trunc.h>
+#include <simdpp/core/for_each.h>
 #include <simdpp/core/i_abs.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/core/i_add_sat.h>
