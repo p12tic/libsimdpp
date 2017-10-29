@@ -39,20 +39,24 @@ void i_store_u(char* p, const uint8<16>& a)
 #elif SIMDPP_USE_ALTIVEC
     // From https://web.archive.org/web/20110305043420/http://developer.apple.com/hardwaredrivers/ve/alignment.html
     uint8_t* q = reinterpret_cast<uint8_t*>(p);
-    __vector uint8_t MSQ, LSQ, edges;
-    __vector uint8_t edgeAlign, align;
-    MSQ = vec_ld(0, q);                                 // most significant quadword
-    LSQ = vec_ld(15, q);                                // least significant quadword
+    __vector uint8_t msq, lsq, edges;
+    __vector uint8_t edge_align, align;
+    msq = vec_ld(0, q);                         // most significant quadword
+    lsq = vec_ld(15, q);                        // least significant quadword
+    // The address offset is 15 to take into account storing into aligned
+    // addresses. If 16 were used, then when q is 16-byte aligned we would
+    // access the next second 16-byte block, which could be on different page
+    // and inaccessible.
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
-    edgeAlign = vec_lvsl(0, q);                         // permute map to extract edges
-    edges = vec_perm(LSQ, MSQ, edgeAlign);              // extract the edges
-    align = vec_lvsr(0, q);                             // permute map to misalign data
+    edge_align = vec_lvsl(0, q);                // permute map to extract edges
+    edges = vec_perm(lsq, msq, edge_align);     // extract the edges
+    align = vec_lvsr(0, q);                     // permute map to misalign data
 #pragma GCC diagnostic pop
-    MSQ = vec_perm(edges, a.native(), align);           // misalign the data (MSQ)
-    LSQ = vec_perm(a.native(), edges, align);           // misalign the data (LSQ)
-    vec_st(LSQ, 15, q);                                 // Store the LSQ part first
-    vec_st(MSQ, 0, q);                                  // Store the MSQ part
+    msq = vec_perm(edges, a.native(), align);   // misalign the data (msq)
+    lsq = vec_perm(a.native(), edges, align);   // misalign the data (lsq)
+    vec_st(lsq, 15, q);                         // Store the lsq part first
+    vec_st(msq, 0, q);                          // Store the msq part
 #elif SIMDPP_USE_MSA
     __msa_st_b((v16i8) a.native(), p, 0);
 #endif
