@@ -226,12 +226,15 @@ uint32<4> expr_eval_mul_lo(const uint32<4,E1>& qa,
 #elif SIMDPP_USE_NEON
     return vmulq_u32(a.native(), b.native());
 #elif SIMDPP_USE_VSX_207
-    __vector uint32_t va = a, vb = b;
-    __vector uint32_t vr;
+#if __GNUC__
     // BUG: GCC does not have support for vmuluwm yet
-    // return vec_vmuluwm(a, b);
-    asm("vmuluwm	%0, %1, %2" : "=wa"(vr) : "wa"(va), "wa"(vb));
+    __vector uint32_t va = a.native(), vb = b.native();
+    __vector uint32_t vr;
+    asm("vmuluwm	%0, %1, %2" : "=v"(vr) : "v"(va), "v"(vb));
     return vr;
+#else
+    return vec_vmuluwm(a.native(), b.native());
+#endif
 #elif SIMDPP_USE_ALTIVEC
     // implement in terms of 16-bit multiplies
     //   *  ah  al
