@@ -220,15 +220,27 @@
 #define SIMDPP_NS_ID_MSA
 #endif
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE21(arch, \
-	SIMDPP_NS_ID_NULL, SIMDPP_NS_ID_SSE2, SIMDPP_NS_ID_SSE3,                \
-    SIMDPP_NS_ID_SSSE3, SIMDPP_NS_ID_SSE4_1,                                \
-    SIMDPP_NS_ID_POPCNT_INSN, SIMDPP_NS_ID_AVX,                             \
-    SIMDPP_NS_ID_AVX2, SIMDPP_NS_ID_AVX512F, SIMDPP_NS_ID_AVX512BW,         \
-    SIMDPP_NS_ID_AVX512DQ, SIMDPP_NS_ID_FMA3, SIMDPP_NS_ID_FMA4,            \
-    SIMDPP_NS_ID_XOP, SIMDPP_NS_ID_NEON, SIMDPP_NS_ID_NEON_FLT_SP,          \
-    SIMDPP_NS_ID_ALTIVEC, SIMDPP_NS_ID_VSX_206, SIMDPP_NS_ID_VSX_207,       \
-    SIMDPP_NS_ID_MSA)
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE21(arch,                           \
+    SIMDPP_NS_ID_NULL,                                                          \
+    SIMDPP_NS_ID_SSE2,                                                          \
+    SIMDPP_NS_ID_SSE3,                                                          \
+    SIMDPP_NS_ID_SSSE3,                                                         \
+    SIMDPP_NS_ID_SSE4_1,                                                        \
+    SIMDPP_NS_ID_POPCNT_INSN,                                                   \
+    SIMDPP_NS_ID_AVX,                                                           \
+    SIMDPP_NS_ID_AVX2,                                                          \
+    SIMDPP_NS_ID_AVX512F,                                                       \
+    SIMDPP_NS_ID_AVX512BW,                                                      \
+    SIMDPP_NS_ID_AVX512DQ,                                                      \
+    SIMDPP_NS_ID_FMA3,                                                          \
+    SIMDPP_NS_ID_FMA4,                                                          \
+    SIMDPP_NS_ID_XOP,                                                           \
+    SIMDPP_NS_ID_NEON,                                                          \
+    SIMDPP_NS_ID_NEON_FLT_SP,                                                   \
+    SIMDPP_NS_ID_MSA,                                                           \
+    SIMDPP_NS_ID_ALTIVEC,                                                       \
+    SIMDPP_NS_ID_VSX_206,                                                       \
+    SIMDPP_NS_ID_VSX_207)
 
 #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_ARCH_NAMESPACE
 #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 0
