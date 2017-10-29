@@ -27,6 +27,7 @@ The following simple operations for integer computations are provided.
 {{dsc inc | int/dsc reduce_max }}
 {{dsc inc | int/dsc reduce_and }}
 {{dsc inc | int/dsc reduce_or }}
+{{dsc inc | int/dsc reduce_popcnt }}
 
 {{dsc h1 | Miscellaneous}}
 {{dsc inc | int/dsc abs }}
@@ -36,4 +37,5 @@ The following simple operations for integer computations are provided.
 {{dsc inc | int/dsc max }}
 {{dsc inc | int/dsc shift_l }}
 {{dsc inc | int/dsc shift_r }}
+{{dsc inc | int/dsc popcnt}}
 {{dsc end}}

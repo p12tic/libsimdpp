@@ -27,12 +27,14 @@
 {{nv h1 | Reduction}}
 {{nv col begin}}
 {{nv ln | int/reduce_add }}
-{{nv ln | int/reduce_min }}
-{{nv ln | int/reduce_and }}
-{{nv col next}}
 {{nv ln | int/reduce_mul }}
+{{nv ln | int/reduce_min }}
 {{nv ln | int/reduce_max }}
+
+{{nv col next}}
+{{nv ln | int/reduce_and }}
 {{nv ln | int/reduce_or }}
+{{nv ln | int/reduce_popcnt }}
 {{nv col end}}
 
 {{nv h1 | Miscellaneous}}
@@ -46,5 +48,6 @@
 {{nv col next}}
 {{nv ln | int/shift_l }}
 {{nv ln | int/shift_r }}
+{{nv ln | int/popcnt }}
 {{nv col end}}
 {{nv end}}
