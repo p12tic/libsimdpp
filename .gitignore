@@ -1,4 +1,6 @@
 build
+doc/output
+doc/reference
 *.user*
 *~
 libsimdpp.config
