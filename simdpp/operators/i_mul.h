@@ -45,7 +45,7 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
                detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, uint16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, int16, uint16)
 
 /** Multiplies 32-bit values and returns the lower half of the result.
 
@@ -74,7 +74,7 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
                detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int32, uint32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int32, int32, uint32)
 
 
 } // namespace SIMDPP_ARCH_NAMESPACE

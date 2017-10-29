@@ -70,7 +70,7 @@ template<unsigned N, class V> SIMDPP_INL RET_VEC<N, EXPR<VEC<N,V>, VEC<N,expr_sc
 // end #define
 
 // a implementation for integer operations that use get_expr_uint
-#define SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(FUNC, EXPR, VEC, UINT_VEC)                  \
+#define SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(FUNC, EXPR, VEC, INT_VEC, UINT_VEC)         \
 template<unsigned N, class V> SIMDPP_INL                                                \
 typename detail::get_expr_uint<EXPR, V, UINT_VEC<N, expr_scalar<uint32_t>>>::type       \
         FUNC(const VEC<N,V>& a, const unsigned& b)                                      \
@@ -87,29 +87,29 @@ typename detail::get_expr_uint<EXPR, V, UINT_VEC<N, expr_scalar<uint64_t>>>::typ
 { return FUNC(a, detail::cast_expr<UINT_VEC<N, expr_scalar<uint64_t>>>(b)); }           \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, V, UINT_VEC<N, expr_scalar<int32_t>>>::type        \
+typename detail::get_expr_uint<EXPR, V, INT_VEC<N, expr_scalar<int32_t>>>::type         \
         FUNC(const VEC<N,V>& a, const int& b)                                           \
-{ return FUNC(a, detail::cast_expr<UINT_VEC<N, expr_scalar<int32_t>>>(b)); }            \
+{ return FUNC(a, detail::cast_expr<INT_VEC<N, expr_scalar<int32_t>>>(b)); }             \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, V, UINT_VEC<N, expr_scalar<int64_t>>>::type        \
+typename detail::get_expr_uint<EXPR, V, INT_VEC<N, expr_scalar<int64_t>>>::type         \
         FUNC(const VEC<N,V>& a, const long& b)                                          \
-{ return FUNC(a, detail::cast_expr<UINT_VEC<N, expr_scalar<int64_t>>>(b)); }            \
+{ return FUNC(a, detail::cast_expr<INT_VEC<N, expr_scalar<int64_t>>>(b)); }             \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, V, UINT_VEC<N, expr_scalar<int64_t>>>::type        \
+typename detail::get_expr_uint<EXPR, V, INT_VEC<N, expr_scalar<int64_t>>>::type         \
         FUNC(const VEC<N,V>& a, const long long& b)                                     \
-{ return FUNC(a, detail::cast_expr<UINT_VEC<N, expr_scalar<int64_t>>>(b)); }            \
+{ return FUNC(a, detail::cast_expr<INT_VEC<N, expr_scalar<int64_t>>>(b)); }             \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, V, UINT_VEC<N, expr_scalar<float>>>::type          \
+typename detail::get_expr_uint<EXPR, V, INT_VEC<N, expr_scalar<float>>>::type           \
         FUNC(const VEC<N,V>& a, const float& b)                                         \
-{ return FUNC(a, detail::cast_expr<UINT_VEC<N, expr_scalar<float>>>(b)); }              \
+{ return FUNC(a, detail::cast_expr<INT_VEC<N, expr_scalar<float>>>(b)); }               \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, V, UINT_VEC<N, expr_scalar<double>>>::type         \
+typename detail::get_expr_uint<EXPR, V, INT_VEC<N, expr_scalar<double>>>::type          \
         FUNC(const VEC<N,V>& a, const double& b)                                        \
-{ return FUNC(a, detail::cast_expr<UINT_VEC<N, expr_scalar<double>>>(b)); }             \
+{ return FUNC(a, detail::cast_expr<INT_VEC<N, expr_scalar<double>>>(b)); }              \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
 typename detail::get_expr_uint<EXPR, UINT_VEC<N, expr_scalar<uint32_t>>, V>::type       \
@@ -127,29 +127,29 @@ typename detail::get_expr_uint<EXPR, UINT_VEC<N, expr_scalar<uint64_t>>, V>::typ
 { return FUNC(detail::cast_expr<UINT_VEC<N, expr_scalar<uint64_t>>>(a), b); }           \
 \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, UINT_VEC<N, expr_scalar<int32_t>>, V>::type        \
+typename detail::get_expr_uint<EXPR, INT_VEC<N, expr_scalar<int32_t>>, V>::type         \
         FUNC(const int& a, const VEC<N,V>& b)                                           \
-{ return FUNC(detail::cast_expr<UINT_VEC<N, expr_scalar<int32_t>>>(a), b); }            \
+{ return FUNC(detail::cast_expr<INT_VEC<N, expr_scalar<int32_t>>>(a), b); }             \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, UINT_VEC<N, expr_scalar<int64_t>>, V>::type        \
+typename detail::get_expr_uint<EXPR, INT_VEC<N, expr_scalar<int64_t>>, V>::type         \
         FUNC(const long& a, const VEC<N,V>& b)                                          \
-{ return FUNC(detail::cast_expr<UINT_VEC<N, expr_scalar<int64_t>>>(a), b); }            \
+{ return FUNC(detail::cast_expr<INT_VEC<N, expr_scalar<int64_t>>>(a), b); }             \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, UINT_VEC<N, expr_scalar<int64_t>>, V>::type        \
+typename detail::get_expr_uint<EXPR, INT_VEC<N, expr_scalar<int64_t>>, V>::type         \
         FUNC(const long long& a, const VEC<N,V>& b)                                     \
-{ return FUNC(detail::cast_expr<UINT_VEC<N, expr_scalar<int64_t>>>(a), b); }            \
+{ return FUNC(detail::cast_expr<INT_VEC<N, expr_scalar<int64_t>>>(a), b); }             \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, UINT_VEC<N, expr_scalar<float>>, V>::type          \
+typename detail::get_expr_uint<EXPR, INT_VEC<N, expr_scalar<float>>, V>::type           \
         FUNC(const float& a, const VEC<N,V>& b)                                         \
-{ return FUNC(detail::cast_expr<UINT_VEC<N, expr_scalar<float>>>(a), b); }              \
+{ return FUNC(detail::cast_expr<INT_VEC<N, expr_scalar<float>>>(a), b); }               \
                                                                                         \
 template<unsigned N, class V> SIMDPP_INL                                                \
-typename detail::get_expr_uint<EXPR, UINT_VEC<N, expr_scalar<double>>, V>::type         \
+typename detail::get_expr_uint<EXPR, INT_VEC<N, expr_scalar<double>>, V>::type          \
         FUNC(const double& a, const VEC<N,V>& b)                                        \
-{ return FUNC(detail::cast_expr<UINT_VEC<N, expr_scalar<double>>>(a), b); }
+{ return FUNC(detail::cast_expr<INT_VEC<N, expr_scalar<double>>>(a), b); }
 // end #define
 
 #endif

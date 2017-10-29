@@ -45,7 +45,7 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
                detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int8, uint8)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int8, int8, uint8)
 
 /** Adds 16-bit integer values.
 
@@ -68,7 +68,7 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
                detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int16, uint16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int16, int16, uint16)
 
 /** Adds 32-bit integer values.
 
@@ -91,7 +91,7 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
                detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int32, uint32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int32, int32, uint32)
 
 /** Adds 64-bit integer values.
 
@@ -118,7 +118,7 @@ typename detail::get_expr_uint<expr_add, V1, V2>::type
                detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int64, uint64)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int64, int64, uint64)
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
