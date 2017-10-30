@@ -493,7 +493,7 @@ set(SIMDPP_X86_XOP_TEST_CODE
 
 list(APPEND SIMDPP_ARCHS_PRI "X86_AVX512F")
 if(SIMDPP_CLANG OR SIMDPP_GCC)
-    set(SIMDPP_X86_AVX512F_CXX_FLAGS "-mavx512f")
+    set(SIMDPP_X86_AVX512F_CXX_FLAGS "-mavx512f -O1")
 elseif(SIMDPP_INTEL)
     set(SIMDPP_X86_AVX512F_CXX_FLAGS "-xCOMMON-AVX512")
 elseif(SIMDPP_MSVC_INTEL)
@@ -519,10 +519,6 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         return *opaque;
     }
 
-    #if (__clang_major__ == 4) && (__clang_minor__ == 0)
-    #error Not supported. See simdpp/detail/workarounds.h
-    #endif
-
     int main()
     {
         union {
@@ -534,6 +530,7 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         __m512 f = _mm512_load_ps((float*)p);
         p = prevent_optimization(p);
         __m512i i = _mm512_load_epi32((__m512i*)p);
+        p = prevent_optimization(p);
 
         f = _mm512_add_ps(f, f);
 
@@ -549,6 +546,12 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         __m128i i128 = _mm512_castsi512_si128(i);
         i256 = _mm256_srl_epi16(i256, i128);
 
+        // ICE on various versions of Clang trying to select palignr
+        __m512i i2 = _mm512_load_epi32((__m512i*)p);
+        __m512i ap = _mm512_alignr_epi32(i, i, 2);
+        i = _mm512_mask_alignr_epi32(ap, 0xcccc, i2, i2, 14);
+
+        p = prevent_optimization(p);
         _mm512_store_ps((float*)p, f);
         p = prevent_optimization(p);
         _mm512_store_epi32((void*)p, i);
