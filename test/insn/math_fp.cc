@@ -171,8 +171,15 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
             TEST_PUSH_ALL_COMB_OP3(tc, float64_n, fmadd, snan);
             TEST_PUSH_ALL_COMB_OP3(tc, float64_n, fmsub, snan);
         } else {
+#if defined(_MSC_VER) && _MSC_VER < 1900
+            // looks like MSVC 2013 has a bug in fma() implementation
+            tc.set_precision(1);
+#endif
             TEST_PUSH_ALL_COMB_OP3(tc, float64_n, fmadd, s);
             TEST_PUSH_ALL_COMB_OP3(tc, float64_n, fmsub, s);
+#if defined(_MSC_VER) && _MSC_VER < 1900
+            tc.unset_precision();
+#endif
         }
         tc.unset_fp_zero_equal();
 #endif
