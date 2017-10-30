@@ -39,6 +39,10 @@ endif()
 # Each architecture has the following information specific to it:
 #  - SIMDPP_${ARCH}_TEST_CODE: source code snippet that uses functionality
 #       from that arch. Used for @c check_cxx_source_runs macro.
+#       We are taking extra care to confuse the compiler so that it does not
+#       optimize things out. Nowadays compilers have good sense of when things
+#       don't have side effects and will see through simple obfuscation
+#       patterns.
 #  - SIMDPP_${ARCH}_CXX_FLAGS: compiler flags that are needed for compilation.
 #  - SIMDPP_${ARCH}_DEFINE: defines the macro that is needed to enable the
 #       specific instruction set within the library.
@@ -64,15 +68,34 @@ set(SIMDPP_X86_SSE2_DEFINE "SIMDPP_ARCH_X86_SSE2")
 set(SIMDPP_X86_SSE2_SUFFIX "-x86_sse2")
 set(SIMDPP_X86_SSE2_TEST_CODE
     "#include <emmintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile char a[16];
+            char data[16];
             __m128i align;
         };
-        __m128i one = _mm_load_si128((__m128i*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128i one = _mm_load_si128((__m128i*)p);
         one = _mm_or_si128(one, one);
-        _mm_store_si128((__m128i*)(a), one);
+        _mm_store_si128((__m128i*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -88,15 +111,34 @@ set(SIMDPP_X86_SSE3_DEFINE "SIMDPP_ARCH_X86_SSE3")
 set(SIMDPP_X86_SSE3_SUFFIX "-x86_sse3")
 set(SIMDPP_X86_SSE3_TEST_CODE
     "#include <pmmintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile char a[16];
+            char data[16];
             __m128 align;
         };
-        __m128 one = _mm_load_ps((float*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128 one = _mm_load_ps((float*)p);
         one = _mm_hadd_ps(one, one);
-        _mm_store_ps((float*)(a), one);
+        _mm_store_ps((float*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -112,15 +154,34 @@ set(SIMDPP_X86_SSSE3_DEFINE "SIMDPP_ARCH_X86_SSSE3")
 set(SIMDPP_X86_SSSE3_SUFFIX "-x86_ssse3")
 set(SIMDPP_X86_SSSE3_TEST_CODE
     "#include <tmmintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile char a[16];
+            char data[16];
             __m128i align;
         };
-        __m128i one = _mm_load_si128((__m128i*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128i one = _mm_load_si128((__m128i*)p);
         one = _mm_abs_epi8(one);
-        _mm_store_si128((__m128i*)(a), one);
+        _mm_store_si128((__m128i*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -136,15 +197,34 @@ set(SIMDPP_X86_SSE4_1_DEFINE "SIMDPP_ARCH_X86_SSE4_1")
 set(SIMDPP_X86_SSE4_1_SUFFIX "-x86_sse4_1")
 set(SIMDPP_X86_SSE4_1_TEST_CODE
     "#include <smmintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile char a[16];
+            char data[16];
             __m128i align;
         };
-        __m128i one = _mm_load_si128((__m128i*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128i one = _mm_load_si128((__m128i*)p);
         one = _mm_cvtepi16_epi32(one);
-        _mm_store_si128((__m128i*)(a), one);
+        _mm_store_si128((__m128i*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -160,12 +240,29 @@ set(SIMDPP_X86_POPCNT_INSN_DEFINE "SIMDPP_ARCH_X86_POPCNT_INSN")
 set(SIMDPP_X86_POPCNT_INSN_SUFFIX "-x86_popcnt")
 set(SIMDPP_X86_POPCNT_INSN_TEST_CODE
     "#include <nmmintrin.h>
+    #include <iostream>
+
+    unsigned* prevent_optimization(unsigned* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        unsigned* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
-        union {
-            volatile unsigned x;
-        };
-        x = _mm_popcnt_u32(x);
+        unsigned data;
+        unsigned* p = &data;
+        p = prevent_optimization(p);
+
+        *p = _mm_popcnt_u32(*p);
+
+        p = prevent_optimization(p);
     }"
 )
 ###
@@ -180,6 +277,8 @@ set(SIMDPP_X86_AVX_DEFINE "SIMDPP_ARCH_X86_AVX")
 set(SIMDPP_X86_AVX_SUFFIX "-x86_avx")
 set(SIMDPP_X86_AVX_TEST_CODE
     "#include <immintrin.h>
+    #include <iostream>
+
     #if (__clang_major__ == 3) && (__clang_minor__ == 6)
     #error Not supported. See simdpp/detail/workarounds.h
     #endif
@@ -187,15 +286,32 @@ set(SIMDPP_X86_AVX_TEST_CODE
     #error Not supported. See simdpp/detail/workarounds.h
     #endif
 
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile char a[32];
+            char data[32];
             __m256 align;
         };
-        __m256 one = _mm256_load_ps((float*)a);
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m256 one = _mm256_load_ps((float*)p);
         one = _mm256_add_ps(one, one);
-        _mm256_store_ps((float*)a, one);
+        _mm256_store_ps((float*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -213,19 +329,38 @@ set(SIMDPP_X86_AVX2_DEFINE "SIMDPP_ARCH_X86_AVX2")
 set(SIMDPP_X86_AVX2_SUFFIX "-x86_avx2")
 set(SIMDPP_X86_AVX2_TEST_CODE
     "#include <immintrin.h>
+    #include <iostream>
+
     #if (__clang_major__ == 3) && (__clang_minor__ == 6)
     #error Not supported. See simdpp/detail/workarounds.h
     #endif
 
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile char a[32];
+            char data[32];
             __m256 align;
         };
-        __m256i one = _mm256_load_si256((__m256i*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m256i one = _mm256_load_si256((__m256i*)p);
         one = _mm256_or_si256(one, one);
-        _mm256_store_si256((__m256i*)(a), one);
+        _mm256_store_si256((__m256i*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -243,15 +378,34 @@ set(SIMDPP_X86_FMA3_DEFINE "SIMDPP_ARCH_X86_FMA3")
 set(SIMDPP_X86_FMA3_SUFFIX "-x86_fma3")
 set(SIMDPP_X86_FMA3_TEST_CODE
     "#include <immintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile float a[4];
+            char data[16];
             __m128 align;
         };
-        __m128 one = _mm_load_ps((float*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128 one = _mm_load_ps((float*)p);
         one = _mm_fmadd_ps(one, one, one);
-        _mm_store_ps((float*)(a), one);
+        _mm_store_ps((float*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -266,15 +420,34 @@ set(SIMDPP_X86_FMA4_DEFINE "SIMDPP_ARCH_X86_FMA4")
 set(SIMDPP_X86_FMA4_SUFFIX "-x86_fma4")
 set(SIMDPP_X86_FMA4_TEST_CODE
     "#include <x86intrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile float a[4];
+            char data[16];
             __m128 align;
         };
-        __m128 one = _mm_load_ps((float*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128 one = _mm_load_ps((float*)p);
         one = _mm_macc_ps(one, one, one);
-        _mm_store_ps((float*)(a), one);
+        _mm_store_ps((float*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -286,16 +459,35 @@ set(SIMDPP_X86_XOP_DEFINE "SIMDPP_ARCH_X86_XOP")
 set(SIMDPP_X86_XOP_SUFFIX "-x86_xop")
 set(SIMDPP_X86_XOP_TEST_CODE
     "#include <x86intrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
         union {
-            volatile char a[16];
+            char data[16];
             __m128i align;
         };
-        __m128i one = _mm_load_si128((__m128i*)(a));
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128i one = _mm_load_si128((__m128i*)p);
         one = _mm_cmov_si128(one, one, one);
         one = _mm_comeq_epi64(one, one);
-        _mm_store_si128((__m128i*)(a), one);
+        _mm_store_si128((__m128i*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -313,6 +505,19 @@ set(SIMDPP_X86_AVX512F_DEFINE "SIMDPP_ARCH_X86_AVX512F")
 set(SIMDPP_X86_AVX512F_SUFFIX "-x86_avx512f")
 set(SIMDPP_X86_AVX512F_TEST_CODE
     "#include <immintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
 
     #if (__clang_major__ == 4) && (__clang_minor__ == 0)
     #error Not supported. See simdpp/detail/workarounds.h
@@ -321,11 +526,14 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
     int main()
     {
         union {
-            volatile char data[64];
+            char data[64];
             __m512 align;
         };
-        __m512 f = _mm512_load_ps((float*)data);
-        __m512i i = _mm512_load_epi32((__m512i*)data);
+        char* p = data;
+        p = prevent_optimization(p);
+        __m512 f = _mm512_load_ps((float*)p);
+        p = prevent_optimization(p);
+        __m512i i = _mm512_load_epi32((__m512i*)p);
 
         f = _mm512_add_ps(f, f);
 
@@ -341,8 +549,10 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         __m128i i128 = _mm512_castsi512_si128(i);
         i256 = _mm256_srl_epi16(i256, i128);
 
-        _mm512_store_ps((float*)data, f);
-        _mm512_store_epi32((void*)data, i);
+        _mm512_store_ps((float*)p, f);
+        p = prevent_optimization(p);
+        _mm512_store_epi32((void*)p, i);
+        p = prevent_optimization(p);
     }"
 )
 
@@ -359,6 +569,19 @@ set(SIMDPP_X86_AVX512BW_DEFINE "SIMDPP_ARCH_X86_AVX512BW")
 set(SIMDPP_X86_AVX512BW_SUFFIX "-x86_avx512bw")
 set(SIMDPP_X86_AVX512BW_TEST_CODE
     "#include <immintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
 
     #if (__clang_major__ == 4) && (__clang_minor__ == 0)
     #error Not supported. See simdpp/detail/workarounds.h
@@ -367,12 +590,17 @@ set(SIMDPP_X86_AVX512BW_TEST_CODE
     int main()
     {
         union {
-            volatile char a[64];
+            char data[64];
             __m512i align;
         };
-        __m512i one = _mm512_load_si512((void*)a);
-        one = _mm512_add_epi16(one, one); // only in AVX-512BW
-        _mm512_store_si512((void*)a, one);
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m512i i = _mm512_load_si512((void*)p);
+        i = _mm512_add_epi16(i, i); // only in AVX-512BW
+        _mm512_store_si512((void*)p, i);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -385,6 +613,19 @@ set(SIMDPP_X86_AVX512DQ_DEFINE "SIMDPP_ARCH_X86_AVX512DQ")
 set(SIMDPP_X86_AVX512DQ_SUFFIX "-x86_avx512dq")
 set(SIMDPP_X86_AVX512DQ_TEST_CODE
     "#include <immintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
 
     #if (__clang_major__ == 4) && (__clang_minor__ == 0)
     #error Not supported. See simdpp/detail/workarounds.h
@@ -393,12 +634,17 @@ set(SIMDPP_X86_AVX512DQ_TEST_CODE
     int main()
     {
         union {
-            volatile char a[64];
+            char data[64];
             __m512 align;
         };
-        __m512 one = _mm512_load_ps((float*)a);
-        one = _mm512_and_ps(one, one); // only in AVX512-DQ
-        _mm512_store_ps((float*)a, one);
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m512 f = _mm512_load_ps((float*)p);
+        f = _mm512_and_ps(f, f); // only in AVX512-DQ
+        _mm512_store_ps((float*)p, f);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -409,16 +655,39 @@ endif()
 set(SIMDPP_ARM_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM_NEON_SUFFIX "-arm_neon")
 set(SIMDPP_ARM_NEON_TEST_CODE
-    #if (__clang_major__ < 3) || ((__clang_major__ == 3) && (__clang_minor__ <= 3))
+    "#if (__clang_major__ < 3) || ((__clang_major__ == 3) && (__clang_minor__ <= 3))
     #error NEON is not supported on clang 3.3 and earlier.
     #endif
-    "#include <arm_neon.h>
+
+    #include <arm_neon.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
-        volatile long long a[4];
-        uint32x4_t one = vld1q_u32((uint32_t*)(a));
+        union {
+            char data[16];
+            uint32x4_t align;
+        };
+        char* p = data;
+        p = prevent_optimization(p);
+
+        uint32x4_t one = vld1q_u32((uint32_t*)p);
         one = vaddq_u32(one, one);
-        vst1q_u32((uint32_t*)(a), one);
+        vst1q_u32((uint32_t*)p, one);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -439,15 +708,37 @@ set(SIMDPP_ARM64_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM64_NEON_SUFFIX "-arm64_neon")
 set(SIMDPP_ARM64_NEON_TEST_CODE
     "#include <arm_neon.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
-        volatile long long a[4];
-        uint32x4_t one = vld1q_u32((uint32_t*)(a));
+        union {
+            char data[16];
+            uint32x4_t align;
+        };
+        char* p = data;
+        p = prevent_optimization(p);
+
+        uint32x4_t one = vld1q_u32((uint32_t*)(*p));
         one = vaddq_u32(one, one);
-        vst1q_u32((uint32_t*)(a), one);
 
         // GCC 4.8 misses a subset of functions
         one = vdupq_laneq_u32(one, 1);
+
+        vst1q_u32((uint32_t*)(*p), one);
+        p = prevent_optimization(p);
     }"
 )
 
@@ -457,12 +748,34 @@ set(SIMDPP_MIPS_MSA_DEFINE "SIMDPP_ARCH_MIPS_MSA")
 set(SIMDPP_MIPS_MSA_SUFFIX "-mips_msa")
 set(SIMDPP_MIPS_MSA_TEST_CODE
     "#include <msa.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
-        volatile unsigned char a[16];
-        v16i8 v = __msa_ld_b(a, 0);
+        union {
+            char data[16];
+            uint32x4_t align;
+        };
+        char* p = data;
+        p = prevent_optimization(p);
+
+        v16i8 v = __msa_ld_b(*p, 0);
         v = __msa_add_a_b(v, v);
-        __msa_st_b(v, a, 0);
+        __msa_st_b(v, *p, 0);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -472,6 +785,7 @@ set(SIMDPP_POWER_ALTIVEC_DEFINE "SIMDPP_ARCH_POWER_ALTIVEC")
 set(SIMDPP_POWER_ALTIVEC_SUFFIX "-power_altivec")
 set(SIMDPP_POWER_ALTIVEC_TEST_CODE
     "#include <altivec.h>
+    #include <iostream>
 
     #if defined(__GNUC__) && (__GNUC__ < 6) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
     #if !defined(__INTEL_COMPILER) && !defined(__clang__)
@@ -479,12 +793,32 @@ set(SIMDPP_POWER_ALTIVEC_TEST_CODE
     #endif
     #endif
 
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
-        volatile unsigned char a[16];
-        vector unsigned char v = vec_ld(0, a);
+        union {
+            char data[16];
+            vector unsigned char align;
+        };
+        char* p = data;
+        p = prevent_optimization(p);
+
+        vector unsigned char v = vec_ld(0, p);
         v = vec_add(v, v);
-        vec_st(v, 0, a);
+        vec_st(v, 0, p);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -494,6 +828,7 @@ set(SIMDPP_POWER_VSX_206_DEFINE "SIMDPP_ARCH_POWER_VSX_206")
 set(SIMDPP_POWER_VSX_206_SUFFIX "-power_vsx_2.06")
 set(SIMDPP_POWER_VSX_206_TEST_CODE
     "#include <altivec.h>
+    #include <iostream>
 
     #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     #if !defined(__INTEL_COMPILER) && !defined(__clang__)
@@ -508,12 +843,32 @@ set(SIMDPP_POWER_VSX_206_TEST_CODE
     #endif
     #endif
 
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
-        volatile unsigned char a[16];
-        vector unsigned char v = vec_vsx_ld(0, a);
+        union {
+            char data[16];
+            vector unsigned char align;
+        };
+        char* p = data;
+        p = prevent_optimization(p);
+
+        vector unsigned char v = vec_vsx_ld(0, p);
         v = vec_add(v, v);
-        vec_vsx_st(v, 0, a);
+        vec_vsx_st(v, 0, p);
+
+        p = prevent_optimization(p);
     }"
 )
 
@@ -523,6 +878,7 @@ set(SIMDPP_POWER_VSX_207_DEFINE "SIMDPP_ARCH_POWER_VSX_207")
 set(SIMDPP_POWER_VSX_207_SUFFIX "-power_vsx_2.07")
 set(SIMDPP_POWER_VSX_207_TEST_CODE
     "#include <altivec.h>
+    #include <iostream>
 
     #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     #if !defined(__INTEL_COMPILER) && !defined(__clang__)
@@ -536,12 +892,32 @@ set(SIMDPP_POWER_VSX_207_TEST_CODE
     #endif
     #endif
 
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
     int main()
     {
-        volatile unsigned char a[16];
-        vector unsigned char v = vec_vsx_ld(0, a);
+        union {
+            char data[16];
+            vector unsigned char align;
+        };
+        char* p = data;
+        p = prevent_optimization(p);
+
+        vector unsigned char v = vec_vsx_ld(0, p);
         v = vec_vpopcnt(v);
-        vec_vsx_st(v, 0, a);
+        vec_vsx_st(v, 0, p);
+
+        p = prevent_optimization(p);
     }"
 )
 
