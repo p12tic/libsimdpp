@@ -25,7 +25,7 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     for (unsigned i = 0; i < s.size(); ++i) {
         V v = s.data()[i];
         uint64_t sum = 0;
-        for_each(v, [&](E el) { sum += el; });
+        for_each(v, [&](E el) { sum += (uint64_t) el; });
         TEST_PUSH(ts, uint64_t, sum);
     }
 
@@ -39,7 +39,7 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
         expected = 10 * V::length / 4;
     }
     E sum = 0;
-    for_each(v1234, [&](E el) { sum += el; });
+    for_each(v1234, [&](E el) { sum += (uint64_t) el; });
 
     TEST_EQUAL(tr, expected, sum);
 }

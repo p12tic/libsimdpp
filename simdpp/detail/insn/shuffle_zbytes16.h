@@ -25,6 +25,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4800)
+#endif
 
 static SIMDPP_INL
 uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
@@ -38,7 +42,7 @@ uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16
     for (unsigned i = 0; i < 16; i++) {
         unsigned j = mi.el(i) & 0x0f;
         unsigned which = mi.el(i) < 0x10;
-        bool zero = (bool)(mi.el(i) & 0x80);
+        bool zero = mi.el(i) & 0x80;
         r.el(i) = zero ? 0 : (which ? ai.el(j) : bi.el(j));
     }
     return r;
@@ -84,6 +88,10 @@ uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16
     return SIMDPP_NOT_IMPLEMENTED3(a, b, mask);
 #endif
 }
+
+#if _MSC_VER
+#pragma warning(pop)
+#endif
 
 #if SIMDPP_USE_AVX2
 static SIMDPP_INL
