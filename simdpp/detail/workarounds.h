@@ -18,8 +18,12 @@
 
 #if SIMDPP_USE_NEON64
 #if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 8) && !defined(__INTEL_COMPILER) && !defined(__clang__)
-#define vreinterpretq_f64_u64(x) ((float64x2_t) (uint64x2_t) (x))
-#define vreinterpretq_u64_f64(x) ((uint64x2_t) (float64x2_t) (x))
+/* GCC 4.8 and older misses various functions:
+    - vdupq_laneq_* family of functions
+    - vreinterpretq_f64_* family of functions
+    - vreinterpretq_*_f64 family of functions
+*/
+#error "The first supported GCC version for aarch64 NEON is 4.9"
 #endif
 
 #if (__GNUC__ == 4) && (__GNUC_MINOR__ <= 9) && !defined(__INTEL_COMPILER) && !defined(__clang__)
