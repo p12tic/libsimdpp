@@ -80,9 +80,10 @@ simdpp/detail/workarounds.h for more details.
 
  - AVX2 is not supported on Clang 3.6.
 
- - AVX512F is not supported on GCC 5.x and older; not supported on MSVC yet.
-
- - AVX512BW is not supported on Clang 4.0 and older.
+ - AVX512F is not supported on:
+    - GCC 5.x and older
+    - Clang 5.0 and older
+    - MSVC
 
  - NEON armv7 is not supported on Clang 3.3 and older.
 

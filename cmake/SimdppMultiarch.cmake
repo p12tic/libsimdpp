@@ -586,10 +586,6 @@ set(SIMDPP_X86_AVX512BW_TEST_CODE
         return *opaque;
     }
 
-    #if (__clang_major__ == 4) && (__clang_minor__ == 0)
-    #error Not supported. See simdpp/detail/workarounds.h
-    #endif
-
     int main()
     {
         union {
@@ -629,10 +625,6 @@ set(SIMDPP_X86_AVX512DQ_TEST_CODE
         opaque = &ptr;
         return *opaque;
     }
-
-    #if (__clang_major__ == 4) && (__clang_minor__ == 0)
-    #error Not supported. See simdpp/detail/workarounds.h
-    #endif
 
     int main()
     {
