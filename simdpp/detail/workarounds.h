@@ -32,13 +32,16 @@
 #endif
 
 #if SIMDPP_USE_AVX512F
-#if (__GNUC__ == 4) && !defined(__INTEL_COMPILER) && !defined(__clang__)
-/*  See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70059.
-    _mm512_inserti64x4(x, y, 0) and related intrinsics result in wrong code.
-    _mm512_castsi256_si512 is not available in GCC 4.9, thus there's no way
-    to convert between 256-bit and 512-bit vectors.
+#if defined(__GNUC__) && (__GNUC__ < 6) && !defined(__INTEL_COMPILER) && !defined(__clang__)
+/*  GCC 5.x and older have the following bugs:
+      - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70059.
+        _mm512_inserti64x4(x, y, 0) and related intrinsics result in wrong code.
+        _mm512_castsi256_si512 is not available in GCC 4.9, thus there's no way
+        to convert between 256-bit and 512-bit vectors.
+      - Error: invalid register operand for `vpsrlw' when compiling shift code
+        on old binutils
 */
-#error "The first supported GCC version for AVX512F is 5.0"
+#error "The first supported GCC version for AVX512F is 6.0"
 #endif
 #endif
 

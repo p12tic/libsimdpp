@@ -324,16 +324,25 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
             volatile char data[64];
             __m512 align;
         };
-        __m512 a = _mm512_load_ps((float*)data);
-        a = _mm512_add_ps(a, a);
-        __m512d d = _mm512_castps_pd(a); // weed out GCC < 5.0
-        _mm512_store_ps((float*)data, a);
+        __m512 f = _mm512_load_ps((float*)data);
+        __m512i i = _mm512_load_epi32((__m512i*)data);
 
-        // Certain versions of MSVC 2017 miss various subsets of intrinsics
-        __m512i b = _mm512_load_epi32((void*)data);
-        b = _mm512_or_epi32(b, b);
-        _mm512_store_epi32((void*)data, b);
-        a = _mm512_ceil_ps(a);
+        f = _mm512_add_ps(f, f);
+
+        // MSVC 2017 miss this
+        i = _mm512_or_epi32(i, i);
+        f = _mm512_ceil_ps(f);
+
+        // GCC 5.x miss this
+        __m512d d = _mm512_castps_pd(f);
+
+        // ICE on GCC 5.4 on old binutils
+        __m256i i256 = _mm512_castsi512_si256(i);
+        __m128i i128 = _mm512_castsi512_si128(i);
+        i256 = _mm256_srl_epi16(i256, i128);
+
+        _mm512_store_ps((float*)data, f);
+        _mm512_store_epi32((void*)data, i);
     }"
 )
 
