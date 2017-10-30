@@ -38,7 +38,7 @@ uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16
     for (unsigned i = 0; i < 16; i++) {
         unsigned j = mi.el(i) & 0x0f;
         unsigned which = mi.el(i) < 0x10;
-        bool zero = mi.el(i) & 0x80;
+        bool zero = (bool)(mi.el(i) & 0x80);
         r.el(i) = zero ? 0 : (which ? ai.el(j) : bi.el(j));
     }
     return r;

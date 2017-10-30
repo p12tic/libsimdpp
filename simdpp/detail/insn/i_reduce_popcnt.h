@@ -70,7 +70,7 @@ uint32_t i_reduce_popcnt(const uint32<8>& a)
     return i_reduce_popcnt(a0) + i_reduce_popcnt(a1);
 #else
     uint64<4> r = popcnt((uint64<4>)a);
-    return reduce_add(r);
+    return (uint32_t) reduce_add(r);
 #endif
 }
 #endif
