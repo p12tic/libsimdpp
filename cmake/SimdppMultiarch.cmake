@@ -507,6 +507,10 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
     "#include <immintrin.h>
     #include <iostream>
 
+    #if defined(__GNUC__) && (__GNUC__ < 6) && !defined(__INTEL_COMPILER) && !defined(__clang__)
+    #error GCC 5.x and older are not supported on AVX512F. See simdpp/detail/workarounds.h
+    #endif
+
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
@@ -537,14 +541,6 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         // MSVC 2017 miss this
         i = _mm512_or_epi32(i, i);
         f = _mm512_ceil_ps(f);
-
-        // GCC 5.x miss this
-        __m512d d = _mm512_castps_pd(f);
-
-        // ICE on GCC 5.4 on old binutils
-        __m256i i256 = _mm512_castsi512_si256(i);
-        __m128i i128 = _mm512_castsi512_si128(i);
-        i256 = _mm256_srl_epi16(i256, i128);
 
         // ICE on various versions of Clang trying to select palignr
         __m512i i2 = _mm512_load_epi32((__m512i*)p);
