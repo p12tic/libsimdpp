@@ -51,8 +51,12 @@ template<class T, class R> SIMDPP_INL
 void cast_bitwise(const T& t, R& r)
 {
     static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+#if defined(_MSC_VER) && _MSC_VER < 1900
+    r = *reinterpret_cast<const R*>(&t);
+#else
     cast_helper<T, R> helper(t);
     r = helper.convert();
+#endif
 }
 
 template<class T, class R> SIMDPP_INL
