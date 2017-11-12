@@ -158,6 +158,9 @@ the compiler will generate.
 {{ltt | shuffle/zipX_lo_128 | zip16_lo&nbsp;zip8_lo&nbsp;zip4_lo&nbsp;zip2_lo }} <br/>
 {{ltt | shuffle/unzipX_hi_128 | unzip16_hi&nbsp;unzip8_hi<br/>unzip4_hi&nbsp;unzip2_hi }} <br/>
 {{ltt | shuffle/unzipX_lo_128 | unzip16_lo&nbsp;unzip8_lo<br/>unzip4_lo&nbsp;unzip2_lo }} <br/>
+{{ltt | shuffle/make_shuffle_bytes16_mask}}<br/>
+{{ltt | shuffle/shuffle_bytes16}}&nbsp;&nbsp;{{ltt | shuffle/shuffle_zbytes16}}<br/>
+{{ltt | shuffle/permute_bytes16}}&nbsp;&nbsp;{{ltt | shuffle/permute_zbytes16}}<br/>
 </div>
 
 '''[[misc | Miscellaneous operations]]'''

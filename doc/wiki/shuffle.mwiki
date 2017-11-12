@@ -27,4 +27,9 @@ The following shuffle operations are provided.
 {{dsc inc | shuffle/dsc zipX_lo_128 }}
 {{dsc inc | shuffle/dsc unzipX_hi_128 }}
 {{dsc inc | shuffle/dsc unzipX_lo_128 }}
+{{dsc inc | shuffle/dsc make_shuffle_bytes16_mask }}
+{{dsc inc | shuffle/dsc shuffle_bytes16 }}
+{{dsc inc | shuffle/dsc shuffle_zbytes16 }}
+{{dsc inc | shuffle/dsc permute_bytes16 }}
+{{dsc inc | shuffle/dsc permute_zbytes16 }}
 {{dsc end}}
