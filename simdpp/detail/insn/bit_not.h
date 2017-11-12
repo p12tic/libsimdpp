@@ -14,8 +14,8 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/bit_xor.h>
+#include <simdpp/core/to_mask.h>
 #include <simdpp/detail/null/bitwise.h>
-#include <simdpp/detail/to_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -147,7 +147,7 @@ mask_int8x16 i_bit_not(const mask_int8x16& a)
 #if SIMDPP_USE_NULL
     return detail::null::bit_not_mm(a);
 #else
-    return detail::to_mask(i_bit_not(uint8x16(a)));
+    return to_mask(i_bit_not(uint8x16(a)));
 #endif
 }
 
@@ -157,7 +157,7 @@ mask_int16x8 i_bit_not(const mask_int16x8& a)
 #if SIMDPP_USE_NULL
     return detail::null::bit_not_mm(a);
 #else
-    return detail::to_mask(i_bit_not(uint16x8(a)));
+    return to_mask(i_bit_not(uint16x8(a)));
 #endif
 }
 
@@ -167,7 +167,7 @@ mask_int32x4 i_bit_not(const mask_int32x4& a)
 #if SIMDPP_USE_NULL
     return detail::null::bit_not_mm(a);
 #else
-    return detail::to_mask(i_bit_not(uint32x4(a)));
+    return to_mask(i_bit_not(uint32x4(a)));
 #endif
 }
 
@@ -177,7 +177,7 @@ mask_int64x2 i_bit_not(const mask_int64x2& a)
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::bit_not_mm(a);
 #else
-    return detail::to_mask(i_bit_not(uint64x2(a)));
+    return to_mask(i_bit_not(uint64x2(a)));
 #endif
 }
 
@@ -290,7 +290,7 @@ mask_float32x4 i_bit_not(const mask_float32x4& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::bit_not_mm(a);
 #else
-    return detail::to_mask(i_bit_not(float32<4>(a)));
+    return to_mask(i_bit_not(float32<4>(a)));
 #endif
 }
 
@@ -298,7 +298,7 @@ mask_float32x4 i_bit_not(const mask_float32x4& a)
 static SIMDPP_INL
 mask_float32x8 i_bit_not(const mask_float32x8& a)
 {
-    return detail::to_mask(i_bit_not(float32x8(a)));
+    return to_mask(i_bit_not(float32x8(a)));
 }
 #endif
 
@@ -318,7 +318,7 @@ mask_float64x2 i_bit_not(const mask_float64x2& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_206)
     return detail::null::bit_not_mm(a);
 #else
-    return detail::to_mask(i_bit_not(float64x2(a)));
+    return to_mask(i_bit_not(float64x2(a)));
 #endif
 }
 
@@ -326,7 +326,7 @@ mask_float64x2 i_bit_not(const mask_float64x2& a)
 static SIMDPP_INL
 mask_float64x4 i_bit_not(const mask_float64x4& a)
 {
-    return detail::to_mask(i_bit_not(float64x4(a)));
+    return to_mask(i_bit_not(float64x4(a)));
 }
 #endif
 
