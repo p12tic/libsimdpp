@@ -12,5 +12,6 @@
 {{nv col next}}
 {{nv ln | conv/to_float32 }}
 {{nv ln | conv/to_float64 }}
+{{nv ln | conv/to_mask }}
 {{nv col end}}
 {{nv end}}

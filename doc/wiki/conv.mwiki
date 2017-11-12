@@ -14,4 +14,5 @@ The following type conversion operations are provided.
 {{dsc inc | conv/dsc to_uint64 }}
 {{dsc inc | conv/dsc to_float32 }}
 {{dsc inc | conv/dsc to_float64 }}
+{{dsc inc | conv/dsc to_mask }}
 {{dsc end}}

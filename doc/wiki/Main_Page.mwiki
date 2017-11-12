@@ -136,7 +136,8 @@ the compiler will generate.
 {{ltt|conv/to_int16}}&nbsp;&nbsp;{{ltt|conv/to_uint16}}<br/>
 {{ltt|conv/to_int32}}&nbsp;&nbsp;{{ltt|conv/to_uint32}}<br/>
 {{ltt|conv/to_int64}}&nbsp;&nbsp;{{ltt|conv/to_uint64}}<br/>
-{{ltt|conv/to_float32}}&nbsp;&nbsp;{{ltt|conv/to_float64}}
+{{ltt|conv/to_float32}}&nbsp;&nbsp;{{ltt|conv/to_float64}}<br/>
+{{ltt|conv/to_mask}}
 </div>
 
 '''[[shuffle | Shuffle operations]]'''
