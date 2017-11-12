@@ -160,12 +160,17 @@ template<> struct shuffle_impl<8> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
-        uint8<16> mask = make_uint(s0, s1, s2, s3);
 #if SIMDPP_USE_AVX512VL
+        uint8<16> mask = make_uint(s0, s1, s2, s3);
         return _mm256_permutex2var_epi64(a.native(),
                                          _mm256_cvtepi8_epi64(mask.native()),
                                          b.native());
 #else
+        const unsigned p0 = s0<4 ? s0 : s0+4;
+        const unsigned p1 = s1<4 ? s1 : s1+4;
+        const unsigned p2 = s2<4 ? s2 : s2+4;
+        const unsigned p3 = s3<4 ? s3 : s3+4;
+        uint8<16> mask = make_uint(p0, p1, p2, p3);
         __m512i res = _mm512_permutex2var_epi64(_mm512_castsi256_si512(a.native()),
                                                 _mm512_cvtepi8_epi64(mask.native()),
                                                 _mm512_castsi256_si512(b.native()));
