@@ -97,7 +97,7 @@ public:
     const char* name() const                { return name_; }
 
     /// Resets the sequence number
-    void reset_seq()                        { seq_ = 1; }
+    void reset_seq()                        { seq_ = 0; }
 
     /** Allows synchronizing tests in cases when certain architectures do not
         execute the test in question. The function must be called before and
