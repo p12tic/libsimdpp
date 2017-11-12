@@ -80,7 +80,7 @@ void print_numeric(std::ostream& err, unsigned num_elems, unsigned precision,
     err << std::dec;
 }
 
-void print_vector_hex(std::ostream& out, unsigned type, unsigned num_elems,
+void print_vector_hex(std::ostream& out, ElementType type, unsigned num_elems,
                       const void* data)
 {
     switch (type) {
@@ -117,8 +117,8 @@ void print_vector_hex(std::ostream& out, unsigned type, unsigned num_elems,
     }
 }
 
-void print_vector_numeric(std::ostream& out, unsigned type, unsigned num_elems,
-                          const void* data)
+void print_vector_numeric(std::ostream& out, ElementType type,
+                          unsigned num_elems, const void* data)
 {
     switch (type) {
     case TYPE_UINT8:
@@ -154,7 +154,7 @@ void print_vector_numeric(std::ostream& out, unsigned type, unsigned num_elems,
     }
 }
 
-const char* vector_type_to_str(unsigned type)
+const char* vector_type_to_str(ElementType type)
 {
     switch (type) {
     case TYPE_UINT8: return "uint8";
@@ -171,7 +171,7 @@ const char* vector_type_to_str(unsigned type)
     }
 }
 
-void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
+void print_data_diff(std::ostream& out, ElementType type, unsigned num_elems,
                      const void* data_a, const void* data_b)
 {
     out << "type: " << vector_type_to_str(type)

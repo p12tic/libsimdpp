@@ -16,7 +16,7 @@
 #include "element_type.h"
 
 // Prints two vectors side by side for comparison
-void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
+void print_data_diff(std::ostream& out, ElementType type, unsigned num_elems,
                      const void* data_a, const void* data_b);
 
 void print_separator(std::ostream& out);
