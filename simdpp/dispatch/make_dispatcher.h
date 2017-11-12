@@ -397,7 +397,7 @@ SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       
     SIMDPP_MAKE_DISPATCHER macro and also of the functions referenced by the
     dispatcher function. The latter is necessary because the dispatcher is
     compiled into a only single object file out of the set of multiversioned
-    object files. The referenced functions be instantiated in all of them.
+    object files. The referenced functions will be instantiated in all of them.
 */
 // Implementation note: we can't accept the signatures as a sequence, e.g.
 // (a)(b)(c), because SIMDPP_PP_SEQ_FOR_EACH does not support sequence elements
