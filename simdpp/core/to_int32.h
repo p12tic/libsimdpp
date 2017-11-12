@@ -13,9 +13,11 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/detail/insn/conv_extend_to_int32.h>
 #include <simdpp/detail/insn/conv_shrink_to_int32.h>
 #include <simdpp/detail/insn/conv_float_to_int32.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -163,12 +165,20 @@ uint32<N,expr_empty> to_uint32(const uint64<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> to_uint32(const float32<N,E>& a)
 {
+#if SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION
     return detail::insn::i_to_uint32(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 template<unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> to_uint32(const float64<N,E>& a)
 {
+#if SIMDPP_HAS_FLOAT64_TO_UINT32_CONVERSION
     return detail::insn::i_to_uint32(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

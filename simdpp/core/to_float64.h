@@ -13,7 +13,9 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/detail/insn/conv_any_to_float64.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -68,12 +70,20 @@ float64<N,expr_empty> to_float64(const uint32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 float64<N,expr_empty> to_float64(const int64<N,E>& a)
 {
+#if SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION
     return detail::insn::i_to_float64(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 template<unsigned N, class E> SIMDPP_INL
 float64<N,expr_empty> to_float64(const uint64<N,E>& a)
 {
+#if SIMDPP_HAS_UINT64_TO_FLOAT64_CONVERSION
     return detail::insn::i_to_float64(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 template<unsigned N, class E> SIMDPP_INL
 float64<N,expr_empty> to_float64(const float32<N,E>& a)

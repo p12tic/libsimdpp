@@ -13,8 +13,10 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/detail/insn/conv_extend_to_int64.h>
 #include <simdpp/detail/insn/conv_float_to_int64.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -81,12 +83,20 @@ int64<N,expr_empty> to_int64(const uint64<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 int64<N,expr_empty> to_int64(const float32<N,E>& a)
 {
+#if SIMDPP_HAS_FLOAT32_TO_INT64_CONVERSION
     return detail::insn::i_to_int64(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 template<unsigned N, class E> SIMDPP_INL
 int64<N,expr_empty> to_int64(const float64<N,E>& a)
 {
+#if SIMDPP_HAS_FLOAT64_TO_INT64_CONVERSION
     return detail::insn::i_to_int64(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 
 /** Converts elements within a vector to 64-bit unsigned values.
@@ -151,12 +161,20 @@ uint64<N,expr_empty> to_uint64(const uint64<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint64<N,expr_empty> to_uint64(const float32<N,E>& a)
 {
+#if SIMDPP_HAS_FLOAT32_TO_UINT64_CONVERSION
     return detail::insn::i_to_uint64(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 template<unsigned N, class E> SIMDPP_INL
 uint64<N,expr_empty> to_uint64(const float64<N,E>& a)
 {
+#if SIMDPP_HAS_FLOAT64_TO_UINT64_CONVERSION
     return detail::insn::i_to_uint64(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
 }
 
 
