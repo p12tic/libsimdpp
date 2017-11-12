@@ -62,11 +62,29 @@ public:
 
     TestData() : ptr_(nullptr) {}
 
+    TestData(const TestData& other)
+    {
+        data_ = other.data_;
+        ptr_ = &data_.front();
+    }
+
+    TestData& operator=(const TestData& other)
+    {
+        data_ = other.data_;
+        ptr_ = &data_.front();
+    }
+
     template<class U>
     void add(const U& u)
     {
         T t = (T) u;
         data_.push_back(t);
+        ptr_ = &data_.front();
+    }
+
+    void add(const TestData& other)
+    {
+        data_.insert(data_.end(), other.data_.begin(), other.data_.end());
         ptr_ = &data_.front();
     }
 

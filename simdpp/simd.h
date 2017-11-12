@@ -208,6 +208,8 @@
 #include <simdpp/dispatch/make_dispatcher.h>
 #endif
 
+#include <simdpp/capabilities.h>
+
 namespace simdpp {
 using namespace SIMDPP_ARCH_NAMESPACE;
 namespace detail {

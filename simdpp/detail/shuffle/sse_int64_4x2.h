@@ -205,7 +205,8 @@ template<> struct shuffle_impl<9> {
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
 uint64<N> do_shuffle(const uint64<N>& a, const uint64<N>& b)
 {
-    return shuffle_impl<impl_selector<s0, s1, s2, s3>::impl>::run<s0, s1, s2, s3>(a, b);
+    const unsigned selector = impl_selector<s0, s1, s2, s3>::impl;
+    return shuffle_impl<selector>::template run<s0, s1, s2, s3>(a, b);
 }
 
 } // namespace sse_shuffle4x2_int64

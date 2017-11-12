@@ -1,4 +1,4 @@
-/*  Copyright (C) 2013-2014  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2017  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -13,63 +13,75 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/insn/to_float64.h>
+#include <simdpp/detail/insn/conv_any_to_float64.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/** Converts the 32-bit integer values to 64-bit float values.
+/** Converts elements within a vector to 64-bit floating-point values.
 
     SSE specific:
 
-    If only inexact conversion can be performed, the value is rounded according
-    to the current rounding mode.
+    If only inexact conversion can be performed, the current rounding mode is
+    used.
 
     NEON specific:
 
-    If only inexact conversion can be performed, the value is rounded to the
-    nearest representable value.
+    If only inexact conversion can be performed, round to nearest mode is used.
 
-    @par 256-bit version:
     @code
     r0 = (double) a0
     ...
-    r3 = (double) a3
+    rN = (double) aN
     @endcode
-
-    @icost{SSE2-SSE4.1, 3}
-    @novec{NEON, ALTIVEC}
 */
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const int8<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const uint8<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const int16<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const uint16<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
 template<unsigned N, class E> SIMDPP_INL
 float64<N,expr_empty> to_float64(const int32<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
-
-/** Converts the 32-bit float values to 64-bit float values.
-
-    SSE specific:
-
-    If only inexact conversion can be performed, the value is rounded according
-    to the current rounding mode.
-
-    NEON specific:
-
-    If only inexact conversion can be performed, the value is rounded to the
-    nearest representable value.
-
-    @par 256-bit version:
-    @code
-    r0 = (double) a0
-    ...
-    r3 = (double) a3
-    @endcode
-
-    @icost{SSE2-SSE4.1, 3}
-    @novec{NEON, ALTIVEC}
-*/
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const uint32<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const int64<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const uint64<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
 template<unsigned N, class E> SIMDPP_INL
 float64<N,expr_empty> to_float64(const float32<N,E>& a)
+{
+    return detail::insn::i_to_float64(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float64<N,expr_empty> to_float64(const float64<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
