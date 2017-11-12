@@ -157,8 +157,8 @@ void print_vector_numeric(std::ostream& out, unsigned type, unsigned num_elems,
 const char* vector_type_to_str(unsigned type)
 {
     switch (type) {
-    case TYPE_UINT8: return "uint86";
-    case TYPE_INT8: return "int86";
+    case TYPE_UINT8: return "uint8";
+    case TYPE_INT8: return "int8";
     case TYPE_UINT16: return "uint16";
     case TYPE_INT16: return "int16";
     case TYPE_UINT32: return "uint32";
