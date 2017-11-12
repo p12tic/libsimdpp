@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/transpose2 | transposes 2x2 blocks within two vectors }}

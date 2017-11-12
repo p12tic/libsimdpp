@@ -20,9 +20,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class E1, class E2, class E3>  SIMDPP_INL
-R expr_eval(const expr_blend<E1, E2, E3>& q)
+R expr_eval_blend(const E1& qon, const E2& qoff, const E3& qmask)
 {
-    return (R) insn::i_blend(q.on.eval(), q.off.eval(), q.mask.eval());
+    return (R) insn::i_blend(qon.eval(), qoff.eval(), qmask.eval());
 }
 
 } // namespace detail

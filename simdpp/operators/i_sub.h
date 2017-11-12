@@ -44,7 +44,7 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
                                     detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int8, uint8)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int8, int8, uint8)
 
 /** Subtracts 16-bit integer values.
 
@@ -67,7 +67,7 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
                                     detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int16, uint16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int16, int16, uint16)
 
 /** Subtracts 32-bit integer values.
 
@@ -90,7 +90,7 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
                                     detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int32, uint32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int32, int32, uint32)
 
 /** Subtracts 64-bit integer values.
 
@@ -117,7 +117,7 @@ typename detail::get_expr_uint<expr_sub, V1, V2>::type
                                     detail::cast_expr<typename expr::v2_type>(b.wrapped()));
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int64, uint64)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator-, expr_sub, any_int64, int64, uint64)
 
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -14,4 +14,6 @@ void main_test_function(TestReporter& ts);
 void test_expr_bitwise(TestReporter& ts);
 void test_expr_math_float(TestReporter& ts);
 void test_expr_math_int(TestReporter& ts);
+void test_expr_compare(TestReporter& tr);
+
 #endif

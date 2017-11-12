@@ -61,7 +61,8 @@ inline void get_cpuid(unsigned level, unsigned subleaf, unsigned* eax, unsigned*
 
 inline uint64_t get_xcr(unsigned level)
 {
-#if (defined (_MSC_FULL_VER) && _MSC_FULL_VER >= 160040000) || (defined (__INTEL_COMPILER) && __INTEL_COMPILER >= 1200) // Microsoft or Intel compiler supporting _xgetbv intrinsic
+#if (defined (_MSC_FULL_VER) && _MSC_FULL_VER >= 160040000) ||                  \
+    (defined (__INTEL_COMPILER) && __INTEL_COMPILER >= 1200)
     return _xgetbv(level);
 #elif defined(__GNUC__) || defined(__clang__)
     uint32_t eax, edx;
@@ -70,6 +71,22 @@ inline uint64_t get_xcr(unsigned level)
 #else
     return 0;
 #endif
+}
+
+enum cpu_manufacturer {
+    CPU_INTEL,
+    CPU_AMD,
+    CPU_UNKNOWN
+};
+
+static inline cpu_manufacturer
+    get_cpu_manufacturer(uint32_t ebx, uint32_t ecx, uint32_t edx)
+{
+    if (ebx == 0x756E6547 && ecx == 0x6C65746E && edx == 0x49656E69)
+        return CPU_INTEL; // "GenuineIntel"
+    if (ebx == 0x68747541 && ecx == 0x444D4163 && edx == 0x69746E65)
+        return CPU_AMD; // "AuthenticAMD"
+    return CPU_UNKNOWN;
 }
 
 } // namespace detail
@@ -86,6 +103,8 @@ inline Arch get_arch_raw_cpuid()
 
     simdpp::detail::get_cpuid(0, 0, &eax, &ebx, &ecx, &edx);
     unsigned max_cpuid_level = eax;
+    simdpp::detail::cpu_manufacturer mfg =
+            simdpp::detail::get_cpu_manufacturer(ebx, ecx, edx);
 
     simdpp::detail::get_cpuid(0x80000000, 0, &eax, &ebx, &ecx, &edx);
     unsigned max_ex_cpuid_level = eax;
@@ -101,6 +120,10 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_SSSE3;
         if (ecx & (1 << 19))
             arch_info |= Arch::X86_SSE4_1;
+        if (ecx & (1 << 20) && mfg == simdpp::detail::CPU_INTEL)
+            arch_info |= Arch::X86_POPCNT_INSN; // popcnt is included in SSE4.2 on Intel
+        if (ecx & (1 << 23))
+            arch_info |= Arch::X86_POPCNT_INSN;
         if (ecx & (1 << 12))
             arch_info |= Arch::X86_FMA3;
         if (ecx & (1 << 26)) {
@@ -127,6 +150,10 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_AVX2;
         if (ebx & (1 << 16) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512F;
+        if (ebx & (1 << 30) && xsave_xrstore_avail)
+            arch_info |= Arch::X86_AVX512BW;
+        if (ebx & (1 << 17) && xsave_xrstore_avail)
+            arch_info |= Arch::X86_AVX512DQ;
     }
 
     return arch_info;

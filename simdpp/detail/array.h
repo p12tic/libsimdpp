@@ -24,8 +24,8 @@ namespace detail {
 template<class T, unsigned N>
 class array {
 public:
-    T&       operator[](unsigned id) { return d[id]; }
-    const T& operator[](unsigned id) const { return d[id]; }
+    SIMDPP_INL T&       operator[](unsigned id) { return d[id]; }
+    SIMDPP_INL const T& operator[](unsigned id) const { return d[id]; }
 private:
     T d[N];
 };

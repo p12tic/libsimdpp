@@ -1,0 +1,7 @@
+{{navbar
+|heading1 = navbar heading
+|content1 = navbar content
+
+|heading2 = util/navbar heading
+|content2 = util/navbar content
+}}

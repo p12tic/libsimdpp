@@ -17,11 +17,12 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& opts);
-void test_bitwise(TestResults& res);
+void test_bitwise(TestResults& res, TestReporter& tr);
 void test_blend(TestResults& res);
 void test_compare(TestResults& res);
 void test_convert(TestResults& res);
 void test_construct(TestResults& res);
+void test_for_each(TestResults& res, TestReporter& tr);
 void test_math_fp(TestResults& res, const TestOptions& opts);
 void test_math_int(TestResults& res);
 void test_math_shift(TestResults& res);

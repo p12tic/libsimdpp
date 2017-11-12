@@ -1,0 +1,17 @@
+This is one of templates used to make links.
+
+Absolute links:
+
+{{tl|ltt|''path''|''title'' {{mark optional}} }} - link to a page using absolute path. The default title is only the last part of the path. Link font is {{tt|teletype}}.
+
+{{tl|ltf|''path''|''title'' {{mark optional}} | args=''arguments'' {{mark optional}}  }} - link to a page using absolute path. The default title is only the last part of the path. Link font is {{tt|teletype}}. Parentheses indicating function are appended.
+
+{{tl|l2tt|''page''|''title1'' {{mark optional}} | ''title2'' {{mark optional}} }} - makes a link to a page using absolute path. The title is formed from the two last parts of the path. {{tt|::}} is inserted between them. Each of these parts can be overridden by ''title1'' and ''title2''.  Link font is {{tt|teletype}}.
+
+Relative links:
+
+{{tl|rl|''page''|''title'' {{mark optional}} }} - makes a link to a page relative to this page. The link appears in normal font.
+
+{{tl|rlp|''page''|''title'' {{mark optional}} }} - makes a link to a page relative to the parent page. The link appears in normal font.
+
+{{tl|rlt|''page''|''title'' {{mark optional}} }} - makes a link to a page relative to this page. The link appears in teletype font.

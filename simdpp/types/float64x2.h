@@ -37,6 +37,10 @@ public:
     typedef __m128d native_type;
 #elif SIMDPP_USE_NEON64
     typedef float64x2_t native_type;
+#elif SIMDPP_USE_VSX_206
+    typedef __vector double native_type;
+#elif SIMDPP_USE_MSA
+    typedef v2f64 native_type;
 #else
     typedef detail::array<double, 2> native_type;
 #endif
@@ -60,7 +64,11 @@ public:
     SIMDPP_INL float64<2>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL float64<2>(const expr_vec_construct<E>& e)
     {
@@ -77,10 +85,10 @@ public:
 
     SIMDPP_INL float64<2> eval() const { return *this; }
 
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_206)
     /// For internal use only
-    const double& el(unsigned i) const { return d_[i]; }
-          double& el(unsigned i)       { return d_[i]; }
+    SIMDPP_INL const double& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL double& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -105,6 +113,10 @@ public:
     typedef __m128d native_type;
 #elif SIMDPP_USE_NEON64
     typedef float64x2_t native_type;
+#elif SIMDPP_USE_VSX_206
+    typedef __vector double native_type;
+#elif SIMDPP_USE_MSA
+    typedef v2f64 native_type;
 #else // NULL, NEON 32bit, ALTIVEC
     typedef detail::array<bool, 2> native_type;
 #endif
@@ -115,8 +127,8 @@ public:
 
     SIMDPP_INL mask_float64<2>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64
-    SIMDPP_INL mask_float64<2>(const float64<2>& d) : d_(d) {}
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
+    SIMDPP_INL mask_float64<2>(const float64<2>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float64<2>(const mask_int64<2,E>& d)
@@ -128,21 +140,26 @@ public:
         *this = bit_cast<mask_float64<2> >(d.eval()); return *this;
     }
 
-    SIMDPP_INL operator native_type() const { return d_; }
+    /// Convert to the underlying vector type
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL float64<2> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-        return detail::null::unmask_mask<float64<2> >(*this);
-    #else
+    #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
         return float64<2>(d_);
+    #else
+        return detail::null::unmask_mask<float64<2> >(*this);
     #endif
     }
 
-#if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64)
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+#if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA)
+    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_float64<2>& vec(unsigned) const { return *this; }

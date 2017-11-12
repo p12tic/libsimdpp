@@ -107,13 +107,26 @@ class get_expr_blend {
 
 
 public:
-    typedef typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type v1_type;
-    typedef typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type v2_type;
-    typedef typename type_of_tag<v3_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V3>::type>::type v3_type;
+    typedef typename type_of_tag<
+        v12_type_tag + size_tag, V1::length_bytes,
+        typename wrap_vector_expr<V1>::type
+    >::type v1_type;
+
+    typedef typename type_of_tag<
+        v12_type_tag + size_tag, V1::length_bytes,
+        typename wrap_vector_expr<V2>::type
+    >::type v2_type;
+
+    typedef typename type_of_tag<
+        v3_type_tag + size_tag, V1::length_bytes,
+        typename wrap_vector_expr<V3>::type
+    >::type v3_type;
 
     typedef expr_blend<v1_type, v2_type, v3_type> expr_type;
-    typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                 expr_blend<v1_type, v2_type, v3_type> >::type type;
+    typedef typename type_of_tag<
+        type_tag + size_tag, V1::length_bytes,
+        expr_blend<v1_type, v2_type, v3_type>
+    >::type type;
 };
 
 } // namespace detail

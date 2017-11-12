@@ -1,7 +1,0 @@
-{{nv begin}}
-{{nv ln | bitwise/bit_and}}
-{{nv ln | bitwise/bit_andnot}}
-{{nv ln | bitwise/bit_or}}
-{{nv ln | bitwise/bit_xor}}
-{{nv ln | bitwise/bit_not}}
-{{nv end}}

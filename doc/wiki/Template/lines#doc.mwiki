@@ -1,3 +1,0 @@
-{{tl|lines| ''text''}}
-
-Extracts lines from {{tt|<nowiki><br></nowiki>}}-separated text and puts each of them into separate HTML tag.

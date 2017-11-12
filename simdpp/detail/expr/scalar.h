@@ -22,13 +22,19 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class Int> SIMDPP_INL void scalar_convert(Int& d, uint64_t x) { d = static_cast<Int>(x); }
-SIMDPP_INL void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
-SIMDPP_INL void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
+static SIMDPP_INL
+void scalar_convert(float& d, uint64_t x) { d = bit_cast<float>(uint32_t(x)); }
+static SIMDPP_INL
+void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
 
-SIMDPP_INL uint64_t cast_int(int32_t x) { return uint32_t(x); }
-SIMDPP_INL uint64_t cast_int(int64_t x) { return x; }
-SIMDPP_INL uint64_t cast_int(uint32_t x) { return x; }
-SIMDPP_INL uint64_t cast_int(uint64_t x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(int32_t x) { return uint32_t(x); }
+static SIMDPP_INL
+uint64_t cast_int(int64_t x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(uint32_t x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(uint64_t x) { return x; }
 
 template<class V> SIMDPP_INL
 V make_const_bitwise(uint64_t t)
@@ -41,19 +47,19 @@ V make_const_bitwise(uint64_t t)
 }
 
 template<class R, class EL> SIMDPP_INL
-R expr_eval(const expr_scalar<EL>& q)
+R expr_eval_scalar(EL q)
 {
     typename detail::remove_sign<R>::type r;
     expr_vec_make_const<typename R::element_type, 1> e;
-    e.a[0] = reinterpret_cast<const EL&>(q);
+    e.a[0] = static_cast<typename R::element_type>(q);
     insn::i_make_const(r, e, 0);
     return R(r);
 }
 
 template<class R, class EL> SIMDPP_INL
-R expr_eval(const expr_scalar_bitwise<EL>& q)
+R expr_eval_scalar_bitwise(EL q)
 {
-    return make_const_bitwise<R>(cast_int(reinterpret_cast<const EL&>(q)));
+    return make_const_bitwise<R>(cast_int(q));
 }
 
 } // namespace detail

@@ -1,0 +1,1 @@
+{{dsc tfun | int/cmp_eq | compares vector elements for equality }}

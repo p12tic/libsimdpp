@@ -25,12 +25,13 @@ void test_expr_bitwise(TestReporter& ts)
         float32<4> p = v.f32[i*4+3];
 
         // operators
-        TEST_CMP_VEC(ts, bit_and(a, b), a & b);
-        TEST_CMP_VEC(ts, bit_or(a, b), a | b);
-        TEST_CMP_VEC(ts, bit_xor(a, b), a ^ b);
-        TEST_CMP_VEC(ts, bit_andnot(a, b), a & ~b);
+        TEST_EQUAL(ts, bit_and(a, b), a & b);
+        TEST_EQUAL(ts, bit_or(a, b), a | b);
+        TEST_EQUAL(ts, bit_xor(a, b), a ^ b);
+        TEST_EQUAL(ts, bit_andnot(a, b), a & ~b);
 
-        TEST_CMP_VEC(ts, bit_and(a, bit_or(q, p)), a & (q | p));
-        TEST_CMP_VEC(ts, bit_xor(q, make_uint<uint32x4>(0x12341234)), q ^ 0x12341234);
+        TEST_EQUAL(ts, bit_and(a, bit_or(q, p)), a & (q | p));
+        TEST_EQUAL(ts, bit_xor(q, make_uint<uint32x4>(0x12341234)),
+                   q ^ 0x12341234);
     }
 }

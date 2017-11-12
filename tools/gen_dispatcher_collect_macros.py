@@ -46,6 +46,11 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_SSE4_1
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_POPCNT_INSN
+    #define SIMDPP_DISPATCH_$num$_NS_ID_POPCNT_INSN SIMDPP_INSN_ID_POPCNT_INSN
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_POPCNT_INSN
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_AVX
     #define SIMDPP_DISPATCH_$num$_NS_ID_AVX SIMDPP_INSN_ID_AVX
     #else
@@ -76,6 +81,16 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512F
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512BW
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512BW SIMDPP_INSN_ID_AVX512BW
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512BW
+    #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512DQ
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ SIMDPP_INSN_ID_AVX512DQ
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_$num$_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else
@@ -86,41 +101,74 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_NEON_FLT_SP
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_MSA
+    #define SIMDPP_DISPATCH_$num$_NS_ID_MSA SIMDPP_INSN_ID_MSA
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_MSA
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_ALTIVEC
     #define SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC SIMDPP_INSN_ID_ALTIVEC
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_VSX_206
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_206 SIMDPP_INSN_ID_VSX_206
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_206
+    #endif
+    #if SIMDPP_ARCH_PP_NS_USE_VSX_207
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_207 SIMDPP_INSN_ID_VSX_207
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_207
+    #endif
 
-    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE15(arch,         $n$
+    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE21(arch,         $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NULL,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE3,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSSE3,                                  $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE4_1,                                 $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_POPCNT_INSN,                            $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX,                                    $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX512F,                                $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_AVX512BW,                               $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ,                               $n$
         SIMDPP_DISPATCH_$num$_NS_ID_FMA3,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_FMA4,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_XOP,                                    $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NEON,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NEON_FLT_SP,                            $n$
-        SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC)
+        SIMDPP_DISPATCH_$num$_NS_ID_MSA,                                    $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_ALTIVEC,                                $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_VSX_206,                                $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_VSX_207)
+
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE SIMDPP_DISPATCH_$num$_NAMESPACE
+    #define SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH 1
+    #include <simdpp/dispatch/preprocess_single_compile_arch.h>
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_FOR_DISPATCH
+    #undef SIMDPP_ARCH_PP_THIS_COMPILE_ARCH_NAMESPACE
 
     #define SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)          $n$
-        ARRAY[$num$-1] = SIMDPP_DISPATCH_$num$_NAMESPACE::register_fn_##NAME((FUN_TYPE)(NULL));
-    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(NAME,FUN_TYPE)                 $n$
+        {   /* the following will fail if the overload is not available */  $n$
+            FUN_TYPE fun_ptr = &SIMDPP_DISPATCH_$num$_NAMESPACE::SIMDPP_PP_REMOVE_PARENS(NAME); $n$
+            ARRAY[$num$-1] = ::simdpp::SIMDPP_DISPATCH_$num$_NAMESPACE::detail::create_fn_version(fun_ptr); $n$
+        }
+
+    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(SIGNATURE)                     $n$
         namespace SIMDPP_DISPATCH_$num$_NAMESPACE {                         $n$
-            ::simdpp::detail::FnVersion register_fn_##NAME(FUN_TYPE); }
+            SIMDPP_PP_REMOVE_PARENS(SIGNATURE);                             $n$
+        }
     #undef SIMDPP_ARCH_PP_LIST
 #else
     #define SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)
-    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(NAME,FUN_TYPE)
+    #define SIMDPP_DISPATCH_$num$_FN_DECLARE(SIGNATURE)
 #endif'''
 
 single_fn_register_template = '    SIMDPP_DISPATCH_$num$_FN_REGISTER(ARRAY,NAME,FUN_TYPE)   $n$'
-single_fn_declare_template = '    SIMDPP_DISPATCH_$num$_FN_DECLARE(NAME,FUN_TYPE)   $n$'
+single_fn_declare_template = '''\
+        SIMDPP_DISPATCH_$num$_FN_DECLARE(SIGNATURE)                         $n$'''
 
 # print the actual file
 
@@ -141,7 +189,12 @@ print('''/*  Copyright (C) 2015  Povilas Kanapickas <povilas@radix.lt>
     #error "This file must be included through simd.h"
 #endif
 
+// We rely on setup_arch.h being included before this file to undefine
+// all SIMDPP_ARCH_* macros
+#include <simdpp/setup_arch.h>
+
 #if SIMDPP_EMIT_DISPATCHER
+#include <simdpp/detail/preprocessor/punctuation/remove_parens.hpp>
 ''')
 
 print('#define SIMDPP_DISPATCH_MAX_ARCHS ' + str(num_archs) + '\n')
@@ -152,7 +205,7 @@ for i in range(1, num_archs+1):
 
 print('''
 
-#define SIMDPP_DISPATCH_DECLARE_FUNCTIONS(NAME,FUN_TYPE)                    \\''')
+#define SIMDPP_DISPATCH_DECLARE_FUNCTIONS(SIGNATURE)                        \\''')
 for i in range(1, num_archs+1):
     vars = { 'num' : str(i) }
     output_template(single_fn_declare_template, vars)

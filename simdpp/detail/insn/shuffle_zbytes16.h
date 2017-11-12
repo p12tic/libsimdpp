@@ -25,8 +25,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4800)
+#endif
 
-SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
+static SIMDPP_INL
+uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
 {
 #if SIMDPP_USE_NULL
     uint8x16 ai = a;
@@ -42,16 +47,16 @@ SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, con
     }
     return r;
 #elif SIMDPP_USE_XOP
-    return _mm_perm_epi8(a, b, mask);
+    return _mm_perm_epi8(a.native(), b.native(), mask.native());
 #elif SIMDPP_USE_SSE4_1
     int8x16 sel, set_zero, ai, bi, r;
     sel = mask;
     set_zero = cmp_lt(sel, 0);
-    sel = _mm_slli_epi16(sel, 3);
+    sel = _mm_slli_epi16(sel.native(), 3);
 
-    ai = _mm_shuffle_epi8(a, mask);
-    bi = _mm_shuffle_epi8(b, mask);
-    r = _mm_blendv_epi8(ai, bi, sel);
+    ai = _mm_shuffle_epi8(a.native(), mask.native());
+    bi = _mm_shuffle_epi8(b.native(), mask.native());
+    r = _mm_blendv_epi8(ai.native(), bi.native(), sel.native());
     r = bit_andnot(r, set_zero);
     return r;
 #elif SIMDPP_USE_SSSE3
@@ -61,8 +66,8 @@ SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, con
     m2 = add(m, 0xf0);
     set_zero = cmp_lt(m, 0);
 
-    ai = _mm_shuffle_epi8(a, m1);
-    bi = _mm_shuffle_epi8(b, m2);
+    ai = _mm_shuffle_epi8(a.native(), m1.native());
+    bi = _mm_shuffle_epi8(b.native(), m2.native());
     r = bit_or(ai, bi);
     r = bit_andnot(r, set_zero);
     return r;
@@ -75,23 +80,44 @@ SIMDPP_INL uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, con
     a0 = i_shuffle_bytes16(a0, b0, mask);
     a0 = bit_andnot(a0, zero_mask);
     return a0;
+#elif SIMDPP_USE_MSA
+    return (v16u8) __msa_vshf_b((v16i8) mask.native(),
+                                (v16i8) b.native(),
+                                (v16i8) a.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED3(a, b, mask);
 #endif
 }
 
-#if SIMDPP_USE_AVX2
-SIMDPP_INL uint8x32 i_shuffle_zbytes16(const uint8x32& a, const uint8x32& b, const uint8x32& mask)
-{
-    int8x32 sel, set_zero, ai, bi, r;
-    sel = mask;
-    set_zero = cmp_lt(sel, 0);
-    sel = _mm256_slli_epi16(sel, 3);
+#if _MSC_VER
+#pragma warning(pop)
+#endif
 
-    ai = _mm256_shuffle_epi8(a, mask);
-    bi = _mm256_shuffle_epi8(b, mask);
-    r = _mm256_blendv_epi8(ai, bi, sel);
-    r = bit_andnot(r, set_zero);
+#if SIMDPP_USE_AVX2
+static SIMDPP_INL
+uint8x32 i_shuffle_zbytes16(const uint8x32& a, const uint8x32& b, const uint8x32& mask)
+{
+    int8x32 sel, ai, bi, r;
+    sel = mask;
+    sel = _mm256_slli_epi16(sel.native(), 3);
+
+    ai = _mm256_shuffle_epi8(a.native(), mask.native());
+    bi = _mm256_shuffle_epi8(b.native(), mask.native());
+    r = _mm256_blendv_epi8(ai.native(), bi.native(), sel.native());
+    return r;
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8<64> i_shuffle_zbytes16(const uint8<64>& a, const uint8<64>& b, const uint8<64>& mask)
+{
+    uint8<64> sel_mask, ai, bi, r;
+    sel_mask = make_uint(0x10);
+    __mmask64 sel = _mm512_test_epi8_mask(mask.native(), sel_mask.native());
+
+    ai = _mm512_shuffle_epi8(a.native(), mask.native());
+    bi = _mm512_shuffle_epi8(b.native(), mask.native());
+    r = _mm512_mask_blend_epi8(sel, ai.native(), bi.native());
     return r;
 }
 #endif

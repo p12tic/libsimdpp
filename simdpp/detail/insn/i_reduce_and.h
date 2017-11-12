@@ -23,7 +23,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL uint8_t i_reduce_and(const uint8x16& a)
+static SIMDPP_INL
+uint8_t i_reduce_and(const uint8x16& a)
 {
 #if SIMDPP_USE_NULL
     uint8_t r = a.el(0);
@@ -31,7 +32,7 @@ SIMDPP_INL uint8_t i_reduce_and(const uint8x16& a)
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint8x16 r = bit_and(a, move16_l<8>(a));
     r = bit_and(r, move16_l<4>(r));
     r = bit_and(r, move16_l<2>(r));
@@ -41,15 +42,21 @@ SIMDPP_INL uint8_t i_reduce_and(const uint8x16& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16_t i_reduce_and(const uint8x32& a)
+static SIMDPP_INL
+uint8_t i_reduce_and(const uint8x32& a)
 {
     uint8x16 r = detail::extract128<0>(a);
     r = bit_and(r, detail::extract128<1>(a));
-    r = bit_and(r, move16_l<8>(r));
-    r = bit_and(r, move16_l<4>(r));
-    r = bit_and(r, move16_l<2>(r));
-    r = bit_and(r, move16_l<1>(r));
-    return extract<0>(r);
+    return i_reduce_and(r);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint8_t i_reduce_and(const uint8<64>& a)
+{
+    uint8<32> r = detail::extract256<0>(a);
+    r = bit_and(r, detail::extract256<1>(a));
+    return i_reduce_and(r);
 }
 #endif
 
@@ -75,7 +82,8 @@ SIMDPP_INL uint8_t i_reduce_and(const uint8<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint16_t i_reduce_and(const uint16x8& a)
+static SIMDPP_INL
+uint16_t i_reduce_and(const uint16x8& a)
 {
 #if SIMDPP_USE_NULL
     uint16_t r = a.el(0);
@@ -83,7 +91,7 @@ SIMDPP_INL uint16_t i_reduce_and(const uint16x8& a)
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16x8 r = bit_and(a, move8_l<4>(a));
     r = bit_and(r, move8_l<2>(r));
     r = bit_and(r, move8_l<1>(r));
@@ -92,14 +100,21 @@ SIMDPP_INL uint16_t i_reduce_and(const uint16x8& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint16_t i_reduce_and(const uint16x16& a)
+static SIMDPP_INL
+uint16_t i_reduce_and(const uint16x16& a)
 {
     uint16x8 r = detail::extract128<0>(a);
     r = bit_and(r, detail::extract128<1>(a));
-    r = bit_and(r, move8_l<4>(r));
-    r = bit_and(r, move8_l<2>(r));
-    r = bit_and(r, move8_l<1>(r));
-    return extract<0>(r);
+    return i_reduce_and(r);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL uint16_t i_reduce_and(const uint16<32>& a)
+{
+    uint16<16> r = detail::extract256<0>(a);
+    r = bit_and(r, detail::extract256<1>(a));
+    return i_reduce_and(r);
 }
 #endif
 
@@ -125,7 +140,8 @@ SIMDPP_INL uint16_t i_reduce_and(const uint16<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint32_t i_reduce_and(const uint32x4& a)
+static SIMDPP_INL
+uint32_t i_reduce_and(const uint32x4& a)
 {
 #if SIMDPP_USE_NULL
     uint32_t r = a.el(0);
@@ -133,7 +149,7 @@ SIMDPP_INL uint32_t i_reduce_and(const uint32x4& a)
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 r = bit_and(a, move4_l<2>(a));
     r = bit_and(r, move4_l<1>(r));
     return extract<0>(r);
@@ -141,7 +157,8 @@ SIMDPP_INL uint32_t i_reduce_and(const uint32x4& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint32_t i_reduce_and(const uint32x8& a)
+static SIMDPP_INL
+uint32_t i_reduce_and(const uint32x8& a)
 {
     uint32x4 r = detail::extract128<0>(a);
     r = bit_and(r, detail::extract128<1>(a));
@@ -152,13 +169,10 @@ SIMDPP_INL uint32_t i_reduce_and(const uint32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint32_t i_reduce_and(const uint32<16>& a)
+static SIMDPP_INL
+uint32_t i_reduce_and(const uint32<16>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_and(bit_and(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_and_epi32(a);
-#endif
 }
 #endif
 
@@ -184,22 +198,24 @@ SIMDPP_INL uint32_t i_reduce_and(const uint32<N>& a)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL uint64_t i_reduce_and(const uint64x2& a)
+static SIMDPP_INL
+uint64_t i_reduce_and(const uint64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
+    uint64x2 r = bit_and(a, move2_l<1>(a));
+    return extract<0>(r);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64_t r = a.el(0);
     for (unsigned i = 0; i < a.length; i++) {
         r &= a.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
-    uint64x2 r = bit_and(a, move2_l<1>(a));
-    return extract<0>(r);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL uint64_t i_reduce_and(const uint64x4& a)
+static SIMDPP_INL
+uint64_t i_reduce_and(const uint64x4& a)
 {
     uint64x2 r = detail::extract128<0>(a);
     r = bit_and(r, detail::extract128<1>(a));
@@ -209,20 +225,17 @@ SIMDPP_INL uint64_t i_reduce_and(const uint64x4& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL uint64_t i_reduce_and(const uint64<8>& a)
+static SIMDPP_INL
+uint64_t i_reduce_and(const uint64<8>& a)
 {
-#if SIMDPP_WORKAROUND_AVX512F_NO_REDUCE
     return i_reduce_and(bit_and(extract256<0>(a), extract256<1>(a)));
-#else
-    return _mm512_reduce_and_epi64(a);
-#endif
 }
 #endif
 
 template<unsigned N>
 SIMDPP_INL uint64_t i_reduce_and(const uint64<N>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     uint64_t r = 0xffffffffffffffff;
     for (unsigned j = 0; j < a.vec_length; ++j) {
         for (unsigned i = 0; i < a.base_length; i++) {

@@ -40,6 +40,8 @@ public:
     typedef int32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector int32_t native_type;
+#elif SIMDPP_USE_MSA
+    typedef v4i32 native_type;
 #else
     typedef detail::array<int32_t, 4> native_type;
 #endif
@@ -64,7 +66,11 @@ public:
     SIMDPP_INL int32<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL int32<4>(const expr_vec_construct<E>& e)
     {
@@ -83,8 +89,8 @@ public:
 
 #if SIMDPP_USE_NULL
     /// For internal use only
-    const int32_t& el(unsigned i) const  { return d_[i]; }
-          int32_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const int32_t& el(unsigned i) const  { return d_[i]; }
+    SIMDPP_INL int32_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -107,6 +113,8 @@ public:
     typedef uint32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector uint32_t native_type;
+#elif SIMDPP_USE_MSA
+    typedef v4u32 native_type;
 #else
     typedef detail::array<uint32_t, 4> native_type;
 #endif
@@ -131,7 +139,11 @@ public:
     SIMDPP_INL uint32<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL uint32<4>(const expr_vec_construct<E>& e)
     {
@@ -150,8 +162,8 @@ public:
 
 #if SIMDPP_USE_NULL
     /// For uinternal use only
-    const uint32_t& el(unsigned i) const  { return d_[i]; }
-          uint32_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const uint32_t& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL uint32_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -173,6 +185,8 @@ public:
     typedef uint32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector uint32_t native_type;
+#elif SIMDPP_USE_MSA
+    typedef v4u32 native_type;
 #else
     typedef detail::array<bool, 4> native_type;
 #endif
@@ -188,7 +202,7 @@ public:
 #endif
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d) {}
+    SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_int32<4>(const mask_float32<4,E>& d)
@@ -200,7 +214,12 @@ public:
         *this = bit_cast<mask_int32<4> >(d.eval()); return *this;
     }
 
-    SIMDPP_INL operator native_type() const { return d_; }
+    /// Convert to the underlying vector type
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL uint32<4> unmask() const
@@ -213,8 +232,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int32<4>& vec(unsigned) const { return *this; }

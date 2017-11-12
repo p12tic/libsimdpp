@@ -34,18 +34,25 @@ struct Arch {
         X86_SSSE3 = 1 << 3,
         /// Indicates x86 SSE4.1 support
         X86_SSE4_1 = 1 << 4,
+        /// Indicates x86 popcnt instruction support (Note: this is not equivalent
+        /// to the ABM CPUID flag, Intel includes the instruction into SSE 4.2)
+        X86_POPCNT_INSN = 1 << 5,
         /// Indicates x86 AVX support
-        X86_AVX = 1 << 5,
+        X86_AVX = 1 << 6,
         /// Indicates x86 AVX2 support
-        X86_AVX2 = 1 << 6,
+        X86_AVX2 = 1 << 7,
         /// Indicates x86 FMA3 (Intel) support
-        X86_FMA3 = 1 << 7,
+        X86_FMA3 = 1 << 8,
         /// Indicates x86 FMA4 (AMD) support
-        X86_FMA4 = 1 << 8,
+        X86_FMA4 = 1 << 9,
         /// Indicates x86 XOP (AMD) support
-        X86_XOP = 1 << 9,
+        X86_XOP = 1 << 10,
         /// Indicates x86 AVX-512F suppotr
-        X86_AVX512F = 1 << 10,
+        X86_AVX512F = 1 << 11,
+        /// Indicates x86 AVX-512BW suppotr
+        X86_AVX512BW = 1 << 12,
+        /// Indicates x86 AVX-512DQ suppotr
+        X86_AVX512DQ = 1 << 13,
 
         /// Indicates ARM NEON support (SP and DP floating-point math is executed
         /// on VFP)
@@ -55,7 +62,16 @@ struct Arch {
         ARM_NEON_FLT_SP = 1 << 1,
 
         /// Indicates POWER ALTIVEC support.
-        POWER_ALTIVEC = 1 << 0
+        POWER_ALTIVEC = 1 << 0,
+
+        /// Indicates POWER VSX support available since Power ISA 2.06
+        POWER_VSX_206 = 1 << 1,
+
+        /// Indicates POWER VSX support available since Power ISA 2.07
+        POWER_VSX_207 = 1 << 2,
+
+        /// Indicates MIPS MSA support
+        MIPS_MSA = 1 << 0
     };
 
     Arch() {} // works as regular fundamental type

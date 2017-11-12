@@ -1,4 +1,4 @@
-/*  Copyright (C) 2013  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2017  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -8,7 +8,7 @@
 #ifndef LIBSIMDPP_DISPATCH_GET_ARCH_LINUX_CPUINFO_H
 #define LIBSIMDPP_DISPATCH_GET_ARCH_LINUX_CPUINFO_H
 
-#if __linux__ && (__arm__ || __i386__ || __amd64__)
+#if __linux__ && (__arm__ || __aarch64__ || __i386__ || __amd64__)
 #define SIMDPP_HAS_GET_ARCH_LINUX_CPUINFO 1
 
 #include <algorithm>
@@ -37,16 +37,24 @@ inline Arch get_arch_linux_cpuinfo()
     ident = "Features\t";
     features["neon"] = Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP;
 
+#elif __aarch64__
+    ident = "Features\t";
+    features["asimd"] = Arch::ARM_NEON | Arch::ARM_NEON_FLT_SP;
+
 #elif __i386__ || __amd64__
     Arch a_sse2 = Arch::X86_SSE2;
     Arch a_sse3 = a_sse2 | Arch::X86_SSE3;
     Arch a_ssse3 = a_sse3 | Arch::X86_SSSE3;
     Arch a_sse4_1 = a_ssse3 | Arch::X86_SSE4_1;
+    Arch a_popcnt = Arch::X86_POPCNT_INSN;
     Arch a_avx = a_sse4_1 | Arch::X86_AVX;
     Arch a_avx2 = a_avx | Arch::X86_AVX2;
     Arch a_fma3 = a_sse3 | Arch::X86_FMA3;
     Arch a_fma4 = a_sse3 | Arch::X86_FMA4;
     Arch a_xop = a_sse3 | Arch::X86_XOP;
+    Arch a_avx512f = a_avx2 | Arch::X86_AVX512F;
+    Arch a_avx512bw = a_avx512f | Arch::X86_AVX512BW;
+    Arch a_avx512dq = a_avx512f | Arch::X86_AVX512DQ;
 
     ident = "flags\t";
     features["sse2"] = a_sse2;
@@ -55,9 +63,13 @@ inline Arch get_arch_linux_cpuinfo()
     features["sse4_1"] = a_sse4_1;
     features["avx"] = a_avx;
     features["avx2"] = a_avx2;
+    features["popcnt"] = a_popcnt;
     features["fma"] = a_fma3;
     features["fma4"] = a_fma4;
     features["xop"] = a_xop;
+    features["avx512f"] = a_avx512f;
+    features["avx512bw"] = a_avx512bw;
+    features["avx512dq"] = a_avx512dq;
 #else
     return res;
 #endif

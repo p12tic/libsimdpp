@@ -30,20 +30,23 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr, void* sv_p)
     std::memcpy(sv, sv_p, sizeof(V) * vnum);
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
-    // necessarily aligned to 16 bytes on the stack
-    SIMDPP_ALIGN(16) V rv[vnum];
+    // necessarily aligned to 16 bytes on the stack.
+    // NOTE: MSVC 2013 does not support constant expressions within
+    // SIMDPP_ALIGN, thus we're aligning to the alignment of the largest V
+    // is going to be instantiated with
+    SIMDPP_ALIGN(64) V rv[vnum];
 
     // calls constructor that accepts expr_construct
     for (unsigned i = 0; i < vnum; i++) {
         V r = simdpp::load(sdata + i*V::length);
         TEST_PUSH(tc, V, r);
-        TEST_CMP_VEC(tr, sv[i], r);
+        TEST_EQUAL(tr, sv[i], r);
     }
 
     for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
         V r = simdpp::load_u(sdata+i);
         TEST_PUSH(tc, V, r);
-        TEST_CMPNE_VEC(tr, zero, r);
+        TEST_NOT_EQUAL(tr, zero, r);
     }
 
     // calls operator= that accepts expr_construct
@@ -51,49 +54,49 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr, void* sv_p)
         V r;
         r = simdpp::load(sdata + i*V::length);
         TEST_PUSH(tc, V, r);
-        TEST_CMP_VEC(tr, sv[i], r);
+        TEST_EQUAL(tr, sv[i], r);
     }
 
     for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
         V r;
         r = simdpp::load_u(sdata+i);
         TEST_PUSH(tc, V, r);
-        TEST_CMPNE_VEC(tr, zero, r);
+        TEST_NOT_EQUAL(tr, zero, r);
     }
 
     // initializes the vector directly
     for (unsigned i = 0; i < vnum; i++) {
         V r = simdpp::load<V>(sdata + i*V::length);
         TEST_PUSH(tc, V, r);
-        TEST_CMP_VEC(tr, sv[i], r);
+        TEST_EQUAL(tr, sv[i], r);
     }
 
     for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
         V r = simdpp::load_u<V>(sdata+i);
         TEST_PUSH(tc, V, r);
-        TEST_CMPNE_VEC(tr, zero, r);
+        TEST_NOT_EQUAL(tr, zero, r);
     }
 
     rzero(rv, vnum);
     load_packed2(rv[0], rv[1], sdata);
-    TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
+    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
 
     rzero(rv, vnum);
     load_packed3(rv[0], rv[1], rv[2], sdata);
-    TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
-    TEST_CMPNE_VEC(tr, zero, rv[2]);
+    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
+    TEST_NOT_EQUAL(tr, zero, rv[2]);
 
     rzero(rv, vnum);
     load_packed4(rv[0], rv[1], rv[2], rv[3], sdata);
-    TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
-    TEST_CMPNE_VEC(tr, zero, rv[2]);
-    TEST_CMPNE_VEC(tr, zero, rv[3]);
+    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
+    TEST_NOT_EQUAL(tr, zero, rv[2]);
+    TEST_NOT_EQUAL(tr, zero, rv[3]);
 }
 
 template<unsigned B>

@@ -24,9 +24,12 @@ SIMDPP_INL void prefetch_read(const void* ptr)
 {
 #if SIMDPP_USE_SSE2
     _mm_prefetch((const char*)ptr, _MM_HINT_T0);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
 #if __GNUC__
-    __builtin_prefetch(ptr, 0); // should result in PLD or DST
+    // on NEON results in PLD
+    // on Altivec results in DST
+    // on MSA results in PREF
+    __builtin_prefetch(ptr, 0);
 #endif
 #endif
     (void) ptr;
@@ -40,9 +43,12 @@ SIMDPP_INL void prefetch_write(const void* ptr)
 {
 #if SIMDPP_USE_SSE2
     _mm_prefetch((const char*)ptr, _MM_HINT_T0);
-#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
 #if __GNUC__
-    __builtin_prefetch(ptr, 1); // should result in PLDW or DSTST
+    // on NEON results in PLDW
+    // on Altivec results in DSTST
+    // on MSA results in PREF
+    __builtin_prefetch(ptr, 1);
 #endif
 #endif
     (void) ptr;

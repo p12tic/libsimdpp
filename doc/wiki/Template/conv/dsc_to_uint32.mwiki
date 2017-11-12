@@ -1,0 +1,1 @@
+{{dsc tfun | conv/to_uint32 | converts vector elements to 32-bit unsigned integers }}

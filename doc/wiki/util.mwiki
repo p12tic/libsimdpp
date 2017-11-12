@@ -36,6 +36,7 @@ The following macros differ from the [[arch/selection|user-defined instruction s
 {{dsc macro const | nolink=true | SIMDPP_USE_SSE3 | {{c|1}} if SSE3 is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_SSSE3 | {{c|1}} if SSSE3 is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_SSE4_1 | {{c|1}} if SSE4.1 is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_X86_POPCNT_INSN | {{c|1}} if popcnt instruction is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_AVX | {{c|1}} if AVX is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_FMA3 | {{c|1}} if FMA3 is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_FMA4 | {{c|1}} if FMA4 is available, {{c|0}} otherwise }}

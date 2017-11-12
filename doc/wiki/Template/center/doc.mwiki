@@ -1,0 +1,7 @@
+Aligns a snippet of text passed as the first unnamed parameter
+
+{{tl|left|''text''}} - aligns ''text'' to the left
+
+{{tl|center|''text''}} - aligns ''text'' to the center
+
+{{tl|right|''text''}} - aligns ''text'' to the right

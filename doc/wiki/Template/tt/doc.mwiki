@@ -1,0 +1,9 @@
+Adds formatting to the enclosed text
+
+{{tl|tt|''text''}} - monospace font ({{tt|&lt;code>}} html attribute)
+
+{{tl|ttb|''text''}} - bold monospace font ({{tt|&lt;code>&lt;b>}} html attributes)
+
+{{tl|small|''text''}} - small font ({{tt|&lt;small>}} html attribute)
+
+{{tl|smalltt|''text''}} - small monospace font ({{tt|&lt;small>&lt;code>}} html attributes)

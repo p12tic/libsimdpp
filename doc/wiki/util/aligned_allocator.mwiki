@@ -1,0 +1,12 @@
+{{simdpp/title|aligned_allocator}}
+{{util/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< class T, std::size_t Alignment >
+class aligned_allocator;
+}}
+{{dcl end}}
+
+A standard allocator that aligns all allocated memory to {{tt|Alignment}} bytes.
+
+The interface of the standard allocator is provided. See [http://en.cppreference.com/w/cpp/memory/allocator this documentation].

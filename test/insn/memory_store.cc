@@ -23,16 +23,21 @@ template<class V>
 void test_store_masked(TestResultsSet& tc, TestReporter& tr, const V* sv)
 {
     using namespace simdpp;
-    SIMDPP_ALIGN(16) V rv[1];
+
+    // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
+    // necessarily aligned to 16 bytes on the stack.
+    // NOTE: MSVC 2013 does not support constant expressions within
+    // SIMDPP_ALIGN, thus we're aligning to the alignment of the largest V
+    // is going to be instantiated with
+    SIMDPP_ALIGN(64) V rv[1];
 
     tc.reset_seq();
-    TestData<V> mask_data(
-        make_int(0, 0, 0, 0),
-        make_int(1, 0, 0, 0),
-        make_int(0, 1, 0, 0),
-        make_int(0, 0, 1, 0),
-        make_int(0, 0, 0, 1)
-    );
+    TestData<V> mask_data;
+    mask_data.add(make_int(0, 0, 0, 0));
+    mask_data.add(make_int(1, 0, 0, 0));
+    mask_data.add(make_int(0, 1, 0, 0));
+    mask_data.add(make_int(0, 0, 1, 0));
+    mask_data.add(make_int(0, 0, 0, 1));
 
     for (unsigned j = 0; j < mask_data.size(); ++j) {
         typename V::mask_vector_type mask;
@@ -43,7 +48,7 @@ void test_store_masked(TestResultsSet& tc, TestReporter& tr, const V* sv)
         store_masked(rv, sv[0], mask);
         TEST_PUSH(tc, V, rv[0]);
 
-        TEST_CMP_VEC(tr, bit_and(sv[0], mask), rv[0]);
+        TEST_EQUAL(tr, bit_and(sv[0], mask), rv[0]);
     }
 
 }
@@ -55,35 +60,44 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
     V zero = make_zero();
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
-    // necessarily aligned to 16 bytes on the stack
+    // necessarily aligned to 16 bytes on the stack.
+    // NOTE: MSVC 2013 does not support constant expressions within
+    // SIMDPP_ALIGN, thus we're aligning to the alignment of the largest V
+    // is going to be instantiated with
+#if SIMDPP_USE_ALTIVEC
+    // Force-aligning to 64 bytes exposes a bug in GCC on Altivec
     SIMDPP_ALIGN(16) V rv[vnum];
+#else
+    SIMDPP_ALIGN(64) V rv[vnum];
+#endif
+
     typename V::element_type* rdata = reinterpret_cast<typename V::element_type*>(rv);
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv, vnum);
         store(rv+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
-        TEST_CMP_VEC(tr, sv[0], rv[i]);
+        TEST_PUSH_ARRAY(tc, V, rv);
+        TEST_EQUAL(tr, sv[0], rv[i]);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv, vnum);
         store_u(rv+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
-        TEST_CMPNE_VEC(tr, zero, rv[i]);
+        TEST_PUSH_ARRAY(tc, V, rv);
+        TEST_NOT_EQUAL(tr, zero, rv[i]);
     }
 
     for (unsigned i = 0; i < (vnum-1)*V::length; i++) {
         rzero(rv, vnum);
         store_u(rdata+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
+        TEST_PUSH_ARRAY(tc, V, rv);
     }
 
     for (unsigned i = 0; i < vnum; i++) {
         rzero(rv, vnum);
         stream(rv+i, sv[0]);
-        TEST_ARRAY_PUSH(tc, V, rv);
-        TEST_CMP_VEC(tr, sv[0], rv[i]);
+        TEST_PUSH_ARRAY(tc, V, rv);
+        TEST_EQUAL(tr, sv[0], rv[i]);
 
     }
 
@@ -93,7 +107,7 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
         store_first(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
         if (i > 1) { // the first element may be zero
-            TEST_CMPNE_VEC(tr, zero, rv[0]);
+            TEST_NOT_EQUAL(tr, zero, rv[0]);
         }
     }
 
@@ -103,30 +117,30 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
         store_last(rv, sv[0], i);
         TEST_PUSH(tc, V, rv[0]);
         if (i > 0) {
-            TEST_CMPNE_VEC(tr, zero, rv[0]);
+            TEST_NOT_EQUAL(tr, zero, rv[0]);
         }
     }
 
     rzero(rv, vnum);
     store_packed2(rv, sv[0], sv[1]);
-    TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
+    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
 
     rzero(rv, vnum);
     store_packed3(rv, sv[0], sv[1], sv[2]);
-    TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
-    TEST_CMPNE_VEC(tr, zero, rv[2]);
+    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
+    TEST_NOT_EQUAL(tr, zero, rv[2]);
 
     rzero(rv, vnum);
     store_packed4(rv, sv[0], sv[1], sv[2], sv[3]);
-    TEST_ARRAY_PUSH(tc, V, rv);
-    TEST_CMPNE_VEC(tr, zero, rv[0]);
-    TEST_CMPNE_VEC(tr, zero, rv[1]);
-    TEST_CMPNE_VEC(tr, zero, rv[2]);
-    TEST_CMPNE_VEC(tr, zero, rv[3]);
+    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_NOT_EQUAL(tr, zero, rv[0]);
+    TEST_NOT_EQUAL(tr, zero, rv[1]);
+    TEST_NOT_EQUAL(tr, zero, rv[2]);
+    TEST_NOT_EQUAL(tr, zero, rv[3]);
 }
 
 template<unsigned B>

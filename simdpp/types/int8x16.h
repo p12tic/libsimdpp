@@ -40,6 +40,8 @@ public:
     typedef int8x16_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector int8_t native_type;
+#elif SIMDPP_USE_MSA
+    typedef v16i8 native_type;
 #else
     typedef detail::array<int8_t, 16> native_type;
 #endif
@@ -64,7 +66,11 @@ public:
     SIMDPP_INL int8<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL int8<16>(const expr_vec_construct<E>& e)
     {
@@ -83,8 +89,8 @@ public:
 
 #if SIMDPP_USE_NULL
     /// For internal use only
-    const int8_t& el(unsigned i) const  { return d_[i]; }
-          int8_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const int8_t& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL int8_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -107,6 +113,8 @@ public:
     typedef uint8x16_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector uint8_t native_type;
+#elif SIMDPP_USE_MSA
+    typedef v16u8 native_type;
 #else
     typedef detail::array<uint8_t, 16> native_type;
 #endif
@@ -131,7 +139,11 @@ public:
     SIMDPP_INL uint8<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL uint8<16>(const expr_vec_construct<E>& e)
     {
@@ -150,8 +162,8 @@ public:
 
 #if SIMDPP_USE_NULL
     /// For uinternal use only
-    const uint8_t& el(unsigned i) const  { return d_[i]; }
-          uint8_t& el(unsigned i)        { return d_[i]; }
+    SIMDPP_INL const uint8_t& el(unsigned i) const { return d_[i]; }
+    SIMDPP_INL uint8_t& el(unsigned i) { return d_[i]; }
 #endif
 
 private:
@@ -173,6 +185,8 @@ public:
     typedef uint8x16_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector uint8_t native_type;
+#elif SIMDPP_USE_MSA
+    typedef v16u8 native_type;
 #else
     typedef detail::array<bool, 16> native_type;
 #endif
@@ -187,11 +201,16 @@ public:
     SIMDPP_INL mask_int8<16>(const __vector __bool char& d) : d_((__vector uint8_t)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    SIMDPP_INL mask_int8<16>(const uint8<16>& d) : d_(d) {}
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_ALTIVEC
+    SIMDPP_INL mask_int8<16>(const uint8<16>& d) : d_(d.native()) {}
 #endif
 
-    SIMDPP_INL operator native_type() const { return d_; }
+    /// Convert to the underlying vector type
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL uint8<16> unmask() const
@@ -204,8 +223,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int8<16>& vec(unsigned) const { return *this; }

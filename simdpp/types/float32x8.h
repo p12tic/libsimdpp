@@ -55,7 +55,11 @@ public:
     SIMDPP_INL float32<8>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     template<class E> SIMDPP_INL float32<8>(const expr_vec_construct<E>& e)
     {
@@ -96,7 +100,7 @@ public:
     SIMDPP_INL mask_float32<8>(const native_type& d) : d_(d) {}
 
 #if SIMDPP_USE_AVX
-    SIMDPP_INL mask_float32<8>(const float32<8>& d) : d_(d) {}
+    SIMDPP_INL mask_float32<8>(const float32<8>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float32<8>(const mask_int32<8,E>& d)
@@ -108,7 +112,12 @@ public:
         *this = bit_cast<mask_float32<8> >(d.eval()); return *this;
     }
 
-    SIMDPP_INL operator native_type() const { return d_; }
+    /// Convert to the underlying vector type
+#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL float32<8> unmask() const

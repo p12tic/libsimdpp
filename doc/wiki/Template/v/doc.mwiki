@@ -1,0 +1,3 @@
+{{tl|v|''number''}} or {{tl|v|''number'',''number''}} or {{tl|v|''number''-''number''}}
+
+Used to refer to the items in numbered lists, e.g. to specific overload, etc. This is required in order to JavaScript-based standard-versioning to work.

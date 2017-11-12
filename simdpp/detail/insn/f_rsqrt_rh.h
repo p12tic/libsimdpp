@@ -37,7 +37,8 @@ V v_rsqrt_rh(const V& cx, const V& a)
     return r;
 }
 
-SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
+static SIMDPP_INL
+float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 {
     // x_n = x*(3-d*x*x)/2
     float32<4> x = cx;
@@ -49,13 +50,13 @@ SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
         r.el(i) = ix * (3.0f - ia*ix*ix) * 0.5f;
     }
     return r;
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     return v_rsqrt_rh(x, a);
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x2, r;
 
     x2 = mul(x, x);
-    r = vrsqrtsq_f32(a, x2);
+    r = vrsqrtsq_f32(a.native(), x2.native());
     x = mul(x, r);
 
     return x;
@@ -66,7 +67,7 @@ SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 
     x2 = mul(x, x);
     // r = (c3 - a*x2)
-    r = vec_nmsub((__vector float)a, (__vector float)x2, (__vector float)c3);
+    r = vec_nmsub(a.native(), x2.native(), c3.native());
     xp5 = mul(x, 0.5);
     r = mul(xp5, r);
 
@@ -75,14 +76,16 @@ SIMDPP_INL float32x4 i_rsqrt_rh(const float32x4& cx, const float32x4& a)
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rsqrt_rh(const float32x8& x, const float32x8& a)
+static SIMDPP_INL
+float32x8 i_rsqrt_rh(const float32x8& x, const float32x8& a)
 {
     return v_rsqrt_rh(x, a);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_rsqrt_rh(const float32<16>& x, const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_rsqrt_rh(const float32<16>& x, const float32<16>& a)
 {
     return v_rsqrt_rh(x, a);
 }

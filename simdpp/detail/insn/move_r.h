@@ -29,14 +29,16 @@ uint8x16 i_move16_r(const uint8x16& a)
 #if SIMDPP_USE_NULL
     return detail::null::move_n_r<shift>(a);
 #elif SIMDPP_USE_SSE2
-    return _mm_slli_si128(a, shift);
+    return _mm_slli_si128(a.native(), shift);
 #elif SIMDPP_USE_NEON
-    uint8x16 z = make_zero();
-    return vextq_u8(z, a, 16-shift);
+    uint8x16 zero = make_zero();
+    return vextq_u8(zero.native(), a.native(), 16-shift);
 #elif SIMDPP_USE_ALTIVEC
     // return align<16-shift>((uint8x16) make_zero(), a);
-    return vec_sld((__vector uint8_t)(uint8x16) make_zero(),
-                   (__vector uint8_t)a, 16-shift);
+    return vec_sld_biendian<16-shift>((uint8<16>)make_zero(), a);
+#elif SIMDPP_USE_MSA
+    uint8x16 zero = make_zero();
+    return (v16u8) __msa_sldi_b((v16i8)a.native(), (v16i8)zero.native(), 16-shift);
 #endif
 }
 
@@ -45,7 +47,16 @@ template<unsigned shift> SIMDPP_INL
 uint8x32 i_move16_r(const uint8x32& a)
 {
     SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
-    return _mm256_slli_si256(a, shift);
+    return _mm256_slli_si256(a.native(), shift);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned shift> SIMDPP_INL
+uint8<64> i_move16_r(const uint8<64>& a)
+{
+    SIMDPP_STATIC_ASSERT(shift <= 16, "Selector out of range");
+    return _mm512_bslli_epi128(a.native(), shift);
 }
 #endif
 
@@ -73,7 +84,16 @@ template<unsigned shift> SIMDPP_INL
 uint16<16> i_move8_r(const uint16<16>& a)
 {
     SIMDPP_STATIC_ASSERT(shift <= 8, "Selector out of range");
-    return _mm256_slli_si256(a, shift*2);
+    return _mm256_slli_si256(a.native(), shift*2);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned shift> SIMDPP_INL
+uint16<32> i_move8_r(const uint16<32>& a)
+{
+    SIMDPP_STATIC_ASSERT(shift <= 8, "Selector out of range");
+    return _mm512_bslli_epi128(a.native(), shift*2);
 }
 #endif
 
@@ -100,7 +120,7 @@ template<unsigned shift> SIMDPP_INL
 uint32<8> i_move4_r(const uint32<8>& a)
 {
     SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
-    return _mm256_slli_si256(a, shift*4);
+    return _mm256_slli_si256(a.native(), shift*4);
 }
 #endif
 
@@ -110,10 +130,14 @@ uint32<16> i_move4_r(const uint32<16>& a)
 {
     SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     switch (shift) {
+    default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_epi32(0xeeee, a, _MM_PERM_ENUM(_MM_SHUFFLE(2, 1, 0, 0)));
-    case 2: return _mm512_maskz_shuffle_epi32(0xcccc, a, _MM_PERM_ENUM(_MM_SHUFFLE(1, 0, 0, 0)));
-    case 3: return _mm512_maskz_shuffle_epi32(0x8888, a, _MM_PERM_ENUM(_MM_SHUFFLE(0, 0, 0, 0)));
+    case 1: return _mm512_maskz_shuffle_epi32(0xeeee, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(2, 1, 0, 0)));
+    case 2: return _mm512_maskz_shuffle_epi32(0xcccc, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(1, 0, 0, 0)));
+    case 3: return _mm512_maskz_shuffle_epi32(0x8888, a.native(),
+                                              _MM_PERM_ENUM(_MM_SHUFFLE(0, 0, 0, 0)));
     case 4: return make_zero();
     }
 }
@@ -130,7 +154,7 @@ uint32<N> i_move4_r(const uint32<N>& a)
 template<unsigned shift> SIMDPP_INL
 uint64<2> i_move2_r(const uint64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::move_n_r<shift>(a);
 #else
     return (uint64<2>) i_move16_r<shift*8>(uint8<16>(a));
@@ -142,7 +166,7 @@ template<unsigned shift> SIMDPP_INL
 uint64<4> i_move2_r(const uint64<4>& a)
 {
     SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
-    return _mm256_slli_si256(a, shift*8);
+    return _mm256_slli_si256(a.native(), shift*8);
 }
 #endif
 
@@ -188,10 +212,14 @@ float32<16> i_move4_r(const float32<16>& a)
 {
     SIMDPP_STATIC_ASSERT(shift <= 4, "Selector out of range");
     switch (shift) {
+    default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_ps(0xeeee, a, a, _MM_SHUFFLE(2, 1, 0, 0));
-    case 2: return _mm512_maskz_shuffle_ps(0xcccc, a, a, _MM_SHUFFLE(1, 0, 0, 0));
-    case 3: return _mm512_maskz_shuffle_ps(0x8888, a, a, _MM_SHUFFLE(0, 0, 0, 0));
+    case 1: return _mm512_maskz_shuffle_ps(0xeeee, a.native(), a.native(),
+                                           _MM_SHUFFLE(2, 1, 0, 0));
+    case 2: return _mm512_maskz_shuffle_ps(0xcccc, a.native(), a.native(),
+                                           _MM_SHUFFLE(1, 0, 0, 0));
+    case 3: return _mm512_maskz_shuffle_ps(0x8888, a.native(), a.native(),
+                                           _MM_SHUFFLE(0, 0, 0, 0));
     case 4: return make_zero();
     }
 }
@@ -208,10 +236,10 @@ float32<N> i_move4_r(const float32<N>& a)
 template<unsigned shift> SIMDPP_INL
 float64<2> i_move2_r(const float64<2>& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::move_n_r<shift>(a);
-#else
+#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     return (float64<2>) i_move16_r<shift*8>(uint8<16>(a));
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    return detail::null::move_n_r<shift>(a);
 #endif
 }
 
@@ -230,8 +258,9 @@ float64<8> i_move2_r(const float64<8>& a)
 {
     SIMDPP_STATIC_ASSERT(shift <= 2, "Selector out of range");
     switch (shift) {
+    default:
     case 0: return a;
-    case 1: return _mm512_maskz_shuffle_pd(0xaa, a, a, SIMDPP_SHUFFLE_MASK_2x2_4(0, 0));
+    case 1: return _mm512_maskz_shuffle_pd(0xaa, a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2_4(0, 0));
     case 2: return make_zero();
     }
 }

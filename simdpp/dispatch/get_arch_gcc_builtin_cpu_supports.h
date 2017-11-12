@@ -61,6 +61,9 @@ inline Arch get_arch_gcc_builtin_cpu_supports()
     } else if (__builtin_cpu_supports("sse2")) {
         arch_info |= Arch::X86_SSE2;
     }
+    if (__builtin_cpu_supports("popcnt"))
+        arch_info |= Arch::X86_POPCNT_INSN;
+
     return arch_info;
 }
 } // namespace simdpp

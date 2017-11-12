@@ -64,6 +64,11 @@ float32<4> i_shuffle4x2(const float32<4>& a, const float32<4>& b)
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> mask = make_shuffle_bytes16_mask<s0, s1, s2, s3>(mask);
     return shuffle_bytes16(a, b, mask);
+#elif SIMDPP_USE_MSA
+    uint32<4> mask = make_uint(s0,s1,s2,s3);
+    return (v4f32) __msa_vshf_w((v4i32) mask.native(),
+                                (v4i32) b.native(),
+                                (v4i32) a.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
@@ -122,8 +127,10 @@ float64<N> i_shuffle4x2(const float64<N>& a, const float64<N>& b)
 #else
     float64<N> r;
     for (unsigned i = 0; i < float64<N>::vec_length; i+=2) {
-        r.vec(i*2)   = i_shuffle_emul_64x4_half<s0,s1>(a.vec(i*2), a.vec(i*2+1), b.vec(i*2), b.vec(i*2+1));
-        r.vec(i*2+1) = i_shuffle_emul_64x4_half<s2,s3>(a.vec(i*2), a.vec(i*2+1), b.vec(i*2), b.vec(i*2+1));
+        r.vec(i*2)   = i_shuffle_emul_64x4_half<s0,s1>(a.vec(i*2), a.vec(i*2+1),
+                                                       b.vec(i*2), b.vec(i*2+1));
+        r.vec(i*2+1) = i_shuffle_emul_64x4_half<s2,s3>(a.vec(i*2), a.vec(i*2+1),
+                                                       b.vec(i*2), b.vec(i*2+1));
     }
     return r;
 #endif
@@ -149,6 +156,11 @@ uint32<4> i_shuffle4x2(const uint32<4>& a, const uint32<4>& b)
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> mask = make_shuffle_bytes16_mask<s0, s1, s2, s3>(mask);
     return shuffle_bytes16(a, b, mask);
+#elif SIMDPP_USE_MSA
+    uint32<4> mask = make_uint(s0,s1,s2,s3);
+    return (v4u32) __msa_vshf_w((v4i32) mask.native(),
+                                (v4i32) b.native(),
+                                (v4i32) a.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(int64<s0+4>, a, b);
 #endif
@@ -207,8 +219,10 @@ uint64<N> i_shuffle4x2(const uint64<N>& a, const uint64<N>& b)
 #else
     uint64<N> r;
     for (unsigned i = 0; i < uint64<N>::vec_length; i+=2) {
-        r.vec(i*2)   = i_shuffle_emul_64x4_half<s0,s1>(a.vec(i*2), a.vec(i*2+1), b.vec(i*2), b.vec(i*2+1));
-        r.vec(i*2+1) = i_shuffle_emul_64x4_half<s2,s3>(a.vec(i*2), a.vec(i*2+1), b.vec(i*2), b.vec(i*2+1));
+        r.vec(i*2)   = i_shuffle_emul_64x4_half<s0,s1>(a.vec(i*2), a.vec(i*2+1),
+                                                       b.vec(i*2), b.vec(i*2+1));
+        r.vec(i*2+1) = i_shuffle_emul_64x4_half<s2,s3>(a.vec(i*2), a.vec(i*2+1),
+                                                       b.vec(i*2), b.vec(i*2+1));
     }
     return r;
 #endif
