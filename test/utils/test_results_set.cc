@@ -174,7 +174,10 @@ const char* vector_type_to_str(unsigned type)
 void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
                      const void* data_a, const void* data_b)
 {
-    out << "type: " << vector_type_to_str(type) << "\n";
+    out << "type: " << vector_type_to_str(type)
+        << " count: " << num_elems
+        << " size: " << element_size_for_type(type) * num_elems << " bytes"
+        << "\n";
     out << "A : ";
     print_vector_numeric(out, type, num_elems, data_a);
     out << "\nA : ";
