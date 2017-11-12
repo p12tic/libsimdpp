@@ -1,5 +1,6 @@
 {{nv begin}}
 {{nv | [[types | Types]] }}
+{{nv | [[cap | Capabilities]] }}
 {{nv h1 | Operations }}
 {{nv | [[bitwise | Bitwise operations]] }}
 {{nv | [[fp | Floating-point operations]] }}

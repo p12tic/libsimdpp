@@ -19,8 +19,8 @@ The implementation behaves as if the following set of overloads is provided:
 {{vset1 | uint16 }}
 {{vset1 | int32 }}
 {{vset1 | uint32 }}
-{{vset1 | int64 }}
-{{vset1 | uint64 }}
+{{vset1 | int64 | notes={{cap|SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION}} }}
+{{vset1 | uint64 | notes={{cap|SIMDPP_HAS_UINT64_TO_FLOAT64_CONVERSION}} }}
 {{vset1 | float32 }}
 {{vset1 | float64 }}
 {{vset end}}
@@ -37,9 +37,9 @@ A [[types/expr|vector expression]] evaluating to vector with values converted to
 
 ===Equivalent operation===
 {{source|1=
-r0 = float(a0)
+r0 = double(a0)
 ...
-rN = float(aN)
+rN = double(aN)
 }}
 
 ===See also===

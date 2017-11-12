@@ -21,8 +21,8 @@ The implementation behaves as if the following set of overloads is provided:
 {{vset1 | uint32 }}
 {{vset1 | int64 }}
 {{vset1 | uint64 }}
-{{vset1 | float32 }}
-{{vset1 | float64 }}
+{{vset1 | float32 | notes={{cap|SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION}} }}
+{{vset1 | float64 | notes={{cap|SIMDPP_HAS_FLOAT64_TO_UINT32_CONVERSION}} }}
 {{vset end}}
 
 The return type is a [[types/expr|vector expression]].

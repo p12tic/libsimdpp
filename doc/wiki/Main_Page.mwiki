@@ -45,6 +45,8 @@ the compiler will generate.
 [[types/promotion|Vector type promotion]]<br/>
 </div>
 
+'''[[cap|Capabilities]]'''
+
 '''[[util | Utilities]]'''
 <div class="mainpagediv">
 {{ltt|util#zzz|SIMDPP_ALIGN}}<br/>
