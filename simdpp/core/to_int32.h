@@ -42,14 +42,6 @@ uint32<N,expr_empty> to_uint32(const uint16<N,E>& a)
     return detail::insn::i_to_uint32(a.eval());
 }
 
-#if !SIMDPP_DISABLE_DEPRECATED
-template<unsigned N, class E> SIMDPP_INL
-uint32<N,expr_empty> to_int32(const uint16<N,E>& a)
-{
-    return to_uint32(a);
-}
-#endif
-
 /** Converts the values of a float32x4 vector into signed int32_t
     representation using truncation if only an inexact conversion can be
     performed. The behavior is undefined if the value can not be represented in
