@@ -161,15 +161,16 @@ template<> struct shuffle_impl<8> {
     static uint64<4> run(const uint64<4>& a, const uint64<4>& b)
     {
         uint8<16> mask = make_uint(s0, s1, s2, s3);
-        //FIXME GCC bug
-        // This code does not work:
-        // _mm256_permutex2var_epi64(a.native(),
-        //                           _mm256_cvtepi8_epi64(mask.native()),
-        //                           b.native());
+#if SIMDPP_USE_AVX512VL
+        return _mm256_permutex2var_epi64(a.native(),
+                                         _mm256_cvtepi8_epi64(mask.native()),
+                                         b.native());
+#else
         __m512i res = _mm512_permutex2var_epi64(_mm512_castsi256_si512(a.native()),
                                                 _mm512_cvtepi8_epi64(mask.native()),
                                                 _mm512_castsi256_si512(b.native()));
         return _mm512_castsi512_si256(res);
+#endif
     }
 
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
