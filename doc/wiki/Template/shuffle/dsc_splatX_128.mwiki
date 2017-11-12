@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/splatX_128 | title=splat16<br/>splat8<br/>splat4<br/>splat2 | sets all elements in each group of elements to n-th element in that group}}
