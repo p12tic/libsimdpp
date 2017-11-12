@@ -1,4 +1,4 @@
-/*  Copyright (C) 2012  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2012-2017  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -8,18 +8,18 @@
 #include "test_results_set.h"
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <limits>
 #include <type_traits>
 #include <typeinfo>
-#include <cstdlib>
+#include <string>
 
 TestResultsSet::TestResultsSet(const char* name) :
     name_(name),
     curr_precision_ulp_(0),
-    curr_fp_zero_equal_(false),
-    curr_results_section_(0)
+    curr_fp_zero_equal_(false)
 {
     reset_seq();
 }
@@ -27,13 +27,9 @@ TestResultsSet::TestResultsSet(const char* name) :
 TestResultsSet::Result& TestResultsSet::push(ElementType type, unsigned length,
                                              const char* file, unsigned line)
 {
-    while (results_.size() <= curr_results_section_)
-        results_.push_back(std::vector<Result>());
-
-    auto& curr_part = results_[curr_results_section_];
-    curr_part.emplace_back(type, length, element_size_for_type(type), file, line, seq_++,
-                           curr_precision_ulp_, curr_fp_zero_equal_);
-    return curr_part.back();
+    results_.emplace_back(type, length, element_size_for_type(type), file, line,
+                          seq_++, curr_precision_ulp_, curr_fp_zero_equal_);
+    return results_.back();
 }
 
 unsigned precision_for_result(const TestResultsSet::Result& res)
@@ -311,9 +307,7 @@ const char* get_filename_from_results_set(const TestResultsSet& a)
 {
     if (a.results().empty())
         return nullptr;
-    if (a.results().front().empty())
-        return nullptr;
-    return a.results().front().front().file;
+    return a.results().front().file;
 }
 
 const char* get_filename_from_results_set(const TestResultsSet& a,
@@ -323,6 +317,114 @@ const char* get_filename_from_results_set(const TestResultsSet& a,
     if (res)
         return res;
     return get_filename_from_results_set(b);
+}
+
+struct TestSequence {
+    unsigned begin_index, end_index;
+    const char* begin_file;
+    // For comparisons we want to strip the arch suffix from the file name.
+    // To reduce the number of duplicate computations it is cached here.
+    std::string begin_file_stripped;
+    unsigned begin_line;
+};
+
+bool is_test_seq_from_same_test(const TestSequence& a, const TestSequence& b)
+{
+    if (a.begin_file_stripped != b.begin_file_stripped)
+        return false;
+    if (a.begin_line != b.begin_line)
+        return false;
+    return true;
+}
+
+using TestSequenceList = std::vector<TestSequence>;
+
+/*  Skips test result sequences until two results referring to the same test
+    are found. If a[ia] and b[ib] refers to the same test already, nothing is
+    done.
+
+    Returns true if test results were skipped, false otherwise.
+*/
+bool skip_results_until_same_test(unsigned& ia, unsigned& ib,
+                                  const TestSequenceList& a,
+                                  const TestSequenceList& b)
+{
+    if (is_test_seq_from_same_test(a[ia], b[ib]))
+        return false;
+    unsigned max_skipped = a.size() - ia + b.size() - ib;
+
+    // This problem is solved by brute force as the number of skipped sequences
+    // is very likely small. We evaluate all possible ways to skip sequences
+    // starting with the smallest total number of skipped sequences.
+    for (unsigned num_skipped = 1; num_skipped < max_skipped; ++num_skipped) {
+
+        for (unsigned i = 0; i <= num_skipped; ++i) {
+            unsigned skip_from_a = i;
+            unsigned skip_from_b = num_skipped - i;
+
+            unsigned new_ia = ia + skip_from_a;
+            unsigned new_ib = ib + skip_from_b;
+
+            if (new_ia < a.size() && new_ib < b.size()) {
+                if (is_test_seq_from_same_test(a[new_ia], b[new_ib])) {
+                    ia = new_ia;
+                    ib = new_ib;
+                    return true;
+                }
+            }
+        }
+    }
+    // could not find any matching tests
+    ia = a.size();
+    ib = b.size();
+    return true;
+}
+
+std::string strip_arch_suffix_from_file(const char* file)
+{
+    if (file == nullptr)
+        return "";
+    std::string ret = file;
+    std::string::size_type idx = ret.find("_simdpp_");
+    if (idx != std::string::npos)
+        ret = ret.substr(0, idx);
+    return ret;
+}
+
+TestSequenceList build_test_sequences(const std::vector<TestResultsSet::Result>& results)
+{
+    TestSequenceList ret;
+    if (results.empty())
+        return ret;
+
+    TestSequence next_seq;
+
+    unsigned i = 0;
+    next_seq.begin_index = i;
+    next_seq.begin_file = results[i].file;
+    next_seq.begin_file_stripped = strip_arch_suffix_from_file(results[i].file);
+    next_seq.begin_line = results[i].line;
+    unsigned last_seq_num = results[i].seq;
+
+    ++i;
+
+    for (; i < results.size(); ++i) {
+        if (results[i].seq <= last_seq_num) {
+            next_seq.end_index = i;
+            ret.push_back(next_seq);
+
+            next_seq.begin_index = i;
+            next_seq.begin_file = results[i].file;
+            next_seq.begin_file_stripped = strip_arch_suffix_from_file(results[i].file);
+            next_seq.begin_line = results[i].line;
+        }
+        last_seq_num = results[i].seq;
+    }
+
+    next_seq.end_index = i;
+    ret.push_back(next_seq);
+
+    return ret;
 }
 
 void report_test_comparison(const TestResultsSet& a, const char* a_arch,
@@ -337,9 +439,9 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
     {
         tr.out() << "  In test case \"" << a.name() << "\" :\n";
     };
-    auto fmt_seq = [&](unsigned num)
+    auto fmt_seq_num = [&](unsigned num)
     {
-        tr.out() << "  Sequence number: " << num << "\n"; // start from one
+        tr.out() << "  Sequence number: " << num << "\n";
     };
     auto fmt_prec = [&](unsigned prec)
     {
@@ -380,92 +482,114 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
         return;
     }
 
-    if (a.results().size() != b.results().size()) {
-        if (a.results().size() == 0 || b.results().size() == 0) {
-            return; // Ignore empty result sets
-        }
-        print_separator(tr.out());
-        print_arch();
-        print_file_info(tr.out(), get_filename_from_results_set(a, b));
-        fmt_test_case();
-        tr.out() << "FATAL: The number of result sections do not match: "
-                 << a.results().size() << "/" << b.results().size() << "\n";
-        print_separator(tr.out());
-        tr.add_result(false);
-        return;
-    }
+    TestSequenceList a_seqs = build_test_sequences(a.results());
+    TestSequenceList b_seqs = build_test_sequences(b.results());
 
     // Compare results
-    for (unsigned is = 0; is < a.results().size(); is++) {
-        const auto& sect_a = a.results()[is];
-        const auto& sect_b = b.results()[is];
+    unsigned ia_seq = 0;
+    unsigned ib_seq = 0;
 
-        if (sect_a.empty() || sect_b.empty())
+    while (ia_seq < a_seqs.size() && ib_seq < b_seqs.size()) {
+        if (skip_results_until_same_test(ia_seq, ib_seq, a_seqs, b_seqs)) {
             continue;
-
-        if (sect_a.size() != sect_b.size()) {
-            print_separator(tr.out());
-            print_arch();
-            print_file_info(tr.out(), sect_a.front().file);
-            fmt_test_case();
-            tr.out() << "FATAL: The number of results in a section do not match: "
-                     << " section: " << is << " result count: "
-                     << sect_a.size() << "/" << sect_b.size() << "\n";
-            print_separator(tr.out());
-            tr.add_result(false);
         }
 
-        for (unsigned i = 0; i < sect_a.size(); ++i) {
-            const auto& ia = sect_a[i];
-            const auto& ib = sect_b[i];
+        const auto& a_seq = a_seqs[ia_seq];
+        const auto& b_seq = b_seqs[ib_seq];
 
-            if ((ia.line != ib.line) || (ia.type != ib.type) || (ia.length != ib.length)) {
+        unsigned a_seq_size = a_seq.end_index - a_seq.begin_index;
+        unsigned b_seq_size = b_seq.end_index - b_seq.begin_index;
+
+        if (a_seq_size != b_seq_size) {
+            print_separator(tr.out());
+            print_arch();
+            tr.out() << "Sequence A starting at:\n";
+            print_file_info(tr.out(), a_seq.begin_file, a_seq.begin_line);
+            tr.out() << "Sequence B starting at:\n";
+            print_file_info(tr.out(), b_seq.begin_file, b_seq.begin_line);
+            fmt_test_case();
+            tr.out() << "FATAL: The number of results in a test sequence do "
+                     << "not match: "
+                     << " result count: "
+                     << a_seq_size << "/" << b_seq_size << "\n";
+            print_separator(tr.out());
+            tr.add_result(false);
+            return;
+        }
+
+        for (unsigned i = 0; i < a_seq_size; ++i) {
+            unsigned ia = a_seq.begin_index + i;
+            unsigned ib = b_seq.begin_index + i;
+
+            const auto& a_res = a.results()[ia];
+            const auto& b_res = b.results()[ib];
+
+            if ((a_res.seq != b_res.seq) ||
+                (a_res.line != b_res.line) ||
+                (a_res.type != b_res.type) ||
+                (a_res.length != b_res.length))
+            {
                 print_separator(tr.out());
                 print_arch();
-                print_file_info(tr.out(), ia.file, ia.line);
+                tr.out() << "Sequence A starting at:\n";
+                print_file_info(tr.out(), a_seq.begin_file, a_seq.begin_line);
+                tr.out() << "Sequence B starting at:\n";
+                print_file_info(tr.out(), b_seq.begin_file, b_seq.begin_line);
                 fmt_test_case();
-                if (ia.line != ib.line) {
-                    tr.out() << "FATAL: Line numbers do not match for items with the same "
-                             << "sequence number: section: " << is << " id: " << i
-                             << " line_A: " << ia.line
-                             << " line_B: " << ib.line << "\n";
+                if (a_res.seq != b_res.seq) {
+                    tr.out() << "FATAL: Sequence numbers do not match for "
+                             << "items in the same sequence position:"
+                             << " seq_A: " << a_res.seq
+                             << " seq_B: " << b_res.seq << "\n";
                 }
-                if (ia.type != ib.type) {
-                    tr.out() << "FATAL: Types do not match for items with the same "
-                             << "sequence number: id: " << i
-                             << " type_A: " << vector_type_to_str(ia.type)
-                             << " type_B: " << vector_type_to_str(ib.type) << "\n";
+                if (a_res.line != b_res.line) {
+                    tr.out() << "FATAL: Line numbers do not match for items "
+                             << "with the same sequence position:"
+                             << " seq: " << a_res.seq
+                             << " line_A: " << a_res.line
+                             << " line_B: " << b_res.line << "\n";
                 }
-                if (ia.length != ib.length) {
+                if (a_res.type != b_res.type) {
+                    tr.out() << "FATAL: Types do not match for items with the "
+                             << "same sequence position:"
+                             << " seq: " << a_res.seq
+                             << " type_A: " << vector_type_to_str(a_res.type)
+                             << " type_B: " << vector_type_to_str(b_res.type) << "\n";
+                }
+                if (a_res.length != b_res.length) {
                     tr.out() << "FATAL: Number of elements do not match for "
-                             << "items with the same sequence number: id: " << i
-                             << " length_A: " << ia.length
-                             << " length_B: " << ib.length << "\n";
+                             << "items with the same sequence position:"
+                             << " seq: " << a_res.seq
+                             << " length_A: " << a_res.length
+                             << " length_B: " << b_res.length << "\n";
                 }
                 print_separator(tr.out());
                 tr.add_result(false);
                 return;
             }
 
-            unsigned prec = std::max(precision_for_result(ia),
-                                     precision_for_result(ib));
+            unsigned prec = std::max(precision_for_result(a_res),
+                                     precision_for_result(b_res));
 
-            bool fp_zero_eq = ia.fp_zero_eq || ib.fp_zero_eq;
+            bool fp_zero_eq = a_res.fp_zero_eq || b_res.fp_zero_eq;
 
-            if (!cmpeq_result(ia, ib, prec, fp_zero_eq)) {
+            if (!cmpeq_result(a_res, b_res, prec, fp_zero_eq)) {
                 print_separator(tr.out());
                 print_arch();
-                print_file_info(tr.out(), ia.file, ia.line);
+                print_file_info(tr.out(), a_res.file, a_res.line);
                 fmt_test_case();
-                fmt_seq(ia.seq);
+                fmt_seq_num(a_res.seq);
                 tr.out() << "ERROR: Vectors not equal: \n";
-                print_data_diff(tr.out(), ia.type, ia.length, ia.d(), ib.d());
+                print_data_diff(tr.out(), a_res.type, a_res.length, a_res.d(), b_res.d());
                 fmt_prec(prec);
                 print_separator(tr.out());
                 tr.add_result(false);
             } else {
                 tr.add_result(true);
             }
+
         }
+        ia_seq++;
+        ib_seq++;
     }
 }

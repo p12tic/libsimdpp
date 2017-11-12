@@ -15,12 +15,6 @@
 #include "test_reporter.h"
 #include "element_type.h"
 
-class TestResultsSet;
-
-void report_test_comparison(const TestResultsSet& a, const char* a_arch,
-                            const TestResultsSet& b, const char* b_arch,
-                            TestReporter& tr);
-
 // Prints two vectors side by side for comparison
 void print_data_diff(std::ostream& out, unsigned type, unsigned num_elems,
                      const void* data_a, const void* data_b);
@@ -92,23 +86,13 @@ public:
     void set_fp_zero_equal()                { curr_fp_zero_equal_ = true; }
     void unset_fp_zero_equal()              { curr_fp_zero_equal_ = false; }
 
-
     /// The name of the test case
     const char* name() const                { return name_; }
 
     /// Resets the sequence number
     void reset_seq()                        { seq_ = 0; }
 
-    /** Allows synchronizing tests in cases when certain architectures do not
-        execute the test in question. The function must be called before and
-        after the block of tests that may not be executed. The call to this
-        function must be executed regardless of architectures.
-
-        The function resets the sequence number.
-    */
-    void sync_archs()                       { curr_results_section_++; reset_seq(); }
-
-    const std::vector<std::vector<Result>>& results() const { return results_; }
+    const std::vector<Result>& results() const { return results_; }
 
 private:
     friend class TestResults;
@@ -120,8 +104,32 @@ private:
     unsigned curr_precision_ulp_;
     bool curr_fp_zero_equal_;
 
-    unsigned curr_results_section_;
-    std::vector<std::vector<Result>> results_;
+    std::vector<Result> results_;
 };
+
+/** Compares two results sets.
+
+    Each test result is identified by the source file name, line number in that
+    file and sequence number. If that data is equal for two test results, they
+    are said to refer to the same test.
+
+    The same source line must produce the same number of test results. That is,
+    the minimum and maximum sequence numbers must be the same in each group of
+    test results that are produced from that line. Note that each group of
+    increasing sequence numbers may be produced from different source lines.
+
+    Any differences in reported values for the test results referring to the
+    same test are interpreted as errors and printed to the test reporter.
+
+    The test results sets may contain different sets of test results, that is,
+    on certain architecture part of the tests may be excluded from running. If
+    during iteration of the results set test results start to refer to
+    different tests, the result set is examined to find the next pair of test
+    results that refer to the same test. An attempt is made to skip as few
+    results as possible.
+*/
+void report_test_comparison(const TestResultsSet& a, const char* a_arch,
+                            const TestResultsSet& b, const char* b_arch,
+                            TestReporter& tr);
 
 #endif

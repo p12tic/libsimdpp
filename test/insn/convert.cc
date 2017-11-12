@@ -193,28 +193,22 @@ void test_convert_n(TestResultsSet& ts)
     TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,  uint64_8n, to_int32, s);
     TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   int64_8n, to_uint32, s);
     TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,  uint64_8n, to_uint32, s);
-    ts.sync_archs();
 #if SIMDPP_HAS_INT64_TO_FLOAT32_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  int64_8n, to_float32, s);
 #endif
-    ts.sync_archs();
 #if SIMDPP_HAS_UINT64_TO_FLOAT32_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, float32_4n, uint64_8n, to_float32, s);
 #endif
-    ts.sync_archs();
     TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   int64_8n, to_int64, s);
     TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,  uint64_8n, to_int64, s);
     TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   int64_8n, to_uint64, s);
     TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,  uint64_8n, to_uint64, s);
-    ts.sync_archs();
 #if SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  int64_8n, to_float64, s);
 #endif
-    ts.sync_archs();
 #if SIMDPP_HAS_UINT64_TO_FLOAT64_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, float64_8n, uint64_8n, to_float64, s);
 #endif
-    ts.sync_archs();
 
 #if SIMDPP_X86
     ts.unset_precision();
@@ -256,21 +250,16 @@ void test_convert_n(TestResultsSet& ts)
     TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   float32_4n, to_int16, sn);
     TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   float32_4n, to_uint16, sp);
     TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   float32_4n, to_int32, sn);
-    ts.sync_archs();
 #if SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   float32_4n, to_uint32, sp);
 #endif
-    ts.sync_archs();
     TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  float32_4n, to_float32, sn);
-    ts.sync_archs();
 #if SIMDPP_HAS_FLOAT32_TO_INT64_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   float32_4n, to_int64, sn);
 #endif
-    ts.sync_archs();
 #if SIMDPP_HAS_FLOAT32_TO_UINT64_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   float32_4n, to_uint64, sp);
 #endif
-    ts.sync_archs();
     TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  float32_4n, to_float64, sp);
 
 #if SIMDPP_X86
@@ -325,15 +314,12 @@ void test_convert_n(TestResultsSet& ts)
     TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   float64_8n, to_uint32, sp);
 #endif
     TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  float64_8n, to_float32, sn);
-    ts.sync_archs();
 #if SIMDPP_HAS_FLOAT64_TO_INT64_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   float64_8n, to_int64, sn64);
 #endif
-    ts.sync_archs();
 #if SIMDPP_HAS_FLOAT64_TO_UINT64_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   float64_8n, to_uint64, sp64);
 #endif
-    ts.sync_archs();
     TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  float64_8n, to_float64, sp);
 
 #if SIMDPP_X86

@@ -87,7 +87,6 @@ void test_compare_n(TestResultsSet& tc)
         TEST_COMPARE_TESTER_HELPER(tc, uint32_n, sl, sr);
     }
 
-    tc.sync_archs();
 #if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     //int64_n
     {
@@ -105,7 +104,6 @@ void test_compare_n(TestResultsSet& tc)
         TEST_COMPARE_TESTER_HELPER(tc, uint64_n, sl, sr);
     }
 #endif
-    tc.sync_archs();
 
     float nanf = std::numeric_limits<float>::quiet_NaN();
     double nan = std::numeric_limits<double>::quiet_NaN();
