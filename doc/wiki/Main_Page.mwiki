@@ -105,6 +105,7 @@ the compiler will generate.
 {{ltt|int/mull}}&nbsp;&nbsp;{{ltt|int/neg}} <br/>
 {{ltt|int/cmp_eq}}&nbsp;&nbsp;{{ltt|int/cmp_neq}} <br/>
 {{ltt|int/cmp_lt}}&nbsp;&nbsp;{{ltt|int/cmp_gt}} <br/>
+{{ltt|int/cmp_le}}&nbsp;&nbsp;{{ltt|int/cmp_ge}} <br/>
 {{ltt|int/abs}} <br/>
 {{ltt|int/avg}}&nbsp;&nbsp;{{ltt|int/avg_trunc}} <br/>
 {{ltt|int/min}}&nbsp;&nbsp;{{ltt|int/max}} <br/>

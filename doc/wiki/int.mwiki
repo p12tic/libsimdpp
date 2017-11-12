@@ -19,6 +19,8 @@ The following simple operations for integer computations are provided.
 {{dsc inc | int/dsc cmp_neq }}
 {{dsc inc | int/dsc cmp_lt }}
 {{dsc inc | int/dsc cmp_gt }}
+{{dsc inc | int/dsc cmp_le }}
+{{dsc inc | int/dsc cmp_ge }}
 
 {{dsc h1 | Reduction}}
 {{dsc inc | int/dsc reduce_add }}
