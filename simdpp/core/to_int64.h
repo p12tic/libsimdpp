@@ -32,7 +32,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 3-4}
 */
 template<unsigned N, class E> SIMDPP_INL
-int64<N> to_int64(const int32<N,E>& a)
+int64<N,expr_empty> to_int64(const int32<N,E>& a)
 {
     return detail::insn::i_to_int64(a.eval());
 }
@@ -49,14 +49,14 @@ int64<N> to_int64(const int32<N,E>& a)
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint64<N> to_uint64(const uint32<N,E>& a)
+uint64<N,expr_empty> to_uint64(const uint32<N,E>& a)
 {
     return detail::insn::i_to_uint64(a.eval());
 }
 
 #if !SIMDPP_DISABLE_DEPRECATED
 template<unsigned N, class E> SIMDPP_INL
-uint64<N> to_int64(const uint32<N,E>& a)
+uint64<N,expr_empty> to_int64(const uint32<N,E>& a)
 {
     return to_uint64(a);
 }

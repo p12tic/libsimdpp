@@ -30,21 +30,21 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-int32<N> to_int32(const int16<N,E>& a)
+int32<N,expr_empty> to_int32(const int16<N,E>& a)
 {
     return detail::insn::i_to_int32(a.eval());
 }
 
 // TODO: document
 template<unsigned N, class E> SIMDPP_INL
-uint32<N> to_uint32(const uint16<N,E>& a)
+uint32<N,expr_empty> to_uint32(const uint16<N,E>& a)
 {
     return detail::insn::i_to_uint32(a.eval());
 }
 
 #if !SIMDPP_DISABLE_DEPRECATED
 template<unsigned N, class E> SIMDPP_INL
-uint32<N> to_int32(const uint16<N,E>& a)
+uint32<N,expr_empty> to_int32(const uint16<N,E>& a)
 {
     return to_uint32(a);
 }
@@ -74,7 +74,7 @@ uint32<N> to_int32(const uint16<N,E>& a)
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-int32<N> to_int32(const float32<N,E>& a)
+int32<N,expr_empty> to_int32(const float32<N,E>& a)
 {
     return detail::insn::i_to_int32(a.eval());
 }
@@ -105,7 +105,7 @@ int32<N> to_int32(const float32<N,E>& a)
     @icost{SSE2-SSE4.1, 3}
 */
 template<unsigned N, class E> SIMDPP_INL
-int32<N> to_int32(const float64<N,E>& a)
+int32<N,expr_empty> to_int32(const float64<N,E>& a)
 {
     return detail::insn::i_to_int32(a.eval());
 }

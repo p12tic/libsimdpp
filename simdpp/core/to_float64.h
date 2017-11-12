@@ -41,7 +41,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-float64<N> to_float64(const int32<N,E>& a)
+float64<N,expr_empty> to_float64(const int32<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
@@ -69,7 +69,7 @@ float64<N> to_float64(const int32<N,E>& a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-float64<N> to_float64(const float32<N,E>& a)
+float64<N,expr_empty> to_float64(const float32<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
