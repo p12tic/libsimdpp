@@ -22,6 +22,9 @@
 {{nv col next}}
 {{nv ln | int/cmp_lt }}
 {{nv ln | int/cmp_gt }}
+{{nv col next}}
+{{nv ln | int/cmp_le }}
+{{nv ln | int/cmp_ge }}
 {{nv col end}}
 
 {{nv h1 | Reduction}}

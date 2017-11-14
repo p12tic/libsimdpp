@@ -14,7 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/cast.h>
-#include <simdpp/detail/to_mask.h>
+#include <simdpp/core/to_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

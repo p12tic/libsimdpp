@@ -1,4 +1,4 @@
-/*  Copyright (C) 2013-2014  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2017  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/detail/get_expr.h>
 #include <simdpp/detail/insn/permute_zbytes16.h>
 
 namespace simdpp {
@@ -23,52 +24,37 @@ namespace SIMDPP_ARCH_NAMESPACE {
      * Bit 7 results in the result byte being zeroed, if set.
      * Bits 6-4 must be zero or the behavior is undefined
      * Bits 3-0 define the element within the given vector.
-
-    @par 128-bit version:
-    @unimp{SSE2-SSE3}
-    @icost{NEON, 2}
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    The vectors will be shuffled as if the 128-bit version was applied to the
-    lower and higher halves of the vectors separately.
-
-    @unimp{SSE2-SSE3}
-    @icost{SSSE3-AVX, 2}
-    @icost{AVX2, 1}
-    @icost{NEON, 4}
-    @icost{ALTIVEC, 2-3}
-
 */
-template<unsigned N> SIMDPP_INL
-uint8<N> permute_zbytes16(const uint8<N>& a, const uint8<N>& mask)
+template<unsigned N, class V1, class E2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::empty
+    permute_zbytes16(const any_vec8<N,V1>& a, const uint8<N,E2>& mask)
 {
-    return detail::insn::i_permute_zbytes16(a, mask);
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();
+    return detail::insn::i_permute_zbytes16(ra, mask.eval());
 }
-template<unsigned N> SIMDPP_INL
-uint16<N> permute_zbytes16(const uint16<N>& a, const uint16<N>& mask)
+
+template<unsigned N, class V1, class E2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::empty
+    permute_zbytes16(const any_vec16<N,V1>& a, const uint16<N,E2>& mask)
 {
-    return detail::insn::i_permute_zbytes16(a, mask);
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();
+    return detail::insn::i_permute_zbytes16(ra, mask.eval());
 }
-template<unsigned N> SIMDPP_INL
-uint32<N> permute_zbytes16(const uint32<N>& a, const uint32<N>& mask)
+
+template<unsigned N, class V1, class E2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::empty
+    permute_zbytes16(const any_vec32<N,V1>& a, const uint32<N,E2>& mask)
 {
-    return detail::insn::i_permute_zbytes16(a, mask);
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();
+    return detail::insn::i_permute_zbytes16(ra, mask.eval());
 }
-template<unsigned N> SIMDPP_INL
-uint64<N> permute_zbytes16(const uint64<N>& a, const uint64<N>& mask)
+
+template<unsigned N, class V1, class E2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::empty
+    permute_zbytes16(const any_vec64<N,V1>& a, const uint64<N,E2>& mask)
 {
-    return detail::insn::i_permute_zbytes16(a, mask);
-}
-template<unsigned N> SIMDPP_INL
-float32<N> permute_zbytes16(const float32<N>& a, const uint32<N>& mask)
-{
-    return detail::insn::i_permute_zbytes16(a, mask);
-}
-template<unsigned N> SIMDPP_INL
-float64<N> permute_zbytes16(const float64<N>& a, const uint64<N>& mask)
-{
-    return detail::insn::i_permute_zbytes16(a, mask);
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();
+    return detail::insn::i_permute_zbytes16(ra, mask.eval());
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

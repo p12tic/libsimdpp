@@ -80,4 +80,20 @@
     for (unsigned i = 0; i < RTYPE::vec_length; ++i) {          \
         OP((V1).vec(i), (V2).vec(i), (V3).vec(i), (V4).vec(i)); }
 
+// Used when the native vector of source vector corresponds to multiple native
+// vectors in the destination vector. This happens when a vector type of
+// smaller element size is converted to a vector type with larger element size
+#define SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(RTYPE, OP, A)                         \
+    RTYPE r; for (unsigned i = 0; i < (A).vec_length; ++i) {                    \
+        detail::subvec_insert(r, OP(a.vec(i)), i); }                            \
+    return r;
+
+// Used when the native vector of destination vector corresponds to multiple
+// native vectors in the source vector. This happens when a vector type of
+// larger element size is converted to a vector type with smaller element size.
+#define SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(RTYPE, OP, A)                        \
+    RTYPE r; for (unsigned i = 0; i < r.vec_length; ++i) {                      \
+        r.vec(i) = OP(detail::subvec_extract<RTYPE::base_length>((A), i)); }    \
+    return r;
+
 #endif

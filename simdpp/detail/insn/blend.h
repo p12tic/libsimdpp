@@ -16,8 +16,8 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/core/bit_or.h>
+#include <simdpp/core/to_mask.h>
 #include <simdpp/detail/null/shuffle.h>
-#include <simdpp/detail/to_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -188,7 +188,7 @@ mask_int16<8> i_blend(const mask_int16<8>& on, const mask_int16<8>& off, const m
 #if SIMDPP_USE_NULL
     return detail::null::blend_mask(on, off, mask);
 #else
-    return detail::to_mask(i_blend(uint16<8>(on), uint16<8>(off), uint16<8>(mask)));
+    return to_mask(i_blend(uint16<8>(on), uint16<8>(off), uint16<8>(mask)));
 #endif
 }
 
@@ -196,7 +196,7 @@ mask_int16<8> i_blend(const mask_int16<8>& on, const mask_int16<8>& off, const m
 static SIMDPP_INL
 mask_int16<16> i_blend(const mask_int16<16>& on, const mask_int16<16>& off, const mask_int16<16>& mask)
 {
-    return detail::to_mask(i_blend(uint16<16>(on), uint16<16>(off), uint16<16>(mask)));
+    return to_mask(i_blend(uint16<16>(on), uint16<16>(off), uint16<16>(mask)));
 }
 #endif
 
@@ -270,7 +270,7 @@ mask_int32<4> i_blend(const mask_int32<4>& on, const mask_int32<4>& off, const m
 #if SIMDPP_USE_NULL
     return detail::null::blend_mask(on, off, mask);
 #else
-    return detail::to_mask(i_blend(uint32<4>(on), uint32<4>(off), uint32<4>(mask)));
+    return to_mask(i_blend(uint32<4>(on), uint32<4>(off), uint32<4>(mask)));
 #endif
 }
 
@@ -278,7 +278,7 @@ mask_int32<4> i_blend(const mask_int32<4>& on, const mask_int32<4>& off, const m
 static SIMDPP_INL
 mask_int32<8> i_blend(const mask_int32<8>& on, const mask_int32<8>& off, const mask_int32<8>& mask)
 {
-    return detail::to_mask(i_blend(uint32<8>(on), uint32<8>(off), uint32<8>(mask)));
+    return to_mask(i_blend(uint32<8>(on), uint32<8>(off), uint32<8>(mask)));
 }
 #endif
 
@@ -373,7 +373,7 @@ mask_float32<4> i_blend(const mask_float32<4>& on, const mask_float32<4>& off, c
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::blend_mask(on, off, mask);
 #else
-    return detail::to_mask(i_blend(float32<4>(on), float32<4>(off), float32<4>(mask)));
+    return to_mask(i_blend(float32<4>(on), float32<4>(off), float32<4>(mask)));
 #endif
 }
 
@@ -381,7 +381,7 @@ mask_float32<4> i_blend(const mask_float32<4>& on, const mask_float32<4>& off, c
 static SIMDPP_INL
 mask_float32<8> i_blend(const mask_float32<8>& on, const mask_float32<8>& off,const mask_float32<8>& mask)
 {
-    return detail::to_mask(i_blend(float32<8>(on), float32<8>(off), float32<8>(mask)));
+    return to_mask(i_blend(float32<8>(on), float32<8>(off), float32<8>(mask)));
 }
 #endif
 
@@ -461,7 +461,7 @@ mask_int64<2> i_blend(const mask_int64<2>& on, const mask_int64<2>& off, const m
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::blend_mask(on, off, mask);
 #else
-    return detail::to_mask(i_blend(uint64<2>(on), uint64<2>(off), uint64<2>(mask)));
+    return to_mask(i_blend(uint64<2>(on), uint64<2>(off), uint64<2>(mask)));
 #endif
 }
 
@@ -469,7 +469,7 @@ mask_int64<2> i_blend(const mask_int64<2>& on, const mask_int64<2>& off, const m
 static SIMDPP_INL
 mask_int64<4> i_blend(const mask_int64<4>& on, const mask_int64<4>& off, const mask_int64<4>& mask)
 {
-    return detail::to_mask(i_blend(uint64<4>(on), uint64<4>(off), uint64<4>(mask)));
+    return to_mask(i_blend(uint64<4>(on), uint64<4>(off), uint64<4>(mask)));
 }
 #endif
 

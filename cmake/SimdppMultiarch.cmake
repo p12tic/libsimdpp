@@ -646,8 +646,10 @@ endif()
 set(SIMDPP_ARM_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM_NEON_SUFFIX "-arm_neon")
 set(SIMDPP_ARM_NEON_TEST_CODE
-    "#if (__clang_major__ < 3) || ((__clang_major__ == 3) && (__clang_minor__ <= 3))
+    "#if defined(__clang_major__)
+    #if (__clang_major__ < 3) || ((__clang_major__ == 3) && (__clang_minor__ <= 3))
     #error NEON is not supported on clang 3.3 and earlier.
+    #endif
     #endif
 
     #include <arm_neon.h>
@@ -757,14 +759,14 @@ set(SIMDPP_MIPS_MSA_TEST_CODE
     {
         union {
             char data[16];
-            uint32x4_t align;
+            v4i32 align;
         };
         char* p = data;
         p = prevent_optimization(p);
 
-        v16i8 v = __msa_ld_b(*p, 0);
+        v16i8 v = __msa_ld_b(p, 0);
         v = __msa_add_a_b(v, v);
-        __msa_st_b(v, *p, 0);
+        __msa_st_b(v, p, 0);
 
         p = prevent_optimization(p);
     }"
@@ -805,9 +807,9 @@ set(SIMDPP_POWER_ALTIVEC_TEST_CODE
         char* p = data;
         p = prevent_optimization(p);
 
-        vector unsigned char v = vec_ld(0, p);
+        vector unsigned char v = vec_ld(0, (unsigned char*)p);
         v = vec_add(v, v);
-        vec_st(v, 0, p);
+        vec_st(v, 0, (unsigned char*)p);
 
         p = prevent_optimization(p);
     }"
@@ -855,9 +857,9 @@ set(SIMDPP_POWER_VSX_206_TEST_CODE
         char* p = data;
         p = prevent_optimization(p);
 
-        vector unsigned char v = vec_vsx_ld(0, p);
+        vector unsigned char v = vec_vsx_ld(0, (unsigned char*)p);
         v = vec_add(v, v);
-        vec_vsx_st(v, 0, p);
+        vec_vsx_st(v, 0, (unsigned char*)p);
 
         p = prevent_optimization(p);
     }"
@@ -904,9 +906,9 @@ set(SIMDPP_POWER_VSX_207_TEST_CODE
         char* p = data;
         p = prevent_optimization(p);
 
-        vector unsigned char v = vec_vsx_ld(0, p);
+        vector unsigned char v = vec_vsx_ld(0, (unsigned char*)p);
         v = vec_vpopcnt(v);
-        vec_vsx_st(v, 0, p);
+        vec_vsx_st(v, 0, (unsigned char*)p);
 
         p = prevent_optimization(p);
     }"

@@ -152,11 +152,9 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_PUSH_ALL_COMB_OP2(tc, int32_n, avg, s);
         TEST_PUSH_ALL_COMB_OP2(tc, int32_n, avg_trunc, s);
 
-        tc.sync_archs();
 #if SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
         TEST_PUSH_ALL_COMB_OP2_T(tc, int64<B/4>, int32_n, mull, s);
 #endif
-        tc.sync_archs();
 
         TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, add, s);
         TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, sub, s);
@@ -165,11 +163,8 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, avg, s);
         TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, avg_trunc, s);
 
-        tc.sync_archs();
         TEST_PUSH_ALL_COMB_OP2_T(tc, uint64<B/4>, uint32_n, mull, s);
-        tc.sync_archs();
         TEST_PUSH_ALL_COMB_OP2_T(tc, uint32_n, uint32_n, mul_lo, s);
-        tc.sync_archs();
 
         TEST_PUSH_ARRAY_OP1(tc, int32_n, neg, s);
         TEST_PUSH_ARRAY_OP1(tc, int32_n, abs, s);
@@ -214,14 +209,12 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_PUSH_ALL_COMB_OP2(tc, uint64_n, add, s);
         TEST_PUSH_ALL_COMB_OP2(tc, uint64_n, sub, s);
 
-        tc.sync_archs();
 #if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_ALTIVEC
         TEST_PUSH_ALL_COMB_OP2(tc, int64_n, min, s);
         TEST_PUSH_ALL_COMB_OP2(tc, int64_n, max, s);
         TEST_PUSH_ALL_COMB_OP2(tc, uint64_n, min, s);
         TEST_PUSH_ALL_COMB_OP2(tc, uint64_n, max, s);
 #endif
-        tc.sync_archs();
 
         TEST_PUSH_ARRAY_OP1(tc, int64_n, neg, s);
         TEST_PUSH_ARRAY_OP1(tc, int64_n, abs, s);
@@ -232,14 +225,12 @@ void test_math_int_n(TestResultsSet& tc)
         TEST_PUSH_ALL_COMB_OP1_T(tc, int64_t, int64_n, reduce_or, s);
         TEST_PUSH_ALL_COMB_OP1_T(tc, uint64_t, uint64_n, reduce_and, s);
         TEST_PUSH_ALL_COMB_OP1_T(tc, int64_t, int64_n, reduce_and, s);
-        tc.sync_archs();
 #if SIMDPP_USE_NULL || SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_ALTIVEC
         TEST_PUSH_ALL_COMB_OP1_T(tc, uint64_t, uint64_n, reduce_min, s);
         TEST_PUSH_ALL_COMB_OP1_T(tc, int64_t, int64_n, reduce_min, s);
         TEST_PUSH_ALL_COMB_OP1_T(tc, uint64_t, uint64_n, reduce_max, s);
         TEST_PUSH_ALL_COMB_OP1_T(tc, int64_t, int64_n, reduce_max, s);
 #endif
-        tc.sync_archs();
     }
 }
 

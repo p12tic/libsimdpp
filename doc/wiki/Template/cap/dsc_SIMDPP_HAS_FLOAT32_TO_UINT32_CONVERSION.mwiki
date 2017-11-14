@@ -1,0 +1,1 @@
+{{dsc tfun | cap/SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION | indicates support of {{c|float32}} to {{c|uint32}} conversion }}

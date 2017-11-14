@@ -1,4 +1,4 @@
-/*  Copyright (C) 2013-2014  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2017  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -13,12 +13,14 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/insn/to_float32.h>
+#include <simdpp/capabilities.h>
+#include <simdpp/detail/insn/conv_any_to_float32.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/** Converts 32-bit integer values to 32-bit float values.
+/** Converts elements within a vector to 32-bit floating-point values.
 
     SSE specific:
 
@@ -34,52 +36,62 @@ namespace SIMDPP_ARCH_NAMESPACE {
     ...
     rN = (float) aN
     @endcode
-
-    @par 256-bit version:
-    @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N> to_float32(const int32<N,E>& a)
+float32<N,expr_empty> to_float32(const int8<N,E>& a)
 {
     return detail::insn::i_to_float32(a.eval());
 }
-
-/** Converts 64-bit float values to 32-bit float values.
-
-    SSE specific:
-
-    If only inexact conversion can be performed, the value is rounded according
-    to the current rounding mode.
-
-    NEON specific:
-
-    If only inexact conversion can be performed, the value is truncated.
-
-    @par 128-bit version:
-    @code
-    r0 = (float) a0
-    r1 = (float) a1
-    r2 = 0.0f
-    r3 = 0.0f
-    @endcode
-
-    @novec{NEON, ALTIVEC}
-
-    @par 256-bit version:
-    @code
-    r0 = (float) a0
-    ...
-    r3 = (float) a3
-    r4 = 0.0f
-    ...
-    r7 = 0.0f
-    @endcode
-
-    @icost{SSE2-SSE4.1, 3}
-    @novec{NEON, ALTIVEC}
-*/
 template<unsigned N, class E> SIMDPP_INL
-float32<N> to_float32(const float64<N,E>& a)
+float32<N,expr_empty> to_float32(const uint8<N,E>& a)
+{
+    return detail::insn::i_to_float32(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const int16<N,E>& a)
+{
+    return detail::insn::i_to_float32(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const uint16<N,E>& a)
+{
+    return detail::insn::i_to_float32(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const int32<N,E>& a)
+{
+    return detail::insn::i_to_float32(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const uint32<N,E>& a)
+{
+    return detail::insn::i_to_float32(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const int64<N,E>& a)
+{
+#if SIMDPP_HAS_INT64_TO_FLOAT32_CONVERSION
+    return detail::insn::i_to_float32(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const uint64<N,E>& a)
+{
+#if SIMDPP_HAS_UINT64_TO_FLOAT32_CONVERSION
+    return detail::insn::i_to_float32(a.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
+#endif
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const float32<N,E>& a)
+{
+    return detail::insn::i_to_float32(a.eval());
+}
+template<unsigned N, class E> SIMDPP_INL
+float32<N,expr_empty> to_float32(const float64<N,E>& a)
 {
     return detail::insn::i_to_float32(a.eval());
 }

@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/make_shuffle_bytes16_mask | creates a shuffle mask for {{tt|shuffle_bytes16}} or {{tt|permute_bytes16}} }}

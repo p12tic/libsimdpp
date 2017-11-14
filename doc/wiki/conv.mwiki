@@ -1,0 +1,18 @@
+{{title|Conversion operations}}
+{{conv/navbar}}
+
+The following type conversion operations are provided.
+
+{{dsc begin}}
+{{dsc inc | conv/dsc to_int8 }}
+{{dsc inc | conv/dsc to_uint8 }}
+{{dsc inc | conv/dsc to_int16 }}
+{{dsc inc | conv/dsc to_uint16 }}
+{{dsc inc | conv/dsc to_int32 }}
+{{dsc inc | conv/dsc to_uint32 }}
+{{dsc inc | conv/dsc to_int64 }}
+{{dsc inc | conv/dsc to_uint64 }}
+{{dsc inc | conv/dsc to_float32 }}
+{{dsc inc | conv/dsc to_float64 }}
+{{dsc inc | conv/dsc to_mask }}
+{{dsc end}}

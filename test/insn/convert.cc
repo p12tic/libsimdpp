@@ -18,57 +18,139 @@ void test_convert_n(TestResultsSet& ts)
 
     using uint8_n = uint8<B>;
     using  int8_n = int8<B>;
-    using uint16_n = uint16<B/2>;
-    using  int16_n = int16<B/2>;
     using uint16_2n = uint16<B>;
     using  int16_2n = int16<B>;
-    using uint32_n = uint32<B/4>;
-    using  int32_n = int32<B/4>;
-    using uint32_2n = uint32<B/2>;
-    using  int32_2n = int32<B/2>;
-    //using uint64_n = uint64<B/8>;
-    //using  int64_n = int64<B/8>;
-    using uint64_2n = uint64<B/4>;
-    using  int64_2n = int64<B/4>;
-    using float32_n =  float32<B/4>;
-    //using float32_2n = float32<B/2>;
-    //using float64_n =  float64<B/8>;
-    using float64_2n = float64<B/4>;
+    using uint32_4n = uint32<B>;
+    using  int32_4n = int32<B>;
+    using uint64_8n = uint64<B>;
+    using  int64_8n = int64<B>;
+    using float32_4n = float32<B>;
+    using float64_8n = float64<B>;
+
+    const uint64_t u2_pow_24 = 16777216;
+    const uint64_t u2_pow_23 = u2_pow_24 / 2;
+    const uint64_t u2_pow_25 = u2_pow_24 * 2;
+    const uint64_t u2_pow_53 = 9007199254740992;
+    const uint64_t u2_pow_52 = u2_pow_53 / 2;
+    const uint64_t u2_pow_54 = u2_pow_53 * 2;
 
     //int8
     {
     TestData<int8_n> s;
-    s.add(make_uint(0x00, 0x11, 0x22, 0x33));
-    s.add(make_uint(0xcc, 0xdd, 0xee, 0xff));
+    s.add(make_uint(0, 1, 2, 3));
+    s.add(make_uint(0x11, 0x22, 0x33, 0x44));
+    s.add(make_uint(0xbb, 0xcc, 0xdd, 0xee));
+    s.add(make_uint(0xfc, 0xfd, 0xfe, 0xff));
 
-    TEST_PUSH_ARRAY_OP1_T(ts, int16_2n,  int8_n, to_int16, s);
-    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n, uint8_n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,     int8_n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,    uint8_n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,     int8_n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,    uint8_n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   int8_n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,  uint8_n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   int8_n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,  uint8_n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   int8_n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,  uint8_n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   int8_n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,  uint8_n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  int8_n, to_float32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n, uint8_n, to_float32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   int8_n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,  uint8_n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   int8_n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,  uint8_n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  int8_n, to_float64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n, uint8_n, to_float64, s);
     }
 
     //int16
     {
-    TestData<int16_n> s;
-    s.add(make_uint(0x0000, 0x1111, 0x2222, 0x3333));
-    s.add(make_uint(0xcccc, 0xdddd, 0xeeee, 0xffff));
+    TestData<int16_2n> s;
+    s.add(make_uint(0, 1, 2, 3));
+    s.add(make_uint(0x1111, 0x2222, 0x3333, 0x4444));
+    s.add(make_uint(0xbbbb, 0xcccc, 0xdddd, 0xeeee));
+    s.add(make_uint(0xfffc, 0xfffd, 0xfffe, 0xffff));
 
-    TEST_PUSH_ARRAY_OP1_T(ts, int32_2n,  int16_n, to_int32, s);
-    TEST_PUSH_ARRAY_OP1_T(ts, uint32_2n, uint16_n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,     int16_2n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,    uint16_2n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,     int16_2n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,    uint16_2n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   int16_2n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,  uint16_2n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   int16_2n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,  uint16_2n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   int16_2n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,  uint16_2n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   int16_2n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,  uint16_2n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  int16_2n, to_float32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n, uint16_2n, to_float32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   int16_2n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,  uint16_2n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   int16_2n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,  uint16_2n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  int16_2n, to_float64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n, uint16_2n, to_float64, s);
     }
 
     //int32
     {
-    TestData<int32_n> s;
-    s.add(make_uint(0x00000000, 0x11111111));
-    s.add(make_uint(0x22222222, 0x33333333));
-    s.add(make_uint(0xcccccccc, 0xeeeeeeee));
-    s.add(make_uint(0xdddddddd, 0xffffffff));
+    TestData<int32_4n> s;
+    s.add(make_uint(0, 1, 2, 3));
+    s.add(make_uint(0x11111111, 0x22222222, 0x33333333, 0x44444444));
+    s.add(make_uint(0xbbbbbbbb, 0xcccccccc, 0xdddddddd, 0xeeeeeeee));
+    s.add(make_uint(0xfffffffc, 0xfffffffd, 0xfffffffe, 0xffffffff));
 
-    TEST_PUSH_ARRAY_OP1_T(ts, int64_2n,  int32_n, to_int64, s);
-    TEST_PUSH_ARRAY_OP1_T(ts, uint64_2n, uint32_n, to_uint64, s);
+    s.add(make_uint(1, 100));
+    s.add(make_uint(-1, -100));
+    s.add(make_uint(0, -15));
+    s.add(make_uint(u2_pow_23 - 1, u2_pow_23));
+    s.add(make_uint(u2_pow_23 + 1, u2_pow_23 + 2));
+    s.add(make_uint(u2_pow_24 - 1, u2_pow_24));
+    s.add(make_uint(u2_pow_24 + 1, u2_pow_24 + 2));
+    s.add(make_uint(u2_pow_25 - 1, u2_pow_25));
+    s.add(make_uint(u2_pow_25 + 1, u2_pow_25 + 2));
+    s.add(make_int(-u2_pow_23 + 1, -u2_pow_23));
+    s.add(make_int(-u2_pow_23 - 1, -u2_pow_23 - 2));
+    s.add(make_int(-u2_pow_24 + 1, -u2_pow_24));
+    s.add(make_int(-u2_pow_24 - 1, -u2_pow_24 - 2));
+    s.add(make_int(-u2_pow_25 + 1, -u2_pow_25));
+    s.add(make_int(-u2_pow_25 - 1, -u2_pow_25 - 2));
+
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,     int32_4n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,    uint32_4n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,     int32_4n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,    uint32_4n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   int32_4n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,  uint32_4n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   int32_4n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,  uint32_4n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   int32_4n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,  uint32_4n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   int32_4n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,  uint32_4n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  int32_4n, to_float32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n, uint32_4n, to_float32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   int32_4n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,  uint32_4n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   int32_4n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,  uint32_4n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  int32_4n, to_float64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n, uint32_4n, to_float64, s);
     }
 
+    // int64
     {
-    TestData<int32_n> s;
+    TestData<int64_8n> s;
+    s.add(make_uint(0, 1, 2, 3));
+    s.add(make_uint(0x1111111111111111, 0x2222222222222222,
+                    0x3333333333333333, 0x4444444444444444));
+    s.add(make_uint(0xbbbbbbbbbbbbbbbb, 0xcccccccccccccccc,
+                    0xdddddddddddddddd, 0xeeeeeeeeeeeeeeee));
+    s.add(make_uint(0xfffffffffffffffc, 0xfffffffffffffffd,
+                    0xfffffffffffffffe, 0xffffffffffffffff));
+
     s.add(make_uint(1, 100));
     s.add(make_uint(-1, -100));
     s.add(make_uint(0, -15));
@@ -77,44 +159,172 @@ void test_convert_n(TestResultsSet& ts)
     s.add(make_uint(-63100000, -63100001));
     s.add(make_uint(-63100002, -63100003));
 
+    s.add(make_uint(u2_pow_24 - 1, u2_pow_24));
+    s.add(make_uint(u2_pow_24 + 1, u2_pow_24 + 2));
+    s.add(make_uint(u2_pow_52 - 1, u2_pow_52));
+    s.add(make_uint(u2_pow_52 + 1, u2_pow_52 + 2));
+    s.add(make_uint(u2_pow_53 - 1, u2_pow_53));
+    s.add(make_uint(u2_pow_53 + 1, u2_pow_53 + 2));
+    s.add(make_uint(u2_pow_54 - 1, u2_pow_54));
+    s.add(make_uint(u2_pow_54 + 1, u2_pow_54 + 2));
+    s.add(make_int(-u2_pow_24 + 1, -u2_pow_24));
+    s.add(make_int(-u2_pow_24 - 1, -u2_pow_24 - 2));
+    s.add(make_int(-u2_pow_52 + 1, -u2_pow_52));
+    s.add(make_int(-u2_pow_52 - 1, -u2_pow_52 - 2));
+    s.add(make_int(-u2_pow_53 + 1, -u2_pow_53));
+    s.add(make_int(-u2_pow_53 - 1, -u2_pow_53 - 2));
+    s.add(make_int(-u2_pow_54 + 1, -u2_pow_54));
+    s.add(make_int(-u2_pow_54 - 1, -u2_pow_54 - 2));
+
+#if SIMDPP_X86
+    // TODO: figure out how to handle rounding differences.
     ts.set_precision(1);
-    set_round_to_zero(); // set consistent mode on SSE2
-    TEST_PUSH_ARRAY_OP1_T(ts, float32_n,  int32_n, to_float32, s);
-    TEST_PUSH_ARRAY_OP1_T(ts, float64_2n, int32_n, to_float64, s);
-    set_round_to_nearest();
+#endif
+
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,     int64_8n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,    uint64_8n, to_int8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,     int64_8n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,    uint64_8n, to_uint8, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   int64_8n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,  uint64_8n, to_int16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   int64_8n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,  uint64_8n, to_uint16, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   int64_8n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,  uint64_8n, to_int32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   int64_8n, to_uint32, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,  uint64_8n, to_uint32, s);
+#if SIMDPP_HAS_INT64_TO_FLOAT32_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  int64_8n, to_float32, s);
+#endif
+#if SIMDPP_HAS_UINT64_TO_FLOAT32_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n, uint64_8n, to_float32, s);
+#endif
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   int64_8n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,  uint64_8n, to_int64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   int64_8n, to_uint64, s);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,  uint64_8n, to_uint64, s);
+#if SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  int64_8n, to_float64, s);
+#endif
+#if SIMDPP_HAS_UINT64_TO_FLOAT64_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n, uint64_8n, to_float64, s);
+#endif
+
+#if SIMDPP_X86
     ts.unset_precision();
+#endif
     }
 
     //float32
     {
-    TestData<float32_n> s;
-    s.add(make_float(1.0, 100.0));
-    s.add(make_float(-1.0, -100.0));
-    s.add(make_float(0.0, -15.0));
-    s.add(make_float(1.0, 1.1));
-    s.add(make_float(-1.0, -1.1));
-    s.add(make_float(63100000.0, 63100000.0));
-    s.add(make_float(63100002.0, 63100003.0));
-    s.add(make_float(-63100000.0, -63100001.0));
-    s.add(make_float(-63100002.0, -63100003.0));
+    TestData<float32_4n> sp;
+    sp.add(make_float(1.0, 100.0));
+    sp.add(make_float(0.0, 15.0));
+    sp.add(make_float(1.0, 1.1));
+    sp.add(make_uint(u2_pow_23 - 1, u2_pow_23));
+    sp.add(make_uint(u2_pow_23 + 1, u2_pow_23 + 2));
+    sp.add(make_uint(u2_pow_24 - 1, u2_pow_24));
+    sp.add(make_uint(u2_pow_24 + 1, u2_pow_24 + 2));
+    sp.add(make_uint(u2_pow_25 - 1, u2_pow_25));
+    sp.add(make_uint(u2_pow_25 + 1, u2_pow_25 + 2));
 
-    TEST_PUSH_ARRAY_OP1_T(ts, int32_n, float32_n, to_int32, s);
+    TestData<float32_4n> sn = sp;
+    sn.add(make_float(-1.0, -100.0));
+    sn.add(make_float(-0.0, -15.0));
+    sn.add(make_float(-1.0, -1.1));
+    sn.add(make_int(-u2_pow_23 + 1, -u2_pow_23));
+    sn.add(make_int(-u2_pow_23 - 1, -u2_pow_23 - 2));
+    sn.add(make_int(-u2_pow_24 + 1, -u2_pow_24));
+    sn.add(make_int(-u2_pow_24 - 1, -u2_pow_24 - 2));
+    sn.add(make_int(-u2_pow_25 + 1, -u2_pow_25));
+    sn.add(make_int(-u2_pow_25 - 1, -u2_pow_25 - 2));
+    // float -> integer overflows are undefined, we're not testing them
+
+#if SIMDPP_X86
+    // TODO: figure out how to handle rounding differences.
+    ts.set_precision(1);
+#endif
+
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,     float32_4n, to_int8, sn);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,     float32_4n, to_uint8, sp);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   float32_4n, to_int16, sn);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   float32_4n, to_uint16, sp);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   float32_4n, to_int32, sn);
+#if SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   float32_4n, to_uint32, sp);
+#endif
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  float32_4n, to_float32, sn);
+#if SIMDPP_HAS_FLOAT32_TO_INT64_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   float32_4n, to_int64, sn);
+#endif
+#if SIMDPP_HAS_FLOAT32_TO_UINT64_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   float32_4n, to_uint64, sp);
+#endif
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  float32_4n, to_float64, sp);
+
+#if SIMDPP_X86
+    ts.unset_precision();
+#endif
     }
 
     //float64
     {
-    TestData<float64_2n> s;
-    s.add(make_float(1.0, 100.0));
-    s.add(make_float(-1.0, -100.0));
-    s.add(make_float(0.0, -15.0));
-    s.add(make_float(1.0, 1.1));
-    s.add(make_float(-1.0, -1.1));
-    s.add(make_float(63100000.0, 63100000.0));
-    s.add(make_float(63100002.0, 63100003.0));
-    s.add(make_float(-63100000.0, -63100001.0));
-    s.add(make_float(-63100002.0, -63100003.0));
+    TestData<float64_8n> sp;
+    sp.add(make_float(1.0, 100.0));
+    sp.add(make_float(0.0, 15.0));
+    sp.add(make_float(1.0, 1.1));
+    sp.add(make_uint(u2_pow_24 - 1, u2_pow_24));
+    sp.add(make_uint(u2_pow_24 + 1, u2_pow_24 + 2));
 
-    TEST_PUSH_ARRAY_OP1_T(ts, int32_n, float64_2n, to_int32, s);
+    TestData<float64_8n> sp64 = sp;
+    sp64.add(make_uint(u2_pow_52 - 1, u2_pow_52));
+    sp64.add(make_uint(u2_pow_52 + 1, u2_pow_52 + 2));
+    sp64.add(make_uint(u2_pow_53 - 1, u2_pow_53));
+    sp64.add(make_uint(u2_pow_53 + 1, u2_pow_53 + 2));
+    sp64.add(make_uint(u2_pow_54 - 1, u2_pow_54));
+    sp64.add(make_uint(u2_pow_54 + 1, u2_pow_54 + 2));
+
+    TestData<float64_8n> sn = sp;
+    sn.add(make_float(-1.0, -100.0));
+    sn.add(make_float(-0.0, -15.0));
+    sn.add(make_float(-1.0, -1.1));
+    sn.add(make_int(-u2_pow_24 + 1, -u2_pow_24));
+    sn.add(make_int(-u2_pow_24 - 1, -u2_pow_24 - 2));
+
+    TestData<float64_8n> sn64 = sp;
+    sn64.add(sn);
+    sn64.add(make_int(-u2_pow_52 + 1, -u2_pow_52));
+    sn64.add(make_int(-u2_pow_52 - 1, -u2_pow_52 - 2));
+    sn64.add(make_int(-u2_pow_53 + 1, -u2_pow_53));
+    sn64.add(make_int(-u2_pow_53 - 1, -u2_pow_53 - 2));
+    sn64.add(make_int(-u2_pow_54 + 1, -u2_pow_54));
+    sn64.add(make_int(-u2_pow_54 - 1, -u2_pow_54 - 2));
+    // float -> integer overflows are undefined, we're not testing them
+
+#if SIMDPP_X86
+    ts.set_precision(1);
+#endif
+
+    TEST_PUSH_ARRAY_OP1_T(ts,  int8_n,     float64_8n, to_int8, sn);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint8_n,     float64_8n, to_uint8, sp);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   float64_8n, to_int16, sn);
+    TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   float64_8n, to_uint16, sp);
+    TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   float64_8n, to_int32, sn);
+#if SIMDPP_HAS_FLOAT64_TO_UINT32_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   float64_8n, to_uint32, sp);
+#endif
+    TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  float64_8n, to_float32, sn);
+#if SIMDPP_HAS_FLOAT64_TO_INT64_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   float64_8n, to_int64, sn64);
+#endif
+#if SIMDPP_HAS_FLOAT64_TO_UINT64_CONVERSION
+    TEST_PUSH_ARRAY_OP1_T(ts, uint64_8n,   float64_8n, to_uint64, sp64);
+#endif
+    TEST_PUSH_ARRAY_OP1_T(ts, float64_8n,  float64_8n, to_float64, sp);
+
+#if SIMDPP_X86
+    ts.unset_precision();
+#endif
     }
 }
 

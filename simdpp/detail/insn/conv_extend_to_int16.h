@@ -1,12 +1,12 @@
-/*  Copyright (C) 2013-2014  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2017  Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_TO_INT16_H
-#define LIBSIMDPP_SIMDPP_DETAIL_INSN_TO_INT16_H
+#ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_CONV_EXTEND_TO_INT16_H
+#define LIBSIMDPP_SIMDPP_DETAIL_INSN_CONV_EXTEND_TO_INT16_H
 
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
@@ -26,7 +26,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
+SIMDPP_INL uint16<16> i_to_uint16(const uint8<16>& a)
 {
 #if SIMDPP_USE_NULL
     uint16x16 r;
@@ -34,6 +34,8 @@ SIMDPP_INL uint16x16 i_to_uint16(const uint8x16& a)
         r.vec(i/8).el(i%8) = uint16_t(a.el(i));
     }
     return r;
+#elif SIMDPP_USE_AVX2
+    return _mm256_cvtepu8_epi16(a.native());
 #elif SIMDPP_USE_SSE4_1
     uint16x8 r1, r2;
     r1 = _mm_cvtepu8_epi16(a.native());
@@ -88,11 +90,7 @@ SIMDPP_INL uint16<64> i_to_uint16(const uint8<64>& a)
 template<unsigned N> SIMDPP_INL
 uint16<N> i_to_uint16(const uint8<N>& a)
 {
-    uint16<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, i_to_uint16(a.vec(i)), i);
-    }
-    return r;
+    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint16<N>, i_to_uint16, a)
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +103,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
         r.vec(i/8).el(i%8) = int16_t(a.el(i));
     }
     return r;
+#elif SIMDPP_USE_AVX2
+    return _mm256_cvtepi8_epi16(a.native());
 #elif SIMDPP_USE_SSE4_1
     int16x8 r1, r2;
     r1 = _mm_cvtepi8_epi16(a.native());
@@ -167,12 +167,9 @@ SIMDPP_INL int16<64> i_to_int16(const int8<64>& a)
 template<unsigned N> SIMDPP_INL
 int16<N> i_to_int16(const int8<N>& a)
 {
-    int16<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, i_to_int16(a.vec(i)), i);
-    }
-    return r;
+    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int16<N>, i_to_int16, a)
 }
+
 
 } // namespace insn
 } // namespace detail

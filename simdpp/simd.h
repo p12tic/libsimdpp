@@ -8,9 +8,6 @@
 #ifndef LIBSIMDPP_SIMD_H
 #define LIBSIMDPP_SIMD_H
 
-/* For documentation, see doc/src/libsimdpp-doc.h or http:// TODO .html
-*/
-
 /* The following file sets up the preprocessor variables and includes the
    required system headers for the specific architecture
 */
@@ -127,6 +124,7 @@
 #include <simdpp/core/to_int32.h>
 #include <simdpp/core/to_int64.h>
 #include <simdpp/core/to_int8.h>
+#include <simdpp/core/to_mask.h>
 #include <simdpp/core/transpose.h>
 #include <simdpp/core/unzip_hi.h>
 #include <simdpp/core/unzip_lo.h>
@@ -134,8 +132,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/detail/cast.h>
 #include <simdpp/detail/cast.inl>
-#include <simdpp/detail/to_mask.h>
-#include <simdpp/detail/to_mask.inl>
+#include <simdpp/detail/insn/conv_to_mask.inl>
 
 #include <simdpp/detail/altivec/load1.h>
 
@@ -207,6 +204,8 @@
 #include <simdpp/dispatch/dispatcher.h>
 #include <simdpp/dispatch/make_dispatcher.h>
 #endif
+
+#include <simdpp/capabilities.h>
 
 namespace simdpp {
 using namespace SIMDPP_ARCH_NAMESPACE;

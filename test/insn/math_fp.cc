@@ -76,14 +76,12 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
         TEST_PUSH_ARRAY_OP1(tc, float32_n, ceil, s);
         tc.unset_fp_zero_equal();
 
-        tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
         tc.set_fp_zero_equal();
         TEST_PUSH_ALL_COMB_OP3(tc, float32_n, fmadd, s);
         TEST_PUSH_ALL_COMB_OP3(tc, float32_n, fmsub, s);
         tc.unset_fp_zero_equal();
 #endif
-        tc.sync_archs();
 
         TestData<float32_n> snan;
         snan.add(make_float(1.0f, 2.0f, 3.0f, 4.0f));
@@ -152,7 +150,6 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
         TEST_PUSH_ALL_COMB_OP2(tc, float64_n, min, snan);
         TEST_PUSH_ALL_COMB_OP2(tc, float64_n, max, snan);
 
-        tc.sync_archs();
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
         tc.set_fp_zero_equal();
         // Certain simulators can't handle NaNs and infinity in this instruction
@@ -183,7 +180,6 @@ void test_math_fp_n(TestResultsSet& tc, const TestOptions& opts)
         }
         tc.unset_fp_zero_equal();
 #endif
-        tc.sync_archs();
 
         // Depending on the reduction order precision errors may occur.
         tc.set_precision(2);

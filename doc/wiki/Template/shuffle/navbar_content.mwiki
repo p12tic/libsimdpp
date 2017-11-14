@@ -23,4 +23,12 @@
 {{nv ln | shuffle/zipX_lo_128 | zip16_lo&nbsp;zip8_lo&nbsp;zip4_lo&nbsp;zip2_lo }} 
 {{nv ln | shuffle/unzipX_hi_128 | unzip16_hi&nbsp;unzip8_hi&nbsp;unzip4_hi&nbsp;unzip2_hi }} 
 {{nv ln | shuffle/unzipX_lo_128 | unzip16_lo&nbsp;unzip8_lo&nbsp;unzip4_lo&nbsp;unzip2_lo }} 
+{{nv ln | shuffle/make_shuffle_bytes16_mask }}
+{{nv col begin}}
+{{nv ln | shuffle/shuffle_bytes16}}
+{{nv ln | shuffle/shuffle_zbytes16}}
+{{nv col next}}
+{{nv ln | shuffle/permute_bytes16}}
+{{nv ln | shuffle/permute_zbytes16}}
+{{nv col end}}
 {{nv end}}

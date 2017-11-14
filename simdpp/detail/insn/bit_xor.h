@@ -13,8 +13,8 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/to_mask.h>
 #include <simdpp/detail/null/bitwise.h>
-#include <simdpp/detail/to_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -112,7 +112,7 @@ mask_int16<8> i_bit_xor(const mask_int16<8>& a, const mask_int16<8>& b)
 #if SIMDPP_USE_NULL
     return detail::null::bit_xor_mm(a, b);
 #else
-    return detail::to_mask((uint16<8>) i_bit_xor(uint8<16>(a), uint8<16>(b)));
+    return to_mask((uint16<8>) i_bit_xor(uint8<16>(a), uint8<16>(b)));
 #endif
 }
 
@@ -120,7 +120,7 @@ mask_int16<8> i_bit_xor(const mask_int16<8>& a, const mask_int16<8>& b)
 static SIMDPP_INL
 mask_int16<16> i_bit_xor(const mask_int16<16>& a, const mask_int16<16>& b)
 {
-    return detail::to_mask((uint16<16>) i_bit_xor(uint16<16>(a), uint16<16>(b)));
+    return to_mask((uint16<16>) i_bit_xor(uint16<16>(a), uint16<16>(b)));
 }
 #endif
 
@@ -163,7 +163,7 @@ mask_int32<4> i_bit_xor(const mask_int32<4>& a, const mask_int32<4>& b)
 #if SIMDPP_USE_NULL
     return detail::null::bit_xor_mm(a, b);
 #else
-    return detail::to_mask((uint32<4>) i_bit_xor(uint8<16>(a), uint8<16>(b)));
+    return to_mask((uint32<4>) i_bit_xor(uint8<16>(a), uint8<16>(b)));
 #endif
 }
 
@@ -171,7 +171,7 @@ mask_int32<4> i_bit_xor(const mask_int32<4>& a, const mask_int32<4>& b)
 static SIMDPP_INL
 mask_int32<8> i_bit_xor(const mask_int32<8>& a, const mask_int32<8>& b)
 {
-    return detail::to_mask((uint32<8>) i_bit_xor(uint32<8>(a), uint32<8>(b)));
+    return to_mask((uint32<8>) i_bit_xor(uint32<8>(a), uint32<8>(b)));
 }
 #endif
 
@@ -219,7 +219,7 @@ mask_int64<2> i_bit_xor(const mask_int64<2>& a, const mask_int64<2>& b)
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::bit_xor_mm(a, b);
 #else
-    return detail::to_mask((uint64<2>) i_bit_xor(uint8<16>(a), uint8<16>(b)));
+    return to_mask((uint64<2>) i_bit_xor(uint8<16>(a), uint8<16>(b)));
 #endif
 }
 
@@ -227,7 +227,7 @@ mask_int64<2> i_bit_xor(const mask_int64<2>& a, const mask_int64<2>& b)
 static SIMDPP_INL
 mask_int64<4> i_bit_xor(const mask_int64<4>& a, const mask_int64<4>& b)
 {
-    return detail::to_mask((uint64<4>) i_bit_xor(uint64<4>(a), uint64<4>(b)));
+    return to_mask((uint64<4>) i_bit_xor(uint64<4>(a), uint64<4>(b)));
 }
 #endif
 
@@ -287,7 +287,7 @@ mask_float32x4 i_bit_xor(const mask_float32x4& a, const mask_float32x4& b)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::bit_xor_mm(a, b);
 #else
-    return detail::to_mask(i_bit_xor(float32x4(a), float32x4(b)));
+    return to_mask(i_bit_xor(float32x4(a), float32x4(b)));
 #endif
 }
 
@@ -295,7 +295,7 @@ mask_float32x4 i_bit_xor(const mask_float32x4& a, const mask_float32x4& b)
 static SIMDPP_INL
 mask_float32x8 i_bit_xor(const mask_float32x8& a, const mask_float32x8& b)
 {
-    return detail::to_mask(i_bit_xor(float32x8(a), float32x8(b)));
+    return to_mask(i_bit_xor(float32x8(a), float32x8(b)));
 }
 #endif
 
@@ -356,7 +356,7 @@ mask_float64x2 i_bit_xor(const mask_float64x2& a, const mask_float64x2& b)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_206)
     return detail::null::bit_xor_mm(a, b);
 #else
-    return detail::to_mask(i_bit_xor(float64x2(a), float64x2(b)));
+    return to_mask(i_bit_xor(float64x2(a), float64x2(b)));
 #endif
 }
 
@@ -364,7 +364,7 @@ mask_float64x2 i_bit_xor(const mask_float64x2& a, const mask_float64x2& b)
 static SIMDPP_INL
 mask_float64x4 i_bit_xor(const mask_float64x4& a, const mask_float64x4& b)
 {
-    return detail::to_mask(i_bit_xor(float64x4(a), float64x4(b)));
+    return to_mask(i_bit_xor(float64x4(a), float64x4(b)));
 }
 #endif
 

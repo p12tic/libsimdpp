@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/shuffle4x2 | shuffles two vectors at four-element granularity }}
