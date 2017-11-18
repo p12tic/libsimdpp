@@ -178,6 +178,12 @@ float32<4> i_to_float32(const uint32<4>& a)
 #elif SIMDPP_USE_SSE2
     mask_int32<4> is_large = cmp_gt(a, 0x7fffffff);
     float32<4> f_a = _mm_cvtepi32_ps(a.native());
+    // f_a has values in the range [0x80000000, 0xffffffff) wrapped around to
+    // negative values. Conditionally bias the result to fix that. Note, that
+    // the result is in sufficient precision even for large argument values.
+    // The result has lowest precision around 0x80000000, and the precision
+    // increases going towards 0xffffffff. The final result after bias will
+    // have lower precision in this whole range.
     float32<4> f_large = add(f_a, 0x100000000);
     return blend(f_large, f_a, is_large);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
