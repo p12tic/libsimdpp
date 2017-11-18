@@ -11,7 +11,6 @@ The following macros are provided to indicate the presence of instructions that 
 {{dsc inc | cap/dsc SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION}}
 {{dsc inc | cap/dsc SIMDPP_HAS_UINT64_TO_FLOAT32_CONVERSION}}
 {{dsc inc | cap/dsc SIMDPP_HAS_UINT64_TO_FLOAT64_CONVERSION}}
-{{dsc inc | cap/dsc SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION}}
 {{dsc inc | cap/dsc SIMDPP_HAS_FLOAT32_TO_INT64_CONVERSION}}
 {{dsc inc | cap/dsc SIMDPP_HAS_FLOAT32_TO_UINT64_CONVERSION}}
 {{dsc inc | cap/dsc SIMDPP_HAS_FLOAT64_TO_UINT32_CONVERSION}}
