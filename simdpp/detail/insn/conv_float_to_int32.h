@@ -13,6 +13,8 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/i_add.h>
+#include <simdpp/core/f_sub.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -110,7 +112,15 @@ uint32<4> i_to_uint32(const float32<4>& a)
 #elif SIMDPP_USE_ALTIVEC
     return vec_ctu(a.native(), 0);
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    // Smaller than 0x80000000 numbers can be represented as int32, so we can
+    // use i_to_int32 which is available as instruction on all supported
+    // architectures. Larger integers can be biased into int32 range, converted
+    // and unbiased. Note that no rounding takes place in the latter case.
+    mask_float32<4> is_small = cmp_lt(a, 0x80000000);
+    int32<4> i_small = i_to_int32(a);
+    float32<4> t = sub(a, 0x80000000);
+    int32<4> i_large = add(i_to_int32(t), 0x80000000);
+    return (uint32<4>) blend(i_small, i_large, is_small);
 #endif
 }
 
@@ -124,7 +134,11 @@ uint32<8> i_to_uint32(const float32<8>& a)
     __m512 a512 = _mm512_castps256_ps512(a.native());
     return _mm512_castsi512_si256(_mm512_cvttps_epu32(a512));
 #else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
+    mask_float32<8> is_small = cmp_lt(a, 0x80000000);
+    int32<8> i_small = i_to_int32(a);
+    float32<8> t = sub(a, 0x80000000);
+    int32<8> i_large = add(i_to_int32(t), 0x80000000);
+    return (uint32<8>) blend(i_small, i_large, is_small);
 #endif
 }
 #endif
