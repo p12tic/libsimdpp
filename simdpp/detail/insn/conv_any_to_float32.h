@@ -177,10 +177,8 @@ float32<4> i_to_float32(const uint32<4>& a)
     return r;
 #elif SIMDPP_USE_SSE2
     mask_int32<4> is_large = cmp_gt(a, 0x7fffffff);
-    uint32<4> large = shift_r<1>(a);
-    float32<4> f_large = _mm_cvtepi32_ps(large.native());
-    f_large = mul(f_large, 2.0f);
     float32<4> f_a = _mm_cvtepi32_ps(a.native());
+    float32<4> f_large = add(f_a, 0x100000000);
     return blend(f_large, f_a, is_large);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<uint32<4>> mi(a);
@@ -208,10 +206,8 @@ float32x8 i_to_float32(const uint32x8& a)
     return _mm512_castps512_ps256(_mm512_cvtepu32_ps(a512));
 #elif SIMDPP_USE_AVX2
     mask_int32<8> is_large = cmp_gt(a, 0x7fffffff);
-    uint32<8> large = shift_r<1>(a);
-    float32<8> f_large = _mm256_cvtepi32_ps(large.native());
-    f_large = mul(f_large, 2.0f);
     float32<8> f_a = _mm256_cvtepi32_ps(a.native());
+    float32<8> f_large = add(f_a, 0x100000000);
     return blend(f_large, f_a, is_large);
 #else
     return combine(i_to_float32(a.vec(0)), i_to_float32(a.vec(1)));
