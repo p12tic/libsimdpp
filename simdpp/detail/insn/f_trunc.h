@@ -28,7 +28,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-
 static SIMDPP_INL
 float32x4 i_trunc(const float32x4& a)
 {
@@ -45,7 +44,7 @@ float32x4 i_trunc(const float32x4& a)
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_MSA
     //check if the value is not too large
     float32x4 af = abs(a);
-    mask_float32x4 mask_range = cmp_le(af, 8388607.0f);
+    mask_float32x4 mask_range = cmp_lt(af, 8388608.0f);
 
     // don't change the sign of negative zero
     mask_float32x4 mask_nonzero = cmp_gt(af, 0);
