@@ -5,13 +5,17 @@ What's new in v2.1 development master:
  * Added support for x86 AVX512BW and AVX512DQ instruction sets.
  * Added support for 64-bit little-endian PowerPC.
  * Added support for arbitrary width vectors in extract() and insert()
- * New functions: popcnt, reduce_popcnt, for_each
+ * Added support for arbitrary source vectors to to_int8(), to_uint8(),
+    to_int16(), to_uint16(), to_int32(), to_uint32(), to_int64(), to_uint64(),
+    to_float32(), to_float64().
+ * Make shuffle_bytes16(), shuffle_zbytes16(), permute_bytes16() and
+    permute_zbytes() more generic.
+ * New functions: popcnt, reduce_popcnt, for_each, to_mask()
  * Xcode is now supported.
  * Deprecation: implicit conversion operators to native vector types has been
     deprecated and a replacement method has been provided instead. The implicit
     conversion operators may lead to wrong code being accepted without a
     compile error on Clang.
- * Various bug fixes.
 
 What's new in v2.0:
 
