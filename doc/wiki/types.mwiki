@@ -13,22 +13,42 @@ This page outlines the available vector types in the library. Several higher-lev
 
 ===Vector types===
 {{dsc begin}}
-{{dsc tclass | types/uint8_void | title=uint8{{small|<N>}} | vector containing unsigned 8-bit integers}}
-{{dsc tclass | types/int8_void | title=int8{{small|<N>}} | vector containing signed 8-bit integers}}
-{{dsc tclass | types/mask_int8_void | title=mask_int8{{small|<N>}} | vector containing masks for 8-bit integers}}
-{{dsc tclass | types/uint16_void | title=uint16{{small|<N>}} | vector containing unsigned 16-bit integers}}
-{{dsc tclass | types/int16_void | title=int16{{small|<N>}} | vector containing signed 16-bit integers}}
-{{dsc tclass | types/mask_int16_void | title=mask_int16{{small|<N>}} | vector containing masks for 16-bit integers}}
-{{dsc tclass | types/uint32_void | title=uint32{{small|<N>}} | vector containing unsigned 32-bit integers}}
-{{dsc tclass | types/int32_void | title=int32{{small|<N>}} | vector containing signed 32-bit integers}}
-{{dsc tclass | types/mask_int32_void | title=mask_int32{{small|<N>}} | vector containing masks for 32-bit integers}}
-{{dsc tclass | types/uint64_void | title=uint64{{small|<N>}} | vector containing unsigned 64-bit integers}}
-{{dsc tclass | types/int64_void | title=int64{{small|<N>}} | vector containing signed 64-bit integers}}
-{{dsc tclass | types/mask_int64_void | title=mask_int64{{small|<N>}} | vector containing masks for 64-bit integers}}
-{{dsc tclass | types/float32_void | title=float32{{small|<N>}} | vector containing 32-bit floating-point numbers}}
-{{dsc tclass | types/mask_float32_void | title=mask_float32{{small|<N>}} | vector containing masks for 32-bit floating-point numbers}}
-{{dsc tclass | types/float64_void | title=float64{{small|<N>}} | vector containing 64-bit floating-point numbers}}
-{{dsc tclass | types/mask_float64_void | title=mask_float64{{small|<N>}} | vector containing masks for 64-bit floating-point numbers}}
+{{dsc tclass | types/uint8_void | title=uint8{{small|<N,void>}} | vector containing unsigned 8-bit integers}}
+{{dsc tclass | types/int8_void | title=int8{{small|<N,void>}} | vector containing signed 8-bit integers}}
+{{dsc tclass | types/mask_int8_void | title=mask_int8{{small|<N,void>}} | vector containing masks for 8-bit integers}}
+{{dsc tclass | types/uint16_void | title=uint16{{small|<N,void>}} | vector containing unsigned 16-bit integers}}
+{{dsc tclass | types/int16_void | title=int16{{small|<N,void>}} | vector containing signed 16-bit integers}}
+{{dsc tclass | types/mask_int16_void | title=mask_int16{{small|<N,void>}} | vector containing masks for 16-bit integers}}
+{{dsc tclass | types/uint32_void | title=uint32{{small|<N,void>}} | vector containing unsigned 32-bit integers}}
+{{dsc tclass | types/int32_void | title=int32{{small|<N,void>}} | vector containing signed 32-bit integers}}
+{{dsc tclass | types/mask_int32_void | title=mask_int32{{small|<N,void>}} | vector containing masks for 32-bit integers}}
+{{dsc tclass | types/uint64_void | title=uint64{{small|<N,void>}} | vector containing unsigned 64-bit integers}}
+{{dsc tclass | types/int64_void | title=int64{{small|<N,void>}} | vector containing signed 64-bit integers}}
+{{dsc tclass | types/mask_int64_void | title=mask_int64{{small|<N,void>}} | vector containing masks for 64-bit integers}}
+{{dsc tclass | types/float32_void | title=float32{{small|<N,void>}} | vector containing 32-bit floating-point numbers}}
+{{dsc tclass | types/mask_float32_void | title=mask_float32{{small|<N,void>}} | vector containing masks for 32-bit floating-point numbers}}
+{{dsc tclass | types/float64_void | title=float64{{small|<N,void>}} | vector containing 64-bit floating-point numbers}}
+{{dsc tclass | types/mask_float64_void | title=mask_float64{{small|<N,void>}} | vector containing masks for 64-bit floating-point numbers}}
+{{dsc end}}
+
+===Vector expressions===
+{{dsc begin}}
+{{dsc tclass | types/uint8_expr | title=uint8{{small|<N,E>}} | vector containing unsigned 8-bit integers}}
+{{dsc tclass | types/int8_expr | title=int8{{small|<N,E>}} | vector containing signed 8-bit integers}}
+{{dsc tclass | types/mask_int8_expr | title=mask_int8{{small|<N,E>}} | vector containing masks for 8-bit integers}}
+{{dsc tclass | types/uint16_expr | title=uint16{{small|<N,E>}} | vector containing unsigned 16-bit integers}}
+{{dsc tclass | types/int16_expr | title=int16{{small|<N,E>}} | vector containing signed 16-bit integers}}
+{{dsc tclass | types/mask_int16_expr | title=mask_int16{{small|<N,E>}} | vector containing masks for 16-bit integers}}
+{{dsc tclass | types/uint32_expr | title=uint32{{small|<N,E>}} | vector containing unsigned 32-bit integers}}
+{{dsc tclass | types/int32_expr | title=int32{{small|<N,E>}} | vector containing signed 32-bit integers}}
+{{dsc tclass | types/mask_int32_expr | title=mask_int32{{small|<N,E>}} | vector containing masks for 32-bit integers}}
+{{dsc tclass | types/uint64_expr | title=uint64{{small|<N,E>}} | vector containing unsigned 64-bit integers}}
+{{dsc tclass | types/int64_expr | title=int64{{small|<N,E>}} | vector containing signed 64-bit integers}}
+{{dsc tclass | types/mask_int64_expr | title=mask_int64{{small|<N,E>}} | vector containing masks for 64-bit integers}}
+{{dsc tclass | types/float32_expr | title=float32{{small|<N,E>}} | vector containing 32-bit floating-point numbers}}
+{{dsc tclass | types/mask_float32_expr | title=mask_float32{{small|<N,E>}} | vector containing masks for 32-bit floating-point numbers}}
+{{dsc tclass | types/float64_expr | title=float64{{small|<N,E>}} | vector containing 64-bit floating-point numbers}}
+{{dsc tclass | types/mask_float64_expr | title=mask_float64{{small|<N,E>}} | vector containing masks for 64-bit floating-point numbers}}
 {{dsc end}}
 
 ===Categorization types===
