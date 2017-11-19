@@ -212,3 +212,7 @@ Because of this, the implicit native vector type conversion operators are deprec
 ===Return value===
 Wrapped SIMD type.
 }}
+
+{{types/any_{{{kind}}}{{{bits}}}/inherit}}
+{{types/any_vec{{{bits}}}/inherit}}
+{{types/any_vec/inherit}}

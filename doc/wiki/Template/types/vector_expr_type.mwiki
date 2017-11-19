@@ -36,3 +36,7 @@ operator {{{1}}}<N>() const;
 
 Returns {{c|eval()}}.
 }}
+
+{{types/any_{{{kind}}}{{{bits}}}/inherit}}
+{{types/any_vec{{{bits}}}/inherit}}
+{{types/any_vec/inherit}}

@@ -1,0 +1,26 @@
+{{simdpp/title | any_vec8{{small|<N,V>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N, class V >
+class any_vec8 : public any_vec<N*1, V>;
+}}
+{{dcl end}}
+
+A categorization type that represents any vector with 8-bit elements.
+
+{{ltt|types/any_vec8}}, {{ltt|types/uint8_void|uint8}}, {{ltt|types/int8_void|int8}} and {{ltt|types/mask_int8_void|mask_int8}} derive from this type.
+
+===Template parameters===
+{{par begin}}
+{{par | N | the number of elements in the vector}}
+{{par | V | the actual type of the vector}}
+{{par end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|size_tag}} | {{tt|SIMDPP_TAG_SIZE8}} }}
+{{dsc end}}
+
+{{types/any_vec/inherit}}
