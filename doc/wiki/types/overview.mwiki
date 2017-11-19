@@ -55,7 +55,7 @@ Here {{tt|N}} is the number of elements within vector.
 The {{tt|Expr}} template parameter is used to support expression templates. Most user code will use the default value {{tt|void}}.
 
 ===Masks===
-Masts are special vector types that are similar to their regular counterparts from user's perspective. The difference is that masks store one bit of information per element: either all bits are ones or zeroes. The physical layout is undefined similarly to the regular vector types. On certain instruction sets such as AVX512 each mask element occupies single physical bit, on others it is effectively a regular vector that stores either ones or zeroes in its elements.
+Masks are special vector types that are similar to their regular counterparts from user's perspective. The difference is that masks store one bit of information per element: either all bits are ones or zeroes. The physical layout is undefined similarly to the regular vector types. On certain instruction sets such as AVX512 each mask element occupies single physical bit, on others it is effectively a regular vector that stores either ones or zeroes in its elements.
 
 The following class templates are provided for mask types:
 {{dcl begin}}
