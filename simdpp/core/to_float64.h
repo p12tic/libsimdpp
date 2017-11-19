@@ -93,7 +93,7 @@ float64<N,expr_empty> to_float64(const float32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 float64<N,expr_empty> to_float64(const float64<N,E>& a)
 {
-    return detail::insn::i_to_float64(a.eval());
+    return a;
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
