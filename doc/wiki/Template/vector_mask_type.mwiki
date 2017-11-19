@@ -11,7 +11,7 @@ Defines a {{{kind_text}}} mask type with {{tt|N}} elements. Each element defines
 
 The physical representation of the mask vector depends on the selected instruction set. Some instruction sets have efficient mask representation where each element only takes 1 bit of space. On other platforms the mask is a {{tt|{{{regular_vec}}}}} with elements whose bits are either all zeroes or all ones depending on the value of the mask.
 
-This is a template specialization for the parameter {{tt|Expr}} being {{tt|void}}. It corresponds to a physical vector data as opposed to a vector expression. See [[types/expr|this page]] for documentation of operations available on vector expressions.
+This is a template specialization for the parameter {{tt|Expr}} being {{tt|void}}. It corresponds to a physical vector data as opposed to a vector expression. See [[types#expr|this page]] for documentation of operations available on vector expressions.
 
 If {{tt|N}} corresponds to a register size supported on current instruction set then the type wraps a native register and provides APIs to access underlying type provided by compiler SIMD intrinsics.
 
@@ -64,7 +64,7 @@ Constructs the mask vector object.
 
 :(2) Copy constructor is default.
 
-:(3) The vector can be constructed from a [[types/expr|vector expression]] evaluating it.
+:(3) The vector can be constructed from a [[types#expr|vector expression]] evaluating it.
 
 :(4) The vector can be constructed from {{{regular_vec}}} if it is used as physical storage (i.e. the instruction set does not provide efficient mask type). This function is deprecated, use {{ltf|conv/to_mask}}} as a replacement.
 

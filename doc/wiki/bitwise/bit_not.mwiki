@@ -9,7 +9,7 @@ V<N, DETAIL> bit_not( const any_vec<N,V>& a );
 
 Computes bitwise NOT of integer or floating-point vector.
 
-The return type is a [[types/expr|vector expression]] of {{tt|N}} bytes.
+The return type is a [[types#expr|vector expression]] of {{tt|N}} bytes.
 
 ===Parameters===
 {{par begin}}
@@ -17,7 +17,7 @@ The return type is a [[types/expr|vector expression]] of {{tt|N}} bytes.
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to bitwise {{tt|~a}}.
+A [[types#expr|vector expression]] evaluating to bitwise {{tt|~a}}.
 
 ===Equivalent operation===
 {{source|1=

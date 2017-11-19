@@ -33,7 +33,7 @@ The return vector type is governed by the [[types/promotion|expression promotion
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]].
+A [[types#expr|vector expression]].
 
 ===Equivalent operation===
 For the {{c|uint32x4}} case:

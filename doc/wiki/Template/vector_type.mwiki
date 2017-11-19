@@ -9,7 +9,7 @@ class {{{1}}}<N,void> : public {{{2}}}<N, {{{1}}}<N,void> >;
 
 Defines a {{{kind_text}}} type with {{tt|N}} elements each having {{{bits}}} bits.
 
-This is a template specialization for the parameter {{tt|Expr}} being {{tt|void}}. It corresponds to a physical vector data as opposed to a vector expression. See [[types/expr|this page]] for documentation of operations available on vector expressions.
+This is a template specialization for the parameter {{tt|Expr}} being {{tt|void}}. It corresponds to a physical vector data as opposed to a vector expression. See [[types#expr|this page]] for documentation of operations available on vector expressions.
 
 If {{tt|N}} corresponds to a register size supported on current instruction set then the type wraps a native register and provides APIs to access underlying type provided by compiler SIMD intrinsics.
 
@@ -67,7 +67,7 @@ Constructs the vector object.
 
 :(2) Copy constructor is default.
 
-:(3) The vector can be constructed from a [[types/expr|vector expression]] evaluating it.
+:(3) The vector can be constructed from a [[types#expr|vector expression]] evaluating it.
 
 :(4) The vector can be constructed from any other vector of the same size. This constructor is {{tt|explicit}} - implicit conversions between vectors are not allowed.
 

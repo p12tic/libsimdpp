@@ -18,7 +18,7 @@ The implementation behaves as if the following set of overloads is provided:
 {{vset3 u | ''promoted 64-bit vector'' | ''any 64-bit vector'' | ''any 64-bit vector'' }}
 {{vset end}}
 
-The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types/expr|vector expression]].
+The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types#expr|vector expression]].
 
 The selectors {{tt|s0}}, {{tt|s1}}, {{tt|s2}} and {{tt|s3}} must be in range {{c|[0..7]}}.
 
@@ -34,7 +34,7 @@ The vectors are shuffled at 4x4 block granularity as follows: the vectors are pa
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to the shuffled vectors.
+A [[types#expr|vector expression]] evaluating to the shuffled vectors.
 
 ===Equivalent operation===
 {{source|1=

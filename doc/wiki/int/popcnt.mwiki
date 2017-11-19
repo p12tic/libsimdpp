@@ -21,7 +21,7 @@ Counts the number of set bits (population count) in each element of the vector. 
 {{vset2 | uint64 | uint64 }}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 ===Parameters===
 {{par begin}}
@@ -29,7 +29,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|popcnt(a)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|popcnt(a)}}.
 
 ===Equivalent operation===
 {{source|1=

@@ -15,7 +15,7 @@ Computes the minimum of the values in two floating-point values. The implementat
 {{vset3 | float64 | float64 | float64}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 For each pair of values being processed: if at least one of the values is NaN, or both values are zeroes, it is unspecified which value will be returned.
 
@@ -27,7 +27,7 @@ For each pair of values being processed: if at least one of the values is NaN, o
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|min(a, b)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|min(a, b)}}.
 
 ===Equivalent operation===
 {{source|1=

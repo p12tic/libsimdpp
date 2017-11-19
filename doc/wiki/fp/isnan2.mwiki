@@ -15,7 +15,7 @@ Checks if the values in the floating-point vector {{tt|a}} and {{tt|b}} are Not-
 {{vset2 | mask_float64 | float64}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 ===Parameters===
 {{par begin}}
@@ -23,7 +23,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating for each value to all bits set if at least one of the corresponding values from either {{tt|a}} or {{tt|b}} is not a number and zero otherwise.
+A [[types#expr|vector expression]] evaluating for each value to all bits set if at least one of the corresponding values from either {{tt|a}} or {{tt|b}} is not a number and zero otherwise.
 
 ===Equivalent operation===
 {{source|1=

@@ -24,7 +24,7 @@ The implementation behaves as if the following set of overloads is provided:
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|e * (3 - x*e*e) * 0.5}}.
+A [[types#expr|vector expression]] evaluating to {{tt|e * (3 - x*e*e) * 0.5}}.
 
 ===See also===
 {{todo}}

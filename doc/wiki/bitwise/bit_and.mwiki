@@ -9,7 +9,7 @@ PROMOTED_EXPRESSION bit_and( const any_vec<N,V1>& a, const any_vec<N,V2>& b );
 
 Computes bitwise AND of integer or floating-point vectors.
 
-The return type is a [[types/expr|vector expression]] of {{tt|N}} bytes. The vector type is governed by the [[types/promotion|expression promotion]] rules.
+The return type is a [[types#expr|vector expression]] of {{tt|N}} bytes. The vector type is governed by the [[types/promotion|expression promotion]] rules.
 
 {{scalar_note_int}}
 
@@ -19,7 +19,7 @@ The return type is a [[types/expr|vector expression]] of {{tt|N}} bytes. The vec
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to bitwise {{tt|a & b}}.
+A [[types#expr|vector expression]] evaluating to bitwise {{tt|a & b}}.
 
 ===Equivalent operation===
 {{source|1=

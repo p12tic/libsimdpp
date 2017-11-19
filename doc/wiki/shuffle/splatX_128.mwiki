@@ -30,7 +30,7 @@ The return vector type is governed by the [[types/promotion|expression promotion
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]].
+A [[types#expr|vector expression]].
 
 ===Equivalent operation===
 For the {{tt|any_vec32}} case on 128-bit vector:

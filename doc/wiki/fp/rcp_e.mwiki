@@ -28,7 +28,7 @@ The precision depends on platform:
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|approx(1/a)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|approx(1/a)}}.
 
 ===Equivalent operation===
 {{source|1=

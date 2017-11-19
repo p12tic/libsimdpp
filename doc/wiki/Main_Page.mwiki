@@ -41,7 +41,6 @@ the compiler will generate.
 <div class="mainpagediv">
 [[types/main|Vector types]]<br/>
 [[types/hierarchy|Type hierarchy]]<br/>
-[[types/expr|Vector expressions]]<br/>
 [[types/promotion|Vector type promotion]]<br/>
 </div>
 

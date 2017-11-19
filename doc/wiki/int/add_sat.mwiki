@@ -17,7 +17,7 @@ Performs saturated addition of two integer values. The implementation behaves as
 {{vset3 | uint16 | uint16 | uint16}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 {{scalar note int}}
 
@@ -27,7 +27,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|saturate(a + b)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|saturate(a + b)}}.
 
 ===Equivalent operation===
 {{source|1=

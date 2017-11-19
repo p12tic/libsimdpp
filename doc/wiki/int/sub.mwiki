@@ -29,7 +29,7 @@ Performs subtraction of two integer values. The implementation behaves as if the
 {{vset3 | uint64 | uint64 | uint64}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 {{scalar note int}}
 
@@ -39,7 +39,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|a - b}}.
+A [[types#expr|vector expression]] evaluating to {{tt|a - b}}.
 
 ===Equivalent operation===
 {{source|1=

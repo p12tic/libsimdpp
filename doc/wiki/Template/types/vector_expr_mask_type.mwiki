@@ -1,6 +1,15 @@
-{{member | {{small|simdpp::}}{{{1}}}<N,E> |
+{{simdpp/title | {{{1}}}{{small|<N,E>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N, class E >
+class {{{1}}} : public {{{2}}}<N, {{{1}}}<N,E> >;
+}}
+{{dcl end}}
 
-Inherits from {{c|{{{2}}}}}.
+Defines a {{{kind_text}}} mask expression type with {{tt|N}} elements.
+
+Instances of this type do not correspond to any physical SIMD registers. Instead, the type contains all information needed to produce one or more SIMD registers with correct information, but the operations have not been executed yet. The expression can be evaluated and its result obtained by calling {{tt|eval()}} member function.
 
 ===Member types===
 {{dsc begin}}
@@ -35,5 +44,4 @@ operator {{{3}}}<N>() const;
 {{dcl end}}
 
 Returns {{c|eval().unmask()}}.
-}}
 }}

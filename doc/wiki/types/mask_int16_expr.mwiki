@@ -1,0 +1,1 @@
+{{types/vector_expr_type |mask_int16|any_int16|uint16| kind_text=integer }}

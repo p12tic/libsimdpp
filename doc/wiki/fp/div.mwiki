@@ -15,7 +15,7 @@ Performs division of two floating-point values. The implementation behaves as if
 {{vset3 | float64 | float64 | float64}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 {{scalar note}}
 
@@ -25,7 +25,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|a / b}}.
+A [[types#expr|vector expression]] evaluating to {{tt|a / b}}.
 
 ===Equivalent operation===
 {{source|1=

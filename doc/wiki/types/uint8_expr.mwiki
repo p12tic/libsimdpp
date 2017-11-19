@@ -1,0 +1,1 @@
+{{types/vector_expr_type |uint8|any_int8| kind_text=integer | bits=8}}
