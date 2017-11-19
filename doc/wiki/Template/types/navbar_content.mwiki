@@ -1,5 +1,4 @@
 {{nv begin}}
-{{nv | [[types/main|Vector types]]}}
-{{nv | [[types/hierarchy|Type hierarchy]]}}
+{{nv | [[types/overview|Overview]]}}
 {{nv | [[types/promotion|Vector type promotion]]}}
 {{nv end}}

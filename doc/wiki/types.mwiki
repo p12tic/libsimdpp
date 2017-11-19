@@ -3,13 +3,14 @@
 
 This page outlines the available vector types in the library. Several higher-level descriptions are available in the following pages:
 
-*<span style="font-size:1.2em;">[[types/main|Main vector types]]</span>
-
-*<span style="font-size:1.2em;">[[types/hierarchy|Type hierarchy]]</span>
+*<span style="font-size:1.2em;">[[types/overview|Overview]]</span>
 
 *<span style="font-size:1.2em;">[[types/promotion|Vector type promotion]]</span>
 
-===Vector types===
+===Regular vector types===
+
+Regular vector types are any vector type with {{tt|void}} {{tt|Expr}} template parameter. Vector types correspond to one or more physical SIMD registers.
+
 {{dsc begin}}
 {{dsc tclass | types/uint8_void | title=uint8{{small|<N,void>}} | vector containing unsigned 8-bit integers}}
 {{dsc tclass | types/int8_void | title=int8{{small|<N,void>}} | vector containing signed 8-bit integers}}

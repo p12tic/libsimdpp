@@ -1,4 +1,4 @@
-{{title|Main vector types}}
+{{title|Overview}}
 {{types/navbar}}
 
 The library has a number of types that correspond to various types of data that may be stored within a SIMD registers. The types may be categorized in two dimensions: the type of data stored within a single element (lane) of the wrapped SIMD register and the number of such elements wrapped by the type.
@@ -100,3 +100,40 @@ for (unsigned i = 0; i < size; ++i) {
 The vectorized version of this code should use {{c|int32<4>}} and {{c|float32<4>}} types on SSE2 and {{c|int32<8>}} and {{c|float32<8>}} on AVX2. The former instruction set supports 128-bit SIMD instructions for both integer and floating-point operations whereas the latter supports 256-bit SIMD instructions. Effectively utilizing non-uniform instruction set such as AVX is more complex: for floating-point operations 256-bit instructions are available, wheres integer SIMD instructions still support only 128 bits. With libsimdpp the user can simply use {{c|int32<8>}} and {{c|float32<8>}} types and floating-point operations would be done using 256-bit SIMD instructions, whereas integer operations would employ twice as many 128-bit instructions.
 
 Using vector types wider than available SIMD instructions increases register pressure. Users should query the most efficient vector widths from the library via [[util#Vector_size_macros|vector size macros]] and use it to size vectors for their algorithms.
+
+===Type hierarchy===
+
+The vector types form type hierarchy by inheriting from empty class template using [https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern curriously recurring template pattern]. This allows to write function templates accepting a certain category of vector types as parameters without needing to create excessive number of overloads. For example, it's possible to write a single function template that accepts any two integer vectors with 32-bit elements.
+
+The type hierarchy is shown below:
+{{source|1=
+any_vec
+┣━ any_vec8
+┃   ┗━ any_int8
+┃        ┣━ int8
+┃        ┣━ uint8
+┃        ┗━ mask_int8
+┣━ any_vec16
+┃   ┗━ any_int16
+┃        ┣━ int16
+┃        ┣━ uint16
+┃        ┗━ mask_int16
+┣━ any_vec32
+┃   ┣━ any_int32
+┃   ┃    ┣━ int32
+┃   ┃    ┣━ uint32
+┃   ┃    ┗━ mask_int32
+┃   ┗━ any_float32
+┃        ┣━ float32
+┃        ┗━ mask_float32
+┗━ any_vec64
+    ┣━ any_int64
+    ┃    ┣━ int64
+    ┃    ┣━ uint64
+    ┃    ┗━ mask_int64
+    ┗━ any_float64
+         ┣━ float64
+         ┗━ mask_float64
+}}
+
+The categorization types are only useful as parameters in functions that a certain vector category. They are never used in other contexts.

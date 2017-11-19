@@ -39,8 +39,7 @@ the compiler will generate.
 
 '''[[types|Types]]'''
 <div class="mainpagediv">
-[[types/main|Vector types]]<br/>
-[[types/hierarchy|Type hierarchy]]<br/>
+[[types/overview|Overview]]<br/>
 [[types/promotion|Vector type promotion]]<br/>
 </div>
 
