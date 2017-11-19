@@ -72,6 +72,23 @@ def sync_single_page(page, direction, dest_root):
             file.write(fix_whitespace(text))
         print('Downloaded {0}'.format(dest_path))
 
+def remove_no_longer_existing_pages(pages, dest_root):
+    paths = []
+    for dir, dirnames, filenames in os.walk(dest_root):
+        for filename in filenames:
+            rel_path = os.path.join(os.path.relpath(dir, dest_root), filename)
+            if rel_path.startswith('./'):
+                rel_path = rel_path[2:]
+            paths.append(rel_path)
+
+    paths = set(paths)
+
+    existing_paths = set([get_path_from_title(page.title()) for page in pages])
+    deleted_paths = paths - existing_paths
+
+    for path in deleted_paths:
+        os.remove(os.path.join(dest_root, path))
+
 def perform_sync(url, direction, dest_root, user, password):
 
     if direction == SYNC_DIRECTION_DOWNLOAD:
@@ -102,8 +119,12 @@ def perform_sync(url, direction, dest_root, user, password):
     )
     pages = pywikibot.pagegenerators.PreloadingGenerator(pages, groupsize=100)
 
+    pages = list(pages)
     for page in pages:
         sync_single_page(page, direction, dest_root)
+
+    if direction == SYNC_DIRECTION_DOWNLOAD:
+        remove_no_longer_existing_pages(pages, dest_root)
 
 def main():
     parser = argparse.ArgumentParser(prog='sync_mediawiki')
