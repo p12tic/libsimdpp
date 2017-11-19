@@ -37,6 +37,17 @@ def get_path_from_title(title):
 
     return '/'.join(pathnames) + '.mwiki'
 
+def fix_whitespace(text):
+    # Trims trailing whitespace on lines
+    # Adds trailing newline if not present. MediaWiki strips it and we don't
+    # want to fight with editors.
+
+    # Note that splitlines does not return empty line corresponding to the
+    # trailing newline character.
+    lines = text.splitlines()
+    lines = [ l.rstrip() for l in lines ]
+    return '\n'.join(lines) + '\n'
+
 def sync_single_page(page, direction, dest_root):
     title = page.title()
     text = page.get(get_redirect=True)
@@ -58,11 +69,7 @@ def sync_single_page(page, direction, dest_root):
             os.makedirs(dest_dir)
 
         with open(dest_path, 'w') as file:
-            if not text.endswith('\n'):
-                # MediaWiki strips trailing whitespace, re-add it so that lack
-                # of it does not fight with editors
-                text = text + '\n'
-            file.write(text)
+            file.write(fix_whitespace(text))
         print('Downloaded {0}'.format(dest_path))
 
 def perform_sync(url, direction, dest_root, user, password):
