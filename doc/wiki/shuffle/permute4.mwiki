@@ -1,14 +1,14 @@
 {{simdpp/title|permute4}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
-template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, 
+{{dcl |
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class E>
 Vec<N,_DETAIL_> permute4( const Vec<N,E>& a );
 }}
 {{dcl end}}
 
-Permutes groups of four elements within the source vector. The implementation behaves as if the following set of overloads is provided: 
+Permutes groups of four elements within the source vector. The implementation behaves as if the following set of overloads is provided:
 
 {{vset begin}}
 {{vset2 h | Ret | Vec }}

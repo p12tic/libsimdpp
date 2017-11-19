@@ -1,7 +1,7 @@
 {{simdpp/title|to_uint64}}
 {{conv/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 uint64<N, _DETAIL_> to_uint64( Vec<N,E> a );
 }}

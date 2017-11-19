@@ -1,7 +1,7 @@
 {{simdpp/title|to_uint8}}
 {{conv/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 uint8<N, _DETAIL_> to_uint8( Vec<N,E> a );
 }}

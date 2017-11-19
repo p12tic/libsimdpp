@@ -1,7 +1,7 @@
 {{simdpp/title|sqrt}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> sqrt( Vec<N,E> a );
 }}

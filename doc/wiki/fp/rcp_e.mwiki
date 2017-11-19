@@ -1,7 +1,7 @@
 {{simdpp/title|rcp_e}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> rcp_e( Vec<N,E> a );
 }}

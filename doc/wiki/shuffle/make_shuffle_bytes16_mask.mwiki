@@ -15,7 +15,7 @@ template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, unsigne
 uint8<N> make_shuffle_bytes16_mask( uint8<N> &mask );
 }}
 {{dcl |
-template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, 
+template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7,
          int s8, int s9, int s10, int s11, int s12, int s13, int s14, int s15,
          unsigned N>
 uint8<N> make_shuffle_bytes16_mask( uint8<N> &mask );

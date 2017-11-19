@@ -1,7 +1,7 @@
 {{simdpp/title|load_packed3}}
 {{mem/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V>
 void load_packed3( any_vec<N,V>& a, any_vec<N,V>& b, any_vec<N,V>& c,
                    const void* ptr );

@@ -1,19 +1,19 @@
 {{simdpp/title|move16_l, move8_l, move4_l, move2_l}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned shift, unsigned N, class V1>
 Ret<N, _DETAIL_> move16_l( const any_vec8<N,V1>& a );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned shift, unsigned N, class V1>
 Ret<N, _DETAIL_> move8_l( const any_vec16<N,V1>& a );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned shift, unsigned N, class V1>
 Ret<N, _DETAIL_> move4_l( const any_vec32<N,V1>& a );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned shift, unsigned N, class V1>
 Ret<N, _DETAIL_> move2_l( const any_vec64<N,V1>& a );
 }}
@@ -34,7 +34,7 @@ A [[types/expr|vector expression]].
 ===Equivalent operation===
 For the {{tt|any_vec32}} case:
 {{source|1=
-shift: pos:  0  1  2  3  
+shift: pos:  0  1  2  3
 0      r = [ a0 a1 a2 a3 ]
 1      r = [ a1 a2 a3 0  ]
 2      r = [ a2 a3 0  0  ]

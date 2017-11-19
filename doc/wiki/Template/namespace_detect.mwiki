@@ -1,18 +1,18 @@
 {{#switch:
   {{lc:               <!--Lower case the result-->
     <!--If no or empty "demospace" parameter then detect namespace-->
-    {{#if:{{{demospace|}}} 
+    {{#if:{{{demospace|}}}
     | {{{demospace}}}
-    | {{#if:{{{page|}}} 
+    | {{#if:{{{page|}}}
       | <!--Detect the namespace in the "page" parameter-->
         {{#ifeq:{{NAMESPACE:{{{page}}} }}|{{TALKSPACE:{{{page}}} }}
         | talk
-        | {{SUBJECTSPACE:{{{page}}} }} 
+        | {{SUBJECTSPACE:{{{page}}} }}
         }}
       | <!--No "demospace" or "page" parameters, so detect actual namespace-->
         {{#ifeq:{{NAMESPACE}}|{{TALKSPACE}}
         | talk
-        | {{SUBJECTSPACE}} 
+        | {{SUBJECTSPACE}}
         }}
       }}
     }}

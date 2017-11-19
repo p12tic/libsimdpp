@@ -38,7 +38,7 @@ _DETAIL_ make_float( double v0, double v1, ... , double v15 );
 }}
 {{dcl end}}
 
-Creates a vector from floating-point values known at compile-time. 
+Creates a vector from floating-point values known at compile-time.
 
 The values passed to this function are converted using standard conversions to the element type of the resulting vector.  All conversions and other overhead is performed at compile-time thus even if the minimal optimization level is selected, the function results in a simple load from memory.
 

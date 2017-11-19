@@ -1,7 +1,7 @@
 {{simdpp/title|shuffle4x2}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class E1, class E2>
 Ret<N,_DETAIL_> shuffle4x2( const Vec1<N,E1>& a, const Vec2<N,E2& b );

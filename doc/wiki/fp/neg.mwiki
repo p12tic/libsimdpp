@@ -1,7 +1,7 @@
 {{simdpp/title|neg{{small|(float)}}}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1>
 Ret<N, _DETAIL_> neg( Vec1<N,E1> a );
 }}

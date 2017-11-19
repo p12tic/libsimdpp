@@ -7,7 +7,7 @@ The rules are intuitive and resemble the C type promotion rules. The rules are a
 
 * The rules only apply to vectors of the same size
 
-* The element data type of the result vector is defined as follows: 
+* The element data type of the result vector is defined as follows:
 :* if either of the vectors is {{tt|float}}, the result is also {{tt|float}}
 :* otherwise, if either of the vectors is {{tt|uint}}, the result is also {{tt|uint}}
 :* otherwise, if either of the vectors is {{tt|int}}, the result is also {{tt|int}}
@@ -27,7 +27,7 @@ Examples:
 
 
 
-The following tables illustrate the promotion rules in more detail: 
+The following tables illustrate the promotion rules in more detail:
 
 If the arguments have the same element size {{tt|XX}}, then:
 

@@ -1,7 +1,7 @@
 {{simdpp/title|rsqrt_rh}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> rsqrt_rh( const Vec<N,E>& e, const Vec<N,E>& x );
 }}

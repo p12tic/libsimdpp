@@ -3,7 +3,7 @@
 {{dcl begin}}
 {{dcl |
 template<unsigned N, class E1, class E2, class E3>
-Ret<N,_DETAIL_> shuffle_bytes16( const Vec1<N,E1>& a, const Vec2<N,E2>& b, 
+Ret<N,_DETAIL_> shuffle_bytes16( const Vec1<N,E1>& a, const Vec2<N,E2>& b,
                                  const Mask<N,E3>& mask );
 }}
 {{dcl end}}
@@ -29,7 +29,7 @@ The implementation behaves as if the following set of overloads is provided:
 
 The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types/expr|vector expression]].
 
-The vectors are shuffled at 16 byte granularity as follows: the vectors are partitioned into 128-bit lanes. The {{tt|n}}-th lane in the return vector is governed by {{tt|n}}-th lane of the {{tt|mask}} vector. The {{tt|n}}-th lane in the return vector will contain elements only from {{tt|n}}-th lanes of {{tt|a}} and {{tt|b}} vectors. 
+The vectors are shuffled at 16 byte granularity as follows: the vectors are partitioned into 128-bit lanes. The {{tt|n}}-th lane in the return vector is governed by {{tt|n}}-th lane of the {{tt|mask}} vector. The {{tt|n}}-th lane in the return vector will contain elements only from {{tt|n}}-th lanes of {{tt|a}} and {{tt|b}} vectors.
 
 ===Parameters===
 {{par begin}}

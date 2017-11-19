@@ -1,7 +1,7 @@
 {{simdpp/title|fmadd{{small|(floatint-point)}}}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1, class E2, class E3>
 Ret<N, _DETAIL_> fmadd( Vec1<N,E1> a, Vec2<N,E2> b, Vec3<N,E3> );
 }}

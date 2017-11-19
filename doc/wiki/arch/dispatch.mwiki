@@ -19,14 +19,14 @@ The additional predefined flags for dispatcher support are the following:
 
 ==={{tt|SIMDPPP_MAKE_DISPATCHER}} macro===
 
-The {{tt|SIMDPP_MAKE_DISPATCHER}} macro builds a dispatcher for a specific non-member function. The same macro is used for functions with or without return value, with different parameter counts and for template functions. 
+The {{tt|SIMDPP_MAKE_DISPATCHER}} macro builds a dispatcher for a specific non-member function. The same macro is used for functions with or without return value, with different parameter counts and for template functions.
 
 The function accepts a sequence of 3 or 5 parenthesized token groups. Each group conveys the following information:
- 
+
 * (optional) the full template prefix, e.g. {{c|(template<class T>)}}.
 
 * (optional) the template argument list enclosed in brackets, e.g. {{c|(<T,U>)}}.
-  
+
 * the return type, e.g. {{c|(void)}}, or {{c|(float)}}.
 
 * the function name, e.g. {{c|(my_function)}}

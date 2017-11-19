@@ -1,7 +1,7 @@
 {{simdpp/title|store_packed4}}
 {{mem/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V>
 void store_packed4( void* ptr, const any_vec<N,V>& a, const any_vec<N,V>& b,
                                const any_vec<N,V>& c, const any_vec<N,V>& d );

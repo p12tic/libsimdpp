@@ -4,14 +4,14 @@
 | heading-style = {{{heading-style|}}}
 | content = {{{content|}}}
 
-| docpage = 
+| docpage =
   {{#if: {{{1|}}}
   | {{{1|}}}
   | {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/doc
   }}
 
-| doc exist = 
-  {{#ifexist: 
+| doc exist =
+  {{#ifexist:
     {{#if: {{{1|}}}
     | {{{1|}}}   <!--Other docname fed-->
     | {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/doc

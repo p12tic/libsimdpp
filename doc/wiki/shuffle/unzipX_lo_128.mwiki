@@ -1,22 +1,22 @@
 {{simdpp/title|unzip16_lo, unzip8_lo, unzip4_lo, unzip2_lo}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V1, class V2>
 Ret<N, _DETAIL_> unzip16_lo( const any_vec8<N,V1>& a,
                              const any_vec8<N,V2>& b );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V1, class V2>
 Ret<N, _DETAIL_> unzip8_lo( const any_vec16<N,V1>& a,
                             const any_vec16<N,V2>& b );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V1, class V2>
 Ret<N, _DETAIL_> unzip4_lo( const any_vec32<N,V1>& a,
                             const any_vec32<N,V2>& b );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V1, class V2>
 Ret<N, _DETAIL_> unzip2_lo( const any_vec64<N,V1>& a,
                             const any_vec64<N,V2>& b );

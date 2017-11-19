@@ -1,7 +1,7 @@
 {{simdpp/title|to_uint16}}
 {{conv/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 uint16<N, _DETAIL_> to_uint16( Vec<N,E> a );
 }}

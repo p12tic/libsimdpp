@@ -17,8 +17,8 @@
      | #default = <!--
   --><td class="mbox-image"><!--
     -->{{#switch:{{{small|}}}
-       | left = <!-- Don't use the DIV --> 
-       | #default = <div style="width: 52px;"> 
+       | left = <!-- Don't use the DIV -->
+       | #default = <div style="width: 52px;">
        }}<!--
     -->{{#if:{{{image|}}}
        | {{{image}}}
@@ -33,15 +33,15 @@
          | notice          <!-- notice = default -->
          | #default   = Ambox notice.png
          }} | <!--
-      -->{{#switch:{{{small|}}} 
-         | left = 20x20px 
-         | #default = 40x40px 
+      -->{{#switch:{{{small|}}}
+         | left = 20x20px
+         | #default = 40x40px
          }} | link= |alt= <!--
       -->]]<!--
     -->}}<!--
     -->{{#switch:{{{small|}}}
        | left = <!-- Don't use the /DIV -->
-       | #default = </div> 
+       | #default = </div>
        }}<!--
   --></td><!--
   -->}}<!--
@@ -59,7 +59,7 @@
       --></td><!--
     -->}}<!--
   -->}}<!--
---></tr></table><!-- 
+--></tr></table><!--
 Detect and report usage with faulty "type" parameter:
 -->{{#switch:{{{type|}}}
 |   <!-- No type fed, is also valid input -->
@@ -71,7 +71,7 @@ Detect and report usage with faulty "type" parameter:
 | protection
 | notice     = <!-- Do nothing, valid "type" -->
 | #default   = <div style="text-align: center;">This message box is using an invalid "type={{{type|}}}" parameter and needs fixing.</div>[[Category:Wikipedia message box parameter needs fixing|{{main other|Main:}}{{FULLPAGENAME}}]]<!-- Sort on namespace -->
-}}<!-- 
+}}<!--
 Detect and report usage of deprecated "image=blank":
 -->{{#switch:{{{image|}}}
 | blank = [[Category:Wikipedia message box parameter needs fixing|{{main other|Main:}}{{FULLPAGENAME}}]]<!-- Sort on namespace -->

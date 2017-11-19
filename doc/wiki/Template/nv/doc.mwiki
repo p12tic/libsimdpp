@@ -6,10 +6,10 @@ This is one of the family of templates used for creation of feature lists in sid
 : starts the declaration list
 
 {{tl|nv h1 | ''heading''}}
-: adds heading to the feature list 
+: adds heading to the feature list
 
 {{tl|nv h2 | ''heading''}}
-: adds heading to the feature list 
+: adds heading to the feature list
 
 {{tl|nv | ''explanation'' }}
 : adds a generic item to the feature list

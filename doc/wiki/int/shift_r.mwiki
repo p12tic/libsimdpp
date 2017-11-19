@@ -1,11 +1,11 @@
 {{simdpp/title|shift_r}}
 {{int/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1>
 Ret<N, _DETAIL_> shift_r( const Vec1<N,E1>& a, unsigned shift );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned shift, unsigned N, class E1>
 Ret<N, _DETAIL_> shift_r( const Vec1<N,E1>& a );
 }}

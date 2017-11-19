@@ -18,7 +18,7 @@ Creates an annotation. Several annotations are already defined:
 
 {{tl|mark language}} results in {{mark language}}
 
-; Standards 
+; Standards
 
 {{tl|mark c++11}} results in {{mark c++11}}
 

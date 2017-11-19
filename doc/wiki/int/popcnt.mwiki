@@ -1,7 +1,7 @@
 {{simdpp/title|popcnt}}
 {{int/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1, class E2>
 Ret<N, _DETAIL_> popcnt( Vec<N,E1> a );
 }}

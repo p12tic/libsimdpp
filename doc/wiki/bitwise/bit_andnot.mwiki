@@ -7,7 +7,7 @@ PROMOTED_EXPRESSION bit_andnot( const any_vec<N,V1>& a, const any_vec<N,V2>& b )
 }}
 {{dcl end}}
 
-Computes bitwise AND NOT of integer or floating-point vectors. 
+Computes bitwise AND NOT of integer or floating-point vectors.
 
 The return type is a [[types/expr|vector expression]] of {{tt|N}} bytes. The vector type is governed by the [[types/promotion|expression promotion]] rules.
 

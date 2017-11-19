@@ -1,7 +1,7 @@
 {{simdpp/title|isnan2}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1, class E2>
 Ret<N, _DETAIL_> isnan( Vec1<N,E1> a, Vec2<N,E2> b );
 }}

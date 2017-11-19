@@ -1,19 +1,19 @@
 {{simdpp/title|splat16, splat8, splat4, splat2}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned s, unsigned N, class V1>
 Ret<N, _DETAIL_> splat16( const any_vec8<N,V1>& a );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned s, unsigned N, class V1>
 Ret<N, _DETAIL_> splat8( const any_vec16<N,V1>& a );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned s, unsigned N, class V1>
 Ret<N, _DETAIL_> splat4( const any_vec32<N,V1>& a );
 }}
-{{dcl | 
+{{dcl |
 template<unsigned s, unsigned N, class V1>
 Ret<N, _DETAIL_> splat2( const any_vec64<N,V1>& a );
 }}

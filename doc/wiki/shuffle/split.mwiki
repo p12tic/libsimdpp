@@ -1,7 +1,7 @@
 {{simdpp/title|split}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template< unsigned N, class E >
 void split( const Ret<N*2,E>& a,
             const Vec1<N>& r1, const Vec2<N>& r2 );

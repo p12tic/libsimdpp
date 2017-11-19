@@ -1,4 +1,4 @@
-Adds information about noexcept specification. 
+Adds information about noexcept specification.
 
 {{tl|noexcept|specification{{mark optional}}|notes{{=}}''notes''{{mark optional}}}}
 

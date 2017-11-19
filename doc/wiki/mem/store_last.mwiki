@@ -1,13 +1,13 @@
 {{simdpp/title|store_last}}
 {{mem/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V>
 void store_last( void* ptr, const any_vec<N,V>& a, unsigned n );
 }}
 {{dcl end}}
 
-Stores the last {{tt|n}} elements the given vector to memory block starting at {{tt|ptr}}. {{tt|n}} must be in range {{tt|[0..N]}}. 
+Stores the last {{tt|n}} elements the given vector to memory block starting at {{tt|ptr}}. {{tt|n}} must be in range {{tt|[0..N]}}.
 
 The function may be implemented as read-modify-write operation that behaves as if {{c|store(ptr, blend(a, (V) load(ptr), store_mask)}} was executed.
 

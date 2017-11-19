@@ -1,7 +1,7 @@
 {{simdpp/title|to_int16}}
 {{conv/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 int16<N, _DETAIL_> to_int16( Vec<N,E> a );
 }}

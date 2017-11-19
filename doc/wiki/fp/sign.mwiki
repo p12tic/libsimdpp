@@ -1,7 +1,7 @@
 {{simdpp/title|sign}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> sign( Vec<N,E> a );
 }}

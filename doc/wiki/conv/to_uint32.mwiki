@@ -1,7 +1,7 @@
 {{simdpp/title|to_uint32}}
 {{conv/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 uint32<N, _DETAIL_> to_uint32( Vec<N,E> a );
 }}

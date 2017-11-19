@@ -1,11 +1,11 @@
 {{simdpp/title|load_u}}
 {{mem/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<class V>
 V load_u( void* ptr );
 }}
-{{dcl | 
+{{dcl |
 _DETAIL_ load_u( void* ptr );
 }}
 {{dcl end}}

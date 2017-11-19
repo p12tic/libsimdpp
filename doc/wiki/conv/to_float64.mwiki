@@ -1,7 +1,7 @@
 {{simdpp/title|to_float64}}
 {{conv/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 float64<N, _DETAIL_> to_float64( Vec<N,E> a );
 }}

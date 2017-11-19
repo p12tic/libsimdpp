@@ -8,7 +8,7 @@ The type hierarchy is shown below:
 any_vec
 ┣━ any_vec8
 ┃   ┗━ any_int8
-┃        ┣━ int8 
+┃        ┣━ int8
 ┃        ┣━ uint8
 ┃        ┗━ mask_int8
 ┣━ any_vec16

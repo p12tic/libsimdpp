@@ -1,7 +1,7 @@
 {{simdpp/title|ceil}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> ceil( Vec<N,E> a );
 }}

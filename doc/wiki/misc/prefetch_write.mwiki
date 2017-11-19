@@ -1,7 +1,7 @@
 {{simdpp/title|prefetch_write}}
 {{misc/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 void prefetch_write( const void* ptr );
 }}
 {{dcl end}}
