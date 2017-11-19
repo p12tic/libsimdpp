@@ -53,6 +53,16 @@ the compiler will generate.
 [[util#Enabled_instruction_sets | Enabled instruction set]]
 </div>
 
+'''[[conv | Conversions]]'''
+<div class="mainpagediv">
+{{ltt|conv/to_int8}}&nbsp;&nbsp;{{ltt|conv/to_uint8}}<br/>
+{{ltt|conv/to_int16}}&nbsp;&nbsp;{{ltt|conv/to_uint16}}<br/>
+{{ltt|conv/to_int32}}&nbsp;&nbsp;{{ltt|conv/to_uint32}}<br/>
+{{ltt|conv/to_int64}}&nbsp;&nbsp;{{ltt|conv/to_uint64}}<br/>
+{{ltt|conv/to_float32}}&nbsp;&nbsp;{{ltt|conv/to_float64}}<br/>
+{{ltt|conv/to_mask}}
+</div>
+
 |
 
 '''[[bitwise | Bitwise operations]]'''
@@ -115,7 +125,7 @@ the compiler will generate.
 {{ltt|int/reduce_and}}&nbsp;&nbsp;{{ltt|int/reduce_or}} <br/>
 </div>
 
-'''[[mem | Memory access operations]]'''
+'''[[mem | Memory access]]'''
 <div class="mainpagediv">
 {{ltt|mem/load}}&nbsp;&nbsp;{{ltt|mem/load_u}} <br/>
 {{ltt|mem/load_splat}} <br/>
@@ -130,15 +140,6 @@ the compiler will generate.
 </div>
 
 |
-'''[[conv | Conversions]]'''
-<div class="mainpagediv">
-{{ltt|conv/to_int8}}&nbsp;&nbsp;{{ltt|conv/to_uint8}}<br/>
-{{ltt|conv/to_int16}}&nbsp;&nbsp;{{ltt|conv/to_uint16}}<br/>
-{{ltt|conv/to_int32}}&nbsp;&nbsp;{{ltt|conv/to_uint32}}<br/>
-{{ltt|conv/to_int64}}&nbsp;&nbsp;{{ltt|conv/to_uint64}}<br/>
-{{ltt|conv/to_float32}}&nbsp;&nbsp;{{ltt|conv/to_float64}}<br/>
-{{ltt|conv/to_mask}}
-</div>
 
 '''[[shuffle | Shuffle operations]]'''
 <div class="mainpagediv">
