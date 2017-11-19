@@ -59,7 +59,7 @@ def sync_single_page(page, direction, dest_root):
             return
         with open(dest_path, 'r') as file:
             new_text = file.read()
-        if text != new_text:
+        if fix_whitespace(text) != fix_whitespace(new_text):
             page.put(new_text, 'sync with git')
             print('Uploaded {0}'.format(title))
 
