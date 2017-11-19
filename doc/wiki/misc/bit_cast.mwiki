@@ -1,7 +1,7 @@
 {{simdpp/title|bit_cast}}
 {{misc/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template< class R, class T >
 R bit_cast( const T& t );
 }}

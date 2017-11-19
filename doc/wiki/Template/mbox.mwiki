@@ -1,5 +1,5 @@
 {{
-  {{namespace detect 
+  {{namespace detect
   | demospace = {{{demospace|}}}
   | main      = ambox
   | talk      = tmbox

@@ -1,7 +1,7 @@
 {{simdpp/title|stream}}
 {{mem/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V>
 void stream( void* ptr, const any_vec<N,V>& a );
 }}

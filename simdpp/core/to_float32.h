@@ -88,7 +88,7 @@ float32<N,expr_empty> to_float32(const uint64<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 float32<N,expr_empty> to_float32(const float32<N,E>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return a;
 }
 template<unsigned N, class E> SIMDPP_INL
 float32<N,expr_empty> to_float32(const float64<N,E>& a)

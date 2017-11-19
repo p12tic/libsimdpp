@@ -1,5 +1,5 @@
 {{#switch:{{{1|}}}
- | lparen | ( 
+ | lparen | (
  | rparen | )
  | lsq | [
  | rsq | ]={{#switch:{{{2|}}} | 1=0.5 | 2=1 | 1.5}}

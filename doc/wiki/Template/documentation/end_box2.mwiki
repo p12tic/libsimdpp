@@ -3,13 +3,13 @@
 | content = {{{content|}}}
 | link box = {{{link box|}}}   <!--So "link box=off" works-->
 
-| docpage = 
+| docpage =
   {{#if: {{{1|}}}
   | {{{1|}}}
   | {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/doc
   }}
-| doc exist = 
-  {{#ifexist: 
+| doc exist =
+  {{#ifexist:
     {{#if: {{{1|}}}
     | {{{1|}}}   <!--Other docname fed-->
     | {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/doc
@@ -21,12 +21,12 @@
   | yes
   }}
 
-| sandbox = 
+| sandbox =
   {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/sandbox
-| testcases = 
+| testcases =
   {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/testcases
 
-| template page = 
+| template page =
   {{NAMESPACE}}:{{{template page|{{PAGENAME}}}}}
 
 }}<noinclude>

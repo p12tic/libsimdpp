@@ -14,7 +14,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/combine.h>
-#include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
@@ -32,14 +31,6 @@ namespace detail {
 namespace insn {
 
 
-template<unsigned N> SIMDPP_INL
-float32<N> i_to_float32(const float32<N>& a)
-{
-    return a;
-}
-
-// -----------------------------------------------------------------------------
-
 static SIMDPP_INL
 float32<4> i_to_float32(const float64<4>& a)
 {
@@ -49,8 +40,7 @@ float32<4> i_to_float32(const float64<4>& a)
     float32x4 r1, r2;
     r1 = _mm_cvtpd_ps(a.vec(0).native());
     r2 = _mm_cvtpd_ps(a.vec(1).native());
-    r2 = move4_r<2>(r2);
-    return bit_or(r1, r2);
+    return _mm_movelh_ps(r2.native(), r1.native());
 #elif SIMDPP_USE_NEON64
     float32<4> r;
     r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0).native()),
@@ -179,10 +169,14 @@ float32<4> i_to_float32(const uint32<4>& a)
     return r;
 #elif SIMDPP_USE_SSE2
     mask_int32<4> is_large = cmp_gt(a, 0x7fffffff);
-    uint32<4> large = shift_r<1>(a);
-    float32<4> f_large = _mm_cvtepi32_ps(large.native());
-    f_large = mul(f_large, 2.0f);
     float32<4> f_a = _mm_cvtepi32_ps(a.native());
+    // f_a has values in the range [0x80000000, 0xffffffff) wrapped around to
+    // negative values. Conditionally bias the result to fix that. Note, that
+    // the result is in sufficient precision even for large argument values.
+    // The result has lowest precision around 0x80000000, and the precision
+    // increases going towards 0xffffffff. The final result after bias will
+    // have lower precision in this whole range.
+    float32<4> f_large = add(f_a, 0x100000000);
     return blend(f_large, f_a, is_large);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<uint32<4>> mi(a);
@@ -210,10 +204,8 @@ float32x8 i_to_float32(const uint32x8& a)
     return _mm512_castps512_ps256(_mm512_cvtepu32_ps(a512));
 #elif SIMDPP_USE_AVX2
     mask_int32<8> is_large = cmp_gt(a, 0x7fffffff);
-    uint32<8> large = shift_r<1>(a);
-    float32<8> f_large = _mm256_cvtepi32_ps(large.native());
-    f_large = mul(f_large, 2.0f);
     float32<8> f_a = _mm256_cvtepi32_ps(a.native());
+    float32<8> f_large = add(f_a, 0x100000000);
     return blend(f_large, f_a, is_large);
 #else
     return combine(i_to_float32(a.vec(0)), i_to_float32(a.vec(1)));

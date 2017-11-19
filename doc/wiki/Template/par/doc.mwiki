@@ -33,10 +33,10 @@ Specific cases
 : predicate with no arguments
 
 {{tl | par pred1 | ''parameter_name'' | value{{=}}''return_value'' {{mark optional}} | ''condition'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' }}
-: unary predicate 
+: unary predicate
 
 {{tl | par pred2 | ''parameter_name'' | value{{=}}''return_value'' {{mark optional}} | ''condition'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{mark optional}} }}
-: binary predicate 
+: binary predicate
 
 {{tl | par pred2 eq | ''parameter_name'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{mark optional}} }}
 : binary equality predicate
@@ -64,8 +64,8 @@ Specific cases
 
 :; Parameters
 
-:*''parameter_name'' is the name of the predicate parameter. 
-:*{{tt|value}} is the expected return value when the ''condition'' is satisfied (defaults to {{c|true}}). 
+:*''parameter_name'' is the name of the predicate parameter.
+:*{{tt|value}} is the expected return value when the ''condition'' is satisfied (defaults to {{c|true}}).
 :*{{tt|t1}}, {{tt|t2}}, {{tt|p1}}, {{tt|p2}} are types that the predicate is required to accept as its first and second parameters respectively. {{tt|p1}} and {{tt|p2}} describe a pointer parameter, i.e. it will be dereferenced before passed to the predicate. For each parameter, only one of either {{tt|t*}} or {{tt|p*}} can be used. If {{tt|t2/p2}} are not defined, {{tt|t1,p1}} are used for the second parameter instead.
 
 ===Example===

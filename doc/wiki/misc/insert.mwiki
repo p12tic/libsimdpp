@@ -1,7 +1,7 @@
 {{simdpp/title|insert}}
 {{misc/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template< unsigned K, unsigned N, class E >
 Ret<N> extract( const Vec1<N,E>& a, const El& el );
 }}

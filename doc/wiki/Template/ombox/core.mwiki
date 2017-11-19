@@ -1,4 +1,4 @@
-<table class="plainlinks ombox {{#ifeq:{{{small}}}|yes|mbox-small}} 
+<table class="plainlinks ombox {{#ifeq:{{{small}}}|yes|mbox-small}}
 {{#switch:{{{type|}}}
 | speedy     = ombox-speedy
 | delete     = ombox-delete

@@ -13,75 +13,13 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/i_add.h>
+#include <simdpp/core/f_sub.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
-
-// -----------------------------------------------------------------------------
-
-static SIMDPP_INL
-uint32<4> i_to_uint32(const float32<4>& a)
-{
-#if SIMDPP_USE_NULL
-    uint32x4 r;
-    for (unsigned i = 0; i < a.length; i++) {
-        r.el(i) = uint32_t(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_AVX512VL
-    return _mm_cvttps_epu32(a.native());
-#elif SIMDPP_USE_AVX512F
-    __m512 a512 = _mm512_castps128_ps512(a.native());
-    return _mm512_castsi512_si128(_mm512_cvttps_epu32(a512));
-#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
-    detail::mem_block<float32x4> mf(a);
-    detail::mem_block<uint32x4> mi;
-    mi[0] = uint(mf[0]);
-    mi[1] = uint(mf[1]);
-    mi[2] = uint(mf[2]);
-    mi[3] = uint(mf[3]);
-    return mi;
-#elif SIMDPP_USE_NEON_FLT_SP
-    return vcvtq_u32_f32(a.native());
-#elif SIMDPP_USE_MSA
-    return __msa_ftrunc_u_w(a.native());
-#elif SIMDPP_USE_ALTIVEC
-    return vec_ctu(a.native(), 0);
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-static SIMDPP_INL
-uint32<8> i_to_uint32(const float32<8>& a)
-{
-#if SIMDPP_USE_AVX512VL
-    return _mm256_cvttps_epu32(a.native());
-#elif SIMDPP_USE_AVX512F
-    __m512 a512 = _mm512_castps256_ps512(a.native());
-    return _mm512_castsi512_si256(_mm512_cvttps_epu32(a512));
-#else
-    return SIMDPP_NOT_IMPLEMENTED1(a);
-#endif
-}
-#endif
-
-#if SIMDPP_USE_AVX512F
-static SIMDPP_INL
-uint32<16> i_to_uint32(const float32<16>& a)
-{
-    return _mm512_cvttps_epu32(a.native());
-}
-#endif
-
-template<unsigned N> SIMDPP_INL
-uint32<N> i_to_uint32(const float32<N>& a)
-{
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint32<N>, i_to_uint32, a)
-}
 
 // -----------------------------------------------------------------------------
 
@@ -141,6 +79,82 @@ template<unsigned N> SIMDPP_INL
 int32<N> i_to_int32(const float32<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int32<N>, i_to_int32, a)
+}
+
+// -----------------------------------------------------------------------------
+
+static SIMDPP_INL
+uint32<4> i_to_uint32(const float32<4>& a)
+{
+#if SIMDPP_USE_NULL
+    uint32x4 r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = uint32_t(a.el(i));
+    }
+    return r;
+#elif SIMDPP_USE_AVX512VL
+    return _mm_cvttps_epu32(a.native());
+#elif SIMDPP_USE_AVX512F
+    __m512 a512 = _mm512_castps128_ps512(a.native());
+    return _mm512_castsi512_si128(_mm512_cvttps_epu32(a512));
+#elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
+    detail::mem_block<float32x4> mf(a);
+    detail::mem_block<uint32x4> mi;
+    mi[0] = uint(mf[0]);
+    mi[1] = uint(mf[1]);
+    mi[2] = uint(mf[2]);
+    mi[3] = uint(mf[3]);
+    return mi;
+#elif SIMDPP_USE_NEON_FLT_SP
+    return vcvtq_u32_f32(a.native());
+#elif SIMDPP_USE_MSA
+    return __msa_ftrunc_u_w(a.native());
+#elif SIMDPP_USE_ALTIVEC
+    return vec_ctu(a.native(), 0);
+#else
+    // Smaller than 0x80000000 numbers can be represented as int32, so we can
+    // use i_to_int32 which is available as instruction on all supported
+    // architectures. Larger integers can be biased into int32 range, converted
+    // and unbiased. Note that no rounding takes place in the latter case.
+    mask_float32<4> is_small = cmp_lt(a, 0x80000000);
+    int32<4> i_small = i_to_int32(a);
+    float32<4> t = sub(a, 0x80000000);
+    int32<4> i_large = add(i_to_int32(t), 0x80000000);
+    return (uint32<4>) blend(i_small, i_large, is_small);
+#endif
+}
+
+#if SIMDPP_USE_AVX
+static SIMDPP_INL
+uint32<8> i_to_uint32(const float32<8>& a)
+{
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cvttps_epu32(a.native());
+#elif SIMDPP_USE_AVX512F
+    __m512 a512 = _mm512_castps256_ps512(a.native());
+    return _mm512_castsi512_si256(_mm512_cvttps_epu32(a512));
+#else
+    mask_float32<8> is_small = cmp_lt(a, 0x80000000);
+    int32<8> i_small = i_to_int32(a);
+    float32<8> t = sub(a, 0x80000000);
+    int32<8> i_large = add(i_to_int32(t), 0x80000000);
+    return (uint32<8>) blend(i_small, i_large, is_small);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+static SIMDPP_INL
+uint32<16> i_to_uint32(const float32<16>& a)
+{
+    return _mm512_cvttps_epu32(a.native());
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+uint32<N> i_to_uint32(const float32<N>& a)
+{
+    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint32<N>, i_to_uint32, a)
 }
 
 // -----------------------------------------------------------------------------

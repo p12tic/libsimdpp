@@ -1,7 +1,7 @@
 {{simdpp/title|floor}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> floor( Vec<N,E> a );
 }}
@@ -15,7 +15,7 @@ Rounds the values in a floating-point vector towards negative infinity. The impl
 {{vset2 | float64 | float64}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 ===Parameters===
 {{par begin}}
@@ -23,7 +23,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|floor(a)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|floor(a)}}.
 
 ===Equivalent operation===
 {{source|1=

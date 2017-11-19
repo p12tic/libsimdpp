@@ -38,7 +38,7 @@ _DETAIL_ make_uint( uint64_t v0, uint64_t v1, ... , uint64_t v15 );
 }}
 {{dcl end}}
 
-Creates a vector from unsigned integer values known at compile-time. 
+Creates a vector from unsigned integer values known at compile-time.
 
 The values passed to this function are converted using standard conversions to the element type of the resulting vector.  All conversions and other overhead is performed at compile-time thus even if the minimal optimization level is selected, the function results in a simple load from memory.
 
@@ -47,7 +47,7 @@ The function is not guaranteed to have adequate performance if the arguments are
 If the vector has fewer elements than the number of the parameters this function accepts then the extra values are discarded.
 
 The first set of overloads loads to given non-mask vector type.
-	
+
 The second set of overloads returns a value of unspecified type with which any non-mask vector can be initialized. E.g. {{c|1=uint32<4> x = make_uint(1, 2, 3, 4);}}
 
 ===Parameters===

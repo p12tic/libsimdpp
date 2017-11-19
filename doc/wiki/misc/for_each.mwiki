@@ -1,7 +1,7 @@
 {{simdpp/title|bit_cast}}
 {{misc/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V, class F>
 void for_each( const any_vec<N, V>& v, const F& function );
 }}

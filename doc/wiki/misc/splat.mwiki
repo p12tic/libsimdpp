@@ -12,7 +12,7 @@ _DETAIL_ splat( Arithmetic v0 );
 
 Loads a value from a register and broadcasts it to all elements of a vector. The argument value is converted to the element of the resulting vector using standard conversions.
 
-The implementation behaves as if the following set of overloads is provided: 
+The implementation behaves as if the following set of overloads is provided:
 
 {{vset begin}}
 {{vset1 h | Arithmetic }}
@@ -27,7 +27,7 @@ The implementation behaves as if the following set of overloads is provided:
 {{vset end}}
 
 The first set of overloads loads to given non-mask vector type.
-	
+
 The second set of overloads returns a value of unspecified type with which any non-mask vector can be initialized. E.g. {{c|1=uint32<4> x = splat(19);}}
 
 ===Parameters===

@@ -1,7 +1,7 @@
 {{simdpp/title|rsqrt_rh}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> rsqrt_rh( const Vec<N,E>& e, const Vec<N,E>& x );
 }}
@@ -24,7 +24,7 @@ The implementation behaves as if the following set of overloads is provided:
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|e * (3 - x*e*e) * 0.5}}.
+A [[types#expr|vector expression]] evaluating to {{tt|e * (3 - x*e*e) * 0.5}}.
 
 ===See also===
 {{todo}}

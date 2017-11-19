@@ -11,7 +11,7 @@
 | {{ombox/core
   | type  = {{{type|}}}
   | image = {{{image|}}}
-  | imageright = {{{imageright|}}} 
+  | imageright = {{{imageright|}}}
   | style = {{{style|}}}
   | textstyle = {{{textstyle|}}}
   | text  = {{{text}}}

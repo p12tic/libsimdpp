@@ -1,7 +1,7 @@
 {{simdpp/title|rcp_e}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> rcp_e( Vec<N,E> a );
 }}
@@ -28,7 +28,7 @@ The precision depends on platform:
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|approx(1/a)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|approx(1/a)}}.
 
 ===Equivalent operation===
 {{source|1=

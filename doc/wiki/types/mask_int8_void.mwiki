@@ -1,0 +1,1 @@
+{{types/vector_mask_type |mask_int8|any_int8| kind=int | kind_text=integer | regular_vec=uint8 | bits=8  }}

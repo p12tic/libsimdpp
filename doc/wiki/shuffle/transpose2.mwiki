@@ -1,7 +1,7 @@
 {{simdpp/title|transpose2}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N>
 void transpose2( Vec<N>& a, Vec<N>& b );
 }}

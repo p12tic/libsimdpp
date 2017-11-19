@@ -29,14 +29,6 @@ namespace detail {
 namespace insn {
 
 
-template<unsigned N> SIMDPP_INL
-float64<N> i_to_float64(const float64<N>& a)
-{
-    return a;
-}
-
-// -----------------------------------------------------------------------------
-
 static SIMDPP_INL
 float64x4 i_to_float64(const float32x4& a)
 {
