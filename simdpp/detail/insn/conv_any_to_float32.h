@@ -168,7 +168,7 @@ float32<4> i_to_float32(const uint32<4>& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    mask_int32<4> is_large = cmp_gt(a, 0x7fffffff);
+    mask_float32<4> is_large = bit_cast<mask_float32<4>>(cmp_lt(int32<4>(a.eval()), 0));	// true when a is in the range [0x80000000, 0xffffffff)
     float32<4> f_a = _mm_cvtepi32_ps(a.native());
     // f_a has values in the range [0x80000000, 0xffffffff) wrapped around to
     // negative values. Conditionally bias the result to fix that. Note, that
@@ -176,8 +176,7 @@ float32<4> i_to_float32(const uint32<4>& a)
     // The result has lowest precision around 0x80000000, and the precision
     // increases going towards 0xffffffff. The final result after bias will
     // have lower precision in this whole range.
-    float32<4> f_large = add(f_a, 0x100000000);
-    return blend(f_large, f_a, is_large);
+    return add(f_a, bit_and(is_large, splat<float32<4>>(0x100000000)));
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<uint32<4>> mi(a);
     detail::mem_block<float32<4>> mf;
@@ -203,10 +202,9 @@ float32x8 i_to_float32(const uint32x8& a)
     __m512i a512 = _mm512_castsi256_si512(a.native());
     return _mm512_castps512_ps256(_mm512_cvtepu32_ps(a512));
 #elif SIMDPP_USE_AVX2
-    mask_int32<8> is_large = cmp_gt(a, 0x7fffffff);
+    mask_float32<8> is_large = bit_cast<mask_float32<8>>(cmp_lt(int32<8>(a.eval()), 0));	// true when a is in the range [0x80000000, 0xffffffff)
     float32<8> f_a = _mm256_cvtepi32_ps(a.native());
-    float32<8> f_large = add(f_a, 0x100000000);
-    return blend(f_large, f_a, is_large);
+    return add(f_a, bit_and(is_large, splat<float32<8>>(0x100000000)));
 #else
     return combine(i_to_float32(a.vec(0)), i_to_float32(a.vec(1)));
 #endif
