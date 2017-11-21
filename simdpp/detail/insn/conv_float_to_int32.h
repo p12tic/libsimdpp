@@ -114,13 +114,12 @@ uint32<4> i_to_uint32(const float32<4>& a)
 #else
     // Smaller than 0x80000000 numbers can be represented as int32, so we can
     // use i_to_int32 which is available as instruction on all supported
-    // architectures. Larger integers can be biased into int32 range, converted
-    // and unbiased. Note that no rounding takes place in the latter case.
-    mask_float32<4> is_small = cmp_lt(a, 0x80000000);
-    int32<4> i_small = i_to_int32(a);
-    float32<4> t = sub(a, 0x80000000);
-    int32<4> i_large = add(i_to_int32(t), 0x80000000);
-    return (uint32<4>) blend(i_small, i_large, is_small);
+    // architectures. Values >= 0x80000000 are biased into the range -0x80000000..0xffffffff.
+    // These conveniently convert through i_to_int32() to 0x80000000..0xffffffff. No further
+    // unbiasing is required. No attempt is made to produce a reliable overflow value for
+    // values outside the range 0 .. 0xffffffff.
+    mask_float32<4> is_large = cmp_ge(a, 0x80000000);
+	return uint32<4>( i_to_int32(sub(a, bit_and(is_large, splat<float32<4>>(0x100000000)))) );
 #endif
 }
 
@@ -134,11 +133,8 @@ uint32<8> i_to_uint32(const float32<8>& a)
     __m512 a512 = _mm512_castps256_ps512(a.native());
     return _mm512_castsi512_si256(_mm512_cvttps_epu32(a512));
 #else
-    mask_float32<8> is_small = cmp_lt(a, 0x80000000);
-    int32<8> i_small = i_to_int32(a);
-    float32<8> t = sub(a, 0x80000000);
-    int32<8> i_large = add(i_to_int32(t), 0x80000000);
-    return (uint32<8>) blend(i_small, i_large, is_small);
+    mask_float32<8> is_large = cmp_ge(a, 0x80000000);
+	return uint32<8>( i_to_int32(sub(a, bit_and(is_large, splat<float32<8>>(0x100000000)))) );
 #endif
 }
 #endif
