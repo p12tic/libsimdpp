@@ -18,6 +18,17 @@
     #endif
 #endif
 
+// Disables all APIs deprecated in 2.1 and older releases
+#ifndef SIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER
+#define SIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER 0
+#endif
+
+#if SIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER
+    #ifndef SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+        #define SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES 1
+    #endif
+#endif
+
 /*  Clang supports a native vector extension that defines operators between
     vector types. SSE types such as __m128 and __m128i are implemented on top
     of this extension, which causes code like this being possible:
