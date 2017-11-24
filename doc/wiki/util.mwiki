@@ -31,6 +31,15 @@ A low-level, macro-based interface is also provided. It's mostly useful when a f
 The following macros differ from the [[arch/selection|user-defined instruction set selection macros]] in that regardless of what the latter expand to, the former always expand to {{c|0}} or {{c|1}}.
 
 {{dsc begin}}
+{{dsc h2 | Architecture}}
+{{dsc macro const | nolink=true | SIMDPP_32_BITS | {{c|1}} if compiling for 32-bit architecture, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_64_BITS | {{c|1}} if compiling for 64-bit architecture is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_X86 | {{c|1}} if compiling for x86, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_ARM | {{c|1}} if compiling for ARM, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_PPC | {{c|1}} if compiling for PowerPC, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_MIPS | {{c|1}} if compiling for MIPS, {{c|0}} otherwise }}
+
+{{dsc h2 | Instruction sets}}
 {{dsc macro const | nolink=true | SIMDPP_USE_NULL | {{c|1}} if SIMD instruction set is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_SSE2 | {{c|1}} if SSE2 is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_SSE3 | {{c|1}} if SSE3 is available, {{c|0}} otherwise }}
@@ -51,6 +60,4 @@ The following macros differ from the [[arch/selection|user-defined instruction s
 {{dsc macro const | nolink=true | SIMDPP_USE_ALTIVEC | {{c|1}} if Altivec is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_VSX_206 | {{c|1}} if Power 2.06 VSX is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_VSX_207 | {{c|1}} if Power 2.07 VSX is available, {{c|0}} otherwise }}
-{{dsc macro const | nolink=true | SIMDPP_32_BITS | {{c|1}} if compiling for 32-bit architecture, {{c|0}} otherwise }}
-{{dsc macro const | nolink=true | SIMDPP_64_BITS | {{c|1}} if compiling for 64-bit architecture is available, {{c|0}} otherwise }}
 {{dsc end}}
