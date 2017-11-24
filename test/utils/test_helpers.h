@@ -240,6 +240,21 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 {
     test_push_internal_vec(t.push(TYPE_FLOAT64, N, file, line), data);
 }
+
+template<class V>
+void print_vector_hex(std::ostream& out, const V& v)
+{
+    simdpp::detail::mem_block<V> block(v);
+    print_vector_hex(out, GetElementType<V>::value, v.length, block.data());
+}
+
+template<class V>
+void print_vector_numeric(std::ostream& out, const V& v)
+{
+    simdpp::detail::mem_block<V> block(v);
+    print_vector_numeric(out, GetElementType<V>::value, v.length, block.data());
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
 
 // we are supposed to call this from within the test function which is in

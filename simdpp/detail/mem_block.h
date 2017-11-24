@@ -46,7 +46,7 @@ public:
     SIMDPP_INL const element_type& operator[](unsigned id) const { return d_[id]; }
     SIMDPP_INL element_type& operator[](unsigned id) { return d_[id]; }
 
-    SIMDPP_INL const element_type* operator&() const { return d_; }
+    SIMDPP_INL const element_type* data() const { return d_; }
 private:
 #if SIMDPP_USE_NEON32
     // On NEON the stack and vector types are not themselves 16-byte aligned
