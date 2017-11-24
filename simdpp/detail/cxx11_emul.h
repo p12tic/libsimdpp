@@ -23,9 +23,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace cxx11 {
 
+template<bool Value> struct static_assert_impl;
+template<> struct static_assert_impl<true> {};
+
 #define SIMDPP_STATIC_ASSERT3(line) simdpp_assert_ ## line
 #define SIMDPP_STATIC_ASSERT2(line) SIMDPP_STATIC_ASSERT3(line)
-#define SIMDPP_STATIC_ASSERT(v, msg) typedef int SIMDPP_STATIC_ASSERT2(__LINE__) [(v) ? 1 : -1] SIMDPP_ATTRIBUTE_UNUSED
+#define SIMDPP_STATIC_ASSERT(v, msg)                                            \
+    enum { SIMDPP_STATIC_ASSERT2(__LINE__) = sizeof(::simdpp::SIMDPP_ARCH_NAMESPACE::detail::cxx11::static_assert_impl<(v)>) \
+    } SIMDPP_ATTRIBUTE_UNUSED
 
 SIMDPP_INL float isnan(float x)
 {
