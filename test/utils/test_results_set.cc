@@ -210,6 +210,28 @@ void print_file_info(std::ostream& out, const char* file, unsigned line)
     out << "  In file \"" << file << "\" at line " << line << " : \n";
 }
 
+void print_arch(std::ostream& out, const char* a_arch, const char* b_arch)
+{
+    out << "  For architectures: " << a_arch << " and " << b_arch << " :\n";
+}
+
+void print_test_case_name(std::ostream& out, const char* name)
+{
+    out << "  In test case \"" << name << "\" :\n";
+}
+
+void print_seq_num(std::ostream& out, unsigned num)
+{
+    out << "  Sequence number: " << num << "\n";
+}
+
+void print_precision(std::ostream& out, unsigned prec)
+{
+    if (prec > 0) {
+        out << "  Precision: " << prec << "ULP\n";
+    }
+}
+
 template<class T>
 struct binary_for_float;
 template<> struct binary_for_float<float> { using type = int32_t; };
@@ -430,53 +452,33 @@ TestSequenceList build_test_sequences(const std::vector<TestResultsSet::Result>&
     return ret;
 }
 
+bool cmpeq_result(const TestResultsSet::Result& ia, const TestResultsSet::Result& ib,
+                  unsigned fp_prec, bool fp_zero_eq)
+{
+    if (std::memcmp(ia.d(), ib.d(), ia.el_size * ia.length) == 0) {
+        return true;
+    }
+
+    switch (ia.type) {
+    case TYPE_FLOAT32:
+        return cmpeq_arrays((const float*)ia.d(), (const float*)ib.d(), ia.length,
+                            fp_prec, fp_zero_eq);
+    case TYPE_FLOAT64:
+        return cmpeq_arrays((const double*)ia.d(), (const double*)ib.d(), ia.length,
+                            fp_prec, fp_zero_eq);
+    default:
+        return false;
+    }
+}
+
 void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                             const TestResultsSet& b, const char* b_arch,
                             TestReporter& tr)
 {
-    auto print_arch = [&]()
-    {
-        tr.out() << "  For architectures: " << a_arch << " and " << b_arch << " :\n";
-    };
-    auto fmt_test_case = [&]()
-    {
-        tr.out() << "  In test case \"" << a.name() << "\" :\n";
-    };
-    auto fmt_seq_num = [&](unsigned num)
-    {
-        tr.out() << "  Sequence number: " << num << "\n";
-    };
-    auto fmt_prec = [&](unsigned prec)
-    {
-        if (prec > 0) {
-            tr.out() << "  Precision: " << prec << "ULP\n";
-        }
-    };
-
-    auto cmpeq_result = [](const TestResultsSet::Result& ia, const TestResultsSet::Result& ib,
-                           unsigned fp_prec, bool fp_zero_eq) -> bool
-    {
-        if (std::memcmp(ia.d(), ib.d(), ia.el_size * ia.length) == 0) {
-            return true;
-        }
-
-        switch (ia.type) {
-        case TYPE_FLOAT32:
-            return cmpeq_arrays((const float*)ia.d(), (const float*)ib.d(), ia.length,
-                                fp_prec, fp_zero_eq);
-        case TYPE_FLOAT64:
-            return cmpeq_arrays((const double*)ia.d(), (const double*)ib.d(), ia.length,
-                                fp_prec, fp_zero_eq);
-        default:
-            return false;
-        }
-    };
-
-
     // Handle fatal errors first
     if (std::strcmp(a.name(), b.name()) != 0) {
         print_separator(tr.out());
-        print_arch();
+        print_arch(tr.out(), a_arch, b_arch);
         print_file_info(tr.out(), get_filename_from_results_set(a, b));
         tr.out() << "FATAL: Test case names do not match: \""
                  << a.name() << "\" and \""  << b.name() << "\"\n";
@@ -505,12 +507,12 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
 
         if (a_seq_size != b_seq_size) {
             print_separator(tr.out());
-            print_arch();
+            print_arch(tr.out(), a_arch, b_arch);
             tr.out() << "Sequence A starting at:\n";
             print_file_info(tr.out(), a_seq.begin_file, a_seq.begin_line);
             tr.out() << "Sequence B starting at:\n";
             print_file_info(tr.out(), b_seq.begin_file, b_seq.begin_line);
-            fmt_test_case();
+            print_test_case_name(tr.out(), a.name());
             tr.out() << "FATAL: The number of results in a test sequence do "
                      << "not match: "
                      << " result count: "
@@ -533,12 +535,12 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                 (a_res.length != b_res.length))
             {
                 print_separator(tr.out());
-                print_arch();
+                print_arch(tr.out(), a_arch, b_arch);
                 tr.out() << "Sequence A starting at:\n";
                 print_file_info(tr.out(), a_seq.begin_file, a_seq.begin_line);
                 tr.out() << "Sequence B starting at:\n";
                 print_file_info(tr.out(), b_seq.begin_file, b_seq.begin_line);
-                fmt_test_case();
+                print_test_case_name(tr.out(), a.name());
                 if (a_res.seq != b_res.seq) {
                     tr.out() << "FATAL: Sequence numbers do not match for "
                              << "items in the same sequence position:"
@@ -578,13 +580,13 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
 
             if (!cmpeq_result(a_res, b_res, prec, fp_zero_eq)) {
                 print_separator(tr.out());
-                print_arch();
+                print_arch(tr.out(), a_arch, b_arch);
                 print_file_info(tr.out(), a_res.file, a_res.line);
-                fmt_test_case();
-                fmt_seq_num(a_res.seq);
+                print_test_case_name(tr.out(), a.name());
+                print_seq_num(tr.out(), a_res.seq);
                 tr.out() << "ERROR: Vectors not equal: \n";
                 print_data_diff(tr.out(), a_res.type, a_res.length, a_res.d(), b_res.d());
-                fmt_prec(prec);
+                print_precision(tr.out(), prec);
                 print_separator(tr.out());
                 tr.add_result(false);
             } else {
