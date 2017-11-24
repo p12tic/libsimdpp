@@ -212,12 +212,12 @@ float32<4> i_to_float32(const int32<4>& a)
     return _mm_cvtepi32_ps(a.native());
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<int32<4>> mi(a);
-    detail::mem_block<float32<4>> mf;
-    mf[0] = float(mi[0]);
-    mf[1] = float(mi[1]);
-    mf[2] = float(mi[2]);
-    mf[3] = float(mi[3]);
-    return mf;
+    float32<4> r;
+    r.el(0) = float(mi[0]);
+    r.el(1) = float(mi[1]);
+    r.el(2) = float(mi[2]);
+    r.el(3) = float(mi[3]);
+    return r;
 #elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_f32_s32(a.native());
 #elif SIMDPP_USE_ALTIVEC
