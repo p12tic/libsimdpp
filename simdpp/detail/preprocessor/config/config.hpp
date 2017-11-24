@@ -73,18 +73,26 @@
 # define SIMDPP_PP_VARIADICS_MSVC 0
 # if !defined SIMDPP_PP_VARIADICS
 #    /* variadic support explicitly disabled for all untested compilers */
+#    /* variadic support has been enabled for any compiler that supports it */
+#    /* even if this requires command-line switch to enable */
 #    if defined __GCCXML__ || defined __CUDACC__ || defined __PATHSCALE__ || defined __DMC__ || defined __CODEGEARC__ || defined __BORLANDC__ || defined __MWERKS__ || ( defined __SUNPRO_CC && __SUNPRO_CC < 0x5120 ) || defined __HP_aCC && !defined __EDG__ || defined __MRC__ || defined __SC__ || defined __IBMCPP__ || defined __PGI
 #        define SIMDPP_PP_VARIADICS 0
 #    elif defined(_MSC_VER) && defined(__clang__)
 #        define SIMDPP_PP_VARIADICS 1
 #    elif defined(__clang__) && (__clang_major__ >= 3)
-#        /* Clang 2.9 implement C99 preprocessor */
+#        /* Clang 2.9 implements C99 preprocessor */
 #        define SIMDPP_PP_VARIADICS 1
-#    /* VC++ (C/C++) and Intel C++ Compiler >= 17.0 with MSVC */
-#    elif defined _MSC_VER && _MSC_VER >= 1400 && (!defined __EDG__ || defined(__INTELLISENSE__) || defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1700)
+#    elif (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
+#        /* GCC 4.3 implements C99 preprocessor */
+#        define SIMDPP_PP_VARIADICS 1
+#    /* VC++ (C/C++) and Intel C++ Compiler >= 11.1 with MSVC */
+#    elif defined _MSC_VER && _MSC_VER >= 1400 && (!defined __EDG__ || defined(__INTELLISENSE__) || defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1110)
 #        define SIMDPP_PP_VARIADICS 1
 #        undef SIMDPP_PP_VARIADICS_MSVC
 #        define SIMDPP_PP_VARIADICS_MSVC 1
+#    /* Intel C++ Compiler >= 11.1 on Linux */
+#    elif defined(__GNUC__) && defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1110
+#        define SIMDPP_PP_VARIADICS 1
 #    /* Wave (C/C++), GCC (C++) */
 #    elif defined __WAVE__ && __WAVE_HAS_VARIADICS__ || defined __GNUC__ && defined __GXX_EXPERIMENTAL_CXX0X__ && __GXX_EXPERIMENTAL_CXX0X__
 #        define SIMDPP_PP_VARIADICS 1
@@ -97,7 +105,7 @@
 # elif !SIMDPP_PP_VARIADICS + 1 < 2
 #    undef SIMDPP_PP_VARIADICS
 #    define SIMDPP_PP_VARIADICS 1
-#    if defined _MSC_VER && _MSC_VER >= 1400 && !defined(__clang__) && (defined(__INTELLISENSE__) || (defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1700) || !(defined __EDG__ || defined __GCCXML__ || defined __CUDACC__ || defined __PATHSCALE__ || defined __DMC__ || defined __CODEGEARC__ || defined __BORLANDC__ || defined __MWERKS__ || defined __SUNPRO_CC || defined __HP_aCC || defined __MRC__ || defined __SC__ || defined __IBMCPP__ || defined __PGI))
+#    if defined _MSC_VER && _MSC_VER >= 1400 && !defined(__clang__) && (defined(__INTELLISENSE__) || (defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1110) || !(defined __EDG__ || defined __GCCXML__ || defined __CUDACC__ || defined __PATHSCALE__ || defined __DMC__ || defined __CODEGEARC__ || defined __BORLANDC__ || defined __MWERKS__ || defined __SUNPRO_CC || defined __HP_aCC || defined __MRC__ || defined __SC__ || defined __IBMCPP__ || defined __PGI))
 #        undef SIMDPP_PP_VARIADICS_MSVC
 #        define SIMDPP_PP_VARIADICS_MSVC 1
 #    endif
@@ -106,7 +114,8 @@
 #    define SIMDPP_PP_VARIADICS 0
 # endif
 #
-# if SIMDPP_PP_VARIADICS == 0
+# if SIMDPP_PP_VARIADICS == 0 && !defined(SIMDPP_DISABLE_DISPATCHER)
+#   /* Please disable dispatcher support by defining SIMDPP_DISABLE_DISPATCHER to non-zero value */
 #   error "This compiler has not been recognized as a supported compiler (lack of variadic support)"
 # endif
 #
