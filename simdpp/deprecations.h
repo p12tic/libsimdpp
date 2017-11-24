@@ -8,6 +8,15 @@
 #ifndef LIBSIMDPP_SIMDPP_DEPRETATIONS_H
 #define LIBSIMDPP_SIMDPP_DEPRETATIONS_H
 
+// Compatibility macro introduced in 2.1 development cycle, but never released
+// Will be removed in the future
+#ifdef SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    #if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+        #define SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES 0
+    #else
+        #define SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES 1
+    #endif
+#endif
 
 /*  Clang supports a native vector extension that defines operators between
     vector types. SSE types such as __m128 and __m128i are implemented on top
@@ -35,10 +44,10 @@ a = a + b;
     intrinsics of those instruction sets never accepted implicit conversions
     from libsimdpp types.
 */
-#ifndef SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
-    #define SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES 1
+#ifndef SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    #define SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES 0
 #endif
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     #define SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG                          \
         SIMDPP_DEPRECATED(                                                      \
             "Implicit conversion operators may lead to wrong code being "       \
