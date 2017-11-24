@@ -53,7 +53,7 @@
 #endif
 
 #if SIMDPP_USE_AVX512VL
-#if (!defined(__APPLE__) && (__clang_major__ == 3)
+#if !defined(__APPLE__) && (__clang_major__ == 3)
 // clang 3.9 and older incorrectly compile reduce_{min,max} for int32 and uint32
 #error Clang 3.9 and older is not supported on AVX512VL due to compiler bugs.
 #endif
