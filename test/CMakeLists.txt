@@ -134,7 +134,12 @@ else()
     # linking the test executable unless -fvisibility-inlines-hidden is passed.
     set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-std=c++11 -O1 -g1 -Wall -Wextra -fvisibility-inlines-hidden")
 endif()
-target_compile_definitions(test_insn PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+
+if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
+    # We don't want to break testing on old environments where newer cmake
+    # versions are not easily available.
+    target_compile_definitions(test_insn PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+endif()
 
 add_test(s_test_insn test_insn)
 add_dependencies(check test_insn)
@@ -168,7 +173,9 @@ elseif(SIMDPP_MSVC_INTEL)
 else()
     set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall -fvisibility-inlines-hidden")
 endif()
-target_compile_definitions(test_dispatcher PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
+    target_compile_definitions(test_dispatcher PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+endif()
 
 add_test(s_test_dispatcher1 test_dispatcher "NONE_NULL")
 if(HAS_SSE2)
@@ -231,7 +238,9 @@ elseif(SIMDPP_MSVC_INTEL)
 else()
     set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-std=c++11 -g2 -Wall -fvisibility-inlines-hidden")
 endif()
-target_compile_definitions(test_expr PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
+    target_compile_definitions(test_expr PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+endif()
 
 add_test(s_test_expr1 test_expr)
 add_dependencies(check test_expr)
