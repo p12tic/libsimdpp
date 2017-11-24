@@ -50,7 +50,7 @@ the compiler will generate.
 {{ltt|util#zzz|SIMDPP_ALIGN}}<br/>
 {{ltt|util/aligned_allocator}}<br/>
 [[util#Vector_size_macros|Vector size macros]]<br/>
-[[util#Enabled_instruction_sets | Enabled instruction set]]
+[[util#Enabled_instruction_set | Enabled instruction set]]
 </div>
 
 '''[[conv | Conversions]]'''

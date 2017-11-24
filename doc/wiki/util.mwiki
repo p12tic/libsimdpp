@@ -43,9 +43,14 @@ The following macros differ from the [[arch/selection|user-defined instruction s
 {{dsc macro const | nolink=true | SIMDPP_USE_XOP | {{c|1}} if XOP is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_AVX2 | {{c|1}} if AVX2 is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_AVX512F | {{c|1}} if AVX512F is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_AVX512BW | {{c|1}} if AVX512BW is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_AVX512DQ | {{c|1}} if AVX512DQ is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_AVX512VL | {{c|1}} if AVX512VL is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_NEON | {{c|1}} if NEON except floating-point support is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_NEON_FLT_SP | {{c|1}} if NEON with floating-point support is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_USE_ALTIVEC | {{c|1}} if Altivec is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_VSX_206 | {{c|1}} if Power 2.06 VSX is available, {{c|0}} otherwise }}
+{{dsc macro const | nolink=true | SIMDPP_USE_VSX_207 | {{c|1}} if Power 2.07 VSX is available, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_32_BITS | {{c|1}} if compiling for 32-bit architecture, {{c|0}} otherwise }}
 {{dsc macro const | nolink=true | SIMDPP_64_BITS | {{c|1}} if compiling for 64-bit architecture is available, {{c|0}} otherwise }}
 {{dsc end}}

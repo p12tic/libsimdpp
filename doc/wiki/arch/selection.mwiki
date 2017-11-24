@@ -60,11 +60,29 @@ The following instruction sets are supported by the library.
 | {{ttb|SIMDPP_ARCH_X86_AVX512F}}
 | 512-bit vectors for floating-point and 32, 64-bit integer types. 8-bit and 16-bit integer vectors have 256-bit length. Implies AVX2
 |-
-| ARM NEON without floating-point support
+| x86 AVX512BW
+| {{ttb|SIMDPP_ARCH_X86_AVX512BW}}
+| 512-bit vectors for floating-point and 8, 16, 32, 64-bit integer types. Implies AVX512F
+|-
+| x86 AVX512DQ
+| {{ttb|SIMDPP_ARCH_X86_AVX512DQ}}
+| Implies AVX512F
+|-
+| x86 AVX512VL
+| {{ttb|SIMDPP_ARCH_X86_AVX512VL}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| Implies AVX512F
+|-
+| ARM NEON <br/>without floating-point support
 | {{ttb|SIMDPP_ARCH_ARM_NEON}}
 | Does not use SIMD instructions for floating-point computations. The rationale for this mode is that certain NEON implementations have imprecise single-precision floating-point units.
 |-
-| ARM NEON with floating-point support
+| ARM NEON <br/>with floating-point support
 | {{ttb|SIMDPP_ARCH_ARM_NEON_FLT_SP}}
 | Uses SIMD instructions for single-precision floating-point computations, non-SIMD instructions for double-precision floating-point computations.
 |-
@@ -75,4 +93,16 @@ The following instruction sets are supported by the library.
 | PowerPC Altivec
 | {{ttb|SIMDPP_ARCH_POWER_ALTIVEC}}
 | Does not use SIMD for double-precision and 64-bit integer computations
+|-
+| PowerPC 2.06 VSX
+| {{ttb|SIMDPP_ARCH_POWER_VSX_206}}
+| Does not use SIMD 64-bit integer computations
+|-
+| PowerPC 2.07 VSX
+| {{ttb|SIMDPP_ARCH_POWER_VSX_207}}
+| Does not use SIMD 64-bit integer computations
+|-
+| MIPS MSA
+| {{ttb|SIMDPP_ARCH_MIPS_MSA}}
+| (none)
 |}
