@@ -647,7 +647,11 @@ endif()
 set(SIMDPP_X86_AVX512VL_DEFINE "SIMDPP_ARCH_X86_AVX512VL")
 set(SIMDPP_X86_AVX512VL_SUFFIX "-x86_avx512vl")
 set(SIMDPP_X86_AVX512VL_TEST_CODE
-    "#include <immintrin.h>
+    "#if (!defined(__APPLE__) && (__clang_major__ == 3)
+    #error AVX512VL is not supported on clang 3.9 and earlier.
+    #endif
+
+    #include <immintrin.h>
     #include <iostream>
 
     char* prevent_optimization(char* ptr)
