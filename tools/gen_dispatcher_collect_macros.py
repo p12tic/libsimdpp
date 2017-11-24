@@ -91,6 +91,11 @@ single_arch_template = '''
     #else
     #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ
     #endif
+    #if SIMDPP_ARCH_PP_NS_USE_AVX512VL
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512VL SIMDPP_INSN_ID_AVX512VL
+    #else
+    #define SIMDPP_DISPATCH_$num$_NS_ID_AVX512VL
+    #endif
     #if SIMDPP_ARCH_PP_NS_USE_NEON
     #define SIMDPP_DISPATCH_$num$_NS_ID_NEON SIMDPP_INSN_ID_NEON
     #else

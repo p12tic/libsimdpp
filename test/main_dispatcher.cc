@@ -131,6 +131,10 @@ int main(int argc, char** argv)
         g_supported_arch = Arch::X86_SSE2 | Arch::X86_SSE3 | Arch::X86_SSSE3 |
                 Arch::X86_SSE4_1 | Arch::X86_AVX | Arch::X86_AVX2 |
                 Arch::X86_AVX512F | Arch::X86_AVX512DQ;
+    } else if (arch_name == "X86_AVX512VL") {
+        g_supported_arch = Arch::X86_SSE2 | Arch::X86_SSE3 | Arch::X86_SSSE3 |
+                Arch::X86_SSE4_1 | Arch::X86_AVX | Arch::X86_AVX2 |
+                Arch::X86_AVX512F | Arch::X86_AVX512VL;
     } else if (arch_name == "ARM_NEON") {
         g_supported_arch = Arch::ARM_NEON;
     } else if (arch_name == "ARM_NEON_FLT_SP") {

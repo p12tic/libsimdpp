@@ -639,6 +639,46 @@ set(SIMDPP_X86_AVX512DQ_TEST_CODE
     }"
 )
 
+list(APPEND SIMDPP_ARCHS_PRI "X86_AVX512VL")
+if(SIMDPP_CLANG OR SIMDPP_GCC OR SIMDPP_INTEL)
+    set(SIMDPP_X86_AVX512VL_CXX_FLAGS "-mavx512vl")
+    #unsupported on MSVC
+endif()
+set(SIMDPP_X86_AVX512VL_DEFINE "SIMDPP_ARCH_X86_AVX512VL")
+set(SIMDPP_X86_AVX512VL_SUFFIX "-x86_avx512vl")
+set(SIMDPP_X86_AVX512VL_TEST_CODE
+    "#include <immintrin.h>
+    #include <iostream>
+
+    char* prevent_optimization(char* ptr)
+    {
+        volatile bool never = false;
+        if (never) {
+            while (*ptr++)
+                std::cout << *ptr;
+        }
+        char* volatile* volatile opaque;
+        opaque = &ptr;
+        return *opaque;
+    }
+
+    int main()
+    {
+        union {
+            char data[16];
+            __m128 align;
+        };
+        char* p = data;
+        p = prevent_optimization(p);
+
+        __m128 f = _mm_load_ps((float*)p);
+        f = _mm_rcp14_ps(f); // only in AVX512-VL
+        _mm_store_ps((float*)p, f);
+
+        p = prevent_optimization(p);
+    }"
+)
+
 list(APPEND SIMDPP_ARCHS_PRI "ARM_NEON")
 if(SIMDPP_CLANG OR SIMDPP_GCC)
     set(SIMDPP_ARM_NEON_CXX_FLAGS "-mfpu=neon")
@@ -990,7 +1030,7 @@ endfunction()
 #   The following identifiers are currently supported:
 #   X86_SSE2, X86_SSE3, X86_SSSE3, X86_SSE4_1,
 #   X86_AVX, X86_AVX2, X86_FMA3, X86_FMA4,
-#   X86_AVX512F, X86_AVX512BW, X86_AVX512DQ, X86_XOP,
+#   X86_AVX512F, X86_AVX512BW, X86_AVX512DQ, X86_AVX512VL, X86_XOP,
 #   ARM_NEON, ARM_NEON_FLT_SP, ARM64_NEON,
 #   MIPS_MSA, POWER_ALTIVEC, POWER_VSX_206, POWER_VSX_207
 #
@@ -1140,9 +1180,11 @@ function(simdpp_get_arch_perm ALL_ARCHS_VAR)
 
         if(DEFINED ARCH_SUPPORTED_X86_AVX512BW)
             if(DEFINED ARCH_SUPPORTED_X86_AVX512DQ)
-                # All Intel processors that support AVX512BW also support
-                # AVX512DQ
-                list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_POPCNT_INSN,X86_AVX512BW,X86_AVX512DQ")
+                if(DEFINED ARCH_SUPPORTED_X86_AVX512VL)
+                    # All Intel processors that support AVX512BW also support
+                    # AVX512DQ and AVX512VL
+                    list(APPEND ALL_ARCHS "X86_AVX512F,X86_FMA3,X86_POPCNT_INSN,X86_AVX512BW,X86_AVX512DQ,X86_AVX512VL")
+                endif()
             endif()
         endif()
     endif()
