@@ -11,6 +11,7 @@
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/conv_to_mask.h>
 #include <simdpp/core/cmp_neq.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

@@ -17,6 +17,7 @@
 #include <simdpp/core/blend.h>
 #include <simdpp/core/cmp_gt.h>
 #include <simdpp/detail/null/math.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

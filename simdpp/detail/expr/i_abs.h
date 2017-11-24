@@ -20,6 +20,7 @@
 #include <simdpp/core/i_sub.h>
 #include <simdpp/core/move_r.h>
 #include <simdpp/detail/null/math.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

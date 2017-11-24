@@ -21,6 +21,7 @@
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/detail/null/shuffle.h>
 #include <simdpp/detail/shuffle/shuffle_mask.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

@@ -16,6 +16,7 @@
 #include <simdpp/core/bit_xor.h>
 #include <simdpp/detail/null/compare.h>
 #include <simdpp/detail/not_implemented.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

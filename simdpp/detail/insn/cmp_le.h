@@ -17,6 +17,7 @@
 #include <simdpp/detail/null/compare.h>
 #include <simdpp/detail/insn/bit_not.h>
 #include <simdpp/detail/insn/cmp_gt.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

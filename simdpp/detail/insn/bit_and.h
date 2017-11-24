@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/to_mask.h>
 #include <simdpp/detail/null/bitwise.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

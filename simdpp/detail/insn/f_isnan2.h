@@ -16,6 +16,7 @@
 #include <simdpp/core/bit_or.h>
 #include <simdpp/core/f_isnan.h>
 #include <simdpp/detail/null/math.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

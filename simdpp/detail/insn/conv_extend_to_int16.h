@@ -19,7 +19,7 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/core/detail/subvec_insert.h>
+#include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

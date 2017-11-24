@@ -16,6 +16,7 @@
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON
     #include <simdpp/detail/null/math.h>
 #endif
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

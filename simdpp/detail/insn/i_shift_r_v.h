@@ -18,6 +18,7 @@
 #include <simdpp/detail/shuffle/shuffle_mask.h>
 #include <simdpp/core/i_mul.h>
 #include <simdpp/core/permute_bytes16.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
