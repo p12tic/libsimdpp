@@ -351,6 +351,22 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
+#define TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(TC, R, T1, T2, OP, A1, A2)            \
+{                                                                               \
+    (TC).reset_seq();                                                           \
+    for (unsigned i = 0; i < (A1).size(); i++) {                                \
+        for (unsigned j = 0; j < (A2).size(); j++) {                            \
+            const T1* lp = reinterpret_cast<const T1*>((A1).data() + i);        \
+            const T2* rp = reinterpret_cast<const T2*>((A2).data() + j);        \
+            T1 l = *lp; T2 r = *rp;                                             \
+            for (unsigned rot = 0; rot < 128 / T1::num_bits; rot++) {           \
+                TEST_PUSH(TC, R, OP(l, r));                                     \
+                l = simdpp::detail::align_v128<1>(l, l);                        \
+            }                                                                   \
+        }                                                                       \
+    }                                                                           \
+}
+
 #define TEST_EQUAL_ALL_COMB_OP2_EXPLICIT(TR, T, OP1, OP2, A)                    \
 {                                                                               \
     for (unsigned i = 0; i < (A).size(); i++) {                                 \

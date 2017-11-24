@@ -67,6 +67,117 @@ void test_math_shift_n(TestResultsSet& tc)
     TemplateTestArrayHelper<Test_shift_l, int64<B/8>>::run(tc, v.i64, vnum);
     TemplateTestArrayHelper<Test_shift_r, uint64<B/8>>::run(tc, v.u64, vnum);
     TemplateTestArrayHelper<Test_shift_r, int64<B/8>>::run(tc, v.i64, vnum);
+
+    {
+        using UV = uint8<B>;
+#if SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR
+        using IV = int8<B>;
+#endif
+
+        TestData<UV> shift;
+        for (unsigned i = 0; i < 8; ++i) {
+            shift.add(make_uint(i));
+        }
+        shift.add(make_uint(0, 1, 2, 3, 4, 5, 6, 7));
+        TestData<UV> data;
+        data.add(make_uint(0));
+        data.add(make_uint(0xff));
+        data.add(make_uint(0xff, 0));
+        data.add(make_uint(0, 0xff));
+        data.add(make_uint(0x55));
+        data.add(make_uint(0x55, 0));
+        data.add(make_uint(0, 0x55));
+        data.add(make_uint(0xaa));
+        data.add(make_uint(0xaa, 0));
+        data.add(make_uint(0, 0xaa));
+
+#if SIMDPP_HAS_UINT8_SHIFT_L_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, UV, UV, UV, shift_l, data, shift);
+#endif
+#if SIMDPP_HAS_UINT8_SHIFT_R_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, UV, UV, UV, shift_r, data, shift);
+#endif
+#if SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, IV, IV, UV, shift_r, data, shift);
+#endif
+    }
+
+    {
+        using UV = uint16<B>;
+#if SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR
+        using IV = int16<B>;
+#endif
+
+        TestData<UV> shift;
+        for (unsigned i = 0; i < 16; ++i) {
+            shift.add(make_uint(i));
+        }
+        shift.add(make_uint(0, 1, 2, 3, 4, 5, 6, 7));
+
+        TestData<UV> data;
+        data.add(make_uint(0));
+        data.add(make_uint(0xffff));
+        data.add(make_uint(0xffff, 0));
+        data.add(make_uint(0, 0xffff));
+        data.add(make_uint(0x5555));
+        data.add(make_uint(0x5555, 0));
+        data.add(make_uint(0, 0x5555));
+        data.add(make_uint(0xaaaa));
+        data.add(make_uint(0xaaaa, 0));
+        data.add(make_uint(0, 0xaaaa));
+        data.add(make_uint(0xa00a));
+        data.add(make_uint(0xa00a, 0));
+        data.add(make_uint(0, 0xa00a));
+
+#if SIMDPP_HAS_UINT16_SHIFT_L_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, UV, UV, UV, shift_l, data, shift);
+#endif
+#if SIMDPP_HAS_UINT16_SHIFT_R_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, UV, UV, UV, shift_r, data, shift);
+#endif
+#if SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, IV, IV, UV, shift_r, data, shift);
+#endif
+    }
+
+    {
+        using UV = uint32<B>;
+#if SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR
+        using IV = int32<B>;
+#endif
+
+        TestData<UV> shift;
+        for (unsigned i = 0; i < 32; ++i) {
+            shift.add(make_uint(i));
+        }
+        shift.add(make_int(0, 1, 2, 3));
+        shift.add(make_int(4, 5, 6, 7));
+
+        TestData<UV> data;
+        data.add(make_uint(0));
+        data.add(make_uint(0xffffffff));
+        data.add(make_uint(0xffffffff, 0));
+        data.add(make_uint(0, 0xffffffff));
+        data.add(make_uint(0x55555555));
+        data.add(make_uint(0x55555555, 0));
+        data.add(make_uint(0, 0x55555555));
+        data.add(make_uint(0xaaaaaaaa));
+        data.add(make_uint(0xaaaaaaaa, 0));
+        data.add(make_uint(0, 0xaaaaaaaa));
+        data.add(make_uint(0xa000000a));
+        data.add(make_uint(0xa000000a, 0));
+        data.add(make_uint(0, 0xa000000a));
+
+#if SIMDPP_HAS_UINT32_SHIFT_L_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, UV, UV, UV, shift_l, data, shift);
+#endif
+#if SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, UV, UV, UV, shift_r, data, shift);
+#endif
+#if SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR
+        TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(tc, IV, IV, UV, shift_r, data, shift);
+#endif
+    }
 }
 
 void test_math_shift(TestResults& res)
