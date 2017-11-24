@@ -1,0 +1,1 @@
+{{dsc macro const | cap/SIMDPP_HAS_INT64_SIMD | indicates support of 64-bit integers in SIMD unit }}

@@ -1,4 +1,11 @@
 {{nv begin}}
+{{nv h1 | Types}}
+{{nv ln | cap/SIMDPP_HAS_INT8_SIMD}}
+{{nv ln | cap/SIMDPP_HAS_INT16_SIMD}}
+{{nv ln | cap/SIMDPP_HAS_INT32_SIMD}}
+{{nv ln | cap/SIMDPP_HAS_INT64_SIMD}}
+{{nv ln | cap/SIMDPP_HAS_FLOAT32_SIMD}}
+{{nv ln | cap/SIMDPP_HAS_FLOAT64_SIMD}}
 {{nv h1 | Conversions}}
 {{nv ln | cap/SIMDPP_HAS_INT64_TO_FLOAT32_CONVERSION}}
 {{nv ln | cap/SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION}}
