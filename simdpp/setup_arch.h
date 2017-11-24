@@ -391,6 +391,7 @@
 #endif
 
 #include <simdpp/detail/workarounds.h>
+#include <simdpp/deprecations.h>
 
 // #define SIMDPP_EXPR_DEBUG 1
 
