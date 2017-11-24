@@ -101,7 +101,7 @@ uint8<16> i_shift_r_v(const uint8<16>& a, const uint8<16>& count)
 #elif SIMDPP_USE_ALTIVEC
     return vec_sr(a.native(), count.native());
 #elif SIMDPP_USE_MSA
-    return (v16u8) __msa_slr_b((v16i8)a.native(), (v16i8)count.native());
+    return (v16u8) __msa_srl_b((v16i8)a.native(), (v16i8)count.native());
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, count);
 #endif
@@ -204,7 +204,7 @@ int8<16> i_shift_r_v(const int8<16>& a, const uint8<16>& count)
     int8<16> qcount = neg((int8<16>)count);
     return vshlq_s8(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sra(a.native(), (__vector int8_t) count.native());
+    return vec_sra(a.native(), count.native());
 #elif SIMDPP_USE_MSA
     return __msa_sra_b(a.native(), (v16i8) count.native());
 #else
@@ -326,7 +326,7 @@ int16<8> i_shift_r_v(const int16<8>& a, const uint16<8>& count)
     int16<8> qcount = neg((int16<8>)count);
     return vshlq_s16(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sra(a.native(), (__vector int32_t) count.native());
+    return vec_sra(a.native(), count.native());
 #elif SIMDPP_USE_MSA
     return __msa_sra_h(a.native(), (v8i16) count.native());
 #else
@@ -469,7 +469,7 @@ int32<4> i_shift_r_v(const int32<4>& a, const uint32<4>& count)
     int32<4> qcount = neg((int32<4>)count);
     return vshlq_s32(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_sra(a.native(), (__vector int32_t) count.native());
+    return vec_sra(a.native(), count.native());
 #elif SIMDPP_USE_MSA
     return __msa_sra_w(a.native(), (v4i32)count.native());
 #endif
