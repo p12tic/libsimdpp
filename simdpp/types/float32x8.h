@@ -89,7 +89,9 @@ public:
     using base_vector_type = mask_float32<8,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX512VL
+    using native_type = __mmask8;
+#elif SIMDPP_USE_AVX
     using native_type = __m256;
 #endif
 
@@ -99,7 +101,7 @@ public:
 
     SIMDPP_INL mask_float32<8>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX512VL
     SIMDPP_INL mask_float32<8>(const float32<8>& d) : d_(d.native()) {}
 #endif
 
@@ -122,7 +124,11 @@ public:
     /// Access the underlying type
     SIMDPP_INL float32<8> unmask() const
     {
+#if SIMDPP_USE_AVX512VL
+        return _mm256_castsi256_ps(_mm256_movm_epi32(d_));
+#else
         return float32<8>(d_);
+#endif
     }
 
     SIMDPP_INL const mask_float32<8>& vec(unsigned) const { return *this; }

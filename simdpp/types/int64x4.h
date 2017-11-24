@@ -151,7 +151,9 @@ public:
     using base_vector_type = mask_int64<4,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX512VL
+    using native_type = __mmask8;
+#elif SIMDPP_USE_AVX2
     using native_type = __m256i;
 #endif
 
@@ -161,7 +163,7 @@ public:
 
     SIMDPP_INL mask_int64<4>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_AVX2
+#if (SIMDPP_USE_AVX2 && !SIMDPP_USE_AVX512VL)
     SIMDPP_INL mask_int64<4>(const uint64<4>& d) : d_(d.native()) {}
 #endif
 
@@ -184,9 +186,11 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint64<4> unmask() const
     {
-    #if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX512VL
+        return _mm256_movm_epi64(d_);
+#elif SIMDPP_USE_AVX2
         return uint64<4>(d_);
-    #endif
+#endif
     }
 
     SIMDPP_INL const mask_int64<4>& vec(unsigned) const { return *this; }

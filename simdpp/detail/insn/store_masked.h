@@ -28,10 +28,13 @@ void i_store_masked(char* p, const uint32<4>& a, const mask_int32<4>& mask)
 {
 #if SIMDPP_USE_NULL
     null::store_masked(p, a, mask);
+#elif SIMDPP_USE_AVX512VL
+    _mm_mask_store_epi32(p, mask.native(), a.native());
 #elif SIMDPP_USE_AVX2
     _mm_maskstore_epi32(reinterpret_cast<int*>(p), mask.native(), a.native());
 #elif SIMDPP_USE_AVX
-    _mm_maskstore_ps(reinterpret_cast<float*>(p), mask.native(), _mm_castsi128_ps(a.native()));
+    _mm_maskstore_ps(reinterpret_cast<float*>(p), mask.native(),
+                     _mm_castsi128_ps(a.native()));
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32<4> b = load(p);
     b = blend(a, b, mask);
@@ -43,7 +46,11 @@ void i_store_masked(char* p, const uint32<4>& a, const mask_int32<4>& mask)
 static SIMDPP_INL
 void i_store_masked(char* p, const uint32<8>& a, const mask_int32<8>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    _mm256_mask_store_epi32(p, mask.native(), a.native());
+#else
     _mm256_maskstore_epi32(reinterpret_cast<int*>(p), mask.native(), a.native());
+#endif
 }
 #endif
 
@@ -60,7 +67,15 @@ void i_store_masked(char* p, const uint32<16>& a, const mask_int32<16>& mask)
 static SIMDPP_INL
 void i_store_masked(char* p, const uint64<2>& a, const mask_int64<2>& mask)
 {
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX512VL
+#if __INTEL_COMPILER
+    _mm_mask_store_epi64(reinterpret_cast<__int64*>(p), mask.native(),
+                         a.native());
+#else
+    _mm_mask_store_epi64(reinterpret_cast<long long*>(p), mask.native(),
+                         a.native());
+#endif
+#elif SIMDPP_USE_AVX2
 #if __INTEL_COMPILER
     _mm_maskstore_epi64(reinterpret_cast<__int64*>(p), mask.native(), a.native());
 #else
@@ -81,10 +96,20 @@ void i_store_masked(char* p, const uint64<2>& a, const mask_int64<2>& mask)
 static SIMDPP_INL
 void i_store_masked(char* p, const uint64<4>& a, const mask_int64<4>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+#if __INTEL_COMPILER
+    _mm256_mask_store_epi64(reinterpret_cast<__int64*>(p), mask.native(),
+                            a.native());
+#else
+    _mm256_mask_store_epi64(reinterpret_cast<long long*>(p), mask.native(),
+                            a.native());
+#endif
+#else
 #if __INTEL_COMPILER
     _mm256_maskstore_epi64(reinterpret_cast<__int64*>(p), mask.native(), a.native());
 #else
     _mm256_maskstore_epi64(reinterpret_cast<long long*>(p), mask.native(), a.native());
+#endif
 #endif
 }
 #endif
@@ -108,6 +133,8 @@ void i_store_masked(char* p, const float32<4>& a, const mask_float32<4>& mask)
 {
 #if SIMDPP_USE_NULL
     null::store_masked(p, a, mask);
+#elif SIMDPP_USE_AVX512VL
+    _mm_mask_store_ps(reinterpret_cast<float*>(p), mask.native(), a.native());
 #elif SIMDPP_USE_AVX
     _mm_maskstore_ps(reinterpret_cast<float*>(p),
                      _mm_castps_si128(mask.native()), a.native());
@@ -122,8 +149,13 @@ void i_store_masked(char* p, const float32<4>& a, const mask_float32<4>& mask)
 static SIMDPP_INL
 void i_store_masked(char* p, const float32<8>& a, const mask_float32<8>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    _mm256_mask_store_ps(reinterpret_cast<float*>(p), mask.native(),
+                         a.native());
+#else
     _mm256_maskstore_ps(reinterpret_cast<float*>(p),
                         _mm256_castps_si256(mask.native()), a.native());
+#endif
 }
 #endif
 
@@ -140,7 +172,9 @@ void i_store_masked(char* p, const float32<16>& a, const mask_float32<16>& mask)
 static SIMDPP_INL
 void i_store_masked(char* p, const float64<2>& a, const mask_float64<2>& mask)
 {
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX512VL
+    _mm_mask_store_pd(reinterpret_cast<double*>(p), mask.native(), a.native());
+#elif SIMDPP_USE_AVX
     _mm_maskstore_pd(reinterpret_cast<double*>(p),
                      _mm_castpd_si128(mask.native()), a.native());
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
@@ -156,9 +190,13 @@ void i_store_masked(char* p, const float64<2>& a, const mask_float64<2>& mask)
 static SIMDPP_INL
 void i_store_masked(char* p, const float64<4>& a, const mask_float64<4>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    _mm256_mask_store_pd(reinterpret_cast<double*>(p), mask.native(),
+                         a.native());
+#else
     _mm256_maskstore_pd(reinterpret_cast<double*>(p),
                         _mm256_castpd_si256(mask.native()), a.native());
-
+#endif
 }
 #endif
 

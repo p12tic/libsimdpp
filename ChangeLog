@@ -4,7 +4,7 @@ What's new in v2.1 development master:
     fully documented.
  * Added support for MIPS MSA instruction set.
  * Added support for PowerPC VSX v2.06 and v2.07 instruction sets.
- * Added support for x86 AVX512BW and AVX512DQ instruction sets.
+ * Added support for x86 AVX512BW, AVX512DQ and AVX512VL instruction sets.
  * Added support for 64-bit little-endian PowerPC.
  * Added support for arbitrary width vectors in extract() and insert()
  * Added support for arbitrary source vectors to to_int8(), to_uint8(),

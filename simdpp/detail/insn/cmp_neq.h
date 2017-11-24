@@ -28,6 +28,8 @@ mask_int8x16 i_cmp_neq(const uint8x16& a, const uint8x16& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_cmpneq_epi8_mask(a.native(), b.native());
 #elif SIMDPP_USE_XOP && !SIMDPP_WORKAROUND_XOP_COM
     return _mm_comneq_epi8(a.native(), b.native());
 #else
@@ -35,11 +37,31 @@ mask_int8x16 i_cmp_neq(const uint8x16& a, const uint8x16& b)
 #endif
 }
 
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int8<16> i_cmp_neq(const mask_int8<16>& a, const mask_int8<16>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
+}
+#endif
+
 #if SIMDPP_USE_AVX2
 static SIMDPP_INL
 mask_int8x32 i_cmp_neq(const uint8x32& a, const uint8x32& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cmpneq_epi8_mask(a.native(), b.native());
+#else
     return bit_not(cmp_eq(a, b));
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int8<32> i_cmp_neq(const mask_int8<32>& a, const mask_int8<32>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
 }
 #endif
 
@@ -69,6 +91,14 @@ mask_int16x8 i_cmp_neq(const uint16x8& a, const uint16x8& b)
 #endif
 }
 
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int16<8> i_cmp_neq(const mask_int16<8>& a, const mask_int16<8>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
+}
+#endif
+
 #if SIMDPP_USE_AVX2
 static SIMDPP_INL
 mask_int16x16 i_cmp_neq(const uint16x16& a, const uint16x16& b)
@@ -76,6 +106,15 @@ mask_int16x16 i_cmp_neq(const uint16x16& a, const uint16x16& b)
     return bit_not(cmp_eq(a, b));
 }
 #endif
+
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int16<16> i_cmp_neq(const mask_int16<16>& a, const mask_int16<16>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
+}
+#endif
+
 
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL mask_int16<32> i_cmp_neq(const uint16<32>& a, const uint16<32>& b)
@@ -103,11 +142,27 @@ mask_int32x4 i_cmp_neq(const uint32x4& a, const uint32x4& b)
 #endif
 }
 
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int32<4> i_cmp_neq(const mask_int32<4>& a, const mask_int32<4>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
+}
+#endif
+
 #if SIMDPP_USE_AVX2
 static SIMDPP_INL
 mask_int32x8 i_cmp_neq(const uint32x8& a, const uint32x8& b)
 {
     return bit_not(cmp_eq(a, b));
+}
+#endif
+
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int32<8> i_cmp_neq(const mask_int32<8>& a, const mask_int32<8>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
 }
 #endif
 
@@ -147,11 +202,27 @@ mask_int64x2 i_cmp_neq(const uint64x2& a, const uint64x2& b)
 #endif
 }
 
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int64<2> i_cmp_neq(const mask_int64<2>& a, const mask_int64<2>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
+}
+#endif
+
 #if SIMDPP_USE_AVX2
 static SIMDPP_INL
 mask_int64x4 i_cmp_neq(const uint64x4& a, const uint64x4& b)
 {
     return bit_not(cmp_eq(a, b));
+}
+#endif
+
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_int64<4> i_cmp_neq(const mask_int64<4>& a, const mask_int64<4>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
 }
 #endif
 
@@ -176,6 +247,8 @@ mask_float32x4 i_cmp_neq(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::cmp_neq(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_cmp_ps_mask(a.native(), b.native(), _CMP_NEQ_UQ);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a.native(), b.native(), _CMP_NEQ_UQ);
 #elif SIMDPP_USE_SSE2
@@ -187,11 +260,31 @@ mask_float32x4 i_cmp_neq(const float32x4& a, const float32x4& b)
 #endif
 }
 
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_float32<4> i_cmp_neq(const mask_float32<4>& a, const mask_float32<4>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
+}
+#endif
+
 #if SIMDPP_USE_AVX
 static SIMDPP_INL
 mask_float32x8 i_cmp_neq(const float32x8& a, const float32x8& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cmp_ps_mask(a.native(), b.native(), _CMP_NEQ_UQ);
+#else
     return _mm256_cmp_ps(a.native(), b.native(), _CMP_NEQ_UQ);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_float32<8> i_cmp_neq(const mask_float32<8>& a, const mask_float32<8>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
 }
 #endif
 
@@ -214,7 +307,9 @@ mask_float32<16> i_cmp_neq(const mask_float32<16>& a, const mask_float32<16>& b)
 static SIMDPP_INL
 mask_float64x2 i_cmp_neq(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX512VL
+    return _mm_cmp_pd_mask(a.native(), b.native(), _CMP_NEQ_UQ);
+#elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a.native(), b.native(), _CMP_NEQ_UQ);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpneq_pd(a.native(), b.native());
@@ -229,11 +324,31 @@ mask_float64x2 i_cmp_neq(const float64x2& a, const float64x2& b)
 #endif
 }
 
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_float64<2> i_cmp_neq(const mask_float64<2>& a, const mask_float64<2>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
+}
+#endif
+
 #if SIMDPP_USE_AVX
 static SIMDPP_INL
 mask_float64x4 i_cmp_neq(const float64x4& a, const float64x4& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cmp_pd_mask(a.native(), b.native(), _CMP_NEQ_UQ);
+#else
     return _mm256_cmp_pd(a.native(), b.native(), _CMP_NEQ_UQ);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL
+mask_float64<4> i_cmp_neq(const mask_float64<4>& a, const mask_float64<4>& b)
+{
+    return _mm512_kxor(a.native(), b.native());
 }
 #endif
 

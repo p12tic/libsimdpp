@@ -279,7 +279,9 @@ uint32<N> i_max(const uint32<N>& a, const uint32<N>& b)
 static SIMDPP_INL
 int64x2 i_max(const int64x2& a, const int64x2& b)
 {
-#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_AVX512VL
+    return _mm_max_epi64(a.native(), b.native());
+#elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     mask_int64x2 mask = cmp_gt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_VSX_207
@@ -297,8 +299,12 @@ int64x2 i_max(const int64x2& a, const int64x2& b)
 static SIMDPP_INL
 int64x4 i_max(const int64x4& a, const int64x4& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_max_epi64(a.native(), b.native());
+#else
     mask_int64x4 mask = cmp_gt(a, b);
     return blend(a, b, mask);
+#endif
 }
 #endif
 
@@ -321,7 +327,9 @@ int64<N> i_max(const int64<N>& a, const int64<N>& b)
 static SIMDPP_INL
 uint64x2 i_max(const uint64x2& a, const uint64x2& b)
 {
-#if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
+#if SIMDPP_USE_AVX512VL
+    return _mm_max_epu64(a.native(), b.native());
+#elif SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64
     mask_int64x2 mask = cmp_gt(a, b);
     return blend(a, b, mask);
 #elif SIMDPP_USE_VSX_207
@@ -339,8 +347,12 @@ uint64x2 i_max(const uint64x2& a, const uint64x2& b)
 static SIMDPP_INL
 uint64x4 i_max(const uint64x4& a, const uint64x4& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_max_epu64(a.native(), b.native());
+#else
     mask_int64x4 mask = cmp_gt(a, b);
     return blend(a, b, mask);
+#endif
 }
 #endif
 

@@ -185,7 +185,9 @@ template<class R, class E> SIMDPP_INL
 uint64<2> expr_eval_abs(const int64<2,E>& qa)
 {
     int64<2> a = qa.eval();
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    return _mm_abs_epi64(a.native());
+#elif SIMDPP_USE_SSE2
     uint32x4 ta;
     int64x2 t;
     ta = (uint32x4) bit_and(a, 0x8000000000000000);
@@ -221,12 +223,16 @@ template<class R, class E> SIMDPP_INL
 uint64<4> expr_eval_abs(const int64<4,E>& qa)
 {
     int64<4> a = qa.eval();
+#if SIMDPP_USE_AVX512VL
+    return _mm256_abs_epi64(a.native());
+#else
     int64x4 t;
     int64x4 zero = make_zero();
     t = _mm256_cmpgt_epi64(zero.native(), a.native());
     a = bit_xor(a, t);
     a = sub(a, t);
     return a;
+#endif
 }
 #endif
 

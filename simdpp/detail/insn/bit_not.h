@@ -181,11 +181,18 @@ mask_int64x2 i_bit_not(const mask_int64x2& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX2 && !SIMDPP_USE_AVX512VL
 static SIMDPP_INL mask_int8x32  i_bit_not(const mask_int8x32& a)  { return i_bit_not(uint8x32(a)); }
 static SIMDPP_INL mask_int16x16 i_bit_not(const mask_int16x16& a) { return i_bit_not(uint16x16(a)); }
 static SIMDPP_INL mask_int32x8  i_bit_not(const mask_int32x8& a)  { return i_bit_not(uint32x8(a)); }
 static SIMDPP_INL mask_int64x4  i_bit_not(const mask_int64x4& a)  { return i_bit_not(uint64x4(a)); }
+#endif
+
+#if SIMDPP_USE_AVX512VL
+static SIMDPP_INL mask_int8x32  i_bit_not(const mask_int8x32& a)  { return ~a.native(); }
+static SIMDPP_INL mask_int16x16 i_bit_not(const mask_int16x16& a) { return ~a.native(); }
+static SIMDPP_INL mask_int32x8  i_bit_not(const mask_int32x8& a)  { return ~a.native(); }
+static SIMDPP_INL mask_int64x4  i_bit_not(const mask_int64x4& a)  { return ~a.native(); }
 #endif
 
 #if SIMDPP_USE_AVX512F

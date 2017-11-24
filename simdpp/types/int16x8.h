@@ -179,7 +179,9 @@ public:
     using base_vector_type = mask_int16<8, void>;
     using expr_type = void;
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    using native_type = __mmask8;
+#elif SIMDPP_USE_SSE2
     using native_type = __m128i;
 #elif SIMDPP_USE_NEON
     using native_type = uint16x8_t;
@@ -201,7 +203,7 @@ public:
     SIMDPP_INL mask_int16<8>(const __vector __bool short& d) : d_((__vector uint16_t)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if (SIMDPP_USE_SSE2 && !SIMDPP_USE_AVX512VL) || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     SIMDPP_INL mask_int16<8>(const uint16<8>& d) : d_(d.native()) {}
 #endif
 
@@ -215,11 +217,13 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint16<8> unmask() const
     {
-    #if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL
         return detail::null::unmask_mask<uint16<8>>(*this);
-    #else
+#elif SIMDPP_USE_AVX512VL
+        return _mm_movm_epi16(d_);
+#else
         return uint16<8>(d_);
-    #endif
+#endif
     }
 
 #if SIMDPP_USE_NULL

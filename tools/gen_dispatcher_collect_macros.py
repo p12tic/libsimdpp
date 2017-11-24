@@ -127,7 +127,7 @@ single_arch_template = '''
     #define SIMDPP_DISPATCH_$num$_NS_ID_VSX_207
     #endif
 
-    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE21(arch,         $n$
+    #define SIMDPP_DISPATCH_$num$_NAMESPACE SIMDPP_PP_PASTE22(arch,         $n$
         SIMDPP_DISPATCH_$num$_NS_ID_NULL,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE2,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_SSE3,                                   $n$
@@ -139,6 +139,7 @@ single_arch_template = '''
         SIMDPP_DISPATCH_$num$_NS_ID_AVX512F,                                $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX512BW,                               $n$
         SIMDPP_DISPATCH_$num$_NS_ID_AVX512DQ,                               $n$
+        SIMDPP_DISPATCH_$num$_NS_ID_AVX512VL,                               $n$
         SIMDPP_DISPATCH_$num$_NS_ID_FMA3,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_FMA4,                                   $n$
         SIMDPP_DISPATCH_$num$_NS_ID_XOP,                                    $n$

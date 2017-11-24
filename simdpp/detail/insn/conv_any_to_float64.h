@@ -355,7 +355,7 @@ float64<2> i_to_float64(const int64<2>& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 float64<4> i_to_float64(const int64<4>& a)
 {
@@ -412,7 +412,7 @@ float64<2> i_to_float64(const uint64<2>& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 float64<4> i_to_float64(const uint64<4>& a)
 {

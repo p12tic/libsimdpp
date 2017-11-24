@@ -230,7 +230,7 @@
 #define SIMDPP_NS_ID_MSA
 #endif
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE21(arch,                           \
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE22(arch,                           \
     SIMDPP_NS_ID_NULL,                                                          \
     SIMDPP_NS_ID_SSE2,                                                          \
     SIMDPP_NS_ID_SSE3,                                                          \

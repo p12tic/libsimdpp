@@ -227,7 +227,9 @@ uint32<N> i_to_uint32(const float64<N>& a)
 static SIMDPP_INL
 int32x4 i_to_int32(const float64x4& a)
 {
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cvttpd_epi32(a.native());
+#elif SIMDPP_USE_SSE2
     int32x4 r, r1, r2;
     float64x2 a1, a2;
     split(a, a1, a2);

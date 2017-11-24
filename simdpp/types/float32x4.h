@@ -106,7 +106,9 @@ public:
     using base_vector_type = mask_float32<4,void>;
     using expr_type = void;
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    using native_type = __mmask8;
+#elif SIMDPP_USE_SSE2
     using native_type = __m128;
 #elif SIMDPP_USE_NEON_FLT_SP
     using native_type = float32x4_t;
@@ -127,7 +129,7 @@ public:
     SIMDPP_INL mask_float32<4>(const __vector __bool int& d) : d_((__vector float)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2 && !SIMDPP_USE_AVX512VL
     SIMDPP_INL mask_float32<4>(const float32<4>& d) : d_(d.native()) {}
 #endif
 
@@ -150,11 +152,13 @@ public:
     /// Access the underlying type
     SIMDPP_INL float32<4> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_USE_AVX512VL
+        return _mm_castsi128_ps(_mm_movm_epi32(d_));
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
         return detail::null::unmask_mask<float32<4>>(*this);
-    #else
+#else
         return float32<4>(d_);
-    #endif
+#endif
     }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP

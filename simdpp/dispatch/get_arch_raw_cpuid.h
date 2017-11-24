@@ -154,7 +154,7 @@ inline Arch get_arch_raw_cpuid()
             arch_info |= Arch::X86_AVX512BW;
         if (ebx & (1 << 17) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512DQ;
-        if (ebx & (1 << 17) && xsave_xrstore_avail) TODO
+        if (ebx & (1 << 31) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512VL;
     }
 
