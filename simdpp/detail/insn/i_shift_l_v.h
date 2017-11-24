@@ -37,7 +37,7 @@ U8 v_emul_shift_l_v8_using_v16(const U8& a, const U8& count)
     U16 select_mask = make_uint(0xff00);
     U16 a_lo = a16;
     U16 a_hi = bit_and(a16, select_mask);
-    U16 c_lo = c16;
+    U16 c_lo = bit_andnot(c16, select_mask);
     U16 c_hi = shift_r<8>(c16);
     a_lo = shift_l(a_lo, c_lo);
     a_hi = shift_l(a_hi, c_hi);

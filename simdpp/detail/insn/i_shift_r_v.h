@@ -38,7 +38,7 @@ U8 v_emul_shift_r_u8_using_v16(const U8& a, const U8& count)
     U16 select_mask = make_uint(0x00ff);
     U16 a_lo = bit_and(a16, select_mask);
     U16 a_hi = a16;
-    U16 c_lo = c16;
+    U16 c_lo = bit_and(c16, select_mask);
     U16 c_hi = shift_r<8>(c16);
     a_lo = shift_r(a_lo, c_lo);
     a_hi = shift_r(a_hi, c_hi);
@@ -139,15 +139,17 @@ I8 v_emul_shift_r_i8_using_v16(const I8& a, const U8& count)
     U16 a16; a16 = a;
     U16 c16; c16 = count;
 
+    U16 select_mask = make_uint(0x00ff);
     U16 a_lo = shift_l<8>(a16);
     U16 a_hi = a16;
-    U16 c_lo = c16;
+    U16 c_lo = bit_and(c16, select_mask);
     U16 c_hi = shift_r<8>(c16);
     a_lo = shift_r((I16)a_lo, c_lo);
     a_hi = shift_r((I16)a_hi, c_hi);
 
-    U16 select_mask = make_uint(0x00ff);
-    a16 = blend(a_lo, a_hi, select_mask);
+    a_lo = shift_r<8>(a_lo);
+    a_hi = bit_andnot(a_hi, select_mask);
+    a16 = bit_or(a_lo, a_hi);
 
     return (I8) a16;
 }
