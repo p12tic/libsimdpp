@@ -100,6 +100,106 @@ float32<N> i_to_float32(const float64<N>& a)
 // -----------------------------------------------------------------------------
 
 static SIMDPP_INL
+float32<4> i_to_float32(const int64<4>& a)
+{
+#if SIMDPP_USE_NULL
+    float32<4> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = float(a.vec(i/2).el(i%2));
+    }
+    return r;
+#elif SIMDPP_USE_AVX512VL
+    return _mm256_cvtepi64_ps(a.native());
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+
+#if SIMDPP_USE_AVX
+static SIMDPP_INL
+float32<8> i_to_float32(const int64<8>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    return _mm512_cvtepi64_ps(a.native());
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+static SIMDPP_INL
+float32<16> i_to_float32(const int64<16>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    float32<8> r0 = _mm512_cvtepi64_ps(a.vec(0).native());
+    float32<8> r1 = _mm512_cvtepi64_ps(a.vec(1).native());
+    return combine(r0, r1);
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+float32<N> i_to_float32(const int64<N>& a)
+{
+    return i_to_float32(i_to_float64(a));
+}
+
+// -----------------------------------------------------------------------------
+
+static SIMDPP_INL
+float32<4> i_to_float32(const uint64<4>& a)
+{
+#if SIMDPP_USE_NULL
+    float32<4> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = float(a.vec(i/2).el(i%2));
+    }
+    return r;
+#elif SIMDPP_USE_AVX512VL
+    return _mm256_cvtepu64_ps(a.native());
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+
+#if SIMDPP_USE_AVX
+static SIMDPP_INL
+float32<8> i_to_float32(const uint64<8>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    return _mm512_cvtepu64_ps(a.native());
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+static SIMDPP_INL
+float32<16> i_to_float32(const uint64<16>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    float32<8> r0 = _mm512_cvtepu64_ps(a.vec(0).native());
+    float32<8> r1 = _mm512_cvtepu64_ps(a.vec(1).native());
+    return combine(r0, r1);
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+float32<N> i_to_float32(const uint64<N>& a)
+{
+    return i_to_float32(i_to_float64(a));
+}
+
+// -----------------------------------------------------------------------------
+
+static SIMDPP_INL
 float32<4> i_to_float32(const int32<4>& a)
 {
 #if SIMDPP_USE_NULL
@@ -255,14 +355,6 @@ template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const int8<N>& a)
 {
     return i_to_float32(i_to_int32(a));
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N, class V> SIMDPP_INL
-float32<N> i_to_float32(const any_int64<N,V>& a)
-{
-    return i_to_float32(i_to_float64(a.wrapped()));
 }
 
 // -----------------------------------------------------------------------------
