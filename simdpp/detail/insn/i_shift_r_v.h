@@ -16,6 +16,7 @@
 #include <simdpp/detail/null/math.h>
 #include <simdpp/detail/insn/i_shift.h>
 #include <simdpp/detail/shuffle/shuffle_mask.h>
+#include <simdpp/core/i_neg.h>
 #include <simdpp/core/i_mul.h>
 #include <simdpp/core/permute_bytes16.h>
 #include <simdpp/detail/vector_array_macros.h>
@@ -95,7 +96,8 @@ uint8<16> i_shift_r_v(const uint8<16>& a, const uint8<16>& count)
 #elif SIMDPP_USE_SSSE3
     return v_emul_shift_r_u8_using_mul(a, count);
 #elif SIMDPP_USE_NEON
-    return vshrq_u8(a.native(), count.native());
+    int8<16> qcount = neg((int8<16>)count);
+    return vshlq_u8(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
     return vec_sr(a.native(), count.native());
 #elif SIMDPP_USE_MSA
@@ -277,7 +279,8 @@ uint16<8> i_shift_r_v(const uint16<8>& a, const uint16<8>& count)
 #elif SIMDPP_USE_SSSE3
     return v_emul_shift_r_u16_using_mul(a, count);
 #elif SIMDPP_USE_NEON
-    return vshrq_u16(a.native(), count.native());
+    int16<8> qcount = neg((int16<8>)count);
+    return vshlq_u16(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
     return vec_sr(a.native(), count.native());
 #elif SIMDPP_USE_MSA
@@ -321,7 +324,7 @@ int16<8> i_shift_r_v(const int16<8>& a, const uint16<8>& count)
     return _mm512_castsi512_si128(_mm512_srav_epi16(a512, count512));
 #elif SIMDPP_USE_NEON
     int16<8> qcount = neg((int16<8>)count);
-    return vshrq_s16(a.native(), qcount.native());
+    return vshlq_s16(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
     return vec_sra(a.native(), (__vector int32_t) count.native());
 #elif SIMDPP_USE_MSA
@@ -396,7 +399,8 @@ uint32<4> i_shift_r_v(const uint32<4>& a, const uint32<4>& count)
 #endif
     return a0;
 #elif SIMDPP_USE_NEON
-    return vshrq_u32(a.native(), count.native());
+    int32<4> qcount = neg((int32<4>)count);
+    return vshlq_u32(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
     return vec_sr(a.native(), count.native());
 #elif SIMDPP_USE_MSA
@@ -463,7 +467,7 @@ int32<4> i_shift_r_v(const int32<4>& a, const uint32<4>& count)
     return a0;
 #elif SIMDPP_USE_NEON
     int32<4> qcount = neg((int32<4>)count);
-    return vshrq_s32(a.native(), qcount.native());
+    return vshlq_s32(a.native(), qcount.native());
 #elif SIMDPP_USE_ALTIVEC
     return vec_sra(a.native(), (__vector int32_t) count.native());
 #elif SIMDPP_USE_MSA

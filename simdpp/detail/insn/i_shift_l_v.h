@@ -90,7 +90,7 @@ uint8<16> i_shift_l_v(const uint8<16>& a, const uint8<16>& count)
 #elif SIMDPP_USE_SSSE3
     return v_emul_shift_l_v8_using_mul(a, count);
 #elif SIMDPP_USE_NEON
-    return vshlq_u8(a.native(), count.native());
+    return vshlq_u8(a.native(), vreinterpretq_s8_u8(count.native()));
 #elif SIMDPP_USE_ALTIVEC
     return vec_sl(a.native(), count.native());
 #elif SIMDPP_USE_MSA
@@ -155,7 +155,7 @@ uint16<8> i_shift_l_v(const uint16<8>& a, const uint16<8>& count)
 #elif SIMDPP_USE_SSSE3
     return v_emul_shift_l_v16_using_mul(a, count);
 #elif SIMDPP_USE_NEON
-    return vshlq_u16(a.native(), count.native());
+    return vshlq_u16(a.native(), vreinterpretq_s16_u16(count.native()));
 #elif SIMDPP_USE_ALTIVEC
     return vec_sl(a.native(), count.native());
 #elif SIMDPP_USE_MSA
@@ -226,7 +226,7 @@ uint32<4> i_shift_l_v(const uint32<4>& a, const uint32<4>& count)
 #endif
     return a0;
 #elif SIMDPP_USE_NEON
-    return vshlq_u32(a.native(), count.native());
+    return vshlq_u32(a.native(), vreinterpretq_s32_u32(count.native()));
 #elif SIMDPP_USE_ALTIVEC
     return vec_sl(a.native(), count.native());
 #elif SIMDPP_USE_MSA
