@@ -151,7 +151,7 @@ uint16<8> i_shift_l_v(const uint16<8>& a, const uint16<8>& count)
 #if SIMDPP_USE_NULL
     return detail::null::shift_l_v(a, count);
 #elif SIMDPP_USE_AVX512BW && SIMDPP_USE_AVX512VL
-    return _mm_sllv_epi8(a.native(), count.native());
+    return _mm_sllv_epi16(a.native(), count.native());
 #elif SIMDPP_USE_SSSE3
     return v_emul_shift_l_v16_using_mul(a, count);
 #elif SIMDPP_USE_NEON
@@ -170,7 +170,7 @@ static SIMDPP_INL
 uint16<16> i_shift_l_v(const uint16<16>& a, const uint16<16>& count)
 {
 #if SIMDPP_USE_AVX512BW && SIMDPP_USE_AVX512VL
-    return _mm256_sllv_epi8(a.native(), count.native());
+    return _mm256_sllv_epi16(a.native(), count.native());
 #else
     return v_emul_shift_l_v16_using_mul(a, count);
 #endif
