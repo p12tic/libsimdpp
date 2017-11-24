@@ -21,14 +21,13 @@ namespace detail {
 namespace null {
 
 template<class V> SIMDPP_INL
-V load(V& a, const void* p)
+void load(V& a, const void* p)
 {
     using T = typename V::element_type;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         a.el(i) = *pt++;
     }
-    return a;
 }
 
 template<class V> SIMDPP_INL
