@@ -46,7 +46,7 @@ mask_int8<32> i_to_mask(const uint8<32>& a)
 static SIMDPP_INL
 mask_int8<64> i_to_mask(const uint8<64>& a)
 {
-    return cmp_neq(a, (uint8<64>) make_zero());
+    return _mm512_movepi8_mask(a.native());
 }
 #endif
 
@@ -80,7 +80,7 @@ mask_int16<16> i_to_mask(const uint16<16>& a)
 static SIMDPP_INL
 mask_int16<32> i_to_mask(const uint16<32>& a)
 {
-    return cmp_neq(a, (uint16<32>) make_zero());
+    return _mm512_movepi16_mask(a.native());
 }
 #endif
 
@@ -114,7 +114,7 @@ mask_int32<8> i_to_mask(const uint32<8>& a)
 static SIMDPP_INL
 mask_int32<16> i_to_mask(const uint32<16>& a)
 {
-    return cmp_neq(a, (uint32<16>) make_zero());
+    return _mm512_test_epi32_mask(a.native(), a.native());
 }
 #endif
 
@@ -148,7 +148,7 @@ mask_int64<4> i_to_mask(const uint64<4>& a)
 static SIMDPP_INL
 mask_int64<8> i_to_mask(const uint64<8>& a)
 {
-    return cmp_neq(a, (uint64<8>) make_zero());
+    return _mm512_test_epi64_mask(a.native(), a.native());
 }
 #endif
 
@@ -184,7 +184,8 @@ mask_float32<8> i_to_mask(const float32<8>& a)
 static SIMDPP_INL
 mask_float32<16> i_to_mask(const float32<16>& a)
 {
-    return cmp_neq(a, (float32<16>) make_zero());
+    __m512i ia = _mm512_castps_si512(a.native());
+    return _mm512_test_epi32_mask(ia, ia);
 }
 #endif
 
@@ -220,7 +221,8 @@ mask_float64<4> i_to_mask(const float64<4>& a)
 static SIMDPP_INL
 mask_float64<8> i_to_mask(const float64<8>& a)
 {
-    return cmp_neq(a, (float64<8>) make_zero());
+    __m512i ia = _mm512_castpd_si512(a.native());
+    return _mm512_test_epi64_mask(ia, ia);
 }
 #endif
 
