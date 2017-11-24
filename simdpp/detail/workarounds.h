@@ -11,8 +11,7 @@
 // this file contains workarounds for common compiler problems
 
 // the implementation of XOP's com instruction is buggy in clang 3.5 and 3.4.
-// clang 3.3 doesn't support the corresponding intrinsic at all
-#if defined(__clang__)
+#if defined(__clang__) && (__clang_major__ == 3) && (__clang_minor__ < 6)
 #define SIMDPP_WORKAROUND_XOP_COM 1
 #endif
 
