@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/core/f_sub.h>
+#include <simdpp/core/cmp_ge.h>
 #include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {

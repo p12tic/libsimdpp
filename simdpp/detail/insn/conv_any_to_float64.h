@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/combine.h>
+#include <simdpp/core/f_add.h>
 #include <simdpp/core/f_neg.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>
