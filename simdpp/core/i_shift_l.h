@@ -13,10 +13,16 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/detail/insn/i_shift_l.h>
+#include <simdpp/detail/insn/i_shift_l_v.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
+
+// -----------------------------------------------------------------------------
+// shift by scalar
 
 /** Shifts 8-bit values left by @a count bits while shifting in zeros.
 
@@ -101,6 +107,102 @@ uint64<N,expr_empty> shift_l(const uint64<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_l(a.eval(), count);
 }
+
+// -----------------------------------------------------------------------------
+// shift by vector
+
+/** Shifts 8-bit values left by the number of bits in corresponding element
+    in the given count vector. Zero bits are shifted in.
+
+    @code
+    r0 = a0 << count0
+    ...
+    rN = aN << countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+int8<N,expr_empty> shift_l(const int8<N,E>& a, const uint8<N,E>& count)
+{
+#if SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR
+    uint8<N> qa = a.eval();
+    return detail::insn::i_shift_l_v(qa, count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+template<unsigned N, class E> SIMDPP_INL
+uint8<N,expr_empty> shift_l(const uint8<N,E>& a, const uint8<N,E>& count)
+{
+#if SIMDPP_HAS_UINT8_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_l_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+/** Shifts 16-bit values left by the number of bits in corresponding element
+    in the given count vector. Zero bits are shifted in.
+
+    @code
+    r0 = a0 << count0
+    ...
+    rN = aN << countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+int16<N,expr_empty> shift_l(const int16<N,E>& a, const uint16<N,E>& count)
+{
+#if SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR
+    uint16<N> qa = a.eval();
+    return detail::insn::i_shift_l_v(qa, count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+template<unsigned N, class E> SIMDPP_INL
+uint16<N,expr_empty> shift_l(const uint16<N,E>& a, const uint16<N,E>& count)
+{
+#if SIMDPP_HAS_UINT16_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_l_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+/** Shifts 32-bit values left by the number of bits in corresponding element
+    in the given count vector. Zero bits are shifted in.
+
+    @code
+    r0 = a0 << count0
+    ...
+    rN = aN << countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+int32<N,expr_empty> shift_l(const int32<N,E>& a, const uint32<N,E>& count)
+{
+#if SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR
+    uint32<N> qa = a.eval();
+    return detail::insn::i_shift_l_v(qa, count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+template<unsigned N, class E> SIMDPP_INL
+uint32<N,expr_empty> shift_l(const uint32<N,E>& a, const uint32<N,E>& count)
+{
+#if SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_l_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+// -----------------------------------------------------------------------------
+// shift by compile-time constant
 
 /** Shifts 8-bit values left by @a count bits while shifting in zeros.
 

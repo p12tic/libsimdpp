@@ -184,12 +184,32 @@ V shift_r(const V& a, unsigned shift)
     return r;
 }
 
+template<class V, class S> SIMDPP_INL
+V shift_r_v(const V& a, const S& shift)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r.el(i) = a.el(i) >> shift.el(i);
+    }
+    return r;
+}
+
 template<class V> SIMDPP_INL
 V shift_l(const V& a, unsigned shift)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
         r.el(i) = a.el(i) << shift;
+    }
+    return r;
+}
+
+template<class V, class S> SIMDPP_INL
+V shift_l_v(const V& a, const S& shift)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r.el(i) = a.el(i) << shift.el(i);
     }
     return r;
 }

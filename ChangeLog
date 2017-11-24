@@ -10,6 +10,9 @@ What's new in v2.1 development master:
  * Added support for arbitrary source vectors to to_int8(), to_uint8(),
     to_int16(), to_uint16(), to_int32(), to_uint32(), to_int64(), to_uint64(),
     to_float32(), to_float64().
+ * Added support for per-element integer shifts to shift_r() and shift_l().
+    Fallback paths are provided for SSE2-AVX instruction sets that lack
+    hardware per-element integer shift support.
  * Make shuffle_bytes16(), shuffle_zbytes16(), permute_bytes16() and
     permute_zbytes() more generic.
  * New functions: popcnt, reduce_popcnt, for_each, to_mask()
