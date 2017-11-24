@@ -39,8 +39,9 @@ static inline std::size_t element_size_for_type(ElementType t)
     case TYPE_INT64: return 8;
     case TYPE_FLOAT32: return 4;
     case TYPE_FLOAT64: return 8;
-    default: std::abort();
     }
+    std::abort();
+    return 0;
 }
 
 template<class V> struct GetElementType {
