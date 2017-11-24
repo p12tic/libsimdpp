@@ -123,7 +123,7 @@ uint64<8> i_to_uint64(const uint16<8>& a)
     return i_to_uint64(i_to_uint32(a));
 #elif SIMDPP_USE_ALTIVEC
     uint64<8> r;
-    mem_block<uint16<8>> b = a;
+    mem_block<uint16<8> > b = a;
     for (unsigned i = 0; i < 8; i++) {
         r.vec(i/2).el(i%2) = uint64_t(b[i]);
     }
@@ -223,7 +223,7 @@ uint64<16> i_to_uint64(const uint8<16>& a)
     return i_to_uint64(i_to_uint32(a));
 #elif SIMDPP_USE_ALTIVEC
     uint64<16> r;
-    mem_block<uint8<16>> b = a;
+    mem_block<uint8<16> > b = a;
     for (unsigned i = 0; i < 16; i++) {
         r.vec(i/2).el(i%2) = uint64_t(b[i]);
     }
@@ -395,7 +395,7 @@ int64<8> i_to_int64(const int16<8>& a)
     return i_to_int64(i_to_int32(a));
 #elif SIMDPP_USE_ALTIVEC
     int64<8> r;
-    mem_block<int16<8>> b = a;
+    mem_block<int16<8> > b = a;
     for (unsigned i = 0; i < 8; i++) {
         r.vec(i/2).el(i%2) = int64_t(b[i]);
     }
@@ -495,7 +495,7 @@ int64<16> i_to_int64(const int8<16>& a)
     return i_to_int64(i_to_int32(a));
 #elif SIMDPP_USE_ALTIVEC
     int64<16> r;
-    mem_block<int8<16>> b = a;
+    mem_block<int8<16> > b = a;
     for (unsigned i = 0; i < 16; i++) {
         r.vec(i/2).el(i%2) = int64_t(b[i]);
     }

@@ -52,7 +52,7 @@ template<class T, class R> SIMDPP_INL
 void cast_bitwise(const T& t, R& r)
 {
     SIMDPP_STATIC_ASSERT(sizeof(R) == sizeof(T), "Size mismatch");
-#if defined(_MSC_VER) && _MSC_VER < 1900
+#if __cplusplus < 201103L || (defined(_MSC_VER) && _MSC_VER < 1900)
     r = *reinterpret_cast<const R*>(&t);
 #else
     cast_helper<T, R> helper(t);

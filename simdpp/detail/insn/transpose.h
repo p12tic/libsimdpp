@@ -403,7 +403,7 @@ void i_transpose4(uint8x16& a0, uint8x16& a1,
 #if SIMDPP_USE_NULL
     detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
-    v_sse_transpose8x4<uint8<16>, uint16<8>, uint32<4>>(a0, a1, a2, a3);
+    v_sse_transpose8x4<uint8<16>, uint16<8>, uint32<4> >(a0, a1, a2, a3);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint16x8 b0, b1, b2, b3;
     i_transpose2(a0, a1);  // 8-bit transpose
@@ -421,7 +421,7 @@ static SIMDPP_INL
 void i_transpose4(uint8x32& a0, uint8x32& a1,
                   uint8x32& a2, uint8x32& a3)
 {
-    v_sse_transpose8x4<uint8<32>, uint16<16>, uint32<8>>(a0, a1, a2, a3);
+    v_sse_transpose8x4<uint8<32>, uint16<16>, uint32<8> >(a0, a1, a2, a3);
 }
 #endif
 
@@ -430,7 +430,7 @@ static SIMDPP_INL
 void i_transpose4(uint8<64>& a0, uint8<64>& a1,
                   uint8<64>& a2, uint8<64>& a3)
 {
-    v_sse_transpose8x4<uint8<64>, uint16<32>, uint32<16>>(a0, a1, a2, a3);
+    v_sse_transpose8x4<uint8<64>, uint16<32>, uint32<16> >(a0, a1, a2, a3);
 }
 #endif
 
@@ -449,7 +449,7 @@ void i_transpose4(uint16x8& a0, uint16x8& a1,
 #if SIMDPP_USE_NULL
     detail::null::transpose4(a0, a1, a2, a3);
 #elif SIMDPP_USE_SSE2
-    v_sse_transpose16x4<uint16<8>, uint32<4>, uint64<2>>(a0, a1, a2, a3);
+    v_sse_transpose16x4<uint16<8>, uint32<4>, uint64<2> >(a0, a1, a2, a3);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     uint32x4 b0, b1, b2, b3;
     i_transpose2(a0, a1);  // 16-bit transpose
@@ -466,7 +466,7 @@ static SIMDPP_INL
 void i_transpose4(uint16x16& a0, uint16x16& a1,
                              uint16x16& a2, uint16x16& a3)
 {
-    v_sse_transpose16x4<uint16<16>, uint32<8>, uint64<4>>(a0, a1, a2, a3);
+    v_sse_transpose16x4<uint16<16>, uint32<8>, uint64<4> >(a0, a1, a2, a3);
 }
 #endif
 
@@ -474,7 +474,7 @@ void i_transpose4(uint16x16& a0, uint16x16& a1,
 SIMDPP_INL void i_transpose4(uint16<32>& a0, uint16<32>& a1,
                              uint16<32>& a2, uint16<32>& a3)
 {
-    v_sse_transpose16x4<uint16<32>, uint32<16>, uint64<8>>(a0, a1, a2, a3);
+    v_sse_transpose16x4<uint16<32>, uint32<16>, uint64<8> >(a0, a1, a2, a3);
 }
 #endif
 

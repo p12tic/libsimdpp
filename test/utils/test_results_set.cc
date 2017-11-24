@@ -12,7 +12,6 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <type_traits>
 #include <typeinfo>
 #include <string>
 
@@ -43,15 +42,15 @@ unsigned precision_for_result(const TestResultsSet::Result& res)
     }
 }
 
-template<class T> struct fix_char_type { using type = T; };
-template<> struct fix_char_type<uint8_t> { using type = int; };
-template<> struct fix_char_type<int8_t> { using type = int; };
+template<class T> struct fix_char_type { typedef T type; };
+template<> struct fix_char_type<uint8_t> { typedef int type; };
+template<> struct fix_char_type<int8_t> { typedef int type; };
 
 template<class T>
 void print_hex(std::ostream& err, unsigned num_elems, unsigned width,
                const T* p)
 {
-    static_assert(std::is_unsigned<T>::value, "T must be unsigned");
+    // static_assert(std::is_unsigned<T>::value, "T must be unsigned");
     err << "[ " << std::hex << std::setfill('0');
     err.precision(width);
     for (unsigned i = 0; i < num_elems; i++, p++) {
@@ -196,7 +195,7 @@ void print_separator(std::ostream& out)
 
 void print_file_info(std::ostream& out, const char* file)
 {
-    if (file == nullptr) {
+    if (file == NULL) {
         file = "<unknown>";
     }
     out << "  In file \"" << file << "\" :\n";
@@ -204,7 +203,7 @@ void print_file_info(std::ostream& out, const char* file)
 
 void print_file_info(std::ostream& out, const char* file, unsigned line)
 {
-    if (file == nullptr) {
+    if (file == NULL) {
         file = "<unknown>";
     }
     out << "  In file \"" << file << "\" at line " << line << " : \n";
@@ -234,8 +233,8 @@ void print_precision(std::ostream& out, unsigned prec)
 
 template<class T>
 struct binary_for_float;
-template<> struct binary_for_float<float> { using type = int32_t; };
-template<> struct binary_for_float<double> { using type = int64_t; };
+template<> struct binary_for_float<float> { typedef int32_t type; };
+template<> struct binary_for_float<double> { typedef int64_t type; };
 
 template<class U, class T>
 U binary_convert(const T& x)
@@ -331,7 +330,7 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
 const char* get_filename_from_results_set(const TestResultsSet& a)
 {
     if (a.results().empty())
-        return nullptr;
+        return NULL;
     return a.results().front().file;
 }
 
@@ -362,7 +361,7 @@ bool is_test_seq_from_same_test(const TestSequence& a, const TestSequence& b)
     return true;
 }
 
-using TestSequenceList = std::vector<TestSequence>;
+typedef std::vector<TestSequence> TestSequenceList;
 
 /*  Skips test result sequences until two results referring to the same test
     are found. If a[ia] and b[ib] refers to the same test already, nothing is
@@ -407,7 +406,7 @@ bool skip_results_until_same_test(unsigned& ia, unsigned& ib,
 
 std::string strip_arch_suffix_from_file(const char* file)
 {
-    if (file == nullptr)
+    if (file == NULL)
         return "";
     std::string ret = file;
     std::string::size_type idx = ret.find("_simdpp_");
@@ -499,8 +498,8 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
             continue;
         }
 
-        const auto& a_seq = a_seqs[ia_seq];
-        const auto& b_seq = b_seqs[ib_seq];
+        const TestSequence& a_seq = a_seqs[ia_seq];
+        const TestSequence& b_seq = b_seqs[ib_seq];
 
         unsigned a_seq_size = a_seq.end_index - a_seq.begin_index;
         unsigned b_seq_size = b_seq.end_index - b_seq.begin_index;
@@ -526,8 +525,8 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
             unsigned ia = a_seq.begin_index + i;
             unsigned ib = b_seq.begin_index + i;
 
-            const auto& a_res = a.results()[ia];
-            const auto& b_res = b.results()[ib];
+            const TestResultsSet::Result& a_res = a.results()[ia];
+            const TestResultsSet::Result& b_res = b.results()[ib];
 
             if ((a_res.seq != b_res.seq) ||
                 (a_res.line != b_res.line) ||

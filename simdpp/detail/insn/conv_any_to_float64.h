@@ -253,7 +253,7 @@ float64<4> i_to_float64(const uint32<4>& a)
     r.vec(1) = __msa_ffint_u_d(a64.vec(1).native());
     return r;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<uint32<4>> ax(a);
+    detail::mem_block<uint32<4> > ax(a);
     float64<4> r;
     r.vec(0).el(0) = double(ax[0]);
     r.vec(0).el(1) = double(ax[1]);
@@ -353,7 +353,7 @@ float64<2> i_to_float64(const int64<2>& a)
 #elif SIMDPP_USE_MSA
     return __msa_ffint_s_d(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int64<2>> ax(a);
+    detail::mem_block<int64<2> > ax(a);
     float64<2> r;
     r.el(0) = double(ax[0]);
     r.el(1) = double(ax[1]);
@@ -410,7 +410,7 @@ float64<2> i_to_float64(const uint64<2>& a)
 #elif SIMDPP_USE_MSA
     return __msa_ffint_u_d(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::mem_block<uint64<2>> ax(a);
+    detail::mem_block<uint64<2> > ax(a);
     float64<2> r;
     r.el(0) = double(ax[0]);
     r.el(1) = double(ax[1]);

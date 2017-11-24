@@ -11,6 +11,7 @@
 #include <simdpp/simd.h>
 #include <simdpp/detail/align_v128.h>
 #include <simdpp/detail/mem_block.h>
+#include <simdpp/types/traits.h>
 #include <iostream>
 #include "test_results_set.h"
 #include "test_reporter.h"
@@ -62,7 +63,7 @@ template<class T>
 class TestData {
 public:
 
-    TestData() : ptr_(nullptr) {}
+    TestData() : ptr_(NULL) {}
 
     TestData(const TestData& other)
     {
@@ -562,7 +563,7 @@ struct TemplateTestArrayHelper {
 };
 
 template<class V1, class V2>
-void test_cmp_equal_impl(std::true_type /*is_V1_vector*/, TestReporter& tr,
+void test_cmp_equal_impl(simdpp::detail::true_type /*is_V1_vector*/, TestReporter& tr,
                          const V1& q1, const V2& q2,
                          bool expected_equal, unsigned line, const char* file)
 {
@@ -583,7 +584,7 @@ void test_cmp_equal_impl(std::true_type /*is_V1_vector*/, TestReporter& tr,
 }
 
 template<class T1, class T2>
-void test_cmp_equal_impl(std::false_type /*is_T1_vector*/, TestReporter& tr,
+void test_cmp_equal_impl(simdpp::detail::false_type /*is_T1_vector*/, TestReporter& tr,
                          const T1& a1, const T2& a2,
                          bool expected_equal, unsigned line, const char* file)
 {

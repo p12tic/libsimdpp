@@ -40,7 +40,7 @@ uint64<2> i_to_uint64(const float64<2>& a)
 #elif SIMDPP_USE_MSA
     return __msa_ftrunc_u_d(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<uint64<2>> r;
+    detail::mem_block<uint64<2> > r;
     r[0] = uint64_t(a.el(0));
     r[1] = uint64_t(a.el(1));
     return r;
@@ -103,7 +103,7 @@ int64<2> i_to_int64(const float64<2>& a)
 #elif SIMDPP_USE_MSA
     return __msa_ftrunc_s_d(a.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int64<2>> r;
+    detail::mem_block<int64<2> > r;
     r[0] = int64_t(a.el(0));
     r[1] = int64_t(a.el(1));
     return r;
@@ -158,8 +158,8 @@ uint64<4> i_to_uint64(const float32<4>& a)
 #elif SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     return i_to_uint64(i_to_float64(a));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<uint64<4>> r;
-    detail::mem_block<float32<4>> mi(a);
+    detail::mem_block<uint64<4> > r;
+    detail::mem_block<float32<4> > mi(a);
     r[0] = int64_t(mi[0]);
     r[1] = int64_t(mi[1]);
     r[2] = int64_t(mi[2]);
@@ -220,8 +220,8 @@ int64<4> i_to_int64(const float32<4>& a)
 #elif SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     return i_to_int64(i_to_float64(a));
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    detail::mem_block<int64<4>> r;
-    detail::mem_block<float32<4>> mi(a);
+    detail::mem_block<int64<4> > r;
+    detail::mem_block<float32<4> > mi(a);
     r[0] = int64_t(mi[0]);
     r[1] = int64_t(mi[1]);
     r[2] = int64_t(mi[2]);

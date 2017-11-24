@@ -26,7 +26,7 @@ template<unsigned N, class V> SIMDPP_INL
 bool test_bits_any(const any_vec<N,V>& a)
 {
     SIMDPP_STATIC_ASSERT(!is_mask<V>::value, "Mask types are not supported");
-    using expr = typename detail::get_expr_nosign<V, typename V::expr_type>::type;
+    typedef typename detail::get_expr_nosign<V, typename V::expr_type>::type expr;
     return detail::e_test_bits_any(expr(a));
 }
 

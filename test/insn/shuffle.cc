@@ -208,8 +208,8 @@ void test_shuffle(TestResults& res)
     using namespace simdpp;
 
     // extract bits
-    test_extract_bits<uint16_t, uint8<16>>(tc);
-    test_extract_bits<uint32_t, uint8<32>>(tc);
+    test_extract_bits<uint16_t, uint8<16> >(tc);
+    test_extract_bits<uint32_t, uint8<32> >(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

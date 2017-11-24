@@ -33,7 +33,7 @@ V v_emul_popcnt_u8(const V& a)
 {
     // We're using 16-bit ops because on SSE/AVX no 8-bit shift is available
     // There's no difference on other architectures
-    using w_b16 = typename same_width<V>::u16;
+    typedef typename same_width<V>::u16 w_b16;
 
     w_b16 p = (w_b16)a;
     w_b16 m55 = splat(0x5555);

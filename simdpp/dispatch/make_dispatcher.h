@@ -267,9 +267,9 @@ SIMDPP_DISPATCH_DECLARE_FUNCTIONS(                                              
 SIMDPP_PP_REMOVE_PARENS(TEMPLATE_PREFIX)                                        \
 SIMDPP_PP_REMOVE_PARENS(R) NAME(SIMDPP_DETAIL_ARGS(ARGS))                       \
 {                                                                               \
-    using FunPtr = SIMDPP_PP_REMOVE_PARENS(R)(*)(SIMDPP_DETAIL_TYPES(ARGS));    \
-    static FunPtr selected = nullptr;                                           \
-    if (selected == nullptr) {                                                  \
+    typedef SIMDPP_PP_REMOVE_PARENS(R)(*FunPtr)(SIMDPP_DETAIL_TYPES(ARGS));     \
+    static FunPtr selected = NULL;                                           \
+    if (selected == NULL) {                                                  \
         ::simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {};   \
         SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions,                             \
             (NAME SIMDPP_PP_REMOVE_PARENS(TEMPLATE_ARGS)), FunPtr)              \

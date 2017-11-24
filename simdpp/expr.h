@@ -275,6 +275,8 @@ struct expr_vec_make_ones : expr_vec_construct<expr_vec_make_ones> {};
 
 struct expr_vec_load : expr_vec_construct<expr_vec_load> {
     const char* a;
+
+    expr_vec_load(const char* x) : a(x) {}
 };
 
 struct expr_vec_load_u : expr_vec_construct<expr_vec_load_u> {

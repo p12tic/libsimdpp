@@ -77,6 +77,9 @@
 #        define SIMDPP_PP_VARIADICS 0
 #    elif defined(_MSC_VER) && defined(__clang__)
 #        define SIMDPP_PP_VARIADICS 1
+#    elif defined(__clang__) && (__clang_major__ >= 3)
+#        /* Clang 2.9 implement C99 preprocessor */
+#        define SIMDPP_PP_VARIADICS 1
 #    /* VC++ (C/C++) and Intel C++ Compiler >= 17.0 with MSVC */
 #    elif defined _MSC_VER && _MSC_VER >= 1400 && (!defined __EDG__ || defined(__INTELLISENSE__) || defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1700)
 #        define SIMDPP_PP_VARIADICS 1

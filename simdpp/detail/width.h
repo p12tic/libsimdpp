@@ -45,16 +45,16 @@ struct vec256_impl {
 };
 
 struct vec512_impl {
-    using i8  =  int8<64>;
-    using u8  = uint8<64>;
-    using i16 =  int16<32>;
-    using u16 = uint16<32>;
-    using i32 =  int32<16>;
-    using u32 = uint32<16>;
-    using i64 =  int64<8>;
-    using u64 = uint64<8>;
-    using f32 = float32<16>;
-    using f64 = float64<8>;
+    typedef int8<64> i8;
+    typedef uint8<64> u8;
+    typedef int16<32> i16;
+    typedef uint16<32> u16;
+    typedef int32<16> i32;
+    typedef uint32<16> u32;
+    typedef int64<8> i64;
+    typedef uint64<8> u64;
+    typedef float32<16> f32;
+    typedef float64<8> f64;
 };
 
 template<class T> struct same_width;
@@ -88,7 +88,7 @@ template<> struct same_width< int32<16> > : vec512_impl {};
 template<> struct same_width<uint32<16> > : vec512_impl {};
 template<> struct same_width< int64<8>  > : vec512_impl {};
 template<> struct same_width<uint64<8>  > : vec512_impl {};
-template<> struct same_width<float32<16>> : vec512_impl {};
+template<> struct same_width<float32<16> > : vec512_impl {};
 template<> struct same_width<float64<8> > : vec512_impl {};
 
 } // namespace detail

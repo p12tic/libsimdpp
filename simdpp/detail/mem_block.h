@@ -45,7 +45,7 @@ public:
 private:
     union {
         element_type d_[length];
-        typename V::native_type align_;
+        typename V::base_vector_type::native_type align_;
     };
 };
 

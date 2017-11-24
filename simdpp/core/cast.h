@@ -14,6 +14,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/detail/cast.h>
+#include <simdpp/detail/cxx11_emul.h>
 #include <simdpp/types/traits.h>
 
 namespace simdpp {
@@ -37,9 +38,9 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N> > { static const unsign
 #endif
 #if SIMDPP_USE_VSX_206 && !SIMDPP_USE_VSX_207
 template<unsigned N>
-struct cast_mask_override<mask_int64<N>, mask_float64<N>> { static const unsigned value = CAST_MASK_REMASK; };
+struct cast_mask_override<mask_int64<N>, mask_float64<N> > { static const unsigned value = CAST_MASK_REMASK; };
 template<unsigned N>
-struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigned value = CAST_MASK_UNMASK; };
+struct cast_mask_override<mask_float64<N>, mask_int64<N> > { static const unsigned value = CAST_MASK_UNMASK; };
 #endif
 
 template<class R, class T> SIMDPP_INL

@@ -15,7 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/extract.h>
 #include <simdpp/detail/mem_block.h>
-#include <type_traits>
+#include <simdpp/types/traits.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -23,7 +23,7 @@ namespace detail {
 
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA
 template<class V, class F> SIMDPP_INL
-void foreach_impl(std::integral_constant<unsigned, 2>,
+void foreach_impl(detail::integral_constant<unsigned, 2>,
                   const V& v, const F& function)
 {
     function(extract<0>(v));
@@ -31,7 +31,7 @@ void foreach_impl(std::integral_constant<unsigned, 2>,
 }
 
 template<class V, class F> SIMDPP_INL
-void foreach_impl(std::integral_constant<unsigned, 4>,
+void foreach_impl(detail::integral_constant<unsigned, 4>,
                   const V& v, const F& function)
 {
     function(extract<0>(v));
@@ -41,7 +41,7 @@ void foreach_impl(std::integral_constant<unsigned, 4>,
 }
 
 template<unsigned N, class V, class F> SIMDPP_INL
-void foreach_impl(std::integral_constant<unsigned, N>,
+void foreach_impl(detail::integral_constant<unsigned, N>,
                   const V& v, const F& function)
 {
     // When we're operating on more than 4-5 elements it makes sense to move
@@ -64,7 +64,7 @@ void foreach_impl(std::integral_constant<unsigned, N>,
 }
 #else
 template<unsigned N, class V, class F> SIMDPP_INL
-void foreach_impl(std::integral_constant<unsigned, N>,
+void foreach_impl(detail::integral_constant<unsigned, N>,
                   const V& v, const F& function)
 {
     mem_block<V> mem(v);
@@ -76,7 +76,7 @@ void foreach_impl(std::integral_constant<unsigned, N>,
 template<unsigned N, class V, class F> SIMDPP_INL
 void for_each(const any_vec<N, V>& v, const F& function)
 {
-    using size_tag = std::integral_constant<unsigned, V::base_vector_type::length>;
+    typedef detail::integral_constant<unsigned, V::base_vector_type::length> size_tag;
     for (unsigned i = 0; i < V::vec_length; ++i)
         foreach_impl(size_tag(), v.wrapped().vec(i), function);
 }

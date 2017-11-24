@@ -11,11 +11,22 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+template<class E>
+class SumClosure {
+public:
+    SumClosure(uint64_t& sum) : sum_(sum) {}
+
+    void operator()(E el) { sum_ += (uint64_t) el; }
+
+private:
+    uint64_t& sum_;
+};
+
 template<class V>
 void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
 {
     using namespace simdpp;
-    using E = typename V::element_type;
+    typedef typename V::element_type E;
 
     TestData<V> s;
     s.add(make_uint(0, 1, 2, 3));
@@ -25,12 +36,12 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     for (unsigned i = 0; i < s.size(); ++i) {
         V v = s.data()[i];
         uint64_t sum = 0;
-        for_each(v, [&](E el) { sum += (uint64_t) el; });
+        for_each(v, SumClosure<E>(sum));
         TEST_PUSH(ts, uint64_t, sum);
     }
 
     V v1234 = make_uint(1, 2, 3, 4);
-    E expected;
+    uint64_t expected;
     switch (V::length) {
     case 1: expected = 1; break;
     case 2: expected = 3; break;
@@ -38,8 +49,8 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     default:
         expected = 10 * V::length / 4;
     }
-    E sum = 0;
-    for_each(v1234, [&](E el) { sum += (uint64_t) el; });
+    uint64_t sum = 0;
+    for_each(v1234, SumClosure<E>(sum));
 
     TEST_EQUAL(tr, expected, sum);
 }
@@ -49,16 +60,16 @@ void test_for_each_n(TestResultsSet& ts, TestReporter& tr)
 {
     using namespace simdpp;
 
-    using int8_n = uint8<B>;
-    using int16_n = uint16<B/2>;
-    using int32_n = uint32<B/4>;
-    using int64_n = uint64<B/8>;
-    using uint8_n = uint8<B>;
-    using uint16_n = uint16<B/2>;
-    using uint32_n = uint32<B/4>;
-    using uint64_n = uint64<B/8>;
-    using float32_n = float32<B/4>;
-    using float64_n = float64<B/8>;
+    typedef uint8<B> int8_n;
+    typedef uint16<B/2> int16_n;
+    typedef uint32<B/4> int32_n;
+    typedef uint64<B/8> int64_n;
+    typedef uint8<B> uint8_n;
+    typedef uint16<B/2> uint16_n;
+    typedef uint32<B/4> uint32_n;
+    typedef uint64<B/8> uint64_n;
+    typedef float32<B/4> float32_n;
+    typedef float64<B/8> float64_n;
 
     test_for_each_type<int8_n>(ts, tr);
     test_for_each_type<int16_n>(ts, tr);

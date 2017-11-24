@@ -121,8 +121,8 @@ float32<4> i_to_float32(const int32<4>& a)
 #elif SIMDPP_USE_SSE2
     return _mm_cvtepi32_ps(a.native());
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
-    detail::mem_block<int32<4>> mi(a);
-    detail::mem_block<float32<4>> mf;
+    detail::mem_block<int32<4> > mi(a);
+    detail::mem_block<float32<4> > mf;
     mf[0] = float(mi[0]);
     mf[1] = float(mi[1]);
     mf[2] = float(mi[2]);
@@ -185,8 +185,8 @@ float32<4> i_to_float32(const uint32<4>& a)
     float32<4> f_a = _mm_cvtepi32_ps(a.native());
     return blend(f_large, f_a, is_large);
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
-    detail::mem_block<uint32<4>> mi(a);
-    detail::mem_block<float32<4>> mf;
+    detail::mem_block<uint32<4> > mi(a);
+    detail::mem_block<float32<4> > mf;
     mf[0] = float(mi[0]);
     mf[1] = float(mi[1]);
     mf[2] = float(mi[2]);

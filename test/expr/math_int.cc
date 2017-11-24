@@ -124,16 +124,16 @@ void test_expr_math_int(TestReporter& ts)
 
     // All integer expressions use get_expr_uint, it's enough to test one
     // expression type extensively to get proper coverage of all return types
-    test_expr_math_int_return_types_add<int8<16>, uint8<16>>();
-    test_expr_math_int_return_types_add<int8<32>, uint8<32>>();
-    test_expr_math_int_return_types_add<int8<64>, uint8<64>>();
-    test_expr_math_int_return_types_add<int16<8>, uint16<8>>();
-    test_expr_math_int_return_types_add<int16<16>, uint16<16>>();
-    test_expr_math_int_return_types_add<int16<32>, uint16<32>>();
-    test_expr_math_int_return_types_add<int32<4>, uint32<4>>();
-    test_expr_math_int_return_types_add<int32<8>, uint32<8>>();
-    test_expr_math_int_return_types_add<int32<16>, uint32<16>>();
-    test_expr_math_int_return_types_add<int64<2>, uint64<2>>();
-    test_expr_math_int_return_types_add<int64<4>, uint64<4>>();
-    test_expr_math_int_return_types_add<int64<8>, uint64<8>>();
+    test_expr_math_int_return_types_add<int8<16>, uint8<16> >();
+    test_expr_math_int_return_types_add<int8<32>, uint8<32> >();
+    test_expr_math_int_return_types_add<int8<64>, uint8<64> >();
+    test_expr_math_int_return_types_add<int16<8>, uint16<8> >();
+    test_expr_math_int_return_types_add<int16<16>, uint16<16> >();
+    test_expr_math_int_return_types_add<int16<32>, uint16<32> >();
+    test_expr_math_int_return_types_add<int32<4>, uint32<4> >();
+    test_expr_math_int_return_types_add<int32<8>, uint32<8> >();
+    test_expr_math_int_return_types_add<int32<16>, uint32<16> >();
+    test_expr_math_int_return_types_add<int64<2>, uint64<2> >();
+    test_expr_math_int_return_types_add<int64<4>, uint64<4> >();
+    test_expr_math_int_return_types_add<int64<8>, uint64<8> >();
 }
