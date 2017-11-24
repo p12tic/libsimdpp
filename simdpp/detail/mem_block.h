@@ -12,7 +12,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/setup_arch.h>
+#include <simdpp/types.h>
+#include <simdpp/types/traits.h>
+#include <simdpp/core/store.h>
+#include <simdpp/core/load.h>
 #include <cstring>
 
 namespace simdpp {
@@ -27,16 +30,18 @@ namespace detail {
 template<class V>
 class mem_block {
 public:
+    static_assert(is_vector<V>::value, "Non-vector types are not supported");
+
     using element_type = typename V::element_type;
     static const unsigned length = V::length;
 
     SIMDPP_INL mem_block() = default;
     SIMDPP_INL mem_block(const mem_block&) = default;
-    SIMDPP_INL mem_block(const V& v) { std::memcpy(d_, &v, sizeof(v)); }
+    SIMDPP_INL mem_block(const V& v) { store(d_, v); }
 
-    SIMDPP_INL mem_block& operator=(const V& v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
+    SIMDPP_INL mem_block& operator=(const V& v) { store(d_, v); return *this; }
 
-    SIMDPP_INL operator V() const { V r; std::memcpy(&r, d_, sizeof(r)); return r; }
+    SIMDPP_INL operator V() const { V r = load(d_); return r; }
 
     SIMDPP_INL const element_type& operator[](unsigned id) const { return d_[id]; }
     SIMDPP_INL element_type& operator[](unsigned id) { return d_[id]; }
