@@ -43,10 +43,15 @@ public:
 
     SIMDPP_INL const element_type* operator&() const { return d_; }
 private:
+#if SIMDPP_USE_NEON32
+    // On NEON the stack and vector types are not themselves 16-byte aligned
+    SIMDPP_ALIGN(16) element_type d_[length];
+#else
     union {
         element_type d_[length];
         V align_;
     };
+#endif
 };
 
 } // namespace detail

@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/types/int32x4.h>
@@ -90,7 +91,10 @@ public:
     SIMDPP_INL float32<4> eval() const { return *this; }
 
 private:
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_ARM && !SIMDPP_HAS_FLOAT32_SIMD
+    // When casting int32<4> to float32<4> on certain conditions GCC will assume
+    // that result location is 16-byte aligned and will use aligned store which
+    // causes a crash when the stack is not aligned.
     SIMDPP_ALIGN(16) native_type d_;
 #else
     native_type d_;

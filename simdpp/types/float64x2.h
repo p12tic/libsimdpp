@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/types/int64x2.h>
@@ -92,10 +93,10 @@ public:
 #endif
 
 private:
-#if SIMDPP_USE_SSE2
-    native_type d_;
-#else
+#if SIMDPP_ARM && !SIMDPP_HAS_FLOAT64_SIMD
     SIMDPP_ALIGN(16) native_type d_;
+#else
+    native_type d_;
 #endif
 };
 
