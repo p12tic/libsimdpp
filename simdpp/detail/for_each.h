@@ -24,7 +24,7 @@ namespace detail {
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA
 template<class V, class F> SIMDPP_INL
 void foreach_impl(std::integral_constant<unsigned, 2>,
-                  const V& v, const F& function)
+                  const V& v, F function)
 {
     function(extract<0>(v));
     function(extract<1>(v));
@@ -32,7 +32,7 @@ void foreach_impl(std::integral_constant<unsigned, 2>,
 
 template<class V, class F> SIMDPP_INL
 void foreach_impl(std::integral_constant<unsigned, 4>,
-                  const V& v, const F& function)
+                  const V& v, F function)
 {
     function(extract<0>(v));
     function(extract<1>(v));
@@ -42,7 +42,7 @@ void foreach_impl(std::integral_constant<unsigned, 4>,
 
 template<unsigned N, class V, class F> SIMDPP_INL
 void foreach_impl(std::integral_constant<unsigned, N>,
-                  const V& v, const F& function)
+                  const V& v, F function)
 {
     // When we're operating on more than 4-5 elements it makes sense to move
     // the vector to memory and load data from there. This has higher latency,
@@ -65,7 +65,7 @@ void foreach_impl(std::integral_constant<unsigned, N>,
 #else
 template<unsigned N, class V, class F> SIMDPP_INL
 void foreach_impl(std::integral_constant<unsigned, N>,
-                  const V& v, const F& function)
+                  const V& v, F function)
 {
     mem_block<V> mem(v);
     for (unsigned i = 0; i < N; ++i)
@@ -74,7 +74,7 @@ void foreach_impl(std::integral_constant<unsigned, N>,
 #endif
 
 template<unsigned N, class V, class F> SIMDPP_INL
-void for_each(const any_vec<N, V>& v, const F& function)
+void for_each(const any_vec<N, V>& v, F function)
 {
     using size_tag = std::integral_constant<unsigned, V::base_vector_type::length>;
     for (unsigned i = 0; i < V::vec_length; ++i)
