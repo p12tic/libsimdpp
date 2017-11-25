@@ -36,6 +36,9 @@ SIMDPP_INL bool isnan(float x)
 {
 #if _MSC_VER
     return _isnan(x);
+#elif defined(__GNUC__) && !defined(__clang__)
+    // certain versions of GCC hide isnan included from C headers
+    return __builtin_isnanf(x);
 #else
     return ::isnan(x);
 #endif
@@ -45,6 +48,9 @@ SIMDPP_INL bool isnan(double x)
 {
 #if _MSC_VER
     return _isnan(x);
+#elif defined(__GNUC__) && !defined(__clang__)
+    // certain versions of GCC hide isnan included from C headers
+    return __builtin_isnan(x);
 #else
     return ::isnan(x);
 #endif
