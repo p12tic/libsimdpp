@@ -168,8 +168,8 @@ inline void test_push_internal(TestResultsSet& t, double data,
 template<class V>
 void test_push_internal_vec(TestResultsSet::Result& res, const V& data)
 {
-    static_assert(sizeof(data) == V::length_bytes,
-                  "Vector uses unsupported data layout");
+    SIMDPP_STATIC_ASSERT(sizeof(data) == V::length_bytes,
+                         "Vector uses unsupported data layout");
     for (unsigned i = 0; i < data.vec_length; ++i) {
         typedef typename V::base_vector_type Base;
         std::memcpy(res.data.data() + i * Base::length_bytes,

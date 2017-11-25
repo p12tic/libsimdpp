@@ -121,7 +121,7 @@ uint32<4> i_to_uint32(const float32<4>& a)
     // unbiasing is required. No attempt is made to produce a reliable overflow value for
     // values outside the range 0 .. 0xffffffff.
     mask_float32<4> is_large = cmp_ge(a, 0x80000000);
-	return uint32<4>( i_to_int32(sub(a, bit_and(is_large, splat<float32<4>>(0x100000000)))) );
+    return uint32<4>( i_to_int32(sub(a, bit_and(is_large, splat<float32<4> >(0x100000000)))) );
 #endif
 }
 
@@ -136,7 +136,7 @@ uint32<8> i_to_uint32(const float32<8>& a)
     return _mm512_castsi512_si256(_mm512_cvttps_epu32(a512));
 #else
     mask_float32<8> is_large = cmp_ge(a, 0x80000000);
-	return uint32<8>( i_to_int32(sub(a, bit_and(is_large, splat<float32<8>>(0x100000000)))) );
+    return uint32<8>( i_to_int32(sub(a, bit_and(is_large, splat<float32<8> >(0x100000000)))) );
 #endif
 }
 #endif

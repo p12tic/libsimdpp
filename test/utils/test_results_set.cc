@@ -261,7 +261,7 @@ template<class T>
 T nextafter_ulps(T from, T to)
 {
     // ignore NaNs
-    if (std::isnan(from) || std::isnan(to))
+    if (::simdpp::detail::cxx11::isnan(from) || ::simdpp::detail::cxx11::isnan(to))
         return from;
 
     // if 'from' is infinity, ignore
@@ -311,7 +311,7 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
         // introduce any rounding errors
         T ia = *a++;
         T ib = *b++;
-        if (std::isnan(ia) && std::isnan(ib)) {
+        if (::simdpp::detail::cxx11::isnan(ia) && ::simdpp::detail::cxx11::isnan(ib)) {
             continue;
         }
         if (zero_eq && is_zero_or_neg_zero(ia) && is_zero_or_neg_zero(ib)) {

@@ -278,7 +278,7 @@ float32<4> i_to_float32(const uint32<4>& a)
     // The result has lowest precision around 0x80000000, and the precision
     // increases going towards 0xffffffff. The final result after bias will
     // have lower precision in this whole range.
-    return add(f_a, bit_and(is_large, splat<float32<4>>(0x100000000)));
+    return add(f_a, bit_and(is_large, splat<float32<4> >(0x100000000)));
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<uint32<4> > mi(a);
     detail::mem_block<float32<4> > mf;
@@ -308,7 +308,7 @@ float32x8 i_to_float32(const uint32x8& a)
     mask_float32<8> is_large = mask_float32<8>(cmp_lt(int32<8>(a), 0));
 
     float32<8> f_a = _mm256_cvtepi32_ps(a.native());
-    return add(f_a, bit_and(is_large, splat<float32<8>>(0x100000000)));
+    return add(f_a, bit_and(is_large, splat<float32<8> >(0x100000000)));
 #else
     return combine(i_to_float32(a.vec(0)), i_to_float32(a.vec(1)));
 #endif
