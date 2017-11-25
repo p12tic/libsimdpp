@@ -32,7 +32,7 @@ template<> struct static_assert_impl<true> {};
     enum { SIMDPP_STATIC_ASSERT2(__LINE__) = sizeof(::simdpp::SIMDPP_ARCH_NAMESPACE::detail::cxx11::static_assert_impl<(v)>) \
     } SIMDPP_ATTRIBUTE_UNUSED
 
-SIMDPP_INL float isnan(float x)
+SIMDPP_INL bool isnan(float x)
 {
 #if _MSC_VER
     return _isnan(x);
@@ -41,7 +41,7 @@ SIMDPP_INL float isnan(float x)
 #endif
 }
 
-SIMDPP_INL double isnan(double x)
+SIMDPP_INL bool isnan(double x)
 {
 #if _MSC_VER
     return _isnan(x);
