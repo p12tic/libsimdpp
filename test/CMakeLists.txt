@@ -232,7 +232,7 @@ add_executable(test_expr EXCLUDE_FROM_ALL
 
 if(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
 else()
-    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-Wall -fvisibility-inlines-hidden")
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-O2 -Wall -fvisibility-inlines-hidden")
 endif()
 if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
     target_compile_definitions(test_expr PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
