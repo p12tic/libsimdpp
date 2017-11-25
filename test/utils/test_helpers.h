@@ -92,7 +92,8 @@ public:
     }
 
     size_t size() const { return data_.size(); }
-    const T* data() const { return ptr_; }
+
+    const T& operator[](unsigned i) const { return *(ptr_ + i); }
 
 private:
     std::vector<T, simdpp::aligned_allocator<T, sizeof(T)> > data_;
@@ -167,12 +168,12 @@ inline void test_push_internal(TestResultsSet& t, double data,
 template<class V>
 void test_push_internal_vec(TestResultsSet::Result& res, const V& data)
 {
+    static_assert(sizeof(data) == V::length_bytes,
+                  "Vector uses unsupported data layout");
     for (unsigned i = 0; i < data.vec_length; ++i) {
         typedef typename V::base_vector_type Base;
-        simdpp::detail::mem_block<Base> block(data.vec(i));
-        for (unsigned j = 0; j < Base::length; j++) {
-            res.set(i*Base::length + j, &block[j]);
-        }
+        std::memcpy(res.data.data() + i * Base::length_bytes,
+                    &data.vec(i), Base::length_bytes);
     }
 }
 
@@ -242,6 +243,21 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 {
     test_push_internal_vec(t.push(TYPE_FLOAT64, N, file, line), data);
 }
+
+template<class V>
+void print_vector_hex(std::ostream& out, const V& v)
+{
+    simdpp::detail::mem_block<V> block(v);
+    print_vector_hex(out, GetElementType<V>::value, v.length, block.data());
+}
+
+template<class V>
+void print_vector_numeric(std::ostream& out, const V& v)
+{
+    simdpp::detail::mem_block<V> block(v);
+    print_vector_numeric(out, GetElementType<V>::value, v.length, block.data());
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
 
 // we are supposed to call this from within the test function which is in
@@ -261,9 +277,9 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 #define TEST_PUSH_ARRAY(TC, T, A)                                       \
 {                                                                       \
     (TC).reset_seq();                                                   \
-    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
-        const T* lp = reinterpret_cast<const T*>((A) + i);              \
-        TEST_PUSH(TC, T, *lp);                                          \
+    for (unsigned i = 0; i < sizeof(A) / sizeof((A)[0]); i++) {                 \
+        T l = (T) (A)[i];                                                       \
+        TEST_PUSH(TC, T, l);                                                    \
     }                                                                   \
 }
 
@@ -271,8 +287,8 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        TEST_PUSH(TC, T, OP(*lp));                                      \
+        T l = (T) (A)[i];                                                       \
+        TEST_PUSH(TC, T, OP(l));                                                \
     }                                                                   \
 }
 
@@ -280,8 +296,8 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        TEST_PUSH(TC, R, OP(*lp));                                      \
+        T l = (T) (A)[i];                                                       \
+        TEST_PUSH(TC, R, OP(l));                                                \
     }                                                                   \
 }
 
@@ -289,9 +305,9 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        const T* rp = reinterpret_cast<const T*>((B).data() + i);       \
-        TEST_PUSH(TC, T, OP(*lp, *rp));                                 \
+        T l = (T) (A)[i];                                                       \
+        T r = (T) (B)[i];                                                       \
+        TEST_PUSH(TC, T, OP(l, r));                                             \
     }                                                                   \
 }
 
@@ -300,8 +316,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        T l = *lp;                                                      \
+        T l = (T) (A)[i];                                                       \
         for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {        \
             TEST_PUSH(TC, T, OP(l));                                    \
             l = simdpp::detail::align_v128<1>(l, l);                    \
@@ -313,8 +328,7 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        T l = *lp;                                                      \
+        T l = (T) (A)[i];                                                       \
         for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {        \
             TEST_PUSH(TC, R, OP(l));                                    \
             l = simdpp::detail::align_v128<1>(l, l);                    \
@@ -327,9 +341,8 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
         for (unsigned j = 0; j < (A).size(); j++) {                     \
-            const T* lp = reinterpret_cast<const T*>((A).data() + i);   \
-            const T* rp = reinterpret_cast<const T*>((A).data() + j);   \
-            T l = *lp; T r = *rp;                                       \
+            T l = (T) (A)[i];                                                   \
+            T r = (T) (A)[j];                                                   \
             for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {    \
                 TEST_PUSH(TC, T, OP(l, r));                             \
                 l = simdpp::detail::align_v128<1>(l, l);                \
@@ -343,9 +356,8 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
         for (unsigned j = 0; j < (A).size(); j++) {                     \
-            const T* lp = reinterpret_cast<const T*>((A).data() + i);   \
-            const T* rp = reinterpret_cast<const T*>((A).data() + j);   \
-            T l = *lp; T r = *rp;                                       \
+            T l = (T) (A)[i];                                                   \
+            T r = (T) (A)[j];                                                   \
             for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {    \
                 TEST_PUSH(TC, R, OP(l, r));                             \
                 l = simdpp::detail::align_v128<1>(l, l);                \
@@ -354,13 +366,27 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     }                                                                   \
 }
 
+#define TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(TC, R, T1, T2, OP, A1, A2)            \
+{                                                                               \
+    (TC).reset_seq();                                                           \
+    for (unsigned i = 0; i < (A1).size(); i++) {                                \
+        for (unsigned j = 0; j < (A2).size(); j++) {                            \
+            T1 l = (T1) (A1)[i];                                                \
+            T2 r = (T2) (A2)[j];                                                \
+            for (unsigned rot = 0; rot < 128 / T1::num_bits; rot++) {           \
+                TEST_PUSH(TC, R, OP(l, r));                                     \
+                l = simdpp::detail::align_v128<1>(l, l);                        \
+            }                                                                   \
+        }                                                                       \
+    }                                                                           \
+}
+
 #define TEST_EQUAL_ALL_COMB_OP2_EXPLICIT(TR, T, OP1, OP2, A)                    \
 {                                                                               \
     for (unsigned i = 0; i < (A).size(); i++) {                                 \
         for (unsigned j = 0; j < (A).size(); j++) {                             \
-            const T* lp = reinterpret_cast<const T*>((A).data() + i);           \
-            const T* rp = reinterpret_cast<const T*>((A).data() + j);           \
-            T ARG1 = *lp; T ARG2 = *rp;                                         \
+            T ARG1 = (T) (A)[i];                                                \
+            T ARG2 = (T) (A)[j];                                                \
             for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {            \
                 TEST_EQUAL(TR, (OP1), (OP2));                                   \
                 ARG1 = simdpp::detail::align_v128<1>(ARG1, ARG1);               \
@@ -375,10 +401,9 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
     for (unsigned i0 = 0; i0 < (A).size(); i0++) {                      \
     for (unsigned i1 = 0; i1 < (A).size(); i1++) {                      \
     for (unsigned i2 = 0; i2 < (A).size(); i2++) {                      \
-        const T* p0 = reinterpret_cast<const T*>((A).data() + i0);      \
-        const T* p1 = reinterpret_cast<const T*>((A).data() + i1);      \
-        const T* p2 = reinterpret_cast<const T*>((A).data() + i2);      \
-        T v0 = *p0; T v1 = *p1; T v2 = *p2;                             \
+        T v0 = (T) (A)[i0];                                                     \
+        T v1 = (T) (A)[i1];                                                     \
+        T v2 = (T) (A)[i2];                                                     \
         for (unsigned rot0 = 0; rot0 < 128 / T::num_bits; rot0++) {     \
             for (unsigned rot1 = 0; rot1 < 128 / T::num_bits; rot1++) { \
                 TEST_PUSH(TC, T, OP(v0, v1, v2));                       \

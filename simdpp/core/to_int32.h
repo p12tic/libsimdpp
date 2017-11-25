@@ -165,11 +165,7 @@ uint32<N,expr_empty> to_uint32(const uint64<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> to_uint32(const float32<N,E>& a)
 {
-#if SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION
     return detail::insn::i_to_uint32(a.eval());
-#else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE1(E, a);
-#endif
 }
 template<unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> to_uint32(const float64<N,E>& a)

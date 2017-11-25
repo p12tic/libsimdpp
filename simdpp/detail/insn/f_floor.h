@@ -23,6 +23,7 @@
 #include <simdpp/core/i_sub.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_int32.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

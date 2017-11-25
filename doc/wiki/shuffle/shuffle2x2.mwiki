@@ -1,7 +1,7 @@
 {{simdpp/title|shuffle2x2}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned s0, unsigned s1, unsigned N, class E1, class E2>
 Ret<N,_DETAIL_> shuffle2x2( const Vec1<N,E1>& a, const Vec2<N,E2& b );
 }}
@@ -17,7 +17,7 @@ The implementation behaves as if the following set of overloads is provided:
 {{vset3 u | ''promoted 64-bit vector'' | ''any 64-bit vector'' | ''any 64-bit vector'' }}
 {{vset end}}
 
-The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types/expr|vector expression]].
+The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types#expr|vector expression]].
 
 The selectors {{tt|s0}} and {{tt|s1}} must be in range {{c|[0..3]}}.
 
@@ -33,7 +33,7 @@ The vectors are shuffled at 2x2 block granularity as follows: the vectors are pa
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to the shuffled vectors.
+A [[types#expr|vector expression]] evaluating to the shuffled vectors.
 
 ===Equivalent operation===
 {{source|1=

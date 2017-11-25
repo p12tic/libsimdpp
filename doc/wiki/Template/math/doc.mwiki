@@ -16,7 +16,7 @@ The following templates can be in the ''source'' parameter of the {{tl|math}} te
 
 *{{tl|mfrac|''integer''|''numerator''|''denominator''}} - creates a fraction, e.g. {{mfrac|integer|numerator|denominator}}.
 
-*{{tl|mparen|''left_paren''|''right_paren''|''row1''|''row2''|...|style{{=}}''style''{{mark optional}}|rows{{=}}''row_number_override''{{mark optional}}}} - 
+*{{tl|mparen|''left_paren''|''right_paren''|''row1''|''row2''|...|style{{=}}''style''{{mark optional}}|rows{{=}}''row_number_override''{{mark optional}}}} -
 *:creates inline table with invisible borders and parentheses on the sides. E.g. {{mparen|(|}|line1|line2|line3}}
 *:''left_paren'' and ''right_paren'' can be one of (){}[]. {{tt|rows}} forces parentheses to span ''row_number_override'' rows. Currently 4 rows are supported. {{tt|style}} denotes additional style for the content ({{tt|row#}} elements).
 

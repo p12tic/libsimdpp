@@ -15,14 +15,14 @@
 {{nv col end}}
 
 {{nv h1 | Shuffles operating on 128-bit blocks}}
-{{nv ln | shuffle/alignX_128 | align16&nbsp;align8&nbsp;align4&nbsp;align2 }} 
-{{nv ln | shuffle/moveX_l_128 | move16_l&nbsp;move8_l&nbsp;move4_l&nbsp;move2_l }} 
-{{nv ln | shuffle/splatX_128 | splat16&nbsp;splat8&nbsp;splat4&nbsp;splat2 }} 
-{{nv ln | shuffle/moveX_r_128 | move16_r&nbsp;move8_r&nbsp;move4_r&nbsp;move2_r }} 
-{{nv ln | shuffle/zipX_hi_128 | zip16_hi&nbsp;zip8_hi&nbsp;zip4_hi&nbsp;zip2_hi }} 
-{{nv ln | shuffle/zipX_lo_128 | zip16_lo&nbsp;zip8_lo&nbsp;zip4_lo&nbsp;zip2_lo }} 
-{{nv ln | shuffle/unzipX_hi_128 | unzip16_hi&nbsp;unzip8_hi&nbsp;unzip4_hi&nbsp;unzip2_hi }} 
-{{nv ln | shuffle/unzipX_lo_128 | unzip16_lo&nbsp;unzip8_lo&nbsp;unzip4_lo&nbsp;unzip2_lo }} 
+{{nv ln | shuffle/alignX_128 | align16&nbsp;align8&nbsp;align4&nbsp;align2 }}
+{{nv ln | shuffle/moveX_l_128 | move16_l&nbsp;move8_l&nbsp;move4_l&nbsp;move2_l }}
+{{nv ln | shuffle/splatX_128 | splat16&nbsp;splat8&nbsp;splat4&nbsp;splat2 }}
+{{nv ln | shuffle/moveX_r_128 | move16_r&nbsp;move8_r&nbsp;move4_r&nbsp;move2_r }}
+{{nv ln | shuffle/zipX_hi_128 | zip16_hi&nbsp;zip8_hi&nbsp;zip4_hi&nbsp;zip2_hi }}
+{{nv ln | shuffle/zipX_lo_128 | zip16_lo&nbsp;zip8_lo&nbsp;zip4_lo&nbsp;zip2_lo }}
+{{nv ln | shuffle/unzipX_hi_128 | unzip16_hi&nbsp;unzip8_hi&nbsp;unzip4_hi&nbsp;unzip2_hi }}
+{{nv ln | shuffle/unzipX_lo_128 | unzip16_lo&nbsp;unzip8_lo&nbsp;unzip4_lo&nbsp;unzip2_lo }}
 {{nv ln | shuffle/make_shuffle_bytes16_mask }}
 {{nv col begin}}
 {{nv ln | shuffle/shuffle_bytes16}}

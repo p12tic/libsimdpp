@@ -17,6 +17,7 @@
 #include <simdpp/core/f_rsqrt_e.h>
 #include <simdpp/core/f_rsqrt_rh.h>
 #include <simdpp/detail/null/math.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

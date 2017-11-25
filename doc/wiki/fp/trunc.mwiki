@@ -1,7 +1,7 @@
 {{simdpp/title|trunc}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 Ret<N, _DETAIL_> trunc( Vec<N,E> a );
 }}
@@ -15,7 +15,7 @@ Rounds the values in a floating-point vector towards zero. The implementation be
 {{vset2 | float64 | float64}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 ===Parameters===
 {{par begin}}
@@ -23,7 +23,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|trunc(a)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|trunc(a)}}.
 
 ===Equivalent operation===
 {{source|1=

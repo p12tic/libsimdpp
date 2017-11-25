@@ -8,13 +8,13 @@
   | ¬   =   <!--Not defined-->
   | #default = dontcat   <!--"category2 = no/'defined but empty'/'anything'"-->
   }}{{#switch: {{lc: {{{subpage|}}} }}
-  | no = 
+  | no =
     {{basepage subpage
-    | 
+    |
     | dontcat    <!--"subpage=no" and on a subpage-->
     | page = {{{page|}}}   <!--For testing-->
     }}
-  | only = 
+  | only =
     {{basepage subpage
     | dontcat    <!--"subpage=only" and not on a subpage-->
     | page = {{{page|}}}   <!--For testing-->
@@ -35,7 +35,7 @@
       }}
     }}
   | hide = <!--Blacklist returned "hide", don't categorize-->
-  | #default  = 
+  | #default  =
     <!--Check if any namespace parameter is defined-->
     {{#ifeq: h0#384!5nea+w9 | {{{all| {{{main| {{{talk| {{{user| {{{wikipedia| {{{file| {{{mediawiki| {{{template| {{{help| {{{category| {{{portal| {{{book| {{{other| h0#384!5nea+w9 }}} }}} }}} }}} }}} }}} }}} }}} }}} }}} }}} }}} }}}
     | <!--No namespace parameters fed, basic usage-->
@@ -49,7 +49,7 @@
       | page = {{{page|}}}   <!--For testing and demonstration-->
       }}
     | <!--Namespace parameters fed, advanced usage.
-          If "data" is a number, return the corresponding 
+          If "data" is a number, return the corresponding
           numbered parameter, else return "data".  -->
       {{{all|}}}{{cat handler/numbered
       | 1 = {{{1|}}}
@@ -62,7 +62,7 @@
       | 8 = {{{8|}}}
       | 9 = {{{9|}}}
       | 10 = {{{10|}}}
-      | data = 
+      | data =
         <!--Check what namespace, and return the data for it.
             Respecting empty parameters on purpose.  -->
         {{namespace detect

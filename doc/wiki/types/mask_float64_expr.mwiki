@@ -1,0 +1,1 @@
+{{types/vector_expr_type |mask_float64|any_float64|float64| kind_text=floating-point }}

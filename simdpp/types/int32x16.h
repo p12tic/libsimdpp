@@ -57,7 +57,7 @@ public:
     SIMDPP_INL int32<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -116,7 +116,7 @@ public:
     SIMDPP_INL uint32<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -170,7 +170,7 @@ public:
     }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif

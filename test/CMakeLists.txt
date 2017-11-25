@@ -33,6 +33,7 @@ list_contains(HAS_AVX2 X86_AVX2 ${NATIVE_ARCHS})
 list_contains(HAS_AVX512F X86_AVX512F ${NATIVE_ARCHS})
 list_contains(HAS_AVX512BW X86_AVX512BW ${NATIVE_ARCHS})
 list_contains(HAS_AVX512DQ X86_AVX512DQ ${NATIVE_ARCHS})
+list_contains(HAS_AVX512VL X86_AVX512VL ${NATIVE_ARCHS})
 list_contains(HAS_NEON X86_NEON ${NATIVE_ARCHS})
 
 # ------------------------------------------------------------------------------
@@ -131,9 +132,14 @@ elseif(SIMDPP_MSVC_INTEL)
 else()
     # Xcode clang linker spends very long time in deduplication pass when
     # linking the test executable unless -fvisibility-inlines-hidden is passed.
-    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-O1 -g1 -Wall -Wextra -fvisibility-inlines-hidden")
+    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-O2 -Wall -Wextra -fvisibility-inlines-hidden")
 endif()
-target_compile_definitions(test_insn PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
+
+if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
+    # We don't want to break testing on old environments where newer cmake
+    # versions are not easily available.
+    target_compile_definitions(test_insn PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+endif()
 
 add_test(s_test_insn test_insn)
 add_dependencies(check test_insn)
@@ -163,9 +169,11 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 
 if(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
 else()
-    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-g2 -Wall -fvisibility-inlines-hidden")
+    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-Wall -fvisibility-inlines-hidden")
 endif()
-target_compile_definitions(test_dispatcher PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
+if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
+    target_compile_definitions(test_dispatcher PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+endif()
 
 add_test(s_test_dispatcher1 test_dispatcher "NONE_NULL")
 if(HAS_SSE2)
@@ -195,6 +203,9 @@ endif()
 if(HAS_AVX512DQ)
     add_test(s_test_dispatcher10 test_dispatcher "X86_AVX512DQ")
 endif()
+if(HAS_AVX512VL)
+    add_test(s_test_dispatcher10 test_dispatcher "X86_AVX512VL")
+endif()
 if(HAS_NEON)
     add_test(s_test_dispatcher11 test_dispatcher "ARM_NEON")
     add_test(s_test_dispatcher12 test_dispatcher "ARM_NEON_FLT_SP")
@@ -221,9 +232,11 @@ add_executable(test_expr EXCLUDE_FROM_ALL
 
 if(SIMDPP_MSVC OR SIMDPP_MSVC_INTEL)
 else()
-    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-g2 -Wall -fvisibility-inlines-hidden")
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-Wall -fvisibility-inlines-hidden")
 endif()
-target_compile_definitions(test_expr PUBLIC "-DSIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES=0")
+if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
+    target_compile_definitions(test_expr PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
+endif()
 
 add_test(s_test_expr1 test_expr)
 add_dependencies(check test_expr)

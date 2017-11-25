@@ -1,7 +1,7 @@
 {{simdpp/title|sub_sat{{small|(integer)}}}}
 {{int/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1, class E2>
 Ret<N, _DETAIL_> sub_sat( Vec1<N,E1> a, Vec2<N,E2> b );
 }}
@@ -17,7 +17,7 @@ Performs saturated subtraction of two integer values. The implementation behaves
 {{vset3 | uint16 | uint16 | uint16}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 {{scalar note int}}
 
@@ -27,7 +27,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|saturate(a - b)}}.
+A [[types#expr|vector expression]] evaluating to {{tt|saturate(a - b)}}.
 
 ===Equivalent operation===
 {{source|1=

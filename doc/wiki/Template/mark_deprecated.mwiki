@@ -1,3 +1,3 @@
-{{mark|deprecated}}<noinclude>
+{{mark|deprecated {{#if:{{{1|}}}|since v{{{1}}}}}}}<noinclude>
 {{documentation | Template:mark/doc}}
 </noinclude>

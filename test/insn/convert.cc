@@ -250,9 +250,7 @@ void test_convert_n(TestResultsSet& ts)
     TEST_PUSH_ARRAY_OP1_T(ts,  int16_2n,   float32_4n, to_int16, sn);
     TEST_PUSH_ARRAY_OP1_T(ts, uint16_2n,   float32_4n, to_uint16, sp);
     TEST_PUSH_ARRAY_OP1_T(ts,  int32_4n,   float32_4n, to_int32, sn);
-#if SIMDPP_HAS_FLOAT32_TO_UINT32_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts, uint32_4n,   float32_4n, to_uint32, sp);
-#endif
     TEST_PUSH_ARRAY_OP1_T(ts, float32_4n,  float32_4n, to_float32, sn);
 #if SIMDPP_HAS_FLOAT32_TO_INT64_CONVERSION
     TEST_PUSH_ARRAY_OP1_T(ts,  int64_8n,   float32_4n, to_int64, sn);

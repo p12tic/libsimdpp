@@ -1,7 +1,7 @@
 {{simdpp/title|reduce_min{{small|(integer)}}}}
 {{int/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1>
 Ret reduce_min( const Vec1<N,E1>& a );
 }}

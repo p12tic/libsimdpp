@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/null/math.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -26,6 +27,8 @@ mask_float32x4 i_isnan(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::isnan(a);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_cmp_ps_mask(a.native(), a.native(), _CMP_UNORD_Q);
 #elif SIMDPP_USE_AVX
     return _mm_cmp_ps(a.native(), a.native(), _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
@@ -41,7 +44,11 @@ mask_float32x4 i_isnan(const float32x4& a)
 static SIMDPP_INL
 mask_float32x8 i_isnan(const float32x8& a)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cmp_ps_mask(a.native(), a.native(), _CMP_UNORD_Q);
+#else
     return _mm256_cmp_ps(a.native(), a.native(), _CMP_UNORD_Q);
+#endif
 }
 #endif
 
@@ -58,7 +65,9 @@ mask_float32<16> i_isnan(const float32<16>& a)
 static SIMDPP_INL
 mask_float64x2 i_isnan(const float64x2& a)
 {
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX512VL
+    return _mm_cmp_pd_mask(a.native(), a.native(), _CMP_UNORD_Q);
+#elif SIMDPP_USE_AVX
     return _mm_cmp_pd(a.native(), a.native(), _CMP_UNORD_Q);
 #elif SIMDPP_USE_SSE2
     return _mm_cmpunord_pd(a.native(), a.native());
@@ -75,7 +84,11 @@ mask_float64x2 i_isnan(const float64x2& a)
 static SIMDPP_INL
 mask_float64x4 i_isnan(const float64x4& a)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cmp_pd_mask(a.native(), a.native(), _CMP_UNORD_Q);
+#else
     return _mm256_cmp_pd(a.native(), a.native(), _CMP_UNORD_Q);
+#endif
 }
 #endif
 

@@ -1,0 +1,31 @@
+{{inherited | [[types/any_vec | {{small|simdpp::}}any_vec<B,V>]] |
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | {{tt|type}} | {{tt|V}} }}
+{{dsc end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|length_bytes}} | {{tt|B}} }}
+{{dsc end}}
+
+===Member functions===
+{{dsc begin}}
+{{dsc mem fun | wrapped | nolink=true | returns the wrapped type }}
+{{dsc end}}
+
+{{member | {{small|simdpp::any_vec::}}wrapped | 2=
+{{dcl begin}}
+{{dcl | 1=
+V& wrapped();
+}}
+{{dcl | 1=
+const V& wrapped() const;
+}}
+{{dcl end}}
+
+Returns the wrapped type. Effectively the same as {{c|static_cast<V&>(*this)}} or {{c|static_cast<const V&>(*this)}} respectively.
+}}
+}}

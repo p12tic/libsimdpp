@@ -1,7 +1,7 @@
 {{simdpp/title|store_u}}
 {{mem/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class V> SIMDPP_INL
 void store_u( void* ptr, const any_vec<N,V>& a );
 }}

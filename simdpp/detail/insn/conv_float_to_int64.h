@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/conv_any_to_float64.h>
+#include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

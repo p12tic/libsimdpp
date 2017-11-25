@@ -37,6 +37,17 @@ def get_path_from_title(title):
 
     return '/'.join(pathnames) + '.mwiki'
 
+def fix_whitespace(text):
+    # Trims trailing whitespace on lines
+    # Adds trailing newline if not present. MediaWiki strips it and we don't
+    # want to fight with editors.
+
+    # Note that splitlines does not return empty line corresponding to the
+    # trailing newline character.
+    lines = text.splitlines()
+    lines = [ l.rstrip() for l in lines ]
+    return '\n'.join(lines) + '\n'
+
 def sync_single_page(page, direction, dest_root):
     title = page.title()
     text = page.get(get_redirect=True)
@@ -48,7 +59,7 @@ def sync_single_page(page, direction, dest_root):
             return
         with open(dest_path, 'r') as file:
             new_text = file.read()
-        if text != new_text:
+        if fix_whitespace(text) != fix_whitespace(new_text):
             page.put(new_text, 'sync with git')
             print('Uploaded {0}'.format(title))
 
@@ -58,12 +69,25 @@ def sync_single_page(page, direction, dest_root):
             os.makedirs(dest_dir)
 
         with open(dest_path, 'w') as file:
-            if not text.endswith('\n'):
-                # MediaWiki strips trailing whitespace, re-add it so that lack
-                # of it does not fight with editors
-                text = text + '\n'
-            file.write(text)
+            file.write(fix_whitespace(text))
         print('Downloaded {0}'.format(dest_path))
+
+def remove_no_longer_existing_pages(pages, dest_root):
+    paths = []
+    for dir, dirnames, filenames in os.walk(dest_root):
+        for filename in filenames:
+            rel_path = os.path.join(os.path.relpath(dir, dest_root), filename)
+            if rel_path.startswith('./'):
+                rel_path = rel_path[2:]
+            paths.append(rel_path)
+
+    paths = set(paths)
+
+    existing_paths = set([get_path_from_title(page.title()) for page in pages])
+    deleted_paths = paths - existing_paths
+
+    for path in deleted_paths:
+        os.remove(os.path.join(dest_root, path))
 
 def perform_sync(url, direction, dest_root, user, password):
 
@@ -95,8 +119,12 @@ def perform_sync(url, direction, dest_root, user, password):
     )
     pages = pywikibot.pagegenerators.PreloadingGenerator(pages, groupsize=100)
 
+    pages = list(pages)
     for page in pages:
         sync_single_page(page, direction, dest_root)
+
+    if direction == SYNC_DIRECTION_DOWNLOAD:
+        remove_no_longer_existing_pages(pages, dest_root)
 
 def main():
     parser = argparse.ArgumentParser(prog='sync_mediawiki')

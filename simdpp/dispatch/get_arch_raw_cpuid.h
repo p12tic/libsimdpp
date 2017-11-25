@@ -112,48 +112,50 @@ inline Arch get_arch_raw_cpuid()
     if (max_cpuid_level >= 0x00000001) {
         simdpp::detail::get_cpuid(0x00000001, 0, &eax, &ebx, &ecx, &edx);
 
-        if (edx & (1 << 26))
+        if (edx & (1u << 26))
             arch_info |= Arch::X86_SSE2;
-        if (ecx & (1 << 0))
+        if (ecx & (1u << 0))
             arch_info |= Arch::X86_SSE3;
-        if (ecx & (1 << 9))
+        if (ecx & (1u << 9))
             arch_info |= Arch::X86_SSSE3;
-        if (ecx & (1 << 19))
+        if (ecx & (1u << 19))
             arch_info |= Arch::X86_SSE4_1;
-        if (ecx & (1 << 20) && mfg == simdpp::detail::CPU_INTEL)
+        if (ecx & (1u << 20) && mfg == simdpp::detail::CPU_INTEL)
             arch_info |= Arch::X86_POPCNT_INSN; // popcnt is included in SSE4.2 on Intel
-        if (ecx & (1 << 23))
+        if (ecx & (1u << 23))
             arch_info |= Arch::X86_POPCNT_INSN;
-        if (ecx & (1 << 12))
+        if (ecx & (1u << 12))
             arch_info |= Arch::X86_FMA3;
-        if (ecx & (1 << 26)) {
+        if (ecx & (1u << 26)) {
             // XSAVE/XRSTORE available on hardware, now check OS support
             uint64_t xcr = simdpp::detail::get_xcr(0);
             if ((xcr & 6) == 6)
                 xsave_xrstore_avail = true;
         }
 
-        if (ecx & (1 << 28) && xsave_xrstore_avail)
+        if (ecx & (1u << 28) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX;
     }
     if (max_ex_cpuid_level >= 0x80000001) {
         simdpp::detail::get_cpuid(0x80000001, 0, &eax, &ebx, &ecx, &edx);
-        if (ecx & (1 << 16))
+        if (ecx & (1u << 16))
             arch_info |= Arch::X86_FMA4;
-        if (ecx & (1 << 11))
+        if (ecx & (1u << 11))
             arch_info |= Arch::X86_XOP;
     }
 
     if (max_cpuid_level >= 0x00000007) {
         simdpp::detail::get_cpuid(0x00000007, 0, &eax, &ebx, &ecx, &edx);
-        if (ebx & (1 << 5) && xsave_xrstore_avail)
+        if (ebx & (1u << 5) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX2;
-        if (ebx & (1 << 16) && xsave_xrstore_avail)
+        if (ebx & (1u << 16) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512F;
-        if (ebx & (1 << 30) && xsave_xrstore_avail)
+        if (ebx & (1u << 30) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512BW;
-        if (ebx & (1 << 17) && xsave_xrstore_avail)
+        if (ebx & (1u << 17) && xsave_xrstore_avail)
             arch_info |= Arch::X86_AVX512DQ;
+        if (ebx & (1u << 31) && xsave_xrstore_avail)
+            arch_info |= Arch::X86_AVX512VL;
     }
 
     return arch_info;

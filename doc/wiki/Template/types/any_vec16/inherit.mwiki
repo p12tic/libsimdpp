@@ -1,0 +1,7 @@
+{{inherited | [[types/any_vec16 | {{small|simdpp::}}any_vec16<N,V>]] |
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|size_tag}} | {{tt|SIMDPP_TAG_SIZE16}} }}
+{{dsc end}}
+}}

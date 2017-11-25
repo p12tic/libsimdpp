@@ -25,9 +25,9 @@ The implementation behaves as if the following set of overloads is provided:
 {{vset4 u | ''promoted 64-bit vector'' | ''any 64-bit vector'' | ''any 64-bit vector'' | {{tt|uint64}} }}
 {{vset end}}
 
-The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types/expr|vector expression]].
+The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types#expr|vector expression]].
 
-The vectors are shuffled at 16 byte granularity as follows: the vectors are partitioned into 128-bit lanes. The {{tt|n}}-th lane in the return vector is governed by {{tt|n}}-th lane of the {{tt|mask}} vector. The {{tt|n}}-th lane in the return vector will contain elements only from {{tt|n}}-th lanes of the {{tt|a}} vector. 
+The vectors are shuffled at 16 byte granularity as follows: the vectors are partitioned into 128-bit lanes. The {{tt|n}}-th lane in the return vector is governed by {{tt|n}}-th lane of the {{tt|mask}} vector. The {{tt|n}}-th lane in the return vector will contain elements only from {{tt|n}}-th lanes of the {{tt|a}} vector.
 
 ===Parameters===
 {{par begin}}
@@ -36,7 +36,7 @@ The vectors are shuffled at 16 byte granularity as follows: the vectors are part
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to the shuffled vectors.
+A [[types#expr|vector expression]] evaluating to the shuffled vectors.
 
 ===See also===
 {{dsc begin}}

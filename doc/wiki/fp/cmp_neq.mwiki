@@ -1,7 +1,7 @@
 {{simdpp/title|cmp_neq{{small|(floating-point)}}}}
 {{fp/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E1, class E2>
 Ret<N, _DETAIL_> cmp_neq( Vec1<N,E1> a, Vec2<N,E2> b );
 }}
@@ -21,7 +21,7 @@ Compares values in two floating-point vectors for ''not equal-to''. The implemen
 {{vset3 | mask_float64 | mask_float64 | mask_float64}}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 {{scalar note}}
 
@@ -31,7 +31,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to {{tt|1=a != b}}.
+A [[types#expr|vector expression]] evaluating to {{tt|1=a != b}}.
 
 ===Equivalent operation===
 {{source|1=

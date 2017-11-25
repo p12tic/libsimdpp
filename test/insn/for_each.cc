@@ -34,7 +34,7 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     s.add(make_uint(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff));
 
     for (unsigned i = 0; i < s.size(); ++i) {
-        V v = s.data()[i];
+        V v = s[i];
         uint64_t sum = 0;
         for_each(v, SumClosure<E>(sum));
         TEST_PUSH(ts, uint64_t, sum);

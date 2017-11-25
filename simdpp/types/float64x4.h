@@ -57,7 +57,7 @@ public:
     SIMDPP_INL float64<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -92,7 +92,9 @@ public:
     typedef mask_float64<4,void> base_vector_type;
     typedef void expr_type;
 
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX512VL
+    typedef __mmask8 native_type;
+#elif SIMDPP_USE_AVX
     typedef __m256d native_type;
 #endif
 
@@ -102,7 +104,7 @@ public:
 
     SIMDPP_INL mask_float64<4>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX512VL
     SIMDPP_INL mask_float64<4>(const float64<4>& d) : d_(d.native()) {}
 #endif
 
@@ -116,7 +118,7 @@ public:
     }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -125,9 +127,11 @@ public:
     /// Access the underlying type
     SIMDPP_INL float64<4> unmask() const
     {
-    #if SIMDPP_USE_AVX
+#if SIMDPP_USE_AVX512VL
+        return _mm256_castsi256_pd(_mm256_movm_epi64(d_));
+#else
         return float64<4>(d_);
-    #endif
+#endif
     }
 
     SIMDPP_INL const mask_float64<4>& vec(unsigned) const { return *this; }

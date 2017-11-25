@@ -161,17 +161,17 @@ The templates for member objects accept {{tt|inlinemem{{=}}true}} parameter. Thi
 ===See also templates===
 Used in ''see also'' lists.
 
-{{tl|dsc see cpp | ''location'' 
- | ''nomono''{{=}}{{tt|true_if_serif}} {{mark optional}} 
- | ''title1''{{mark optional}} 
- | ''title2''{{mark optional}} ... 
+{{tl|dsc see cpp | ''location''
+ | ''nomono''{{=}}{{tt|true_if_serif}} {{mark optional}}
+ | ''title1''{{mark optional}}
+ | ''title2''{{mark optional}} ...
 }}
-: adds a link to C++ documentation of a feature. 
+: adds a link to C++ documentation of a feature.
 
-{{tl|dsc see c | ''location'' 
- | ''nomono''{{=}}{{tt|true_if_serif}} {{mark optional}} 
- | ''title1''{{mark optional}} 
- | ''title2''{{mark optional}} ... 
+{{tl|dsc see c | ''location''
+ | ''nomono''{{=}}{{tt|true_if_serif}} {{mark optional}}
+ | ''title1''{{mark optional}}
+ | ''title2''{{mark optional}} ...
 }}
 : adds a link to C documentation of a feature.
 
@@ -212,7 +212,7 @@ The above results in the following:
 
 ===={{tl|dsc member}}====
 {{tl|dsc member | ''page'' | ''title'' {{mark optional}} | title=''title'' {{mark optional}} | nolink{{=}}''true_if_nolink'' {{mark optional}} | nobold{{=}}''true_if_nobold'' {{mark optional}} | notes{{=}}''notes'' {{mark optional}}}}
-: Default title of the link is ''page''. Custom title can be supplied via the second unnamed parameter or {{tt|title}} parameter. If {{tt|nolink}} is ''true'', no link is produced. 
+: Default title of the link is ''page''. Custom title can be supplied via the second unnamed parameter or {{tt|title}} parameter. If {{tt|nolink}} is ''true'', no link is produced.
 
 : Default font of the link is bold monospace. If {{tt|nobold}} is ''true'', the font is normal serif.
 
@@ -222,7 +222,7 @@ The above results in the following:
 
 ===={{tl|dsc mark mem}}====
 {{tl|dsc mark mem | ''link'' | ''mark_class'' | nomem{{=}}''true_if_nomem'' {{mark optional}} | inlinemem{{=}}''true_if_inlinemem'' {{mark optional}} }}
-: Outputs {{tlc|mark ''mark_class''}} potentially appending additional description of the class the function/class is member of. 
+: Outputs {{tlc|mark ''mark_class''}} potentially appending additional description of the class the function/class is member of.
 
 : Specifically, the template checks if the parent of the page linked to by {{tt|link}} is a parent of the page the template is used in (i.e. they are siblings). For example, consider {{tt|link}} ''{{=}} a/b/c'' and ''page'' the page the template is used in. Then the template would append the additional description if {{tt|page}} equals to ''z/z/z'', or ''a/z'', or ''a/b/z/z'', but not if ''page'' is ''a/b/z'' or ''a/b''.
 

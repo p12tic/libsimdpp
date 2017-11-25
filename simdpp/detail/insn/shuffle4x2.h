@@ -22,6 +22,7 @@
 #include <simdpp/detail/shuffle/sse_int64_4x2.h>
 #include <simdpp/detail/shuffle/neon_int32x4.h>
 #include <simdpp/detail/not_implemented.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

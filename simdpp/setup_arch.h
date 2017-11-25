@@ -86,6 +86,11 @@
 #else
 #define SIMDPP_USE_AVX512DQ 0
 #endif
+#if SIMDPP_ARCH_PP_USE_AVX512VL
+#define SIMDPP_USE_AVX512VL 1
+#else
+#define SIMDPP_USE_AVX512VL 0
+#endif
 #if SIMDPP_ARCH_PP_USE_NEON
 #define SIMDPP_USE_NEON 1
 #else
@@ -189,6 +194,11 @@
 #else
 #define SIMDPP_NS_ID_AVX512DQ
 #endif
+#if SIMDPP_ARCH_PP_NS_USE_AVX512VL
+#define SIMDPP_NS_ID_AVX512VL SIMDPP_INSN_ID_AVX512VL
+#else
+#define SIMDPP_NS_ID_AVX512VL
+#endif
 #if SIMDPP_ARCH_PP_NS_USE_NEON
 #define SIMDPP_NS_ID_NEON SIMDPP_INSN_ID_NEON
 #else
@@ -220,7 +230,7 @@
 #define SIMDPP_NS_ID_MSA
 #endif
 
-#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE21(arch,                           \
+#define SIMDPP_ARCH_NAMESPACE SIMDPP_PP_PASTE22(arch,                           \
     SIMDPP_NS_ID_NULL,                                                          \
     SIMDPP_NS_ID_SSE2,                                                          \
     SIMDPP_NS_ID_SSE3,                                                          \
@@ -232,6 +242,7 @@
     SIMDPP_NS_ID_AVX512F,                                                       \
     SIMDPP_NS_ID_AVX512BW,                                                      \
     SIMDPP_NS_ID_AVX512DQ,                                                      \
+    SIMDPP_NS_ID_AVX512VL,                                                      \
     SIMDPP_NS_ID_FMA3,                                                          \
     SIMDPP_NS_ID_FMA4,                                                          \
     SIMDPP_NS_ID_XOP,                                                           \
@@ -383,6 +394,7 @@
 #endif
 
 #include <simdpp/detail/workarounds.h>
+#include <simdpp/deprecations.h>
 
 // #define SIMDPP_EXPR_DEBUG 1
 

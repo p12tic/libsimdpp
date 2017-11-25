@@ -55,6 +55,7 @@ inline Arch get_arch_linux_cpuinfo()
     Arch a_avx512f = a_avx2 | Arch::X86_AVX512F;
     Arch a_avx512bw = a_avx512f | Arch::X86_AVX512BW;
     Arch a_avx512dq = a_avx512f | Arch::X86_AVX512DQ;
+    Arch a_avx512vl = a_avx512f | Arch::X86_AVX512VL;
 
     ident = "flags\t";
     features["sse2"] = a_sse2;
@@ -70,6 +71,7 @@ inline Arch get_arch_linux_cpuinfo()
     features["avx512f"] = a_avx512f;
     features["avx512bw"] = a_avx512bw;
     features["avx512dq"] = a_avx512dq;
+    features["avx512vl"] = a_avx512vl;
 #else
     return res;
 #endif

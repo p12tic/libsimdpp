@@ -1,7 +1,7 @@
 {{simdpp/title|combine}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template< unsigned N, class E1, class E2 >
 Ret<N*2> combine( const Vec1<N,E1>& a, const Vec2<N,E2>& b );
 }}

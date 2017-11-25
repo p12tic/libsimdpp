@@ -57,6 +57,7 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     Arch a_avx512f = a_avx2 | Arch::X86_AVX512F;
     Arch a_avx512bw = a_avx512f | Arch::X86_AVX512BW;
     Arch a_avx512dq = a_avx512f | Arch::X86_AVX512DQ;
+    Arch a_avx512vl = a_avx512f | Arch::X86_AVX512VL;
 
     features.push_back(ArchDesc("sse2", a_sse2));
     features.push_back(ArchDesc("sse3", a_sse3));
@@ -71,6 +72,7 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     features.push_back(ArchDesc("avx512f", a_avx512f));
     features.push_back(ArchDesc("avx512bw", a_avx512bw));
     features.push_back(ArchDesc("avx512dq", a_avx512dq));
+    features.push_back(ArchDesc("avx512vl", a_avx512vl));
 #elif SIMDPP_PPC
     Arch a_altivec = Arch::POWER_ALTIVEC;
     Arch a_vsx_206 = a_altivec | Arch::POWER_VSX_206;

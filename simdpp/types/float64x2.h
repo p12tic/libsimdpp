@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/types/int64x2.h>
@@ -64,7 +65,7 @@ public:
     SIMDPP_INL float64<2>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -92,10 +93,10 @@ public:
 #endif
 
 private:
-#if SIMDPP_USE_SSE2
-    native_type d_;
-#else
+#if SIMDPP_ARM && !SIMDPP_HAS_FLOAT64_SIMD
     SIMDPP_ALIGN(16) native_type d_;
+#else
+    native_type d_;
 #endif
 };
 
@@ -109,7 +110,9 @@ public:
     typedef mask_float64<2,void> base_vector_type;
     typedef void expr_type;
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    typedef __mmask8 native_type;
+#elif SIMDPP_USE_SSE2
     typedef __m128d native_type;
 #elif SIMDPP_USE_NEON64
     typedef float64x2_t native_type;
@@ -127,7 +130,7 @@ public:
 
     SIMDPP_INL mask_float64<2>(const native_type& d) : d_(d) {}
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
+#if (SIMDPP_USE_SSE2 && !SIMDPP_USE_AVX512VL) || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
     SIMDPP_INL mask_float64<2>(const float64<2>& d) : d_(d.native()) {}
 #endif
 
@@ -141,7 +144,7 @@ public:
     }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -150,11 +153,13 @@ public:
     /// Access the underlying type
     SIMDPP_INL float64<2> unmask() const
     {
-    #if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
+#if SIMDPP_USE_AVX512VL
+        return _mm_castsi128_pd(_mm_movm_epi64(d_));
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
         return float64<2>(d_);
-    #else
+#else
         return detail::null::unmask_mask<float64<2> >(*this);
-    #endif
+#endif
     }
 
 #if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA)

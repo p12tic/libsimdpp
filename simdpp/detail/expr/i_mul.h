@@ -19,6 +19,7 @@
 #include <simdpp/core/shuffle2.h>
 #include <simdpp/core/unzip_hi.h>
 #include <simdpp/detail/null/math.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

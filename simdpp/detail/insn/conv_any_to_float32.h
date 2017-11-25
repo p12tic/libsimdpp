@@ -14,7 +14,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/combine.h>
-#include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/insert.h>
@@ -32,14 +31,6 @@ namespace detail {
 namespace insn {
 
 
-template<unsigned N> SIMDPP_INL
-float32<N> i_to_float32(const float32<N>& a)
-{
-    return a;
-}
-
-// -----------------------------------------------------------------------------
-
 static SIMDPP_INL
 float32<4> i_to_float32(const float64<4>& a)
 {
@@ -49,8 +40,7 @@ float32<4> i_to_float32(const float64<4>& a)
     float32x4 r1, r2;
     r1 = _mm_cvtpd_ps(a.vec(0).native());
     r2 = _mm_cvtpd_ps(a.vec(1).native());
-    r2 = move4_r<2>(r2);
-    return bit_or(r1, r2);
+    return _mm_movelh_ps(r2.native(), r1.native());
 #elif SIMDPP_USE_NEON64
     float32<4> r;
     r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0).native()),
@@ -110,6 +100,106 @@ float32<N> i_to_float32(const float64<N>& a)
 // -----------------------------------------------------------------------------
 
 static SIMDPP_INL
+float32<4> i_to_float32(const int64<4>& a)
+{
+#if SIMDPP_USE_NULL
+    float32<4> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = float(a.vec(i/2).el(i%2));
+    }
+    return r;
+#elif SIMDPP_USE_AVX512VL
+    return _mm256_cvtepi64_ps(a.native());
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+
+#if SIMDPP_USE_AVX
+static SIMDPP_INL
+float32<8> i_to_float32(const int64<8>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    return _mm512_cvtepi64_ps(a.native());
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+static SIMDPP_INL
+float32<16> i_to_float32(const int64<16>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    float32<8> r0 = _mm512_cvtepi64_ps(a.vec(0).native());
+    float32<8> r1 = _mm512_cvtepi64_ps(a.vec(1).native());
+    return combine(r0, r1);
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+float32<N> i_to_float32(const int64<N>& a)
+{
+    return i_to_float32(i_to_float64(a));
+}
+
+// -----------------------------------------------------------------------------
+
+static SIMDPP_INL
+float32<4> i_to_float32(const uint64<4>& a)
+{
+#if SIMDPP_USE_NULL
+    float32<4> r;
+    for (unsigned i = 0; i < a.length; i++) {
+        r.el(i) = float(a.vec(i/2).el(i%2));
+    }
+    return r;
+#elif SIMDPP_USE_AVX512VL
+    return _mm256_cvtepu64_ps(a.native());
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+
+#if SIMDPP_USE_AVX
+static SIMDPP_INL
+float32<8> i_to_float32(const uint64<8>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    return _mm512_cvtepu64_ps(a.native());
+#else
+    return SIMDPP_NOT_IMPLEMENTED1(a);
+#endif
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+static SIMDPP_INL
+float32<16> i_to_float32(const uint64<16>& a)
+{
+#if SIMDPP_USE_AVX512DQ
+    float32<8> r0 = _mm512_cvtepu64_ps(a.vec(0).native());
+    float32<8> r1 = _mm512_cvtepu64_ps(a.vec(1).native());
+    return combine(r0, r1);
+#else
+    return i_to_float32(i_to_float64(a));
+#endif
+}
+#endif
+
+template<unsigned N> SIMDPP_INL
+float32<N> i_to_float32(const uint64<N>& a)
+{
+    return i_to_float32(i_to_float64(a));
+}
+
+// -----------------------------------------------------------------------------
+
+static SIMDPP_INL
 float32<4> i_to_float32(const int32<4>& a)
 {
 #if SIMDPP_USE_NULL
@@ -122,12 +212,12 @@ float32<4> i_to_float32(const int32<4>& a)
     return _mm_cvtepi32_ps(a.native());
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<int32<4> > mi(a);
-    detail::mem_block<float32<4> > mf;
-    mf[0] = float(mi[0]);
-    mf[1] = float(mi[1]);
-    mf[2] = float(mi[2]);
-    mf[3] = float(mi[3]);
-    return mf;
+    float32<4> r;
+    r.el(0) = float(mi[0]);
+    r.el(1) = float(mi[1]);
+    r.el(2) = float(mi[2]);
+    r.el(3) = float(mi[3]);
+    return r;
 #elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_f32_s32(a.native());
 #elif SIMDPP_USE_ALTIVEC
@@ -178,12 +268,17 @@ float32<4> i_to_float32(const uint32<4>& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    mask_int32<4> is_large = cmp_gt(a, 0x7fffffff);
-    uint32<4> large = shift_r<1>(a);
-    float32<4> f_large = _mm_cvtepi32_ps(large.native());
-    f_large = mul(f_large, 2.0f);
+    // true when a is in the range [0x80000000, 0xffffffff)
+    mask_float32<4> is_large = mask_float32<4>(cmp_lt(int32<4>(a), 0));
+
     float32<4> f_a = _mm_cvtepi32_ps(a.native());
-    return blend(f_large, f_a, is_large);
+    // f_a has values in the range [0x80000000, 0xffffffff) wrapped around to
+    // negative values. Conditionally bias the result to fix that. Note, that
+    // the result is in sufficient precision even for large argument values.
+    // The result has lowest precision around 0x80000000, and the precision
+    // increases going towards 0xffffffff. The final result after bias will
+    // have lower precision in this whole range.
+    return add(f_a, bit_and(is_large, splat<float32<4>>(0x100000000)));
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<uint32<4> > mi(a);
     detail::mem_block<float32<4> > mf;
@@ -209,12 +304,11 @@ float32x8 i_to_float32(const uint32x8& a)
     __m512i a512 = _mm512_castsi256_si512(a.native());
     return _mm512_castps512_ps256(_mm512_cvtepu32_ps(a512));
 #elif SIMDPP_USE_AVX2
-    mask_int32<8> is_large = cmp_gt(a, 0x7fffffff);
-    uint32<8> large = shift_r<1>(a);
-    float32<8> f_large = _mm256_cvtepi32_ps(large.native());
-    f_large = mul(f_large, 2.0f);
+    // true when a is in the range [0x80000000, 0xffffffff)
+    mask_float32<8> is_large = mask_float32<8>(cmp_lt(int32<8>(a), 0));
+
     float32<8> f_a = _mm256_cvtepi32_ps(a.native());
-    return blend(f_large, f_a, is_large);
+    return add(f_a, bit_and(is_large, splat<float32<8>>(0x100000000)));
 #else
     return combine(i_to_float32(a.vec(0)), i_to_float32(a.vec(1)));
 #endif
@@ -261,14 +355,6 @@ template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const int8<N>& a)
 {
     return i_to_float32(i_to_int32(a));
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N, class V> SIMDPP_INL
-float32<N> i_to_float32(const any_int64<N,V>& a)
-{
-    return i_to_float32(i_to_float64(a.wrapped()));
 }
 
 // -----------------------------------------------------------------------------

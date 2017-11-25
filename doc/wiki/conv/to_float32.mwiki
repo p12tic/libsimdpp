@@ -1,7 +1,7 @@
 {{simdpp/title|to_float32}}
 {{conv/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned N, class E>
 float32<N, _DETAIL_> to_float32( Vec<N,E> a );
 }}
@@ -25,7 +25,7 @@ The implementation behaves as if the following set of overloads is provided:
 {{vset1 | float64 }}
 {{vset end}}
 
-The return type is a [[types/expr|vector expression]].
+The return type is a [[types#expr|vector expression]].
 
 ===Parameters===
 {{par begin}}
@@ -33,7 +33,7 @@ The return type is a [[types/expr|vector expression]].
 {{par end}}
 
 ===Return value===
-A [[types/expr|vector expression]] evaluating to vector with values converted to 32-bit floating-point values.
+A [[types#expr|vector expression]] evaluating to vector with values converted to 32-bit floating-point values.
 
 ===Equivalent operation===
 {{source|1=

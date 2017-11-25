@@ -66,7 +66,7 @@ public:
     SIMDPP_INL int32<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -139,7 +139,7 @@ public:
     SIMDPP_INL uint32<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -179,7 +179,9 @@ public:
     typedef mask_int32<4,void> base_vector_type;
     typedef void expr_type;
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    typedef __mmask8 native_type;
+#elif SIMDPP_USE_SSE2
     typedef __m128i native_type;
 #elif SIMDPP_USE_NEON
     typedef uint32x4_t native_type;
@@ -201,7 +203,7 @@ public:
     SIMDPP_INL mask_int32<4>(const __vector __bool int& d) : d_((__vector uint32_t)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+#if (SIMDPP_USE_SSE2 && !SIMDPP_USE_AVX512VL) || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d.native()) {}
 #endif
 
@@ -215,7 +217,7 @@ public:
     }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -224,11 +226,13 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint32<4> unmask() const
     {
-    #if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL
         return detail::null::unmask_mask<uint32<4> >(*this);
-    #else
+#elif SIMDPP_USE_AVX512VL
+        return _mm_movm_epi32(d_);
+#else
         return uint32<4>(d_);
-    #endif
+#endif
     }
 
 #if SIMDPP_USE_NULL

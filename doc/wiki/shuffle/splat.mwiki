@@ -1,13 +1,13 @@
 {{simdpp/title|splat}}
 {{shuffle/navbar}}
 {{dcl begin}}
-{{dcl | 
+{{dcl |
 template<unsigned n, unsigned N, class E>
 Vec<N,_DETAIL_> splat( const Vec<N,E>& a );
 }}
 {{dcl end}}
 
-Broadcasts {{tt|n}}-th element of the source vector across all lanes of the vector. 
+Broadcasts {{tt|n}}-th element of the source vector across all lanes of the vector.
 
 {{tt|Vec}} must be a non-mask vector type.
 

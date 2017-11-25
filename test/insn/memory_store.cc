@@ -41,7 +41,7 @@ void test_store_masked(TestResultsSet& tc, TestReporter& tr, const V* sv)
 
     for (unsigned j = 0; j < mask_data.size(); ++j) {
         typename V::mask_vector_type mask;
-        mask = bit_not(cmp_eq(mask_data.data()[j], 0));
+        mask = bit_not(cmp_eq(mask_data[j], 0));
 
         std::memset(rv, 0, sizeof(V));
 

@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/types/int32x4.h>
@@ -63,7 +64,7 @@ public:
     SIMDPP_INL float32<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -90,7 +91,10 @@ public:
     SIMDPP_INL float32<4> eval() const { return *this; }
 
 private:
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_ARM && !SIMDPP_HAS_FLOAT32_SIMD
+    // When casting int32<4> to float32<4> on certain conditions GCC will assume
+    // that result location is 16-byte aligned and will use aligned store which
+    // causes a crash when the stack is not aligned.
     SIMDPP_ALIGN(16) native_type d_;
 #else
     native_type d_;
@@ -106,7 +110,9 @@ public:
     typedef mask_float32<4,void> base_vector_type;
     typedef void expr_type;
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    typedef __mmask8 native_type;
+#elif SIMDPP_USE_SSE2
     typedef __m128 native_type;
 #elif SIMDPP_USE_NEON_FLT_SP
     typedef float32x4_t native_type;
@@ -127,7 +133,7 @@ public:
     SIMDPP_INL mask_float32<4>(const __vector __bool int& d) : d_((__vector float)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2 && !SIMDPP_USE_AVX512VL
     SIMDPP_INL mask_float32<4>(const float32<4>& d) : d_(d.native()) {}
 #endif
 
@@ -141,7 +147,7 @@ public:
     }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -150,11 +156,13 @@ public:
     /// Access the underlying type
     SIMDPP_INL float32<4> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_USE_AVX512VL
+        return _mm_castsi128_ps(_mm_movm_epi32(d_));
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
         return detail::null::unmask_mask<float32<4> >(*this);
-    #else
+#else
         return float32<4>(d_);
-    #endif
+#endif
     }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP

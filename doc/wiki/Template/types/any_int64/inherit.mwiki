@@ -1,0 +1,20 @@
+{{inherited | [[types/any_int64 | {{small|simdpp::}}any_int64<N,V>]] |
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | {{tt|uint_element_type}} | {{c|uint64_t}} }}
+{{dsc | {{tt|int_vector_type}} | {{c|int64<N>}} }}
+{{dsc | {{tt|uint_vector_type}} | {{c|uint64<N>}} }}
+{{dsc | {{tt|mask_vector_type}} | {{c|mask_int64<N>}} }}
+{{dsc end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|length}} | {{tt|N}} }}
+{{dsc | {{tt|base_length}} | {{tt|SIMDPP_FAST_INT64_SIZE}} }}
+{{dsc | {{tt|vec_length}} | The number of base vectors of {{tt|SIMDPP_FAST_INT64_SIZE}} size in this vector }}
+{{dsc | {{tt|num_bits}} | {{c|64}} }}
+{{dsc | {{tt|all_bits}} | {{c|0xffffffffffffffff}} }}
+{{dsc end}}
+}}

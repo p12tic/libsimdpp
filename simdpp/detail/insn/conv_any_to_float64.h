@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/combine.h>
+#include <simdpp/core/f_add.h>
 #include <simdpp/core/f_neg.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>
@@ -28,14 +29,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-
-template<unsigned N> SIMDPP_INL
-float64<N> i_to_float64(const float64<N>& a)
-{
-    return a;
-}
-
-// -----------------------------------------------------------------------------
 
 static SIMDPP_INL
 float64x4 i_to_float64(const float32x4& a)
@@ -363,7 +356,7 @@ float64<2> i_to_float64(const int64<2>& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 float64<4> i_to_float64(const int64<4>& a)
 {
@@ -420,7 +413,7 @@ float64<2> i_to_float64(const uint64<2>& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 float64<4> i_to_float64(const uint64<4>& a)
 {

@@ -17,6 +17,7 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/core/i_shift_r.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
