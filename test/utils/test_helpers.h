@@ -81,7 +81,13 @@ public:
     void add(const U& u)
     {
         T t = (T) u;
+#if defined(_MSC_VER) && _MSC_VER < 1700
+        size_t prev_size = data_.size();
+        data_.resize(prev_size + sizeof(T));
+        std::memcpy(data_.data() + prev_size, &t, sizeof(T));
+#else
         data_.push_back(t);
+#endif
         ptr_ = &data_.front();
     }
 
@@ -91,13 +97,25 @@ public:
         ptr_ = &data_.front();
     }
 
+#if defined(_MSC_VER) && _MSC_VER < 1700
+    size_t size() const { return data_.size() / sizeof(T); }
+    const T& operator[](unsigned i) const
+    {
+        return *(reinterpret_cast<const T*>(ptr_) + i);
+    }
+#else
     size_t size() const { return data_.size(); }
-
     const T& operator[](unsigned i) const { return *(ptr_ + i); }
+#endif
 
 private:
+#if defined(_MSC_VER) && _MSC_VER < 1700
+    std::vector<char, simdpp::aligned_allocator<char, sizeof(T)> > data_;
+    char* volatile ptr_;
+#else
     std::vector<T, simdpp::aligned_allocator<T, sizeof(T)> > data_;
     T* volatile ptr_;
+#endif
 };
 
 
