@@ -35,7 +35,7 @@ template<> struct static_assert_impl<true> {};
 SIMDPP_INL bool isnan(float x)
 {
 #if _MSC_VER
-    return _isnan(x);
+    return (bool) _isnan(x);
 #elif defined(__GNUC__) && !defined(__clang__)
     // certain versions of GCC hide isnan included from C headers
     return __builtin_isnanf(x);
@@ -47,7 +47,7 @@ SIMDPP_INL bool isnan(float x)
 SIMDPP_INL bool isnan(double x)
 {
 #if _MSC_VER
-    return _isnan(x);
+    return (bool) _isnan(x);
 #elif defined(__GNUC__) && !defined(__clang__)
     // certain versions of GCC hide isnan included from C headers
     return __builtin_isnan(x);
