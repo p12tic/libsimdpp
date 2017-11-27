@@ -40,7 +40,7 @@ float32<4> i_to_float32(const float64<4>& a)
     float32x4 r1, r2;
     r1 = _mm_cvtpd_ps(a.vec(0).native());
     r2 = _mm_cvtpd_ps(a.vec(1).native());
-    return _mm_movelh_ps(r2.native(), r1.native());
+    return _mm_movelh_ps(r1.native(), r2.native());
 #elif SIMDPP_USE_NEON64
     float32<4> r;
     r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0).native()),
