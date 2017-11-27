@@ -218,6 +218,7 @@ void test_convert_n(TestResultsSet& ts)
     //float32
     {
     TestData<float32_4n> sp;
+    sp.add(make_uint(0, 1, 2, 3));
     sp.add(make_float(1.0, 100.0));
     sp.add(make_float(0.0, 15.0));
     sp.add(make_float(1.0, 1.1));
@@ -268,6 +269,7 @@ void test_convert_n(TestResultsSet& ts)
     //float64
     {
     TestData<float64_8n> sp;
+    sp.add(make_uint(0, 1, 2, 3));
     sp.add(make_float(1.0, 100.0));
     sp.add(make_float(0.0, 15.0));
     sp.add(make_float(1.0, 1.1));
