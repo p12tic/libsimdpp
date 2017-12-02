@@ -48,6 +48,26 @@ inline void set_round_to_nearest()
 #endif
 }
 
+inline void prevent_optimization_impl(const void* ptr)
+{
+    std::cout << ptr;
+}
+
+// Some compilers are really clever figuring out ways to access to data that
+// would allow them to optimize things. Storing and reading a pointer from
+// volatile location seems to work around this.
+template<class T>
+T* prevent_optimization(T* ptr)
+{
+    volatile bool never = false;
+    if (never) {
+        prevent_optimization_impl(ptr);
+    }
+    T* volatile* volatile opaque;
+    opaque = &ptr;
+    return *opaque;
+}
+
 namespace SIMDPP_ARCH_NAMESPACE {
 
 
@@ -60,18 +80,16 @@ template<class T>
 class TestData {
 public:
 
-    TestData() : ptr_(nullptr) {}
+    TestData() {}
 
     TestData(const TestData& other)
     {
         data_ = other.data_;
-        ptr_ = &data_.front();
     }
 
     TestData& operator=(const TestData& other)
     {
         data_ = other.data_;
-        ptr_ = &data_.front();
     }
 
     template<class U>
@@ -79,22 +97,22 @@ public:
     {
         T t = (T) u;
         data_.push_back(t);
-        ptr_ = &data_.front();
     }
 
     void add(const TestData& other)
     {
         data_.insert(data_.end(), other.data_.begin(), other.data_.end());
-        ptr_ = &data_.front();
     }
 
     size_t size() const { return data_.size(); }
 
-    const T& operator[](unsigned i) const { return *(ptr_ + i); }
+    const T& operator[](unsigned i) const
+    {
+        return *(prevent_optimization(&data_.front()) + i);
+    }
 
 private:
     std::vector<T, simdpp::aligned_allocator<T, sizeof(T)>> data_;
-    T* volatile ptr_;
 };
 
 
