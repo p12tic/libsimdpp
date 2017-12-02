@@ -13,169 +13,34 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/core/i_sub.h>
-#include <simdpp/detail/null/math.h>
-#include <simdpp/detail/vector_array_macros.h>
+#include <simdpp/detail/insn/i_neg.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-
-template<class R, class E> SIMDPP_INL
-int8<16> expr_eval_neg(const int8<16,E>& qa)
-{
-    int8<16> a = qa.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
-    return sub(0, a);
-#elif SIMDPP_USE_NEON
-    return vnegq_s8(a.native());
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-template<class R, class E> SIMDPP_INL
-int8<32> expr_eval_neg(const int8<32,E>& qa)
-{
-    int8<32> a = qa.eval();
-    return sub(0, a);
-}
-#endif
-
-#if SIMDPP_USE_AVX512BW
-template<class R, class E> SIMDPP_INL
-int8<64> expr_eval_neg(const int8<64,E>& qa)
-{
-    int8<64> a = qa.eval();
-    return sub(0, a);
-}
-#endif
-
 template<class R, unsigned N, class E> SIMDPP_INL
 int8<N> expr_eval_neg(const int8<N,E>& qa)
 {
-    int8<N> a = qa.eval();
-    SIMDPP_VEC_ARRAY_IMPL1(int8<N>, neg, a);
+    return insn::i_ineg(qa.eval());
 }
-
-// -----------------------------------------------------------------------------
-
-template<class R, class E> SIMDPP_INL
-int16<8> expr_eval_neg(const int16<8,E>& qa)
-{
-    int16<8> a = qa.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
-    return sub(0, a);
-#elif SIMDPP_USE_NEON
-    return vnegq_s16(a.native());
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-template<class R, class E> SIMDPP_INL
-int16<16> expr_eval_neg(const int16<16,E>& qa)
-{
-    int16<16> a = qa.eval();
-    return sub(0, a);
-}
-#endif
-
-#if SIMDPP_USE_AVX512BW
-template<class R, class E> SIMDPP_INL
-int16<32> expr_eval_neg(const int16<32,E>& qa)
-{
-    int16<32> a = qa.eval();
-    return sub(0, a);
-}
-#endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
 int16<N> expr_eval_neg(const int16<N,E>& qa)
 {
-    int16<N> a = qa.eval();
-    SIMDPP_VEC_ARRAY_IMPL1(int16<N>, neg, a);
+    return insn::i_ineg(qa.eval());
 }
-
-// -----------------------------------------------------------------------------
-
-template<class R, class E> SIMDPP_INL
-int32<4> expr_eval_neg(const int32<4,E>& qa)
-{
-    int32<4> a = qa.eval();
-#if SIMDPP_USE_NULL
-    return detail::null::neg(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
-    return sub(0, a);
-#elif SIMDPP_USE_NEON
-    return vnegq_s32(a.native());
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-template<class R, class E> SIMDPP_INL
-int32<8> expr_eval_neg(const int32<8,E>& qa)
-{
-    int32<8> a = qa.eval();
-    return sub(0, a);
-}
-#endif
-
-#if SIMDPP_USE_AVX512F
-template<class R, class E> SIMDPP_INL
-int32<16> expr_eval_neg(const int32<16,E>& qa)
-{
-    int32<16> a = qa.eval();
-    return sub(0, a);
-}
-#endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
 int32<N> expr_eval_neg(const int32<N,E>& qa)
 {
-    int32<N> a = qa.eval();
-    SIMDPP_VEC_ARRAY_IMPL1(int32<N>, neg, a);
+    return insn::i_ineg(qa.eval());
 }
-
-// -----------------------------------------------------------------------------
-
-template<class R, class E> SIMDPP_INL
-int64<2> expr_eval_neg(const int64<2,E>& qa)
-{
-    int64<2> a = qa.eval();
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
-    return sub(0, a);
-#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    return detail::null::neg(a);
-#endif
-}
-
-#if SIMDPP_USE_AVX2
-template<class R, class E> SIMDPP_INL
-uint64<4> expr_eval_neg(const int64<4,E>& qa)
-{
-    int64<4> a = qa.eval();
-    return sub(0, a);
-}
-#endif
-
-#if SIMDPP_USE_AVX512F
-template<class R, class E> SIMDPP_INL
-uint64<8> expr_eval_neg(const int64<8,E>& qa)
-{
-    int64<8> a = qa.eval();
-    return sub(0, a);
-}
-#endif
 
 template<class R, unsigned N, class E> SIMDPP_INL
-uint64<N> expr_eval_neg(const int64<N,E>& qa)
+int64<N> expr_eval_neg(const int64<N,E>& qa)
 {
-    int64<N> a = qa.eval();
-    SIMDPP_VEC_ARRAY_IMPL1(int64<N>, neg, a);
+    return insn::i_ineg(qa.eval());
 }
 
 } // namespace detail
