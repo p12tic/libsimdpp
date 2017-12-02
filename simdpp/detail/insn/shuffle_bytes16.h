@@ -41,7 +41,10 @@ uint8x16 i_shuffle_bytes16(const uint8x16& a, const uint8x16& b, const uint8x16&
     return r;
 #elif SIMDPP_USE_XOP
     return _mm_perm_epi8(a.native(), b.native(), mask.native());
-#elif SIMDPP_USE_SSE4_1
+#elif SIMDPP_USE_AVX
+    // it's not advantageous to use _mm_blendv_epi8 on pre-AVX machines
+    // because it takes the same number of cycles as the alternative, but
+    // forces the result into xmm0 register.
     int16x8 sel, ai, bi, r;
     sel = mask;
     sel = _mm_slli_epi16(sel.native(), 3);
