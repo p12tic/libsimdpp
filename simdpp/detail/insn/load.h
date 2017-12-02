@@ -50,9 +50,8 @@ static SIMDPP_INL
 void i_load(uint64x2& a, const char* p)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
-    const uint64_t* q = reinterpret_cast<const uint64_t*>(p);
-    q = detail::assume_aligned(q, 16);
-    detail::null::load(a, q);
+    p = detail::assume_aligned(p, 16);
+    detail::null::load(a, p);
 #else
     uint8x16 r; i_load(r, p); a = r;
 #endif
@@ -61,10 +60,11 @@ void i_load(uint64x2& a, const char* p)
 static SIMDPP_INL
 void i_load(float32x4& a, const char* p)
 {
+    p = detail::assume_aligned(p, 16);
     const float* q = reinterpret_cast<const float*>(p);
-    q = detail::assume_aligned(q, 16);
+    (void) q;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::load(a, q);
+    detail::null::load(a, p);
 #elif SIMDPP_USE_SSE2
     a = _mm_load_ps(q);
 #elif SIMDPP_USE_NEON
@@ -79,8 +79,9 @@ void i_load(float32x4& a, const char* p)
 static SIMDPP_INL
 void i_load(float64x2& a, const char* p)
 {
+    p = detail::assume_aligned(p, 16);
     const double* q = reinterpret_cast<const double*>(p);
-    q = detail::assume_aligned(q, 16);
+    (void) q;
 #if SIMDPP_USE_SSE2
     a = _mm_load_pd(q);
 #elif SIMDPP_USE_NEON64
@@ -90,7 +91,7 @@ void i_load(float64x2& a, const char* p)
 #elif SIMDPP_USE_MSA
     a = (v2f64) __msa_ld_d(q, 0);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON32
-    detail::null::load(a, q);
+    detail::null::load(a, p);
 #endif
 }
 

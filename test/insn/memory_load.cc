@@ -13,7 +13,7 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned vnum>
-void test_load_helper(TestResultsSet& tc, TestReporter& tr, void* sv_p)
+void test_load_helper(TestResultsSet& tc, TestReporter& tr, V* sv_p)
 {
     using namespace simdpp;
     using E = typename V::element_type;

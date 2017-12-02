@@ -107,8 +107,9 @@ static SIMDPP_INL
 void i_store_u(char* p, const float32x4& a)
 {
     float* q = reinterpret_cast<float*>(p);
+    (void) q;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::store(q, a);
+    detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_storeu_ps(q, a.native());
 #elif SIMDPP_USE_NEON
@@ -127,6 +128,7 @@ static SIMDPP_INL
 void i_store_u(char* p, const float64x2& a)
 {
     double* q = reinterpret_cast<double*>(p);
+    (void) q;
 #if SIMDPP_USE_SSE2
     _mm_storeu_pd(q, a.native());
 #elif SIMDPP_USE_NEON64
@@ -136,7 +138,7 @@ void i_store_u(char* p, const float64x2& a)
 #elif SIMDPP_USE_MSA
     __msa_st_d((v2i64) a.native(), q, 0);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-    detail::null::store(q, a);
+    detail::null::store(p, a);
 #endif
 }
 

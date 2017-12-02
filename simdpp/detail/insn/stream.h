@@ -138,10 +138,11 @@ void i_stream(char* p, const uint64<8>& a)
 static SIMDPP_INL
 void i_stream(char* p, const float32x4& a)
 {
+    p = detail::assume_aligned(p, 16);
     float* q = reinterpret_cast<float*>(p);
-    q = detail::assume_aligned(q, 16);
+    (void) q;
 #if SIMDPP_USE_NULL
-    detail::null::store(q, a);
+    detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
     _mm_stream_ps(q, a.native());
 #elif SIMDPP_USE_NEON || SIMDPP_USE_MSA
