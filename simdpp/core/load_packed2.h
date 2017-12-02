@@ -31,8 +31,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @a p must be aligned to the vector size in bytes
 */
-template<unsigned N, class V> SIMDPP_INL
-void load_packed2(any_vec<N,V>& a, any_vec<N,V>& b, const void* p)
+template<unsigned N, class V, class T> SIMDPP_INL
+void load_packed2(any_vec<N,V>& a, any_vec<N,V>& b, const T* p)
 {
     static_assert(!is_mask<V>::value, "Mask types can not be loaded");
     typename detail::get_expr_nosign<V>::type ra, rb;

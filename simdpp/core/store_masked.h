@@ -25,29 +25,29 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     The pointer must be aligned to the native vector size.
 */
-template<unsigned N, class V, class M> SIMDPP_INL
-void store_masked(void* p, const any_int32<N,V>& a, const mask_int32<N,M>& mask)
+template<class T, unsigned N, class V, class M> SIMDPP_INL
+void store_masked(T* p, const any_int32<N,V>& a, const mask_int32<N,M>& mask)
 {
     uint32<N> ra;
     ra = a.wrapped().eval();
     detail::insn::i_store_masked(reinterpret_cast<char*>(p), ra, mask.wrapped().eval());
 }
-template<unsigned N, class V, class M> SIMDPP_INL
-void store_masked(void* p, const any_int64<N,V>& a, const mask_int64<N,M>& mask)
+template<class T, unsigned N, class V, class M> SIMDPP_INL
+void store_masked(T* p, const any_int64<N,V>& a, const mask_int64<N,M>& mask)
 {
     uint64<N> ra;
     ra = a.wrapped().eval();
     detail::insn::i_store_masked(reinterpret_cast<char*>(p), ra, mask.wrapped().eval());
 }
-template<unsigned N, class V, class M> SIMDPP_INL
-void store_masked(void* p, const any_float32<N,V>& a, const mask_float32<N,M>& mask)
+template<class T, unsigned N, class V, class M> SIMDPP_INL
+void store_masked(T* p, const any_float32<N,V>& a, const mask_float32<N,M>& mask)
 {
     float32<N> ra;
     ra = a.wrapped().eval();
     detail::insn::i_store_masked(reinterpret_cast<char*>(p), ra, mask.wrapped().eval());
 }
-template<unsigned N, class V, class M> SIMDPP_INL
-void store_masked(void* p, const any_float64<N,V>& a, const mask_float64<N,M>& mask)
+template<class T, unsigned N, class V, class M> SIMDPP_INL
+void store_masked(T* p, const any_float64<N,V>& a, const mask_float64<N,M>& mask)
 {
     float64<N> ra;
     ra = a.wrapped().eval();

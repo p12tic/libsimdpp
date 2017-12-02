@@ -247,14 +247,13 @@ void i_store_last(char* p, const float32x4& ca, unsigned n)
     a = blend(a, old, mask);
     store(p, a);
 #elif SIMDPP_USE_NEON
-    float* q = reinterpret_cast<float*>(p);
     // + VFP
     if (n < 1) return;
-    neon::store_lane<3,1>(q+3, a);
+    neon::store_lane<3,1>(p+12, a);
     if (n < 2) return;
-    neon::store_lane<2,1>(q+2, a);
+    neon::store_lane<2,1>(p+8, a);
     if (n < 3) return;
-    neon::store_lane<1,1>(q+1, a);
+    neon::store_lane<1,1>(p+4, a);
 #endif
 }
 

@@ -32,8 +32,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @a p must be aligned to the vector size in bytes
 */
-template<unsigned N, class V1, class V2> SIMDPP_INL
-void store_packed2(void* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b)
+template<class T, unsigned N, class V1, class V2> SIMDPP_INL
+void store_packed2(T* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
     static_assert(!is_mask<V1>::value && !is_mask<V2>::value,
                   "Mask types can not be stored"); // FIXME
