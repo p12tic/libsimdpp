@@ -17,6 +17,8 @@
 #include <simdpp/core/bit_and.h>
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/core/bit_or.h>
+#include <simdpp/core/i_add.h>
+#include <simdpp/core/i_sub.h>
 #include <simdpp/core/splat.h>
 #include <simdpp/core/set_splat.h>
 #include <simdpp/core/permute4.h>
@@ -376,27 +378,11 @@ static SIMDPP_INL
 int64x2 i_shift_r(const int64x2& a, unsigned count)
 {
 #if SIMDPP_USE_SSE2
-    if (count > 31) {
-        int32x4 s, v;
-        v = a;
-        s = shift_r<31>(v);
-        v = shift_r(v, count - 32);
-        v = shuffle2<1,3,1,3>(v, s);
-        v = permute4<0,2,1,3>(v);
-        return int64x2(v);
-    } else {
-        // shift the sign bit using 32-bit shift, then combine the result with
-        // the unsigned shift using a mask
-        uint64x2 v, mask, sgn;
-        v = sgn = a;
-        v = shift_r(v, count);
-        sgn = shift_r(int32x4(sgn), count);
-        mask = make_ones();
-        mask = shift_l(mask, 64 - count);
-        sgn = bit_and(sgn, mask);
-        v = bit_or(v, sgn);
-        return int64x2(v);
-    }
+    uint64<2> ret, bias;
+    bias = make_uint(0x8000000000000000);
+    ret = shift_r(add(uint64<2>(a), bias), count);
+    ret = sub(ret, shift_r(bias, count));
+    return (int64<2>) ret;
 #elif SIMDPP_USE_NEON
     int64x2 shift = splat(-int(count));
     return vshlq_s64(a.native(), shift.native());
@@ -415,27 +401,11 @@ int64x2 i_shift_r(const int64x2& a, unsigned count)
 static SIMDPP_INL
 int64x4 i_shift_r(const int64x4& a, unsigned count)
 {
-    // a copy of the 128-bit implementation
-    if (count > 31) {
-        int32x8 s, v;
-        v = a;
-        s = shift_r<31>(v);
-        v = shift_r(v, count - 32);
-        v = shuffle2<1,3,1,3>(v, s);
-        v = permute4<0,2,1,3>(v);
-        return int64x4(v);
-    } else {
-        uint64x4 v, mask;
-        int32x8 sgn;
-        v = sgn = a;
-        v = shift_r(v, count);
-        sgn = shift_r(sgn, count);
-        mask = make_ones();
-        mask = shift_l(mask, 64 - count);
-        sgn = bit_and(sgn, mask);
-        v = bit_or(v, sgn);
-        return int64x4(v);
-    }
+    uint64<4> ret, bias;
+    bias = make_uint(0x8000000000000000);
+    ret = shift_r(add(uint64<4>(a), bias), count);
+    ret = sub(ret, shift_r(bias, count));
+    return (int64<4>) ret;
 }
 #endif
 
@@ -448,7 +418,6 @@ int64<8> i_shift_r(const int64<8>& a, unsigned count)
 #endif
 
 // -----------------------------------------------------------------------------
-
 
 template<class V> SIMDPP_INL
 V i_shift_r(const V& a, unsigned count)
