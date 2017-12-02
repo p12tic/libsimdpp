@@ -224,7 +224,7 @@ void i_store_u(char* p, const float64<8>& a)
 template<class V> SIMDPP_INL
 void v_store_u(char* p, const V& a)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
 
     for (unsigned i = 0; i < V::vec_length; ++i) {
         i_store_u(p, a.vec(i));

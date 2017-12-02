@@ -37,7 +37,7 @@ void test_store_masked(TestResultsSet& tc, TestReporter& tr, const V* sv)
         typename V::mask_vector_type mask;
         mask = bit_not(cmp_eq(mask_data[j], 0));
 
-        std::memset(rv, 0, sizeof(V));
+        std::memset(rv, 0, V::length_bytes);
 
         store_masked(rv, sv[0], mask);
         TEST_PUSH(tc, V, rv[0]);
@@ -68,7 +68,7 @@ void test_store_helper(TestResultsSet& tc, TestReporter& tr, const V* sv)
 
     auto rzero = [](V* r)
     {
-        std::memset(r, 0, sizeof(V) * vnum);
+        std::memset(r, 0, V::length_bytes * vnum);
     };
 
     for (unsigned i = 0; i < vnum; i++) {

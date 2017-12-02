@@ -21,7 +21,7 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr, V* sv_p)
     V zero = make_zero();
 
     V sv[vnum];
-    std::memcpy(sv, sv_p, sizeof(V) * vnum);
+    std::memcpy(sv, sv_p, V::length_bytes * vnum);
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack.
@@ -32,7 +32,7 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr, V* sv_p)
 
     auto rzero = [&](V* r)
     {
-        std::memset(r, 0, sizeof(V) * vnum);
+        std::memset(r, 0, V::length_bytes * vnum);
     };
 
     // calls constructor that accepts expr_construct

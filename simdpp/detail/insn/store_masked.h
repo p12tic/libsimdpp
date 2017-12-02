@@ -213,7 +213,7 @@ void i_store_masked(char* p, const float64<8>& a, const mask_float64<8>& mask)
 template<class V, class M>
 void i_store_masked(char* p, const V& a, const M& mask)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
 
     for (unsigned i = 0; i < a.vec_length; ++i) {
         i_store_masked(p, a.vec(i), mask.vec(i));

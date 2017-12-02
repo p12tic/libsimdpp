@@ -167,7 +167,7 @@ void i_load(float64<8>& a, const char* p)
 template<class V> SIMDPP_INL
 void i_load(V& a, const char* p)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
 
     for (unsigned i = 0; i < V::vec_length; ++i) {
         i_load(a.vec(i), p);
