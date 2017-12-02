@@ -28,6 +28,12 @@ the compiler will generate.
 
 No API-breaking changes are planned for the foreseeable future.
 
+Documentation
+-------------
+
+Online documentation is provided
+[here](http://p12tic.github.io/libsimdpp/v2.1-dev/libsimdpp/w/).
+
 Compiler and instruction set support
 ------------------------------------
 
@@ -37,7 +43,6 @@ Compiler and instruction set support
 
 The library supports the following architectures and instruction sets:
 
- - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX512F,
  AVX512BW, AVX512DQ, AVX512VL, XOP
  - ARM 32-bit: NEON, NEONv2
@@ -95,12 +100,6 @@ simdpp/detail/workarounds.h for more details.
  - VSX on big-endian PPC is not supported on GCC 5.x and older.
 
  - MSA is not supported on GCC 6.x and older.
-
-Documentation
--------------
-
-Online documentation is provided
-[here](http://p12tic.github.io/libsimdpp/v2.1-dev/libsimdpp/w/).
 
 License
 -------
