@@ -38,7 +38,8 @@ Compiler and instruction set support
 The library supports the following architectures and instruction sets:
 
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
- AVX-512BW, AVX-512DQ, XOP
+ - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX512F,
+ AVX512BW, AVX512DQ, AVX512VL, XOP
  - ARM 32-bit: NEON, NEONv2
  - ARM 64-bit: NEON, NEONv2
  - PowerPC 32-bit big-endian: Altivec, VSX v2.06, VSX v2.07
