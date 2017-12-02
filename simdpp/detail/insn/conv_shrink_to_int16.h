@@ -30,7 +30,7 @@ SIMDPP_INL uint16<8> i_to_uint16(const uint32<8>& a)
 #if SIMDPP_USE_NULL
     uint16<8> r;
     for (unsigned i = 0; i < 8; i++) {
-        r.el(i) = uint16_t(a.vec(i/8).el(i%8));
+        r.el(i) = uint16_t(a.vec(i/4).el(i%4));
     }
     return r;
 #elif SIMDPP_USE_AVX512VL
