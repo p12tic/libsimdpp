@@ -121,7 +121,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v2f64;
 #else // NULL, NEON 32bit, ALTIVEC
-    using native_type = detail::array<bool, 2>;
+    using native_type = detail::array<uint8_t, 2>;
 #endif
 
     SIMDPP_INL mask_float64<2>() = default;
@@ -163,8 +163,8 @@ public:
     }
 
 #if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA)
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_float64<2>& vec(unsigned) const { return *this; }

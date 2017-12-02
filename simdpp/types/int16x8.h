@@ -190,7 +190,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v8u16;
 #else
-    using native_type = detail::array<bool, 8>;
+    using native_type = detail::array<uint8_t, 8>;
 #endif
 
     SIMDPP_INL mask_int16<8>() = default;
@@ -227,8 +227,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int16<8>& vec(unsigned) const { return *this; }
