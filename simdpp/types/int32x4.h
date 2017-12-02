@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v4i32;
 #else
-    using native_type = detail::array<int32_t, 4>;
+    using native_type = detail::array4<int32_t>;
 #endif
 
     SIMDPP_INL int32<4>() = default;
@@ -116,7 +116,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v4u32;
 #else
-    using native_type = detail::array<uint32_t, 4>;
+    using native_type = detail::array4<uint32_t>;
 #endif
 
     SIMDPP_INL uint32<4>() = default;
@@ -190,7 +190,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v4u32;
 #else
-    using native_type = detail::array<uint8_t, 4>;
+    using native_type = detail::array4<uint8_t>;
 #endif
 
     SIMDPP_INL mask_int32<4>() = default;

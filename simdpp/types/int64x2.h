@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v2i64;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    using native_type = detail::array<int64_t, 2>;
+    using native_type = detail::array2<int64_t>;
 #endif
 
     SIMDPP_INL int64<2>() = default;
@@ -116,7 +116,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v2u64;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    using native_type = detail::array<uint64_t, 2>;
+    using native_type = detail::array2<uint64_t>;
 #endif
 
     SIMDPP_INL uint64<2>() = default;
@@ -191,7 +191,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v2u64;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    using native_type = detail::array<uint8_t, 2>;
+    using native_type = detail::array2<uint8_t>;
 #endif
 
     SIMDPP_INL mask_int64<2>() = default;
