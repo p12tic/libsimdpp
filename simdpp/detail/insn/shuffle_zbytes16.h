@@ -34,16 +34,13 @@ static SIMDPP_INL
 uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
 {
 #if SIMDPP_USE_NULL
-    uint8x16 ai = a;
-    uint8x16 bi = b;
-    uint8x16 mi = mask;
     uint8x16 r;
 
     for (unsigned i = 0; i < 16; i++) {
-        unsigned j = mi.el(i) & 0x0f;
-        unsigned which = mi.el(i) < 0x10;
-        bool zero = mi.el(i) & 0x80;
-        r.el(i) = zero ? 0 : (which ? ai.el(j) : bi.el(j));
+        unsigned j = mask.el(i) & 0x0f;
+        unsigned which = mask.el(i) < 0x10;
+        bool zero = mask.el(i) & 0x80;
+        r.el(i) = zero ? 0 : (which ? a.el(j) : b.el(j));
     }
     return r;
 #elif SIMDPP_USE_XOP
