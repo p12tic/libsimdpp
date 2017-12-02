@@ -19,29 +19,13 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned N, class E> SIMDPP_INL
-int8<N> expr_eval_neg(const int8<N,E>& qa)
-{
-    return insn::i_ineg(qa.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-int16<N> expr_eval_neg(const int16<N,E>& qa)
-{
-    return insn::i_ineg(qa.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-int32<N> expr_eval_neg(const int32<N,E>& qa)
-{
-    return insn::i_ineg(qa.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-int64<N> expr_eval_neg(const int64<N,E>& qa)
-{
-    return insn::i_ineg(qa.eval());
-}
+template<class R, class E>
+struct expr_eval<R, expr_ineg<E>> {
+    static SIMDPP_INL R eval(const expr_ineg<E>& e)
+    {
+        return (R) insn::i_ineg(e.a.eval());
+    }
+};
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

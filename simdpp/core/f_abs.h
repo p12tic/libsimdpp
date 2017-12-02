@@ -38,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N, expr_abs<float32<N,E>>> abs(const float32<N,E>& a)
+float32<N, expr_fabs<float32<N,E>>> abs(const float32<N,E>& a)
 {
     return { { a } };
 }
@@ -61,7 +61,7 @@ float32<N, expr_abs<float32<N,E>>> abs(const float32<N,E>& a)
     @icost{AVX-AVX2, 1-2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float64<N, expr_abs<float64<N,E>>> abs(const float64<N,E>& a)
+float64<N, expr_fabs<float64<N,E>>> abs(const float64<N,E>& a)
 {
     return { { a } };
 }

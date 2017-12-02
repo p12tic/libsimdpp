@@ -13,39 +13,23 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/detail/insn/i_sub.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N> expr_eval_sub(const uint8<N,E1>& qa,
-                       const uint8<N,E2>& qb)
-{
-    return insn::i_isub(qa.eval(), qb.eval());
-}
-
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N> expr_eval_sub(const uint16<N,E1>& qa,
-                        const uint16<N,E2>& qb)
-{
-    return insn::i_isub(qa.eval(), qb.eval());
-}
-
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N> expr_eval_sub(const uint32<N,E1>& qa,
-                        const uint32<N,E2>& qb)
-{
-    return insn::i_isub(qa.eval(), qb.eval());
-}
-
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint64<N> expr_eval_sub(const uint64<N,E1>& qa,
-                        const uint64<N,E2>& qb)
-{
-    return insn::i_isub(qa.eval(), qb.eval());
-}
+template<class R, class E1, class E2>
+struct expr_eval<R, expr_isub<E1, E2>> {
+    static SIMDPP_INL R eval(const expr_isub<E1, E2>& e)
+    {
+        using E = get_expr_uint_impl<E1, E2>;
+        return (R) insn::i_isub(
+                eval_maybe_scalar<typename E::v1_final_type, E1>::eval(e.a),
+                eval_maybe_scalar<typename E::v2_final_type, E2>::eval(e.b));
+    }
+};
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

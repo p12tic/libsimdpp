@@ -19,29 +19,14 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned N, class E> SIMDPP_INL
-uint8<N> expr_eval_abs(const int8<N,E>& qa)
-{
-    return insn::i_iabs(qa.eval());
-}
+template<class R, class E>
+struct expr_eval<R, expr_iabs<E>> {
+    static SIMDPP_INL R eval(const expr_iabs<E>& e)
+    {
+        return (R) insn::i_iabs(e.a.eval());
+    }
+};
 
-template<class R, unsigned N, class E> SIMDPP_INL
-uint16<N> expr_eval_abs(const int16<N,E>& qa)
-{
-    return insn::i_iabs(qa.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-uint32<N> expr_eval_abs(const int32<N,E>& qa)
-{
-    return insn::i_iabs(qa.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-uint64<N> expr_eval_abs(const int64<N,E>& qa)
-{
-    return insn::i_iabs(qa.eval());
-}
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -15,7 +15,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_mul.h>
-#include <simdpp/detail/cast_expr.h>
 #include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 #include <simdpp/core/detail/get_expr_uint.h>
@@ -40,12 +39,10 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         operator*(const any_int16<N,V1>& a,
                const any_int16<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_mul_lo, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    return { { a.wrapped(), b.wrapped() } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, int16, uint16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, int16)
 
 /** Multiplies 32-bit values and returns the lower half of the result.
 
@@ -69,12 +66,10 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         operator*(const any_int32<N,V1>& a,
                const any_int32<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_mul_lo, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    return { { a.wrapped(), b.wrapped() } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int32, int32, uint32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int32, int32)
 
 
 } // namespace SIMDPP_ARCH_NAMESPACE

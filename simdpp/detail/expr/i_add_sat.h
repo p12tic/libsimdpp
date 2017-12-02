@@ -13,39 +13,23 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/detail/get_expr.h>
 #include <simdpp/detail/insn/i_add_sat.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-int8<N> expr_eval_add_sat(const int8<N,E1>& qa,
-                          const int8<N,E2>& qb)
-{
-    return insn::i_add_sat(qa.eval(), qb.eval());
-}
-
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-int16<N> expr_eval_add_sat(const int16<N,E1>& qa,
-                           const int16<N,E2>& qb)
-{
-    return insn::i_add_sat(qa.eval(), qb.eval());
-}
-
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N> expr_eval_add_sat(const uint8<N,E1>& qa,
-                           const uint8<N,E2>& qb)
-{
-    return insn::i_add_sat(qa.eval(), qb.eval());
-}
-
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N> expr_eval_add_sat(const uint16<N,E1>& qa,
-                            const uint16<N,E2>& qb)
-{
-    return insn::i_add_sat(qa.eval(), qb.eval());
-}
+template<class R, class E1, class E2>
+struct expr_eval<R, expr_iadd_sat<E1, E2>> {
+    static SIMDPP_INL R eval(const expr_iadd_sat<E1, E2>& e)
+    {
+        using E = get_expr2_same<E1, E2>;
+        return (R) insn::i_add_sat(
+                eval_maybe_scalar<typename E::v1_final_type, E1>::eval(e.a),
+                eval_maybe_scalar<typename E::v2_final_type, E2>::eval(e.b));
+    }
+};
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

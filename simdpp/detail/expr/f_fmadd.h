@@ -19,21 +19,13 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned N, class E1, class E2, class E3> SIMDPP_INL
-float32<N> expr_eval_fmadd(const float32<N,E1>& qa,
-                           const float32<N,E2>& qb,
-                           const float32<N,E3>& qc)
-{
-    return insn::i_fmadd(qa.eval(), qb.eval(), qc.eval());
-}
-
-template<class R, unsigned N, class E1, class E2, class E3> SIMDPP_INL
-float64<N> expr_eval_fmadd(const float64<N,E1>& qa,
-                           const float64<N,E2>& qb,
-                           const float64<N,E3>& qc)
-{
-    return insn::i_fmadd(qa.eval(), qb.eval(), qc.eval());
-}
+template<class R, class E1, class E2, class E3>
+struct expr_eval<R, expr_fmadd<E1, E2, E3>> {
+    static SIMDPP_INL R eval(const expr_fmadd<E1, E2, E3>& e)
+    {
+        return (R) insn::i_fmadd(e.a.eval(), e.b.eval(), e.c.eval());
+    }
+};
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

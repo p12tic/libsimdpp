@@ -28,13 +28,17 @@ static SIMDPP_INL
 void scalar_convert(double& d, uint64_t x) { d = bit_cast<double>(x); }
 
 static SIMDPP_INL
-uint64_t cast_int(int32_t x) { return uint32_t(x); }
+uint64_t cast_int(const int& x) { return (unsigned int) x; }
 static SIMDPP_INL
-uint64_t cast_int(int64_t x) { return x; }
+uint64_t cast_int(const long& x) { return (unsigned long) x; }
 static SIMDPP_INL
-uint64_t cast_int(uint32_t x) { return x; }
+uint64_t cast_int(const long long& x) { return (unsigned long long) x; }
 static SIMDPP_INL
-uint64_t cast_int(uint64_t x) { return x; }
+uint64_t cast_int(const unsigned& x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(const unsigned long& x) { return x; }
+static SIMDPP_INL
+uint64_t cast_int(const unsigned long long& x) { return x; }
 
 template<class V> SIMDPP_INL
 V make_const_bitwise(uint64_t t)
@@ -47,7 +51,7 @@ V make_const_bitwise(uint64_t t)
 }
 
 template<class R, class EL> SIMDPP_INL
-R expr_eval_scalar(EL q)
+R expr_eval_scalar(const EL& q)
 {
     typename detail::remove_sign<R>::type r;
     expr_vec_make_const<typename R::element_type, 1> e;
@@ -57,7 +61,7 @@ R expr_eval_scalar(EL q)
 }
 
 template<class R, class EL> SIMDPP_INL
-R expr_eval_scalar_bitwise(EL q)
+R expr_eval_scalar_bitwise(const EL& q)
 {
     return make_const_bitwise<R>(cast_int(q));
 }

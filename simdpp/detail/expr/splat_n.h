@@ -19,47 +19,37 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
-uint8<N> expr_eval_splat16(const uint8<N,E>& qa)
-{
-    uint8<N> a = qa.eval();
-    return insn::i_splat16<s>(a);
-}
+template<class R, unsigned S, class E>
+struct expr_eval<R, expr_splat2<S, E>> {
+    static SIMDPP_INL R eval(const expr_splat2<S, E>& e)
+    {
+        return insn::i_splat2<S>(e.a.eval());
+    }
+};
 
-template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
-uint16<N> expr_eval_splat8(const uint16<N,E>& qa)
-{
-    uint16<N> a = qa.eval();
-    return insn::i_splat8<s>(a);
-}
+template<class R, unsigned S, class E>
+struct expr_eval<R, expr_splat4<S, E>> {
+    static SIMDPP_INL R eval(const expr_splat4<S, E>& e)
+    {
+        return insn::i_splat4<S>(e.a.eval());
+    }
+};
 
-template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
-uint32<N> expr_eval_splat4(const uint32<N,E>& qa)
-{
-    uint32<N> a = qa.eval();
-    return insn::i_splat4<s>(a);
-}
+template<class R, unsigned S, class E>
+struct expr_eval<R, expr_splat8<S, E>> {
+    static SIMDPP_INL R eval(const expr_splat8<S, E>& e)
+    {
+        return insn::i_splat8<S>(e.a.eval());
+    }
+};
 
-template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
-uint64<N> expr_eval_splat2(const uint64<N,E>& qa)
-{
-    uint64<N> a = qa.eval();
-    return insn::i_splat2<s>(a);
-}
-
-template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
-float32<N> expr_eval_splat4(const float32<N,E>& qa)
-{
-    float32<N> a = qa.eval();
-    return insn::i_splat4<s>(a);
-}
-
-template<class R, unsigned s, unsigned N, class E> SIMDPP_INL
-float64<N> expr_eval_splat2(const float64<N,E>& qa)
-{
-    float64<N> a = qa.eval();
-    return insn::i_splat2<s>(a);
-}
+template<class R, unsigned S, class E>
+struct expr_eval<R, expr_splat16<S, E>> {
+    static SIMDPP_INL R eval(const expr_splat16<S, E>& e)
+    {
+        return insn::i_splat16<S>(e.a.eval());
+    }
+};
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
