@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/bit_andnot.h>
 #include <simdpp/core/bit_or.h>
+#include <simdpp/core/blend.h>
 #include <simdpp/core/cmp_lt.h>
 #include <simdpp/core/shuffle_bytes16.h>
 #include <simdpp/core/i_add.h>
@@ -46,28 +47,17 @@ uint8x16 i_shuffle_zbytes16(const uint8x16& a, const uint8x16& b, const uint8x16
 #elif SIMDPP_USE_XOP
     return _mm_perm_epi8(a.native(), b.native(), mask.native());
 #elif SIMDPP_USE_SSE4_1
-    int8x16 sel, set_zero, ai, bi, r;
-    sel = mask;
-    set_zero = cmp_lt(sel, 0);
-    sel = _mm_slli_epi16(sel.native(), 3);
+    uint8<16> sel = _mm_slli_epi16(mask.native(), 3);
 
-    ai = _mm_shuffle_epi8(a.native(), mask.native());
-    bi = _mm_shuffle_epi8(b.native(), mask.native());
-    r = _mm_blendv_epi8(ai.native(), bi.native(), sel.native());
-    r = bit_andnot(r, set_zero);
-    return r;
+    uint8<16> ai = _mm_shuffle_epi8(a.native(), mask.native());
+    uint8<16> bi = _mm_shuffle_epi8(b.native(), mask.native());
+    return _mm_blendv_epi8(ai.native(), bi.native(), sel.native());
 #elif SIMDPP_USE_SSSE3
-    int8x16 r, m, m1, m2, set_zero, ai, bi;
-    m = mask;
-    m1 = add(m, 0x70);
-    m2 = add(m, 0xf0);
-    set_zero = cmp_lt(m, 0);
+    mask_int8<16> select_a = cmp_lt((int8<16>) bit_and(mask, 0x1f), 0x10);
 
-    ai = _mm_shuffle_epi8(a.native(), m1.native());
-    bi = _mm_shuffle_epi8(b.native(), m2.native());
-    r = bit_or(ai, bi);
-    r = bit_andnot(r, set_zero);
-    return r;
+    uint8<16> ai = _mm_shuffle_epi8(a.native(), mask.native());
+    uint8<16> bi = _mm_shuffle_epi8(b.native(), mask.native());
+    return blend(ai, bi, select_a);
 #elif SIMDPP_USE_NEON
     return shuffle_bytes16(a, b, mask);
 #elif SIMDPP_USE_ALTIVEC
