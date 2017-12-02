@@ -104,7 +104,10 @@ simdpp/detail/workarounds.h for more details.
 License
 -------
 
-The library is distributed under the Boost Software License, Version 1.0
+The library may be freely used in commercial and non-commercial software. The
+code is distributed under the Boost Software License, Version 1.0. Some
+internal development scripts are licensed under different licenses -- see
+comments in these files. The documentation is licensed under CC-BY-SA.
 
 > Boost Software License - Version 1.0 - August 17th, 2003
 >
