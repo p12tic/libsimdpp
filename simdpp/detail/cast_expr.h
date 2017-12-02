@@ -44,13 +44,7 @@ namespace detail {
     For the second case we cast effectively cast G& to R<N,G>&, where G is
     S<N,void>.
 *///TODO check comment above
-#if !SIMDPP_EXPR_DEBUG
-template<class R, class S> SIMDPP_INL
-const R& cast_expr(const S& expr)
-{
-    return reinterpret_cast<const R&>(expr);
-}
-#else
+#if SIMDPP_EXPR_DEBUG
 template<class R, class S>
 struct cast_expr_check {
     static_assert(std::is_same<R, R>::value, "Bad cast_expr");
@@ -67,14 +61,16 @@ template<template<unsigned, template<unsigned, class> class> class R,
          template<unsigned, class> class S,
          unsigned N, class E>
 struct cast_expr_check< R<N, S<N,E> >, S<N,E> > { };
+#endif
 
 template<class R, class S> SIMDPP_INL
 const R& cast_expr(const S& expr)
 {
+#if SIMDPP_EXPR_DEBUG
     cast_expr_check<R,S> x;
+#endif
     return reinterpret_cast<const R&>(expr);
 }
-#endif
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
