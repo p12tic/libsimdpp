@@ -290,20 +290,19 @@ void i_store_last(char* p, const float32<16>& a, unsigned n)
 static SIMDPP_INL
 void i_store_last(char* p, const float64x2& a, unsigned n)
 {
-    double* q = reinterpret_cast<double*>(p);
-    q = detail::assume_aligned(q, 16);
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2
     if (n == 1) {
         float64x2 b = zip2_hi(a, a);
-        _mm_store_sd(q+1, b.native());
+        _mm_store_sd(reinterpret_cast<double*>(p)+1, b.native());
     }
 #elif SIMDPP_USE_NEON64
     if (n == 1) {
-        vst1_f64(q+1, vget_high_f64(a.native()));
+        vst1_f64(reinterpret_cast<double*>(p)+1, vget_high_f64(a.native()));
     }
 #elif SIMDPP_USE_VSX_206
     if (n == 1) {
-        *(q+1) = vec_extract(a.native(), 1);
+        *(reinterpret_cast<double*>(p)+1) = vec_extract(a.native(), 1);
     }
 #elif SIMDPP_USE_MSA
     i_store_last(p, uint64x2(a), n);
