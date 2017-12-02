@@ -101,6 +101,11 @@ simdpp/detail/workarounds.h for more details.
 
  - MSA is not supported on GCC 6.x and older.
 
+Contributing
+------------
+
+Contributions are welcome. Please see CONTRIBUTING.md for more information.
+
 License
 -------
 
