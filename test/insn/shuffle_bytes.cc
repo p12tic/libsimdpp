@@ -73,7 +73,7 @@ struct Test_permute_bytes16_x16 {
 };
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x2 {
-    static const unsigned limit = 2;
+    static const unsigned limit = 4;
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
@@ -87,7 +87,7 @@ struct Test_shuffle_bytes16_x2 {
 
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x4 {
-    static const unsigned limit = 4;
+    static const unsigned limit = 8;
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
@@ -101,7 +101,7 @@ struct Test_shuffle_bytes16_x4 {
 
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x8 {
-    static const unsigned limit = 8;
+    static const unsigned limit = 16;
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
@@ -115,7 +115,7 @@ struct Test_shuffle_bytes16_x8 {
 
 template<class V, unsigned i>
 struct Test_shuffle_bytes16_x16 {
-    static const unsigned limit = 16;
+    static const unsigned limit = 32;
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = i;
@@ -241,7 +241,7 @@ struct Test_shuffle_zbytes16_x16 {
 };
 
 
-void test_shuffle_bytes(TestResults& res)
+void test_shuffle_bytes(TestResults& res, TestReporter& tr)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSSE3 || SIMDPP_USE_NEON
     TestResultsSet& tc = res.new_results_set("shuffle_bytes");
@@ -307,22 +307,23 @@ void test_shuffle_bytes(TestResults& res)
         uint16x16 mask = make_shuffle_bytes16_mask<-1,-1,-1,-1>(mask);
         uint16x16 r1 = make_zero();
         uint16x16 r2 = permute_zbytes16(v.u16[0], mask);
-        TEST_PUSH(tc, uint16x16, cmp_eq(r1, r2));
+        TEST_EQUAL(tr, r1, r2);
     }
     {
         uint16x16 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
         uint16x16 r1 = permute4<0,1,2,3>(v.u16[0]);
         uint16x16 r2 = permute_bytes16(v.u16[0], mask);
-        TEST_PUSH(tc, uint16x16, cmp_eq(r1, r2));
+        TEST_EQUAL(tr, r1, r2);
     }
     {
         uint32x8 mask = make_shuffle_bytes16_mask<0,1,2,3>(mask);
         uint32x8 r1 = permute4<0,1,2,3>(v.u32[0]);
         uint32x8 r2 = permute_zbytes16(v.u32[0], mask);
-        TEST_PUSH(tc, uint32x8, cmp_eq(r1, r2));
+        TEST_EQUAL(tr, r1, r2);
     }
 #else
     (void) res;
+    (void) tr;
 #endif
 }
 
