@@ -60,8 +60,8 @@ float64x4 i_to_float64(const float32x4& a)
     return combine(lo_f, hi_f);
 #elif SIMDPP_USE_MSA
     float64<2> lo, hi;
-    lo = __msa_fexupl_d(a.native());
-    hi = __msa_fexupr_d(a.native());
+    lo = __msa_fexupr_d(a.native());
+    hi = __msa_fexupl_d(a.native());
     return combine(lo, hi);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
