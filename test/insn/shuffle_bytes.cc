@@ -127,15 +127,31 @@ struct Test_shuffle_bytes16_x16 {
         TEST_PUSH(tc, V, r);
     }
 };
+
+#if SIMDPP_X86 && (defined(__clang__) && (__clang_major__ == 3) && (__clang_minor__ <= 7) && (__clang_minor__ >= 6))
+// BUG: Clang 3.7 and 3.6 incorrectly optimize certain cases of constant mask
+// when the values are available for the compiler to collapse. The bug happens
+// on x86-only. Since creating a mask which effectively results in a nop is
+// extremely unlikely we just disable the tests.
+#define BUGGY_ZBYTES_CONTSTANT_PROPAGATION 1
+#else
+#define BUGGY_ZBYTES_CONTSTANT_PROPAGATION 0
+#endif
+
 template<class V, unsigned i>
 struct Test_permute_zbytes16_x2 {
     static const unsigned limit = 3;
     static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
-        mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
+        mask = simdpp::make_shuffle_bytes16_mask<s,s1>(mask);
         V r = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -147,9 +163,14 @@ struct Test_permute_zbytes16_x4 {
     static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
-        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
+        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s1>(mask);
         V r = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -161,9 +182,14 @@ struct Test_permute_zbytes16_x8 {
     static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
-        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
+        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s1>(mask);
         V r = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -175,10 +201,15 @@ struct Test_permute_zbytes16_x16 {
     static void test(TestResultsSet& tc, const V& a)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
-                                                 s,s,s,s,s,s,s,s>(mask);
+                                                 s,s,s,s,s,s,s,s1>(mask);
         V r = simdpp::permute_zbytes16(a, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -189,9 +220,14 @@ struct Test_shuffle_zbytes16_x2 {
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
-        mask = simdpp::make_shuffle_bytes16_mask<s,s>(mask);
+        mask = simdpp::make_shuffle_bytes16_mask<s,s1>(mask);
         V r = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -203,9 +239,14 @@ struct Test_shuffle_zbytes16_x4 {
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
-        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s>(mask);
+        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s1>(mask);
         V r = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -217,9 +258,14 @@ struct Test_shuffle_zbytes16_x8 {
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
-        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s>(mask);
+        mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s1>(mask);
         V r = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -231,10 +277,15 @@ struct Test_shuffle_zbytes16_x16 {
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
         const int s = (int) i - 1;
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        const int s1 = s == -1 ? 0 : s;
+#else
+        const int s1 = s;
+#endif
 
         typename V::uint_vector_type mask;
         mask = simdpp::make_shuffle_bytes16_mask<s,s,s,s,s,s,s,s,
-                                                 s,s,s,s,s,s,s,s>(mask);
+                                                 s,s,s,s,s,s,s,s1>(mask);
         V r = simdpp::shuffle_zbytes16(a, b, mask);
         TEST_PUSH(tc, V, r);
     }
@@ -304,8 +355,14 @@ void test_shuffle_bytes(TestResults& res, TestReporter& tr)
 
     // some tests whether the permute mask itself is correctly generated
     {
+#if BUGGY_ZBYTES_CONTSTANT_PROPAGATION
+        uint16x16 mask = make_shuffle_bytes16_mask<0,-1,-1,-1>(mask);
+        uint16x16 r1 = make_uint(0x0100, 0, 0, 0, 0x0908, 0, 0, 0,
+                                 0x1110, 0, 0, 0, 0x1918, 0, 0, 0);
+#else
         uint16x16 mask = make_shuffle_bytes16_mask<-1,-1,-1,-1>(mask);
         uint16x16 r1 = make_zero();
+#endif
         uint16x16 r2 = permute_zbytes16(v.u16[0], mask);
         TEST_EQUAL(tr, r1, r2);
     }
