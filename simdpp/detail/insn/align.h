@@ -20,6 +20,7 @@
 #include <simdpp/core/shuffle2x2.h>
 #include <simdpp/core/shuffle4x2.h>
 #include <simdpp/detail/shuffle/shuffle_mask.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

@@ -54,6 +54,7 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     Arch a_avx512f = a_avx2 | Arch::X86_AVX512F;
     Arch a_avx512bw = a_avx512f | Arch::X86_AVX512BW;
     Arch a_avx512dq = a_avx512f | Arch::X86_AVX512DQ;
+    Arch a_avx512vl = a_avx512f | Arch::X86_AVX512VL;
 
     features.emplace_back("sse2", a_sse2);
     features.emplace_back("sse3", a_sse3);
@@ -68,6 +69,7 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     features.emplace_back("avx512f", a_avx512f);
     features.emplace_back("avx512bw", a_avx512bw);
     features.emplace_back("avx512dq", a_avx512dq);
+    features.emplace_back("avx512vl", a_avx512vl);
 #elif SIMDPP_PPC
     Arch a_altivec = Arch::POWER_ALTIVEC;
     Arch a_vsx_206 = a_altivec | Arch::POWER_VSX_206;
@@ -95,7 +97,6 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
 
         // strip prefix
         s += prefixlen;
-        len -= prefixlen;
 
         // check if any of the architectures match
         for (auto& feature : features) {

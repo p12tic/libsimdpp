@@ -14,7 +14,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/blend.h>
-#include <simdpp/detail/expr/blend.h>
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {
@@ -107,17 +106,17 @@ class get_expr_blend {
 
 
 public:
-    using v1_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes,
-                                         typename wrap_vector_expr<V1>::type>::type;
+    using v1_final_type = typename type_of_tag<v12_type_tag + size_tag,
+                                               V1::length_bytes, void>::type;
 
-    using v2_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes,
-                                         typename wrap_vector_expr<V2>::type>::type;
+    using v2_final_type = typename type_of_tag<v12_type_tag + size_tag,
+                                               V1::length_bytes, void>::type;
 
-    using v3_type = typename type_of_tag<v3_type_tag + size_tag, V1::length_bytes,
-                                         typename wrap_vector_expr<V3>::type>::type;
+    using v3_final_type = typename type_of_tag<v3_type_tag + size_tag,
+                                               V1::length_bytes, void>::type;
 
     using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                      expr_blend<v1_type, v2_type, v3_type>>::type;
+                                      expr_blend<V1, V2, V3>>::type;
 };
 
 } // namespace detail
@@ -184,10 +183,7 @@ typename detail::get_expr_blend<V1, V2, V3>::type
         blend(const any_vec<N,V1>& on, const any_vec<N,V2>& off,
               const any_vec<N,V3>& mask)
 {
-    using expr = detail::get_expr_blend<V1, V2, V3>;
-    return { { detail::cast_expr<typename expr::v1_type>(on.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(off.wrapped()),
-               detail::cast_expr<typename expr::v3_type>(mask.wrapped()) } };
+    return { { on.wrapped(), off.wrapped(), mask.wrapped() } };
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -28,21 +28,6 @@ namespace insn {
 
 // -----------------------------------------------------------------------------
 
-template<unsigned N> SIMDPP_INL
-uint8<N> i_to_uint8(const uint8<N>& a)
-{
-    return a;
-}
-
-template<unsigned N> SIMDPP_INL
-uint8<N> i_to_uint8(const int8<N>& a)
-{
-    uint8<N> r; r = a;
-    return r;
-}
-
-// -----------------------------------------------------------------------------
-
 SIMDPP_INL uint8<16> i_to_uint8(const uint16<16>& a)
 {
 #if SIMDPP_USE_NULL
@@ -115,14 +100,6 @@ template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint16<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N> SIMDPP_INL
-uint8<N> i_to_uint8(const int16<N>& a)
-{
-    return i_to_uint8(uint16<N>(a));
 }
 
 // -----------------------------------------------------------------------------
@@ -211,14 +188,6 @@ template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint32<N>& a)
 {
     SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
-}
-
-// -----------------------------------------------------------------------------
-
-template<unsigned N> SIMDPP_INL
-uint8<N> i_to_uint8(const int32<N>& a)
-{
-    return i_to_uint8(uint32<N>(a));
 }
 
 // -----------------------------------------------------------------------------

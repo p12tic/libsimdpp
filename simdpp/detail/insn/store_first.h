@@ -230,14 +230,13 @@ void i_store_first(char* p, const float32x4& a, unsigned n)
     b = blend(a, b, mask);
     store(p, b);
 #elif SIMDPP_USE_NEON
-    float* q = reinterpret_cast<float*>(p);
     // + VFP
     if (n < 1) return;
-    neon::store_lane<0,1>(q, a);
+    neon::store_lane<0,1>(p, a);
     if (n < 2) return;
-    neon::store_lane<1,1>(q+1, a);
+    neon::store_lane<1,1>(p+4, a);
     if (n < 3) return;
-    neon::store_lane<2,1>(q+2, a);
+    neon::store_lane<2,1>(p+8, a);
 #endif
 }
 
@@ -322,7 +321,7 @@ void i_store_first(char* p, const float64<8>& a, unsigned n)
 template<class V> SIMDPP_INL
 void i_store_first(char* p, const V& ca, unsigned n)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
 
     typename detail::remove_sign<V>::type a = ca;
     p = detail::assume_aligned(p, veclen);

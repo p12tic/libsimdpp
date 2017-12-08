@@ -1,0 +1,1 @@
+{{dsc macro const | cap/SIMDPP_HAS_INT8_SIMD | indicates support of 8-bit integers in SIMD unit }}

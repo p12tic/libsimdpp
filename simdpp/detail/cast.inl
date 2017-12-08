@@ -28,18 +28,6 @@ template<unsigned N> struct base_mask_vector_type<mask_int64<N>> { using type = 
 template<unsigned N> struct base_mask_vector_type<mask_float32<N>> { using type = float32<N>; };
 template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type = float64<N>; };
 
-template<class T, class R>
-struct cast_helper {
-
-    SIMDPP_INL cast_helper(const T& t) : t_(t) {}
-    SIMDPP_INL R convert() { return r_; }
-
-    union {
-        T t_;
-        R r_;
-    };
-};
-
 /*  Note that in this function we are invoking undefined behavior that happens
     to work in all compilers the library supports. The only non-undefined way
     to do bitwise data transfer between unrelated types without breaking strict
@@ -51,11 +39,42 @@ template<class T, class R> SIMDPP_INL
 void cast_bitwise(const T& t, R& r)
 {
     static_assert(sizeof(R) == sizeof(T), "Size mismatch");
-#if defined(_MSC_VER) && _MSC_VER < 1900
-    r = *reinterpret_cast<const R*>(&t);
+    union {
+        T t_union;
+        R r_union;
+    };
+    t_union = t;
+    r = r_union;
+}
+
+template<class T, class R> SIMDPP_INL
+void cast_bitwise_vector(const T& t, R& r)
+{
+    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+#if 1 || __cplusplus < 201103L || (defined(_MSC_VER) && _MSC_VER < 1900)
+    // We can't create use union of vector types because they are not trivial
+    // types. In pre-C++11 mode they have empty user-defined default
+    // constructor, which is required as the compiler will not provide one
+    // by default due to additional constructors being present. Instead we
+    // create union of native_type which are trivial types in all supported
+    // configurations.
+    using NativeT = typename T::base_vector_type::native_type;
+    using NativeR = typename R::base_vector_type::native_type;
+    union {
+        NativeT t_union[T::vec_length];
+        NativeR r_union[R::vec_length];
+    };
+    for (unsigned i = 0; i < T::vec_length; ++i)
+        t_union[i] = t.vec(i).native();
+    for (unsigned i = 0; i < R::vec_length; ++i)
+        r.vec(i) = r_union[i];
 #else
-    cast_helper<T, R> helper(t);
-    r = helper.convert();
+    union {
+        T t_union;
+        R r_union;
+    };
+    t_union = t;
+    r = r_union;
 #endif
 }
 
@@ -64,7 +83,7 @@ void cast_bitwise_unmask(const T& t, R& r)
 {
     using TT = typename base_mask_vector_type<T>::type;
     TT tt = t.unmask();
-    cast_bitwise(tt, r);
+    cast_bitwise_vector(tt, r);
 }
 
 template<class T, class R> SIMDPP_INL
@@ -72,9 +91,18 @@ void cast_bitwise_remask(const T& t, R& r)
 {
     using BaseMaskVector = typename base_mask_vector_type<R>::type;
     BaseMaskVector rr;
-    cast_bitwise(t.unmask(), rr);
+    cast_bitwise_vector(t.unmask(), rr);
     r = to_mask(rr);
 }
+
+template<>
+struct cast_wrapper<CAST_TYPE_OTHER> {
+    template<class T, class R> SIMDPP_INL
+    static void run(const T& t, R& r)
+    {
+        cast_bitwise(t, r);
+    }
+};
 
 template<>
 struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_BITWISE> {
@@ -84,7 +112,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_BITWISE> {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        cast_bitwise(t, r);
+        cast_bitwise_vector(t.eval(), r);
     }
 };
 
@@ -96,7 +124,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_UNMASK> {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        cast_bitwise_unmask(t, r);
+        cast_bitwise_unmask(t.eval(), r);
     }
 };
 
@@ -108,7 +136,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_REMASK> {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        cast_bitwise_remask(t, r);
+        cast_bitwise_remask(t.eval(), r);
     }
 };
 
@@ -128,7 +156,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
-        cast_bitwise_unmask(t, r);
+        cast_bitwise_unmask(t.eval(), r);
     }
 };
 
@@ -137,7 +165,7 @@ struct cast_wrapper<CAST_TYPE_VECTOR_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
-        cast_bitwise(t, r);
+        cast_bitwise_vector(t.eval(), r);
     }
 };
 

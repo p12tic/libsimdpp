@@ -29,7 +29,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 template<unsigned N, class V, class F> SIMDPP_INL
-void for_each(const any_vec<N, V>& v, const F& function)
+void for_each(const any_vec<N, V>& v, F function)
 {
     detail::for_each(v.wrapped().eval(), function);
 }

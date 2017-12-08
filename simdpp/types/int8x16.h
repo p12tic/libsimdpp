@@ -66,7 +66,7 @@ public:
     SIMDPP_INL int8<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -139,7 +139,7 @@ public:
     SIMDPP_INL uint8<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -179,7 +179,9 @@ public:
     using base_vector_type = mask_int16v;
     using expr_type = void;
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    using native_type = __mmask16;
+#elif SIMDPP_USE_SSE2
     using native_type = __m128i;
 #elif SIMDPP_USE_NEON
     using native_type = uint8x16_t;
@@ -188,7 +190,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v16u8;
 #else
-    using native_type = detail::array<bool, 16>;
+    using native_type = detail::array<uint8_t, 16>;
 #endif
 
     SIMDPP_INL mask_int8<16>() = default;
@@ -201,12 +203,12 @@ public:
     SIMDPP_INL mask_int8<16>(const __vector __bool char& d) : d_((__vector uint8_t)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_ALTIVEC
+#if (SIMDPP_USE_SSE2 && !SIMDPP_USE_AVX512VL) || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_ALTIVEC
     SIMDPP_INL mask_int8<16>(const uint8<16>& d) : d_(d.native()) {}
 #endif
 
     /// Convert to the underlying vector type
-#if SIMDPP_DEFINE_IMPLICIT_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
     SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
     { return d_; }
 #endif
@@ -215,16 +217,18 @@ public:
     /// Access the underlying type
     SIMDPP_INL uint8<16> unmask() const
     {
-    #if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL
         return detail::null::unmask_mask<uint8<16>>(*this);
-    #else
+#elif SIMDPP_USE_AVX512VL
+        return _mm_movm_epi8(d_);
+#else
         return uint8<16>(d_);
-    #endif
+#endif
     }
 
 #if SIMDPP_USE_NULL
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int8<16>& vec(unsigned) const { return *this; }

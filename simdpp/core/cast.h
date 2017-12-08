@@ -45,11 +45,14 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N>> { static const unsigne
 template<class R, class T> SIMDPP_INL
 void bit_cast_impl(const T& t, R& r)
 {
+    const bool is_vector_r = is_vector<R>::value;
+    const bool is_vector_t = is_vector<T>::value;
     const bool is_mask_r = is_mask<R>::value;
     const bool is_mask_t = is_mask<T>::value;
     const unsigned mask_mask_cast_override = detail::cast_mask_override<R,T>::value;
 
     const unsigned cast_type =
+            (!is_vector_t && !is_vector_r) ? CAST_TYPE_OTHER :
             (!is_mask_t && !is_mask_r) ? CAST_TYPE_VECTOR_TO_VECTOR :
             (is_mask_t && !is_mask_r) ? CAST_TYPE_MASK_TO_VECTOR :
             (!is_mask_t && is_mask_r) ? CAST_TYPE_VECTOR_TO_MASK :
@@ -58,7 +61,7 @@ void bit_cast_impl(const T& t, R& r)
             (mask_mask_cast_override == CAST_MASK_UNMASK) ? CAST_TYPE_MASK_TO_MASK_UNMASK :
                                                             CAST_TYPE_MASK_TO_MASK_BITWISE;
 
-    static_assert(is_vector<T>::value == is_vector<R>::value,
+    static_assert(is_vector_r == is_vector_t,
                   "bit_cast can't convert between vector and non-vector types");
 
     detail::cast_wrapper<cast_type>::run(t, r);

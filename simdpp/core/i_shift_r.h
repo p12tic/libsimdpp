@@ -13,10 +13,16 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/detail/insn/i_shift_r.h>
+#include <simdpp/detail/insn/i_shift_r_v.h>
+#include <simdpp/detail/not_implemented.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
+
+// -----------------------------------------------------------------------------
+// shift by scalar
 
 /** Shifts signed 8-bit values right by @a count bits while shifting in the
     sign bit.
@@ -26,17 +32,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{SSE2-AVX2, 6}
-    @icost{NEON, 1-2}
-    @icost{ALTIVEC, 1-4}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 12}
-    @icost{AVX2, 6}
-    @icost{NEON, 2-3}
-    @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
 int8<N,expr_empty> shift_r(const int8<N,E>& a, unsigned count)
@@ -51,17 +46,6 @@ int8<N,expr_empty> shift_r(const int8<N,E>& a, unsigned count)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{SSE2-AVX2, 4-5}
-    @icost{NEON, 1-2}
-    @icost{ALTIVEC, 1-4}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 8-9}
-    @icost{AVX2, 4-5}
-    @icost{NEON, 2-3}
-    @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
 uint8<N,expr_empty> shift_r(const uint8<N,E>& a, unsigned count)
@@ -77,15 +61,6 @@ uint8<N,expr_empty> shift_r(const uint8<N,E>& a, unsigned count)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{NEON, 1-2}
-    @icost{ALTIVEC, 1-4}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 2-3}
-    @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
 int16<N,expr_empty> shift_r(const int16<N,E>& a, unsigned count)
@@ -101,15 +76,6 @@ int16<N,expr_empty> shift_r(const int16<N,E>& a, unsigned count)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{NEON, 1-2}
-    @icost{ALTIVEC, 1-4}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 2-3}
-    @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
 uint16<N,expr_empty> shift_r(const uint16<N,E>& a, unsigned count)
@@ -124,21 +90,7 @@ uint16<N,expr_empty> shift_r(const uint16<N,E>& a, unsigned count)
     r0 = a0 >> count
     ...
     rN = aN >> count
-    @endcode    @code
-    r0 = a0 >> count
-    ...
-    rN = aN >> count
     @endcode
-    @icost{NEON, 2}
-
-    @par 128-bit version:
-    @icost{NEON, 1-2}
-    @icost{ALTIVEC, 1-4}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 2-3}
-    @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
 int32<N,expr_empty> shift_r(const int32<N,E>& a, unsigned count)
@@ -154,15 +106,6 @@ int32<N,expr_empty> shift_r(const int32<N,E>& a, unsigned count)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{NEON, 1-2}
-    @icost{ALTIVEC, 1-4}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 2-3}
-    @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> shift_r(const uint32<N,E>& a, unsigned count)
@@ -178,17 +121,6 @@ uint32<N,expr_empty> shift_r(const uint32<N,E>& a, unsigned count)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{SSE2-AVX2, 4-6}
-    @icost{NEON, 2}
-    @unimp{ALTIVEC}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 8-10}
-    @icost{AVX2, 4-6}
-    @icost{NEON, 3}
-    @unimp{ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
 int64<N,expr_empty> shift_r(const int64<N,E>& a, unsigned count)
@@ -204,21 +136,132 @@ int64<N,expr_empty> shift_r(const int64<N,E>& a, unsigned count)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{NEON, 1-2}
-    @unimp{ALTIVEC}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 2}
-    @icost{NEON, 2-3}
-    @unimp{ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
 uint64<N,expr_empty> shift_r(const uint64<N,E>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
+
+// -----------------------------------------------------------------------------
+// shift by vector
+
+/** Shifts signed 8-bit values right by the number of bits in corresponding
+    element in the given count vector. Sign bits are shifted in.
+
+    @code
+    r0 = a0 >> count0
+    ...
+    rN = aN >> countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+int8<N,expr_empty> shift_r(const int8<N,E>& a, const uint8<N,E>& count)
+{
+#if SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+/** Shifts unsigned 8-bit values right by the number of bits in corresponding
+    element in the given count vector. Zero bits are shifted in.
+
+    @code
+    r0 = a0 >> count0
+    ...
+    rN = aN >> countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+uint8<N,expr_empty> shift_r(const uint8<N,E>& a, const uint8<N,E>& count)
+{
+#if SIMDPP_HAS_UINT8_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+/** Shifts signed 16-bit values right by the number of bits in corresponding
+    element in the given count vector. Sign bits are shifted in.
+
+    @code
+    r0 = a0 >> count0
+    ...
+    rN = aN >> countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+int16<N,expr_empty> shift_r(const int16<N,E>& a, const uint16<N,E>& count)
+{
+#if SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+/** Shifts unsigned 16-bit values right by the number of bits in corresponding
+    element in the given count vector. Zero bits are shifted in.
+
+    @code
+    r0 = a0 >> count0
+    ...
+    rN = aN >> countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+uint16<N,expr_empty> shift_r(const uint16<N,E>& a, const uint16<N,E>& count)
+{
+#if SIMDPP_HAS_UINT16_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+/** Shifts signed 32-bit values right by the number of bits in corresponding
+    element in the given count vector. Sign bits are shifted in.
+
+    @code
+    r0 = a0 >> count0
+    ...
+    rN = aN >> countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+int32<N,expr_empty> shift_r(const int32<N,E>& a, const uint32<N,E>& count)
+{
+#if SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+/** Shifts unsigned 32-bit values right by the number of bits in corresponding
+    element in the given count vector. Zero bits are shifted in.
+
+    @code
+    r0 = a0 >> count0
+    ...
+    rN = aN >> countN
+    @endcode
+*/
+template<unsigned N, class E> SIMDPP_INL
+uint32<N,expr_empty> shift_r(const uint32<N,E>& a, const uint32<N,E>& count)
+{
+#if SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR
+    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+#else
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+#endif
+}
+
+// -----------------------------------------------------------------------------
+// shift by compile-time constant
 
 /** Shifts signed 8-bit values right by @a count bits while shifting in the
     sign bit.
@@ -228,16 +271,6 @@ uint64<N,expr_empty> shift_r(const uint64<N,E>& a, unsigned count)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{SSE2-AVX2, 6}
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 12}
-    @icost{AVX2, 6}
-    @icost{NEON, 2}
-    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 int8<N,expr_empty> shift_r(const int8<N,E>& a)
@@ -254,16 +287,6 @@ int8<N,expr_empty> shift_r(const int8<N,E>& a)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{ALTIVEC, 1-2}
-    @icost{SSE2-AVX2, 2-3}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, 4-5}
-    @icost{AVX2, 2-3}
-    @icost{NEON, 2}
-    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint8<N,expr_empty> shift_r(const uint8<N,E>& a)
@@ -280,13 +303,6 @@ uint8<N,expr_empty> shift_r(const uint8<N,E>& a)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 int16<N,expr_empty> shift_r(const int16<N,E>& a)
@@ -303,13 +319,6 @@ int16<N,expr_empty> shift_r(const int16<N,E>& a)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint16<N,expr_empty> shift_r(const uint16<N,E>& a)
@@ -326,13 +335,6 @@ uint16<N,expr_empty> shift_r(const uint16<N,E>& a)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 int32<N,expr_empty> shift_r(const int32<N,E>& a)
@@ -349,13 +351,6 @@ int32<N,expr_empty> shift_r(const int32<N,E>& a)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @icost{ALTIVEC, 1-2}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-    @icost{ALTIVEC, 2-3}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> shift_r(const uint32<N,E>& a)
@@ -372,18 +367,6 @@ uint32<N,expr_empty> shift_r(const uint32<N,E>& a)
     ...
     rN = aN >> count
     @endcode
-
-    @par 128-bit version:
-    @novec{SSE2-AVX2}
-    @icost{SSE2-AVX2, 4-6}
-    @unimp{ALTIVEC}
-
-    @par 256-bit version:
-    @novec{SSE2-AVX}
-    @icost{SSE2-AVX, 8-10}
-    @icost{AVX2, 4-6}
-    @icost{NEON, 2}
-    @unimp{ALTIVEC}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 int64<N,expr_empty> shift_r(const int64<N,E>& a)
@@ -400,12 +383,6 @@ int64<N,expr_empty> shift_r(const int64<N,E>& a)
     ...
     rN = aN >> count
     @endcode
-
-    @unimp{ALTIVEC}
-
-    @par 256-bit version:
-    @icost{SSE2-AVX, NEON, 2}
-    @unimp{ALTIVEC}
 */
 template<unsigned count, unsigned N, class E> SIMDPP_INL
 uint64<N,expr_empty> shift_r(const uint64<N,E>& a)

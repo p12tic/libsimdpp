@@ -11,6 +11,20 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
+#if (__clang_major__ == 3) && (__clang_minor__ == 5)
+// clang 3.5 crashes when compiling lambda in the test
+template<class E, class Sum>
+class SumClosure {
+public:
+    SumClosure(Sum& sum) : sum_(sum) {}
+
+    void operator()(E el) { sum_ += (Sum) el; }
+
+private:
+    Sum& sum_;
+};
+#endif
+
 template<class V>
 void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
 {
@@ -23,9 +37,13 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     s.add(make_uint(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff));
 
     for (unsigned i = 0; i < s.size(); ++i) {
-        V v = s.data()[i];
+        V v = s[i];
         uint64_t sum = 0;
+#if (__clang_major__ == 3) && (__clang_minor__ == 5)
+        for_each(v, SumClosure<E,uint64_t>(sum));
+#else
         for_each(v, [&](E el) { sum += (uint64_t) el; });
+#endif
         TEST_PUSH(ts, uint64_t, sum);
     }
 
@@ -39,7 +57,11 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
         expected = 10 * V::length / 4;
     }
     E sum = 0;
+#if (__clang_major__ == 3) && (__clang_minor__ == 5)
+    for_each(v1234, SumClosure<E, E>(sum));
+#else
     for_each(v1234, [&](E el) { sum += (uint64_t) el; });
+#endif
 
     TEST_EQUAL(tr, expected, sum);
 }

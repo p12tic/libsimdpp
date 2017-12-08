@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/f_rcp_e.h>
 #include <simdpp/core/f_rcp_rh.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

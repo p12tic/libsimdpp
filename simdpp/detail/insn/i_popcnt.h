@@ -22,6 +22,7 @@
 #include <simdpp/core/insert.h>
 #include <simdpp/detail/null/bitwise.h>
 #include <simdpp/detail/width.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -58,11 +59,7 @@ uint8<16> i_popcnt(const uint8<16>& a)
 #elif SIMDPP_USE_NEON
     return vcntq_u8(a.native());
 #elif SIMDPP_USE_VSX_207
-#if defined(__GNUC__) && (__GNUC__ < 7)
     return vec_vpopcnt(a.native());
-#else
-    return vec_popcnt(a.native());
-#endif
 #elif SIMDPP_USE_MSA
     return (v16u8) __msa_pcnt_b((v16i8) a.native());
 #else
@@ -119,11 +116,7 @@ uint16<8> i_popcnt(const uint16<8>& a)
     uint8x16_t p8 = vcntq_u8(vreinterpretq_u8_u16(a.native()));
     return vpaddlq_u8(p8);
 #elif SIMDPP_USE_VSX_207
-#if defined(__GNUC__) && (__GNUC__ < 7)
     return vec_vpopcnt(a.native());
-#else
-    return vec_popcnt(a.native());
-#endif
 #elif SIMDPP_USE_MSA
     return (v8u16) __msa_pcnt_h((v8i16) a.native());
 #else
@@ -198,11 +191,7 @@ uint32<4> i_popcnt(const uint32<4>& a)
     uint16x8_t p16 = vpaddlq_u8(p8);
     return vpaddlq_u16(p16);
 #elif SIMDPP_USE_VSX_207
-#if defined(__GNUC__) && (__GNUC__ < 7)
     return vec_vpopcnt(a.native());
-#else
-    return vec_popcnt(a.native());
-#endif
 #elif SIMDPP_USE_MSA
     return (v4u32) __msa_pcnt_w((v4i32) a.native());
 #else
@@ -282,11 +271,7 @@ uint64<2> i_popcnt(const uint64<2>& a)
     uint32x4_t p32 = vpaddlq_u16(p16);
     return vpaddlq_u32(p32);
 #elif SIMDPP_USE_VSX_207
-#if defined(__GNUC__) && (__GNUC__ < 7)
     return vec_vpopcnt(a.native());
-#else
-    return vec_popcnt(a.native());
-#endif
 #elif SIMDPP_USE_MSA
     return (v2u64) __msa_pcnt_d((v2i64) a.native());
 #else

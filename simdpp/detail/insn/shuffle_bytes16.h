@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/bit_or.h>
+#include <simdpp/core/blend.h>
 #include <simdpp/core/cmp_lt.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/detail/not_implemented.h>
@@ -28,38 +29,47 @@ static SIMDPP_INL
 uint8x16 i_shuffle_bytes16(const uint8x16& a, const uint8x16& b, const uint8x16& mask)
 {
 #if SIMDPP_USE_NULL
-    uint8x16 ai = a;
-    uint8x16 bi = b;
-    uint8x16 mi = mask;
     uint8x16 r;
 
     for (unsigned i = 0; i < 16; i++) {
-        unsigned j = mi.el(i) & 0x0f;
-        unsigned which = mi.el(i) < 0x10;
-        r.el(i) = which ? ai.el(j) : bi.el(j);
+        unsigned j = mask.el(i) & 0x0f;
+        bool which = mask.el(i) < 0x10;
+        r.el(i) = which ? a.el(j) : b.el(j);
     }
     return r;
 #elif SIMDPP_USE_XOP
     return _mm_perm_epi8(a.native(), b.native(), mask.native());
-#elif SIMDPP_USE_SSE4_1
+#elif SIMDPP_USE_AVX
+    // it's not advantageous to use _mm_blendv_epi8 on pre-AVX machines
+    // because it takes the same number of cycles as the alternative, but
+    // forces the result into xmm0 register.
     int16x8 sel, ai, bi, r;
-    sel = mask;
-    sel = _mm_slli_epi16(sel.native(), 3);
+    sel = _mm_slli_epi16(mask.native(), 3);
 
     ai = _mm_shuffle_epi8(a.native(), mask.native());
     bi = _mm_shuffle_epi8(b.native(), mask.native());
     r = _mm_blendv_epi8(ai.native(), bi.native(), sel.native());
     return (uint8<16>) r;
 #elif SIMDPP_USE_SSSE3
-    uint8x16 m, m1, m2, ai, bi;
-    m = mask;
+#if (defined(__clang__) && (__clang_major__ == 3) && (__clang_minor__ <= 7) && (__clang_minor__ >= 6))
+    // Clang 3.7 and 3.6 incorrectly optimize certain cases of constant
+    // mask when the values are available for the compiler to collapse.
+    // Fortunately the overhead of the workaround is very small
+    uint8<16> ai, bi;
+    mask_int8<16> select_a = cmp_lt((int8<16>) mask, 0x10);
+    ai = _mm_shuffle_epi8(a.native(), mask.native());
+    bi = _mm_shuffle_epi8(b.native(), mask.native());
+    return blend(ai, bi, select_a);
+#else
+    uint8x16 m1, m2, ai, bi;
     // sets the 7-th bit if we want an element from the other vector
-    m1 = add(m, 0x70);
-    m2 = add(m, 0xf0);
+    m1 = add(mask, 0x70);
+    m2 = add(mask, 0xf0);
 
     ai = _mm_shuffle_epi8(a.native(), m1.native());
     bi = _mm_shuffle_epi8(b.native(), m2.native());
     return bit_or(ai, bi);
+#endif
 #elif SIMDPP_USE_NEON32
     uint8x8x4_t table = {{vget_low_u8(a.native()), vget_high_u8(a.native()),
                           vget_low_u8(b.native()), vget_high_u8(b.native())}};

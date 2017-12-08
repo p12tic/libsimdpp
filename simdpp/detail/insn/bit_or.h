@@ -15,13 +15,12 @@
 #include <simdpp/types.h>
 #include <simdpp/core/to_mask.h>
 #include <simdpp/detail/null/bitwise.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
-
-// see doc/src/expressions.md for the list of types we must cover
 
 // -----------------------------------------------------------------------------
 // uint8, uint8
@@ -63,6 +62,8 @@ mask_int8<16> i_bit_or(const mask_int8<16>& a, const mask_int8<16>& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::bit_or_mm(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
 #else
     return to_mask(i_bit_or(uint8<16>(a), uint8<16>(b)));
 #endif
@@ -72,7 +73,11 @@ mask_int8<16> i_bit_or(const mask_int8<16>& a, const mask_int8<16>& b)
 static SIMDPP_INL
 mask_int8<32> i_bit_or(const mask_int8<32>& a, const mask_int8<32>& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
+#else
     return to_mask(i_bit_or(uint8<32>(a), uint8<32>(b)));
+#endif
 }
 #endif
 
@@ -113,6 +118,8 @@ mask_int16<8> i_bit_or(const mask_int16<8>& a, const mask_int16<8>& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::bit_or_mm(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
 #else
     return to_mask(i_bit_or(uint16<8>(a), uint16<8>(b)));
 #endif
@@ -122,7 +129,11 @@ mask_int16<8> i_bit_or(const mask_int16<8>& a, const mask_int16<8>& b)
 static SIMDPP_INL
 mask_int16<16> i_bit_or(const mask_int16<16>& a, const mask_int16<16>& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
+#else
     return to_mask(i_bit_or(uint16<16>(a), uint16<16>(b)));
+#endif
 }
 #endif
 
@@ -164,6 +175,8 @@ mask_int32<4> i_bit_or(const mask_int32<4>& a, const mask_int32<4>& b)
 {
 #if SIMDPP_USE_NULL
     return detail::null::bit_or_mm(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
 #else
     return to_mask(i_bit_or(uint32<4>(a), uint32<4>(b)));
 #endif
@@ -173,7 +186,11 @@ mask_int32<4> i_bit_or(const mask_int32<4>& a, const mask_int32<4>& b)
 static SIMDPP_INL
 mask_int32<8> i_bit_or(const mask_int32<8>& a, const mask_int32<8>& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
+#else
     return to_mask(i_bit_or(uint32<8>(a), uint32<8>(b)));
+#endif
 }
 #endif
 
@@ -220,6 +237,8 @@ mask_int64<2> i_bit_or(const mask_int64<2>& a, const mask_int64<2>& b)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::bit_or_mm(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
 #else
     return to_mask(i_bit_or(uint64<2>(a), uint64<2>(b)));
 #endif
@@ -229,7 +248,11 @@ mask_int64<2> i_bit_or(const mask_int64<2>& a, const mask_int64<2>& b)
 static SIMDPP_INL
 mask_int64<4> i_bit_or(const mask_int64<4>& a, const mask_int64<4>& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
+#else
     return to_mask(i_bit_or(uint64<4>(a), uint64<4>(b)));
+#endif
 }
 #endif
 
@@ -287,6 +310,8 @@ mask_float32<4> i_bit_or(const mask_float32<4>& a, const mask_float32<4>& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return detail::null::bit_or_mm(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
 #else
     return to_mask(i_bit_or(float32<4>(a), float32<4>(b)));
 #endif
@@ -296,7 +321,11 @@ mask_float32<4> i_bit_or(const mask_float32<4>& a, const mask_float32<4>& b)
 static SIMDPP_INL
 mask_float32<8> i_bit_or(const mask_float32<8>& a, const mask_float32<8>& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
+#else
     return to_mask(i_bit_or(float32<8>(a), float32<8>(b)));
+#endif
 }
 #endif
 
@@ -354,6 +383,8 @@ mask_float64<2> i_bit_or(const mask_float64<2>& a, const mask_float64<2>& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_206)
     return detail::null::bit_or_mm(a, b);
+#elif SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
 #else
     return to_mask(i_bit_or(float64<2>(a), float64<2>(b)));
 #endif
@@ -363,7 +394,11 @@ mask_float64<2> i_bit_or(const mask_float64<2>& a, const mask_float64<2>& b)
 static SIMDPP_INL
 mask_float64<4> i_bit_or(const mask_float64<4>& a, const mask_float64<4>& b)
 {
+#if SIMDPP_USE_AVX512VL
+    return a.native() | b.native();
+#else
     return to_mask(i_bit_or(float64<4>(a), float64<4>(b)));
+#endif
 }
 #endif
 

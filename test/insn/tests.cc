@@ -61,7 +61,7 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
     test_permute_generic(res);
     test_shuffle_generic(res);
     test_shuffle(res);
-    test_shuffle_bytes(res);
+    test_shuffle_bytes(res, tr);
 
     test_convert(res);
     test_math_fp(res, opts);

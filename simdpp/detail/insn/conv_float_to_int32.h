@@ -15,6 +15,8 @@
 #include <simdpp/types.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/core/f_sub.h>
+#include <simdpp/core/cmp_ge.h>
+#include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -100,10 +102,10 @@ uint32<4> i_to_uint32(const float32<4>& a)
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<float32x4> mf(a);
     detail::mem_block<uint32x4> mi;
-    mi[0] = uint(mf[0]);
-    mi[1] = uint(mf[1]);
-    mi[2] = uint(mf[2]);
-    mi[3] = uint(mf[3]);
+    mi[0] = unsigned(mf[0]);
+    mi[1] = unsigned(mf[1]);
+    mi[2] = unsigned(mf[2]);
+    mi[3] = unsigned(mf[3]);
     return mi;
 #elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_u32_f32(a.native());
@@ -114,13 +116,12 @@ uint32<4> i_to_uint32(const float32<4>& a)
 #else
     // Smaller than 0x80000000 numbers can be represented as int32, so we can
     // use i_to_int32 which is available as instruction on all supported
-    // architectures. Larger integers can be biased into int32 range, converted
-    // and unbiased. Note that no rounding takes place in the latter case.
-    mask_float32<4> is_small = cmp_lt(a, 0x80000000);
-    int32<4> i_small = i_to_int32(a);
-    float32<4> t = sub(a, 0x80000000);
-    int32<4> i_large = add(i_to_int32(t), 0x80000000);
-    return (uint32<4>) blend(i_small, i_large, is_small);
+    // architectures. Values >= 0x80000000 are biased into the range -0x80000000..0xffffffff.
+    // These conveniently convert through i_to_int32() to 0x80000000..0xffffffff. No further
+    // unbiasing is required. No attempt is made to produce a reliable overflow value for
+    // values outside the range 0 .. 0xffffffff.
+    mask_float32<4> is_large = cmp_ge(a, 0x80000000);
+	return uint32<4>( i_to_int32(sub(a, bit_and(is_large, splat<float32<4>>(0x100000000)))) );
 #endif
 }
 
@@ -134,11 +135,8 @@ uint32<8> i_to_uint32(const float32<8>& a)
     __m512 a512 = _mm512_castps256_ps512(a.native());
     return _mm512_castsi512_si256(_mm512_cvttps_epu32(a512));
 #else
-    mask_float32<8> is_small = cmp_lt(a, 0x80000000);
-    int32<8> i_small = i_to_int32(a);
-    float32<8> t = sub(a, 0x80000000);
-    int32<8> i_large = add(i_to_int32(t), 0x80000000);
-    return (uint32<8>) blend(i_small, i_large, is_small);
+    mask_float32<8> is_large = cmp_ge(a, 0x80000000);
+	return uint32<8>( i_to_int32(sub(a, bit_and(is_large, splat<float32<8>>(0x100000000)))) );
 #endif
 }
 #endif
@@ -231,7 +229,9 @@ uint32<N> i_to_uint32(const float64<N>& a)
 static SIMDPP_INL
 int32x4 i_to_int32(const float64x4& a)
 {
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    return _mm256_cvttpd_epi32(a.native());
+#elif SIMDPP_USE_SSE2
     int32x4 r, r1, r2;
     float64x2 a1, a2;
     split(a, a1, a2);

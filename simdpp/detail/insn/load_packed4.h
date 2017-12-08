@@ -297,7 +297,7 @@ void v512_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 template<class V> SIMDPP_INL
 void i_load_packed4(V& a, V& b, V& c, V& d, const char* p)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
 
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {

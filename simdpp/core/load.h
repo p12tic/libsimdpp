@@ -39,15 +39,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX (integer vectors), 2}
 */
 // Fixme return empty expression
-SIMDPP_INL expr_vec_load load(const void* p)
+template<class T>
+SIMDPP_INL expr_vec_load load(const T* p)
 {
     expr_vec_load r;
     r.a = reinterpret_cast<const char*>(p);
     return r;
 }
 
-template<class V> SIMDPP_INL
-V load(const void* p)
+template<class V, class T> SIMDPP_INL
+V load(const T* p)
 {
     static_assert(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");

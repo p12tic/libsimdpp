@@ -13,15 +13,14 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 template<class V, unsigned vnum>
-void test_load_helper(TestResultsSet& tc, TestReporter& tr, void* sv_p)
+void test_load_helper(TestResultsSet& tc, TestReporter& tr,
+                      const typename V::element_type* sdata)
 {
     using namespace simdpp;
-    using E = typename V::element_type;
-    auto sdata = reinterpret_cast<E*>(sv_p);
     V zero = make_zero();
 
     V sv[vnum];
-    std::memcpy(sv, sv_p, sizeof(V) * vnum);
+    std::memcpy(sv, sdata, V::length_bytes * vnum);
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack.
@@ -32,7 +31,7 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr, void* sv_p)
 
     auto rzero = [&](V* r)
     {
-        std::memset(r, 0, sizeof(V) * vnum);
+        std::memset(r, 0, V::length_bytes * vnum);
     };
 
     // calls constructor that accepts expr_construct
@@ -107,18 +106,18 @@ void test_memory_load_n(TestResultsSet& tc, TestReporter& tr)
     const unsigned vnum = 4;
     Vectors<B,vnum> v;
 
-    test_load_helper<uint8<B>, vnum>(tc, tr, v.u8);
-    test_load_helper<uint16<B/2>, vnum>(tc, tr, v.u16);
-    test_load_helper<uint32<B/4>, vnum>(tc, tr, v.u32);
-    test_load_helper<uint64<B/8>, vnum>(tc, tr, v.u64);
+    test_load_helper<uint8<B>, vnum>(tc, tr, v.pu8);
+    test_load_helper<uint16<B/2>, vnum>(tc, tr, v.pu16);
+    test_load_helper<uint32<B/4>, vnum>(tc, tr, v.pu32);
+    test_load_helper<uint64<B/8>, vnum>(tc, tr, v.pu64);
 
-    test_load_helper<int8<B>, vnum>(tc, tr, v.i8);
-    test_load_helper<int16<B/2>, vnum>(tc, tr, v.i16);
-    test_load_helper<int32<B/4>, vnum>(tc, tr, v.i32);
-    test_load_helper<int64<B/8>, vnum>(tc, tr, v.i64);
+    test_load_helper<int8<B>, vnum>(tc, tr, v.pi8);
+    test_load_helper<int16<B/2>, vnum>(tc, tr, v.pi16);
+    test_load_helper<int32<B/4>, vnum>(tc, tr, v.pi32);
+    test_load_helper<int64<B/8>, vnum>(tc, tr, v.pi64);
 
-    test_load_helper<float32<B/4>, vnum>(tc, tr, v.f32);
-    test_load_helper<float64<B/8>, vnum>(tc, tr, v.f64);
+    test_load_helper<float32<B/4>, vnum>(tc, tr, v.pf32);
+    test_load_helper<float64<B/8>, vnum>(tc, tr, v.pf64);
 }
 
 void test_memory_load(TestResults& res, TestReporter& tr)

@@ -40,8 +40,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @a p must be aligned to 32 bytes.
 */
-template<unsigned N, class V> SIMDPP_INL
-void store_last(void* p, const any_vec<N,V>& a, unsigned n)
+template<class T, unsigned N, class V> SIMDPP_INL
+void store_last(T* p, const any_vec<N,V>& a, unsigned n)
 {
     static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
     detail::insn::i_store_last(reinterpret_cast<char*>(p),

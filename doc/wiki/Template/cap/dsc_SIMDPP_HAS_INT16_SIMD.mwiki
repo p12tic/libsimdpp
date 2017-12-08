@@ -1,0 +1,1 @@
+{{dsc macro const | cap/SIMDPP_HAS_INT16_SIMD | indicates support of 16-bit integers in SIMD unit }}

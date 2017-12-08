@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/not_implemented.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -24,13 +25,11 @@ static SIMDPP_INL
 uint8x16 i_permute_bytes16(const uint8x16& a, const uint8x16& mask)
 {
 #if SIMDPP_USE_NULL
-    uint8x16 ai = a;
-    uint8x16 mi = mask;
     uint8x16 r;
 
     for (unsigned i = 0; i < 16; i++) {
-        unsigned j = mi.el(i) & 0x0f;
-        r.el(i) = ai.el(j);
+        unsigned j = mask.el(i) & 0x0f;
+        r.el(i) = a.el(j);
     }
     return r;
 #elif SIMDPP_USE_SSSE3

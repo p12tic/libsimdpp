@@ -14,6 +14,7 @@
 
 #include <simdpp/types.h>
 #include <simdpp/core/combine.h>
+#include <simdpp/core/f_add.h>
 #include <simdpp/core/f_neg.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/move_l.h>
@@ -59,8 +60,8 @@ float64x4 i_to_float64(const float32x4& a)
     return combine(lo_f, hi_f);
 #elif SIMDPP_USE_MSA
     float64<2> lo, hi;
-    lo = __msa_fexupl_d(a.native());
-    hi = __msa_fexupr_d(a.native());
+    lo = __msa_fexupr_d(a.native());
+    hi = __msa_fexupl_d(a.native());
     return combine(lo, hi);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
@@ -355,7 +356,7 @@ float64<2> i_to_float64(const int64<2>& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 float64<4> i_to_float64(const int64<4>& a)
 {
@@ -412,7 +413,7 @@ float64<2> i_to_float64(const uint64<2>& a)
 #endif
 }
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 float64<4> i_to_float64(const uint64<4>& a)
 {

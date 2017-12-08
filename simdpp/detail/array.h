@@ -30,6 +30,46 @@ private:
     T d[N];
 };
 
+/*  It looks like arrays are too opaque for most compilers to be able to figure
+    out whith store corresponds to which load. As a workaround, separate
+    variables are used.
+*/
+template<class T>
+class array2 {
+public:
+    SIMDPP_INL T&       operator[](unsigned id) { return id == 0 ? d0 : d1; }
+    SIMDPP_INL const T& operator[](unsigned id) const { return id == 0 ? d0 : d1; }
+private:
+    T d0, d1;
+};
+
+template<class T>
+class array4 {
+public:
+    SIMDPP_INL T& operator[](unsigned id)
+    {
+        switch (id) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        default: return d3;
+        }
+    }
+
+    SIMDPP_INL const T& operator[](unsigned id) const
+    {
+        switch (id) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        default: return d3;
+        }
+    }
+
+private:
+    T d0, d1, d2, d3;
+};
+
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

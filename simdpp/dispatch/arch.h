@@ -52,6 +52,8 @@ enum class Arch : std::uint32_t {
     X86_AVX512BW = 1 << 12,
     /// Indicates x86 AVX-512DQ suppotr
     X86_AVX512DQ = 1 << 13,
+    /// Indicates x86 AVX-512VL suppotr
+    X86_AVX512VL = 1 << 14,
 
     /// Indicates ARM NEON support (SP and DP floating-point math is executed
     /// on VFP)

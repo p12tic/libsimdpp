@@ -18,6 +18,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/combine.h>
 #include <simdpp/detail/mem_block.h>
+#include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {

@@ -28,7 +28,7 @@ SIMDPP_INL uint32<4> i_to_uint32(const uint64<4>& a)
 #if SIMDPP_USE_NULL
     uint32<4> r;
     for (unsigned i = 0; i < 4; i++) {
-        r.el(i) = uint32_t(a.vec(i/4).el(i%4));
+        r.el(i) = uint32_t(a.vec(i/2).el(i%2));
     }
     return r;
 #elif SIMDPP_USE_AVX512VL
