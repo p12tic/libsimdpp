@@ -379,8 +379,10 @@
 #define SIMDPP_INL inline
 #endif
 
-#if defined(__GNUC__) || defined(__clang__)
+#if defined(__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #define SIMDPP_DEPRECATED(msg) __attribute__ ((deprecated(msg)))
+#elif defined(__GNUC__)
+#define SIMDPP_DEPRECATED(msg) __attribute__ ((deprecated))
 #else
 #define SIMDPP_DEPRECATED(msg)
 #endif
