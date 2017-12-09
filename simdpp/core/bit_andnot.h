@@ -35,8 +35,7 @@ template<unsigned N, class V1, class V2> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, V1, V2>::type
         bit_andnot(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, V1, V2>::type ret =
-            { { a.wrapped(), b.wrapped() } };
+    expr_bit_andnot<V1, V2> ret = { a.wrapped(), b.wrapped() };
     return ret;
 }
 
@@ -45,48 +44,42 @@ template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned, V>::type
         bit_andnot(const unsigned& a, const any_vec<N,V>& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned, V>::type ret =
-            { { a, b.wrapped() } };
+    expr_bit_andnot<unsigned, V> ret = { a, b.wrapped() };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned long, V>::type
         bit_andnot(const unsigned long& a, const any_vec<N,V>& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned long, V>::type ret =
-            { { a, b.wrapped() } };
+    expr_bit_andnot<unsigned long, V> ret = { a, b.wrapped() };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned long long, V>::type
         bit_andnot(const unsigned long long& a, const any_vec<N,V>& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned long long, V>::type ret =
-            { { a, b.wrapped() } };
+    expr_bit_andnot<unsigned long long, V> ret = { a, b.wrapped() };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, int, V>::type
         bit_andnot(const int& a, const any_vec<N,V>& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, int, V>::type ret =
-            { { a, b.wrapped() } };
+    expr_bit_andnot<int, V> ret = { a, b.wrapped() };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, long, V>::type
         bit_andnot(const long& a, const any_vec<N,V>& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, long, V>::type ret =
-            { { a, b.wrapped() } };
+    expr_bit_andnot<long, V> ret = { a, b.wrapped() };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, long long, V>::type
         bit_andnot(const long long& a, const any_vec<N,V>& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, long long, V>::type ret =
-            { { a, b.wrapped() } };
+    expr_bit_andnot<long long, V> ret = { a, b.wrapped() };
     return ret;
 }
 
@@ -94,48 +87,42 @@ template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned>::type
         bit_andnot(const any_vec<N,V>& a, const unsigned& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned>::type ret =
-            { { a.wrapped(), b } };
+    expr_bit_andnot<V, unsigned> ret = { a.wrapped(), b };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned long>::type
         bit_andnot(const any_vec<N,V>& a, const unsigned long& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned long>::type ret =
-            { { a.wrapped(), b } };
+    expr_bit_andnot<V, unsigned long> ret = { a.wrapped(), b };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned long long>::type
         bit_andnot(const any_vec<N,V>& a, const unsigned long long& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned long long>::type ret =
-            { { a.wrapped(), b } };
+    expr_bit_andnot<V, unsigned long long> ret = { a.wrapped(), b };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, int>::type
         bit_andnot(const any_vec<N,V>& a, const int& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, int>::type ret =
-            { { a.wrapped(), b } };
+    expr_bit_andnot<V, int> ret = { a.wrapped(), b };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, long>::type
         bit_andnot(const any_vec<N,V>& a, const long& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, long>::type ret =
-            { { a.wrapped(), b } };
+    expr_bit_andnot<V, long> ret = { a.wrapped(), b };
     return ret;
 }
 template<unsigned N, class V> SIMDPP_INL
 typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, long long>::type
         bit_andnot(const any_vec<N,V>& a, const long long& b)
 {
-    typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, long long>::type ret =
-            { { a.wrapped(), b } };
+    expr_bit_andnot<V, long long> ret = { a.wrapped(), b };
     return ret;
 }
 

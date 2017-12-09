@@ -20,7 +20,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class E>
-struct expr_eval<R, expr_iabs<E>> {
+struct expr_eval<R, expr_iabs<E> > {
     static SIMDPP_INL R eval(const expr_iabs<E>& e)
     {
         return (R) insn::i_iabs(e.a.eval());

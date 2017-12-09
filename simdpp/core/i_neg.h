@@ -32,7 +32,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E> SIMDPP_INL
 int8<N, expr_ineg<int8<N,E> > > neg(const int8<N,E>& a)
 {
-    int8<N, expr_ineg<int8<N,E> > > ret = { { a } };
+    expr_ineg<int8<N,E> > ret = { a };
     return ret;
 }
 
@@ -50,7 +50,7 @@ int8<N, expr_ineg<int8<N,E> > > neg(const int8<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 int16<N, expr_ineg<int16<N,E> > > neg(const int16<N,E>& a)
 {
-    int16<N, expr_ineg<int16<N,E> > > ret = { { a } };
+    expr_ineg<int16<N,E> > ret = { a };
     return ret;
 }
 
@@ -68,7 +68,7 @@ int16<N, expr_ineg<int16<N,E> > > neg(const int16<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 int32<N, expr_ineg<int32<N,E> > > neg(const int32<N,E>& a)
 {
-    int32<N, expr_ineg<int32<N,E> > > ret = { { a } };
+    expr_ineg<int32<N,E> > ret = { a };
     return ret;
 }
 
@@ -90,7 +90,7 @@ int32<N, expr_ineg<int32<N,E> > > neg(const int32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 int64<N, expr_ineg<int64<N,E> > > neg(const int64<N,E>& a)
 {
-    int64<N, expr_ineg<int64<N,E> > > ret = { { a } };
+    expr_ineg<int64<N,E> > ret = { a };
     return ret;
 }
 

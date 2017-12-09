@@ -35,8 +35,8 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 float32<N, expr_fadd<float32<N,E1>,
                      float32<N,E2> > > add(const float32<N,E1>& a, const float32<N,E2>& b)
 {
-    float32<N, expr_fadd<float32<N,E1>,
-                         float32<N,E2> > > ret = { { a, b } };
+    expr_fadd<float32<N,E1>,
+              float32<N,E2> > ret = { a, b };
     return ret;
 }
 
@@ -61,8 +61,8 @@ template<unsigned N, class E1, class E2> SIMDPP_INL
 float64<N, expr_fadd<float64<N,E1>,
                      float64<N,E2> > > add(const float64<N,E1>& a, const float64<N,E2>& b)
 {
-    float64<N, expr_fadd<float64<N,E1>,
-                         float64<N,E2> > > ret = { { a, b } };
+    expr_fadd<float64<N,E1>,
+              float64<N,E2> > ret = { a, b };
     return ret;
 }
 

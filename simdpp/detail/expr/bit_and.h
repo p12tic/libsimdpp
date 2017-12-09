@@ -22,10 +22,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class E1, class E2>
-struct expr_eval<R, expr_bit_and<E1, E2>> {
+struct expr_eval<R, expr_bit_and<E1, E2> > {
     static SIMDPP_INL R eval(const expr_bit_and<E1, E2>& e)
     {
-        using E = get_expr_bitwise2_and_impl<E1, E2>;
+        typedef get_expr_bitwise2_and_impl<E1, E2> E;
         return (R) insn::i_bit_and(
                 eval_maybe_scalar_bitwise<typename E::v1_final_type, E1>::eval(e.a),
                 eval_maybe_scalar_bitwise<typename E::v2_final_type, E2>::eval(e.b));

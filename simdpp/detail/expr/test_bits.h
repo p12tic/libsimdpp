@@ -73,8 +73,9 @@ bool e_test_bits_any(const any_vec<32, V<N, expr_bit_andnot<V1,V2> > >& e)
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const uint32<16, expr_bit_and<V1,V2> >& e)
+template<unsigned N, template<unsigned, typename> class V,
+         class V1, class V2> SIMDPP_INL
+bool e_test_bits_any(const any_vec32<16, V<N, expr_bit_and<V1,V2> > >& e)
 {
     uint32<16> a, b;
     a = e.wrapped().e.a.eval();
@@ -82,8 +83,9 @@ bool e_test_bits_any(const uint32<16, expr_bit_and<V1,V2> >& e)
     return _mm512_test_epi64_mask(a.native(), b.native()) != 0;
 }
 
-template<class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const uint64<8, expr_bit_and<V1,V2> >& e)
+template<unsigned N, template<unsigned, typename> class V,
+         class V1, class V2> SIMDPP_INL
+bool e_test_bits_any(const any_vec64<8, V<N, expr_bit_and<V1,V2> > >& e)
 {
     uint64<8> a, b;
     a = e.wrapped().e.a.eval();

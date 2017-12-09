@@ -314,8 +314,8 @@ uint64<4> i_mull(const uint32<4>& a, const uint32<4>& b)
 #endif
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #elif SIMDPP_USE_ALTIVEC
-    mem_block<uint32<4>> ba = a;
-    mem_block<uint32<4>> bb = b;
+    mem_block<uint32<4> > ba = a;
+    mem_block<uint32<4> > bb = b;
     uint64x4 r;
     r.vec(0).el(0) = (uint64_t) ba[0] * bb[0];
     r.vec(0).el(1) = (uint64_t) ba[1] * bb[1];

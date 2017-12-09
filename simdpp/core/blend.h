@@ -116,7 +116,7 @@ public:
                                  V1::length_bytes, void>::type v3_final_type;
 
     typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                 expr_blend<V1, V2, V3>>::type type;
+                                 expr_blend<V1, V2, V3> >::type type;
 };
 
 } // namespace detail
@@ -183,8 +183,7 @@ typename detail::get_expr_blend<V1, V2, V3>::type
         blend(const any_vec<N,V1>& on, const any_vec<N,V2>& off,
               const any_vec<N,V3>& mask)
 {
-    typename detail::get_expr_blend<V1, V2, V3>::type ret =
-            { { on.wrapped(), off.wrapped(), mask.wrapped() } };
+    expr_blend<V1, V2, V3> ret = { on.wrapped(), off.wrapped(), mask.wrapped() };
     return ret;
 }
 

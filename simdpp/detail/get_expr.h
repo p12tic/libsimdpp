@@ -241,12 +241,12 @@ public:
 
 template<class V1, class V2>
 class get_expr2_same {
-    using tags = expr2_maybe_scalar_tags<V1, V2>;
+    typedef expr2_maybe_scalar_tags<V1, V2> tags;
 public:
-    using v1_final_type = typename type_of_tag<tags::v1_type_tag + tags::v1_size_tag,
-                                               tags::length_bytes, void>::type;
-    using v2_final_type = typename type_of_tag<tags::v2_type_tag + tags::v2_size_tag,
-                                               tags::length_bytes, void>::type;
+    typedef typename type_of_tag<tags::v1_type_tag + tags::v1_size_tag,
+                                 tags::length_bytes, void>::type v1_final_type;
+    typedef typename type_of_tag<tags::v2_type_tag + tags::v2_size_tag,
+                                 tags::length_bytes, void>::type v2_final_type;
 };
 
 template<class V1, class V2, class E = void>

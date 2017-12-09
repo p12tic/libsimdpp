@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E> SIMDPP_INL
 float32<N, expr_fabs<float32<N,E> > > abs(const float32<N,E>& a)
 {
-    float32<N, expr_fabs<float32<N,E> > > ret = { { a } };
+    expr_fabs<float32<N,E> > ret = { a };
     return ret;
 }
 
@@ -64,7 +64,7 @@ float32<N, expr_fabs<float32<N,E> > > abs(const float32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 float64<N, expr_fabs<float64<N,E> > > abs(const float64<N,E>& a)
 {
-    float64<N, expr_fabs<float64<N,E> > > ret = { { a } };
+    expr_fabs<float64<N,E> > ret = { a };
     return ret;
 }
 

@@ -37,8 +37,7 @@ typename detail::get_expr_uint<expr_isub, V1, V2>::type
         sub(const any_int8<N,V1>& a,
             const any_int8<N,V2>& b)
 {
-    typename detail::get_expr_uint<expr_isub, V1, V2>::type ret =
-            { { a.wrapped(), b.wrapped() } };
+    expr_isub<V1, V2> ret = { a.wrapped(), b.wrapped() };
     return ret;
 }
 
@@ -60,8 +59,7 @@ typename detail::get_expr_uint<expr_isub, V1, V2>::type
         sub(const any_int16<N,V1>& a,
             const any_int16<N,V2>& b)
 {
-    typename detail::get_expr_uint<expr_isub, V1, V2>::type ret =
-            { { a.wrapped(), b.wrapped() } };
+    expr_isub<V1, V2> ret = { a.wrapped(), b.wrapped() };
     return ret;
 }
 
@@ -83,8 +81,7 @@ typename detail::get_expr_uint<expr_isub, V1, V2>::type
         sub(const any_int32<N,V1>& a,
             const any_int32<N,V2>& b)
 {
-    typename detail::get_expr_uint<expr_isub, V1, V2>::type ret =
-            { { a.wrapped(), b.wrapped() } };
+    expr_isub<V1, V2> ret = { a.wrapped(), b.wrapped() };
     return ret;
 }
 
@@ -110,8 +107,7 @@ typename detail::get_expr_uint<expr_isub, V1, V2>::type
         sub(const any_int64<N,V1>& a,
             const any_int64<N,V2>& b)
 {
-    typename detail::get_expr_uint<expr_isub, V1, V2>::type ret =
-            { { a.wrapped(), b.wrapped() } };
+    expr_isub<V1, V2> ret = { a.wrapped(), b.wrapped() };
     return ret;
 }
 

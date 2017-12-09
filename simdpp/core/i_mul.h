@@ -38,8 +38,7 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         mul_lo(const any_int16<N,V1>& a,
                const any_int16<N,V2>& b)
 {
-    typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type ret =
-            { { a.wrapped(), b.wrapped() } };
+    expr_mul_lo<V1, V2> ret = { a.wrapped(), b.wrapped() };
     return ret;
 }
 
@@ -65,8 +64,8 @@ int16<N, expr_mul_hi<int16<N,E1>,
                      int16<N,E2> > > mul_hi(const int16<N,E1>& a,
                                           const int16<N,E2>& b)
 {
-    int16<N, expr_mul_hi<int16<N,E1>,
-                         int16<N,E2> > > ret = { { a, b } };
+    expr_mul_hi<int16<N,E1>,
+                int16<N,E2> > ret = { a, b };
     return ret;
 }
 
@@ -92,8 +91,8 @@ uint16<N, expr_mul_hi<uint16<N,E1>,
                       uint16<N,E2> > > mul_hi(const uint16<N,E1>& a,
                                             const uint16<N,E2>& b)
 {
-    uint16<N, expr_mul_hi<uint16<N,E1>,
-                          uint16<N,E2> > > ret = { { a, b } };
+    expr_mul_hi<uint16<N,E1>,
+                uint16<N,E2> > ret = { a, b };
     return ret;
 }
 
@@ -122,8 +121,7 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         mul_lo(const any_int32<N,V1>& a,
                const any_int32<N,V2>& b)
 {
-    typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type ret =
-            { { a.wrapped(), b.wrapped() } };
+    expr_mul_lo<V1, V2> ret = { a.wrapped(), b.wrapped() };
     return ret;
 }
 

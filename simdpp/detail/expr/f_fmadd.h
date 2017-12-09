@@ -20,7 +20,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class E1, class E2, class E3>
-struct expr_eval<R, expr_fmadd<E1, E2, E3>> {
+struct expr_eval<R, expr_fmadd<E1, E2, E3> > {
     static SIMDPP_INL R eval(const expr_fmadd<E1, E2, E3>& e)
     {
         return (R) insn::i_fmadd(e.a.eval(), e.b.eval(), e.c.eval());

@@ -58,7 +58,7 @@ namespace detail {
 
 template<class V1, class V2>
 struct get_expr_bitwise2_and_impl {
-    using tags = expr2_maybe_scalar_tags<V1, V2>;
+    typedef expr2_maybe_scalar_tags<V1, V2> tags;
 
     // (size_tag) get the size tag of the resulting expression
     static const unsigned size_tag = tags::v1_size_tag > tags::v2_size_tag
@@ -101,7 +101,7 @@ struct get_expr_bitwise2_and {
     typedef get_expr_bitwise2_and_impl<V1, V2> impl;
     typedef typename type_of_tag<impl::type_tag + impl::size_tag,
                                  impl::tags::length_bytes,
-                                 E<V1, V2>>::type type;
+                                 E<V1, V2> >::type type;
 };
 
 
@@ -157,7 +157,7 @@ public:
                                  V1::length_bytes, void>::type v2_final_type;
 
     typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                 expr_bit_or<V1, V2>>::type type;
+                                 expr_bit_or<V1, V2> >::type type;
 };
 
 

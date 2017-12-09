@@ -187,7 +187,7 @@ struct expr2_uint_maybe_scalar_tags<V1, double> {
 
 template<class V1, class V2>
 struct get_expr_uint_impl {
-    using tags = expr2_uint_maybe_scalar_tags<V1, V2>;
+    typedef expr2_uint_maybe_scalar_tags<V1, V2> tags;
 
 #if SIMDPP_EXPR_DEBUG
     SIMDPP_STATIC_ASSERT(tags::v1_size_tag == tags::v2_size_tag, "Mismatching vector sizes");
@@ -223,7 +223,7 @@ struct get_expr_uint {
 
     typedef typename type_of_tag<impl::type_tag + impl::size_tag,
                                  impl::tags::length_bytes,
-                                 E<V1, V2>>::type type;
+                                 E<V1, V2> >::type type;
 };
 
 } // namespace detail

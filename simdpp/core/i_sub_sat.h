@@ -35,8 +35,8 @@ int8<N, expr_isub_sat<int8<N,E1>,
                       int8<N,E2> > > sub_sat(const int8<N,E1>& a,
                                            const int8<N,E2>& b)
 {
-    int8<N, expr_isub_sat<int8<N,E1>,
-                          int8<N,E2> > > ret = { { a, b } };
+    expr_isub_sat<int8<N,E1>,
+                  int8<N,E2> > ret = { a, b };
     return ret;
 }
 
@@ -58,8 +58,8 @@ int16<N, expr_isub_sat<int16<N,E1>,
                        int16<N,E2> > > sub_sat(const int16<N,E1>& a,
                                              const int16<N,E2>& b)
 {
-    int16<N, expr_isub_sat<int16<N,E1>,
-                           int16<N,E2> > > ret = { { a, b } };
+    expr_isub_sat<int16<N,E1>,
+                  int16<N,E2> > ret = { a, b };
     return ret;
 }
 
@@ -81,8 +81,8 @@ uint8<N, expr_isub_sat<uint8<N,E1>,
                        uint8<N,E2> > > sub_sat(const uint8<N,E1>& a,
                                              const uint8<N,E2>& b)
 {
-    uint8<N, expr_isub_sat<uint8<N,E1>,
-                           uint8<N,E2> > > ret = { { a, b } };
+    expr_isub_sat<uint8<N,E1>,
+                  uint8<N,E2> > ret = { a, b };
     return ret;
 }
 
@@ -104,8 +104,8 @@ uint16<N, expr_isub_sat<uint16<N,E1>,
                         uint16<N,E2> > > sub_sat(const uint16<N,E1>& a,
                                                const uint16<N,E2>& b)
 {
-    uint16<N, expr_isub_sat<uint16<N,E1>,
-                            uint16<N,E2> > > ret = { { a, b } };
+    expr_isub_sat<uint16<N,E1>,
+                  uint16<N,E2> > ret = { a, b };
     return ret;
 }
 

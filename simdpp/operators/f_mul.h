@@ -37,8 +37,8 @@ float32<N, expr_fmul<float32<N,E1>,
                      float32<N,E2> > > operator*(const float32<N,E1>& a,
                                          const float32<N,E2>& b)
 {
-    float32<N, expr_fmul<float32<N,E1>,
-                         float32<N,E2> > > ret = { { a, b } };
+    expr_fmul<float32<N,E1>,
+              float32<N,E2> > ret = { a, b };
     return ret;
 }
 
@@ -64,8 +64,8 @@ float64<N, expr_fmul<float64<N,E1>,
                      float64<N,E2> > > operator*(const float64<N,E1>& a,
                                          const float64<N,E2>& b)
 {
-    float64<N, expr_fmul<float64<N,E1>,
-                         float64<N,E2> > > ret = { { a, b } };
+    expr_fmul<float64<N,E1>,
+              float64<N,E2> > ret = { a, b };
     return ret;
 }
 

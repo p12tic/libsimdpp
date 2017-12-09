@@ -52,7 +52,7 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     E sum = 0;
     for_each(v1234, SumClosure<E, E>(sum));
 
-    TEST_EQUAL(tr, expected, sum);
+    TEST_EQUAL(tr, expected, (uint64_t)sum);
 }
 
 template<unsigned B>

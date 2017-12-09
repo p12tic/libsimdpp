@@ -38,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N, class E> SIMDPP_INL
 uint8<N, expr_iabs<int8<N,E> > > abs(const int8<N,E>& a)
 {
-    uint8<N, expr_iabs<int8<N,E> > > ret = { { a } };
+    expr_iabs<int8<N,E> > ret = { a };
     return ret;
 }
 
@@ -62,7 +62,7 @@ uint8<N, expr_iabs<int8<N,E> > > abs(const int8<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint16<N, expr_iabs<int16<N,E> > > abs(const int16<N,E>& a)
 {
-    uint16<N, expr_iabs<int16<N,E> > > ret = { { a } };
+    expr_iabs<int16<N,E> > ret = { a };
     return ret;
 }
 
@@ -85,7 +85,7 @@ uint16<N, expr_iabs<int16<N,E> > > abs(const int16<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint32<N, expr_iabs<int32<N,E> > > abs(const int32<N,E>& a)
 {
-    uint32<N, expr_iabs<int32<N,E> > > ret = { { a } };
+    expr_iabs<int32<N,E> > ret = { a };
     return ret;
 }
 
@@ -110,7 +110,7 @@ uint32<N, expr_iabs<int32<N,E> > > abs(const int32<N,E>& a)
 template<unsigned N, class E> SIMDPP_INL
 uint64<N, expr_iabs<int64<N,E> > > abs(const int64<N,E>& a)
 {
-    uint64<N, expr_iabs<int64<N,E> > > ret = { { a } };
+    expr_iabs<int64<N,E> > ret = { a };
     return ret;
 }
 

@@ -21,7 +21,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, class E1, class E2>
-struct expr_eval<R, expr_mull<E1, E2>> {
+struct expr_eval<R, expr_mull<E1, E2> > {
     static SIMDPP_INL R eval(const expr_mull<E1, E2>& e)
     {
         typedef get_expr2_same<E1, E2> E;

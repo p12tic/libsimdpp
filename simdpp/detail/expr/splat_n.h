@@ -20,7 +20,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
 template<class R, unsigned S, class E>
-struct expr_eval<R, expr_splat2<S, E>> {
+struct expr_eval<R, expr_splat2<S, E> > {
     static SIMDPP_INL R eval(const expr_splat2<S, E>& e)
     {
         return insn::i_splat2<S>(e.a.eval());
@@ -28,7 +28,7 @@ struct expr_eval<R, expr_splat2<S, E>> {
 };
 
 template<class R, unsigned S, class E>
-struct expr_eval<R, expr_splat4<S, E>> {
+struct expr_eval<R, expr_splat4<S, E> > {
     static SIMDPP_INL R eval(const expr_splat4<S, E>& e)
     {
         return insn::i_splat4<S>(e.a.eval());
@@ -36,7 +36,7 @@ struct expr_eval<R, expr_splat4<S, E>> {
 };
 
 template<class R, unsigned S, class E>
-struct expr_eval<R, expr_splat8<S, E>> {
+struct expr_eval<R, expr_splat8<S, E> > {
     static SIMDPP_INL R eval(const expr_splat8<S, E>& e)
     {
         return insn::i_splat8<S>(e.a.eval());
@@ -44,7 +44,7 @@ struct expr_eval<R, expr_splat8<S, E>> {
 };
 
 template<class R, unsigned S, class E>
-struct expr_eval<R, expr_splat16<S, E>> {
+struct expr_eval<R, expr_splat16<S, E> > {
     static SIMDPP_INL R eval(const expr_splat16<S, E>& e)
     {
         return insn::i_splat16<S>(e.a.eval());
