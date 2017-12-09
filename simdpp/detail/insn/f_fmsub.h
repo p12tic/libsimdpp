@@ -25,7 +25,7 @@ static SIMDPP_INL
 float32<4> i_fmsub(const float32<4>& a, const float32<4>& b,
                    const float32<4>& c)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL && (!defined(_MSC_VER) || _MSC_VER >= 1800)
     return detail::null::fmsub(a, b, c);
 #elif SIMDPP_USE_FMA3
     return _mm_fmsub_ps(a.native(), b.native(), c.native());
@@ -71,7 +71,7 @@ static SIMDPP_INL
 float64<2> i_fmsub(const float64<2>& a, const float64<2>& b,
                    const float64<2>& c)
 {
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL && (!defined(_MSC_VER) || _MSC_VER >= 1800)
     return detail::null::fmsub(a, b, c);
 #elif SIMDPP_USE_FMA3
     return _mm_fmsub_pd(a.native(), b.native(), c.native());
