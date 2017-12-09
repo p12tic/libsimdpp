@@ -128,7 +128,6 @@ if(SIMDPP_MSVC)
         set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "/Gv")
     endif()
 elseif(SIMDPP_MSVC_INTEL)
-    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
 else()
     # Xcode clang linker spends very long time in deduplication pass when
     # linking the test executable unless -fvisibility-inlines-hidden is passed.
