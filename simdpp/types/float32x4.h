@@ -42,7 +42,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v4f32;
 #else // NULL && (NEON && !FLT_SP)
-    using native_type = detail::array4<float>;
+    using native_type = detail::vararray<float,4>;
 #endif
 
     SIMDPP_INL float32<4>() = default;
@@ -92,10 +92,12 @@ public:
 
 private:
 #if SIMDPP_ARM && !SIMDPP_HAS_FLOAT32_SIMD
-    // When casting int32<4> to float32<4> on certain conditions GCC will assume
-    // that result location is 16-byte aligned and will use aligned store which
-    // causes a crash when the stack is not aligned.
-    SIMDPP_ALIGN(16) native_type d_;
+    // Force alignment to be the same as of the real vector types. Different
+    // alignment causes problems when types such as int32<4> are casted to
+    // float32<4> or vice-versa - GCC assumes that some data on stack has
+    // higher alignment than it really has and uses aligned load or store which
+    // causes crashes.
+    SIMDPP_ALIGN(8) native_type d_;
 #else
     native_type d_;
 #endif
@@ -121,7 +123,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v4f32;
 #else // NULL || (NEON && !FLT_SP)
-    using native_type = detail::array4<uint8_t>;
+    using native_type = detail::vararray<uint8_t,4>;
 #endif
     SIMDPP_INL mask_float32<4>() = default;
     SIMDPP_INL mask_float32<4>(const mask_float32<4> &) = default;

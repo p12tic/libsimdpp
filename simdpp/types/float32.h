@@ -12,12 +12,11 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/types.h>
+#include <simdpp/setup_arch.h>
 #include <simdpp/types/any.h>
-#include <simdpp/types/tag.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/core/cast.h>
-#include <simdpp/types/float32x4.h>
-#include <simdpp/types/float32x8.h>
+#include <simdpp/detail/array.h>
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
@@ -78,7 +77,7 @@ private:
         return r;
     }
 
-    float32v d_[float32::vec_length];
+    detail::vararray<float32v, float32::vec_length> d_;
 };
 
 
@@ -120,7 +119,7 @@ public:
     SIMDPP_INL mask_float32<N> eval() const { return *this; }
 
 private:
-    mask_float32v d_[mask_float32::vec_length];
+    detail::vararray<mask_float32v, mask_float32::vec_length> d_;
 };
 
 
