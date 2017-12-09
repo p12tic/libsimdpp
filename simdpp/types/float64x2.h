@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v2f64;
 #else
-    using native_type = detail::array2<double>;
+    using native_type = detail::vararray<double,2>;
 #endif
 
     SIMDPP_INL float64<2>() = default;
@@ -121,7 +121,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v2f64;
 #else // NULL, NEON 32bit, ALTIVEC
-    using native_type = detail::array2<uint8_t>;
+    using native_type = detail::vararray<uint8_t,2>;
 #endif
 
     SIMDPP_INL mask_float64<2>() = default;

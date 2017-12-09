@@ -30,12 +30,25 @@ private:
     T d[N];
 };
 
-/*  It looks like arrays are too opaque for most compilers to be able to figure
-    out whith store corresponds to which load. As a workaround, separate
-    variables are used.
+/*  A compile-time array that uses variables instead of array for underlying
+    storage when element count is small.
+
+    Variables are used as a workaround because arrays are too opaque for most
+    older compilers to be able to figure out whith store corresponds to which
+    load.
 */
+template<class T, unsigned N>
+class vararray {
+public:
+    SIMDPP_INL T&       operator[](unsigned id) { return d[id]; }
+    SIMDPP_INL const T& operator[](unsigned id) const { return d[id]; }
+private:
+    T d[N];
+};
+
+
 template<class T>
-class array2 {
+class vararray<T,2> {
 public:
     SIMDPP_INL T&       operator[](unsigned id) { return id == 0 ? d0 : d1; }
     SIMDPP_INL const T& operator[](unsigned id) const { return id == 0 ? d0 : d1; }
@@ -44,7 +57,7 @@ private:
 };
 
 template<class T>
-class array4 {
+class vararray<T,4> {
 public:
     SIMDPP_INL T& operator[](unsigned id)
     {
