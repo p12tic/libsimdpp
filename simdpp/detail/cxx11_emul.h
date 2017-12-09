@@ -18,6 +18,11 @@
 #include <math.h>
 #include <float.h>
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4800)
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
@@ -82,6 +87,10 @@ SIMDPP_INL double fma(double a, double b, double c)
 } // SIMDPP_ARCH_NAMESPACE
 } // namespace detail
 } // namespace simdpp
+
+#if _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif
 
