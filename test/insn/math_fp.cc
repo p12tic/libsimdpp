@@ -158,21 +158,6 @@ void test_math_float64_n(TestResultsSet& tc, const TestOptions& opts)
     TEST_PUSH_ALL_COMB_OP2(tc, float64_n, max, snan);
 
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
-    tc.set_fp_zero_equal();
-    // Certain simulators can't handle NaNs and infinity in this instruction
-    if (opts.is_simulator) {
-
-        TestData<float64_n> snan;
-        snan.add(make_float(1.0, 2.0));
-        snan.add(make_float(3.0, 4.0));
-        snan.add(make_float(-1.0, -2.0));
-        snan.add(make_float(-3.0, -4.0));
-        snan.add(make_float(63100000000000000.0, 63100000000000004.0));
-        snan.add(make_float(63100000000000008.0, 63100000000000012.0));
-        snan.add(make_float(-63100000000000000.0, -63100000000000004.0));
-        snan.add(make_float(-63100000000000008.0, -63100000000000012.0));
-
-#if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
 #if !defined(_MSC_VER) || _MSC_VER >= 1800
     // std::fma which we're testing against is only available since MSVC 2013
     tc.set_fp_zero_equal();
