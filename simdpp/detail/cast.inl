@@ -48,6 +48,12 @@ void cast_bitwise(const T& t, R& r)
     r = r_union;
 }
 
+#ifdef __GNUC__
+// t_union and r_union on GCC 4.4
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 template<class T, class R> SIMDPP_INL
 void cast_bitwise_vector(const T& t, R& r)
 {
@@ -78,6 +84,10 @@ void cast_bitwise_vector(const T& t, R& r)
     r = r_union;
 #endif
 }
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
 template<class T, class R> SIMDPP_INL
 void cast_bitwise_unmask(const T& t, R& r)
