@@ -307,7 +307,9 @@ void i_set_splat(float32<16>& v, float v0)
 
 #ifdef __GNUC__
 // GCC thinks tv is not initialized
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic push
+#endif
 #pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 
@@ -320,7 +322,7 @@ void i_set_splat(float32<N>& v, float v0)
         v.vec(i) = tv;
     }
 }
-#ifdef __GNUC__
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic pop
 #endif
 
@@ -380,7 +382,9 @@ void i_set_splat(float64<N>& v, double v0)
 
 #ifdef __GNUC__
 // GCC thinks r is not initialized
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic push
+#endif
 #pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 template<class V, class VE> SIMDPP_INL
@@ -390,7 +394,7 @@ V i_splat_any(const VE& x)
     insn::i_set_splat(r, x);
     return V(r);
 }
-#ifdef __GNUC__
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic pop
 #endif
 

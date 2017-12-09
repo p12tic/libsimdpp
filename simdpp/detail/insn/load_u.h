@@ -32,7 +32,9 @@ namespace insn {
 // Pentium 4 era processors.
 #ifdef __GNUC__
 // vec_lvsl on little-endian PPC
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic push
+#endif
 #pragma GCC diagnostic ignored "-Wdeprecated"
 #endif
 
@@ -60,7 +62,7 @@ void i_load_u(uint8x16& a, const char* p)
 #endif
 }
 
-#ifdef __GNUC__
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic pop
 #endif
 

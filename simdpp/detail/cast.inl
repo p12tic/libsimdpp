@@ -50,7 +50,9 @@ void cast_bitwise(const T& t, R& r)
 
 #ifdef __GNUC__
 // t_union and r_union on GCC 4.4
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic push
+#endif
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
@@ -85,7 +87,7 @@ void cast_bitwise_vector(const T& t, R& r)
 #endif
 }
 
-#ifdef __GNUC__
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic pop
 #endif
 

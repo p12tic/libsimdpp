@@ -26,7 +26,9 @@ namespace insn {
 
 #ifdef __GNUC__
 // vec_lvsl on little-endian PPC
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic push
+#endif
 #pragma GCC diagnostic ignored "-Wdeprecated"
 #endif
 
@@ -65,7 +67,7 @@ void i_store_u(char* p, const uint8<16>& a)
 #endif
 }
 
-#ifdef __GNUC__
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
 #pragma GCC diagnostic pop
 #endif
 
