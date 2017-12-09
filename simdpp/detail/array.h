@@ -18,18 +18,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-/* A simple array class to reduce diff with C++03 branch. Implements a subset
- * of std::array that we use
- */
-template<class T, unsigned N>
-class array {
-public:
-    SIMDPP_INL T&       operator[](unsigned id) { return d[id]; }
-    SIMDPP_INL const T& operator[](unsigned id) const { return d[id]; }
-private:
-    T d[N];
-};
-
 /*  A compile-time array that uses variables instead of array for underlying
     storage when element count is small.
 

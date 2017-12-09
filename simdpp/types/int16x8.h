@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v8i16;
 #else
-    using native_type = detail::array<int16_t, 8>;
+    using native_type = detail::vararray<int16_t, 8>;
 #endif
 
     SIMDPP_INL int16<8>() = default;
@@ -116,7 +116,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v8u16;
 #else
-    using native_type = detail::array<uint16_t, 8>;
+    using native_type = detail::vararray<uint16_t, 8>;
 #endif
 
     SIMDPP_INL uint16<8>() = default;
@@ -190,7 +190,7 @@ public:
 #elif SIMDPP_USE_MSA
     using native_type = v8u16;
 #else
-    using native_type = detail::array<uint8_t, 8>;
+    using native_type = detail::vararray<uint8_t, 8>;
 #endif
 
     SIMDPP_INL mask_int16<8>() = default;
