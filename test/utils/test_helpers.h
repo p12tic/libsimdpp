@@ -51,6 +51,26 @@ inline void set_round_to_nearest()
 #endif
 }
 
+inline void prevent_optimization_impl(const void* ptr)
+{
+    std::cout << ptr;
+}
+
+// Some compilers are really clever figuring out ways to access to data that
+// would allow them to optimize things. Storing and reading a pointer from
+// volatile location seems to work around this.
+template<class T>
+T* prevent_optimization(T* ptr)
+{
+    volatile bool never = false;
+    if (never) {
+        prevent_optimization_impl(ptr);
+    }
+    T* volatile* volatile opaque;
+    opaque = &ptr;
+    return *opaque;
+}
+
 namespace SIMDPP_ARCH_NAMESPACE {
 
 
@@ -63,18 +83,16 @@ template<class T>
 class TestData {
 public:
 
-    TestData() : ptr_(NULL) {}
+    TestData() {}
 
     TestData(const TestData& other)
     {
         data_ = other.data_;
-        ptr_ = &data_.front();
     }
 
     TestData& operator=(const TestData& other)
     {
         data_ = other.data_;
-        ptr_ = &data_.front();
     }
 
     template<class U>
@@ -88,33 +106,33 @@ public:
 #else
         data_.push_back(t);
 #endif
-        ptr_ = &data_.front();
     }
 
     void add(const TestData& other)
     {
         data_.insert(data_.end(), other.data_.begin(), other.data_.end());
-        ptr_ = &data_.front();
     }
 
 #if defined(_MSC_VER) && _MSC_VER < 1700
     size_t size() const { return data_.size() / sizeof(T); }
     const T& operator[](unsigned i) const
     {
-        return *(reinterpret_cast<const T*>(ptr_) + i);
+        const char* ptr = prevent_optimization(&data_.front());
+        return *(reinterpret_cast<const T*>(ptr) + i);
     }
 #else
     size_t size() const { return data_.size(); }
-    const T& operator[](unsigned i) const { return *(ptr_ + i); }
+    const T& operator[](unsigned i) const
+    {
+        return *(prevent_optimization(&data_.front()) + i);
+    }
 #endif
 
 private:
 #if defined(_MSC_VER) && _MSC_VER < 1700
     std::vector<char, simdpp::aligned_allocator<char, sizeof(T)> > data_;
-    char* volatile ptr_;
 #else
     std::vector<T, simdpp::aligned_allocator<T, sizeof(T)> > data_;
-    T* volatile ptr_;
 #endif
 };
 
@@ -263,6 +281,15 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
 }
 
 template<class V>
+void test_push_stored(TestResultsSet& t, const typename V::element_type* data,
+                      unsigned count, const char* file, unsigned line)
+{
+    ElementType type = GetElementType<V>::value;
+    TestResultsSet::Result& res = t.push(type, count, file, line);
+    std::memcpy(res.data.data(), data, count * sizeof(data[0]));
+}
+
+template<class V>
 void print_vector_hex(std::ostream& out, const V& v)
 {
     simdpp::detail::mem_block<V> block(v);
@@ -291,6 +318,11 @@ void print_vector_numeric(std::ostream& out, const V& v)
 */
 #define TEST_PUSH(TC,T,D)                                                       \
     { test_push_internal((TC), (T)(D), __FILE__, __LINE__); }
+
+// The following macro is the same as TEST_PUSH, except that D is a pointer to
+// data of COUNT vectors of type T stored to memory. D must be V::element_type.
+#define TEST_PUSH_STORED(TC, T, D, COUNT)                                       \
+{ test_push_stored<V>((TC), (D), COUNT, __FILE__, __LINE__); }
 
 #define TEST_PUSH_ARRAY(TC, T, A)                                       \
 {                                                                       \
@@ -605,6 +637,28 @@ struct TemplateTestArrayHelper {
     }
 };
 
+template<class E>
+void test_cmp_memory(TestReporter& tr, const E* e1, const E* e2, unsigned count,
+                     bool expected_equal, unsigned line, const char* file)
+{
+    if (count == 0) {
+        tr.add_result(true);
+        return;
+    }
+
+    int memcmp_result = std::memcmp(e1, e2, sizeof(E) * count);
+    bool success = expected_equal ? memcmp_result == 0 : memcmp_result != 0;
+    tr.add_result(success);
+
+    if (!success) {
+        print_separator(tr.out());
+        print_file_info(tr.out(), file, line);
+        tr.out() << (expected_equal ? "Memory not equal:\n"
+                                    : "Memory equal:\n");
+        print_data_diff(tr.out(), GetElementType<E>::value, count, e1, e2);
+    }
+}
+
 template<class V1, class V2>
 void test_cmp_equal_impl(simdpp::detail::true_type /*is_V1_vector*/, TestReporter& tr,
                          const V1& q1, const V2& q2,
@@ -614,8 +668,8 @@ void test_cmp_equal_impl(simdpp::detail::true_type /*is_V1_vector*/, TestReporte
     V v1, v2;
     v1 = q1.eval(); v2 = q2.eval();
 
-    bool success = expected_equal ? std::memcmp(&v1, &v2, sizeof(v1)) == 0 :
-                                    std::memcmp(&v1, &v2, sizeof(v1)) != 0;
+    int memcmp_result = std::memcmp(&v1, &v2, V::length_bytes);
+    bool success = expected_equal ? memcmp_result == 0 : memcmp_result != 0;
     tr.add_result(success);
 
     if (!success) {
@@ -659,5 +713,11 @@ void test_cmp_equal(TestReporter& tr, const T1& a1, const T2& a2,
 
 #define TEST_NOT_EQUAL(TR, V1, V2)                                              \
     do { test_cmp_equal(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
+
+#define TEST_EQUAL_MEMORY(TR, E1, E2, COUNT)                                    \
+    do { test_cmp_memory((TR), (E1), (E2), (COUNT), true, __LINE__, __FILE__); } while(0)
+
+#define TEST_NOT_EQUAL_MEMORY(TR, E1, E2, COUNT)                                \
+    do { test_cmp_memory((TR), (E1), (E2), (COUNT), false, __LINE__, __FILE__); } while(0)
 
 #endif

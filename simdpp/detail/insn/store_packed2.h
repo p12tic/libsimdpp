@@ -267,7 +267,7 @@ void v512_store_pack2(char* p, const V& ca, const V& cb)
 template<class V> SIMDPP_INL
 void i_store_packed2(char* p, const V& ca, const V& cb)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
     typename detail::remove_sign<V>::type a = ca, b = cb;
 
     p = detail::assume_aligned(p, veclen);

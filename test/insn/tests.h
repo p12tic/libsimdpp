@@ -30,7 +30,7 @@ void test_memory_load(TestResults& res, TestReporter& tr);
 void test_memory_store(TestResults& res, TestReporter& tr);
 void test_set(TestResults& res);
 void test_shuffle(TestResults& res);
-void test_shuffle_bytes(TestResults& res);
+void test_shuffle_bytes(TestResults& res, TestReporter& tr);
 void test_shuffle_generic(TestResults& res);
 void test_permute_generic(TestResults& res);
 void test_shuffle_transpose(TestResults& res);

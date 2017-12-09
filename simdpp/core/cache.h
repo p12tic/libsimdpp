@@ -20,10 +20,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @param ptr pointer to the data to prefetch
 */
-SIMDPP_INL void prefetch_read(const void* ptr)
+template<class T>
+SIMDPP_INL void prefetch_read(const T* ptr)
 {
 #if SIMDPP_USE_SSE2
-    _mm_prefetch((const char*)ptr, _MM_HINT_T0);
+    _mm_prefetch(reinterpret_cast<const char*>(ptr), _MM_HINT_T0);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
 #if __GNUC__
     // on NEON results in PLD
@@ -39,10 +40,11 @@ SIMDPP_INL void prefetch_read(const void* ptr)
 
     @param ptr pointer to the data to prefetch
 */
-SIMDPP_INL void prefetch_write(const void* ptr)
+template<class T>
+SIMDPP_INL void prefetch_write(const T* ptr)
 {
 #if SIMDPP_USE_SSE2
-    _mm_prefetch((const char*)ptr, _MM_HINT_T0);
+    _mm_prefetch(reinterpret_cast<const char*>(ptr), _MM_HINT_T0);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
 #if __GNUC__
     // on NEON results in PLDW

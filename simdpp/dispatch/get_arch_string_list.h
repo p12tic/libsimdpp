@@ -100,7 +100,6 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
 
         // strip prefix
         s += prefixlen;
-        len -= prefixlen;
 
         // check if any of the architectures match
         for (unsigned j = 0; j < features.size(); ++j) {

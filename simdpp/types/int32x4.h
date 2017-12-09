@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v4i32 native_type;
 #else
-    typedef detail::array<int32_t, 4> native_type;
+    typedef detail::vararray<int32_t,4> native_type;
 #endif
 
     SIMDPP_INL int32<4>() {}
@@ -116,7 +116,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v4u32 native_type;
 #else
-    typedef detail::array<uint32_t, 4> native_type;
+    typedef detail::vararray<uint32_t,4> native_type;
 #endif
 
     SIMDPP_INL uint32<4>() {}
@@ -190,7 +190,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v4u32 native_type;
 #else
-    typedef detail::array<bool, 4> native_type;
+    typedef detail::vararray<uint8_t,4> native_type;
 #endif
 
     SIMDPP_INL mask_int32<4>() {}
@@ -236,8 +236,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int32<4>& vec(unsigned) const { return *this; }

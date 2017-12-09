@@ -42,7 +42,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v4f32 native_type;
 #else // NULL && (NEON && !FLT_SP)
-    typedef detail::array<float, 4> native_type;
+    typedef detail::vararray<float,4> native_type;
 #endif
 
     SIMDPP_INL float32<4>() {}
@@ -92,10 +92,12 @@ public:
 
 private:
 #if SIMDPP_ARM && !SIMDPP_HAS_FLOAT32_SIMD
-    // When casting int32<4> to float32<4> on certain conditions GCC will assume
-    // that result location is 16-byte aligned and will use aligned store which
-    // causes a crash when the stack is not aligned.
-    SIMDPP_ALIGN(16) native_type d_;
+    // Force alignment to be the same as of the real vector types. Different
+    // alignment causes problems when types such as int32<4> are casted to
+    // float32<4> or vice-versa - GCC assumes that some data on stack has
+    // higher alignment than it really has and uses aligned load or store which
+    // causes crashes.
+    SIMDPP_ALIGN(8) native_type d_;
 #else
     native_type d_;
 #endif
@@ -121,7 +123,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v4f32 native_type;
 #else // NULL || (NEON && !FLT_SP)
-    typedef detail::array<bool, 4> native_type;
+    typedef detail::vararray<uint8_t,4> native_type;
 #endif
     SIMDPP_INL mask_float32<4>() {}
     // SIMDPP_INL mask_float32<4>(const mask_float32<4> &) = default;
@@ -166,8 +168,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_float32<4>& vec(unsigned) const { return *this; }

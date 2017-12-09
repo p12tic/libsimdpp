@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v16i8 native_type;
 #else
-    typedef detail::array<int8_t, 16> native_type;
+    typedef detail::vararray<int8_t, 16> native_type;
 #endif
 
     SIMDPP_INL int8<16>() {}
@@ -116,7 +116,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v16u8 native_type;
 #else
-    typedef detail::array<uint8_t, 16> native_type;
+    typedef detail::vararray<uint8_t, 16> native_type;
 #endif
 
     SIMDPP_INL uint8<16>() {}
@@ -190,7 +190,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v16u8 native_type;
 #else
-    typedef detail::array<bool, 16> native_type;
+    typedef detail::vararray<uint8_t, 16> native_type;
 #endif
 
     SIMDPP_INL mask_int8<16>() {}
@@ -227,8 +227,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int8<16>& vec(unsigned) const { return *this; }

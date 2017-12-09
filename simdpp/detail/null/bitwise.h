@@ -55,7 +55,7 @@ M bit_and_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = a.el(i) && b.el(i);
+        r.el(i) = a.el(i) & b.el(i);
     }
     return r;
 }
@@ -80,7 +80,7 @@ V bit_andnot_vm(const V& a, const M& m)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
-        r.el(i) = !m.el(i) ? a.el(i) : 0;
+        r.el(i) = m.el(i) ? 0 : a.el(i);
     }
     return r;
 }
@@ -90,7 +90,7 @@ M bit_andnot_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = a.el(i) && !b.el(i);
+        r.el(i) = a.el(i) & (b.el(i) ^ 1);
     }
     return r;
 }
@@ -115,7 +115,7 @@ M bit_or_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = a.el(i) || b.el(i);
+        r.el(i) = a.el(i) | b.el(i);
     }
     return r;
 }
@@ -139,8 +139,7 @@ M bit_xor_mm(const M& a, const M& b)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = (a.el(i) && !b.el(i)) ||
-                  (!a.el(i) && b.el(i));
+        r.el(i) = a.el(i) ^ b.el(i);
     }
     return r;
 }
@@ -150,7 +149,7 @@ M bit_not_mm(const M& a)
 {
     M r;
     for (unsigned i = 0; i < M::length; i++) {
-        r.el(i) = !a.el(i);
+        r.el(i) = a.el(i) ^ 1;
     }
     return r;
 }

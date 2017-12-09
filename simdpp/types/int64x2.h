@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v2i64 native_type;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    typedef detail::array<int64_t, 2> native_type;
+    typedef detail::vararray<int64_t,2> native_type;
 #endif
 
     SIMDPP_INL int64<2>() {}
@@ -116,7 +116,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v2u64 native_type;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    typedef detail::array<uint64_t, 2> native_type;
+    typedef detail::vararray<uint64_t,2> native_type;
 #endif
 
     SIMDPP_INL uint64<2>() {}
@@ -191,7 +191,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v2u64 native_type;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    typedef detail::array<bool, 2> native_type;
+    typedef detail::vararray<uint8_t,2> native_type;
 #endif
 
     SIMDPP_INL mask_int64<2>() {}
@@ -233,8 +233,8 @@ public:
     }
 
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_int64<2>& vec(unsigned) const { return *this; }

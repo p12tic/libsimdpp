@@ -28,6 +28,12 @@ the compiler will generate.
 
 No API-breaking changes are planned for the foreseeable future.
 
+Documentation
+-------------
+
+Online documentation is provided
+[here](http://p12tic.github.io/libsimdpp/v2.1-dev/libsimdpp/w/).
+
 Compiler and instruction set support
 ------------------------------------
 
@@ -37,8 +43,8 @@ Compiler and instruction set support
 
 The library supports the following architectures and instruction sets:
 
- - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
- AVX-512BW, AVX-512DQ, XOP
+ - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX512F,
+ AVX512BW, AVX512DQ, AVX512VL, XOP
  - ARM 32-bit: NEON, NEONv2
  - ARM 64-bit: NEON, NEONv2
  - PowerPC 32-bit big-endian: Altivec, VSX v2.06, VSX v2.07
@@ -95,16 +101,18 @@ simdpp/detail/workarounds.h for more details.
 
  - MSA is not supported on GCC 6.x and older.
 
-Documentation
--------------
+Contributing
+------------
 
-Online documentation is provided
-[here](http://p12tic.github.io/libsimdpp/v2.1-dev/libsimdpp/w/).
+Contributions are welcome. Please see CONTRIBUTING.md for more information.
 
 License
 -------
 
-The library is distributed under the Boost Software License, Version 1.0
+The library may be freely used in commercial and non-commercial software. The
+code is distributed under the Boost Software License, Version 1.0. Some
+internal development scripts are licensed under different licenses -- see
+comments in these files. The documentation is licensed under CC-BY-SA.
 
 > Boost Software License - Version 1.0 - August 17th, 2003
 >

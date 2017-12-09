@@ -56,27 +56,30 @@ namespace detail {
     (see simdpp/types/tag.h)
 */
 
-template<template<class, class> class E, class V1, class V2>
-class get_expr_bitwise2_and {
+template<class V1, class V2>
+struct get_expr_bitwise2_and_impl {
+    using tags = expr2_maybe_scalar_tags<V1, V2>;
 
     // (size_tag) get the size tag of the resulting expression
-    static const unsigned size_tag = V1::size_tag > V2::size_tag ? V1::size_tag : V2::size_tag;
+    static const unsigned size_tag = tags::v1_size_tag > tags::v2_size_tag
+                                    ? tags::v1_size_tag : tags::v2_size_tag;
 
     // (type_tag) get the type tag of the expression. We compute it in the same
     // way get_expr2 computes them, i.e.
     // type_tag == get_expr2<V1,V2>::type::type_tag
-    static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
+    static const unsigned type_tag_t1 = tags::v1_type_tag > tags::v2_type_tag
+                                    ? tags::v1_type_tag : tags::v2_type_tag;
     static const bool is_mask_op1 = type_tag_t1 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t1 == SIMDPP_TAG_MASK_FLOAT;
-    static const unsigned type_tag = (is_mask_op1 && V1::size_tag != V2::size_tag)
+    static const unsigned type_tag = (is_mask_op1 && tags::v1_size_tag != tags::v2_size_tag)
                                     ? SIMDPP_TAG_UINT : type_tag_t1;
 
     // strip signed integer types
     static const unsigned v1_type_tag = type_tag == SIMDPP_TAG_INT ? SIMDPP_TAG_UINT : type_tag;
 
 
-    static const bool is_v2_mask = V2::type_tag == SIMDPP_TAG_MASK_INT ||
-                                   V2::type_tag == SIMDPP_TAG_MASK_FLOAT;
+    static const bool is_v2_mask = tags::v2_type_tag == SIMDPP_TAG_MASK_INT ||
+                                   tags::v2_type_tag == SIMDPP_TAG_MASK_FLOAT;
     static const bool is_v1_float = type_tag == SIMDPP_TAG_FLOAT ||
                                      type_tag == SIMDPP_TAG_MASK_FLOAT;
 
@@ -87,13 +90,18 @@ class get_expr_bitwise2_and {
                                         is_v1_float ? SIMDPP_TAG_MASK_FLOAT :
                                         SIMDPP_TAG_MASK_INT;
 
-public:
-    typedef typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type v1_type;
-    typedef typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type v2_type;
-    typedef E<v1_type, v2_type> expr_type;
+    typedef typename type_of_tag<v1_type_tag + size_tag,
+                                 tags::length_bytes, void>::type v1_final_type;
+    typedef typename type_of_tag<v2_type_tag + size_tag,
+                                 tags::length_bytes, void>::type v2_final_type;
+};
 
-    typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                 expr_type>::type type;
+template<template<class, class> class E, class V1, class V2>
+struct get_expr_bitwise2_and {
+    typedef get_expr_bitwise2_and_impl<V1, V2> impl;
+    typedef typename type_of_tag<impl::type_tag + impl::size_tag,
+                                 impl::tags::length_bytes,
+                                 E<V1, V2>>::type type;
 };
 
 
@@ -143,12 +151,13 @@ class get_expr_bit_or {
 
 
 public:
-    typedef typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V1>::type>::type v1_type;
-    typedef typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes, typename wrap_vector_expr<V2>::type>::type v2_type;
-    typedef expr_bit_or<v1_type, v2_type> expr_type;
+    typedef typename type_of_tag<v12_type_tag + size_tag,
+                                 V1::length_bytes, void>::type v1_final_type;
+    typedef typename type_of_tag<v12_type_tag + size_tag,
+                                 V1::length_bytes, void>::type v2_final_type;
 
     typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                 expr_type>::type type;
+                                 expr_bit_or<V1, V2>>::type type;
 };
 
 

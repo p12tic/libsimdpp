@@ -23,16 +23,6 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-// Same as V::expr_type, except that if that type is void, returns V as type.
-// In other words, if V is a vector (V<N,void>), then type is V<N,void>.
-// otherwise type is V.
-template<class V>
-struct wrap_vector_expr { typedef typename V::expr_type type; };
-
-template<template<unsigned, class> class V, unsigned N>
-struct wrap_vector_expr< V<N,void> > { typedef V<N,void> type; };
-
-
 /*  The tag values are selected specifically to make this class template
     simpler.
 
@@ -61,6 +51,159 @@ template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_FLOAT + SIMDPP_TAG_S
 template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_FLOAT + SIMDPP_TAG_SIZE64, B, E>      { typedef float64<B/8,E> type;    typedef float64<B/8,expr_empty> empty; };
 template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE32, B, E> { typedef mask_float32<B/4,E> type; typedef mask_float32<B/4,expr_empty> empty; };
 template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE64, B, E> { typedef mask_float64<B/8,E> type; typedef mask_float64<B/8,expr_empty> empty; };
+
+template<class V1, class V2>
+struct expr2_maybe_scalar_tags {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<int, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<long, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<long long, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<unsigned, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<unsigned long, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<unsigned long long, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<float, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_maybe_scalar_tags<double, V2> {
+    static const unsigned v1_type_tag = V2::type_tag;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, int> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, long long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, unsigned> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, unsigned long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, unsigned long long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, float> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_maybe_scalar_tags<V1, double> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V1::type_tag;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
 
 template<class V, class E = void>
 class get_expr {
@@ -96,6 +239,16 @@ public:
     typedef typename type_of_tag<type_tag + V::size_tag, V::length_bytes, E>::empty empty;
 };
 
+template<class V1, class V2>
+class get_expr2_same {
+    using tags = expr2_maybe_scalar_tags<V1, V2>;
+public:
+    using v1_final_type = typename type_of_tag<tags::v1_type_tag + tags::v1_size_tag,
+                                               tags::length_bytes, void>::type;
+    using v2_final_type = typename type_of_tag<tags::v2_type_tag + tags::v2_size_tag,
+                                               tags::length_bytes, void>::type;
+};
+
 template<class V1, class V2, class E = void>
 class get_expr2 {
     static const bool is_mask_op = (V1::type_tag == SIMDPP_TAG_MASK_FLOAT || V1::type_tag == SIMDPP_TAG_MASK_INT) &&
@@ -108,6 +261,8 @@ public:
     typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::type type;
     typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes, E>::empty empty;
 };
+
+
 
 template<class V1, class V2, class E = void>
 class get_expr2_nomask {

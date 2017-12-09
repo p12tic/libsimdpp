@@ -102,10 +102,10 @@ uint32<4> i_to_uint32(const float32<4>& a)
 #elif SIMDPP_USE_NEON && !SIMDPP_USE_NEON_FLT_SP
     detail::mem_block<float32x4> mf(a);
     detail::mem_block<uint32x4> mi;
-    mi[0] = uint(mf[0]);
-    mi[1] = uint(mf[1]);
-    mi[2] = uint(mf[2]);
-    mi[3] = uint(mf[3]);
+    mi[0] = unsigned(mf[0]);
+    mi[1] = unsigned(mf[1]);
+    mi[2] = unsigned(mf[2]);
+    mi[3] = unsigned(mf[3]);
     return mi;
 #elif SIMDPP_USE_NEON_FLT_SP
     return vcvtq_u32_f32(a.native());

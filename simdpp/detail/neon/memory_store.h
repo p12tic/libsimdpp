@@ -27,7 +27,7 @@ namespace neon {
     undefined if @a pos+n exceeds the number of elements in the specified vector.
 */
 template<unsigned pos, unsigned n> SIMDPP_INL
-void store_lane(void* p, const uint8x16& a)
+void store_lane(char* p, const uint8x16& a)
 {
     SIMDPP_STATIC_ASSERT(n == 1 || n == 2 || n == 4 || n == 8, "Size not supported");
     SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
@@ -49,7 +49,7 @@ void store_lane(void* p, const uint8x16& a)
 }
 
 template<unsigned pos, unsigned n> SIMDPP_INL
-void store_lane(void* p, const uint16x8& a)
+void store_lane(char* p, const uint16x8& a)
 {
     SIMDPP_STATIC_ASSERT(n == 1 || n == 2 || n == 4, "Size not supported");
     SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
@@ -70,7 +70,7 @@ void store_lane(void* p, const uint16x8& a)
 }
 
 template<unsigned pos, unsigned n> SIMDPP_INL
-void store_lane(void* p, const uint32x4& a)
+void store_lane(char* p, const uint32x4& a)
 {
     SIMDPP_STATIC_ASSERT(n == 1 || n == 2, "Size not supported");
     SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
@@ -87,7 +87,7 @@ void store_lane(void* p, const uint32x4& a)
 }
 
 template<unsigned pos, unsigned n> SIMDPP_INL
-void store_lane(void* p, const uint64x2& a)
+void store_lane(char* p, const uint64x2& a)
 {
     SIMDPP_STATIC_ASSERT(n == 1, "Size not supported");
     SIMDPP_STATIC_ASSERT(pos%n == 0, "pos must be a multiple of n");
@@ -96,7 +96,7 @@ void store_lane(void* p, const uint64x2& a)
 }
 
 template<unsigned pos, unsigned n> SIMDPP_INL
-void store_lane(void* p, const float32x4& a)
+void store_lane(char* p, const float32x4& a)
 {
     store_lane<pos,n>(p, uint32x4(a));
 }

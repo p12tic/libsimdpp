@@ -247,14 +247,13 @@ void i_store_last(char* p, const float32x4& ca, unsigned n)
     a = blend(a, old, mask);
     store(p, a);
 #elif SIMDPP_USE_NEON
-    float* q = reinterpret_cast<float*>(p);
     // + VFP
     if (n < 1) return;
-    neon::store_lane<3,1>(q+3, a);
+    neon::store_lane<3,1>(p+12, a);
     if (n < 2) return;
-    neon::store_lane<2,1>(q+2, a);
+    neon::store_lane<2,1>(p+8, a);
     if (n < 3) return;
-    neon::store_lane<1,1>(q+1, a);
+    neon::store_lane<1,1>(p+4, a);
 #endif
 }
 
@@ -291,20 +290,19 @@ void i_store_last(char* p, const float32<16>& a, unsigned n)
 static SIMDPP_INL
 void i_store_last(char* p, const float64x2& a, unsigned n)
 {
-    double* q = reinterpret_cast<double*>(p);
-    q = detail::assume_aligned(q, 16);
+    p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_SSE2
     if (n == 1) {
         float64x2 b = zip2_hi(a, a);
-        _mm_store_sd(q+1, b.native());
+        _mm_store_sd(reinterpret_cast<double*>(p)+1, b.native());
     }
 #elif SIMDPP_USE_NEON64
     if (n == 1) {
-        vst1_f64(q+1, vget_high_f64(a.native()));
+        vst1_f64(reinterpret_cast<double*>(p)+1, vget_high_f64(a.native()));
     }
 #elif SIMDPP_USE_VSX_206
     if (n == 1) {
-        *(q+1) = vec_extract(a.native(), 1);
+        *(reinterpret_cast<double*>(p)+1) = vec_extract(a.native(), 1);
     }
 #elif SIMDPP_USE_MSA
     i_store_last(p, uint64x2(a), n);
@@ -344,7 +342,7 @@ void i_store_last(char* p, const float64<8>& a, unsigned n)
 template<class V> SIMDPP_INL
 void i_store_last(char* p, const V& ca, unsigned n)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
 
     typename detail::remove_sign<V>::type a = ca;
     p = detail::assume_aligned(p, veclen);

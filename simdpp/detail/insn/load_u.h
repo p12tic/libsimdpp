@@ -123,8 +123,9 @@ static SIMDPP_INL
 void i_load_u(float32x4& a, const char* p)
 {
     const float* q = reinterpret_cast<const float*>(p);
+    (void) q;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    detail::null::load(a, q);
+    detail::null::load(a, p);
 #elif SIMDPP_USE_SSE2
     a = _mm_loadu_ps(q);
 #elif SIMDPP_USE_NEON
@@ -144,6 +145,7 @@ static SIMDPP_INL
 void i_load_u(float64x2& a, const char* p)
 {
     const double* q = reinterpret_cast<const double*>(p);
+    (void) q;
 #if SIMDPP_USE_SSE2
     a = _mm_loadu_pd(q);
 #elif SIMDPP_USE_NEON64
@@ -153,7 +155,7 @@ void i_load_u(float64x2& a, const char* p)
 #elif SIMDPP_USE_MSA
     a = (v2f64) __msa_ld_d(q, 0);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC || SIMDPP_USE_NEON
-    detail::null::load(a, q);
+    detail::null::load(a, p);
 #else
     SIMDPP_NOT_IMPLEMENTED2(a, p);
 #endif
@@ -191,6 +193,89 @@ static SIMDPP_INL
 void i_load_u(float64x4& a, const char* p)
 {
     a = _mm256_loadu_pd(reinterpret_cast<const double*>(p));
+}
+#endif
+
+#if __INTEL_COMPILER && SIMDPP_USE_AVX && !SIMDPP_USE_AVX512F
+// BUG: Certain versions of ICC don't like vectors larger than native vector
+// (e.g. float32<16> and float64<8>) on AVX and AVX2. Two xmm vmovaps aligned
+// loads are emitted for each 32-byte load even though the argument is clearly
+// unaligned (e.g. p + 1). The code below results in the same output except
+// that correct vmovups unaligned load instructions are used.
+template<unsigned N> SIMDPP_INL
+void i_load_u(float32<N>& a, const char* p)
+{
+    for (unsigned i = 0; i < float32<N>::vec_length; ++i) {
+        __m128 lo, hi;
+        lo = _mm_loadu_ps(reinterpret_cast<const float*>(p));
+        hi = _mm_loadu_ps(reinterpret_cast<const float*>(p + 16));
+        a.vec(i) = _mm256_insertf128_ps(_mm256_castps128_ps256(lo), hi, 1);
+        p += 32;
+    }
+}
+
+template<unsigned N> SIMDPP_INL
+void i_load_u(float64<N>& a, const char* p)
+{
+    for (unsigned i = 0; i < float64<N>::vec_length; ++i) {
+        __m128d lo, hi;
+        lo = _mm_loadu_pd(reinterpret_cast<const double*>(p));
+        hi = _mm_loadu_pd(reinterpret_cast<const double*>(p + 16));
+        a.vec(i) = _mm256_insertf128_pd(_mm256_castpd128_pd256(lo), hi, 1);
+        p += 32;
+    }
+}
+#endif
+
+#if __INTEL_COMPILER && SIMDPP_USE_AVX2 && !SIMDPP_USE_AVX512BW
+template<unsigned N> SIMDPP_INL
+void i_load_u(uint8<N>& a, const char* p)
+{
+    for (unsigned i = 0; i < uint8<N>::vec_length; ++i) {
+        __m128i lo, hi;
+        lo = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+        hi = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p + 16));
+        a.vec(i) = _mm256_inserti128_si256(_mm256_castsi128_si256(lo), hi, 1);
+        p += 32;
+    }
+}
+
+template<unsigned N> SIMDPP_INL
+void i_load_u(uint16<N>& a, const char* p)
+{
+    for (unsigned i = 0; i < uint16<N>::vec_length; ++i) {
+        __m128i lo, hi;
+        lo = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+        hi = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p + 16));
+        a.vec(i) = _mm256_inserti128_si256(_mm256_castsi128_si256(lo), hi, 1);
+        p += 32;
+    }
+}
+#endif
+
+#if __INTEL_COMPILER && SIMDPP_USE_AVX2 && !SIMDPP_USE_AVX512F
+template<unsigned N> SIMDPP_INL
+void i_load_u(uint32<N>& a, const char* p)
+{
+    for (unsigned i = 0; i < uint32<N>::vec_length; ++i) {
+        __m128i lo, hi;
+        lo = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+        hi = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p + 16));
+        a.vec(i) = _mm256_inserti128_si256(_mm256_castsi128_si256(lo), hi, 1);
+        p += 32;
+    }
+}
+
+template<unsigned N> SIMDPP_INL
+void i_load_u(uint64<N>& a, const char* p)
+{
+    for (unsigned i = 0; i < uint64<N>::vec_length; ++i) {
+        __m128i lo, hi;
+        lo = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p));
+        hi = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p + 16));
+        a.vec(i) = _mm256_inserti128_si256(_mm256_castsi128_si256(lo), hi, 1);
+        p += 32;
+    }
 }
 #endif
 
@@ -233,13 +318,11 @@ void i_load_u(float64<8>& a, const char* p)
 template<class V> SIMDPP_INL
 void i_load_u(V& a, const char* p)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
-
+    const unsigned veclen = V::base_vector_type::length_bytes;
     for (unsigned i = 0; i < V::vec_length; ++i) {
         i_load_u(a.vec(i), p);
         p += veclen;
     }
-
 }
 
 template<class V>

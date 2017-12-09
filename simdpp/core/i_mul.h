@@ -14,7 +14,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_mul.h>
-#include <simdpp/detail/cast_expr.h>
 #include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 #include <simdpp/core/detail/get_expr_uint.h>
@@ -39,12 +38,12 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         mul_lo(const any_int16<N,V1>& a,
                const any_int16<N,V2>& b)
 {
-    typedef typename detail::get_expr_uint<expr_mul_lo, V1, V2> expr;
-    return typename expr::expr_type(detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-                                    detail::cast_expr<typename expr::v2_type>(b.wrapped()));
+    typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type ret =
+            { { a.wrapped(), b.wrapped() } };
+    return ret;
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, int16, uint16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, int16)
 
 /** Multiplies signed 16-bit values and returns the higher half of the result.
 
@@ -66,7 +65,9 @@ int16<N, expr_mul_hi<int16<N,E1>,
                      int16<N,E2> > > mul_hi(const int16<N,E1>& a,
                                           const int16<N,E2>& b)
 {
-    return expr_mul_hi<int16<N,E1>, int16<N,E2> >(a, b);
+    int16<N, expr_mul_hi<int16<N,E1>,
+                         int16<N,E2> > > ret = { { a, b } };
+    return ret;
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, int16, int16)
@@ -91,7 +92,9 @@ uint16<N, expr_mul_hi<uint16<N,E1>,
                       uint16<N,E2> > > mul_hi(const uint16<N,E1>& a,
                                             const uint16<N,E2>& b)
 {
-    return expr_mul_hi<uint16<N,E1>, uint16<N,E2> >(a, b);
+    uint16<N, expr_mul_hi<uint16<N,E1>,
+                          uint16<N,E2> > > ret = { { a, b } };
+    return ret;
 }
 
 SIMDPP_SCALAR_ARG_IMPL_EXPR(mul_hi, expr_mul_hi, uint16, uint16)
@@ -119,12 +122,12 @@ typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
         mul_lo(const any_int32<N,V1>& a,
                const any_int32<N,V2>& b)
 {
-    typedef typename detail::get_expr_uint<expr_mul_lo, V1, V2> expr;
-    return typename expr::expr_type(detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-                                    detail::cast_expr<typename expr::v2_type>(b.wrapped()));
+    typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type ret =
+            { { a.wrapped(), b.wrapped() } };
+    return ret;
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int32, int32, uint32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int32, int32)
 
 
 } // namespace SIMDPP_ARCH_NAMESPACE

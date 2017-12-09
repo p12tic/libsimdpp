@@ -11,15 +11,15 @@
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-template<class E>
+template<class E, class Sum>
 class SumClosure {
 public:
-    SumClosure(uint64_t& sum) : sum_(sum) {}
+    SumClosure(Sum& sum) : sum_(sum) {}
 
-    void operator()(E el) { sum_ += (uint64_t) el; }
+    void operator()(E el) { sum_ += (Sum) el; }
 
 private:
-    uint64_t& sum_;
+    Sum& sum_;
 };
 
 template<class V>
@@ -36,7 +36,7 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     for (unsigned i = 0; i < s.size(); ++i) {
         V v = s[i];
         uint64_t sum = 0;
-        for_each(v, SumClosure<E>(sum));
+        for_each(v, SumClosure<E,uint64_t>(sum));
         TEST_PUSH(ts, uint64_t, sum);
     }
 
@@ -49,8 +49,8 @@ void test_for_each_type(TestResultsSet& ts, TestReporter& tr)
     default:
         expected = 10 * V::length / 4;
     }
-    uint64_t sum = 0;
-    for_each(v1234, SumClosure<E>(sum));
+    E sum = 0;
+    for_each(v1234, SumClosure<E, E>(sum));
 
     TEST_EQUAL(tr, expected, sum);
 }

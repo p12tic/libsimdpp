@@ -43,7 +43,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v2f64 native_type;
 #else
-    typedef detail::array<double, 2> native_type;
+    typedef detail::vararray<double,2> native_type;
 #endif
 
     SIMDPP_INL float64<2>() {}
@@ -94,7 +94,7 @@ public:
 
 private:
 #if SIMDPP_ARM && !SIMDPP_HAS_FLOAT64_SIMD
-    SIMDPP_ALIGN(16) native_type d_;
+    SIMDPP_ALIGN(8) native_type d_;
 #else
     native_type d_;
 #endif
@@ -121,7 +121,7 @@ public:
 #elif SIMDPP_USE_MSA
     typedef v2f64 native_type;
 #else // NULL, NEON 32bit, ALTIVEC
-    typedef detail::array<bool, 2> native_type;
+    typedef detail::vararray<uint8_t,2> native_type;
 #endif
 
     SIMDPP_INL mask_float64<2>() {}
@@ -163,8 +163,8 @@ public:
     }
 
 #if !(SIMDPP_USE_SSE2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA)
-    SIMDPP_INL bool& el(unsigned id) { return d_[id]; }
-    SIMDPP_INL const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_float64<2>& vec(unsigned) const { return *this; }
