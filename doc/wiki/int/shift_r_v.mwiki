@@ -1,0 +1,45 @@
+{{simdpp/title|shift_r{{small|(vector)}}}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2>
+Ret<N, _DETAIL_> shift_r( const Vec1<N,E1>& a, const Vec2<N,E2>& b );
+}}
+{{dcl end}}
+
+Shifts values in the given integer vector {{tt|a}} right by the number of bits specified in the corresponding elements of the given integer vector {{tt|b}}. Zeroes are shifted in for unsigned vectors, sign bits is shifted in for signed vectors.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2 }}
+{{vset3 | int8 | int8 | uint8 | notes={{cap|SIMDPP_HAS_UINT8_SHIFT_R_BY_VECTOR}} }}
+{{vset3 | uint8 | uint8 | uint8 | notes={{cap|SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR}} }}
+{{vset3 | int16 | int16 | uint16 | notes={{cap|SIMDPP_HAS_UINT16_SHIFT_R_BY_VECTOR}} }}
+{{vset3 | uint16 | uint16 | uint16 | notes={{cap|SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR}} }}
+{{vset3 | int32 | int32 | uint32 | notes={{cap|SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR}} }}
+{{vset3 | uint32 | uint32 | uint32 | notes={{cap|SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR}} }}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a | integer vector to shift }}
+{{par | shift | integer vector containing the number of bits to shift}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|a >> shift}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 >> shift0
+...
+rN = aN >> shiftN
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | int/dsc shift_r }}
+{{dsc end}}

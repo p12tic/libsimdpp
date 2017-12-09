@@ -1,4 +1,4 @@
-{{simdpp/title|shift_r}}
+{{simdpp/title|shift_r{{small|(scalar)}}}}
 {{int/navbar}}
 {{dcl begin}}
 {{dcl |
@@ -48,4 +48,6 @@ rN = aN >> shift
 }}
 
 ===See also===
-{{todo}}
+{{dsc begin}}
+{{dsc inc | int/dsc shift_r_v }}
+{{dsc end}}
