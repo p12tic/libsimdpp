@@ -94,7 +94,7 @@ public:
 
 private:
 #if SIMDPP_ARM && !SIMDPP_HAS_FLOAT64_SIMD
-    SIMDPP_ALIGN(16) native_type d_;
+    SIMDPP_ALIGN(8) native_type d_;
 #else
     native_type d_;
 #endif
