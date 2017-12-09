@@ -30,6 +30,12 @@ namespace insn {
 // offer better performance on e.g. ARM. Note, we don't use LDDQU on SSE,
 // because it has usage restrictions and offers improved performance only on
 // Pentium 4 era processors.
+#ifdef __GNUC__
+// vec_lvsl on little-endian PPC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+#endif
+
 static SIMDPP_INL
 void i_load_u(uint8x16& a, const char* p)
 {
@@ -47,15 +53,16 @@ void i_load_u(uint8x16& a, const char* p)
     uint8x16 l1, l2, mask;
     l1 = vec_ld(0, q);
     l2 = vec_ld(16, q);
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
     mask = vec_lvsl(0, q);
-#pragma GCC diagnostic pop
     a = vec_perm(l1.native(), l2.native(), mask.native());
 #elif SIMDPP_USE_MSA
     a = (v16u8) __msa_ld_b(p, 0);
 #endif
 }
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
 static SIMDPP_INL
 void i_load_u(uint16x8& a, const char* p)

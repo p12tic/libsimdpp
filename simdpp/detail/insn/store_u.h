@@ -24,6 +24,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
+#ifdef __GNUC__
+// vec_lvsl on little-endian PPC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+#endif
+
 static SIMDPP_INL
 void i_store_u(char* p, const uint8<16>& a)
 {
@@ -47,12 +53,9 @@ void i_store_u(char* p, const uint8<16>& a)
     // addresses. If 16 were used, then when q is 16-byte aligned we would
     // access the next second 16-byte block, which could be on different page
     // and inaccessible.
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
     edge_align = vec_lvsl(0, q);                // permute map to extract edges
     edges = vec_perm(lsq, msq, edge_align);     // extract the edges
     align = vec_lvsr(0, q);                     // permute map to misalign data
-#pragma GCC diagnostic pop
     msq = vec_perm(edges, a.native(), align);   // misalign the data (msq)
     lsq = vec_perm(a.native(), edges, align);   // misalign the data (lsq)
     vec_st(lsq, 15, q);                         // Store the lsq part first
@@ -61,6 +64,10 @@ void i_store_u(char* p, const uint8<16>& a)
     __msa_st_b((v16i8) a.native(), p, 0);
 #endif
 }
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
 static SIMDPP_INL
 void i_store_u(char* p, const uint16<8>& a)
