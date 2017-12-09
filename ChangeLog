@@ -17,6 +17,8 @@ What's new in v2.1 development master:
     permute_zbytes() more generic.
  * New functions: popcnt, reduce_popcnt, for_each, to_mask()
  * Xcode is now supported.
+ * The library has been refactored in such a way that older compilers are able
+    to optimize vector emulation code paths much better than before.
  * Deprecation: implicit conversion operators to native vector types has been
     deprecated and a replacement method has been provided instead. The implicit
     conversion operators may lead to wrong code being accepted without a
