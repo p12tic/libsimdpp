@@ -46,6 +46,18 @@ enum {
     VECTOR_CAST_TYPE_INVALID
 };
 
+#if (__GNUC__ >= 6) && !defined(__INTEL_COMPILER) && !defined(__clang__)
+/*  native_cast, native_cast_split and native_cast_combine uses native vector
+    type as class template parameter. On GCC vector types have alignment
+    attributes specified on some architectures. This leads to "ignored
+    attributes" warning, because the attributes are not part of the type.
+    Since libsimdpp always uses the same attributes for all native_type members
+    we can safely ignore this warning.
+*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+#endif
+
 template<class NativeT, class NativeR, bool IsVarArray> struct native_cast;
 
 template<class T, class R> struct native_cast<T, R, false> {
@@ -363,6 +375,10 @@ void cast_bitwise_vector(const T& t, R& r)
 
     cast_bitwise_vector_impl<vector_cast_type>::cast(t, r);
 }
+
+#if (__GNUC__ >= 6) && !defined(__INTEL_COMPILER) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
