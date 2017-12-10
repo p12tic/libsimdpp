@@ -38,6 +38,8 @@ The following simple operations for integer computations are provided.
 {{dsc inc | int/dsc min }}
 {{dsc inc | int/dsc max }}
 {{dsc inc | int/dsc shift_l }}
+{{dsc inc | int/dsc shift_l_v }}
 {{dsc inc | int/dsc shift_r }}
+{{dsc inc | int/dsc shift_r_v }}
 {{dsc inc | int/dsc popcnt}}
 {{dsc end}}

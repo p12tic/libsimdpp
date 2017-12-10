@@ -395,6 +395,9 @@
 #error "Unsupported compiler"
 #endif
 
+#define SIMDPP_LIBRARY_VERSION_CXX11 0
+#define SIMDPP_LIBRARY_VERSION_CXX98 1
+
 #include <simdpp/detail/workarounds.h>
 #include <simdpp/deprecations.h>
 

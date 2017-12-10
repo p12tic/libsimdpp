@@ -2,6 +2,7 @@
 {{nv | [[types | Types]] }}
 {{nv | [[cap | Capabilities]] }}
 {{nv h1 | Operations }}
+{{nv | [[conv | Conversions]] }}
 {{nv | [[bitwise | Bitwise operations]] }}
 {{nv | [[fp | Floating-point operations]] }}
 {{nv | [[int | Integer operations]] }}

@@ -49,8 +49,13 @@
 {{nv ln | int/min }}
 {{nv ln | int/max }}
 {{nv col next}}
-{{nv ln | int/shift_l }}
-{{nv ln | int/shift_r }}
 {{nv ln | int/popcnt }}
+{{nv col end}}
+{{nv col begin}}
+{{nv ln | int/shift_l | shift_l(scalar)}}
+{{nv ln | int/shift_l_v | shift_l(vector)}}
+{{nv col next}}
+{{nv ln | int/shift_r | shift_r(scalar)}}
+{{nv ln | int/shift_r_v | shift_r(vector)}}
 {{nv col end}}
 {{nv end}}

@@ -1,0 +1,11 @@
+{{title|SIMDPP_HAS_INT32_SHIFT_L_BY_VECTOR}}
+{{cap/navbar}}
+{{dcl begin}}
+{{dcl |
+#define SIMDPP_HAS_INT32_SHIFT_L_BY_VECTOR /* 1 if present, 0 otherwise */
+}}
+{{dcl end}}
+
+Indicates support of efficient left per-element shift of {{c|int32}} vector data (see {{ltf|int/shift_l_v | shift_l}}). The macro evaluates to {{c|1}} if this operation is supported in the SIMD unit, {{c|0}} otherwise.
+
+Currently, the macro is defined to {{c|1}} on all supported instruction sets.

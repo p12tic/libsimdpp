@@ -1,0 +1,1 @@
+{{dsc macro const | cap/SIMDPP_HAS_UINT8_SHIFT_L_BY_VECTOR | indicates support of per-element left shift for {{c|uint8}} }}

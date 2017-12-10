@@ -60,11 +60,11 @@ template<class T, class R> SIMDPP_INL
 void cast_bitwise_vector(const T& t, R& r)
 {
     SIMDPP_STATIC_ASSERT(sizeof(R) == sizeof(T), "Size mismatch");
-#if 1 || __cplusplus < 201103L || (defined(_MSC_VER) && _MSC_VER < 1900)
+#if SIMDPP_LIBRARY_VERSION_CXX98 || (defined(_MSC_VER) && _MSC_VER < 1900)
     // We can't create use union of vector types because they are not trivial
-    // types. In pre-C++11 mode they have empty user-defined default
-    // constructor, which is required as the compiler will not provide one
-    // by default due to additional constructors being present. Instead we
+    // types. In pre-C++11 version of the library they have empty user-defined
+    // default constructor, which is required as the compiler will not provide
+    // one by default due to additional constructors being present. Instead we
     // create union of native_type which are trivial types in all supported
     // configurations.
     typedef typename T::base_vector_type::native_type NativeT;

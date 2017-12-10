@@ -37,6 +37,8 @@ the compiler will generate.
 [[arch/dispatch|Dynamic dispatch]]<br/>
 </div>
 
+'''[[depr|Deprecations]]'''
+
 '''[[types|Types]]'''
 <div class="mainpagediv">
 [[types/overview|Overview]]<br/>
