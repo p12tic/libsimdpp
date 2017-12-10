@@ -9,6 +9,8 @@
 #define LIBSIMDPP_SIMDPP_DETAIL_INSN_DETAIL_CAST_BITWISE_H
 
 #include <simdpp/types.h>
+#include <simdpp/detail/cxx11_emul.h>
+#include <simdpp/detail/traits.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -30,7 +32,7 @@ namespace detail {
 template<class T, class R> SIMDPP_INL
 void cast_bitwise(const T& t, R& r)
 {
-    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+    SIMDPP_STATIC_ASSERT(sizeof(R) == sizeof(T), "Size mismatch");
     union {
         T t_union;
         R r_union;
@@ -313,22 +315,22 @@ template<unsigned CastType>
 struct cast_bitwise_vector_impl;
 
 template<class T>
-struct is_vararray : std::false_type {};
+struct is_vararray : false_type {};
 
 template<class T, unsigned N>
-struct is_vararray<vararray<T, N>> : std::true_type {};
+struct is_vararray<vararray<T, N> > : true_type {};
 
 template<>
 struct cast_bitwise_vector_impl<VECTOR_CAST_TYPE_1_TO_1> {
     template<class T, class R> SIMDPP_INL static
     void cast(const T& t, R& r)
     {
-        using NativeT = typename T::base_vector_type::native_type;
-        using NativeR = typename R::base_vector_type::native_type;
+        typedef typename T::base_vector_type::native_type NativeT;
+        typedef typename R::base_vector_type::native_type NativeR;
         const bool is_arg_vararray =
                 is_vararray<NativeT>::value || is_vararray<NativeR>::value;
-        using CastImpl = native_cast<sizeof(NativeT), NativeT,
-                                     NativeR, is_arg_vararray>;
+        typedef native_cast<sizeof(NativeT), NativeT,
+                            NativeR, is_arg_vararray> CastImpl;
 
         for (unsigned i = 0; i < T::vec_length; ++i) {
             r.vec(i) = CastImpl::cast(t.vec(i).native());
@@ -341,9 +343,9 @@ struct cast_bitwise_vector_impl<VECTOR_CAST_TYPE_SPLIT2> {
     template<class T, class R> SIMDPP_INL static
     void cast(const T& t, R& r)
     {
-        using NativeT = typename T::base_vector_type::native_type;
-        using NativeR = typename R::base_vector_type::native_type;
-        using CastImpl = native_cast_split<sizeof(NativeT), NativeT, NativeR>;
+        typedef typename T::base_vector_type::native_type NativeT;
+        typedef typename R::base_vector_type::native_type NativeR;
+        typedef native_cast_split<sizeof(NativeT), NativeT, NativeR> CastImpl;
 
         for (unsigned i = 0; i < T::vec_length; ++i) {
             NativeR r0, r1;
@@ -359,9 +361,9 @@ struct cast_bitwise_vector_impl<VECTOR_CAST_TYPE_COMBINE2> {
     template<class T, class R> SIMDPP_INL static
     void cast(const T& t, R& r)
     {
-        using NativeT = typename T::base_vector_type::native_type;
-        using NativeR = typename R::base_vector_type::native_type;
-        using CastImpl = native_cast_combine<sizeof(NativeR), NativeT, NativeR>;
+        typedef typename T::base_vector_type::native_type NativeT;
+        typedef typename R::base_vector_type::native_type NativeR;
+        typedef native_cast_combine<sizeof(NativeR), NativeT, NativeR> CastImpl;
 
         for (unsigned i = 0; i < R::vec_length; ++i) {
             r.vec(i) = CastImpl::cast(t.vec(i*2).native(),
@@ -373,7 +375,7 @@ struct cast_bitwise_vector_impl<VECTOR_CAST_TYPE_COMBINE2> {
 template<class T, class R> SIMDPP_INL
 void cast_bitwise_vector(const T& t, R& r)
 {
-    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
+    SIMDPP_STATIC_ASSERT(sizeof(R) == sizeof(T), "Size mismatch");
     const unsigned vector_cast_type =
             T::vec_length == R::vec_length ? VECTOR_CAST_TYPE_1_TO_1 :
             T::vec_length == R::vec_length*2 ? VECTOR_CAST_TYPE_COMBINE2 :
