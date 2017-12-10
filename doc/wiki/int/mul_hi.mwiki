@@ -1,0 +1,38 @@
+{{simdpp/title|mul_hi{{small|(integer)}}}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2>
+Ret<N, _DETAIL_> mul_hi( Vec1<N,E1> a, Vec2<N,E2> b );
+}}
+{{dcl end}}
+
+Multiplies two vectors with integer values and returns the higher part of the result. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2}}
+{{vset3 | int16 | int16 | int16}}
+{{vset3 | uint16 | uint16 | uint16}}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+{{scalar note}}
+
+===Parameters===
+{{par begin}}
+{{par | a, b | integer vectors}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|(a * b) >> half_bits}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = (a0 * b0) >> half_bits
+...
+rN = (aN * bN) >> half_bits
+}}
+
+===See also===
+{{todo}}

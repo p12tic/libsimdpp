@@ -1,0 +1,10 @@
+{{title|Overview}}
+
+libsimdpp consists of three major parts:
+:* A number of class templates that wrap platform specific types that map to SIMD registers
+:* A number of functions and function templates that operate on said types
+:* Infrastructure that allows to use said types and functions without major boilerplate
+
+
+
+===Operations===

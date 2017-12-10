@@ -1,0 +1,53 @@
+{{simdpp/title|shuffle2x2}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned s0, unsigned s1, unsigned N, class E1, class E2>
+Ret<N,_DETAIL_> shuffle2x2( const Vec1<N,E1>& a, const Vec2<N,E2& b );
+}}
+{{dcl end}}
+
+Shuffles two vectors at 2x2 element block granularity.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2 }}
+{{vset3 u | ''promoted 32-bit vector'' | ''any 32-bit vector'' | ''any 32-bit vector'' }}
+{{vset3 u | ''promoted 64-bit vector'' | ''any 64-bit vector'' | ''any 64-bit vector'' }}
+{{vset end}}
+
+The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types#expr|vector expression]].
+
+The selectors {{tt|s0}} and {{tt|s1}} must be in range {{c|[0..3]}}.
+
+The vectors are shuffled at 2x2 block granularity as follows: the vectors are partitioned into {{tt|N/2}} groups. The {{tt|n}}-th group in the return vector will contain:
+:* elements only from {{tt|n}}-th groups of {{tt|a}} and {{tt|b}} vectors
+:* the first and second elements are selected by the {{tt|s0}} and {{tt|s1}} selectors respectively
+:* values {{c|0}} and {{c|1}} correspond to the {{c|0}} and {{c|1}} elements from {{tt|n}}-th group from {{tt|a}}, {{c|2}} and {{c|3}} correspond to the {{c|0}} and {{c|1}} elements from {{tt|n}}-th group from {{tt|b}}.
+
+===Parameters===
+{{par begin}}
+{{par | a, b | source vectors }}
+{{par | s0, s1 | the permutation indices}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to the shuffled vectors.
+
+===Equivalent operation===
+{{source|1=
+r0 = s0 < 2 ? a[s0] : b[s0-2]
+r1 = s1 < 2 ? a[s1] : b[s1-2]
+
+r2 = s0 < 2 ? a[s0+2] : b[s0]
+r3 = s1 < 2 ? a[s1+2] : b[s1]
+
+r4 = s0 < 2 ? a[s0+4] : b[s0+2]
+r5 = s1 < 2 ? a[s1+4] : b[s1+2]
+
+...
+}}
+
+===See also===
+{{todo}}

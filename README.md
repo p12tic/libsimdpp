@@ -1,6 +1,9 @@
 
-Overview
---------
+libsimdpp
+=========
+
+[![Travis build status](https://travis-ci.org/p12tic/libsimdpp.svg?branch=master)](https://travis-ci.org/p12tic/libsimdpp "Travis build status")
+[![Appveyor build status](https://img.shields.io/appveyor/ci/p12tic/libsimdpp/master.svg)](https://ci.appveyor.com/project/p12tic/libsimdpp "Appveyor build status")
 
 libsimdpp is a portable header-only zero-overhead C++ wrapper around
 single-instruction multiple-data (SIMD) intrinsics found in many compilers. The
@@ -25,6 +28,12 @@ the compiler will generate.
 
 No API-breaking changes are planned for the foreseeable future.
 
+Documentation
+-------------
+
+Online documentation is provided
+[here](http://p12tic.github.io/libsimdpp/v2.1-dev/libsimdpp/w/).
+
 Compiler and instruction set support
 ------------------------------------
 
@@ -34,10 +43,14 @@ Compiler and instruction set support
 
 The library supports the following architectures and instruction sets:
 
- - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX-512F,
-XOP
- - ARM, ARM64: NEON
- - PowerPC: Altivec
+ - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX512F,
+ AVX512BW, AVX512DQ, AVX512VL, XOP
+ - ARM 32-bit: NEON, NEONv2
+ - ARM 64-bit: NEON, NEONv2
+ - PowerPC 32-bit big-endian: Altivec, VSX v2.06, VSX v2.07
+ - PowerPC 64-bit little-endian: Altivec, VSX v2.06, VSX v2.07
+ - MIPS 32-bit little-endian: MSA
+ - MIPS 64-bit little-endian: MSA
 
 The primary development of the library happens in C++11. A C++98-compatible
 version of the library is provided on the
@@ -46,36 +59,60 @@ version of the library is provided on the
 Supported compilers:
 
  - C++11 version:
-   - GCC: 4.8-6.x
+   - GCC: 4.8-7.x
    - Clang: 3.3-4.0
+   - Xcode 7.0-9.x
    - MSVC: 2013, 2015, 2017
    - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
 
  - C++98 version
-   - GCC: 4.4-6.x
+   - GCC: 4.4-7.x
    - Clang: 3.3-4.0
+   - Xcode 7.0-9.x
    - MSVC: 2013, 2015, 2017
    - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
-
-Clang 3.3 is not supported on ARM. MSVC and ICC are only supported on x86 and
-x86-64. Any compiler bugs are either worked-around or support for broken
-instruction set on the particular compiler version is disabled -- the bugs are
-not exposed under any circumstances.
 
 Newer versions of the aforementioned compilers will generally work with either
 C++11 or C++98 version of the library. Older versions of these compilers will
 generally work with the C++98 version of the library.
 
-Documentation
--------------
+Various compiler versions are not supported on various instruction sets due to
+compiler bugs or incompletely implemented instruction sets. See
+simdpp/detail/workarounds.h for more details.
 
-Online documentation is provided
-[here](http://p12tic.github.io/libsimdpp/v2.0~rc2/libsimdpp/).
+ - MSVC and ICC are only supported on x86 and x86-64.
+
+ - AVX is not supported on Clang 3.6 or GCC 4.4
+
+ - AVX2 is not supported on Clang 3.6.
+
+ - AVX512F is not supported on:
+    - GCC 5.x and older
+    - Clang 5.0 and older
+    - MSVC
+
+ - NEON armv7 is not supported on Clang 3.3 and older.
+
+ - NEON aarch64 is not supported on GCC 4.8 and older
+
+ - Altivec on little-endian PPC is not suppported on GCC 5.x and older.
+
+ - VSX on big-endian PPC is not supported on GCC 5.x and older.
+
+ - MSA is not supported on GCC 6.x and older.
+
+Contributing
+------------
+
+Contributions are welcome. Please see CONTRIBUTING.md for more information.
 
 License
 -------
 
-The library is distributed under the Boost Software License, Version 1.0
+The library may be freely used in commercial and non-commercial software. The
+code is distributed under the Boost Software License, Version 1.0. Some
+internal development scripts are licensed under different licenses -- see
+comments in these files. The documentation is licensed under CC-BY-SA.
 
 > Boost Software License - Version 1.0 - August 17th, 2003
 >
@@ -100,6 +137,3 @@ The library is distributed under the Boost Software License, Version 1.0
 > FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 > ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 > DEALINGS IN THE SOFTWARE.
-
-
-

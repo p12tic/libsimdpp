@@ -1,0 +1,34 @@
+{{simdpp/title|store_packed3}}
+{{mem/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+void store_packed3( void* ptr, const any_vec<N,V>& a, const any_vec<N,V>& b,
+                    const any_vec<N,V>& c );
+}}
+{{dcl end}}
+
+Interleaves the values in {{tt|a}}, {{tt|b}} and {{tt|c}} in groups of three elements and stores the resulting values in successive locations starting at {{tt|p}}.
+
+{{tt|V}} must me a non-mask vector type. {{tt|ptr}} must be aligned to vector size.
+
+===Parameters===
+{{par begin}}
+{{par | a, b, c | vectors to store }}
+{{par | ptr | pointer to location to store data to}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+[ *(p),   *(p+3), *(p+6), ... , *(p+M*3-3) ] = a
+[ *(p+1), *(p+4), *(p+7), ... , *(p+M*3-2) ] = b
+[ *(p+2), *(p+5), *(p+8), ... , *(p+M*3-1) ] = c
+}}
+
+Here {{tt|M}} is the number of elements in the vector.
+
+===See also===
+{{todo}}

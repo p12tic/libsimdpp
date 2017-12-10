@@ -31,41 +31,199 @@ namespace detail {
       * uint64, uint64
 */
 
-template<template<class, class> class E, class V1, class V2>
-class get_expr_uint {
+template<class V1, class V2>
+struct expr2_uint_maybe_scalar_tags {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<int, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<long, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<long long, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<unsigned, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_UINT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<unsigned long, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_UINT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<unsigned long long, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_UINT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<float, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+template<class V2>
+struct expr2_uint_maybe_scalar_tags<double, V2> {
+    static const unsigned v1_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v1_size_tag = V2::size_tag;
+    static const unsigned v2_type_tag = V2::type_tag;
+    static const unsigned v2_size_tag = V2::size_tag;
+    static const unsigned length_bytes = V2::length_bytes;
+};
+
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, int> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, long long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, unsigned> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_UINT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, unsigned long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_UINT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, unsigned long long> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_UINT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, float> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1>
+struct expr2_uint_maybe_scalar_tags<V1, double> {
+    static const unsigned v1_type_tag = V1::type_tag;
+    static const unsigned v1_size_tag = V1::size_tag;
+    static const unsigned v2_type_tag = SIMDPP_TAG_INT;
+    static const unsigned v2_size_tag = V1::size_tag;
+    static const unsigned length_bytes = V1::length_bytes;
+};
+
+template<class V1, class V2>
+struct get_expr_uint_impl {
+    typedef expr2_uint_maybe_scalar_tags<V1, V2> tags;
 
 #if SIMDPP_EXPR_DEBUG
-    SIMDPP_STATIC_ASSERT(V1::size_tag == V2::size_tag, "Mismatching vector sizes");
-    SIMDPP_STATIC_ASSERT(V1::type_tag == SIMDPP_TAG_MASK_INT ||
-                  V1::type_tag == SIMDPP_TAG_UINT ||
-                  V1::type_tag == SIMDPP_TAG_INT, "Incorrect type parameter");
-    SIMDPP_STATIC_ASSERT(V2::type_tag == SIMDPP_TAG_MASK_INT ||
-                  V2::type_tag == SIMDPP_TAG_UINT ||
-                  V2::type_tag == SIMDPP_TAG_INT, "Incorrect type parameter");
+    SIMDPP_STATIC_ASSERT(tags::v1_size_tag == tags::v2_size_tag, "Mismatching vector sizes");
+    SIMDPP_STATIC_ASSERT(tags::v1_type_tag == SIMDPP_TAG_MASK_INT ||
+                  tags::v1_type_tag == SIMDPP_TAG_UINT ||
+                  tags::v1_type_tag == SIMDPP_TAG_INT, "Incorrect type parameter");
+    SIMDPP_STATIC_ASSERT(tags::v2_type_tag == SIMDPP_TAG_MASK_INT ||
+                  tags::v2_type_tag == SIMDPP_TAG_UINT ||
+                  tags::v2_type_tag == SIMDPP_TAG_INT, "Incorrect type parameter");
 #endif
 
     // the size tag of the expression
-    static const unsigned size_tag = V1::size_tag;
+    static const unsigned size_tag = tags::v1_size_tag;
 
     // (type_tag) get the type tag of the expression. Pretty much the same as
     // get_expr2_nomask does
-    static const unsigned type_tag_t1 = V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag;
+    static const unsigned type_tag_t1 = tags::v1_type_tag > tags::v2_type_tag ? tags::v1_type_tag : tags::v2_type_tag;
     static const unsigned type_tag = (type_tag_t1 == SIMDPP_TAG_MASK_INT) ? SIMDPP_TAG_UINT : type_tag_t1;
 
     // strip signed integer types and masks
     static const unsigned v1_type_tag = SIMDPP_TAG_UINT;
     static const unsigned v2_type_tag = SIMDPP_TAG_UINT;
 
-public:
-    typedef typename type_of_tag<v1_type_tag + size_tag, V1::length_bytes,
-                                         typename wrap_vector_expr<V1>::type>::type v1_type;
-    typedef typename type_of_tag<v2_type_tag + size_tag, V1::length_bytes,
-                                         typename wrap_vector_expr<V2>::type>::type v2_type;
+    typedef typename type_of_tag<v1_type_tag + size_tag,
+                                 tags::length_bytes, void>::type v1_final_type;
+    typedef typename type_of_tag<v2_type_tag + size_tag,
+                                 tags::length_bytes, void>::type v2_final_type;
+};
 
-    typedef E<v1_type, v2_type> expr_type;
+template<template<class, class> class E, class V1, class V2>
+struct get_expr_uint {
+    typedef get_expr_uint_impl<V1, V2> impl;
 
-    typedef typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                 E<v1_type, v2_type> >::type type;
+    typedef typename type_of_tag<impl::type_tag + impl::size_tag,
+                                 impl::tags::length_bytes,
+                                 E<V1, V2> >::type type;
 };
 
 } // namespace detail

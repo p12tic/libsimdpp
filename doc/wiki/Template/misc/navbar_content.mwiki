@@ -1,0 +1,20 @@
+{{nv begin}}
+{{nv h2 | Constant declaration}}
+{{nv ln | misc/make_int }}
+{{nv ln | misc/make_uint }}
+{{nv ln | misc/make_float }}
+
+{{nv h2 | Data transfer}}
+{{nv ln | misc/extract }}
+{{nv ln | misc/insert }}
+{{nv ln | misc/splat | splat{{small|(scalar)}}}}
+{{nv ln | misc/test_bits_any }}
+{{nv ln | misc/for_each}}
+
+{{nv h2 | Casts}}
+{{nv ln | misc/bit_cast }}
+
+{{nv h2 | Cache operations}}
+{{nv ln | misc/prefetch_read }}
+{{nv ln | misc/prefetch_write }}
+{{nv end}}

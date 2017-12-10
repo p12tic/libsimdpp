@@ -1,0 +1,32 @@
+{{simdpp/title|load_packed3}}
+{{mem/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+void load_packed3( any_vec<N,V>& a, any_vec<N,V>& b, any_vec<N,V>& c,
+                   const void* ptr );
+}}
+{{dcl end}}
+
+Loads values packed in triplets, de-interleaves them and stores the result into three vectors.
+
+{{tt|ptr}} must be aligned to the vector size.
+
+===Parameters===
+{{par begin}}
+{{par | a, b, c | vectors to load values to}}
+{{par | ptr | pointer to location to load data from}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+a = [ *(p),   *(p+3), *(p+6), ... , *(p+M*3-3) ]
+b = [ *(p+1), *(p+4), *(p+7), ... , *(p+M*3-2) ]
+c = [ *(p+2), *(p+5), *(p+8), ... , *(p+M*3-1) ]
+}}
+
+===See also===
+{{todo}}

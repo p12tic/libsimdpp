@@ -1,0 +1,40 @@
+{{simdpp/title | any_int32{{small|<N,void>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N, class V >
+class any_int32 : public any_vec32<N, V>;
+}}
+{{dcl end}}
+
+A categorization type that represents any integer vector with 32-bit elements.
+
+{{ltt|types/uint32_void|uint32}}, {{ltt|types/int32_void|int32}} and {{ltt|types/mask_int32_void|mask_int32}} derive from this type.
+
+===Template parameters===
+{{par begin}}
+{{par | N | the number of elements in the vector}}
+{{par | V | the actual type of the vector}}
+{{par end}}
+
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | {{tt|uint_element_type}} | {{c|uint32_t}} }}
+{{dsc | {{tt|int_vector_type}} | {{c|int32<N>}} }}
+{{dsc | {{tt|uint_vector_type}} | {{c|uint32<N>}} }}
+{{dsc | {{tt|mask_vector_type}} | {{c|mask_int32<N>}} }}
+{{dsc end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|length}} | {{tt|N}} }}
+{{dsc | {{tt|base_length}} | {{tt|SIMDPP_FAST_INT32_SIZE}} }}
+{{dsc | {{tt|vec_length}} | The number of base vectors of {{tt|SIMDPP_FAST_INT32_SIZE}} size in this vector }}
+{{dsc | {{tt|num_bits}} | {{c|32}} }}
+{{dsc | {{tt|all_bits}} | {{c|0xffffffff}} }}
+{{dsc end}}
+
+{{types/any_vec32/inherit}}
+{{types/any_vec/inherit}}

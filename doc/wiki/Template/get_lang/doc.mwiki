@@ -1,0 +1,3 @@
+Returns the programming language to use for a page by default. The output value depends on the title of the page this template is included in.
+
+If the page title begins with "c/", then the output value is "c", if the page title begins with "cpp/", then the output value is "cpp". Otherwise the output value is "cpp".

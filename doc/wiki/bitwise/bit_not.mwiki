@@ -1,0 +1,30 @@
+{{simdpp/title|bit_not}}
+{{bitwise/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+V<N, DETAIL> bit_not( const any_vec<N,V>& a );
+}}
+{{dcl end}}
+
+Computes bitwise NOT of integer or floating-point vector.
+
+The return type is a [[types#expr|vector expression]] of {{tt|N}} bytes.
+
+===Parameters===
+{{par begin}}
+{{par | a | an integer or floating-point vector}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to bitwise {{tt|~a}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = ~a0
+...
+rN = ~aN
+}}
+
+===See also===
+{{todo}}

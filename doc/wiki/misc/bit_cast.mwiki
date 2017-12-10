@@ -1,0 +1,26 @@
+{{simdpp/title|bit_cast}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl |
+template< class R, class T >
+R bit_cast( const T& t );
+}}
+{{dcl end}}
+
+Casts between unrelated types. No changes to the stored values are performed.
+
+Conversions between vector and non-vector types are not allowed.
+
+Conversion from non-mask type to mask type is not allowed. Use {{tt|cmp_**}} functions for that.
+
+Conversion from mask type to a non-mask type may not be a costless operation because masks may have different logical and physical layout (e.g., on certain implementations one bit represents entire element in a vector).
+
+Conversions between mask types is only allowed if the element size is the same.
+
+===Parameters===
+{{par begin}}
+{{par | t | data to cast}}
+{{par end}}
+
+===Return value===
+Casted data.

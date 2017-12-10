@@ -1,0 +1,110 @@
+Creates an annotation. Several annotations are already defined:
+
+; Miscellaneous
+
+{{tl|mark deprecated}} results in {{mark deprecated}}
+
+{{tl|mark optional}} results in {{mark optional}}
+
+{{tl|mark implicit}} results in {{mark implicit}}
+
+{{tl|mark concept}} results in {{mark concept}}
+
+{{tl|mark typedef}} results in {{mark typedef}}
+
+{{tl|mark enum}} results in {{mark enum}}
+
+{{tl|mark keyword}} results in {{mark keyword}}
+
+{{tl|mark language}} results in {{mark language}}
+
+; Standards
+
+{{tl|mark c++11}} results in {{mark c++11}}
+
+{{tl|mark since c++11}} results in {{mark since c++11}}
+
+{{tl|mark until c++11}} results in {{mark until c++11}}
+
+{{tl|mark c++14}} results in {{mark c++14}}
+
+{{tl|mark since c++14}} results in {{mark since c++14}}
+
+{{tl|mark until c++14}} results in {{mark until c++14}}
+
+{{tl|mark c99}} results in {{mark c99}}
+
+{{tl|mark since c99}} results in {{mark since c99}}
+
+{{tl|mark c11}} results in {{mark c11}}
+
+{{tl|mark until c11}} results in {{mark until c11}}
+
+{{tl|mark since c11}} results in {{mark since c11}}
+
+{{tl|mark since none}} results in {{mark since none}}
+
+{{tl|mark until none}} results in {{mark until none}}
+
+; Technical specifications
+
+{{tl|mark since libfund ts}} results in {{mark since libfund ts}}
+
+{{tl|mark since fs ts}} results in {{mark since fs ts}}
+
+{{tl|mark since parallelism ts}} results in {{mark since parallelism ts}}
+
+; Functions
+
+{{tl|mark fun}} results in {{mark fun}}
+
+{{tl|mark tfun}} results in {{mark tfun}}
+<!--
+{{tl|mark ptfun}} results in {{mark ptfun}}
+-->
+
+{{tl|mark mem fun}} results in {{mark mem fun}}
+
+{{tl|mark mem sfun}} results in {{mark mem sfun}}
+
+{{tl|mark mem vfun}} results in {{mark mem vfun}}
+
+{{tl|mark priv mem fun}} results in {{mark priv mem fun}}
+
+{{tl|mark prot mem fun}} results in {{mark prot mem fun}}
+
+{{tl|mark prot mem vfun}} results in {{mark prot mem vfun}}
+
+{{tl|mark macro fun}} results in {{mark macro fun}}
+
+; Classes
+
+{{tl|mark class}} results in {{mark class}}
+
+{{tl|mark tclass}} results in {{mark tclass}}
+
+{{tl|mark ptclass}} results in {{mark ptclass}}
+
+{{tl|mark mem class}} results in {{mark mem class}}
+
+{{tl|mark priv mem class}} results in {{mark priv mem class}}
+
+{{tl|mark prot mem class}} results in {{mark prot mem class}}
+
+; Constants
+
+{{tl|mark macro const}} results in {{mark macro const}}
+
+{{tl|mark const}} results in {{mark const}}
+
+{{tl|mark mem const}} results in {{mark mem const}}
+
+{{tl|mark mem sconst}} results in {{mark mem sconst}}
+
+; Objects
+
+{{tl|mark mem obj}} results in {{mark mem obj}}
+
+{{tl|mark priv mem obj}} results in {{mark priv mem obj}}
+
+{{tl|mark prot mem obj}} results in {{mark prot mem obj}}

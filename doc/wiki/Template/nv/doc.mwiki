@@ -1,0 +1,38 @@
+This is one of the family of templates used for creation of feature lists in sidebars.
+
+{{list/doc}}
+
+{{tl|nv begin}}
+: starts the declaration list
+
+{{tl|nv h1 | ''heading''}}
+: adds heading to the feature list
+
+{{tl|nv h2 | ''heading''}}
+: adds heading to the feature list
+
+{{tl|nv | ''explanation'' }}
+: adds a generic item to the feature list
+
+{{tl|nv ln | ''link'' | ''title override''{{small|(optional)}} | ... | ''title6 override'' {{small|(optional)}} }}
+: adds a link item to the feature list
+
+{{tl|nv mem ln | ''link'' | ''title override''{{small|(optional)}} | ... | ''title4 override'' {{small|(optional)}} }}
+: adds a link item to the feature list
+
+{{tl|nv inc | ''location'' | ''param1'' (optional) | ''param2'' (optional) ... }}
+: includes a template from ''location''. It only invokes {{tlc|location| ''param1'' | ''param2'' ... }} and is included for consistency. Unnamed parameters are passed to the source template. The source template itself should consist from {{tlc|sb list ...}} items.
+
+{{tl|nv end}}
+: ends the feature list
+
+The following three templates are used to place features in several columns.
+
+{{tl|nv col begin}}
+: starts a column construct
+
+{{tl|nv col next}}
+: adds another column
+
+{{tl|nv col end}}
+: ends a column construct

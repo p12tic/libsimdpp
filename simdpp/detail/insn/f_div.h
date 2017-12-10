@@ -15,6 +15,7 @@
 #include <simdpp/types.h>
 #include <simdpp/core/f_rcp_e.h>
 #include <simdpp/core/f_rcp_rh.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -22,7 +23,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
+static SIMDPP_INL
+float32x4 i_div(const float32x4& a, const float32x4& b)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -31,66 +33,79 @@ SIMDPP_INL float32x4 i_div(const float32x4& a, const float32x4& b)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_div_ps(a, b);
+    return _mm_div_ps(a.native(), b.native());
 #elif SIMDPP_USE_NEON64
-    return vdivq_f32(a, b);
+    return vdivq_f32(a.native(), b.native());
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x4 x;
     x = rcp_e(b);
     x = rcp_rh(x, b);
     x = rcp_rh(x, b);
     return mul(a, x);
+#elif SIMDPP_USE_VSX_206
+    return vec_div(a.native(), b.native());
 #elif SIMDPP_USE_ALTIVEC
     float32x4 x;
     x = rcp_e(b);
     x = rcp_rh(x, b);
     x = rcp_rh(x, b); // TODO: check how many approximation steps are needed
     return mul(a, x);
+#elif SIMDPP_USE_MSA
+    return __msa_fdiv_w(a.native(), b.native());
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_div(const float32x8& a, const float32x8& b)
+static SIMDPP_INL
+float32x8 i_div(const float32x8& a, const float32x8& b)
 {
-    return _mm256_div_ps(a, b);
+    return _mm256_div_ps(a.native(), b.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_div(const float32<16>& a, const float32<16>& b)
+static SIMDPP_INL
+float32<16> i_div(const float32<16>& a, const float32<16>& b)
 {
-    return _mm512_div_ps(a, b);
+    return _mm512_div_ps(a.native(), b.native());
 }
 #endif
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_div(const float64x2& a, const float64x2& b)
+static SIMDPP_INL
+float64x2 i_div(const float64x2& a, const float64x2& b)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSE2
+    return _mm_div_pd(a.native(), b.native());
+#elif SIMDPP_USE_NEON64
+    return vdivq_f64(a.native(), b.native());
+#elif SIMDPP_USE_VSX_206
+    return vec_div(a.native(), b.native());
+#elif SIMDPP_USE_MSA
+    return __msa_fdiv_d(a.native(), b.native());
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     float64x2 r;
     for (unsigned i = 0; i < a.length; i++) {
         r.el(i) = a.el(i) / b.el(i);
     }
     return r;
-#elif SIMDPP_USE_SSE2
-    return _mm_div_pd(a, b);
-#elif SIMDPP_USE_NEON64
-    return vdivq_f64(a, b);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_div(const float64x4& a, const float64x4& b)
+static SIMDPP_INL
+float64x4 i_div(const float64x4& a, const float64x4& b)
 {
-    return _mm256_div_pd(a, b);
+    return _mm256_div_pd(a.native(), b.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float64<8> i_div(const float64<8>& a, const float64<8>& b)
+static SIMDPP_INL
+float64<8> i_div(const float64<8>& a, const float64<8>& b)
 {
-    return _mm512_div_pd(a, b);
+    return _mm512_div_pd(a.native(), b.native());
 }
 #endif
 

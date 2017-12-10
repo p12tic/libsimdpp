@@ -1,0 +1,20 @@
+{{simdpp/title|prefetch_write}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl |
+void prefetch_write( const void* ptr );
+}}
+{{dcl end}}
+
+Prefetches data into lowest level cache for writing.
+
+===Parameters===
+{{par begin}}
+{{par | ptr | pointer to the data to prefetch}}
+{{par end}}
+
+===Return value===
+(none)
+
+===See also===
+{{todo}}

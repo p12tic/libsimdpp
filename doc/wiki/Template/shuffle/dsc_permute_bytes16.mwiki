@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/permute_bytes16 | permutes elements in a vector according to another vector}}

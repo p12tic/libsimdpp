@@ -1,0 +1,52 @@
+{{simdpp/title|to_mask}}
+{{conv/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E>
+Ret<N, _DETAIL_> to_mask( Vec<N,E> a );
+}}
+{{dcl end}}
+
+Converts a vector to a mask.
+
+The values of the elements in the source vector must be either all ones or all zeros. Otherwise the behavior is undefined.
+
+In instruction sets that support optimized mask types (e.g. AVX512), the operation results in a conversion instruction being executed. In instruction sets where masks are implemented as regular vectors this function is equivalent to a simple type conversion and does not result in any instructions being executed.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec }}
+{{vset2 | mask_int8 | int8 }}
+{{vset2 | mask_int8 | uint8 }}
+{{vset2 | mask_int16 | int16 }}
+{{vset2 | mask_int16 | uint16 }}
+{{vset2 | mask_int32 | int32 }}
+{{vset2 | mask_int32 | uint32 }}
+{{vset2 | mask_int64 | int64 }}
+{{vset2 | mask_int64 | uint64 }}
+{{vset2 | mask_float32 | float32 }}
+{{vset2 | mask_float64 | float64 }}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a | vector to convert}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to vector converted to its mask equivalent.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 != 0 ? 1 : 0
+...
+rN = aN != 0 ? 1 : 0
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | int/dsc cmp_eq }}
+{{dsc end}}

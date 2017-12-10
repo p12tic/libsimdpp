@@ -1,0 +1,1 @@
+{{types/vector_type |uint16|any_int16| kind_text=integer | element=uint16_t | bits=16 | bytes=2 }}

@@ -33,8 +33,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
     @a p must be aligned to the vector size in bytes
 */
-template<unsigned N, class V1, class V2, class V3> SIMDPP_INL
-void store_packed3(void* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b,
+template<class T, unsigned N, class V1, class V2, class V3> SIMDPP_INL
+void store_packed3(T* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b,
                    const any_vec<N,V3>& c)
 {
     SIMDPP_STATIC_ASSERT(!is_mask<V1>::value && !is_mask<V2>::value && !is_mask<V3>::value,

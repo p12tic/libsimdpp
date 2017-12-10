@@ -1,0 +1,40 @@
+{{simdpp/title | any_int64{{small|<N,void>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N, class V >
+class any_int64 : public any_vec64<N, V>;
+}}
+{{dcl end}}
+
+A categorization type that represents any integer vector with 64-bit elements.
+
+{{ltt|types/uint64_void|uint64}}, {{ltt|types/int64_void|int64}} and {{ltt|types/mask_int64_void|mask_int64}} derive from this type.
+
+===Template parameters===
+{{par begin}}
+{{par | N | the number of elements in the vector}}
+{{par | V | the actual type of the vector}}
+{{par end}}
+
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | {{tt|uint_element_type}} | {{c|uint64_t}} }}
+{{dsc | {{tt|int_vector_type}} | {{c|int64<N>}} }}
+{{dsc | {{tt|uint_vector_type}} | {{c|uint64<N>}} }}
+{{dsc | {{tt|mask_vector_type}} | {{c|mask_int64<N>}} }}
+{{dsc end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|length}} | {{tt|N}} }}
+{{dsc | {{tt|base_length}} | {{tt|SIMDPP_FAST_INT64_SIZE}} }}
+{{dsc | {{tt|vec_length}} | The number of base vectors of {{tt|SIMDPP_FAST_INT64_SIZE}} size in this vector }}
+{{dsc | {{tt|num_bits}} | {{c|64}} }}
+{{dsc | {{tt|all_bits}} | {{c|0xffffffffffffffff}} }}
+{{dsc end}}
+
+{{types/any_vec64/inherit}}
+{{types/any_vec/inherit}}

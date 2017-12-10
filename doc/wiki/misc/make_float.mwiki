@@ -1,0 +1,86 @@
+{{simdpp/title|make_float}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+template<class V>
+V make_float( double v0 );
+}}
+{{dcl | num=1 |
+template<class V>
+V make_float( double v0, double v1 );
+}}
+{{dcl | num=1 |
+template<class V>
+V make_float( double v0, double v1, double v2, double v3 );
+}}
+{{dcl | num=1 |
+template<class V>
+V make_float( double v0, double v1, ... , double v7 );
+}}
+{{dcl | num=1 |
+template<class V>
+V make_float( double v0, double v1, ... , double v15 );
+}}
+{{dcl | num=2 |
+_DETAIL_ make_float( double v0 );
+}}
+{{dcl | num=2 |
+_DETAIL_ make_float( double v0, double v1 );
+}}
+{{dcl | num=2 |
+_DETAIL_ make_float( double v0, double v1, double v2, double v3 );
+}}
+{{dcl | num=2 |
+_DETAIL_ make_float( double v0, double v1, ... , double v7 );
+}}
+{{dcl | num=2 |
+_DETAIL_ make_float( double v0, double v1, ... , double v15 );
+}}
+{{dcl end}}
+
+Creates a vector from floating-point values known at compile-time.
+
+The values passed to this function are converted using standard conversions to the element type of the resulting vector.  All conversions and other overhead is performed at compile-time thus even if the minimal optimization level is selected, the function results in a simple load from memory.
+
+The function is not guaranteed to have adequate performance if the arguments are not known at compile-time.
+
+If the vector has fewer elements than the number of the parameters this function accepts then the extra values are discarded.
+
+The first set of overloads loads to given non-mask vector type.
+
+The second set of overloads returns a value of unspecified type with which any non-mask vector can be initialized. E.g. {{c|1=uint32<4> x = make_float(1, 2, 3, 4);}}
+
+===Parameters===
+{{par begin}}
+{{par | v0, ..., v15 | the values to initialize the vector to}}
+{{par end}}
+
+===Return value===
+(1) Vector that contains the given values.
+
+(2) An value of unspecified type that can initialize a vector with the given values as if the first version of the function was executed.
+
+===Equivalent operation===
+
+1 parameter version
+{{source|1=
+r = [ v0 v0 v0 v0 ... v0 ]
+}}
+
+2 parameters version
+{{source|1=
+r = [ v0 v1 v0 v1 ... v1 ]
+}}
+
+4 parameters version
+{{source|1=
+r = [ v0 v1 v2 v3 ... v3 ]
+}}
+
+8 parameters version
+{{source|1=
+r = [ v0 v1 .. v7 v0  ... v7 ]
+}}
+
+===See also===
+{{todo}}

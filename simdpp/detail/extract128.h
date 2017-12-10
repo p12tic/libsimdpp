@@ -22,7 +22,7 @@ namespace detail {
 template<unsigned s>
 SIMDPP_INL uint8x16 extract128(const uint8x32& a)
 {
-    return s == 0 ? _mm256_castsi256_si128(a) : _mm256_extracti128_si256(a, 1);
+    return s == 0 ? _mm256_castsi256_si128(a.native()) : _mm256_extracti128_si256(a.native(), 1);
 }
 
 template<unsigned s>
@@ -46,21 +46,36 @@ SIMDPP_INL int64x2 extract128(const int64x4& a) { return (int64x2) extract128<s>
 template<unsigned s>
 SIMDPP_INL float32x4 extract128(const float32x8& a)
 {
-    return s == 0 ? _mm256_castps256_ps128(a) : _mm256_extractf128_ps(a, 1);
+    return s == 0 ? _mm256_castps256_ps128(a.native()) : _mm256_extractf128_ps(a.native(), 1);
 }
 
 template<unsigned s>
 SIMDPP_INL float64x2 extract128(const float64x4& a)
 {
-    return s == 0 ? _mm256_castpd256_pd128(a) : _mm256_extractf128_pd(a, 1);
+    return s == 0 ? _mm256_castpd256_pd128(a.native()) : _mm256_extractf128_pd(a.native(), 1);
 }
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned s>
+SIMDPP_INL uint8<16> extract128(const uint8<64>& a)
+{
+    return _mm512_extracti32x4_epi32(a.native(), s);
+}
+template<unsigned s>
+SIMDPP_INL int8<16> extract128(const int8<64>& a) { return (int8<16>) extract128<s>(uint8<64>(a)); }
+
+template<unsigned s>
+SIMDPP_INL uint16<8> extract128(const uint16<32>& a) { return (uint16<8>) extract128<s>(uint8<64>(a)); }
+template<unsigned s>
+SIMDPP_INL int16<8> extract128(const int16<32>& a) { return (int16<8>) extract128<s>(uint8<64>(a)); }
 #endif
 
 #if SIMDPP_USE_AVX512F
 template<unsigned s>
 SIMDPP_INL uint32x4 extract128(const uint32<16>& a)
 {
-    return _mm512_extracti32x4_epi32(a, s);
+    return _mm512_extracti32x4_epi32(a.native(), s);
 }
 
 template<unsigned s>
@@ -74,19 +89,19 @@ SIMDPP_INL int64x2 extract128(const int64<8>& a) { return (int64x2) extract128<s
 template<unsigned s>
 SIMDPP_INL float32x4 extract128(const float32<16>& a)
 {
-    return _mm512_extractf32x4_ps(a, s);
+    return _mm512_extractf32x4_ps(a.native(), s);
 }
 
 template<unsigned s>
 SIMDPP_INL float64x2 extract128(const float64<8>& a)
 {
-    return _mm_castps_pd(_mm512_extractf32x4_ps(_mm512_castpd_ps((__m512d)a), s));
+    return _mm_castps_pd(_mm512_extractf32x4_ps(_mm512_castpd_ps(a.native()), s));
 }
 
 template<unsigned s>
 SIMDPP_INL uint32x8 extract256(const uint32<16>& a)
 {
-    return _mm512_extracti64x4_epi64(a, s);
+    return _mm512_extracti64x4_epi64(a.native(), s);
 }
 
 template<unsigned s>
@@ -100,13 +115,39 @@ SIMDPP_INL int64x4 extract256(const int64<8>& a) { return (int64x4) extract256<s
 template<unsigned s>
 SIMDPP_INL float32<8> extract256(const float32<16>& a)
 {
-    return _mm256_castpd_ps(_mm512_extractf64x4_pd(_mm512_castps_pd((__m512)a), s));
+    return _mm256_castpd_ps(_mm512_extractf64x4_pd(_mm512_castps_pd(a.native()), s));
 }
 
 template<unsigned s>
 SIMDPP_INL float64<4> extract256(const float64<8>& a)
 {
-    return _mm512_extractf64x4_pd(a, s);
+    return _mm512_extractf64x4_pd(a.native(), s);
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned s>
+SIMDPP_INL uint8<32> extract256(const uint8<64>& a)
+{
+    return _mm512_extracti64x4_epi64(a.native(), s);
+}
+
+template<unsigned s>
+SIMDPP_INL uint16<16> extract256(const uint16<32>& a)
+{
+    return _mm512_extracti64x4_epi64(a.native(), s);
+}
+
+template<unsigned s>
+SIMDPP_INL int8<32> extract256(const int8<64>& a)
+{
+    return _mm512_extracti64x4_epi64(a.native(), s);
+}
+
+template<unsigned s>
+SIMDPP_INL int16<16> extract256(const int16<32>& a)
+{
+    return _mm512_extracti64x4_epi64(a.native(), s);
 }
 #endif
 

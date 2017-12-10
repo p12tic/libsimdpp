@@ -12,7 +12,10 @@
     #error "This file must be included through simd.h"
 #endif
 
-#include <simdpp/setup_arch.h>
+#include <simdpp/types.h>
+#include <simdpp/types/traits.h>
+#include <simdpp/core/store.h>
+#include <simdpp/core/load.h>
 #include <cstring>
 
 namespace simdpp {
@@ -27,26 +30,33 @@ namespace detail {
 template<class V>
 class mem_block {
 public:
+    SIMDPP_STATIC_ASSERT(is_vector<V>::value, "Non-vector types are not supported");
+
     typedef typename V::element_type element_type;
     static const unsigned length = V::length;
 
     SIMDPP_INL mem_block() {}
     SIMDPP_INL mem_block(const mem_block& other) { std::memcpy(this, &other, sizeof(other)); }
-    SIMDPP_INL mem_block(const V& v) { std::memcpy(d_, &v, sizeof(v)); }
+    SIMDPP_INL mem_block(const V& v) { store(d_, v); }
 
-    SIMDPP_INL mem_block& operator=(const V& v) { std::memcpy(d_, &v, sizeof(v)); return *this; }
+    SIMDPP_INL mem_block& operator=(const V& v) { store(d_, v); return *this; }
 
-    SIMDPP_INL operator V() const { V r; std::memcpy(&r, d_, sizeof(r)); return r; }
+    SIMDPP_INL operator V() const { V r = load(d_); return r; }
 
     SIMDPP_INL const element_type& operator[](unsigned id) const { return d_[id]; }
     SIMDPP_INL element_type& operator[](unsigned id) { return d_[id]; }
 
-    SIMDPP_INL const element_type* operator&() const { return d_; }
+    SIMDPP_INL const element_type* data() const { return d_; }
 private:
+#if SIMDPP_USE_NEON32
+    // On NEON the stack and vector types are not themselves 16-byte aligned
+    SIMDPP_ALIGN(16) element_type d_[length];
+#else
     union {
         element_type d_[length];
-        typename V::native_type align_;
+        typename V::base_vector_type::native_type align_;
     };
+#endif
 };
 
 } // namespace detail

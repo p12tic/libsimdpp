@@ -1,0 +1,74 @@
+<noinclude><div></noinclude><div style="clear: both;"></div><!--So right or left floating items don't stick out of the doc box.-->
+</div><!--End of green doc box--><!--
+  Link box below for the doc meta-data:
+-->{{#if:
+  <!--Check if we should show the link box-->
+  {{#ifeq: {{{link box|}}} | off
+  |
+  | {{{doc exist|yes}}}{{
+    #switch: {{SUBJECTSPACE}}
+    | {{ns:User}}
+    | {{ns:Template}} = yes
+    }}
+  }}
+
+| {{fmbox
+  | id = documentation-meta-data
+  | image = none
+  | style = background-color: #ecfcf4;
+  | textstyle = font-style: italic;
+  | text =
+    {{#if: {{{link box|}}}
+    | {{{link box}}}   <!--Use custom link box content-->
+    | {{#if: {{{doc exist|yes}}}
+      | <!--/doc exists, link to it-->
+        The above [[enwiki:Wikipedia:Template documentation|documentation]] is [[enwiki:Wikipedia:Transclusion|transcluded]] from [[{{{docpage|{{FULLPAGENAME}}/doc}}}]]. <small style="font-style: normal">([{{fullurl:{{{docpage|{{FULLPAGENAME}}/doc}}}|action=edit}} edit] &#124; [{{fullurl:{{{docpage|{{FULLPAGENAME}}/doc}}}|action=history}} history])</small> <br>
+      }}<!--
+        Add links to /sandbox and /testcases when appropriate:
+   --><!--{{#switch: {{SUBJECTSPACE}}
+      | {{ns:User}}
+      | {{ns:Template}} =
+        Editors can experiment in this template's {{
+        #ifexist: {{{sandbox| {{FULLPAGENAME}}/sandbox }}}
+        | [[{{{sandbox| {{FULLPAGENAME}}/sandbox }}}|sandbox]] <small style="font-style: normal">([{{fullurl: {{{sandbox| {{FULLPAGENAME}}/sandbox }}} | action=edit }} edit] {{!}} [{{fullurl:Wikipedia:pagediff | withJS={{urlencode:MediaWiki:Common.js/pagediff.js}}&oldpage={{urlencode:{{{template page|{{FULLPAGENAME}}}}}}}&newpage={{urlencode:{{{sandbox|{{FULLPAGENAME}}/sandbox}}}}}}} diff])</small>
+        | sandbox <small style="font-style: normal">([{{fullurl: {{{sandbox| {{FULLPAGENAME}}/sandbox }}} | action=edit&preload=Template:Documentation/preload-sandbox }} create])</small>
+        }} and {{
+        #ifexist: {{{testcases| {{FULLPAGENAME}}/testcases }}}
+        | [[{{{testcases| {{FULLPAGENAME}}/testcases }}}|testcases]] <small style="font-style: normal">([{{fullurl: {{{testcases| {{FULLPAGENAME}}/testcases }}} | action=edit }} edit])</small>
+        | testcases <small style="font-style: normal">([{{fullurl: {{{testcases| {{FULLPAGENAME}}/testcases }}} | action=edit&preload=Template:Documentation/preload-testcases }} create])</small>
+        }} pages. <br>
+      }}--><!--
+        Show the cats and interwiki text, but not
+        if "content" fed or "docname fed" since then it is
+        unclear where to add the cats and interwikis.
+   -->{{#if: {{{content|}}} {{{docname fed|}}}
+      |
+      | Please add categories and interwikis to the [[{{{docpage|{{FULLPAGENAME}}/doc}}}|/doc]] subpage.
+      }}<!--
+        Show the "Subpages" link:
+   -->{{#switch: {{SUBJECTSPACE}}
+      | {{ns:File}} =   <!--Don't show it-->
+      | {{ns:Template}} = &#32;[[Special:PrefixIndex/{{{template page|{{FULLPAGENAME}}}}}/|Subpages of this template]].
+      | #default = &#32;[[Special:PrefixIndex/{{{template page|{{FULLPAGENAME}}}}}/|Subpages of this page]].
+      }}
+    }}
+  }}
+}}<!--End link box--><!--
+
+  Detect and report strange usage:
+-->{{#if:
+
+  <!--Check if {{documentation}} is transcluded
+      on a /doc or /testcases page-->
+  {{#switch: {{SUBPAGENAME}}
+  | doc
+  | testcases = strange
+  }}
+  <!--More checks can be added here, just return anything
+      to make the surrounding if-case trigger-->
+
+| <includeonly>[[Category:Wikipedia pages with strange ((documentation)) usage|{{main other|Main:}}{{FULLPAGENAME}}]]<!-- Sort on namespace --></includeonly>
+
+}}<noinclude>
+{{pp-template|small=yes}}
+</noinclude>

@@ -1,0 +1,48 @@
+{{simdpp/title|mul_lo{{small|(integer)}}}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2>
+Ret<N, _DETAIL_> mul_lo( Vec1<N,E1> a, Vec2<N,E2> b );
+}}
+{{dcl end}}
+
+Multiplies two vectors with integer values and returns the lower part of the result. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2}}
+{{vset3 | int16 | int16 | int16}}
+{{vset3 | uint16 | uint16 | int16}}
+{{vset3 | uint16 | int16 | uint16}}
+{{vset3 | uint16 | uint16 | uint16}}
+{{vset3 | int32 | int32 | int32}}
+{{vset3 | uint32 | uint32 | int32}}
+{{vset3 | uint32 | int32 | uint32}}
+{{vset3 | uint32 | uint32 | uint32}}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+{{scalar note int}}
+
+===Parameters===
+{{par begin}}
+{{par | a, b | integer vectors}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|a * b}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 * b0
+...
+rN = aN * bN
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | int/dsc mul_hi }}
+{{dsc inc | int/dsc reduce_mul }}
+{{dsc inc | int/dsc mull }}
+{{dsc end}}

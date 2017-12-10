@@ -1,0 +1,1 @@
+{{types/vector_mask_type |mask_int16|any_int16| kind=int | kind_text=integer | regular_vec=uint16 | bits=16  }}

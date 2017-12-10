@@ -36,8 +36,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
     @icost{AVX (integer vectors), 2}
 */
-template<unsigned N, class V> SIMDPP_INL
-void store(void* p, const any_vec<N,V>& a)
+template<class T, unsigned N, class V> SIMDPP_INL
+void store(T* p, const any_vec<N,V>& a)
 {
     SIMDPP_STATIC_ASSERT(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
     detail::insn::i_store(reinterpret_cast<char*>(p), a.wrapped().eval());

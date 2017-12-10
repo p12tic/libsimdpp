@@ -21,18 +21,17 @@ namespace detail {
 namespace null {
 
 template<class V> SIMDPP_INL
-V load(V& a, const void* p)
+void load(V& a, const char* p)
 {
     typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
     for (unsigned i = 0; i < V::length; i++) {
         a.el(i) = *pt++;
     }
-    return a;
 }
 
 template<class V> SIMDPP_INL
-void load_packed2(V& a, V& b, const void* p)
+void load_packed2(V& a, V& b, const char* p)
 {
     typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
@@ -43,7 +42,7 @@ void load_packed2(V& a, V& b, const void* p)
 }
 
 template<class V> SIMDPP_INL
-void load_packed3(V& a, V& b, V& c, const void* p)
+void load_packed3(V& a, V& b, V& c, const char* p)
 {
     typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
@@ -55,7 +54,7 @@ void load_packed3(V& a, V& b, V& c, const void* p)
 }
 
 template<class V> SIMDPP_INL
-void load_packed4(V& a, V& b, V& c, V& d, const void* p)
+void load_packed4(V& a, V& b, V& c, V& d, const char* p)
 {
     typedef typename V::element_type T;
     const T* pt = reinterpret_cast<const T*>(p);
@@ -68,7 +67,7 @@ void load_packed4(V& a, V& b, V& c, V& d, const void* p)
 }
 
 template<class V> SIMDPP_INL
-void store(void* p, const V& a)
+void store(char* p, const V& a)
 {
     typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
@@ -78,7 +77,7 @@ void store(void* p, const V& a)
 }
 
 template<class V, class M> SIMDPP_INL
-void store_masked(void* p, const V& a, const M& mask)
+void store_masked(char* p, const V& a, const M& mask)
 {
     typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
@@ -90,7 +89,7 @@ void store_masked(void* p, const V& a, const M& mask)
 }
 
 template<class V> SIMDPP_INL
-void store_first(void* p, const V& a, unsigned n)
+void store_first(char* p, const V& a, unsigned n)
 {
     typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
@@ -100,7 +99,7 @@ void store_first(void* p, const V& a, unsigned n)
 }
 
 template<class V> SIMDPP_INL
-void store_last(void* p, const V& a, unsigned n)
+void store_last(char* p, const V& a, unsigned n)
 {
     typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
@@ -111,7 +110,7 @@ void store_last(void* p, const V& a, unsigned n)
 }
 
 template<class V> SIMDPP_INL
-void store_packed2(void* p, const V& a, const V& b)
+void store_packed2(char* p, const V& a, const V& b)
 {
     typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
@@ -122,7 +121,7 @@ void store_packed2(void* p, const V& a, const V& b)
 }
 
 template<class V> SIMDPP_INL
-void store_packed3(void* p, const V& a, const V& b, const V& c)
+void store_packed3(char* p, const V& a, const V& b, const V& c)
 {
     typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);
@@ -134,7 +133,7 @@ void store_packed3(void* p, const V& a, const V& b, const V& c)
 }
 
 template<class V> SIMDPP_INL
-void store_packed4(void* p, const V& a, const V& b, const V& c, const V& d)
+void store_packed4(char* p, const V& a, const V& b, const V& c, const V& d)
 {
     typedef typename V::element_type T;
     T* pt = reinterpret_cast<T*>(p);

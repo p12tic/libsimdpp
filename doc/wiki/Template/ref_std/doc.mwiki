@@ -1,0 +1,42 @@
+{{tl|ref std c89}}
+
+{{tl|ref std c99}}
+
+{{tl|ref std c11}}
+
+{{tl|ref std c++98}}
+
+{{tl|ref std c++03}}
+
+{{tl|ref std c++11}}
+
+{{tl|ref std c++14}}
+
+{{tl|ref std end}}
+
+{{tl|ref std | section{{=}}''section'' | title{{=}}''title'' | id{{=}}''id''{{mark optional}}| p{{=}}''pages'' {{mark optional}}}}
+
+Applies consistent formatting to the references to the C++ standards in the "References" section. Each section must always start with {{tlc|ref std c++*}} and end with {{tlc|ref std end}}.
+
+===Example===
+  <nowiki>
+  {{ref std c++11}}
+  {{ref std | section=8.3.5 | title=Functions | id=dcl.fct}}
+  {{ref std | section=8.3.6 | title=Default arguments | id=dcl.fct.default | p=1-2,4}}
+  {{ref std end}}
+  {{ref std c++98}}
+  {{ref std | section=8.3.5 | title=Functions | id=dcl.fct}}
+  {{ref std | section=8.3.6 | title=Default arguments | id=dcl.fct.default | p=1-2,4}}
+  {{ref std end}}
+  </nowiki>
+
+The above wikitext is rendered as:
+
+{{ref std c++11}}
+{{ref std | section=8.3.5 | title=Functions | id=dcl.fct}}
+{{ref std | section=8.3.6 | title=Default arguments | id=dcl.fct.default | p=1-2,4}}
+{{ref std end}}
+{{ref std c++98}}
+{{ref std | section=8.3.5 | title=Functions | id=dcl.fct}}
+{{ref std | section=8.3.6 | title=Default arguments | id=dcl.fct.default | p=1-2,4}}
+{{ref std end}}

@@ -1,0 +1,1 @@
+{{dsc tfun | misc/splat | title=splat{{small|(scalar)}} | sets all elements of a vector to runtime value }}

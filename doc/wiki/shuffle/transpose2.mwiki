@@ -1,0 +1,41 @@
+{{simdpp/title|transpose2}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N>
+void transpose2( Vec<N>& a, Vec<N>& b );
+}}
+{{dcl end}}
+
+Transposes two vectors at 2x2 element block granularity.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset1 h | Vec }}
+{{vset1 | int16 }}
+{{vset1 | uint16 }}
+{{vset1 | int32 }}
+{{vset1 | uint32 }}
+{{vset1 | int64 }}
+{{vset1 | uint64 }}
+{{vset1 | float32 }}
+{{vset1 | float64 }}
+{{vset end}}
+
+===Parameters===
+{{par begin}}
+{{par | a, b | vectors to transpose }}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+a = [ a0; b0 ; a2; b2; ... ]
+b = [ b1; a1 ; b3; a3; ... ]
+}}
+
+===See also===
+{{todo}}

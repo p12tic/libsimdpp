@@ -1,0 +1,30 @@
+{{simdpp/title|load_packed2}}
+{{mem/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+void load_packed2( any_vec<N,V>& a, any_vec<N,V>& b, const void* ptr );
+}}
+{{dcl end}}
+
+Loads values packed in pairs, de-interleaves them and stores the result into two vectors.
+
+{{tt|ptr}} must be aligned to the vector size.
+
+===Parameters===
+{{par begin}}
+{{par | a, b | vectors to load values to}}
+{{par | ptr | pointer to location to load data from}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+a = [ *(p),   *(p+2), *(p+4), ... , *(p+M*2-2) ]
+b = [ *(p+1), *(p+3), *(p+5), ... , *(p+M*2-1) ]
+}}
+
+===See also===
+{{todo}}

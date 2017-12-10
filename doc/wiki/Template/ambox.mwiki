@@ -17,8 +17,8 @@
   |style      = {{{style|}}}
   |textstyle  = {{{textstyle|}}}
   |text       = {{#if:{{{smalltext|}}}
-   |{{{smalltext}}} 
-   |{{{text}}} 
+   |{{{smalltext}}}
+   |{{{text}}}
   }}
  }}
  |{{ambox/core

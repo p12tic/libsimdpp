@@ -1,0 +1,42 @@
+{{simdpp/title|splat16, splat8, splat4, splat2}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned s, unsigned N, class V1>
+Ret<N, _DETAIL_> splat16( const any_vec8<N,V1>& a );
+}}
+{{dcl |
+template<unsigned s, unsigned N, class V1>
+Ret<N, _DETAIL_> splat8( const any_vec16<N,V1>& a );
+}}
+{{dcl |
+template<unsigned s, unsigned N, class V1>
+Ret<N, _DETAIL_> splat4( const any_vec32<N,V1>& a );
+}}
+{{dcl |
+template<unsigned s, unsigned N, class V1>
+Ret<N, _DETAIL_> splat2( const any_vec64<N,V1>& a );
+}}
+{{dcl end}}
+
+Broadcasts the {{tt|s}}-th element within the vector across all lates. Each 128-bit lane within vectors is processed separately.
+
+The return vector type is governed by the [[types/promotion|expression promotion]] rules.
+
+===Parameters===
+{{par begin}}
+{{par | a | source vector }}
+{{par | s | the index of the element to broadcast}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]].
+
+===Equivalent operation===
+For the {{tt|any_vec32}} case on 128-bit vector:
+{{source|1=
+r = [ a[s], a[s], a[s], a[s] ]
+}}
+
+===See also===
+{{todo}}

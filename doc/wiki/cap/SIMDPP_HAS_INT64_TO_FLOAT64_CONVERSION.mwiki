@@ -1,0 +1,17 @@
+{{title|SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION}}
+{{cap/navbar}}
+{{dcl begin}}
+{{dcl |
+#define SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION /* 1 if present, 0 otherwise */
+}}
+{{dcl end}}
+
+Indicates support of efficient conversion of {{c|int64}} to {{c|float64}} (see {{ltf|conv/to_float64}}). The macro evaluates to {{c|1}} if this operation is supported in the SIMD unit, {{c|0}} otherwise.
+
+Currently, the macro is defined to {{c|1}} on the following instruction sets:
+
+* {{c|SIMDPP_USE_NULL}}
+* {{c|SIMDPP_USE_AVX512DQ}}
+* {{c|SIMDPP_USE_NEON && SIMDPP_64_BITS}}
+* {{c|SIMDPP_USE_VSX_207}}
+* {{c|SIMDPP_USE_MSA}}

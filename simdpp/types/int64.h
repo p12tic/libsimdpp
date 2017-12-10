@@ -13,8 +13,9 @@
 #endif
 
 #include <simdpp/setup_arch.h>
-#include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
+#include <simdpp/types/fwd.h>
+#include <simdpp/detail/array.h>
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
@@ -73,7 +74,7 @@ private:
     }
 
 private:
-    int64v d_[int64::vec_length];
+    detail::vararray<int64v, int64::vec_length> d_;
 };
 
 /** Class representing an unsigned @a int64 vector of arbitrary length. The vector
@@ -127,7 +128,7 @@ private:
         return r;
     }
 private:
-    uint64v d_[uint64::vec_length];
+    detail::vararray<uint64v, uint64::vec_length> d_;
 };
 
 /// Class representing a mask for 64-bit integer vector of arbitrary
@@ -168,7 +169,7 @@ public:
     SIMDPP_INL mask_int64<N> eval() const { return *this; }
 
 private:
-    mask_int64v d_[mask_int64::vec_length];
+    detail::vararray<mask_int64v, mask_int64::vec_length> d_;
 };
 
 } // namespace SIMDPP_ARCH_NAMESPACE

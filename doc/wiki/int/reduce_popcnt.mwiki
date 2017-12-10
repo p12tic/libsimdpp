@@ -1,0 +1,42 @@
+{{simdpp/title|reduce_popcnt}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1>
+uint32_t reduce_popcnt( const Vec1<N,E1>& a );
+}}
+{{dcl end}}
+
+computes the sum of set bits (population count) in all elements in the vector.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset1 h | Vec1 }}
+{{vset1 | int8 }}
+{{vset1 | uint8 }}
+{{vset1 | int16 }}
+{{vset1 | uint16 }}
+{{vset1 | int32 }}
+{{vset1 | uint32 }}
+{{vset1 | int64 }}
+{{vset1 | uint64 }}
+{{vset end}}
+
+===Parameters===
+{{par begin}}
+{{par | a | integer vector}}
+{{par end}}
+
+===Return value===
+Population
+
+===Equivalent operation===
+{{source|1=
+r = popcnt(a0) + popcnt(a1) + ... + popcnt(aN)
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | int/dsc_popcnt}}
+{{dsc end}}

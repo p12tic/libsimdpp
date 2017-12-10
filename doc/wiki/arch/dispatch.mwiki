@@ -1,0 +1,157 @@
+{{title|Dynamic dispatch}}
+{{arch/navbar}}
+
+Using libsimdpp it's easy to produce binaries that support multiple instruction sets and automatically select the fastest available on target processor. The implementation of this consists of three parts:
+
+* All functions that need to be dispatched must be put in {{tt|SIMDPP_ARCH_NAMESPACE}}, a special namespace whose name depends on the instruction set that is being compiled for. This is required for dynamic dispatcher to function and also helps to avoid ODR violations. For each function, the {{tt|SIMDPP_MAKE_DISPATCHER}} macro must be invoked in namespace scope just outside the {{tt|SIMDPP_ARCH_NAMESPACE}} namespace the actual function is in.
+
+* Production of several object files each of which contain compiled code for different target instruction set. The target instruction set is selected by predefining appropriate macros as described [[arch/selection|here]].
+
+* Production of auxiliary dispatcher code that, on runtime, queries the system about the available instruction sets and based on that information selects the fastest implementation. In libsimdpp, the code is added to one of the mentioned object files by compiling it with additional predefined flags that tell the library that dispatcher code is needed and which instruction sets the user wants to support.
+
+The additional predefined flags for dispatcher support are the following:
+
+* {{ttb|SIMDPP_EMIT_DISPATCHER}} - defining it tells the library that this object file should contain implementations of dispatcher functionality.
+
+* {{ttb|SIMDPP_USER_ARCH_INFO}} - tells the dispatcher how to acquire the information about the supported instruction sets. The macro must result in an expression that evaluates to a value of {{c|simdpp::Arch}} type.
+
+* {{ttb|SIMDPP_DISPATCH_ARCH1}}, {{ttb|SIMDPP_DISPATCH_ARCH2}}, {{ttb|SIMDPP_DISPATCH_ARCH3}}, ...: these tell the library for which instruction sets the user wants to dispatch. Each of these macros needs to be defined to a comma separated list of {{tt|SIMDPP_ARCH_*}} values corresponding to the enabled instruction sets.
+
+==={{tt|SIMDPPP_MAKE_DISPATCHER}} macro===
+
+The {{tt|SIMDPP_MAKE_DISPATCHER}} macro builds a dispatcher for a specific non-member function. The same macro is used for functions with or without return value, with different parameter counts and for template functions.
+
+The function accepts a sequence of 3 or 5 parenthesized token groups. Each group conveys the following information:
+
+* (optional) the full template prefix, e.g. {{c|(template<class T>)}}.
+
+* (optional) the template argument list enclosed in brackets, e.g. {{c|(<T,U>)}}.
+
+* the return type, e.g. {{c|(void)}}, or {{c|(float)}}.
+
+* the function name, e.g. {{c|(my_function)}}
+
+* comma-separated list of function arguments. Each argument is specified as a parenthesized type name and argument name which follows immediately. For example {{c|((float) x, (int) y, (std::pair<int, int>) z)}}.
+
+The following examples show several ways to invoke the {{c|SIMDPP_MAKE_DISPATCHER}} macro:
+
+{{source|1=
+SIMDPP_MAKE_DISPATCHER((void)(my_function1)())
+SIMDPP_MAKE_DISPATCHER((void)(my_function1)((int) x, (float)z))
+SIMDPP_MAKE_DISPATCHER((int)(my_function1)((int) x, (float)z))
+SIMDPP_MAKE_DISPATCHER((template<class A, class B>)(<A,B>)(A)(my_function1)())
+SIMDPP_MAKE_DISPATCHER((template<class A, class B>)(<A,B>)(A)(my_function1)((B) x, (B)z))
+}}
+
+{{c|SIMDPP_ARCH_NAMESPACE::NAME}} (where {{tt|NAME}} refers to the name of the function supplied to the {{c|SIMDPP_MAKE_DISPATCHER}} macro) must refer to the function to be disptached relative to the namespace in which the {{c|SIMDPP_MAKE_DISPATCHER}} macro is used in. That is, the macro must be used in a namespace one level up than the dispatched function, and that namespace must be {{c|SIMDPP_ARCH_NAMESPACE}}.
+
+The return and parameter types must be exactly the same as those of the function to be dispatched. The dispatched function may be overloaded.
+
+When dispatching function templates, each used template must be explicitly dispatched in all architecture-specific compilation units. For example, when using {{c|simdpp_multiarch}} (see [cmake/SimdppMultiarch.cmake https://github.com/p12tic/libsimdpp/blob/master/cmake/SimdppMultiarch.cmake]), these instantiations must be defined in {{tt|SRC_FILE}} source file.
+
+The macro defines a function with the same signature as the dispatched function in the namespace the macro is used. The body of that function implements the dispatch mechanism.
+
+The dispatch functions check the enabled instruction set and select the best function on first call. The initialization does not introduce race conditions when done concurrently.
+
+The generated dispatching code links to all versions of the dispatched function statically, so techniques to prevent linkers from stripping unreferenced object files are not needed.
+
+==={{tt|SIMDPP_INSTANTIATE_DISPATCHER}} macro===
+The {{tt|SIMDPP_INSTANTIATE_DISPATCHER}} macro defines a one or more template instantiations for a dispatcher. Accepts one or more parenthesized token groups separated by commas defining one or more full template instantiations. For example:
+
+{{source|1=SIMDPP_INSTANTIATE_DISPATCHER((template void foo<int>(int x))}}
+
+or
+
+{{source|1=SIMDPP_INSTANTIATE_DISPATCHER(
+    (template void foo<int>(int x)),
+    (template void foo<char>(char x))
+)}}
+
+The macro forces instantiation of the dispatch function defined by the {{c|SIMDPP_MAKE_DISPATCHER}} macro and also of the functions referenced by the dispatcher function. The latter is necessary because the dispatcher is compiled into a only single object file out of the set of multiversioned
+object files. The referenced functions will be instantiated in all of them.
+
+===Example===
+
+{{ttb|test.h}}
+{{source|1=
+void print_arch();
+}}
+
+{{ttb|test.cc}}
+{{source|1=
+#include "test.h"
+#include <simdpp/simd.h>
+#include <iostream>
+#include <simdpp/dispatch/get_arch_gcc_builtin_cpu_supports.h>
+#define SIMDPP_USER_ARCH_INFO ::simdpp::get_arch_gcc_builtin_cpu_supports()
+
+namespace SIMDPP_ARCH_NAMESPACE {
+
+void print_arch()
+{
+    std::cout << static_cast<unsigned>(simdpp::this_compile_arch()) << '\n';
+}
+
+} // namespace SIMDPP_ARCH_NAMESPACE
+
+SIMDPP_MAKE_DISPATCHER((void)(print_arch)());
+}}
+
+{{ttb|main.cc}}
+{{source|1=
+#include "test.h"
+
+int main()
+{
+    print_arch();
+}
+}}
+
+{{ttb|Makefile}}
+{{source|1=
+CXXFLAGS=""
+
+test: main.o test_sse2.o test_sse3.o test_sse4_1.o test_null.o
+    g++ $^ -o test
+
+main.o: main.cc
+    g++ main.cc $(CXXFLAGS) -c -o main.o
+
+test_null.o: test.cc
+    g++ test.cc -c $(CXXFLAGS) -DSIMDPP_EMIT_DISPATCHER \
+        -DSIMDPP_DISPATCH_ARCH1=SIMDPP_ARCH_X86_SSE2 \
+        -DSIMDPP_DISPATCH_ARCH2=SIMDPP_ARCH_X86_SSE3 \
+        -DSIMDPP_DISPATCH_ARCH3=SIMDPP_ARCH_X86_SSE4_1 -o test_null.o
+
+test_sse2.o: test.cc
+    g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE2 -msse2 -o test_sse2.o
+
+test_sse3.o: test.cc
+    g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE3 -msse3 -o test_sse3.o
+
+test_sse4_1.o: test.cc
+    g++ test.cc -c $(CXXFLAGS) -DSIMDPP_ARCH_X86_SSE4_1 -msse4.1 -o test_sse4_1.o
+}}
+
+===CMake===
+
+For CMake users, {{tt|cmake/SimdppMultiarch.cmake}} contains several useful
+functions:
+
+* {{c|simdpp_get_compilable_archs}}: checks what architectures are supported by the compiler.
+* {{c|simdpp_get_runnable_archs}}: checks what architectures are supported by both the compiler and the current processor.
+* {{c|simdpp_multiversion}}: given a list of architectures (possibly generated by {{tt|simdpp_get_compilable_archs}} or {{tt|simdpp_get_runnable_archs}}), automatically configures compilation of additional object files. The user only needs to add the returned list of source files to {{c|add_library}} or {{c|add_executable}}.
+
+The above example may be build with {{tt|CMakeLists.txt}} as simple as follows:
+
+{{source|1=
+cmake_minimum_required(VERSION 2.8.0)
+project(test)
+
+include(SimdppMultiarch)
+
+simdpp_get_runnable_archs(RUNNABLE_ARCHS)
+simdpp_multiarch(GEN_ARCH_FILES test.cc ${RUNNABLE_ARCHS})
+add_executable(test main.cc ${GEN_ARCH_FILES})
+set_target_properties(test PROPERTIES COMPILE_FLAGS "-std=c++11")
+}}

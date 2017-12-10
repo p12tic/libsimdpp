@@ -63,14 +63,16 @@ SIMDPP_INL expr_vec_make_const<int64_t,1> make_int(int64_t v0)
     return a;
 }
 
-SIMDPP_INL expr_vec_make_const<int64_t,2> make_int(int64_t v0, int64_t v1)
+static SIMDPP_INL
+expr_vec_make_const<int64_t,2> make_int(int64_t v0, int64_t v1)
 {
     expr_vec_make_const<int64_t,2> a;
     a.a[0] = v0;  a.a[1] = v1;
     return a;
 }
 
-SIMDPP_INL expr_vec_make_const<int64_t,4>
+static SIMDPP_INL
+expr_vec_make_const<int64_t,4>
     make_int(int64_t v0, int64_t v1, int64_t v2, int64_t v3)
 {
     expr_vec_make_const<int64_t,4> a;
@@ -78,7 +80,8 @@ SIMDPP_INL expr_vec_make_const<int64_t,4>
     return a;
 }
 
-SIMDPP_INL expr_vec_make_const<int64_t,8>
+static SIMDPP_INL
+expr_vec_make_const<int64_t,8>
     make_int(int64_t v0, int64_t v1, int64_t v2, int64_t v3,
              int64_t v4, int64_t v5, int64_t v6, int64_t v7)
 {
@@ -88,7 +91,8 @@ SIMDPP_INL expr_vec_make_const<int64_t,8>
     return a;
 }
 
-SIMDPP_INL expr_vec_make_const<int64_t,16>
+static SIMDPP_INL
+expr_vec_make_const<int64_t,16>
     make_int(int64_t v0,  int64_t v1,  int64_t v2,  int64_t v3,
              int64_t v4,  int64_t v5,  int64_t v6,  int64_t v7,
              int64_t v8,  int64_t v9,  int64_t v10, int64_t v11,

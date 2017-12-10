@@ -36,9 +36,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-4}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint8<N, expr_abs<int8<N,E> > > abs(const int8<N,E>& a)
+uint8<N, expr_iabs<int8<N,E> > > abs(const int8<N,E>& a)
 {
-    return expr_abs<int8<N,E> >(a);
+    expr_iabs<int8<N,E> > ret = { a };
+    return ret;
 }
 
 
@@ -59,9 +60,10 @@ uint8<N, expr_abs<int8<N,E> > > abs(const int8<N,E>& a)
     @icost{ALTIVEC, 2-5}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint16<N, expr_abs<int16<N,E> > > abs(const int16<N,E>& a)
+uint16<N, expr_iabs<int16<N,E> > > abs(const int16<N,E>& a)
 {
-    return expr_abs<int16<N,E> >(a);
+    expr_iabs<int16<N,E> > ret = { a };
+    return ret;
 }
 
 /** Computes absolute value of 32-bit integer values.
@@ -81,9 +83,10 @@ uint16<N, expr_abs<int16<N,E> > > abs(const int16<N,E>& a)
     @icost{ALTIVEC, 2-4}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint32<N, expr_abs<int32<N,E> > > abs(const int32<N,E>& a)
+uint32<N, expr_iabs<int32<N,E> > > abs(const int32<N,E>& a)
 {
-    return expr_abs<int32<N,E> >(a);
+    expr_iabs<int32<N,E> > ret = { a };
+    return ret;
 }
 
 /** Computes absolute value of 64-bit integer values.
@@ -105,9 +108,10 @@ uint32<N, expr_abs<int32<N,E> > > abs(const int32<N,E>& a)
     @novec{ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-uint64<N, expr_abs<int64<N,E> > > abs(const int64<N,E>& a)
+uint64<N, expr_iabs<int64<N,E> > > abs(const int64<N,E>& a)
 {
-    return expr_abs<int64<N,E> >(a);
+    expr_iabs<int64<N,E> > ret = { a };
+    return ret;
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

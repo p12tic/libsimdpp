@@ -1,0 +1,40 @@
+{{simdpp/title | any_int8{{small|<N,void>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N, class V >
+class any_int8 : public any_vec8<N, V>;
+}}
+{{dcl end}}
+
+A categorization type that represents any integer vector with 8-bit elements.
+
+{{ltt|types/uint8_void|uint8}}, {{ltt|types/int8_void|int8}} and {{ltt|types/mask_int8_void|mask_int8}} derive from this type.
+
+===Template parameters===
+{{par begin}}
+{{par | N | the number of elements in the vector}}
+{{par | V | the actual type of the vector}}
+{{par end}}
+
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | {{tt|uint_element_type}} | {{c|uint8_t}} }}
+{{dsc | {{tt|int_vector_type}} | {{c|int8<N>}} }}
+{{dsc | {{tt|uint_vector_type}} | {{c|uint8<N>}} }}
+{{dsc | {{tt|mask_vector_type}} | {{c|mask_int8<N>}} }}
+{{dsc end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|length}} | {{tt|N}} }}
+{{dsc | {{tt|base_length}} | {{tt|SIMDPP_FAST_INT8_SIZE}} }}
+{{dsc | {{tt|vec_length}} | The number of base vectors of {{tt|SIMDPP_FAST_INT8_SIZE}} size in this vector }}
+{{dsc | {{tt|num_bits}} | {{c|8}} }}
+{{dsc | {{tt|all_bits}} | {{c|0xff}} }}
+{{dsc end}}
+
+{{types/any_vec8/inherit}}
+{{types/any_vec/inherit}}

@@ -1,0 +1,83 @@
+This is one of the family of templates used for creation of parameter list.
+
+{{list/doc}}
+
+{{tl|par begin}}
+: starts the parameter list
+
+{{tl|par end}}
+: ends the parameter list
+
+{{tl|par | ''parameter'' | ''explanation''}}
+: adds an item to the parameter list.
+
+{{tl|par hreq}}
+: results in "Type requirements"
+
+{{tl|par req | ''requirement''}}
+: adds a generic type requirement
+
+{{tl|par req concept | ''parameter_name'' | ''concept'' | ''concept2'' {{mark optional}} | ... | ''concept_n'' {{mark optional}} | overload{{=}}''applicable overload''{{mark optional}} | overloads{{=}}''applicable overloads''{{mark optional}} | notes{{=}}''notes'' }}
+: adds a concept requirement.
+
+{{tl|par req concept deref | ''expression'' | ''concept'' | ''concept2'' {{mark optional}} || overload{{=}}''applicable overload''{{mark optional}} | overloads{{=}}''applicable overloads''{{mark optional}} |  ... | ''concept_n'' {{mark optional}} | notes{{=}}''notes'' }}
+: adds a concept requirement on the result of dereference of type
+
+{{tl|par inc | ''location'' | ''param1'' {{mark optional}} | ''param2'' {{mark optional}} ... }}
+: Sets {{tt|dcl-list-template-name}} [https://www.mediawiki.org/wiki/Extension:Variables variable] to ''location'', includes the template from ''location'' and unsets the variable. Use this template whenever copying param list items from a template; this will add an edit link to them. The unnamed parameters ''param1'', ''param2'', ... are passed to the template.
+
+Specific cases
+: functions passed as parameters:
+
+{{tl | par pred0 | ''parameter_name'' | value{{=}}''return_value'' {{mark optional}} | ''condition'' }}
+: predicate with no arguments
+
+{{tl | par pred1 | ''parameter_name'' | value{{=}}''return_value'' {{mark optional}} | ''condition'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' }}
+: unary predicate
+
+{{tl | par pred2 | ''parameter_name'' | value{{=}}''return_value'' {{mark optional}} | ''condition'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{mark optional}} }}
+: binary predicate
+
+{{tl | par pred2 eq | ''parameter_name'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{mark optional}} }}
+: binary equality predicate
+
+{{tl | par cmp | ''parameter_name'' | value{{=}}''return_value'' {{mark optional}} | ''condition'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{mark optional}} }}
+: comparison function
+
+{{tl | par cmp ord | ''parameter_name'' | value{{=}}''return_value'' {{mark optional}} | ''condition'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{mark optional}} }}
+: comparison function for ordering
+
+{{tl | par ccmp | ''parameter_name'' | ''additional_explanation'' {{mark optional}} }}
+: C-style comparison function
+
+{{tl | par opf | ''parameter_name'' | ''action'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type''}}
+: function
+
+{{tl | par op1 | ''parameter_name'' | ''action'' | rt{{=}}''type'' {{small|or}} rp{{=}}''pointer_type'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type''}}
+: unary operation
+
+{{tl | par op2 | ''parameter_name'' | ''action'' | rt{{=}}''type'' {{small|or}} rp{{=}}''pointer_type'' | t1{{=}}''type'' {{small|or}} p1{{=}}''pointer_type'' | t2{{=}}''type'' {{small|or}} p2{{=}}''pointer_type'' {{mark optional}} }}
+: binary operation
+
+{{tl | par gen | ''parameter_name'' | ''action'' | rt{{=}}''type'' {{small|or}} rp{{=}}''pointer_type'' }}
+: generator
+
+:; Parameters
+
+:*''parameter_name'' is the name of the predicate parameter.
+:*{{tt|value}} is the expected return value when the ''condition'' is satisfied (defaults to {{c|true}}).
+:*{{tt|t1}}, {{tt|t2}}, {{tt|p1}}, {{tt|p2}} are types that the predicate is required to accept as its first and second parameters respectively. {{tt|p1}} and {{tt|p2}} describe a pointer parameter, i.e. it will be dereferenced before passed to the predicate. For each parameter, only one of either {{tt|t*}} or {{tt|p*}} can be used. If {{tt|t2/p2}} are not defined, {{tt|t1,p1}} are used for the second parameter instead.
+
+===Example===
+
+  <nowiki> {{par begin}}
+  {{par | count | the size of the list}}
+  {{par pred2 | p | p1=ForwardIt | t2=T | if the elements should be exchanged}}
+  {{par end}}</nowiki>
+
+The above results in the following:
+
+{{par begin}}
+{{par | count | the size of the list}}
+{{par pred2 | p | p1=ForwardIt | t2=T | if the elements should be exchanged}}
+{{par end}}

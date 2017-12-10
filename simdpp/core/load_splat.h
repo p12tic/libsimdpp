@@ -30,13 +30,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @a p must have the alignment of the element of the target vector.
 */
 // FIXME: return empty expression
-SIMDPP_INL expr_vec_load_splat load_splat(const void* p)
+template<class T>
+SIMDPP_INL expr_vec_load_splat load_splat(const T* p)
 {
     return expr_vec_load_splat(reinterpret_cast<const char*>(p));
 }
 
-template<class V> SIMDPP_INL
-V load_splat(const void* p)
+template<class V, class T> SIMDPP_INL
+V load_splat(const T* p)
 {
     SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");

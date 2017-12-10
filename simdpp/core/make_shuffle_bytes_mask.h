@@ -45,53 +45,39 @@ void assert_selector_range()
 }
 
 /// s - selector, u - the number of elements per group
-template<int s, int u> SIMDPP_INL
-uint8_t get_shuffle_bytex1_16()
-{
-    return (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
-}
-
-typedef array<uint8_t, 2> uint8x2;
-typedef array<uint8_t, 4> uint8x4;
-typedef array<uint8_t, 8> uint8x8;
+template<int s, int u>
+struct get_shuffle_bytex1_16 {
+    static const unsigned r0 = (s == -1) ? 0x80 : (s < u ? s : (s-u)+16);
+};
 
 /// s - selector, u - the number of elements per group
-template<int s, int u> SIMDPP_INL
-uint8x2 get_shuffle_bytex2_16()
-{
-    uint8x2 r;
-    r[0] = (s == -1) ? 0x80 : (s < u ? s*2   : (s-u)*2+16);
-    r[1] = (s == -1) ? 0x80 : r[0]+1;
-    return r;
-}
+template<int s, int u>
+struct get_shuffle_bytex2_16 {
+    static const unsigned r0 = (s == -1) ? 0x80 : (s < u ? s*2   : (s-u)*2+16);
+    static const unsigned r1 = (s == -1) ? 0x80 : r0+1;
+};
 
 /// s - selector, u - the number of elements per group
-template<int s, int u> SIMDPP_INL
-uint8x4 get_shuffle_bytex4_16()
-{
-    uint8x4 r;
-    r[0] = (s == -1) ? 0x80 : (s < u ? s*4   : (s-u)*4+16);
-    r[1] = (s == -1) ? 0x80 : r[0]+1;
-    r[2] = (s == -1) ? 0x80 : r[0]+2;
-    r[3] = (s == -1) ? 0x80 : r[0]+3;
-    return r;
-}
+template<int s, int u>
+struct get_shuffle_bytex4_16 {
+    static const unsigned r0 = (s == -1) ? 0x80 : (s < u ? s*4   : (s-u)*4+16);
+    static const unsigned r1 = (s == -1) ? 0x80 : r0+1;
+    static const unsigned r2 = (s == -1) ? 0x80 : r0+2;
+    static const unsigned r3 = (s == -1) ? 0x80 : r0+3;
+};
 
 /// s - selector, u - the number of elements per group
-template<int s, int u> SIMDPP_INL
-uint8x8 get_shuffle_bytex8_16()
-{
-    uint8x8 r;
-    r[0] = (s == -1) ? 0x80 : (s < u ? s*8   : (s-u)*8+16);
-    r[1] = (s == -1) ? 0x80 : r[0]+1;
-    r[2] = (s == -1) ? 0x80 : r[0]+2;
-    r[3] = (s == -1) ? 0x80 : r[0]+3;
-    r[4] = (s == -1) ? 0x80 : r[0]+4;
-    r[5] = (s == -1) ? 0x80 : r[0]+5;
-    r[6] = (s == -1) ? 0x80 : r[0]+6;
-    r[7] = (s == -1) ? 0x80 : r[0]+7;
-    return r;
-}
+template<int s, int u>
+struct get_shuffle_bytex8_16 {
+    static const unsigned r0 = (s == -1) ? 0x80 : (s < u ? s*8   : (s-u)*8+16);
+    static const unsigned r1 = (s == -1) ? 0x80 : r0+1;
+    static const unsigned r2 = (s == -1) ? 0x80 : r0+2;
+    static const unsigned r3 = (s == -1) ? 0x80 : r0+3;
+    static const unsigned r4 = (s == -1) ? 0x80 : r0+4;
+    static const unsigned r5 = (s == -1) ? 0x80 : r0+5;
+    static const unsigned r6 = (s == -1) ? 0x80 : r0+6;
+    static const unsigned r7 = (s == -1) ? 0x80 : r0+7;
+};
 
 } // namespace detail
 
@@ -132,8 +118,8 @@ template<int s0, int s1, unsigned N> SIMDPP_INL
 uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,2>();
-    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,2>();
+    const unsigned b0 = detail::get_shuffle_bytex1_16<s0,2>::r0;
+    const unsigned b1 = detail::get_shuffle_bytex1_16<s1,2>::r0;
     mask = make_uint(b0,   b1,   b0+2, b1+2,
                      b0+4, b1+4, b0+6, b1+6,
                      b0+8, b1+8, b0+10,b1+10,
@@ -180,10 +166,10 @@ template<int s0, int s1, int s2, int s3, unsigned N> SIMDPP_INL
 uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,4>();
-    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,4>();
-    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,4>();
-    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,4>();
+    const unsigned b0 = detail::get_shuffle_bytex1_16<s0,4>::r0;
+    const unsigned b1 = detail::get_shuffle_bytex1_16<s1,4>::r0;
+    const unsigned b2 = detail::get_shuffle_bytex1_16<s2,4>::r0;
+    const unsigned b3 = detail::get_shuffle_bytex1_16<s3,4>::r0;
     mask = make_uint(b0,   b1,   b2,   b3,
                      b0+4, b1+4, b2+4, b3+4,
                      b0+8, b1+8, b2+8, b3+8,
@@ -228,14 +214,14 @@ uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
-    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,8>();
-    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,8>();
-    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,8>();
-    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,8>();
-    uint8_t b4 = detail::get_shuffle_bytex1_16<s4,8>();
-    uint8_t b5 = detail::get_shuffle_bytex1_16<s5,8>();
-    uint8_t b6 = detail::get_shuffle_bytex1_16<s6,8>();
-    uint8_t b7 = detail::get_shuffle_bytex1_16<s7,8>();
+    const unsigned b0 = detail::get_shuffle_bytex1_16<s0,8>::r0;
+    const unsigned b1 = detail::get_shuffle_bytex1_16<s1,8>::r0;
+    const unsigned b2 = detail::get_shuffle_bytex1_16<s2,8>::r0;
+    const unsigned b3 = detail::get_shuffle_bytex1_16<s3,8>::r0;
+    const unsigned b4 = detail::get_shuffle_bytex1_16<s4,8>::r0;
+    const unsigned b5 = detail::get_shuffle_bytex1_16<s5,8>::r0;
+    const unsigned b6 = detail::get_shuffle_bytex1_16<s6,8>::r0;
+    const unsigned b7 = detail::get_shuffle_bytex1_16<s7,8>::r0;
     mask = make_uint(b0,   b1,   b2,   b3,
                      b4,   b5,   b6,   b7,
                      b0+8, b1+8, b2+8, b3+8,
@@ -277,22 +263,22 @@ uint8<N> make_shuffle_bytes16_mask(uint8<N> &mask)
     detail::assert_selector_range<s4,s5,s6,s7,16>();
     detail::assert_selector_range<s8,s9,s10,s11,16>();
     detail::assert_selector_range<s12,s13,s14,s15,16>();
-    uint8_t b0 = detail::get_shuffle_bytex1_16<s0,16>();
-    uint8_t b1 = detail::get_shuffle_bytex1_16<s1,16>();
-    uint8_t b2 = detail::get_shuffle_bytex1_16<s2,16>();
-    uint8_t b3 = detail::get_shuffle_bytex1_16<s3,16>();
-    uint8_t b4 = detail::get_shuffle_bytex1_16<s4,16>();
-    uint8_t b5 = detail::get_shuffle_bytex1_16<s5,16>();
-    uint8_t b6 = detail::get_shuffle_bytex1_16<s6,16>();
-    uint8_t b7 = detail::get_shuffle_bytex1_16<s7,16>();
-    uint8_t b8 = detail::get_shuffle_bytex1_16<s8,16>();
-    uint8_t b9 = detail::get_shuffle_bytex1_16<s9,16>();
-    uint8_t b10 = detail::get_shuffle_bytex1_16<s10,16>();
-    uint8_t b11 = detail::get_shuffle_bytex1_16<s11,16>();
-    uint8_t b12 = detail::get_shuffle_bytex1_16<s12,16>();
-    uint8_t b13 = detail::get_shuffle_bytex1_16<s13,16>();
-    uint8_t b14 = detail::get_shuffle_bytex1_16<s14,16>();
-    uint8_t b15 = detail::get_shuffle_bytex1_16<s15,16>();
+    const unsigned b0 = detail::get_shuffle_bytex1_16<s0,16>::r0;
+    const unsigned b1 = detail::get_shuffle_bytex1_16<s1,16>::r0;
+    const unsigned b2 = detail::get_shuffle_bytex1_16<s2,16>::r0;
+    const unsigned b3 = detail::get_shuffle_bytex1_16<s3,16>::r0;
+    const unsigned b4 = detail::get_shuffle_bytex1_16<s4,16>::r0;
+    const unsigned b5 = detail::get_shuffle_bytex1_16<s5,16>::r0;
+    const unsigned b6 = detail::get_shuffle_bytex1_16<s6,16>::r0;
+    const unsigned b7 = detail::get_shuffle_bytex1_16<s7,16>::r0;
+    const unsigned b8 = detail::get_shuffle_bytex1_16<s8,16>::r0;
+    const unsigned b9 = detail::get_shuffle_bytex1_16<s9,16>::r0;
+    const unsigned b10 = detail::get_shuffle_bytex1_16<s10,16>::r0;
+    const unsigned b11 = detail::get_shuffle_bytex1_16<s11,16>::r0;
+    const unsigned b12 = detail::get_shuffle_bytex1_16<s12,16>::r0;
+    const unsigned b13 = detail::get_shuffle_bytex1_16<s13,16>::r0;
+    const unsigned b14 = detail::get_shuffle_bytex1_16<s14,16>::r0;
+    const unsigned b15 = detail::get_shuffle_bytex1_16<s15,16>::r0;
     mask = make_uint(b0,  b1,  b2,  b3,
                      b4,  b5,  b6,  b7,
                      b8,  b9,  b10, b11,
@@ -337,12 +323,12 @@ template<int s0, int s1, unsigned N> SIMDPP_INL
 uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,2>();
-    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,2>();
-    mask = (uint8<N*2>) make_uint(b0[0],   b0[1],   b1[0],   b1[1],
-                                  b0[0]+4, b0[1]+4, b1[0]+4, b1[1]+4,
-                                  b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
-                                  b0[0]+12,b0[1]+12,b1[0]+12,b1[1]+12);
+    typedef typename detail::get_shuffle_bytex2_16<s0,2> b0;
+    typedef typename detail::get_shuffle_bytex2_16<s1,2> b1;
+    mask = (uint8<N*2>) make_uint(b0::r0,   b0::r1,   b1::r0,   b1::r1,
+                                  b0::r0+4, b0::r1+4, b1::r0+4, b1::r1+4,
+                                  b0::r0+8, b0::r1+8, b1::r0+8, b1::r1+8,
+                                  b0::r0+12,b0::r1+12,b1::r0+12,b1::r1+12);
     return mask;
 }
 
@@ -385,14 +371,14 @@ template<int s0, int s1, int s2, int s3, unsigned N> SIMDPP_INL
 uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,4>();
-    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,4>();
-    detail::uint8x2 b2 = detail::get_shuffle_bytex2_16<s2,4>();
-    detail::uint8x2 b3 = detail::get_shuffle_bytex2_16<s3,4>();
-    mask = (uint8<N*2>) make_uint(b0[0],   b0[1],   b1[0],   b1[1],
-                                  b2[0],   b2[1],   b3[0],   b3[1],
-                                  b0[0]+8, b0[1]+8, b1[0]+8, b1[1]+8,
-                                  b2[0]+8, b2[1]+8, b3[0]+8, b3[1]+8);
+    typedef typename detail::get_shuffle_bytex2_16<s0,4> b0;
+    typedef typename detail::get_shuffle_bytex2_16<s1,4> b1;
+    typedef typename detail::get_shuffle_bytex2_16<s2,4> b2;
+    typedef typename detail::get_shuffle_bytex2_16<s3,4> b3;
+    mask = (uint8<N*2>) make_uint(b0::r0,   b0::r1,   b1::r0,   b1::r1,
+                                  b2::r0,   b2::r1,   b3::r0,   b3::r1,
+                                  b0::r0+8, b0::r1+8, b1::r0+8, b1::r1+8,
+                                  b2::r0+8, b2::r1+8, b3::r0+8, b3::r1+8);
     return mask;
 }
 
@@ -431,18 +417,18 @@ uint16<N> make_shuffle_bytes16_mask(uint16<N> &mask)
     detail::assert_selector_range<s0,s1,s2,s3,8>();
     detail::assert_selector_range<s4,s5,s6,s7,8>();
 
-    detail::uint8x2 b0 = detail::get_shuffle_bytex2_16<s0,8>();
-    detail::uint8x2 b1 = detail::get_shuffle_bytex2_16<s1,8>();
-    detail::uint8x2 b2 = detail::get_shuffle_bytex2_16<s2,8>();
-    detail::uint8x2 b3 = detail::get_shuffle_bytex2_16<s3,8>();
-    detail::uint8x2 b4 = detail::get_shuffle_bytex2_16<s4,8>();
-    detail::uint8x2 b5 = detail::get_shuffle_bytex2_16<s5,8>();
-    detail::uint8x2 b6 = detail::get_shuffle_bytex2_16<s6,8>();
-    detail::uint8x2 b7 = detail::get_shuffle_bytex2_16<s7,8>();
-    mask = (uint8<N*2>) make_uint(b0[0], b0[1], b1[0], b1[1],
-                                  b2[0], b2[1], b3[0], b3[1],
-                                  b4[0], b4[1], b5[0], b5[1],
-                                  b6[0], b6[1], b7[0], b7[1]);
+    typedef typename detail::get_shuffle_bytex2_16<s0,8> b0;
+    typedef typename detail::get_shuffle_bytex2_16<s1,8> b1;
+    typedef typename detail::get_shuffle_bytex2_16<s2,8> b2;
+    typedef typename detail::get_shuffle_bytex2_16<s3,8> b3;
+    typedef typename detail::get_shuffle_bytex2_16<s4,8> b4;
+    typedef typename detail::get_shuffle_bytex2_16<s5,8> b5;
+    typedef typename detail::get_shuffle_bytex2_16<s6,8> b6;
+    typedef typename detail::get_shuffle_bytex2_16<s7,8> b7;
+    mask = (uint8<N*2>) make_uint(b0::r0, b0::r1, b1::r0, b1::r1,
+                                  b2::r0, b2::r1, b3::r0, b3::r1,
+                                  b4::r0, b4::r1, b5::r0, b5::r1,
+                                  b6::r0, b6::r1, b7::r0, b7::r1);
     return mask;
 }
 
@@ -480,12 +466,12 @@ template<int s0, int s1, unsigned N> SIMDPP_INL
 uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,2>();
-    detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,2>();
-    mask = (uint8<N*4>) make_uint(b0[0],   b0[1],   b0[2],   b0[3],
-                                  b1[0],   b1[1],   b1[2],   b1[3],
-                                  b0[0]+8, b0[1]+8, b0[2]+8, b0[3]+8,
-                                  b1[0]+8, b1[1]+8, b1[2]+8, b1[3]+8);
+    typedef typename detail::get_shuffle_bytex4_16<s0,2> b0;
+    typedef typename detail::get_shuffle_bytex4_16<s1,2> b1;
+    mask = (uint8<N*4>) make_uint(b0::r0,   b0::r1,   b0::r2,   b0::r3,
+                                  b1::r0,   b1::r1,   b1::r2,   b1::r3,
+                                  b0::r0+8, b0::r1+8, b0::r2+8, b0::r3+8,
+                                  b1::r0+8, b1::r1+8, b1::r2+8, b1::r3+8);
     return mask;
 }
 
@@ -519,14 +505,14 @@ template<int s0, int s1, int s2, int s3, unsigned N> SIMDPP_INL
 uint32<N> make_shuffle_bytes16_mask(uint32<N> &mask)
 {
     detail::assert_selector_range<s0,s1,s2,s3,4>();
-    detail::uint8x4 b0 = detail::get_shuffle_bytex4_16<s0,4>();
-    detail::uint8x4 b1 = detail::get_shuffle_bytex4_16<s1,4>();
-    detail::uint8x4 b2 = detail::get_shuffle_bytex4_16<s2,4>();
-    detail::uint8x4 b3 = detail::get_shuffle_bytex4_16<s3,4>();
-    mask = (uint8<N*4>) make_uint(b0[0], b0[1], b0[2], b0[3],
-                                  b1[0], b1[1], b1[2], b1[3],
-                                  b2[0], b2[1], b2[2], b2[3],
-                                  b3[0], b3[1], b3[2], b3[3]);
+    typedef typename detail::get_shuffle_bytex4_16<s0,4> b0;
+    typedef typename detail::get_shuffle_bytex4_16<s1,4> b1;
+    typedef typename detail::get_shuffle_bytex4_16<s2,4> b2;
+    typedef typename detail::get_shuffle_bytex4_16<s3,4> b3;
+    mask = (uint8<N*4>) make_uint(b0::r0, b0::r1, b0::r2, b0::r3,
+                                  b1::r0, b1::r1, b1::r2, b1::r3,
+                                  b2::r0, b2::r1, b2::r2, b2::r3,
+                                  b3::r0, b3::r1, b3::r2, b3::r3);
     return mask;
 }
 
@@ -558,12 +544,12 @@ template<int s0, int s1, unsigned N> SIMDPP_INL
 uint64<N> make_shuffle_bytes16_mask(uint64<N> &mask)
 {
     detail::assert_selector_range<s0,s1,2>();
-    detail::uint8x8 b0 = detail::get_shuffle_bytex8_16<s0,2>();
-    detail::uint8x8 b1 = detail::get_shuffle_bytex8_16<s1,2>();
-    mask = (uint8<N*8>) make_uint(b0[0], b0[1], b0[2], b0[3],
-                                  b0[4], b0[5], b0[6], b0[7],
-                                  b1[0], b1[1], b1[2], b1[3],
-                                  b1[4], b1[5], b1[6], b1[7]);
+    typedef typename detail::get_shuffle_bytex8_16<s0,2> b0;
+    typedef typename detail::get_shuffle_bytex8_16<s1,2> b1;
+    mask = (uint8<N*8>) make_uint(b0::r0, b0::r1, b0::r2, b0::r3,
+                                  b0::r4, b0::r5, b0::r6, b0::r7,
+                                  b1::r0, b1::r1, b1::r2, b1::r3,
+                                  b1::r4, b1::r5, b1::r6, b1::r7);
     return mask;
 }
 

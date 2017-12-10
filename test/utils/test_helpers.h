@@ -10,6 +10,8 @@
 
 #include <simdpp/simd.h>
 #include <simdpp/detail/align_v128.h>
+#include <simdpp/detail/mem_block.h>
+#include <simdpp/types/traits.h>
 #include <iostream>
 #include "test_results_set.h"
 #include "test_reporter.h"
@@ -49,6 +51,26 @@ inline void set_round_to_nearest()
 #endif
 }
 
+inline void prevent_optimization_impl(const void* ptr)
+{
+    std::cout << ptr;
+}
+
+// Some compilers are really clever figuring out ways to access to data that
+// would allow them to optimize things. Storing and reading a pointer from
+// volatile location seems to work around this.
+template<class T>
+T* prevent_optimization(T* ptr)
+{
+    volatile bool never = false;
+    if (never) {
+        prevent_optimization_impl(ptr);
+    }
+    T* volatile* volatile opaque;
+    opaque = &ptr;
+    return *opaque;
+}
+
 namespace SIMDPP_ARCH_NAMESPACE {
 
 
@@ -61,155 +83,57 @@ template<class T>
 class TestData {
 public:
 
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8, class U9, class U10,
-             class U11, class U12, class U13, class U14, class U15>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
-             const U11& u11, const U12& u12, const U13& u13, const U14& u14, const U15& u15)
+    TestData() {}
+
+    TestData(const TestData& other)
     {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8); add(u9); add(u10);
-        add(u11); add(u12); add(u13); add(u14); add(u15);
+        data_ = other.data_;
     }
 
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8, class U9, class U10,
-             class U11, class U12, class U13, class U14>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
-             const U11& u11, const U12& u12, const U13& u13, const U14& u14)
+    TestData& operator=(const TestData& other)
     {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8); add(u9); add(u10);
-        add(u11); add(u12); add(u13); add(u14);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8, class U9, class U10,
-             class U11, class U12, class U13>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
-             const U11& u11, const U12& u12, const U13& u13)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8); add(u9); add(u10);
-        add(u11); add(u12); add(u13);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8, class U9, class U10,
-             class U11, class U12>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
-             const U11& u11, const U12& u12)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8); add(u9); add(u10);
-        add(u11); add(u12);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8, class U9, class U10,
-             class U11>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10,
-             const U11& u11)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8); add(u9); add(u10);
-        add(u11);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8, class U9, class U10>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8, const U9& u9, const U10& u10)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8); add(u9); add(u10);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8, class U9>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8, const U9& u9)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8); add(u9);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7, class U8>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7, const U8& u8)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7); add(u8);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6, class U7>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6, const U7& u7)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6); add(u7);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5,
-             class U6>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5,
-             const U6& u6)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-        add(u6);
-    }
-
-    template<class U1, class U2, class U3, class U4, class U5>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4, const U5& u5)
-    {
-        add(u1); add(u2); add(u3); add(u4); add(u5);
-    }
-
-    template<class U1, class U2, class U3, class U4>
-    TestData(const U1& u1, const U2& u2, const U3& u3, const U4& u4)
-    {
-        add(u1); add(u2); add(u3); add(u4);
-    }
-
-    template<class U1, class U2, class U3>
-    TestData(const U1& u1, const U2& u2, const U3& u3)
-    {
-        add(u1); add(u2); add(u3);
-    }
-
-    template<class U1, class U2>
-    TestData(const U1& u1, const U2& u2)
-    {
-        add(u1); add(u2);
-    }
-
-    template<class U1>
-    TestData(const U1& u1)
-    {
-        add(u1);
+        data_ = other.data_;
     }
 
     template<class U>
     void add(const U& u)
     {
         T t = (T) u;
+#if defined(_MSC_VER) && _MSC_VER < 1700
+        size_t prev_size = data_.size();
+        data_.resize(prev_size + sizeof(T));
+        std::memcpy(data_.data() + prev_size, &t, sizeof(T));
+#else
         data_.push_back(t);
-        ptr_ = &data_.front();
+#endif
     }
 
-    unsigned size() const { return data_.size(); }
-    const T* data() const { return ptr_; }
+    void add(const TestData& other)
+    {
+        data_.insert(data_.end(), other.data_.begin(), other.data_.end());
+    }
+
+#if defined(_MSC_VER) && _MSC_VER < 1700
+    size_t size() const { return data_.size() / sizeof(T); }
+    const T& operator[](unsigned i) const
+    {
+        const char* ptr = prevent_optimization(&data_.front());
+        return *(reinterpret_cast<const T*>(ptr) + i);
+    }
+#else
+    size_t size() const { return data_.size(); }
+    const T& operator[](unsigned i) const
+    {
+        return *(prevent_optimization(&data_.front()) + i);
+    }
+#endif
 
 private:
+#if defined(_MSC_VER) && _MSC_VER < 1700
+    std::vector<char, simdpp::aligned_allocator<char, sizeof(T)> > data_;
+#else
     std::vector<T, simdpp::aligned_allocator<T, sizeof(T)> > data_;
-    T* volatile ptr_;
+#endif
 };
 
 
@@ -217,52 +141,62 @@ private:
     method accepts a type enum plus a pointer; the wrapper overloads determine
     the type enum from the type of the supplied argument.
 */
-inline void test_push_internal(TestResultsSet& t, int8_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, int8_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT8, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, uint8_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, uint8_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT8, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, int16_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, int16_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT16, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, uint16_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, uint16_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT16, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, int32_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, int32_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, uint32_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, uint32_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, int64_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, int64_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_INT64, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, uint64_t data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, uint64_t data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_UINT64, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, float data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, float data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_FLOAT32, 1, file, line).set(0, &data);
 }
 
-inline void test_push_internal(TestResultsSet& t, double data, const char* file, unsigned line)
+inline void test_push_internal(TestResultsSet& t, double data,
+                               const char* file, unsigned line)
 {
     t.push(TYPE_FLOAT64, 1, file, line).set(0, &data);
 }
@@ -270,71 +204,105 @@ inline void test_push_internal(TestResultsSet& t, double data, const char* file,
 template<class V>
 void test_push_internal_vec(TestResultsSet::Result& res, const V& data)
 {
+    SIMDPP_STATIC_ASSERT(sizeof(data) == V::length_bytes,
+                         "Vector uses unsupported data layout");
     for (unsigned i = 0; i < data.vec_length; ++i) {
         typedef typename V::base_vector_type Base;
-        simdpp::detail::mem_block<Base> block(data.vec(i));
-        for (unsigned j = 0; j < Base::length; j++) {
-            res.set(i*Base::length + j, &block[j]);
-        }
+        std::memcpy(res.data.data() + i * Base::length_bytes,
+                    &data.vec(i), Base::length_bytes);
     }
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int8<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int8<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT8, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint8<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint8<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT8, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int16<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int16<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT16, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint16<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint16<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT16, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int32<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int32<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT32, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint32<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint32<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT32, N, file, line), data);
 }
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::int64<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::int64<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_INT64, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::uint64<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::uint64<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_UINT64, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::float32<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::float32<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_FLOAT32, N, file, line), data);
 }
 
 template<unsigned N>
-void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const char* file, unsigned line)
+void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data,
+                        const char* file, unsigned line)
 {
     test_push_internal_vec(t.push(TYPE_FLOAT64, N, file, line), data);
 }
+
+template<class V>
+void test_push_stored(TestResultsSet& t, const typename V::element_type* data,
+                      unsigned count, const char* file, unsigned line)
+{
+    ElementType type = GetElementType<V>::value;
+    TestResultsSet::Result& res = t.push(type, count, file, line);
+    std::memcpy(res.data.data(), data, count * sizeof(data[0]));
+}
+
+template<class V>
+void print_vector_hex(std::ostream& out, const V& v)
+{
+    simdpp::detail::mem_block<V> block(v);
+    print_vector_hex(out, GetElementType<V>::value, v.length, block.data());
+}
+
+template<class V>
+void print_vector_numeric(std::ostream& out, const V& v)
+{
+    simdpp::detail::mem_block<V> block(v);
+    print_vector_numeric(out, GetElementType<V>::value, v.length, block.data());
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
 
 // we are supposed to call this from within the test function which is in
@@ -348,81 +316,84 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const
     OP - operation to apply to the array or arguments
     R - type to cast the object to be pushed to
 */
-#define TEST_PUSH(TC,T,D)   { test_push_internal((TC), (T)(D), __FILE__, __LINE__); }
+#define TEST_PUSH(TC,T,D)                                                       \
+    { test_push_internal((TC), (T)(D), __FILE__, __LINE__); }
 
-#define TEST_ARRAY_PUSH(TC, T, A)                                       \
+// The following macro is the same as TEST_PUSH, except that D is a pointer to
+// data of COUNT vectors of type T stored to memory. D must be V::element_type.
+#define TEST_PUSH_STORED(TC, T, D, COUNT)                                       \
+{ test_push_stored<V>((TC), (D), COUNT, __FILE__, __LINE__); }
+
+#define TEST_PUSH_ARRAY(TC, T, A)                                       \
 {                                                                       \
     (TC).reset_seq();                                                   \
-    for (unsigned i = 0; i < sizeof(A) / sizeof(T); i++) {              \
-        const T* lp = reinterpret_cast<const T*>((A) + i);              \
-        TEST_PUSH(TC, T, *lp);                                          \
+    for (unsigned i = 0; i < sizeof(A) / sizeof((A)[0]); i++) {                 \
+        T l = (T) (A)[i];                                                       \
+        TEST_PUSH(TC, T, l);                                                    \
     }                                                                   \
 }
 
-#define TEST_ARRAY_HELPER1(TC, T, OP, A)                                \
+#define TEST_PUSH_ARRAY_OP1(TC, T, OP, A)                               \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        TEST_PUSH(TC, T, OP(*lp));                                      \
+        T l = (T) (A)[i];                                                       \
+        TEST_PUSH(TC, T, OP(l));                                                \
     }                                                                   \
 }
 
-#define TEST_ARRAY_HELPER1_T(TC, R, T, OP, A)                           \
+#define TEST_PUSH_ARRAY_OP1_T(TC, R, T, OP, A)                          \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        TEST_PUSH(TC, R, OP(*lp));                                      \
+        T l = (T) (A)[i];                                                       \
+        TEST_PUSH(TC, R, OP(l));                                                \
     }                                                                   \
 }
 
-#define TEST_ARRAY_HELPER2(TC, T, OP, A, B)                             \
+#define TEST_PUSH_ARRAY_OP2(TC, T, OP, A, B)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        const T* rp = reinterpret_cast<const T*>((B).data() + i);       \
-        TEST_PUSH(TC, T, OP(*lp, *rp));                                 \
+        T l = (T) (A)[i];                                                       \
+        T r = (T) (B)[i];                                                       \
+        TEST_PUSH(TC, T, OP(l, r));                                             \
     }                                                                   \
 }
 
 // tests OP on all pairs of elements within array A
-#define TEST_ALL_COMB_HELPER1(TC, T, OP, A, EL_SIZE)                    \
+#define TEST_PUSH_ALL_COMB_OP1(TC, T, OP, A)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        T l = *lp;                                                      \
-        for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {        \
+        T l = (T) (A)[i];                                                       \
+        for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {        \
             TEST_PUSH(TC, T, OP(l));                                    \
             l = simdpp::detail::align_v128<1>(l, l);                    \
         }                                                               \
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER1_T(TC, R, T, OP, A, EL_SIZE)               \
+#define TEST_PUSH_ALL_COMB_OP1_T(TC, R, T, OP, A)                       \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
-        const T* lp = reinterpret_cast<const T*>((A).data() + i);       \
-        T l = *lp;                                                      \
-        for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {        \
+        T l = (T) (A)[i];                                                       \
+        for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {        \
             TEST_PUSH(TC, R, OP(l));                                    \
             l = simdpp::detail::align_v128<1>(l, l);                    \
         }                                                               \
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER2(TC, T, OP, A, EL_SIZE)                    \
+#define TEST_PUSH_ALL_COMB_OP2(TC, T, OP, A)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
         for (unsigned j = 0; j < (A).size(); j++) {                     \
-            const T* lp = reinterpret_cast<const T*>((A).data() + i);   \
-            const T* rp = reinterpret_cast<const T*>((A).data() + j);   \
-            T l = *lp; T r = *rp;                                       \
-            for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
+            T l = (T) (A)[i];                                                   \
+            T r = (T) (A)[j];                                                   \
+            for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {    \
                 TEST_PUSH(TC, T, OP(l, r));                             \
                 l = simdpp::detail::align_v128<1>(l, l);                \
             }                                                           \
@@ -430,15 +401,14 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER2_T(TC, R, T, OP, A, EL_SIZE)               \
+#define TEST_PUSH_ALL_COMB_OP2_T(TC, R, T, OP, A)                       \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i = 0; i < (A).size(); i++) {                         \
         for (unsigned j = 0; j < (A).size(); j++) {                     \
-            const T* lp = reinterpret_cast<const T*>((A).data() + i);   \
-            const T* rp = reinterpret_cast<const T*>((A).data() + j);   \
-            T l = *lp; T r = *rp;                                       \
-            for (unsigned rot = 0; rot < sizeof(T)/EL_SIZE; rot++) {    \
+            T l = (T) (A)[i];                                                   \
+            T r = (T) (A)[j];                                                   \
+            for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {    \
                 TEST_PUSH(TC, R, OP(l, r));                             \
                 l = simdpp::detail::align_v128<1>(l, l);                \
             }                                                           \
@@ -446,18 +416,46 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const
     }                                                                   \
 }
 
-#define TEST_ALL_COMB_HELPER3(TC, T, OP, A, EL_SIZE)                    \
+#define TEST_PUSH_ALL_COMB_OP2_SEPARATE_T(TC, R, T1, T2, OP, A1, A2)            \
+{                                                                               \
+    (TC).reset_seq();                                                           \
+    for (unsigned i = 0; i < (A1).size(); i++) {                                \
+        for (unsigned j = 0; j < (A2).size(); j++) {                            \
+            T1 l = (T1) (A1)[i];                                                \
+            T2 r = (T2) (A2)[j];                                                \
+            for (unsigned rot = 0; rot < 128 / T1::num_bits; rot++) {           \
+                TEST_PUSH(TC, R, OP(l, r));                                     \
+                l = simdpp::detail::align_v128<1>(l, l);                        \
+            }                                                                   \
+        }                                                                       \
+    }                                                                           \
+}
+
+#define TEST_EQUAL_ALL_COMB_OP2_EXPLICIT(TR, T, OP1, OP2, A)                    \
+{                                                                               \
+    for (unsigned i = 0; i < (A).size(); i++) {                                 \
+        for (unsigned j = 0; j < (A).size(); j++) {                             \
+            T ARG1 = (T) (A)[i];                                                \
+            T ARG2 = (T) (A)[j];                                                \
+            for (unsigned rot = 0; rot < 128 / T::num_bits; rot++) {            \
+                TEST_EQUAL(TR, (OP1), (OP2));                                   \
+                ARG1 = simdpp::detail::align_v128<1>(ARG1, ARG1);               \
+            }                                                                   \
+        }                                                                       \
+    }                                                                           \
+}
+
+#define TEST_PUSH_ALL_COMB_OP3(TC, T, OP, A)                            \
 {                                                                       \
     (TC).reset_seq();                                                   \
     for (unsigned i0 = 0; i0 < (A).size(); i0++) {                      \
     for (unsigned i1 = 0; i1 < (A).size(); i1++) {                      \
     for (unsigned i2 = 0; i2 < (A).size(); i2++) {                      \
-        const T* p0 = reinterpret_cast<const T*>((A).data() + i0);      \
-        const T* p1 = reinterpret_cast<const T*>((A).data() + i1);      \
-        const T* p2 = reinterpret_cast<const T*>((A).data() + i2);      \
-        T v0 = *p0; T v1 = *p1; T v2 = *p2;                             \
-        for (unsigned rot0 = 0; rot0 < sizeof(T)/EL_SIZE % 4; rot0++) { \
-            for (unsigned rot1 = 0; rot1 < sizeof(T)/EL_SIZE % 4; rot1++) { \
+        T v0 = (T) (A)[i0];                                                     \
+        T v1 = (T) (A)[i1];                                                     \
+        T v2 = (T) (A)[i2];                                                     \
+        for (unsigned rot0 = 0; rot0 < 128 / T::num_bits; rot0++) {     \
+            for (unsigned rot1 = 0; rot1 < 128 / T::num_bits; rot1++) { \
                 TEST_PUSH(TC, T, OP(v0, v1, v2));                       \
                 v0 = simdpp::detail::align_v128<1>(v0, v0);             \
             }                                                           \
@@ -466,29 +464,35 @@ void test_push_internal(TestResultsSet& t, const simdpp::float64<N>& data, const
     }}}                                                                 \
 }
 
-/**
-    Used to test functions that depend on a template parameter. Essentially
-    implements a for loop realised in templates.
 
-    The template calls F<V, i>::test(tc, a) for each i from 0 to F<V, 0>::limit.
-*/
-template<template<class, unsigned> class F, class V, bool large, unsigned i, unsigned limit>
+// Implements TemplateTestHelper functionality. Template recursion is optimized
+// by potentially putting a large number of test template instantiations into a
+// single instantiation of TemplateTestHelperImpl.
+enum {
+    TemplateTestHelperImpl_InstBatchSize = 30
+};
+
+template<template<class, unsigned> class F,
+         class V, bool large, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl;
 
-template<template<class, unsigned> class F, class V, unsigned i, unsigned limit>
+template<template<class, unsigned> class F,
+         class V, unsigned i, unsigned limit>
 struct TemplateTestHelperImpl<F, V, false, i, limit> {
 
     static void run(TestResultsSet& tc, const V& a)
     {
         F<V, i>::test(tc, a);
-        const bool is_large = i + 30 < limit;
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a);
     }
 
     static void run(TestResultsSet& tc, const V& a, const V& b)
     {
         F<V, i>::test(tc, a, b);
-        const bool is_large = i + 30 < limit;
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size < limit;
         TemplateTestHelperImpl<F, V, is_large, i+1, limit>::run(tc, a, b);
     }
 };
@@ -529,8 +533,9 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         F<V, i+27>::test(tc, a);
         F<V, i+28>::test(tc, a);
         F<V, i+29>::test(tc, a);
-        const bool is_large = i + 60 < limit;
-        TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a);
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size*2 < limit;
+        TemplateTestHelperImpl<F, V, is_large, i+batch_size, limit>::run(tc, a);
     }
 
     static void run(TestResultsSet& tc, const V& a, const V& b)
@@ -566,8 +571,9 @@ struct TemplateTestHelperImpl<F, V, true, i, limit> {
         F<V, i+27>::test(tc, a, b);
         F<V, i+28>::test(tc, a, b);
         F<V, i+29>::test(tc, a, b);
-        const bool is_large = i + 60 < limit;
-        TemplateTestHelperImpl<F, V, is_large, i+30, limit>::run(tc, a, b);
+        const unsigned batch_size = TemplateTestHelperImpl_InstBatchSize;
+        const bool is_large = i + batch_size*2 < limit;
+        TemplateTestHelperImpl<F, V, is_large, i+batch_size, limit>::run(tc, a, b);
     }
 };
 
@@ -583,6 +589,12 @@ struct TemplateTestHelperImpl<F, V, false, i, i> {
     static void run(TestResultsSet&, const V&, const V&) {}
 };
 
+/**
+    Used to test functions that depend on a template parameter. Essentially
+    implements a for loop realised in templates.
+
+    The template calls F<V, i>::test(tc, a) for each i from 0 to F<V, 0>::limit.
+*/
 template<template<class, unsigned> class F, class V>
 struct TemplateTestHelper {
     static void run(TestResultsSet& tc, const V& a)
@@ -625,27 +637,87 @@ struct TemplateTestArrayHelper {
     }
 };
 
+template<class E>
+void test_cmp_memory(TestReporter& tr, const E* e1, const E* e2, unsigned count,
+                     bool expected_equal, unsigned line, const char* file)
+{
+    if (count == 0) {
+        tr.add_result(true);
+        return;
+    }
+
+    int memcmp_result = std::memcmp(e1, e2, sizeof(E) * count);
+    bool success = expected_equal ? memcmp_result == 0 : memcmp_result != 0;
+    tr.add_result(success);
+
+    if (!success) {
+        print_separator(tr.out());
+        print_file_info(tr.out(), file, line);
+        tr.out() << (expected_equal ? "Memory not equal:\n"
+                                    : "Memory equal:\n");
+        print_data_diff(tr.out(), GetElementType<E>::value, count, e1, e2);
+    }
+}
+
 template<class V1, class V2>
-void test_cmp_vectors(TestReporter& tr, const V1& q1, const V2& q2, bool expected_equal,
-                      unsigned line, const char* file)
+void test_cmp_equal_impl(simdpp::detail::true_type /*is_V1_vector*/, TestReporter& tr,
+                         const V1& q1, const V2& q2,
+                         bool expected_equal, unsigned line, const char* file)
 {
     typedef typename simdpp::detail::get_expr_nomask<V1>::type V;
     V v1, v2;
     v1 = q1.eval(); v2 = q2.eval();
 
-    bool success = expected_equal ? std::memcmp(&v1, &v2, sizeof(v1)) == 0 :
-                                    std::memcmp(&v1, &v2, sizeof(v1)) != 0;
+    int memcmp_result = std::memcmp(&v1, &v2, V::length_bytes);
+    bool success = expected_equal ? memcmp_result == 0 : memcmp_result != 0;
     tr.add_result(success);
 
     if (!success) {
         print_separator(tr.out());
         print_file_info(tr.out(), file, line);
         tr.out() << (expected_equal ? "Vectors not equal:\n" : "Vectors equal:\n");
-        print_vector_diff(tr.out(), GetVectorType<V>::value, V::length, &v1, &v2);
+        print_data_diff(tr.out(), GetElementType<V>::value, V::length, &v1, &v2);
     }
 }
 
-#define TEST_CMP_VEC(TR, V1, V2)    do { test_cmp_vectors(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
-#define TEST_CMPNE_VEC(TR, V1, V2)  do { test_cmp_vectors(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
+template<class T1, class T2>
+void test_cmp_equal_impl(simdpp::detail::false_type /*is_T1_vector*/, TestReporter& tr,
+                         const T1& a1, const T2& a2,
+                         bool expected_equal, unsigned line, const char* file)
+{
+    SIMDPP_STATIC_ASSERT(sizeof(T1) == sizeof(T2), "Data type sizes must be equal");
+    bool success = expected_equal ? std::memcmp(&a1, &a2, sizeof(a1)) == 0 :
+                                    std::memcmp(&a1, &a2, sizeof(a1)) != 0;
+    tr.add_result(success);
+
+    if (!success) {
+        print_separator(tr.out());
+        print_file_info(tr.out(), file, line);
+        tr.out() << (expected_equal ? "Data not equal:\n" : "Data equal:\n");
+        print_data_diff(tr.out(), GetElementType<T1>::value, 1, &a1, &a2);
+    }
+}
+
+template<class T1, class T2>
+void test_cmp_equal(TestReporter& tr, const T1& a1, const T2& a2,
+                    bool expected_equal, unsigned line, const char* file)
+{
+    SIMDPP_STATIC_ASSERT(simdpp::is_vector<T1>::value == simdpp::is_vector<T2>::value,
+                  "Invalid types for comparison");
+    test_cmp_equal_impl(simdpp::is_vector<T1>(), tr, a1, a2, expected_equal,
+                        line, file);
+}
+
+#define TEST_EQUAL(TR, V1, V2)                                                  \
+    do { test_cmp_equal(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
+
+#define TEST_NOT_EQUAL(TR, V1, V2)                                              \
+    do { test_cmp_equal(TR, V1, V2, false, __LINE__, __FILE__); } while(0)
+
+#define TEST_EQUAL_MEMORY(TR, E1, E2, COUNT)                                    \
+    do { test_cmp_memory((TR), (E1), (E2), (COUNT), true, __LINE__, __FILE__); } while(0)
+
+#define TEST_NOT_EQUAL_MEMORY(TR, E1, E2, COUNT)                                \
+    do { test_cmp_memory((TR), (E1), (E2), (COUNT), false, __LINE__, __FILE__); } while(0)
 
 #endif

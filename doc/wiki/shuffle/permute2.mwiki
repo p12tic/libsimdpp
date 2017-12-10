@@ -1,0 +1,56 @@
+{{simdpp/title|permute2}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned s0, unsigned s1, unsigned N, class E>
+Ret<N,_DETAIL_> permute2( const Vec<N,E>& a );
+}}
+{{dcl end}}
+
+Permutes pairs of elements within the source vector. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec }}
+{{vset2 | int16 | int16 }}
+{{vset2 | uint16 | uint16 }}
+{{vset2 | uint16 | mask_int16 }}
+{{vset2 | int32 | int32 }}
+{{vset2 | uint32 | uint32 }}
+{{vset2 | uint32 | mask_int32 }}
+{{vset2 | int64 | int64 }}
+{{vset2 | uint64 | uint64 }}
+{{vset2 | uint64 | mask_int64 }}
+{{vset2 | float32 | float32 }}
+{{vset2 | float32 | mask_float32 }}
+{{vset2 | float64 | float64 }}
+{{vset2 | float64 | mask_float64 }}
+{{vset end}}
+
+The selectors {{tt|s0}} and {{tt|s1}} must be in range {{c|[0..1]}}.
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a | source vector }}
+{{par | s0,s1 | the permutation indices}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to the permuted vector.
+
+===Equivalent operation===
+{{source|1=
+r0 = a[s0]
+r1 = a[s1]
+r2 = a[s0+2]
+r3 = a[s1+2]
+...
+rM-1 = a[s0+M-1]
+rM   = a[s1+M-1]
+}}
+
+Here {{c|1=M = N-1}}.
+
+===See also===
+{{todo}}

@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/splat | sets all elements to a specific element within vector}}

@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/moveX_l_128 | title=move16_l<br/>move8_l<br/>move4_l<br/>move2_l | moves elements in the vector to the left}}

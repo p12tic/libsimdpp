@@ -44,6 +44,19 @@ struct vec256_impl {
     typedef float64x4 f64;
 };
 
+struct vec512_impl {
+    typedef int8<64> i8;
+    typedef uint8<64> u8;
+    typedef int16<32> i16;
+    typedef uint16<32> u16;
+    typedef int32<16> i32;
+    typedef uint32<16> u32;
+    typedef int64<8> i64;
+    typedef uint64<8> u64;
+    typedef float32<16> f32;
+    typedef float64<8> f64;
+};
+
 template<class T> struct same_width;
 template<> struct same_width<int8x16  > : vec128_impl {};
 template<> struct same_width<uint8x16 > : vec128_impl {};
@@ -66,6 +79,17 @@ template<> struct same_width< int64x4 > : vec256_impl {};
 template<> struct same_width<uint64x4 > : vec256_impl {};
 template<> struct same_width<float32x8> : vec256_impl {};
 template<> struct same_width<float64x4> : vec256_impl {};
+
+template<> struct same_width< int8<64>  > : vec512_impl {};
+template<> struct same_width<uint8<64>  > : vec512_impl {};
+template<> struct same_width< int16<32> > : vec512_impl {};
+template<> struct same_width<uint16<32> > : vec512_impl {};
+template<> struct same_width< int32<16> > : vec512_impl {};
+template<> struct same_width<uint32<16> > : vec512_impl {};
+template<> struct same_width< int64<8>  > : vec512_impl {};
+template<> struct same_width<uint64<8>  > : vec512_impl {};
+template<> struct same_width<float32<16> > : vec512_impl {};
+template<> struct same_width<float64<8> > : vec512_impl {};
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

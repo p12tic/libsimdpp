@@ -12,5 +12,6 @@ void main_test_function(TestReporter& ts)
     test_expr_bitwise(ts);
     test_expr_math_float(ts);
     test_expr_math_int(ts);
+    test_expr_compare(ts);
 }
 

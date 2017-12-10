@@ -16,6 +16,7 @@
 #include <simdpp/core/splat_n.h>
 #include <simdpp/detail/extract128.h>
 #include <simdpp/detail/insn/shuffle128.h>
+#include <simdpp/detail/shuffle/shuffle_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -38,7 +39,19 @@ uint8x32 i_splat(const uint8x32& a)
     uint8x16 lo;
     lo = s < 16 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move16_l<s % 16>(lo);
-    return _mm256_broadcastb_epi8(lo);
+    return _mm256_broadcastb_epi8(lo.native());
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned s> SIMDPP_INL
+uint8<64> i_splat(const uint8<64>& a)
+{
+    SIMDPP_STATIC_ASSERT(s < 64, "Access out of bounds");
+    uint8<16> lo;
+    lo = detail::extract128<s / 16>(a);
+    lo = move16_l<s % 16>(lo);
+    return _mm512_broadcastb_epi8(lo.native());
 }
 #endif
 
@@ -58,7 +71,19 @@ uint16x16 i_splat(const uint16x16& a)
     uint16x8 lo;
     lo = s < 8 ? detail::extract128<0>(a) : detail::extract128<1>(a);
     lo = move8_l<s % 8>(lo);
-    return _mm256_broadcastw_epi16(lo);
+    return _mm256_broadcastw_epi16(lo.native());
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<unsigned s> SIMDPP_INL
+uint16<32> i_splat(const uint16<32>& a)
+{
+    SIMDPP_STATIC_ASSERT(s < 32, "Access out of bounds");
+    uint16<8> lo;
+    lo = detail::extract128<s / 8>(a);
+    lo = move8_l<s % 8>(lo);
+    return _mm512_broadcastw_epi16(lo.native());
 }
 #endif
 
@@ -118,7 +143,8 @@ uint64<8> i_splat(const uint64<8>& ca)
     SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     uint64<8> a = ca;
     a = permute2<s%2,s%2>(a);
-    a = _mm512_shuffle_i64x2(a, a, ((s/2) << 6) + ((s/2) << 4) + ((s/2) << 2) + (s/2)); // TODO extract
+    a = _mm512_shuffle_i64x2(a.native(), a.native(),
+                             SIMDPP_SHUFFLE_MASK_4x4(s/2, s/2, s/2, s/2)); // TODO extract
     return a;
 }
 #endif
@@ -149,7 +175,8 @@ float32<16> i_splat(const float32<16>& ca)
     SIMDPP_STATIC_ASSERT(s < 16, "Access out of bounds");
     float32<16> a = ca;
     a = permute4<s%4,s%4,s%4,s%4>(a);
-    a = _mm512_shuffle_f32x4(a, a, ((s/4) << 6) + ((s/4) << 4) + ((s/4) << 2) + (s/4));
+    a = _mm512_shuffle_f32x4(a.native(), a.native(),
+                             SIMDPP_SHUFFLE_MASK_4x4(s/4, s/4, s/4, s/4));
     return a;
 }
 #endif
@@ -185,7 +212,8 @@ float64<8> i_splat(const float64<8>& ca)
     SIMDPP_STATIC_ASSERT(s < 8, "Access out of bounds");
     float64<8> a = ca;
     a = permute2<s%2,s%2>(a);
-    a = _mm512_shuffle_f64x2(a, a, ((s/2) << 6) + ((s/2) << 4) + ((s/2) << 2) + (s/2)); // TODO extract
+    a = _mm512_shuffle_f64x2(a.native(), a.native(),
+                             SIMDPP_SHUFFLE_MASK_4x4(s/2, s/2, s/2, s/2)); // TODO extract
     return a;
 }
 #endif

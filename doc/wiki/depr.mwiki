@@ -1,0 +1,22 @@
+{{title|Deprecations}}
+{{depr/navbar}}
+
+The libsimdpp library maintains backwards compatibility as much as possible. However, in some cases it is not possible to fix bugs without API changes. The library can be selectively configured to provide the either the new or old API for each API change. This page lists the macros that affect the APIs provided by the library.
+
+The macros must be defined before inclusion of the library headers in order to work as advertised.
+
+===Disabling deprecated APIs by release===
+
+The following macros can be used to disable APIs that have been deprecated by the time of a particular release.
+
+{{dsc begin}}
+{{dsc macro const | nolink=true | SIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER | will disable APIs deprecated in 2.1 release if defined to {{c|1}} }}
+{{dsc end}}
+
+===Granular deprecated API control===
+The macros outlined within this section will be automatically defined to {{c|1}} if they are not defined by the user and corresponding {{c|SIMDPP_DISABLE_DEPRECATED_IN_X_Y_AND_OLDER}} macro is defined. If both are defined, then the macros in this section take precedence.
+
+{{dsc begin}}
+{{dsc h2 | Deprecated in 2.1 release}}
+{{dsc macro const | depr/SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES | will disable implicit conversion operators from vector to native types if defined to {{c|1}} }}
+{{dsc end}}

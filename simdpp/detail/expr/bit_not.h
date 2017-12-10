@@ -13,35 +13,22 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/insn/bit_or.h>
+#include <simdpp/detail/insn/bit_not.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 
-template<class R, unsigned N, class E> SIMDPP_INL
-mask_int32<N> expr_eval(const expr_bit_not<mask_int32<N,E> >& q)
-{
-    return insn::i_bit_not(q.a.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-mask_int64<N> expr_eval(const expr_bit_not<mask_int64<N,E> >& q)
-{
-    return insn::i_bit_not(q.a.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-mask_float32<N> expr_eval(const expr_bit_not<mask_float32<N,E> >& q)
-{
-    return insn::i_bit_not(q.a.eval());
-}
-
-template<class R, unsigned N, class E> SIMDPP_INL
-mask_float64<N> expr_eval(const expr_bit_not<mask_float64<N,E> >& q)
-{
-    return insn::i_bit_not(q.a.eval());
-}
+template<class R, class E>
+struct expr_eval<R, expr_bit_not<E> > {
+    static SIMDPP_INL R eval(const expr_bit_not<E>& e)
+    {
+        // FIXME: this expression is not emitted at the moment
+        typename detail::get_expr_nosign<E>::type a;
+        a = e.a.eval();
+        return (R) insn::i_bit_not(a);
+    }
+};
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

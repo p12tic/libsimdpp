@@ -18,28 +18,44 @@
 #include <math.h>
 #include <float.h>
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4800)
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace cxx11 {
 
+template<bool Value> struct static_assert_impl;
+template<> struct static_assert_impl<true> {};
+
 #define SIMDPP_STATIC_ASSERT3(line) simdpp_assert_ ## line
 #define SIMDPP_STATIC_ASSERT2(line) SIMDPP_STATIC_ASSERT3(line)
-#define SIMDPP_STATIC_ASSERT(v, msg) typedef int SIMDPP_STATIC_ASSERT2(__LINE__) [(v) ? 1 : -1] SIMDPP_ATTRIBUTE_UNUSED
+#define SIMDPP_STATIC_ASSERT(v, msg)                                            \
+    enum { SIMDPP_STATIC_ASSERT2(__LINE__) = sizeof(::simdpp::SIMDPP_ARCH_NAMESPACE::detail::cxx11::static_assert_impl<(v)>) \
+    } SIMDPP_ATTRIBUTE_UNUSED
 
-SIMDPP_INL float isnan(float x)
+SIMDPP_INL bool isnan(float x)
 {
 #if _MSC_VER
-    return _isnan(x);
+    return (bool) _isnan(x);
+#elif defined(__GNUC__) && !defined(__clang__)
+    // certain versions of GCC hide isnan included from C headers
+    return __builtin_isnanf(x);
 #else
     return ::isnan(x);
 #endif
 }
 
-SIMDPP_INL double isnan(double x)
+SIMDPP_INL bool isnan(double x)
 {
 #if _MSC_VER
-    return _isnan(x);
+    return (bool) _isnan(x);
+#elif defined(__GNUC__) && !defined(__clang__)
+    // certain versions of GCC hide isnan included from C headers
+    return __builtin_isnan(x);
 #else
     return ::isnan(x);
 #endif
@@ -71,6 +87,10 @@ SIMDPP_INL double fma(double a, double b, double c)
 } // SIMDPP_ARCH_NAMESPACE
 } // namespace detail
 } // namespace simdpp
+
+#if _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif
 

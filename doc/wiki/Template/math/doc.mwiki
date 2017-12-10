@@ -1,0 +1,46 @@
+The following templates are used to create wikimarkup generated mathematical formulas. The generated formula is displayed using the same-size font as the adjoining text.
+
+{{tl|math|''source''}} - creates a formula from the specified ''source''.
+
+===Helper templates===
+
+The following templates can be in the ''source'' parameter of the {{tl|math}} template to create advanced formatting.
+
+*{{tl|su|p{{=}}''superscript''{{mark optional}}|b{{=}}''subscript''{{mark optional}}}} - creates superscript and/or subscript, e.g. {{su|p=superscript|b=subscript}}
+
+*{{tl|mrad}} - produces radicals
+
+*{{tl|minteg|''min''|''max''|''body''}} - creates an integral, e.g. {{minteg|min|max|body}}.
+
+*{{tl|mexp|''power''}} - creates an exponent raised to ''power'', e.g. {{mexp|power}}
+
+*{{tl|mfrac|''integer''|''numerator''|''denominator''}} - creates a fraction, e.g. {{mfrac|integer|numerator|denominator}}.
+
+*{{tl|mparen|''left_paren''|''right_paren''|''row1''|''row2''|...|style{{=}}''style''{{mark optional}}|rows{{=}}''row_number_override''{{mark optional}}}} -
+*:creates inline table with invisible borders and parentheses on the sides. E.g. {{mparen|(|}|line1|line2|line3}}
+*:''left_paren'' and ''right_paren'' can be one of (){}[]. {{tt|rows}} forces parentheses to span ''row_number_override'' rows. Currently 4 rows are supported. {{tt|style}} denotes additional style for the content ({{tt|row#}} elements).
+
+===Examples===
+{| class="wikitable"
+|-
+! Source
+! Result
+|-
+|<tt><nowiki>{{math|({{mrad|2}}){{su|p=2}} {{=}} 2}}</nowiki></tt>
+|{{math|({{mrad|2}}){{su|p=2}} {{=}} 2}}
+|-
+|<tt><nowiki>{{math|A{{su|p=12|b=3}}}}</nowiki></tt>
+|{{math|A{{su|p=12|b=3}}}}
+|-
+|<tt><nowiki>{{math|{{minteg|0|+∞|{{mexp|−''x''}} d''x''}} {{=}} 1}}</nowiki></tt>
+|{{math|{{minteg|0|+∞|{{mexp|−''x''}} d''x''}} {{=}} 1}}
+|-
+|<tt><nowiki>{{math|{{mfrac|1|2}} − {{mfrac|1|3}} {{=}} {{mfrac|1|6}}}}</nowiki></tt>
+|{{math|{{mfrac|1|2}} − {{mfrac|1|3}} {{=}} {{mfrac|1|6}}}}
+|-
+|<tt><nowiki>{{mparen|(|}|line1|line2|line3}}</nowiki></tt>
+|{{mparen|(|}|line1|line2|line3}}
+|-
+|<tt><nowiki>{{mparen|{|]|line1|line2|style=font-style: italic;|rows=3}}</nowiki></tt>
+|{{mparen|{|]|line1|line2|style=font-style: italic;|rows=3}}
+|}

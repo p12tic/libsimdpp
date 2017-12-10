@@ -14,6 +14,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/detail/get_expr.h>
 #include <simdpp/detail/insn/bit_xor.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 

@@ -1,0 +1,1 @@
+{{types/vector_type |int8|any_int8| kind_text=integer | element=int8_t | bits=8 | bytes=1 }}

@@ -16,7 +16,7 @@ The library provides the following operators that behave equivalently to the res
 {{dsc tfun | nolink=true | operator~ | performs bitwise NOT, wraps {{ltt|bitwise/bit_not}} }}
 
 {{dsc tfun | nolink=true | operator{{==}} | performs comparison for equality, wraps {{ltt|fp/cmp_eq|cmp_eq{{small|(floating-point)}}}} and {{ltt|int/cmp_eq|cmp_eq{{small|(integer)}}}} }}
-{{dsc tfun | nolink=true | operator<nowiki>|=</nowiki> | performs comparison for inequality, wraps {{ltt|fp/cmp_neq|cmp_neq{{small|(floating-point)}}}} and {{ltt|int/cmp_neq|cmp_neq{{small|(integer)}}}} }}
+{{dsc tfun | nolink=true | operator<nowiki>!=</nowiki> | performs comparison for inequality, wraps {{ltt|fp/cmp_neq|cmp_neq{{small|(floating-point)}}}} and {{ltt|int/cmp_neq|cmp_neq{{small|(integer)}}}} }}
 {{dsc tfun | nolink=true | operator> | performs comparison for greater than, wraps {{ltt|fp/cmp_gt|cmp_gt{{small|(floating-point)}}}} and {{ltt|int/cmp_gt|cmp_gt{{small|(integer)}}}} }}
 {{dsc tfun | nolink=true | operator>{{=}} | performs comparison for greater than or equal, wraps {{ltt|fp/cmp_ge|cmp_ge{{small|(floating-point)}}}}  }}
 {{dsc tfun | nolink=true | operator< | performs comparison for less than, wraps {{ltt|fp/cmp_lt|cmp_lt{{small|(floating-point)}}}} and {{ltt|int/cmp_lt|cmp_lt{{small|(integer)}}}} }}

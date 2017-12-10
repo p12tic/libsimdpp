@@ -1,0 +1,7 @@
+This is one of the templates used to refer to templates without inlining them.
+
+{{tl|tl|''template''|''param1''|''param2''|...}} - equivalent to {{tl|tl|''template''|''param1''|''param2''|...}}
+
+{{tl|tlc|''template''|''param1''|''param2''|...}} - equivalent to {{tlc|tlc|''template''|''param1''|''param2''|...}}
+
+{{tl|tlf|''template''|''param1''|''param2''|...}} - equivalent to {{tlf|tlf|''template''|''param1''|''param2''|...}}

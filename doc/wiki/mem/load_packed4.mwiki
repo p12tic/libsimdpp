@@ -1,0 +1,33 @@
+{{simdpp/title|load_packed4}}
+{{mem/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+void load_packed4( any_vec<N,V>& a, any_vec<N,V>& b, any_vec<N,V>& c, any_vec<N,V>& d,
+                   const void* ptr );
+}}
+{{dcl end}}
+
+Loads values packed by four elements, de-interleaves them and stores the result into four vectors.
+
+{{tt|ptr}} must be aligned to the vector size.
+
+===Parameters===
+{{par begin}}
+{{par | a, b, c, d | vectors to load values to}}
+{{par | ptr | pointer to location to load data from}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+a = [ *(p),   *(p+4), *(p+8),  ... , *(p+M*4-4) ]
+b = [ *(p+1), *(p+5), *(p+9),  ... , *(p+M*4-3) ]
+c = [ *(p+2), *(p+6), *(p+10), ... , *(p+M*4-2) ]
+d = [ *(p+3), *(p+7), *(p+11), ... , *(p+M*4-1) ]
+}}
+
+===See also===
+{{todo}}

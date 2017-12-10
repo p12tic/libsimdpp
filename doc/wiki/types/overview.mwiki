@@ -1,0 +1,139 @@
+{{title|Overview}}
+{{types/navbar}}
+
+The library has a number of types that correspond to various types of data that may be stored within a SIMD registers. The types may be categorized in two dimensions: the type of data stored within a single element (lane) of the wrapped SIMD register and the number of such elements wrapped by the type.
+
+The following element types are supported:
+:* signed integers: 8, 16, 32 and 64-bit wide
+:* unsigned integers: 8, 16, 32 and 64-bit wide
+:* floating-point numbers: 32 and 64-bit wide
+:* ''integer'' masks: with elements 8, 16, 32 and 64-bits wide
+:* ''floating-point'' masks: with elements 32 and 64-bits wide
+
+Masks are special vector types that store one bit of information per element. They are described below.
+
+The number of elements that may be contained within a vector type may be any power of two, which larger than certain minimum bound that is dependent on element type. Currently the minimum size of a vector is 128 bits, which means that vectors containing 8, 16, 32 and 64-bit elements must have at least 16, 8, 4 and 2 of them respectively.
+
+The actual physical layout of a vector type is undefined. In particular, this means that the user must use the library functions to store or load vectors from memory and also not depend on {{c|sizeof}} operator.
+
+The following class templates are provided for non-mask types:
+{{dcl begin}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class int8;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class int16;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class int32;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class int64;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class uint8;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class uint16;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class uint32;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class uint64;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class float32;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class float64;
+}}
+{{dcl end}}
+
+Here {{tt|N}} is the number of elements within vector.
+
+The {{tt|Expr}} template parameter is used to support expression templates. Most user code will use the default value {{tt|void}}.
+
+===Masks===
+Masks are special vector types that are similar to their regular counterparts from user's perspective. The difference is that masks store one bit of information per element: either all bits are ones or zeroes. The physical layout is undefined similarly to the regular vector types. On certain instruction sets such as AVX512 each mask element occupies single physical bit, on others it is effectively a regular vector that stores either ones or zeroes in its elements.
+
+The following class templates are provided for mask types:
+{{dcl begin}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class mask_int8;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class mask_int16;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class mask_int32;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class mask_int64;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class mask_float32;
+}}
+{{dcl | 1=
+template<unsigned N, class Expr = void> class mask_float64;
+}}
+{{dcl end}}
+
+Here {{tt|N}} is the number of elements within mask vector and {{tt|Expr}} is used to implement expression templates.
+
+Different types are used for floating-point and integer masks not without a reason: on certain architectures integer and floating point operations are implemented in different processor "domains" with extra latency to pass data between them. Separate types are used to select instructions that operate in correct domain to avoid that extra latency.
+
+===Vector width===
+
+As described above the number of elements in a vector type can be any power of two such that the vector size is not less than 128 bits. Vector types map to as many native SIMD registers as is needed to support the specified number of elements. For example, an instance of {{c|int32x8}} type maps to two instances of {{tt|__m128i}} type on SSE2, but to a single instance of {{tt|__m256i}} on AVX2.
+
+This flexibility allows to use widest native vector widths even in cases when mixed floating-point - integer algorithms are implemented on non-uniform SIMD architectures. Consider a simple example:
+
+{{source|1=
+int* src; float* dst;
+...
+for (unsigned i = 0; i < size; ++i) {
+     *dst++ = (int) (*src++) * 3.14f;
+}
+}}
+
+The vectorized version of this code should use {{c|int32<4>}} and {{c|float32<4>}} types on SSE2 and {{c|int32<8>}} and {{c|float32<8>}} on AVX2. The former instruction set supports 128-bit SIMD instructions for both integer and floating-point operations whereas the latter supports 256-bit SIMD instructions. Effectively utilizing non-uniform instruction set such as AVX is more complex: for floating-point operations 256-bit instructions are available, wheres integer SIMD instructions still support only 128 bits. With libsimdpp the user can simply use {{c|int32<8>}} and {{c|float32<8>}} types and floating-point operations would be done using 256-bit SIMD instructions, whereas integer operations would employ twice as many 128-bit instructions.
+
+Using vector types wider than available SIMD instructions increases register pressure. Users should query the most efficient vector widths from the library via [[util#Vector_size_macros|vector size macros]] and use it to size vectors for their algorithms.
+
+===Type hierarchy===
+
+The vector types form type hierarchy by inheriting from empty class template using [https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern curriously recurring template pattern]. This allows to write function templates accepting a certain category of vector types as parameters without needing to create excessive number of overloads. For example, it's possible to write a single function template that accepts any two integer vectors with 32-bit elements.
+
+The type hierarchy is shown below:
+{{source|1=
+any_vec
+┣━ any_vec8
+┃   ┗━ any_int8
+┃        ┣━ int8
+┃        ┣━ uint8
+┃        ┗━ mask_int8
+┣━ any_vec16
+┃   ┗━ any_int16
+┃        ┣━ int16
+┃        ┣━ uint16
+┃        ┗━ mask_int16
+┣━ any_vec32
+┃   ┣━ any_int32
+┃   ┃    ┣━ int32
+┃   ┃    ┣━ uint32
+┃   ┃    ┗━ mask_int32
+┃   ┗━ any_float32
+┃        ┣━ float32
+┃        ┗━ mask_float32
+┗━ any_vec64
+    ┣━ any_int64
+    ┃    ┣━ int64
+    ┃    ┣━ uint64
+    ┃    ┗━ mask_int64
+    ┗━ any_float64
+         ┣━ float64
+         ┗━ mask_float64
+}}
+
+The categorization types are only useful as parameters in functions that a certain vector category. They are never used in other contexts.

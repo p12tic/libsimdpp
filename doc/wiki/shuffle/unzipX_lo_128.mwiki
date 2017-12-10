@@ -1,0 +1,50 @@
+{{simdpp/title|unzip16_lo, unzip8_lo, unzip4_lo, unzip2_lo}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> unzip16_lo( const any_vec8<N,V1>& a,
+                             const any_vec8<N,V2>& b );
+}}
+{{dcl |
+template<unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> unzip8_lo( const any_vec16<N,V1>& a,
+                            const any_vec16<N,V2>& b );
+}}
+{{dcl |
+template<unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> unzip4_lo( const any_vec32<N,V1>& a,
+                            const any_vec32<N,V2>& b );
+}}
+{{dcl |
+template<unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> unzip2_lo( const any_vec64<N,V1>& a,
+                            const any_vec64<N,V2>& b );
+}}
+{{dcl end}}
+
+De-interleaves even elements from two source vectors. Each 128-bit lane within vectors is processed separately.
+
+The return vector type is governed by the [[types/promotion|expression promotion]] rules.
+
+===Parameters===
+{{par begin}}
+{{par | a, b | source vectors }}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]].
+
+===Equivalent operation===
+For the {{c|uint32x4}} case:
+{{source|1=
+r = [ a0 a2 b0 b2 ]
+}}
+
+For the {{c|uint32x8}} case:
+{{source|1=
+r = [ a0 a2 b0 b2 a4 a6 b4 b6 ]
+}}
+
+===See also===
+{{todo}}

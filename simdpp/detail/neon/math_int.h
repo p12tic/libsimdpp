@@ -29,9 +29,10 @@ namespace neon {
     r15 = low(a15 * b15)
     @endcode
 */
-SIMDPP_INL uint8x16 mul_lo(const uint8x16& a, const uint8x16& b)
+static SIMDPP_INL
+uint8x16 mul_lo(const uint8x16& a, const uint8x16& b)
 {
-    return vmulq_u8(a, b);
+    return vmulq_u8(a.native(), b.native());
 }
 
 /** Multiplies the first 8 values of two signed int8x16 vectors and expands the
@@ -43,9 +44,10 @@ SIMDPP_INL uint8x16 mul_lo(const uint8x16& a, const uint8x16& b)
     r7 = a7 * b7
     @endcode
 */
-SIMDPP_INL int16x8 mull_lo(const int8x16& a, const int8x16& b)
+static SIMDPP_INL
+int16x8 mull_lo(const int8x16& a, const int8x16& b)
 {
-    return vmull_s8(vget_low_s8(a), vget_low_s8(b));
+    return vmull_s8(vget_low_s8(a.native()), vget_low_s8(b.native()));
 }
 
 /** Multiplies the first 8 values of two unsigned int8x16 vectors and expands the
@@ -57,9 +59,10 @@ SIMDPP_INL int16x8 mull_lo(const int8x16& a, const int8x16& b)
     r7 = a7 * b7
     @endcode
 */
-SIMDPP_INL uint16x8 mull_lo(const uint8x16& a, const uint8x16& b)
+static SIMDPP_INL
+uint16x8 mull_lo(const uint8x16& a, const uint8x16& b)
 {
-    return vmull_u8(vget_low_u8(a), vget_low_u8(b));
+    return vmull_u8(vget_low_u8(a.native()), vget_low_u8(b.native()));
 }
 
 /** Multiplies the last 8 values of two signed int8x16 vectors and expands the
@@ -71,9 +74,10 @@ SIMDPP_INL uint16x8 mull_lo(const uint8x16& a, const uint8x16& b)
     r7 = a15 * b15
     @endcode
 */
-SIMDPP_INL int16x8 mull_hi(const int8x16& a, const int8x16& b)
+static SIMDPP_INL
+int16x8 mull_hi(const int8x16& a, const int8x16& b)
 {
-    return vmull_s8(vget_high_s8(a), vget_high_s8(b));
+    return vmull_s8(vget_high_s8(a.native()), vget_high_s8(b.native()));
 }
 
 
@@ -86,9 +90,10 @@ SIMDPP_INL int16x8 mull_hi(const int8x16& a, const int8x16& b)
     r7 = a15 * b15
     @endcode
 */
-SIMDPP_INL uint16x8 mull_hi(const uint8x16& a, const uint8x16& b)
+static SIMDPP_INL
+uint16x8 mull_hi(const uint8x16& a, const uint8x16& b)
 {
-    return vmull_u8(vget_high_u8(a), vget_high_u8(b));
+    return vmull_u8(vget_high_u8(a.native()), vget_high_u8(b.native()));
 }
 
 } // namespace neon

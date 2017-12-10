@@ -1,0 +1,1 @@
+{{dsc macro const | cap/SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR | indicates support of per-element right shift for {{c|uint32}} }}

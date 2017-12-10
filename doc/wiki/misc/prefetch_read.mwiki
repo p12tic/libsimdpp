@@ -1,0 +1,20 @@
+{{simdpp/title|prefetch_read}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl |
+void prefetch_read( const void* ptr );
+}}
+{{dcl end}}
+
+Prefetches data into lowest level cache for reading.
+
+===Parameters===
+{{par begin}}
+{{par | ptr | pointer to the data to prefetch}}
+{{par end}}
+
+===Return value===
+(none)
+
+===See also===
+{{todo}}

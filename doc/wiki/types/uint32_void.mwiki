@@ -1,0 +1,1 @@
+{{types/vector_type |uint32|any_int32| kind_text=integer | element=uint32_t | bits=32 | bytes=4 }}

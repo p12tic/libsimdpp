@@ -1,0 +1,3 @@
+{{nv begin}}
+{{nv ln | depr/SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES }}
+{{nv end}}
