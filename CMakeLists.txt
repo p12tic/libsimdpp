@@ -6,8 +6,8 @@
 
 cmake_minimum_required(VERSION 2.8.0)
 project(libsimdpp)
-set(PROJECT_VERSION "2.0")
-set(SIMDPP_API_VERSION "2.0")
+set(PROJECT_VERSION "2.1")
+set(SIMDPP_API_VERSION "2.1")
 
 set(PKG_NAME "${CMAKE_PROJECT_NAME}")
 set(PKG_FULL_NAME "${CMAKE_PROJECT_NAME}-${PROJECT_VERSION}")
