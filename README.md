@@ -32,7 +32,7 @@ Documentation
 -------------
 
 Online documentation is provided
-[here](http://p12tic.github.io/libsimdpp/v2.1-dev/libsimdpp/w/).
+[here](http://p12tic.github.io/libsimdpp/v2.1/libsimdpp/w/).
 
 Compiler and instruction set support
 ------------------------------------
