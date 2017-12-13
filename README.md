@@ -2,6 +2,8 @@
 libsimdpp
 =========
 
+[![Join the chat at https://gitter.im/libsimdpp/Lobby](https://badges.gitter.im/libsimdpp/Lobby.svg)](https://gitter.im/libsimdpp/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Travis build status](https://travis-ci.org/p12tic/libsimdpp.svg?branch=master)](https://travis-ci.org/p12tic/libsimdpp "Travis build status")
 [![Appveyor build status](https://img.shields.io/appveyor/ci/p12tic/libsimdpp/master.svg)](https://ci.appveyor.com/project/p12tic/libsimdpp "Appveyor build status")
 
