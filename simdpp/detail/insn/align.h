@@ -91,8 +91,20 @@ uint8<N> i_align16(const uint8<N>& lower, const uint8<N>& upper)
 template<unsigned shift> SIMDPP_INL
 uint16<8> i_align8(const uint16<8>& lower, const uint16<8>& upper)
 {
+#if SIMDPP_USE_NULL
+    uint16<8> r;
+    //use int to disable warnings wrt. comparison result always being true/false
+    for (int i = 0; i < (int)(8-shift); i++) {
+        r.el(i) = lower.el(i + shift);
+    }
+    for (unsigned i = 8-shift; i < 8; i++) {
+        r.el(i) = upper.el(i - 8 + shift);
+    }
+    return r;
+#else
     return uint16<8>(i_align16<shift*2>(uint8<16>(lower),
                                         uint8<16>(upper)));
+#endif
 }
 
 #if SIMDPP_USE_AVX2

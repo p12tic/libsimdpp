@@ -38,9 +38,9 @@ public:
     typedef __m512i native_type;
 #endif
 
-    SIMDPP_INL int16<32>() = default;
-    SIMDPP_INL int16<32>(const int16<32> &) = default;
-    SIMDPP_INL int16<32> &operator=(const int16<32> &) = default;
+    SIMDPP_INL int16<32>() {}
+    // SIMDPP_INL int16<32>(const int16<32> &) = default;
+    // SIMDPP_INL int16<32> &operator=(const int16<32> &) = default;
 
     template<class E> SIMDPP_INL int16<32>(const int16<32,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL int16<32>(const uint16<32,E>& d) { *this = d.eval(); }
@@ -101,9 +101,9 @@ public:
     typedef __m512i native_type;
 #endif
 
-    SIMDPP_INL uint16<32>() = default;
-    SIMDPP_INL uint16<32>(const uint16<32> &) = default;
-    SIMDPP_INL uint16<32> &operator=(const uint16<32> &) = default;
+    SIMDPP_INL uint16<32>() {}
+    // SIMDPP_INL uint16<32>(const uint16<32> &) = default;
+    // SIMDPP_INL uint16<32> &operator=(const uint16<32> &) = default;
 
     template<class E> SIMDPP_INL uint16<32>(const uint16<32,E>& d) { *this = d.eval(); }
     template<class E> SIMDPP_INL uint16<32>(const int16<32,E>& d) { *this = d.eval(); }
@@ -163,9 +163,9 @@ public:
     typedef __mmask32 native_type;
 #endif
 
-    SIMDPP_INL mask_int16<32>() = default;
-    SIMDPP_INL mask_int16<32>(const mask_int16<32> &) = default;
-    SIMDPP_INL mask_int16<32> &operator=(const mask_int16<32> &) = default;
+    SIMDPP_INL mask_int16<32>() {}
+    // SIMDPP_INL mask_int16<32>(const mask_int16<32> &) = default;
+    // SIMDPP_INL mask_int16<32> &operator=(const mask_int16<32> &) = default;
 
     SIMDPP_INL mask_int16<32>(const native_type& d) : d_(d) {}
 

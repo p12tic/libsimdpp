@@ -3,12 +3,15 @@
 # -------
 
 # version format
-version: 2.0.{build}
+version: 2.1.{build}
 
 # branches to build
 branches:
   only:
     - master
+    - dev
+    - cxx98
+    - cxx98-staging
 
 max_jobs: 1
 
