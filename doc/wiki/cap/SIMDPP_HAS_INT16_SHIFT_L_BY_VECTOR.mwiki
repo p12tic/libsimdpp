@@ -1,0 +1,17 @@
+{{title|SIMDPP_HAS_INT16_SHIFT_L_BY_VECTOR}}
+{{cap/navbar}}
+{{dcl begin}}
+{{dcl |
+#define SIMDPP_HAS_INT16_SHIFT_L_BY_VECTOR /* 1 if present, 0 otherwise */
+}}
+{{dcl end}}
+
+Indicates support of efficient left per-element shift of {{c|int16}} vector data (see {{ltf|int/shift_l_v | shift_l}}). The macro evaluates to {{c|1}} if this operation is supported in the SIMD unit, {{c|0}} otherwise.
+
+Currently, the macro is defined to {{c|1}} on the following instruction sets:
+
+* {{c|SIMDPP_USE_NULL}}
+* {{c|SIMDPP_USE_SSSE3}}
+* {{c|SIMDPP_USE_NEON}}
+* {{c|SIMDPP_USE_ALTIVEC}}
+* {{c|SIMDPP_USE_MSA}}

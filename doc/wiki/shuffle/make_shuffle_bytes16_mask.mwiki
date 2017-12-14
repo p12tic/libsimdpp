@@ -1,0 +1,151 @@
+{{simdpp/title|make_shuffle_bytes16_mask}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl h | 8-bit element shuffle mask}}
+{{dcl |
+template<int s0, int s1, unsigned N>
+uint8<N> make_shuffle_bytes16_mask( uint8<N> &mask );
+}}
+{{dcl |
+template<int s0, int s1, int s2, int s3, unsigned N>
+uint8<N> make_shuffle_bytes16_mask( uint8<N> &mask );
+}}
+{{dcl |
+template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, unsigned N>
+uint8<N> make_shuffle_bytes16_mask( uint8<N> &mask );
+}}
+{{dcl |
+template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7,
+         int s8, int s9, int s10, int s11, int s12, int s13, int s14, int s15,
+         unsigned N>
+uint8<N> make_shuffle_bytes16_mask( uint8<N> &mask );
+}}
+{{dcl h | 16-bit element shuffle mask}}
+{{dcl |
+template<int s0, int s1, unsigned N>
+uint16<N> make_shuffle_bytes16_mask( uint16<N> &mask );
+}}
+{{dcl |
+template<int s0, int s1, int s2, int s3, unsigned N>
+uint16<N> make_shuffle_bytes16_mask( uint16<N> &mask );
+}}
+{{dcl |
+template<int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, unsigned N>
+uint16<N> make_shuffle_bytes16_mask( uint16<N> &mask );
+}}
+{{dcl h | 32-bit element shuffle mask}}
+{{dcl |
+template<int s0, int s1, unsigned N>
+uint32<N> make_shuffle_bytes16_mask( uint32<N> &mask );
+}}
+{{dcl |
+template<int s0, int s1, int s2, int s3, unsigned N>
+uint32<N> make_shuffle_bytes16_mask( uint32<N> &mask );
+}}
+{{dcl h | 64-bit element shuffle mask}}
+{{dcl |
+template<int s0, int s1, unsigned N>
+uint64<N> make_shuffle_bytes16_mask( uint64<N> &mask );
+}}
+{{dcl end}}
+
+Makes a mask to shuffle an vector elements within 16-byte lanes using {{ltf|shuffle/permute_bytes16}}, {{ltf|shuffle/permute_zbytes16}}, {{ltf|shuffle/shuffle_bytes16}} or {{ltf|shuffle/shuffle_zbytes16}} functions.
+
+The type of the {{c|mask}} argument determines the type of the vector to create mask for.
+
+The number of the selector template parameters ({{tt|s0}}, {{tt|s1}}, ...) determines the actual lane width within which the elements will be shuffled. The maximum size of the lane elements will be shuffled across is 16 bytes.
+
+====2 element selector template====
+Elements are shuffled across element pairs.
+
+All elements within vectors are grouped into lanes of two adjacent elements. Elements within each lane of the resulting vector can be selected only from corresponding sets of the source vectors.
+
+The template arguments define which elements to select from each element group:
+* Values {{c|]0,1]}} select elements from the first vector.
+* Values {{c|[2,3]}} select elements from the second vector. The mask can only be used in {{ltf|shuffle/shuffle_bytes16}} or {{ltf|shuffle/shuffle_zbytes16}}.
+* Value {{c|-1}} sets the corresponding element to zero. The mask can only be used in @c {{ltf|shuffle/permute_bytes16}}, {{ltf|shuffle/shuffle_zbytes16}}.
+
+The created mask will cause {{ltf|shuffle/shuffle_zbytes16}} to perform as follows:
+
+{{source|1=
+r0 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0] : b[s0-2])
+r1 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1] : b[s1-2])
+r2 = (s0 == -1) ? 0 : (s0 < 2 ? a[s0+2] : b[s0])
+r3 = (s1 == -1) ? 0 : (s1 < 2 ? a[s1+2] : b[s1])
+...
+}}
+
+====4 element selector template====
+Elements are shuffled across element pairs.
+
+All elements within vectors are grouped into lanes of 4 adjacent elements. Elements within each lane of the resulting vector can be selected only from corresponding sets of the source vectors.
+
+The template arguments define which elements to select from each element group:
+* Values {{c|]0,3]}} select elements from the first vector.
+* Values {{c|[4,7]}} select elements from the second vector. The mask can only be used in {{ltf|shuffle/shuffle_bytes16}} or {{ltf|shuffle/shuffle_zbytes16}}.
+* Value {{c|-1}} sets the corresponding element to zero. The mask can only be used in @c {{ltf|shuffle/permute_bytes16}}, {{ltf|shuffle/shuffle_zbytes16}}.
+
+The created mask will cause {{ltf|shuffle/shuffle_zbytes16}} to perform as follows:
+
+{{source|1=
+r0 = (s0 == -1) ? 0 : (s0 < 4 ? a[s0] : b[s0-4])
+r1 = (s1 == -1) ? 0 : (s1 < 4 ? a[s1] : b[s1-4])
+r2 = (s2 == -1) ? 0 : (s2 < 4 ? a[s2] : b[s2-4])
+r3 = (s3 == -1) ? 0 : (s3 < 4 ? a[s3] : b[s3-4])
+...
+}}
+
+====8 element selector template====
+Elements are shuffled across element pairs.
+
+All elements within vectors are grouped into lanes of 8 adjacent elements. Elements within each lane of the resulting vector can be selected only from corresponding sets of the source vectors.
+
+The template arguments define which elements to select from each element group:
+* Values {{c|]0,7]}} select elements from the first vector.
+* Values {{c|[8,15]}} select elements from the second vector. The mask can only be used in {{ltf|shuffle/shuffle_bytes16}} or {{ltf|shuffle/shuffle_zbytes16}}.
+* Value {{c|-1}} sets the corresponding element to zero. The mask can only be used in @c {{ltf|shuffle/permute_bytes16}}, {{ltf|shuffle/shuffle_zbytes16}}.
+
+The created mask will cause {{ltf|shuffle/shuffle_zbytes16}} to perform as follows:
+
+{{source|1=
+r0 = (s0 == -1) ? 0 : (s0 < 8 ? a[s0] : b[s0-8])
+...
+r7 = (s7 == -1) ? 0 : (s7 < 8 ? a[s7] : b[s7-8])
+...
+}}
+
+====16 element selector template====
+Elements are shuffled across element pairs.
+
+All elements within vectors are grouped into lanes of 8 adjacent elements. Elements within each lane of the resulting vector can be selected only from corresponding sets of the source vectors.
+
+The template arguments define which elements to select from each element group:
+* Values {{c|]0,15]}} select elements from the first vector.
+* Values {{c|[16,31]}} select elements from the second vector. The mask can only be used in {{ltf|shuffle/shuffle_bytes16}} or {{ltf|shuffle/shuffle_zbytes16}}.
+* Value {{c|-1}} sets the corresponding element to zero. The mask can only be used in @c {{ltf|shuffle/permute_bytes16}}, {{ltf|shuffle/shuffle_zbytes16}}.
+
+The created mask will cause {{ltf|shuffle/shuffle_zbytes16}} to perform as follows:
+
+{{source|1=
+r0 = (s0 == -1) ? 0 : (s0 < 16 ? a[s0] : b[s0-16])
+r1 = (s1 == -1) ? 0 : (s0 < 16 ? a[s1] : b[s1-16])
+...
+r15 = (s15 == -1) ? 0 : (s15 < 16 ? a[s15] : b[s15-16])
+...
+}}
+
+===Parameters===
+{{par begin}}
+{{par | mask | mask vector}}
+{{par end}}
+
+===Return value===
+{{c|mask}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | shuffle/dsc shuffle_bytes16}}
+{{dsc inc | shuffle/dsc shuffle_zbytes16}}
+{{dsc inc | shuffle/dsc permute_bytes16}}
+{{dsc inc | shuffle/dsc permute_zbytes16}}
+{{dsc end}}

@@ -1,0 +1,21 @@
+{{inherited | [[types/any_float32 | {{small|simdpp::}}any_float32<N,V>]] |
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | {{tt|element_type}} | {{c|float}} }}
+{{dsc | {{tt|uint_element_type}} | {{c|uint32_t}} }}
+{{dsc | {{tt|int_vector_type}} | {{c|int32<N>}} }}
+{{dsc | {{tt|uint_vector_type}} | {{c|uint32<N>}} }}
+{{dsc | {{tt|mask_vector_type}} | {{c|mask_float32<N>}} }}
+{{dsc end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|length}} | {{tt|N}} }}
+{{dsc | {{tt|base_length}} | {{tt|SIMDPP_FAST_FLOAT32_SIZE}} }}
+{{dsc | {{tt|vec_length}} | The number of base vectors of {{tt|SIMDPP_FAST_FLOAT32_SIZE}} size in this vector }}
+{{dsc | {{tt|num_bits}} | {{c|32}} }}
+{{dsc | {{tt|all_bits}} | {{c|0xffffffff}} }}
+{{dsc end}}
+}}

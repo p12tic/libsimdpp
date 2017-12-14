@@ -50,7 +50,6 @@ mask_int64<N, expr_bit_not<mask_int64<N,E> > > operator~(mask_int64<N,E> a)
     return { { a } };
 }
 
-
 template<unsigned N, class E> SIMDPP_INL
 mask_float32<N, expr_bit_not<mask_float32<N,E> > > operator~(mask_float32<N,E> a)
 {

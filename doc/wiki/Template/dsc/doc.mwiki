@@ -1,0 +1,237 @@
+This is one of the family of templates used for creation of description list. These templates should be used to design function, variable or type lists.
+
+{{list/doc}}
+
+{{tl|dsc begin}}
+: starts the description list
+
+{{tl|dsc end}}
+: ends the description list
+
+{{tl|dsc h1 | ''heading''}}
+: adds heading to the description list (<tt>h3</tt> level)
+
+{{tl|dsc h2 | ''heading''}}
+: adds sub-heading to the description list (<tt>h5</tt> level)
+
+{{tl|dsc header}}
+: adds explanation which header the features come from
+
+{{tl|dsc namespace}}
+: adds explanation which namespace the features are in
+
+{{tl|dsc sep}}
+: adds a separator
+
+{{tl|dsc | ''name'' | ''explanation'' }}
+: adds a generic item to the description list. If ''explanation'' is omitted, the item spans through both columns.
+
+{{tl|dsc hitem | ''name'' | ''explanation'' }}
+: adds a highlighted item to the description list. If ''explanation'' is omitted, the item spans through both columns.
+
+{{tl|dsc inc | ''location'' | ''param1'' {{mark optional}} | ''param2'' {{mark optional}} ... }}
+: Sets {{tt|dsc-list-template-name}} [https://www.mediawiki.org/wiki/Extension:Variables variable] to ''location'', includes the template from ''location'' and unsets the variable. Use this template whenever copying dsc items from a template; this will add an edit link to them. The unnamed parameters ''param1'', ''param2'', ... are passed to the template.
+
+{{tl|dsc break}}
+: breaks the columns. The width of the columns above does not depend on the content below and vice-versa.
+
+{{tl|dsc todo | ''reason'' }}
+: adds a todo item (similar to {{tl|todo}})
+
+===Specialized templates===
+
+There are templates already specialized for most of the usage cases.
+
+; Classes
+
+{{tl|dsc class | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a class.
+
+{{tl|dsc tclass | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a class template.
+
+{{tl|dsc ptclass | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a class template specialization.
+
+{{tl|dsc mem class | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a member class.
+
+; Functions
+
+{{tl|dsc fun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a function
+
+{{tl|dsc tfun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a function template.
+
+<!--
+{{tl|dsc ptfun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a function template specialization.
+-->
+{{tl|dsc mem fun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a public member function.
+
+{{tl|dsc prot mem fun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a protected member function template.
+
+{{tl|dsc mem ctor | ''link'' | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a public constructor.
+
+{{tl|dsc prot mem ctor | ''link'' | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a protected constructor.
+
+{{tl|dsc mem dtor | ''link'' | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a public destructor.
+
+{{tl|dsc prot mem dtor | ''link'' | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a protected destructor.
+
+{{tl|dsc mem vdtor | ''link'' | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a virtual public destructor.
+
+{{tl|dsc prot mem vdtor | ''link'' | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a virtual protected destructor.
+
+{{tl|dsc mem sfun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a static member function.
+
+{{tl|dsc mem vfun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a virtual public member function template.
+
+{{tl|dsc prot mem vfun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a virtual protected member function template.
+
+{{tl|dsc macro fun | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}} -
+adds an item linking to a description of a function macro.
+
+; Constants
+
+{{tl|dsc macro const | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a macro constant.
+
+{{tl|dsc const | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a global constant variable.
+
+{{tl|dsc mem const | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a constant member variable.
+
+{{tl|dsc mem sconst | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a static constant member variable.
+
+; Objects
+
+{{tl|dsc mem obj | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a member object.
+
+{{tl|dsc prot mem obj | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a protected member object.
+
+{{tl|dsc priv mem obj | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a private member object.
+
+; Miscellaneous
+
+{{tl|dsc typedef | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a typedef.
+
+{{tl|dsc enum | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a enum or enum class.
+
+{{tl|dsc concept | ''link'' | title{{=}}''link title''{{mark optional}} | notes{{=}}''link notes''{{mark optional}} | ''explanation''}}
+: adds an item linking to a description of a [[cpp/concept|concept]].
+
+:; Parameters
+
+''link''
+: this parameter controls the link target.
+
+{{tt|title}}=''link title''
+: this parameter overrides the link title
+
+{{tt|notes}}=''link notes''
+: this parameter adds text besides the link that is not the part of the link
+
+''explanation''
+: the explanation of the feature.
+
+All templates accept {{tt|nolink{{=}}true}} parameter. In that case no link is made, the formatting is the same.
+
+The templates for member objects accept {{tt|inlinemem{{=}}true}} parameter. This should be used if the functionality is described inline in the page of the class.
+
+===See also templates===
+Used in ''see also'' lists.
+
+{{tl|dsc see cpp | ''location''
+ | ''nomono''{{=}}{{tt|true_if_serif}} {{mark optional}}
+ | ''title1''{{mark optional}}
+ | ''title2''{{mark optional}} ...
+}}
+: adds a link to C++ documentation of a feature.
+
+{{tl|dsc see c | ''location''
+ | ''nomono''{{=}}{{tt|true_if_serif}} {{mark optional}}
+ | ''title1''{{mark optional}}
+ | ''title2''{{mark optional}} ...
+}}
+: adds a link to C documentation of a feature.
+
+:; Parameters
+
+''location''
+: this parameter controls the link target.
+
+''nomono''
+: {{tt|true}} if serif font should be used for the title
+
+''title1'', ''title2'', ...
+: this parameter overrides the title (default the title is guessed from ''location''). Commas are placed between titles if several of them are provided.
+
+===Example===
+
+  <nowiki>
+  {{dsc begin}}
+  {{dsc h1 | Magic creatures}}
+  {{dsc h2 | Dragon}}
+  {{dsc header | dragon.h}}
+  {{dsc fun | cpp/dragon/call_dragon | calls the dragon}}
+  {{dsc fun | cpp/dragon/receive_fire | receives the fire}}
+  {{dsc end}}
+  </nowiki>
+
+The above results in the following:
+
+{{dsc begin}}
+{{dsc h1 | Magic creatures}}
+{{dsc h2 | Dragon}}
+{{dsc header | dragon.h}}
+{{dsc fun | cpp/dragon/call_dragon | calls the dragon}}
+{{dsc fun | cpp/dragon/receive_fire | receives the fire}}
+{{dsc end}}
+
+===Templates used in the implementation===
+
+===={{tl|dsc member}}====
+{{tl|dsc member | ''page'' | ''title'' {{mark optional}} | title=''title'' {{mark optional}} | nolink{{=}}''true_if_nolink'' {{mark optional}} | nobold{{=}}''true_if_nobold'' {{mark optional}} | notes{{=}}''notes'' {{mark optional}}}}
+: Default title of the link is ''page''. Custom title can be supplied via the second unnamed parameter or {{tt|title}} parameter. If {{tt|nolink}} is ''true'', no link is produced.
+
+: Default font of the link is bold monospace. If {{tt|nobold}} is ''true'', the font is normal serif.
+
+: Additional notes to be placed in the right of the link can be passed through {{tt|notes}} parameter.
+
+: Both {{tt|title}} and {{tt|notes}} can accept &lt;br&gt; tags without breaking the layout.
+
+===={{tl|dsc mark mem}}====
+{{tl|dsc mark mem | ''link'' | ''mark_class'' | nomem{{=}}''true_if_nomem'' {{mark optional}} | inlinemem{{=}}''true_if_inlinemem'' {{mark optional}} }}
+: Outputs {{tlc|mark ''mark_class''}} potentially appending additional description of the class the function/class is member of.
+
+: Specifically, the template checks if the parent of the page linked to by {{tt|link}} is a parent of the page the template is used in (i.e. they are siblings). For example, consider {{tt|link}} ''{{=}} a/b/c'' and ''page'' the page the template is used in. Then the template would append the additional description if {{tt|page}} equals to ''z/z/z'', or ''a/z'', or ''a/b/z/z'', but not if ''page'' is ''a/b/z'' or ''a/b''.
+
+: If {{tt|nomem}} is ''true'' then additional description is never appended.
+
+: The template fetches information about the name of the parent class from ''a/b/title'' page.
+
+: If {{tt|inlinemem}} is ''true'' then the name of the parent class is fetched from ''a/b/c/title'' template. This is used when a class includes descriptions of its members inline.
+
+===={{tl|dsc editlink}}====
+{{tl|dsc editlink}}
+: Outputs an <nowiki>[edit]</nowiki> text with a link pointing to a page for editing the template whose name is defined in {{tt|dsc-list-template-name}} variable. At least one dummy parameter must be passed to this template, as Mediawiki software employs some optimizations that break the implementation.

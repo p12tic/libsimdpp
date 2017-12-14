@@ -23,6 +23,7 @@
 #include <simdpp/core/i_sub.h>
 #include <simdpp/core/to_float32.h>
 #include <simdpp/core/to_int32.h>
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -30,7 +31,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_floor(const float32x4& a)
+static SIMDPP_INL
+float32x4 i_floor(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -39,10 +41,10 @@ SIMDPP_INL float32x4 i_floor(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE4_1
-    return _mm_floor_ps(a);
+    return _mm_floor_ps(a.native());
 #elif SIMDPP_USE_NEON64
-    return vrndmq_f32(a);
-#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP
+    return vrndmq_f32(a.native());
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_MSA
     //check if the value is not too large, or is zero
     float32x4 ba = abs(a);
     mask_float32x4 mask_range = cmp_le(ba, 8388607.0f);
@@ -59,37 +61,34 @@ SIMDPP_INL float32x4 i_floor(const float32x4& a)
     //combine the results
     return blend(fa, a, mask);
 #elif SIMDPP_USE_ALTIVEC
-    return vec_floor((__vector float)a);
+    return vec_floor(a.native());
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_floor(const float32x8& a)
+static SIMDPP_INL
+float32x8 i_floor(const float32x8& a)
 {
-    return _mm256_floor_ps(a);
+    return _mm256_floor_ps(a.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_floor(const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_floor(const float32<16>& a)
 {
-    return _mm512_floor_ps(a);
+    return _mm512_floor_ps(a.native());
 }
 #endif
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL float64x2 i_floor(const float64x2& a)
+static SIMDPP_INL
+float64x2 i_floor(const float64x2& a)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    float64x2 r;
-    for (unsigned i = 0; i < r.length; ++i) {
-        r.el(i) = std::floor(a.el(i));
-    }
-    return r;
-#elif SIMDPP_USE_SSE4_1
-    return _mm_floor_pd(a);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE4_1
+    return _mm_floor_pd(a.native());
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     float64x2 af = abs(a);
     // check if the value is not too large or is a nan
     mask_float64x2 mask_range = cmp_le(af, 4503599627370495.0);
@@ -125,21 +124,31 @@ SIMDPP_INL float64x2 i_floor(const float64x2& a)
 
     return blend(a2, a, mask_range);
 #elif SIMDPP_USE_NEON64
-    return vrndnq_f64(a);
+    return vrndnq_f64(a.native());
+#elif SIMDPP_USE_VSX_206
+    return vec_floor(a.native());
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    float64x2 r;
+    for (unsigned i = 0; i < r.length; ++i) {
+        r.el(i) = std::floor(a.el(i));
+    }
+    return r;
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float64x4 i_floor(const float64x4& a)
+static SIMDPP_INL
+float64x4 i_floor(const float64x4& a)
 {
-    return _mm256_floor_pd(a);
+    return _mm256_floor_pd(a.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float64<8> i_floor(const float64<8>& a)
+static SIMDPP_INL
+float64<8> i_floor(const float64<8>& a)
 {
-    return _mm512_floor_pd(a);
+    return _mm512_floor_pd(a.native());
 }
 #endif
 

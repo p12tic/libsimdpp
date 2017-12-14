@@ -1,0 +1,1 @@
+{{types/vector_mask_type |mask_float64|any_float64| kind=float | kind_text=floating-point | regular_vec=float64 | bits=64 }}

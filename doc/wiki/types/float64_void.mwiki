@@ -1,0 +1,1 @@
+{{types/vector_type |float64|any_float64| kind_text=floating-point | element=double | bits=64 | bytes=8 }}

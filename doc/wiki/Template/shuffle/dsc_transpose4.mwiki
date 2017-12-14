@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/transpose4 | transposes 4x4 blocks within four vectors }}

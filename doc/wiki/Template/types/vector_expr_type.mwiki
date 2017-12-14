@@ -1,0 +1,42 @@
+{{simdpp/title | {{{1}}}{{small|<N,E>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N, class E >
+class {{{1}}} : public {{{2}}}<N, {{{1}}}<N,E> >;
+}}
+{{dcl end}}
+
+Defines a {{{kind_text}}} expression type with {{tt|N}} elements each having {{{bits}}} bits.
+
+Instances of this type do not correspond to any physical SIMD registers. Instead, the type  contains all information needed to produce one or more SIMD registers with correct information, but the operations have not been executed yet. The expression can be evaluated and its result obtained by calling {{tt|eval()}} member function.
+
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Type | Definition}}
+{{dsc | {{tt|expr_type}} | {{tt|E}} }}
+{{dsc end}}
+
+===Member functions===
+{{member | {{small|{{{1}}}::}}eval |
+{{dcl begin}}
+{{dcl |
+{{{1}}}<N> eval() const;
+}}
+{{dcl end}}
+
+Evaluates the expression and returns the result.
+}}
+{{member | {{small|{{{1}}}::}}operator {{{1}}}<N> |
+{{dcl begin}}
+{{dcl |
+operator {{{1}}}<N>() const;
+}}
+{{dcl end}}
+
+Returns {{c|eval()}}.
+}}
+
+{{types/any_{{{kind}}}{{{bits}}}/inherit}}
+{{types/any_vec{{{bits}}}/inherit}}
+{{types/any_vec/inherit}}

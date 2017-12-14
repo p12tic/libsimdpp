@@ -2,7 +2,7 @@
 | style = background: none repeat scroll 0 0 #F8EABA; {{{style|}}}
 | textstyle = {{{textstyle|}}}
 | image = [[File:{{{icon|Replacement filing cabinet.svg}}}|40x40px|alt=|link=]]
-| text  = 
+| text  =
 This is an archive of past discussions{{#if:{{{period|}}}|&#32;for the period '''{{{period}}}'''}}. '''Do not edit the contents of this page.''' If you wish to start a new discussion or revive an old one, please do so on the [[{{NAMESPACE}}:{{BASEPAGENAME}}|current page]].
 }}
 {| style="width: 32em; background: transparent; margin: 0 auto 0.5em; text-align: center"

@@ -1,0 +1,32 @@
+{{simdpp/title|store_packed2}}
+{{mem/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+void store_packed2( void* ptr, const any_vec<N,V>& a, const any_vec<N,V>& b );
+}}
+{{dcl end}}
+
+Interleaves the values in {{tt|a}} and {{tt|b}} in pairs and stores the resulting values in successive locations starting at {{tt|p}}.
+
+{{tt|V}} must me a non-mask vector type. {{tt|ptr}} must be aligned to vector size.
+
+===Parameters===
+{{par begin}}
+{{par | a, b | vectors to store }}
+{{par | ptr | pointer to location to store data to}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+[ *(p),   *(p+2), *(p+4), ... , *(p+M*2-2) ] = a
+[ *(p+1), *(p+3), *(p+5), ... , *(p+M*2-1) ] = b
+}}
+
+Here {{tt|M}} is the number of elements in the vector.
+
+===See also===
+{{todo}}

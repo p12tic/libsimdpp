@@ -1,0 +1,31 @@
+{{simdpp/title|blend}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V1, class V2, class V3>
+PROMOTED_EXPRESSION blend( const any_vec<N,V1>& on, const any_vec<N,V2>& off,
+                           const any_vec<N,V3>& mask );
+}}
+{{dcl end}}
+
+Blends vectors in two vectors according to a mask. Elements for which corresponding element in {{tt|mask}} is set to ones are picked from the {{tt|on}} vector. Elements for which corresponding element in {{tt|mask}} is set to zeroes are picked from the {{tt|off}} vector.
+
+The return type is a [[types#expr|vector expression]] of {{tt|N}} bytes. The vector type is governed by the [[types/promotion|expression promotion]] rules.
+
+===Parameters===
+{{par begin}}
+{{par | on, off, mask | any two vectors of same size}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|mask ? on : off}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = mask0 ? on0 : off0
+...
+rN = maskN ? onN : offN
+}}
+
+===See also===
+{{todo}}

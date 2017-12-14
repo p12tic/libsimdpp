@@ -1,0 +1,1 @@
+{{dsc fun | misc/prefetch_write | prefetches data to lowest level cache for writing }}

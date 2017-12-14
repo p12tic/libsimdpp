@@ -1,0 +1,45 @@
+<!--
+  Start of green doc box
+--><div id="template-documentation" class="template-documentation iezoomfix"><!--
+  Add the heading at the top of the doc box:
+-->{{#ifeq: {{{heading|¬}}} | <!--Defined but empty-->
+| <!--"heading=", do nothing-->
+| <div style="padding-bottom: 3px; border-bottom: 1px solid #aaa; margin-bottom: 1ex;">{{
+  #if: {{{content|}}}
+  |
+  | <!--Add the [edit][purge] or [create] links-->
+    <span class="editsection plainlinks" id="doc_editlinks">{{
+    #if: {{{doc exist|yes}}}
+    | [[{{fullurl:{{{docpage|{{FULLPAGENAME}}/doc}}}|action=edit}} edit]] [{{purge|purge}}]
+    | <!--/doc doesn't exist-->
+      [[{{fullurl:{{{docpage|{{FULLPAGENAME}}/doc}}}| action=edit&preload={{
+        #if: {{{preload|}}}
+        | {{urlencode:{{{preload}}}}}
+        | {{#ifeq: {{SUBJECTSPACE}} | {{ns:File}}
+          | Template:Documentation/preload-filespace
+          | Template:Documentation/preload
+          }} }} }} create]]
+    }}</span>
+  }} <span style="{{#if: {{{heading-style|}}}
+  | {{{heading-style|}}}
+  | {{#ifeq: {{SUBJECTSPACE}} | {{ns:Template}}
+    | font-weight: bold; font-size: 125%
+    | font-size: 150%
+    }}
+  }}">{{#switch: {{{heading|¬}}}
+  | ¬ =
+    <!--"heading" not defined in this or previous level-->
+    {{#switch: {{SUBJECTSPACE}}
+    | {{ns:Template}} = Template documentation
+    | {{ns:File}} = Summary
+    | #default = Documentation
+    }}
+  | #default =
+    <!--"heading" has data or is empty but defined-->
+    {{{heading|}}}
+  }}</span></div>
+}}<noinclude><!-- close the div --></div>
+
+{{pp-template}}
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

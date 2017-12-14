@@ -1,0 +1,46 @@
+{{simdpp/title|mull{{small|(integer)}}}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2>
+Ret<N, _DETAIL_> mull( Vec1<N,E1> a, Vec2<N,E2> b );
+}}
+{{dcl end}}
+
+Multiplies two vectors with integer values and returns expanded values. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2}}
+{{vset3 | int32 | int16 | int16}}
+{{vset3 | uint32 | uint16 | int16}}
+{{vset3 | uint32 | int16 | uint16}}
+{{vset3 | uint32 | uint16 | uint16}}
+{{vset3 | int64 | int32 | int32}}
+{{vset3 | uint64 | uint32 | int32}}
+{{vset3 | uint64 | int32 | uint32}}
+{{vset3 | uint64 | uint32 | uint32}}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+{{scalar note}}
+
+This function does not map to well to native instructions on x86 and PowerPC. On average, for each multiplication instruction a shuffle instruction is needed. Consider using different data layout if this is important.
+
+===Parameters===
+{{par begin}}
+{{par | a, b | integer vectors}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|a * b}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 * b0
+...
+rN = aN * bN
+}}
+
+===See also===
+{{todo}}

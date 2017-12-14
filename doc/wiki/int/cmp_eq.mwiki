@@ -1,0 +1,40 @@
+{{simdpp/title|cmp_eq{{small|(integer)}}}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2>
+Ret<N, _DETAIL_> cmp_eq( Vec1<N,E1> a, Vec2<N,E2> b );
+}}
+{{dcl end}}
+
+Compares values in two integer vectors. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2}}
+{{vset3 u | {{c|mask_int8}} | ''any int8 vector or mask'' | ''any int8 vector or mask'' }}
+{{vset3 u | {{c|mask_int16}} | ''any int16 vector or mask'' | ''any int16 vector or mask'' }}
+{{vset3 u | {{c|mask_int32}} | ''any int32 vector or mask'' | ''any int32 vector or mask'' }}
+{{vset3 u | {{c|mask_int64}} | ''any int64 vector or mask'' | ''any int64 vector or mask'' }}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+{{scalar note}}
+
+===Parameters===
+{{par begin}}
+{{par | a, b | integer vectors}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|1=a == b}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 == b0 ? 0xff...ff : 0
+...
+rN = aN == bN ? 0xff...ff : 0
+}}
+
+===See also===
+{{todo}}

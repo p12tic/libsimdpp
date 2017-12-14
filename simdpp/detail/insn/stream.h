@@ -22,69 +22,93 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL void i_stream(char* p, const uint8<16>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint8<16>& a)
 {
     p = detail::assume_aligned(p, 16);
 #if SIMDPP_USE_NULL
     detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
-    _mm_stream_si128(reinterpret_cast<__m128i*>(p), a);
-#elif SIMDPP_USE_NEON
+    _mm_stream_si128(reinterpret_cast<__m128i*>(p), a.native());
+#elif SIMDPP_USE_NEON || SIMDPP_USE_MSA
     store(p, a);
 #elif SIMDPP_USE_ALTIVEC
-    vec_st((__vector uint8_t)a, 0, reinterpret_cast<uint8_t*>(p));
+    vec_st(a.native(), 0, reinterpret_cast<uint8_t*>(p));
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_stream(char* p, const uint8<32>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint8<32>& a)
 {
     p = detail::assume_aligned(p, 32);
-    _mm256_stream_si256(reinterpret_cast<__m256i*>(p), a);
+    _mm256_stream_si256(reinterpret_cast<__m256i*>(p), a.native());
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_stream(char* p, const uint8<64>& a)
+{
+    p = detail::assume_aligned(p, 64);
+    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a.native());
 }
 #endif
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_stream(char* p, const uint16<8>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint16<8>& a)
 {
     i_stream(p, uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_stream(char* p, const uint16<16>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint16<16>& a)
 {
     i_stream(p, uint8<32>(a));
 }
 #endif
 
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_stream(char* p, const uint16<32>& a)
+{
+    p = detail::assume_aligned(p, 64);
+    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a.native());
+}
+#endif
+
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_stream(char* p, const uint32<4>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint32<4>& a)
 {
     i_stream(p, uint8<16>(a));
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_stream(char* p, const uint32<8>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint32<8>& a)
 {
     i_stream(p, uint8<32>(a));
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_stream(char* p, const uint32<16>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint32<16>& a)
 {
     p = detail::assume_aligned(p, 64);
-    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a);
+    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a.native());
 }
 #endif
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_stream(char* p, const uint64<2>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint64<2>& a)
 {
-#if SIMDPP_USE_ALTIVEC
+#if (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     p = detail::assume_aligned(p, 16);
     detail::null::store(p, a);
 #else
@@ -93,80 +117,89 @@ SIMDPP_INL void i_stream(char* p, const uint64<2>& a)
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_stream(char* p, const uint64<4>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint64<4>& a)
 {
     i_stream(p, uint8<32>(a));
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_stream(char* p, const uint64<8>& a)
+static SIMDPP_INL
+void i_stream(char* p, const uint64<8>& a)
 {
     p = detail::assume_aligned(p, 64);
-    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a);
+    _mm512_stream_si512(reinterpret_cast<__m512i*>(p), a.native());
 }
 #endif
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_stream(char* p, const float32x4& a)
-{
-    float* q = reinterpret_cast<float*>(p);
-    q = detail::assume_aligned(q, 16);
-#if SIMDPP_USE_NULL
-    detail::null::store(q, a);
-#elif SIMDPP_USE_SSE2
-    _mm_stream_ps(q, a);
-#elif SIMDPP_USE_NEON
-    store(q, a);
-#elif SIMDPP_USE_ALTIVEC
-    vec_st((__vector float)a, 0, q);
-#endif
-}
-
-#if SIMDPP_USE_AVX
-SIMDPP_INL void i_stream(char* p, const float32x8& a)
-{
-    p = detail::assume_aligned(p, 32);
-    _mm256_stream_ps(reinterpret_cast<float*>(p), a);
-}
-#endif
-
-#if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_stream(char* p, const float32<16>& a)
-{
-    p = detail::assume_aligned(p, 64);
-    _mm512_stream_ps(reinterpret_cast<float*>(p), a);
-}
-#endif
-
-// -----------------------------------------------------------------------------
-
-SIMDPP_INL void i_stream(char* p, const float64x2& a)
+static SIMDPP_INL
+void i_stream(char* p, const float32x4& a)
 {
     p = detail::assume_aligned(p, 16);
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    float* q = reinterpret_cast<float*>(p);
+    (void) q;
+#if SIMDPP_USE_NULL
     detail::null::store(p, a);
 #elif SIMDPP_USE_SSE2
-    _mm_stream_pd(reinterpret_cast<double*>(p), a);
-#elif SIMDPP_USE_NEON64
-    store(p, a);
+    _mm_stream_ps(q, a.native());
+#elif SIMDPP_USE_NEON || SIMDPP_USE_MSA
+    store(q, a);
+#elif SIMDPP_USE_ALTIVEC
+    vec_st(a.native(), 0, q);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_stream(char* p, const float64x4& a)
+static SIMDPP_INL
+void i_stream(char* p, const float32x8& a)
 {
     p = detail::assume_aligned(p, 32);
-    _mm256_stream_pd(reinterpret_cast<double*>(p), a);
+    _mm256_stream_ps(reinterpret_cast<float*>(p), a.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_stream(char* p, const float64<8>& a)
+static SIMDPP_INL
+void i_stream(char* p, const float32<16>& a)
 {
     p = detail::assume_aligned(p, 64);
-    _mm512_stream_pd(reinterpret_cast<double*>(p), a);
+    _mm512_stream_ps(reinterpret_cast<float*>(p), a.native());
+}
+#endif
+
+// -----------------------------------------------------------------------------
+
+static SIMDPP_INL
+void i_stream(char* p, const float64x2& a)
+{
+    p = detail::assume_aligned(p, 16);
+#if SIMDPP_USE_SSE2
+    _mm_stream_pd(reinterpret_cast<double*>(p), a.native());
+#elif SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
+    store(p, a);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
+    detail::null::store(p, a);
+#endif
+}
+
+#if SIMDPP_USE_AVX
+static SIMDPP_INL
+void i_stream(char* p, const float64x4& a)
+{
+    p = detail::assume_aligned(p, 32);
+    _mm256_stream_pd(reinterpret_cast<double*>(p), a.native());
+}
+#endif
+
+#if SIMDPP_USE_AVX512F
+static SIMDPP_INL
+void i_stream(char* p, const float64<8>& a)
+{
+    p = detail::assume_aligned(p, 64);
+    _mm512_stream_pd(reinterpret_cast<double*>(p), a.native());
 }
 #endif
 
@@ -175,7 +208,8 @@ SIMDPP_INL void i_stream(char* p, const float64<8>& a)
 template<class V> SIMDPP_INL
 void i_stream(char* p, const V& ca)
 {
-    unsigned veclen = sizeof(typename V::base_vector_type);
+    const unsigned veclen = V::base_vector_type::length_bytes;
+
     typename detail::remove_sign<V>::type a = ca;
     p = detail::assume_aligned(p, veclen);
     for (unsigned i = 0; i < V::vec_length; ++i) {

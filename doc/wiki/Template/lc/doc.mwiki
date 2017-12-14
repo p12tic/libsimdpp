@@ -1,0 +1,5 @@
+{{tl|lc|''identifier''|''title_override''}}
+
+Automatically creates a link to ''identifier''. Which identifiers are linked where are defined in [[MediaWiki:autolinker-definition-c]] and [[MediaWiki:autolinker-definition-cpp]]. Which of these lists are used depends on the output of {{tl|get_lang}} for the current page.
+
+The title of the link is ''identifier'', unless ''title_override'' is not empty, in which case ''title_override'' is used.

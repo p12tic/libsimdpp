@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/setup_arch.h>
+#include <simdpp/capabilities.h>
 #include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
 #include <simdpp/types/int32x4.h>
@@ -38,8 +39,10 @@ public:
     typedef float32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector float native_type;
+#elif SIMDPP_USE_MSA
+    typedef v4f32 native_type;
 #else // NULL && (NEON && !FLT_SP)
-    typedef detail::array<float, 4> native_type;
+    typedef detail::vararray<float,4> native_type;
 #endif
 
     SIMDPP_INL float32<4>() {}
@@ -61,11 +64,15 @@ public:
     SIMDPP_INL float32<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
-    SIMDPP_INL operator native_type() const { return d_; }
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    float& el(unsigned id) { return d_[id]; }
-    const float& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL float& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const float& el(unsigned id) const { return d_[id]; }
 #endif
 
     template<class E> SIMDPP_INL float32<4>(const expr_vec_construct<E>& e)
@@ -84,8 +91,13 @@ public:
     SIMDPP_INL float32<4> eval() const { return *this; }
 
 private:
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    SIMDPP_ALIGN(16) native_type d_;
+#if SIMDPP_ARM && !SIMDPP_HAS_FLOAT32_SIMD
+    // Force alignment to be the same as of the real vector types. Different
+    // alignment causes problems when types such as int32<4> are casted to
+    // float32<4> or vice-versa - GCC assumes that some data on stack has
+    // higher alignment than it really has and uses aligned load or store which
+    // causes crashes.
+    SIMDPP_ALIGN(8) native_type d_;
 #else
     native_type d_;
 #endif
@@ -100,14 +112,18 @@ public:
     typedef mask_float32<4,void> base_vector_type;
     typedef void expr_type;
 
-#if SIMDPP_USE_SSE2
+#if SIMDPP_USE_AVX512VL
+    typedef __mmask8 native_type;
+#elif SIMDPP_USE_SSE2
     typedef __m128 native_type;
 #elif SIMDPP_USE_NEON_FLT_SP
     typedef float32x4_t native_type;
 #elif SIMDPP_USE_ALTIVEC
     typedef __vector float native_type;
+#elif SIMDPP_USE_MSA
+    typedef v4f32 native_type;
 #else // NULL || (NEON && !FLT_SP)
-    typedef detail::array<bool, 4> native_type;
+    typedef detail::vararray<uint8_t,4> native_type;
 #endif
     SIMDPP_INL mask_float32<4>() {}
     // SIMDPP_INL mask_float32<4>(const mask_float32<4> &) = default;
@@ -119,8 +135,8 @@ public:
     SIMDPP_INL mask_float32<4>(const __vector __bool int& d) : d_((__vector float)d) {}
 #endif
 
-#if SIMDPP_USE_SSE2
-    SIMDPP_INL mask_float32<4>(const float32<4>& d) : d_(d) {}
+#if SIMDPP_USE_SSE2 && !SIMDPP_USE_AVX512VL
+    SIMDPP_INL mask_float32<4>(const float32<4>& d) : d_(d.native()) {}
 #endif
 
     template<class E> SIMDPP_INL explicit mask_float32<4>(const mask_int32<4,E>& d)
@@ -132,21 +148,28 @@ public:
         *this = bit_cast<mask_float32<4> >(d.eval()); return *this;
     }
 
-    SIMDPP_INL operator native_type() const { return d_; }
+    /// Convert to the underlying vector type
+#if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
+    SIMDPP_INL operator native_type() const SIMDPP_IMPLICIT_CONVERSION_DEPRECATION_MSG
+    { return d_; }
+#endif
+    SIMDPP_INL native_type native() const { return d_; }
 
     /// Access the underlying type
     SIMDPP_INL float32<4> unmask() const
     {
-    #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
+#if SIMDPP_USE_AVX512VL
+        return _mm_castsi128_ps(_mm_movm_epi32(d_));
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
         return detail::null::unmask_mask<float32<4> >(*this);
-    #else
+#else
         return float32<4>(d_);
-    #endif
+#endif
     }
 
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    bool& el(unsigned id) { return d_[id]; }
-    const bool& el(unsigned id) const { return d_[id]; }
+    SIMDPP_INL uint8_t& el(unsigned id) { return d_[id]; }
+    SIMDPP_INL const uint8_t& el(unsigned id) const { return d_[id]; }
 #endif
 
     SIMDPP_INL const mask_float32<4>& vec(unsigned) const { return *this; }

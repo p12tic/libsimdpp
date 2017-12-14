@@ -1,0 +1,34 @@
+{{simdpp/title|splat}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned n, unsigned N, class E>
+Vec<N,_DETAIL_> splat( const Vec<N,E>& a );
+}}
+{{dcl end}}
+
+Broadcasts {{tt|n}}-th element of the source vector across all lanes of the vector.
+
+{{tt|Vec}} must be a non-mask vector type.
+
+===Parameters===
+{{par begin}}
+{{par | a | source vector }}
+{{par | n | the index of the element to broadcast}}
+{{par end}}
+
+===Return value===
+A vector with all elements set to the {{tt|n}}-th element.
+
+===Equivalent operation===
+{{source|1=
+r0 = a[s]
+r1 = a[s]
+...
+rM = a[s]
+}}
+
+Here {{c|1=M = N-1}}.
+
+===See also===
+{{todo}}

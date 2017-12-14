@@ -1,0 +1,4 @@
+<onlyinclude>{{#switch:{{#explode:{{PAGENAME}}|/|0}}
+|cpp=[[cpp/header/{{{1|}}}|&lt;{{{1|}}}&gt;]]
+|&lt;{{{1|}}}&gt;
+}}</onlyinclude>

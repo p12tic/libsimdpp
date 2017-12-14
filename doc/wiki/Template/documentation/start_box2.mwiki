@@ -1,0 +1,26 @@
+{{documentation/start box
+| preload = {{{preload|}}}   <!--Allow custom preloads-->
+| heading = {{{heading|¬}}}   <!--Empty but defined means no header-->
+| heading-style = {{{heading-style|}}}
+| content = {{{content|}}}
+
+| docpage =
+  {{#if: {{{1|}}}
+  | {{{1|}}}
+  | {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/doc
+  }}
+
+| doc exist =
+  {{#ifexist:
+    {{#if: {{{1|}}}
+    | {{{1|}}}   <!--Other docname fed-->
+    | {{{docspace|{{NAMESPACE}}}}}:{{{template page|{{PAGENAME}}}}}/doc
+    }}
+  | yes
+  }}
+
+}}<noinclude>
+
+{{pp-template}}
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

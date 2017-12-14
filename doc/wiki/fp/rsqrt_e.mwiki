@@ -1,0 +1,41 @@
+{{simdpp/title|rsqrt_e}}
+{{fp/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E>
+Ret<N, _DETAIL_> rsqrt_e( Vec<N,E> a );
+}}
+{{dcl end}}
+
+Computes approximate reciprocal square root. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec}}
+{{vset2 | float32 | float32}}
+{{vset2 | float64 | float64}}
+{{vset end}}
+
+The precision depends on platform:
+* 1/2 ULP for NULL and NEON
+* ~1/2730 for SSE2
+* 1/16376 for AVX512F
+* 1/4096 for ALTIVEC
+* 1/256 for NEON_FLT_SP
+
+===Parameters===
+{{par begin}}
+{{par | a | floating-point vector}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|approx(1/sqrt(a))}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = approx(1 / sqrt(a0))
+...
+rN = approx(1 / sqrt(aN))
+}}
+
+===See also===
+{{todo}}

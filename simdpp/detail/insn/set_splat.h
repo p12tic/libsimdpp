@@ -22,16 +22,18 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
-SIMDPP_INL void i_set_splat(uint32x4&, uint32_t);
+static SIMDPP_INL
+void i_set_splat(uint32x4&, uint32_t);
 
-SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
+static SIMDPP_INL
+void i_set_splat(uint8x16& v, uint8_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint8x16, uint8_t>(v0);
 #elif SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
-    v = _mm_broadcastb_epi8(v);
+    v = _mm_broadcastb_epi8(v.native());
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 * 0x01010101;
@@ -45,14 +47,25 @@ SIMDPP_INL void i_set_splat(uint8x16& v, uint8_t v0)
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#elif SIMDPP_USE_MSA
+    v = (v16u8) __msa_fill_b(v0);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_set_splat(uint8x32& v, uint8_t v0)
+static SIMDPP_INL
+void i_set_splat(uint8x32& v, uint8_t v0)
 {
     uint8x16 a = _mm_cvtsi32_si128(v0);
-    v = _mm256_broadcastb_epi8(a);
+    v = _mm256_broadcastb_epi8(a.native());
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_set_splat(uint8<64>& v, uint8_t v0)
+{
+    uint8x16 a = _mm_cvtsi32_si128(v0);
+    v = _mm512_broadcastb_epi8(a.native());
 }
 #endif
 
@@ -68,14 +81,15 @@ void i_set_splat(uint8<N>& v, uint8_t v0)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_set_splat(uint16x8& v, uint16_t v0)
+static SIMDPP_INL
+void i_set_splat(uint16x8& v, uint16_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint16x8, uint16_t>(v0);
 #elif SIMDPP_USE_AVX2
     uint32_t u0 = v0;
     v = _mm_cvtsi32_si128(u0);
-    v = _mm_broadcastw_epi16(v);
+    v = _mm_broadcastw_epi16(v.native());
 #elif SIMDPP_USE_SSE2
     uint32_t u0;
     u0 = v0 | v0 << 16;
@@ -89,14 +103,25 @@ SIMDPP_INL void i_set_splat(uint16x8& v, uint16_t v0)
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#elif SIMDPP_USE_MSA
+    v = (v8u16) __msa_fill_h(v0);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_set_splat(uint16x16& v, uint16_t v0)
+static SIMDPP_INL
+void i_set_splat(uint16x16& v, uint16_t v0)
 {
     uint16x8 a = _mm_cvtsi32_si128(v0);
-    v = _mm256_broadcastw_epi16(a);
+    v = _mm256_broadcastw_epi16(a.native());
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+SIMDPP_INL void i_set_splat(uint16<32>& v, uint16_t v0)
+{
+    uint16x8 a = _mm_cvtsi32_si128(v0);
+    v = _mm512_broadcastw_epi16(a.native());
 }
 #endif
 
@@ -112,13 +137,14 @@ void i_set_splat(uint16<N>& v, uint16_t v0)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_set_splat(uint32x4& v, uint32_t v0)
+static SIMDPP_INL
+void i_set_splat(uint32x4& v, uint32_t v0)
 {
 #if SIMDPP_USE_NULL
     v = detail::null::make_vec<uint32x4, uint32_t>(v0);
 #elif SIMDPP_USE_AVX2
     v = _mm_cvtsi32_si128(v0);
-    v = _mm_broadcastd_epi32(v);
+    v = _mm_broadcastd_epi32(v.native());
 #elif SIMDPP_USE_SSE2
     v = _mm_cvtsi32_si128(v0);
     v = permute4<0,0,0,0>(v);
@@ -129,19 +155,23 @@ SIMDPP_INL void i_set_splat(uint32x4& v, uint32_t v0)
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#elif SIMDPP_USE_MSA
+    v = (v4u32) __msa_fill_w(v0);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_set_splat(uint32x8& v, uint32_t v0)
+static SIMDPP_INL
+void i_set_splat(uint32x8& v, uint32_t v0)
 {
     uint32x4 a = _mm_cvtsi32_si128(v0);
-    v = _mm256_broadcastd_epi32(a);
+    v = _mm256_broadcastd_epi32(a.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_set_splat(uint32<16>& v, uint32_t v0)
+static SIMDPP_INL
+void i_set_splat(uint32<16>& v, uint32_t v0)
 {
     v = _mm512_set1_epi32(v0);
 }
@@ -159,11 +189,10 @@ void i_set_splat(uint32<N>& v, uint32_t v0)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
+static SIMDPP_INL
+void i_set_splat(uint64x2& v, uint64_t v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<uint64x2, uint64_t>(v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
 #if SIMDPP_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
     uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
@@ -175,26 +204,50 @@ SIMDPP_INL void i_set_splat(uint64x2& v, uint64_t v0)
 #endif
 #elif SIMDPP_USE_NEON
     v = vdupq_n_u64(v0);
+#elif SIMDPP_USE_VSX_207
+    SIMDPP_ALIGN(16) uint64_t rv[2];
+    rv[0] = v0;
+    v = vec_ld(0, reinterpret_cast<const __vector uint64_t*>(rv));
+    v = splat<0>(v);
+#elif SIMDPP_USE_MSA
+#if SIMDPP_64_BITS
+    v = (v2u64) __msa_fill_d(v0.native());
+#else
+    uint32_t v0lo = v0;
+    uint32_t v0hi = v0 >> 32;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+    v4i32 vr;
+    vr = __msa_insert_w(vr, 0, v0lo);
+    vr = __msa_insert_w(vr, 1, v0hi);
+#pragma GCC diagnostic pop
+    v = (int32<4>) vr;
+    v = (v2u64) __msa_splat_d((v2i64) v.native(), 0);
+#endif
+#elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
+    v = detail::null::make_vec<uint64x2, uint64_t>(v0);
 #endif
 }
 
 #if SIMDPP_USE_AVX2
-SIMDPP_INL void i_set_splat(uint64x4& v, uint64_t v0)
+static SIMDPP_INL
+void i_set_splat(uint64x4& v, uint64_t v0)
 {
 #if SIMDPP_32_BITS
     uint32x4 va = _mm_cvtsi32_si128(uint32_t(v0));
     uint32x4 vb = _mm_cvtsi32_si128(uint32_t(v0 >> 32));
     uint64x2 a = (uint64x2) zip4_lo(va, vb);
-    v = _mm256_broadcastq_epi64(a);
+    v = _mm256_broadcastq_epi64(a.native());
 #else
     uint64x2 a = _mm_cvtsi64_si128(v0);
-    v = _mm256_broadcastq_epi64(a);
+    v = _mm256_broadcastq_epi64(a.native());
 #endif
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_set_splat(uint64<8>& v, uint64_t v0)
+static SIMDPP_INL
+void i_set_splat(uint64<8>& v, uint64_t v0)
 {
     v = _mm512_set1_epi64(v0);
 }
@@ -212,37 +265,52 @@ void i_set_splat(uint64<N>& v, uint64_t v0)
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_set_splat(float32x4& v, float v0)
+static SIMDPP_INL
+void i_set_splat(float32x4& v, float v0)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     v = detail::null::make_vec<float32x4, float>(v0);
 #elif SIMDPP_USE_SSE2
     v = _mm_set1_ps(v0);        // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON
-    v = vsetq_lane_f32(v0, v, 0);
-    v = splat<0>(v);
+    v = vdupq_n_f32(v0);
 #elif SIMDPP_USE_ALTIVEC
     SIMDPP_ALIGN(16) float rv[4];
     rv[0] = v0;
     v = altivec::load1(v, rv);
     v = splat<0>(v);
+#elif SIMDPP_USE_MSA
+    SIMDPP_ALIGN(16) float rv[4];
+    rv[0] = v0;
+    v = (v4f32) __msa_ld_w(rv, 0);
+    v = (v4f32) __msa_splat_w((v4i32) v.native(), 0);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_set_splat(float32x8& v, float v0)
+static SIMDPP_INL
+void i_set_splat(float32x8& v, float v0)
 {
     v = _mm256_broadcast_ss(&v0);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_set_splat(float32<16>& v, float v0)
+static SIMDPP_INL
+void i_set_splat(float32<16>& v, float v0)
 {
     float32<4> a;
     i_set_splat(a, v0);
-    v = _mm512_broadcast_f32x4(a);
+    v = _mm512_broadcast_f32x4(a.native());
 }
+#endif
+
+#ifdef __GNUC__
+// GCC thinks tv is not initialized
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
+#pragma GCC diagnostic push
+#endif
+#pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 
 template<unsigned N> SIMDPP_INL
@@ -254,33 +322,49 @@ void i_set_splat(float32<N>& v, float v0)
         v.vec(i) = tv;
     }
 }
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
+#pragma GCC diagnostic pop
+#endif
 
 // -----------------------------------------------------------------------------
 
-SIMDPP_INL void i_set_splat(float64x2& v, double v0)
+static SIMDPP_INL
+void i_set_splat(float64x2& v, double v0)
 {
-#if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    v = detail::null::make_vec<float64x2, double>(v0);
-#elif SIMDPP_USE_SSE2
+#if SIMDPP_USE_SSE2
     v = _mm_set1_pd(v0);            // likely in a SSE register anyway
 #elif SIMDPP_USE_NEON64
     v = vdupq_n_f64(v0);
+#elif SIMDPP_USE_VSX_206
+    SIMDPP_ALIGN(16) double rv[2];
+    rv[0] = v0;
+    v = vec_ld(0, reinterpret_cast<const __vector double*>(rv));
+    v = splat<0>(v);
+#elif SIMDPP_USE_MSA
+    SIMDPP_ALIGN(16) double rv[2];
+    rv[0] = v0;
+    v = (v2f64) __msa_ld_d(rv, 0);
+    v = (v2f64) __msa_splat_d((v2i64) v.native(), 0);
+#elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
+    v = detail::null::make_vec<float64x2, double>(v0);
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL void i_set_splat(float64x4& v, double v0)
+static SIMDPP_INL
+void i_set_splat(float64x4& v, double v0)
 {
     v = _mm256_broadcast_sd(&v0);
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL void i_set_splat(float64<8>& v, double v0)
+static SIMDPP_INL
+void i_set_splat(float64<8>& v, double v0)
 {
     float64<4> v1;
     i_set_splat(v1, v0);
-    v = _mm512_broadcast_f64x4(v1);
+    v = _mm512_broadcast_f64x4(v1.native());
 }
 #endif
 
@@ -296,6 +380,13 @@ void i_set_splat(float64<N>& v, double v0)
 
 // -----------------------------------------------------------------------------
 
+#ifdef __GNUC__
+// GCC thinks r is not initialized
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
+#pragma GCC diagnostic push
+#endif
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
 template<class V, class VE> SIMDPP_INL
 V i_splat_any(const VE& x)
 {
@@ -303,6 +394,9 @@ V i_splat_any(const VE& x)
     insn::i_set_splat(r, x);
     return V(r);
 }
+#if (__INTEL_COMPILER) || (__clang__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ > 4)
+#pragma GCC diagnostic pop
+#endif
 
 } // namespace insn
 
@@ -312,7 +406,7 @@ void construct_eval(V& v, const expr_vec_set_splat<VE>& e)
     v = insn::i_splat_any<V>(e.a);
 }
 
-template<class V, class VE>
+template<class V, class VE> SIMDPP_INL
 V splat_impl(const VE& x)
 {
     SIMDPP_STATIC_ASSERT(is_vector<V>::value && !is_mask<V>::value,

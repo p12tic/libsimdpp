@@ -1,0 +1,8 @@
+{{#switch: {{SUBJECTSPACE}}
+  | {{ns:0}}
+  | {{ns:File}}
+  | {{ns:MediaWiki}}
+  | {{ns:Category}} = {{TALKSPACE}}
+  | #default = {{SUBJECTSPACE}}
+}}<noinclude>
+</noinclude>

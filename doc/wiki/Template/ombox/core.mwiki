@@ -1,0 +1,54 @@
+<table class="plainlinks ombox {{#ifeq:{{{small}}}|yes|mbox-small}}
+{{#switch:{{{type|}}}
+| speedy     = ombox-speedy
+| delete     = ombox-delete
+| content    = ombox-content
+| style      = ombox-style
+| move       = ombox-move
+| protection = ombox-protection
+| notice          <!-- notice = default -->
+| #default   = ombox-notice
+}}" style="{{{style|}}}">
+<tr>
+{{#ifeq:{{{image|}}}|none
+| <!-- No image. Cell with some width or padding necessary for text cell to have 100% width. --><td class="mbox-empty-cell"></td>
+| <td class="mbox-image">
+  {{#if:{{{image|}}}
+  | {{{image}}}
+  | [[Image:{{#switch:{{{type|}}}
+    | speedy     = Imbox speedy deletion.png
+    | delete     = Imbox deletion.png
+    | content    = Imbox content.png
+    | style      = Edit-clear.svg
+    | move       = Imbox move.png
+    | protection = Imbox protection.png
+    | notice          <!-- notice = default -->
+    | #default   = Imbox notice.png
+    }} | {{#ifeq:{{{small|}}}|yes
+    | 30x30px
+    | 40x40px
+    }}|link=|alt=]]
+  }}</td>
+}}
+<td class="mbox-text" style="{{{textstyle|}}}"> {{{text}}} </td>
+{{#if:{{{imageright|}}}
+| {{#ifeq:{{{imageright|}}}|none
+  | <!-- No image. -->
+  | <td class="mbox-imageright"> {{{imageright}}} </td>
+  }}
+}}
+</tr>
+</table><!-- Detect and report usage with faulty "type" parameter:
+-->{{#switch:{{{type|}}}
+|   <!-- No type fed, is also valid input -->
+| speedy
+| delete
+| content
+| style
+| move
+| protection
+| notice     =    <!-- Do nothing, valid "type" -->
+| #default   = <div style="text-align: center;">This message box is using an invalid "type={{{type|}}}" parameter and needs fixing.</div>[[Category:Wikipedia message box parameter needs fixing|{{main other|Main:}}{{FULLPAGENAME}}]]<!-- Sort on namespace -->
+}}<noinclude>
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

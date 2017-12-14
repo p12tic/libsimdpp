@@ -1,0 +1,6 @@
+{{#iferror: {{#expr: 1 + {{{data|}}} }}
+| {{{data|}}}   <!--Not a number, return "data" as is-->
+| {{{ {{{data|}}} |}}}   <!--"data" is a number, return that numbered parameter-->
+}}<noinclude>
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

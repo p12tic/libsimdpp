@@ -1,0 +1,39 @@
+{{simdpp/title|fmadd{{small|(floatint-point)}}}}
+{{fp/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2, class E3>
+Ret<N, _DETAIL_> fmadd( Vec1<N,E1> a, Vec2<N,E2> b, Vec3<N,E3> );
+}}
+{{dcl end}}
+
+Performs a fused multiply-add operation of floating-point in three vectors, as if by {{tt|a*b+c}} for each element. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+|-
+! {{tt|Ret}} || {{tt|Vec1}} || {{tt|Vec2}} || {{tt|Vec3}}
+|-
+| {{c|float32}} || {{c|float32}} || {{c|float32}} || {{c|float32}}
+|-
+| {{c|float64}} || {{c|float64}} || {{c|float64}} || {{c|float64}}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a, b, c | floating-point vectors}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|a * b + c}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 * b0 + c0
+ ...
+rN = aN * bN + cN
+}}
+
+===See also===
+{{todo}}

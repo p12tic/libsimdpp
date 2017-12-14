@@ -1,0 +1,41 @@
+{{simdpp/title|extract}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl |
+template< unsigned K, unsigned N, class E >
+Ret extract( const Vec1<N,E>& a );
+}}
+{{dcl end}}
+
+Extracts a {{tt|K}}-th element from the given source vector. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec1 }}
+{{vset2 | int8_t | int8 }}
+{{vset2 | uint8_t | uint8 }}
+{{vset2 | int16_t | int16 }}
+{{vset2 | uint16_t | uint16 }}
+{{vset2 | int32_t | int32 }}
+{{vset2 | uint32_t | uint32 }}
+{{vset2 | int64_t | int64 }}
+{{vset2 | uint64_t | uint64}}
+{{vset2 | float | float32}}
+{{vset2 | double | float64}}
+{{vset end}}
+
+===Parameters===
+{{par begin}}
+{{par | a | vector to extract data from}}
+{{par end}}
+
+===Return value===
+Extracted element
+(none)
+
+===Equivalent operation===
+{{source|1=
+r = a[K]
+}}
+
+===See also===
+{{todo}}

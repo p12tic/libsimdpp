@@ -1,0 +1,2 @@
+<onlyinclude>{{#tag:source|{{{code|{{{1}}}}}}|lang={{{lang|{{{2|{{get_lang}}}}}}}}|enclose=none}}</onlyinclude>
+{{documentation | Template:source/doc}}

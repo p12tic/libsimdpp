@@ -1,0 +1,44 @@
+{{simdpp/title|permute_bytes16}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2, class E3>
+Ret<N,_DETAIL_> permute_bytes16( const Vec1<N,E1>& a, const Mask<N,E3>& mask );
+}}
+{{dcl end}}
+
+Permutes elements in vector {{tt|a}} according to a {{tt|mask}}. The shuffling is done at 16-byte granularity: that is, elements within each 16-byte lane can select only elements from the same 16-byte lane.
+
+Each byte within the {{tt|mask}} defines which element to select for the output vector:
+* Bits 7-4 must be zero or the behavior is undefined.
+* Bits 3-0 define the element within the selected vector.
+
+Use {{ltf|shuffle/make_shuffle_bytes16_mask}} to create masks with known contents for shuffling elements of various sizes.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset4 h | Ret | Vec1 | Vec2 | Mask }}
+{{vset4 u | ''promoted 8-bit vector'' | ''any 8-bit vector'' | ''any 8-bit vector'' | {{tt|uint8}} }}
+{{vset4 u | ''promoted 16-bit vector'' | ''any 16-bit vector'' | ''any 16-bit vector'' | {{tt|uint16}} }}
+{{vset4 u | ''promoted 32-bit vector'' | ''any 32-bit vector'' | ''any 32-bit vector'' | {{tt|uint32}} }}
+{{vset4 u | ''promoted 64-bit vector'' | ''any 64-bit vector'' | ''any 64-bit vector'' | {{tt|uint64}} }}
+{{vset end}}
+
+The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types#expr|vector expression]].
+
+The vectors are shuffled at 16 byte granularity as follows: the vectors are partitioned into 128-bit lanes. The {{tt|n}}-th lane in the return vector is governed by {{tt|n}}-th lane of the {{tt|mask}} vector. The {{tt|n}}-th lane in the return vector will contain elements only from {{tt|n}}-th lanes of the {{tt|a}} vector.
+
+===Parameters===
+{{par begin}}
+{{par | a | source vector }}
+{{par | mask | mask vector}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to the shuffled vectors.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | shuffle/dsc permute_zbytes16}}
+{{dsc end}}

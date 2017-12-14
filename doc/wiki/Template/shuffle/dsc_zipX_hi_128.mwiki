@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/zipX_hi_128 | title=zip16_hi<br/>zip8_hi<br/>zip4_hi<br/>zip2_hi | interleaves higher halves of two vectors}}

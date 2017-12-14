@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/unzipX_hi_128 | title=unzip16_hi<br/>unzip8_hi<br/>unzip4_hi<br/>unzip2_hi | de-interleaves odd(high) elements of two vectors}}

@@ -1,0 +1,1 @@
+{{dsc tfun | shuffle/shuffle_bytes16 | selects elements from two vectors according to another vector}}

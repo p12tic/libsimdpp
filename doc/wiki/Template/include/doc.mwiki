@@ -1,0 +1,6 @@
+{{tl|include | ''location'' | ''param1'' {{mark optional}} | ''param2'' {{mark optional}} ... }}
+: Includes the template from ''location'' and adds an edit link. Use this template whenever using an some templated content that occupies full width of the page. The unnamed parameters ''param1'', ''param2'', ... are passed to the template.
+
+===Implementation templates===
+{{tl|include editlink | ''location''}}
+: Adds an edit link to a template.

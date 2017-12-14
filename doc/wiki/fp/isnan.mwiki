@@ -1,0 +1,36 @@
+{{simdpp/title|isnan}}
+{{fp/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E>
+Ret<N, _DETAIL_> isnan( Vec<N,E> a );
+}}
+{{dcl end}}
+
+Checks if the values in the floating-point vector {{tt|a}} are Not-a-Number values. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec}}
+{{vset2 | mask_float32 | float32}}
+{{vset2 | mask_float64 | float64}}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a | floating-point vector}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating for each value to all bits set if corresponding value is not a number and zero otherwise.
+
+===Equivalent operation===
+{{source|1=
+r0 = isnan(a0) ? 0xff...00 : 0
+...
+rN = isnan(aN) ? 0xff...00 : 0
+}}
+
+===See also===
+{{todo}}

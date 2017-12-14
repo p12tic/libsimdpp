@@ -1,7 +1,14 @@
-build
-*.user*
-*~
+# Documentation output
+doc/output
+doc/reference
+# QtCreator files
 libsimdpp.config
 libsimdpp.creator
 libsimdpp.includes
 libsimdpp.files
+*.user*
+# Misc files created during local development
+*~
+build*
+venv
+pywiki

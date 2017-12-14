@@ -78,13 +78,13 @@ template<> struct shuffle_impl<1> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float64<4> run(const float64<4>& a, const float64<4>& b)
     {
-        return _mm256_unpacklo_pd(a, b);
+        return _mm256_unpacklo_pd(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float64<8> run(const float64<8>& a, const float64<8>& b)
     {
-        return _mm512_unpacklo_pd(a, b);
+        return _mm512_unpacklo_pd(a.native(), b.native());
     }
 #endif
 };
@@ -103,13 +103,13 @@ template<> struct shuffle_impl<3> {
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float64<4> run(const float64<4>& a, const float64<4>& b)
     {
-        return _mm256_unpackhi_pd(a, b);
+        return _mm256_unpackhi_pd(a.native(), b.native());
     }
 #if SIMDPP_USE_AVX512F
     template<unsigned, unsigned, unsigned, unsigned> SIMDPP_INL
     static float64<8> run(const float64<8>& a, const float64<8>& b)
     {
-        return _mm512_unpackhi_pd(a, b);
+        return _mm512_unpackhi_pd(a.native(), b.native());
     }
 #endif
 };
@@ -129,7 +129,7 @@ template<> struct shuffle_impl<5> {
     static float64<4> run(const float64<4>& a, const float64<4>& b)
     {
         const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        return _mm256_blend_pd(a, b, mask);
+        return _mm256_blend_pd(a.native(), b.native(), mask);
     }
 #if SIMDPP_USE_AVX512F
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
@@ -137,7 +137,7 @@ template<> struct shuffle_impl<5> {
     {
         const unsigned mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
         const unsigned mask2 = mask | mask << 4;
-        return _mm512_mask_blend_pd(mask2, a, b);
+        return _mm512_mask_blend_pd(mask2, a.native(), b.native());
     }
 #endif
 };
@@ -148,14 +148,16 @@ template<> struct shuffle_impl<6> {
     static float64<4> run(const float64<4>& a, const float64<4>& b)
     {
         if (s0%2 != s2%2 || s1%2 != s3%2) {
-            __m128d a1 = _mm256_castpd256_pd128(a);
-            __m128d b1 = _mm256_castpd256_pd128(b);
+            __m128d a1 = _mm256_castpd256_pd128(a.native());
+            __m128d b1 = _mm256_castpd256_pd128(b.native());
             a1 = _mm_shuffle_pd(a1, b1, SIMDPP_SHUFFLE_MASK_2x2(s0, s1-4));
-            __m256d t = _mm256_shuffle_pd(a, b, SIMDPP_SHUFFLE_MASK_2x2_2(s2-2,s3-6));
+            __m256d t = _mm256_shuffle_pd(a.native(), b.native(),
+                                          SIMDPP_SHUFFLE_MASK_2x2_2(s2-2,s3-6));
             t = _mm256_insertf128_pd(t, a1, 0);
             return t;
         } else {
-            return _mm256_shuffle_pd(a, b, SIMDPP_SHUFFLE_MASK_2x2_2(s0, s1-4));
+            return _mm256_shuffle_pd(a.native(), b.native(),
+                                     SIMDPP_SHUFFLE_MASK_2x2_2(s0, s1-4));
         }
     }
 };
@@ -166,14 +168,16 @@ template<> struct shuffle_impl<7> {
     static float64<4> run(const float64<4>& a, const float64<4>& b)
     {
         if (s0%2 != s2%2 || s1%2 != s3%2) {
-            __m128d a1 = _mm256_castpd256_pd128(a);
-            __m128d b1 = _mm256_castpd256_pd128(b);
+            __m128d a1 = _mm256_castpd256_pd128(a.native());
+            __m128d b1 = _mm256_castpd256_pd128(b.native());
             a1 = _mm_shuffle_pd(b1, a1, SIMDPP_SHUFFLE_MASK_2x2(s1,s0-4));
-            __m256d t = _mm256_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2_2(s3-2,s2-6));
+            __m256d t = _mm256_shuffle_pd(b.native(), a.native(),
+                                          SIMDPP_SHUFFLE_MASK_2x2_2(s3-2,s2-6));
             t = _mm256_insertf128_pd(t, a1, 0);
             return t;
         } else {
-            return _mm256_shuffle_pd(b, a, SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-4));
+            return _mm256_shuffle_pd(b.native(), a.native(),
+                                     SIMDPP_SHUFFLE_MASK_2x2_2(s1,s0-4));
         }
     }
 };
@@ -187,8 +191,10 @@ template<> struct shuffle_impl<8> {
     {
         uint8<16> mask = make_uint(s0, s1, s2, s3);
         // FIXME: GCC BUG
-        // return  _mm256_permutex2var_pd(a, _mm256_cvtepi8_epi64(mask), b);
-        return _mm512_castpd512_pd256(_mm512_permutex2var_pd(_mm512_castpd256_pd512(a), _mm512_cvtepi8_epi64(mask), _mm512_castpd256_pd512(b)));
+        // return  _mm256_permutex2var_pd(a.native(), _mm256_cvtepi8_epi64(mask), b);
+        return _mm512_castpd512_pd256(_mm512_permutex2var_pd(_mm512_castpd256_pd512(a.native()),
+                                                             _mm512_cvtepi8_epi64(mask.native()),
+                                                             _mm512_castpd256_pd512(b.native())));
     }
 
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
@@ -199,7 +205,7 @@ template<> struct shuffle_impl<8> {
         const unsigned p2 = s2<4 ? s2 : s2+4;
         const unsigned p3 = s3<4 ? s3 : s3+4;
         uint8<16> mask = make_uint(p0, p1, p2, p3, p0+4, p1+4, p2+4, p3+4);
-        return _mm512_permutex2var_pd(a, _mm512_cvtepi8_epi64(mask), b);
+        return _mm512_permutex2var_pd(a.native(), _mm512_cvtepi8_epi64(mask.native()), b.native());
     }
 };
 #endif
@@ -211,16 +217,8 @@ template<> struct shuffle_impl<9> {
     static float64<4> run(const float64<4>& a, const float64<4>& b)
     {
         const unsigned bl_mask = (s0<4 ? 0 : 1) | (s1<4 ? 0 : 2) | (s2<4 ? 0 : 4) | (s3<4 ? 0 : 8);
-        const unsigned int s00 = s0 < 4 ? s0 : 0;
-        const unsigned int s01 = s1 < 4 ? s1 : 1;
-        const unsigned int s02 = s2 < 4 ? s2 : 2;
-        const unsigned int s03 = s3 < 4 ? s3 : 3;
-        const unsigned int s10 = s0 >= 4 ? s0-4 : 0;
-        const unsigned int s11 = s1 >= 4 ? s1-4 : 1;
-        const unsigned int s12 = s2 >= 4 ? s2-4 : 2;
-        const unsigned int s13 = s3 >= 4 ? s3-4 : 3;
-        __m256d ta = _mm256_permute4x64_pd(a, _MM_SHUFFLE(s03,s02,s01,s00));
-        __m256d tb = _mm256_permute4x64_pd(b, _MM_SHUFFLE(s13,s12,s11,s10));
+        __m256d ta = _mm256_permute4x64_pd(a.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
+        __m256d tb = _mm256_permute4x64_pd(b.native(), SIMDPP_SHUFFLE_MASK_4x4(s0%4, s1%4, s2%4, s3%4));
         return _mm256_blend_pd(ta, tb, bl_mask);
     }
 };

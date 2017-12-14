@@ -1,0 +1,3 @@
+Forces an end of table row.
+
+This template is used in table building templates to prevent spaces after a template to be included into the cell content.

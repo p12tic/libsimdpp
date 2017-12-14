@@ -14,6 +14,7 @@
 
 #include <simdpp/setup_arch.h>
 #include <simdpp/detail/cast.h>
+#include <simdpp/detail/cxx11_emul.h>
 #include <simdpp/types/traits.h>
 
 namespace simdpp {
@@ -21,7 +22,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 namespace detail {
 
-// on NEON mask-mask conversions may need unmasking or remasking
+// on certain architectures mask-mask conversions may need unmasking or remasking
 template<class R, class T> struct cast_mask_override { static const unsigned value = CAST_MASK_MEMCPY; };
 #if SIMDPP_USE_NEON_NO_FLT_SP
 template<unsigned N>
@@ -29,12 +30,50 @@ struct cast_mask_override<mask_float32<N>, mask_int32<N> > { static const unsign
 template<unsigned N>
 struct cast_mask_override<mask_int32<N>, mask_float32<N> > { static const unsigned value = CAST_MASK_REMASK; };
 #endif
-#if SIMDPP_USE_NEON
+#if SIMDPP_USE_NEON && SIMDPP_32_BITS
 template<unsigned N>
 struct cast_mask_override<mask_int64<N>, mask_float64<N> > { static const unsigned value = CAST_MASK_UNMASK; };
 template<unsigned N>
 struct cast_mask_override<mask_float64<N>, mask_int64<N> > { static const unsigned value = CAST_MASK_REMASK; };
 #endif
+#if SIMDPP_USE_VSX_206 && !SIMDPP_USE_VSX_207
+template<unsigned N>
+struct cast_mask_override<mask_int64<N>, mask_float64<N> > { static const unsigned value = CAST_MASK_REMASK; };
+template<unsigned N>
+struct cast_mask_override<mask_float64<N>, mask_int64<N> > { static const unsigned value = CAST_MASK_UNMASK; };
+#endif
+
+template<class R, class T> SIMDPP_INL
+void bit_cast_impl(const T& t, R& r)
+{
+    const bool is_vector_r = is_vector<R>::value;
+    const bool is_vector_t = is_vector<T>::value;
+    const bool is_mask_r = is_mask<R>::value;
+    const bool is_mask_t = is_mask<T>::value;
+    const unsigned mask_mask_cast_override = detail::cast_mask_override<R,T>::value;
+
+    const unsigned cast_type =
+            (!is_vector_t && !is_vector_r) ? CAST_TYPE_OTHER :
+            (!is_mask_t && !is_mask_r) ? CAST_TYPE_VECTOR_TO_VECTOR :
+            (is_mask_t && !is_mask_r) ? CAST_TYPE_MASK_TO_VECTOR :
+            (!is_mask_t && is_mask_r) ? CAST_TYPE_VECTOR_TO_MASK :
+            // remaining cases deal with is_mask_t && is_mask_r
+            (mask_mask_cast_override == CAST_MASK_REMASK) ? CAST_TYPE_MASK_TO_MASK_REMASK :
+            (mask_mask_cast_override == CAST_MASK_UNMASK) ? CAST_TYPE_MASK_TO_MASK_UNMASK :
+                                                            CAST_TYPE_MASK_TO_MASK_BITWISE;
+
+    SIMDPP_STATIC_ASSERT(is_vector_r == is_vector_t,
+                  "bit_cast can't convert between vector and non-vector types");
+
+    detail::cast_wrapper<cast_type>::run(t, r);
+}
+
+template<class T> SIMDPP_INL
+void bit_cast_impl(const T& t, T& r)
+{
+    // Simple implementation for the common case
+    r = t;
+}
 
 } // namespace detail
 
@@ -55,11 +94,9 @@ struct cast_mask_override<mask_float64<N>, mask_int64<N> > { static const unsign
 template<class R, class T> SIMDPP_INL
 R bit_cast(const T& t)
 {
-    SIMDPP_STATIC_ASSERT(is_vector<R>::value == is_vector<T>::value,
-                  "bit_cast can't convert between vector and non-vector types");
-    return detail::cast_wrapper<is_mask<R>::value,
-                                is_mask<T>::value,
-                                detail::cast_mask_override<R,T>::value>::template run<R>(t);
+    R r;
+    detail::bit_cast_impl(t, r);
+    return r;
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

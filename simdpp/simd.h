@@ -8,9 +8,6 @@
 #ifndef LIBSIMDPP_SIMD_H
 #define LIBSIMDPP_SIMD_H
 
-/* For documentation, see doc/src/libsimdpp-doc.h or http:// TODO .html
-*/
-
 /* The following file sets up the preprocessor variables and includes the
    required system headers for the specific architecture
 */
@@ -36,6 +33,7 @@
 #include <simdpp/core/cmp_lt.h>
 #include <simdpp/core/cmp_neq.h>
 #include <simdpp/core/extract.h>
+#include <simdpp/core/extract_bits.h>
 #include <simdpp/core/f_abs.h>
 #include <simdpp/core/f_add.h>
 #include <simdpp/core/f_ceil.h>
@@ -61,6 +59,7 @@
 #include <simdpp/core/f_sqrt.h>
 #include <simdpp/core/f_sub.h>
 #include <simdpp/core/f_trunc.h>
+#include <simdpp/core/for_each.h>
 #include <simdpp/core/i_abs.h>
 #include <simdpp/core/i_add.h>
 #include <simdpp/core/i_add_sat.h>
@@ -72,12 +71,14 @@
 #include <simdpp/core/i_mul.h>
 #include <simdpp/core/i_mull.h>
 #include <simdpp/core/i_neg.h>
+#include <simdpp/core/i_popcnt.h>
 #include <simdpp/core/i_reduce_add.h>
 #include <simdpp/core/i_reduce_and.h>
 #include <simdpp/core/i_reduce_max.h>
 #include <simdpp/core/i_reduce_min.h>
 #include <simdpp/core/i_reduce_mul.h>
 #include <simdpp/core/i_reduce_or.h>
+#include <simdpp/core/i_reduce_popcnt.h>
 #include <simdpp/core/i_shift_l.h>
 #include <simdpp/core/i_shift_r.h>
 #include <simdpp/core/i_sub.h>
@@ -123,6 +124,7 @@
 #include <simdpp/core/to_int32.h>
 #include <simdpp/core/to_int64.h>
 #include <simdpp/core/to_int8.h>
+#include <simdpp/core/to_mask.h>
 #include <simdpp/core/transpose.h>
 #include <simdpp/core/unzip_hi.h>
 #include <simdpp/core/unzip_lo.h>
@@ -130,6 +132,7 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/detail/cast.h>
 #include <simdpp/detail/cast.inl>
+#include <simdpp/detail/insn/conv_to_mask.inl>
 
 #include <simdpp/detail/altivec/load1.h>
 
@@ -171,7 +174,7 @@
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int8x32.h>
 #include <simdpp/types/traits.h>
-#include <simdpp/types/generic.inl>
+#include <simdpp/expr.inl>
 
 #include <simdpp/operators/bit_and.h>
 #include <simdpp/operators/bit_or.h>
@@ -196,12 +199,13 @@
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher
     mechanism is not needed, the user can define the @c SIMDPP_NO_DISPATCHER.
-    On cxx98 branch, this results in the library not depending on boost.
 */
 #ifndef SIMDPP_NO_DISPATCHER
-#include <simdpp/this_compile_arch.h>
 #include <simdpp/dispatch/dispatcher.h>
+#include <simdpp/dispatch/make_dispatcher.h>
 #endif
+
+#include <simdpp/capabilities.h>
 
 namespace simdpp {
 using namespace SIMDPP_ARCH_NAMESPACE;

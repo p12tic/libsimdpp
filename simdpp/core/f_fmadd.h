@@ -36,7 +36,8 @@ float32<N, expr_fmadd<float32<N,E1>,
                                             const float32<N,E2>& b,
                                             const float32<N,E3>& c)
 {
-    return expr_fmadd<float32<N,E1>, float32<N,E2>, float32<N,E3> >(a, b, c);
+    expr_fmadd<float32<N,E1>, float32<N,E2>, float32<N,E3> > ret = { a, b, c };
+    return ret;
 }
 
 template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
@@ -46,7 +47,8 @@ float64<N, expr_fmadd<float64<N,E1>,
                                             const float64<N,E2>& b,
                                             const float64<N,E3>& c)
 {
-    return expr_fmadd<float64<N,E1>, float64<N,E2>, float64<N,E3> >(a, b, c);
+    expr_fmadd<float64<N,E1>, float64<N,E2>, float64<N,E3> > ret = { a, b, c };
+    return ret;
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -1,0 +1,46 @@
+{{simdpp/title|move16_r, move8_r, move4_r, move2_r}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1>
+Ret<N, _DETAIL_> move16_r( const any_vec8<N,V1>& a );
+}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1>
+Ret<N, _DETAIL_> move8_r( const any_vec16<N,V1>& a );
+}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1>
+Ret<N, _DETAIL_> move4_r( const any_vec32<N,V1>& a );
+}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1>
+Ret<N, _DETAIL_> move2_r( const any_vec64<N,V1>& a );
+}}
+{{dcl end}}
+
+Moves elements within the vector to left (towards the 0-th element) shifting in zeros. Each 128-bit lane within vectors is processed separately.
+
+The return vector type is governed by the [[types/promotion|expression promotion]] rules.
+
+===Parameters===
+{{par begin}}
+{{par | a | source vector }}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]].
+
+===Equivalent operation===
+For the {{tt|any_vec32}} case:
+{{source|1=
+shift: pos:  0  1  2  3
+0      r = [ a0 a1 a2 a3 ]
+1      r = [ 0  a0 a1 a2 ]
+2      r = [ 0  0  a0 a1 ]
+3      r = [ 0  0  0  a0 ]
+4      r = [ 0  0  0  0  ]
+}}
+
+===See also===
+{{todo}}

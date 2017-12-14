@@ -142,9 +142,14 @@ template<class V> SIMDPP_INL
 V blend(const V& on, const V& off, const V& mask)
 {
     V r;
-    V mon = detail::null::bit_and(on, mask);
-    V moff = detail::null::bit_andnot(off, mask);
-      r = detail::null::bit_or(mon, moff);
+    typedef typename V::element_type E;
+    typedef typename V::uint_element_type U;
+    for (unsigned i = 0; i < V::length; i++) {
+        U on1 = bit_cast<U, E>(on.el(i));
+        U off1 = bit_cast<U, E>(off.el(i));
+        U mask1 = bit_cast<U, E>(mask.el(i));
+        r.el(i) = bit_cast<E, U>((on1 & mask1) | (off1 & ~mask1));
+    }
     return r;
 }
 

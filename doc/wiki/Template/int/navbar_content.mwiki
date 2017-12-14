@@ -1,0 +1,61 @@
+
+{{nv begin}}
+{{nv h1 | Elementary operations}}
+{{nv col begin}}
+{{nv ln | int/add }}
+{{nv ln | int/add_sat }}
+{{nv col next}}
+{{nv ln | int/sub }}
+{{nv ln | int/sub_sat }}
+{{nv col next}}
+{{nv ln | int/mul_lo }}
+{{nv ln | int/mul_hi }}
+{{nv ln | int/mull }}
+{{nv col next}}
+{{nv ln | int/neg }}
+{{nv col end}}
+
+{{nv h1 | Comparisons}}
+{{nv col begin}}
+{{nv ln | int/cmp_eq }}
+{{nv ln | int/cmp_neq }}
+{{nv col next}}
+{{nv ln | int/cmp_lt }}
+{{nv ln | int/cmp_gt }}
+{{nv col next}}
+{{nv ln | int/cmp_le }}
+{{nv ln | int/cmp_ge }}
+{{nv col end}}
+
+{{nv h1 | Reduction}}
+{{nv col begin}}
+{{nv ln | int/reduce_add }}
+{{nv ln | int/reduce_mul }}
+{{nv ln | int/reduce_min }}
+{{nv ln | int/reduce_max }}
+
+{{nv col next}}
+{{nv ln | int/reduce_and }}
+{{nv ln | int/reduce_or }}
+{{nv ln | int/reduce_popcnt }}
+{{nv col end}}
+
+{{nv h1 | Miscellaneous}}
+{{nv col begin}}
+{{nv ln | int/abs }}
+{{nv ln | int/avg }}
+{{nv ln | int/avg_trunc }}
+{{nv col next}}
+{{nv ln | int/min }}
+{{nv ln | int/max }}
+{{nv col next}}
+{{nv ln | int/popcnt }}
+{{nv col end}}
+{{nv col begin}}
+{{nv ln | int/shift_l | shift_l(scalar)}}
+{{nv ln | int/shift_l_v | shift_l(vector)}}
+{{nv col next}}
+{{nv ln | int/shift_r | shift_r(scalar)}}
+{{nv ln | int/shift_r_v | shift_r(vector)}}
+{{nv col end}}
+{{nv end}}

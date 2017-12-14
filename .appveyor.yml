@@ -1,0 +1,52 @@
+
+# General
+# -------
+
+# version format
+version: 2.1.{build}
+
+# branches to build
+branches:
+  only:
+    - master
+    - dev
+    - cxx98
+    - cxx98-staging
+
+max_jobs: 1
+
+# Environment
+# -----------
+
+image:
+- Visual Studio 2013
+- Visual Studio 2015
+- Visual Studio 2017
+
+shallow_clone: true
+
+clone_folder: c:\projects\libsimdpp
+
+# Build configuration
+# -------------------
+
+before_build:
+- cd c:\projects\libsimdpp
+- if exist build rmdir build /s /q
+- mkdir build
+- cd build
+- cmake ..
+
+build_script:
+- cd c:\projects\libsimdpp\build
+- cmake --build . --target test_insn
+- cmake --build . --target test_dispatcher
+- cmake --build . --target test_expr
+
+
+# Tests configuration
+# -------------------
+
+test_script:
+- cd c:\projects\libsimdpp\build
+- cmake --build . --target check

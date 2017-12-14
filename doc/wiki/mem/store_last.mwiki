@@ -1,0 +1,39 @@
+{{simdpp/title|store_last}}
+{{mem/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V>
+void store_last( void* ptr, const any_vec<N,V>& a, unsigned n );
+}}
+{{dcl end}}
+
+Stores the last {{tt|n}} elements the given vector to memory block starting at {{tt|ptr}}. {{tt|n}} must be in range {{tt|[0..N]}}.
+
+The function may be implemented as read-modify-write operation that behaves as if {{c|store(ptr, blend(a, (V) load(ptr), store_mask)}} was executed.
+
+The function is meant to be used in loop heads. It results in several instructions and is best not used in inner loops.
+
+{{tt|V}} must me a non-mask vector type. {{tt|ptr}} must be aligned to vector size.
+
+===Parameters===
+{{par begin}}
+{{par | ptr | pointer to location to store data to}}
+{{par | a | vector to store}}
+{{par | n | the number of elements to store}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+*(p+0) = (n > M)   ? a0 : *(p+0)
+*(p+1) = (n > M-1) ? a1 : *(p+1)
+...
+*(p+M) = (n > 0)   ? aM : *(p+M)
+}}
+
+Here {{c|1=M = N-1}}.
+
+===See also===
+{{todo}}

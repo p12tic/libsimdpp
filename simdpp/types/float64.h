@@ -13,11 +13,10 @@
 #endif
 
 #include <simdpp/setup_arch.h>
-#include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/core/cast.h>
-#include <simdpp/types/float64x2.h>
-#include <simdpp/types/float64x4.h>
+#include <simdpp/detail/array.h>
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
@@ -79,7 +78,7 @@ private:
         return r;
     }
 
-    float64v d_[float64::vec_length];
+    detail::vararray<float64v, float64::vec_length> d_;
 };
 
 /// Class representing possibly optimized mask data for 2x 64-bit floating point
@@ -120,7 +119,7 @@ public:
     SIMDPP_INL mask_float64<N> eval() const { return *this; }
 
 private:
-    mask_float64v d_[mask_float64::vec_length];
+    detail::vararray<mask_float64v, mask_float64::vec_length> d_;
 };
 
 } // namespace SIMDPP_ARCH_NAMESPACE

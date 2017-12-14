@@ -1,0 +1,36 @@
+{{simdpp/title|neg{{small|(float)}}}}
+{{fp/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1>
+Ret<N, _DETAIL_> neg( Vec1<N,E1> a );
+}}
+{{dcl end}}
+
+Computes negative value in a vector with floating-point values. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec1 }}
+{{vset2 | float32 | float32 }}
+{{vset2 | float64 | float64 }}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a | floating-point vector}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|-a}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = -a0
+...
+rN = -aN
+}}
+
+===See also===
+{{todo}}

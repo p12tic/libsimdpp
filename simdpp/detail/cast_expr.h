@@ -43,7 +43,7 @@ namespace detail {
 
     For the second case we cast effectively cast G& to R<N,G>&, where G is
     S<N,void>.
-*/
+*///TODO check comment above
 #if !SIMDPP_EXPR_DEBUG
 template<class R, class S> SIMDPP_INL
 const R& cast_expr(const S& expr)

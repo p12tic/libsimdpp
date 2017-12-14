@@ -1,0 +1,44 @@
+{{simdpp/title|min{{small|(integer)}}}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1, class E2>
+Ret<N, _DETAIL_> min( Vec1<N,E1> a, Vec2<N,E2> b );
+}}
+{{dcl end}}
+
+Returns minimum of two values in two integer vectors. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2}}
+{{vset3 | int8 | int8 | int8}}
+{{vset3 | uint8 | uint8 | uint8}}
+{{vset3 | int16 | int16 | int16}}
+{{vset3 | uint16 | uint16 | uint16}}
+{{vset3 | int32 | int32 | int32}}
+{{vset3 | uint32 | uint32 | uint32}}
+{{vset3 | int64 | int64 | int64 | since=AVX2, NEONv2}}
+{{vset3 | uint64 | uint64 | uint64 | since=AVX2, NEONv2}}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+{{scalar note}}
+
+===Parameters===
+{{par begin}}
+{{par | a, b | integer vectors}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|1=min(a, b)}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 < b0 ? a0 : b0
+...
+rN = aN < bN ? a0 : b0
+}}
+
+===See also===
+{{todo}}

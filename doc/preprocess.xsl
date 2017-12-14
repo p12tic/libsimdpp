@@ -57,4 +57,7 @@
   <xsl:template match="/html/body/script[contains(@src, 'google-analytics.com/ga.js')]"/>
   <xsl:template match="/html/body/script[contains(text(),'pageTracker')]"/>
 
+  <!-- remove unused stats -->
+  <xsl:template match="/html/body/script[contains(text(),'wgBackendResponseTime')]"/>
+
 </xsl:stylesheet>

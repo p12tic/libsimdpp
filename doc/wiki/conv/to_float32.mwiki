@@ -1,0 +1,48 @@
+{{simdpp/title|to_float32}}
+{{conv/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E>
+float32<N, _DETAIL_> to_float32( Vec<N,E> a );
+}}
+{{dcl end}}
+
+Converts elements within a vector to 32-bit floating-point values.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset1 h | Vec }}
+{{vset1 | int8 }}
+{{vset1 | uint8 }}
+{{vset1 | int16 }}
+{{vset1 | uint16 }}
+{{vset1 | int32 }}
+{{vset1 | uint32 }}
+{{vset1 | int64 | notes={{cap|SIMDPP_HAS_INT64_TO_FLOAT32_CONVERSION}} }}
+{{vset1 | uint64 | notes={{cap|SIMDPP_HAS_UINT64_TO_FLOAT32_CONVERSION}} }}
+{{vset1 | float32 }}
+{{vset1 | float64 }}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a | vector to convert}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to vector with values converted to 32-bit floating-point values.
+
+===Equivalent operation===
+{{source|1=
+r0 = float(a0)
+...
+rN = float(aN)
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | conv/dsc to_float64 }}
+{{dsc end}}

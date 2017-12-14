@@ -1,0 +1,80 @@
+<table class="metadata plainlinks ambox {{#switch:{{{small|}}}
+| left = mbox-small-left
+}} {{#switch:{{{type|}}}
+| speedy     = ambox-speedy
+| delete     = ambox-delete
+| content    = ambox-content
+| style      = ambox-style
+| move       = ambox-move
+| protection = ambox-protection
+| notice     <!-- notice = default -->
+| #default   = ambox-notice
+}}" style="{{{style|}}}"><!--
+--><tr><!--
+  -->{{#switch:{{{image|}}}
+     | blank    <!-- Fall back to "none", since deprecated. -->
+     | none = <td class="mbox-empty-cell"></td>   <!-- No image. Cell with some width or padding necessary for text cell to have 100% width. -->
+     | #default = <!--
+  --><td class="mbox-image"><!--
+    -->{{#switch:{{{small|}}}
+       | left = <!-- Don't use the DIV -->
+       | #default = <div style="width: 52px;">
+       }}<!--
+    -->{{#if:{{{image|}}}
+       | {{{image}}}
+       | [[File:<!--
+      -->{{#switch:{{{type|}}}
+         | speedy     = Ambox speedy deletion.png
+         | delete     = Ambox deletion.png
+         | content    = Ambox content.png
+         | style      = Edit-clear.svg
+         | move       = Ambox move.png
+         | protection = Ambox protection.png
+         | notice          <!-- notice = default -->
+         | #default   = Ambox notice.png
+         }} | <!--
+      -->{{#switch:{{{small|}}}
+         | left = 20x20px
+         | #default = 40x40px
+         }} | link= |alt= <!--
+      -->]]<!--
+    -->}}<!--
+    -->{{#switch:{{{small|}}}
+       | left = <!-- Don't use the /DIV -->
+       | #default = </div>
+       }}<!--
+  --></td><!--
+  -->}}<!--
+  --><td class="mbox-text" style="{{{textstyle|}}}"><!--
+   -->{{{text}}} {{#if:{{{date|}}}|<small>''({{{date}}})''</small>}}<!--
+  --></td><!--
+  -->{{#if:{{{imageright|}}}
+     | {{#ifeq:{{{imageright|}}}|none
+       | <!-- No image.-->
+       | <td class="mbox-imageright"><!--
+        -->{{#switch:{{{small|}}}
+           | left = {{{imageright}}}
+           | #default = <div style="width: 52px;"> {{{imageright}}} </div>
+           }}<!--
+      --></td><!--
+    -->}}<!--
+  -->}}<!--
+--></tr></table><!--
+Detect and report usage with faulty "type" parameter:
+-->{{#switch:{{{type|}}}
+|   <!-- No type fed, is also valid input -->
+| speedy
+| delete
+| content
+| style
+| move
+| protection
+| notice     = <!-- Do nothing, valid "type" -->
+| #default   = <div style="text-align: center;">This message box is using an invalid "type={{{type|}}}" parameter and needs fixing.</div>[[Category:Wikipedia message box parameter needs fixing|{{main other|Main:}}{{FULLPAGENAME}}]]<!-- Sort on namespace -->
+}}<!--
+Detect and report usage of deprecated "image=blank":
+-->{{#switch:{{{image|}}}
+| blank = [[Category:Wikipedia message box parameter needs fixing|{{main other|Main:}}{{FULLPAGENAME}}]]<!-- Sort on namespace -->
+}}<noinclude>
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>

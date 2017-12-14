@@ -1,0 +1,68 @@
+{{title|Vector type promotion}}
+{{types/navbar}}
+
+''Vector type promotion'' refers to a common set of rules that specify the return type of library-provided binary functions that accept multiple vector types as their parameters. Like the type promotion rules in C, they describe what happens when a generic operation is applied to different vector types. Effectively this is description of what vector types do library functions return for certain arguments.
+
+The rules are intuitive and resemble the C type promotion rules. The rules are as follows:
+
+* The rules only apply to vectors of the same size
+
+* The element data type of the result vector is defined as follows:
+:* if either of the vectors is {{tt|float}}, the result is also {{tt|float}}
+:* otherwise, if either of the vectors is {{tt|uint}}, the result is also {{tt|uint}}
+:* otherwise, if either of the vectors is {{tt|int}}, the result is also {{tt|int}}
+:* otherwise, if either of the vectors is {{tt|mask_float}}, the result is also {{tt|mask_float}}
+:* otherwise, the result is {{tt|mask_int}}
+
+* The number of bits per element in the result vector is the maximum of the argument vectors. For example, operation on {{tt|int32x4}} and {{tt|int64x2}} results in {{tt|int64x2}}.
+
+Examples:
+{{tset begin}}
+{{tset3 h | First type | Second type | Result type }}
+{{tset3 | {{tt|int32x4}} | {{tt|int16x8}} | {{tt|int32x4}}}}
+{{tset3 | {{tt|uint32x4}} | {{tt|mask_float64x2}} | {{tt|uint64x2}}}}
+{{tset3 | {{tt|float64x2}} | {{tt|uint8x16}} | {{tt|float64x2}}}}
+{{tset3 | {{tt|mask_int8x16}} | {{tt|mask_float64x2}} | {{tt|mask_float64x2}}}}
+{{tset end}}
+
+
+
+The following tables illustrate the promotion rules in more detail:
+
+If the arguments have the same element size {{tt|XX}}, then:
+
+{{tset begin}}
+{{tset3 h | First type | Second type | Result type }}
+{{tset3 | {{tt|int''XX}}'' | {{tt|int''XX}}'' | {{tt|int''XX''}}}}
+{{tset3 | {{tt|int''XX}}'' | {{tt|uint''XX}}'' | {{tt|uint''XX''}}}}
+{{tset3 | {{tt|uint''XX}}'' | {{tt|uint''XX}}'' | {{tt|uint''XX''}}}}
+{{tset3 | {{tt|float''XX}}'' | {{tt|int''XX}}'' | {{tt|float''XX''}}}}
+{{tset3 | {{tt|float''XX}}'' | {{tt|uint''XX}}'' | {{tt|float''XX''}}}}
+{{tset3 | {{tt|float''XX}}'' | {{tt|float''XX}}'' | {{tt|float''XX''}}}}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|int''XX}}'' | {{tt|int''XX''}}}}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|uint''XX}}'' | {{tt|uint''XX''}}}}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|mask_int''XX}}'' | {{tt|mask_int''XX''}}}}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|float''XX}}'' | {{tt|float''XX''}}}}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|mask_float''XX}}'' | {{tt|mask_float''XX''}}}}
+{{tset3 | {{tt|mask_float''XX}}'' | {{tt|float''XX}}'' | {{tt|float''XX''}}}}
+{{tset3 | {{tt|mask_float''XX}}'' | {{tt|mask_float''XX}}'' | {{tt|mask_float''XX''}}}}
+{{tset end}}
+
+If the arguments have different element sizes {{tt|XX}} and {{tt|YY}}, then:
+
+{{tset begin}}
+{{tset3 h | First type | Second type | Result type }}
+{{tset3 | {{tt|int''XX}}'' | {{tt|int''YY}}'' | {{tt|int''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|int''XX}}'' | {{tt|uint''YY}}'' | {{tt|uint''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|uint''XX}}'' | {{tt|uint''YY}}'' | {{tt|uint''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|float''XX}}'' | {{tt|int''YY}}'' | {{tt|float''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|float''XX}}'' | {{tt|uint''YY}}'' | {{tt|float''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|float''XX}}'' | {{tt|float''YY}}'' | {{tt|float''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|int''YY}}'' | {{tt|int''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|uint''YY}}'' | {{tt|uint''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|mask_int''YY}}'' | {{tt|uint''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|float''YY}}'' | {{tt|float''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|mask_int''XX}}'' | {{tt|mask_float''YY}}'' | {{tt|uint''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|mask_float''XX}}'' | {{tt|float''YY}}'' | {{tt|float''{ max(XX, YY) }''}} }}
+{{tset3 | {{tt|mask_float''XX}}'' | {{tt|mask_float''YY}}'' | {{tt|uint''{ max(XX, YY) }''}} }}
+{{tset end}}

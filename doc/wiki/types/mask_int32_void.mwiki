@@ -1,0 +1,1 @@
+{{types/vector_mask_type |mask_int32|any_int32| kind=int | kind_text=integer | regular_vec=uint32 | bits=32  }}
