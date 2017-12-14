@@ -1,0 +1,5 @@
+{{#switch: {{SUBPAGENAME}}
+| sandbox
+| testcases = {{BASEPAGENAME}}
+| #default = {{PAGENAME}}
+}}<noinclude>{{documentation}}</noinclude>

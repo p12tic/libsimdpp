@@ -17,6 +17,7 @@
     #include <cmath>
     #include <simdpp/detail/null/math.h>
 #endif
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -24,7 +25,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_rsqrt_e(const float32x4& a)
+static SIMDPP_INL
+float32x4 i_rsqrt_e(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -33,25 +35,29 @@ SIMDPP_INL float32x4 i_rsqrt_e(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_rsqrt_ps(a);
+    return _mm_rsqrt_ps(a.native());
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vrsqrteq_f32(a);
+    return vrsqrteq_f32(a.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_rsqrte((__vector float)a);
+    return vec_rsqrte(a.native());
+#elif SIMDPP_USE_MSA
+    return __msa_frsqrt_w(a.native());
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rsqrt_e(const float32x8& a)
+static SIMDPP_INL
+float32x8 i_rsqrt_e(const float32x8& a)
 {
-    return _mm256_rsqrt_ps(a);
+    return _mm256_rsqrt_ps(a.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_rsqrt_e(const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_rsqrt_e(const float32<16>& a)
 {
-    return _mm512_rsqrt14_ps(a);
+    return _mm512_rsqrt14_ps(a.native());
 }
 #endif
 

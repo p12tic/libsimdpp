@@ -82,7 +82,7 @@
  |#default=<!--null-->
 }}protected]]</div>
 |<!-- else, not small -->
-{{mbox 
+{{mbox
 | demospace = {{{demospace|}}}
 | type = protection
 | image = [[Image:{{{image|{{#switch:{{lc:{{{type}}}}}
@@ -112,7 +112,7 @@
 }}{{#ifeq:{{lc:{{{type}}}}}|indef||{{#if:{{{expiry|}}}|&#32;until {{#time:F j, Y|{{{expiry}}}}}}}}}{{{reason<includeonly>|</includeonly>}}}.}}}'''<br /> {{{explanation-text|{{#switch:{{lc:{{{type}}}}}
  |full|indef=Please discuss any changes on the talk page.
  |semi=If you cannot edit this {{pp-meta/pagetype}} and you wish to make a change, you can {{#ifeq:{{NAMESPACE}}|{{TALKSPACE}}||[[Template:Editsemiprotected|request an edit]], [[{{TALKPAGENAME}}|discuss changes on the talk page]],}} request unprotection, [[Special:Userlogin|log in]], or <span class="plainlinks">[http://en.cppreference.com/mwiki/index.php?title=Special:Userlogin&type=signup <span style="color:#002bb8;" title="Sign in / create account">create an account</span>]</span>.
- |move=The page may still be edited but cannot be moved until unprotected. Please discuss any suggested moves on the [[{{TALKPAGENAME}}|talk page]].  
+ |move=The page may still be edited but cannot be moved until unprotected. Please discuss any suggested moves on the [[{{TALKPAGENAME}}|talk page]].
  |office=If you are able to edit this page, please discuss all changes and additions on the [[{{TALKPAGENAME}}|talk page]] first. '''Do not remove protection from this page unless you are authorized by the Wikimedia Foundation to do so.'''
  |create=Please see the {{#if:{{{xfd|}}}|'''[[{{{xfd}}}|deletion discussion]]''' or the}} [{{fullurl:Special:Log|type=delete&page={{FULLPAGENAMEE}}}} deletion log] for details of why this page was deleted.
 }}}}}

@@ -1,0 +1,38 @@
+{{simdpp/title|reduce_max{{small|(integer)}}}}
+{{int/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1>
+Ret reduce_max( const Vec1<N,E1>& a );
+}}
+{{dcl end}}
+
+Computes the maximum of all elements in the vector. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec1 }}
+{{vset2 | int8_t | int8 }}
+{{vset2 | uint8_t | uint8 }}
+{{vset2 | int16_t | int16 }}
+{{vset2 | uint16_t | uint16 }}
+{{vset2 | int32_t | int32 }}
+{{vset2 | uint32_t | uint32 }}
+{{vset2 | int64_t | int64 }}
+{{vset2 | uint64_t | uint64 }}
+{{vset end}}
+
+===Parameters===
+{{par begin}}
+{{par | a | integer vector}}
+{{par end}}
+
+===Return value===
+A maximum of all elements within a vector
+
+===Equivalent operation===
+{{source|1=
+r = max(a0 , ... , aN)
+}}
+
+===See also===
+{{todo}}

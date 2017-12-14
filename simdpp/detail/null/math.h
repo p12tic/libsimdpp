@@ -20,6 +20,17 @@
 #include <cstdlib>
 #include <limits>
 
+// On certain versions of MSVC min and max are defined as macros.
+#if _MSC_VER
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+#endif
+
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
@@ -173,12 +184,32 @@ V shift_r(const V& a, unsigned shift)
     return r;
 }
 
+template<class V, class S> SIMDPP_INL
+V shift_r_v(const V& a, const S& shift)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r.el(i) = a.el(i) >> shift.el(i);
+    }
+    return r;
+}
+
 template<class V> SIMDPP_INL
 V shift_l(const V& a, unsigned shift)
 {
     V r;
     for (unsigned i = 0; i < V::length; i++) {
         r.el(i) = a.el(i) << shift;
+    }
+    return r;
+}
+
+template<class V, class S> SIMDPP_INL
+V shift_l_v(const V& a, const S& shift)
+{
+    V r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r.el(i) = a.el(i) << shift.el(i);
     }
     return r;
 }

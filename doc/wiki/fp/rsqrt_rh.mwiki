@@ -1,0 +1,30 @@
+{{simdpp/title|rsqrt_rh}}
+{{fp/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E>
+Ret<N, _DETAIL_> rsqrt_rh( const Vec<N,E>& e, const Vec<N,E>& x );
+}}
+{{dcl end}}
+
+Performs single Newton-Rhapson iteration improving the current estimate {{tt|e}} of reciprocal square root of {{tt|x}}. Effectively implements {{tt|e * (3 - x*e*e) * 0.5}}.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec}}
+{{vset2 | float32 | float32}}
+{{vset2 | float64 | float64}}
+{{vset end}}
+
+===Parameters===
+{{par begin}}
+{{par | e | current estimate}}
+{{par | x | values to compute reciprocal for}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to {{tt|e * (3 - x*e*e) * 0.5}}.
+
+===See also===
+{{todo}}

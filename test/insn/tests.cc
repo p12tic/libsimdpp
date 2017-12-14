@@ -50,21 +50,27 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
 {
     test_test_utils(res);
 
+    // Tests are ordered in such a way so that base functionality that other
+    // tests depend on is tested first.
     test_construct(res);
-    test_convert(res);
+    test_memory_load(res, tr);
+    test_memory_store(res, tr);
+
     test_blend(res);
-    test_bitwise(res);
+    test_bitwise(res, tr);
+    test_permute_generic(res);
+    test_shuffle_generic(res);
+    test_shuffle(res);
+    test_shuffle_bytes(res, tr);
+
+    test_convert(res);
     test_math_fp(res, opts);
     test_math_int(res);
     test_compare(res);
     test_math_shift(res);
-    test_permute_generic(res);
-    test_shuffle_generic(res);
-    test_shuffle(res);
-    test_shuffle_bytes(res);
-    test_memory_load(res, tr);
-    test_memory_store(res, tr);
     test_transpose(res);
+
+    test_for_each(res, tr);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
@@ -84,7 +90,8 @@ SIMDPP_MAKE_DISPATCHER_VOID3(main_test_function, TestResults&, TestReporter&, co
 std::vector<simdpp::detail::FnVersion> get_test_archs()
 {
     simdpp::detail::FnVersion versions[SIMDPP_DISPATCH_MAX_ARCHS] = {};
-    SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, void(*)(TestResults&, TestReporter&, const TestOptions&))
+    using FunPtr = void(*)(TestResults&, TestReporter&, const TestOptions&);
+    SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, FunPtr)
     std::vector<simdpp::detail::FnVersion> result;
     result.assign(versions, versions+SIMDPP_DISPATCH_MAX_ARCHS);
     return result;

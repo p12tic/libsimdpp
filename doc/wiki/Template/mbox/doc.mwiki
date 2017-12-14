@@ -1,0 +1,7 @@
+{{tl|mbox|''text''}} results in different box templates depending on the namespace it is placed in. Results in {{tl|ambox}} in the article namespace, <!--{{tl|tmbox}} in the talk namespace, {{tl|cmbox}} in the category namespace,--> {{tl|fmbox}} in the file namespace and {{tl|ombox}} if none of the previous applies.
+
+{{tl|ambox|''text''}} results in {{ambox|{{{text}}}}}
+
+{{tl|ombox|''text''}} results in {{ombox|{{{text}}}}}
+
+{{tl|fmbox|''text''}} results in {{fmbox|{{{text}}}}}

@@ -1,0 +1,239 @@
+{{title|Instruction set selection}}
+{{arch/navbar}}
+
+During compilation libsimdpp needs to be explicitly told which instruction set to use. This is done by defining one of the macros listed in the table below before the first inclusion of the {{tt|simdpp/simd.h}} header. Multiple options may be specified: for example, if user wants to select AVX and FMA4, then he needs to define {{tt|SIMDPP_ARCH_X86_AVX}} and {{tt|SIMDPP_ARCH_X86_FMA4}} macros.
+
+Each row of the table lists the data formats supported by the SIMD unit of particular instruction set. The library can be used for unsupported data formats, but the operations are implemented without using SIMD hardware and may be slower than equivalent scalar C++ code.
+
+{| class="wikitable" style="font-size: 0.8em"
+|-
+! style="padding-top: 4em; padding-bottom: 4em" | Instruction set
+! Macro to enable it
+! {{vertical|8-bit integers}}
+! {{vertical|16-bit integers}}
+! {{vertical|32-bit integers}}
+! {{vertical|64-bit integers}}
+! {{vertical|32-bit floats}}
+! {{vertical|64-bit floats}}
+! Remarks
+|-
+| Non-SIMD
+| (none)
+| {{n/a}}
+| {{n/a}}
+| {{n/a}}
+| {{n/a}}
+| {{n/a}}
+| {{n/a}}
+| Uses plain C++. May be slower than equivalent C/C++ implementation as it makes compiler harder to reason about code. The compiler may still vectorize the code if it knows certain SIMD instruction set is available.
+|-
+| x86 SSE2
+| {{ttb|SIMDPP_ARCH_X86_SSE2}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| (none)
+|-
+| x86 SSE3
+| {{ttb|SIMDPP_ARCH_X86_SSE3}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies SSE2
+|-
+| x86 SSSE3
+| {{ttb|SIMDPP_ARCH_X86_SSSE3}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies SSE3
+|-
+| x86 SSE4.1
+| {{ttb|SIMDPP_ARCH_X86_SSE4_1}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies SSSE3
+|-
+| x86 {{tt|popcnt}} instruction
+| {{ttb|SIMDPP_ARCH_X86_POPCNT_INSN}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies SSSE3. This does not directly correspond to the ABM instruction set as Intel provides the instruction in SSE 4.2 already.
+|-
+| x86 AVX
+| {{ttb|SIMDPP_ARCH_X86_AVX}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| Implies SSE4.1
+|-
+| x86 FMA3 (Intel flavor)
+| {{ttb|SIMDPP_ARCH_X86_FMA3}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies SSE3.
+|-
+| x86 FMA4 (AMD flavor)
+| {{ttb|SIMDPP_ARCH_X86_FMA4}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies SSE3.
+|-
+| x86 XOP
+| {{ttb|SIMDPP_ARCH_X86_XOP}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies SSE3.
+|-
+| x86 AVX2
+| {{ttb|SIMDPP_ARCH_X86_AVX2}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| Implies AVX
+|-
+| x86 AVX512F
+| {{ttb|SIMDPP_ARCH_X86_AVX512F}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| Implies AVX2
+|-
+| x86 AVX512BW
+| {{ttb|SIMDPP_ARCH_X86_AVX512BW}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| Implies AVX512F
+|-
+| x86 AVX512DQ
+| {{ttb|SIMDPP_ARCH_X86_AVX512DQ}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| Implies AVX512F
+|-
+| x86 AVX512VL
+| {{ttb|SIMDPP_ARCH_X86_AVX512VL}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ffff90;|256}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| {{yes|style=background: #ff9090;|512}}
+| Implies AVX512F
+|-
+| ARM NEON <br/>without floating-point support
+| {{ttb|SIMDPP_ARCH_ARM_NEON}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{n/a}}
+| {{n/a}}
+| The rationale for this mode is that certain NEON implementations have imprecise single-precision floating-point units. Not all 64-bit integer operations are provided in hardware.
+|-
+| ARM NEON <br/>with floating-point support
+| {{ttb|SIMDPP_ARCH_ARM_NEON_FLT_SP}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{n/a}}
+| Not all 64-bit integer operations are provided in hardware.
+|-
+| ARM NEONv2
+| {{ttb|SIMDPP_ARCH_ARM_NEON_FLT_SP}}<br/>or {{ttb|SIMDPP_ARCH_ARM_NEON}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Automatically enabled when compiling for ARM64. All floating-point computations are done on the NEON unit.
+|-
+| PowerPC Altivec
+| {{ttb|SIMDPP_ARCH_POWER_ALTIVEC}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{n/a}}
+| {{yes|128}}
+| {{n/a}}
+| (none)
+|-
+| PowerPC 2.06 VSX
+| {{ttb|SIMDPP_ARCH_POWER_VSX_206}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{n/a}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies Altivec
+|-
+| PowerPC 2.07 VSX
+| {{ttb|SIMDPP_ARCH_POWER_VSX_207}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| Implies PowerPC 2.07 VSX
+|-
+| MIPS MSA
+| {{ttb|SIMDPP_ARCH_MIPS_MSA}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| {{yes|128}}
+| (none)
+|}

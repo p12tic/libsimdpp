@@ -1,0 +1,20 @@
+
+Used to declare that certain part of the description in valid to only specific revisions of the standard.
+
+{{tl|rev begin|noborder{{=}}''true_if_noborder''}}
+
+Begins the set of text snippets specific to a specific revision(s) of the standard. If the {{tt|noborder}} parameter is ''true'' then the table is displayed with no border and as little padding as possible.
+
+{{tl|rev|since{{=}}''since-std''{{mark optional}}|until{{=}}''until-std''{{mark optional}}|text}}
+
+Specifies that ''text'' is valid only for standard revisions since ''since-std'' until ''until-std'' (''until-std'' is not inclusive).
+
+{{tl|rev end}}
+
+Ends the set of text snippets specific to a specific revision(s) of the standard.
+
+{{tl|rev inl|since{{=}}''since-std''{{mark optional}}|until{{=}}''until-std''{{mark optional}}|noborder{{=}}''true_if_noborder''|text}}
+
+Same as {{tl|rev}}, just is displayed inline. {{tl|rev begin}} and {{tl|rev end}} must not be used.
+
+Border is omitted if the {{tt|noborder}} parameter is ''true''.

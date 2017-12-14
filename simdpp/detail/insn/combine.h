@@ -20,12 +20,23 @@ namespace detail {
 namespace insn {
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 uint8<32> i_combine(const uint8<16>& a, const uint8<16>& b)
 {
     uint8<32> r;
-    r = _mm256_castsi128_si256(a);
-    r = _mm256_inserti128_si256(r, b, 1);
+    r = _mm256_castsi128_si256(a.native());
+    r = _mm256_inserti128_si256(r.native(), b.native(), 1);
+    return r;
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<class Dummy> SIMDPP_INL
+uint8<64> i_combine(const uint8<32>& a, const uint8<32>& b)
+{
+    uint8<64> r;
+    r = _mm512_castsi256_si512(a.native());
+    r = _mm512_inserti64x4(r.native(), b.native(), 1);
     return r;
 }
 #endif
@@ -33,12 +44,23 @@ uint8<32> i_combine(const uint8<16>& a, const uint8<16>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 uint16<16> i_combine(const uint16<8>& a, const uint16<8>& b)
 {
     uint16<16> r;
-    r = _mm256_castsi128_si256(a);
-    r = _mm256_inserti128_si256(r, b, 1);
+    r = _mm256_castsi128_si256(a.native());
+    r = _mm256_inserti128_si256(r.native(), b.native(), 1);
+    return r;
+}
+#endif
+
+#if SIMDPP_USE_AVX512BW
+template<class Dummy> SIMDPP_INL
+uint16<32> i_combine(const uint16<16>& a, const uint16<16>& b)
+{
+    uint16<32> r;
+    r = _mm512_castsi256_si512(a.native());
+    r = _mm512_inserti64x4(r.native(), b.native(), 1);
     return r;
 }
 #endif
@@ -46,23 +68,23 @@ uint16<16> i_combine(const uint16<8>& a, const uint16<8>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 uint32<8> i_combine(const uint32<4>& a, const uint32<4>& b)
 {
     uint32<8> r;
-    r = _mm256_castsi128_si256(a);
-    r = _mm256_inserti128_si256(r, b, 1);
+    r = _mm256_castsi128_si256(a.native());
+    r = _mm256_inserti128_si256(r.native(), b.native(), 1);
     return r;
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 uint32<16> i_combine(const uint32<8>& a, const uint32<8>& b)
 {
     uint32<16> r;
-    r = _mm512_castsi256_si512(a);
-    r = _mm512_inserti64x4(r, b, 1);
+    r = _mm512_castsi256_si512(a.native());
+    r = _mm512_inserti64x4(r.native(), b.native(), 1);
     return r;
 }
 #endif
@@ -70,23 +92,23 @@ uint32<16> i_combine(const uint32<8>& a, const uint32<8>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX2
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 uint64<4> i_combine(const uint64<2>& a, const uint64<2>& b)
 {
     uint64<4> r;
-    r = _mm256_castsi128_si256(a);
-    r = _mm256_inserti128_si256(r, b, 1);
+    r = _mm256_castsi128_si256(a.native());
+    r = _mm256_inserti128_si256(r.native(), b.native(), 1);
     return r;
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 uint64<8> i_combine(const uint64<4>& a, const uint64<4>& b)
 {
     uint64<8> r;
-    r = _mm512_castsi256_si512(a);
-    r = _mm512_inserti64x4(r, b, 1);
+    r = _mm512_castsi256_si512(a.native());
+    r = _mm512_inserti64x4(r.native(), b.native(), 1);
     return r;
 }
 #endif
@@ -94,24 +116,24 @@ uint64<8> i_combine(const uint64<4>& a, const uint64<4>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 float32<8> i_combine(const float32<4>& a, const float32<4>& b)
 {
     float32<8> r;
-    r = _mm256_castps128_ps256(a);
-    r = _mm256_insertf128_ps(r, b, 1);
+    r = _mm256_castps128_ps256(a.native());
+    r = _mm256_insertf128_ps(r.native(), b.native(), 1);
     return r;
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 float32<16> i_combine(const float32<8>& a, const float32<8>& b)
 {
     float32<16> r;
-    r = _mm512_castps256_ps512(a);
-    r = _mm512_castpd_ps(_mm512_insertf64x4(_mm512_castps_pd(r),
-                                            _mm256_castps_pd(b), 1));
+    r = _mm512_castps256_ps512(a.native());
+    r = _mm512_castpd_ps(_mm512_insertf64x4(_mm512_castps_pd(r.native()),
+                                            _mm256_castps_pd(b.native()), 1));
     return r;
 }
 #endif
@@ -119,23 +141,23 @@ float32<16> i_combine(const float32<8>& a, const float32<8>& b)
 // -----------------------------------------------------------------------------
 
 #if SIMDPP_USE_AVX
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 float64<4> i_combine(const float64<2>& a, const float64<2>& b)
 {
     float64<4> r;
-    r = _mm256_castpd128_pd256(a);
-    r = _mm256_insertf128_pd(r, b, 1);
+    r = _mm256_castpd128_pd256(a.native());
+    r = _mm256_insertf128_pd(r.native(), b.native(), 1);
     return r;
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-template<class V = void> SIMDPP_INL
+template<class Dummy> SIMDPP_INL
 float64<8> i_combine(const float64<4>& a, const float64<4>& b)
 {
     float64<8> r;
-    r = _mm512_castpd256_pd512(a);
-    r = _mm512_insertf64x4(r, b, 1);
+    r = _mm512_castpd256_pd512(a.native());
+    r = _mm512_insertf64x4(r.native(), b.native(), 1);
     return r;
 }
 #endif

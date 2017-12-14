@@ -136,6 +136,7 @@ void test_shuffle_type(TestResultsSet &tc, const V& v1, const V& v2)
     TemplateTestHelper<Test_move_l, V>::run(tc, v1);
     TemplateTestHelper<Test_splat, V>::run(tc, v1);
     TemplateTestHelper<Test_align, V>::run(tc, v1, v2);
+    TemplateTestHelper<Test_insert_extract, V>::run(tc, v1, v2);
 }
 
 template<unsigned B>
@@ -167,6 +168,35 @@ void test_shuffle_n(TestResultsSet& tc)
     TemplateTestHelper<Test_splat2, float64_n>::run(tc, v.f64[0]);
 }
 
+template<class E, class V>
+void test_extract_bits(TestResultsSet& tc)
+{
+    using namespace simdpp;
+
+    for (unsigned el = 0; el < V::length; el++) {
+        simdpp::SIMDPP_ARCH_NAMESPACE::detail::mem_block<V> mu;
+        mu = make_zero();
+        mu[el] = 0xff;
+        TEST_PUSH(tc, E, extract_bits_any(V(mu)));
+        mu[el] = 1 << 0;
+        TEST_PUSH(tc, E, extract_bits<0>(V(mu)));
+        mu[el] = 1 << 1;
+        TEST_PUSH(tc, E, extract_bits<1>(V(mu)));
+        mu[el] = 1 << 2;
+        TEST_PUSH(tc, E, extract_bits<2>(V(mu)));
+        mu[el] = 1 << 3;
+        TEST_PUSH(tc, E, extract_bits<3>(V(mu)));
+        mu[el] = 1 << 4;
+        TEST_PUSH(tc, E, extract_bits<4>(V(mu)));
+        mu[el] = 1 << 5;
+        TEST_PUSH(tc, E, extract_bits<5>(V(mu)));
+        mu[el] = 1 << 6;
+        TEST_PUSH(tc, E, extract_bits<6>(V(mu)));
+        mu[el] = 1 << 7;
+        TEST_PUSH(tc, E, extract_bits<7>(V(mu)));
+    }
+}
+
 void test_shuffle(TestResults& res)
 {
     TestResultsSet& tc = res.new_results_set("shuffle");
@@ -177,44 +207,9 @@ void test_shuffle(TestResults& res)
 
     using namespace simdpp;
 
-    Vectors<16,4> v;
-
-    TemplateTestHelper<Test_insert_extract, uint8<16>>::run(tc, v.u8[0], v.u8[1]);
-    TemplateTestHelper<Test_insert_extract, int8<16>>::run(tc, v.i8[0], v.i8[1]);
-    TemplateTestHelper<Test_insert_extract, uint16<8>>::run(tc, v.u16[0], v.u16[1]);
-    TemplateTestHelper<Test_insert_extract, int16<8>>::run(tc, v.i16[0], v.i16[1]);
-    TemplateTestHelper<Test_insert_extract, uint32<4>>::run(tc, v.u32[0], v.u32[1]);
-    TemplateTestHelper<Test_insert_extract, int32<4>>::run(tc, v.i32[0], v.i32[1]);
-    TemplateTestHelper<Test_insert_extract, uint64<2>>::run(tc, v.u64[0], v.u64[1]);
-    TemplateTestHelper<Test_insert_extract, int64<2>>::run(tc, v.i64[0], v.i64[1]);
-    TemplateTestHelper<Test_insert_extract, float32<4>>::run(tc, v.f32[0], v.f32[1]);
-    TemplateTestHelper<Test_insert_extract, float64<2>>::run(tc, v.f64[0], v.f64[1]);
-
     // extract bits
-
-    for (unsigned el = 0; el < 16; el++) {
-        simdpp::SIMDPP_ARCH_NAMESPACE::detail::mem_block<uint8x16> mu;
-        mu = make_zero();
-        mu[el] = 0xff;
-        TEST_PUSH(tc, uint16_t, extract_bits_any(uint8x16(mu)));
-        mu[el] = 1 << 0;
-        TEST_PUSH(tc, uint16_t, extract_bits<0>(uint8x16(mu)));
-        mu[el] = 1 << 1;
-        TEST_PUSH(tc, uint16_t, extract_bits<1>(uint8x16(mu)));
-        mu[el] = 1 << 2;
-        TEST_PUSH(tc, uint16_t, extract_bits<2>(uint8x16(mu)));
-        mu[el] = 1 << 3;
-        TEST_PUSH(tc, uint16_t, extract_bits<3>(uint8x16(mu)));
-        mu[el] = 1 << 4;
-        TEST_PUSH(tc, uint16_t, extract_bits<4>(uint8x16(mu)));
-        mu[el] = 1 << 5;
-        TEST_PUSH(tc, uint16_t, extract_bits<5>(uint8x16(mu)));
-        mu[el] = 1 << 6;
-        TEST_PUSH(tc, uint16_t, extract_bits<6>(uint8x16(mu)));
-        mu[el] = 1 << 7;
-        TEST_PUSH(tc, uint16_t, extract_bits<7>(uint8x16(mu)));
-    }
-
+    test_extract_bits<uint16_t, uint8<16>>(tc);
+    test_extract_bits<uint32_t, uint8<32>>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

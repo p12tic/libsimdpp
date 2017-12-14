@@ -1,0 +1,47 @@
+{{simdpp/title|split}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template< unsigned N, class E >
+void split( const Ret<N*2,E>& a,
+            const Vec1<N>& r1, const Vec2<N>& r2 );
+}}
+{{dcl end}}
+
+Splits a vectors into two vectors twice as narrow. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2}}
+{{vset3 | int8 | int8 | int8}}
+{{vset3 | uint8 | uint8 | int8}}
+{{vset3 | int16 | int16 | int16}}
+{{vset3 | uint16 | uint16 | uint16}}
+{{vset3 | int32 | int32 | int32}}
+{{vset3 | uint32 | uint32 | uint32}}
+{{vset3 | int64 | int64 | int64}}
+{{vset3 | uint64 | uint64 | uint64}}
+{{vset3 | float32 | float32 | float32}}
+{{vset3 | float64 | float64 | float64}}
+{{vset end}}
+
+===Parameters===
+{{par begin}}
+{{par | a | vector to split}}
+{{par | r1, r2 | result vectors}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+r0 = a0
+...
+rM = aM
+r{M+1} = b0
+...
+r{M+M} = bM
+}}
+
+===See also===
+{{todo}}

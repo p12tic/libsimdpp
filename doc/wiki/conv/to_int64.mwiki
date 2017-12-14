@@ -1,0 +1,53 @@
+{{simdpp/title|to_int64}}
+{{conv/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E>
+int64<N, _DETAIL_> to_int64( Vec<N,E> a );
+}}
+{{dcl end}}
+
+Converts elements within a vector to 64-bit signed values.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset1 h | Vec }}
+{{vset1 | int8 }}
+{{vset1 | uint8 }}
+{{vset1 | int16 }}
+{{vset1 | uint16 }}
+{{vset1 | int32 }}
+{{vset1 | uint32 }}
+{{vset1 | int64 }}
+{{vset1 | uint64 }}
+{{vset1 | float32 | notes={{cap|SIMDPP_HAS_FLOAT32_TO_INT64_CONVERSION}} }}
+{{vset1 | float64 | notes={{cap|SIMDPP_HAS_FLOAT64_TO_INT64_CONVERSION}} }}
+{{vset end}}
+
+The return type is a [[types#expr|vector expression]].
+
+The conversion rules are as follows:
+* 32-bit and narrower signed integers are sign-extended to 64 bits.
+* 32-bit and narrower unsigned integers are zero-extended to 64 bits.
+* if floating-point value can not be represented in 64-bit signed integer, the behavior depends on the instruction set used.
+
+===Parameters===
+{{par begin}}
+{{par | a | vector to convert}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to vector with values converted to 64-bit signed integers.
+
+===Equivalent operation===
+{{source|1=
+r0 = int64_t(a0)
+...
+rN = int64_t(aN)
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | conv/dsc to_uint64 }}
+{{dsc end}}

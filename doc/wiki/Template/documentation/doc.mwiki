@@ -1,0 +1,140 @@
+<!-- PLEASE ADD CATEGORIES AND INTERWIKIS AT THE BOTTOM OF THIS PAGE -->
+
+This is the {{tl|documentation}} template.
+
+For most of the instructions about how and when to use this template, see [[enwiki:Wikipedia:Template documentation]].
+
+This template displays a green doc box like you are seeing now, and automatically loads the content from a /doc subpage. It can also load the content from other places if instructed to.
+
+This template is intended for documenting templates and other pages which are [[enwiki:Wikipedia:Transclusion|transcluded]] onto other pages. It can be used in template space and most other [[enwiki:Wikipedia:Namespace|namespaces]].
+
+Use of this template allows templates to be [[enwiki:Wikipedia:Protection policy|protected]] where necessary, while allowing anyone to edit the documentation, categories, and interwiki links.
+
+=== Usage ===
+
+Normally this template is used without any parameters, placed at the bottom of the template or page being documented, within <code>&lt;noinclude></code>:
+
+<pre>
+<!--Last line of your template code--><noinclude>
+
+{{documentation}}
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>
+</pre>
+
+Then this template automatically loads the content from the /doc subpage of the template it is used on.
+
+This template can also load the content from any other page. Like this:
+
+<pre>
+<!--Last line of your template code--><noinclude>
+
+{{documentation|Template:Other page/doc}}
+</noinclude>
+</pre>
+
+Note that when loading the documentation from another page than the local /doc page it becomes tricky to handle the categories and interwiki links.
+
+The content can also be fed directly as text. Like this:
+
+<pre>
+<!--Last line of your template code--><noinclude>
+
+{{documentation
+| content = Some documentation text.
+}}
+</noinclude>
+</pre>
+
+When the '''content''' parameter is used the doc box normally doesn't show the [edit] [purge] links in the top right corner. Note that if the /doc page exists a link to it is still shown in the link box below the doc box. <!--and no link to a /doc page is shown in the link box below the doc box.-->
+
+But parameter 1 and the '''content''' parameter can also be combined, like this:
+
+<pre>
+<!--Last line of your template code--><noinclude>
+
+{{documentation
+| 1 = Template:Any page/doc
+| content = {{Template:Any page/doc|parameters}}
+}}
+</noinclude>
+</pre>
+
+Then the pagename fed as parameter 1 is used for the [edit] [purge] links and for the /doc link in the link box below the doc box. But the '''content''' parameter is used for the content shown in the doc box. The above code means that the content is transcluded as "<code><nowiki>{{Template:Any page/doc|parameters}}</nowiki></code>". In this example a parameter is also fed to the /doc page being loaded.
+
+=== Best practice ===
+
+The code should be added at the bottom of the template code, with no space before "<code>&lt;noinclude></code>" (which would cause extra space on pages where the template is used).
+
+Categories and interwiki links that apply to the template itself should be added to the bottom of the /doc subpage, inside <code>&lt;includeonly>&lt;/includeonly></code> tags. For more complex cases, see [[enwiki:Wikipedia:Template documentation#Categories and interwiki links]].
+
+If the documentation page contains &lt;includeonly> or &lt;noinclude> tags as part of the visible documentation text, replace the "<code>&lt;</code>" with "<code>&amp;lt;</code>".
+<!--
+=== The heading ===
+
+When in Template space this template shows this heading:
+:[[File:Template-info.svg|32px]] '''Template documentation'''
+
+In most other namespaces, such as "Wikipedia:", it shows this heading:
+:'''Documentation'''
+
+But when on File (image) pages it shows this heading:
+:'''Summary'''
+
+The '''heading''' parameter can be used to set the heading to something else. Like this:
+
+:<code><nowiki>{{documentation| heading = Infobox documentation }}</nowiki></code>
+
+If the '''heading''' parameter is empty but defined, no heading is shown and no [edit] [purge] links are shown. Like this:
+
+:<code><nowiki>{{documentation| heading = }}</nowiki></code>
+
+The '''heading-style''' parameter can be fed optional [[Cascading Style Sheets|CSS]] values. Without quotation marks <code>" "</code> but with the ending semicolons <code>;</code>. For example:
+:<code>heading-style = color: red; font-size: 150%;</code>
+
+=== The link box ===
+
+Below the big doc box is a small link box that shows some meta-data about the documentation. The link box shows different things depending on what parameters are fed to this template, and in which namespace it is used. In some cases the link box is not shown at all.
+
+To hide the link box, add the parameter "{{para|link box|off}}".
+
+You can also insert customised text in the link box, by defining the {{para|link box}} parameter. For example:
+<pre>|link box=This documentation is automatically generated by [[Template:Country showdata]]</pre>
+
+=== Automatic functions ===
+
+If the documentation page doesn't exist, the [create] link includes a [[mw:Manual:Creating pages with preloaded text|preload]] page so that clicking it will pre-fill the edit form with the basic documentation page format. Preload text is also used for the /sandbox and /testcases <small>(create)</small> links.
+
+When this template is on a protected template page it now automatically adds {{tl|pp-template}} which shows the grey or red padlock in the top right corner. So no need to manually add {{tlf|pp-template}} to templates that use {{tl|documentation}}.
+
+When this template is on a /sandbox subpage it automatically adds the {{tl|template sandbox notice}}.
+
+=== Subject space vs talk space ===
+
+Terminology: ''Subject space'' is the opposite of ''talk space''. For instance "Template:" is the subject space of "Template talk:".
+
+This template is usually placed in subject space, within &lt;noinclude> tags. But in some cases this template needs to be on the talkpage:
+
+* For preload pages (usually in Template or Wikipedia space), since they can't use &lt;noinclude>. See for instance [[Template talk:AfC preload]] and [[Template talk:RfD subpage starter]]. Such talkpages can be marked with {{tl|talkdoc}}.
+
+* In MediaWiki space, since &lt;noinclude> often doesn't work in system messages and since MediaWiki space needs to be kept clean for performance reasons.
+
+When placed on talkpages this template usually is placed near the top of the page and without &lt;noinclude> tags.
+
+The /doc, /sandbox and /testcases pages should normally be in subject space, except in the namespaces that don't have the MediaWiki [[meta:Link#Subpage feature|subpage feature]] enabled: Main, File, MediaWiki and Category. (But currently we only show the /sandbox and /testcases links from User, User talk, Template and Template talk space.) There are also a whole bunch of other technical reasons why the /doc page must be stored under the talkpage for those namespaces.
+
+This template automatically points its create links for the /doc, /sandbox and /testcases to the right namespace.
+
+=== Technical details ===
+
+This template calls {{tl|documentation/start box2}} and {{tl|documentation/end box2}} which in turn call {{tl|documentation/start box}} and {{tl|documentation/end box}}. /start box (and /end box) hold most of the code, while this template and /start box2 (and /end box2) do parameter preprocessing.
+
+The preload page for the /doc [create] link is [[Template:Documentation/preload]], but in File space it is [[Template:Documentation/preload-filespace]]. The preload pages for the /sandbox and /testcases <small>(create)</small> links are [[Template:Documentation/preload-sandbox]] and [[Template:Documentation/preload-testcases]].
+
+For more technical details see the [[Template talk:Documentation|talk page]].
+-->
+=== See also ===
+
+<!-- {{documentation/see also}} -->
+* {{tl|documentation}} – Placed on templates and other pages to document them.
+<!--* {{tl|documentation subpage}} – Used at the top of /doc subpages to explain what they are and to link back to the page they document.-->

@@ -1,0 +1,1 @@
+{{dsc tfun | conv/to_int8 | converts vector elements to 8-bit signed integers }}

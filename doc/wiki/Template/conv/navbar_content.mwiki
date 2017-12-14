@@ -1,0 +1,17 @@
+{{nv begin}}
+{{nv col begin}}
+{{nv ln | conv/to_int8 }}
+{{nv ln | conv/to_uint8 }}
+{{nv ln | conv/to_int16 }}
+{{nv ln | conv/to_uint16 }}
+{{nv col next}}
+{{nv ln | conv/to_int32 }}
+{{nv ln | conv/to_uint32 }}
+{{nv ln | conv/to_int64 }}
+{{nv ln | conv/to_uint64 }}
+{{nv col next}}
+{{nv ln | conv/to_float32 }}
+{{nv ln | conv/to_float64 }}
+{{nv ln | conv/to_mask }}
+{{nv col end}}
+{{nv end}}

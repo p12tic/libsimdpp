@@ -1,0 +1,17 @@
+{{title|SIMDPP_HAS_FLOAT32_SIMD}}
+{{cap/navbar}}
+{{dcl begin}}
+{{dcl |
+#define SIMDPP_HAS_FLOAT32_SIMD /* 1 if present, 0 otherwise */
+}}
+{{dcl end}}
+
+Indicates support of 32-bit floating-point elements in the SIMD unit. The library provides API for 32-bit floats even if this macro is defined to {{c|0}} and uses scalar implementation in that case.
+
+Currently, the macro is defined to {{c|1}} on the following instruction sets:
+
+* {{c|SIMDPP_USE_SSE2}}
+* {{c|SIMDPP_USE_NEON_FLT_SP}}
+* {{c|SIMDPP_USE_NEON && SIMDPP_64_BITS}}
+* {{c|SIMDPP_USE_ALTIVEC}}
+* {{c|SIMDPP_USE_MSA}}

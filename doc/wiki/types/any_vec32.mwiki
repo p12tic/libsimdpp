@@ -1,0 +1,26 @@
+{{simdpp/title | any_vec32{{small|<N,V>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N, class V >
+class any_vec32 : public any_vec<N*4, V>;
+}}
+{{dcl end}}
+
+A categorization type that represents any vector with 32-bit elements.
+
+{{ltt|types/any_int32}}, {{ltt|types/uint32_void|uint32}}, {{ltt|types/int32_void|int32}} and {{ltt|types/mask_int32_void|mask_int32}}, {{ltt|types/any_float32}}, {{ltt|types/float32_void|float32}}, {{ltt|types/mask_float32_void|mask_float32}} derive from this type.
+
+===Template parameters===
+{{par begin}}
+{{par | N | the number of elements in the vector}}
+{{par | V | the actual type of the vector}}
+{{par end}}
+
+===Member constants===
+{{dsc begin}}
+{{dsc hitem | Member constant | Value}}
+{{dsc | {{tt|size_tag}} | {{tt|SIMDPP_TAG_SIZE32}} }}
+{{dsc end}}
+
+{{types/any_vec/inherit}}

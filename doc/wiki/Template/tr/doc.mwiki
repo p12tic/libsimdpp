@@ -1,0 +1,15 @@
+{{tl|tr_note}}
+
+Shows a note that the page is not completely translated. Disables search engine (such as Google) indexing of the page.
+
+{{tl|tr|translated text | original text}}
+
+Used for formatting automatically translated text in translations. On hover, a box containing the original text is shown.
+
+{{tl|trd|''yyyy-mm-dd''}}
+
+Tracks the date of the last synchronization of the translation with the English version. ''yyyy-mm-dd'' is the date of the last synchronization in the ISO-8601 format
+
+The template outputs an invisible tag that can later be used by a bot (which is yet to be written) to find translations that need updates.
+
+The template should be included at the end of the page. This template should not generally be included into ''dsc'' or other short templates.

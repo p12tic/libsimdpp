@@ -1,0 +1,1 @@
+{{dsc tfun | int/reduce_add | computes the sum of all elements in the vector }}

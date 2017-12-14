@@ -13,9 +13,10 @@
 #endif
 
 #include <simdpp/setup_arch.h>
-#include <simdpp/types/fwd.h>
 #include <simdpp/types/any.h>
+#include <simdpp/types/fwd.h>
 #include <simdpp/core/cast.h>
+#include <simdpp/detail/array.h>
 #include <simdpp/detail/construct_eval.h>
 
 namespace simdpp {
@@ -73,7 +74,7 @@ private:
         return r;
     }
 
-    int16v d_[int16::vec_length];
+    detail::vararray<int16v, int16::vec_length> d_;
 };
 
 /** Class representing an unsigned @a int16 vector of arbitrary length. The vector
@@ -128,7 +129,7 @@ private:
         return r;
     }
 
-    uint16v d_[uint16::vec_length];
+    detail::vararray<uint16v, uint16::vec_length> d_;
 };
 
 /// Class representing a mask for 16-bit integer vector of arbitrary
@@ -160,7 +161,7 @@ public:
     SIMDPP_INL mask_int16<N> eval() const { return *this; }
 
 private:
-    mask_int16v d_[mask_int16::vec_length];
+    detail::vararray<mask_int16v, mask_int16::vec_length> d_;
 };
 
 } // namespace SIMDPP_ARCH_NAMESPACE

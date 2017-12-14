@@ -1,0 +1,22 @@
+{{title|SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES}}
+{{depr/navbar}}
+
+Defining SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES to nonzero value before inclusion of libsimdpp headers will disable deprecated implicit conversion operator between libsimdpp vector types and native SIMD types provided by the compiler.
+
+The operators has been deprecated because Clang supports native vector extension which interferes with simdpp types and allows wrong code being allowed to be compiled.
+
+The native vector extension defines operators between vector types. SSE types such as {{c|__m128}} and {{c|__m128i}} are implemented on top of this extension, which causes code like this being possible:
+
+{{source|1=__m128i a, b; a = a + b;}}
+
+Having an implicit conversion operator to vector types allows types such as {{c|uint8<16>}} and {{c|uint16<8>}} to be implicitly converted to {{c|__m128i}}. This leads to code like this being accepted on clang.
+
+{{source|1=
+uint8<16> a;
+uint16<8> b;
+a = a + b;
+}}
+
+Here, both {{tt|a}} and {{tt|b}} are implicitly converted to {{c|__m128i}} values and they are added using an operator provided by the clang vector extension. Unexpectedly, the result is {{tt|paddq}} instruction (64-bit integer addition).
+
+Because of this, the implicit native vector type conversion operators are deprecated and a {{c|native()}} method is provided as a replacement. This change only affects code that interacts with native intrinsics. Altivec/VSX and MSA are affected only slightly, because intrinsics of those instruction sets never accepted implicit conversions from libsimdpp types.

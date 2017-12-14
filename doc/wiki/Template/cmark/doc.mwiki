@@ -1,0 +1,7 @@
+Creates an annotation for a function. Several annotations are already defined:
+
+{{tl|cmark virtual}} results in {{cmark virtual}}
+
+{{tl|cmark static}} results in {{cmark static}}
+
+{{tl|cmark deleted}} results in {{cmark deleted}}

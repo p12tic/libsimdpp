@@ -28,6 +28,7 @@ template<unsigned s0, unsigned s1, class V> SIMDPP_INL
 V permute_half(const V& a0, const V& a1)
 {
     switch (s0*4+s1) {
+    default:
     case 0: /* 0 0 */ return permute2<0,0>(a0);
     case 1: /* 0 1 */ return a0;
     case 2: /* 0 2 */ return shuffle1<0,0>(a0, a1);

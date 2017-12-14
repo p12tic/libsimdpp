@@ -18,17 +18,6 @@ namespace SIMDPP_ARCH_NAMESPACE {
 // -----------------------------------------------------------------------------
 
 /*
-    The dummy parameter in the template definitions below specifies that we
-    want to perform initialization of the underlying expression and not to
-    perform a conversion.
-
-    The conversions are provided for the 'empty' expression types
-    (e.g. float32<N,expr_empty>) so that they can be initialized with
-    different vector type.
-
-    TODO: explain better
-    TODO: investigate whether conversions are still needed.
-
     Note: the name of the expression vector type only identifies the target
     type. In various cases we want to change the target type, thus the arbitrary
     conversions have been added.
@@ -52,7 +41,8 @@ public:
     float32(const any_vec<N*4,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator float32<N>() const { return eval(); }
-    SIMDPP_INL float32<N> eval() const;
+    SIMDPP_INL float32<N> eval() const
+    { return detail::expr_eval_wrapper<float32<N>, expr_type>::eval(e); }
 };
 
 template<unsigned N, class E>
@@ -66,7 +56,8 @@ public:
 
     SIMDPP_INL operator mask_float32<N>() const { return eval(); }
     SIMDPP_INL operator float32<N>() const { return eval(); }
-    SIMDPP_INL mask_float32<N> eval() const;
+    SIMDPP_INL mask_float32<N> eval() const
+    { return detail::expr_eval_wrapper<mask_float32<N>, expr_type>::eval(e); }
 };
 
 // -----------------------------------------------------------------------------
@@ -84,7 +75,8 @@ public:
     float64(const any_vec<N*8,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator float64<N>() const { return eval(); }
-    SIMDPP_INL float64<N> eval() const;
+    SIMDPP_INL float64<N> eval() const
+    { return detail::expr_eval_wrapper<float64<N>, expr_type>::eval(e); }
 };
 
 template<unsigned N, class E>
@@ -98,7 +90,8 @@ public:
 
     SIMDPP_INL operator mask_float64<N>() const { return eval(); }
     SIMDPP_INL operator float64<N>() const { return eval(); }
-    SIMDPP_INL mask_float64<N> eval() const;
+    SIMDPP_INL mask_float64<N> eval() const
+    { return detail::expr_eval_wrapper<mask_float64<N>, expr_type>::eval(e); }
 };
 
 // -----------------------------------------------------------------------------
@@ -116,7 +109,8 @@ public:
     int8(const any_vec<N,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator int8<N>() const { return eval(); }
-    SIMDPP_INL int8<N> eval() const;
+    SIMDPP_INL int8<N> eval() const
+    { return detail::expr_eval_wrapper<int8<N>, expr_type>::eval(e); }
 };
 
 
@@ -133,7 +127,8 @@ public:
     uint8(const any_vec<N,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator uint8<N>() const { return eval(); }
-    SIMDPP_INL uint8<N> eval() const;
+    SIMDPP_INL uint8<N> eval() const
+    { return detail::expr_eval_wrapper<uint8<N>, expr_type>::eval(e); }
 };
 
 template<unsigned N, class E>
@@ -147,7 +142,8 @@ public:
 
     SIMDPP_INL operator mask_int8<N>() const { return eval(); }
     SIMDPP_INL operator uint8<N>() const { return eval(); }
-    SIMDPP_INL mask_int8<N> eval() const;
+    SIMDPP_INL mask_int8<N> eval() const
+    { return detail::expr_eval_wrapper<mask_int8<N>, expr_type>::eval(e); }
 };
 
 // -----------------------------------------------------------------------------
@@ -164,7 +160,8 @@ public:
     int16(const any_vec<N*2,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator int16<N>() const { return eval(); }
-    SIMDPP_INL int16<N> eval() const;
+    SIMDPP_INL int16<N> eval() const
+    { return detail::expr_eval_wrapper<int16<N>, expr_type>::eval(e); }
 };
 
 
@@ -180,7 +177,8 @@ public:
     uint16(const any_vec<N*2,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator uint16<N>() const { return eval(); }
-    SIMDPP_INL uint16<N> eval() const;
+    SIMDPP_INL uint16<N> eval() const
+    { return detail::expr_eval_wrapper<uint16<N>, expr_type>::eval(e); }
 };
 
 template<unsigned N, class E>
@@ -194,7 +192,8 @@ public:
 
     SIMDPP_INL operator mask_int16<N>() const { return eval(); }
     SIMDPP_INL operator uint16<N>() const { return eval(); }
-    SIMDPP_INL mask_int16<N> eval() const;
+    SIMDPP_INL mask_int16<N> eval() const
+    { return detail::expr_eval_wrapper<mask_int16<N>, expr_type>::eval(e); }
 };
 
 // -----------------------------------------------------------------------------
@@ -211,7 +210,8 @@ public:
     int32(const any_vec<N*4,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator int32<N>() const { return eval(); }
-    SIMDPP_INL int32<N> eval() const;
+    SIMDPP_INL int32<N> eval() const
+    { return detail::expr_eval_wrapper<int32<N>, expr_type>::eval(e); }
 };
 
 
@@ -227,7 +227,8 @@ public:
     uint32(const any_vec<N*4,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator uint32<N>() const { return eval(); }
-    SIMDPP_INL uint32<N> eval() const;
+    SIMDPP_INL uint32<N> eval() const
+    { return detail::expr_eval_wrapper<uint32<N>, expr_type>::eval(e); }
 };
 
 template<unsigned N, class E>
@@ -241,7 +242,8 @@ public:
 
     SIMDPP_INL operator mask_int32<N>() const { return eval(); }
     SIMDPP_INL operator uint32<N>() const { return eval(); }
-    SIMDPP_INL mask_int32<N> eval() const;
+    SIMDPP_INL mask_int32<N> eval() const
+    { return detail::expr_eval_wrapper<mask_int32<N>, expr_type>::eval(e); }
 };
 
 // -----------------------------------------------------------------------------
@@ -259,7 +261,8 @@ public:
     int64(const any_vec<N*8,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator int64<N>() const { return eval(); }
-    SIMDPP_INL int64<N> eval() const;
+    SIMDPP_INL int64<N> eval() const
+    { return detail::expr_eval_wrapper<int64<N>, expr_type>::eval(e); }
 };
 
 
@@ -275,7 +278,8 @@ public:
     uint64(const any_vec<N*8,V<N2,E>>& a) : e(a.wrapped().e) {}
 
     SIMDPP_INL operator uint64<N>() const { return eval(); }
-    SIMDPP_INL uint64<N> eval() const;
+    SIMDPP_INL uint64<N> eval() const
+    { return detail::expr_eval_wrapper<uint64<N>, expr_type>::eval(e); }
 };
 
 
@@ -290,7 +294,8 @@ public:
 
     SIMDPP_INL operator mask_int64<N>() const { return eval(); }
     SIMDPP_INL operator uint64<N>() const { return eval(); }
-    SIMDPP_INL mask_int64<N> eval() const;
+    SIMDPP_INL mask_int64<N> eval() const
+    { return detail::expr_eval_wrapper<mask_int64<N>, expr_type>::eval(e); }
 };
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -1,0 +1,193 @@
+{{simdpp/title | {{{1}}}{{small|<N,void>}} }}
+{{types/navbar}}
+{{dcl begin}}
+{{dcl | 1=
+template< unsigned N >
+class {{{1}}}<N,void> : public {{{2}}}<N, {{{1}}}<N,void> >;
+}}
+{{dcl end}}
+
+Defines a {{{kind_text}}} mask type with {{tt|N}} elements. Each element defines a boolean value - either {{c|0}} or {{c|1}}. The mask can be used to select elements within {{ltt|types/uint{{{bits|32}}}_void|uint{{{bits}}}}}, {{ltt|types/int{{{bits|32}}}_void|int{{{bits}}}}} {{#ifexpr:32 <= {{{bits|32}}}|or {{ltt|types/float{{{bits|32}}}_void|float{{{bits}}}}}}} vectors.
+
+The physical representation of the mask vector depends on the selected instruction set. Some instruction sets have efficient mask representation where each element only takes 1 bit of space. On other platforms the mask is a {{tt|{{{regular_vec}}}}} with elements whose bits are either all zeroes or all ones depending on the value of the mask.
+
+This is a template specialization for the parameter {{tt|Expr}} being {{tt|void}}. It corresponds to a physical vector data as opposed to a vector expression. See [[types#expr|this page]] for documentation of operations available on vector expressions.
+
+If {{tt|N}} corresponds to a register size supported on current instruction set then the type wraps a native register and provides APIs to access underlying type provided by compiler SIMD intrinsics.
+
+===Template parameters===
+{{par begin}}
+{{par | N | the number of elements in the vector}}
+{{par end}}
+
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | expr_type | {{tt|void}} }}
+{{dsc | native_type | Instruction-set and compiler specific type corresponding to a single register.<br/>{{mark|Provided only if the vector type wraps native register}}}}
+{{dsc end}}
+
+===Member functions===
+{{dsc begin}}
+{{dsc mem ctor | constructor | nolink=true | constructs the vector object }}
+{{dsc mem fun | operator{{=}} | nolink=true | assigns data to vector }}
+{{dsc mem fun | vec | nolink=true | returns a base vector corresponding to native register }}
+{{dsc mem fun | eval | nolink=true | evaluates vector expression. Simply returns {{c|*this}} }}
+{{dsc mem fun | native | nolink=true | returns wrapped SIMD type<br/>{{mark|Provided only if the vector type wraps native register}}}}
+{{dsc mem fun | operator native_type | nolink=true | returns wrapped SIMD type<br/>{{mark deprecated|2.1}}}}
+{{dsc end}}
+
+{{member | {{small|simdpp::{{{1}}}::}}{{{1}}} | 2=
+{{dcl begin}}
+{{dcl | num=1 | 1=
+{{{1}}}<N>( ) = default;
+}}
+{{dcl | num=2 | 1=
+{{{1}}}<N>( const {{{1}}}<N>& other ) = default;
+}}
+{{dcl | num=3 | 1=
+template< class E >
+{{{1}}}<N>( const {{{1}}}<N,E>& other );
+}}
+{{dcl | num=4 | notes={{mark|provided only if {{{regular_vec}}} is used as physical storage}}<br/>{{mark deprecated|2.1}} | 1=
+template< class V >
+explicit {{{1}}}<N>( const {{{regular_vec}}}<N>& other );
+}}
+{{dcl | num=5 | notes={{mark|Provided only if the vector type wraps native register}} |1=
+{{{1}}}<N>( const native_type& n );
+}}
+{{dcl end}}
+
+Constructs the mask vector object.
+
+:(1) Default constructor is default.
+
+:(2) Copy constructor is default.
+
+:(3) The vector can be constructed from a [[types#expr|vector expression]] evaluating it.
+
+:(4) The vector can be constructed from {{{regular_vec}}} if it is used as physical storage (i.e. the instruction set does not provide efficient mask type). This function is deprecated, use {{ltf|conv/to_mask}}} as a replacement.
+
+:(5) The vector can be constructed from a native SIMD type if it corresponds to one.
+
+===Parameters===
+{{par begin}}
+{{par | other | another vector to construct from }}
+{{par | e | a value returned by either of {{ltt|misc/splat}}, {{ltt|misc/make_int}}, {{ltt|misc/make_uint}}, {{ltt|misc/make_float}} functions}}
+{{par | n | native SIMD type to construct from }}
+{{par end}}
+
+}}
+
+{{member | {{small|simdpp::{{{1}}}::}}operator{{=}} | 2=
+{{dcl begin}}
+{{dcl | 1=
+{{{1}}}<N>& operator=( const {{{1}}}<N>& other ) = default;
+}}
+{{dcl end}}
+
+Assigns data to vector object. Copy assignment operator is default.
+
+===Parameters===
+{{par begin}}
+{{par | other | another vector to assign data from }}
+{{par end}}
+
+===Return value===
+{{c|*this}}
+
+}}
+
+{{member | {{small|simdpp::{{{1}}}::}}vec | 2=
+{{dcl begin}}
+{{dcl | 1=
+const {{{1}}}<W>& vec( unsigned index ) const;
+}}
+{{dcl | 1=
+{{{1}}}<W>& vec( unsigned index );
+}}
+{{dcl end}}
+
+Returns a base vector corresponding to a native register of width {{tt|W}}. {{tt|W}} might be less than {{tt|N}} or equal to it. For example, on AVX {{tt|mask_int32<8>}} corresponds to two native {{tt|__m128i}} values; {{c|vec(0)}} will return the lower half, whereas {{c|vec(1)}} will return the higher.
+
+If {{{1}}}<N> itself corresponds to native register, returns {{c|*this}} regardless of {{tt|index}}.
+
+===Parameters===
+{{par begin}}
+{{par | index | the index of the subvector to return}}
+{{par end}}
+
+===Return value===
+A base vector corresponding to a native register.
+
+}}
+
+{{member | {{small|simdpp::{{{1}}}::}}eval | 2=
+{{dcl begin}}
+{{dcl | 1=
+{{{1}}}<N> eval() const;
+}}
+{{dcl end}}
+
+Evaluates vector expression. Types with {{tt|Expr}} parameter being {{c|void}} corresponds to physical data already, thus evaluation is a nop and returns {{c|*this}}.
+
+===Parameters===
+(none)
+
+===Return value===
+{{c|*this}}
+}}
+
+{{member | {{small|simdpp::{{{1}}}::}}native | 2=
+{{dcl begin}}
+{{dcl | notes={{mark|Provided only if the vector type wraps native register}} | 1=
+native_type native() const;
+}}
+{{dcl end}}
+
+Returns the wrapped native SIMD type.
+
+===Parameters===
+(none)
+
+===Return value===
+Wrapped SIMD type.
+}}
+
+{{member | {{small|simdpp::{{{1}}}::}}operator native_type{{small|{{mark deprecated|2.1}}}} | 2=
+{{dcl begin}}
+{{dcl | notes={{mark|Provided only if the vector type wraps native register}} | 1=
+native_type operator native_type() const;
+}}
+{{dcl end}}
+
+Returns the wrapped native SIMD type.
+
+This API has been deprecated because Clang supports native vector extension which interferes with simdpp types and allows wrong code being allowed to be compiled.
+
+The native vector extension defines operators between vector types. SSE types such as {{c|__m128}} and {{c|__m128i}} are implemented on top of this extension, which causes code like this being possible:
+
+{{source|1=__m128i a, b; a = a + b;}}
+
+Having an implicit conversion operator to vector types allows types such as {{c|uint8<16>}} and {{c|uint16<8>}} to be implicitly converted to {{c|__m128i}}. This leads to code like this being accepted on clang.
+
+{{source|1=
+uint8<16> a;
+uint16<8> b;
+a = a + b;
+}}
+
+Here, both {{tt|a}} and {{tt|b}} are implicitly converted to {{c|__m128i}} values and they are added using an operator provided by the clang vector extension. Unexpectedly, the result is {{tt|paddq}} instruction (64-bit integer addition).
+
+Because of this, the implicit native vector type conversion operators are deprecated and a {{c|native()}} method is provided as a replacement. This change only affects code that interacts with native intrinsics. Altivec/VSX and MSA are affected only slightly, because intrinsics of those instruction sets never accepted implicit conversions from libsimdpp types.
+
+===Parameters===
+(none)
+
+===Return value===
+Wrapped SIMD type.
+}}
+
+{{types/any_{{{kind}}}{{{bits}}}/inherit}}
+{{types/any_vec{{{bits}}}/inherit}}
+{{types/any_vec/inherit}}

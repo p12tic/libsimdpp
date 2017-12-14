@@ -1,0 +1,15 @@
+This is one of the templates used to output special symbols:
+
+{{tl|!}} - outputs <tt>|</tt>
+
+{{tl|!!}} - outputs <tt>||</tt>
+
+{{tl|1==}} - outputs <tt>=</tt>
+
+{{tl|1===}} - outputs <tt>==</tt>
+
+{{tl|1=!=}} - outputs <tt>|=</tt>
+
+{{tl|1=(!}} - outputs <tt>{|</tt>
+
+{{tl|1=!)}} - outputs <tt>|}</tt>

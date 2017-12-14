@@ -1,0 +1,34 @@
+{{simdpp/title|reduce_add{{small|(floatint-point)}}}}
+{{fp/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class E1>
+Ret reduce_add( const Vec1<N,E1>& a );
+}}
+{{dcl end}}
+
+Computes the sum of all elements in the vector. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec1 }}
+{{vset2 | float | float32 }}
+{{vset2 | double | float64 }}
+{{vset end}}
+
+The order in which the operations are executed is undefined, but is consistent on the same instruction set. This may lead to slightly different results on different instruction sets due to different rounding.
+
+===Parameters===
+{{par begin}}
+{{par | a | floating-point vector}}
+{{par end}}
+
+===Return value===
+A sum of all elements within a vector
+
+===Equivalent operation===
+{{source|1=
+r = a0 + ... + aN
+}}
+
+===See also===
+{{todo}}

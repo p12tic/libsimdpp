@@ -1,0 +1,32 @@
+{{simdpp/title|bit_xor}}
+{{bitwise/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V1, class V2>
+PROMOTED_EXPRESSION bit_xor( const any_vec<N,V1>& a, const any_vec<N,V2>& b );
+}}
+{{dcl end}}
+
+Computes bitwise exclusive OR of integer or floating-point vectors.
+
+The return type is a [[types#expr|vector expression]] of {{tt|N}} bytes. The vector type is governed by the [[types/promotion|expression promotion]] rules.
+
+{{scalar_note_int}}
+
+===Parameters===
+{{par begin}}
+{{par | a, b | any two vectors of the same size}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to bitwise {{tt|a ^ b}}.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0 ^ b0
+...
+rN = aN ^ bN
+}}
+
+===See also===
+{{todo}}

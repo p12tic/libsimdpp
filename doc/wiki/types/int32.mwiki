@@ -1,0 +1,30 @@
+{{simdpp/title|int32<N>}}
+{{simdpp/types/navbar}}
+{{dcl begin}}
+{{dcl | notes={{mark|generic declaration}} | 1=
+template<unsigned N, class Expr = void> class int32;
+}}
+{{dcl | notes={{mark|specialization for non-expression templates}} | 1=
+template<unsigned N>
+class int32<N,void> : any_int32<N, int32<N,void> >;
+}}
+{{dcl end}}
+
+Defines a vector containing {{tt|N}} {{c|int32_t}} elements.
+
+===Member types===
+{{dsc begin}}
+{{dsc hitem | Member type | Definition}}
+{{dsc | {{tt|base_vector_type}} | {{c|int32<M>}} where {{tt|M}} is the number of elements that can fit into underlying SIMD vector }}
+{{dsc | {{tt|expr_type}} | {{c|void}} }}
+{{dsc end}}
+
+===Member constants===
+
+===Member functions===
+{{dsc begin}}
+{{dsc mem ctor | constructs a new vector}}
+{{dsc mem fun | operator{{=}} | assigns contents}}
+{{dsc mem fun | eval | assigns contents}}
+{{dsc mem fun | vec | assigns contents}}
+{{dsc end}}

@@ -1,0 +1,1 @@
+{{dsc tfun | int/mul_hi | performs multiplication, returns higher half of the result }}

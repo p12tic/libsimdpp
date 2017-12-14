@@ -17,6 +17,7 @@
     #include <cmath>
     #include <simdpp/detail/null/math.h>
 #endif
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -24,7 +25,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_rcp_e(const float32x4& a)
+static SIMDPP_INL
+float32x4 i_rcp_e(const float32x4& a)
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     float32x4 r;
@@ -33,26 +35,30 @@ SIMDPP_INL float32x4 i_rcp_e(const float32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    return _mm_rcp_ps(a);
+    return _mm_rcp_ps(a.native());
 #elif SIMDPP_USE_NEON_FLT_SP
-    return vrecpeq_f32(a);
+    return vrecpeq_f32(a.native());
 #elif SIMDPP_USE_ALTIVEC
-    return vec_re((__vector float)a);
+    return vec_re(a.native());
+#elif SIMDPP_USE_MSA
+    return __msa_frcp_w(a.native());
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rcp_e(const float32x8& a)
+static SIMDPP_INL
+float32x8 i_rcp_e(const float32x8& a)
 {
-    return _mm256_rcp_ps(a);
+    return _mm256_rcp_ps(a.native());
 }
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_rcp_e(const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_rcp_e(const float32<16>& a)
 {
     // TODO: document precision
-    return _mm512_rcp14_ps(a);
+    return _mm512_rcp14_ps(a.native());
 }
 #endif
 

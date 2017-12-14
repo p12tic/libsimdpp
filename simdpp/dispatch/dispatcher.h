@@ -95,6 +95,4 @@ inline FnVersion select_version_any(FnVersion* versions, unsigned size,
 } // namespace detail
 } // namespace simdpp
 
-#include <simdpp/dispatch/macros_generated.h>
-
 #endif

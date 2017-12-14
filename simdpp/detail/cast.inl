@@ -1,4 +1,4 @@
-/*  Copyright (C) 2013-2014  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2013-2017 Povilas Kanapickas <povilas@radix.lt>
 
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,7 +14,8 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/cast.h>
-#include <simdpp/core/cmp_neq.h>
+#include <simdpp/detail/cast_bitwise.h>
+#include <simdpp/core/to_mask.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -28,96 +29,94 @@ template<unsigned N> struct base_mask_vector_type<mask_int64<N>> { using type = 
 template<unsigned N> struct base_mask_vector_type<mask_float32<N>> { using type = float32<N>; };
 template<unsigned N> struct base_mask_vector_type<mask_float64<N>> { using type = float64<N>; };
 
-#if _MSC_VER
-#pragma intrinsic(memcpy)
-#endif
-
-template<class R, class T> SIMDPP_INL
-R cast_memcpy(const T& t)
-{
-    static_assert(sizeof(R) == sizeof(T), "Size mismatch");
-    R r;
-    ::memcpy(&r, &t, sizeof(R));
-    return r;
-}
-
-template<class R, class T> SIMDPP_INL
-R cast_memcpy_unmask(const T& t)
+template<class T, class R> SIMDPP_INL
+void cast_bitwise_unmask(const T& t, R& r)
 {
     using TT = typename base_mask_vector_type<T>::type;
     TT tt = t.unmask();
-    return cast_memcpy<R>(tt);
+    cast_bitwise_vector(tt, r);
 }
 
-template<class R, class T> SIMDPP_INL
-R cast_memcpy_remask(const T& t)
+template<class T, class R> SIMDPP_INL
+void cast_bitwise_remask(const T& t, R& r)
 {
-    using RR = typename base_mask_vector_type<R>::type;
-    RR rr = cast_memcpy<RR>(t.unmask());
-    return cmp_neq(rr, (RR) make_zero());
+    using BaseMaskVector = typename base_mask_vector_type<R>::type;
+    BaseMaskVector rr;
+    cast_bitwise_vector(t.unmask(), rr);
+    r = to_mask(rr);
 }
 
 template<>
-struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_MEMCPY> {
-    template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+struct cast_wrapper<CAST_TYPE_OTHER> {
+    template<class T, class R> SIMDPP_INL
+    static void run(const T& t, R& r)
     {
-        static_assert(R::size_tag == T::size_tag,
-                      "Conversions between masks with different element size is"
-                      " not allowed");
-        return cast_memcpy<R>(t);
+        cast_bitwise(t, r);
     }
 };
 
 template<>
-struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_UNMASK> {
-    template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_BITWISE> {
+    template<class T, class R> SIMDPP_INL
+    static void run(const T& t, R& r)
     {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        return cast_memcpy_unmask<R>(t);
+        cast_bitwise_vector(t.eval(), r);
     }
 };
 
 template<>
-struct cast_wrapper<true/*IsRMask*/, true/*IsLMask*/, CAST_MASK_REMASK> {
+struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_UNMASK> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    static void run(const T& t, R& r)
     {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        return cast_memcpy_remask<R>(t);
+        cast_bitwise_unmask(t.eval(), r);
     }
 };
 
-template<unsigned MaskCastOverride>
-struct cast_wrapper<true/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
+template<>
+struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_REMASK> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T&)
+    static void run(const T& t, R& r)
     {
+        static_assert(R::size_tag == T::size_tag,
+                      "Conversions between masks with different element size is"
+                      " not allowed");
+        cast_bitwise_remask(t.eval(), r);
+    }
+};
+
+template<>
+struct cast_wrapper<CAST_TYPE_VECTOR_TO_MASK> {
+    template<class R, class T> SIMDPP_INL
+    static void run(const T& t, R& r)
+    {
+        (void) t; (void) r;
         static_assert(!std::is_same<T,T>::value, // fake dependency
                       "Conversion from non-mask type to a mask type is not allowed");
     }
 };
 
-template<unsigned MaskCastOverride>
-struct cast_wrapper<false/*IsRMask*/, true/*IsLMask*/, MaskCastOverride> {
+template<>
+struct cast_wrapper<CAST_TYPE_MASK_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    static void run(const T& t, R& r)
     {
-        return cast_memcpy_unmask<R>(t);
+        cast_bitwise_unmask(t.eval(), r);
     }
 };
 
-template<unsigned MaskCastOverride>
-struct cast_wrapper<false/*IsRMask*/, false/*IsLMask*/, MaskCastOverride> {
+template<>
+struct cast_wrapper<CAST_TYPE_VECTOR_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
-    static R run(const T& t)
+    static void run(const T& t, R& r)
     {
-        return cast_memcpy<R>(t);
+        cast_bitwise_vector(t.eval(), r);
     }
 };
 

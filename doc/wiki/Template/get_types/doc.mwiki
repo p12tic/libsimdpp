@@ -1,0 +1,7 @@
+This is ''generic'' description of all ''***/get_types'' templates.
+
+''***/get_types'' templates are used for easier definition of C++ template parameters. Often several related C++ templates have a non-member function which has identical behavior whichever of those templates are passed as parameter. For example, most of C++ containers have comparison operators that behave identically for most of the containers. We usually want to put the article for such functions in a template to reduce maintenance burden. The problem is that often C++ templates accepted as function arguments have different template arguments, so we end up with a huge {{tt|<nowiki>{{#switch:</nowiki>}} statement.
+
+This template solves the issue by defining the template arguments as variables.
+* {{tt|<nowiki>{{#var:types}}</nowiki>}} contains the long type description (use it as {{tt|template< <nowiki>{{#var:types}}</nowiki> >}}).
+* {{tt|<nowiki>{{#var:types_short}}</nowiki>}} contains the short type description (use it as {{tt|Type<<nowiki>{{#var:types_short}}</nowiki>>}}).

@@ -1,0 +1,55 @@
+{{simdpp/title|permute4}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
+         unsigned N, class E>
+Vec<N,_DETAIL_> permute4( const Vec<N,E>& a );
+}}
+{{dcl end}}
+
+Permutes groups of four elements within the source vector. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset2 h | Ret | Vec }}
+{{vset2 | int16 | int16 }}
+{{vset2 | uint16 | uint16 }}
+{{vset2 | uint16 | mask_int16 }}
+{{vset2 | int32 | int32 }}
+{{vset2 | uint32 | uint32 }}
+{{vset2 | uint32 | mask_int32 }}
+{{vset2 | int64 | int64 }}
+{{vset2 | uint64 | uint64 }}
+{{vset2 | uint64 | mask_int64 }}
+{{vset2 | float32 | float32 }}
+{{vset2 | float32 | mask_float32 }}
+{{vset2 | float64 | float64 }}
+{{vset2 | float64 | mask_float64 }}
+{{vset end}}
+
+The selectors {{tt|s0}}, {{tt|s1}}, {{tt|s2}} and {{tt|s3}} must be in range {{c|[0..3]}}.
+
+The return type is a [[types#expr|vector expression]].
+
+===Parameters===
+{{par begin}}
+{{par | a | source vector }}
+{{par | s0, s1, s2, s3 | the permutation indices}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to the permuted vector.
+
+===Equivalent operation===
+{{source|1=
+r0 = a[s0]
+...
+r3 = a[s3]
+r4 = a[s0+4]
+...
+r7 = a[s3+4]
+...
+}}
+
+===See also===
+{{todo}}

@@ -1,0 +1,27 @@
+Sets the title of the page. The title can include the following formatting elements:
+{{tt|<nowiki><small></nowiki>}},
+{{tt|<nowiki><big></nowiki>}},
+{{tt|<nowiki><abbr></nowiki>}},
+{{tt|<nowiki><b></nowiki>}},
+{{tt|<nowiki><center></nowiki>}},
+{{tt|<nowiki><code></nowiki>}},
+{{tt|<nowiki><del></nowiki>}},
+{{tt|<nowiki><em></nowiki>}},
+{{tt|<nowiki><font></nowiki>}},
+{{tt|<nowiki><i></nowiki>}},
+{{tt|<nowiki><ins></nowiki>}},
+{{tt|<nowiki><s></nowiki>}},
+{{tt|<nowiki><strong></nowiki>}},
+{{tt|<nowiki><strike></nowiki>}},
+{{tt|<nowiki><s></nowiki>}},
+{{tt|<nowiki><span></nowiki>}},
+{{tt|<nowiki><sub></nowiki>}},
+{{tt|<nowiki><sup></nowiki>}},
+{{tt|<nowiki><u></nowiki>}},
+{{tt|<nowiki><tt></nowiki>}}
+
+{{tl | title | ''custom title''}} - general utility to set page title
+
+{{tl | ctitle | n{{=}}''namespace'' | ''object1'' | ''object2'' ... }} - sets page title of a page that describes a library component.
+
+If ''object1'' contains phrase {{tt|#MAGICTITLESTRING#}}, title is not altered, {{tt|n}} is returned instead.

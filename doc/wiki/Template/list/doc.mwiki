@@ -1,0 +1,11 @@
+<div style="margin: 1em 1em 2em 1em; padding: 0.2em 1em 1em; border: 1px solid #AAAAAA;">
+<h4>List template families</h4>
+
+* [[Template:dsc |dsc ****]] : For creation of member variable/function lists.
+* [[Template:dcl |dcl ****]] : For creation of detailed declaration lists (those including actual declaration code)
+* [[Template:sdsc | sdsc ****]] : For creation of lists representing various syntaxes of a language feature. Used in subpages of [[cpp/language]]
+* [[Template:par | par ****]] : For creation of lists explaining function parameters.
+* [[Template:spar | spar ****]] : For creation of lists explaining syntax parameters.
+* [[Template:nv | nv ****]] : For creation of feature lists in navbars.
+
+</div>

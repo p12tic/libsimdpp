@@ -60,7 +60,7 @@ void mem_pack2(any_vec<32,V>& qa, any_vec<32,V>& qb)
     qb.wrapped() = shuffle1_128<1,1>(c1, c2);
 }
 
-#if SIMDPP_USE_AVX512F
+#if SIMDPP_USE_AVX512F || SIMDPP_USE_AVX512BW
 template<class V> SIMDPP_INL
 void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 {
@@ -83,7 +83,7 @@ void mem_pack2(any_vec<64,V>& qa, any_vec<64,V>& qb)
 template<class T> SIMDPP_INL
 void v_mem_pack3_impl8_128(T& a, T& b, T& c)
 {
-#if SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     using U = typename T::uint_vector_type;
 
     T a1, b1, c1;
@@ -200,7 +200,7 @@ void v_mem_pack3_impl8_128(T& a, T& b, T& c)
 template<class T> SIMDPP_INL
 void v_mem_pack3_impl16_128(T& a, T& b, T& c)
 {
-#if SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     using U = typename T::uint_vector_type;
 
     // [a0..a7]
@@ -297,7 +297,7 @@ void v_mem_pack3_impl16_128(T& a, T& b, T& c)
 template<class T> SIMDPP_INL
 void v_mem_pack3_impl32_128(T& a, T& b, T& c)
 {
-#if SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     using U = typename T::uint_vector_type;
 
     // [a0,a1,a2,a3]
@@ -465,7 +465,7 @@ template<class T> SIMDPP_INL
 void v_mem_pack4_impl8_128(T& a, T& b, T& c, T& d)
 {
     // either uint16x8 or uint16x16, other entries likewise
-#if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
+#if SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     // TODO: optimize for altivec
     using w_b32 = typename same_width<T>::u32;
 

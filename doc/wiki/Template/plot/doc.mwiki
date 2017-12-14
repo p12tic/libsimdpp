@@ -1,0 +1,12 @@
+
+{{tl|plot | ''location'' | left=''text_at_left'' {{optional}} | right=''text_at_right'' {{optional}} | bottom=''text_at_bottom'' {{optional}} | size='' '''width'''x'''height'''px''{{optional}}}}
+
+Draws a plot image at ''location''. {{tt|left}}, {{tt|right}} and {{tt|bottom}} parameters optionally specify additional text that would appear to the left, right and bottom of the plot image. The {{tt|size}} parameter specifies the size of the image in the usual Mediawiki syntax (see [http://www.mediawiki.org/wiki/Help:Images this help page]). The default size value is 200 &times; 200 pixels.
+
+===Example===
+
+{{tt|<nowiki>{{plot | math-atan2.png | left=Y argument | bottom=X argument | right=Return value | size=x240px}}</nowiki>}}
+
+results in:
+
+{{plot | math-atan2.png | left=Y argument | bottom=X argument | right=Return value | size=x240px}}

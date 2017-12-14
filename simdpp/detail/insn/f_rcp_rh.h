@@ -20,6 +20,7 @@
     #include <cmath>
     #include <simdpp/detail/null/math.h>
 #endif
+#include <simdpp/detail/vector_array_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -27,7 +28,8 @@ namespace detail {
 namespace insn {
 
 
-SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
+static SIMDPP_INL
+float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
 {
     float32<4> x = cx;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
@@ -38,7 +40,7 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
         r.el(i) = ix*(2.0f - ix*ia);
     }
     return r;
-#elif SIMDPP_USE_SSE2
+#elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     float32x4 r;
 
     r = mul(a, x);
@@ -48,7 +50,7 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
     return x;
 #elif SIMDPP_USE_NEON_FLT_SP
     float32x4 r;
-    r = vrecpsq_f32(a, x);
+    r = vrecpsq_f32(a.native(), x.native());
     x = mul(x, r);
 
     return x;
@@ -56,14 +58,15 @@ SIMDPP_INL float32x4 i_rcp_rh(const float32x4& cx, const float32x4& a)
     float32x4 r, c2;
     c2 = make_float(2.0f);
     // -(x*a-c2)
-    r = vec_nmsub((__vector float)x, (__vector float)a, (__vector float)c2);
+    r = vec_nmsub(x.native(), a.native(), c2.native());
     x = mul(x, r);
     return x;
 #endif
 }
 
 #if SIMDPP_USE_AVX
-SIMDPP_INL float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
+static SIMDPP_INL
+float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
 {
     float32x8 r, x = cx;
 
@@ -76,7 +79,8 @@ SIMDPP_INL float32x8 i_rcp_rh(const float32x8& cx, const float32x8& a)
 #endif
 
 #if SIMDPP_USE_AVX512F
-SIMDPP_INL float32<16> i_rcp_rh(const float32<16>& cx, const float32<16>& a)
+static SIMDPP_INL
+float32<16> i_rcp_rh(const float32<16>& cx, const float32<16>& a)
 {
     float32<16> r, x = cx;
 

@@ -1,0 +1,50 @@
+{{simdpp/title|align16, align8, align4, align2}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> align16( const any_vec8<N,V1>& lower,
+                          const any_vec8<N,V2>& upper );
+}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> align8( const any_vec16<N,V1>& lower,
+                         const any_vec16<N,V2>& upper );
+}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> align4( const any_vec32<N,V1>& lower,
+                         const any_vec32<N,V2>& upper );
+}}
+{{dcl |
+template<unsigned shift, unsigned N, class V1, class V2>
+Ret<N, _DETAIL_> align2( const any_vec64<N,V1>& lower,
+                         const any_vec64<N,V2>& upper );
+}}
+{{dcl end}}
+
+Extract a vector from two concatenated vectors. Each 128-bit lane within vectors is processed separately.
+
+The return vector type is governed by the [[types/promotion|expression promotion]] rules.
+
+===Parameters===
+{{par begin}}
+{{par | a, b | source vectors }}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]].
+
+===Equivalent operation===
+For the {{tt|any_vec32}} case:
+{{source|1=
+shift: pos:  0  1  2  3
+0      r = [ l0 l1 l2 l3 ]
+1      r = [ l1 l2 l3 u0 ]
+2      r = [ l2 l3 u0 u1 ]
+3      r = [ l3 u0 u1 u2 ]
+4      r = [ u0 u1 u2 u3 ]
+}}
+
+===See also===
+{{todo}}

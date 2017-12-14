@@ -1,0 +1,34 @@
+{{simdpp/title|bit_cast}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned N, class V, class F>
+void for_each( const any_vec<N, V>& v, const F& function );
+}}
+{{dcl end}}
+
+Applies a function to each element in the given vector {{tt|v}}.
+
+The function is applied sequentially.
+
+===Parameters===
+{{par begin}}
+{{par | v | vector to apply the function to}}
+{{par | function | function to apply}}
+{{par end}}
+
+===Return value===
+(none)
+
+===Equivalent operation===
+{{source|1=
+function(extract<0>(v));
+function(extract<1>(v));
+...
+function(extract<N>(v));
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | misc/dsc splat }}
+{{dsc end}}

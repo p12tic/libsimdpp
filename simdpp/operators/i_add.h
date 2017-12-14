@@ -15,7 +15,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/expr/i_add.h>
-#include <simdpp/detail/cast_expr.h>
 #include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 #include <simdpp/core/detail/get_expr_uint.h>
@@ -36,16 +35,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_add, V1, V2>::type
+typename detail::get_expr_uint<expr_iadd, V1, V2>::type
         operator+(const any_int8<N,V1>& a,
             const any_int8<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    return { { a.wrapped(), b.wrapped() } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int8, uint8)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_iadd, any_int8, int8)
 
 /** Adds 16-bit integer values.
 
@@ -59,16 +56,14 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int8, uint8)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_add, V1, V2>::type
+typename detail::get_expr_uint<expr_iadd, V1, V2>::type
         operator+(const any_int16<N,V1>& a,
             const any_int16<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    return { { a.wrapped(), b.wrapped() } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int16, uint16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_iadd, any_int16, int16)
 
 /** Adds 32-bit integer values.
 
@@ -82,16 +77,14 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int16, uint16)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_add, V1, V2>::type
+typename detail::get_expr_uint<expr_iadd, V1, V2>::type
         operator+(const any_int32<N,V1>& a,
             const any_int32<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    return { { a.wrapped(), b.wrapped() } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int32, uint32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_iadd, any_int32, int32)
 
 /** Adds 64-bit integer values.
 
@@ -109,16 +102,14 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int32, uint32)
     @icost{ALTIVEC, 10-11}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_add, V1, V2>::type
+typename detail::get_expr_uint<expr_iadd, V1, V2>::type
         operator+(const any_int64<N,V1>& a,
             const any_int64<N,V2>& b)
 {
-    using expr = typename detail::get_expr_uint<expr_add, V1, V2>;
-    return { { detail::cast_expr<typename expr::v1_type>(a.wrapped()),
-               detail::cast_expr<typename expr::v2_type>(b.wrapped()) } };
+    return { { a.wrapped(), b.wrapped() } };
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_add, any_int64, uint64)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator+, expr_iadd, any_int64, int64)
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

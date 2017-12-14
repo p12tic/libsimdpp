@@ -1,0 +1,7 @@
+Adds information about noexcept specification.
+
+{{tl|noexcept|specification{{mark optional}}|notes{{=}}''notes''{{mark optional}}}}
+
+{{tt|specification}} parameter specifies the code within {{tt|noexcept()}}.
+
+{{tt|notes}} are additional notes that will appear next to the noexcept explanation.

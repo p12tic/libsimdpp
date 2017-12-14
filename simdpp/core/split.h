@@ -24,8 +24,8 @@ template<class A, class R> SIMDPP_INL
 void v256_split(A a, R& r1, R& r2)
 {
 #if SIMDPP_USE_AVX2
-    r1 = _mm256_extracti128_si256(a, 0);
-    r2 = _mm256_extracti128_si256(a, 1);
+    r1 = _mm256_extracti128_si256(a.native(), 0);
+    r2 = _mm256_extracti128_si256(a.native(), 1);
 #else
     r1 = a[0];
     r2 = a[1];

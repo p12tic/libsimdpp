@@ -1,0 +1,30 @@
+{{simdpp/title|load}}
+{{mem/navbar}}
+{{dcl begin}}
+{{dcl |
+template<class V>
+V load( void* ptr );
+}}
+{{dcl |
+_DETAIL_ load( void* ptr );
+}}
+{{dcl end}}
+
+Performs an aligned load from memory.
+
+The first overload loads to given non-mask vector type.
+
+The second overloads returns a value of unspecified type with which any non-mask vector can be initialized. E.g. {{c|1=uint32<4> x = load(pointer);}}
+
+===Parameters===
+{{par begin}}
+{{par | ptr | pointer to location to load data from}}
+{{par end}}
+
+===Return value===
+(1) Vector that contains value loaded from address {{tt|ptr}}.
+
+(2) An value of unspecified type that can initialize a vector.
+
+===See also===
+{{todo}}

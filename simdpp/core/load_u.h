@@ -47,13 +47,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     smallest 32-byte aligned 64-byte block may be accessed.
 */
 // Fixme return empty expression
-SIMDPP_INL expr_vec_load_u load_u(const void* p)
+template<class T>
+SIMDPP_INL expr_vec_load_u load_u(const T* p)
 {
     return { reinterpret_cast<const char*>(p) };
 }
 
-template<class V> SIMDPP_INL
-V load_u(const void* p)
+template<class V, class T> SIMDPP_INL
+V load_u(const T* p)
 {
     static_assert(is_vector<V>::value && !is_mask<V>::value,
                   "V must be a non-mask vector");

@@ -1,0 +1,1 @@
+{{dsc macro const | cap/SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION | indicates support of {{c|int64}} to {{c|int64}} conversion}}

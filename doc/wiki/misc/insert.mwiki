@@ -1,0 +1,46 @@
+{{simdpp/title|insert}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl |
+template< unsigned K, unsigned N, class E >
+Ret<N> extract( const Vec1<N,E>& a, const El& el );
+}}
+{{dcl end}}
+
+Inserts an element into {{tt|K}}-th position in the given vector. The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | El }}
+{{vset3 | int8 | int8 | int8_t }}
+{{vset3 | uint8 | uint8 | uint8_t }}
+{{vset3 | int16 | int16 | int16_t }}
+{{vset3 | uint16 | uint16 | uint16_t }}
+{{vset3 | int32 | int32 | int32_t }}
+{{vset3 | uint32 | uint32 | uint32_t }}
+{{vset3 | int64 | int64 | int64_t }}
+{{vset3 | uint64 | uint64 | uint64_t }}
+{{vset3 | float32 | float32 | float }}
+{{vset3 | float64 | float64 | double }}
+{{vset end}}
+
+===Parameters===
+{{par begin}}
+{{par | a | vector to insert data to}}
+{{par | el | the element to insert.
+{{par end}}
+
+===Return value===
+The resulting vector.
+
+===Equivalent operation===
+{{source|1=
+r0 = a0
+...
+r{K-1} = a{K-1}
+rK = el
+r{K+1} = a{K+1}
+...
+}}
+
+===See also===
+{{todo}}

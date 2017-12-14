@@ -1,0 +1,55 @@
+{{simdpp/title|shuffle4x2}}
+{{shuffle/navbar}}
+{{dcl begin}}
+{{dcl |
+template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
+         unsigned N, class E1, class E2>
+Ret<N,_DETAIL_> shuffle4x2( const Vec1<N,E1>& a, const Vec2<N,E2& b );
+}}
+{{dcl end}}
+
+Shuffles two vectors at 4x4 element block granularity.
+
+The implementation behaves as if the following set of overloads is provided:
+
+{{vset begin}}
+{{vset3 h | Ret | Vec1 | Vec2 }}
+{{vset3 u | ''promoted 32-bit vector'' | ''any 32-bit vector'' | ''any 32-bit vector'' }}
+{{vset3 u | ''promoted 64-bit vector'' | ''any 64-bit vector'' | ''any 64-bit vector'' }}
+{{vset end}}
+
+The type of the return vector is governed by the [[types/promotion|expression promotion]] rules. The return type is a [[types#expr|vector expression]].
+
+The selectors {{tt|s0}}, {{tt|s1}}, {{tt|s2}} and {{tt|s3}} must be in range {{c|[0..7]}}.
+
+The vectors are shuffled at 4x4 block granularity as follows: the vectors are partitioned into {{tt|N/4}} groups. The {{tt|n}}-th group in the return vector will contain:
+:* elements only from {{tt|n}}-th groups of {{tt|a}} and {{tt|b}} vectors
+:* the {{c|0}}-th, {{c|1}}-st, {{c|2}}-nd and {{c|3}}-rd elements are selected by the {{tt|s0}}, {{tt|s1}}, {{tt|s2}} and {{tt|s3}} selectors respectively
+:* values {{c|0..3}} correspond to the {{c|0..3}}-th elements from {{tt|n}}-th group from {{tt|a}}, {{c|4..7}} correspond to the {{c|0..3}}-th elements from {{tt|n}}-th group from {{tt|b}}.
+
+===Parameters===
+{{par begin}}
+{{par | a, b | source vectors }}
+{{par | s0, s1, s2, s3 | the permutation indices}}
+{{par end}}
+
+===Return value===
+A [[types#expr|vector expression]] evaluating to the shuffled vectors.
+
+===Equivalent operation===
+{{source|1=
+r0 = s0 < 4 ? a[s0] : b[s0-4]
+r1 = s1 < 4 ? a[s1] : b[s1-4]
+r2 = s2 < 4 ? a[s2] : b[s2-4]
+r3 = s3 < 4 ? a[s3] : b[s3-4]
+
+r4 = s0 < 4 ? a[s0+4] : b[s0]
+r5 = s1 < 4 ? a[s1+4] : b[s1]
+r6 = s2 < 4 ? a[s2+4] : b[s2]
+r7 = s3 < 4 ? a[s3+4] : b[s3]
+
+...
+}}
+
+===See also===
+{{todo}}
