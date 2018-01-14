@@ -83,4 +83,7 @@ r = [ v0 v1 .. v7 v0  ... v7 ]
 }}
 
 ===See also===
-{{todo}}
+{{dsc begin}}
+{{dsc inc | misc/dsc make_int }}
+{{dsc inc | misc/dsc make_uint }}
+{{dsc end}}
