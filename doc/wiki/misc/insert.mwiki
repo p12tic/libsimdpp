@@ -3,7 +3,7 @@
 {{dcl begin}}
 {{dcl |
 template< unsigned K, unsigned N, class E >
-Ret<N> extract( const Vec1<N,E>& a, const El& el );
+Ret<N> insert( const Vec1<N,E>& a, El el );
 }}
 {{dcl end}}
 
