@@ -1,9 +1,9 @@
-{{simdpp/title|bit_cast}}
+{{simdpp/title|for_each}}
 {{misc/navbar}}
 {{dcl begin}}
 {{dcl |
 template<unsigned N, class V, class F>
-void for_each( const any_vec<N, V>& v, const F& function );
+void for_each( const any_vec<N, V>& v, F function );
 }}
 {{dcl end}}
 
