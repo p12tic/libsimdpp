@@ -19,7 +19,7 @@ Checks whether any bits are set in the given vector.
 
 ===Equivalent operation===
 {{source|1=
-r = (bool)(a0 & a1 & a2 & ... & aN)
+r = (bool)(a0 {{!}} a1 {{!}} a2 {{!}} ... {{!}} aN)
 }}
 
 ===See also===
