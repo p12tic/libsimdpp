@@ -90,6 +90,7 @@ public:
     TestData& operator=(const TestData& other)
     {
         data_ = other.data_;
+        return (*this);
     }
 
     template<class U>
