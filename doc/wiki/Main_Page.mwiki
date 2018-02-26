@@ -177,6 +177,9 @@ the compiler will generate.
 <div class="mainpagediv">
 {{ltt|algorithm/transform}}<br/>
 {{ltt|algorithm/reduce}}<br/>
+{{ltt|algorithm/fill}}<br/>
+{{ltt|algorithm/copy}}<br/>
+{{ltt|algorithm/copy_n}}<br/>
 </div>
 
 |- class="row rowbottom"

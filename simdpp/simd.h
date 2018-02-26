@@ -196,6 +196,12 @@
 #include <simdpp/operators/i_shift_r.h>
 #include <simdpp/operators/i_sub.h>
 
+#include <simdpp/algorithm/copy.h>
+#include <simdpp/algorithm/copy_n.h>
+#include <simdpp/algorithm/fill.h>
+#include <simdpp/algorithm/transform.h>
+#include <simdpp/algorithm/reduce.h>
+
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher
     mechanism is not needed, the user can define the @c SIMDPP_NO_DISPATCHER.

@@ -63,7 +63,10 @@ set(TEST_INSN_ARCH_SOURCES
     insn/compare.cc
     insn/construct.cc
     insn/convert.cc
+    insn/copy.cc
+    insn/copy_n.cc
     insn/for_each.cc
+    insn/fill.cc
     insn/math_fp.cc
     insn/math_int.cc
     insn/math_shift.cc
@@ -72,9 +75,11 @@ set(TEST_INSN_ARCH_SOURCES
     insn/shuffle.cc
     insn/shuffle_bytes.cc
     insn/permute_generic.cc
+    insn/reduce.cc
     insn/shuffle_generic.cc
     insn/test_utils.cc
     insn/tests.cc
+    insn/transform.cc
     insn/transpose.cc
 )
 

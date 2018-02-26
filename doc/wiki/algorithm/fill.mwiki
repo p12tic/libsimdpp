@@ -1,0 +1,26 @@
+{{simdpp/title|fill}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+  template<typename T, typename U> 
+        void fill(T* first, T* last, U value)
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|fill}} Assigns the given {{tt|value}} to the elements in the range {{tt|[first, last)}}.
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to modify}}
+{{par | value | the value to be assigned}}
+{{par end}}
+
+===Return value===
+(none)
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc copy}}
+{{dsc end}}
