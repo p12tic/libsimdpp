@@ -20,7 +20,7 @@ various variants of matrix transpositions, interleaving loads/stores, optimized
 compile-time shuffling instructions, etc. Each of these are implemented in the
 most efficient manner for the target instruction set. Finally, it's possible
 to fall back to native intrinsics when necessary, without compromising
-maintanability.
+maintainability.
 
 
 The library sits somewhere in the middle between programming directly in
@@ -171,6 +171,12 @@ the compiler will generate.
 {{ltt|misc/for_each}}&nbsp;&nbsp;{{ltt|misc/test_bits_any}}<br/>
 {{ltt|misc/bit_cast}}<br/>
 {{ltt|misc/prefetch_read}}&nbsp;&nbsp;{{ltt|misc/prefetch_write}}
+</div>
+
+'''[[Algorithm | STL like algorithm]]'''
+<div class="mainpagediv">
+{{ltt|algorithm/transform}}<br/>
+{{ltt|algorithm/reduce}}<br/>
 </div>
 
 |- class="row rowbottom"

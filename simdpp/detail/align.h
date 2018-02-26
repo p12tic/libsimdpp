@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <assert.h> 
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -40,6 +41,24 @@ const T* assume_aligned(const T* x, unsigned bytes)
     (void) bytes;
     return x;
 #endif
+}
+
+SIMDPP_INL bool is_aligned(const void* ptr, std::size_t A) noexcept
+{
+    assert(((A & (A - 1)) == 0));
+    return ((std::size_t)ptr & (A - 1)) == 0; //from boost\align\detail\is_aligned.hpp
+}
+
+SIMDPP_INL bool is_aligned(std::size_t val, std::size_t A) noexcept
+{
+    assert(((A & (A - 1)) == 0));
+    return (val & (A - 1)) == 0; //from boost\align\detail\is_aligned.hpp
+}
+
+SIMDPP_INL void* reach_next_aligned(void* ptr, std::size_t A) noexcept
+{    
+    assert(((A & (A - 1)) == 0));
+    return (void*)(((std::size_t)ptr + A - 1) &~(A - 1)); //from boost\align\detail\align_up.hpp
 }
 
 } // namespace detail
