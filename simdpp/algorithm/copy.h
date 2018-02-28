@@ -22,7 +22,7 @@ namespace simdpp {
         {
             struct UnaryOpCopy
             {
-                using simd_type_T = typetraits<T>::simd_type;
+                using simd_type_T = typename typetraits<T>::simd_type;
                 SIMDPP_INL T operator()(T const &a) const  noexcept
                 {
                     return a;

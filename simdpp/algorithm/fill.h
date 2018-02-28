@@ -33,7 +33,7 @@ namespace simdpp {
             if (!last)
                 throw std::runtime_error("fill - null ptr last.");
 #endif
-            using simd_type_T = typetraits<T>::simd_type;
+            using simd_type_T = typename typetraits<T>::simd_type;
             const auto alignment = typetraits<T>::alignment;
 
             simd_type_T valsimd = splat((T)value);

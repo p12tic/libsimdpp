@@ -35,7 +35,7 @@ namespace simdpp {
             if (!last)
                 throw std::runtime_error("helper_input_range - null ptr last.");
 #endif
-            using simd_type_T = typetraits<T>::simd_type;            
+            using simd_type_T = typename typetraits<T>::simd_type;            
 
             const auto simd_size = simd_type_T::base_length;
             const auto alignment = typetraits<T>::alignment;

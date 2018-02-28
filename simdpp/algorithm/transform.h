@@ -35,8 +35,8 @@ namespace simdpp {
             if (!out)
                 throw std::runtime_error("transform - null ptr out.");
 #endif
-            using simd_type_T = typetraits<T>::simd_type;
-            using simd_type_U = typetraits<U>::simd_type;
+            using simd_type_T = typename typetraits<T>::simd_type;
+            using simd_type_U = typename typetraits<U>::simd_type;
 
             static_assert (simd_type_T::base_length == simd_type_U::base_length
                 , "mismatch base_length between T and U"
@@ -101,9 +101,9 @@ namespace simdpp {
             if (!out)
                 throw std::runtime_error("transform - null ptr out.");
 #endif
-            using simd_type_T1 = typetraits<T1>::simd_type;
-            using simd_type_T2 = typetraits<T2>::simd_type;
-            using simd_type_U = typetraits<U>::simd_type;
+            using simd_type_T1 = typename typetraits<T1>::simd_type;
+            using simd_type_T2 = typename typetraits<T2>::simd_type;
+            using simd_type_U = typename typetraits<U>::simd_type;
 
             static_assert (simd_type_T1::base_length == simd_type_T2::base_length
                 , "mismatch base_length between T1 and T2"
