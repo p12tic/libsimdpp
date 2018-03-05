@@ -26,11 +26,16 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
  void test_copy_n(TestResults& res, TestReporter& tr);
  void test_for_each(TestResults& res, TestReporter& tr);
  void test_fill(TestResults& res, TestReporter& tr);
+ void test_find(TestResults& res, TestReporter& tr);
+ void test_find_if(TestResults& res, TestReporter& tr);
+ void test_find_if_not(TestResults& res, TestReporter& tr);
  void test_math_fp(TestResults& res, const TestOptions& opts);
  void test_math_int(TestResults& res);
  void test_math_shift(TestResults& res);
+ void test_max(TestResults& res, TestReporter& tr);
  void test_memory_load(TestResults& res, TestReporter& tr);
  void test_memory_store(TestResults& res, TestReporter& tr);
+ void test_min(TestResults& res, TestReporter& tr);
  void test_set(TestResults& res);
  void test_shuffle(TestResults& res);
  void test_shuffle_bytes(TestResults& res, TestReporter& tr);

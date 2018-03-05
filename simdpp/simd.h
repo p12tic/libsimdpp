@@ -196,9 +196,13 @@
 #include <simdpp/operators/i_shift_r.h>
 #include <simdpp/operators/i_sub.h>
 
+//algorithm
 #include <simdpp/algorithm/copy.h>
 #include <simdpp/algorithm/copy_n.h>
 #include <simdpp/algorithm/fill.h>
+#include <simdpp/algorithm/find.h>
+#include <simdpp/algorithm/find_if.h>
+#include <simdpp/algorithm/find_if_not.h>
 #include <simdpp/algorithm/max.h>
 #include <simdpp/algorithm/min.h>
 #include <simdpp/algorithm/transform.h>

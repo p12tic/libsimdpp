@@ -178,6 +178,9 @@ the compiler will generate.
 {{ltt|algorithm/copy}}<br/>
 {{ltt|algorithm/copy_n}}<br/>
 {{ltt|algorithm/fill}}<br/>
+{{ltt|algorithm/find}}<br/>
+{{ltt|algorithm/find_if}}<br/>
+{{ltt|algorithm/find_if_not}}<br/>
 {{ltt|algorithm/max}}<br/>
 {{ltt|algorithm/min}}<br/>
 {{ltt|algorithm/transform}}<br/>

@@ -67,11 +67,16 @@ set(TEST_INSN_ARCH_SOURCES
     insn/copy_n.cc
     insn/for_each.cc
     insn/fill.cc
+    insn/find.cc
+	insn/find_if.cc
+	insn/find_if_not.cc
     insn/math_fp.cc
     insn/math_int.cc
     insn/math_shift.cc
+    insn/max.cc
     insn/memory_load.cc
     insn/memory_store.cc
+    insn/min.cc
     insn/shuffle.cc
     insn/shuffle_bytes.cc
     insn/permute_generic.cc

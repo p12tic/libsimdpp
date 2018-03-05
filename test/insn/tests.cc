@@ -78,6 +78,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
         test_copy(res,tr);
         test_copy_n(res,tr);
         test_fill(res,tr);
+        test_find(res, tr);
+        test_find_if(res, tr);
+        test_find_if_not(res, tr);
+        test_max(res,tr);
+        test_min(res,tr);
     }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
