@@ -29,8 +29,8 @@ namespace simdpp {
             if (!last)
                 throw std::runtime_error("find_if - null ptr last.");
 #endif
-            using simd_type_T = typename simdpp::typetraits<T>::simd_type;
-            using simd_mask_T = typename simdpp::typetraits<T>::simd_mask_type;
+            using simd_type_T = typename typetraits<T>::simd_type;
+            using simd_mask_T = typename typetraits<T>::simd_mask_type;
 
             if (first == last) return last;
 
@@ -38,7 +38,7 @@ namespace simdpp {
             const auto simd_size = simd_type_T::base_length;
             const auto size = std::distance(first, last);
             //note enforce that input is aligned when we start the main simd loop
-            const auto range = simdpp::helper_input_range(first, last);
+            const auto range = helper_input_range(first, last);
             const auto size_prologue_loop = range.first;
             const auto size_simd_loop = range.second;
 
@@ -51,13 +51,14 @@ namespace simdpp {
             auto i = size_prologue_loop;
 
             //workaraund not reduce_and for mask type
-            const simd_type_T on = simdpp::splat(T(1));
-            const simd_type_T off = simdpp::splat(T(0));
+            const simd_type_T on = splat(T(1));
+            const simd_type_T off = splat(T(0));
             for (; i < size_simd_loop; i += simd_size)
             {
                 //TR why can't reduce_and not available for mask?
-                const auto res = simdpp::blend(on, off, pred(simdpp::load(lastprologue)));
-                if (!simdpp::reduce_and(res)) //match extract exact position
+                simd_mask_T mask = pred(load(lastprologue));
+                const auto res = blend(on, off, mask);
+                if (!reduce_and(res)) //match extract exact position
                 {
                     return std::find_if_not(lastprologue, lastprologue + simd_size, pred); //or extract position from res ?
                 }
