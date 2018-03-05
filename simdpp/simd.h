@@ -199,6 +199,8 @@
 #include <simdpp/algorithm/copy.h>
 #include <simdpp/algorithm/copy_n.h>
 #include <simdpp/algorithm/fill.h>
+#include <simdpp/algorithm/max.h>
+#include <simdpp/algorithm/min.h>
 #include <simdpp/algorithm/transform.h>
 #include <simdpp/algorithm/reduce.h>
 

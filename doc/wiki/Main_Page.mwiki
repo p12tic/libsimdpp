@@ -175,11 +175,13 @@ the compiler will generate.
 
 '''[[Algorithm | STL like algorithm]]'''
 <div class="mainpagediv">
-{{ltt|algorithm/transform}}<br/>
-{{ltt|algorithm/reduce}}<br/>
-{{ltt|algorithm/fill}}<br/>
 {{ltt|algorithm/copy}}<br/>
 {{ltt|algorithm/copy_n}}<br/>
+{{ltt|algorithm/fill}}<br/>
+{{ltt|algorithm/max}}<br/>
+{{ltt|algorithm/min}}<br/>
+{{ltt|algorithm/transform}}<br/>
+{{ltt|algorithm/reduce}}<br/>
 </div>
 
 |- class="row rowbottom"
