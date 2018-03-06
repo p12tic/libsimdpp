@@ -204,7 +204,9 @@
 #include <simdpp/algorithm/find_if.h>
 #include <simdpp/algorithm/find_if_not.h>
 #include <simdpp/algorithm/max.h>
+#include <simdpp/algorithm/max_element.h>
 #include <simdpp/algorithm/min.h>
+#include <simdpp/algorithm/min_element.h>
 #include <simdpp/algorithm/transform.h>
 #include <simdpp/algorithm/reduce.h>
 

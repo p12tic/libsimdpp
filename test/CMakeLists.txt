@@ -74,9 +74,11 @@ set(TEST_INSN_ARCH_SOURCES
     insn/math_int.cc
     insn/math_shift.cc
     insn/max.cc
+	insn/max_element.cc
     insn/memory_load.cc
     insn/memory_store.cc
     insn/min.cc
+    insn/min_element.cc
     insn/shuffle.cc
     insn/shuffle_bytes.cc
     insn/permute_generic.cc

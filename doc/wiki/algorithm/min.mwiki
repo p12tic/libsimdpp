@@ -26,4 +26,6 @@ template<typename T>
 ===See also===
 {{dsc begin}}
 {{dsc inc | algorithm/dsc max}}
+{{dsc inc | algorithm/dsc max_element}}
+{{dsc inc | algorithm/dsc min_element}}
 {{dsc end}}

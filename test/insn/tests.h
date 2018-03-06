@@ -33,9 +33,11 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
  void test_math_int(TestResults& res);
  void test_math_shift(TestResults& res);
  void test_max(TestResults& res, TestReporter& tr);
+ void test_max_element(TestResults& res, TestReporter& tr);
  void test_memory_load(TestResults& res, TestReporter& tr);
  void test_memory_store(TestResults& res, TestReporter& tr);
  void test_min(TestResults& res, TestReporter& tr);
+ void test_min_element(TestResults& res, TestReporter& tr);
  void test_set(TestResults& res);
  void test_shuffle(TestResults& res);
  void test_shuffle_bytes(TestResults& res, TestReporter& tr);

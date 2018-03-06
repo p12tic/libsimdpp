@@ -182,7 +182,9 @@ the compiler will generate.
 {{ltt|algorithm/find_if}}<br/>
 {{ltt|algorithm/find_if_not}}<br/>
 {{ltt|algorithm/max}}<br/>
+{{ltt|algorithm/max_element}}<br/>
 {{ltt|algorithm/min}}<br/>
+{{ltt|algorithm/min_element}}<br/>
 {{ltt|algorithm/transform}}<br/>
 {{ltt|algorithm/reduce}}<br/>
 </div>
