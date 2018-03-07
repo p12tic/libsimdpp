@@ -175,6 +175,8 @@ the compiler will generate.
 
 '''[[Algorithm | STL like algorithm]]'''
 <div class="mainpagediv">
+{{ltt|algorithm/any_of}}<br/>
+{{ltt|algorithm/all_of}}<br/>
 {{ltt|algorithm/copy}}<br/>
 {{ltt|algorithm/copy_n}}<br/>
 {{ltt|algorithm/count}}<br/>
@@ -187,6 +189,7 @@ the compiler will generate.
 {{ltt|algorithm/max_element}}<br/>
 {{ltt|algorithm/min}}<br/>
 {{ltt|algorithm/min_element}}<br/>
+{{ltt|algorithm/none_of}}<br/>
 {{ltt|algorithm/transform}}<br/>
 {{ltt|algorithm/reduce}}<br/>
 </div>

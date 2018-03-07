@@ -58,6 +58,8 @@ set(TEST_INSN_HEADERS
 )
 
 set(TEST_INSN_ARCH_SOURCES
+    insn/all_of.cc
+    insn/any_of.cc
     insn/bitwise.cc
     insn/blend.cc
     insn/compare.cc
@@ -81,6 +83,7 @@ set(TEST_INSN_ARCH_SOURCES
     insn/memory_store.cc
     insn/min.cc
     insn/min_element.cc
+    insn/none_of.cc
     insn/shuffle.cc
     insn/shuffle_bytes.cc
     insn/permute_generic.cc

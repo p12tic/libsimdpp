@@ -73,6 +73,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
         test_for_each(res, tr);
 
         //algorithm
+        test_all_of(res,tr);
+        test_any_of(res,tr);         
         test_copy(res,tr);
         test_copy_n(res,tr);
         test_count(res,tr);
@@ -85,6 +87,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
         test_max_element(res, tr);
         test_min(res,tr);
         test_min_element(res, tr);
+        test_none_of(res,tr);
         test_reduce(res, tr);
         test_transform(res, tr);
 

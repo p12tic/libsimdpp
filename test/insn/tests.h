@@ -17,6 +17,8 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& opts);
+ void test_all_of(TestResults& res, TestReporter& tr);
+ void test_any_of(TestResults& res, TestReporter& tr);
  void test_bitwise(TestResults& res, TestReporter& tr);
  void test_blend(TestResults& res);
  void test_compare(TestResults& res);
@@ -40,6 +42,7 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
  void test_memory_store(TestResults& res, TestReporter& tr);
  void test_min(TestResults& res, TestReporter& tr);
  void test_min_element(TestResults& res, TestReporter& tr);
+ void test_none_of(TestResults& res, TestReporter& tr);
  void test_set(TestResults& res);
  void test_shuffle(TestResults& res);
  void test_shuffle_bytes(TestResults& res, TestReporter& tr);

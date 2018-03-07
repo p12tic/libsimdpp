@@ -197,6 +197,8 @@
 #include <simdpp/operators/i_sub.h>
 
 //algorithm
+#include <simdpp/algorithm/all_of.h>
+#include <simdpp/algorithm/any_of.h>
 #include <simdpp/algorithm/copy.h>
 #include <simdpp/algorithm/copy_n.h>
 #include <simdpp/algorithm/count.h>
@@ -209,6 +211,7 @@
 #include <simdpp/algorithm/max_element.h>
 #include <simdpp/algorithm/min.h>
 #include <simdpp/algorithm/min_element.h>
+#include <simdpp/algorithm/none_of.h>
 #include <simdpp/algorithm/transform.h>
 #include <simdpp/algorithm/reduce.h>
 
