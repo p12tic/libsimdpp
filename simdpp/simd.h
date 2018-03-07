@@ -199,6 +199,8 @@
 //algorithm
 #include <simdpp/algorithm/copy.h>
 #include <simdpp/algorithm/copy_n.h>
+#include <simdpp/algorithm/count.h>
+#include <simdpp/algorithm/count_if.h>
 #include <simdpp/algorithm/fill.h>
 #include <simdpp/algorithm/find.h>
 #include <simdpp/algorithm/find_if.h>

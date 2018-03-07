@@ -1,0 +1,28 @@
+{{simdpp/title|count_if}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+  template<typename T, typename UnaryPredicate>
+    typename std::iterator_traits<const T*>::difference_type
+      count_if(T const* first, T const* last, UnaryPredicate pred);
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|count_if}} counts the elements that satisfied the predicate in the range defined by {{tt|[first, last)}}. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to examine}}
+{{par | pred | unary predicate which returns {{tt|true}} for the required elements. }}
+{{par end}}
+
+===Return value===
+number of elements satisfying the condition.
+
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc count}}
+{{dsc end}}

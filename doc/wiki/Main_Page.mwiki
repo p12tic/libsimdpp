@@ -177,6 +177,8 @@ the compiler will generate.
 <div class="mainpagediv">
 {{ltt|algorithm/copy}}<br/>
 {{ltt|algorithm/copy_n}}<br/>
+{{ltt|algorithm/count}}<br/>
+{{ltt|algorithm/count_if}}<br/>
 {{ltt|algorithm/fill}}<br/>
 {{ltt|algorithm/find}}<br/>
 {{ltt|algorithm/find_if}}<br/>

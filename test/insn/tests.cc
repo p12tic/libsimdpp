@@ -75,6 +75,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
         //algorithm
         test_copy(res,tr);
         test_copy_n(res,tr);
+        test_count(res,tr);
+        test_count_if(res,tr);
         test_fill(res,tr);
         test_find(res, tr);
         test_find_if(res, tr);

@@ -65,16 +65,18 @@ set(TEST_INSN_ARCH_SOURCES
     insn/convert.cc
     insn/copy.cc
     insn/copy_n.cc
+    insn/count.cc
+    insn/count_if.cc
     insn/for_each.cc
     insn/fill.cc
     insn/find.cc
-	insn/find_if.cc
-	insn/find_if_not.cc
+    insn/find_if.cc
+    insn/find_if_not.cc
     insn/math_fp.cc
     insn/math_int.cc
     insn/math_shift.cc
     insn/max.cc
-	insn/max_element.cc
+    insn/max_element.cc
     insn/memory_load.cc
     insn/memory_store.cc
     insn/min.cc

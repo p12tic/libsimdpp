@@ -24,6 +24,8 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
  void test_construct(TestResults& res);
  void test_copy(TestResults& res, TestReporter& tr);
  void test_copy_n(TestResults& res, TestReporter& tr);
+ void test_count(TestResults& res, TestReporter& tr);
+ void test_count_if(TestResults& res, TestReporter& tr);
  void test_for_each(TestResults& res, TestReporter& tr);
  void test_fill(TestResults& res, TestReporter& tr);
  void test_find(TestResults& res, TestReporter& tr);
