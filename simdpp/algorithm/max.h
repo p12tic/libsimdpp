@@ -34,7 +34,7 @@ namespace simdpp {
                 throw std::runtime_error("max - null ptr last.");
 #endif
             using simd_type_T = typename typetraits<T>::simd_type;
-            using simd_mask_T = typename simdpp::typetraits<T>::simd_mask_type;
+            using simd_mask_T = typename typetraits<T>::simd_mask_type;
 
             if (first == last) return comp(T(0), T(1)) ? std::numeric_limits<T>::max() : std::numeric_limits<T>::lowest(); //stolen from boost::simd
 

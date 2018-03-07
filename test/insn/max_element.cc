@@ -60,21 +60,22 @@ namespace SIMDPP_ARCH_NAMESPACE {
                 vector_aligned_t ivect(5);
                 std::iota(begin(ivect), end(ivect), (T)1);
                 ivect[0] = { (T)127 };
-                TEST_EQUAL(tr, (T)127, *max_element(ivect.data(), ivect.data() + ivect.size()), cmpOPGreater);
+                TEST_EQUAL(tr, (T)127, *max_element(ivect.data(), ivect.data() + ivect.size(), cmpOPGreater));
             }
             { //test epilogue
                 vector_aligned_t ivect(100);
                 std::iota(begin(ivect), end(ivect), (T)1);
                 ivect[99] = { (T)127 };
-                TEST_EQUAL(tr, (T)127, *max_element(ivect.data(), ivect.data() + ivect.size()), cmpOPGreater);
+                TEST_EQUAL(tr, (T)127, *max_element(ivect.data(), ivect.data() + ivect.size(), cmpOPGreater));
             }
             { //test main loop and epilogue on aligned vector
                 vector_aligned_t ivect(100);
                 std::iota(begin(ivect), end(ivect), (T)1);
                 ivect[50] = { (T)127 };
-                TEST_EQUAL(tr, (T)127, *max_element(ivect.data(), ivect.data() + ivect.size()), cmpOPGreater);            }
+                TEST_EQUAL(tr, (T)127, *max_element(ivect.data(), ivect.data() + ivect.size(), cmpOPGreater));
+            }
         }
-
+        
     }
 
     void test_max_element(TestResults& res, TestReporter& tr)

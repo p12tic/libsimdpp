@@ -33,7 +33,6 @@ namespace simdpp {
                 throw std::runtime_error("reduce - null ptr last.");
 #endif
             using simd_type_T = typename typetraits<T>::simd_type;
-            const auto alignment = typetraits<T>::alignment;
 
             simd_type_T accusimd = splat((T)0);
 
