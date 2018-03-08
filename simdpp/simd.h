@@ -212,8 +212,11 @@
 #include <simdpp/algorithm/min.h>
 #include <simdpp/algorithm/min_element.h>
 #include <simdpp/algorithm/none_of.h>
-#include <simdpp/algorithm/transform.h>
 #include <simdpp/algorithm/reduce.h>
+#include <simdpp/algorithm/replace.h>
+#include <simdpp/algorithm/replace_if.h>
+#include <simdpp/algorithm/transform.h>
+
 
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher

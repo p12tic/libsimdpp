@@ -190,8 +190,10 @@ the compiler will generate.
 {{ltt|algorithm/min}}<br/>
 {{ltt|algorithm/min_element}}<br/>
 {{ltt|algorithm/none_of}}<br/>
-{{ltt|algorithm/transform}}<br/>
 {{ltt|algorithm/reduce}}<br/>
+{{ltt|algorithm/replace}}<br/>
+{{ltt|algorithm/replace_if}}<br/>
+{{ltt|algorithm/transform}}<br/>
 </div>
 
 |- class="row rowbottom"

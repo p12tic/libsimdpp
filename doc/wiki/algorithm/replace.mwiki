@@ -1,0 +1,27 @@
+{{simdpp/title|replace}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+  template<typename T>
+      void replace(T * first, T * last, T const & old_val, T const & new_val);
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|replace}} Replaces all elements that are equal to old_val by new_val in the range defined by {{tt|[first, last)}}. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to examine}}
+{{par | old_val | the value of elements to replace}}
+{{par | new_val | the value to use as replacement}}
+{{par end}}
+
+===Return value===
+(None)
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc replace_if}}
+{{dsc end}}

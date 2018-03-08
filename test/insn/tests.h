@@ -43,6 +43,8 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
  void test_min(TestResults& res, TestReporter& tr);
  void test_min_element(TestResults& res, TestReporter& tr);
  void test_none_of(TestResults& res, TestReporter& tr);
+ void test_replace(TestResults& res, TestReporter& tr);
+ void test_replace_if(TestResults& res, TestReporter& tr);
  void test_set(TestResults& res);
  void test_shuffle(TestResults& res);
  void test_shuffle_bytes(TestResults& res, TestReporter& tr);

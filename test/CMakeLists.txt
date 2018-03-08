@@ -88,6 +88,8 @@ set(TEST_INSN_ARCH_SOURCES
     insn/shuffle_bytes.cc
     insn/permute_generic.cc
     insn/reduce.cc
+    insn/replace.cc
+    insn/replace_if.cc
     insn/shuffle_generic.cc
     insn/test_utils.cc
     insn/tests.cc

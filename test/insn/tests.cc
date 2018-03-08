@@ -88,6 +88,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
         test_min(res,tr);
         test_min_element(res, tr);
         test_none_of(res,tr);
+        test_replace(res,tr);
+        test_replace_if(res,tr);        
         test_reduce(res, tr);
         test_transform(res, tr);
 

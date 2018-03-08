@@ -1,0 +1,27 @@
+{{simdpp/title|replace_if}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+    template<typename T, typename UnaryPredicate>
+       void replace_if(T* first, T* last, UnaryPredicate pred , const T& new_val);
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|replace_if}} Replaces all elements for which predicate p returns {{tt|true}}. in the range defined by {{tt|[first, last)}}. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to examine}}
+{{par | old_val | the value of elements to replace}}
+{{par | pred | unary predicate which returns ​true if the element value should be replaced.}}
+{{par end}}
+
+===Return value===
+(None)
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc replace}}
+{{dsc end}}
