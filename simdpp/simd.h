@@ -203,10 +203,12 @@
 #include <simdpp/algorithm/copy_n.h>
 #include <simdpp/algorithm/count.h>
 #include <simdpp/algorithm/count_if.h>
+#include <simdpp/algorithm/equal.h>
 #include <simdpp/algorithm/fill.h>
 #include <simdpp/algorithm/find.h>
 #include <simdpp/algorithm/find_if.h>
 #include <simdpp/algorithm/find_if_not.h>
+#include <simdpp/algorithm/lexicographical_compare.h>
 #include <simdpp/algorithm/max.h>
 #include <simdpp/algorithm/max_element.h>
 #include <simdpp/algorithm/min.h>

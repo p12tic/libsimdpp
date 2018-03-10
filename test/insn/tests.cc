@@ -79,10 +79,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
         test_copy_n(res,tr);
         test_count(res,tr);
         test_count_if(res,tr);
+        test_equal(res,tr);        
         test_fill(res,tr);
         test_find(res, tr);
         test_find_if(res, tr);
         test_find_if_not(res, tr);
+        test_lexicographical_compare(res,tr);
         test_max(res,tr);
         test_max_element(res, tr);
         test_min(res,tr);

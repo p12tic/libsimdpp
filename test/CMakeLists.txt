@@ -69,11 +69,13 @@ set(TEST_INSN_ARCH_SOURCES
     insn/copy_n.cc
     insn/count.cc
     insn/count_if.cc
+    insn/equal.cc
     insn/for_each.cc
     insn/fill.cc
     insn/find.cc
     insn/find_if.cc
     insn/find_if_not.cc
+    insn/lexicographical_compare.cc
     insn/math_fp.cc
     insn/math_int.cc
     insn/math_shift.cc

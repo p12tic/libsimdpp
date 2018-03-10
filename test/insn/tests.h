@@ -28,11 +28,13 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
  void test_copy_n(TestResults& res, TestReporter& tr);
  void test_count(TestResults& res, TestReporter& tr);
  void test_count_if(TestResults& res, TestReporter& tr);
+ void test_equal(TestResults& res, TestReporter& tr);
  void test_for_each(TestResults& res, TestReporter& tr);
  void test_fill(TestResults& res, TestReporter& tr);
  void test_find(TestResults& res, TestReporter& tr);
  void test_find_if(TestResults& res, TestReporter& tr);
  void test_find_if_not(TestResults& res, TestReporter& tr);
+ void test_lexicographical_compare(TestResults& res, TestReporter& tr);   
  void test_math_fp(TestResults& res, const TestOptions& opts);
  void test_math_int(TestResults& res);
  void test_math_shift(TestResults& res);

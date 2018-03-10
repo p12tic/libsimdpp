@@ -181,10 +181,12 @@ the compiler will generate.
 {{ltt|algorithm/copy_n}}<br/>
 {{ltt|algorithm/count}}<br/>
 {{ltt|algorithm/count_if}}<br/>
+{{ltt|algorithm/equal}}<br/>
 {{ltt|algorithm/fill}}<br/>
 {{ltt|algorithm/find}}<br/>
 {{ltt|algorithm/find_if}}<br/>
 {{ltt|algorithm/find_if_not}}<br/>
+{{ltt|algorithm/lexicographical_compare}}<br/>
 {{ltt|algorithm/max}}<br/>
 {{ltt|algorithm/max_element}}<br/>
 {{ltt|algorithm/min}}<br/>

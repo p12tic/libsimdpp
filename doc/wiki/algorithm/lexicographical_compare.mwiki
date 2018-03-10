@@ -1,0 +1,34 @@
+{{simdpp/title|lexicographical_compare}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+      template<typename T>
+         bool lexicographical_compare(const T* first1, const T* last1, const T* first2, const T* last2);
+}}
+{{dcl | num=2 |
+
+      template<typename T, typename BinarayPredicate>
+         bool lexicographical_compare(const T* first1, const T* last1, const T* first2, const T* last2,BinarayPredicate comp);
+}}
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|lexicographical_compare}} Checks if the first range {{c|[first1, last1)}} is lexicographically ''less'' than the second range {{c|[first2, last2)}}. 
+
+@1@ Elements are compared using {{tt|operator<}}.
+@2@ Elements are compared using the given binary comparison function {{tt|comp}}.
+
+===Parameters===
+{{par begin}}
+{{par | first1, last1 | the first range of elements to examine}}
+{{par | first2, last2 | the second range of elements to examine}}
+{{par | comp | comparaison operator}}
+{{par end}}
+
+===Return value===
+{{c|true}} if the first range is lexicographically ''less'' than the second.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc equal }}
+{{dsc end}}
