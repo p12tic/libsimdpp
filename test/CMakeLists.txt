@@ -96,6 +96,7 @@ set(TEST_INSN_ARCH_SOURCES
     insn/test_utils.cc
     insn/tests.cc
     insn/transform.cc
+    insn/transform_reduce.cc
     insn/transpose.cc
 )
 

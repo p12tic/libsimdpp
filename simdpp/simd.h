@@ -218,6 +218,7 @@
 #include <simdpp/algorithm/replace.h>
 #include <simdpp/algorithm/replace_if.h>
 #include <simdpp/algorithm/transform.h>
+#include <simdpp/algorithm/transform_reduce.h>
 
 
 /** @def SIMDPP_NO_DISPATCHER

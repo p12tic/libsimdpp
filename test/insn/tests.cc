@@ -94,6 +94,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
         test_replace_if(res,tr);        
         test_reduce(res, tr);
         test_transform(res, tr);
+        test_transform_reduce(res, tr);
 
     }
 

@@ -57,6 +57,7 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
  void test_test_utils(TestResults& res);
  void test_transpose(TestResults& res);
  void test_transform(TestResults& res, TestReporter& tr);
+ void test_transform_reduce(TestResults& res, TestReporter& tr);  
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 

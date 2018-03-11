@@ -196,6 +196,7 @@ the compiler will generate.
 {{ltt|algorithm/replace}}<br/>
 {{ltt|algorithm/replace_if}}<br/>
 {{ltt|algorithm/transform}}<br/>
+{{ltt|algorithm/transform_reduce}}<br/>
 </div>
 
 |- class="row rowbottom"
