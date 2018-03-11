@@ -61,7 +61,7 @@ namespace simdpp {
                 *out++ = f(*first++);
             }
             //---main simd loop
-            if (detail::is_aligned(out, alignment)) //TODO reach the first aligned adress
+            if (detail::is_aligned(out, alignment))
             {
                 for (; i < size_simd_loop; i += simd_size)
                 {
@@ -134,7 +134,7 @@ namespace simdpp {
             }
 
             //---main simd loop
-            if (detail::is_aligned(first1, alignment) && detail::is_aligned(first2, alignment) && detail::is_aligned(out, alignment))//TODO reach the first aligned adress
+            if (detail::is_aligned(first2, alignment) && detail::is_aligned(out, alignment))
             {
                 for (; i < size_simd_loop; i += simd_size)
                 {
@@ -150,7 +150,7 @@ namespace simdpp {
             {
                 for (; i < size_simd_loop; i += simd_size)
                 {
-                    simd_type_T1 element1 = load_u(first1);
+                    simd_type_T1 element1 = load(first1);
                     simd_type_T2 element2 = load_u(first2);
                     store_u(out, f(element1, element2));
                     first1 += simd_size;

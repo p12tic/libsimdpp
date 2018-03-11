@@ -15,8 +15,8 @@
 
 {{tt|equal}} Returns {{c|true}} if the range {{tt|[first1,last1)}} is equal to the range {{tt|[first2, first2 + (last1 - first1))}} according to pred and {{c|false}} otherwise
 
-1) Returns {{c|true}} if the range {{tt|[first1,last1)}} is equal to the range {{tt|[first2, first2 + (last1 - first1))}}, and {{c|false}} otherwise
-2) The binary operation BinaryPredicate is applied to pairs of elements from two ranges: one defined by [first1, last1) and the other beginning at first2.
+@1@ Returns {{c|true}} if the range {{tt|[first1,last1)}} is equal to the range {{tt|[first2, first2 + (last1 - first1))}}, and {{c|false}} otherwise
+@2@ The binary operation BinaryPredicate is applied to pairs of elements from two ranges: one defined by [first1, last1) and the other beginning at first2.
 
 ===Parameters===
 {{par begin}}

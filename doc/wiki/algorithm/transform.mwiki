@@ -14,8 +14,8 @@ template<typename T1, typename T2, typename U, typename BinOp>
 
 {{tt|transform}} applies the given function to a range and stores the result in another range, beginning at out.
 
-1) The unary operation unary_op is applied to the range defined by [first1, last1).
-2) The binary operation binary_op is applied to pairs of elements from two ranges: one defined by [first1, last1) and the other beginning at first2.
+@1@ The unary operation unary_op is applied to the range defined by [first1, last1).
+@2@ The binary operation binary_op is applied to pairs of elements from two ranges: one defined by [first1, last1) and the other beginning at first2.
 
 ===Parameters===
 {{par begin}}

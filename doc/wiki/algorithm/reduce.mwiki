@@ -12,8 +12,8 @@ template<typename T, typename BinOp>
 {{dcl end}}
 {{misc/navbar}}
 
-1) Computes the sum over elements in the given Range [first,last) and the initial value init.
-2) Reduces the range [first,last), possibly permuted and aggregated in unspecified manner, along with the initial value init over binary_op.
+@1@ Computes the sum over elements in the given Range [first,last) and the initial value init.
+@2@ Reduces the range [first,last), possibly permuted and aggregated in unspecified manner, along with the initial value init over binary_op.
 
 ===Notes===
 The behavior is non-deterministic if binary_op is not associative or not commutative.

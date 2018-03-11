@@ -119,7 +119,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
         test_reducebinop_type<double>(ts, tr);
         test_reducebinop_type<float>(ts, tr);
-        //TR Why no operator * for above types at least for uint64_t and int64_t
+        //TR Why no operator * for above types at least for uint64_t
+        //and int64_t //FIXME
         //test_reducebinop_type<uint64_t>(ts, tr);
         //test_reducebinop_type<int64_t>(ts, tr);
         //test_reducebinop_type<uint32_t>(ts, tr);
