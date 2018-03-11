@@ -9,6 +9,7 @@
 #include "../utils/test_results.h"
 #include <vector>
 #include <algorithm>
+#include <numeric>
 #include <simdpp/simd.h>
 #include <simdpp/algorithm/transform.h>
 

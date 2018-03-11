@@ -10,6 +10,7 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <numeric>
 #include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {

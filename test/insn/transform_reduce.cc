@@ -8,6 +8,7 @@
 #include "../utils/test_helpers.h"
 #include "../utils/test_results.h"
 #include <vector>
+#include <numeric>
 #include <simdpp/simd.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
