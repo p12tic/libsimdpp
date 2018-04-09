@@ -1,4 +1,5 @@
 /*  Copyright (C) 2018  Povilas Kanapickas <povilas@radix.lt>
+    Copyright (C) 2018  Thomas Retornaz <thomas.retornaz@mines-paris.org>
 
     Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,77 +11,123 @@
 #include <vector>
 #include <algorithm>
 #include <simdpp/simd.h>
+//algorithm
+#include <simdpp/algorithm/all_of.h>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-   template<typename T>
-      struct UnaryPredicateEqualValue
-   {
-   public:
-      UnaryPredicateEqualValue(T val) :m_val(val), m_val_simd(simdpp::splat(val)) {}
-      using simd_mask_T = typename simdpp::typetraits<T>::simd_mask_type;
-      using simd_type_T = typename simdpp::typetraits<T>::simd_type;
+template<typename T>
+    struct UnaryPredicateEqualValue
+{
+public:
+    UnaryPredicateEqualValue(T val) :m_val(val), m_val_simd(simdpp::splat(val)) {}
+    using simd_mask_T = typename simdpp::simd_traits<T>::simd_mask_type;
+    using simd_type_T = typename simdpp::simd_traits<T>::simd_type;
 
-      bool                  operator()(T a)           const { return a == m_val; }
-      simd_mask_T operator()(const simd_type_T& a) const { return cmp_eq(a, m_val_simd); }
+    bool                  operator()(T a)           const { return a == m_val; }
+    simd_mask_T operator()(const simd_type_T& a) const { return cmp_eq(a, m_val_simd); }
 
-      T m_val;
-      simd_type_T m_val_simd;
-   };
+    T m_val;
+    simd_type_T m_val_simd;
+};
 
+
+
+template<typename T>
+struct AllOffFuzzingTest
+{
+    AllOffFuzzingTest(std::initializer_list<std::size_t> sizes = {}) :m_sizes(sizes), m_generator(10) {}
+    void operator()(TestReporter& tr)
+    {
+        const auto predEqualTen = UnaryPredicateEqualValue<T>((T)10);
+        const auto predEqualFive = UnaryPredicateEqualValue<T>((T)5);
+        for (auto size : m_sizes)
+        {
+            {//aligned input/ouput predicate match
+                const auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
+                auto res_std=std::all_of(cbegin(input), cend(input), predEqualTen);
+                auto res_simd=simdpp::all_of(input.data(), input.data() + input.size(),predEqualTen);
+                TEST_EQUAL(tr, res_std, res_simd);
+            }
+            {//non aligned input/ouput predicate match
+                const auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
+                auto res_std = std::all_of(cbegin(input), cend(input), predEqualTen);
+                auto res_simd = simdpp::all_of(input.data(), input.data() + input.size(), predEqualTen);
+                TEST_EQUAL(tr, res_std, res_simd);
+            }
+
+            {//aligned input/ouput predicate fail
+                const auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
+                auto res_std = std::all_of(cbegin(input), cend(input), predEqualFive);
+                auto res_simd = simdpp::all_of(input.data(), input.data() + input.size(), predEqualFive);
+                TEST_EQUAL(tr, res_std, res_simd);
+            }
+            {//non aligned input/ouput predicate fail
+                const auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
+                auto res_std = std::all_of(cbegin(input), cend(input), predEqualFive);
+                auto res_simd = simdpp::all_of(input.data(), input.data() + input.size(), predEqualFive);
+                TEST_EQUAL(tr, res_std, res_simd);
+            }
+        }
+    }
+    std::vector<std::size_t> m_sizes;
+    GeneratorConstant<T> m_generator;
+};
       
-   template<typename T>
-      void test_all_of_type(TestResultsSet& ts, TestReporter& tr)
-   {
-      using namespace simdpp;
-      using vector_t = std::vector<T>;
-      using vector_aligned_t = std::vector<T, aligned_allocator<T, typetraits<T>::alignment>>;
+template<typename T>
+void test_all_of_type(TestResultsSet& ts, TestReporter& tr)
+{
+    using namespace simdpp;
+    using vector_t = std::vector<T>;
+    using vector_aligned_t = std::vector<T, aligned_allocator<T, simd_traits<T>::alignment>>;
       
-      {//test with predicate
-         const auto predEqualTen = UnaryPredicateEqualValue<T>((T)10);
-         const auto predEqualFive = UnaryPredicateEqualValue<T>((T)5);
-         { //test prologue
-            vector_t ivect = { (T)10,(T)10 };
-            auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualTen);
-            auto resstd = std::all_of(begin(ivect), end(ivect), predEqualTen);
-            TEST_EQUAL(tr, res, resstd);
-         }
-         { //test prologue
-            vector_t ivect = { (T)10,(T)10 };
-            auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualFive);
-            auto resstd = std::all_of(begin(ivect), end(ivect), predEqualFive);
-            TEST_EQUAL(tr, res, resstd);
-         }
-         { //test main loop and epilogue on aligned vector
-            vector_aligned_t ivect(50, (T)10);
-            auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualTen);
-            auto resstd = std::all_of(begin(ivect), end(ivect), predEqualTen);
-            TEST_EQUAL(tr, res, resstd);
-         }
-         { //test main loop and epilogue on aligned vector
-            vector_aligned_t ivect(50, (T)10);
-            auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualFive);
-            auto resstd = std::all_of(begin(ivect), end(ivect), predEqualFive);
-            TEST_EQUAL(tr, res, resstd);
-         }
-      }
+    {//test with predicate
+        const auto predEqualTen = UnaryPredicateEqualValue<T>((T)10);
+        const auto predEqualFive = UnaryPredicateEqualValue<T>((T)5);
+        { //test prologue
+        vector_t ivect = { (T)10,(T)10 };
+        auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualTen);
+        auto resstd = std::all_of(begin(ivect), end(ivect), predEqualTen);
+        TEST_EQUAL(tr, res, resstd);
+        }
+        { //test prologue
+        vector_t ivect = { (T)10,(T)10 };
+        auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualFive);
+        auto resstd = std::all_of(begin(ivect), end(ivect), predEqualFive);
+        TEST_EQUAL(tr, res, resstd);
+        }
+        { //test main loop and epilogue on aligned vector
+        vector_aligned_t ivect(50, (T)10);
+        auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualTen);
+        auto resstd = std::all_of(begin(ivect), end(ivect), predEqualTen);
+        TEST_EQUAL(tr, res, resstd);
+        }
+        { //test main loop and epilogue on aligned vector
+        vector_aligned_t ivect(50, (T)10);
+        auto res = all_of(ivect.data(), ivect.data() + ivect.size(), predEqualFive);
+        auto resstd = std::all_of(begin(ivect), end(ivect), predEqualFive);
+        TEST_EQUAL(tr, res, resstd);
+        }
+        AllOffFuzzingTest<T> fuzzing({ 1,3,5,8,21,55,89,144 });//0 generate null ptr inputs/ouput
+        fuzzing(tr);
+    }
       
-   }
+}
 
-   void test_all_of(TestResults& res, TestReporter& tr)
-   {
-      using namespace simdpp;
-      TestResultsSet& ts = res.new_results_set("all_of");
-      //test_all_of_type<double>(ts, tr); //FIXME
-      //test_all_of_type<float>(ts, tr); //FIXME
-      test_all_of_type<uint64_t>(ts, tr);
-      test_all_of_type<int64_t>(ts, tr);
-      test_all_of_type<uint32_t>(ts, tr);
-      test_all_of_type<int32_t>(ts, tr);
-      test_all_of_type<uint16_t>(ts, tr);
-      test_all_of_type<int16_t>(ts, tr);
-      test_all_of_type<uint8_t>(ts, tr);
-      test_all_of_type<int8_t>(ts, tr);
-   }
+void test_all_of(TestResults& res, TestReporter& tr)
+{
+    using namespace simdpp;
+    TestResultsSet& ts = res.new_results_set("all_of");
+    //test_all_of_type<double>(ts, tr); //FIXME
+    //test_all_of_type<float>(ts, tr); //FIXME
+    test_all_of_type<uint64_t>(ts, tr);
+    test_all_of_type<int64_t>(ts, tr);
+    test_all_of_type<uint32_t>(ts, tr);
+    test_all_of_type<int32_t>(ts, tr);
+    test_all_of_type<uint16_t>(ts, tr);
+    test_all_of_type<int16_t>(ts, tr);
+    test_all_of_type<uint8_t>(ts, tr);
+    test_all_of_type<int8_t>(ts, tr);
+}
 
 } // namespace SIMDPP_ARCH_NAMESPACE  

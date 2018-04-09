@@ -196,31 +196,6 @@
 #include <simdpp/operators/i_shift_r.h>
 #include <simdpp/operators/i_sub.h>
 
-//algorithm
-#include <simdpp/algorithm/all_of.h>
-#include <simdpp/algorithm/any_of.h>
-#include <simdpp/algorithm/copy.h>
-#include <simdpp/algorithm/copy_n.h>
-#include <simdpp/algorithm/count.h>
-#include <simdpp/algorithm/count_if.h>
-#include <simdpp/algorithm/equal.h>
-#include <simdpp/algorithm/fill.h>
-#include <simdpp/algorithm/find.h>
-#include <simdpp/algorithm/find_if.h>
-#include <simdpp/algorithm/find_if_not.h>
-#include <simdpp/algorithm/lexicographical_compare.h>
-#include <simdpp/algorithm/max.h>
-#include <simdpp/algorithm/max_element.h>
-#include <simdpp/algorithm/min.h>
-#include <simdpp/algorithm/min_element.h>
-#include <simdpp/algorithm/none_of.h>
-#include <simdpp/algorithm/reduce.h>
-#include <simdpp/algorithm/replace.h>
-#include <simdpp/algorithm/replace_if.h>
-#include <simdpp/algorithm/transform.h>
-#include <simdpp/algorithm/transform_reduce.h>
-
-
 /** @def SIMDPP_NO_DISPATCHER
     Disables internal dispatching functionality. If the internal dispathcher
     mechanism is not needed, the user can define the @c SIMDPP_NO_DISPATCHER.

@@ -1,4 +1,5 @@
 /*  Copyright (C) 2018  Povilas Kanapickas <povilas@radix.lt>
+    Copyright (C) 2018  Thomas Retornaz <thomas.retornaz@mines-paris.org>
 
     Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
@@ -15,21 +16,21 @@
 #include <simdpp/algorithm/any_of.h>
 
 namespace simdpp {
-   namespace SIMDPP_ARCH_NAMESPACE {
+namespace SIMDPP_ARCH_NAMESPACE {
 
-      template<typename T, typename UnaryPredicate>
-         bool none_of(T const* first, T const* last, UnaryPredicate pred)
-      {
-#ifndef NDEBUG //precondition debug mode           
-         if (!first)
-            throw std::runtime_error("none_of - null ptr first.");
-         if (!last)
-            throw std::runtime_error("none_of - null ptr last.");
+template<typename T, typename UnaryPredicate>
+bool none_of(T const* first, T const* last, UnaryPredicate pred)
+{
+#ifndef SIMDPP_DEBUG  //precondition debug mode           
+    if (!first)
+    throw std::runtime_error("none_of - null ptr first.");
+    if (!last)
+    throw std::runtime_error("none_of - null ptr last.");
 #endif
-         return !any_of(first,last,pred);
-      }
+    return !any_of(first,last,pred);
+}
 
-   } // namespace SIMDPP_ARCH_NAMESPACE
+} // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
 #endif //LIBSIMDPP_SIMDPP_ALGORITHM_NONE_OF_H
