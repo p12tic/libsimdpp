@@ -41,14 +41,14 @@ struct MinElementFuzzingTest
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
                 std::reverse(std::begin(input), std::end(input));
-                auto res_std = std::min_element(cbegin(input), cend(input));
+                auto res_std = std::min_element(input.cbegin(), input.cend());
                 auto res_simd = simdpp::min_element(input.data(), input.data() + input.size());
                 TEST_EQUAL(tr, *res_std, *res_simd);
             }
             {//unaligned input/ouput 
                 auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
                 std::reverse(std::begin(input), std::end(input));
-                auto res_std = std::min_element(cbegin(input), cend(input));
+                auto res_std = std::min_element(input.cbegin(), input.cend());
                 auto res_simd = simdpp::min_element(input.data(), input.data() + input.size());
                 TEST_EQUAL(tr, *res_std, *res_simd);
 
@@ -56,7 +56,7 @@ struct MinElementFuzzingTest
             {//aligned input/ouput + predicate 
                 auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
                 std::reverse(std::begin(input), std::end(input));
-                auto res_std = std::min_element(cbegin(input), cend(input), cmpOPGreater);
+                auto res_std = std::min_element(input.cbegin(), input.cend(), cmpOPGreater);
                 auto res_simd = simdpp::min_element(input.data(), input.data() + input.size(), cmpOPGreater);
                 TEST_EQUAL(tr, *res_std, *res_simd);
 
@@ -64,7 +64,7 @@ struct MinElementFuzzingTest
             {//unaligned input/ouput + predicate 
                 auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
                 std::reverse(std::begin(input), std::end(input));
-                auto res_std = std::min_element(cbegin(input), cend(input), cmpOPGreater);
+                auto res_std = std::min_element(input.cbegin(), input.cend(), cmpOPGreater);
                 auto res_simd = simdpp::min_element(input.data(), input.data() + input.size(), cmpOPGreater);
                 TEST_EQUAL(tr, *res_std, *res_simd);
             }

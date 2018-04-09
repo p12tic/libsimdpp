@@ -29,18 +29,16 @@ struct LexicographicalCompareFuzzingTest
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorIota<T>>(size, m_generator1));
                 auto input2(DataGeneratorAligned<T, GeneratorIota<T>>(size, m_generator2));
-                auto res_std = std::lexicographical_compare(cbegin(input), cend(input), cbegin(input2), cend(input2));
+                auto res_std = std::lexicographical_compare(input.cbegin(), input.cend(), input2.cbegin(), input2.cend());
                 auto res_simd = simdpp::lexicographical_compare(input.data(), input.data() + input.size(), input2.data(), input2.data() + input2.size() );
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//unaligned input/ouput 
                 auto input(DataGenerator<T, GeneratorIota<T>>(size, m_generator1));
                 auto input2(DataGenerator<T, GeneratorIota<T>>(size, m_generator2));
-                auto res_std = std::lexicographical_compare(cbegin(input), cend(input), cbegin(input2), cend(input2));
+                auto res_std = std::lexicographical_compare(input.cbegin(), input.cend(), input2.cbegin(), input2.cend());
                 auto res_simd = simdpp::lexicographical_compare(input.data(), input.data() + input.size(), input2.data(), input2.data() + input2.size());
                 TEST_EQUAL(tr, res_std, res_simd);
-
-
             }
         }
     }

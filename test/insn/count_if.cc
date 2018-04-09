@@ -44,14 +44,14 @@ struct CountIfFuzzingTest
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
                 input[(input.size() - 1) % 2] = (T)0;
-                auto res_std = std::count_if(cbegin(input), cend(input),pred);
+                auto res_std = std::count_if(input.cbegin(), input.cend(),pred);
                 auto res_simd = simdpp::count_if(input.data(), input.data() + input.size(), pred);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//unaligned input/ouput 
                 auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
                 input[(input.size() - 1) % 2] = (T)0;
-                auto res_std = std::count_if(cbegin(input), cend(input), pred);
+                auto res_std = std::count_if(input.cbegin(), input.cend(), pred);
                 auto res_simd = simdpp::count_if(input.data(), input.data() + input.size(), pred);
                 TEST_EQUAL(tr, res_std, res_simd);
 

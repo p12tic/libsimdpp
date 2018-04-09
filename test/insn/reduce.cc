@@ -51,14 +51,14 @@ struct ReduceFuzzingTest
         {
             {//aligned input/ouput
                 const auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
-                auto res_std = std::accumulate(cbegin(input), cend(input), init);
+                auto res_std = std::accumulate(input.cbegin(), input.cend(), init);
                 //auto res_std=std::reduce(cbegin(input), cend(input),init);
                 auto res_simd = simdpp::reduce(input.data(), input.data() + input.size(), init);
                 TEST_EQUAL(tr, approximatelyEqual(res_std, res_simd, 10 * std::numeric_limits<T>::epsilon()), true);
             }
             {//non aligned input/ouput
                 const auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
-                auto res_std = std::accumulate(cbegin(input), cend(input), init);
+                auto res_std = std::accumulate(input.cbegin(), input.cend(), init);
                 //auto res_std = std::reduce(cbegin(input), cend(input), init);
                 auto res_simd = simdpp::reduce(input.data(), input.data() + input.size(), init);
                 TEST_EQUAL(tr, approximatelyEqual(res_std, res_simd, 10 * std::numeric_limits<T>::epsilon()), true);
@@ -83,14 +83,14 @@ struct ReduceBinaryFuzzingTest
             {//aligned input/ouput
                 const auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
                 //auto res_std = std::reduce(cbegin(input), cend(input),init, opPlus);
-                auto res_std = std::accumulate(cbegin(input), cend(input), init, opPlus);
+                auto res_std = std::accumulate(input.cbegin(), input.cend(), init, opPlus);
                 auto res_simd = simdpp::reduce(input.data(), input.data() + input.size(), init, neutral, opPlus);
                 TEST_EQUAL(tr, approximatelyEqual(res_std, res_simd, 10 * std::numeric_limits<T>::epsilon()), true);
             }
             {//non aligned input/ouput
                 const auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
                 //auto res_std = std::reduce(cbegin(input), cend(input), init, opPlus);
-                auto res_std = std::accumulate(cbegin(input), cend(input), init, opPlus);
+                auto res_std = std::accumulate(input.cbegin(), input.cend(), init, opPlus);
                 auto res_simd = simdpp::reduce(input.data(), input.data() + input.size(), init, neutral, opPlus);
                 TEST_EQUAL(tr, approximatelyEqual(res_std, res_simd, 10 * std::numeric_limits<T>::epsilon()), true);
             }

@@ -27,14 +27,14 @@ struct EqualFuzzingTest
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorIota<T>>(size, m_generator));
                 auto input2(DataGeneratorAligned<T, GeneratorIota<T>>(size, m_generator));
-                auto res_std = std::equal(cbegin(input), cend(input), cbegin(input2));
+                auto res_std = std::equal(input.cbegin(), input.cend(), input2.cbegin());
                 auto res_simd = simdpp::equal(input.data(), input.data() + input.size(), input2.data());
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//unaligned input/ouput 
                 auto input(DataGenerator<T, GeneratorIota<T>>(size, m_generator));
                 auto input2(DataGenerator<T, GeneratorIota<T>>(size, m_generator));
-                auto res_std = std::equal(cbegin(input), cend(input), cbegin(input2));
+                auto res_std = std::equal(input.cbegin(), input.cend(),input2.cbegin());
                 auto res_simd = simdpp::equal(input.data(), input.data() + input.size(), input2.data());
                 TEST_EQUAL(tr, res_std, res_simd);
 

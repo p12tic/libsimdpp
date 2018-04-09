@@ -352,7 +352,8 @@ struct GeneratorRandom<T, typename std::enable_if<std::is_floating_point<T>::val
 };
 
 template<typename T, class Generator>
-decltype(auto) DataGeneratorAligned(std::size_t size, Generator gen)
+//decltype(auto) DataGeneratorAligned(std::size_t size, Generator gen)
+std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> DataGeneratorAligned(std::size_t size, Generator gen)   
 {
     std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> vect(size);
     std::generate(vect.begin(), vect.end(), gen);
@@ -360,7 +361,8 @@ decltype(auto) DataGeneratorAligned(std::size_t size, Generator gen)
 }
 
 template<typename T, class  Generator>
-decltype(auto) DataGenerator(std::size_t size, Generator gen)
+//decltype(auto) DataGenerator(std::size_t size, Generator gen)
+std::vector<T> DataGenerator(std::size_t size, Generator gen)  
 {
     std::vector<T> vect(size);
     std::generate(vect.begin(), vect.end(), gen);
@@ -787,8 +789,8 @@ void test_cmp_equal_collections_impl(TestReporter& tr,
         tr.out() << " Container1 Size is:"<<a1.size()<<", Container2 Size is:" << a2.size()<<"\n";
         return; //NO NEED TO GO FURTHER
     }
-    auto it1beg = cbegin(a1), it1end = cend(a1);
-    auto it2beg = cbegin(a2);
+    auto it1beg = a1.cbegin(), it1end = a1.cend();
+    auto it2beg = a2.begin();
     for (; it1beg != it1end; ++it1beg, ++it2beg)
     {
         if(*it1beg!=*it2beg) //just log the first failure
@@ -804,7 +806,7 @@ template<class Container1, class Container2>
 void test_cmp_equal_collections(TestReporter& tr, const Container1& a1, const Container2& a2,
     bool expected_equal, unsigned line, const char* file)
 {
-    static_assert(std::is_same<Container1::value_type,Container2::value_type>::value, //TR to be relaxed for comparable types?
+    static_assert(std::is_same<typename Container1::value_type,typename Container2::value_type>::value, //TR to be relaxed for comparable types?
         "Invalid types for comparison");
     test_cmp_equal_collections_impl(tr, a1, a2, expected_equal,line, file);
 }

@@ -45,27 +45,27 @@ struct NoneOffFuzzingTest
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
                 input[(size_t)(rand() % input.size())] = 10;
-                auto res_std = std::none_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::none_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::none_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//non aligned input/ouput
                 auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
                 input[(size_t)(rand() % input.size())] = 10;
-                auto res_std = std::none_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::none_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::none_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
 
             {//aligned input/ouput
                 auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std = std::none_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::none_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::none_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//non aligned input/ouput
                 auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std = std::none_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::none_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::none_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }

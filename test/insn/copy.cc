@@ -30,7 +30,7 @@ struct CopyFuzzingTest
                 auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
                 std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> expected(size);
                 std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> output(size);
-                std::copy(cbegin(input),cend(input),begin(expected));
+                std::copy(input.cbegin(), input.cend(),begin(expected));
                 simdpp::copy(input.data(), input.data()+input.size(), output.data());
                 TEST_EQUAL_COLLECTIONS(tr,output,expected);
             }
@@ -38,7 +38,7 @@ struct CopyFuzzingTest
                 auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
                 std::vector<T> expected(size);
                 std::vector<T> output(size);
-                std::copy(cbegin(input), cend(input), begin(expected));
+                std::copy(input.cbegin(), input.cend(), begin(expected));
                 simdpp::copy(input.data(), input.data() + input.size(), output.data());
                 TEST_EQUAL_COLLECTIONS(tr, output, expected);
             }

@@ -10,6 +10,7 @@
 #include "../utils/test_results.h"
 #include <vector>
 #include <algorithm>
+#include <iterator>
 #include <simdpp/simd.h>
 //algorithm
 #include <simdpp/algorithm/all_of.h>
@@ -45,26 +46,26 @@ struct AllOffFuzzingTest
         {
             {//aligned input/ouput predicate match
                 const auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std=std::all_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std=std::all_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd=simdpp::all_of(input.data(), input.data() + input.size(),predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//non aligned input/ouput predicate match
                 const auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std = std::all_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std=std::all_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::all_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
 
             {//aligned input/ouput predicate fail
                 const auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std = std::all_of(cbegin(input), cend(input), predEqualFive);
+                auto res_std=std::all_of(input.cbegin(), input.cend(), predEqualFive);
                 auto res_simd = simdpp::all_of(input.data(), input.data() + input.size(), predEqualFive);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//non aligned input/ouput predicate fail
                 const auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std = std::all_of(cbegin(input), cend(input), predEqualFive);
+                auto res_std=std::all_of(input.cbegin(), input.cend(), predEqualFive);                
                 auto res_simd = simdpp::all_of(input.data(), input.data() + input.size(), predEqualFive);
                 TEST_EQUAL(tr, res_std, res_simd);
             }

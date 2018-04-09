@@ -41,26 +41,26 @@ struct MaxElementFuzzingTest
         {
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
-                auto res_std = std::max_element(cbegin(input), cend(input));
+                auto res_std = std::max_element(input.cbegin(), input.cend());
                 auto res_simd = simdpp::max_element(input.data(), input.data() + input.size());
                 TEST_EQUAL(tr, *res_std,*res_simd);
             }
             {//unaligned input/ouput 
                 auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
-                auto res_std = std::max_element(cbegin(input), cend(input));
+                auto res_std = std::max_element(input.cbegin(), input.cend());
                 auto res_simd = simdpp::max_element(input.data(), input.data() + input.size());
                 TEST_EQUAL(tr, *res_std, *res_simd);
 
             }
             {//aligned input/ouput + predicate 
                 auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
-                auto res_std = std::max_element(cbegin(input), cend(input), cmpOPGreater);
+                auto res_std = std::max_element(input.cbegin(), input.cend(), cmpOPGreater);
                 auto res_simd = simdpp::max_element(input.data(), input.data() + input.size(), cmpOPGreater);
                 TEST_EQUAL(tr, *res_std, *res_simd);
             }
             {//unaligned input/ouput + predicate 
                 auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
-                auto res_std = std::max_element(cbegin(input), cend(input), cmpOPGreater);
+                auto res_std = std::max_element(input.cbegin(), input.cend(), cmpOPGreater);
                 auto res_simd = simdpp::max_element(input.data(), input.data() + input.size(), cmpOPGreater);
                 TEST_EQUAL(tr, *res_std, *res_simd);
             }

@@ -34,7 +34,7 @@ typename Container::value_type ExtractMaxFromContainer(const Container& cont)
 {
     typedef typename Container::value_type value_type; 
     value_type current = std::numeric_limits<value_type>::lowest();
-    auto it=cbegin(cont),itend=cend(cont);
+    auto it=cont.cbegin(),itend=cont.cend();
     for (; it != itend; ++it)
     {
         current=std::max(current,*it);

@@ -65,7 +65,7 @@ struct TransformUnaryFuzzingTest
                 const auto input(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
                 std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> expected(size);
                 std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> output(size);
-                std::transform(cbegin(input), cend(input), begin(expected), opPlusOne);
+                std::transform(input.cbegin(), input.cend(),expected.begin(), opPlusOne);
                 simdpp::transform(input.data(), input.data() + input.size(), output.data(), opPlusOne);
                 TEST_EQUAL_COLLECTIONS(tr, output, expected);
             }
@@ -73,7 +73,7 @@ struct TransformUnaryFuzzingTest
                 const auto input(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
                 std::vector<T> expected(size);
                 std::vector<T> output(size);
-                std::transform(cbegin(input), cend(input), begin(expected), opPlusOne);
+                std::transform(input.cbegin(), input.cend(),expected.begin(), opPlusOne);
                 simdpp::transform(input.data(), input.data() + input.size(), output.data(), opPlusOne);
                 TEST_EQUAL_COLLECTIONS(tr, output, expected);
             }
@@ -97,7 +97,7 @@ struct TransformBinaryFuzzingTest
                 const auto input2(DataGeneratorAligned<T, GeneratorRandom<T>>(size, m_generator));
                 std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> expected(size);
                 std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> output(size);
-                std::transform(cbegin(input1), cend(input1), cbegin(input2), begin(expected), opPlus);
+                std::transform(input1.cbegin(), input1.cend(), input2.cbegin(), expected.begin(), opPlus);
                 simdpp::transform(input1.data(), input1.data() + input1.size(), input2.data(), output.data(), opPlus);
                 TEST_EQUAL_COLLECTIONS(tr, output, expected);
             }
@@ -106,7 +106,7 @@ struct TransformBinaryFuzzingTest
                 const auto input2(DataGenerator<T, GeneratorRandom<T>>(size, m_generator));
                 std::vector<T> expected(size);
                 std::vector<T> output(size);
-                std::transform(cbegin(input1), cend(input1), cbegin(input2), begin(expected), opPlus);
+                std::transform(input1.cbegin(), input1.cend(), input2.cbegin(), expected.begin(), opPlus);
                 simdpp::transform(input1.data(), input1.data() + input1.size(), input2.data(), output.data(), opPlus);
                 TEST_EQUAL_COLLECTIONS(tr, output, expected);
             }

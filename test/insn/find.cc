@@ -27,13 +27,13 @@ struct FindFuzzingTest
             const auto val = ((size - 1) / 2)+1;
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorIota<T>>(size, m_generator));
-                auto res_std = std::find(cbegin(input), cend(input), val);
+                auto res_std = std::find(input.cbegin(), input.cend(), val);
                 auto res_simd = simdpp::find(input.data(), input.data() + input.size(),val);
                 TEST_EQUAL(tr, *res_std, *res_simd);
             }
             {//unaligned input/ouput 
                 auto input(DataGenerator<T, GeneratorIota<T>>(size, m_generator));
-                auto res_std = std::find(cbegin(input), cend(input), val);
+                auto res_std = std::find(input.cbegin(), input.cend(), val);
                 auto res_simd = simdpp::find(input.data(), input.data() + input.size(), val);
                 TEST_EQUAL(tr, *res_std, *res_simd);
             }

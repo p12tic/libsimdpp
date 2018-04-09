@@ -46,27 +46,27 @@ struct AnyOffFuzzingTest
             {//aligned input/ouput predicate match
                 auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
                 input[(size_t)(rand() % input.size())]=10;
-                auto res_std = std::any_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::any_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::any_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//non aligned input/ouput predicate match
                 auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
                 input[(size_t)(rand() % input.size())] = 10;
-                auto res_std = std::any_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::any_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::any_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
 
             {//aligned input/ouput predicate fail
                 auto input(DataGeneratorAligned<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std = std::any_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::any_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::any_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }
             {//non aligned input/ouput predicate fail
                 auto input(DataGenerator<T, GeneratorConstant<T>>(size, m_generator));
-                auto res_std = std::any_of(cbegin(input), cend(input), predEqualTen);
+                auto res_std = std::any_of(input.cbegin(), input.cend(), predEqualTen);
                 auto res_simd = simdpp::any_of(input.data(), input.data() + input.size(), predEqualTen);
                 TEST_EQUAL(tr, res_std, res_simd);
             }

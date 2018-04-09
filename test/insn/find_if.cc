@@ -42,13 +42,13 @@ struct FindIfFuzzingTest
             const auto pred = UnaryPredicateSupValue<T>((T)((size - 1) / 2));
             {//aligned input/ouput 
                 auto input(DataGeneratorAligned<T, GeneratorIota<T>>(size, m_generator));
-                auto res_std = std::find_if(cbegin(input), cend(input), pred);
+                auto res_std = std::find_if(input.cbegin(), input.cend(),pred);
                 auto res_simd = simdpp::find_if(input.data(), input.data() + input.size(), pred);
                 TEST_EQUAL(tr, *res_std, *res_simd);
             }
             {//unaligned input/ouput 
                 auto input(DataGenerator<T, GeneratorIota<T>>(size, m_generator));
-                auto res_std = std::find_if(cbegin(input), cend(input), pred);
+                auto res_std = std::find_if(input.cbegin(), input.cend(), pred);
                 auto res_simd = simdpp::find_if(input.data(), input.data() + input.size(), pred);
                 TEST_EQUAL(tr, *res_std, *res_simd);
 
