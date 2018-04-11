@@ -21,13 +21,13 @@ struct BinaryOpPlus
 {
 public:
     BinaryOpPlus() {}
-    SIMDPP_INL T operator()(T const &a0, T const &a1) const  noexcept
+    SIMDPP_INL T operator()(T const &a0, T const &a1) const  SIMDPP_NOEXCEPT
     {
         return a0 + a1;
     }
 
     template<typename U>
-    SIMDPP_INL U operator()(U const &a0, U const &a1) const  noexcept
+    SIMDPP_INL U operator()(U const &a0, U const &a1) const  SIMDPP_NOEXCEPT
     {
         return a0 + a1;
     }

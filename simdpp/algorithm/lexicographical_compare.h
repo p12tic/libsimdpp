@@ -112,8 +112,8 @@ bool lexicographical_compare(const T* first1, const T* last1, const T* first2, c
             
     local_binary_predicate_less():on(splat(T(1))),off(splat(T(0))) {}
 
-    bool operator()(T a0,T a1) { return a0<a1;}
-    bool operator()(const simd_type_T& a0,const simd_type_T& a1)
+    SIMDPP_INL bool operator()(T a0,T a1) const SIMDPP_NOEXCEPT { return a0<a1;}
+    SIMDPP_INL bool operator()(const simd_type_T& a0,const simd_type_T& a1) const SIMDPP_NOEXCEPT
     {
         return test_bits_any(blend(on,off, cmp_lt(a0,a1)));
     }

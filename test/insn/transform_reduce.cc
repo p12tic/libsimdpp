@@ -20,24 +20,24 @@ template<typename T>
     struct UnaryPredicateSquare
 {
     using simd_type_T = typename simd_traits<T>::simd_type;      
-    T operator()(T a) {return a*a;}
-    simd_type_T operator()(const simd_type_T& a) {return a*a;}
+    SIMDPP_INL T operator()(T a) const SIMDPP_NOEXCEPT {return a*a;}
+    SIMDPP_INL simd_type_T operator()(const simd_type_T& a) const SIMDPP_NOEXCEPT {return a*a;}
 };
 
 template<typename T>
     struct BinaryPredicatePlus
 {
     using simd_type_T = typename simd_traits<T>::simd_type;      
-    T operator()(T a0,T a1) {return a0 + a1;}
-    simd_type_T operator()(const simd_type_T& a0,const simd_type_T& a1) {return a0+a1;}
+    SIMDPP_INL T operator()(T a0,T a1) const SIMDPP_NOEXCEPT {return a0 + a1;}
+    SIMDPP_INL simd_type_T operator()(const simd_type_T& a0,const simd_type_T& a1) const SIMDPP_NOEXCEPT {return a0+a1;}
 };
 
 template<typename T>
     struct BinaryPredicateMul
 {
     using simd_type_T = typename simd_traits<T>::simd_type;      
-    T operator()(T a0,T a1) {return a0 * a1;}
-    simd_type_T operator()(const simd_type_T& a0,const simd_type_T& a1) {return a0*a1;}
+    SIMDPP_INL T operator()(T a0,T a1) const SIMDPP_NOEXCEPT {return a0 * a1;}
+    SIMDPP_INL simd_type_T operator()(const simd_type_T& a0,const simd_type_T& a1) const SIMDPP_NOEXCEPT {return a0*a1;}
 };
 
 //from https://stackoverflow.com/questions/17333/what-is-the-most-effective-way-for-float-and-double-comparison

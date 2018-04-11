@@ -21,13 +21,13 @@ struct UnaryOpAddValue
     T m_val;
 public:
     UnaryOpAddValue(T val) :m_val(val) {}
-    SIMDPP_INL T operator()(T const &a) const  noexcept
+    SIMDPP_INL T operator()(T const &a) const  SIMDPP_NOEXCEPT
     {
         return m_val + a;
     }
 
     template<typename U>
-    SIMDPP_INL U operator()(U const &a) const  noexcept
+    SIMDPP_INL U operator()(U const &a) const  SIMDPP_NOEXCEPT
     {
         return m_val + a;
     }
@@ -38,13 +38,13 @@ struct BinaryOpAdd
 {
 public:
     BinaryOpAdd() {}
-    SIMDPP_INL T operator()(T const &a0, T const &a1) const  noexcept
+    SIMDPP_INL T operator()(T const &a0, T const &a1) const  SIMDPP_NOEXCEPT
     {
         return a0 + a1;
     }
 
     template<typename U>
-    SIMDPP_INL U operator()(U const &a0, U const &a1) const  noexcept
+    SIMDPP_INL U operator()(U const &a0, U const &a1) const  SIMDPP_NOEXCEPT
     {
         using namespace simdpp;
         return a0 + a1;

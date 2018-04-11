@@ -31,8 +31,8 @@ T const* find(T const* first, T const* last, U val)
         using simd_mask_T = typename simd_traits<T>::simd_mask_type;
         using simd_type_T = typename simd_traits<T>::simd_type;
 
-        bool                  operator()(T a)           const { return a == m_val; }
-        simd_mask_T operator()(const simd_type_T& a) const { return cmp_eq(a, m_val_simd); }
+        SIMDPP_INL bool                  operator()(T a)           const SIMDPP_NOEXCEPT { return a == m_val; }
+        SIMDPP_INL simd_mask_T operator()(const simd_type_T& a) const SIMDPP_NOEXCEPT { return cmp_eq(a, m_val_simd); }
     private:
         T m_val;
         simd_type_T m_val_simd;

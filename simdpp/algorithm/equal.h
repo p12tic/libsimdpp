@@ -89,8 +89,8 @@ bool equal(const T* first1,  const T* last1, const T* first2)
     {
     using simd_type_T = typename simd_traits<T>::simd_type;
     using simd_mask_T = typename simd_traits<T>::simd_mask_type;
-    bool operator()(const T& a0,const T& a1) {return a0==a1;}
-    simd_mask_T operator()(const simd_type_T& a0,const simd_type_T& a1) {return cmp_eq(a0,a1);}
+    SIMDPP_INL bool operator()(const T& a0,const T& a1) const SIMDPP_NOEXCEPT {return a0==a1;}
+    SIMDPP_INL simd_mask_T operator()(const simd_type_T& a0,const simd_type_T& a1) const SIMDPP_NOEXCEPT {return cmp_eq(a0,a1);}
     };
     return equal(first1,last1,first2,local_bynary_predicate_equal());         
 }

@@ -24,12 +24,12 @@ T* copy(T const* first, T const* last, T* out)
 struct UnaryOpCopy
 {
     using simd_type_T = typename simd_traits<T>::simd_type;
-    SIMDPP_INL T operator()(T const &a) const  noexcept
+    SIMDPP_INL T operator()(T const &a) const  SIMDPP_NOEXCEPT
     {
         return a;
     }
 
-    SIMDPP_INL simd_type_T operator()(simd_type_T const &a) const  noexcept
+    SIMDPP_INL simd_type_T operator()(simd_type_T const &a) const  SIMDPP_NOEXCEPT
     {
         return a;
     }

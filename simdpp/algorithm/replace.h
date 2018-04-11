@@ -26,8 +26,8 @@ void replace(T* first, T* last, T const & old_val, T const & new_val)
     using simd_type_T = typename simd_traits<T>::simd_type;
     local_predicate(const T & old_val, const T & new_val) : m_old_val(old_val), m_new_val(new_val),m_old_val_simd(splat(old_val)), m_new_val_simd(splat(new_val)) {}
 
-    T   operator()( const T& a) const { return a == m_old_val ? m_new_val : a;}
-    simd_type_T operator()(const simd_type_T& a) const { return blend(m_new_val_simd,a,cmp_eq(a,m_old_val_simd)); }
+    SIMDPP_INL T   operator()( const T& a) const SIMDPP_NOEXCEPT { return a == m_old_val ? m_new_val : a;}
+    SIMDPP_INL simd_type_T operator()(const simd_type_T& a) const SIMDPP_NOEXCEPT { return blend(m_new_val_simd,a,cmp_eq(a,m_old_val_simd)); }
 
     T m_old_val, m_new_val;
     simd_type_T  m_old_val_simd, m_new_val_simd;

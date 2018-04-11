@@ -23,8 +23,8 @@ public:
     using simd_mask_T = typename simdpp::simd_traits<T>::simd_mask_type;
     using simd_type_T = typename simdpp::simd_traits<T>::simd_type;
 
-    bool                  operator()(T a)           const { return a < m_val; }
-    simd_mask_T operator()(const simd_type_T& a) const { return cmp_lt(a, m_val_simd); }
+    SIMDPP_INL bool                  operator()(T a)           const SIMDPP_NOEXCEPT { return a < m_val; }
+    SIMDPP_INL simd_mask_T operator()(const simd_type_T& a) const SIMDPP_NOEXCEPT { return cmp_lt(a, m_val_simd); }
 private:
     T m_val;
     simd_type_T m_val_simd;

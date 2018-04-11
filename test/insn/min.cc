@@ -24,9 +24,9 @@ public:
     using simd_mask_T = typename simdpp::simd_traits<T>::simd_mask_type;
     using simd_type_T = typename simdpp::simd_traits<T>::simd_type;
 
-    SIMDPP_INL bool operator()(T a, T b) { return a > b; }
+    SIMDPP_INL bool operator()(T a, T b) const SIMDPP_NOEXCEPT { return a > b; }
 
-    SIMDPP_INL simd_mask_T operator()(const simd_type_T& a, const simd_type_T& b) { return simdpp::cmp_gt(a, b); }
+    SIMDPP_INL simd_mask_T operator()(const simd_type_T& a, const simd_type_T& b) const SIMDPP_NOEXCEPT { return simdpp::cmp_gt(a, b); }
 };
 
 template<typename Container>

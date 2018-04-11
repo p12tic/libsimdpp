@@ -26,8 +26,8 @@ void replace_if(T* first, T* last, UnaryPredicate pred , const T& new_val)
     using simd_type_T = typename simd_traits<T>::simd_type;
     local_predicate(const UnaryPredicate& pred,const T & new_val) : m_new_val(new_val),m_new_val_simd(splat(new_val)),m_pred(pred) {}
 
-    T   operator()( const T& a) const { return m_pred(a) ? m_new_val : a;}
-    simd_type_T operator()(const simd_type_T& a) const { return blend(m_new_val_simd,a,m_pred(a)); }
+    SIMDPP_INL T   operator()( const T& a) const SIMDPP_NOEXCEPT { return m_pred(a) ? m_new_val : a;}
+    SIMDPP_INL simd_type_T operator()(const simd_type_T& a) const SIMDPP_NOEXCEPT { return blend(m_new_val_simd,a,m_pred(a)); }
 
     T m_new_val;
     simd_type_T  m_new_val_simd;
