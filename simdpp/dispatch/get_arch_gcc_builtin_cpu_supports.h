@@ -8,7 +8,7 @@
 #ifndef LIBSIMDPP_DISPATCH_GET_ARCH_GCC_BUILTIN_CPU_SUPPORTS_H
 #define LIBSIMDPP_DISPATCH_GET_ARCH_GCC_BUILTIN_CPU_SUPPORTS_H
 
-#if ((__GNUC__ >= 4) && (__GNUC_MINOR__ >= 8)) && (__i386__ || __amd64__)
+#if ((__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)) && (__i386__ || __amd64__)
 #define SIMDPP_HAS_GET_ARCH_GCC_BUILTIN_CPU_SUPPORTS 1
 
 #include <simdpp/dispatch/arch.h>
@@ -20,7 +20,7 @@ namespace simdpp {
 */
 inline Arch get_arch_gcc_builtin_cpu_supports()
 {
-    Arch arch_info;
+    Arch arch_info = Arch::NONE_NULL;
 #if (__GNUC__ > 4)
     if (__builtin_cpu_supports("avx512f")) { // since 5.0
         arch_info |= Arch::X86_SSE2;
