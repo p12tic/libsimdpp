@@ -28,7 +28,7 @@ Extract from contigous range [first,last[
     - Note epilogue equals [size_simd_loop,stop[
 */
 template<typename T>
-const std::pair<size_t,size_t> helper_input_range(const T* first, const T* last)
+const std::pair<size_t,size_t> SIMDPP_INL helper_input_range(const T* first, const T* last)
 {
 #ifndef SIMDPP_DEBUG  //precondition debug mode           
     if (!first)

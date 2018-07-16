@@ -12,7 +12,6 @@ http://www.boost.org/LICENSE_1_0.txt)
 #include <numeric>
 #include <simdpp/simd.h>
 #include <simdpp/algorithm/reduce.h>
-#include <numeric>
 
 namespace SIMDPP_ARCH_NAMESPACE {
 

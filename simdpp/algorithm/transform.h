@@ -21,6 +21,7 @@
 #include <simdpp/detail/insn/load_u.h>
 #include <simdpp/detail/insn/load.h>
 #include <simdpp/algorithm/helper_input_range.h>
+#include <iostream>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -53,7 +54,6 @@ U* transform(T const* first, T const* last, U* out, UnOp f)
     const auto size_prologue_loop = range.first;
     const auto size_simd_loop = range.second;
             
-
     auto i = 0u;
 
     //---prologue
@@ -61,6 +61,7 @@ U* transform(T const* first, T const* last, U* out, UnOp f)
     {
         *out++ = f(*first++);
     }
+
     //---main simd loop
     if (detail::is_aligned(out, alignment))
     {
@@ -76,7 +77,7 @@ U* transform(T const* first, T const* last, U* out, UnOp f)
     {
         for (; i < size_simd_loop; i += simd_size)
         {
-            simd_type_T element = load(first);
+            simd_type_T element = load_u(first);
             store_u(out, f(element));
             first += simd_size;
             out += simd_size;
