@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8.0)
 
 #Adapted from https://github.com/dream3d/Dream3DSdkBuild/blob/master/Boost.cmake
 message("Create ExternalProject google benchmark has thirdpartie lib")
 
 include(ExternalProject)
 # clone approach
-find_package(git REQUIRED)
+find_package(git QUIET)
 ExternalProject_Add(googlebenchmark
   GIT_REPOSITORY https://github.com/google/benchmark.git
   GIT_TAG master
@@ -34,5 +34,5 @@ set_target_properties (benchmark PROPERTIES FOLDER bench)
 if(WIN32)
 set_target_properties(benchmark PROPERTIES IMPORTED_LOCATION ${BINARY_DIR}/src/Release/benchmark.lib)
 else()
-set_target_properties(benchmark PROPERTIES IMPORTED_LOCATION ${BINARY_DIR}/src/Release/benchmark.a)
+set_target_properties(benchmark PROPERTIES IMPORTED_LOCATION ${BINARY_DIR}/src/libbenchmark.a)
 endif()
