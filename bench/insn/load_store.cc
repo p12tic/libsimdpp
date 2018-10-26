@@ -34,6 +34,7 @@ namespace {
       vector_aligned_t  m_outputvect;
    };
 
+   //UINT8_T
    BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryUNINT8_SIMD_Test, uint8_t)(benchmark::State& st)
    {
       const auto size = (size_t)st.range(0);
@@ -70,4 +71,194 @@ namespace {
       }
    }
   BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryUNINT8_STD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  //UINT16
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryUNINT16_SIMD_Test, uint16_t)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<uint16_t>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; i += simd_size)
+        {
+           simd_type_T element = simdpp::load(ptrin);
+           simdpp::store(ptrout, element);
+           ptrin += simd_size;
+           ptrout += simd_size;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryUNINT16_SIMD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryUNINT16_STD_Test, uint16_t)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<uint16_t>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; ++i)
+        {
+           *ptrout++ = *ptrin++;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryUNINT16_STD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  //UINT32
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryUNINT32_SIMD_Test, uint32_t)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<uint32_t>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; i += simd_size)
+        {
+           simd_type_T element = simdpp::load(ptrin);
+           simdpp::store(ptrout, element);
+           ptrin += simd_size;
+           ptrout += simd_size;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryUNINT32_SIMD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryUNINT32_STD_Test, uint32_t)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<uint32_t>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; ++i)
+        {
+           *ptrout++ = *ptrin++;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryUNINT32_STD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  //UINT64
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryUNINT64_SIMD_Test, uint64_t)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<uint64_t>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; i += simd_size)
+        {
+           simd_type_T element = simdpp::load(ptrin);
+           simdpp::store(ptrout, element);
+           ptrin += simd_size;
+           ptrout += simd_size;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryUNINT64_SIMD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryUNINT64_STD_Test, uint64_t)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<uint64_t>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; ++i)
+        {
+           *ptrout++ = *ptrin++;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryUNINT64_STD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  //FLOAT
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryFloat_SIMD_Test, float)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<float>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; i += simd_size)
+        {
+           simd_type_T element = simdpp::load(ptrin);
+           simdpp::store(ptrout, element);
+           ptrin += simd_size;
+           ptrout += simd_size;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryFloat_SIMD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryFloat_STD_Test, float)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<float>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; ++i)
+        {
+           *ptrout++ = *ptrin++;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryFloat_STD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  //DOUBLE
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryDouble_SIMD_Test, double)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<double>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; i += simd_size)
+        {
+           simd_type_T element = simdpp::load(ptrin);
+           simdpp::store(ptrout, element);
+           ptrin += simd_size;
+           ptrout += simd_size;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryDouble_SIMD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
+
+  BENCHMARK_TEMPLATE_DEFINE_F(LoadStoreFixture, UnaryDouble_STD_Test, double)(benchmark::State& st)
+  {
+     const auto size = (size_t)st.range(0);
+     using simd_type_T = typename simdpp::simd_traits<double>::simd_type;
+     const auto simd_size = simd_type_T::base_length;
+     while (st.KeepRunning())
+     {
+        const auto* ptrin = m_inputvect.data();
+        auto* ptrout = m_outputvect.data();
+        for (size_t i = 0; i < size; ++i)
+        {
+           *ptrout++ = *ptrin++;
+        }
+     }
+  }
+  BENCHMARK_REGISTER_F(LoadStoreFixture, UnaryDouble_STD_Test)->Arg(64)->Arg(128)->Arg(256)->Arg(512)->Arg(1024);
 }  // namespace

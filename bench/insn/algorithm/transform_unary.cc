@@ -26,7 +26,7 @@ public:
     SIMDPP_INL T operator()(T const &a) const  SIMDPP_NOEXCEPT
     {
         return m_val + a;
-    }
+    } 
 
     template<typename U>
     SIMDPP_INL U operator()(U const &a) const  SIMDPP_NOEXCEPT
@@ -102,7 +102,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryUNINT16_SIMD_Test, uint1
   const auto size= (size_t)st.range(0);
   while (st.KeepRunning()) 
   {
-    simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne);
+     benchmark::DoNotOptimize(simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne));
   }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryUNINT16_SIMD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -112,7 +112,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryUNINT16_STD_Test, uint16
    const auto size = (size_t)st.range(0);
    while (st.KeepRunning())
    {
-      std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne);
+      benchmark::DoNotOptimize(std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne));
    }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryUNINT16_STD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -123,7 +123,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryUNINT32_SIMD_Test, uint3
   const auto size= (size_t)st.range(0);
   while (st.KeepRunning()) 
   {
-    simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne);
+     benchmark::DoNotOptimize(simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne));
   }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryUNINT32_SIMD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -133,7 +133,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryUNINT32_STD_Test, uint32
    const auto size = (size_t)st.range(0);
    while (st.KeepRunning())
    {
-      std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne);
+      benchmark::DoNotOptimize(std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne));
    }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryUNINT32_STD_Test)->Arg(1)->Arg(10)->Arg(31)->Arg(100)->Arg(1000)->Arg(10000);
@@ -144,7 +144,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryUNINT64_SIMD_Test, uint6
   const auto size= (size_t)st.range(0);
   while (st.KeepRunning()) 
   {
-    simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne);
+     benchmark::DoNotOptimize(simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne));
   }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryUNINT64_SIMD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -154,7 +154,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryUNINT64_STD_Test, uint64
    const auto size = (size_t)st.range(0);
    while (st.KeepRunning())
    {
-      std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne);
+      benchmark::DoNotOptimize(std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne));
    }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryUNINT64_STD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -165,7 +165,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryFloat_SIMD_Test, float)(
    const auto size = (size_t)st.range(0);
    while (st.KeepRunning())
    {
-      simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne);
+      benchmark::DoNotOptimize(simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne));
    }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryFloat_SIMD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -176,7 +176,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryFloat_STD_Test, float)(b
    const auto size = (size_t)st.range(0);
    while (st.KeepRunning())
    {
-      std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne);
+      benchmark::DoNotOptimize(std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne));
    }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryFloat_STD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -187,7 +187,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryDouble_SIMD_Test, double
   const auto size= (size_t)st.range(0);
   while (st.KeepRunning()) 
   {
-    simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne);
+     benchmark::DoNotOptimize(simdpp::transform(m_inputvect.data(), m_inputvect.data() + m_inputvect.size(), m_outputvect.data(), opPlusOne));
   }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryDouble_SIMD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);
@@ -197,7 +197,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(TransformUnaryFixture, UnaryDouble_STD_Test, double)
    const auto size = (size_t)st.range(0);
    while (st.KeepRunning())
    {
-      std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne);
+      benchmark::DoNotOptimize(std::transform(m_inputvect.begin(), m_inputvect.end(), m_outputvect.begin(), opPlusOne));
    }
 }
 BENCHMARK_REGISTER_F(TransformUnaryFixture, UnaryDouble_STD_Test)->Arg(1)->Arg(10)->Arg(32)->Arg(100)->Arg(1000)->Arg(10000);

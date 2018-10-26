@@ -54,7 +54,7 @@ U* transform(T const* first, T const* last, U* out, UnOp f)
     const auto size_prologue_loop = range.first;
     const auto size_simd_loop = range.second;
             
-    auto i = 0u;
+    auto i = 0;
 
     //---prologue
     for (; i < size_prologue_loop; ++i)
@@ -127,7 +127,7 @@ U* transform(T1 const* first1, T1 const* last1, T2 const* first2, U* out, BinOp 
     const auto size_simd_loop = range.second;
 
 
-    auto i = 0u;
+    auto i = 0;
 
     //---prologue
     for (; i < size_prologue_loop; ++i)

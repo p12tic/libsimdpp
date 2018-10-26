@@ -159,7 +159,7 @@ void test_transform_type_binary(TestResultsSet& ts, TestReporter& tr)
         vector_t expected = { 1,3 };
 
         transform(ivect1.data(), ivect1.data() + ivect1.size(), ivect2.data(), ovect.data(), opPlus);
-        for (auto i = 0; i < ovect.size(); ++i) //TODO make TEST_EQUAL_COLECTIONS
+        for (auto i = 0u; i < ovect.size(); ++i) //TODO make TEST_EQUAL_COLECTIONS
         {
             TEST_EQUAL(tr, expected[i], ovect[i]);
         }
@@ -171,7 +171,7 @@ void test_transform_type_binary(TestResultsSet& ts, TestReporter& tr)
         vector_t expected(150, 1);
 
         transform(ivect1.data(), ivect1.data() + ivect1.size(), ivect2.data(), ovect.data(), opPlus);
-        for (auto i = 0; i < ovect.size(); ++i) //TODO make TEST_EQUAL_COLECTIONS
+        for (auto i = 0u; i < ovect.size(); ++i) //TODO make TEST_EQUAL_COLECTIONS
         {
             TEST_EQUAL(tr, expected[i], ovect[i]);
         }

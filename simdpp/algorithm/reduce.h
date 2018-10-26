@@ -92,7 +92,7 @@ T reduce(T const* first, T const* last, T init, T neutral, BinOp f) //need neutr
     const auto size_prologue_loop = range.first;
     const auto size_simd_loop = range.second;
 
-    auto i = 0u;
+    auto i = 0;
     simd_type_T accusimd = splat(T(neutral)); //think about product sum
 
     //---prologue

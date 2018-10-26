@@ -8,7 +8,9 @@ set(TEST_BENCH_SOURCES
 
 set(BENCH_INSN_ARCH_SOURCES
   algorithm/transform_unary.cc
+  algorithm/transform_binary.cc
   algorithm/reduce_unary.cc
+  algorithm/reduce_binary.cc
   load_store.cc
   )
 
@@ -23,7 +25,7 @@ foreach(ARCH ${COMPILABLE_ARCHS}})
   if(SIMDPP_MSVC)
     if(CMAKE_SIZEOF_VOID_P EQUAL 4)
         # enable _vectorcall on i386 builds (only works on MSVC 2013)
-        set_target_properties(${exename} PROPERTIES COMPILE_FLAGS "/Gv")
+        #set_target_properties(${exename} PROPERTIES COMPILE_FLAGS "/Gv")
     endif()
   elseif(SIMDPP_MSVC_INTEL)
     set_target_properties(${exename} PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
