@@ -36,7 +36,7 @@ float32x4 i_sqrt(const float32x4& a)
     return r;
 #elif SIMDPP_USE_SSE2
     return _mm_sqrt_ps(a.native());
-#elif SIMPDP_USE_NEON64
+#elif SIMDPP_USE_NEON64
     return vsqrtq_f32(a.native());
 #elif SIMDPP_USE_NEON_FLT_SP || SIMDPP_USE_ALTIVEC
     float32x4 x;
