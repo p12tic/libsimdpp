@@ -4,7 +4,7 @@
 #       (See accompanying file LICENSE_1_0.txt or copy at
 #           http://www.boost.org/LICENSE_1_0.txt)
 
-file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.h *.inl)
+file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.h *.inl *.hpp)
 
 foreach(FILE ${HEADERS})
     get_filename_component(FILE_PATH "${FILE}" PATH)
