@@ -91,6 +91,11 @@
 #else
 #define SIMDPP_USE_AVX512VL 0
 #endif
+#if SIMDPP_ARCH_PP_USE_SVML
+#define SIMDPP_USE_SVML 1
+#else
+#define SIMDPP_USE_SVML 0
+#endif
 #if SIMDPP_ARCH_PP_USE_NEON
 #define SIMDPP_USE_NEON 1
 #else
