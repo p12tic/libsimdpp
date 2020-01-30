@@ -192,7 +192,7 @@ mask_int64x2 i_cmp_neq(const uint64x2& a, const uint64x2& b)
     return bit_not(cmp_eq(a, b));
 #elif SIMDPP_USE_SSE2
     uint64x2 r32, r32s;
-    r32 = (uint32x4)cmp_eq(uint32x4(a), uint32x4(b));
+    r32 = cmp_eq(uint32x4(a), uint32x4(b));
     // swap the 32-bit halves
     r32s = bit_or(shift_l<32>(r32), shift_r<32>(r32));
     // combine the results. Each 32-bit half is ORed with the neighbouring pair
@@ -381,4 +381,3 @@ typename V::mask_vector_type i_cmp_neq(const V& a, const V& b)
 } // namespace simdpp
 
 #endif
-
