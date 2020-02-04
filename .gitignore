@@ -12,3 +12,5 @@ libsimdpp.files
 build*
 venv
 pywiki
+*.o
+*.out
