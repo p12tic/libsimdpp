@@ -16,18 +16,18 @@
 #include "element_type.h"
 
 // Prints two vectors side by side for comparison
-void print_data_diff(std::ostream& out, ElementType type, unsigned num_elems,
+void print_data_diff(std::ostream& out, ElementType type, std::size_t num_elems,
                      const void* data_a, const void* data_b);
 
 void print_separator(std::ostream& out);
 void print_file_info(std::ostream& out, const char* file);
-void print_file_info(std::ostream& out, const char* file, unsigned line);
+void print_file_info(std::ostream& out, const char* file, std::size_t line);
 
-void print_vector_hex(std::ostream& out, ElementType type, unsigned num_elems,
+void print_vector_hex(std::ostream& out, ElementType type, std::size_t num_elems,
                       const void* data);
 
 void print_vector_numeric(std::ostream& out, ElementType type,
-                          unsigned num_elems, const void* data);
+                          std::size_t num_elems, const void* data);
 
 /** The class represents test results for certain instruction set. We later
     compare the results with other instruction sets and assume that all
@@ -40,11 +40,11 @@ public:
 
     // Holds one result vector
     struct Result {
-        static const unsigned num_bytes = 32;
+        static const std::size_t num_bytes = 32;
 
-        Result(ElementType atype, unsigned alength, unsigned ael_size,
-               const char* afile, unsigned aline, unsigned aseq,
-               unsigned aprec_ulp, bool afp_zero_eq)
+        Result(ElementType atype, std::size_t alength, std::size_t ael_size,
+               const char* afile, std::size_t aline, std::size_t aseq,
+               std::size_t aprec_ulp, bool afp_zero_eq)
         {
             type = atype;
             file = afile;
@@ -58,15 +58,15 @@ public:
         }
 
         ElementType type;
-        unsigned line;
-        unsigned seq;
-        unsigned prec_ulp;
+        std::size_t line;
+        std::size_t seq;
+        std::size_t prec_ulp;
         bool fp_zero_eq;
         const char* file;
-        unsigned length;
-        unsigned el_size;
+        std::size_t length;
+        std::size_t el_size;
 
-        void set(unsigned id, void* adata)
+        void set(std::size_t id, void* adata)
         {
             std::memcpy(data.data() + id*el_size, adata, el_size);
         }
@@ -80,11 +80,11 @@ public:
     };
 
     /// Stores the results into the results set.
-    Result& push(ElementType type, unsigned length, const char* file, unsigned line);
+    Result& push(ElementType type, std::size_t length, const char* file, std::size_t line);
 
     /// Sets the allowed error in ULPs. Only meaningful for floating-point data.
     /// Affects all pushed data until the next call to @a unset_precision
-    void set_precision(unsigned num_ulp)    { curr_precision_ulp_ = num_ulp; }
+    void set_precision(std::size_t num_ulp)    { curr_precision_ulp_ = num_ulp; }
     void unset_precision()                  { curr_precision_ulp_ = 0; }
 
     /// Sets whether floating-point zero and negative zero are considered
@@ -106,8 +106,8 @@ private:
     TestResultsSet(const char* name);
 
     const char* name_;
-    unsigned seq_;
-    unsigned curr_precision_ulp_;
+    std::size_t seq_;
+    std::size_t curr_precision_ulp_;
     bool curr_fp_zero_equal_;
 
     std::vector<Result> results_;

@@ -1,0 +1,27 @@
+{{simdpp/title|find_if_not}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+  template<typename T, typename UnaryPredicate>
+    T const* find_if_not(T const* first, T const* last, UnaryPredicate pred);
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|find_if}} Returns the first element in the range [first, last[ that {{not}} satisfies specific predicate. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to examine}}
+{{par | pred | unary predicate which returns {{false}} for the required element.}}
+{{par end}}
+
+===Return value===
+Address to the first element satisfying the condition or last if no such element is found.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc find}}
+{{dsc inc | algorithm/dsc find_if}}
+{{dsc end}}

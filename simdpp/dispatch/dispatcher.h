@@ -67,7 +67,7 @@ struct FnVersion {
     const char* arch_name;
 };
 
-inline FnVersion select_version_any(FnVersion* versions, unsigned size,
+inline FnVersion select_version_any(FnVersion* versions, std::size_t size,
                                     Arch arch)
 {
     // No need to try to be very efficient here.
@@ -76,7 +76,7 @@ inline FnVersion select_version_any(FnVersion* versions, unsigned size,
                   return lhs.needed_arch > rhs.needed_arch;
               });
 
-    unsigned i;
+    std::size_t i;
     for (i = 0; i < size; ++i) {
         if (versions[i].fun_ptr == nullptr)
             continue;

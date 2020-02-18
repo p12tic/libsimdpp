@@ -1,0 +1,27 @@
+{{simdpp/title|all_of}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+   template<typename T, typename UnaryPredicate>
+      bool all_of(T const* first, T const* last, UnaryPredicate pred);
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|all_of}} Checks if unary predicate p returns true for {{tt|all}} elements in the range {{tt|[first, last)}}. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to examine}}
+{{par | pred | unary predicate
+{{par end}}
+
+===Return value===
+{{tt|true}} if unary predicate returns {{tt|true}} for all elements in the range, {{tt|false}} otherwise. Returns {{tt|true}} if the range is empty.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc none_of}}
+{{dsc inc | algorithm/dsc any_of}}
+{{dsc end}}

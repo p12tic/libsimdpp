@@ -1,0 +1,27 @@
+{{simdpp/title|count}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+  template<typename T, typename U>
+    typename std::iterator_traits<const T*>::difference_type
+      count(T const* first, T const* last, U val);
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|count}} counts the elements that are equal to value in the range defined by {{tt|[first, last)}}. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to examine}}
+{{par | val | the value to search for}}
+{{par end}}
+
+===Return value===
+number of elements satisfying the condition.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc count_if}}
+{{dsc end}}

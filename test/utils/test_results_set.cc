@@ -24,15 +24,15 @@ TestResultsSet::TestResultsSet(const char* name) :
     reset_seq();
 }
 
-TestResultsSet::Result& TestResultsSet::push(ElementType type, unsigned length,
-                                             const char* file, unsigned line)
+TestResultsSet::Result& TestResultsSet::push(ElementType type, std::size_t length,
+                                             const char* file, std::size_t line)
 {
     results_.emplace_back(type, length, element_size_for_type(type), file, line,
                           seq_++, curr_precision_ulp_, curr_fp_zero_equal_);
     return results_.back();
 }
 
-unsigned precision_for_result(const TestResultsSet::Result& res)
+std::size_t precision_for_result(const TestResultsSet::Result& res)
 {
     switch (res.type) {
     case TYPE_FLOAT32:
@@ -48,13 +48,13 @@ template<> struct fix_char_type<uint8_t> { using type = int; };
 template<> struct fix_char_type<int8_t> { using type = int; };
 
 template<class T>
-void print_hex(std::ostream& err, unsigned num_elems, unsigned width,
+void print_hex(std::ostream& err, std::size_t num_elems, std::size_t width,
                const T* p)
 {
     static_assert(std::is_unsigned<T>::value, "T must be unsigned");
     err << "[ " << std::hex << std::setfill('0');
     err.precision(width);
-    for (unsigned i = 0; i < num_elems; i++, p++) {
+    for (std::size_t i = 0; i < num_elems; i++, p++) {
         err << std::setw(width*2) << uint64_t(*p);
         if (i != num_elems - 1) {
             err << " ; ";
@@ -65,12 +65,12 @@ void print_hex(std::ostream& err, unsigned num_elems, unsigned width,
 }
 
 template<class T>
-void print_numeric(std::ostream& err, unsigned num_elems, unsigned precision,
+void print_numeric(std::ostream& err, std::size_t num_elems, std::size_t precision,
                    const T* p)
 {
     err << "[ ";
     err.precision(precision);
-    for (unsigned i = 0; i < num_elems; i++, p++) {
+    for (std::size_t i = 0; i < num_elems; i++, p++) {
         err << typename fix_char_type<T>::type(*p);
         if (i != num_elems - 1) {
             err << " ; ";
@@ -80,7 +80,7 @@ void print_numeric(std::ostream& err, unsigned num_elems, unsigned precision,
     err << std::dec;
 }
 
-void print_vector_hex(std::ostream& out, ElementType type, unsigned num_elems,
+void print_vector_hex(std::ostream& out, ElementType type, std::size_t num_elems,
                       const void* data)
 {
     switch (type) {
@@ -118,7 +118,7 @@ void print_vector_hex(std::ostream& out, ElementType type, unsigned num_elems,
 }
 
 void print_vector_numeric(std::ostream& out, ElementType type,
-                          unsigned num_elems, const void* data)
+                          std::size_t num_elems, const void* data)
 {
     switch (type) {
     case TYPE_UINT8:
@@ -171,7 +171,7 @@ const char* vector_type_to_str(ElementType type)
     }
 }
 
-void print_data_diff(std::ostream& out, ElementType type, unsigned num_elems,
+void print_data_diff(std::ostream& out, ElementType type, std::size_t num_elems,
                      const void* data_a, const void* data_b)
 {
     out << "type: " << vector_type_to_str(type)
@@ -202,7 +202,7 @@ void print_file_info(std::ostream& out, const char* file)
     out << "  In file \"" << file << "\" :\n";
 }
 
-void print_file_info(std::ostream& out, const char* file, unsigned line)
+void print_file_info(std::ostream& out, const char* file, std::size_t line)
 {
     if (file == nullptr) {
         file = "<unknown>";
@@ -220,12 +220,12 @@ void print_test_case_name(std::ostream& out, const char* name)
     out << "  In test case \"" << name << "\" :\n";
 }
 
-void print_seq_num(std::ostream& out, unsigned num)
+void print_seq_num(std::ostream& out, std::size_t num)
 {
     out << "  Sequence number: " << num << "\n";
 }
 
-void print_precision(std::ostream& out, unsigned prec)
+void print_precision(std::ostream& out, std::size_t prec)
 {
     if (prec > 0) {
         out << "  Precision: " << prec << "ULP\n";
@@ -304,10 +304,10 @@ T nextafter_ulps(T from, T to)
 
 // T is either double or float
 template<class T>
-bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
-                  unsigned prec, bool zero_eq)
+bool cmpeq_arrays(const T* a, const T* b, std::size_t num_elems,
+                  std::size_t prec, bool zero_eq)
 {
-    for (unsigned i = 0; i < num_elems; i++) {
+    for (std::size_t i = 0; i < num_elems; i++) {
         // we need to be extra-precise here. nextafter is used because it won't
         // introduce any rounding errors
         T ia = *a++;
@@ -318,7 +318,7 @@ bool cmpeq_arrays(const T* a, const T* b, unsigned num_elems,
         if (zero_eq && is_zero_or_neg_zero(ia) && is_zero_or_neg_zero(ib)) {
             continue;
         }
-        for (unsigned i = 0; i < prec; i++) {
+        for (std::size_t i = 0; i < prec; i++) {
             ia = nextafter_ulps(ia, ib);
         }
         if (std::memcmp(&ia, &ib, sizeof(ia)) != 0) {
@@ -345,12 +345,12 @@ const char* get_filename_from_results_set(const TestResultsSet& a,
 }
 
 struct TestSequence {
-    unsigned begin_index, end_index;
+    std::size_t begin_index, end_index;
     const char* begin_file;
     // For comparisons we want to strip the arch suffix from the file name.
     // To reduce the number of duplicate computations it is cached here.
     std::string begin_file_stripped;
-    unsigned begin_line;
+    std::size_t begin_line;
 };
 
 bool is_test_seq_from_same_test(const TestSequence& a, const TestSequence& b)
@@ -370,25 +370,25 @@ using TestSequenceList = std::vector<TestSequence>;
 
     Returns true if test results were skipped, false otherwise.
 */
-bool skip_results_until_same_test(unsigned& ia, unsigned& ib,
+bool skip_results_until_same_test(std::size_t& ia, std::size_t& ib,
                                   const TestSequenceList& a,
                                   const TestSequenceList& b)
 {
     if (is_test_seq_from_same_test(a[ia], b[ib]))
         return false;
-    unsigned max_skipped = a.size() - ia + b.size() - ib;
+    auto max_skipped = a.size() - ia + b.size() - ib;
 
     // This problem is solved by brute force as the number of skipped sequences
     // is very likely small. We evaluate all possible ways to skip sequences
     // starting with the smallest total number of skipped sequences.
-    for (unsigned num_skipped = 1; num_skipped < max_skipped; ++num_skipped) {
+    for (auto num_skipped = 1; num_skipped < max_skipped; ++num_skipped) {
 
-        for (unsigned i = 0; i <= num_skipped; ++i) {
-            unsigned skip_from_a = i;
-            unsigned skip_from_b = num_skipped - i;
+        for (auto i = 0; i <= num_skipped; ++i) {
+            auto skip_from_a = i;
+            auto skip_from_b = num_skipped - i;
 
-            unsigned new_ia = ia + skip_from_a;
-            unsigned new_ib = ib + skip_from_b;
+            auto new_ia = ia + skip_from_a;
+            auto new_ib = ib + skip_from_b;
 
             if (new_ia < a.size() && new_ib < b.size()) {
                 if (is_test_seq_from_same_test(a[new_ia], b[new_ib])) {
@@ -424,12 +424,12 @@ TestSequenceList build_test_sequences(const std::vector<TestResultsSet::Result>&
 
     TestSequence next_seq;
 
-    unsigned i = 0;
+    std::size_t i = 0;
     next_seq.begin_index = i;
     next_seq.begin_file = results[i].file;
     next_seq.begin_file_stripped = strip_arch_suffix_from_file(results[i].file);
     next_seq.begin_line = results[i].line;
-    unsigned last_seq_num = results[i].seq;
+    auto last_seq_num = results[i].seq;
 
     ++i;
 
@@ -453,7 +453,7 @@ TestSequenceList build_test_sequences(const std::vector<TestResultsSet::Result>&
 }
 
 bool cmpeq_result(const TestResultsSet::Result& ia, const TestResultsSet::Result& ib,
-                  unsigned fp_prec, bool fp_zero_eq)
+                  std::size_t fp_prec, bool fp_zero_eq)
 {
     if (std::memcmp(ia.d(), ib.d(), ia.el_size * ia.length) == 0) {
         return true;
@@ -491,8 +491,8 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
     TestSequenceList b_seqs = build_test_sequences(b.results());
 
     // Compare results
-    unsigned ia_seq = 0;
-    unsigned ib_seq = 0;
+    std::size_t ia_seq = 0u;
+    std::size_t ib_seq = 0u;
 
     while (ia_seq < a_seqs.size() && ib_seq < b_seqs.size()) {
         if (skip_results_until_same_test(ia_seq, ib_seq, a_seqs, b_seqs)) {
@@ -502,8 +502,8 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
         const auto& a_seq = a_seqs[ia_seq];
         const auto& b_seq = b_seqs[ib_seq];
 
-        unsigned a_seq_size = a_seq.end_index - a_seq.begin_index;
-        unsigned b_seq_size = b_seq.end_index - b_seq.begin_index;
+        std::size_t a_seq_size = a_seq.end_index - a_seq.begin_index;
+        std::size_t b_seq_size = b_seq.end_index - b_seq.begin_index;
 
         if (a_seq_size != b_seq_size) {
             print_separator(tr.out());
@@ -522,9 +522,9 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
             return;
         }
 
-        for (unsigned i = 0; i < a_seq_size; ++i) {
-            unsigned ia = a_seq.begin_index + i;
-            unsigned ib = b_seq.begin_index + i;
+        for (auto i = 0; i < a_seq_size; ++i) {
+            auto ia = a_seq.begin_index + i;
+            auto ib = b_seq.begin_index + i;
 
             const auto& a_res = a.results()[ia];
             const auto& b_res = b.results()[ib];
@@ -573,7 +573,7 @@ void report_test_comparison(const TestResultsSet& a, const char* a_arch,
                 return;
             }
 
-            unsigned prec = std::max(precision_for_result(a_res),
+            std::size_t prec = std::max(precision_for_result(a_res),
                                      precision_for_result(b_res));
 
             bool fp_zero_eq = a_res.fp_zero_eq || b_res.fp_zero_eq;

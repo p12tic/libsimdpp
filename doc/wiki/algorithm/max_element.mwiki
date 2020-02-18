@@ -1,0 +1,31 @@
+{{simdpp/title|max_element}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+  template<typename T>
+    T const * max_element(T const* first, T const* last);
+}}
+{{dcl | num=2 |
+  template<typename T, typename Compare>
+    T const * max_element(T const* first, T const* last, Compare comp); 
+}}
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|max_element}} Returns the address of the element with the largest value in the range[first, last[ over comp (If no comp return simply the address of the max).
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of processed elements}}
+{{par | comp | binary comparison operator}}
+{{par end}}
+
+===Return value===
+(address of the max)
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc max}}
+{{dsc inc | algorithm/dsc min_element}}
+{{dsc inc | algorithm/dsc min}}
+{{dsc end}}

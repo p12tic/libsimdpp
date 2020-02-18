@@ -1,0 +1,27 @@
+{{simdpp/title|find}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+    template<typename T, typename U>
+        T const* find(T const* first, T const* last, U val);
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|find}} Returns the first element in the range [first, last[ that equal val. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to examine}}
+{{par | value | value to compare the elements to.}}
+{{par end}}
+
+===Return value===
+Address to the first element satisfying the condition or last if no such element is found.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc find_if}}
+{{dsc inc | algorithm/dsc find_if_not}}
+{{dsc end}}

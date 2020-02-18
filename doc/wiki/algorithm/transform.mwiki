@@ -1,0 +1,56 @@
+{{simdpp/title|transform}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+template<typename T, typename U, typename UnOp>
+  U* transform(T const* first1, T const* last1, U* out, UnOp f);
+}}
+{{dcl | num=2 |
+template<typename T1, typename T2, typename U, typename BinOp>
+  U* transform(T1 const* first1, T1 const* last1, T2 const* first2, U* out, BinOp f); 
+}}
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|transform}} applies the given function to a range and stores the result in another range, beginning at out.
+
+@1@ The unary operation unary_op is applied to the range defined by [first1, last1).
+@2@ The binary operation binary_op is applied to pairs of elements from two ranges: one defined by [first1, last1) and the other beginning at first2.
+
+===Parameters===
+{{par begin}}
+{{par | first1, last1 | the first range of elements to transform}}
+{{par | first2 | the beginning of the second range of elements to transform}}
+{{par | out | the beginning of the destination range, may be equal to first1 or first2}}
+{{par | UnOp | unary operation function object that will be applied.}}
+{{par | BinOp | binary operation function object that will be applied.}}
+{{par end}}
+
+===Return value===
+(out)
+
+===Notes===
+Notes
+transform does not guarantee in-order application of unary_op or binary_op.
+To apply a function to a sequence in-order or to apply a function that modifies the elements of a sequence, use for_each
+
+===Equivalent operation===
+{{source|1=
+while (first1 != last1) {
+        *out++ = UnOp(*first1++);
+    }
+    return out;
+}}
+
+{{source|2=
+while (first1 != last1) {
+        *out++ = BinOp(*first1++, *first2++);
+    }
+    return out;
+}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | misc/dsc for_each }}
+{{dsc inc | algorithm/dsc reduce }}
+{{dsc end}}

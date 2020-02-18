@@ -57,5 +57,10 @@ install(FILES
 
 enable_testing()
 
+option(ENABLE_BENCH "Set to on in order to compile bench suite, work only in release mode" OFF)
+
 add_subdirectory(simdpp)
 add_subdirectory(test)
+if(ENABLE_BENCH)
+  add_subdirectory(bench)
+endif()  

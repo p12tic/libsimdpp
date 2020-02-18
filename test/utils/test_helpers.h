@@ -1,5 +1,5 @@
 /*  Copyright (C) 2012  Povilas Kanapickas <povilas@radix.lt>
-
+    Copyright (C) 2018  Thomas Retornaz <thomas.retornaz@mines-paris.org>
     Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
             http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +16,9 @@
 #include "test_reporter.h"
 #include <cfenv>
 #include <float.h>
+#include <random>
+#include <initializer_list>
+#include <type_traits>
 
 
 inline void set_round_to_zero()
@@ -90,6 +93,7 @@ public:
     TestData& operator=(const TestData& other)
     {
         data_ = other.data_;
+        return *this;
     }
 
     template<class U>
@@ -114,7 +118,6 @@ public:
 private:
     std::vector<T, simdpp::aligned_allocator<T, sizeof(T)>> data_;
 };
-
 
 /*  A bunch of overloads that wrap the TestSuite::push() method. The push()
     method accepts a type enum plus a pointer; the wrapper overloads determine
@@ -280,6 +283,90 @@ void print_vector_numeric(std::ostream& out, const V& v)
 {
     simdpp::detail::mem_block<V> block(v);
     print_vector_numeric(out, GetElementType<V>::value, v.length, block.data());
+}
+
+
+//TR to be moved elsewhere ?
+
+template <typename T>
+struct GeneratorConstant
+{
+    GeneratorConstant(T constant) { m_constant = constant; }
+    T operator()() { return m_constant; }
+    T m_constant;
+};
+
+template <typename T>
+struct GeneratorIota
+{
+    GeneratorIota(T start) { m_current = start; }
+    T operator()() { return ++m_current; }
+    T m_current;
+};
+
+template <typename T, typename = void>
+struct GeneratorRandom;
+
+template <>
+struct GeneratorRandom <uint8_t>
+{
+    GeneratorRandom() :m_inner_random_generator(std::random_device()()), m_dis(0, UINT8_MAX) {}
+    uint8_t operator()() { return m_dis(m_inner_random_generator); }
+
+    std::mt19937 m_inner_random_generator;
+    std::uniform_int_distribution<unsigned int> m_dis;
+};
+
+template<>
+struct GeneratorRandom<int8_t>
+{
+    GeneratorRandom() :m_inner_random_generator(std::random_device()()), m_dis(INT8_MIN, INT8_MAX) {}
+    int8_t operator()() { return m_dis(m_inner_random_generator); }
+
+    std::mt19937 m_inner_random_generator;
+    std::uniform_int_distribution<int> m_dis;
+};
+
+template <typename T>
+struct GeneratorRandom<T, typename std::enable_if<std::is_integral<T>::value>::type>
+{
+    GeneratorRandom() :m_inner_random_generator(std::random_device()()), m_dis() {}
+    T operator()()
+    {
+        return m_dis(m_inner_random_generator);
+    }
+    std::mt19937 m_inner_random_generator;
+    std::uniform_int_distribution<T> m_dis;
+};
+
+template <typename T>
+struct GeneratorRandom<T, typename std::enable_if<std::is_floating_point<T>::value>::type>
+{
+    GeneratorRandom() :m_inner_random_generator(std::random_device()()), m_dis() {}
+    T operator()()
+    {
+        return m_dis(m_inner_random_generator);
+    }
+    std::mt19937 m_inner_random_generator;
+    std::uniform_real_distribution<T> m_dis;
+};
+
+template<typename T, class Generator>
+//decltype(auto) DataGeneratorAligned(std::size_t size, Generator gen)
+std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> DataGeneratorAligned(std::size_t size, Generator gen)   
+{
+    std::vector<T, simdpp::aligned_allocator<T, simdpp::simd_traits<T>::alignment>> vect(size);
+    std::generate(vect.begin(), vect.end(), gen);
+    return vect;
+}
+
+template<typename T, class  Generator>
+//decltype(auto) DataGenerator(std::size_t size, Generator gen)
+std::vector<T> DataGenerator(std::size_t size, Generator gen)  
+{
+    std::vector<T> vect(size);
+    std::generate(vect.begin(), vect.end(), gen);
+    return vect;
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
@@ -687,6 +774,43 @@ void test_cmp_equal(TestReporter& tr, const T1& a1, const T2& a2,
                         line, file);
 }
 
+
+template<class Container1, class Container2>
+void test_cmp_equal_collections_impl(TestReporter& tr,
+    const Container1& a1, const Container2& a2,
+    bool expected_equal, unsigned line, const char* file)
+{
+    bool sucess_size= (a1.size()== a2.size());
+    if (!sucess_size) {
+        tr.add_result(false);
+        print_separator(tr.out());
+        print_file_info(tr.out(), file, line);
+        tr.out() << " Container Size not equal:\n";
+        tr.out() << " Container1 Size is:"<<a1.size()<<", Container2 Size is:" << a2.size()<<"\n";
+        return; //NO NEED TO GO FURTHER
+    }
+    auto it1beg = a1.cbegin(), it1end = a1.cend();
+    auto it2beg = a2.begin();
+    for (; it1beg != it1end; ++it1beg, ++it2beg)
+    {
+        if(*it1beg!=*it2beg) //just log the first failure
+            {
+            test_cmp_equal(tr, *it1beg, *it2beg, expected_equal, line, file); //REUSE
+            return;//NO NEED TO GO FURTHER
+            }
+    }
+    tr.add_result(true);
+}
+
+template<class Container1, class Container2>
+void test_cmp_equal_collections(TestReporter& tr, const Container1& a1, const Container2& a2,
+    bool expected_equal, unsigned line, const char* file)
+{
+    static_assert(std::is_same<typename Container1::value_type,typename Container2::value_type>::value, //TR to be relaxed for comparable types?
+        "Invalid types for comparison");
+    test_cmp_equal_collections_impl(tr, a1, a2, expected_equal,line, file);
+}
+
 #define TEST_EQUAL(TR, V1, V2)                                                  \
     do { test_cmp_equal(TR, V1, V2, true, __LINE__, __FILE__); } while(0)
 
@@ -698,5 +822,9 @@ void test_cmp_equal(TestReporter& tr, const T1& a1, const T2& a2,
 
 #define TEST_NOT_EQUAL_MEMORY(TR, E1, E2, COUNT)                                \
     do { test_cmp_memory((TR), (E1), (E2), (COUNT), false, __LINE__, __FILE__); } while(0)
+
+#define TEST_EQUAL_COLLECTIONS(TR, C1, C2)                                                  \
+    do { test_cmp_equal_collections(TR, C1, C2, true, __LINE__, __FILE__); } while(0)
+
 
 #endif

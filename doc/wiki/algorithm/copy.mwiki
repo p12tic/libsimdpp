@@ -1,0 +1,27 @@
+{{simdpp/title|copy}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+   template<typename T> 
+            T* copy(T const* first, T const* last, T* out)
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|copy}} Copies the elements in the range, defined by {{tt|[first, last)}}, to another range beginning at {{tt|out}}. 
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to copy}}
+{{par | out | the beginning of the destination range.}}
+{{par end}}
+
+===Return value===
+Output adress to the element in the destination range, one past the last element copied.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc fill}}
+{{dsc inc | algorithm/dsc copy_n}}
+{{dsc end}}

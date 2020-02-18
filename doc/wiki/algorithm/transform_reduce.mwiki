@@ -1,0 +1,42 @@
+{{simdpp/title|transform_reduce}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+ template<typename T,typename BinaryOp, typename UnaryOp>
+    T transform_reduce( const T* first, const T* last, T init, BinaryOp binary_op,UnaryOp unary_op);
+}}
+{{dcl | num=2 |
+  template <typename T1,typename T2,typename U, typename  BinaryOp1, typename BinaryOp2>
+    U transform_reduce(const T1* first1, const T1* last1, const T2* first2, U init, BinaryOp1 binary_op1, BinaryOp2 binary_op2);
+
+}}
+{{dcl end}}
+{{misc/navbar}}
+
+@1@ Applies {{tt|unary_op}} to each element in the range {{math|[first; last)}} and reduces the results (possibly permuted and aggregated in unspecified manner) along with the initial value {{tt|init}} over {{tt|binary_op}}.
+
+@2@ Applies {{tt|binary_op2}} to each pair of elements from the ranges {{c|[first; last)}} and the range starting at {{c|first2}} and reduces the results (possibly permuted and aggregated in unspecified manner) along with the initial value {{tt|init}} over {{tt|binary_op1}}
+
+===Notes===
+The behavior is non-deterministic if {{tt|binary_op}}/{{tt|binary_op2}} is not associative or not commutative.
+
+The behavior is undefined if {{tt|unary_op}}, {{tt|binary_op}}, {{tt|binary_op1}}, or {{tt|binary_op2}} modifies any element
+
+===Parameters===
+{{par begin}}
+{{par | first1, last1 | the first range of elements to transform}}
+{{par | first2 | the beginning of the second range of elements to transform}}
+{{par | init | the initial value of the generalized sum}}
+{{par | unary_op | unary {{concept|FunctionObject}} that will be applied to each element of the input range. The return type must be acceptable as input to {{tt|binary_op}} }}
+{{par | binary_op | binary {{concept|FunctionObject}} that will be applied in unspecified order to the results of {{tt|unary_op}}, the results of other {{tt|binary_op}} and {{tt|init}}.}}
+{{par end}}
+
+===Return value===
+@1@ Generalized sum of {{tt|init}} and {{tt|unary_op(*first)}}, {{tt|unary_op(*(first+1))}}, ... {{tt|unary_op(*(last-1))}} over {{tt|binary_op}},
+@2@ Generalized sum of {{tt|init}} and {{tt|binary_op2(*first,*first2)}}, {{tt|binary_op2(*(first+1),*(first2+1))}}, ..., over {{tt|binary_op1}}
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc transform }}
+{{dsc inc | algorithm/dsc reduce }}
+{{dsc end}}
