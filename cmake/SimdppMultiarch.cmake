@@ -768,13 +768,13 @@ set(SIMDPP_ARM64_NEON_TEST_CODE
         char* p = data;
         p = prevent_optimization(p);
 
-        uint32x4_t one = vld1q_u32((uint32_t*)(*p));
+        uint32x4_t one = vld1q_u32((uint32_t*)p);
         one = vaddq_u32(one, one);
 
         // GCC 4.8 misses a subset of functions
         one = vdupq_laneq_u32(one, 1);
 
-        vst1q_u32((uint32_t*)(*p), one);
+        vst1q_u32((uint32_t*)p, one);
         p = prevent_optimization(p);
     }"
 )
