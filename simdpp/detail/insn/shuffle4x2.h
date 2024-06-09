@@ -123,7 +123,7 @@ float64<8> i_shuffle4x2(const float64<8>& a, const float64<8>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_INL
 float64<N> i_shuffle4x2(const float64<N>& a, const float64<N>& b)
 {
-#if SIMDPP_USE_AVX
+#if SIMDPP_FAST_FLOAT64_SIZE >= 4
     SIMDPP_VEC_ARRAY_IMPL2(float64<N>, (i_shuffle4x2<s0,s1,s2,s3>), a, b);
 #else
     float64<N> r;
@@ -215,7 +215,7 @@ uint64<8> i_shuffle4x2(const uint64<8>& a, const uint64<8>& b)
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_INL
 uint64<N> i_shuffle4x2(const uint64<N>& a, const uint64<N>& b)
 {
-#if SIMDPP_USE_AVX2
+#if SIMDPP_FAST_INT64_SIZE >= 4
     SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, (i_shuffle4x2<s0,s1,s2,s3>), a, b);
 #else
     uint64<N> r;

@@ -32,6 +32,8 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 uint64x4 permute_emul(const uint64x4& a);
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
 float64x4 permute_emul(const float64x4& a);
+template<unsigned s0, unsigned s1, class V> SIMDPP_INL
+V permute_64x4_half(const V& a0, const V& a1);
 
 // ----
 
@@ -213,7 +215,16 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_
 uint64<N> i_permute4(const uint64<N>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+#if SIMDPP_FAST_INT64_SIZE >= 4
     SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, (i_permute4<s0,s1,s2,s3>), a);
+#else
+    uint64<N> r;
+    for (unsigned i = 0; i < uint64<N>::vec_length; i+=2) {
+        r.vec(i*2)   = permute_64x4_half<s0,s1>(a.vec(i*2), a.vec(i*2+1));
+        r.vec(i*2+1) = permute_64x4_half<s2,s3>(a.vec(i*2), a.vec(i*2+1));
+    }
+    return r;
+#endif
 }
 
 // -----------------------------------------------------------------------------
@@ -249,7 +260,16 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_
 float64<N> i_permute4(const float64<N>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
+#if SIMDPP_FAST_FLOAT64_SIZE >= 4
     SIMDPP_VEC_ARRAY_IMPL1(float64<N>, (i_permute4<s0,s1,s2,s3>), a);
+#else
+    float64<N> r;
+    for (unsigned i = 0; i < float64<N>::vec_length; i+=2) {
+        r.vec(i*2)   = permute_64x4_half<s0,s1>(a.vec(i*2), a.vec(i*2+1));
+        r.vec(i*2+1) = permute_64x4_half<s2,s3>(a.vec(i*2), a.vec(i*2+1));
+    }
+    return r;
+#endif
 }
 
 } // namespace insn

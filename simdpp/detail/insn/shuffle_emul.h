@@ -7,8 +7,6 @@
 
 #ifndef LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
 #define LIBSIMDPP_SIMDPP_DETAIL_INSN_SHUFFLE_EMUL_H
-#if SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
-
 #ifndef LIBSIMDPP_SIMD_H
     #error "This file must be included through simd.h"
 #endif
@@ -24,8 +22,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
 namespace detail {
 namespace insn {
 
+// emulates 64x4 permute on architectures with 128-bit vectors
 template<unsigned s0, unsigned s1, class V> SIMDPP_INL
-V permute_half(const V& a0, const V& a1)
+V permute_64x4_half(const V& a0, const V& a1)
 {
     switch (s0*4+s1) {
     default:
@@ -56,8 +55,8 @@ uint64x4 permute_emul(const uint64x4& a)
 {
     uint64x2 r0, r1, a0, a1;
     split(a, a0, a1);
-    r0 = permute_half<s0,s1>(a0, a1);
-    r1 = permute_half<s2,s3>(a0, a1);
+    r0 = permute_64x4_half<s0,s1>(a0, a1);
+    r1 = permute_64x4_half<s2,s3>(a0, a1);
     return combine(r0, r1);
 }
 
@@ -66,8 +65,8 @@ float64x4 permute_emul(const float64x4& a)
 {
     float64x2 r0, r1, a0, a1;
     split(a, a0, a1);
-    r0 = permute_half<s0,s1>(a0, a1);
-    r1 = permute_half<s2,s3>(a0, a1);
+    r0 = permute_64x4_half<s0,s1>(a0, a1);
+    r1 = permute_64x4_half<s2,s3>(a0, a1);
     return combine(r0, r1);
 }
 
@@ -76,5 +75,4 @@ float64x4 permute_emul(const float64x4& a)
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
-#endif // SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
 #endif

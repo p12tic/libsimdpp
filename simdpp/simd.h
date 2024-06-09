@@ -133,6 +133,7 @@
 #include <simdpp/detail/cast.h>
 #include <simdpp/detail/cast.inl>
 #include <simdpp/detail/insn/conv_to_mask.inl>
+#include <simdpp/detail/insn/shuffle_emul.h>
 
 #include <simdpp/detail/altivec/load1.h>
 

@@ -152,10 +152,10 @@ T shuffle2(T a, T b)
 }
 
 // 4-element shuffle among two 2-element (sub) vectors
-template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
+template<unsigned s0, unsigned s1> SIMDPP_INL
 T shuffle2x2(const T& a, const T& b)
 {
-    return co(shf2x2<s0,s1>(lo(a), lo(b)), shf2x2<s2,s3>(hi(a), hi(b)));
+    return co(shf2x2<s0,s1>(lo(a), lo(b)), shf2x2<s0,s1>(hi(a), hi(b)));
 }
 
 // 8-element shuffle among two 4-element vectors
