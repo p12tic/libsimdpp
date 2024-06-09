@@ -253,7 +253,7 @@ template<> struct shuffle_impl<10> {
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N>
 float64<N> do_shuffle(const float64<N>& a, const float64<N>& b)
 {
-    return shuffle_impl<impl_selector<s0, s1, s2, s3>::impl>::run<s0, s1, s2, s3>(a, b);
+    return shuffle_impl<impl_selector<s0, s1, s2, s3>::impl>::template run<s0, s1, s2, s3>(a, b);
 }
 
 } // namespace sse_shuffle4x2_float64
