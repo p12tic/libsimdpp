@@ -64,7 +64,7 @@ float32<4> i_shuffle2x2(const float32<4>& a, const float32<4>& b)
         return _mm_shuffle_ps(t, t, _MM_SHUFFLE(3,1,2,0));
     }
 #elif SIMDPP_USE_NEON
-    return (float32<4>) detail::neon_shuffle_int32x4::shuffle2x2<s0,s1>(float32<4>(a), float32<4>(b));
+    return (float32<4>) detail::neon_shuffle_int32x4::shuffle2x2<s0,s1>(uint32<4>(a), uint32<4>(b));
 #elif SIMDPP_USE_ALTIVEC
     uint32<4> mask = make_shuffle_bytes16_mask<s0, s1>(mask);
     return shuffle_bytes16(a, b, mask);

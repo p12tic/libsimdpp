@@ -57,7 +57,7 @@ uint64x2 i_permute2(const uint64x2& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
 #if SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
-    return (uint64x2) i_permute4<s0*2, s0*2+1, s1*2, s1*2+1>(int32x4(a));
+    return (uint64x2) i_permute4<s0*2, s0*2+1, s1*2, s1*2+1>(uint32x4(a));
 #elif SIMDPP_USE_NEON
     return detail::neon_shuffle_int64x2::permute2<s0,s1>(a);
 #elif SIMDPP_USE_VSX_207
