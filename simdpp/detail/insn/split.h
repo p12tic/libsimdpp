@@ -140,12 +140,26 @@ void i_split(const float64<8>& a, float64<4>& r1, float64<4>& r2)
 // -----------------------------------------------------------------------------
 // generic version -- picked up if none of the above matches the arguments
 
+template<unsigned I, unsigned End>
+struct split_unroll {
+    template<class VR, class VS>
+    static SIMDPP_INL void split(VR& dst1, VR& dst2, const VS& src)
+    {
+        dst1.template vec<I>() = src.template vec<I>();
+        dst2.template vec<I>() = src.template vec<I + End>();
+        split_unroll<I + 1, End>::split(dst1, dst2, src);
+    }
+};
+
+template<unsigned End>
+struct split_unroll<End, End> {    template<class VR, class VS>
+    static SIMDPP_INL void split(VR&, VR&, const VS&) {}
+};
+
 template<class V, class H> SIMDPP_INL
 void i_split(const V& a, H& r1, H& r2)
 {
-    unsigned h = H::vec_length;
-    for (unsigned i = 0; i < h; ++i) { r1.vec(i) = a.vec(i); }
-    for (unsigned i = 0; i < h; ++i) { r2.vec(i) = a.vec(i+h); }
+    split_unroll<0, H::vec_length>::split(r1, r2, a);
 }
 
 

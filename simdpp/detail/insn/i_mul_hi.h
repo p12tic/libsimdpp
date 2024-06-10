@@ -42,11 +42,11 @@ int16<8> i_mul_hi(const int16<8>& a, const int16<8>& b)
 #if SIMDPP_BIG_ENDIAN
     int16<16> ab;
     ab = mull(a, b);
-    return unzip8_lo(ab.vec(0), ab.vec(1));
+    return unzip8_lo(ab.vec<0>(), ab.vec<1>());
 #else
     int16<16> ab;
     ab = mull(a, b);
-    return unzip8_hi(ab.vec(0), ab.vec(1));
+    return unzip8_hi(ab.vec<0>(), ab.vec<1>());
 #endif
 #endif
 }
@@ -87,11 +87,11 @@ uint16<8> i_mul_hi(const uint16<8>& a, const uint16<8>& b)
 #elif SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN
     uint16<16> ab;
     ab = mull(a, b);
-    return unzip8_lo(ab.vec(0), ab.vec(1));
+    return unzip8_lo(ab.vec<0>(), ab.vec<1>());
 #elif (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN) || SIMDPP_USE_MSA
     uint16<16> ab;
     ab = mull(a, b);
-    return unzip8_hi(ab.vec(0), ab.vec(1));
+    return unzip8_hi(ab.vec<0>(), ab.vec<1>());
 #endif
 }
 

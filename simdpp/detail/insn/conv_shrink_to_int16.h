@@ -45,21 +45,21 @@ SIMDPP_INL uint16<8> i_to_uint16(const uint32<8>& a)
     a64 = permute4<0,2,0,2>(a64);
     return _mm256_castsi256_si128(a64.native());
 #else
-    return (uint16<8>) zip2_lo(a64.vec(0), a64.vec(1));
+    return (uint16<8>) zip2_lo(a64.vec<0>(), a64.vec<1>());
 #endif
 #elif SIMDPP_USE_NEON64
-    uint16x4_t low = vmovn_u32(a.vec(0).native());
-    return vmovn_high_u32(low, a.vec(1).native());
+    uint16x4_t low = vmovn_u32(a.vec<0>().native());
+    return vmovn_high_u32(low, a.vec<1>().native());
 #elif SIMDPP_USE_NEON
-    uint16x4_t low = vmovn_u32(a.vec(0).native());
-    uint16x4_t high = vmovn_u32(a.vec(1).native());
+    uint16x4_t low = vmovn_u32(a.vec<0>().native());
+    uint16x4_t high = vmovn_u32(a.vec<1>().native());
     return vcombine_u16(low, high);
 #elif SIMDPP_USE_ALTIVEC
-    return vec_pack(a.vec(0).native(), a.vec(1).native());
+    return vec_pack(a.vec<0>().native(), a.vec<1>().native());
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     uint16<8> r1, r2;
-    r1 = a.vec(0);
-    r2 = a.vec(1);
+    r1 = a.vec<0>();
+    r2 = a.vec<1>();
     return unzip8_lo(r1, r2);
 #endif
 }
@@ -81,8 +81,8 @@ SIMDPP_INL uint16<16> i_to_uint16(const uint32<16>& a)
 #else
     uint16<16> perm_mask = make_shuffle_bytes16_mask<0,2,4,6,0,0,0,0>(perm_mask);
     uint64<4> a64_0, a64_1;
-    a64_0 = permute_bytes16((uint16<16>) a.vec(0), perm_mask);
-    a64_1 = permute_bytes16((uint16<16>) a.vec(1), perm_mask);
+    a64_0 = permute_bytes16((uint16<16>) a.vec<0>(), perm_mask);
+    a64_1 = permute_bytes16((uint16<16>) a.vec<1>(), perm_mask);
     a64_0 = zip2_lo(a64_0, a64_1);
     a64_0 = permute4<0,2,1,3>(a64_0);
     return (uint16<16>) a64_0;
@@ -93,8 +93,8 @@ SIMDPP_INL uint16<16> i_to_uint16(const uint32<16>& a)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint16<32> i_to_uint16(const uint32<32>& a)
 {
-    uint16<16> r1 = _mm512_cvtepi32_epi16(a.vec(0).native());
-    uint16<16> r2 = _mm512_cvtepi32_epi16(a.vec(1).native());
+    uint16<16> r1 = _mm512_cvtepi32_epi16(a.vec<0>().native());
+    uint16<16> r2 = _mm512_cvtepi32_epi16(a.vec<1>().native());
     return combine(r1, r2);
 }
 #endif
@@ -151,8 +151,8 @@ SIMDPP_INL uint16<8> i_to_uint16(const uint64<8>& a)
     uint32<8> a32_0, a32_1;
     uint64<4> a64_0;
     uint32<4> b32;
-    a32_0 = permute_bytes16((uint16<16>) a.vec(0), perm_mask);
-    a32_1 = permute_bytes16((uint16<16>) a.vec(1), perm_mask);
+    a32_0 = permute_bytes16((uint16<16>) a.vec<0>(), perm_mask);
+    a32_1 = permute_bytes16((uint16<16>) a.vec<1>(), perm_mask);
     a64_0 = zip4_lo(a32_0, a32_1);
     a32_0 = permute4<0,2,1,3>(a64_0);
     b32 = _mm256_castsi256_si128(a32_0.native());
@@ -162,10 +162,10 @@ SIMDPP_INL uint16<8> i_to_uint16(const uint64<8>& a)
     uint16<8> perm_mask = make_shuffle_bytes16_mask<0,4,0,0,0,0,0,0>(perm_mask);
     uint32<4> a32_0, a32_1, a32_2, a32_3;
     uint64<2> a64_0, a64_1;
-    a32_0 = permute_bytes16((uint16<8>) a.vec(0), perm_mask);
-    a32_1 = permute_bytes16((uint16<8>) a.vec(1), perm_mask);
-    a32_2 = permute_bytes16((uint16<8>) a.vec(2), perm_mask);
-    a32_3 = permute_bytes16((uint16<8>) a.vec(3), perm_mask);
+    a32_0 = permute_bytes16((uint16<8>) a.vec<0>(), perm_mask);
+    a32_1 = permute_bytes16((uint16<8>) a.vec<1>(), perm_mask);
+    a32_2 = permute_bytes16((uint16<8>) a.vec<2>(), perm_mask);
+    a32_3 = permute_bytes16((uint16<8>) a.vec<3>(), perm_mask);
     a64_0 = zip4_lo(a32_0, a32_1);
     a64_1 = zip4_lo(a32_2, a32_3);
     a64_0 = zip2_lo(a64_0, a64_1);
@@ -180,17 +180,17 @@ SIMDPP_INL uint16<8> i_to_uint16(const uint64<8>& a)
 SIMDPP_INL uint16<16> i_to_uint16(const uint64<16>& a)
 {
 #if SIMDPP_USE_AVX512F
-    uint16<8> r0 = _mm512_cvtepi64_epi16(a.vec(0).native());
-    uint16<8> r1 = _mm512_cvtepi64_epi16(a.vec(1).native());
+    uint16<8> r0 = _mm512_cvtepi64_epi16(a.vec<0>().native());
+    uint16<8> r1 = _mm512_cvtepi64_epi16(a.vec<1>().native());
     return combine(r0, r1);
 #else
     uint16<16> perm_mask = make_shuffle_bytes16_mask<0,4,0,0,0,0,0,0>(perm_mask);
     uint32<8> a32_0, a32_1, a32_2, a32_3;
     uint64<4> a64_0, a64_1;
-    a32_0 = permute_bytes16((uint16<16>) a.vec(0), perm_mask);
-    a32_1 = permute_bytes16((uint16<16>) a.vec(1), perm_mask);
-    a32_2 = permute_bytes16((uint16<16>) a.vec(2), perm_mask);
-    a32_3 = permute_bytes16((uint16<16>) a.vec(3), perm_mask);
+    a32_0 = permute_bytes16((uint16<16>) a.vec<0>(), perm_mask);
+    a32_1 = permute_bytes16((uint16<16>) a.vec<1>(), perm_mask);
+    a32_2 = permute_bytes16((uint16<16>) a.vec<2>(), perm_mask);
+    a32_3 = permute_bytes16((uint16<16>) a.vec<3>(), perm_mask);
     a64_0 = zip4_lo(a32_0, a32_1);
     a64_1 = zip4_lo(a32_2, a32_3);
     a64_0 = zip2_lo(a64_0, a64_1);
@@ -204,10 +204,10 @@ SIMDPP_INL uint16<16> i_to_uint16(const uint64<16>& a)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint16<32> i_to_uint16(const uint64<32>& a)
 {
-    uint16<8> r0 = _mm512_cvtepi64_epi16(a.vec(0).native());
-    uint16<8> r1 = _mm512_cvtepi64_epi16(a.vec(1).native());
-    uint16<8> r2 = _mm512_cvtepi64_epi16(a.vec(2).native());
-    uint16<8> r3 = _mm512_cvtepi64_epi16(a.vec(3).native());
+    uint16<8> r0 = _mm512_cvtepi64_epi16(a.vec<0>().native());
+    uint16<8> r1 = _mm512_cvtepi64_epi16(a.vec<1>().native());
+    uint16<8> r2 = _mm512_cvtepi64_epi16(a.vec<2>().native());
+    uint16<8> r3 = _mm512_cvtepi64_epi16(a.vec<3>().native());
     return combine(combine(r0, r1), combine(r2, r3));
 }
 #endif

@@ -34,32 +34,32 @@ uint32<8> i_to_uint32(const uint16<8>& a)
 #if SIMDPP_USE_NULL
     uint32<8> r;
     for (unsigned i = 0; i < r.length; i++) {
-        r.vec(i/4).el(i%4) = uint32_t(a.vec(0).el(i));
+        r.vec(i/4).el(i%4) = uint32_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX2
     return  _mm256_cvtepu16_epi32(a.native());
 #elif SIMDPP_USE_SSE4_1
     uint32<8> r;
-    r.vec(0) = _mm_cvtepu16_epi32(a.native());
-    r.vec(1) = _mm_cvtepu16_epi32(move8_l<4>(a).native());
+    r.vec<0>() = _mm_cvtepu16_epi32(a.native());
+    r.vec<1>() = _mm_cvtepu16_epi32(move8_l<4>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA || (SIMDPP_USE_ALTIVEC && SIMDPP_LITTLE_ENDIAN)
     uint16<8> zero = make_zero();
     uint32<8> r;
-    r.vec(0) = zip8_lo(a, zero);
-    r.vec(1) = zip8_hi(a, zero);
+    r.vec<0>() = zip8_lo(a, zero);
+    r.vec<1>() = zip8_hi(a, zero);
     return r;
 #elif (SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN)
     uint16<8> zero = make_zero();
     uint32<8> r;
-    r.vec(0) = zip8_lo(zero, a);
-    r.vec(1) = zip8_hi(zero, a);
+    r.vec<0>() = zip8_lo(zero, a);
+    r.vec<1>() = zip8_hi(zero, a);
     return r;
 #elif SIMDPP_USE_NEON
     uint32<8> r;
-    r.vec(0) = vmovl_u16(vget_low_u16(a.vec(0).native()));
-    r.vec(1) = vmovl_u16(vget_high_u16(a.vec(1).native()));
+    r.vec<0>() = vmovl_u16(vget_low_u16(a.vec<0>().native()));
+    r.vec<1>() = vmovl_u16(vget_high_u16(a.vec<1>().native()));
     return r;
 #endif
 }
@@ -73,8 +73,8 @@ SIMDPP_INL uint32<16> i_to_uint32(const uint16<16>& a)
     uint32<16> r;
     uint16<8> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm256_cvtepu16_epi32(a0.native());
-    r.vec(1) = _mm256_cvtepu16_epi32(a1.native());
+    r.vec<0>() = _mm256_cvtepu16_epi32(a0.native());
+    r.vec<1>() = _mm256_cvtepu16_epi32(a1.native());
     return r;
 #endif
 }
@@ -86,8 +86,8 @@ SIMDPP_INL uint32<32> i_to_uint32(const uint16<32>& a)
     uint32<32> r;
     uint16<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepu16_epi32(a0.native());
-    r.vec(1) = _mm512_cvtepu16_epi32(a1.native());
+    r.vec<0>() = _mm512_cvtepu16_epi32(a0.native());
+    r.vec<1>() = _mm512_cvtepu16_epi32(a1.native());
     return r;
 }
 #endif
@@ -133,22 +133,22 @@ uint32<16> i_to_uint32(const uint8<16>& a)
 #if SIMDPP_USE_NULL
     uint32<16> r;
     for (unsigned i = 0; i < r.length; i++) {
-        r.vec(i/4).el(i%4) = uint32_t(a.vec(0).el(i));
+        r.vec(i/4).el(i%4) = uint32_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX512F
     return _mm512_cvtepu8_epi32(a.native());
 #elif SIMDPP_USE_AVX2
     uint32<16> r;
-    r.vec(0) =  _mm256_cvtepu8_epi32(a.native());
-    r.vec(1) =  _mm256_cvtepu8_epi32(move16_l<8>(a).native());
+    r.vec<0>() =  _mm256_cvtepu8_epi32(a.native());
+    r.vec<1>() =  _mm256_cvtepu8_epi32(move16_l<8>(a).native());
     return r;
 #elif SIMDPP_USE_SSE4_1
     uint32<16> r;
-    r.vec(0) = _mm_cvtepu8_epi32(a.native());
-    r.vec(1) = _mm_cvtepu8_epi32(move16_l<4>(a).native());
-    r.vec(2) = _mm_cvtepu8_epi32(move16_l<8>(a).native());
-    r.vec(3) = _mm_cvtepu8_epi32(move16_l<12>(a).native());
+    r.vec<0>() = _mm_cvtepu8_epi32(a.native());
+    r.vec<1>() = _mm_cvtepu8_epi32(move16_l<4>(a).native());
+    r.vec<2>() = _mm_cvtepu8_epi32(move16_l<8>(a).native());
+    r.vec<3>() = _mm_cvtepu8_epi32(move16_l<12>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return i_to_uint32(i_to_uint16(a));
@@ -162,17 +162,17 @@ SIMDPP_INL uint32<32> i_to_uint32(const uint8<32>& a)
     uint32<32> r;
     uint8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepu8_epi32(a0.native());
-    r.vec(1) = _mm512_cvtepu8_epi32(a1.native());
+    r.vec<0>() = _mm512_cvtepu8_epi32(a0.native());
+    r.vec<1>() = _mm512_cvtepu8_epi32(a1.native());
     return r;
 #else
     uint32<32> r;
     uint8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) =  _mm256_cvtepu8_epi32(a0.native());
-    r.vec(1) =  _mm256_cvtepu8_epi32(move16_l<8>(a0).native());
-    r.vec(2) =  _mm256_cvtepu8_epi32(a1.native());
-    r.vec(3) =  _mm256_cvtepu8_epi32(move16_l<8>(a1).native());
+    r.vec<0>() =  _mm256_cvtepu8_epi32(a0.native());
+    r.vec<1>() =  _mm256_cvtepu8_epi32(move16_l<8>(a0).native());
+    r.vec<2>() =  _mm256_cvtepu8_epi32(a1.native());
+    r.vec<3>() =  _mm256_cvtepu8_epi32(move16_l<8>(a1).native());
     return r;
 #endif
 }
@@ -188,10 +188,10 @@ SIMDPP_INL uint32<64> i_to_uint32(const uint8<64>& a)
     split(a01, a0, a1);
     split(a23, a2, a3);
 
-    r.vec(0) =  _mm512_cvtepu8_epi32(a0.native());
-    r.vec(1) =  _mm512_cvtepu8_epi32(a1.native());
-    r.vec(2) =  _mm512_cvtepu8_epi32(a2.native());
-    r.vec(3) =  _mm512_cvtepu8_epi32(a3.native());
+    r.vec<0>() =  _mm512_cvtepu8_epi32(a0.native());
+    r.vec<1>() =  _mm512_cvtepu8_epi32(a1.native());
+    r.vec<2>() =  _mm512_cvtepu8_epi32(a2.native());
+    r.vec<3>() =  _mm512_cvtepu8_epi32(a3.native());
     return r;
 }
 #endif
@@ -243,15 +243,15 @@ int32<8> i_to_int32(const int16<8>& a)
 #if SIMDPP_USE_NULL
     int32<8> r;
     for (unsigned i = 0; i < r.length; i++) {
-        r.vec(i/4).el(i%4) = int32_t(a.vec(0).el(i));
+        r.vec(i/4).el(i%4) = int32_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX2
     return  _mm256_cvtepi16_epi32(a.native());
 #elif SIMDPP_USE_SSE4_1
     int32x8 r;
-    r.vec(0) = _mm_cvtepi16_epi32(a.native());
-    r.vec(1) = _mm_cvtepi16_epi32(move8_l<4>(a).native());
+    r.vec<0>() = _mm_cvtepi16_epi32(a.native());
+    r.vec<1>() = _mm_cvtepi16_epi32(move8_l<4>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     int16x8 sign = shift_r<15>(a);
@@ -261,13 +261,13 @@ int32<8> i_to_int32(const int16<8>& a)
     return combine(lo, hi);
 #elif SIMDPP_USE_NEON
     int32x8 r;
-    r.vec(0) = vmovl_s16(vget_low_s16(a.vec(0).native()));
-    r.vec(1) = vmovl_s16(vget_high_s16(a.vec(1).native()));
+    r.vec<0>() = vmovl_s16(vget_low_s16(a.vec<0>().native()));
+    r.vec<1>() = vmovl_s16(vget_high_s16(a.vec<1>().native()));
     return r;
 #elif SIMDPP_USE_ALTIVEC
     int32x4 b0, b1;
-    b0 = vec_unpackh((__vector int16_t)a.vec(0).native());
-    b1 = vec_unpackl((__vector int16_t)a.vec(0).native());
+    b0 = vec_unpackh((__vector int16_t)a.vec<0>().native());
+    b1 = vec_unpackl((__vector int16_t)a.vec<0>().native());
     return combine(b0, b1);
 #endif
 }
@@ -342,22 +342,22 @@ int32<16> i_to_int32(const int8<16>& a)
 #if SIMDPP_USE_NULL
     int32<16> r;
     for (unsigned i = 0; i < r.length; i++) {
-        r.vec(i/4).el(i%4) = int32_t(a.vec(0).el(i));
+        r.vec(i/4).el(i%4) = int32_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX512F
     return _mm512_cvtepi8_epi32(a.native());
 #elif SIMDPP_USE_AVX2
     int32<16> r;
-    r.vec(0) = _mm256_cvtepi8_epi32(a.native());
-    r.vec(1) = _mm256_cvtepi8_epi32(move16_l<8>(a).native());
+    r.vec<0>() = _mm256_cvtepi8_epi32(a.native());
+    r.vec<1>() = _mm256_cvtepi8_epi32(move16_l<8>(a).native());
     return r;
 #elif SIMDPP_USE_SSE4_1
     int32<16> r;
-    r.vec(0) = _mm_cvtepi8_epi32(a.native());
-    r.vec(1) = _mm_cvtepi8_epi32(move16_l<4>(a).native());
-    r.vec(2) = _mm_cvtepi8_epi32(move16_l<8>(a).native());
-    r.vec(3) = _mm_cvtepi8_epi32(move16_l<12>(a).native());
+    r.vec<0>() = _mm_cvtepi8_epi32(a.native());
+    r.vec<1>() = _mm_cvtepi8_epi32(move16_l<4>(a).native());
+    r.vec<2>() = _mm_cvtepi8_epi32(move16_l<8>(a).native());
+    r.vec<3>() = _mm_cvtepi8_epi32(move16_l<12>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     return i_to_int32(i_to_int16(a));
@@ -372,17 +372,17 @@ int32<32> i_to_int32(const int8<32>& a)
     int32<32> r;
     int8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepi8_epi32(a0.native());
-    r.vec(1) = _mm512_cvtepi8_epi32(a1.native());
+    r.vec<0>() = _mm512_cvtepi8_epi32(a0.native());
+    r.vec<1>() = _mm512_cvtepi8_epi32(a1.native());
     return r;
 #else
     int32<32> r;
     int8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) =  _mm256_cvtepi8_epi32(a0.native());
-    r.vec(1) =  _mm256_cvtepi8_epi32(move16_l<8>(a0).native());
-    r.vec(2) =  _mm256_cvtepi8_epi32(a1.native());
-    r.vec(3) =  _mm256_cvtepi8_epi32(move16_l<8>(a1).native());
+    r.vec<0>() =  _mm256_cvtepi8_epi32(a0.native());
+    r.vec<1>() =  _mm256_cvtepi8_epi32(move16_l<8>(a0).native());
+    r.vec<2>() =  _mm256_cvtepi8_epi32(a1.native());
+    r.vec<3>() =  _mm256_cvtepi8_epi32(move16_l<8>(a1).native());
     return r;
 #endif
 }
@@ -398,10 +398,10 @@ SIMDPP_INL int32<64> i_to_int32(const int8<64>& a)
     split(a01, a0, a1);
     split(a23, a2, a3);
 
-    r.vec(0) =  _mm512_cvtepi8_epi32(a0.native());
-    r.vec(1) =  _mm512_cvtepi8_epi32(a1.native());
-    r.vec(2) =  _mm512_cvtepi8_epi32(a2.native());
-    r.vec(3) =  _mm512_cvtepi8_epi32(a3.native());
+    r.vec<0>() =  _mm512_cvtepi8_epi32(a0.native());
+    r.vec<1>() =  _mm512_cvtepi8_epi32(a1.native());
+    r.vec<2>() =  _mm512_cvtepi8_epi32(a2.native());
+    r.vec<3>() =  _mm512_cvtepi8_epi32(a3.native());
     return r;
 }
 #endif

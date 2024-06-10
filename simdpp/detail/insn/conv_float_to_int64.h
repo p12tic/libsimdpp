@@ -245,8 +245,8 @@ uint64<16> i_to_uint64(const float32<16>& a)
     uint64<16> r;
     split(a, a0, a1);
 
-    r.vec(0) = _mm512_cvttps_epu64(a0.native());
-    r.vec(1) = _mm512_cvttps_epu64(a1.native());
+    r.vec<0>() = _mm512_cvttps_epu64(a0.native());
+    r.vec<1>() = _mm512_cvttps_epu64(a1.native());
 
     return r;
 #else
@@ -339,8 +339,8 @@ int64<16> i_to_int64(const float32<16>& a)
     int64<16> r;
     split(a, a0, a1);
 
-    r.vec(0) = _mm512_cvttps_epi64(a0.native());
-    r.vec(1) = _mm512_cvttps_epi64(a1.native());
+    r.vec<0>() = _mm512_cvttps_epi64(a0.native());
+    r.vec<1>() = _mm512_cvttps_epi64(a1.native());
 
     return r;
 #else

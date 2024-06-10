@@ -47,8 +47,8 @@ SIMDPP_INL uint16<16> i_to_uint16(const uint8<16>& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     uint16x16 r;
-    r.vec(0) = vmovl_u8(vget_low_u8(a.native()));
-    r.vec(1) = vmovl_u8(vget_high_u8(a.native()));
+    r.vec<0>() = vmovl_u8(vget_low_u8(a.native()));
+    r.vec<1>() = vmovl_u8(vget_high_u8(a.native()));
     return r;
 #elif (SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN)
     uint16x8 r1, r2;
@@ -141,8 +141,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;
-    r.vec(0) = vmovl_s8(vget_low_s8(a.native()));
-    r.vec(1) = vmovl_s8(vget_high_s8(a.native()));
+    r.vec<0>() = vmovl_s8(vget_low_s8(a.native()));
+    r.vec<1>() = vmovl_s8(vget_high_s8(a.native()));
     return r;
 #elif SIMDPP_USE_MSA
     int8x16 sign = shift_r<7>(a);
@@ -152,8 +152,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
     int16x16 r;
-    r.vec(0) = vec_unpackh(a.vec(0).native());
-    r.vec(1) = vec_unpackl(a.vec(0).native());
+    r.vec<0>() = vec_unpackh(a.vec<0>().native());
+    r.vec<1>() = vec_unpackl(a.vec<0>().native());
     return r;
 #endif
 }
