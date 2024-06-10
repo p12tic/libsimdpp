@@ -4,24 +4,18 @@ libsimdpp
 
 [![Travis build status](https://travis-ci.org/p12tic/libsimdpp.svg?branch=master)](https://travis-ci.org/p12tic/libsimdpp "Travis build status")
 [![Appveyor build status](https://img.shields.io/appveyor/ci/p12tic/libsimdpp/master.svg)](https://ci.appveyor.com/project/p12tic/libsimdpp "Appveyor build status")
+[![Join the chat at https://gitter.im/libsimdpp/Lobby](https://badges.gitter.im/libsimdpp/Lobby.svg)](https://gitter.im/libsimdpp/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-libsimdpp is a portable header-only zero-overhead C++ wrapper around
-single-instruction multiple-data (SIMD) intrinsics found in many compilers. The
-library presents a single interface over several instruction sets in such a way
-that the same source code may be compiled for different instruction sets. The
-resulting object files then may be hooked into internal dynamic dispatch
-mechanism.
+libsimdpp is a portable header-only zero-overhead C++ low level SIMD library.
+The library presents a single interface over SIMD instruction sets present in
+x86, ARM, PowerPC and MIPS architectures. On architectures that support
+different SIMD instruction sets the library allows the same source code files
+to be compiled for each SIMD instruction set and then hooked into an internal
+or third-party dynamic dispatch mechanism. This allows the capabilities of the
+processor to be queried on runtime and the most efficient implementation to be
+selected.
 
-The library resolves differences between instruction sets by implementing the
-missing functionality as a combination of several intrinsics. Moreover, the
-library supplies a lot of additional, commonly used functionality, such as
-various variants of matrix transpositions, interleaving loads/stores, optimized
-compile-time shuffling instructions, etc. Each of these are implemented in the
-most efficient manner for the target instruction set. Finally, it's possible
-to fall back to native intrinsics when necessary, without compromising
-maintanability.
-
-The library sits somewhere in the middle between programming directly in
+The library sits somewhere in the middle between programming directly in SIMD
 intrinsics and even higher-level SIMD libraries. As much control as possible
 is given to the developer, so that it's possible to exactly predict what code
 the compiler will generate.
@@ -32,7 +26,7 @@ Documentation
 -------------
 
 Online documentation is provided
-[here](http://p12tic.github.io/libsimdpp/v2.1/libsimdpp/w/).
+[here](http://p12tic.github.io/libsimdpp/v2.2-dev/libsimdpp/w/).
 
 Compiler and instruction set support
 ------------------------------------
@@ -44,7 +38,7 @@ Compiler and instruction set support
 The library supports the following architectures and instruction sets:
 
  - x86, x86-64: SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, FMA3, FMA4, AVX512F,
- AVX512BW, AVX512DQ, AVX512VL, XOP
+ AVX512BW, AVX512DQ, AVX512VL, XOP, popcnt
  - ARM 32-bit: NEON, NEONv2
  - ARM 64-bit: NEON, NEONv2
  - PowerPC 32-bit big-endian: Altivec, VSX v2.06, VSX v2.07

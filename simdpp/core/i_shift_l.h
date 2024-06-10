@@ -123,7 +123,7 @@ uint64<N,expr_empty> shift_l(const uint64<N,E>& a, unsigned count)
 template<unsigned N, class E> SIMDPP_INL
 int8<N,expr_empty> shift_l(const int8<N,E>& a, const uint8<N,E>& count)
 {
-#if SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR
+#if SIMDPP_HAS_INT8_SHIFT_L_BY_VECTOR
     uint8<N> qa = a.eval();
     return detail::insn::i_shift_l_v(qa, count.eval());
 #else
@@ -134,7 +134,7 @@ int8<N,expr_empty> shift_l(const int8<N,E>& a, const uint8<N,E>& count)
 template<unsigned N, class E> SIMDPP_INL
 uint8<N,expr_empty> shift_l(const uint8<N,E>& a, const uint8<N,E>& count)
 {
-#if SIMDPP_HAS_UINT8_SHIFT_R_BY_VECTOR
+#if SIMDPP_HAS_UINT8_SHIFT_L_BY_VECTOR
     return detail::insn::i_shift_l_v(a.eval(), count.eval());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
@@ -153,7 +153,7 @@ uint8<N,expr_empty> shift_l(const uint8<N,E>& a, const uint8<N,E>& count)
 template<unsigned N, class E> SIMDPP_INL
 int16<N,expr_empty> shift_l(const int16<N,E>& a, const uint16<N,E>& count)
 {
-#if SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR
+#if SIMDPP_HAS_INT16_SHIFT_L_BY_VECTOR
     uint16<N> qa = a.eval();
     return detail::insn::i_shift_l_v(qa, count.eval());
 #else
@@ -164,7 +164,7 @@ int16<N,expr_empty> shift_l(const int16<N,E>& a, const uint16<N,E>& count)
 template<unsigned N, class E> SIMDPP_INL
 uint16<N,expr_empty> shift_l(const uint16<N,E>& a, const uint16<N,E>& count)
 {
-#if SIMDPP_HAS_UINT16_SHIFT_R_BY_VECTOR
+#if SIMDPP_HAS_UINT16_SHIFT_L_BY_VECTOR
     return detail::insn::i_shift_l_v(a.eval(), count.eval());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
@@ -183,7 +183,7 @@ uint16<N,expr_empty> shift_l(const uint16<N,E>& a, const uint16<N,E>& count)
 template<unsigned N, class E> SIMDPP_INL
 int32<N,expr_empty> shift_l(const int32<N,E>& a, const uint32<N,E>& count)
 {
-#if SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR
+#if SIMDPP_HAS_INT32_SHIFT_L_BY_VECTOR
     uint32<N> qa = a.eval();
     return detail::insn::i_shift_l_v(qa, count.eval());
 #else
@@ -194,7 +194,7 @@ int32<N,expr_empty> shift_l(const int32<N,E>& a, const uint32<N,E>& count)
 template<unsigned N, class E> SIMDPP_INL
 uint32<N,expr_empty> shift_l(const uint32<N,E>& a, const uint32<N,E>& count)
 {
-#if SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR
+#if SIMDPP_HAS_UINT32_SHIFT_L_BY_VECTOR
     return detail::insn::i_shift_l_v(a.eval(), count.eval());
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
