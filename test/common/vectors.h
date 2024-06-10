@@ -84,6 +84,8 @@ struct Vectors {
         }
         broadcast();
     }
+
+    std::size_t size() const { return N; }
 private:
     SIMDPP_ALIGN(64) uint8_t c[BE*N];
 };

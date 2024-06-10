@@ -303,12 +303,21 @@ void print_vector_numeric(std::ostream& out, const V& v)
 #define TEST_PUSH_STORED(TC, T, D, COUNT)                                       \
 { test_push_stored<V>((TC), (D), COUNT, __FILE__, __LINE__); }
 
+#define TEST_PUSH_ARRAY_SPAN(TC, T, P, SIZE)                            \
+{                                                                       \
+        (TC).reset_seq();                                               \
+        for (unsigned i = 0; i < (SIZE); i++) {                         \
+            T l = (T) (P)[i];                                           \
+            TEST_PUSH(TC, T, l);                                        \
+    }                                                                   \
+}
+
 #define TEST_PUSH_ARRAY(TC, T, A)                                       \
 {                                                                       \
-    (TC).reset_seq();                                                   \
-    for (unsigned i = 0; i < sizeof(A) / sizeof((A)[0]); i++) {                 \
-        T l = (T) (A)[i];                                                       \
-        TEST_PUSH(TC, T, l);                                                    \
+        (TC).reset_seq();                                               \
+        for (unsigned i = 0; i < (A).size(); i++) {                     \
+            T l = (T) (A)[i];                                           \
+            TEST_PUSH(TC, T, l);                                        \
     }                                                                   \
 }
 
