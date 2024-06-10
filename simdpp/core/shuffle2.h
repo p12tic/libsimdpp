@@ -61,8 +61,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
     shuffle2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     static_assert(sa0 < 4 && sa1 < 4 && sb0 < 4 && sb1 < 4, "Selector out of range");
-    typename detail::get_expr2_nomask<V1,V2>::type a0 = a.wrapped().eval(),
-                                                   b0 = b.wrapped().eval();
+    typename detail::get_expr2_nomask<V1,V2>::type a0 = a.wrapped(),
+                                                   b0 = b.wrapped();
     return detail::insn::i_shuffle4x2<sa0,sa1,sb0+4,sb1+4>(a0, b0);
 }
 
@@ -109,8 +109,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
     shuffle2(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-    typename detail::get_expr2_nomask<V1,V2>::type a0 = a.wrapped().eval(),
-                                                   b0 = b.wrapped().eval();
+    typename detail::get_expr2_nomask<V1,V2>::type a0 = a.wrapped(),
+                                                   b0 = b.wrapped();
     return detail::insn::i_shuffle4x2<s0,s1,s0+4,s1+4>(a0, b0);
 }
 

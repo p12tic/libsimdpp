@@ -29,28 +29,28 @@ template<class T, unsigned N, class V> SIMDPP_INL
 void store_masked(T* p, const any_int32<N,V>& a, const mask_int32<N>& mask)
 {
     uint32<N> ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     detail::insn::i_store_masked(reinterpret_cast<char*>(p), ra, mask);
 }
 template<class T, unsigned N, class V> SIMDPP_INL
 void store_masked(T* p, const any_int64<N,V>& a, const mask_int64<N>& mask)
 {
     uint64<N> ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     detail::insn::i_store_masked(reinterpret_cast<char*>(p), ra, mask);
 }
 template<class T, unsigned N, class V> SIMDPP_INL
 void store_masked(T* p, const any_float32<N,V>& a, const mask_float32<N>& mask)
 {
     float32<N> ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     detail::insn::i_store_masked(reinterpret_cast<char*>(p), ra, mask);
 }
 template<class T, unsigned N, class V> SIMDPP_INL
 void store_masked(T* p, const any_float64<N,V>& a, const mask_float64<N>& mask)
 {
     float64<N> ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     detail::insn::i_store_masked(reinterpret_cast<char*>(p), ra, mask);
 }
 

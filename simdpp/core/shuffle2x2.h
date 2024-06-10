@@ -35,8 +35,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-    typename detail::get_expr2_nomask_nosign<V1,V2>::type a0 = a.wrapped().eval(),
-                                                          b0 = b.wrapped().eval();
+    typename detail::get_expr2_nomask_nosign<V1,V2>::type a0 = a.wrapped(),
+                                                          b0 = b.wrapped();
     return detail::insn::i_shuffle2x2<s0,s1>(a0, b0);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(V1, a, b);
@@ -60,8 +60,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_SSE2 || SIMDPP_USE_NEON
     static_assert(s0 < 4 && s1 < 4, "Selector out of range");
-    typename detail::get_expr2_nomask_nosign<V1,V2>::type a0 = a.wrapped().eval(),
-                                                          b0 = b.wrapped().eval();
+    typename detail::get_expr2_nomask_nosign<V1,V2>::type a0 = a.wrapped(),
+                                                          b0 = b.wrapped();
     return detail::insn::i_shuffle2x2<s0,s1>(a0, b0);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(V1, a, b);

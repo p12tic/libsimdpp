@@ -37,8 +37,8 @@ typename detail::get_expr2<V1, V2>::type
     operator^(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_bit_xor(ra, rb);
 }
 

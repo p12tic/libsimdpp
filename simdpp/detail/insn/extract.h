@@ -178,7 +178,7 @@ uint32_t i_extract(const uint32<4>& a)
     return _mm_extract_epi32(a.native(), id);
 #elif SIMDPP_USE_SSE2
     // when id==0, move_l is template-specialized and does nothing
-    return _mm_cvtsi128_si32(move4_l<id>(a).eval().native());
+    return _mm_cvtsi128_si32(move4_l<id>(a).native());
 #elif SIMDPP_USE_NEON
     return vgetq_lane_u32(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC

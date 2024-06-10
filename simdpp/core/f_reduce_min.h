@@ -28,13 +28,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float reduce_min(const float32<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 double reduce_min(const float64<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

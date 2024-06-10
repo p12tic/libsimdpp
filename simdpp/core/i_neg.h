@@ -32,7 +32,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int8<N> neg(const int8<N>& a)
 {
-    return detail::insn::i_ineg(a.eval());
+    return detail::insn::i_ineg(a);
 }
 
 /** Negates signed 16-bit values.
@@ -49,7 +49,7 @@ int8<N> neg(const int8<N>& a)
 template<unsigned N> SIMDPP_INL
 int16<N> neg(const int16<N>& a)
 {
-    return detail::insn::i_ineg(a.eval());
+    return detail::insn::i_ineg(a);
 }
 
 /** Negates signed 32-bit values.
@@ -66,7 +66,7 @@ int16<N> neg(const int16<N>& a)
 template<unsigned N> SIMDPP_INL
 int32<N> neg(const int32<N>& a)
 {
-    return detail::insn::i_ineg(a.eval());
+    return detail::insn::i_ineg(a);
 }
 
 /** Negates signed 64-bit values.
@@ -87,7 +87,7 @@ int32<N> neg(const int32<N>& a)
 template<unsigned N> SIMDPP_INL
 int64<N> neg(const int64<N>& a)
 {
-    return detail::insn::i_ineg(a.eval());
+    return detail::insn::i_ineg(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

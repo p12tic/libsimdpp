@@ -51,11 +51,11 @@ public:
 
     template<class V> SIMDPP_INL explicit float32<4>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<float32<4>>(d.wrapped().eval());
+        *this = bit_cast<float32<4>>(d.wrapped());
     }
     template<class V> SIMDPP_INL float32<4>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<float32<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<float32<4>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -86,8 +86,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const float32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL float32<4>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL float32<4> eval() const { return *this; }
 
 private:
 #if SIMDPP_ARM && !SIMDPP_HAS_FLOAT32_SIMD
@@ -141,11 +139,11 @@ public:
 
     SIMDPP_INL explicit mask_float32<4>(const mask_int32<4>& d)
     {
-        *this = bit_cast<mask_float32<4>>(d.eval());
+        *this = bit_cast<mask_float32<4>>(d);
     }
     SIMDPP_INL mask_float32<4>& operator=(const mask_int32<4>& d)
     {
-        *this = bit_cast<mask_float32<4>>(d.eval()); return *this;
+        *this = bit_cast<mask_float32<4>>(d); return *this;
     }
 
     /// Convert to the underlying vector type
@@ -174,8 +172,6 @@ public:
 
     SIMDPP_INL const mask_float32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_float32<4>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_float32<4> eval() const { return *this; }
 
 private:
     native_type d_;

@@ -26,7 +26,7 @@ bool test_bits_any(const any_vec<N,V>& a)
 {
     static_assert(!is_mask<V>::value, "Mask types are not supported");
     using expr = typename detail::get_expr_nosign<V>::type;
-    return detail::e_test_bits_any(expr(a.wrapped().eval()));
+    return detail::e_test_bits_any(expr(a.wrapped()));
 }
 
 

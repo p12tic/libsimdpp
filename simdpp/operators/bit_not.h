@@ -33,7 +33,7 @@ typename detail::get_expr<V>::type
     operator~(const any_vec<N,V>& a)
 {
     typename detail::get_expr_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_bit_not(ra);
 }
 

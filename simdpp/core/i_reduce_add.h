@@ -30,49 +30,49 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int16_t reduce_add(const int8<N>& a)
 {
-    return detail::insn::i_reduce_add(a.eval());
+    return detail::insn::i_reduce_add(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint16_t reduce_add(const uint8<N>& a)
 {
-    return detail::insn::i_reduce_add(a.eval());
+    return detail::insn::i_reduce_add(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int32_t reduce_add(const int16<N>& a)
 {
-    return detail::insn::i_reduce_add(a.eval());
+    return detail::insn::i_reduce_add(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_add(const uint16<N>& a)
 {
-    return detail::insn::i_reduce_add(a.eval());
+    return detail::insn::i_reduce_add(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int32_t reduce_add(const int32<N>& a)
 {
-    return detail::insn::i_reduce_add(uint32<N>(a.eval()));
+    return detail::insn::i_reduce_add(uint32<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_add(const uint32<N>& a)
 {
-    return detail::insn::i_reduce_add(a.eval());
+    return detail::insn::i_reduce_add(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int64_t reduce_add(const int64<N>& a)
 {
-    return detail::insn::i_reduce_add(uint64<N>(a.eval()));
+    return detail::insn::i_reduce_add(uint64<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint64_t reduce_add(const uint64<N>& a)
 {
-    return detail::insn::i_reduce_add(a.eval());
+    return detail::insn::i_reduce_add(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

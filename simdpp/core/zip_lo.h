@@ -37,8 +37,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
         zip16_lo(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_zip16_lo(ra, rb);
 }
 
@@ -47,8 +47,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
         zip8_lo(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_zip8_lo(ra, rb);
 }
 
@@ -57,8 +57,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
         zip4_lo(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_zip4_lo(ra, rb);
 }
 
@@ -67,8 +67,8 @@ typename detail::get_expr2_nomask<V1, V2>::type
         zip2_lo(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_zip2_lo(ra, rb);
 }
 

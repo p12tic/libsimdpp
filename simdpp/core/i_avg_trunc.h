@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 uint8<N> avg_trunc(const uint8<N>& a, const uint8<N>& b)
 {
-    return detail::insn::i_avg_trunc(a.eval(), b.eval());
+    return detail::insn::i_avg_trunc(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint8, uint8)
@@ -63,7 +63,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint8, uint8)
 template<unsigned N> SIMDPP_INL
 int8<N> avg_trunc(const int8<N>& a, const int8<N>& b)
 {
-    return detail::insn::i_avg_trunc(a.eval(), b.eval());
+    return detail::insn::i_avg_trunc(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int8, int8)
@@ -88,7 +88,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int8, int8)
 template<unsigned N> SIMDPP_INL
 uint16<N> avg_trunc(const uint16<N>& a, const uint16<N>& b)
 {
-    return detail::insn::i_avg_trunc(a.eval(), b.eval());
+    return detail::insn::i_avg_trunc(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint16, uint16)
@@ -113,7 +113,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint16, uint16)
 template<unsigned N> SIMDPP_INL
 int16<N> avg_trunc(const int16<N>& a, const int16<N>& b)
 {
-    return detail::insn::i_avg_trunc(a.eval(), b.eval());
+    return detail::insn::i_avg_trunc(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int16, int16)
@@ -138,7 +138,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int16, int16)
 template<unsigned N> SIMDPP_INL
 uint32<N> avg_trunc(const uint32<N>& a, const uint32<N>& b)
 {
-    return detail::insn::i_avg_trunc(a.eval(), b.eval());
+    return detail::insn::i_avg_trunc(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint32, uint32)
@@ -164,7 +164,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, uint32, uint32)
 template<unsigned N> SIMDPP_INL
 int32<N> avg_trunc(const int32<N>& a, const int32<N>& b)
 {
-    return detail::insn::i_avg_trunc(a.eval(), b.eval());
+    return detail::insn::i_avg_trunc(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg_trunc, int32, int32)

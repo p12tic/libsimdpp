@@ -117,7 +117,7 @@ void i_store_u(char* p, const float32x4& a)
 #elif SIMDPP_USE_VSX_206
     vec_vsx_st(a.native(), 0, q);
 #elif SIMDPP_USE_ALTIVEC
-    uint32x4 b = bit_cast<uint32x4>(a.eval());
+    uint32x4 b = bit_cast<uint32x4>(a);
     i_store_u(reinterpret_cast<char*>(q), b);
 #elif SIMDPP_USE_MSA
     __msa_st_w((v4i32) a.native(), q, 0);

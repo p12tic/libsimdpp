@@ -45,11 +45,11 @@ public:
     SIMDPP_INL int16<16>(const uint16<16>& d);
     template<class V> SIMDPP_INL explicit int16<16>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<int16<16>>(d.wrapped().eval());
+        *this = bit_cast<int16<16>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int16<16>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<int16<16>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int16<16>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -76,8 +76,6 @@ public:
     SIMDPP_INL const int16<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL int16<16>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL int16<16> eval() const { return *this; }
-
 private:
     native_type d_;
 };
@@ -100,14 +98,14 @@ public:
     SIMDPP_INL uint16<16>(const uint16<16> &) = default;
     SIMDPP_INL uint16<16> &operator=(const uint16<16> &) = default;
 
-    SIMDPP_INL uint16<16>(const int16<16>& d) { *this = d.eval(); }
+    SIMDPP_INL uint16<16>(const int16<16>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint16<16>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<uint16<16>>(d.wrapped().eval());
+        *this = bit_cast<uint16<16>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint16<16>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<uint16<16>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint16<16>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -133,8 +131,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const uint16<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint16<16>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL uint16<16> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -185,8 +181,6 @@ public:
 
     SIMDPP_INL const mask_int16<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int16<16>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int16<16> eval() const { return *this; }
 
 private:
     native_type d_;

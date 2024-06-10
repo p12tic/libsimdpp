@@ -39,11 +39,11 @@ public:
 
     template<class V> SIMDPP_INL explicit float64<N>(const any_vec<N*8,V>& d)
     {
-        *this = bit_cast<float64<N>>(d.wrapped().eval());
+        *this = bit_cast<float64<N>>(d.wrapped());
     }
     template<class V> SIMDPP_INL float64<N>& operator=(const any_vec<N*8,V>& d)
     {
-        *this = bit_cast<float64<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<float64<N>>(d.wrapped()); return *this;
     }
 
     template<class E> SIMDPP_INL float64<N>(const expr_vec_construct<E>& e)
@@ -57,8 +57,6 @@ public:
 
     SIMDPP_INL const float64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL float64v& vec(unsigned i)             { return d_[i]; }
-
-    SIMDPP_INL float64<N> eval() const { return *this; }
 
 private:
     /** Creates a float vector from a native vector
@@ -94,11 +92,11 @@ public:
 
     SIMDPP_INL explicit mask_float64<N>(const mask_int64<N>& d)
     {
-        *this = bit_cast<mask_float64<N>>(d.eval());
+        *this = bit_cast<mask_float64<N>>(d);
     }
     SIMDPP_INL mask_float64<N>& operator=(const mask_int64<N>& d)
     {
-        *this = bit_cast<mask_float64<N>>(d.eval()); return *this;
+        *this = bit_cast<mask_float64<N>>(d); return *this;
     }
 
     /// Access the underlying type
@@ -113,8 +111,6 @@ public:
 
     SIMDPP_INL const mask_float64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL mask_float64v& vec(unsigned i)       { return d_[i]; }
-
-    SIMDPP_INL mask_float64<N> eval() const { return *this; }
 
 private:
     detail::vararray<mask_float64v, mask_float64::vec_length> d_;

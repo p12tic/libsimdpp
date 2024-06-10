@@ -38,8 +38,8 @@ template<unsigned N, class V1, class V2> SIMDPP_INL
     using E = detail::get_expr_bit_or<V1, V2>;
     typename E::v1_final_type ra;
     typename E::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_bit_or(ra, rb);
 }
 

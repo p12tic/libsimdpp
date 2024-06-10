@@ -67,7 +67,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int32<N> mull(const int16<N>& a, const int16<N>& b)
 {
-    return detail::insn::i_mull(a.eval(), b.eval());
+    return detail::insn::i_mull(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int32, int16)
@@ -91,7 +91,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int32, int16)
 template<unsigned N> SIMDPP_INL
 uint32<N> mull(const uint16<N>& a, const uint16<N>& b)
 {
-    return detail::insn::i_mull(a.eval(), b.eval());
+    return detail::insn::i_mull(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mull, uint32, uint16)
@@ -116,7 +116,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mull, uint32, uint16)
 template<unsigned N> SIMDPP_INL
 int64<N> mull(const int32<N>& a, const int32<N>& b)
 {
-    return detail::insn::i_mull(a.eval(), b.eval());
+    return detail::insn::i_mull(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int64, int32)
@@ -140,7 +140,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int64, int32)
 template<unsigned N> SIMDPP_INL
 uint64<N> mull(const uint32<N>& a, const uint32<N>& b)
 {
-    return detail::insn::i_mull(a.eval(), b.eval());
+    return detail::insn::i_mull(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mull, uint64, uint32)

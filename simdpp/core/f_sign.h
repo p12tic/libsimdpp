@@ -37,7 +37,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> sign(const float32<N>& a)
 {
-    return detail::insn::i_sign(a.eval());
+    return detail::insn::i_sign(a);
 }
 
 /** Extracts sigh bit from the values in float64x2 vector.
@@ -60,7 +60,7 @@ float32<N> sign(const float32<N>& a)
 template<unsigned N> SIMDPP_INL
 float64<N> sign(const float64<N>& a)
 {
-    return detail::insn::i_sign(a.eval());
+    return detail::insn::i_sign(a);
 }
 
 

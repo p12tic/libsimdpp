@@ -36,7 +36,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> neg(const float32<N>& a)
 {
-    return detail::insn::i_fneg(a.eval());
+    return detail::insn::i_fneg(a);
 }
 
 /** Negates the values of a vector
@@ -59,7 +59,7 @@ float32<N> neg(const float32<N>& a)
 template<unsigned N> SIMDPP_INL
 float64<N> neg(const float64<N>& a)
 {
-    return detail::insn::i_fneg(a.eval());
+    return detail::insn::i_fneg(a);
 }
 
 

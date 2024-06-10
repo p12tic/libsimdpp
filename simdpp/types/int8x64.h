@@ -47,11 +47,11 @@ public:
     SIMDPP_INL int8<64>(const uint8<64>& d);
     template<class V> SIMDPP_INL explicit int8<64>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int8<64>>(d.wrapped().eval());
+        *this = bit_cast<int8<64>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int8<64>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int8<64>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int8<64>>(d.wrapped()); return *this;
     }
 
     /// @{
@@ -82,8 +82,6 @@ public:
     SIMDPP_INL int8<64>& vec(unsigned)       { return *this; }
     /// @}
 
-    SIMDPP_INL int8<64> eval() const { return *this; }
-
 private:
     native_type d_;
 };
@@ -106,14 +104,14 @@ public:
     SIMDPP_INL uint8<64>(const uint8<64> &) = default;
     SIMDPP_INL uint8<64> &operator=(const uint8<64> &) = default;
 
-    SIMDPP_INL uint8<64>(const int8<64>& d) { *this = d.eval(); }
+    SIMDPP_INL uint8<64>(const int8<64>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint8<64>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint8<64>>(d.wrapped().eval());
+        *this = bit_cast<uint8<64>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint8<64>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint8<64>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint8<64>>(d.wrapped()); return *this;
     }
 
     /// @{
@@ -143,8 +141,6 @@ public:
     SIMDPP_INL const uint8<64>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint8<64>& vec(unsigned)       { return *this; }
     /// @}
-
-    SIMDPP_INL uint8<64> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -187,8 +183,6 @@ public:
 
     SIMDPP_INL const mask_int8<64>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int8<64>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int8<64> eval() const { return *this; }
 
 private:
     native_type d_;

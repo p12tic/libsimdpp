@@ -24,7 +24,7 @@ template<unsigned N, class V> SIMDPP_INL
 bool e_test_bits_any(const any_vec<N,V>& a)
 {
     typename detail::get_expr_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return insn::i_test_bits_any(ra);
 }
 

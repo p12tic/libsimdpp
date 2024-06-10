@@ -41,8 +41,8 @@ template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int8<N> cmp_neq(const any_int8<N,V1>& a, const any_int8<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_neq(ra, rb);
 }
 
@@ -69,8 +69,8 @@ template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int16<N> cmp_neq(const any_int16<N,V1>& a, const any_int16<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_neq(ra, rb);
 }
 
@@ -97,8 +97,8 @@ template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int32<N> cmp_neq(const any_int32<N,V1>& a, const any_int32<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_neq(ra, rb);
 }
 
@@ -130,8 +130,8 @@ template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_int64<N> cmp_neq(const any_int64<N,V1>& a, const any_int64<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_neq(ra, rb);
 }
 
@@ -155,7 +155,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_int64, any_int64)
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float32<N> cmp_neq(const any_float32<N,V1>& a, const any_float32<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.wrapped().eval(), b.wrapped().eval());
+    return detail::insn::i_cmp_neq(a.wrapped(), b.wrapped());
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_float32, any_float32)
@@ -178,7 +178,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_float32, any_float32)
 template<unsigned N, class V1, class V2> SIMDPP_INL
 mask_float64<N> cmp_neq(const any_float64<N,V1>& a, const any_float64<N,V2>& b)
 {
-    return detail::insn::i_cmp_neq(a.wrapped().eval(), b.wrapped().eval());
+    return detail::insn::i_cmp_neq(a.wrapped(), b.wrapped());
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_neq, mask_float64, any_float64)

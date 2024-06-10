@@ -40,7 +40,7 @@ template<class T, unsigned N, class V> SIMDPP_INL
 void store(T* p, const any_vec<N,V>& a)
 {
     static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
-    detail::insn::i_store(reinterpret_cast<char*>(p), a.wrapped().eval());
+    detail::insn::i_store(reinterpret_cast<char*>(p), a.wrapped());
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

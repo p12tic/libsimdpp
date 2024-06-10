@@ -38,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int8<N> max(const int8<N>& a, const int8<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, int8, int8)
@@ -57,7 +57,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int8, int8)
 template<unsigned N> SIMDPP_INL
 uint8<N> max(const uint8<N>& a, const uint8<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint8, uint8)
@@ -76,7 +76,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint8, uint8)
 template<unsigned N> SIMDPP_INL
 int16<N> max(const int16<N>& a, const int16<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, int16, int16)
@@ -99,7 +99,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int16, int16)
 template<unsigned N> SIMDPP_INL
 uint16<N> max(const uint16<N>& a, const uint16<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint16, uint16)
@@ -122,7 +122,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint16, uint16)
 template<unsigned N> SIMDPP_INL
 int32<N> max(const int32<N>& a, const int32<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, int32, int32)
@@ -145,7 +145,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int32, int32)
 template<unsigned N> SIMDPP_INL
 uint32<N> max(const uint32<N>& a, const uint32<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint32, uint32)
@@ -163,7 +163,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint32, uint32)
 template<unsigned N> SIMDPP_INL
 int64<N> max(const int64<N>& a, const int64<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, int64, int64)
@@ -181,7 +181,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int64, int64)
 template<unsigned N> SIMDPP_INL
 uint64<N> max(const uint64<N>& a, const uint64<N>& b)
 {
-    return detail::insn::i_max(a.eval(), b.eval());
+    return detail::insn::i_max(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint64, uint64)

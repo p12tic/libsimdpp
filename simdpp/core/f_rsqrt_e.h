@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> rsqrt_e(const float32<N>& a)
 {
-    return detail::insn::i_rsqrt_e(a.eval());
+    return detail::insn::i_rsqrt_e(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

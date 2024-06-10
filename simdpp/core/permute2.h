@@ -48,7 +48,7 @@ typename detail::get_expr_nomask<V>::type
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     typename detail::get_expr_nomask<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_permute2<s0,s1>(ra);
 }
 
@@ -93,7 +93,7 @@ typename detail::get_expr_nomask<V>::type
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     typename detail::get_expr_nomask<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_permute2<s0,s1>(ra);
 }
 
@@ -124,7 +124,7 @@ typename detail::get_expr_nomask<V>::type
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
     typename detail::get_expr_nomask<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_permute2<s0,s1>(ra);
 }
 
