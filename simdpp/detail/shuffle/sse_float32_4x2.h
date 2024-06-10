@@ -229,7 +229,7 @@ template<> struct shuffle_impl<7> {
 // selects those elements from b that have positions matching either s0 or s1
 #if SIMDPP_USE_SSE4_1
 template<unsigned s0, unsigned s1> SIMDPP_INL
-float32<4> select2_hi(const float32<4>& a, const float32<4>& b)
+__m128 select2_hi(const float32<4>& a, const float32<4>& b)
 {
     const unsigned mask = (s0==4||s1==4 ? 1 : 0) |
                           (s0==5||s1==5 ? 2 : 0) |
@@ -240,7 +240,7 @@ float32<4> select2_hi(const float32<4>& a, const float32<4>& b)
 #endif
 #if SIMDPP_USE_AVX
 template<unsigned s0, unsigned s1> SIMDPP_INL
-float32<8> select2_hi(const float32<8>& a, const float32<8>& b)
+__m256 select2_hi(const float32<8>& a, const float32<8>& b)
 {
     const unsigned mask = (s0==4||s1==4 ? 1 : 0) |
                           (s0==5||s1==5 ? 2 : 0) |
@@ -251,7 +251,7 @@ float32<8> select2_hi(const float32<8>& a, const float32<8>& b)
 #endif
 #if SIMDPP_USE_AVX512F
 template<unsigned s0, unsigned s1> SIMDPP_INL
-float32<16> select2_hi(const float32<16>& a, const float32<16>& b)
+__m512 select2_hi(const float32<16>& a, const float32<16>& b)
 {
     const unsigned mask = (s0==4||s1==4 ? 1 : 0) |
                           (s0==5||s1==5 ? 2 : 0) |
@@ -268,7 +268,7 @@ template<> struct shuffle_impl<8> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab1 = select2_hi<s0,s1>(a, b).native();
+        __m128 ab1 = select2_hi<s0,s1>(a, b);
         return _mm_shuffle_ps(ab1, b.native(),
                               _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
     }
@@ -277,7 +277,7 @@ template<> struct shuffle_impl<8> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab1 = select2_hi<s0,s1>(a, b).native();
+        __m256 ab1 = select2_hi<s0,s1>(a, b);
         return _mm256_shuffle_ps(ab1, b.native(),
                                  _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
     }
@@ -286,7 +286,7 @@ template<> struct shuffle_impl<8> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab1 = select2_hi<s0,s1>(a, b).native();
+        __m512 ab1 = select2_hi<s0,s1>(a, b);
         return _mm512_shuffle_ps(ab1, b.native(),
                                  _MM_SHUFFLE(s3-4, s2-4, s1%4, s0%4));
     }
@@ -299,7 +299,7 @@ template<> struct shuffle_impl<9> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab1 = select2_hi<s0,s1>(a, b).native();
+        __m128 ab1 = select2_hi<s0,s1>(a, b);
         return _mm_shuffle_ps(ab1, a.native(),
                               _MM_SHUFFLE(s3, s2, s1%4, s0%4));
     }
@@ -308,7 +308,7 @@ template<> struct shuffle_impl<9> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab1 = select2_hi<s0,s1>(a, b).native();
+        __m256 ab1 = select2_hi<s0,s1>(a, b);
         return _mm256_shuffle_ps(ab1, a.native(),
                                  _MM_SHUFFLE(s3, s2, s1%4, s0%4));
     }
@@ -317,7 +317,7 @@ template<> struct shuffle_impl<9> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab1 = select2_hi<s0,s1>(a, b).native();
+        __m512 ab1 = select2_hi<s0,s1>(a, b);
         return _mm512_shuffle_ps(ab1, a.native(),
                                  _MM_SHUFFLE(s3, s2, s1%4, s0%4));
     }
@@ -395,7 +395,7 @@ template<> struct shuffle_impl<12> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab2 = select2_hi<s2, s3>(a, b).native();
+        __m128 ab2 = select2_hi<s2, s3>(a, b);
         return _mm_shuffle_ps(b.native(), ab2,
                               _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
     }
@@ -404,7 +404,7 @@ template<> struct shuffle_impl<12> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab2 = select2_hi<s2, s3>(a, b).native();
+        __m256 ab2 = select2_hi<s2, s3>(a, b);
         return _mm256_shuffle_ps(b.native(), ab2,
                                  _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
     }
@@ -413,7 +413,7 @@ template<> struct shuffle_impl<12> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab2 = select2_hi<s2, s3>(a, b).native();
+        __m512 ab2 = select2_hi<s2, s3>(a, b);
         return _mm512_shuffle_ps(b.native(), ab2,
                                  _MM_SHUFFLE(s3%4, s2%4, s1-4, s0-4));
     }
@@ -426,7 +426,7 @@ template<> struct shuffle_impl<13> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<4> run(const float32<4>& a, const float32<4>& b)
     {
-        __m128 ab2 = select2_hi<s2, s3>(a, b).native();
+        __m128 ab2 = select2_hi<s2, s3>(a, b);
         return _mm_shuffle_ps(a.native(), ab2,
                               _MM_SHUFFLE(s3%4, s2%4, s1, s0));
     }
@@ -435,7 +435,7 @@ template<> struct shuffle_impl<13> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<8> run(const float32<8>& a, const float32<8>& b)
     {
-        __m256 ab2 = select2_hi<s2, s3>(a, b).native();
+        __m256 ab2 = select2_hi<s2, s3>(a, b);
         return _mm256_shuffle_ps(a.native(), ab2,
                                  _MM_SHUFFLE(s3%4, s2%4, s1, s0));
     }
@@ -444,7 +444,7 @@ template<> struct shuffle_impl<13> {
     template<unsigned s0, unsigned s1, unsigned s2, unsigned s3> SIMDPP_INL
     static float32<16> run(const float32<16>& a, const float32<16>& b)
     {
-        __m512 ab2 = select2_hi<s2, s3>(a, b).native();
+        __m512 ab2 = select2_hi<s2, s3>(a, b);
         return _mm512_shuffle_ps(a.native(), ab2,
                                  _MM_SHUFFLE(s3%4, s2%4, s1, s0));
     }
