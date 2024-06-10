@@ -76,6 +76,7 @@ set(TEST_INSN_ARCH_SOURCES
     insn/test_utils.cc
     insn/tests.cc
     insn/transpose.cc
+    algorithm/bitonic_sort.cc
 )
 
 set(TEST_INSN_ARCH_GEN_SOURCES "")

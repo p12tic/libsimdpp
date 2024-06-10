@@ -36,6 +36,7 @@ void test_permute_generic(TestResults& res);
 void test_shuffle_transpose(TestResults& res);
 void test_test_utils(TestResults& res);
 void test_transpose(TestResults& res);
+void test_algorithm_bitonic_sort(TestReporter& tr);
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 
