@@ -20,7 +20,6 @@
 #include <simdpp/core/f_mul.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/shuffle_bytes16.h>
-#include <simdpp/core/detail/subvec_extract.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/insn/conv_extend_to_int32.h>
 #include <simdpp/detail/insn/conv_any_to_float64.h>
@@ -91,10 +90,34 @@ float32<16> i_to_float32(const float64<16>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Float64ToFloat32Converter {
+    static SIMDPP_INL void convert(float32<N>& dst, const float64<N>& src)
+    {
+        float64<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float32(sr);
+        Float64ToFloat32Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Float64ToFloat32Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float32<N>& dst, const float64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const float64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(float32<N>, i_to_float32, a)
+    float32<N> r;
+    Float64ToFloat32Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,10 +273,38 @@ float32<16> i_to_float32(const int32<16>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int32_to_float32_converter {
+    static SIMDPP_INL void convert(float32<N>& dst, const int32<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        int32<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float32(sr);
+#else
+        dst.template vec<I>() = i_to_float32(src.template vec<I>());
+#endif
+        int32_to_float32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int32_to_float32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float32<N>& dst, const int32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const int32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(float32<N>, i_to_float32, a)
+    float32<N> r;
+    int32_to_float32_converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -323,10 +374,38 @@ float32<16> i_to_float32(const uint32<16>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint32_to_float32_converter {
+    static SIMDPP_INL void convert(float32<N>& dst, const uint32<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        uint32<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float32(sr);
+#else
+        dst.template vec<I>() = i_to_float32(src.template vec<I>());
+#endif
+        uint32_to_float32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint32_to_float32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float32<N>& dst, const uint32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
+
 template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const uint32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(float32<N>, i_to_float32, a)
+    float32<N> r;
+    uint32_to_float32_converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------

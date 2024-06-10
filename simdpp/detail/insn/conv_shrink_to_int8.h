@@ -96,10 +96,33 @@ SIMDPP_INL uint8<64> i_to_uint8(const uint16<64>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint16ToInt8Converter {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint16<N>& src)
+    {
+        uint16<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_uint8(sr);
+        Uint16ToInt8Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint16ToInt8Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint16<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint16<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
+    uint8<N> r;
+    Uint16ToInt8Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -184,10 +207,42 @@ SIMDPP_INL uint8<64> i_to_uint8(const uint32<64>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint32ToInt8Converter {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint32<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        uint32<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_uint8(sr);
+#else
+        uint32<M> sr;
+        sr.template vec<0>() = src.template vec<I*4>();
+        sr.template vec<1>() = src.template vec<I*4+1>();
+        sr.template vec<2>() = src.template vec<I*4+2>();
+        sr.template vec<3>() = src.template vec<I*4+3>();
+        dst.template vec<I>() = i_to_uint8(sr);
+        Uint32ToInt8Converter<I + 1, End, M, N>::convert(dst, src);
+#endif
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint32ToInt8Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
+    uint8<N> r;
+    Uint32ToInt8Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -296,10 +351,39 @@ SIMDPP_INL uint8<64> i_to_uint8(const uint64<64>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt8Converter {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint64<N>& src)
+    {
+        uint64<M> sr;
+        sr.template vec<0>() = src.template vec<I*8>();
+        sr.template vec<1>() = src.template vec<I*8+1>();
+        sr.template vec<2>() = src.template vec<I*8+2>();
+        sr.template vec<3>() = src.template vec<I*8+3>();
+        sr.template vec<4>() = src.template vec<I*8+4>();
+        sr.template vec<5>() = src.template vec<I*8+5>();
+        sr.template vec<6>() = src.template vec<I*8+6>();
+        sr.template vec<7>() = src.template vec<I*8+7>();
+        dst.template vec<I>() = i_to_uint8(sr);
+        Uint64ToInt8Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt8Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
+    uint8<N> r;
+    Uint64ToInt8Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------

@@ -85,10 +85,33 @@ SIMDPP_INL uint32<16> i_to_uint32(const uint64<16>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt32Converter {
+    static SIMDPP_INL void convert(uint32<N>& dst, const uint64<N>& src)
+    {
+        uint64<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_uint32(sr);
+        Uint64ToInt32Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt32Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint32<N>& dst, const uint64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint32<N> i_to_uint32(const uint64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint32<N>, i_to_uint32, a)
+    uint32<N> r;
+    Uint64ToInt32Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 

@@ -58,6 +58,9 @@ public:
     SIMDPP_INL const float32v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL float32v& vec(unsigned i)             { return d_[i]; }
 
+    template<unsigned I> SIMDPP_INL const float32v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL float32v& vec()             { return d_.template get<I>(); }
+
 private:
     /** Creates a float vector from a native vector
 
@@ -112,6 +115,9 @@ public:
 
     SIMDPP_INL const mask_float32v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL mask_float32v& vec(unsigned i)       { return d_[i]; }
+
+    template<unsigned I> SIMDPP_INL const mask_float32v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL mask_float32v& vec()             { return d_.template get<I>(); }
 
 private:
     detail::vararray<mask_float32v, mask_float32::vec_length> d_;

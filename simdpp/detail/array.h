@@ -30,6 +30,8 @@ class vararray {
 public:
     SIMDPP_INL T&       operator[](unsigned id) { return d[id]; }
     SIMDPP_INL const T& operator[](unsigned id) const { return d[id]; }
+    template<unsigned I> SIMDPP_INL T& get() { return d[I]; }
+    template<unsigned I> SIMDPP_INL const T& get() const { return d[I]; }
 private:
     T d[N];
 };
@@ -40,6 +42,25 @@ class vararray<T,2> {
 public:
     SIMDPP_INL T&       operator[](unsigned id) { return id == 0 ? d0 : d1; }
     SIMDPP_INL const T& operator[](unsigned id) const { return id == 0 ? d0 : d1; }
+
+    template<unsigned I>
+    SIMDPP_INL T& get()
+    {
+        switch (I) {
+        case 0: return d0;
+        default: return d1;
+        }
+    }
+
+    template<unsigned I>
+    SIMDPP_INL const T& get() const
+    {
+        switch (I) {
+        case 0: return d0;
+        default: return d1;
+        }
+    }
+
 private:
     T d0, d1;
 };
@@ -60,6 +81,28 @@ public:
     SIMDPP_INL const T& operator[](unsigned id) const
     {
         switch (id) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        default: return d3;
+        }
+    }
+
+    template<unsigned I>
+    SIMDPP_INL T& get()
+    {
+        switch (I) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        default: return d3;
+        }
+    }
+
+    template<unsigned I>
+    SIMDPP_INL const T& get() const
+    {
+        switch (I) {
         case 0: return d0;
         case 1: return d1;
         case 2: return d2;
@@ -91,6 +134,36 @@ public:
     SIMDPP_INL const T& operator[](unsigned id) const
     {
         switch (id) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        case 3: return d3;
+        case 4: return d4;
+        case 5: return d5;
+        case 6: return d6;
+        default: return d7;
+        }
+    }
+
+    template<unsigned I>
+    SIMDPP_INL T& get()
+    {
+        switch (I) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        case 3: return d3;
+        case 4: return d4;
+        case 5: return d5;
+        case 6: return d6;
+        default: return d7;
+        }
+    }
+
+    template<unsigned I>
+    SIMDPP_INL const T& get() const
+    {
+        switch (I) {
         case 0: return d0;
         case 1: return d1;
         case 2: return d2;
