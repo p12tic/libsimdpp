@@ -57,7 +57,7 @@ namespace detail {
 */
 
 template<class V1, class V2>
-struct get_expr_bitwise2_and_impl {
+struct get_expr_bitwise2_and {
     using tags = expr2_maybe_scalar_tags<V1, V2>;
 
     // (size_tag) get the size tag of the resulting expression
@@ -94,16 +94,11 @@ struct get_expr_bitwise2_and_impl {
                                                tags::length_bytes, void>::type;
     using v2_final_type = typename type_of_tag<v2_type_tag + size_tag,
                                                tags::length_bytes, void>::type;
-};
 
-template<template<class, class> class E, class V1, class V2>
-struct get_expr_bitwise2_and {
-    using impl = get_expr_bitwise2_and_impl<V1, V2>;
-    using type = typename type_of_tag<impl::type_tag + impl::size_tag,
-                                      impl::tags::length_bytes,
-                                      E<V1, V2>>::type;
+    using type = typename type_of_tag<type_tag + size_tag,
+                                      tags::length_bytes,
+                                      void>::empty;
 };
-
 
 /*  The case with bit_or is similar to bit_and and bit_andnot except that the
     expression types are either leave two masks or none.
@@ -132,7 +127,7 @@ struct get_expr_bitwise2_and {
 */
 
 template<class V1, class V2>
-struct get_expr_bitwise2_or_impl {
+struct get_expr_bit_or {
     using tags = expr2_maybe_scalar_tags<V1, V2>;
 
     // (size_tag) get the size tag of the resulting expression
@@ -158,14 +153,8 @@ struct get_expr_bitwise2_or_impl {
                                                tags::length_bytes, void>::type;
     using v2_final_type = typename type_of_tag<v12_type_tag + size_tag,
                                                tags::length_bytes, void>::type;
-};
 
-template<class V1, class V2>
-struct get_expr_bit_or {
-    using impl = get_expr_bitwise2_or_impl<V1, V2>;
-    using type = typename type_of_tag<impl::type_tag + impl::size_tag,
-                                      impl::tags::length_bytes,
-                                      expr_bit_or<V1, V2>>::type;
+    using type = typename type_of_tag<type_tag + size_tag, tags::length_bytes, void>::type;
 };
 
 

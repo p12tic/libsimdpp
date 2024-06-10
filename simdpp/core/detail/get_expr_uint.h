@@ -186,7 +186,7 @@ struct expr2_uint_maybe_scalar_tags<V1, double> {
 };
 
 template<class V1, class V2>
-struct get_expr_uint_impl {
+struct get_expr_uint {
     using tags = expr2_uint_maybe_scalar_tags<V1, V2>;
 
 #if SIMDPP_EXPR_DEBUG
@@ -215,15 +215,9 @@ struct get_expr_uint_impl {
                                                tags::length_bytes, void>::type;
     using v2_final_type = typename type_of_tag<v2_type_tag + size_tag,
                                                tags::length_bytes, void>::type;
-};
 
-template<template<class, class> class E, class V1, class V2>
-struct get_expr_uint {
-    using impl = get_expr_uint_impl<V1, V2>;
-
-    using type = typename type_of_tag<impl::type_tag + impl::size_tag,
-                                      impl::tags::length_bytes,
-                                      E<V1, V2>>::type;
+    using type = typename type_of_tag<type_tag + size_tag,
+                                      tags::length_bytes, void>::type;
 };
 
 } // namespace detail

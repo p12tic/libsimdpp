@@ -133,84 +133,84 @@ RET_VEC<N, EXPR<VEC<N,V>, double>>                                              
 // a implementation for integer operations that use get_expr_uint
 #define SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(FUNC, EXPR, VEC, INT_VEC)           \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, unsigned>::type                         \
+typename detail::get_expr_uint<V, unsigned>::type                               \
         FUNC(const VEC<N,V>& a, const unsigned& b)                              \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(a, make_uint<INT_VEC>(b)); }                                      \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, unsigned long>::type                    \
+typename detail::get_expr_uint<V, unsigned long>::type                          \
         FUNC(const VEC<N,V>& a, const unsigned long& b)                         \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(a, make_uint<INT_VEC>(b)); }                                      \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, unsigned long long>::type               \
+typename detail::get_expr_uint<V, unsigned long long>::type                     \
         FUNC(const VEC<N,V>& a, const unsigned long long& b)                    \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(a, make_uint<INT_VEC>(b)); }                                      \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, int>::type                              \
+typename detail::get_expr_uint<V, int>::type                                    \
         FUNC(const VEC<N,V>& a, const int& b)                                   \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(a, make_int<INT_VEC>(b)); }                                       \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, long>::type                             \
+typename detail::get_expr_uint<V, long>::type                                   \
         FUNC(const VEC<N,V>& a, const long& b)                                  \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(a, make_int<INT_VEC>(b)); }                                       \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, long long>::type                        \
+typename detail::get_expr_uint<V, long long>::type                              \
         FUNC(const VEC<N,V>& a, const long long& b)                             \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(a, make_int<INT_VEC>(b)); }                                       \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, float>::type                            \
+typename detail::get_expr_uint<V, float>::type                                  \
         FUNC(const VEC<N,V>& a, const float& b)                                 \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(a, make_float<INT_VEC>(b)); }                                     \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, V, double>::type                           \
+typename detail::get_expr_uint<V, double>::type                                 \
         FUNC(const VEC<N,V>& a, const double& b)                                \
-{ return { { a.wrapped(), b } }; }                                              \
+{ return FUNC(make_uint<INT_VEC>(a), b); }                                      \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, unsigned, V>::type                         \
+typename detail::get_expr_uint<unsigned, V>::type                               \
         FUNC(const unsigned& a, const VEC<N,V>& b)                              \
-{ return { { a, b.wrapped() } }; }                                              \
+{ return FUNC(make_uint<INT_VEC>(a), b); }                                      \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, unsigned long, V>::type                    \
+typename detail::get_expr_uint<unsigned long, V>::type                          \
         FUNC(const unsigned long& a, const VEC<N,V>& b)                         \
-{ return { { a, b.wrapped() } }; }                                              \
+{ return FUNC(make_uint<INT_VEC>(a), b); }                                      \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, unsigned long long, V>::type               \
+typename detail::get_expr_uint<unsigned long long, V>::type                     \
         FUNC(const unsigned long long& a, const VEC<N,V>& b)                    \
-{ return { { a, b.wrapped() } }; }                                              \
+{ return FUNC(make_uint<INT_VEC>(a), b); }                                      \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, int, V>::type                              \
+typename detail::get_expr_uint<int, V>::type                                    \
         FUNC(const int& a, const VEC<N,V>& b)                                   \
-{ return { { a, b.wrapped() } }; }                                              \
+{ return FUNC(make_int<INT_VEC>(a), b); }                                       \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, long, V>::type                             \
+typename detail::get_expr_uint<long, V>::type                                   \
         FUNC(const long& a, const VEC<N,V>& b)                                  \
-{ return { { a, b.wrapped() } }; }                                              \
+{ return FUNC(make_int<INT_VEC>(a), b); }                                       \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, long long, V>::type                        \
+typename detail::get_expr_uint<long long, V>::type                              \
         FUNC(const long long& a, const VEC<N,V>& b)                             \
-{ return { { a, b.wrapped() } }; }                                              \
+{ return FUNC(make_int<INT_VEC>(a), b); }                                       \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, float, V>::type                            \
+typename detail::get_expr_uint<float, V>::type                                  \
         FUNC(const float& a, const VEC<N,V>& b)                                 \
-{ return { { a, b.wrapped() } }; }                                              \
+{ return FUNC(make_float<INT_VEC>(a), b); }                                     \
                                                                                 \
 template<unsigned N, class V> SIMDPP_INL                                        \
-typename detail::get_expr_uint<EXPR, double, V>::type                           \
+typename detail::get_expr_uint<double, V>::type                                 \
         FUNC(const double& a, const VEC<N,V>& b)                                \
-{ return { { a, b.wrapped() } }; }
+{ return FUNC(make_float<INT_VEC>(a), b); }
 // end #define
 
 #endif

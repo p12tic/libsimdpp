@@ -13,6 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
+#include <simdpp/detail/eval_scalar.h>
 #include <simdpp/detail/insn/blend.h>
 #include <simdpp/detail/get_expr.h>
 
@@ -117,6 +118,8 @@ public:
 
     using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
                                       expr_blend<V1, V2, V3>>::type;
+    using empty = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
+                                       void>::empty;
 };
 
 } // namespace detail
@@ -179,11 +182,15 @@ public:
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class V1, class V2, class V3> SIMDPP_INL
-typename detail::get_expr_blend<V1, V2, V3>::type
+typename detail::get_expr_blend<V1, V2, V3>::empty
         blend(const any_vec<N,V1>& on, const any_vec<N,V2>& off,
               const any_vec<N,V3>& mask)
 {
-    return { { on.wrapped(), off.wrapped(), mask.wrapped() } };
+    using E = typename detail::get_expr_blend<V1, V2, V3>;
+    return detail::insn::i_blend(
+        detail::eval_maybe_scalar<typename E::v1_final_type, V1>::eval(on.wrapped()),
+        detail::eval_maybe_scalar<typename E::v2_final_type, V2>::eval(off.wrapped()),
+        detail::eval_maybe_scalar<typename E::v3_final_type, V3>::eval(mask.wrapped()));
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
