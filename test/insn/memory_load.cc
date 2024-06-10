@@ -20,7 +20,10 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr,
     V zero = make_zero();
 
     V sv[vnum];
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-memaccess"
     std::memcpy(sv, sdata, V::length_bytes * vnum);
+#pragma GCC diagnostic pop
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack.
@@ -77,20 +80,20 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr,
 
     rzero(rv);
     load_packed2(rv[0], rv[1], sdata);
-    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_PUSH_ARRAY_SPAN(tc, V, rv, vnum);
     TEST_NOT_EQUAL(tr, zero, rv[0]);
     TEST_NOT_EQUAL(tr, zero, rv[1]);
 
     rzero(rv);
     load_packed3(rv[0], rv[1], rv[2], sdata);
-    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_PUSH_ARRAY_SPAN(tc, V, rv, vnum);
     TEST_NOT_EQUAL(tr, zero, rv[0]);
     TEST_NOT_EQUAL(tr, zero, rv[1]);
     TEST_NOT_EQUAL(tr, zero, rv[2]);
 
     rzero(rv);
     load_packed4(rv[0], rv[1], rv[2], rv[3], sdata);
-    TEST_PUSH_ARRAY(tc, V, rv);
+    TEST_PUSH_ARRAY_SPAN(tc, V, rv, vnum);
     TEST_NOT_EQUAL(tr, zero, rv[0]);
     TEST_NOT_EQUAL(tr, zero, rv[1]);
     TEST_NOT_EQUAL(tr, zero, rv[2]);
