@@ -26,7 +26,7 @@ struct Test_shuffle21 {
 };
 
 template<class V, unsigned i>
-struct Test_shuffle42 {
+struct Test_shuffle42_pairs {
     static const unsigned limit = 256;
     static void test(TestResultsSet& tc, const V& a, const V& b)
     {
@@ -40,6 +40,34 @@ struct Test_shuffle42 {
     }
 };
 
+template<class V, unsigned i>
+struct Test_shuffle42_full {
+    static const unsigned limit = 8 * 8 * 8 / 7;
+    static void test(TestResultsSet& tc, const V& a, const V& b)
+    {
+        constexpr unsigned s0 = (i * 7) / 64 % 8;
+        constexpr unsigned s1 = (i * 7) / 8 % 8;
+        constexpr unsigned s2 = (i * 7) % 8;
+
+        V r = simdpp::shuffle4x2<s0,s1,s2,0>(a, b);
+        TEST_PUSH(tc, V, r);
+        r = simdpp::shuffle4x2<s0,s1,s2,1>(a, b);
+        TEST_PUSH(tc, V, r);
+        r = simdpp::shuffle4x2<s0,s1,s2,2>(a, b);
+        TEST_PUSH(tc, V, r);
+        r = simdpp::shuffle4x2<s0,s1,s2,3>(a, b);
+        TEST_PUSH(tc, V, r);
+        r = simdpp::shuffle4x2<s0,s1,s2,4>(a, b);
+        TEST_PUSH(tc, V, r);
+        r = simdpp::shuffle4x2<s0,s1,s2,5>(a, b);
+        TEST_PUSH(tc, V, r);
+        r = simdpp::shuffle4x2<s0,s1,s2,6>(a, b);
+        TEST_PUSH(tc, V, r);
+        r = simdpp::shuffle4x2<s0,s1,s2,7>(a, b);
+        TEST_PUSH(tc, V, r);
+    }
+};
+
 template<unsigned B>
 void test_shuffle_generic_n(TestResultsSet& tc)
 {
@@ -48,13 +76,15 @@ void test_shuffle_generic_n(TestResultsSet& tc)
     Vectors<B,2> v;
 
     // int32
-    TemplateTestHelper<Test_shuffle42, uint32<B/4>>::run(tc, v.u32[0], v.u32[1]);
+    TemplateTestHelper<Test_shuffle42_pairs, uint32<B/4>>::run(tc, v.u32[0], v.u32[1]);
+    TemplateTestHelper<Test_shuffle42_full, uint32<B/4>>::run(tc, v.u32[0], v.u32[1]);
 
     // int64
     TemplateTestHelper<Test_shuffle21, uint64<B/8>>::run(tc, v.u64[0], v.u64[1]);
 
     // float32
-    TemplateTestHelper<Test_shuffle42, float32<B/4>>::run(tc, v.f32[0], v.f32[1]);
+    TemplateTestHelper<Test_shuffle42_pairs, float32<B/4>>::run(tc, v.f32[0], v.f32[1]);
+    TemplateTestHelper<Test_shuffle42_full, float32<B/4>>::run(tc, v.f32[0], v.f32[1]);
 
     // float64
     TemplateTestHelper<Test_shuffle21, float64<B/8>>::run(tc, v.f64[0], v.f64[1]);
