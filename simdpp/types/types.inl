@@ -115,6 +115,24 @@ SIMDPP_INL mask_float64<4>& mask_float64<4>::operator=(const mask_int64<4>& d)
 }
 #endif
 
+SIMDPP_INL mask_float32<4>::mask_float32(const mask_int32<4>& d)
+{
+#if SIMDPP_USE_NEON_NO_FLT_SP
+    *this = to_mask(bit_cast<float32<4>>(d.unmask()));
+#else
+    *this = bit_cast<mask_float32<4>>(d);
+#endif
+}
+
+SIMDPP_INL mask_float32<4>& mask_float32<4>::operator=(const mask_int32<4>& d)
+{
+#if SIMDPP_USE_NEON_NO_FLT_SP
+    *this = to_mask(bit_cast<float32<4>>(d.unmask())); return *this;
+#else
+    *this = bit_cast<mask_float32<4>>(d); return *this;
+#endif
+}
+
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
 
