@@ -12,7 +12,7 @@ SET(libsimdpp_SOURCE_DIR "source_dir_not_specified" CACHE STRING "Root directory
 include(CheckCXXSourceCompiles)
 
 function(test_compile_fail DESC FLAGS CODE)
-    set(CMAKE_REQUIRED_FLAGS "-std=c++11 ${FLAGS}")
+    set(CMAKE_REQUIRED_FLAGS "-std=c++14 ${FLAGS}")
     set(CMAKE_REQUIRED_DEFINITIONS "-DSIMDPP_ARCH_X86_SSE2 -DSIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES=1")
     set(CMAKE_REQUIRED_INCLUDES "${libsimdpp_SOURCE_DIR}")
     set(CHECK_VAR "VERIFY_FAILS_TO_COMPILE_${DESC}")
