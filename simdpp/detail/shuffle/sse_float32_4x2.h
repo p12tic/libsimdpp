@@ -45,8 +45,8 @@ struct impl_selector {
     static const bool is6_shuffle1 = s0 <  4 && s1  < 4 && s2 >= 4 && s3 >= 4;
     static const bool is7_shuffle2 = s0 >= 4 && s1 >= 4 && s2 <  4 && s3 <  4;
 #if SIMDPP_USE_SSE4_1
-    static const bool is8_lobl_shuffle1 = s2 >= 4 && s3 >= 4 && s0 != s1;
-    static const bool is9_lobl_shuffle2 = s2 <  4 && s3 <  4 && s0 != s1;
+    static const bool is8_lobl_shuffle1 = s2 >= 4 && s3 >= 4 && (s0 % 4) != (s1 % 4);
+    static const bool is9_lobl_shuffle2 = s2 <  4 && s3 <  4 && (s0 % 4) != (s1 % 4);
 #else
     static const bool is8_lobl_shuffle1 = false;
     static const bool is9_lobl_shuffle2 = false;
@@ -54,8 +54,8 @@ struct impl_selector {
     static const bool is10_losh_shuffle1 = s2 >= 4 && s3 >= 4;
     static const bool is11_losh_shuffle2 = s2 <  4 && s3 <  4;
 #if SIMDPP_USE_SSE4_1
-    static const bool is12_hibl_shuffle1 = s0 >= 4 && s1 >= 4 && s2 != s3;
-    static const bool is13_hibl_shuffle2 = s0 <  4 && s1 <  4 && s2 != s3;
+    static const bool is12_hibl_shuffle1 = s0 >= 4 && s1 >= 4 && (s2 % 4) != (s3 % 4);
+    static const bool is13_hibl_shuffle2 = s0 <  4 && s1 <  4 && (s2 % 4) != (s3 % 4);
 #else
     static const bool is12_hibl_shuffle1 = false;
     static const bool is13_hibl_shuffle2 = false;
