@@ -118,6 +118,13 @@ void test_bitwise_n(TestResultsSet& tc, TestReporter& tr)
             TEST_PUSH(tc, float32_n, bit_andnot(v.f32[i], m.f32[j]));
             TEST_PUSH(tc, float64_n, bit_andnot(v.f64[i], m.f64[j]));
 
+            TEST_PUSH(tc, uint8_n,   bit_or(v.u8[i], m.u8[j]));
+            TEST_PUSH(tc, uint16_n,  bit_or(v.u16[i], m.u16[j]));
+            TEST_PUSH(tc, uint32_n,  bit_or(v.u32[i], m.u32[j]));
+            TEST_PUSH(tc, uint64_n,  bit_or(v.u64[i], m.u64[j]));
+            TEST_PUSH(tc, float32_n, bit_or(v.f32[i], m.f32[j]));
+            TEST_PUSH(tc, float64_n, bit_or(v.f64[i], m.f64[j]));
+
             // masks
             TEST_PUSH(tc, uint8_n,   bit_and(m.u8[i], m.u8[j]));
             TEST_PUSH(tc, uint16_n,  bit_and(m.u16[i], m.u16[j]));

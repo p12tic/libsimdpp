@@ -132,7 +132,7 @@ struct get_expr_bitwise2_and {
 */
 
 template<class V1, class V2>
-class get_expr_bit_or {
+struct get_expr_bitwise2_or_impl {
     using tags = expr2_maybe_scalar_tags<V1, V2>;
 
     // (size_tag) get the size tag of the resulting expression
@@ -146,25 +146,27 @@ class get_expr_bit_or {
                                     ? tags::v1_type_tag : tags::v2_type_tag;
     static const bool is_mask_op1 = type_tag_t1 == SIMDPP_TAG_MASK_INT ||
                                     type_tag_t1 == SIMDPP_TAG_MASK_FLOAT;
-    static const unsigned type_tag = (is_mask_op1 &&
-                                      tags::v1_size_tag != tags::v2_size_tag)
+    static const unsigned type_tag =
+            (is_mask_op1 && tags::v1_size_tag != tags::v2_size_tag)
                                     ? SIMDPP_TAG_UINT : type_tag_t1;
 
     // strip signed integer types
     static const unsigned v12_type_tag = type_tag == SIMDPP_TAG_INT
                                     ? SIMDPP_TAG_UINT : type_tag;
 
-
-public:
     using v1_final_type = typename type_of_tag<v12_type_tag + size_tag,
                                                tags::length_bytes, void>::type;
     using v2_final_type = typename type_of_tag<v12_type_tag + size_tag,
                                                tags::length_bytes, void>::type;
-
-    using type = typename type_of_tag<type_tag + size_tag, tags::length_bytes,
-                                      expr_bit_or<V1, V2>>::type;
 };
 
+template<class V1, class V2>
+struct get_expr_bit_or {
+    using impl = get_expr_bitwise2_or_impl<V1, V2>;
+    using type = typename type_of_tag<impl::type_tag + impl::size_tag,
+                                      impl::tags::length_bytes,
+                                      expr_bit_or<V1, V2>>::type;
+};
 
 
 } // namespace detail

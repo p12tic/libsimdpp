@@ -50,6 +50,8 @@ The first set of overloads loads to given non-mask vector type.
 
 The second set of overloads returns a value of unspecified type with which any non-mask vector can be initialized. E.g. {{c|1=uint32<4> x = make_uint(1, 2, 3, 4);}}
 
+The difference between {{ltf|misc/make_int}}, {{ltf|misc/make_uint}} and {{ltf|misc/make_float}} functions is only in the types of the parameters. The reason for existence of separate functions is to make coercion of literals of different types easier. Assigning e.g. {{c|make_int(2)}}, {{c|make_uint(2)}} or {{c|make_float(2)}} to a vector of any type will result in the same behavior: all elements within the vector will be set to 2. The bitwise representation of the resulting vectors will be different depending on the type of the vector.
+
 ===Parameters===
 {{par begin}}
 {{par | v0, ..., v15 | the values to initialize the vector to}}
@@ -83,4 +85,7 @@ r = [ v0 v1 .. v7 v0  ... v7 ]
 }}
 
 ===See also===
-{{todo}}
+{{dsc begin}}
+{{dsc inc | misc/dsc make_int }}
+{{dsc inc | misc/dsc make_float }}
+{{dsc end}}
