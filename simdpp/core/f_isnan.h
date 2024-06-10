@@ -30,7 +30,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-mask_float32<N,expr_empty> isnan(const float32<N,E>& a)
+mask_float32<N> isnan(const float32<N,E>& a)
 {
     return detail::insn::i_isnan(a.eval());
 }
@@ -51,7 +51,7 @@ mask_float32<N,expr_empty> isnan(const float32<N,E>& a)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-mask_float64<N,expr_empty> isnan(const float64<N,E>& a)
+mask_float64<N> isnan(const float64<N,E>& a)
 {
     return detail::insn::i_isnan(a.eval());
 }

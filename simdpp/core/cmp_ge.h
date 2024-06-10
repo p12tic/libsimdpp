@@ -28,8 +28,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int8<N,expr_empty> cmp_ge(const int8<N,E1>& a,
-                               const int8<N,E2>& b)
+mask_int8<N> cmp_ge(const int8<N,E1>& a, const int8<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -37,8 +36,7 @@ mask_int8<N,expr_empty> cmp_ge(const int8<N,E1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int8, int8)
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int8<N,expr_empty> cmp_ge(const uint8<N,E1>& a,
-                               const uint8<N,E2>& b)
+mask_int8<N> cmp_ge(const uint8<N,E1>& a, const uint8<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -46,8 +44,7 @@ mask_int8<N,expr_empty> cmp_ge(const uint8<N,E1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int8, uint8)
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int16<N,expr_empty> cmp_ge(const int16<N,E1>& a,
-                                const int16<N,E2>& b)
+mask_int16<N> cmp_ge(const int16<N,E1>& a, const int16<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -55,8 +52,7 @@ mask_int16<N,expr_empty> cmp_ge(const int16<N,E1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int16, int16)
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int16<N,expr_empty> cmp_ge(const uint16<N,E1>& a,
-                                const uint16<N,E2>& b)
+mask_int16<N> cmp_ge(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -64,8 +60,7 @@ mask_int16<N,expr_empty> cmp_ge(const uint16<N,E1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int16, uint16)
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int32<N,expr_empty> cmp_ge(const int32<N,E1>& a,
-                                const int32<N,E2>& b)
+mask_int32<N> cmp_ge(const int32<N,E1>& a, const int32<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -73,8 +68,7 @@ mask_int32<N,expr_empty> cmp_ge(const int32<N,E1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int32, int32)
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int32<N,expr_empty> cmp_ge(const uint32<N,E1>& a,
-                                const uint32<N,E2>& b)
+mask_int32<N> cmp_ge(const uint32<N,E1>& a, const uint32<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -82,8 +76,7 @@ mask_int32<N,expr_empty> cmp_ge(const uint32<N,E1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int32, uint32)
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int64<N,expr_empty> cmp_ge(const int64<N,E1>& a,
-                                const int64<N,E2>& b)
+mask_int64<N> cmp_ge(const int64<N,E1>& a, const int64<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -91,8 +84,7 @@ mask_int64<N,expr_empty> cmp_ge(const int64<N,E1>& a,
 SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int64, int64)
 
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_int64<N,expr_empty> cmp_ge(const uint64<N,E1>& a,
-                                const uint64<N,E2>& b)
+mask_int64<N> cmp_ge(const uint64<N,E1>& a, const uint64<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -110,8 +102,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_int64, uint64)
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float32<N,expr_empty> cmp_ge(const float32<N,E1>& a,
-                                  const float32<N,E2>& b)
+mask_float32<N> cmp_ge(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }
@@ -134,8 +125,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(cmp_ge, mask_float32, float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float64<N,expr_empty> cmp_ge(const float64<N,E1>& a,
-                                  const float64<N,E2>& b)
+mask_float64<N> cmp_ge(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return detail::insn::i_cmp_ge(a.eval(), b.eval());
 }

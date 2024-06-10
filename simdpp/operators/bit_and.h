@@ -39,74 +39,74 @@ typename detail::get_expr_bitwise2_and<V1, V2>::type
 
 // support scalar arguments
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<unsigned, V>::empty
+typename detail::get_expr_bitwise2_and<unsigned, V>::type
         operator&(const unsigned& a, const any_vec<N,V>& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<unsigned long, V>::empty
+typename detail::get_expr_bitwise2_and<unsigned long, V>::type
         operator&(const unsigned long& a, const any_vec<N,V>& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<unsigned long long, V>::empty
+typename detail::get_expr_bitwise2_and<unsigned long long, V>::type
         operator&(const unsigned long long& a, const any_vec<N,V>& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<int, V>::empty
+typename detail::get_expr_bitwise2_and<int, V>::type
         operator&(const int& a, const any_vec<N,V>& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<long, V>::empty
+typename detail::get_expr_bitwise2_and<long, V>::type
         operator&(const long& a, const any_vec<N,V>& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<long long, V>::empty
+typename detail::get_expr_bitwise2_and<long long, V>::type
         operator&(const long long& a, const any_vec<N,V>& b)
 {
     return bit_and(a, b);
 }
 
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<V, unsigned>::empty
+typename detail::get_expr_bitwise2_and<V, unsigned>::type
         operator&(const any_vec<N,V>& a, const unsigned& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<V, unsigned long>::empty
+typename detail::get_expr_bitwise2_and<V, unsigned long>::type
         operator&(const any_vec<N,V>& a, const unsigned long& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<V, unsigned long long>::empty
+typename detail::get_expr_bitwise2_and<V, unsigned long long>::type
         operator&(const any_vec<N,V>& a, const unsigned long long& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<V, int>::empty
+typename detail::get_expr_bitwise2_and<V, int>::type
         operator&(const any_vec<N,V>& a, const int& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<V, long>::empty
+typename detail::get_expr_bitwise2_and<V, long>::type
         operator&(const any_vec<N,V>& a, const long& b)
 {
     return bit_and(a, b);
 }
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<V, long long>::empty
+typename detail::get_expr_bitwise2_and<V, long long>::type
         operator&(const any_vec<N,V>& a, const long long& b)
 {
     return bit_and(a, b);

@@ -24,52 +24,52 @@ namespace SIMDPP_ARCH_NAMESPACE {
     or all zeros. Otherwise the behavior is undefined.
 */
 template<unsigned N, class E> SIMDPP_INL
-mask_int8<N,expr_empty> to_mask(const int8<N,E>& a)
+mask_int8<N> to_mask(const int8<N,E>& a)
 {
     return detail::insn::i_to_mask(uint8<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_int8<N,expr_empty> to_mask(const uint8<N,E>& a)
+mask_int8<N> to_mask(const uint8<N,E>& a)
 {
     return detail::insn::i_to_mask(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_int16<N,expr_empty> to_mask(const int16<N,E>& a)
+mask_int16<N> to_mask(const int16<N,E>& a)
 {
     return detail::insn::i_to_mask(uint16<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_int16<N,expr_empty> to_mask(const uint16<N,E>& a)
+mask_int16<N> to_mask(const uint16<N,E>& a)
 {
     return detail::insn::i_to_mask(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_int32<N,expr_empty> to_mask(const int32<N,E>& a)
+mask_int32<N> to_mask(const int32<N,E>& a)
 {
     return detail::insn::i_to_mask(uint32<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_int32<N,expr_empty> to_mask(const uint32<N,E>& a)
+mask_int32<N> to_mask(const uint32<N,E>& a)
 {
     return detail::insn::i_to_mask(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_int64<N,expr_empty> to_mask(const int64<N,E>& a)
+mask_int64<N> to_mask(const int64<N,E>& a)
 {
     return detail::insn::i_to_mask(uint64<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_int64<N,expr_empty> to_mask(const uint64<N,E>& a)
+mask_int64<N> to_mask(const uint64<N,E>& a)
 {
     return detail::insn::i_to_mask(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_float32<N,expr_empty> to_mask(const float32<N,E>& a)
+mask_float32<N> to_mask(const float32<N,E>& a)
 {
     return detail::insn::i_to_mask(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-mask_float64<N,expr_empty> to_mask(const float64<N,E>& a)
+mask_float64<N> to_mask(const float64<N,E>& a)
 {
     return detail::insn::i_to_mask(a.eval());
 }

@@ -23,7 +23,6 @@ template<class R, class E> struct expr_eval;
 } // namespace detail
 
 // -----------------------------------------------------------------------------
-struct expr_empty {};
 
 template<class E1, class E2>
 struct expr_bit_and {

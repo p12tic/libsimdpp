@@ -37,7 +37,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N,expr_empty> rcp_e(const float32<N,E>& a)
+float32<N> rcp_e(const float32<N,E>& a)
 {
     return detail::insn::i_rcp_e(a.eval());
 }

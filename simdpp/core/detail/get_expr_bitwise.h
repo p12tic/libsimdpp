@@ -97,7 +97,7 @@ struct get_expr_bitwise2_and {
 
     using type = typename type_of_tag<type_tag + size_tag,
                                       tags::length_bytes,
-                                      void>::empty;
+                                      void>::type;
 };
 
 /*  The case with bit_or is similar to bit_and and bit_andnot except that the

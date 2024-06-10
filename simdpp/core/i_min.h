@@ -36,7 +36,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int8<N,expr_empty> min(const int8<N,E1>& a, const int8<N,E2>& b)
+int8<N> min(const int8<N,E1>& a, const int8<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -55,7 +55,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, int8, int8)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N,expr_empty> min(const uint8<N,E1>& a, const uint8<N,E2>& b)
+uint8<N> min(const uint8<N,E1>& a, const uint8<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -74,7 +74,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint8, uint8)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int16<N,expr_empty> min(const int16<N,E1>& a, const int16<N,E2>& b)
+int16<N> min(const int16<N,E1>& a, const int16<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -97,7 +97,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, int16, int16)
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N,expr_empty> min(const uint16<N,E1>& a, const uint16<N,E2>& b)
+uint16<N> min(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -120,7 +120,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint16, uint16)
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int32<N,expr_empty> min(const int32<N,E1>& a, const int32<N,E2>& b)
+int32<N> min(const int32<N,E1>& a, const int32<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -144,7 +144,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, int32, int32)
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N,expr_empty> min(const uint32<N,E1>& a, const uint32<N,E2>& b)
+uint32<N> min(const uint32<N,E1>& a, const uint32<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -162,7 +162,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, uint32, uint32)
     Supported since AVX2, NEON64. Not supported on ALTIVEC.
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int64<N,expr_empty> min(const int64<N,E1>& a, const int64<N,E2>& b)
+int64<N> min(const int64<N,E1>& a, const int64<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }
@@ -180,7 +180,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, int64, int64)
     Supported since AVX2, NEON64. Not supported on ALTIVEC.
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint64<N,expr_empty> min(const uint64<N,E1>& a, const uint64<N,E2>& b)
+uint64<N> min(const uint64<N,E1>& a, const uint64<N,E2>& b)
 {
     return detail::insn::i_min(a.eval(), b.eval());
 }

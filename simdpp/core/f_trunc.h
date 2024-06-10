@@ -36,12 +36,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE4.1, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N,expr_empty> trunc(const float32<N,E>& a)
+float32<N> trunc(const float32<N,E>& a)
 {
     return detail::insn::i_trunc(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> trunc(const float64<N,E>& a)
+float64<N> trunc(const float64<N,E>& a)
 {
     return detail::insn::i_trunc(a.eval());
 }

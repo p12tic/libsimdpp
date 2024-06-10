@@ -36,7 +36,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 19}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N,expr_empty> div(const float32<N,E1>& a, const float32<N,E2>& b)
+float32<N> div(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return detail::insn::i_div(a.eval(), b.eval());
 }
@@ -59,7 +59,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(div, float32, float32)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N,expr_empty> div(const float64<N,E1>& a, const float64<N,E2>& b)
+float64<N> div(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return detail::insn::i_div(a.eval(), b.eval());
 }

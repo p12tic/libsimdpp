@@ -63,7 +63,7 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, int16<N>)
     @icost{NEON, ALTIVEC, 6}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int16<N, expr_empty> mul_hi(const int16<N,E1>& a, const int16<N,E2>& b)
+int16<N> mul_hi(const int16<N,E1>& a, const int16<N,E2>& b)
 {
     return detail::insn::i_mul_hi(a.wrapped().eval(), b.wrapped().eval());
 }
@@ -86,8 +86,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mul_hi, int16, int16)
     @icost{NEON, ALTIVEC, 6}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N, expr_empty> mul_hi(const uint16<N,E1>& a,
-                                            const uint16<N,E2>& b)
+uint16<N> mul_hi(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
     return detail::insn::i_mul_hi(a.wrapped().eval(), b.wrapped().eval());
 }
