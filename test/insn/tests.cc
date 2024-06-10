@@ -46,32 +46,57 @@ static_assert(sizeof(simdpp::float64<8>) == 64, "Incorrect vector size");
 
 namespace SIMDPP_ARCH_NAMESPACE {
 
-void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& opts)
-{
-    test_test_utils(res);
+    void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& opts)
+    {
+        test_test_utils(res);
 
-    // Tests are ordered in such a way so that base functionality that other
-    // tests depend on is tested first.
-    test_construct(res);
-    test_memory_load(res, tr);
-    test_memory_store(res, tr);
+        // Tests are ordered in such a way so that base functionality that other
+        // tests depend on is tested first.
+        test_construct(res);
+        test_memory_load(res, tr);
+        test_memory_store(res, tr);
 
-    test_blend(res);
-    test_bitwise(res, tr);
-    test_permute_generic(res);
-    test_shuffle_generic(res);
-    test_shuffle(res);
-    test_shuffle_bytes(res, tr);
+        test_blend(res);
+        test_bitwise(res, tr);
+        test_permute_generic(res);
+        test_shuffle_generic(res);
+        test_shuffle(res);
+        test_shuffle_bytes(res, tr);
 
-    test_convert(res);
-    test_math_fp(res, opts);
-    test_math_int(res);
-    test_compare(res);
-    test_math_shift(res);
-    test_transpose(res);
+        test_convert(res);
+        test_math_fp(res, opts);
+        test_math_int(res);
+        test_compare(res);
+        test_math_shift(res);
+        test_transpose(res);
 
-    test_for_each(res, tr);
-}
+        test_for_each(res, tr);
+
+        //algorithm
+        test_all_of(res,tr);
+        test_any_of(res,tr);         
+        test_copy(res,tr);
+        test_copy_n(res,tr);
+        test_count(res,tr);
+        test_count_if(res,tr);
+        test_equal(res,tr);        
+        test_fill(res,tr);
+        test_find(res, tr);
+        test_find_if(res, tr);
+        test_find_if_not(res, tr);
+        test_lexicographical_compare(res,tr);
+        test_max(res,tr);
+        test_max_element(res, tr);
+        test_min(res,tr);
+        test_min_element(res, tr);
+        test_none_of(res,tr);
+        test_replace(res,tr);
+        test_replace_if(res,tr);        
+        test_reduce(res, tr);
+        test_transform(res, tr);
+        test_transform_reduce(res, tr);
+
+    }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 /* TODO: here we use dispatcher only to register the available functions, not
@@ -93,7 +118,7 @@ std::vector<simdpp::detail::FnVersion> get_test_archs()
     using FunPtr = void(*)(TestResults&, TestReporter&, const TestOptions&);
     SIMDPP_DISPATCH_COLLECT_FUNCTIONS(versions, main_test_function, FunPtr)
     std::vector<simdpp::detail::FnVersion> result;
-    result.assign(versions, versions+SIMDPP_DISPATCH_MAX_ARCHS);
+    result.assign(versions, versions + SIMDPP_DISPATCH_MAX_ARCHS);
     return result;
 }
 #endif

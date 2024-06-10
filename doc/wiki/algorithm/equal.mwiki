@@ -1,0 +1,35 @@
+{{simdpp/title|equal}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+  template<typename T> 
+    bool equal(const T* first1,  const T* last1, const T* first2);
+}}
+{{dcl | num=2 |
+  template<typename T, typename BinaryPredicate> 
+    bool equal(const T* first1,  const T* last1, const T* first2,BinaryPredicate pred);
+
+}}
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|equal}} Returns {{c|true}} if the range {{tt|[first1,last1)}} is equal to the range {{tt|[first2, first2 + (last1 - first1))}} according to pred and {{c|false}} otherwise
+
+@1@ Returns {{c|true}} if the range {{tt|[first1,last1)}} is equal to the range {{tt|[first2, first2 + (last1 - first1))}}, and {{c|false}} otherwise
+@2@ The binary operation BinaryPredicate is applied to pairs of elements from two ranges: one defined by [first1, last1) and the other beginning at first2.
+
+===Parameters===
+{{par begin}}
+{{par | first1, last1 | the first range of elements to examine}
+{{par | first2 | the beginning of the second range of elements to examine}}
+{{par | pred | 	binary predicate which returns ​true if the elements should be treated as equal.}}
+{{par end}}
+
+===Return value===
+If the elements in the two ranges are equal, returns  {{c|true}}.Otherwise returns  {{c|false}}.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc find }}
+{{dsc inc | algorithm/dsc lexicographic_compare }}
+{{dsc end}}

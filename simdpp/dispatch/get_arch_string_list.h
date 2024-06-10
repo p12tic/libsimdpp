@@ -84,10 +84,10 @@ inline Arch get_arch_string_list(const char* const strings[], int count, const c
     return res;
 #endif
 
-    int prefixlen = std::strlen(prefix);
-    for (int i = 0; i < count; ++i) {
+    auto prefixlen = std::strlen(prefix);
+    for (auto i = 0; i < count; ++i) {
         const char* s = *strings++;
-        int len = std::strlen(s);
+        size_t len = std::strlen(s);
 
         // check if s matches prefix
         if (len < prefixlen)

@@ -1,0 +1,31 @@
+{{simdpp/title|max}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+template<typename T, typename Comp>
+  T max(T const* first, T const* last, Comp comp);
+}}
+{{dcl | num=2 |
+template<typename T>
+  T max(T const* first, T const* last); 
+}}
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|max}} Returns the value of the element with the largest value in the range[first, last[ over comp (If no comp return simply the max).The lowest possible value for the order if the range is empty.
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of processed elements}}
+{{par | comp | binary comparison operator}}
+{{par end}}
+
+===Return value===
+(max)
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc min}}
+{{dsc inc | algorithm/dsc max_element}}
+{{dsc inc | algorithm/dsc min_element}}
+{{dsc end}}

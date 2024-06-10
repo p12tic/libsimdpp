@@ -1,0 +1,38 @@
+{{simdpp/title|reduce}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | num=1 |
+template<typename T>
+  T reduce(T const* first, T const* last, T init);
+}}
+{{dcl | num=2 |
+template<typename T, typename BinOp>
+  T reduce(T const* first, T const* last, T init, T neutral, BinOp f); 
+}}
+{{dcl end}}
+{{misc/navbar}}
+
+@1@ Computes the sum over elements in the given Range [first,last) and the initial value init.
+@2@ Reduces the range [first,last), possibly permuted and aggregated in unspecified manner, along with the initial value init over binary_op.
+
+===Notes===
+The behavior is non-deterministic if binary_op is not associative or not commutative.
+
+If the range is empty, {{tt|init}} is returned, unmodified
+
+===Parameters===
+{{par begin}}
+{{par | first, last | the range of elements to apply the algorithm to}}
+{{par | init | the initial value of the generalized sum}}
+{{par | binary_op | binary FunctionObject that will be applied in unspecified order}}
+{{par | neutral | Value containing the neutral element of BinOp}}
+{{par end}}
+
+===Return value===
+Generalized sum of {{tt|init}} and {{tt|*first}}, {{tt|*(first+1)}}, ... {{tt|*(last-1)}} over {{tt|binary_op}},
+in other words, {{tt|reduce}} behaves like {{lc|accumulate}} except the elements of the range may be grouped and rearranged in arbitrary order
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc transform }}
+{{dsc end}}

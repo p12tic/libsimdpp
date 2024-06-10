@@ -1,0 +1,28 @@
+{{simdpp/title|copy}}
+{{misc/navbar}}
+{{dcl begin}}
+{{dcl | 
+    template<typename T, typename Size> 
+      T* copy_n(T const* first, Size n, T* out)
+}}
+
+{{dcl end}}
+{{misc/navbar}}
+
+{{tt|copy_n}} Copies exactly {{tt|Size}} values from the range beginning at {{tt|first}} to the range beginning at {{tt|out}}, if {{tt|count>0}}. Does nothing otherwise.
+
+===Parameters===
+{{par begin}}
+{{par | first | the beginning of the range of elements to copy from}}
+{{par | Size | number of the elements to copy}}
+{{par | out | the beginning of the destination range}}
+{{par end}}
+
+===Return value===
+Output adress in the destination range, pointing past the last element copied if {{tt|Size>0}} or {{tt|out}} otherwise.
+
+===See also===
+{{dsc begin}}
+{{dsc inc | algorithm/dsc fill}}
+{{dsc inc | algorithm/dsc copy}}
+{{dsc end}}
