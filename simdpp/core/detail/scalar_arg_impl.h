@@ -20,7 +20,27 @@
 */
 
 // simple implementation returning empty expression
-#define SIMDPP_SCALAR_ARG_IMPL_VEC_IMPL(FUNC, RET_VEC, EXPR, NEW_VEC)                                                                   \
+#define SIMDPP_SCALAR_ARG_IMPL_VEC(FUNC, RET_VEC, VEC)                                                                   \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const unsigned& a,              const VEC<N>& b) { return FUNC(make_uint<VEC<N>>(a), b); }   \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const unsigned long& a,         const VEC<N>& b) { return FUNC(make_uint<VEC<N>>(a), b); }   \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const unsigned long long& a,    const VEC<N>& b) { return FUNC(make_uint<VEC<N>>(a), b); }   \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const int& a,                   const VEC<N>& b) { return FUNC(make_int<VEC<N>>(a), b); }    \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const long& a,                  const VEC<N>& b) { return FUNC(make_int<VEC<N>>(a), b); }    \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const long long& a,             const VEC<N>& b) { return FUNC(make_int<VEC<N>>(a), b); }    \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const float& a,                 const VEC<N>& b) { return FUNC(make_float<VEC<N>>(a), b); }  \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const double& a,                const VEC<N>& b) { return FUNC(make_float<VEC<N>>(a), b); }  \
+                                                                                                                                               \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const unsigned& b          ) { return FUNC(a, make_uint<VEC<N>>(b)); }   \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const unsigned long& b     ) { return FUNC(a, make_uint<VEC<N>>(b)); }   \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const unsigned long long& b) { return FUNC(a, make_uint<VEC<N>>(b)); }   \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const int& b               ) { return FUNC(a, make_int<VEC<N>>(b)); }    \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const long& b              ) { return FUNC(a, make_int<VEC<N>>(b)); }    \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const long long& b         ) { return FUNC(a, make_int<VEC<N>>(b)); }    \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const float& b             ) { return FUNC(a, make_float<VEC<N>>(b)); }  \
+template<unsigned N> SIMDPP_INL RET_VEC<N> FUNC(const VEC<N>& a, const double& b            ) { return FUNC(a, make_float<VEC<N>>(b)); }
+// end #define
+
+#define SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR_IMPL(FUNC, RET_VEC, EXPR, NEW_VEC)                                                                   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const unsigned& a,              const EXPR<N,V>& b) { return FUNC(make_uint<NEW_VEC>(a), b); }   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const unsigned long& a,         const EXPR<N,V>& b) { return FUNC(make_uint<NEW_VEC>(a), b); }   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const unsigned long long& a,    const EXPR<N,V>& b) { return FUNC(make_uint<NEW_VEC>(a), b); }   \
@@ -29,7 +49,7 @@ template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const long& a,         
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const long long& a,             const EXPR<N,V>& b) { return FUNC(make_int<NEW_VEC>(a), b); }    \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const float& a,                 const EXPR<N,V>& b) { return FUNC(make_float<NEW_VEC>(a), b); }  \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const double& a,                const EXPR<N,V>& b) { return FUNC(make_float<NEW_VEC>(a), b); }  \
-                                                                                                                                                        \
+                                                                                                                                                    \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const EXPR<N,V>& a, const unsigned& b          ) { return FUNC(a, make_uint<NEW_VEC>(b)); }   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const EXPR<N,V>& a, const unsigned long& b     ) { return FUNC(a, make_uint<NEW_VEC>(b)); }   \
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const EXPR<N,V>& a, const unsigned long long& b) { return FUNC(a, make_uint<NEW_VEC>(b)); }   \
@@ -40,94 +60,8 @@ template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const EXPR<N,V>& a, con
 template<unsigned N, class V> SIMDPP_INL RET_VEC<N> FUNC(const EXPR<N,V>& a, const double& b            ) { return FUNC(a, make_float<NEW_VEC>(b)); }
 // end #define
 
-
-#define SIMDPP_SCALAR_ARG_IMPL_VEC(FUNC, RET_VEC, VEC) \
-    SIMDPP_SCALAR_ARG_IMPL_VEC_IMPL(FUNC, RET_VEC, VEC, VEC<N>)
 #define SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(FUNC, RET_VEC, EXPR) \
-    SIMDPP_SCALAR_ARG_IMPL_VEC_IMPL(FUNC, RET_VEC, EXPR, typename detail::get_expr<V>::type)
-// end #define
-
-// implementation returning an expression for vector arguments
-#define SIMDPP_SCALAR_ARG_IMPL_EXPR(FUNC, EXPR, RET_VEC, VEC)                   \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<unsigned, VEC<N,V>>>                                            \
-    FUNC(const unsigned& a, const VEC<N,V>& b)                                  \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<unsigned long, VEC<N,V>>>                                       \
-    FUNC(const unsigned long& a, const VEC<N,V>& b)                             \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<unsigned long long, VEC<N,V>>>                                  \
-    FUNC(const unsigned long long& a, const VEC<N,V>& b)                        \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<int, VEC<N,V>>>                                                 \
-    FUNC(const int& a, const VEC<N,V>& b)                                       \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<long, VEC<N,V>>>                                                \
-    FUNC(const long& a, const VEC<N,V>& b)                                      \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<long long, VEC<N,V>>>                                           \
-    FUNC(const long long& a, const VEC<N,V>& b)                                 \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<float, VEC<N,V>>>                                               \
-    FUNC(const float& a, const VEC<N,V>& b)                                     \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<double, VEC<N,V>>>                                              \
-    FUNC(const double& a, const VEC<N,V>& b)                                    \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, unsigned>>                                            \
-    FUNC(const VEC<N,V>& a, const unsigned& b)                                  \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, unsigned long>>                                       \
-    FUNC(const VEC<N,V>& a, const unsigned long& b)                             \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, unsigned long long>>                                  \
-    FUNC(const VEC<N,V>& a, const unsigned long long& b)                        \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, int>>                                                 \
-    FUNC(const VEC<N,V>& a, const int& b)                                       \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, long>>                                                \
-    FUNC(const VEC<N,V>& a, const long& b)                                      \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, long long>>                                           \
-    FUNC(const VEC<N,V>& a, const long long& b)                                 \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, float>>                                               \
-    FUNC(const VEC<N,V>& a, const float& b)                                     \
-{ return { { a, b } }; }                                                        \
-                                                                                \
-template<unsigned N, class V> SIMDPP_INL                                        \
-RET_VEC<N, EXPR<VEC<N,V>, double>>                                              \
-    FUNC(const VEC<N,V>& a, const double& b)                                    \
-{ return { { a, b } }; }
+    SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR_IMPL(FUNC, RET_VEC, EXPR, typename detail::get_expr<V>::type)
 // end #define
 
 // a implementation for integer operations that use get_expr_uint

@@ -27,11 +27,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float64x4 vector
 template<>
-class float64<4, void> : public any_float64<4, float64<4,void>> {
+class float64<4> : public any_float64<4, float64<4>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
     using element_type = double;
-    using base_vector_type = float64<4,void>;
+    using base_vector_type = float64<4>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX
@@ -42,7 +42,6 @@ public:
     SIMDPP_INL float64<4>(const float64<4> &) = default;
     SIMDPP_INL float64<4> &operator=(const float64<4> &) = default;
 
-    template<class E> SIMDPP_INL float64<4>(const float64<4,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float64<4>(const any_vec<32,V>& d)
     {
         *this = bit_cast<float64<4>>(d.wrapped().eval());
@@ -83,13 +82,13 @@ private:
 };
 
 
-/// Class representing possibly optimized mask data for 2x 64-bit floating point
+/// Class representing possibly optimized mask data for 4x 64-bit floating point
 /// vector
 template<>
-class mask_float64<4, void> : public any_float64<4, mask_float64<4,void>> {
+class mask_float64<4> : public any_float64<4, mask_float64<4>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using base_vector_type = mask_float64<4,void>;
+    using base_vector_type = mask_float64<4>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512VL
@@ -103,19 +102,14 @@ public:
     SIMDPP_INL mask_float64<4> &operator=(const mask_float64<4> &) = default;
 
     SIMDPP_INL mask_float64<4>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_float64<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
 #if SIMDPP_USE_AVX && !SIMDPP_USE_AVX512VL
     SIMDPP_INL mask_float64<4>(const float64<4>& d) : d_(d.native()) {}
 #endif
 
-    template<class E> SIMDPP_INL explicit mask_float64<4>(const mask_int64<4,E>& d)
-    {
-        *this = bit_cast<mask_float64<4>>(d.eval());
-    }
-    template<class E> SIMDPP_INL mask_float64<4>& operator=(const mask_int64<4,E>& d)
-    {
-        *this = bit_cast<mask_float64<4>>(d.eval()); return *this;
-    }
+    SIMDPP_INL explicit mask_float64<4>(const mask_int64<4>& d);
+    SIMDPP_INL mask_float64<4>& operator=(const mask_int64<4>& d);
 
     /// Convert to the underlying vector type
 #if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES

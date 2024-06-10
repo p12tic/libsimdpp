@@ -40,6 +40,5 @@
 #include <simdpp/types/int64.h>
 #include <simdpp/types/float32.h>
 #include <simdpp/types/float64.h>
-#include <simdpp/types/generic.h>
 
 #endif

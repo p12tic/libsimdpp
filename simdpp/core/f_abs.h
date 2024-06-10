@@ -37,8 +37,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX-AVX2, 1-2}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N> abs(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> abs(const float32<N>& a)
 {
     return detail::insn::i_fabs(a.eval());
 }
@@ -60,8 +60,8 @@ float32<N> abs(const float32<N,E>& a)
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
-template<unsigned N, class E> SIMDPP_INL
-float64<N> abs(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float64<N> abs(const float64<N>& a)
 {
     return detail::insn::i_fabs(a.eval());
 }

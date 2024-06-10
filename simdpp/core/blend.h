@@ -107,16 +107,10 @@ class get_expr_blend {
 
 
 public:
-    using v1_final_type = typename type_of_tag<v12_type_tag + size_tag,
-                                               V1::length_bytes, void>::type;
-
-    using v2_final_type = typename type_of_tag<v12_type_tag + size_tag,
-                                               V1::length_bytes, void>::type;
-
-    using v3_final_type = typename type_of_tag<v3_type_tag + size_tag,
-                                               V1::length_bytes, void>::type;
-
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, void>::type;
+    using v1_final_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes>::type;
+    using v2_final_type = typename type_of_tag<v12_type_tag + size_tag, V1::length_bytes>::type;
+    using v3_final_type = typename type_of_tag<v3_type_tag + size_tag, V1::length_bytes>::type;
+    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes>::type;
 };
 
 } // namespace detail

@@ -90,14 +90,9 @@ struct get_expr_bitwise2_and {
                                         is_v1_float ? SIMDPP_TAG_MASK_FLOAT :
                                         SIMDPP_TAG_MASK_INT;
 
-    using v1_final_type = typename type_of_tag<v1_type_tag + size_tag,
-                                               tags::length_bytes, void>::type;
-    using v2_final_type = typename type_of_tag<v2_type_tag + size_tag,
-                                               tags::length_bytes, void>::type;
-
-    using type = typename type_of_tag<type_tag + size_tag,
-                                      tags::length_bytes,
-                                      void>::type;
+    using v1_final_type = typename type_of_tag<v1_type_tag + size_tag, tags::length_bytes>::type;
+    using v2_final_type = typename type_of_tag<v2_type_tag + size_tag, tags::length_bytes>::type;
+    using type = typename type_of_tag<type_tag + size_tag, tags::length_bytes>::type;
 };
 
 /*  The case with bit_or is similar to bit_and and bit_andnot except that the
@@ -149,12 +144,9 @@ struct get_expr_bit_or {
     static const unsigned v12_type_tag = type_tag == SIMDPP_TAG_INT
                                     ? SIMDPP_TAG_UINT : type_tag;
 
-    using v1_final_type = typename type_of_tag<v12_type_tag + size_tag,
-                                               tags::length_bytes, void>::type;
-    using v2_final_type = typename type_of_tag<v12_type_tag + size_tag,
-                                               tags::length_bytes, void>::type;
-
-    using type = typename type_of_tag<type_tag + size_tag, tags::length_bytes, void>::type;
+    using v1_final_type = typename type_of_tag<v12_type_tag + size_tag, tags::length_bytes>::type;
+    using v2_final_type = typename type_of_tag<v12_type_tag + size_tag, tags::length_bytes>::type;
+    using type = typename type_of_tag<type_tag + size_tag, tags::length_bytes>::type;
 };
 
 

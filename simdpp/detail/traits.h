@@ -22,32 +22,32 @@ namespace detail {
  */
 template<class V> struct remove_sign { using type = V; using expr = V; };
 
-template<unsigned N, class E>
-struct remove_sign<int8<N,E>> { using type = uint8<N>;   using expr = uint8<N,E>; };
-template<unsigned N, class E>
-struct remove_sign<int16<N,E>> { using type = uint16<N>; using expr = uint16<N,E>; };
-template<unsigned N, class E>
-struct remove_sign<int32<N,E>> { using type = uint32<N>; using expr = uint32<N,E>; };
-template<unsigned N, class E>
-struct remove_sign<int64<N,E>> { using type = uint64<N>; using expr = uint64<N,E>; };
+template<unsigned N>
+struct remove_sign<int8<N>> { using type = uint8<N>;   using expr = uint8<N>; };
+template<unsigned N>
+struct remove_sign<int16<N>> { using type = uint16<N>; using expr = uint16<N>; };
+template<unsigned N>
+struct remove_sign<int32<N>> { using type = uint32<N>; using expr = uint32<N>; };
+template<unsigned N>
+struct remove_sign<int64<N>> { using type = uint64<N>; using expr = uint64<N>; };
 
 /*  Normalizes vector type. Removes sign from a vector type. Result type is a
     value type, not an expression.
  */
 template<class V> struct remove_mask { using type = V; using expr = V; };
 
-template<unsigned N, class E>
-struct remove_mask<mask_int8<N,E>> { using type = uint8<N>;   using expr = uint8<N,E>; };
-template<unsigned N, class E>
-struct remove_mask<mask_int16<N,E>> { using type = uint16<N>; using expr = uint16<N,E>; };
-template<unsigned N, class E>
-struct remove_mask<mask_int32<N,E>> { using type = uint32<N>; using expr = uint32<N,E>; };
-template<unsigned N, class E>
-struct remove_mask<mask_int64<N,E>> { using type = uint64<N>; using expr = uint64<N,E>; };
-template<unsigned N, class E>
-struct remove_mask<mask_float32<N,E>> { using type = float32<N>; using expr = float32<N,E>; };
-template<unsigned N, class E>
-struct remove_mask<mask_float64<N,E>> { using type = float64<N>; using expr = float64<N,E>; };
+template<unsigned N>
+struct remove_mask<mask_int8<N>> { using type = uint8<N>;   using expr = uint8<N>; };
+template<unsigned N>
+struct remove_mask<mask_int16<N>> { using type = uint16<N>; using expr = uint16<N>; };
+template<unsigned N>
+struct remove_mask<mask_int32<N>> { using type = uint32<N>; using expr = uint32<N>; };
+template<unsigned N>
+struct remove_mask<mask_int64<N>> { using type = uint64<N>; using expr = uint64<N>; };
+template<unsigned N>
+struct remove_mask<mask_float32<N>> { using type = float32<N>; using expr = float32<N>; };
+template<unsigned N>
+struct remove_mask<mask_float64<N>> { using type = float64<N>; using expr = float64<N>; };
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

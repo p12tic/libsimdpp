@@ -29,14 +29,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     Implemented only on architectures with either @c X86_FMA3 or @c X86_FMA4
     support.
 */
-template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
-float32<N> fmadd(const float32<N,E1>& a, const float32<N,E2>& b, const float32<N,E3>& c)
+template<unsigned N> SIMDPP_INL
+float32<N> fmadd(const float32<N>& a, const float32<N>& b, const float32<N>& c)
 {
     return detail::insn::i_fmadd(a.eval(), b.eval(), c.eval());
 }
 
-template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
-float64<N> fmadd(const float64<N,E1>& a, const float64<N,E2>& b, const float64<N,E3>& c)
+template<unsigned N> SIMDPP_INL
+float64<N> fmadd(const float64<N>& a, const float64<N>& b, const float64<N>& c)
 {
     return detail::insn::i_fmadd(a.eval(), b.eval(), c.eval());
 }

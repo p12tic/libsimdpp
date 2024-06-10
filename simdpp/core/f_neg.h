@@ -33,8 +33,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, ALTIVEC, 2-3}
     @icost{AVX-AVX2, NEON, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N> neg(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> neg(const float32<N>& a)
 {
     return detail::insn::i_fneg(a.eval());
 }
@@ -56,8 +56,8 @@ float32<N> neg(const float32<N,E>& a)
     @icost{AVX-AVX2, 1-2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned N, class E> SIMDPP_INL
-float64<N> neg(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float64<N> neg(const float64<N>& a)
 {
     return detail::insn::i_fneg(a.eval());
 }

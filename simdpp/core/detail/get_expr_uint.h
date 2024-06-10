@@ -211,13 +211,9 @@ struct get_expr_uint {
     static const unsigned v1_type_tag = SIMDPP_TAG_UINT;
     static const unsigned v2_type_tag = SIMDPP_TAG_UINT;
 
-    using v1_final_type = typename type_of_tag<v1_type_tag + size_tag,
-                                               tags::length_bytes, void>::type;
-    using v2_final_type = typename type_of_tag<v2_type_tag + size_tag,
-                                               tags::length_bytes, void>::type;
-
-    using type = typename type_of_tag<type_tag + size_tag,
-                                      tags::length_bytes, void>::type;
+    using v1_final_type = typename type_of_tag<v1_type_tag + size_tag, tags::length_bytes>::type;
+    using v2_final_type = typename type_of_tag<v2_type_tag + size_tag, tags::length_bytes>::type;
+    using type = typename type_of_tag<type_tag + size_tag, tags::length_bytes>::type;
 };
 
 } // namespace detail

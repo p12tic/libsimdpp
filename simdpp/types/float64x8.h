@@ -26,11 +26,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float64x8 vector
 template<>
-class float64<8, void> : public any_float64<8, float64<8,void>> {
+class float64<8> : public any_float64<8, float64<8>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
     using element_type = double;
-    using base_vector_type = float64<8,void>;
+    using base_vector_type = float64<8>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512F
@@ -41,7 +41,6 @@ public:
     SIMDPP_INL float64<8>(const float64<8> &) = default;
     SIMDPP_INL float64<8> &operator=(const float64<8> &) = default;
 
-    template<class E> SIMDPP_INL float64<8>(const float64<8,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float64<8>(const any_vec<64,V>& d)
     {
         *this = bit_cast<float64<8>>(d.wrapped().eval());
@@ -85,10 +84,10 @@ private:
 /// Class representing possibly optimized mask data for 8x 64-bit floating point
 /// vector
 template<>
-class mask_float64<8, void> : public any_float64<8, mask_float64<8,void>> {
+class mask_float64<8> : public any_float64<8, mask_float64<8>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using base_vector_type = mask_float64<8,void>;
+    using base_vector_type = mask_float64<8>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512F
@@ -100,12 +99,13 @@ public:
     SIMDPP_INL mask_float64<8> &operator=(const mask_float64<8> &) = default;
 
     SIMDPP_INL mask_float64<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_float64<8>& operator=(const native_type& d) { d_ = d; return *this; }
 
-    template<class E> SIMDPP_INL explicit mask_float64<8>(const mask_int64<8,E>& d)
+    SIMDPP_INL explicit mask_float64<8>(const mask_int64<8>& d)
     {
         *this = bit_cast<mask_float64<8>>(d.eval());
     }
-    template<class E> SIMDPP_INL mask_float64<8>& operator=(const mask_int64<8,E>& d)
+    SIMDPP_INL mask_float64<8>& operator=(const mask_int64<8>& d)
     {
         *this = bit_cast<mask_float64<8>>(d.eval()); return *this;
     }

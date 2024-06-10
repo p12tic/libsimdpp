@@ -27,7 +27,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 32x 16-bit signed integer vector
 */
 template<>
-class int16<32, void> : public any_int16<32, int16<32,void>> {
+class int16<32> : public any_int16<32, int16<32>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int16_t;
@@ -42,8 +42,7 @@ public:
     SIMDPP_INL int16<32>(const int16<32> &) = default;
     SIMDPP_INL int16<32> &operator=(const int16<32> &) = default;
 
-    template<class E> SIMDPP_INL int16<32>(const int16<32,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL int16<32>(const uint16<32,E>& d) { *this = d.eval(); }
+    SIMDPP_INL int16<32>(const uint16<32>& d);
     template<class V> SIMDPP_INL explicit int16<32>(const any_vec<64,V>& d)
     {
         *this = bit_cast<int16<32>>(d.wrapped().eval());
@@ -90,11 +89,11 @@ private:
 /** Class representing 16x 16-bit unsigned integer vector
 */
 template<>
-class uint16<32, void> : public any_int16<32, uint16<32,void>> {
+class uint16<32> : public any_int16<32, uint16<32>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint16_t;
-    using base_vector_type = uint16<32,void>;
+    using base_vector_type = uint16<32>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX2
@@ -105,8 +104,7 @@ public:
     SIMDPP_INL uint16<32>(const uint16<32> &) = default;
     SIMDPP_INL uint16<32> &operator=(const uint16<32> &) = default;
 
-    template<class E> SIMDPP_INL uint16<32>(const uint16<32,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL uint16<32>(const int16<32,E>& d) { *this = d.eval(); }
+    SIMDPP_INL uint16<32>(const int16<32>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint16<32>(const any_vec<64,V>& d)
     {
         *this = bit_cast<uint16<32>>(d.wrapped().eval());
@@ -153,10 +151,10 @@ private:
 /// Class representing possibly optimized mask data for 8x 16-bit integer
 /// vector
 template<>
-class mask_int16<32, void> : public any_int16<32, mask_int16<32,void>> {
+class mask_int16<32> : public any_int16<32, mask_int16<32>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int16<32, void>;
+    using base_vector_type = mask_int16<32>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512BW
@@ -168,6 +166,7 @@ public:
     SIMDPP_INL mask_int16<32> &operator=(const mask_int16<32> &) = default;
 
     SIMDPP_INL mask_int16<32>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int16<32>& operator=(const native_type& d) { d_ = d; return *this; }
 
     /// Convert to the underlying vector type
 #if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
