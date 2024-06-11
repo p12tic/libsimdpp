@@ -20,7 +20,6 @@
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/unzip_lo.h>
-#include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -93,10 +92,37 @@ SIMDPP_INL uint32<32> i_to_uint32(const uint16<32>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint_16_to_uint32_converter {
+    static SIMDPP_INL void convert(uint32<N>& dst, const uint16<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        dst.template vec<I>() = i_to_uint32(src.template vec<I>());
+#else
+        uint32<M> sr;
+        sr = i_to_uint32(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+#endif
+        uint_16_to_uint32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint_16_to_uint32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint32<N>& dst, const uint16<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint32<N> i_to_uint32(const uint16<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint32<N>, i_to_uint32, a)
+    uint32<N> r;
+    uint_16_to_uint32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,10 +196,43 @@ SIMDPP_INL uint32<64> i_to_uint32(const uint8<64>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint_8_to_uint32_converter {
+    static SIMDPP_INL void convert(uint32<N>& dst, const uint8<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        uint32<M> sr;
+        sr = i_to_uint32(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+#else
+        uint32<M> sr;
+        sr = i_to_uint32(src.template vec<I>());
+        dst.template vec<I*4>() = sr.template vec<0>();
+        dst.template vec<I*4+1>() = sr.template vec<1>();
+        dst.template vec<I*4+2>() = sr.template vec<2>();
+        dst.template vec<I*4+3>() = sr.template vec<3>();
+#endif
+        uint_8_to_uint32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint_8_to_uint32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint32<N>& dst, const uint8<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint32<N> i_to_uint32(const uint8<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint32<N>, i_to_uint32, a)
+    uint32<N> r;
+    uint_8_to_uint32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,10 +301,37 @@ SIMDPP_INL int32<32> i_to_int32(const int16<32>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int16_to_int32_converter {
+    static SIMDPP_INL void convert(int32<N>& dst, const int16<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        dst.template vec<I>() = i_to_int32(src.template vec<I>());
+#else
+        int32<M> sr;
+        sr = i_to_int32(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+#endif
+        int16_to_int32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int16_to_int32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(int32<N>& dst, const int16<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 int32<N> i_to_int32(const int16<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int32<N>, i_to_int32, a)
+    int32<N> r;
+    int16_to_int32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -320,12 +406,44 @@ SIMDPP_INL int32<64> i_to_int32(const int8<64>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int8_to_int32_converter {
+    static SIMDPP_INL void convert(int32<N>& dst, const int8<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        int32<M> sr;
+        sr = i_to_int32(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+#else
+        int32<M> sr;
+        sr = i_to_int32(src.template vec<I>());
+        dst.template vec<I*4>() = sr.template vec<0>();
+        dst.template vec<I*4+1>() = sr.template vec<1>();
+        dst.template vec<I*4+2>() = sr.template vec<2>();
+        dst.template vec<I*4+3>() = sr.template vec<3>();
+#endif
+        int8_to_int32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int8_to_int32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(int32<N>& dst, const int8<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 int32<N> i_to_int32(const int8<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int32<N>, i_to_int32, a)
+    int32<N> r;
+    int8_to_int32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
-
 
 } // namespace insn
 } // namespace detail

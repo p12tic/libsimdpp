@@ -99,10 +99,39 @@ SIMDPP_INL uint16<32> i_to_uint16(const uint32<32>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint32ToInt16Converter {
+    static SIMDPP_INL void convert(uint16<N>& dst, const uint32<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        dst.template vec<I>() = i_to_uint16(src.template vec<I>());
+        Uint32ToInt16Converter<I + 1, End, M, N>::convert(dst, src);
+#else
+        uint32<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_uint16(sr);
+        Uint32ToInt16Converter<I + 1, End, M, N>::convert(dst, src);
+#endif
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint32ToInt16Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint16<N>& dst, const uint32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint16<N> i_to_uint16(const uint32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint16<N>, i_to_uint16, a)
+    uint16<N> r;
+    Uint32ToInt16Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,10 +212,43 @@ SIMDPP_INL uint16<32> i_to_uint16(const uint64<32>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt16Converter {
+    static SIMDPP_INL void convert(uint16<N>& dst, const uint64<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        uint64<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_uint16(sr);
+#else
+        uint64<M> sr;
+        sr.template vec<0>() = src.template vec<I*4>();
+        sr.template vec<1>() = src.template vec<I*4+1>();
+        sr.template vec<2>() = src.template vec<I*4+2>();
+        sr.template vec<3>() = src.template vec<I*4+3>();
+        dst.template vec<I>() = i_to_uint16(sr);
+#endif
+        Uint64ToInt16Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt16Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint16<N>& dst, const uint64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint16<N> i_to_uint16(const uint64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint16<N>, i_to_uint16, a)
+    uint16<N> r;
+    Uint64ToInt16Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 } // namespace insn

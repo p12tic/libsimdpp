@@ -18,7 +18,6 @@
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/combine.h>
 #include <simdpp/detail/mem_block.h>
-#include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -89,10 +88,34 @@ uint64<16> i_to_uint64(const uint32<16>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint_32_to_uint64_converter {
+    static SIMDPP_INL void convert(uint64<N>& dst, const uint32<N>& src)
+    {
+        uint64<M> sr;
+        sr = i_to_uint64(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+        uint_32_to_uint64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint_32_to_uint64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint64<N>& dst, const uint32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint64<N> i_to_uint64(const uint32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint64<N>, i_to_uint64, a)
+    uint64<N> r;
+    uint_32_to_uint64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,10 +203,36 @@ uint64<32> i_to_uint64(const uint16<32>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint_16_to_uint64_converter {
+    static SIMDPP_INL void convert(uint64<N>& dst, const uint16<N>& src)
+    {
+        uint64<M> sr;
+        sr = i_to_uint64(src.template vec<I>());
+        dst.template vec<I*4>() = sr.template vec<0>();
+        dst.template vec<I*4+1>() = sr.template vec<1>();
+        dst.template vec<I*4+2>() = sr.template vec<2>();
+        dst.template vec<I*4+3>() = sr.template vec<3>();
+        uint_16_to_uint64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint_16_to_uint64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint64<N>& dst, const uint16<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint64<N> i_to_uint64(const uint16<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint64<N>, i_to_uint64, a)
+    uint64<N> r;
+    uint_16_to_uint64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -290,10 +339,39 @@ uint64<64> i_to_uint64(const uint8<64>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint_8_to_uint64_converter {
+    static SIMDPP_INL void convert(uint64<N>& dst, const uint8<N>& src)
+    {
+        uint64<M> sr;
+        sr = i_to_uint64(src.template vec<I>());
+        dst.template vec<I*8>() = sr.template vec<0>();
+        dst.template vec<I*8+1>() = sr.template vec<1>();
+        dst.template vec<I*8+2>() = sr.template vec<2>();
+        dst.template vec<I*8+3>() = sr.template vec<3>();
+        dst.template vec<I*8+4>() = sr.template vec<4>();
+        dst.template vec<I*8+5>() = sr.template vec<5>();
+        dst.template vec<I*8+6>() = sr.template vec<6>();
+        dst.template vec<I*8+7>() = sr.template vec<7>();
+        uint_8_to_uint64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint_8_to_uint64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint64<N>& dst, const uint8<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
-uint64<N> i_to_uint64(const uint8<N>& a)
+    uint64<N> i_to_uint64(const uint8<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint64<N>, i_to_uint64, a)
+    uint64<N> r;
+    uint_8_to_uint64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -361,11 +439,36 @@ int64<16> i_to_int64(const int32<16>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int32_to_int64_converter {
+    static SIMDPP_INL void convert(int64<N>& dst, const int32<N>& src)
+    {
+        int64<M> sr;
+        sr = i_to_int64(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+        int32_to_int64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int32_to_int64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(int64<N>& dst, const int32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 int64<N> i_to_int64(const int32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int64<N>, i_to_int64, a)
+    int64<N> r;
+    int32_to_int64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
+
 
 // -----------------------------------------------------------------------------
 
@@ -452,10 +555,35 @@ int64<32> i_to_int64(const int16<32>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int16_to_int64_converter {
+    static SIMDPP_INL void convert(int64<N>& dst, const int16<N>& src)
+    {
+        int64<M> sr;
+        sr = i_to_int64(src.template vec<I>());
+        dst.template vec<I*4>() = sr.template vec<0>();
+        dst.template vec<I*4+1>() = sr.template vec<1>();
+        dst.template vec<I*4+2>() = sr.template vec<2>();
+        dst.template vec<I*4+3>() = sr.template vec<3>();
+        int16_to_int64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int16_to_int64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(int64<N>& dst, const int16<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 int64<N> i_to_int64(const int16<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int64<N>, i_to_int64, a)
+    int64<N> r;
+    int16_to_int64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -562,10 +690,39 @@ int64<64> i_to_int64(const int8<64>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int8_to_int64_converter {
+    static SIMDPP_INL void convert(int64<N>& dst, const int8<N>& src)
+    {
+        int64<M> sr;
+        sr = i_to_int64(src.template vec<I>());
+        dst.template vec<I*8>() = sr.template vec<0>();
+        dst.template vec<I*8+1>() = sr.template vec<1>();
+        dst.template vec<I*8+2>() = sr.template vec<2>();
+        dst.template vec<I*8+3>() = sr.template vec<3>();
+        dst.template vec<I*8+4>() = sr.template vec<4>();
+        dst.template vec<I*8+5>() = sr.template vec<5>();
+        dst.template vec<I*8+6>() = sr.template vec<6>();
+        dst.template vec<I*8+7>() = sr.template vec<7>();
+        int8_to_int64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int8_to_int64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(int64<N>& dst, const int8<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 int64<N> i_to_int64(const int8<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int64<N>, i_to_int64, a)
+    int64<N> r;
+    int8_to_int64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------

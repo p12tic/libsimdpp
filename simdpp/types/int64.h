@@ -58,6 +58,8 @@ public:
     SIMDPP_INL const int64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL int64v& vec(unsigned i)             { return d_[i]; }
 
+    template<unsigned I> SIMDPP_INL const int64v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL int64v& vec()             { return d_.template get<I>(); }
 private:
 
     /// Creates a signed int64 vector with the contents set to copy of native
@@ -112,6 +114,9 @@ public:
     SIMDPP_INL const uint64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL uint64v& vec(unsigned i)             { return d_[i]; }
 
+    template<unsigned I> SIMDPP_INL const uint64v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL uint64v& vec()             { return d_.template get<I>(); }
+
 private:
     /// Creates a unsigned int64 vector with the contents set to copy of native
     /// register
@@ -161,6 +166,9 @@ public:
 
     SIMDPP_INL const mask_int64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL mask_int64v& vec(unsigned i)       { return d_[i]; }
+
+    template<unsigned I> SIMDPP_INL const mask_int64v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL mask_int64v& vec()             { return d_.template get<I>(); }
 
 private:
     detail::vararray<mask_int64v, mask_int64::vec_length> d_;
