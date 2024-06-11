@@ -25,10 +25,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 /// Class representing float32x16 vector
 template<>
-class float32<16, void> : public any_float32<16, float32<16,void>> {
+class float32<16> : public any_float32<16, float32<16>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
-    using base_vector_type = float32<16,void>;
+    using base_vector_type = float32<16>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512F
@@ -39,7 +39,6 @@ public:
     SIMDPP_INL float32<16>(const float32<16> &) = default;
     SIMDPP_INL float32<16> &operator=(const float32<16> &) = default;
 
-    template<class E> SIMDPP_INL float32<16>(const float32<16,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float32<16>(const any_vec<64,V>& d)
     {
         *this = bit_cast<float32<16>>(d.wrapped().eval());
@@ -82,10 +81,10 @@ private:
 /// Class representing possibly optimized mask data for 4x 32-bit floating-point
 /// vector
 template<>
-class mask_float32<16, void> : public any_float32<16, mask_float32<16,void>> {
+class mask_float32<16> : public any_float32<16, mask_float32<16>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
-    using base_vector_type = mask_float32<16,void>;
+    using base_vector_type = mask_float32<16>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512F
@@ -97,12 +96,9 @@ public:
     SIMDPP_INL mask_float32<16> &operator=(const mask_float32<16> &) = default;
 
     SIMDPP_INL mask_float32<16>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_float32<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
-    template<class E> SIMDPP_INL explicit mask_float32<16>(const mask_int32<16,E>& d)
-    {
-        *this = bit_cast<mask_float32<16>>(d.eval());
-    }
-    template<class E> SIMDPP_INL mask_float32<16>& operator=(const mask_int32<16,E>& d)
+    SIMDPP_INL mask_float32<16>& operator=(const mask_int32<16>& d)
     {
         *this = bit_cast<mask_float32<16>>(d.eval()); return *this;
     }

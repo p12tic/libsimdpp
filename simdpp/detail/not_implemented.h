@@ -62,6 +62,13 @@ void libsimdpp_instruction_not_available_template()
     static_assert(!std::is_same<T, T>::value, "The instruction is not available");
 }
 
+template<unsigned N>
+void libsimdpp_instruction_not_available_template_n()
+{
+    static_assert(!std::integral_constant<std::uint32_t, N>::value,
+                  "The instruction is not available");
+}
+
 /** Causes linker error whenever unimplemented functionality is used. Compared
     to libsimdpp_instruction_not_available, this function is not limited to
     template contexts, but the errors are much harder to track down.
@@ -98,6 +105,35 @@ void libsimdpp_instruction_not_available4();
 #define SIMDPP_NOT_IMPLEMENTED_TEMPLATE4(T,A,B,C,D)  (                  \
     (void) A, (void) B, (void) C, (void) D,                             \
     libsimdpp_instruction_not_available_template<T>(),                  \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N0(N)  (                        \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N1(N,A)  (                      \
+    (void) A,                                                           \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N,A,B)  (                    \
+    (void) A, (void) B,                                                 \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N3(N,A,B,C)  (                  \
+    (void) A, (void) B, (void) C,                                       \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N4(N,A,B,C,D)  (                \
+    (void) A, (void) B, (void) C, (void) D,                             \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
     ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
     )
 

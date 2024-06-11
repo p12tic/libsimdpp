@@ -35,13 +35,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 10-11}
     @icost{SSE4.1, ALTIVEC, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N> trunc(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> trunc(const float32<N>& a)
 {
     return detail::insn::i_trunc(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-float64<N> trunc(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float64<N> trunc(const float64<N>& a)
 {
     return detail::insn::i_trunc(a.eval());
 }

@@ -25,14 +25,14 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
 // forward declarations
-template<unsigned N, class E> SIMDPP_INL
-int32_t reduce_mul(const int16<N,E>& a);
-template<unsigned N, class E> SIMDPP_INL
-uint32_t reduce_mul(const uint16<N,E>& a);
-template<unsigned N, class E> SIMDPP_INL
-int32_t reduce_mul(const int32<N,E>& a);
-template<unsigned N, class E> SIMDPP_INL
-uint32_t reduce_mul(const uint32<N,E>& a);
+template<unsigned N> SIMDPP_INL
+int32_t reduce_mul(const int16<N>& a);
+template<unsigned N> SIMDPP_INL
+uint32_t reduce_mul(const uint16<N>& a);
+template<unsigned N> SIMDPP_INL
+int32_t reduce_mul(const int32<N>& a);
+template<unsigned N> SIMDPP_INL
+uint32_t reduce_mul(const uint32<N>& a);
 
 namespace detail {
 namespace insn {

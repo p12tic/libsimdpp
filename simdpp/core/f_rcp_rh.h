@@ -51,8 +51,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 4}
     @icost{ALTIVEC, 4-5}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N> rcp_rh(const float32<N,E>& x, const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> rcp_rh(const float32<N>& x, const float32<N>& a)
 {
     return detail::insn::i_rcp_rh(x.eval(), a.eval());
 }

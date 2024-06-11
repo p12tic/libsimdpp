@@ -37,53 +37,53 @@ namespace SIMDPP_ARCH_NAMESPACE {
     rN = (int16_t) aN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const int8<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const int8<N>& a)
 {
     return detail::insn::i_to_int16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const uint8<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const uint8<N>& a)
 {
     return (int16<N>) detail::insn::i_to_uint16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const int16<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const int16<N>& a)
 {
     return a.eval();
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const uint16<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const uint16<N>& a)
 {
     return int16<N>(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const int32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const int32<N>& a)
 {
     return detail::insn::i_to_uint16(uint32<N>(a.eval()));
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const uint32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const uint32<N>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const int64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const int64<N>& a)
 {
     return detail::insn::i_to_uint16(uint64<N>(a.eval()));
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const uint64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const uint64<N>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const float32<N>& a)
 {
     return detail::insn::i_to_int16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-int16<N> to_int16(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> to_int16(const float64<N>& a)
 {
     return detail::insn::i_to_int16(a.eval());
 }
@@ -103,53 +103,53 @@ int16<N> to_int16(const float64<N,E>& a)
     rN = (uint16_t) aN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const int8<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const int8<N>& a)
 {
     return (uint16<N>) detail::insn::i_to_int16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const uint8<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const uint8<N>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const int16<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const int16<N>& a)
 {
     return uint16<N>(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const uint16<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const uint16<N>& a)
 {
     return a.eval();
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const int32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const int32<N>& a)
 {
     return detail::insn::i_to_uint16(uint32<N>(a.eval()));
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const uint32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const uint32<N>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const int64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const int64<N>& a)
 {
     return detail::insn::i_to_uint16(uint64<N>(a.eval()));
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const uint64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const uint64<N>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const float32<N>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> to_uint16(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+uint16<N> to_uint16(const float64<N>& a)
 {
     return detail::insn::i_to_uint16(a.eval());
 }

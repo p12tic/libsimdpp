@@ -31,8 +31,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-int8<N> add_sat(const int8<N,E1>& a, const int8<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+int8<N> add_sat(const int8<N>& a, const int8<N>& b)
 {
     return detail::insn::i_add_sat(a.eval(), b.eval());
 }
@@ -50,8 +50,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(add_sat, int8, int8)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-int16<N> add_sat(const int16<N,E1>& a, const int16<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+int16<N> add_sat(const int16<N>& a, const int16<N>& b)
 {
     return detail::insn::i_add_sat(a.eval(), b.eval());
 }
@@ -69,8 +69,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(add_sat, int16, int16)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N> add_sat(const uint8<N,E1>& a, const uint8<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+uint8<N> add_sat(const uint8<N>& a, const uint8<N>& b)
 {
     return detail::insn::i_add_sat(a.eval(), b.eval());
 }
@@ -88,8 +88,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(add_sat, uint8, uint8)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N> add_sat(const uint16<N,E1>& a, const uint16<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+uint16<N> add_sat(const uint16<N>& a, const uint16<N>& b)
 {
     return detail::insn::i_add_sat(a.eval(), b.eval());
 }

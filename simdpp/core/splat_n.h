@@ -40,16 +40,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, 2-3}
     @icost{NEON, ALTIVEC, 2}
 */
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-int8<N> splat16(const int8<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+int8<N> splat16(const int8<N>& a)
 {
     static_assert(s < 16, "Access out of bounds");
     return detail::insn::i_splat16<s>(a.eval());
     return { { a } };
 }
 
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-uint8<N> splat16(const uint8<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+uint8<N> splat16(const uint8<N>& a)
 {
     static_assert(s < 16, "Access out of bounds");
     return detail::insn::i_splat16<s>(a.eval());
@@ -74,15 +74,15 @@ uint8<N> splat16(const uint8<N,E>& a)
     @icost{SSSE3-AVX, 2-3}
     @icost{AVX2, NEON, ALTIVEC, 2}
 */
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-int16<N> splat8(const int16<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+int16<N> splat8(const int16<N>& a)
 {
     static_assert(s < 8, "Access out of bounds");
     return detail::insn::i_splat8<s>(a.eval());
 }
 
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-uint16<N> splat8(const uint16<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+uint16<N> splat8(const uint16<N>& a)
 {
     static_assert(s < 8, "Access out of bounds");
     return detail::insn::i_splat8<s>(a.eval());
@@ -100,15 +100,15 @@ uint16<N> splat8(const uint16<N,E>& a)
     @par 256-bit version:
     @icost{NEON, ALTIVEC, 2}
 */
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-int32<N> splat4(const int32<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+int32<N> splat4(const int32<N>& a)
 {
     static_assert(s < 4, "Access out of bounds");
     return detail::insn::i_splat4<s>(a.eval());
 }
 
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-uint32<N> splat4(const uint32<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+uint32<N> splat4(const uint32<N>& a)
 {
     static_assert(s < 4, "Access out of bounds");
     return detail::insn::i_splat4<s>(a.eval());
@@ -128,15 +128,15 @@ uint32<N> splat4(const uint32<N,E>& a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-int64<N> splat2(const int64<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+int64<N> splat2(const int64<N>& a)
 {
     static_assert(s < 2, "Access out of bounds");
     return detail::insn::i_splat2<s>(a.eval());
 }
 
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-uint64<N> splat2(const uint64<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+uint64<N> splat2(const uint64<N>& a)
 {
     static_assert(s < 2, "Access out of bounds");
     return detail::insn::i_splat2<s>(a.eval());
@@ -154,8 +154,8 @@ uint64<N> splat2(const uint64<N,E>& a)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-float32<N> splat4(const float32<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+float32<N> splat4(const float32<N>& a)
 {
     static_assert(s < 4, "Access out of bounds");
     return detail::insn::i_splat4<s>(a.eval());
@@ -175,8 +175,8 @@ float32<N> splat4(const float32<N,E>& a)
     @icost{SSE2-AVX, 2}
     @novec{NEON, ALTIVEC}
 */
-template<unsigned s, unsigned N, class E> SIMDPP_INL
-float64<N> splat2(const float64<N,E>& a)
+template<unsigned s, unsigned N> SIMDPP_INL
+float64<N> splat2(const float64<N>& a)
 {
     static_assert(s < 2, "Access out of bounds");
     return detail::insn::i_splat2<s>(a.eval());

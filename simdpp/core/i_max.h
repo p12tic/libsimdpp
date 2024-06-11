@@ -35,8 +35,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSSE3, 8}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-int8<N> max(const int8<N,E1>& a, const int8<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+int8<N> max(const int8<N>& a, const int8<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -54,8 +54,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int8, int8)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-uint8<N> max(const uint8<N,E1>& a, const uint8<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+uint8<N> max(const uint8<N>& a, const uint8<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -73,8 +73,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint8, uint8)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-int16<N> max(const int16<N,E1>& a, const int16<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+int16<N> max(const int16<N>& a, const int16<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -96,8 +96,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int16, int16)
     @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-uint16<N> max(const uint16<N,E1>& a, const uint16<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+uint16<N> max(const uint16<N>& a, const uint16<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -119,8 +119,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint16, uint16)
     @icost{SSE2-SSSE3, 8}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-int32<N> max(const int32<N,E1>& a, const int32<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+int32<N> max(const int32<N>& a, const int32<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -142,8 +142,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int32, int32)
     @icost{SSE2-SSSE3, 12-13}
     @icost{SSE4.1-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N> max(const uint32<N,E1>& a, const uint32<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+uint32<N> max(const uint32<N>& a, const uint32<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -160,8 +160,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, uint32, uint32)
 
     Supported since AVX2, NEON64. Not supported on ALTIVEC.
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-int64<N> max(const int64<N,E1>& a, const int64<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+int64<N> max(const int64<N>& a, const int64<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }
@@ -178,8 +178,8 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(max, int64, int64)
 
     Supported since AVX2, NEON64. Not supported on ALTIVEC.
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-uint64<N> max(const uint64<N,E1>& a, const uint64<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+uint64<N> max(const uint64<N>& a, const uint64<N>& b)
 {
     return detail::insn::i_max(a.eval(), b.eval());
 }

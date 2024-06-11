@@ -26,19 +26,18 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class int16<N, void> : public any_int16<N, int16<N,void>> {
+class int16 : public any_int16<N, int16<N>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int16_t;
     using base_vector_type = int16v;
     using expr_type = void;
 
-    SIMDPP_INL int16<N>() = default;
-    SIMDPP_INL int16<N>(const int16<N>&) = default;
-    SIMDPP_INL int16<N>& operator=(const int16<N>&) = default;
+    SIMDPP_INL int16() = default;
+    SIMDPP_INL int16(const int16<N>&) = default;
+    SIMDPP_INL int16& operator=(const int16<N>&) = default;
 
-    template<class E> SIMDPP_INL int16<N>(const int16<N,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL int16<N>(const uint16<N,E>& d) { *this = d.eval(); }
+    SIMDPP_INL int16(const uint16<N>& d);
     template<class V> SIMDPP_INL explicit int16<N>(const any_vec<N*2,V>& d)
     {
         *this = bit_cast<int16<N>>(d.wrapped().eval());
@@ -81,7 +80,7 @@ private:
     always contains at least one native vector.
 */
 template<unsigned N>
-class uint16<N, void> : public any_int16<N, uint16<N,void>> {
+class uint16 : public any_int16<N, uint16<N>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint16_t;
@@ -92,8 +91,7 @@ public:
     SIMDPP_INL uint16<N>(const uint16<N>&) = default;
     SIMDPP_INL uint16<N>& operator=(const uint16<N>&) = default;
 
-    template<class E> SIMDPP_INL uint16<N>(const uint16<N,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL uint16<N>(const int16<N,E>& d) { *this = d.eval(); }
+    SIMDPP_INL uint16<N>(const int16<N>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit uint16<N>(const any_vec<N*2,V>& d)
     {
         *this = bit_cast<uint16<N>>(d.wrapped().eval());
@@ -135,7 +133,7 @@ private:
 /// Class representing a mask for 16-bit integer vector of arbitrary
 /// length.
 template<unsigned N>
-class mask_int16<N, void> : public any_int16<N, mask_int16<N,void>> {
+class mask_int16 : public any_int16<N, mask_int16<N>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
     using base_vector_type = mask_int16v;

@@ -25,14 +25,14 @@ namespace SIMDPP_ARCH_NAMESPACE {
     r0 = a0 + a1 + a2 + ...
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-float reduce_add(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float reduce_add(const float32<N>& a)
 {
     return detail::insn::i_reduce_add(a.eval());
 }
 
-template<unsigned N, class E> SIMDPP_INL
-double reduce_add(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+double reduce_add(const float64<N>& a)
 {
     return detail::insn::i_reduce_add(a.eval());
 }

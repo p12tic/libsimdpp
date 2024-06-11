@@ -37,8 +37,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 128-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N> rsqrt_e(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> rsqrt_e(const float32<N>& a)
 {
     return detail::insn::i_rsqrt_e(a.eval());
 }

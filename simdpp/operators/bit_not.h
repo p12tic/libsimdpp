@@ -38,24 +38,24 @@ typename detail::get_expr<V>::type
 }
 
 /* FIXME
-template<unsigned N, class E> SIMDPP_INL
-mask_int32<N, expr_bit_not<mask_int32<N,E>>> operator~(mask_int32<N,E> a)
+template<unsigned N> SIMDPP_INL
+mask_int32<N, expr_bit_not<mask_int32<N>>> operator~(mask_int32<N> a)
 {
     return { { a } };
 }
-template<unsigned N, class E> SIMDPP_INL
-mask_int64<N, expr_bit_not<mask_int64<N,E>>> operator~(mask_int64<N,E> a)
+template<unsigned N> SIMDPP_INL
+mask_int64<N, expr_bit_not<mask_int64<N>>> operator~(mask_int64<N> a)
 {
     return { { a } };
 }
 
-template<unsigned N, class E> SIMDPP_INL
-mask_float32<N, expr_bit_not<mask_float32<N,E>>> operator~(mask_float32<N,E> a)
+template<unsigned N> SIMDPP_INL
+mask_float32<N, expr_bit_not<mask_float32<N>>> operator~(mask_float32<N> a)
 {
     return { { a } };
 }
-template<unsigned N, class E> SIMDPP_INL
-mask_float64<N, expr_bit_not<mask_float64<N,E>>> operator~(mask_float64<N,E> a)
+template<unsigned N> SIMDPP_INL
+mask_float64<N, expr_bit_not<mask_float64<N>>> operator~(mask_float64<N> a)
 {
     return { { a } };
 }

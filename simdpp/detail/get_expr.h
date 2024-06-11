@@ -34,23 +34,23 @@ namespace detail {
     elements among the function arguments.
 */
 
-template<unsigned Tag, unsigned B, class E> struct type_of_tag;
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE8, B, E>     { using type = int8<B,E>;    };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE16, B, E>    { using type = int16<B/2,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE32, B, E>    { using type = int32<B/4,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE64, B, E>    { using type = int64<B/8,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE8, B, E>    { using type = uint8<B,E>;   };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE16, B, E>   { using type = uint16<B/2,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE32, B, E>   { using type = uint32<B/4,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE64, B, E>   { using type = uint64<B/8,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE8, B, E>    { using type = mask_int8<B,E>;    };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE16, B, E>   { using type = mask_int16<B/2,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE32, B, E>   { using type = mask_int32<B/4,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE64, B, E>   { using type = mask_int64<B/8,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_FLOAT + SIMDPP_TAG_SIZE32, B, E>      { using type = float32<B/4,E>;    };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_FLOAT + SIMDPP_TAG_SIZE64, B, E>      { using type = float64<B/8,E>;    };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE32, B, E> { using type = mask_float32<B/4,E>; };
-template<unsigned B, class E> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE64, B, E> { using type = mask_float64<B/8,E>; };
+template<unsigned Tag, unsigned B> struct type_of_tag;
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE8, B>     { using type = int8<B>;    };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE16, B>    { using type = int16<B/2>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE32, B>    { using type = int32<B/4>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_INT + SIMDPP_TAG_SIZE64, B>    { using type = int64<B/8>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE8, B>    { using type = uint8<B>;   };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE16, B>   { using type = uint16<B/2>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE32, B>   { using type = uint32<B/4>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_UINT + SIMDPP_TAG_SIZE64, B>   { using type = uint64<B/8>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE8, B>    { using type = mask_int8<B>;    };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE16, B>   { using type = mask_int16<B/2>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE32, B>   { using type = mask_int32<B/4>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_MASK_INT + SIMDPP_TAG_SIZE64, B>   { using type = mask_int64<B/8>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_FLOAT + SIMDPP_TAG_SIZE32, B>      { using type = float32<B/4>;    };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_FLOAT + SIMDPP_TAG_SIZE64, B>      { using type = float64<B/8>;    };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE32, B> { using type = mask_float32<B/4>; };
+template<unsigned B> struct type_of_tag<SIMDPP_TAG_MASK_FLOAT + SIMDPP_TAG_SIZE64, B> { using type = mask_float64<B/8>; };
 
 template<class V1, class V2>
 struct expr2_maybe_scalar_tags {
@@ -208,7 +208,7 @@ struct expr2_maybe_scalar_tags<V1, double> {
 template<class V>
 class get_expr {
 public:
-    using type = typename type_of_tag<V::type_tag + V::size_tag, V::length_bytes, void>::type;
+    using type = typename type_of_tag<V::type_tag + V::size_tag, V::length_bytes>::type;
 };
 
 template<class V>
@@ -216,14 +216,14 @@ class get_expr_nomask {
     static const unsigned type_tag = (V::type_tag == SIMDPP_TAG_MASK_FLOAT) ? SIMDPP_TAG_FLOAT :
                                      (V::type_tag == SIMDPP_TAG_MASK_INT) ? SIMDPP_TAG_UINT : V::type_tag;
 public:
-    using type = typename type_of_tag<type_tag + V::size_tag, V::length_bytes, void>::type;
+    using type = typename type_of_tag<type_tag + V::size_tag, V::length_bytes>::type;
 };
 
 template<class V>
 class get_expr_nosign {
     static const unsigned type_tag = (V::type_tag == SIMDPP_TAG_INT) ? SIMDPP_TAG_UINT : V::type_tag;
 public:
-    using type = typename type_of_tag<type_tag + V::size_tag, V::length_bytes, void>::type;
+    using type = typename type_of_tag<type_tag + V::size_tag, V::length_bytes>::type;
 };
 
 template<class V>
@@ -232,7 +232,7 @@ class get_expr_nomask_nosign {
                                      (V::type_tag == SIMDPP_TAG_INT) ? SIMDPP_TAG_UINT :
                                      (V::type_tag == SIMDPP_TAG_MASK_INT) ? SIMDPP_TAG_UINT : V::type_tag;
 public:
-    using type = typename type_of_tag<type_tag + V::size_tag, V::length_bytes, void>::type;
+    using type = typename type_of_tag<type_tag + V::size_tag, V::length_bytes>::type;
 };
 
 template<class V1, class V2>
@@ -240,9 +240,9 @@ class get_expr2_same {
     using tags = expr2_maybe_scalar_tags<V1, V2>;
 public:
     using v1_final_type = typename type_of_tag<tags::v1_type_tag + tags::v1_size_tag,
-                                               tags::length_bytes, void>::type;
+                                               tags::length_bytes>::type;
     using v2_final_type = typename type_of_tag<tags::v2_type_tag + tags::v2_size_tag,
-                                               tags::length_bytes, void>::type;
+                                               tags::length_bytes>::type;
 };
 
 template<class V1, class V2>
@@ -254,7 +254,7 @@ class get_expr2 {
                                                   (V1::type_tag > V2::type_tag ? V1::type_tag : V2::type_tag);
 
 public:
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, void>::type;
+    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes>::type;
 };
 
 
@@ -268,7 +268,7 @@ class get_expr2_nomask {
                                         (type_tag_t1 == SIMDPP_TAG_MASK_INT) ? SIMDPP_TAG_UINT : type_tag_t1;
 
 public:
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, void>::type;
+    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes>::type;
 };
 
 template<class V1, class V2>
@@ -279,7 +279,7 @@ public:
     static const unsigned size_tag = V1::size_tag > V2::size_tag ? V1::size_tag : V2::size_tag;
     static const unsigned type_tag = (type_tag_t1 == SIMDPP_TAG_INT) ? SIMDPP_TAG_UINT : type_tag_t1;
 
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, void>::type;
+    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes>::type;
 };
 
 
@@ -293,7 +293,7 @@ class get_expr2_nomask_nosign {
                                      (type_tag_t1 == SIMDPP_TAG_INT) ? SIMDPP_TAG_UINT : type_tag_t1;
 
 public:
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, void>::type;
+    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes>::type;
 };
 
 

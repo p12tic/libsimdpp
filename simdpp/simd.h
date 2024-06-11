@@ -153,7 +153,6 @@
 #include <simdpp/detail/extract128.h>
 
 #include <simdpp/types.h>
-#include <simdpp/types/generic.h>
 #include <simdpp/types/float32.h>
 #include <simdpp/types/float32x4.h>
 #include <simdpp/types/float32x8.h>
@@ -174,6 +173,7 @@
 #include <simdpp/types/int8x16.h>
 #include <simdpp/types/int8x32.h>
 #include <simdpp/types/traits.h>
+#include <simdpp/types/types.inl>
 #include <simdpp/expr.inl>
 
 #include <simdpp/operators/bit_and.h>

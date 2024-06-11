@@ -33,8 +33,8 @@ namespace SIMDPP_ARCH_NAMESPACE {
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int8<N> shift_r(const int8<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int8<N> shift_r(const int8<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -47,8 +47,8 @@ int8<N> shift_r(const int8<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint8<N> shift_r(const uint8<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint8<N> shift_r(const uint8<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -62,8 +62,8 @@ uint8<N> shift_r(const uint8<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int16<N> shift_r(const int16<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int16<N> shift_r(const int16<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -77,8 +77,8 @@ int16<N> shift_r(const int16<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> shift_r(const uint16<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint16<N> shift_r(const uint16<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -92,8 +92,8 @@ uint16<N> shift_r(const uint16<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int32<N> shift_r(const int32<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int32<N> shift_r(const int32<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -107,8 +107,8 @@ int32<N> shift_r(const int32<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint32<N> shift_r(const uint32<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint32<N> shift_r(const uint32<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -122,8 +122,8 @@ uint32<N> shift_r(const uint32<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int64<N> shift_r(const int64<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int64<N> shift_r(const int64<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -137,8 +137,8 @@ int64<N> shift_r(const int64<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint64<N> shift_r(const uint64<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint64<N> shift_r(const uint64<N>& a, unsigned count)
 {
     return detail::insn::i_shift_r(a.eval(), count);
 }
@@ -155,13 +155,13 @@ uint64<N> shift_r(const uint64<N,E>& a, unsigned count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int8<N> shift_r(const int8<N,E>& a, const uint8<N,E>& count)
+template<unsigned N> SIMDPP_INL
+int8<N> shift_r(const int8<N>& a, const uint8<N>& count)
 {
 #if SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR
     return detail::insn::i_shift_r_v(a.eval(), count.eval());
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -174,13 +174,13 @@ int8<N> shift_r(const int8<N,E>& a, const uint8<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint8<N> shift_r(const uint8<N,E>& a, const uint8<N,E>& count)
+template<unsigned N> SIMDPP_INL
+uint8<N> shift_r(const uint8<N>& a, const uint8<N>& count)
 {
 #if SIMDPP_HAS_UINT8_SHIFT_R_BY_VECTOR
     return detail::insn::i_shift_r_v(a.eval(), count.eval());
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -193,13 +193,13 @@ uint8<N> shift_r(const uint8<N,E>& a, const uint8<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int16<N> shift_r(const int16<N,E>& a, const uint16<N,E>& count)
+template<unsigned N> SIMDPP_INL
+int16<N> shift_r(const int16<N>& a, const uint16<N>& count)
 {
 #if SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR
     return detail::insn::i_shift_r_v(a.eval(), count.eval());
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -212,13 +212,13 @@ int16<N> shift_r(const int16<N,E>& a, const uint16<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint16<N> shift_r(const uint16<N,E>& a, const uint16<N,E>& count)
+template<unsigned N> SIMDPP_INL
+uint16<N> shift_r(const uint16<N>& a, const uint16<N>& count)
 {
 #if SIMDPP_HAS_UINT16_SHIFT_R_BY_VECTOR
     return detail::insn::i_shift_r_v(a.eval(), count.eval());
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -231,13 +231,13 @@ uint16<N> shift_r(const uint16<N,E>& a, const uint16<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int32<N> shift_r(const int32<N,E>& a, const uint32<N,E>& count)
+template<unsigned N> SIMDPP_INL
+int32<N> shift_r(const int32<N>& a, const uint32<N>& count)
 {
 #if SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR
     return detail::insn::i_shift_r_v(a.eval(), count.eval());
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -250,13 +250,13 @@ int32<N> shift_r(const int32<N,E>& a, const uint32<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint32<N> shift_r(const uint32<N,E>& a, const uint32<N,E>& count)
+template<unsigned N> SIMDPP_INL
+uint32<N> shift_r(const uint32<N>& a, const uint32<N>& count)
 {
 #if SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR
     return detail::insn::i_shift_r_v(a.eval(), count.eval());
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -272,8 +272,8 @@ uint32<N> shift_r(const uint32<N,E>& a, const uint32<N,E>& count)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-int8<N> shift_r(const int8<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+int8<N> shift_r(const int8<N>& a)
 {
     static_assert(count < 8, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
@@ -288,8 +288,8 @@ int8<N> shift_r(const int8<N,E>& a)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint8<N> shift_r(const uint8<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+uint8<N> shift_r(const uint8<N>& a)
 {
     static_assert(count < 8, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
@@ -304,8 +304,8 @@ uint8<N> shift_r(const uint8<N,E>& a)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-int16<N> shift_r(const int16<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+int16<N> shift_r(const int16<N>& a)
 {
     static_assert(count < 16, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
@@ -320,8 +320,8 @@ int16<N> shift_r(const int16<N,E>& a)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint16<N> shift_r(const uint16<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+uint16<N> shift_r(const uint16<N>& a)
 {
     static_assert(count < 16, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
@@ -336,8 +336,8 @@ uint16<N> shift_r(const uint16<N,E>& a)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-int32<N> shift_r(const int32<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+int32<N> shift_r(const int32<N>& a)
 {
     static_assert(count < 32, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
@@ -352,8 +352,8 @@ int32<N> shift_r(const int32<N,E>& a)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint32<N> shift_r(const uint32<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+uint32<N> shift_r(const uint32<N>& a)
 {
     static_assert(count < 32, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
@@ -368,8 +368,8 @@ uint32<N> shift_r(const uint32<N,E>& a)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-int64<N> shift_r(const int64<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+int64<N> shift_r(const int64<N>& a)
 {
     static_assert(count < 64, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
@@ -384,8 +384,8 @@ int64<N> shift_r(const int64<N,E>& a)
     rN = aN >> count
     @endcode
 */
-template<unsigned count, unsigned N, class E> SIMDPP_INL
-uint64<N> shift_r(const uint64<N,E>& a)
+template<unsigned count, unsigned N> SIMDPP_INL
+uint64<N> shift_r(const uint64<N>& a)
 {
     static_assert(count < 64, "Shift out of bounds");
     return detail::insn::i_shift_r_wrapper<count == 0>::template run<count>(a.eval());
