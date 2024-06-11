@@ -32,7 +32,7 @@ uint8<16> i_blend(const uint8<16>& con, const uint8<16>& coff, const uint8<16>& 
 {
     uint8<16> on = con, off = coff;
 #if SIMDPP_USE_NULL
-    return detail::null::blend(on, off, mask);
+    return detail::null::bit_select(on, off, mask);
 #elif SIMDPP_USE_AVX2
     return _mm_blendv_epi8(off.native(), on.native(), mask.native());
 #elif SIMDPP_USE_XOP
@@ -333,7 +333,7 @@ float32<4> i_blend(const float32<4>& con, const float32<4>& coff, const float32<
 {
     float32<4> on = con, off = coff;
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
-    return detail::null::blend(on, off, mask);
+    return detail::null::bit_select(on, off, mask);
 #elif SIMDPP_USE_AVX
     return _mm_blendv_ps(off.native(), on.native(), mask.native());
 #elif SIMDPP_USE_SSE2
@@ -449,7 +449,7 @@ static SIMDPP_INL
 uint64<2> i_blend(const uint64<2>& on, const uint64<2>& off, const uint64<2>& mask)
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
-    return detail::null::blend(on, off, mask);
+    return detail::null::bit_select(on, off, mask);
 #else
     return uint64<2>(i_blend(uint8<16>(on), uint8<16>(off), uint8<16>(mask)));
 #endif
@@ -565,7 +565,7 @@ float64<2> i_blend(const float64<2>& con, const float64<2>& coff, const float64<
     return (v2f64) __msa_bsel_v((v16u8) mask.native(),
                                 (v16u8) off.native(), (v16u8) on.native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
-    return detail::null::blend(on, off, mask);
+    return detail::null::bit_select(on, off, mask);
 #endif
 }
 
