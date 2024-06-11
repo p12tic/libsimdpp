@@ -20,7 +20,6 @@
 #include <simdpp/core/f_mul.h>
 #include <simdpp/core/make_shuffle_bytes_mask.h>
 #include <simdpp/core/shuffle_bytes16.h>
-#include <simdpp/core/detail/subvec_extract.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/insn/conv_extend_to_int32.h>
 #include <simdpp/detail/insn/conv_any_to_float64.h>
@@ -38,29 +37,29 @@ float32<4> i_to_float32(const float64<4>& a)
     return _mm256_cvtpd_ps(a.native());
 #elif SIMDPP_USE_SSE2
     float32x4 r1, r2;
-    r1 = _mm_cvtpd_ps(a.vec(0).native());
-    r2 = _mm_cvtpd_ps(a.vec(1).native());
+    r1 = _mm_cvtpd_ps(a.vec<0>().native());
+    r2 = _mm_cvtpd_ps(a.vec<1>().native());
     return _mm_movelh_ps(r1.native(), r2.native());
 #elif SIMDPP_USE_NEON64
     float32<4> r;
-    r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec(0).native()),
-                          a.vec(1).native());
+    r = vcvt_high_f32_f64(vcvt_f32_f64(a.vec<0>().native()),
+                          a.vec<1>().native());
     return r;
 #elif SIMDPP_USE_VSX_206
     float32<4> lo, hi;
     uint32<4> shuffle_mask;
-    lo = __builtin_vsx_xvcvdpsp(a.vec(0).native());
-    hi = __builtin_vsx_xvcvdpsp(a.vec(1).native());
+    lo = __builtin_vsx_xvcvdpsp(a.vec<0>().native());
+    hi = __builtin_vsx_xvcvdpsp(a.vec<1>().native());
     shuffle_mask = make_shuffle_bytes16_mask<0,2,4,6>(shuffle_mask);
     return shuffle_bytes16(lo, hi, shuffle_mask);
 #elif SIMDPP_USE_MSA
-    return __msa_fexdo_w(a.vec(0).native(), a.vec(1).native());
+    return __msa_fexdo_w(a.vec<0>().native(), a.vec<1>().native());
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> r;
-    r[0] = float(a.vec(0).el(0));
-    r[1] = float(a.vec(0).el(1));
-    r[2] = float(a.vec(1).el(0));
-    r[3] = float(a.vec(1).el(1));
+    r[0] = float(a.vec<0>().el(0));
+    r[1] = float(a.vec<0>().el(1));
+    r[2] = float(a.vec<1>().el(0));
+    r[3] = float(a.vec<1>().el(1));
     return r;
 #endif
 }
@@ -73,8 +72,8 @@ float32<8> i_to_float32(const float64<8>& a)
     return _mm512_cvt_roundpd_ps(a.native(), (_MM_FROUND_TO_ZERO |_MM_FROUND_NO_EXC));
 #else
     float32x4 r1, r2;
-    r1 = i_to_float32(a.vec(0));
-    r2 = i_to_float32(a.vec(1));
+    r1 = i_to_float32(a.vec<0>());
+    r2 = i_to_float32(a.vec<1>());
     return combine(r1, r2);
 #endif
 }
@@ -85,16 +84,40 @@ static SIMDPP_INL
 float32<16> i_to_float32(const float64<16>& a)
 {
     float32<8> r1, r2;
-    r1 = i_to_float32(a.vec(0));
-    r2 = i_to_float32(a.vec(1));
+    r1 = i_to_float32(a.vec<0>());
+    r2 = i_to_float32(a.vec<1>());
     return combine(r1, r2);
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Float64ToFloat32Converter {
+    static SIMDPP_INL void convert(float32<N>& dst, const float64<N>& src)
+    {
+        float64<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float32(sr);
+        Float64ToFloat32Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Float64ToFloat32Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float32<N>& dst, const float64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const float64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(float32<N>, i_to_float32, a)
+    float32<N> r;
+    Float64ToFloat32Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,8 +155,8 @@ static SIMDPP_INL
 float32<16> i_to_float32(const int64<16>& a)
 {
 #if SIMDPP_USE_AVX512DQ
-    float32<8> r0 = _mm512_cvtepi64_ps(a.vec(0).native());
-    float32<8> r1 = _mm512_cvtepi64_ps(a.vec(1).native());
+    float32<8> r0 = _mm512_cvtepi64_ps(a.vec<0>().native());
+    float32<8> r1 = _mm512_cvtepi64_ps(a.vec<1>().native());
     return combine(r0, r1);
 #else
     return i_to_float32(i_to_float64(a));
@@ -182,8 +205,8 @@ static SIMDPP_INL
 float32<16> i_to_float32(const uint64<16>& a)
 {
 #if SIMDPP_USE_AVX512DQ
-    float32<8> r0 = _mm512_cvtepu64_ps(a.vec(0).native());
-    float32<8> r1 = _mm512_cvtepu64_ps(a.vec(1).native());
+    float32<8> r0 = _mm512_cvtepu64_ps(a.vec<0>().native());
+    float32<8> r1 = _mm512_cvtepu64_ps(a.vec<1>().native());
     return combine(r0, r1);
 #else
     return i_to_float32(i_to_float64(a));
@@ -235,8 +258,8 @@ float32x8 i_to_float32(const int32x8& a)
     return _mm256_cvtepi32_ps(a.native());
 #else
     __m256i a1;
-    a1 = _mm256_castsi128_si256(a.vec(0).native());
-    a1 = _mm256_insertf128_si256(a1, a.vec(1).native(), 1);
+    a1 = _mm256_castsi128_si256(a.vec<0>().native());
+    a1 = _mm256_insertf128_si256(a1, a.vec<1>().native(), 1);
     return _mm256_cvtepi32_ps(a1);
 #endif
 }
@@ -250,10 +273,38 @@ float32<16> i_to_float32(const int32<16>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int32_to_float32_converter {
+    static SIMDPP_INL void convert(float32<N>& dst, const int32<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        int32<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float32(sr);
+#else
+        dst.template vec<I>() = i_to_float32(src.template vec<I>());
+#endif
+        int32_to_float32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int32_to_float32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float32<N>& dst, const int32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const int32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(float32<N>, i_to_float32, a)
+    float32<N> r;
+    int32_to_float32_converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +361,7 @@ float32x8 i_to_float32(const uint32x8& a)
     float32<8> f_a = _mm256_cvtepi32_ps(a.native());
     return add(f_a, bit_and(is_large, splat<float32<8>>(0x100000000)));
 #else
-    return combine(i_to_float32(a.vec(0)), i_to_float32(a.vec(1)));
+    return combine(i_to_float32(a.vec<0>()), i_to_float32(a.vec<1>()));
 #endif
 }
 #endif
@@ -323,10 +374,38 @@ float32<16> i_to_float32(const uint32<16>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint32_to_float32_converter {
+    static SIMDPP_INL void convert(float32<N>& dst, const uint32<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        uint32<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float32(sr);
+#else
+        dst.template vec<I>() = i_to_float32(src.template vec<I>());
+#endif
+        uint32_to_float32_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint32_to_float32_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float32<N>& dst, const uint32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
+
 template<unsigned N> SIMDPP_INL
 float32<N> i_to_float32(const uint32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(float32<N>, i_to_float32, a)
+    float32<N> r;
+    uint32_to_float32_converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------

@@ -59,6 +59,9 @@ public:
     SIMDPP_INL const int16v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL int16v& vec(unsigned i)             { return d_[i]; }
 
+    template<unsigned I> SIMDPP_INL const int16v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL int16v& vec()             { return d_.template get<I>(); }
+
 private:
     /// Creates a signed int16 vector with the contents set to copy of native
     /// register
@@ -101,6 +104,9 @@ public:
 
     SIMDPP_INL const uint16v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL uint16v& vec(unsigned i)             { return d_[i]; }
+
+    template<unsigned I> SIMDPP_INL const uint16v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL uint16v& vec()             { return d_.template get<I>(); }
 
     template<class E> SIMDPP_INL uint16<N>(const expr_vec_construct<E>& e)
     {
@@ -151,6 +157,9 @@ public:
 
     SIMDPP_INL const mask_int16v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL mask_int16v& vec(unsigned i)             { return d_[i]; }
+
+    template<unsigned I> SIMDPP_INL const mask_int16v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL mask_int16v& vec()             { return d_.template get<I>(); }
 
 private:
     detail::vararray<mask_int16v, mask_int16::vec_length> d_;

@@ -164,13 +164,30 @@ float64<8> i_combine(const float64<4>& a, const float64<4>& b)
 
 // -----------------------------------------------------------------------------
 // generic implementation
+
+template<unsigned I, unsigned End>
+struct combine_unroll {
+    template<class VR, class VS>
+    static SIMDPP_INL void combine(VR& dst, const VS& src1, const VS& src2)
+    {
+        dst.template vec<I>() = src1.template vec<I>();
+        dst.template vec<I + End>() = src2.template vec<I>();
+        combine_unroll<I + 1, End>::combine(dst, src1, src2);
+    }
+};
+
+template<unsigned End>
+struct combine_unroll<End, End> {
+    template<class VR, class VS>
+    static SIMDPP_INL void combine(VR&, const VS&, const VS&) {}
+};
+
+
 template<class V, class H> SIMDPP_INL
 V i_combine(const H& a1, const H& a2)
 {
     V r;
-    unsigned h = H::vec_length;
-    for (unsigned i = 0; i < h; ++i) { r.vec(i) = a1.vec(i); }
-    for (unsigned i = 0; i < h; ++i) { r.vec(i+h) = a2.vec(i); }
+    combine_unroll<0, H::vec_length>::combine(r, a1, a2);
     return r;
 }
 

@@ -143,7 +143,7 @@ template<unsigned N, class V>
 SIMDPP_INL bool i_test_bits_any(const any_vec<N,V>& a)
 {
     const V& wa = a.wrapped();
-    typename V::base_vector_type r = wa.vec(0);
+    typename V::base_vector_type r = wa.template vec<0>();
     for (unsigned i = 1; i < wa.vec_length; ++i)
         r = bit_or(r, wa.vec(i));
     return i_test_bits_any(r);

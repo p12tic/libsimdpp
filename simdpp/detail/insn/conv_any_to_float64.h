@@ -20,7 +20,6 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_lo.h>
 #include <simdpp/core/zip_hi.h>
-#include <simdpp/core/detail/subvec_insert.h>
 #include <simdpp/detail/mem_block.h>
 #include <simdpp/detail/insn/conv_extend_to_int64.h>
 
@@ -66,10 +65,10 @@ float64x4 i_to_float64(const float32x4& a)
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC
     detail::mem_block<float32x4> ax(a);
     float64x4 r;
-    r.vec(0).el(0) = double(ax[0]);
-    r.vec(0).el(1) = double(ax[1]);
-    r.vec(1).el(0) = double(ax[2]);
-    r.vec(1).el(1) = double(ax[3]);
+    r.vec<0>().el(0) = double(ax[0]);
+    r.vec<0>().el(1) = double(ax[1]);
+    r.vec<1>().el(0) = double(ax[2]);
+    r.vec<1>().el(1) = double(ax[3]);
     return r;
 #endif
 }
@@ -104,13 +103,32 @@ float64<16> i_to_float64(const float32<16>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct float32_to_float64_converter {
+    static SIMDPP_INL void convert(float64<N>& dst, const float32<N>& src)
+    {
+        float64<M> sr;
+        sr = i_to_float64(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+        float32_to_float64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct float32_to_float64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float64<N>& dst, const float32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float64<N> i_to_float64(const float32<N>& a)
 {
     float64<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, i_to_float64(a.vec(i)), i);
-    }
+    float32_to_float64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
     return r;
 }
 
@@ -134,8 +152,8 @@ float64x4 i_to_float64(const int32x4& a)
 #elif SIMDPP_USE_VSX_206
 #if SIMDPP_USE_VSX_207
     int64<4> a64 = i_to_int64(a);
-    __vector int64_t b0 = a64.vec(0).native();
-    __vector int64_t b1 = a64.vec(1).native();
+    __vector int64_t b0 = a64.vec<0>().native();
+    __vector int64_t b1 = a64.vec<1>().native();
 #else
     int32<4> sign = shift_r<31>(a);
     __vector int64_t b0 = (__vector int64_t) vec_mergeh(a.native(), sign.native());
@@ -143,22 +161,22 @@ float64x4 i_to_float64(const int32x4& a)
 #endif
 
     float64<4> r;
-    r.vec(0) = vec_ctf(b0, 0);
-    r.vec(1) = vec_ctf(b1, 0);
+    r.vec<0>() = vec_ctf(b0, 0);
+    r.vec<1>() = vec_ctf(b1, 0);
     return r;
 #elif SIMDPP_USE_MSA
     int64<4> a64 = i_to_int64(a);
     float64<4> r;
-    r.vec(0) = __msa_ffint_s_d(a64.vec(0).native());
-    r.vec(1) = __msa_ffint_s_d(a64.vec(1).native());
+    r.vec<0>() = __msa_ffint_s_d(a64.vec<0>().native());
+    r.vec<1>() = __msa_ffint_s_d(a64.vec<1>().native());
     return r;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<int32x4> ax(a);
     float64x4 r;
-    r.vec(0).el(0) = double(ax[0]);
-    r.vec(0).el(1) = double(ax[1]);
-    r.vec(1).el(0) = double(ax[2]);
-    r.vec(1).el(1) = double(ax[3]);
+    r.vec<0>().el(0) = double(ax[0]);
+    r.vec<0>().el(1) = double(ax[1]);
+    r.vec<1>().el(0) = double(ax[2]);
+    r.vec<1>().el(1) = double(ax[3]);
     return r;
 #endif
 }
@@ -191,13 +209,36 @@ float64<16> i_to_float64(const int32<16>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int32_to_float64_converter {
+    static SIMDPP_INL void convert(float64<N>& dst, const int32<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        dst.template vec<I>() = i_to_float64(src.template vec<I>());
+#else
+        float64<M> sr;
+        sr = i_to_float64(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+#endif
+        int32_to_float64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int32_to_float64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float64<N>& dst, const int32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float64<N> i_to_float64(const int32<N>& a)
 {
     float64<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, i_to_float64(a.vec(i)), i);
-    }
+    int32_to_float64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
     return r;
 }
 
@@ -213,8 +254,8 @@ float64<4> i_to_float64(const uint32<4>& a)
 #if SIMDPP_USE_AVX
     f = _mm256_cvtepi32_pd(a.native());
 #else
-    f.vec(0) = _mm_cvtepi32_pd(a.native());
-    f.vec(1) = _mm_cvtepi32_pd(move4_l<2>(a).native());
+    f.vec<0>() = _mm_cvtepi32_pd(a.native());
+    f.vec<1>() = _mm_cvtepi32_pd(move4_l<2>(a).native());
 #endif
     // if result is negative, we converted integer larger than 0x7fffffff
     mask_float64<4> is_large = cmp_lt(f, 0);
@@ -227,8 +268,8 @@ float64<4> i_to_float64(const uint32<4>& a)
 #elif SIMDPP_USE_VSX_206
 #if SIMDPP_USE_VSX_207
     uint64<4> a64 = i_to_uint64(a);
-    __vector uint64_t b0 = a64.vec(0).native();
-    __vector uint64_t b1 = a64.vec(1).native();
+    __vector uint64_t b0 = a64.vec<0>().native();
+    __vector uint64_t b1 = a64.vec<1>().native();
 #else
     uint32<4> zero = make_zero();
     __vector uint64_t b0 = (__vector uint64_t) vec_mergeh(a.native(), zero.native());
@@ -236,22 +277,22 @@ float64<4> i_to_float64(const uint32<4>& a)
 #endif
 
     float64<4> r;
-    r.vec(0) = vec_ctf(b0, 0);
-    r.vec(1) = vec_ctf(b1, 0);
+    r.vec<0>() = vec_ctf(b0, 0);
+    r.vec<1>() = vec_ctf(b1, 0);
     return r;
 #elif SIMDPP_USE_MSA
     uint64<4> a64 = i_to_uint64(a);
     float64<4> r;
-    r.vec(0) = __msa_ffint_u_d(a64.vec(0).native());
-    r.vec(1) = __msa_ffint_u_d(a64.vec(1).native());
+    r.vec<0>() = __msa_ffint_u_d(a64.vec<0>().native());
+    r.vec<1>() = __msa_ffint_u_d(a64.vec<1>().native());
     return r;
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     detail::mem_block<uint32<4>> ax(a);
     float64<4> r;
-    r.vec(0).el(0) = double(ax[0]);
-    r.vec(0).el(1) = double(ax[1]);
-    r.vec(1).el(0) = double(ax[2]);
-    r.vec(1).el(1) = double(ax[3]);
+    r.vec<0>().el(0) = double(ax[0]);
+    r.vec<0>().el(1) = double(ax[1]);
+    r.vec<1>().el(0) = double(ax[2]);
+    r.vec<1>().el(1) = double(ax[3]);
     return r;
 #endif
 }
@@ -267,8 +308,8 @@ float64<8> i_to_float64(const uint32<8>& a)
     float64<8> f;
     split(a, a0, a1);
 
-    f.vec(0) = _mm256_cvtepi32_pd(a0.native());
-    f.vec(1) = _mm256_cvtepi32_pd(a1.native());
+    f.vec<0>() = _mm256_cvtepi32_pd(a0.native());
+    f.vec<1>() = _mm256_cvtepi32_pd(a1.native());
 
     // if result is negative, we converted integer larger than 0x7fffffff
     mask_float64<8> is_large = cmp_lt(f, 0);
@@ -285,19 +326,43 @@ float64<16> i_to_float64(const uint32<16>& a)
     uint32<8> a0, a1;
     split(a, a0, a1);
 
-    r.vec(0) = _mm512_cvtepu32_pd(a0.native());
-    r.vec(1) = _mm512_cvtepu32_pd(a1.native());
+    r.vec<0>() = _mm512_cvtepu32_pd(a0.native());
+    r.vec<1>() = _mm512_cvtepu32_pd(a1.native());
     return r;
 }
 #endif
+
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint32_to_float64_converter {
+    static SIMDPP_INL void convert(float64<N>& dst, const uint32<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        dst.template vec<I>() = i_to_float64(src.template vec<I>());
+#else
+        float64<M> sr;
+        sr = i_to_float64(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+#endif
+        uint32_to_float64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint32_to_float64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float64<N>& dst, const uint32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
 
 template<unsigned N> SIMDPP_INL
 float64<N> i_to_float64(const uint32<N>& a)
 {
     float64<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, i_to_float64(a.vec(i)), i);
-    }
+    uint32_to_float64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
     return r;
 }
 
@@ -376,13 +441,36 @@ float64<8> i_to_float64(const int64<8>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int64_to_float64_converter {
+    static SIMDPP_INL void convert(float64<N>& dst, const int64<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        int64<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float64(sr);
+#else
+        dst.template vec<I>() = i_to_float64(src.template vec<I>());
+#endif
+        int64_to_float64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int64_to_float64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float64<N>& dst, const int64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float64<N> i_to_float64(const int64<N>& a)
 {
     float64<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, i_to_float64(a.vec(i)), i);
-    }
+    int64_to_float64_converter<0, r.vec_length, r.base_length, N>::convert(r, a);
     return r;
 }
 
@@ -433,13 +521,36 @@ float64<8> i_to_float64(const uint64<8>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint64_to_float64_converter {
+    static SIMDPP_INL void convert(float64<N>& dst, const uint64<N>& src)
+    {
+#if SIMDPP_USE_AVX && !SIMDPP_USE_AVX2
+        uint64<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_float64(sr);
+#else
+        dst.template vec<I>() = i_to_float64(src.template vec<I>());
+#endif
+        uint64_to_float64_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint64_to_float64_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(float64<N>& dst, const uint64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 float64<N> i_to_float64(const uint64<N>& a)
 {
     float64<N> r;
-    for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, i_to_float64(a.vec(i)), i);
-    }
+    uint64_to_float64_converter<0, r.vec_length, r.base_length, N>::convert(r, a);
     return r;
 }
 

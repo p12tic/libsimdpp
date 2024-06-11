@@ -49,21 +49,21 @@ SIMDPP_INL uint8<16> i_to_uint8(const uint16<16>& a)
     a64 = permute4<0,2,0,2>(a64);
     return _mm256_castsi256_si128(a64.native());
 #else
-    return (uint8<16>) zip2_lo(a64.vec(0), a64.vec(1));
+    return (uint8<16>) zip2_lo(a64.vec<0>(), a64.vec<1>());
 #endif
 #elif SIMDPP_USE_NEON64
-    uint8x8_t low = vmovn_u16(a.vec(0).native());
-    return vmovn_high_u16(low, a.vec(1).native());
+    uint8x8_t low = vmovn_u16(a.vec<0>().native());
+    return vmovn_high_u16(low, a.vec<1>().native());
 #elif SIMDPP_USE_NEON
-    uint8x8_t low = vmovn_u16(a.vec(0).native());
-    uint8x8_t high = vmovn_u16(a.vec(1).native());
+    uint8x8_t low = vmovn_u16(a.vec<0>().native());
+    uint8x8_t high = vmovn_u16(a.vec<1>().native());
     return vcombine_u8(low, high);
 #elif SIMDPP_USE_ALTIVEC
-    return vec_pack(a.vec(0).native(), a.vec(1).native());
+    return vec_pack(a.vec<0>().native(), a.vec<1>().native());
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_MSA
     uint8<16> r1, r2;
-    r1 = a.vec(0);
-    r2 = a.vec(1);
+    r1 = a.vec<0>();
+    r2 = a.vec<1>();
     return unzip16_lo(r1, r2);
 #endif
 }
@@ -78,8 +78,8 @@ SIMDPP_INL uint8<32> i_to_uint8(const uint16<32>& a)
                                                     0,0,0,0,0,0,0,0>(perm_mask);
     uint8<32> a8_0, a8_1;
     uint64<4> a64_0, a64_1;
-    a8_0 = a.vec(0);
-    a8_1 = a.vec(1);
+    a8_0 = a.vec<0>();
+    a8_1 = a.vec<1>();
     a64_0 = permute_bytes16(a8_0, perm_mask);
     a64_1 = permute_bytes16(a8_1, perm_mask);
     return (uint8<32>) shuffle4x2<0,2,4,6>(a64_0, a64_1);
@@ -90,16 +90,39 @@ SIMDPP_INL uint8<32> i_to_uint8(const uint16<32>& a)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint8<64> i_to_uint8(const uint16<64>& a)
 {
-    uint8<32> r1 = _mm512_cvtepi16_epi8(a.vec(0).native());
-    uint8<32> r2 = _mm512_cvtepi16_epi8(a.vec(1).native());
+    uint8<32> r1 = _mm512_cvtepi16_epi8(a.vec<0>().native());
+    uint8<32> r2 = _mm512_cvtepi16_epi8(a.vec<1>().native());
     return combine(r1, r2);
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint16ToInt8Converter {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint16<N>& src)
+    {
+        uint16<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_uint8(sr);
+        Uint16ToInt8Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint16ToInt8Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint16<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint16<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
+    uint8<N> r;
+    Uint16ToInt8Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -123,13 +146,13 @@ SIMDPP_INL uint8<16> i_to_uint8(const uint32<16>& a)
 
     uint32<4> b0, b1, b2, b3;
 #if SIMDPP_USE_AVX2
-    split(a32.vec(0), b0, b1);
-    split(a32.vec(1), b2, b3);
+    split(a32.vec<0>(), b0, b1);
+    split(a32.vec<1>(), b2, b3);
 #else
-    b0 = a32.vec(0);
-    b1 = a32.vec(1);
-    b2 = a32.vec(2);
-    b3 = a32.vec(3);
+    b0 = a32.vec<0>();
+    b1 = a32.vec<1>();
+    b2 = a32.vec<2>();
+    b3 = a32.vec<3>();
 #endif
     uint64<2> r0, r1;
     r0 = zip4_lo(b0, b1);
@@ -145,8 +168,8 @@ SIMDPP_INL uint8<16> i_to_uint8(const uint32<16>& a)
 SIMDPP_INL uint8<32> i_to_uint8(const uint32<32>& a)
 {
 #if SIMDPP_USE_AVX512F
-    uint8<16> r0 = _mm512_cvtepi32_epi8(a.vec(0).native());
-    uint8<16> r1 = _mm512_cvtepi32_epi8(a.vec(1).native());
+    uint8<16> r0 = _mm512_cvtepi32_epi8(a.vec<0>().native());
+    uint8<16> r1 = _mm512_cvtepi32_epi8(a.vec<1>().native());
     return combine(r0, r1);
 #else
     uint8<32> perm_mask = make_shuffle_bytes16_mask<0,4,8,12,0,0,0,0,0,0,0,0,0,0,0,0>(perm_mask);
@@ -154,10 +177,10 @@ SIMDPP_INL uint8<32> i_to_uint8(const uint32<32>& a)
     uint32<8> a32_0, a32_1, a32_2, a32_3;
     uint64<4> a64_0, a64_1;
     uint32<4> b32_0, b32_1, c32_0, c32_1;
-    a8_0 = a.vec(0);
-    a8_1 = a.vec(1);
-    a8_2 = a.vec(2);
-    a8_3 = a.vec(3);
+    a8_0 = a.vec<0>();
+    a8_1 = a.vec<1>();
+    a8_2 = a.vec<2>();
+    a8_3 = a.vec<3>();
     a32_0 = permute_bytes16(a8_0, perm_mask);
     a32_1 = permute_bytes16(a8_1, perm_mask);
     a32_2 = permute_bytes16(a8_2, perm_mask);
@@ -176,18 +199,50 @@ SIMDPP_INL uint8<32> i_to_uint8(const uint32<32>& a)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint8<64> i_to_uint8(const uint32<64>& a)
 {
-    uint8<16> r0 = _mm512_cvtepi32_epi8(a.vec(0).native());
-    uint8<16> r1 = _mm512_cvtepi32_epi8(a.vec(1).native());
-    uint8<16> r2 = _mm512_cvtepi32_epi8(a.vec(2).native());
-    uint8<16> r3 = _mm512_cvtepi32_epi8(a.vec(3).native());
+    uint8<16> r0 = _mm512_cvtepi32_epi8(a.vec<0>().native());
+    uint8<16> r1 = _mm512_cvtepi32_epi8(a.vec<1>().native());
+    uint8<16> r2 = _mm512_cvtepi32_epi8(a.vec<2>().native());
+    uint8<16> r3 = _mm512_cvtepi32_epi8(a.vec<3>().native());
     return combine(combine(r0, r1), combine(r2, r3));
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint32ToInt8Converter {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint32<N>& src)
+    {
+#if SIMDPP_USE_AVX512F && !SIMDPP_USE_AVX512BW
+        uint32<M> sr;
+        sr.template vec<0>() = src.template vec<I*2>();
+        sr.template vec<1>() = src.template vec<I*2+1>();
+        dst.template vec<I>() = i_to_uint8(sr);
+#else
+        uint32<M> sr;
+        sr.template vec<0>() = src.template vec<I*4>();
+        sr.template vec<1>() = src.template vec<I*4+1>();
+        sr.template vec<2>() = src.template vec<I*4+2>();
+        sr.template vec<3>() = src.template vec<I*4+3>();
+        dst.template vec<I>() = i_to_uint8(sr);
+        Uint32ToInt8Converter<I + 1, End, M, N>::convert(dst, src);
+#endif
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint32ToInt8Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint32<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
+    uint8<N> r;
+    Uint32ToInt8Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -201,8 +256,8 @@ SIMDPP_INL uint8<16> i_to_uint8(const uint64<16>& a)
     }
     return r;
 #elif SIMDPP_USE_AVX512F
-    __m128i r0 = _mm512_cvtepi64_epi8(a.vec(0).native());
-    __m128i r1 = _mm512_cvtepi64_epi8(a.vec(1).native());
+    __m128i r0 = _mm512_cvtepi64_epi8(a.vec<0>().native());
+    __m128i r1 = _mm512_cvtepi64_epi8(a.vec<1>().native());
     return _mm_unpacklo_epi64(r0, r1);
 #elif SIMDPP_USE_AVX2
     uint8<32> perm_mask = make_shuffle_bytes16_mask<0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0>(perm_mask);
@@ -211,10 +266,10 @@ SIMDPP_INL uint8<16> i_to_uint8(const uint64<16>& a)
     uint64<4> a64_0;
     uint16<8> b16;
 
-    a16_0 = permute_bytes16((uint8<32>) a.vec(0), perm_mask);
-    a16_1 = permute_bytes16((uint8<32>) a.vec(1), perm_mask);
-    a16_2 = permute_bytes16((uint8<32>) a.vec(2), perm_mask);
-    a16_3 = permute_bytes16((uint8<32>) a.vec(3), perm_mask);
+    a16_0 = permute_bytes16((uint8<32>) a.vec<0>(), perm_mask);
+    a16_1 = permute_bytes16((uint8<32>) a.vec<1>(), perm_mask);
+    a16_2 = permute_bytes16((uint8<32>) a.vec<2>(), perm_mask);
+    a16_3 = permute_bytes16((uint8<32>) a.vec<3>(), perm_mask);
 
     a32_0 = zip8_lo(a16_0, a16_1);
     a32_1 = zip8_lo(a16_2, a16_3);
@@ -238,10 +293,10 @@ SIMDPP_INL uint8<16> i_to_uint8(const uint64<16>& a)
 SIMDPP_INL uint8<32> i_to_uint8(const uint64<32>& a)
 {
 #if SIMDPP_USE_AVX512F
-    __m128i r0 = _mm512_cvtepi64_epi8(a.vec(0).native());
-    __m128i r1 = _mm512_cvtepi64_epi8(a.vec(1).native());
-    __m128i r2 = _mm512_cvtepi64_epi8(a.vec(2).native());
-    __m128i r3 = _mm512_cvtepi64_epi8(a.vec(3).native());
+    __m128i r0 = _mm512_cvtepi64_epi8(a.vec<0>().native());
+    __m128i r1 = _mm512_cvtepi64_epi8(a.vec<1>().native());
+    __m128i r2 = _mm512_cvtepi64_epi8(a.vec<2>().native());
+    __m128i r3 = _mm512_cvtepi64_epi8(a.vec<3>().native());
     uint8<16> r01 = _mm_unpacklo_epi64(r0, r1);
     uint8<16> r23 = _mm_unpacklo_epi64(r2, r3);
     return combine(r01, r23);
@@ -251,14 +306,14 @@ SIMDPP_INL uint8<32> i_to_uint8(const uint64<32>& a)
     uint32<8> a32_0, a32_1, a32_2, a32_3;
     uint64<4> a64_0, a64_1;
 
-    a16_0 = permute_bytes16((uint8<32>) a.vec(0), perm_mask);
-    a16_1 = permute_bytes16((uint8<32>) a.vec(1), perm_mask);
-    a16_2 = permute_bytes16((uint8<32>) a.vec(2), perm_mask);
-    a16_3 = permute_bytes16((uint8<32>) a.vec(3), perm_mask);
-    a16_4 = permute_bytes16((uint8<32>) a.vec(4), perm_mask);
-    a16_5 = permute_bytes16((uint8<32>) a.vec(5), perm_mask);
-    a16_6 = permute_bytes16((uint8<32>) a.vec(6), perm_mask);
-    a16_7 = permute_bytes16((uint8<32>) a.vec(7), perm_mask);
+    a16_0 = permute_bytes16((uint8<32>) a.vec<0>(), perm_mask);
+    a16_1 = permute_bytes16((uint8<32>) a.vec<1>(), perm_mask);
+    a16_2 = permute_bytes16((uint8<32>) a.vec<2>(), perm_mask);
+    a16_3 = permute_bytes16((uint8<32>) a.vec<3>(), perm_mask);
+    a16_4 = permute_bytes16((uint8<32>) a.vec<4>(), perm_mask);
+    a16_5 = permute_bytes16((uint8<32>) a.vec<5>(), perm_mask);
+    a16_6 = permute_bytes16((uint8<32>) a.vec<6>(), perm_mask);
+    a16_7 = permute_bytes16((uint8<32>) a.vec<7>(), perm_mask);
 
     a32_0 = zip8_lo(a16_0, a16_1);
     a32_1 = zip8_lo(a16_2, a16_3);
@@ -280,14 +335,14 @@ SIMDPP_INL uint8<32> i_to_uint8(const uint64<32>& a)
 #if SIMDPP_USE_AVX512BW
 SIMDPP_INL uint8<64> i_to_uint8(const uint64<64>& a)
 {
-    __m128i r0 = _mm512_cvtepi64_epi8(a.vec(0).native());
-    __m128i r1 = _mm512_cvtepi64_epi8(a.vec(1).native());
-    __m128i r2 = _mm512_cvtepi64_epi8(a.vec(2).native());
-    __m128i r3 = _mm512_cvtepi64_epi8(a.vec(3).native());
-    __m128i r4 = _mm512_cvtepi64_epi8(a.vec(4).native());
-    __m128i r5 = _mm512_cvtepi64_epi8(a.vec(5).native());
-    __m128i r6 = _mm512_cvtepi64_epi8(a.vec(6).native());
-    __m128i r7 = _mm512_cvtepi64_epi8(a.vec(7).native());
+    __m128i r0 = _mm512_cvtepi64_epi8(a.vec<0>().native());
+    __m128i r1 = _mm512_cvtepi64_epi8(a.vec<1>().native());
+    __m128i r2 = _mm512_cvtepi64_epi8(a.vec<2>().native());
+    __m128i r3 = _mm512_cvtepi64_epi8(a.vec<3>().native());
+    __m128i r4 = _mm512_cvtepi64_epi8(a.vec<4>().native());
+    __m128i r5 = _mm512_cvtepi64_epi8(a.vec<5>().native());
+    __m128i r6 = _mm512_cvtepi64_epi8(a.vec<6>().native());
+    __m128i r7 = _mm512_cvtepi64_epi8(a.vec<7>().native());
     uint8<16> r01 = _mm_unpacklo_epi64(r0, r1);
     uint8<16> r23 = _mm_unpacklo_epi64(r2, r3);
     uint8<16> r45 = _mm_unpacklo_epi64(r4, r5);
@@ -296,10 +351,39 @@ SIMDPP_INL uint8<64> i_to_uint8(const uint64<64>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt8Converter {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint64<N>& src)
+    {
+        uint64<M> sr;
+        sr.template vec<0>() = src.template vec<I*8>();
+        sr.template vec<1>() = src.template vec<I*8+1>();
+        sr.template vec<2>() = src.template vec<I*8+2>();
+        sr.template vec<3>() = src.template vec<I*8+3>();
+        sr.template vec<4>() = src.template vec<I*8+4>();
+        sr.template vec<5>() = src.template vec<I*8+5>();
+        sr.template vec<6>() = src.template vec<I*8+6>();
+        sr.template vec<7>() = src.template vec<I*8+7>();
+        dst.template vec<I>() = i_to_uint8(sr);
+        Uint64ToInt8Converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct Uint64ToInt8Converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint8<N>& dst, const uint64<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint8<N> i_to_uint8(const uint64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_EXTRACT(uint8<N>, i_to_uint8, a)
+    uint8<N> r;
+    Uint64ToInt8Converter<0, r.vec_length, r.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------

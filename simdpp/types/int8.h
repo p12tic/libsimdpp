@@ -59,6 +59,9 @@ public:
     SIMDPP_INL const int8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL int8v& vec(unsigned i)             { return d_[i]; }
 
+    template<unsigned I> SIMDPP_INL const int8v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL int8v& vec()             { return d_.template get<I>(); }
+
 private:
     /// Creates a signed int8 vector with the contents set to copy of native
     /// register
@@ -112,6 +115,9 @@ public:
     SIMDPP_INL const uint8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL uint8v& vec(unsigned i)             { return d_[i]; }
 
+    template<unsigned I> SIMDPP_INL const uint8v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL uint8v& vec()             { return d_.template get<I>(); }
+
 private:
     /// Creates a unsigned int8 vector with the contents set to copy of native
     /// register
@@ -153,6 +159,9 @@ public:
 
     SIMDPP_INL const mask_int8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL mask_int8v& vec(unsigned i)       { return d_[i]; }
+
+    template<unsigned I> SIMDPP_INL const mask_int8v& vec() const { return d_.template get<I>(); }
+    template<unsigned I> SIMDPP_INL mask_int8v& vec()             { return d_.template get<I>(); }
 
 private:
     detail::vararray<mask_int8v, mask_int8::vec_length> d_;

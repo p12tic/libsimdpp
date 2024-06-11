@@ -109,6 +109,13 @@ mask_float64<8> i_to_mask(const float64<8>& a);
 
 // -----------------------------------------------------------------------------
 
+template<unsigned N> mask_int8<N> i_to_mask(const mask_int8<N>& a) { return a; }
+template<unsigned N> mask_int16<N> i_to_mask(const mask_int16<N>& a) { return a; }
+template<unsigned N> mask_int32<N> i_to_mask(const mask_int32<N>& a) { return a; }
+template<unsigned N> mask_int64<N> i_to_mask(const mask_int64<N>& a) { return a; }
+template<unsigned N> mask_float32<N> i_to_mask(const mask_float32<N>& a) { return a; }
+template<unsigned N> mask_float64<N> i_to_mask(const mask_float64<N>& a) { return a; }
+
 template<class V> SIMDPP_INL
 typename V::mask_vector_type i_to_mask(const V& a);
 

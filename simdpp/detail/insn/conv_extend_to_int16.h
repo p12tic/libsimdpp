@@ -19,7 +19,6 @@
 #include <simdpp/core/move_l.h>
 #include <simdpp/core/zip_hi.h>
 #include <simdpp/core/zip_lo.h>
-#include <simdpp/detail/vector_array_conv_macros.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -48,8 +47,8 @@ SIMDPP_INL uint16<16> i_to_uint16(const uint8<16>& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     uint16x16 r;
-    r.vec(0) = vmovl_u8(vget_low_u8(a.native()));
-    r.vec(1) = vmovl_u8(vget_high_u8(a.native()));
+    r.vec<0>() = vmovl_u8(vget_low_u8(a.native()));
+    r.vec<1>() = vmovl_u8(vget_high_u8(a.native()));
     return r;
 #elif (SIMDPP_USE_ALTIVEC && SIMDPP_BIG_ENDIAN)
     uint16x8 r1, r2;
@@ -87,10 +86,33 @@ SIMDPP_INL uint16<64> i_to_uint16(const uint8<64>& a)
 }
 #endif
 
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct uint_8_to_uint16_converter {
+    static SIMDPP_INL void convert(uint16<N>& dst, const uint8<N>& src)
+    {
+        uint16<M> sr;
+        sr = i_to_uint16(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+        uint_8_to_uint16_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct uint_8_to_uint16_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(uint16<N>& dst, const uint8<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 uint16<N> i_to_uint16(const uint8<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(uint16<N>, i_to_uint16, a)
+    uint16<N> r;
+    uint_8_to_uint16_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,8 +141,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON
     int16x16 r;
-    r.vec(0) = vmovl_s8(vget_low_s8(a.native()));
-    r.vec(1) = vmovl_s8(vget_high_s8(a.native()));
+    r.vec<0>() = vmovl_s8(vget_low_s8(a.native()));
+    r.vec<1>() = vmovl_s8(vget_high_s8(a.native()));
     return r;
 #elif SIMDPP_USE_MSA
     int8x16 sign = shift_r<7>(a);
@@ -130,8 +152,8 @@ SIMDPP_INL int16x16 i_to_int16(const int8x16& a)
     return combine(lo, hi);
 #elif SIMDPP_USE_ALTIVEC
     int16x16 r;
-    r.vec(0) = vec_unpackh(a.vec(0).native());
-    r.vec(1) = vec_unpackl(a.vec(0).native());
+    r.vec<0>() = vec_unpackh(a.vec<0>().native());
+    r.vec<1>() = vec_unpackl(a.vec<0>().native());
     return r;
 #endif
 }
@@ -164,10 +186,34 @@ SIMDPP_INL int16<64> i_to_int16(const int8<64>& a)
 }
 #endif
 
+
+template<unsigned I, unsigned End, unsigned M, unsigned N>
+struct int8_to_int16_converter {
+    static SIMDPP_INL void convert(int16<N>& dst, const int8<N>& src)
+    {
+        int16<M> sr;
+        sr = i_to_int16(src.template vec<I>());
+        dst.template vec<I*2>() = sr.template vec<0>();
+        dst.template vec<I*2+1>() = sr.template vec<1>();
+        int8_to_int16_converter<I + 1, End, M, N>::convert(dst, src);
+    }
+};
+
+template<unsigned End, unsigned M, unsigned N>
+struct int8_to_int16_converter<End, End, M, N> {
+    static SIMDPP_INL void convert(int16<N>& dst, const int8<N>& src)
+    {
+        (void) dst;
+        (void) src;
+    }
+};
+
 template<unsigned N> SIMDPP_INL
 int16<N> i_to_int16(const int8<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL_CONV_INSERT(int16<N>, i_to_int16, a)
+    int16<N> r;
+    int8_to_int16_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    return r;
 }
 
 

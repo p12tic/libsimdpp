@@ -72,7 +72,7 @@ SIMDPP_INL uint8_t i_reduce_or(const uint8<N>& a)
     }
     return r;
 #else
-    uint8v r = a.vec(0);
+    uint8v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = bit_or(r, a.vec(j));
     }
@@ -130,7 +130,7 @@ SIMDPP_INL uint16_t i_reduce_or(const uint16<N>& a)
     }
     return r;
 #else
-    uint16v r = a.vec(0);
+    uint16v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = bit_or(r, a.vec(j));
     }
@@ -188,7 +188,7 @@ SIMDPP_INL uint32_t i_reduce_or(const uint32<N>& a)
     }
     return r;
 #else
-    uint32v r = a.vec(0);
+    uint32v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = bit_or(r, a.vec(j));
     }
@@ -244,7 +244,7 @@ SIMDPP_INL uint64_t i_reduce_or(const uint64<N>& a)
     }
     return r;
 #else
-    uint64v r = a.vec(0);
+    uint64v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = bit_or(r, a.vec(j));
     }

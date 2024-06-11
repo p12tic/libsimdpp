@@ -71,7 +71,7 @@ uint32_t i_reduce_mul(const uint16x8& a)
     return b[0] * b[1] * b[2] * b[3];
 #elif SIMDPP_USE_MSA
     uint32<8> a32 = to_uint32(a);
-    uint32<4> r = mul_lo(a32.vec(0), a32.vec(1));
+    uint32<4> r = mul_lo(a32.vec<0>(), a32.vec<1>());
     r = mul_lo(r, move4_l<2>(r));
     r = mul_lo(r, move4_l<1>(r));
     return extract<0>(r);
@@ -184,7 +184,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
     prod = mul_lo(prod, move4_l<1>(prod));
     return extract<0>(prod);
 #elif SIMDPP_USE_ALTIVEC
-    uint32_t r = i_reduce_mul(a.vec(0));
+    uint32_t r = i_reduce_mul(a.vec<0>());
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r *= i_reduce_mul(a.vec(j));
     }
@@ -193,7 +193,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
     uint32x4 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         uint32<8> a32 = to_uint32(a.vec(j));
-        prod = mul_lo(prod, mul_lo(a32.vec(0), a32.vec(1)));
+        prod = mul_lo(prod, mul_lo(a32.vec<0>(), a32.vec<1>()));
     }
     prod = mul_lo(prod, move4_l<2>(prod));
     prod = mul_lo(prod, move4_l<1>(prod));
@@ -236,7 +236,7 @@ int32_t i_reduce_mul(const int16x8& a)
     return b[0] * b[1] * b[2] * b[3];
 #elif SIMDPP_USE_MSA
     int32<8> a32 = to_int32(a);
-    int32<4> r = mul_lo(a32.vec(0), a32.vec(1));
+    int32<4> r = mul_lo(a32.vec<0>(), a32.vec<1>());
     r = mul_lo(r, move4_l<2>(r));
     r = mul_lo(r, move4_l<1>(r));
     return extract<0>(r);
@@ -349,7 +349,7 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
     prod = mul_lo(prod, move4_l<1>(prod));
     return extract<0>(prod);
 #elif SIMDPP_USE_ALTIVEC
-    int32_t r = i_reduce_mul(a.vec(0));
+    int32_t r = i_reduce_mul(a.vec<0>());
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r *= i_reduce_mul(a.vec(j));
     }
@@ -358,7 +358,7 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
     int32x4 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         int32<8> a32 = to_int32(a.vec(j));
-        prod = mul_lo(prod, mul_lo(a32.vec(0), a32.vec(1)));
+        prod = mul_lo(prod, mul_lo(a32.vec<0>(), a32.vec<1>()));
     }
     prod = mul_lo(prod, move4_l<2>(prod));
     prod = mul_lo(prod, move4_l<1>(prod));
@@ -452,7 +452,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32<N>& a)
     prod = mul_lo(prod, move4_l<1>(prod));
     return extract<0>(prod);
 #elif SIMDPP_USE_ALTIVEC
-    uint32_t r = i_reduce_mul(a.vec(0));
+    uint32_t r = i_reduce_mul(a.vec<0>());
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r *= i_reduce_mul(a.vec(j));
     }

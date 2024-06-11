@@ -80,7 +80,7 @@ float i_reduce_add(const float32<16>& a)
 template<unsigned N>
 SIMDPP_INL float i_reduce_add(const float32<N>& a)
 {
-    float32v r = a.vec(0);
+    float32v r = a.template vec<0>();
     for (unsigned i = 1; i < a.vec_length; ++i)
         r = add(r, a.vec(i));
     return i_reduce_add(r);
@@ -134,7 +134,7 @@ double i_reduce_add(const float64<8>& a)
 template<unsigned N>
 SIMDPP_INL double i_reduce_add(const float64<N>& a)
 {
-    float64v r = a.vec(0);
+    float64v r = a.template vec<0>();
     for (unsigned i = 1; i < a.vec_length; ++i)
         r = add(r, a.vec(i));
     return i_reduce_add(r);
