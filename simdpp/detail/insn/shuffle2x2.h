@@ -133,7 +133,7 @@ float32<16> i_shuffle2x2(const float32<16>& a, const float32<16>& b)
 template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 float32<N> i_shuffle2x2(const float32<N>& a, const float32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, (i_shuffle2x2<s0,s1>), a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, float32<N>, (i_shuffle2x2<s0,s1>), a, b);
 }
 
 // float64
@@ -244,7 +244,7 @@ float64<8> i_shuffle2x2(const float64<8>& a, const float64<8>& b)
 template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 float64<N> i_shuffle2x2(const float64<N>& a, const float64<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, (i_shuffle2x2<s0,s1>), a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, float64<N>, (i_shuffle2x2<s0,s1>), a, b);
 }
 
 // int32
@@ -363,7 +363,7 @@ uint32<16> i_shuffle2x2(const uint32<16>& a, const uint32<16>& b)
 template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 uint32<N> i_shuffle2x2(const uint32<N>& a, const uint32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, (i_shuffle2x2<s0,s1>), a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, uint32<N>, (i_shuffle2x2<s0,s1>), a, b);
 }
 
 // int64
@@ -516,7 +516,7 @@ uint64<8> i_shuffle2x2(const uint64<8>& a, const uint64<8>& b)
 template<unsigned s0, unsigned s1, unsigned N> SIMDPP_INL
 uint64<N> i_shuffle2x2(const uint64<N>& a, const uint64<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, (i_shuffle2x2<s0,s1>), a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, uint64<N>, (i_shuffle2x2<s0,s1>), a, b);
 }
 
 

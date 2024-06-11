@@ -65,7 +65,7 @@ SIMDPP_INL int8<64> i_min(const int8<64>& a, const int8<64>& b)
 template<unsigned N> SIMDPP_INL
 int8<N> i_min(const int8<N>& a, const int8<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(int8<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(int8<N>, int8<N>, i_min, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ SIMDPP_INL uint8<64> i_min(const uint8<64>& a, const uint8<64>& b)
 template<unsigned N> SIMDPP_INL
 uint8<N> i_min(const uint8<N>& a, const uint8<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, uint8<N>, i_min, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +143,7 @@ SIMDPP_INL int16<32> i_min(const int16<32>& a, const int16<32>& b)
 template<unsigned N> SIMDPP_INL
 int16<N> i_min(const int16<N>& a, const int16<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(int16<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(int16<N>, int16<N>, i_min, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ SIMDPP_INL uint16<32> i_min(const uint16<32>& a, const uint16<32>& b)
 template<unsigned N> SIMDPP_INL
 uint16<N> i_min(const uint16<N>& a, const uint16<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, uint16<N>, i_min, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ int32<16> i_min(const int32<16>& a, const int32<16>& b)
 template<unsigned N> SIMDPP_INL
 int32<N> i_min(const int32<N>& a, const int32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(int32<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(int32<N>, int32<N>, i_min, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ uint32<16> i_min(const uint32<16>& a, const uint32<16>& b)
 template<unsigned N> SIMDPP_INL
 uint32<N> i_min(const uint32<N>& a, const uint32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, uint32<N>, i_min, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -321,7 +321,7 @@ int64<8> i_min(const int64<8>& a, const int64<8>& b)
 template<unsigned N> SIMDPP_INL
 int64<N> i_min(const int64<N>& a, const int64<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(int64<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(int64<N>, int64<N>, i_min, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +369,7 @@ uint64<8> i_min(const uint64<8>& a, const uint64<8>& b)
 template<unsigned N> SIMDPP_INL
 uint64<N> i_min(const uint64<N>& a, const uint64<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, i_min, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, uint64<N>, i_min, a, b);
 }
 
 } // namespace insn

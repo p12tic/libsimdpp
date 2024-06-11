@@ -97,7 +97,7 @@ float64<8> i_fmul(const float64<8>& a, const float64<8>& b)
 template<class V> SIMDPP_INL
 V i_fmul(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_fmul, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_fmul, a, b)
 }
 
 } // namespace insn

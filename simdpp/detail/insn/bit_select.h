@@ -697,7 +697,7 @@ static SIMDPP_INL
 template<class V1, class V2, class V3> SIMDPP_INL
     V1 i_bit_select(const V1& on, const V2& off, const V3& mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(V1, i_bit_select, on, off, mask)
+    SIMDPP_VEC_ARRAY_IMPL3(V1, V1, i_bit_select, on, off, mask)
 }
 
 

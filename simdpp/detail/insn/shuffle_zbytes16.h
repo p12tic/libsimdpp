@@ -112,7 +112,7 @@ SIMDPP_INL uint8<64> i_shuffle_zbytes16(const uint8<64>& a, const uint8<64>& b, 
 template<unsigned N> SIMDPP_INL
 uint8<N> i_shuffle_zbytes16(const uint8<N>& a, const uint8<N>& b, const uint8<N>& mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, i_shuffle_zbytes16, a, b, mask);
+    SIMDPP_VEC_ARRAY_IMPL3(uint8<N>, uint8<N>, i_shuffle_zbytes16, a, b, mask);
 }
 
 template<unsigned N> SIMDPP_INL

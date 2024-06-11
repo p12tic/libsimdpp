@@ -104,7 +104,7 @@ uint8x32 transpose_inplace(const uint8x32& a)
                              2, 6, 10,14, 3, 7, 11,15);
     return permute_bytes16(a, idx);
 #elif SIMDPP_USE_SSSE3 || SIMDPP_USE_ALTIVEC
-    SIMDPP_VEC_ARRAY_IMPL1(uint8x32, transpose_inplace, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint8x32, uint8x32, transpose_inplace, a);
 #else
     return SIMDPP_NOT_IMPLEMENTED1(a);
 #endif
@@ -171,7 +171,7 @@ SIMDPP_INL void i_transpose2(uint16<32>& a0, uint16<32>& a1)
 template<unsigned N> SIMDPP_INL
 void i_transpose2(uint16<N>& a0, uint16<N>& a1)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF2(uint16<N>, i_transpose2, a0, a1);
+    SIMDPP_VEC_ARRAY_IMPL_REF2(uint16<N>, uint16<N>, i_transpose2, a0, a1);
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +228,7 @@ void i_transpose2(uint32<16>& a0, uint32<16>& a1)
 template<unsigned N> SIMDPP_INL
 void i_transpose2(uint32<N>& a0, uint32<N>& a1)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF2(uint32<N>, i_transpose2, a0, a1);
+    SIMDPP_VEC_ARRAY_IMPL_REF2(uint32<N>, uint32<N>, i_transpose2, a0, a1);
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ void i_transpose2(uint64<8>& a0, uint64<8>& a1)
 template<unsigned N> SIMDPP_INL
 void i_transpose2(uint64<N>& a0, uint64<N>& a1)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF2(uint64<N>, i_transpose2, a0, a1);
+    SIMDPP_VEC_ARRAY_IMPL_REF2(uint64<N>, uint64<N>, i_transpose2, a0, a1);
 }
 
 // -----------------------------------------------------------------------------
@@ -330,7 +330,7 @@ void i_transpose2(float32<16>& a0, float32<16>& a1)
 template<unsigned N> SIMDPP_INL
 void i_transpose2(float32<N>& a0, float32<N>& a1)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF2(float32<N>, i_transpose2, a0, a1);
+    SIMDPP_VEC_ARRAY_IMPL_REF2(float32<N>, float32<N>, i_transpose2, a0, a1);
 }
 
 // -----------------------------------------------------------------------------
@@ -378,7 +378,7 @@ void i_transpose2(float64<8>& a0, float64<8>& a1)
 template<unsigned N> SIMDPP_INL
 void i_transpose2(float64<N>& a0, float64<N>& a1)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF2(float64<N>, i_transpose2, a0, a1);
+    SIMDPP_VEC_ARRAY_IMPL_REF2(float64<N>, float64<N>, i_transpose2, a0, a1);
 }
 
 // -----------------------------------------------------------------------------
@@ -438,7 +438,7 @@ void i_transpose4(uint8<64>& a0, uint8<64>& a1,
 template<unsigned N> SIMDPP_INL
 void i_transpose4(uint8<N>& a0, uint8<N>& a1, uint8<N>& a2, uint8<N>& a3)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF4(uint8<N>, i_transpose4, a0, a1, a2, a3);
+    SIMDPP_VEC_ARRAY_IMPL_REF4(uint8<N>, uint8<N>, i_transpose4, a0, a1, a2, a3);
 }
 
 // -----------------------------------------------------------------------------
@@ -482,7 +482,7 @@ SIMDPP_INL void i_transpose4(uint16<32>& a0, uint16<32>& a1,
 template<unsigned N> SIMDPP_INL
 void i_transpose4(uint16<N>& a0, uint16<N>& a1, uint16<N>& a2, uint16<N>& a3)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF4(uint16<N>, i_transpose4, a0, a1, a2, a3);
+    SIMDPP_VEC_ARRAY_IMPL_REF4(uint16<N>, uint16<N>, i_transpose4, a0, a1, a2, a3);
 }
 
 // -----------------------------------------------------------------------------
@@ -527,7 +527,7 @@ void i_transpose4(uint32<16>& a0, uint32<16>& a1,
 template<unsigned N> SIMDPP_INL
 void i_transpose4(uint32<N>& a0, uint32<N>& a1, uint32<N>& a2, uint32<N>& a3)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF4(uint32<N>, i_transpose4, a0, a1, a2, a3);
+    SIMDPP_VEC_ARRAY_IMPL_REF4(uint32<N>, uint32<N>, i_transpose4, a0, a1, a2, a3);
 }
 
 // -----------------------------------------------------------------------------
@@ -567,7 +567,7 @@ void i_transpose4(float32<16>& a0, float32<16>& a1,
 template<unsigned N> SIMDPP_INL
 void i_transpose4(float32<N>& a0, float32<N>& a1, float32<N>& a2, float32<N>& a3)
 {
-    SIMDPP_VEC_ARRAY_IMPL_REF4(float32<N>, i_transpose4, a0, a1, a2, a3);
+    SIMDPP_VEC_ARRAY_IMPL_REF4(float32<N>, float32<N>, i_transpose4, a0, a1, a2, a3);
 }
 
 // -----------------------------------------------------------------------------

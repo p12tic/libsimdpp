@@ -67,7 +67,7 @@ float32<16> i_sqrt(const float32<16>& a)
 template<unsigned N> SIMDPP_INL
 float32<N> i_sqrt(const float32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_sqrt, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, float32<N>, i_sqrt, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ float64<8> i_sqrt(const float64<8>& a)
 template<unsigned N> SIMDPP_INL
 float64<N> i_sqrt(const float64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_sqrt, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, float64<N>, i_sqrt, a);
 }
 
 

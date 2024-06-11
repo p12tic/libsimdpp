@@ -160,7 +160,7 @@ float64<8> i_ceil(const float64<8>& a)
 template<class V> SIMDPP_INL
 V i_ceil(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_ceil, a);
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_ceil, a);
 }
 
 } // namespace insn

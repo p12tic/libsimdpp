@@ -79,7 +79,7 @@ SIMDPP_INL uint8<64> i_permute_zbytes16(const uint8<64>& a, const uint8<64>& mas
 template<unsigned N> SIMDPP_INL
 uint8<N> i_permute_zbytes16(const uint8<N>& a, const uint8<N>& mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_permute_zbytes16, a, mask);
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, uint8<N>, i_permute_zbytes16, a, mask);
 }
 template<unsigned N> SIMDPP_INL
 uint16<N> i_permute_zbytes16(const uint16<N>& a, const uint16<N>& mask)

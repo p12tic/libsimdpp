@@ -116,7 +116,7 @@ float64<8> i_fmadd(const float64<8>& a, const float64<8>& b,
 template<class V> SIMDPP_INL
 V i_fmadd(const V& a, const V& b, const V& c)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(V, i_fmadd, a, b, c);
+    SIMDPP_VEC_ARRAY_IMPL3(V, V, i_fmadd, a, b, c);
 }
 
 } // namespace insn

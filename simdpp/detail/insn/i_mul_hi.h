@@ -116,7 +116,7 @@ uint16<32> i_mul_hi(const uint16<32>& a, const uint16<32>& b)
 template<class V> SIMDPP_INL
 V i_mul_hi(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_mul_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_mul_hi, a, b)
 }
 
 } // namespace insn

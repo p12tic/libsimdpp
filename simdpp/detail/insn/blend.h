@@ -666,7 +666,7 @@ mask_float64<8> i_blend(const mask_float64<8>& on, const mask_float64<8>& off, c
 template<class V1, class V2, class V3> SIMDPP_INL
 V1 i_blend(const V1& on, const V2& off, const V3& mask)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(V1, i_blend, on, off, mask)
+    SIMDPP_VEC_ARRAY_IMPL3(V1, V1, i_blend, on, off, mask)
 }
 
 

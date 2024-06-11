@@ -86,38 +86,38 @@ struct vec_array_impl<End, End> {
     static SIMDPP_INL void apply4_ref(V1&, V2&, V3&, V4&, Op&&) {}
 };
 
-#define SIMDPP_VEC_ARRAY_IMPL1(RTYPE, OP, V1)                                           \
+#define SIMDPP_VEC_ARRAY_IMPL1(RTYPE, VTYPE, OP, V1)                                    \
     RTYPE r;                                                                            \
-    detail::vec_array_impl<0, V1.vec_length>::apply1(                                   \
+    detail::vec_array_impl<0, VTYPE::vec_length>::apply1(                               \
         r, V1, [](const auto& v) { return OP(v); });                                    \
     return r;
 
-#define SIMDPP_VEC_ARRAY_IMPL2(RTYPE, OP, V1, V2)                                       \
+#define SIMDPP_VEC_ARRAY_IMPL2(RTYPE, VTYPE, OP, V1, V2)                                \
     RTYPE r;                                                                            \
-    detail::vec_array_impl<0, V1.vec_length>::apply2(                                   \
+    detail::vec_array_impl<0, VTYPE::vec_length>::apply2(                               \
         r, V1, V2, [](const auto& v1, const auto& v2) { return OP(v1, v2); });          \
     return r;
 
 
-#define SIMDPP_VEC_ARRAY_IMPL2S(RTYPE, OP, V1, S2)                                      \
+#define SIMDPP_VEC_ARRAY_IMPL2S(RTYPE, VTYPE, OP, V1, S2)                               \
     RTYPE r;                                                                            \
-    detail::vec_array_impl<0, V1.vec_length>::apply2_scalar(                            \
+    detail::vec_array_impl<0, VTYPE::vec_length>::apply2_scalar(                        \
         r, V1, S2, [](const auto& v1, const auto& v2) { return OP(v1, v2); });          \
     return r;
 
-#define SIMDPP_VEC_ARRAY_IMPL3(RTYPE, OP, V1, V2, V3)                                   \
+#define SIMDPP_VEC_ARRAY_IMPL3(RTYPE, VTYPE, OP, V1, V2, V3)                            \
     RTYPE r;                                                                            \
-    detail::vec_array_impl<0, V1.vec_length>::apply3(                                   \
+    detail::vec_array_impl<0, VTYPE::vec_length>::apply3(                               \
         r, V1, V2, V3, [](const auto& v1, const auto& v2, const auto& v3)               \
                        { return OP(v1, v2, v3); });                                     \
     return r;
 
-#define SIMDPP_VEC_ARRAY_IMPL_REF2(RTYPE, OP, V1, V2)                                   \
-    detail::vec_array_impl<0, V1.vec_length>::apply2_ref(                               \
+#define SIMDPP_VEC_ARRAY_IMPL_REF2(RTYPE, VTYPE, OP, V1, V2)                            \
+    detail::vec_array_impl<0, VTYPE::vec_length>::apply2_ref(                           \
         V1, V2, [](auto& v1, auto& v2) { OP(v1, v2); });
 
-#define SIMDPP_VEC_ARRAY_IMPL_REF4(RTYPE, OP, V1, V2, V3, V4)                           \
-    detail::vec_array_impl<0, V1.vec_length>::apply4_ref(                               \
+#define SIMDPP_VEC_ARRAY_IMPL_REF4(RTYPE, VTYPE, OP, V1, V2, V3, V4)                    \
+    detail::vec_array_impl<0, VTYPE::vec_length>::apply4_ref(                           \
         V1, V2, V3, V4, [](auto& v1, auto& v2, auto& v3, auto& v4) { OP(v1, v2, v3, v4); });
 
 } // namespace detail

@@ -75,7 +75,7 @@ SIMDPP_INL uint8<64> i_unzip16_hi(const uint8<64>& ca, const uint8<64>& cb)
 template<unsigned N> SIMDPP_INL
 uint8<N> i_unzip16_hi(const uint8<N>& a, const uint8<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_unzip16_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, uint8<N>, i_unzip16_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +131,7 @@ SIMDPP_INL uint16<32> i_unzip8_hi(const uint16<32>& ca, const uint16<32>& cb)
 template<unsigned N> SIMDPP_INL
 uint16<N> i_unzip8_hi(const uint16<N>& a, const uint16<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_unzip8_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, uint16<N>, i_unzip8_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ uint32<16> i_unzip4_hi(const uint32<16>& a, const uint32<16>& b)
 template<unsigned N> SIMDPP_INL
 uint32<N> i_unzip4_hi(const uint32<N>& a, const uint32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_unzip4_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, uint32<N>, i_unzip4_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ float32<16> i_unzip4_hi(const float32<16>& a, const float32<16>& b)
 template<unsigned N> SIMDPP_INL
 float32<N> i_unzip4_hi(const float32<N>& a, const float32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_unzip4_hi, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, float32<N>, i_unzip4_hi, a, b)
 }
 
 // -----------------------------------------------------------------------------

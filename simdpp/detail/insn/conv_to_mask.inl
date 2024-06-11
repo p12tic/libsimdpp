@@ -231,7 +231,7 @@ mask_float64<8> i_to_mask(const float64<8>& a)
 template<class V> SIMDPP_INL
 typename V::mask_vector_type i_to_mask(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(typename V::mask_vector_type, i_to_mask, a)
+    SIMDPP_VEC_ARRAY_IMPL1(typename V::mask_vector_type, V, i_to_mask, a)
 }
 
 } // namespace insn

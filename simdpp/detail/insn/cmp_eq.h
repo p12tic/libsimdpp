@@ -405,7 +405,7 @@ mask_float64<8> i_cmp_eq(const mask_float64<8>& a, const mask_float64<8>& b)
 template<class V> SIMDPP_INL
 typename V::mask_vector_type i_cmp_eq(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, i_cmp_eq, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, V, i_cmp_eq, a, b);
 }
 
 } // namespace insn

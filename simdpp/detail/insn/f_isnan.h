@@ -105,7 +105,7 @@ mask_float64<8> i_isnan(const float64<8>& a)
 template<class V> SIMDPP_INL
 typename V::mask_vector_type i_isnan(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(typename V::mask_vector_type, i_isnan, a);
+    SIMDPP_VEC_ARRAY_IMPL1(typename V::mask_vector_type, V, i_isnan, a);
 }
 
 } // namespace insn

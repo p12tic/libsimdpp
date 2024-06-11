@@ -143,7 +143,7 @@ uint64<8> i_ineg(const int64<8>& a)
 template<class V> SIMDPP_INL
 V i_ineg(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_ineg, a)
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_ineg, a)
 }
 
 } // namespace insn

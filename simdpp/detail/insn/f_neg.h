@@ -88,7 +88,7 @@ float64<8> i_fneg(const float64<8>& a)
 template<class V> SIMDPP_INL
 V i_fneg(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_fneg, a)
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_fneg, a)
 }
 
 } // namespace insn

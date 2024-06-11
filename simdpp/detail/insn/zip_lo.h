@@ -58,7 +58,7 @@ SIMDPP_INL uint8<64> i_zip16_lo(const uint8<64>& a, const uint8<64>& b)
 template<unsigned N> SIMDPP_INL
 uint8<N> i_zip16_lo(const uint8<N>& a, const uint8<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_zip16_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, uint8<N>, i_zip16_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ SIMDPP_INL uint16<32> i_zip8_lo(const uint16<32>& a, const uint16<32>& b)
 template<unsigned N> SIMDPP_INL
 uint16<N> i_zip8_lo(const uint16<N>& a, const uint16<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_zip8_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, uint16<N>, i_zip8_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ uint32<16> i_zip4_lo(const uint32<16>& a, const uint32<16>& b)
 template<unsigned N> SIMDPP_INL
 uint32<N> i_zip4_lo(const uint32<N>& a, const uint32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_zip4_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, uint32<N>, i_zip4_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +177,7 @@ uint64<8> i_zip2_lo(const uint64<8>& a, const uint64<8>& b)
 template<unsigned N> SIMDPP_INL
 uint64<N> i_zip2_lo(const uint64<N>& a, const uint64<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, i_zip2_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, uint64<N>, i_zip2_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ float32<16> i_zip4_lo(const float32<16>& a, const float32<16>& b)
 template<unsigned N> SIMDPP_INL
 float32<N> i_zip4_lo(const float32<N>& a, const float32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_zip4_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, float32<N>, i_zip4_lo, a, b)
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ float64<8> i_zip2_lo(const float64<8>& a, const float64<8>& b)
 template<unsigned N> SIMDPP_INL
 float64<N> i_zip2_lo(const float64<N>& a, const float64<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, i_zip2_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, float64<N>, i_zip2_lo, a, b)
 }
 
 

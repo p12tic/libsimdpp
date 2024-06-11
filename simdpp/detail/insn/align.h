@@ -83,7 +83,7 @@ uint8<64> i_align16(const uint8<64>& lower, const uint8<64>& upper)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_align16(const uint8<N>& lower, const uint8<N>& upper)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, i_align16<shift>, lower, upper);
+    SIMDPP_VEC_ARRAY_IMPL2(uint8<N>, uint8<N>, i_align16<shift>, lower, upper);
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ uint16<32> i_align8(const uint16<32>& lower, const uint16<32>& upper)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint16<N> i_align8(const uint16<N>& lower, const uint16<N>& upper)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, i_align8<shift>, lower, upper);
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, uint16<N>, i_align8<shift>, lower, upper);
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ uint32<16> i_align4(const uint32<16>& lower, const uint32<16>& upper)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint32<N> i_align4(const uint32<N>& lower, const uint32<N>& upper)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, i_align4<shift>, lower, upper);
+    SIMDPP_VEC_ARRAY_IMPL2(uint32<N>, uint32<N>, i_align4<shift>, lower, upper);
 }
 
 // -----------------------------------------------------------------------------
@@ -269,7 +269,7 @@ uint64<8> i_align2(const uint64<8>& lower, const uint64<8>& upper)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint64<N> i_align2(const uint64<N>& lower, const uint64<N>& upper)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, i_align2<shift>, lower, upper);
+    SIMDPP_VEC_ARRAY_IMPL2(uint64<N>, uint64<N>, i_align2<shift>, lower, upper);
 }
 
 // -----------------------------------------------------------------------------
@@ -365,7 +365,7 @@ float32<16> i_align4(const float32<16>& lower, const float32<16>& upper)
 template<unsigned shift, unsigned N> SIMDPP_INL
 float32<N> i_align4(const float32<N>& lower, const float32<N>& upper)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_align4<shift>, lower, upper);
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, float32<N>, i_align4<shift>, lower, upper);
 }
 
 // -----------------------------------------------------------------------------
@@ -439,7 +439,7 @@ float64<8> i_align2(const float64<8>& lower, const float64<8>& upper)
 template<unsigned shift, unsigned N> SIMDPP_INL
 float64<N> i_align2(const float64<N>& lower, const float64<N>& upper)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, i_align2<shift>, lower, upper);
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, float64<N>, i_align2<shift>, lower, upper);
 }
 
 } // namespace insn
