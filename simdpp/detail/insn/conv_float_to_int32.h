@@ -105,7 +105,7 @@ template<unsigned N> SIMDPP_INL
 int32<N> i_to_int32(const float32<N>& a)
 {
     int32<N> r;
-    float32_to_int32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    float32_to_int32_converter<0, float32<N>::vec_length, float32<N>::base_length, N>::convert(r, a);
     return r;
 }
 
@@ -204,7 +204,7 @@ template<unsigned N> SIMDPP_INL
 uint32<N> i_to_uint32(const float32<N>& a)
 {
     uint32<N> r;
-    float32_to_uint32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    float32_to_uint32_converter<0, float32<N>::vec_length, float32<N>::base_length, N>::convert(r, a);
     return r;
 }
 
