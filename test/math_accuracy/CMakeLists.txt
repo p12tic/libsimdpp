@@ -10,6 +10,7 @@ set(SOURCES
 
 set(ARCH_SOURCES
     checks.cc
+    log_approx.cc
 )
 
 set(ARCH_GEN_SOURCES "")

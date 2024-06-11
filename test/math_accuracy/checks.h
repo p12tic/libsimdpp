@@ -14,6 +14,8 @@
 namespace SIMDPP_ARCH_NAMESPACE {
 
 void main_check_accuracy(const std::string& check_name);
+void check_log2_approx_accuracy();
+void check_log2_approx_positive_finite_accuracy();
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 

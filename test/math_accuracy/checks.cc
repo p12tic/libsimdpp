@@ -11,6 +11,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
 
 void main_check_accuracy(const std::string& check_name)
 {
+    if (check_name == "" || check_name == "log2_approx") {
+        check_log2_approx_accuracy();
+        check_log2_approx_positive_finite_accuracy();
+    }
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
