@@ -76,7 +76,7 @@ SIMDPP_INL uint8_t i_reduce_min(const uint8<N>& a)
     }
     return r;
 #else
-    uint8v r = a.vec(0);
+    uint8v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }
@@ -142,14 +142,14 @@ SIMDPP_INL int8_t i_reduce_min(const int8<N>& a)
     return r;
 #elif SIMDPP_USE_SSE2 && !SIMDPP_USE_SSE4_1
     // no instruction for int8 min available, only for uint8
-    uint8x16 r = bit_xor(a.vec(0), 0x80);
+    uint8x16 r = bit_xor(a.template vec<0>(), 0x80);
     for (unsigned j = 1; j < a.vec_length; ++j) {
         uint8x16 ca = bit_xor(a.vec(j), 0x80);
         r = min(r, ca);
     }
     return i_reduce_min(r) ^ 0x80;
 #else
-    int8v r = a.vec(0);
+    int8v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }
@@ -216,14 +216,14 @@ SIMDPP_INL uint16_t i_reduce_min(const uint16<N>& a)
     return r;
 #elif SIMDPP_USE_SSE2 && !SIMDPP_USE_SSE4_1
     // no instruction for uint16 min available, only for int16
-    int16x8 r = bit_xor(a.vec(0), 0x8000);
+    int16x8 r = bit_xor(a.template vec<0>(), 0x8000);
     for (unsigned j = 1; j < a.vec_length; ++j) {
         int16x8 ca = bit_xor(a.vec(j), 0x8000);
         r = min(r, ca);
     }
     return i_reduce_min(r) ^ 0x8000;
 #else
-    uint16v r = a.vec(0);
+    uint16v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }
@@ -283,7 +283,7 @@ SIMDPP_INL int16_t i_reduce_min(const int16<N>& a)
     }
     return r;
 #else
-    int16v r = a.vec(0);
+    int16v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }
@@ -350,7 +350,7 @@ SIMDPP_INL uint32_t i_reduce_min(const uint32<N>& a)
     }
     return r;
 #else
-    uint32v r = a.vec(0);
+    uint32v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }
@@ -410,7 +410,7 @@ SIMDPP_INL int32_t i_reduce_min(const int32<N>& a)
     }
     return r;
 #else
-    int32v r = a.vec(0);
+    int32v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }
@@ -463,7 +463,7 @@ template<unsigned N>
 SIMDPP_INL uint64_t i_reduce_min(const uint64<N>& a)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_207 || SIMDPP_USE_MSA
-    uint64v r = a.vec(0);
+    uint64v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }
@@ -535,7 +535,7 @@ template<unsigned N>
 SIMDPP_INL int64_t i_reduce_min(const int64<N>& a)
 {
 #if SIMDPP_USE_AVX2 || SIMDPP_USE_NEON64 || SIMDPP_USE_VSX_206 || SIMDPP_USE_MSA
-    int64v r = a.vec(0);
+    int64v r = a.template vec<0>();
     for (unsigned j = 1; j < a.vec_length; ++j) {
         r = min(r, a.vec(j));
     }

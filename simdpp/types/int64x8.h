@@ -74,6 +74,8 @@ public:
     /// Access base vectors
     SIMDPP_INL const int64<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL int64<8>& vec(unsigned)       { return *this; }
+    template<unsigned N> SIMDPP_INL const int64<8>& vec() const { return *this; }
+    template<unsigned N> SIMDPP_INL int64<8>& vec() { return *this; }
 
 private:
     native_type d_;
@@ -130,6 +132,8 @@ public:
     /// Access base vectors
     SIMDPP_INL const uint64<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint64<8>& vec(unsigned)       { return *this; }
+    template<unsigned N> SIMDPP_INL const uint64<8>& vec() const { return *this; }
+    template<unsigned N> SIMDPP_INL uint64<8>& vec() { return *this; }
 
 private:
     native_type d_;
@@ -178,6 +182,8 @@ public:
 
     SIMDPP_INL const mask_int64<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int64<8>& vec(unsigned)       { return *this; }
+    template<unsigned N> SIMDPP_INL const mask_int64<8>& vec() const { return *this; }
+    template<unsigned N> SIMDPP_INL mask_int64<8>& vec() { return *this; }
 
 private:
     native_type d_;

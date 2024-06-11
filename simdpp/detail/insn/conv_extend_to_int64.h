@@ -31,10 +31,10 @@ uint64<4> i_to_uint64(const uint32<4>& a)
 {
 #if SIMDPP_USE_NULL
     uint64x4 r;
-    r.vec(0).el(0) = uint64_t(a.el(0));
-    r.vec(0).el(1) = uint64_t(a.el(1));
-    r.vec(1).el(0) = uint64_t(a.el(2));
-    r.vec(1).el(1) = uint64_t(a.el(3));
+    r.vec<0>().el(0) = uint64_t(a.el(0));
+    r.vec<0>().el(1) = uint64_t(a.el(1));
+    r.vec<1>().el(0) = uint64_t(a.el(2));
+    r.vec<1>().el(1) = uint64_t(a.el(3));
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_cvtepu32_epi64(a.native());
@@ -54,10 +54,10 @@ uint64<4> i_to_uint64(const uint32<4>& a)
 #elif SIMDPP_USE_ALTIVEC
     uint64x4 r;
     mem_block<uint32x4> b = a;
-    r.vec(0).el(0) = b[0];
-    r.vec(0).el(1) = b[1];
-    r.vec(1).el(0) = b[2];
-    r.vec(1).el(1) = b[3];
+    r.vec<0>().el(0) = b[0];
+    r.vec<0>().el(1) = b[1];
+    r.vec<1>().el(0) = b[2];
+    r.vec<1>().el(1) = b[3];
     return r;
 #endif
 }
@@ -126,22 +126,22 @@ uint64<8> i_to_uint64(const uint16<8>& a)
 #if SIMDPP_USE_NULL
     uint64<8> r;
     for (unsigned i = 0; i < 8; i++) {
-        r.vec(i/2).el(i%2) = uint64_t(a.vec(0).el(i));
+        r.vec(i/2).el(i%2) = uint64_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX512F
     return _mm512_cvtepu16_epi64(a.native());
 #elif SIMDPP_USE_AVX2
     uint64<8> r;
-    r.vec(0) = _mm256_cvtepu16_epi64(a.native());
-    r.vec(1) = _mm256_cvtepu16_epi64(move8_l<4>(a).native());
+    r.vec<0>() = _mm256_cvtepu16_epi64(a.native());
+    r.vec<1>() = _mm256_cvtepu16_epi64(move8_l<4>(a).native());
     return r;
 #elif SIMDPP_USE_SSE4_1
     uint64<8> r;
-    r.vec(0) = _mm_cvtepu16_epi64(a.native());
-    r.vec(1) = _mm_cvtepu16_epi64(move8_l<2>(a).native());
-    r.vec(2) = _mm_cvtepu16_epi64(move8_l<4>(a).native());
-    r.vec(3) = _mm_cvtepu16_epi64(move8_l<6>(a).native());
+    r.vec<0>() = _mm_cvtepu16_epi64(a.native());
+    r.vec<1>() = _mm_cvtepu16_epi64(move8_l<2>(a).native());
+    r.vec<2>() = _mm_cvtepu16_epi64(move8_l<4>(a).native());
+    r.vec<3>() = _mm_cvtepu16_epi64(move8_l<6>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     return i_to_uint64(i_to_uint32(a));
@@ -163,17 +163,17 @@ uint64<16> i_to_uint64(const uint16<16>& a)
     uint64<16> r;
     uint16<8> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepu16_epi64(a0.native());
-    r.vec(1) = _mm512_cvtepu16_epi64(a1.native());
+    r.vec<0>() = _mm512_cvtepu16_epi64(a0.native());
+    r.vec<1>() = _mm512_cvtepu16_epi64(a1.native());
     return r;
 #else
     uint64<16> r;
     uint16<8> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm256_cvtepu16_epi64(a0.native());
-    r.vec(1) = _mm256_cvtepu16_epi64(move8_l<4>(a0).native());
-    r.vec(2) = _mm256_cvtepu16_epi64(a1.native());
-    r.vec(3) = _mm256_cvtepu16_epi64(move8_l<4>(a1).native());
+    r.vec<0>() = _mm256_cvtepu16_epi64(a0.native());
+    r.vec<1>() = _mm256_cvtepu16_epi64(move8_l<4>(a0).native());
+    r.vec<2>() = _mm256_cvtepu16_epi64(a1.native());
+    r.vec<3>() = _mm256_cvtepu16_epi64(move8_l<4>(a1).native());
     return r;
 #endif
 }
@@ -189,16 +189,16 @@ uint64<32> i_to_uint64(const uint16<32>& a)
 #if SIMDPP_USE_AVX512BW
     split(a, a01, a23);
 #else
-    a01 = a.vec(0);
-    a23 = a.vec(1);
+    a01 = a.vec<0>();
+    a23 = a.vec<1>();
 #endif
     split(a01, a0, a1);
     split(a23, a2, a3);
 
-    r.vec(0) =  _mm512_cvtepu16_epi64(a0.native());
-    r.vec(1) =  _mm512_cvtepu16_epi64(a1.native());
-    r.vec(2) =  _mm512_cvtepu16_epi64(a2.native());
-    r.vec(3) =  _mm512_cvtepu16_epi64(a3.native());
+    r.vec<0>() =  _mm512_cvtepu16_epi64(a0.native());
+    r.vec<1>() =  _mm512_cvtepu16_epi64(a1.native());
+    r.vec<2>() =  _mm512_cvtepu16_epi64(a2.native());
+    r.vec<3>() =  _mm512_cvtepu16_epi64(a3.native());
     return r;
 }
 #endif
@@ -243,31 +243,31 @@ uint64<16> i_to_uint64(const uint8<16>& a)
 #if SIMDPP_USE_NULL
     uint64<16> r;
     for (unsigned i = 0; i < 16; i++) {
-        r.vec(i/2).el(i%2) = uint64_t(a.vec(0).el(i));
+        r.vec(i/2).el(i%2) = uint64_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX512F
     uint64<16> r;
-    r.vec(0) = _mm512_cvtepu8_epi64(a.native());
-    r.vec(1) = _mm512_cvtepu8_epi64(move16_l<8>(a).native());
+    r.vec<0>() = _mm512_cvtepu8_epi64(a.native());
+    r.vec<1>() = _mm512_cvtepu8_epi64(move16_l<8>(a).native());
     return r;
 #elif SIMDPP_USE_AVX2
     uint64<16> r;
-    r.vec(0) = _mm256_cvtepu8_epi64(a.native());
-    r.vec(1) = _mm256_cvtepu8_epi64(move16_l<4>(a).native());
-    r.vec(2) = _mm256_cvtepu8_epi64(move16_l<8>(a).native());
-    r.vec(3) = _mm256_cvtepu8_epi64(move16_l<12>(a).native());
+    r.vec<0>() = _mm256_cvtepu8_epi64(a.native());
+    r.vec<1>() = _mm256_cvtepu8_epi64(move16_l<4>(a).native());
+    r.vec<2>() = _mm256_cvtepu8_epi64(move16_l<8>(a).native());
+    r.vec<3>() = _mm256_cvtepu8_epi64(move16_l<12>(a).native());
     return r;
 #elif SIMDPP_USE_SSE4_1
     uint64<16> r;
-    r.vec(0) = _mm_cvtepu8_epi64(a.native());
-    r.vec(1) = _mm_cvtepu8_epi64(move16_l<2>(a).native());
-    r.vec(2) = _mm_cvtepu8_epi64(move16_l<4>(a).native());
-    r.vec(3) = _mm_cvtepu8_epi64(move16_l<6>(a).native());
-    r.vec(4) = _mm_cvtepu8_epi64(move16_l<8>(a).native());
-    r.vec(5) = _mm_cvtepu8_epi64(move16_l<10>(a).native());
-    r.vec(6) = _mm_cvtepu8_epi64(move16_l<12>(a).native());
-    r.vec(7) = _mm_cvtepu8_epi64(move16_l<14>(a).native());
+    r.vec<0>() = _mm_cvtepu8_epi64(a.native());
+    r.vec<1>() = _mm_cvtepu8_epi64(move16_l<2>(a).native());
+    r.vec<2>() = _mm_cvtepu8_epi64(move16_l<4>(a).native());
+    r.vec<3>() = _mm_cvtepu8_epi64(move16_l<6>(a).native());
+    r.vec<4>() = _mm_cvtepu8_epi64(move16_l<8>(a).native());
+    r.vec<5>() = _mm_cvtepu8_epi64(move16_l<10>(a).native());
+    r.vec<6>() = _mm_cvtepu8_epi64(move16_l<12>(a).native());
+    r.vec<7>() = _mm_cvtepu8_epi64(move16_l<14>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     return i_to_uint64(i_to_uint32(a));
@@ -289,23 +289,23 @@ uint64<32> i_to_uint64(const uint8<32>& a)
     uint64<32> r;
     uint8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepu8_epi64(a0.native());
-    r.vec(1) = _mm512_cvtepu8_epi64(move16_l<8>(a0).native());
-    r.vec(2) = _mm512_cvtepu8_epi64(a1.native());
-    r.vec(3) = _mm512_cvtepu8_epi64(move16_l<8>(a1).native());
+    r.vec<0>() = _mm512_cvtepu8_epi64(a0.native());
+    r.vec<1>() = _mm512_cvtepu8_epi64(move16_l<8>(a0).native());
+    r.vec<2>() = _mm512_cvtepu8_epi64(a1.native());
+    r.vec<3>() = _mm512_cvtepu8_epi64(move16_l<8>(a1).native());
     return r;
 #else
     uint64<32> r;
     uint8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm256_cvtepu8_epi64(a0.native());
-    r.vec(1) = _mm256_cvtepu8_epi64(move16_l<4>(a0).native());
-    r.vec(2) = _mm256_cvtepu8_epi64(move16_l<8>(a0).native());
-    r.vec(3) = _mm256_cvtepu8_epi64(move16_l<12>(a0).native());
-    r.vec(4) = _mm256_cvtepu8_epi64(a1.native());
-    r.vec(5) = _mm256_cvtepu8_epi64(move16_l<4>(a1).native());
-    r.vec(6) = _mm256_cvtepu8_epi64(move16_l<8>(a1).native());
-    r.vec(7) = _mm256_cvtepu8_epi64(move16_l<12>(a1).native());
+    r.vec<0>() = _mm256_cvtepu8_epi64(a0.native());
+    r.vec<1>() = _mm256_cvtepu8_epi64(move16_l<4>(a0).native());
+    r.vec<2>() = _mm256_cvtepu8_epi64(move16_l<8>(a0).native());
+    r.vec<3>() = _mm256_cvtepu8_epi64(move16_l<12>(a0).native());
+    r.vec<4>() = _mm256_cvtepu8_epi64(a1.native());
+    r.vec<5>() = _mm256_cvtepu8_epi64(move16_l<4>(a1).native());
+    r.vec<6>() = _mm256_cvtepu8_epi64(move16_l<8>(a1).native());
+    r.vec<7>() = _mm256_cvtepu8_epi64(move16_l<12>(a1).native());
     return r;
 #endif
 }
@@ -321,20 +321,20 @@ uint64<64> i_to_uint64(const uint8<64>& a)
 #if SIMDPP_USE_AVX512BW
     split(a, a01, a23);
 #else
-    a01 = a.vec(0);
-    a23 = a.vec(1);
+    a01 = a.vec<0>();
+    a23 = a.vec<1>();
 #endif
     split(a01, a0, a1);
     split(a23, a2, a3);
 
-    r.vec(0) =  _mm512_cvtepu8_epi64(a0.native());
-    r.vec(1) =  _mm512_cvtepu8_epi64(move16_l<8>(a0).native());
-    r.vec(2) =  _mm512_cvtepu8_epi64(a1.native());
-    r.vec(3) =  _mm512_cvtepu8_epi64(move16_l<8>(a1).native());
-    r.vec(4) =  _mm512_cvtepu8_epi64(a2.native());
-    r.vec(5) =  _mm512_cvtepu8_epi64(move16_l<8>(a2).native());
-    r.vec(6) =  _mm512_cvtepu8_epi64(a3.native());
-    r.vec(7) =  _mm512_cvtepu8_epi64(move16_l<8>(a3).native());
+    r.vec<0>() =  _mm512_cvtepu8_epi64(a0.native());
+    r.vec<1>() =  _mm512_cvtepu8_epi64(move16_l<8>(a0).native());
+    r.vec<2>() =  _mm512_cvtepu8_epi64(a1.native());
+    r.vec<3>() =  _mm512_cvtepu8_epi64(move16_l<8>(a1).native());
+    r.vec<4>() =  _mm512_cvtepu8_epi64(a2.native());
+    r.vec<5>() =  _mm512_cvtepu8_epi64(move16_l<8>(a2).native());
+    r.vec<6>() =  _mm512_cvtepu8_epi64(a3.native());
+    r.vec<7>() =  _mm512_cvtepu8_epi64(move16_l<8>(a3).native());
     return r;
 }
 #endif
@@ -381,10 +381,10 @@ int64<4> i_to_int64(const int32<4>& a)
 {
 #if SIMDPP_USE_NULL
     int64<4> r;
-    r.vec(0).el(0) = int64_t(a.el(0));
-    r.vec(0).el(1) = int64_t(a.el(1));
-    r.vec(1).el(0) = int64_t(a.el(2));
-    r.vec(1).el(1) = int64_t(a.el(3));
+    r.vec<0>().el(0) = int64_t(a.el(0));
+    r.vec<0>().el(1) = int64_t(a.el(1));
+    r.vec<1>().el(0) = int64_t(a.el(2));
+    r.vec<1>().el(1) = int64_t(a.el(3));
     return r;
 #elif SIMDPP_USE_AVX2
     return _mm256_cvtepi32_epi64(a.native());
@@ -407,10 +407,10 @@ int64<4> i_to_int64(const int32<4>& a)
 #elif SIMDPP_USE_ALTIVEC
     int64x4 r;
     mem_block<int32x4> b = a;
-    r.vec(0).el(0) = b[0];
-    r.vec(0).el(1) = b[1];
-    r.vec(1).el(0) = b[2];
-    r.vec(1).el(1) = b[3];
+    r.vec<0>().el(0) = b[0];
+    r.vec<0>().el(1) = b[1];
+    r.vec<1>().el(0) = b[2];
+    r.vec<1>().el(1) = b[3];
     return r;
 #endif
 }
@@ -478,22 +478,22 @@ int64<8> i_to_int64(const int16<8>& a)
 #if SIMDPP_USE_NULL
     int64<8> r;
     for (unsigned i = 0; i < 8; i++) {
-        r.vec(i/2).el(i%2) = int64_t(a.vec(0).el(i));
+        r.vec(i/2).el(i%2) = int64_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX512F
     return _mm512_cvtepi16_epi64(a.native());
 #elif SIMDPP_USE_AVX2
     int64<8> r;
-    r.vec(0) = _mm256_cvtepi16_epi64(a.native());
-    r.vec(1) = _mm256_cvtepi16_epi64(move8_l<4>(a).native());
+    r.vec<0>() = _mm256_cvtepi16_epi64(a.native());
+    r.vec<1>() = _mm256_cvtepi16_epi64(move8_l<4>(a).native());
     return r;
 #elif SIMDPP_USE_SSE4_1
     int64<8> r;
-    r.vec(0) = _mm_cvtepi16_epi64(a.native());
-    r.vec(1) = _mm_cvtepi16_epi64(move8_l<2>(a).native());
-    r.vec(2) = _mm_cvtepi16_epi64(move8_l<4>(a).native());
-    r.vec(3) = _mm_cvtepi16_epi64(move8_l<6>(a).native());
+    r.vec<0>() = _mm_cvtepi16_epi64(a.native());
+    r.vec<1>() = _mm_cvtepi16_epi64(move8_l<2>(a).native());
+    r.vec<2>() = _mm_cvtepi16_epi64(move8_l<4>(a).native());
+    r.vec<3>() = _mm_cvtepi16_epi64(move8_l<6>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     return i_to_int64(i_to_int32(a));
@@ -515,17 +515,17 @@ int64<16> i_to_int64(const int16<16>& a)
     int64<16> r;
     int16<8> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepi16_epi64(a0.native());
-    r.vec(1) = _mm512_cvtepi16_epi64(a1.native());
+    r.vec<0>() = _mm512_cvtepi16_epi64(a0.native());
+    r.vec<1>() = _mm512_cvtepi16_epi64(a1.native());
     return r;
 #else
     int64<16> r;
     int16<8> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm256_cvtepi16_epi64(a0.native());
-    r.vec(1) = _mm256_cvtepi16_epi64(move8_l<4>(a0).native());
-    r.vec(2) = _mm256_cvtepi16_epi64(a1.native());
-    r.vec(3) = _mm256_cvtepi16_epi64(move8_l<4>(a1).native());
+    r.vec<0>() = _mm256_cvtepi16_epi64(a0.native());
+    r.vec<1>() = _mm256_cvtepi16_epi64(move8_l<4>(a0).native());
+    r.vec<2>() = _mm256_cvtepi16_epi64(a1.native());
+    r.vec<3>() = _mm256_cvtepi16_epi64(move8_l<4>(a1).native());
     return r;
 #endif
 }
@@ -541,16 +541,16 @@ int64<32> i_to_int64(const int16<32>& a)
 #if SIMDPP_USE_AVX512BW
     split(a, a01, a23);
 #else
-    a01 = a.vec(0);
-    a23 = a.vec(1);
+    a01 = a.vec<0>();
+    a23 = a.vec<1>();
 #endif
     split(a01, a0, a1);
     split(a23, a2, a3);
 
-    r.vec(0) =  _mm512_cvtepi16_epi64(a0.native());
-    r.vec(1) =  _mm512_cvtepi16_epi64(a1.native());
-    r.vec(2) =  _mm512_cvtepi16_epi64(a2.native());
-    r.vec(3) =  _mm512_cvtepi16_epi64(a3.native());
+    r.vec<0>() =  _mm512_cvtepi16_epi64(a0.native());
+    r.vec<1>() =  _mm512_cvtepi16_epi64(a1.native());
+    r.vec<2>() =  _mm512_cvtepi16_epi64(a2.native());
+    r.vec<3>() =  _mm512_cvtepi16_epi64(a3.native());
     return r;
 }
 #endif
@@ -594,31 +594,31 @@ int64<16> i_to_int64(const int8<16>& a)
 #if SIMDPP_USE_NULL
     int64<16> r;
     for (unsigned i = 0; i < 16; i++) {
-        r.vec(i/2).el(i%2) = int64_t(a.vec(0).el(i));
+        r.vec(i/2).el(i%2) = int64_t(a.el(i));
     }
     return r;
 #elif SIMDPP_USE_AVX512F
     int64<16> r;
-    r.vec(0) = _mm512_cvtepi8_epi64(a.native());
-    r.vec(1) = _mm512_cvtepi8_epi64(move16_l<8>(a).native());
+    r.vec<0>() = _mm512_cvtepi8_epi64(a.native());
+    r.vec<1>() = _mm512_cvtepi8_epi64(move16_l<8>(a).native());
     return r;
 #elif SIMDPP_USE_AVX2
     int64<16> r;
-    r.vec(0) = _mm256_cvtepi8_epi64(a.native());
-    r.vec(1) = _mm256_cvtepi8_epi64(move16_l<4>(a).native());
-    r.vec(2) = _mm256_cvtepi8_epi64(move16_l<8>(a).native());
-    r.vec(3) = _mm256_cvtepi8_epi64(move16_l<12>(a).native());
+    r.vec<0>() = _mm256_cvtepi8_epi64(a.native());
+    r.vec<1>() = _mm256_cvtepi8_epi64(move16_l<4>(a).native());
+    r.vec<2>() = _mm256_cvtepi8_epi64(move16_l<8>(a).native());
+    r.vec<3>() = _mm256_cvtepi8_epi64(move16_l<12>(a).native());
     return r;
 #elif SIMDPP_USE_SSE4_1
     int64<16> r;
-    r.vec(0) = _mm_cvtepi8_epi64(a.native());
-    r.vec(1) = _mm_cvtepi8_epi64(move16_l<2>(a).native());
-    r.vec(2) = _mm_cvtepi8_epi64(move16_l<4>(a).native());
-    r.vec(3) = _mm_cvtepi8_epi64(move16_l<6>(a).native());
-    r.vec(4) = _mm_cvtepi8_epi64(move16_l<8>(a).native());
-    r.vec(5) = _mm_cvtepi8_epi64(move16_l<10>(a).native());
-    r.vec(6) = _mm_cvtepi8_epi64(move16_l<12>(a).native());
-    r.vec(7) = _mm_cvtepi8_epi64(move16_l<14>(a).native());
+    r.vec<0>() = _mm_cvtepi8_epi64(a.native());
+    r.vec<1>() = _mm_cvtepi8_epi64(move16_l<2>(a).native());
+    r.vec<2>() = _mm_cvtepi8_epi64(move16_l<4>(a).native());
+    r.vec<3>() = _mm_cvtepi8_epi64(move16_l<6>(a).native());
+    r.vec<4>() = _mm_cvtepi8_epi64(move16_l<8>(a).native());
+    r.vec<5>() = _mm_cvtepi8_epi64(move16_l<10>(a).native());
+    r.vec<6>() = _mm_cvtepi8_epi64(move16_l<12>(a).native());
+    r.vec<7>() = _mm_cvtepi8_epi64(move16_l<14>(a).native());
     return r;
 #elif SIMDPP_USE_SSE2 || SIMDPP_USE_NEON || SIMDPP_USE_MSA || SIMDPP_USE_VSX_207
     return i_to_int64(i_to_int32(a));
@@ -640,23 +640,23 @@ int64<32> i_to_int64(const int8<32>& a)
     int64<32> r;
     int8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm512_cvtepi8_epi64(a0.native());
-    r.vec(1) = _mm512_cvtepi8_epi64(move16_l<8>(a0).native());
-    r.vec(2) = _mm512_cvtepi8_epi64(a1.native());
-    r.vec(3) = _mm512_cvtepi8_epi64(move16_l<8>(a1).native());
+    r.vec<0>() = _mm512_cvtepi8_epi64(a0.native());
+    r.vec<1>() = _mm512_cvtepi8_epi64(move16_l<8>(a0).native());
+    r.vec<2>() = _mm512_cvtepi8_epi64(a1.native());
+    r.vec<3>() = _mm512_cvtepi8_epi64(move16_l<8>(a1).native());
     return r;
 #else
     int64<32> r;
     int8<16> a0, a1;
     split(a, a0, a1);
-    r.vec(0) = _mm256_cvtepi8_epi64(a0.native());
-    r.vec(1) = _mm256_cvtepi8_epi64(move16_l<4>(a0).native());
-    r.vec(2) = _mm256_cvtepi8_epi64(move16_l<8>(a0).native());
-    r.vec(3) = _mm256_cvtepi8_epi64(move16_l<12>(a0).native());
-    r.vec(4) = _mm256_cvtepi8_epi64(a1.native());
-    r.vec(5) = _mm256_cvtepi8_epi64(move16_l<4>(a1).native());
-    r.vec(6) = _mm256_cvtepi8_epi64(move16_l<8>(a1).native());
-    r.vec(7) = _mm256_cvtepi8_epi64(move16_l<12>(a1).native());
+    r.vec<0>() = _mm256_cvtepi8_epi64(a0.native());
+    r.vec<1>() = _mm256_cvtepi8_epi64(move16_l<4>(a0).native());
+    r.vec<2>() = _mm256_cvtepi8_epi64(move16_l<8>(a0).native());
+    r.vec<3>() = _mm256_cvtepi8_epi64(move16_l<12>(a0).native());
+    r.vec<4>() = _mm256_cvtepi8_epi64(a1.native());
+    r.vec<5>() = _mm256_cvtepi8_epi64(move16_l<4>(a1).native());
+    r.vec<6>() = _mm256_cvtepi8_epi64(move16_l<8>(a1).native());
+    r.vec<7>() = _mm256_cvtepi8_epi64(move16_l<12>(a1).native());
     return r;
 #endif
 }
@@ -672,20 +672,20 @@ int64<64> i_to_int64(const int8<64>& a)
 #if SIMDPP_USE_AVX512BW
     split(a, a01, a23);
 #else
-    a01 = a.vec(0);
-    a23 = a.vec(1);
+    a01 = a.vec<0>();
+    a23 = a.vec<1>();
 #endif
     split(a01, a0, a1);
     split(a23, a2, a3);
 
-    r.vec(0) =  _mm512_cvtepi8_epi64(a0.native());
-    r.vec(1) =  _mm512_cvtepi8_epi64(move16_l<8>(a0).native());
-    r.vec(2) =  _mm512_cvtepi8_epi64(a1.native());
-    r.vec(3) =  _mm512_cvtepi8_epi64(move16_l<8>(a1).native());
-    r.vec(4) =  _mm512_cvtepi8_epi64(a2.native());
-    r.vec(5) =  _mm512_cvtepi8_epi64(move16_l<8>(a2).native());
-    r.vec(6) =  _mm512_cvtepi8_epi64(a3.native());
-    r.vec(7) =  _mm512_cvtepi8_epi64(move16_l<8>(a3).native());
+    r.vec<0>() =  _mm512_cvtepi8_epi64(a0.native());
+    r.vec<1>() =  _mm512_cvtepi8_epi64(move16_l<8>(a0).native());
+    r.vec<2>() =  _mm512_cvtepi8_epi64(a1.native());
+    r.vec<3>() =  _mm512_cvtepi8_epi64(move16_l<8>(a1).native());
+    r.vec<4>() =  _mm512_cvtepi8_epi64(a2.native());
+    r.vec<5>() =  _mm512_cvtepi8_epi64(move16_l<8>(a2).native());
+    r.vec<6>() =  _mm512_cvtepi8_epi64(a3.native());
+    r.vec<7>() =  _mm512_cvtepi8_epi64(move16_l<8>(a3).native());
     return r;
 }
 #endif

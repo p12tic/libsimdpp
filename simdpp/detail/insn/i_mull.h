@@ -77,8 +77,8 @@ int32<8> i_mull(const int16<8>& a, const int16<8>& b)
 #elif SIMDPP_USE_MSA
     int32<8> a32 = to_int32(a);
     int32<8> b32 = to_int32(b);
-    a32.vec(0) = __msa_mulv_w(a32.vec(0).native(), b32.vec(0).native());
-    a32.vec(1) = __msa_mulv_w(a32.vec(1).native(), b32.vec(1).native());
+    a32.vec<0>() = __msa_mulv_w(a32.vec<0>().native(), b32.vec<0>().native());
+    a32.vec<1>() = __msa_mulv_w(a32.vec<1>().native(), b32.vec<1>().native());
     return a32;
 #endif
 }
@@ -146,8 +146,8 @@ uint32<8> i_mull(const uint16<8>& a, const uint16<8>& b)
 #elif SIMDPP_USE_MSA
     int32<8> a32 = (int32<8>) to_uint32(a);
     int32<8> b32 = (int32<8>) to_uint32(b);
-    a32.vec(0) = __msa_mulv_w(a32.vec(0).native(), b32.vec(0).native());
-    a32.vec(1) = __msa_mulv_w(a32.vec(1).native(), b32.vec(1).native());
+    a32.vec<0>() = __msa_mulv_w(a32.vec<0>().native(), b32.vec<0>().native());
+    a32.vec<1>() = __msa_mulv_w(a32.vec<1>().native(), b32.vec<1>().native());
     return uint32<8>(a32);
 #endif
 }
@@ -196,10 +196,10 @@ int64<4> i_mull(const int32<4>& a, const int32<4>& b)
 {
 #if SIMDPP_USE_NULL
     int64x4 r;
-    r.vec(0).el(0) = int64_t(a.el(0)) * b.el(0);
-    r.vec(0).el(1) = int64_t(a.el(1)) * b.el(1);
-    r.vec(1).el(0) = int64_t(a.el(2)) * b.el(2);
-    r.vec(1).el(1) = int64_t(a.el(3)) * b.el(3);
+    r.vec<0>().el(0) = int64_t(a.el(0)) * b.el(0);
+    r.vec<0>().el(1) = int64_t(a.el(1)) * b.el(1);
+    r.vec<1>().el(0) = int64_t(a.el(2)) * b.el(2);
+    r.vec<1>().el(1) = int64_t(a.el(3)) * b.el(3);
     return r;
 #elif SIMDPP_USE_SSE4_1
     int32x4 al, ah, bl, bh;
@@ -236,8 +236,8 @@ int64<4> i_mull(const int32<4>& a, const int32<4>& b)
 #elif SIMDPP_USE_MSA
     int64<4> a64 = to_int64(a);
     int64<4> b64 = to_int64(b);
-    a64.vec(0) = __msa_mulv_d(a64.vec(0).native(), b64.vec(0).native());
-    a64.vec(1) = __msa_mulv_d(a64.vec(1).native(), b64.vec(1).native());
+    a64.vec<0>() = __msa_mulv_d(a64.vec<0>().native(), b64.vec<0>().native());
+    a64.vec<1>() = __msa_mulv_d(a64.vec<1>().native(), b64.vec<1>().native());
     return a64;
 #else
     return SIMDPP_NOT_IMPLEMENTED2(a, b);
@@ -276,10 +276,10 @@ uint64<4> i_mull(const uint32<4>& a, const uint32<4>& b)
 {
 #if SIMDPP_USE_NULL
     uint64x4 r;
-    r.vec(0).el(0) = uint64_t(a.el(0)) * b.el(0);
-    r.vec(0).el(1) = uint64_t(a.el(1)) * b.el(1);
-    r.vec(1).el(0) = uint64_t(a.el(2)) * b.el(2);
-    r.vec(1).el(1) = uint64_t(a.el(3)) * b.el(3);
+    r.vec<0>().el(0) = uint64_t(a.el(0)) * b.el(0);
+    r.vec<0>().el(1) = uint64_t(a.el(1)) * b.el(1);
+    r.vec<1>().el(0) = uint64_t(a.el(2)) * b.el(2);
+    r.vec<1>().el(1) = uint64_t(a.el(3)) * b.el(3);
     return r;
 #elif SIMDPP_USE_SSE2
     uint32x4 al, ah, bl, bh;
@@ -317,16 +317,16 @@ uint64<4> i_mull(const uint32<4>& a, const uint32<4>& b)
     mem_block<uint32<4>> ba = a;
     mem_block<uint32<4>> bb = b;
     uint64x4 r;
-    r.vec(0).el(0) = (uint64_t) ba[0] * bb[0];
-    r.vec(0).el(1) = (uint64_t) ba[1] * bb[1];
-    r.vec(1).el(0) = (uint64_t) ba[2] * bb[2];
-    r.vec(1).el(1) = (uint64_t) ba[3] * bb[3];
+    r.vec<0>().el(0) = (uint64_t) ba[0] * bb[0];
+    r.vec<0>().el(1) = (uint64_t) ba[1] * bb[1];
+    r.vec<1>().el(0) = (uint64_t) ba[2] * bb[2];
+    r.vec<1>().el(1) = (uint64_t) ba[3] * bb[3];
     return r;
 #elif SIMDPP_USE_MSA
     int64<4> a64 = (int64<4>) to_uint64(a);
     int64<4> b64 = (int64<4>) to_uint64(b);
-    a64.vec(0) = __msa_mulv_d(a64.vec(0).native(), b64.vec(0).native());
-    a64.vec(1) = __msa_mulv_d(a64.vec(1).native(), b64.vec(1).native());
+    a64.vec<0>() = __msa_mulv_d(a64.vec<0>().native(), b64.vec<0>().native());
+    a64.vec<1>() = __msa_mulv_d(a64.vec<1>().native(), b64.vec<1>().native());
     return (uint64<4>) a64;
 #endif
 }

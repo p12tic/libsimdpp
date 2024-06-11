@@ -202,10 +202,10 @@ uint64x4 i_permute4(const uint64x4& a)
     return permute_emul<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_ALTIVEC
     uint64x4 r;
-    r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
-    r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
-    r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
-    r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
+    r.vec<0>().el(0) = a.vec(s0/2).el(s0%2);
+    r.vec<0>().el(1) = a.vec(s1/2).el(s1%2);
+    r.vec<1>().el(0) = a.vec(s2/2).el(s2%2);
+    r.vec<1>().el(1) = a.vec(s3/2).el(s3%2);
     return r;
 #endif
 }
@@ -247,10 +247,10 @@ float64x4 i_permute4(const float64x4& a)
     return permute_emul<s0,s1,s2,s3>(a);
 #elif SIMDPP_USE_NULL || SIMDPP_USE_NEON || SIMDPP_USE_ALTIVEC
     float64x4 r;
-    r.vec(0).el(0) = a.vec(s0/2).el(s0%2);
-    r.vec(0).el(1) = a.vec(s1/2).el(s1%2);
-    r.vec(1).el(0) = a.vec(s2/2).el(s2%2);
-    r.vec(1).el(1) = a.vec(s3/2).el(s3%2);
+    r.vec<0>().el(0) = a.vec(s0/2).el(s0%2);
+    r.vec<0>().el(1) = a.vec(s1/2).el(s1%2);
+    r.vec<1>().el(0) = a.vec(s2/2).el(s2%2);
+    r.vec<1>().el(1) = a.vec(s3/2).el(s3%2);
     return r;
 #endif
 }
