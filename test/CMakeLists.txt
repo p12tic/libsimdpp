@@ -58,6 +58,7 @@ set(TEST_INSN_HEADERS
 )
 
 set(TEST_INSN_ARCH_SOURCES
+    insn/bit_select.cc
     insn/bitwise.cc
     insn/blend.cc
     insn/compare.cc

@@ -23,11 +23,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Composes a vector from two sources according to a mask. Each element within
     the mask must have either all bits set or all bits unset.
 
+    The result is undefined if the above requirement is not met.
+
     @code
     r0 = (mask0 == 0xff ) ? on0 : off0
     ...
     rN = (maskN == 0xff ) ? onN : offN
     @endcode
+
+    For an alternative to blend that does not require all bits to be either set or not set,
+    see bit_select.
 
     @todo icost
 
