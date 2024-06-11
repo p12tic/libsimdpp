@@ -24,6 +24,7 @@
 #include <simdpp/core/bit_or.h>
 #include <simdpp/core/bit_xor.h>
 #include <simdpp/core/blend.h>
+#include <simdpp/core/bitselect.h>
 #include <simdpp/core/cache.h>
 #include <simdpp/core/cast.h>
 #include <simdpp/core/cmp_eq.h>
