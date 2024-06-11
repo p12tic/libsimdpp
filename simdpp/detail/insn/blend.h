@@ -364,7 +364,6 @@ float32<8> i_blend(const float32<8>& on, const float32<8>& off, const float32<8>
 static SIMDPP_INL
 float32<16> i_blend(const float32<16>& on, const float32<16>& off, const float32<16>& mask)
 {
-    // maybe cmp_eq + blend has lower latency?
     return (float32<16>) i_blend(uint32<16>(on), uint32<16>(off), uint32<16>(mask));
 }
 #endif
