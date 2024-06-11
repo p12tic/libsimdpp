@@ -71,6 +71,41 @@ private:
     T d0, d1, d2, d3;
 };
 
+template<class T>
+class vararray<T,8> {
+public:
+    SIMDPP_INL T& operator[](unsigned id)
+    {
+        switch (id) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        case 3: return d3;
+        case 4: return d4;
+        case 5: return d5;
+        case 6: return d6;
+        default: return d7;
+        }
+    }
+
+    SIMDPP_INL const T& operator[](unsigned id) const
+    {
+        switch (id) {
+        case 0: return d0;
+        case 1: return d1;
+        case 2: return d2;
+        case 3: return d3;
+        case 4: return d4;
+        case 5: return d5;
+        case 6: return d6;
+        default: return d7;
+        }
+    }
+
+private:
+    T d0, d1, d2, d3, d4, d5, d6, d7;
+};
+
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp
