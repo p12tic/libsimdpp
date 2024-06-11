@@ -65,7 +65,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, NEON, 2-3}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int32<N, expr_empty> mull(const int16<N,E1>& a, const int16<N,E2>& b)
+int32<N> mull(const int16<N,E1>& a, const int16<N,E2>& b)
 {
     return detail::insn::i_mull(a.eval(), b.eval());
 }
@@ -89,7 +89,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int32, int16)
     @icost{NEON, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N, expr_empty> mull(const uint16<N,E1>& a, const uint16<N,E2>& b)
+uint32<N> mull(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
     return detail::insn::i_mull(a.eval(), b.eval());
 }
@@ -114,7 +114,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mull, uint32, uint16)
     @unimp{SSE2-SSSE3, ALTIVEC}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int64<N, expr_empty> mull(const int32<N,E1>& a, const int32<N,E2>& b)
+int64<N> mull(const int32<N,E1>& a, const int32<N,E2>& b)
 {
     return detail::insn::i_mull(a.eval(), b.eval());
 }
@@ -138,7 +138,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int64, int32)
     @unimp{ALTIVEC}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint64<N, expr_empty> mull(const uint32<N,E1>& a, const uint32<N,E2>& b)
+uint64<N> mull(const uint32<N,E1>& a, const uint32<N,E2>& b)
 {
     return detail::insn::i_mull(a.eval(), b.eval());
 }

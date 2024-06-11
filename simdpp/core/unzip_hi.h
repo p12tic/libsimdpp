@@ -96,7 +96,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip16_hi(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
@@ -106,7 +106,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 }
 
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip8_hi(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
@@ -116,7 +116,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 }
 
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip4_hi(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
@@ -126,7 +126,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
 }
 
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip2_hi(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;

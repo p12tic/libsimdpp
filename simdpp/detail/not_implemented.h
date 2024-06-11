@@ -42,23 +42,6 @@ public:
     template<unsigned N> operator float64<N>() { return float64<N>(); }
     template<unsigned N> operator mask_float64<N>() { return mask_float64<N>(); }
 
-    template<unsigned N> operator int8<N,expr_empty>() { return int8<N>(); }
-    template<unsigned N> operator uint8<N,expr_empty>() { return uint8<N>(); }
-    template<unsigned N> operator mask_int8<N,expr_empty>() { return mask_int8<N>(); }
-    template<unsigned N> operator int16<N,expr_empty>() { return int16<N>(); }
-    template<unsigned N> operator uint16<N,expr_empty>() { return uint16<N>(); }
-    template<unsigned N> operator mask_int16<N,expr_empty>() { return mask_int16<N>(); }
-    template<unsigned N> operator int32<N,expr_empty>() { return int32<N>(); }
-    template<unsigned N> operator uint32<N,expr_empty>() { return uint32<N>(); }
-    template<unsigned N> operator mask_int32<N,expr_empty>() { return mask_int32<N>(); }
-    template<unsigned N> operator int64<N,expr_empty>() { return int64<N>(); }
-    template<unsigned N> operator uint64<N,expr_empty>() { return uint64<N>(); }
-    template<unsigned N> operator mask_int64<N,expr_empty>() { return mask_int64<N>(); }
-    template<unsigned N> operator float32<N,expr_empty>() { return float32<N>(); }
-    template<unsigned N> operator mask_float32<N,expr_empty>() { return mask_float32<N>(); }
-    template<unsigned N> operator float64<N,expr_empty>() { return float64<N>(); }
-    template<unsigned N> operator mask_float64<N,expr_empty>() { return mask_float64<N>(); }
-
     operator int32_t() { return 0; }
     operator uint32_t() { return 0; }
     operator int64_t() { return 0; }

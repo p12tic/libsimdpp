@@ -38,37 +38,37 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const int8<N,E>& a)
+float64<N> to_float64(const int8<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const uint8<N,E>& a)
+float64<N> to_float64(const uint8<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const int16<N,E>& a)
+float64<N> to_float64(const int16<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const uint16<N,E>& a)
+float64<N> to_float64(const uint16<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const int32<N,E>& a)
+float64<N> to_float64(const int32<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const uint32<N,E>& a)
+float64<N> to_float64(const uint32<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const int64<N,E>& a)
+float64<N> to_float64(const int64<N,E>& a)
 {
 #if SIMDPP_HAS_INT64_TO_FLOAT64_CONVERSION
     return detail::insn::i_to_float64(a.eval());
@@ -77,7 +77,7 @@ float64<N,expr_empty> to_float64(const int64<N,E>& a)
 #endif
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const uint64<N,E>& a)
+float64<N> to_float64(const uint64<N,E>& a)
 {
 #if SIMDPP_HAS_UINT64_TO_FLOAT64_CONVERSION
     return detail::insn::i_to_float64(a.eval());
@@ -86,12 +86,12 @@ float64<N,expr_empty> to_float64(const uint64<N,E>& a)
 #endif
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const float32<N,E>& a)
+float64<N> to_float64(const float32<N,E>& a)
 {
     return detail::insn::i_to_float64(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> to_float64(const float64<N,E>& a)
+float64<N> to_float64(const float64<N,E>& a)
 {
     return a;
 }

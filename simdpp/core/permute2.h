@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         permute2(const any_vec16<N,V>& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -88,7 +88,7 @@ typename detail::get_expr_nomask<V>::empty
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         permute2(const any_vec32<N,V>& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
@@ -119,7 +119,7 @@ typename detail::get_expr_nomask<V>::empty
     @icost{ALTIVEC, 2-4}
 */
 template<unsigned s0, unsigned s1, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         permute2(const any_vec64<N,V>& a)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");

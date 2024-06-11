@@ -30,17 +30,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     support.
 */
 template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
-float32<N, expr_empty> fmadd(const float32<N,E1>& a,
-                             const float32<N,E2>& b,
-                             const float32<N,E3>& c)
+float32<N> fmadd(const float32<N,E1>& a, const float32<N,E2>& b, const float32<N,E3>& c)
 {
     return detail::insn::i_fmadd(a.eval(), b.eval(), c.eval());
 }
 
 template<unsigned N, class E1, class E2, class E3> SIMDPP_INL
-float64<N, expr_empty> fmadd(const float64<N,E1>& a,
-                             const float64<N,E2>& b,
-                             const float64<N,E3>& c)
+float64<N> fmadd(const float64<N,E1>& a, const float64<N,E2>& b, const float64<N,E3>& c)
 {
     return detail::insn::i_fmadd(a.eval(), b.eval(), c.eval());
 }

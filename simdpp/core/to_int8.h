@@ -34,52 +34,52 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @endcode
 */
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const int8<N,E>& a)
+int8<N> to_int8(const int8<N,E>& a)
 {
     return a.eval();
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const uint8<N,E>& a)
+int8<N> to_int8(const uint8<N,E>& a)
 {
     return int8<N>(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const int16<N,E>& a)
+int8<N> to_int8(const int16<N,E>& a)
 {
     return detail::insn::i_to_uint8(uint16<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const uint16<N,E>& a)
+int8<N> to_int8(const uint16<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const int32<N,E>& a)
+int8<N> to_int8(const int32<N,E>& a)
 {
     return detail::insn::i_to_uint8(uint32<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const uint32<N,E>& a)
+int8<N> to_int8(const uint32<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const int64<N,E>& a)
+int8<N> to_int8(const int64<N,E>& a)
 {
     return detail::insn::i_to_uint8(uint64<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const uint64<N,E>& a)
+int8<N> to_int8(const uint64<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const float32<N,E>& a)
+int8<N> to_int8(const float32<N,E>& a)
 {
     return detail::insn::i_to_int8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> to_int8(const float64<N,E>& a)
+int8<N> to_int8(const float64<N,E>& a)
 {
     return detail::insn::i_to_int8(a.eval());
 }
@@ -98,52 +98,52 @@ int8<N,expr_empty> to_int8(const float64<N,E>& a)
     @endcode
 */
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const int8<N,E>& a)
+uint8<N> to_uint8(const int8<N,E>& a)
 {
     return uint8<N>(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const uint8<N,E>& a)
+uint8<N> to_uint8(const uint8<N,E>& a)
 {
     return a;
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const int16<N,E>& a)
+uint8<N> to_uint8(const int16<N,E>& a)
 {
     return detail::insn::i_to_uint8(uint16<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const uint16<N,E>& a)
+uint8<N> to_uint8(const uint16<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const int32<N,E>& a)
+uint8<N> to_uint8(const int32<N,E>& a)
 {
     return detail::insn::i_to_uint8(uint32<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const uint32<N,E>& a)
+uint8<N> to_uint8(const uint32<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const int64<N,E>& a)
+uint8<N> to_uint8(const int64<N,E>& a)
 {
     return detail::insn::i_to_uint8(uint64<N>(a.eval()));
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const uint64<N,E>& a)
+uint8<N> to_uint8(const uint64<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const float32<N,E>& a)
+uint8<N> to_uint8(const float32<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }
 template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> to_uint8(const float64<N,E>& a)
+uint8<N> to_uint8(const float64<N,E>& a)
 {
     return detail::insn::i_to_uint8(a.eval());
 }

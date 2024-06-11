@@ -26,7 +26,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
      * Bits 3-0 define the element within the given vector.
 */
 template<unsigned N, class V1, class E2> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+typename detail::get_expr_nomask<V1>::type
     permute_zbytes16(const any_vec8<N,V1>& a, const uint8<N,E2>& mask)
 {
     typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();
@@ -34,7 +34,7 @@ typename detail::get_expr_nomask<V1>::empty
 }
 
 template<unsigned N, class V1, class E2> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+typename detail::get_expr_nomask<V1>::type
     permute_zbytes16(const any_vec16<N,V1>& a, const uint16<N,E2>& mask)
 {
     typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();
@@ -42,7 +42,7 @@ typename detail::get_expr_nomask<V1>::empty
 }
 
 template<unsigned N, class V1, class E2> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+typename detail::get_expr_nomask<V1>::type
     permute_zbytes16(const any_vec32<N,V1>& a, const uint32<N,E2>& mask)
 {
     typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();
@@ -50,7 +50,7 @@ typename detail::get_expr_nomask<V1>::empty
 }
 
 template<unsigned N, class V1, class E2> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+typename detail::get_expr_nomask<V1>::type
     permute_zbytes16(const any_vec64<N,V1>& a, const uint64<N,E2>& mask)
 {
     typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval();

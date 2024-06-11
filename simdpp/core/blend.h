@@ -116,10 +116,7 @@ public:
     using v3_final_type = typename type_of_tag<v3_type_tag + size_tag,
                                                V1::length_bytes, void>::type;
 
-    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                      expr_blend<V1, V2, V3>>::type;
-    using empty = typename type_of_tag<type_tag + size_tag, V1::length_bytes,
-                                       void>::empty;
+    using type = typename type_of_tag<type_tag + size_tag, V1::length_bytes, void>::type;
 };
 
 } // namespace detail
@@ -182,7 +179,7 @@ public:
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class V1, class V2, class V3> SIMDPP_INL
-typename detail::get_expr_blend<V1, V2, V3>::empty
+typename detail::get_expr_blend<V1, V2, V3>::type
         blend(const any_vec<N,V1>& on, const any_vec<N,V2>& off,
               const any_vec<N,V3>& mask)
 {

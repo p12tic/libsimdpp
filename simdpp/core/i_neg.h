@@ -30,7 +30,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-int8<N, expr_empty> neg(const int8<N,E>& a)
+int8<N> neg(const int8<N,E>& a)
 {
     return detail::insn::i_ineg(a.eval());
 }
@@ -47,7 +47,7 @@ int8<N, expr_empty> neg(const int8<N,E>& a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-int16<N, expr_empty> neg(const int16<N,E>& a)
+int16<N> neg(const int16<N,E>& a)
 {
     return detail::insn::i_ineg(a.eval());
 }
@@ -64,7 +64,7 @@ int16<N, expr_empty> neg(const int16<N,E>& a)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-int32<N, expr_empty> neg(const int32<N,E>& a)
+int32<N> neg(const int32<N,E>& a)
 {
     return detail::insn::i_ineg(a.eval());
 }
@@ -85,7 +85,7 @@ int32<N, expr_empty> neg(const int32<N,E>& a)
     @icost{ALTIVEC, 8-9}
 */
 template<unsigned N, class E> SIMDPP_INL
-int64<N, expr_empty> neg(const int64<N,E>& a)
+int64<N> neg(const int64<N,E>& a)
 {
     return detail::insn::i_ineg(a.eval());
 }

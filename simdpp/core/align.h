@@ -43,7 +43,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align16(const any_vec8<N,V1>& lower,
             const any_vec8<N,V2>& upper)
 {
@@ -80,7 +80,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     was applied to each of them separately.
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align8(const any_vec16<N,V1>& lower,
            const any_vec16<N,V2>& upper)
 {
@@ -130,7 +130,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align4(const any_vec32<N,V1>& lower,
            const any_vec32<N,V2>& upper)
 {
@@ -179,7 +179,7 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align2(const any_vec64<N,V1>& lower,
            const any_vec64<N,V2>& upper)
 {

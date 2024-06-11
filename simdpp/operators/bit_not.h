@@ -29,7 +29,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @todo icost
 */
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr<V, expr_bit_not<V>>::empty
+typename detail::get_expr<V>::type
     operator~(const any_vec<N,V>& a)
 {
     typename detail::get_expr_nosign<V>::type ra;

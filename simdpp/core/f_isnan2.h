@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, ALTIVEC, 6}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float32<N,expr_empty> isnan2(const float32<N,E1>& a, const float32<N,E2>& b)
+mask_float32<N> isnan2(const float32<N,E1>& a, const float32<N,E2>& b)
 {
     return detail::insn::i_isnan2(a.eval(), b.eval());
 }
@@ -56,7 +56,7 @@ mask_float32<N,expr_empty> isnan2(const float32<N,E1>& a, const float32<N,E2>& b
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-mask_float64<N,expr_empty> isnan2(const float64<N,E1>& a, const float64<N,E2>& b)
+mask_float64<N> isnan2(const float64<N,E1>& a, const float64<N,E2>& b)
 {
     return detail::insn::i_isnan2(a.eval(), b.eval());
 }
