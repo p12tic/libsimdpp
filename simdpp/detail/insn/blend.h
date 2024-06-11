@@ -77,6 +77,8 @@ uint8<16> i_blend(const uint8<16>& on, const uint8<16>& off, const mask_int8<16>
 {
 #if SIMDPP_USE_NULL
     return detail::null::blend_mask(on, off, mask);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_mask_blend_epi8(mask.native(), off.native(), on.native());
 #else
     return i_blend(on, off, uint8<16>(mask));
 #endif
@@ -86,7 +88,11 @@ uint8<16> i_blend(const uint8<16>& on, const uint8<16>& off, const mask_int8<16>
 static SIMDPP_INL
 uint8<32> i_blend(const uint8<32>& on, const uint8<32>& off, const mask_int8<32>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_mask_blend_epi8(mask.native(), off.native(), on.native());
+#else
     return i_blend(on, off, uint8<32>(mask));
+#endif
 }
 #endif
 
@@ -163,6 +169,8 @@ uint16<8> i_blend(const uint16<8>& on, const uint16<8>& off, const mask_int16<8>
 {
 #if SIMDPP_USE_NULL
     return detail::null::blend_mask(on, off, mask);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_mask_blend_epi16(mask.native(), off.native(), on.native());
 #else
     return uint16<8>(i_blend(uint8<16>(on), uint8<16>(off), uint8<16>(mask)));
 #endif
@@ -172,7 +180,11 @@ uint16<8> i_blend(const uint16<8>& on, const uint16<8>& off, const mask_int16<8>
 static SIMDPP_INL
 uint16<16> i_blend(const uint16<16>& on, const uint16<16>& off, const mask_int16<16>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_mask_blend_epi16(mask.native(), off.native(), on.native());
+#else
     return i_blend(on, off, uint16<16>(mask));
+#endif
 }
 #endif
 
@@ -250,6 +262,8 @@ uint32<4> i_blend(const uint32<4>& on, const uint32<4>& off, const mask_int32<4>
 {
 #if SIMDPP_USE_NULL
     return detail::null::blend_mask(on, off, mask);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_mask_blend_epi32(mask.native(), off.native(), on.native());
 #else
     return uint32<4>(i_blend(uint8<16>(on), uint8<16>(off), uint8<16>(mask)));
 #endif
@@ -259,7 +273,11 @@ uint32<4> i_blend(const uint32<4>& on, const uint32<4>& off, const mask_int32<4>
 static SIMDPP_INL
 uint32<8> i_blend(const uint32<8>& on, const uint32<8>& off, const mask_int32<8>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_mask_blend_epi32(mask.native(), off.native(), on.native());
+#else
     return i_blend(on, off, uint32<8>(mask));
+#endif
 }
 #endif
 
@@ -359,6 +377,8 @@ float32<4> i_blend(const float32<4>& on, const float32<4>& off, const mask_float
 {
 #if SIMDPP_USE_NULL
     return detail::null::blend_mask(on, off, mask);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_mask_blend_ps(mask.native(), off.native(), on.native());
 #else
     return i_blend(on, off, float32<4>(mask));
 #endif
@@ -368,7 +388,11 @@ float32<4> i_blend(const float32<4>& on, const float32<4>& off, const mask_float
 static SIMDPP_INL
 float32<8> i_blend(const float32<8>& on, const float32<8>& off, const mask_float32<8>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_mask_blend_ps(mask.native(), off.native(), on.native());
+#else
     return i_blend(on, off, float32<8>(mask));
+#endif
 }
 #endif
 
@@ -453,6 +477,8 @@ uint64<2> i_blend(const uint64<2>& on, const uint64<2>& off, const mask_int64<2>
 {
 #if SIMDPP_USE_NULL || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_207)
     return detail::null::blend_mask(on, off, mask);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_mask_blend_epi64(mask.native(), off.native(), on.native());
 #else
     return uint64<2>(i_blend(uint8<16>(on), uint8<16>(off), uint8<16>(mask)));
 #endif
@@ -462,7 +488,11 @@ uint64<2> i_blend(const uint64<2>& on, const uint64<2>& off, const mask_int64<2>
 static SIMDPP_INL
 uint64<4> i_blend(const uint64<4>& on, const uint64<4>& off, const mask_int64<4>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_mask_blend_epi64(mask.native(), off.native(), on.native());
+#else
     return i_blend(on, off, uint64<4>(mask));
+#endif
 }
 #endif
 
@@ -566,6 +596,8 @@ float64<2> i_blend(const float64<2>& on, const float64<2>& off, const mask_float
 {
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON32 || (SIMDPP_USE_ALTIVEC && !SIMDPP_USE_VSX_206)
     return detail::null::blend_mask(on, off, mask);
+#elif SIMDPP_USE_AVX512VL
+    return _mm_mask_blend_pd(mask.native(), off.native(), on.native());
 #else
     return i_blend(on, off, float64<2>(mask));
 #endif
@@ -575,7 +607,11 @@ float64<2> i_blend(const float64<2>& on, const float64<2>& off, const mask_float
 static SIMDPP_INL
 float64<4> i_blend(const float64<4>& on, const float64<4>& off, const mask_float64<4>& mask)
 {
+#if SIMDPP_USE_AVX512VL
+    return _mm256_mask_blend_pd(mask.native(), off.native(), on.native());
+#else
     return i_blend(on, off, float64<4>(mask));
+#endif
 }
 #endif
 
