@@ -25,44 +25,44 @@ namespace SIMDPP_ARCH_NAMESPACE {
      * Bit 4 defines which vector to select. 0 corresponds to @a a, 1 to @a b.
      * Bits 3-0 define the element within the selected vector.
 */
-template<unsigned N, class V1, class V2, class E3> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+template<unsigned N, class V1, class V2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::type
     shuffle_bytes16(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b,
-                    const uint8<N,E3>& mask)
+                    const uint8<N>& mask)
 {
-    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval(),
-                                               rb = b.wrapped().eval();
-    return detail::insn::i_shuffle_bytes16(ra, rb, mask.eval());
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped(),
+                                               rb = b.wrapped();
+    return detail::insn::i_shuffle_bytes16(ra, rb, mask);
 }
 
-template<unsigned N, class V1, class V2, class E3> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+template<unsigned N, class V1, class V2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::type
     shuffle_bytes16(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b,
-                    const uint16<N,E3>& mask)
+                    const uint16<N>& mask)
 {
-    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval(),
-                                               rb = b.wrapped().eval();
-    return detail::insn::i_shuffle_bytes16(ra, rb, mask.eval());
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped(),
+                                               rb = b.wrapped();
+    return detail::insn::i_shuffle_bytes16(ra, rb, mask);
 }
 
-template<unsigned N, class V1, class V2, class E3> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+template<unsigned N, class V1, class V2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::type
     shuffle_bytes16(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b,
-                    const uint32<N,E3>& mask)
+                    const uint32<N>& mask)
 {
-    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval(),
-                                               rb = b.wrapped().eval();
-    return detail::insn::i_shuffle_bytes16(ra, rb, mask.eval());
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped(),
+                                               rb = b.wrapped();
+    return detail::insn::i_shuffle_bytes16(ra, rb, mask);
 }
 
-template<unsigned N, class V1, class V2, class E3> SIMDPP_INL
-typename detail::get_expr_nomask<V1>::empty
+template<unsigned N, class V1, class V2> SIMDPP_INL
+typename detail::get_expr_nomask<V1>::type
     shuffle_bytes16(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b,
-                    const uint64<N,E3>& mask)
+                    const uint64<N>& mask)
 {
-    typename detail::get_expr_nomask<V1>::type ra = a.wrapped().eval(),
-                                               rb = b.wrapped().eval();
-    return detail::insn::i_shuffle_bytes16(ra, rb, mask.eval());
+    typename detail::get_expr_nomask<V1>::type ra = a.wrapped(),
+                                               rb = b.wrapped();
+    return detail::insn::i_shuffle_bytes16(ra, rb, mask);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

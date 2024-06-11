@@ -100,42 +100,42 @@ namespace SIMDPP_ARCH_NAMESPACE {
     was applied to each of them separately.
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip16_lo(const any_vec8<N,V1>& a, const any_vec8<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_unzip16_lo(ra, rb);
 }
 
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip8_lo(const any_vec16<N,V1>& a, const any_vec16<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_unzip8_lo(ra, rb);
 }
 
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip4_lo(const any_vec32<N,V1>& a, const any_vec32<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_unzip4_lo(ra, rb);
 }
 
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         unzip2_lo(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     typename detail::get_expr2_nomask_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_unzip2_lo(ra, rb);
 }
 

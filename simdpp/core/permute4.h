@@ -52,12 +52,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         permute4(const any_vec16<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     typename detail::get_expr_nomask<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 
@@ -97,12 +97,12 @@ typename detail::get_expr_nomask<V>::empty
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         permute4(const any_vec32<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     typename detail::get_expr_nomask<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 
@@ -126,12 +126,12 @@ typename detail::get_expr_nomask<V>::empty
 */
 template<unsigned s0, unsigned s1, unsigned s2, unsigned s3,
          unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         permute4(const any_vec64<N,V>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
     typename detail::get_expr_nomask<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_permute4<s0,s1,s2,s3>(ra);
 }
 

@@ -14,7 +14,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/bit_andnot.h>
-#include <simdpp/detail/expr/bit_andnot.h>
 #include <simdpp/core/detail/get_expr_bitwise.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
@@ -32,85 +31,136 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @todo: icost
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, V1, V2>::type
-        bit_andnot(const any_vec<N,V1>& a, const any_vec<N,V2>& b)
+    typename detail::get_expr_bitwise2_and<V1, V2>::type
+    bit_andnot(const any_vec<N,V1>& a,
+               const any_vec<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() } };
+    using E = detail::get_expr_bitwise2_and<V1, V2>;
+    typename E::v1_final_type ra;
+    typename E::v2_final_type rb;
+    ra = a.wrapped();
+    rb = b.wrapped();
+    return detail::insn::i_bit_andnot(ra, rb);
 }
 
 // support scalar arguments
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned, V>::type
-        bit_andnot(const unsigned& a, const any_vec<N,V>& b)
+    typename detail::get_expr_bitwise2_and<unsigned, V>::type
+    bit_andnot(unsigned a, const any_vec<N,V>& b)
 {
-    return { { a, b.wrapped() } };
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned long, V>::type
-        bit_andnot(const unsigned long& a, const any_vec<N,V>& b)
-{
-    return { { a, b.wrapped() } };
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, unsigned long long, V>::type
-        bit_andnot(const unsigned long long& a, const any_vec<N,V>& b)
-{
-    return { { a, b.wrapped() } };
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, int, V>::type
-        bit_andnot(const int& a, const any_vec<N,V>& b)
-{
-    return { { a, b.wrapped() } };
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, long, V>::type
-        bit_andnot(const long& a, const any_vec<N,V>& b)
-{
-    return { { a, b.wrapped() } };
-}
-template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, long long, V>::type
-        bit_andnot(const long long& a, const any_vec<N,V>& b)
-{
-    return { { a, b.wrapped() } };
+    using E = detail::get_expr_bitwise2_and<unsigned, V>;
+    return detail::insn::i_bit_andnot(
+        detail::make_const_bitwise<typename E::v1_final_type>(detail::cast_int(a)),
+        (typename E::v2_final_type)b.wrapped());
 }
 
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned>::type
-        bit_andnot(const any_vec<N,V>& a, const unsigned& b)
+    typename detail::get_expr_bitwise2_and<unsigned long, V>::type
+    bit_andnot(unsigned long a, const any_vec<N,V>& b)
 {
-    return { { a.wrapped(), b } };
+    using E = detail::get_expr_bitwise2_and<unsigned long, V>;
+    return detail::insn::i_bit_andnot(
+        detail::make_const_bitwise<typename E::v1_final_type>(detail::cast_int(a)),
+        (typename E::v2_final_type)b.wrapped());
 }
+
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned long>::type
-        bit_andnot(const any_vec<N,V>& a, const unsigned long& b)
+    typename detail::get_expr_bitwise2_and<unsigned long long, V>::type
+    bit_andnot(unsigned long long a, const any_vec<N,V>& b)
 {
-    return { { a.wrapped(), b } };
+    using E = detail::get_expr_bitwise2_and<unsigned long long, V>;
+    return detail::insn::i_bit_andnot(
+        detail::make_const_bitwise<typename E::v1_final_type>(detail::cast_int(a)),
+        (typename E::v2_final_type)b.wrapped());
 }
+
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, unsigned long long>::type
-        bit_andnot(const any_vec<N,V>& a, const unsigned long long& b)
+    typename detail::get_expr_bitwise2_and<int, V>::type
+    bit_andnot(int a, const any_vec<N,V>& b)
 {
-    return { { a.wrapped(), b } };
+    using E = detail::get_expr_bitwise2_and<int, V>;
+    return detail::insn::i_bit_andnot(
+        detail::make_const_bitwise<typename E::v1_final_type>(detail::cast_int(a)),
+        (typename E::v2_final_type)b.wrapped());
 }
+
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, int>::type
-        bit_andnot(const any_vec<N,V>& a, const int& b)
+    typename detail::get_expr_bitwise2_and<long, V>::type
+    bit_andnot(long a, const any_vec<N,V>& b)
 {
-    return { { a.wrapped(), b } };
+    using E = detail::get_expr_bitwise2_and<long, V>;
+    return detail::insn::i_bit_andnot(
+        detail::make_const_bitwise<typename E::v1_final_type>(detail::cast_int(a)),
+        (typename E::v2_final_type)b.wrapped());
 }
+
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, long>::type
-        bit_andnot(const any_vec<N,V>& a, const long& b)
+    typename detail::get_expr_bitwise2_and<long long, V>::type
+    bit_andnot(long long a, const any_vec<N,V>& b)
 {
-    return { { a.wrapped(), b } };
+    using E = detail::get_expr_bitwise2_and<long long, V>;
+    return detail::insn::i_bit_andnot(
+        detail::make_const_bitwise<typename E::v1_final_type>(detail::cast_int(a)),
+        (typename E::v2_final_type)b.wrapped());
 }
+
 template<unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_bitwise2_and<expr_bit_andnot, V, long long>::type
-        bit_andnot(const any_vec<N,V>& a, const long long& b)
+    typename detail::get_expr_bitwise2_and<V, unsigned>::type
+    bit_andnot(const any_vec<N,V>& a, unsigned b)
 {
-    return { { a.wrapped(), b } };
+    using E = detail::get_expr_bitwise2_and<V, unsigned>;
+    return detail::insn::i_bit_andnot(
+        (typename E::v1_final_type)a.wrapped(),
+        detail::make_const_bitwise<typename E::v2_final_type>(detail::cast_int(b)));
+}
+
+template<unsigned N, class V> SIMDPP_INL
+    typename detail::get_expr_bitwise2_and<V, unsigned long>::type
+    bit_andnot(const any_vec<N,V>& a, unsigned long b)
+{
+    using E = detail::get_expr_bitwise2_and<V, unsigned long>;
+    return detail::insn::i_bit_andnot(
+        (typename E::v1_final_type)a.wrapped(),
+        detail::make_const_bitwise<typename E::v2_final_type>(detail::cast_int(b)));
+}
+
+template<unsigned N, class V> SIMDPP_INL
+    typename detail::get_expr_bitwise2_and<V, unsigned long long>::type
+    bit_andnot(const any_vec<N,V>& a, unsigned long long b)
+{
+    using E = detail::get_expr_bitwise2_and<V, unsigned long long>;
+    return detail::insn::i_bit_andnot(
+        (typename E::v1_final_type)a.wrapped(),
+        detail::make_const_bitwise<typename E::v2_final_type>(detail::cast_int(b)));
+}
+
+template<unsigned N, class V> SIMDPP_INL
+    typename detail::get_expr_bitwise2_and<V, int>::type
+    bit_andnot(const any_vec<N,V>& a, int b)
+{
+    using E = detail::get_expr_bitwise2_and<V, int>;
+    return detail::insn::i_bit_andnot((typename E::v1_final_type)a.wrapped(),
+                                   detail::make_const_bitwise<typename E::v2_final_type>(detail::cast_int(b)));
+}
+
+template<unsigned N, class V> SIMDPP_INL
+    typename detail::get_expr_bitwise2_and<V, long>::type
+    bit_andnot(const any_vec<N,V>& a, long b)
+{
+    using E = detail::get_expr_bitwise2_and<V, long>;
+    return detail::insn::i_bit_andnot(
+        (typename E::v1_final_type)a.wrapped(),
+        detail::make_const_bitwise<typename E::v2_final_type>(detail::cast_int(b)));
+}
+
+template<unsigned N, class V> SIMDPP_INL
+    typename detail::get_expr_bitwise2_and<V, long long>::type
+    bit_andnot(const any_vec<N,V>& a, long long b)
+{
+    using E = detail::get_expr_bitwise2_and<V, long long>;
+    return detail::insn::i_bit_andnot(
+        (typename E::v1_final_type)a.wrapped(),
+        detail::make_const_bitwise<typename E::v2_final_type>(detail::cast_int(b)));
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/f_abs.h>
+#include <simdpp/detail/insn/f_abs.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -37,10 +37,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX-AVX2, 1-2}
     @icost{ALTIVEC, 2-3}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N, expr_fabs<float32<N,E>>> abs(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> abs(const float32<N>& a)
 {
-    return { { a } };
+    return detail::insn::i_fabs(a);
 }
 
 /** Computes absolute value of floating point values.
@@ -60,10 +60,10 @@ float32<N, expr_fabs<float32<N,E>>> abs(const float32<N,E>& a)
     @icost{SSE2-SSE4.1, 2-3}
     @icost{AVX-AVX2, 1-2}
 */
-template<unsigned N, class E> SIMDPP_INL
-float64<N, expr_fabs<float64<N,E>>> abs(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float64<N> abs(const float64<N>& a)
 {
-    return { { a } };
+    return detail::insn::i_fabs(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

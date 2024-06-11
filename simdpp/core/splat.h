@@ -77,11 +77,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @novec{NEON, ALTIVEC}
 */
 template<unsigned s, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         splat(const any_vec<N,V>& a)
 {
     static_assert(s < V::length, "Access out of bounds");
-    typename detail::get_expr_nomask<V>::type ra = a.wrapped().eval();
+    typename detail::get_expr_nomask<V>::type ra = a.wrapped();
     return detail::insn::i_splat<s>(ra);
 }
 

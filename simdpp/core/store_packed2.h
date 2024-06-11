@@ -40,7 +40,7 @@ void store_packed2(T* p, const any_vec<N,V1>& a, const any_vec<N,V2>& b)
     static_assert(V1::size_tag == V2::size_tag,
                   "Vector elements must have the same size");
     detail::insn::i_store_packed2(reinterpret_cast<char*>(p),
-                                  a.wrapped().eval(), b.wrapped().eval());
+                                  a.wrapped(), b.wrapped());
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

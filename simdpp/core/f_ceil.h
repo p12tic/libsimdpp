@@ -36,15 +36,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 22-24}
     @icost{ALTIVEC, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N,expr_empty> ceil(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> ceil(const float32<N>& a)
 {
-    return detail::insn::i_ceil(a.eval());
+    return detail::insn::i_ceil(a);
 }
-template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> ceil(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float64<N> ceil(const float64<N>& a)
 {
-    return detail::insn::i_ceil(a.eval());
+    return detail::insn::i_ceil(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

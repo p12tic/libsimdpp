@@ -53,7 +53,7 @@ float32<16> i_fsub(const float32<16>& a, const float32<16>& b)
 }
 #endif
 
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
+template<class R, unsigned N> SIMDPP_INL
 float32<N> i_fsub(const float32<N>& a, const float32<N>& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(float32<N>, sub, a, b);

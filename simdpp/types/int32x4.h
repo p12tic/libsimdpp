@@ -27,11 +27,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 4x 32-bit signed integer vector
 */
 template<>
-class int32<4, void> : public any_int32<4, int32<4,void>> {
+class int32<4> : public any_int32<4, int32<4>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int32_t;
-    using base_vector_type = int32<4,void>;
+    using base_vector_type = int32<4>;
     using expr_type = void;
 
 #if SIMDPP_USE_SSE2
@@ -50,15 +50,14 @@ public:
     SIMDPP_INL int32<4>(const int32<4> &) = default;
     SIMDPP_INL int32<4> &operator=(const int32<4> &) = default;
 
-    template<class E> SIMDPP_INL int32<4>(const int32<4,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL int32<4>(const uint32<4,E>& d) { *this = d.eval(); }
+    SIMDPP_INL int32<4>(const uint32<4>& d);
     template<class V> SIMDPP_INL explicit int32<4>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int32<4>>(d.wrapped().eval());
+        *this = bit_cast<int32<4>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int32<4>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int32<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int32<4>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -85,8 +84,6 @@ public:
     SIMDPP_INL const int32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL int32<4>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL int32<4> eval() const { return *this; }
-
 #if SIMDPP_USE_NULL
     /// For internal use only
     SIMDPP_INL const int32_t& el(unsigned i) const  { return d_[i]; }
@@ -100,11 +97,11 @@ private:
 /** Class representing 4x 32-bit unsigned integer vector
 */
 template<>
-class uint32<4, void> : public any_int32<4, uint32<4,void>> {
+class uint32<4> : public any_int32<4, uint32<4>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint32_t;
-    using base_vector_type = uint32<4,void>;
+    using base_vector_type = uint32<4>;
     using expr_type = void;
 
 #if SIMDPP_USE_SSE2
@@ -123,15 +120,14 @@ public:
     SIMDPP_INL uint32<4>(const uint32<4> &) = default;
     SIMDPP_INL uint32<4> &operator=(const uint32<4> &) = default;
 
-    template<class E> SIMDPP_INL uint32<4>(const uint32<4,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL uint32<4>(const int32<4,E>& d) { *this = d.eval(); }
+    SIMDPP_INL uint32<4>(const int32<4>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint32<4>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint32<4>>(d.wrapped().eval());
+        *this = bit_cast<uint32<4>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint32<4>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint32<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint32<4>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -158,8 +154,6 @@ public:
     SIMDPP_INL const uint32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint32<4>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL uint32<4> eval() const { return *this; }
-
 #if SIMDPP_USE_NULL
     /// For uinternal use only
     SIMDPP_INL const uint32_t& el(unsigned i) const { return d_[i]; }
@@ -173,10 +167,10 @@ private:
 /// Class representing possibly optimized mask data for 4x 32-bit integer
 /// vector
 template<>
-class mask_int32<4, void> : public any_int32<4, mask_int32<4,void>> {
+class mask_int32<4> : public any_int32<4, mask_int32<4>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int32<4,void>;
+    using base_vector_type = mask_int32<4>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512VL
@@ -198,6 +192,7 @@ public:
     SIMDPP_INL mask_int32<4> &operator=(const mask_int32<4> &) = default;
 
     SIMDPP_INL mask_int32<4>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int32<4>& operator=(const native_type& d) { d_ = d; return *this; }
 
 #if SIMDPP_USE_ALTIVEC
     SIMDPP_INL mask_int32<4>(const __vector __bool int& d) : d_((__vector uint32_t)d) {}
@@ -207,14 +202,8 @@ public:
     SIMDPP_INL mask_int32<4>(const uint32<4>& d) : d_(d.native()) {}
 #endif
 
-    template<class E> SIMDPP_INL explicit mask_int32<4>(const mask_float32<4,E>& d)
-    {
-        *this = bit_cast<mask_int32<4>>(d.eval());
-    }
-    template<class E> SIMDPP_INL mask_int32<4>& operator=(const mask_float32<4,E>& d)
-    {
-        *this = bit_cast<mask_int32<4>>(d.eval()); return *this;
-    }
+    SIMDPP_INL explicit mask_int32<4>(const mask_float32<4>& d);
+    SIMDPP_INL mask_int32<4>& operator=(const mask_float32<4>& d);
 
     /// Convert to the underlying vector type
 #if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
@@ -242,8 +231,6 @@ public:
 
     SIMDPP_INL const mask_int32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int32<4>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int32<4> eval() const { return *this; }
 
 private:
     native_type d_;

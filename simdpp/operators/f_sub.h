@@ -14,9 +14,8 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/f_sub.h>
+#include <simdpp/core/f_sub.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
-#include <simdpp/core/detail/get_expr_uint.h>
 
 
 namespace simdpp {
@@ -33,15 +32,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N, expr_fsub<float32<N,E1>,
-                     float32<N,E2>>> operator-(const float32<N,E1>& a,
-                                         const float32<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+float32<N> operator-(const float32<N>& a, const float32<N>& b)
 {
-    return { { a, b } };
+    return sub(a, b);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(operator-, expr_fsub, float32, float32)
+SIMDPP_SCALAR_ARG_IMPL_VEC(operator-, float32, float32)
 
 /** Subtracts the values of two vectors
 
@@ -58,15 +55,13 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(operator-, expr_fsub, float32, float32)
     @novec{NEON, ALTIVEC}
     @icost{SSE2-SSE4.1, 2}
 */
-template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N, expr_fsub<float64<N,E1>,
-                     float64<N,E2>>> operator-(const float64<N,E1>& a,
-                                         const float64<N,E2>& b)
+template<unsigned N> SIMDPP_INL
+float64<N> operator-(const float64<N>& a, const float64<N>& b)
 {
-    return { { a, b } };
+    return sub(a, b);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(operator-, expr_fsub, float64, float64)
+SIMDPP_SCALAR_ARG_IMPL_VEC(operator-, float64, float64)
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

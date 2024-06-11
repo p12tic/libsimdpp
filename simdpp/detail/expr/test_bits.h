@@ -24,74 +24,9 @@ template<unsigned N, class V> SIMDPP_INL
 bool e_test_bits_any(const any_vec<N,V>& a)
 {
     typename detail::get_expr_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return insn::i_test_bits_any(ra);
 }
-
-#if SIMDPP_USE_SSE4_1
-template<unsigned N, template<unsigned, typename> class V,
-         class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const any_vec<16, V<N, expr_bit_and<V1,V2>>>& e)
-{
-    uint8<16> a, b;
-    a = e.wrapped().e.a.eval();
-    b = e.wrapped().e.b.eval();
-    return !_mm_testz_si128(b.native(), a.native());
-}
-
-template<unsigned N, template<unsigned, typename> class V,
-         class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const any_vec<16, V<N, expr_bit_andnot<V1,V2>>>& e)
-{
-    uint8<16> a, b;
-    a = e.wrapped().e.a.eval();
-    b = e.wrapped().e.b.eval();
-    return !_mm_testc_si128(b.native(), a.native());
-}
-#endif
-
-#if SIMDPP_USE_AVX2
-template<unsigned N, template<unsigned, typename> class V,
-         class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const any_vec<32, V<N, expr_bit_and<V1,V2>>>& e)
-{
-    uint8<32> a, b;
-    a = e.wrapped().e.a.eval();
-    b = e.wrapped().e.b.eval();
-    return !_mm256_testz_si256(b.native(), a.native());
-}
-
-template<unsigned N, template<unsigned, typename> class V,
-         class V1, class V2>
-bool e_test_bits_any(const any_vec<32, V<N, expr_bit_andnot<V1,V2>>>& e)
-{
-    uint8<32> a, b;
-    a = e.wrapped().e.a.eval();
-    b = e.wrapped().e.b.eval();
-    return !_mm256_testc_si256(b.native(), a.native());
-}
-#endif
-
-#if SIMDPP_USE_AVX512F
-template<class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const uint32<16, expr_bit_and<V1,V2>>& e)
-{
-    uint32<16> a, b;
-    a = e.wrapped().e.a.eval();
-    b = e.wrapped().e.b.eval();
-    return _mm512_test_epi64_mask(a.native(), b.native()) != 0;
-}
-
-template<class V1, class V2> SIMDPP_INL
-bool e_test_bits_any(const uint64<8, expr_bit_and<V1,V2>>& e)
-{
-    uint64<8> a, b;
-    a = e.wrapped().e.a.eval();
-    b = e.wrapped().e.b.eval();
-    return _mm512_test_epi64_mask(a.native(), b.native()) != 0;
-}
-#endif
-
 
 } // namespace detail
 } // namespace SIMDPP_ARCH_NAMESPACE

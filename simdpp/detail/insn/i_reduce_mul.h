@@ -25,14 +25,14 @@ namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
 // forward declarations
-template<unsigned N, class E> SIMDPP_INL
-int32_t reduce_mul(const int16<N,E>& a);
-template<unsigned N, class E> SIMDPP_INL
-uint32_t reduce_mul(const uint16<N,E>& a);
-template<unsigned N, class E> SIMDPP_INL
-int32_t reduce_mul(const int32<N,E>& a);
-template<unsigned N, class E> SIMDPP_INL
-uint32_t reduce_mul(const uint32<N,E>& a);
+template<unsigned N> SIMDPP_INL
+int32_t reduce_mul(const int16<N>& a);
+template<unsigned N> SIMDPP_INL
+uint32_t reduce_mul(const uint16<N>& a);
+template<unsigned N> SIMDPP_INL
+int32_t reduce_mul(const int32<N>& a);
+template<unsigned N> SIMDPP_INL
+uint32_t reduce_mul(const uint32<N>& a);
 
 namespace detail {
 namespace insn {
@@ -55,8 +55,8 @@ uint32_t i_reduce_mul(const uint16x8& a)
     uint32x4 lo = _mm_mullo_epi16(ca.native(), al.native());
     uint32x4 hi = _mm_mulhi_epu16(ca.native(), ah.native());
     uint32x4 r = bit_or(lo, hi);
-    r = _mm_mul_epu32(r.native(), move4_l<1>(r).eval().native());
-    r = _mm_mul_epu32(r.native(), move4_l<2>(r).eval().native());
+    r = _mm_mul_epu32(r.native(), move4_l<1>(r).native());
+    r = _mm_mul_epu32(r.native(), move4_l<2>(r).native());
     return extract<0>(r);
 #elif SIMDPP_USE_NEON
     uint32x4 r = vmull_u16(vget_low_u16(a.native()),
@@ -90,10 +90,10 @@ uint32_t i_reduce_mul(const uint16x16& a)
     uint32x8 lo = _mm256_mullo_epi16(ca.native(), al.native());
     uint32x8 hi = _mm256_mulhi_epu16(ca.native(), ah.native());
     uint32x8 r = bit_or(lo, hi);
-    r = _mm256_mul_epu32(r.native(), move4_l<1>(r).eval().native());
+    r = _mm256_mul_epu32(r.native(), move4_l<1>(r).native());
     uint32x4 r2 = _mm_mul_epu32(detail::extract128<0>(r).native(),
                                 detail::extract128<1>(r).native());
-    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).eval().native());
+    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).native());
     return extract<0>(r2);
 }
 #endif
@@ -135,7 +135,7 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
         uint32<16> lo = _mm512_mullo_epi16(ca.native(), al.native());
         uint32<16> hi = _mm512_mulhi_epu16(ca.native(), ah.native());
         uint32<16> iprod = bit_or(lo, hi);
-        iprod = _mm512_mul_epu32(iprod.native(), move4_l<1>(iprod).eval().native());
+        iprod = _mm512_mul_epu32(iprod.native(), move4_l<1>(iprod).native());
         prod = _mm512_mul_epu32(prod.native(), iprod.native());
     }
     return reduce_mul(prod);
@@ -150,12 +150,12 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
         uint32x8 lo = _mm256_mullo_epi16(ca.native(), al.native());
         uint32x8 hi = _mm256_mulhi_epu16(ca.native(), ah.native());
         uint32x8 iprod = bit_or(lo, hi);
-        iprod = _mm256_mul_epu32(iprod.native(), move4_l<1>(iprod).eval().native());
+        iprod = _mm256_mul_epu32(iprod.native(), move4_l<1>(iprod).native());
         prod = _mm256_mul_epu32(prod.native(), iprod.native());
     }
     uint32x4 r2 = _mm_mul_epu32(detail::extract128<0>(prod).native(),
                                 detail::extract128<1>(prod).native());
-    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).eval().native());
+    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).native());
     return extract<0>(r2);
 #elif SIMDPP_USE_SSE2
     uint32x4 prod = make_uint(1);
@@ -168,10 +168,10 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint16<N>& a)
         uint32x4 lo = _mm_mullo_epi16(ca.native(), al.native());
         uint32x4 hi = _mm_mulhi_epu16(ca.native(), ah.native());
         uint32x4 r = bit_or(lo, hi);
-        r = _mm_mul_epu32(r.native(), move4_l<1>(r).eval().native());
+        r = _mm_mul_epu32(r.native(), move4_l<1>(r).native());
         prod = _mm_mul_epu32(prod.native(), r.native());
     }
-    prod = _mm_mul_epu32(prod.native(), move4_l<2>(prod).eval().native());
+    prod = _mm_mul_epu32(prod.native(), move4_l<2>(prod).native());
     return extract<0>(prod);
 #elif SIMDPP_USE_NEON
     uint32x4 prod = make_uint(1);
@@ -221,8 +221,8 @@ int32_t i_reduce_mul(const int16x8& a)
     uint32x4 lo = _mm_mullo_epi16(ca.native(), al.native());
     uint32x4 hi = _mm_mulhi_epi16(ca.native(), ah.native());
     uint32x4 r = bit_or(lo, hi);
-    r = _mm_mul_epu32(r.native(), move4_l<1>(r).eval().native());
-    r = _mm_mul_epu32(r.native(), move4_l<2>(r).eval().native());
+    r = _mm_mul_epu32(r.native(), move4_l<1>(r).native());
+    r = _mm_mul_epu32(r.native(), move4_l<2>(r).native());
     return extract<0>(r);
 #elif SIMDPP_USE_NEON
     int32x4 r = vmull_s16(vget_low_s16(a.native()), vget_high_s16(a.native()));
@@ -255,10 +255,10 @@ int32_t i_reduce_mul(const int16x16& a)
     uint32x8 lo = _mm256_mullo_epi16(ca.native(), al.native());
     uint32x8 hi = _mm256_mulhi_epi16(ca.native(), ah.native());
     uint32x8 r = bit_or(lo, hi);
-    r = _mm256_mul_epu32(r.native(), move4_l<1>(r).eval().native());
+    r = _mm256_mul_epu32(r.native(), move4_l<1>(r).native());
     uint32x4 r2 = _mm_mul_epu32(detail::extract128<0>(r).native(),
                                 detail::extract128<1>(r).native());
-    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).eval().native());
+    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).native());
     return extract<0>(r2);
 }
 #endif
@@ -300,7 +300,7 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
         uint32<16> lo = _mm512_mullo_epi16(ca.native(), al.native());
         uint32<16> hi = _mm512_mulhi_epi16(ca.native(), ah.native());
         uint32<16> iprod = bit_or(lo, hi);
-        iprod = _mm512_mul_epu32(iprod.native(), move4_l<1>(iprod).eval().native());
+        iprod = _mm512_mul_epu32(iprod.native(), move4_l<1>(iprod).native());
         prod = _mm512_mul_epu32(prod.native(), iprod.native());
     }
     return reduce_mul(prod);
@@ -315,12 +315,12 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
         uint32x8 lo = _mm256_mullo_epi16(ca.native(), al.native());
         uint32x8 hi = _mm256_mulhi_epi16(ca.native(), ah.native());
         uint32x8 iprod = bit_or(lo, hi);
-        iprod = _mm256_mul_epu32(iprod.native(), move4_l<1>(iprod).eval().native());
+        iprod = _mm256_mul_epu32(iprod.native(), move4_l<1>(iprod).native());
         prod = _mm256_mul_epu32(prod.native(), iprod.native());
     }
     uint32x4 r2 = _mm_mul_epu32(detail::extract128<0>(prod).native(),
                                 detail::extract128<1>(prod).native());
-    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).eval().native());
+    r2 = _mm_mul_epu32(r2.native(), move4_l<2>(r2).native());
     return extract<0>(r2);
 #elif SIMDPP_USE_SSE2
     uint32x4 prod = make_uint(1);
@@ -333,10 +333,10 @@ SIMDPP_INL int32_t i_reduce_mul(const int16<N>& a)
         uint32x4 lo = _mm_mullo_epi16(ca.native(), al.native());
         uint32x4 hi = _mm_mulhi_epi16(ca.native(), ah.native());
         uint32x4 r = bit_or(lo, hi);
-        r = _mm_mul_epu32(r.native(), move4_l<1>(r).eval().native());
+        r = _mm_mul_epu32(r.native(), move4_l<1>(r).native());
         prod = _mm_mul_epu32(prod.native(), r.native());
     }
-    prod = _mm_mul_epu32(prod.native(), move4_l<2>(prod).eval().native());
+    prod = _mm_mul_epu32(prod.native(), move4_l<2>(prod).native());
     return extract<0>(prod);
 #elif SIMDPP_USE_NEON
     int32x4 prod = make_uint(1);
@@ -378,8 +378,8 @@ uint32_t i_reduce_mul(const uint32x4& a)
     }
     return r;
 #elif SIMDPP_USE_SSE2
-    uint32x4 r = _mm_mul_epu32(a.native(), move4_l<1>(a).eval().native());
-    r = _mm_mul_epu32(r.native(), move4_l<2>(r).eval().native());
+    uint32x4 r = _mm_mul_epu32(a.native(), move4_l<1>(a).native());
+    r = _mm_mul_epu32(r.native(), move4_l<2>(r).native());
     return extract<0>(r);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_MSA
     uint32x4 r = a;
@@ -396,10 +396,10 @@ uint32_t i_reduce_mul(const uint32x4& a)
 static SIMDPP_INL
 uint32_t i_reduce_mul(const uint32x8& a)
 {
-    uint32x8 ra = _mm256_mul_epu32(a.native(), move4_l<1>(a).eval().native());
+    uint32x8 ra = _mm256_mul_epu32(a.native(), move4_l<1>(a).native());
     uint32x4 r = _mm_mul_epu32(detail::extract128<0>(ra).native(),
                                detail::extract128<1>(ra).native());
-    r = _mm_mul_epu32(r.native(), move4_l<2>(r).eval().native());
+    r = _mm_mul_epu32(r.native(), move4_l<2>(r).native());
     return extract<0>(r);
 }
 #endif
@@ -427,21 +427,21 @@ SIMDPP_INL uint32_t i_reduce_mul(const uint32<N>& a)
     uint32x8 prod = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         uint32x8 ai = a.vec(j);
-        uint32x8 ra = _mm256_mul_epu32(ai.native(), move4_l<1>(ai).eval().native());
+        uint32x8 ra = _mm256_mul_epu32(ai.native(), move4_l<1>(ai).native());
         prod = _mm256_mul_epu32(prod.native(), ra.native());
     }
     uint32x4 r = _mm_mul_epu32(detail::extract128<0>(prod).native(),
                                detail::extract128<1>(prod).native());
-    r = _mm_mul_epu32(r.native(), move4_l<2>(r).eval().native());
+    r = _mm_mul_epu32(r.native(), move4_l<2>(r).native());
     return extract<0>(r);
 #elif SIMDPP_USE_SSE2
     uint32x4 r = make_uint(1);
     for (unsigned j = 0; j < a.vec_length; ++j) {
         uint32x4 ai = a.vec(j);
-        uint32x4 ra = _mm_mul_epu32(ai.native(), move4_l<1>(ai).eval().native());
+        uint32x4 ra = _mm_mul_epu32(ai.native(), move4_l<1>(ai).native());
         r = _mm_mul_epu32(r.native(), ra.native());
     }
-    r = _mm_mul_epu32(r.native(), move4_l<2>(r).eval().native());
+    r = _mm_mul_epu32(r.native(), move4_l<2>(r).native());
     return extract<0>(r);
 #elif SIMDPP_USE_NEON || SIMDPP_USE_MSA
     uint32x4 prod = make_uint(1);

@@ -45,7 +45,7 @@ void store_first(T* p, const any_vec<N,V>& a, unsigned n)
 {
     static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
     detail::insn::i_store_first(reinterpret_cast<char*>(p),
-                                a.wrapped().eval(), n);
+                                a.wrapped(), n);
 }
 
 

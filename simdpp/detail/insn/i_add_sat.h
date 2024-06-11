@@ -156,7 +156,7 @@ uint16<32> i_add_sat(const uint16<32>& a, const uint16<32>& b)
 }
 #endif
 
-template<class R, unsigned N, class E1, class E2> SIMDPP_INL
+template<class R, unsigned N> SIMDPP_INL
 uint16<N> i_add_sat(const uint16<N>& a, const uint16<N>& b)
 {
     SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, add_sat, a, b);

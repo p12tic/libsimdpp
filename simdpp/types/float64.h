@@ -26,7 +26,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
     always contains at least one native vector.
 */
 template<unsigned N>
-class float64<N, void> : public any_float64<N, float64<N,void>> {
+class float64 : public any_float64<N, float64<N>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_FLOAT;
     using element_type = double;
@@ -37,14 +37,13 @@ public:
     SIMDPP_INL float64<N>(const float64<N>&) = default;
     SIMDPP_INL float64<N>& operator=(const float64<N>&) = default;
 
-    template<class E> SIMDPP_INL float64<N>(const float64<N,E>& d) { *this = d.eval(); }
     template<class V> SIMDPP_INL explicit float64<N>(const any_vec<N*8,V>& d)
     {
-        *this = bit_cast<float64<N>>(d.wrapped().eval());
+        *this = bit_cast<float64<N>>(d.wrapped());
     }
     template<class V> SIMDPP_INL float64<N>& operator=(const any_vec<N*8,V>& d)
     {
-        *this = bit_cast<float64<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<float64<N>>(d.wrapped()); return *this;
     }
 
     template<class E> SIMDPP_INL float64<N>(const expr_vec_construct<E>& e)
@@ -58,8 +57,6 @@ public:
 
     SIMDPP_INL const float64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL float64v& vec(unsigned i)             { return d_[i]; }
-
-    SIMDPP_INL float64<N> eval() const { return *this; }
 
 private:
     /** Creates a float vector from a native vector
@@ -83,7 +80,7 @@ private:
 /// Class representing possibly optimized mask data for 2x 64-bit floating point
 /// vector
 template<unsigned N>
-class mask_float64<N, void> : public any_float64<N, mask_float64<N,void>> {
+class mask_float64 : public any_float64<N, mask_float64<N>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_FLOAT;
     using base_vector_type = mask_float64v;
@@ -93,13 +90,13 @@ public:
     SIMDPP_INL mask_float64<N>(const mask_float64<N> &) = default;
     SIMDPP_INL mask_float64<N> &operator=(const mask_float64<N> &) = default;
 
-    template<class E> SIMDPP_INL explicit mask_float64<N>(const mask_int64<N,E>& d)
+    SIMDPP_INL explicit mask_float64<N>(const mask_int64<N>& d)
     {
-        *this = bit_cast<mask_float64<N>>(d.eval());
+        *this = bit_cast<mask_float64<N>>(d);
     }
-    template<class E> SIMDPP_INL mask_float64<N>& operator=(const mask_int64<N,E>& d)
+    SIMDPP_INL mask_float64<N>& operator=(const mask_int64<N>& d)
     {
-        *this = bit_cast<mask_float64<N>>(d.eval()); return *this;
+        *this = bit_cast<mask_float64<N>>(d); return *this;
     }
 
     /// Access the underlying type
@@ -114,8 +111,6 @@ public:
 
     SIMDPP_INL const mask_float64v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL mask_float64v& vec(unsigned i)       { return d_[i]; }
-
-    SIMDPP_INL mask_float64<N> eval() const { return *this; }
 
 private:
     detail::vararray<mask_float64v, mask_float64::vec_length> d_;

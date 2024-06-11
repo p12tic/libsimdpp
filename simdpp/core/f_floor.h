@@ -36,15 +36,15 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{NEON, 20-21}
     @icost{ALTIVEC, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-float32<N,expr_empty> floor(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float32<N> floor(const float32<N>& a)
 {
-    return detail::insn::i_floor(a.eval());
+    return detail::insn::i_floor(a);
 }
-template<unsigned N, class E> SIMDPP_INL
-float64<N,expr_empty> floor(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float64<N> floor(const float64<N>& a)
 {
-    return detail::insn::i_floor(a.eval());
+    return detail::insn::i_floor(a);
 }
 
 

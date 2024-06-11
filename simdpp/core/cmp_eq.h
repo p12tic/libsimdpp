@@ -32,12 +32,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int8<N,expr_empty> cmp_eq(const any_int8<N,V1>& a,
-                               const any_int8<N,V2>& b)
+mask_int8<N> cmp_eq(const any_int8<N,V1>& a, const any_int8<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 
@@ -55,12 +54,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int8, any_int8)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int16<N,expr_empty> cmp_eq(const any_int16<N,V1>& a,
-                                const any_int16<N,V2>& b)
+mask_int16<N> cmp_eq(const any_int16<N,V1>& a, const any_int16<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 
@@ -78,12 +76,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int16, any_int16)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int32<N,expr_empty> cmp_eq(const any_int32<N,V1>& a,
-                                const any_int32<N,V2>& b)
+mask_int32<N> cmp_eq(const any_int32<N,V1>& a, const any_int32<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 
@@ -110,12 +107,11 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int32, any_int32)
     @icost{ALTIVEC, 6-7}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_int64<N,expr_empty> cmp_eq(const any_int64<N,V1>& a,
-                                const any_int64<N,V2>& b)
+mask_int64<N> cmp_eq(const any_int64<N,V1>& a, const any_int64<N,V2>& b)
 {
     typename detail::get_expr2_nosign<V1, V2>::type ra, rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_cmp_eq(ra, rb);
 }
 
@@ -133,10 +129,9 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_int64, any_int64)
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_float32<N,expr_empty> cmp_eq(const any_float32<N,V1>& a,
-                                  const any_float32<N,V2>& b)
+mask_float32<N> cmp_eq(const any_float32<N,V1>& a, const any_float32<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.wrapped().eval(), b.wrapped().eval());
+    return detail::insn::i_cmp_eq(a.wrapped(), b.wrapped());
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_float32, any_float32)
@@ -157,10 +152,9 @@ SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_float32, any_float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-mask_float64<N,expr_empty> cmp_eq(const any_float64<N,V1>& a,
-                                  const any_float64<N,V2>& b)
+mask_float64<N> cmp_eq(const any_float64<N,V1>& a, const any_float64<N,V2>& b)
 {
-    return detail::insn::i_cmp_eq(a.wrapped().eval(), b.wrapped().eval());
+    return detail::insn::i_cmp_eq(a.wrapped(), b.wrapped());
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC_EXPR(cmp_eq, mask_float64, any_float64)

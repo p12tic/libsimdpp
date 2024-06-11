@@ -49,12 +49,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{ALTIVEC, 2-3}
 */
 template<unsigned s0, unsigned s1, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
         shuffle1(const any_vec64<N,V1>& a, const any_vec64<N,V2>& b)
 {
     static_assert(s0 < 2 && s1 < 2, "Selector out of range");
-    typename detail::get_expr2_nomask<V1, V2>::type ra = a.wrapped().eval(),
-                                                    rb = b.wrapped().eval();
+    typename detail::get_expr2_nomask<V1, V2>::type ra = a.wrapped(),
+                                                    rb = b.wrapped();
     return detail::insn::i_shuffle2x2<s0,s1+2>(ra, rb);
 }
 

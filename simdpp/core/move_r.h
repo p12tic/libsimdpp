@@ -38,13 +38,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         move16_r(const any_vec8<N,V>& a)
 {
     static_assert(shift <= 16, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move16_r_wrapper<shift>::run(ra);
 }
 
@@ -68,13 +68,13 @@ typename detail::get_expr_nomask<V>::empty
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         move8_r(const any_vec16<N,V>& a)
 {
     static_assert(shift <= 8, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move8_r_wrapper<shift>::run(ra);
 }
 
@@ -96,13 +96,13 @@ typename detail::get_expr_nomask<V>::empty
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         move4_r(const any_vec32<N,V>& a)
 {
     static_assert(shift <= 4, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move4_r_wrapper<shift>::run(ra);
 }
 
@@ -123,13 +123,13 @@ typename detail::get_expr_nomask<V>::empty
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V> SIMDPP_INL
-typename detail::get_expr_nomask<V>::empty
+typename detail::get_expr_nomask<V>::type
         move2_r(const any_vec64<N,V>& a)
 {
     static_assert(shift <= 2, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move2_r_wrapper<shift>::run(ra);
 }
 

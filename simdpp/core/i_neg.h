@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/i_neg.h>
+#include <simdpp/detail/insn/i_neg.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -29,10 +29,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-int8<N, expr_ineg<int8<N,E>>> neg(const int8<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int8<N> neg(const int8<N>& a)
 {
-    return { { a } };
+    return detail::insn::i_ineg(a);
 }
 
 /** Negates signed 16-bit values.
@@ -46,10 +46,10 @@ int8<N, expr_ineg<int8<N,E>>> neg(const int8<N,E>& a)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-int16<N, expr_ineg<int16<N,E>>> neg(const int16<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int16<N> neg(const int16<N>& a)
 {
-    return { { a } };
+    return detail::insn::i_ineg(a);
 }
 
 /** Negates signed 32-bit values.
@@ -63,10 +63,10 @@ int16<N, expr_ineg<int16<N,E>>> neg(const int16<N,E>& a)
     @par 256-bit version:
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
-template<unsigned N, class E> SIMDPP_INL
-int32<N, expr_ineg<int32<N,E>>> neg(const int32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int32<N> neg(const int32<N>& a)
 {
-    return { { a } };
+    return detail::insn::i_ineg(a);
 }
 
 /** Negates signed 64-bit values.
@@ -84,10 +84,10 @@ int32<N, expr_ineg<int32<N,E>>> neg(const int32<N,E>& a)
     @icost{SSE2-AVX, NEON, 2}
     @icost{ALTIVEC, 8-9}
 */
-template<unsigned N, class E> SIMDPP_INL
-int64<N, expr_ineg<int64<N,E>>> neg(const int64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+int64<N> neg(const int64<N>& a)
 {
-    return { { a } };
+    return detail::insn::i_ineg(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

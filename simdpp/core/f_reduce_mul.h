@@ -25,16 +25,16 @@ namespace SIMDPP_ARCH_NAMESPACE {
     r0 = a0 * a1 * a2 * ...
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-float reduce_mul(const float32<N,E>& a)
+template<unsigned N> SIMDPP_INL
+float reduce_mul(const float32<N>& a)
 {
-    return detail::insn::i_reduce_mul(a.eval());
+    return detail::insn::i_reduce_mul(a);
 }
 
-template<unsigned N, class E> SIMDPP_INL
-double reduce_mul(const float64<N,E>& a)
+template<unsigned N> SIMDPP_INL
+double reduce_mul(const float64<N>& a)
 {
-    return detail::insn::i_reduce_mul(a.eval());
+    return detail::insn::i_reduce_mul(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

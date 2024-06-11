@@ -38,7 +38,7 @@ float64x4 i_to_float64(const float32x4& a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtps_pd(a.native());
-    r2 = _mm_cvtps_pd(move4_l<2>(a).eval().native());
+    r2 = _mm_cvtps_pd(move4_l<2>(a).native());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON64
     float64<2> r1, r2;
@@ -124,7 +124,7 @@ float64x4 i_to_float64(const int32x4& a)
 #elif SIMDPP_USE_SSE2
     float64x2 r1, r2;
     r1 = _mm_cvtepi32_pd(a.native());
-    r2 = _mm_cvtepi32_pd(move4_l<2>(a).eval().native());
+    r2 = _mm_cvtepi32_pd(move4_l<2>(a).native());
     return combine(r1, r2);
 #elif SIMDPP_USE_NEON64
     float64<2> r1, r2;
@@ -214,7 +214,7 @@ float64<4> i_to_float64(const uint32<4>& a)
     f = _mm256_cvtepi32_pd(a.native());
 #else
     f.vec(0) = _mm_cvtepi32_pd(a.native());
-    f.vec(1) = _mm_cvtepi32_pd(move4_l<2>(a).eval().native());
+    f.vec(1) = _mm_cvtepi32_pd(move4_l<2>(a).native());
 #endif
     // if result is negative, we converted integer larger than 0x7fffffff
     mask_float64<4> is_large = cmp_lt(f, 0);

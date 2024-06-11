@@ -46,18 +46,18 @@ void test_expr_math_int_v(TestReporter& ts)
         TEST_EQUAL(ts, shift_r<4>(a), a >> 4);
 
         // expressions
-        TEST_EQUAL(ts, add(a, add(b, c)), add(a, add(b, c).eval()));
-        TEST_EQUAL(ts, add(add(b, c), a), add(add(b, c).eval(), a));
-        TEST_EQUAL(ts, sub(a, sub(b, c)), sub(a, sub(b, c).eval()));
-        TEST_EQUAL(ts, sub(sub(b, c), a), sub(sub(b, c).eval(), a));
-        //TEST_EQUAL(ts, add_sat(a, add_sat(b, c)), add_sat(a, add_sat(b, c).eval()));
-        //TEST_EQUAL(ts, add_sat(add_sat(b, c), a), add_sat(add_sat(b, c).eval(), a));
-        //TEST_EQUAL(ts, sub_sat(a, sub_sat(b, c)), sub_sat(a, sub_sat(b, c).eval()));
-        //TEST_EQUAL(ts, sub_sat(sub_sat(b, c), a), sub_sat(sub_sat(b, c).eval(), a));
-        TEST_EQUAL(ts, mul_lo(a, mul_lo(b, c)), mul_lo(a, mul_lo(b, c).eval()));
-        TEST_EQUAL(ts, mul_lo(mul_lo(b, c), a), mul_lo(mul_lo(b, c).eval(), a));
-        //TEST_EQUAL(ts, abs(add(a, b)), abs(add(a, b).eval()));
-        //TEST_EQUAL(ts, neg(add(a, b)), neg(add(a, b).eval()));
+        TEST_EQUAL(ts, add(a, add(b, c)), add(a, add(b, c)));
+        TEST_EQUAL(ts, add(add(b, c), a), add(add(b, c), a));
+        TEST_EQUAL(ts, sub(a, sub(b, c)), sub(a, sub(b, c)));
+        TEST_EQUAL(ts, sub(sub(b, c), a), sub(sub(b, c), a));
+        //TEST_EQUAL(ts, add_sat(a, add_sat(b, c)), add_sat(a, add_sat(b, c)));
+        //TEST_EQUAL(ts, add_sat(add_sat(b, c), a), add_sat(add_sat(b, c), a));
+        //TEST_EQUAL(ts, sub_sat(a, sub_sat(b, c)), sub_sat(a, sub_sat(b, c)));
+        //TEST_EQUAL(ts, sub_sat(sub_sat(b, c), a), sub_sat(sub_sat(b, c), a));
+        TEST_EQUAL(ts, mul_lo(a, mul_lo(b, c)), mul_lo(a, mul_lo(b, c)));
+        TEST_EQUAL(ts, mul_lo(mul_lo(b, c), a), mul_lo(mul_lo(b, c), a));
+        //TEST_EQUAL(ts, abs(add(a, b)), abs(add(a, b)));
+        //TEST_EQUAL(ts, neg(add(a, b)), neg(add(a, b)));
 
         // scalar arguments
         TEST_EQUAL(ts, add(a, make_float<V>(1234.1234f)), a + 1234.1234f);

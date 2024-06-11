@@ -43,17 +43,17 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSSE3-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align16(const any_vec8<N,V1>& lower,
             const any_vec8<N,V2>& upper)
 {
     static_assert(shift <= 16, "Shift out of bounds");
-    if (shift == 0) return lower.wrapped().eval();
-    if (shift == 16) return upper.wrapped().eval();
+    if (shift == 0) return lower.wrapped();
+    if (shift == 16) return upper.wrapped();
 
     typename detail::get_expr2_nomask_nosign<V1, V2>::type qlower, qupper;
-    qlower = lower.wrapped().eval();
-    qupper = upper.wrapped().eval();
+    qlower = lower.wrapped();
+    qupper = upper.wrapped();
     return detail::insn::i_align16<shift>(qlower, qupper);
 }
 
@@ -80,17 +80,17 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     was applied to each of them separately.
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align8(const any_vec16<N,V1>& lower,
            const any_vec16<N,V2>& upper)
 {
     static_assert(shift <= 8, "Shift out of bounds");
-    if (shift == 0) return lower.wrapped().eval();
-    if (shift == 8) return upper.wrapped().eval();
+    if (shift == 0) return lower.wrapped();
+    if (shift == 8) return upper.wrapped();
 
     typename detail::get_expr2_nomask_nosign<V1, V2>::type qlower, qupper;
-    qlower = lower.wrapped().eval();
-    qupper = upper.wrapped().eval();
+    qlower = lower.wrapped();
+    qupper = upper.wrapped();
     return detail::insn::i_align8<shift>(qlower, qupper);
 }
 
@@ -130,17 +130,17 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align4(const any_vec32<N,V1>& lower,
            const any_vec32<N,V2>& upper)
 {
     static_assert(shift <= 4, "Shift out of bounds");
-    if (shift == 0) return lower.wrapped().eval();
-    if (shift == 4) return upper.wrapped().eval();
+    if (shift == 0) return lower.wrapped();
+    if (shift == 4) return upper.wrapped();
 
     typename detail::get_expr2_nomask_nosign<V1, V2>::type qlower, qupper;
-    qlower = lower.wrapped().eval();
-    qupper = upper.wrapped().eval();
+    qlower = lower.wrapped();
+    qupper = upper.wrapped();
     return detail::insn::i_align4<shift>(qlower, qupper);
 }
 
@@ -179,17 +179,17 @@ typename detail::get_expr2_nomask<V1, V2>::empty
     @icost{SSSE3-SSE4.1 NEON, ALTIVEC, 2}
 */
 template<unsigned shift, unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr2_nomask<V1, V2>::empty
+typename detail::get_expr2_nomask<V1, V2>::type
     align2(const any_vec64<N,V1>& lower,
            const any_vec64<N,V2>& upper)
 {
     static_assert(shift <= 2, "Shift out of bounds");
-    if (shift == 0) return lower.wrapped().eval();
-    if (shift == 2) return upper.wrapped().eval();
+    if (shift == 0) return lower.wrapped();
+    if (shift == 2) return upper.wrapped();
 
     typename detail::get_expr2_nomask_nosign<V1, V2>::type qlower, qupper;
-    qlower = lower.wrapped().eval();
-    qupper = upper.wrapped().eval();
+    qlower = lower.wrapped();
+    qupper = upper.wrapped();
     return detail::insn::i_align2<shift>(qlower, qupper);
 }
 

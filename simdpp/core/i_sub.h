@@ -13,10 +13,9 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/i_sub.h>
+#include <simdpp/detail/insn/i_sub.h>
 #include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
-#include <simdpp/core/detail/get_expr_uint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -33,14 +32,18 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_isub, V1, V2>::type
+typename detail::get_expr_uint<V1, V2>::type
         sub(const any_int8<N,V1>& a,
             const any_int8<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() } };
+    typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
+    typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
+    ra = a.wrapped();
+    rb = b.wrapped();
+    return detail::insn::i_isub(ra, rb);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int8, int8)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int8, int8<N>)
 
 /** Subtracts 16-bit integer values.
 
@@ -54,14 +57,18 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int8, int8)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_isub, V1, V2>::type
+typename detail::get_expr_uint<V1, V2>::type
         sub(const any_int16<N,V1>& a,
             const any_int16<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() } };
+    typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
+    typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
+    ra = a.wrapped();
+    rb = b.wrapped();
+    return detail::insn::i_isub(ra, rb);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int16, int16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int16, int16<N>)
 
 /** Subtracts 32-bit integer values.
 
@@ -75,14 +82,18 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int16, int16)
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_isub, V1, V2>::type
+typename detail::get_expr_uint<V1, V2>::type
         sub(const any_int32<N,V1>& a,
             const any_int32<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() } };
+    typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
+    typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
+    ra = a.wrapped();
+    rb = b.wrapped();
+    return detail::insn::i_isub(ra, rb);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int32, int32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int32, int32<N>)
 
 /** Subtracts 64-bit integer values.
 
@@ -100,14 +111,18 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int32, int32)
     @icost{ALTIVEC, 10-11}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_isub, V1, V2>::type
+typename detail::get_expr_uint<V1, V2>::type
         sub(const any_int64<N,V1>& a,
             const any_int64<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() } };
+    typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
+    typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
+    ra = a.wrapped();
+    rb = b.wrapped();
+    return detail::insn::i_isub(ra, rb);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int64, int64)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(sub, expr_isub, any_int64, int64<N>)
 
 
 } // namespace SIMDPP_ARCH_NAMESPACE

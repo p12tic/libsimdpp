@@ -27,7 +27,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 8x 16-bit signed integer vector
 */
 template<>
-class int16<8, void> : public any_int16<8, int16<8,void>> {
+class int16<8> : public any_int16<8, int16<8>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int16_t;
@@ -50,15 +50,14 @@ public:
     SIMDPP_INL int16<8>(const int16<8> &) = default;
     SIMDPP_INL int16<8> &operator=(const int16<8> &) = default;
 
-    template<class E> SIMDPP_INL int16<8>(const int16<8,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL int16<8>(const uint16<8,E>& d) { *this = d.eval(); }
+    SIMDPP_INL int16<8>(const uint16<8>& d);
     template<class V> SIMDPP_INL explicit int16<8>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int16<8>>(d.wrapped().eval());
+        *this = bit_cast<int16<8>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int16<8>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int16<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int16<8>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -85,8 +84,6 @@ public:
     SIMDPP_INL const int16<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL int16<8>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL int16<8> eval() const { return *this; }
-
 #if SIMDPP_USE_NULL
     /// For internal use only
     SIMDPP_INL const int16_t& el(unsigned i) const { return d_[i]; }
@@ -100,11 +97,11 @@ private:
 /** Class representing 8x 16-bit unsigned integer vector
 */
 template<>
-class uint16<8, void> : public any_int16<8, uint16<8,void>> {
+class uint16<8> : public any_int16<8, uint16<8>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint16_t;
-    using base_vector_type = uint16<8,void>;
+    using base_vector_type = uint16<8>;
     using expr_type = void;
 
 #if SIMDPP_USE_SSE2
@@ -123,15 +120,14 @@ public:
     SIMDPP_INL uint16<8>(const uint16<8> &) = default;
     SIMDPP_INL uint16<8> &operator=(const uint16<8> &) = default;
 
-    template<class E> SIMDPP_INL uint16<8>(const uint16<8,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL uint16<8>(const int16<8,E>& d) { *this = d.eval(); }
+    SIMDPP_INL uint16<8>(const int16<8>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint16<8>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint16<8>>(d.wrapped().eval());
+        *this = bit_cast<uint16<8>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint16<8>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint16<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint16<8>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -158,8 +154,6 @@ public:
     SIMDPP_INL const uint16<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint16<8>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL uint16<8> eval() const { return *this; }
-
 #if SIMDPP_USE_NULL
     /// For uinternal use only
     SIMDPP_INL const uint16_t& el(unsigned i) const { return d_[i]; }
@@ -173,10 +167,10 @@ private:
 /// Class representing possibly optimized mask data for 8x 16-bit integer
 /// vector
 template<>
-class mask_int16<8, void> : public any_int16<8, mask_int16<8,void>> {
+class mask_int16<8> : public any_int16<8, mask_int16<8>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int16<8, void>;
+    using base_vector_type = mask_int16<8>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512VL
@@ -198,6 +192,7 @@ public:
     SIMDPP_INL mask_int16<8> &operator=(const mask_int16<8> &) = default;
 
     SIMDPP_INL mask_int16<8>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int16<8>& operator=(const native_type& d) { d_ = d; return *this; }
 
 #if SIMDPP_USE_ALTIVEC
     SIMDPP_INL mask_int16<8>(const __vector __bool short& d) : d_((__vector uint16_t)d) {}
@@ -233,8 +228,6 @@ public:
 
     SIMDPP_INL const mask_int16<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int16<8>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int16<8> eval() const { return *this; }
 
 private:
     native_type d_;

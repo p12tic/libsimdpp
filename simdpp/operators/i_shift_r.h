@@ -34,10 +34,10 @@ namespace SIMDPP_ARCH_NAMESPACE {
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> operator>>(const int8<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int8<N> operator>>(const int8<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 /** Shifts unsigned 8-bit values right by @a count bits while shifting in zeros.
@@ -48,10 +48,10 @@ int8<N,expr_empty> operator>>(const int8<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> operator>>(const uint8<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint8<N> operator>>(const uint8<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 /** Shifts signed 16-bit values right by @a count bits while shifting in the
@@ -63,10 +63,10 @@ uint8<N,expr_empty> operator>>(const uint8<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int16<N,expr_empty> operator>>(const int16<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int16<N> operator>>(const int16<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 /** Shifts unsigned 16-bit values right by @a count bits while shifting in
@@ -78,10 +78,10 @@ int16<N,expr_empty> operator>>(const int16<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint16<N,expr_empty> operator>>(const uint16<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint16<N> operator>>(const uint16<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 /** Shifts signed 32-bit values right by @a count bits while shifting in the
@@ -93,10 +93,10 @@ uint16<N,expr_empty> operator>>(const uint16<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int32<N,expr_empty> operator>>(const int32<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int32<N> operator>>(const int32<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 /** Shifts unsigned 32-bit values right by @a count bits while shifting in
@@ -108,10 +108,10 @@ int32<N,expr_empty> operator>>(const int32<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint32<N,expr_empty> operator>>(const uint32<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint32<N> operator>>(const uint32<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 /** Shifts signed 64-bit values right by @a count bits while shifting in the
@@ -123,10 +123,10 @@ uint32<N,expr_empty> operator>>(const uint32<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int64<N,expr_empty> operator>>(const int64<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+int64<N> operator>>(const int64<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 /** Shifts unsigned 64-bit values right by @a count bits while shifting in
@@ -138,10 +138,10 @@ int64<N,expr_empty> operator>>(const int64<N,E>& a, unsigned count)
     rN = aN >> count
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint64<N,expr_empty> operator>>(const uint64<N,E>& a, unsigned count)
+template<unsigned N> SIMDPP_INL
+uint64<N> operator>>(const uint64<N>& a, unsigned count)
 {
-    return detail::insn::i_shift_r(a.eval(), count);
+    return detail::insn::i_shift_r(a, count);
 }
 
 // -----------------------------------------------------------------------------
@@ -156,13 +156,13 @@ uint64<N,expr_empty> operator>>(const uint64<N,E>& a, unsigned count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int8<N,expr_empty> operator>>(const int8<N,E>& a, const uint8<N,E>& count)
+template<unsigned N> SIMDPP_INL
+int8<N> operator>>(const int8<N>& a, const uint8<N>& count)
 {
 #if SIMDPP_HAS_INT8_SHIFT_R_BY_VECTOR
-    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+    return detail::insn::i_shift_r_v(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -175,13 +175,13 @@ int8<N,expr_empty> operator>>(const int8<N,E>& a, const uint8<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint8<N,expr_empty> operator>>(const uint8<N,E>& a, const uint8<N,E>& count)
+template<unsigned N> SIMDPP_INL
+uint8<N> operator>>(const uint8<N>& a, const uint8<N>& count)
 {
 #if SIMDPP_HAS_UINT8_SHIFT_R_BY_VECTOR
-    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+    return detail::insn::i_shift_r_v(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -194,13 +194,13 @@ uint8<N,expr_empty> operator>>(const uint8<N,E>& a, const uint8<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int16<N,expr_empty> operator>>(const int16<N,E>& a, const uint16<N,E>& count)
+template<unsigned N> SIMDPP_INL
+int16<N> operator>>(const int16<N>& a, const uint16<N>& count)
 {
 #if SIMDPP_HAS_INT16_SHIFT_R_BY_VECTOR
-    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+    return detail::insn::i_shift_r_v(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -213,13 +213,13 @@ int16<N,expr_empty> operator>>(const int16<N,E>& a, const uint16<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint16<N,expr_empty> operator>>(const uint16<N,E>& a, const uint16<N,E>& count)
+template<unsigned N> SIMDPP_INL
+uint16<N> operator>>(const uint16<N>& a, const uint16<N>& count)
 {
 #if SIMDPP_HAS_UINT16_SHIFT_R_BY_VECTOR
-    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+    return detail::insn::i_shift_r_v(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -232,13 +232,13 @@ uint16<N,expr_empty> operator>>(const uint16<N,E>& a, const uint16<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-int32<N,expr_empty> operator>>(const int32<N,E>& a, const uint32<N,E>& count)
+template<unsigned N> SIMDPP_INL
+int32<N> operator>>(const int32<N>& a, const uint32<N>& count)
 {
 #if SIMDPP_HAS_INT32_SHIFT_R_BY_VECTOR
-    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+    return detail::insn::i_shift_r_v(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 
@@ -251,13 +251,13 @@ int32<N,expr_empty> operator>>(const int32<N,E>& a, const uint32<N,E>& count)
     rN = aN >> countN
     @endcode
 */
-template<unsigned N, class E> SIMDPP_INL
-uint32<N,expr_empty> operator>>(const uint32<N,E>& a, const uint32<N,E>& count)
+template<unsigned N> SIMDPP_INL
+uint32<N> operator>>(const uint32<N>& a, const uint32<N>& count)
 {
 #if SIMDPP_HAS_UINT32_SHIFT_R_BY_VECTOR
-    return detail::insn::i_shift_r_v(a.eval(), count.eval());
+    return detail::insn::i_shift_r_v(a, count);
 #else
-    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE2(E, a, count);
+    return SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N, a, count);
 #endif
 }
 

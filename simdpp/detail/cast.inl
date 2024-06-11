@@ -63,7 +63,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_BITWISE> {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        cast_bitwise_vector(t.eval(), r);
+        cast_bitwise_vector(t, r);
     }
 };
 
@@ -75,7 +75,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_UNMASK> {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        cast_bitwise_unmask(t.eval(), r);
+        cast_bitwise_unmask(t, r);
     }
 };
 
@@ -87,7 +87,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_MASK_REMASK> {
         static_assert(R::size_tag == T::size_tag,
                       "Conversions between masks with different element size is"
                       " not allowed");
-        cast_bitwise_remask(t.eval(), r);
+        cast_bitwise_remask(t, r);
     }
 };
 
@@ -107,7 +107,7 @@ struct cast_wrapper<CAST_TYPE_MASK_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
-        cast_bitwise_unmask(t.eval(), r);
+        cast_bitwise_unmask(t, r);
     }
 };
 
@@ -116,7 +116,7 @@ struct cast_wrapper<CAST_TYPE_VECTOR_TO_VECTOR> {
     template<class R, class T> SIMDPP_INL
     static void run(const T& t, R& r)
     {
-        cast_bitwise_vector(t.eval(), r);
+        cast_bitwise_vector(t, r);
     }
 };
 

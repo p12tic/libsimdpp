@@ -93,7 +93,7 @@ float64x2 i_trunc(const float64x2& a)
     // check if the value is not too large or is a nan
     mask_float64x2 mask_range = cmp_le(af, 4503599627370495.0);
     // check if truncate to zero
-    float64x2 mask_zero = cmp_lt(af, 1.0).eval().unmask();
+    float64x2 mask_zero = cmp_lt(af, 1.0).unmask();
 
     /*  Emulate truncation for numbers not less than 1.0.
         This is implemented by clearing the mantissa in the source number,

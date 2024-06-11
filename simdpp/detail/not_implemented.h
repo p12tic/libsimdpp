@@ -42,23 +42,6 @@ public:
     template<unsigned N> operator float64<N>() { return float64<N>(); }
     template<unsigned N> operator mask_float64<N>() { return mask_float64<N>(); }
 
-    template<unsigned N> operator int8<N,expr_empty>() { return int8<N>(); }
-    template<unsigned N> operator uint8<N,expr_empty>() { return uint8<N>(); }
-    template<unsigned N> operator mask_int8<N,expr_empty>() { return mask_int8<N>(); }
-    template<unsigned N> operator int16<N,expr_empty>() { return int16<N>(); }
-    template<unsigned N> operator uint16<N,expr_empty>() { return uint16<N>(); }
-    template<unsigned N> operator mask_int16<N,expr_empty>() { return mask_int16<N>(); }
-    template<unsigned N> operator int32<N,expr_empty>() { return int32<N>(); }
-    template<unsigned N> operator uint32<N,expr_empty>() { return uint32<N>(); }
-    template<unsigned N> operator mask_int32<N,expr_empty>() { return mask_int32<N>(); }
-    template<unsigned N> operator int64<N,expr_empty>() { return int64<N>(); }
-    template<unsigned N> operator uint64<N,expr_empty>() { return uint64<N>(); }
-    template<unsigned N> operator mask_int64<N,expr_empty>() { return mask_int64<N>(); }
-    template<unsigned N> operator float32<N,expr_empty>() { return float32<N>(); }
-    template<unsigned N> operator mask_float32<N,expr_empty>() { return mask_float32<N>(); }
-    template<unsigned N> operator float64<N,expr_empty>() { return float64<N>(); }
-    template<unsigned N> operator mask_float64<N,expr_empty>() { return mask_float64<N>(); }
-
     operator int32_t() { return 0; }
     operator uint32_t() { return 0; }
     operator int64_t() { return 0; }
@@ -77,6 +60,13 @@ template<class T>
 void libsimdpp_instruction_not_available_template()
 {
     static_assert(!std::is_same<T, T>::value, "The instruction is not available");
+}
+
+template<unsigned N>
+void libsimdpp_instruction_not_available_template_n()
+{
+    static_assert(!std::integral_constant<std::uint32_t, N>::value,
+                  "The instruction is not available");
 }
 
 /** Causes linker error whenever unimplemented functionality is used. Compared
@@ -115,6 +105,35 @@ void libsimdpp_instruction_not_available4();
 #define SIMDPP_NOT_IMPLEMENTED_TEMPLATE4(T,A,B,C,D)  (                  \
     (void) A, (void) B, (void) C, (void) D,                             \
     libsimdpp_instruction_not_available_template<T>(),                  \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N0(N)  (                        \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N1(N,A)  (                      \
+    (void) A,                                                           \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N2(N,A,B)  (                    \
+    (void) A, (void) B,                                                 \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N3(N,A,B,C)  (                  \
+    (void) A, (void) B, (void) C,                                       \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
+    ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
+    )
+
+#define SIMDPP_NOT_IMPLEMENTED_TEMPLATE_N4(N,A,B,C,D)  (                \
+    (void) A, (void) B, (void) C, (void) D,                             \
+    libsimdpp_instruction_not_available_template_n<N>(),                \
     ::simdpp::SIMDPP_ARCH_NAMESPACE::detail::dummy_value()              \
     )
 

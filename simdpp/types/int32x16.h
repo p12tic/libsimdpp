@@ -26,11 +26,11 @@ namespace SIMDPP_ARCH_NAMESPACE {
 /** Class representing 8x 32-bit signed integer vector
 */
 template<>
-class int32<16, void> : public any_int32<16, int32<16,void>> {
+class int32<16> : public any_int32<16, int32<16>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_INT;
     using element_type = int32_t;
-    using base_vector_type = int32<16,void>;
+    using base_vector_type = int32<16>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512F
@@ -41,15 +41,14 @@ public:
     SIMDPP_INL int32<16>(const int32<16> &) = default;
     SIMDPP_INL int32<16> &operator=(const int32<16> &) = default;
 
-    template<class E> SIMDPP_INL int32<16>(const int32<16,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL int32<16>(const uint32<16,E>& d) { *this = d.eval(); }
+    SIMDPP_INL int32<16>(const uint32<16>& d);
     template<class V> SIMDPP_INL explicit int32<16>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int32<16>>(d.wrapped().eval());
+        *this = bit_cast<int32<16>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int32<16>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int32<16>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int32<16>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -76,8 +75,6 @@ public:
     SIMDPP_INL const int32<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL int32<16>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL int32<16> eval() const { return *this; }
-
 private:
     native_type d_;
 };
@@ -85,11 +82,11 @@ private:
 /** Class representing 8x 32-bit unsigned integer vector
 */
 template<>
-class uint32<16, void> : public any_int32<16, uint32<16,void>> {
+class uint32<16> : public any_int32<16, uint32<16>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_UINT;
     using element_type = uint32_t;
-    using base_vector_type = uint32<16,void>;
+    using base_vector_type = uint32<16>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512F
@@ -100,15 +97,14 @@ public:
     SIMDPP_INL uint32<16>(const uint32<16> &) = default;
     SIMDPP_INL uint32<16> &operator=(const uint32<16> &) = default;
 
-    template<class E> SIMDPP_INL uint32<16>(const uint32<16,E>& d) { *this = d.eval(); }
-    template<class E> SIMDPP_INL uint32<16>(const int32<16,E>& d) { *this = d.eval(); }
+    SIMDPP_INL uint32<16>(const int32<16>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint32<16>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint32<16>>(d.wrapped().eval());
+        *this = bit_cast<uint32<16>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint32<16>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint32<16>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint32<16>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -135,8 +131,6 @@ public:
     SIMDPP_INL const uint32<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint32<16>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL uint32<16> eval() const { return *this; }
-
 private:
     native_type d_;
 };
@@ -144,10 +138,10 @@ private:
 /// Class representing possibly optimized mask data for 4x 32-bit integer
 /// vector
 template<>
-class mask_int32<16, void> : public any_int32<16, mask_int32<16,void>> {
+class mask_int32<16> : public any_int32<16, mask_int32<16>> {
 public:
     static const unsigned type_tag = SIMDPP_TAG_MASK_INT;
-    using base_vector_type = mask_int32<16,void>;
+    using base_vector_type = mask_int32<16>;
     using expr_type = void;
 
 #if SIMDPP_USE_AVX512F
@@ -159,15 +153,10 @@ public:
     SIMDPP_INL mask_int32<16> &operator=(const mask_int32<16> &) = default;
 
     SIMDPP_INL mask_int32<16>(const native_type& d) : d_(d) {}
+    SIMDPP_INL mask_int32<16>& operator=(const native_type& d) { d_ = d; return *this; }
 
-    template<class E> SIMDPP_INL explicit mask_int32<16>(const mask_float32<16,E>& d)
-    {
-        *this = bit_cast<mask_int32<16>>(d.eval());
-    }
-    template<class E> SIMDPP_INL mask_int32<16>& operator=(const mask_float32<16,E>& d)
-    {
-        *this = bit_cast<mask_int32<16>>(d.eval()); return *this;
-    }
+    SIMDPP_INL explicit mask_int32<16>(const mask_float32<16>& d);
+    SIMDPP_INL mask_int32<16>& operator=(const mask_float32<16>& d);
 
     /// Convert to the underlying vector type
 #if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
@@ -188,8 +177,6 @@ public:
 
     SIMDPP_INL const mask_int32<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int32<16>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int32<16> eval() const { return *this; }
 
 private:
     native_type d_;

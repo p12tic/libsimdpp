@@ -25,25 +25,25 @@ namespace detail {
 } // namespace detail
 
 // types
-template<unsigned N, class E = void> class float32;
-template<unsigned N, class E = void> class mask_float32;
+template<unsigned N> class float32;
+template<unsigned N> class mask_float32;
 
 using float32x4 = float32<4>;
 using float32x8 = float32<8>;
 using mask_float32x4 = mask_float32<4>;
 using mask_float32x8 = mask_float32<8>;
 
-template<unsigned N, class E = void> class float64;
-template<unsigned N, class E = void> class mask_float64;
+template<unsigned N> class float64;
+template<unsigned N> class mask_float64;
 
 using float64x2 = float64<2>;
 using float64x4 = float64<4>;
 using mask_float64x2 = mask_float64<2>;
 using mask_float64x4 = mask_float64<4>;
 
-template<unsigned N, class E = void> class int8;
-template<unsigned N, class E = void> class uint8;
-template<unsigned N, class E = void> class mask_int8;
+template<unsigned N> class int8;
+template<unsigned N> class uint8;
+template<unsigned N> class mask_int8;
 
 using int8x16 = int8<16>;
 using int8x32 = int8<32>;
@@ -52,9 +52,9 @@ using uint8x32 = uint8<32>;
 using mask_int8x16 = mask_int8<16>;
 using mask_int8x32 = mask_int8<32>;
 
-template<unsigned N, class E = void> class int16;
-template<unsigned N, class E = void> class uint16;
-template<unsigned N, class E = void> class mask_int16;
+template<unsigned N> class int16;
+template<unsigned N> class uint16;
+template<unsigned N> class mask_int16;
 
 using int16x8 = int16<8>;
 using int16x16 = int16<16>;
@@ -63,9 +63,9 @@ using uint16x16 = uint16<16>;
 using mask_int16x8 = mask_int16<8>;
 using mask_int16x16 = mask_int16<16>;
 
-template<unsigned N, class E = void> class int32;
-template<unsigned N, class E = void> class uint32;
-template<unsigned N, class E = void> class mask_int32;
+template<unsigned N> class int32;
+template<unsigned N> class uint32;
+template<unsigned N> class mask_int32;
 
 using int32x4 = int32<4>;
 using int32x8 = int32<8>;
@@ -74,9 +74,9 @@ using uint32x8 = uint32<8>;
 using mask_int32x4 = mask_int32<4>;
 using mask_int32x8 = mask_int32<8>;
 
-template<unsigned N, class E = void> class int64;
-template<unsigned N, class E = void> class uint64;
-template<unsigned N, class E = void> class mask_int64;
+template<unsigned N> class int64;
+template<unsigned N> class uint64;
+template<unsigned N> class mask_int64;
 
 using int64x2 = int64<2>;
 using int64x4 = int64<4>;

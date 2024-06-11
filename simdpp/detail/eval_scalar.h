@@ -22,7 +22,7 @@ namespace detail {
 
 template<class R, class E>
 struct eval_maybe_scalar {
-    static SIMDPP_INL R eval(const E& e) { return (R) e.eval(); }
+    static SIMDPP_INL R eval(const E& e) { return (R) e; }
 };
 
 template<class R>
@@ -67,7 +67,7 @@ struct eval_maybe_scalar<R, double> {
 
 template<class R, class E>
 struct eval_maybe_scalar_bitwise {
-    static SIMDPP_INL R eval(const E& e) { return (R) e.eval(); }
+    static SIMDPP_INL R eval(const E& e) { return (R) e; }
 };
 
 template<class R>
