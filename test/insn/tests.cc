@@ -71,6 +71,8 @@ void main_test_function(TestResults& res, TestReporter& tr, const TestOptions& o
     test_transpose(res);
 
     test_for_each(res, tr);
+
+    test_algorithm_bitonic_sort(tr);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

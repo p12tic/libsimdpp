@@ -15,5 +15,6 @@ void test_expr_bitwise(TestReporter& ts);
 void test_expr_math_float(TestReporter& ts);
 void test_expr_math_int(TestReporter& ts);
 void test_expr_compare(TestReporter& tr);
+void test_algorithm_bitonic_sort(TestReporter& tr);
 
 #endif
