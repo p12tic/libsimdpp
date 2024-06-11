@@ -11,7 +11,6 @@
 #include <simdpp/setup_arch.h>
 #include <simdpp/expr.h>
 #include <simdpp/detail/expr/scalar.h>
-#include <simdpp/detail/expr/splat_n.h>
 #include <simdpp/detail/expr/test_bits.h>
 #include <simdpp/detail/expr/vec.h>
 
