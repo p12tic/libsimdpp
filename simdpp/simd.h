@@ -44,6 +44,7 @@
 #include <simdpp/core/f_fmsub.h>
 #include <simdpp/core/f_isnan.h>
 #include <simdpp/core/f_isnan2.h>
+#include <simdpp/core/f_isfinite.h>
 #include <simdpp/core/f_max.h>
 #include <simdpp/core/f_min.h>
 #include <simdpp/core/f_mul.h>

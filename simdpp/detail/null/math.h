@@ -47,6 +47,16 @@ typename V::mask_vector_type isnan(const V& a)
 }
 
 template<class V> SIMDPP_INL
+    typename V::mask_vector_type isfinite(const V& a)
+{
+    typename V::mask_vector_type r;
+    for (unsigned i = 0; i < V::length; i++) {
+        r.el(i) = std::isnan(a.el(i)) || std::isinf(a.el(i)) ? 0 : 1;
+    }
+    return r;
+}
+
+template<class V> SIMDPP_INL
 typename V::mask_vector_type isnan2(const V& a, const V& b)
 {
     typename V::mask_vector_type r;
