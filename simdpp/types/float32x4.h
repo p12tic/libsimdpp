@@ -137,14 +137,8 @@ public:
     SIMDPP_INL mask_float32<4>(const float32<4>& d) : d_(d.native()) {}
 #endif
 
-    SIMDPP_INL explicit mask_float32<4>(const mask_int32<4>& d)
-    {
-        *this = bit_cast<mask_float32<4>>(d);
-    }
-    SIMDPP_INL mask_float32<4>& operator=(const mask_int32<4>& d)
-    {
-        *this = bit_cast<mask_float32<4>>(d); return *this;
-    }
+    SIMDPP_INL explicit mask_float32<4>(const mask_int32<4>& d);
+    SIMDPP_INL mask_float32<4>& operator=(const mask_int32<4>& d);
 
     /// Convert to the underlying vector type
 #if !SIMDPP_DISABLE_DEPRECATED_CONVERSION_OPERATOR_TO_NATIVE_TYPES
