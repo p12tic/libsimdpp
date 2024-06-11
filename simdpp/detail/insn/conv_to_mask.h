@@ -82,7 +82,7 @@ mask_int64<8> i_to_mask(const uint64<8>& a);
 static SIMDPP_INL
 mask_float32<4> i_to_mask(const float32<4>& a);
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 mask_float32<8> i_to_mask(const float32<8>& a);
 #endif
@@ -97,7 +97,7 @@ mask_float32<16> i_to_mask(const float32<16>& a);
 static SIMDPP_INL
 mask_float64<2> i_to_mask(const float64<2>& a);
 
-#if SIMDPP_USE_AVX2
+#if SIMDPP_USE_AVX
 static SIMDPP_INL
 mask_float64<4> i_to_mask(const float64<4>& a);
 #endif
