@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/f_mul.h>
+#include <simdpp/detail/insn/f_mul.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
@@ -32,14 +32,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-SSE4.1, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float32<N, expr_fmul<float32<N,E1>,
-                     float32<N,E2>>> mul(const float32<N,E1>& a,
-                                         const float32<N,E2>& b)
+float32<N, expr_empty> mul(const float32<N,E1>& a, const float32<N,E2>& b)
 {
-    return { { a, b } };
+    return detail::insn::i_fmul(a.eval(), b.eval());
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mul, expr_fmul, float32, float32)
+SIMDPP_SCALAR_ARG_IMPL_VEC(mul, float32, float32)
 
 /** Multiplies the values of two vectors
 
@@ -57,14 +55,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mul, expr_fmul, float32, float32)
     @icost{SSE2-SSE4.1, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-float64<N, expr_fmul<float64<N,E1>,
-                     float64<N,E2>>> mul(const float64<N,E1>& a,
-                                         const float64<N,E2>& b)
+float64<N, expr_empty> mul(const float64<N,E1>& a, const float64<N,E2>& b)
 {
-    return { { a, b } };
+    return detail::insn::i_fmul(a.eval(), b.eval());
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mul, expr_fmul, float64, float64)
+SIMDPP_SCALAR_ARG_IMPL_VEC(mul, float64, float64)
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/f_neg.h>
+#include <simdpp/detail/insn/f_neg.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -34,9 +34,9 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX-AVX2, NEON, 2}
 */
 template<unsigned N, class E> SIMDPP_INL
-float32<N, expr_fneg<float32<N,E>>> neg(const float32<N,E>& a)
+float32<N, expr_empty> neg(const float32<N,E>& a)
 {
-    return { { a } };
+    return detail::insn::i_fneg(a.eval());
 }
 
 /** Negates the values of a vector
@@ -57,9 +57,9 @@ float32<N, expr_fneg<float32<N,E>>> neg(const float32<N,E>& a)
     @novec{NEON, ALTIVEC}
 */
 template<unsigned N, class E> SIMDPP_INL
-float64<N, expr_fneg<float64<N,E>>> neg(const float64<N,E>& a)
+float64<N, expr_empty> neg(const float64<N,E>& a)
 {
-    return { { a } };
+    return detail::insn::i_fneg(a.eval());
 }
 
 

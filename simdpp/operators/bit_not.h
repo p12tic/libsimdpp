@@ -15,7 +15,6 @@
 
 #include <simdpp/types.h>
 #include <simdpp/detail/insn/bit_not.h>
-#include <simdpp/detail/expr/bit_not.h>
 #include <simdpp/detail/get_expr.h>
 
 namespace simdpp {

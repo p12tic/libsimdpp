@@ -13,7 +13,7 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/i_mull.h>
+#include <simdpp/detail/insn/i_mull.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
 
 namespace simdpp {
@@ -65,13 +65,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{AVX2, NEON, 2-3}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int32<N, expr_mull<int16<N,E1>,
-                   int16<N,E2>>> mull(const int16<N,E1>& a, const int16<N,E2>& b)
+int32<N, expr_empty> mull(const int16<N,E1>& a, const int16<N,E2>& b)
 {
-    return { { a, b } };
+    return detail::insn::i_mull(a.eval(), b.eval());
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
+SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int32, int16)
 
 /** Multiplies unsigned 16-bit values and expands the results to 32 bits.
 
@@ -90,13 +89,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int32, int16)
     @icost{NEON, 2}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint32<N, expr_mull<uint16<N,E1>,
-                    uint16<N,E2>>> mull(const uint16<N,E1>& a, const uint16<N,E2>& b)
+uint32<N, expr_empty> mull(const uint16<N,E1>& a, const uint16<N,E2>& b)
 {
-    return { { a, b } };
+    return detail::insn::i_mull(a.eval(), b.eval());
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
+SIMDPP_SCALAR_ARG_IMPL_VEC(mull, uint32, uint16)
 
 /** Multiplies signed 32-bit values in and expands the results to 64 bits.
 
@@ -116,13 +114,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint32, uint16)
     @unimp{SSE2-SSSE3, ALTIVEC}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-int64<N, expr_mull<int32<N,E1>,
-                   int32<N,E2>>> mull(const int32<N,E1>& a, const int32<N,E2>& b)
+int64<N, expr_empty> mull(const int32<N,E1>& a, const int32<N,E2>& b)
 {
-    return { { a, b } };
+    return detail::insn::i_mull(a.eval(), b.eval());
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
+SIMDPP_SCALAR_ARG_IMPL_VEC(mull, int64, int32)
 
 /** Multiplies unsigned 32-bit values in the lower halves of the vectors and
     expands the results to 64 bits.
@@ -141,13 +138,12 @@ SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, int64, int32)
     @unimp{ALTIVEC}
 */
 template<unsigned N, class E1, class E2> SIMDPP_INL
-uint64<N, expr_mull<uint32<N,E1>,
-                    uint32<N,E2>>> mull(const uint32<N,E1>& a, const uint32<N,E2>& b)
+uint64<N, expr_empty> mull(const uint32<N,E1>& a, const uint32<N,E2>& b)
 {
-    return { { a, b } };
+    return detail::insn::i_mull(a.eval(), b.eval());
 }
 
-SIMDPP_SCALAR_ARG_IMPL_EXPR(mull, expr_mull, uint64, uint32)
+SIMDPP_SCALAR_ARG_IMPL_VEC(mull, uint64, uint32)
 
 } // namespace SIMDPP_ARCH_NAMESPACE
 } // namespace simdpp

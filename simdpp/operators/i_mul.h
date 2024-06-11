@@ -14,10 +14,9 @@
 #endif
 
 #include <simdpp/types.h>
-#include <simdpp/detail/expr/i_mul.h>
+#include <simdpp/core/i_mul.h>
 #include <simdpp/core/detail/get_expr_uint.h>
 #include <simdpp/core/detail/scalar_arg_impl.h>
-#include <simdpp/core/detail/get_expr_uint.h>
 
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
@@ -35,14 +34,13 @@ namespace SIMDPP_ARCH_NAMESPACE {
     @icost{SSE2-AVX, NEON, ALTIVEC, 2}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
-        operator*(const any_int16<N,V1>& a,
-               const any_int16<N,V2>& b)
+typename detail::get_expr_uint<V1, V2>::type
+        operator*(const any_int16<N,V1>& a, const any_int16<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() } };
+    return mul_lo(a, b);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, int16)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, int16<N>)
 
 /** Multiplies 32-bit values and returns the lower half of the result.
 
@@ -62,14 +60,13 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int16, int16)
     @icost{ALTIVEC, 16}
 */
 template<unsigned N, class V1, class V2> SIMDPP_INL
-typename detail::get_expr_uint<expr_mul_lo, V1, V2>::type
-        operator*(const any_int32<N,V1>& a,
-               const any_int32<N,V2>& b)
+typename detail::get_expr_uint<V1, V2>::type
+        operator*(const any_int32<N,V1>& a, const any_int32<N,V2>& b)
 {
-    return { { a.wrapped(), b.wrapped() } };
+    return mul_lo(a, b);
 }
 
-SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int32, int32)
+SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(operator*, expr_mul_lo, any_int32, int32<N>)
 
 
 } // namespace SIMDPP_ARCH_NAMESPACE
