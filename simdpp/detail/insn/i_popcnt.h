@@ -315,7 +315,7 @@ uint64<8> i_popcnt(const uint64<8>& a)
 template<class V> SIMDPP_INL
 V i_popcnt(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_popcnt, a)
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_popcnt, a)
 }
 
 

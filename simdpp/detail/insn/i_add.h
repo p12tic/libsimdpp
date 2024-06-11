@@ -161,7 +161,7 @@ uint64<8> i_iadd(const uint64<8>& a, const uint64<8>& b)
 template<class V> SIMDPP_INL
 V i_iadd(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_iadd, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_iadd, a, b)
 }
 
 } // namespace insn

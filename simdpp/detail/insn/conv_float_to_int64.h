@@ -105,7 +105,7 @@ template<unsigned N> SIMDPP_INL
 uint64<N> i_to_uint64(const float64<N>& a)
 {
     uint64<N> r;
-    float64_to_uint64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    float64_to_uint64_converter<0, float64<N>::vec_length, float64<N>::base_length, N>::convert(r, a);
     return r;
 }
 
@@ -195,7 +195,7 @@ template<unsigned N> SIMDPP_INL
 int64<N> i_to_int64(const float64<N>& a)
 {
     int64<N> r;
-    float64_to_int64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    float64_to_int64_converter<0, float64<N>::vec_length, float64<N>::base_length, N>::convert(r, a);
     return r;
 }
 
@@ -289,7 +289,7 @@ template<unsigned N> SIMDPP_INL
 uint64<N> i_to_uint64(const float32<N>& a)
 {
     uint64<N> r;
-    float32_to_uint64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    float32_to_uint64_converter<0, float32<N>::vec_length, float32<N>::base_length, N>::convert(r, a);
     return r;
 }
 
@@ -384,7 +384,7 @@ template<unsigned N> SIMDPP_INL
 int64<N> i_to_int64(const float32<N>& a)
 {
     int64<N> r;
-    float32_to_int64_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    float32_to_int64_converter<0, float32<N>::vec_length, float32<N>::base_length, N>::convert(r, a);
     return r;
 }
 

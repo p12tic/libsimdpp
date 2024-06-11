@@ -158,7 +158,7 @@ float64<8> i_trunc(const float64<8>& a)
 template<class V> SIMDPP_INL
 V i_trunc(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_trunc, a);
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_trunc, a);
 }
 
 

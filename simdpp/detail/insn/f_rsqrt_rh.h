@@ -96,7 +96,7 @@ float32<16> i_rsqrt_rh(const float32<16>& x, const float32<16>& a)
 template<unsigned N> SIMDPP_INL
 float32<N> i_rsqrt_rh(const float32<N>& x, const float32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_rsqrt_rh, x, a);
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, float32<N>, i_rsqrt_rh, x, a);
 }
 
 } // namespace insn

@@ -143,7 +143,7 @@ uint32<16> i_mul_lo(const uint32<16>& a, const uint32<16>& b)
 template<class V> SIMDPP_INL
 V i_mul_lo(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_mul_lo, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_mul_lo, a, b)
 }
 
 } // namespace insn

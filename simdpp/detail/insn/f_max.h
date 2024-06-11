@@ -57,7 +57,7 @@ float32<16> i_max(const float32<16>& a, const float32<16>& b)
 template<unsigned N> SIMDPP_INL
 float32<N> i_max(const float32<N>& a, const float32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, i_max, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, float32<N>, i_max, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ float64<8> i_max(const float64<8>& a, const float64<8>& b)
 template<unsigned N> SIMDPP_INL
 float64<N> i_max(const float64<N>& a, const float64<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, i_max, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(float64<N>, float64<N>, i_max, a, b);
 }
 
 } // namespace insn

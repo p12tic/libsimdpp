@@ -64,7 +64,7 @@ float32<16> i_rsqrt_e(const float32<16>& a)
 template<unsigned N> SIMDPP_INL
 float32<N> i_rsqrt_e(const float32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_rsqrt_e, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, float32<N>, i_rsqrt_e, a);
 }
 
 

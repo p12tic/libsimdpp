@@ -254,7 +254,7 @@ SIMDPP_INL uint32<16> i_shift_l_v(const uint32<16>& a, const uint32<16>& count)
 template<class V, class U> SIMDPP_INL
 V i_shift_l_v(const V& a, const U& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_shift_l_v, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_shift_l_v, a, b);
 }
 
 } // namespace insn

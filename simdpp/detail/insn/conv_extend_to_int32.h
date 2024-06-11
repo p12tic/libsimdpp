@@ -121,7 +121,7 @@ template<unsigned N> SIMDPP_INL
 uint32<N> i_to_uint32(const uint16<N>& a)
 {
     uint32<N> r;
-    uint_16_to_uint32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    uint_16_to_uint32_converter<0, uint16<N>::vec_length, uint16<N>::base_length, N>::convert(r, a);
     return r;
 }
 
@@ -231,7 +231,7 @@ template<unsigned N> SIMDPP_INL
 uint32<N> i_to_uint32(const uint8<N>& a)
 {
     uint32<N> r;
-    uint_8_to_uint32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    uint_8_to_uint32_converter<0, uint8<N>::vec_length, uint8<N>::base_length, N>::convert(r, a);
     return r;
 }
 
@@ -330,7 +330,7 @@ template<unsigned N> SIMDPP_INL
 int32<N> i_to_int32(const int16<N>& a)
 {
     int32<N> r;
-    int16_to_int32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    int16_to_int32_converter<0, int16<N>::vec_length, int16<N>::base_length, N>::convert(r, a);
     return r;
 }
 
@@ -441,7 +441,7 @@ template<unsigned N> SIMDPP_INL
 int32<N> i_to_int32(const int8<N>& a)
 {
     int32<N> r;
-    int8_to_int32_converter<0, a.vec_length, a.base_length, N>::convert(r, a);
+    int8_to_int32_converter<0, int8<N>::vec_length, int8<N>::base_length, N>::convert(r, a);
     return r;
 }
 

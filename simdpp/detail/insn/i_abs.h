@@ -220,7 +220,7 @@ uint64<8> i_iabs(const int64<8>& a)
 template<class V> SIMDPP_INL
 V i_iabs(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_iabs, a)
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_iabs, a)
 }
 
 } // namespace insn

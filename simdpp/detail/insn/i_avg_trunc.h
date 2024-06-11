@@ -245,7 +245,7 @@ int32<16> i_avg_trunc(const int32<16>& a, const int32<16>& b)
 template<class V> SIMDPP_INL
 V i_avg_trunc(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_avg_trunc, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_avg_trunc, a, b);
 }
 
 template<class V> SIMDPP_INL

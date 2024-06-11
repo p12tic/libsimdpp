@@ -116,7 +116,7 @@ float64<8> i_fmsub(const float64<8>& a, const float64<8>& b,
 template<class V> SIMDPP_INL
 V i_fmsub(const V& a, const V& b, const V& c)
 {
-    SIMDPP_VEC_ARRAY_IMPL3(V, i_fmsub, a, b, c);
+    SIMDPP_VEC_ARRAY_IMPL3(V, V, i_fmsub, a, b, c);
 }
 
 } // namsepace insn

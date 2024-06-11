@@ -160,7 +160,7 @@ uint16<32> i_sub_sat(const uint16<32>& a, const uint16<32>& b)
 template<class V> SIMDPP_INL
 V i_sub_sat(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_sub_sat, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_sub_sat, a, b)
 }
 
 } // namespace insn

@@ -92,7 +92,7 @@ float64<8> i_fadd(const float64<8>& a, const float64<8>& b)
 template<class V> SIMDPP_INL
 V i_fadd(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_fadd, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_fadd, a, b)
 }
 
 } // namespace insn

@@ -351,7 +351,7 @@ mask_float64<8> i_bit_not(const mask_float64<8>& a)
 template<class V> SIMDPP_INL
 V i_bit_not(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_bit_not, a)
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_bit_not, a)
 }
 
 } // namespace insn

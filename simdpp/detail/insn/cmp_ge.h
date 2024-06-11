@@ -406,7 +406,7 @@ mask_float64<8> i_cmp_ge(const float64<8>& a, const float64<8>& b)
 template<class V> SIMDPP_INL
 typename V::mask_vector_type i_cmp_ge(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, i_cmp_ge, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(typename V::mask_vector_type, V, i_cmp_ge, a, b);
 }
 
 } // namespace insn

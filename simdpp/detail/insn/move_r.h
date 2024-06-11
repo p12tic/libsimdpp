@@ -65,7 +65,7 @@ template<unsigned shift, unsigned N> SIMDPP_INL
 uint8<N> i_move16_r(const uint8<N>& a)
 {
     static_assert(shift <= 16, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_move16_r<shift>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, uint8<N>, i_move16_r<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ uint16<32> i_move8_r(const uint16<32>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint16<N> i_move8_r(const uint16<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, i_move8_r<shift>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, uint16<N>, i_move8_r<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ uint32<16> i_move4_r(const uint32<16>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint32<N> i_move4_r(const uint32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_move4_r<shift>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, uint32<N>, i_move4_r<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ uint64<8> i_move2_r(const uint64<8>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 uint64<N> i_move2_r(const uint64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_move2_r<shift>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, uint64<N>, i_move2_r<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ float32<16> i_move4_r(const float32<16>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 float32<N> i_move4_r(const float32<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_move4_r<shift>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, float32<N>, i_move4_r<shift>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -270,7 +270,7 @@ float64<8> i_move2_r(const float64<8>& a)
 template<unsigned shift, unsigned N> SIMDPP_INL
 float64<N> i_move2_r(const float64<N>& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_move2_r<shift>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, float64<N>, i_move2_r<shift>, a);
 }
 
 // -----------------------------------------------------------------------------

@@ -161,7 +161,7 @@ uint64<8> i_isub(const uint64<8>& a, const uint64<8>& b)
 template<class V> SIMDPP_INL
 V i_isub(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_isub, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_isub, a, b)
 }
 
 } // namespace insn

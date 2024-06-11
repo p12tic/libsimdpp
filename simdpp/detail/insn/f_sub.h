@@ -56,7 +56,7 @@ float32<16> i_fsub(const float32<16>& a, const float32<16>& b)
 template<class R, unsigned N> SIMDPP_INL
 float32<N> i_fsub(const float32<N>& a, const float32<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, sub, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(float32<N>, float32<N>, i_fsub, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ float64<8> i_fsub(const float64<8>& a, const float64<8>& b)
 template<class V> SIMDPP_INL
 V i_fsub(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_fsub, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_fsub, a, b)
 }
 
 } // namespace insn

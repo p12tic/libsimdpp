@@ -422,7 +422,7 @@ int64<8> i_shift_r(const int64<8>& a, unsigned count)
 template<class V> SIMDPP_INL
 V i_shift_r(const V& a, unsigned count)
 {
-    SIMDPP_VEC_ARRAY_IMPL2S(V, i_shift_r, a, count);
+    SIMDPP_VEC_ARRAY_IMPL2S(V, V, i_shift_r, a, count);
 }
 
 
@@ -780,7 +780,7 @@ template<unsigned count, class V> SIMDPP_INL
 V i_shift_r(const V& a)
 {
     static_assert(count < 64, "Shift out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_shift_r<count>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_shift_r<count>, a);
 }
 
 // -----------------------------------------------------------------------------

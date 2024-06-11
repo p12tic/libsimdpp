@@ -87,7 +87,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_
 uint16<N> i_permute4(const uint16<N>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, uint16<N>, (i_permute4<s0,s1,s2,s3>), a);
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_
 uint32<N> i_permute4(const uint32<N>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, uint32<N>, (i_permute4<s0,s1,s2,s3>), a);
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ template<unsigned s0, unsigned s1, unsigned s2, unsigned s3, unsigned N> SIMDPP_
 float32<N> i_permute4(const float32<N>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, float32<N>, (i_permute4<s0,s1,s2,s3>), a);
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ uint64<N> i_permute4(const uint64<N>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_FAST_INT64_SIZE >= 4
-    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, uint64<N>, (i_permute4<s0,s1,s2,s3>), a);
 #else
     uint64<N> r;
     for (unsigned i = 0; i < uint64<N>::vec_length; i+=2) {
@@ -269,7 +269,7 @@ float64<N> i_permute4(const float64<N>& a)
 {
     static_assert(s0 < 4 && s1 < 4 && s2 < 4 && s3 < 4, "Selector out of range");
 #if SIMDPP_FAST_FLOAT64_SIZE >= 4
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, (i_permute4<s0,s1,s2,s3>), a);
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, float64<N>, (i_permute4<s0,s1,s2,s3>), a);
 #else
     float64<N> r;
     for (unsigned i = 0; i < float64<N>::vec_length; i+=2) {

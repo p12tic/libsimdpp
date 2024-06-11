@@ -110,7 +110,7 @@ template<unsigned s, unsigned N> SIMDPP_INL
 uint8<N> i_splat16(const uint8<N>& a)
 {
     static_assert(s < 16, "Access out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, i_splat16<s>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint8<N>, uint8<N>, i_splat16<s>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ template<unsigned s, unsigned N> SIMDPP_INL
 uint16<N> i_splat8(const uint16<N>& a)
 {
     static_assert(s < 8, "Access out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, i_splat8<s>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint16<N>, uint16<N>, i_splat8<s>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +252,7 @@ template<unsigned s, unsigned N> SIMDPP_INL
 uint32<N> i_splat4(const uint32<N>& a)
 {
     static_assert(s < 4, "Access out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, i_splat4<s>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint32<N>, uint32<N>, i_splat4<s>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -308,7 +308,7 @@ template<unsigned s, unsigned N> SIMDPP_INL
 uint64<N> i_splat2(const uint64<N>& a)
 {
     static_assert(s < 2, "Access out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, i_splat2<s>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(uint64<N>, uint64<N>, i_splat2<s>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -362,7 +362,7 @@ template<unsigned s, unsigned N> SIMDPP_INL
 float32<N> i_splat4(const float32<N>& a)
 {
     static_assert(s < 4, "Access out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, i_splat4<s>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float32<N>, float32<N>, i_splat4<s>, a);
 }
 
 // -----------------------------------------------------------------------------
@@ -406,7 +406,7 @@ template<unsigned s, unsigned N> SIMDPP_INL
 float64<N> i_splat2(const float64<N>& a)
 {
     static_assert(s < 2, "Access out of bounds");
-    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, i_splat2<s>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(float64<N>, float64<N>, i_splat2<s>, a);
 }
 
 

@@ -159,7 +159,7 @@ uint16<32> i_add_sat(const uint16<32>& a, const uint16<32>& b)
 template<class R, unsigned N> SIMDPP_INL
 uint16<N> i_add_sat(const uint16<N>& a, const uint16<N>& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, add_sat, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(uint16<N>, uint16<N>, add_sat, a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ uint16<N> i_add_sat(const uint16<N>& a, const uint16<N>& b)
 template<class V> SIMDPP_INL
 V i_add_sat(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_add_sat, a, b)
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_add_sat, a, b)
 }
 
 } // namespace insn

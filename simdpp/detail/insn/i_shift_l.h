@@ -228,7 +228,7 @@ uint64<8> i_shift_l(const uint64<8>& a, unsigned count)
 template<class V> SIMDPP_INL
 V i_shift_l(const V& a, unsigned count)
 {
-    SIMDPP_VEC_ARRAY_IMPL2S(V, i_shift_l, a, count);
+    SIMDPP_VEC_ARRAY_IMPL2S(V, V, i_shift_l, a, count);
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +399,7 @@ uint64<8> i_shift_l(const uint64<8>& a)
 template<unsigned count, class V> SIMDPP_INL
 V i_shift_l(const V& a)
 {
-    SIMDPP_VEC_ARRAY_IMPL1(V, i_shift_l<count>, a);
+    SIMDPP_VEC_ARRAY_IMPL1(V, V, i_shift_l<count>, a);
 }
 
 template<bool no_shift>

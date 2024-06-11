@@ -114,7 +114,7 @@ float64<8> i_div(const float64<8>& a, const float64<8>& b)
 template<class V> SIMDPP_INL
 V i_div(const V& a, const V& b)
 {
-    SIMDPP_VEC_ARRAY_IMPL2(V, i_div, a, b);
+    SIMDPP_VEC_ARRAY_IMPL2(V, V, i_div, a, b);
 }
 
 } // namespace insn
