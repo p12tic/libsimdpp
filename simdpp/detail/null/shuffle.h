@@ -139,7 +139,7 @@ V align(const V& lo, const V& hi)
 }
 
 template<class V> SIMDPP_INL
-V blend(const V& on, const V& off, const V& mask)
+V bit_select(const V& on, const V& off, const V& mask)
 {
     V r;
     using E = typename V::element_type;

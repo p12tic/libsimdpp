@@ -58,6 +58,7 @@ set(TEST_INSN_HEADERS
 )
 
 set(TEST_INSN_ARCH_SOURCES
+    insn/bit_select.cc
     insn/bitwise.cc
     insn/blend.cc
     insn/compare.cc
@@ -133,7 +134,7 @@ elseif(SIMDPP_MSVC_INTEL)
 else()
     # Xcode clang linker spends very long time in deduplication pass when
     # linking the test executable unless -fvisibility-inlines-hidden is passed.
-    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-std=c++14 -O2 -Wall -Wextra -fvisibility-inlines-hidden")
+    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-std=c++14 -O2 -Wall -Wextra -Wno-psabi -fvisibility-inlines-hidden")
 endif()
 
 if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
