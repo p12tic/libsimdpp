@@ -68,14 +68,14 @@ set(SIMDPP_X86_SSE2_DEFINE "SIMDPP_ARCH_X86_SSE2")
 set(SIMDPP_X86_SSE2_SUFFIX "-x86_sse2")
 set(SIMDPP_X86_SSE2_TEST_CODE
     "#include <emmintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -111,14 +111,14 @@ set(SIMDPP_X86_SSE3_DEFINE "SIMDPP_ARCH_X86_SSE3")
 set(SIMDPP_X86_SSE3_SUFFIX "-x86_sse3")
 set(SIMDPP_X86_SSE3_TEST_CODE
     "#include <pmmintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -154,14 +154,14 @@ set(SIMDPP_X86_SSSE3_DEFINE "SIMDPP_ARCH_X86_SSSE3")
 set(SIMDPP_X86_SSSE3_SUFFIX "-x86_ssse3")
 set(SIMDPP_X86_SSSE3_TEST_CODE
     "#include <tmmintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -197,14 +197,14 @@ set(SIMDPP_X86_SSE4_1_DEFINE "SIMDPP_ARCH_X86_SSE4_1")
 set(SIMDPP_X86_SSE4_1_SUFFIX "-x86_sse4_1")
 set(SIMDPP_X86_SSE4_1_TEST_CODE
     "#include <smmintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -240,14 +240,14 @@ set(SIMDPP_X86_POPCNT_INSN_DEFINE "SIMDPP_ARCH_X86_POPCNT_INSN")
 set(SIMDPP_X86_POPCNT_INSN_SUFFIX "-x86_popcnt")
 set(SIMDPP_X86_POPCNT_INSN_TEST_CODE
     "#include <nmmintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     unsigned* prevent_optimization(unsigned* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         unsigned* volatile* volatile opaque;
         opaque = &ptr;
@@ -277,7 +277,7 @@ set(SIMDPP_X86_AVX_DEFINE "SIMDPP_ARCH_X86_AVX")
 set(SIMDPP_X86_AVX_SUFFIX "-x86_avx")
 set(SIMDPP_X86_AVX_TEST_CODE
     "#include <immintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     #if (__clang_major__ == 3) && (__clang_minor__ == 6)
     #error Not supported. See simdpp/detail/workarounds.h
@@ -291,7 +291,7 @@ set(SIMDPP_X86_AVX_TEST_CODE
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -329,7 +329,7 @@ set(SIMDPP_X86_AVX2_DEFINE "SIMDPP_ARCH_X86_AVX2")
 set(SIMDPP_X86_AVX2_SUFFIX "-x86_avx2")
 set(SIMDPP_X86_AVX2_TEST_CODE
     "#include <immintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     #if (__clang_major__ == 3) && (__clang_minor__ == 6)
     #error Not supported. See simdpp/detail/workarounds.h
@@ -340,7 +340,7 @@ set(SIMDPP_X86_AVX2_TEST_CODE
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -378,14 +378,14 @@ set(SIMDPP_X86_FMA3_DEFINE "SIMDPP_ARCH_X86_FMA3")
 set(SIMDPP_X86_FMA3_SUFFIX "-x86_fma3")
 set(SIMDPP_X86_FMA3_TEST_CODE
     "#include <immintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -420,14 +420,14 @@ set(SIMDPP_X86_FMA4_DEFINE "SIMDPP_ARCH_X86_FMA4")
 set(SIMDPP_X86_FMA4_SUFFIX "-x86_fma4")
 set(SIMDPP_X86_FMA4_TEST_CODE
     "#include <x86intrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -459,14 +459,14 @@ set(SIMDPP_X86_XOP_DEFINE "SIMDPP_ARCH_X86_XOP")
 set(SIMDPP_X86_XOP_SUFFIX "-x86_xop")
 set(SIMDPP_X86_XOP_TEST_CODE
     "#include <x86intrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -505,7 +505,7 @@ set(SIMDPP_X86_AVX512F_DEFINE "SIMDPP_ARCH_X86_AVX512F")
 set(SIMDPP_X86_AVX512F_SUFFIX "-x86_avx512f")
 set(SIMDPP_X86_AVX512F_TEST_CODE
     "#include <immintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     #if defined(__GNUC__) && (__GNUC__ < 6) && !defined(__INTEL_COMPILER) && !defined(__clang__)
     #error GCC 5.x and older are not supported on AVX512F. See simdpp/detail/workarounds.h
@@ -516,7 +516,7 @@ set(SIMDPP_X86_AVX512F_TEST_CODE
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -568,14 +568,14 @@ set(SIMDPP_X86_AVX512BW_DEFINE "SIMDPP_ARCH_X86_AVX512BW")
 set(SIMDPP_X86_AVX512BW_SUFFIX "-x86_avx512bw")
 set(SIMDPP_X86_AVX512BW_TEST_CODE
     "#include <immintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -608,14 +608,14 @@ set(SIMDPP_X86_AVX512DQ_DEFINE "SIMDPP_ARCH_X86_AVX512DQ")
 set(SIMDPP_X86_AVX512DQ_SUFFIX "-x86_avx512dq")
 set(SIMDPP_X86_AVX512DQ_TEST_CODE
     "#include <immintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -652,14 +652,14 @@ set(SIMDPP_X86_AVX512VL_TEST_CODE
     #endif
 
     #include <immintrin.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -697,14 +697,14 @@ set(SIMDPP_ARM_NEON_TEST_CODE
     #endif
 
     #include <arm_neon.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -745,14 +745,14 @@ set(SIMDPP_ARM64_NEON_DEFINE "SIMDPP_ARCH_ARM_NEON")
 set(SIMDPP_ARM64_NEON_SUFFIX "-arm64_neon")
 set(SIMDPP_ARM64_NEON_TEST_CODE
     "#include <arm_neon.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -785,14 +785,14 @@ set(SIMDPP_MIPS_MSA_DEFINE "SIMDPP_ARCH_MIPS_MSA")
 set(SIMDPP_MIPS_MSA_SUFFIX "-mips_msa")
 set(SIMDPP_MIPS_MSA_TEST_CODE
     "#include <msa.h>
-    #include <iostream>
+    #include <cstdio>
 
     char* prevent_optimization(char* ptr)
     {
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -822,7 +822,7 @@ set(SIMDPP_POWER_ALTIVEC_DEFINE "SIMDPP_ARCH_POWER_ALTIVEC")
 set(SIMDPP_POWER_ALTIVEC_SUFFIX "-power_altivec")
 set(SIMDPP_POWER_ALTIVEC_TEST_CODE
     "#include <altivec.h>
-    #include <iostream>
+    #include <cstdio>
 
     #if defined(__GNUC__) && (__GNUC__ < 6) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
     #if !defined(__INTEL_COMPILER) && !defined(__clang__)
@@ -835,7 +835,7 @@ set(SIMDPP_POWER_ALTIVEC_TEST_CODE
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -865,7 +865,7 @@ set(SIMDPP_POWER_VSX_206_DEFINE "SIMDPP_ARCH_POWER_VSX_206")
 set(SIMDPP_POWER_VSX_206_SUFFIX "-power_vsx_2.06")
 set(SIMDPP_POWER_VSX_206_TEST_CODE
     "#include <altivec.h>
-    #include <iostream>
+    #include <cstdio>
 
     #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     #if !defined(__INTEL_COMPILER) && !defined(__clang__)
@@ -885,7 +885,7 @@ set(SIMDPP_POWER_VSX_206_TEST_CODE
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
@@ -915,7 +915,7 @@ set(SIMDPP_POWER_VSX_207_DEFINE "SIMDPP_ARCH_POWER_VSX_207")
 set(SIMDPP_POWER_VSX_207_SUFFIX "-power_vsx_2.07")
 set(SIMDPP_POWER_VSX_207_TEST_CODE
     "#include <altivec.h>
-    #include <iostream>
+    #include <cstdio>
 
     #if defined(__GNUC__) && (__GNUC__ < 6) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     #if !defined(__INTEL_COMPILER) && !defined(__clang__)
@@ -934,7 +934,7 @@ set(SIMDPP_POWER_VSX_207_TEST_CODE
         volatile bool never = false;
         if (never) {
             while (*ptr++)
-                std::cout << *ptr;
+                std::printf(\"%c\", *ptr);
         }
         char* volatile* volatile opaque;
         opaque = &ptr;
