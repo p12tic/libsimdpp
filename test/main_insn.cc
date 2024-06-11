@@ -7,6 +7,7 @@
 
 #include "utils/test_results.h"
 #include "utils/test_reporter.h"
+#include "utils/test_arch.h"
 #include "insn/tests.h"
 #include <simdpp/simd.h>
 #include <algorithm>
@@ -17,46 +18,14 @@
 #include <iomanip>
 #include <vector>
 
-#include <simdpp/dispatch/get_arch_linux_cpuinfo.h>
-#include <simdpp/dispatch/get_arch_raw_cpuid.h>
-#include <simdpp/dispatch/get_arch_string_list.h>
-
-simdpp::Arch get_arch_from_system(bool is_simulator)
+void invoke_test_run_function(const simdpp::detail::FnVersion& fn,
+                              TestResults& res, TestReporter& reporter,
+                              const TestOptions& options)
 {
-    (void) is_simulator;
-    std::vector<simdpp::Arch> supported_archs;
-#if SIMDPP_HAS_GET_ARCH_LINUX_CPUINFO
-    if (!is_simulator)
-        supported_archs.push_back(simdpp::get_arch_linux_cpuinfo());
-#endif
-#if SIMDPP_HAS_GET_ARCH_RAW_CPUID
-    supported_archs.push_back(simdpp::get_arch_raw_cpuid());
-#endif
-    if (supported_archs.empty()) {
-        std::cerr << "No architecture information could be retrieved. Testing not supported\n";
-        std::exit(EXIT_FAILURE);
-    }
-
-    simdpp::Arch result = supported_archs.front();
-    for (unsigned i = 1; i < supported_archs.size(); ++i) {
-        if (supported_archs[i] != result) {
-            std::cerr << "Different CPU architecture evaluators return different results\n"
-                      << std::hex << (unsigned)result << " " << i << " "
-                      << std::hex << (unsigned)supported_archs[i] << "\n";
-            std::exit(EXIT_FAILURE);
-        }
-    }
-    std::cerr << "Evaluated architecture bit set: " << std::hex
-              << (unsigned) result << "\n" << std::dec;
-    return result;
+    reinterpret_cast<void(*)(TestResults&, TestReporter&, const TestOptions&)>(fn.fun_ptr)(res, reporter, options);
 }
 
-simdpp::Arch parse_arch_from_args(int argc, char* argv[])
-{
-    return simdpp::get_arch_string_list(argv + 1, argc - 1, "--arch_");
-}
-
-void parse_args(int argc, char* argv[], bool& is_simulator, bool& force_arch)
+inline void parse_args(int argc, char* argv[], bool& is_simulator, bool& force_arch)
 {
     is_simulator = false;
     force_arch = false;
@@ -67,18 +36,6 @@ void parse_args(int argc, char* argv[], bool& is_simulator, bool& force_arch)
         if (std::strcmp(argv[i], "--force_arch") == 0)
             force_arch = true;
     }
-}
-
-bool find_arch_null(const simdpp::detail::FnVersion& a)
-{
-    return a.arch_name && std::strcmp(a.arch_name, "arch_null") == 0;
-}
-
-void invoke_test_run_function(const simdpp::detail::FnVersion& fn,
-                              TestResults& res, TestReporter& reporter,
-                              const TestOptions& options)
-{
-    reinterpret_cast<void(*)(TestResults&, TestReporter&, const TestOptions&)>(fn.fun_ptr)(res, reporter, options);
 }
 
 /*  We test libsimdpp by comparing the results of the same computations done in
