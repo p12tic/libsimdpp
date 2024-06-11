@@ -541,7 +541,12 @@ float64<2> i_blend(const float64<2>& con, const float64<2>& coff, const float64<
 static SIMDPP_INL
 float64<4> i_blend(const float64<4>& on, const float64<4>& off, const float64<4>& mask)
 {
+#if !SIMDPP_USE_AVX2 && __GNUC__ && !defined(__clang__)
+    // GCC (as of 12) produces very bad codegen for _mm256_blendv_pd when AVX2 is disabled.
+    return bit_or(bit_and(on, mask), bit_andnot(off, mask));
+#else
     return _mm256_blendv_pd(off.native(), on.native(), mask.native());
+#endif
 }
 #endif
 
