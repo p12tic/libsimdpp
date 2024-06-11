@@ -20,10 +20,14 @@ void test_load_helper(TestResultsSet& tc, TestReporter& tr,
     V zero = make_zero();
 
     V sv[vnum];
+#if __GNUC__ && !defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wclass-memaccess"
+#endif
     std::memcpy(sv, sdata, V::length_bytes * vnum);
+#if __GNUC__ && !defined(__clang__)
 #pragma GCC diagnostic pop
+#endif
 
     // On certain architectures, e.g. armv7 NEON, 128 bit vectors are not
     // necessarily aligned to 16 bytes on the stack.

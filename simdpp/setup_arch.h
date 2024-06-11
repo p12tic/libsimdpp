@@ -278,7 +278,7 @@
 #endif
 
 #if SIMDPP_USE_AVX
-#if __GNUC__
+#if __GNUC__ && !defined(__clang__)
 // GCC intrinsics headers produce a warning that cannot be silenced another way
 // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=105593
 #pragma GCC diagnostic push
@@ -286,7 +286,7 @@
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
     #include <immintrin.h>
-#if __GNUC__
+#if __GNUC__ && !defined(__clang__)
 #pragma GCC diagnostic pop
 #endif
 #endif
