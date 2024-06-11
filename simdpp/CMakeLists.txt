@@ -44,7 +44,7 @@ if(${ENABLE_HEADER_TESTS} STREQUAL "1")
                 COMMAND ${CMAKE_CXX_COMPILER}
                         -DLIBSIMDPP_SIMD_H
                         -I "${CMAKE_SOURCE_DIR}"
-                        ${CXX_FLAGS} -x c++ -std=c++11 -g2 -Wall
+                        ${CXX_FLAGS} -x c++ -std=c++14 -g2 -Wall
                         ${CMAKE_SOURCE_DIR}/simdpp/${FILE}
                         -c -o ${CMAKE_BINARY_DIR}/${TEST_OUT}
                 DEPENDS ${FILE} )
