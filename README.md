@@ -46,29 +46,15 @@ The library supports the following architectures and instruction sets:
  - MIPS 32-bit little-endian: MSA
  - MIPS 64-bit little-endian: MSA
 
-The primary development of the library happens in C++11. A C++98-compatible
-version of the library is provided on the
-[cxx98](https://github.com/p12tic/libsimdpp/tree/cxx98) branch.
+The primary development of the library happens in C++14.
 
 Supported compilers:
 
- - C++11 version:
    - GCC: 4.8-7.x
    - Clang: 3.3-4.0
    - Xcode 7.0-9.x
    - MSVC: 2013, 2015, 2017
    - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
-
- - C++98 version
-   - GCC: 4.4-7.x
-   - Clang: 3.3-4.0
-   - Xcode 7.0-9.x
-   - MSVC: 2013, 2015, 2017
-   - ICC (on both Linux and Windows): 2013, 2015, 2016, 2017
-
-Newer versions of the aforementioned compilers will generally work with either
-C++11 or C++98 version of the library. Older versions of these compilers will
-generally work with the C++98 version of the library.
 
 Various compiler versions are not supported on various instruction sets due to
 compiler bugs or incompletely implemented instruction sets. See

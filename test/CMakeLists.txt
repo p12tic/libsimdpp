@@ -128,11 +128,11 @@ if(SIMDPP_MSVC)
         set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "/Gv")
     endif()
 elseif(SIMDPP_MSVC_INTEL)
-    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
+    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "/Qstd=c++14")
 else()
     # Xcode clang linker spends very long time in deduplication pass when
     # linking the test executable unless -fvisibility-inlines-hidden is passed.
-    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-std=c++11 -O2 -Wall -Wextra -fvisibility-inlines-hidden")
+    set_target_properties(test_insn PROPERTIES COMPILE_FLAGS "-std=c++14 -O2 -Wall -Wextra -fvisibility-inlines-hidden")
 endif()
 
 if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
@@ -169,9 +169,9 @@ add_executable(test_dispatcher EXCLUDE_FROM_ALL
 
 if(SIMDPP_MSVC)
 elseif(SIMDPP_MSVC_INTEL)
-    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
+    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "/Qstd=c++14")
 else()
-    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++11 -Wall -fvisibility-inlines-hidden")
+    set_target_properties(test_dispatcher PROPERTIES COMPILE_FLAGS "-std=c++14 -Wall -fvisibility-inlines-hidden")
 endif()
 if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
     target_compile_definitions(test_dispatcher PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
@@ -234,9 +234,9 @@ add_executable(test_expr EXCLUDE_FROM_ALL
 
 if(SIMDPP_MSVC)
 elseif(SIMDPP_MSVC_INTEL)
-    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "/Qstd=c++11")
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "/Qstd=c++14")
 else()
-    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-std=c++11 -O2 -Wall -fvisibility-inlines-hidden")
+    set_target_properties(test_expr PROPERTIES COMPILE_FLAGS "-std=c++14 -O2 -Wall -fvisibility-inlines-hidden")
 endif()
 if("${CMAKE_VERSION}" VERSION_GREATER 2.8.12)
     target_compile_definitions(test_expr PUBLIC "-DSIMDPP_DISABLE_DEPRECATED_IN_2_1_AND_OLDER=1")
