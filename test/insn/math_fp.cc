@@ -62,6 +62,8 @@ void test_math_float32_n(TestResultsSet& tc, const TestOptions& opts)
     TEST_PUSH_ARRAY_OP1(tc, float32_n, abs, s);
     TEST_PUSH_ARRAY_OP1(tc, float32_n, sign, s);
     TEST_PUSH_ARRAY_OP1(tc, float32_n, neg, s);
+    TEST_PUSH_ARRAY_OP1(tc, float32_n, isnan, s);
+    TEST_PUSH_ARRAY_OP1(tc, float32_n, isfinite, s);
 
     tc.set_fp_zero_equal();
     TEST_PUSH_ARRAY_OP1(tc, float32_n, trunc, s);
@@ -130,6 +132,8 @@ void test_math_float64_n(TestResultsSet& tc, const TestOptions& opts)
     TEST_PUSH_ARRAY_OP1(tc, float64_n, abs, s);
     TEST_PUSH_ARRAY_OP1(tc, float64_n, sign, s);
     TEST_PUSH_ARRAY_OP1(tc, float64_n, neg, s);
+    TEST_PUSH_ARRAY_OP1(tc, float64_n, isnan, s);
+    TEST_PUSH_ARRAY_OP1(tc, float64_n, isfinite, s);
 
     tc.set_fp_zero_equal();
     TEST_PUSH_ARRAY_OP1(tc, float64_n, trunc, s);
