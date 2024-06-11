@@ -38,7 +38,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 uint8<N> abs(const int8<N>& a)
 {
-    return detail::insn::i_iabs(a.eval());
+    return detail::insn::i_iabs(a);
 }
 
 
@@ -61,7 +61,7 @@ uint8<N> abs(const int8<N>& a)
 template<unsigned N> SIMDPP_INL
 uint16<N> abs(const int16<N>& a)
 {
-    return detail::insn::i_iabs(a.eval());
+    return detail::insn::i_iabs(a);
 }
 
 /** Computes absolute value of 32-bit integer values.
@@ -83,7 +83,7 @@ uint16<N> abs(const int16<N>& a)
 template<unsigned N> SIMDPP_INL
 uint32<N> abs(const int32<N>& a)
 {
-    return detail::insn::i_iabs(a.eval());
+    return detail::insn::i_iabs(a);
 }
 
 /** Computes absolute value of 64-bit integer values.
@@ -107,7 +107,7 @@ uint32<N> abs(const int32<N>& a)
 template<unsigned N> SIMDPP_INL
 uint64<N> abs(const int64<N>& a)
 {
-    return detail::insn::i_iabs(a.eval());
+    return detail::insn::i_iabs(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

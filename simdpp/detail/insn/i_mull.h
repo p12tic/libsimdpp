@@ -115,7 +115,7 @@ int32<N> i_mull(const int16<N>& a, const int16<N>& b)
 {
     int32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)), i);
     }
     return r;
 }
@@ -184,7 +184,7 @@ uint32<N> i_mull(const uint16<N>& a, const uint16<N>& b)
 {
     uint32<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)), i);
     }
     return r;
 }
@@ -253,8 +253,8 @@ int64<8> i_mull(const int32<8>& a, const int32<8>& b)
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm256_mul_epi32(to_int64(al).eval().native(), to_int64(bl).eval().native());
-    rh = _mm256_mul_epi32(to_int64(ah).eval().native(), to_int64(bh).eval().native());
+    rl = _mm256_mul_epi32(to_int64(al).native(), to_int64(bl).native());
+    rh = _mm256_mul_epi32(to_int64(ah).native(), to_int64(bh).native());
     return combine(rl, rh);
 }
 #endif
@@ -264,7 +264,7 @@ int64<N> i_mull(const int32<N>& a, const int32<N>& b)
 {
     int64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)), i);
     }
     return r;
 }
@@ -341,8 +341,8 @@ uint64<8> i_mull(const uint32<8>& a, const uint32<8>& b)
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm256_mul_epu32(to_uint64(al).eval().native(), to_uint64(bl).eval().native());
-    rh = _mm256_mul_epu32(to_uint64(ah).eval().native(), to_uint64(bh).eval().native());
+    rl = _mm256_mul_epu32(to_uint64(al).native(), to_uint64(bl).native());
+    rh = _mm256_mul_epu32(to_uint64(ah).native(), to_uint64(bh).native());
 
     return combine(rl, rh);
 }
@@ -358,8 +358,8 @@ uint64<16> i_mull(const uint32<16>& a, const uint32<16>& b)
     split(a, al, ah);
     split(b, bl, bh);
 
-    rl = _mm512_mul_epu32(to_int64(al).eval().native(), to_int64(bl).eval().native());
-    rh = _mm512_mul_epu32(to_int64(ah).eval().native(), to_int64(bh).eval().native());
+    rl = _mm512_mul_epu32(to_int64(al).native(), to_int64(bl).native());
+    rh = _mm512_mul_epu32(to_int64(ah).native(), to_int64(bh).native());
 
     return combine(rl, rh);
 }
@@ -370,7 +370,7 @@ uint64<N> i_mull(const uint32<N>& a, const uint32<N>& b)
 {
     uint64<N> r;
     for (unsigned i = 0; i < a.vec_length; ++i) {
-        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)).eval(), i);
+        detail::subvec_insert(r, mull(a.vec(i), b.vec(i)), i);
     }
     return r;
 }

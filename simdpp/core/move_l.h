@@ -43,7 +43,7 @@ typename detail::get_expr_nomask<V>::type
 {
     static_assert(shift <= 16, "Shift out of bounds");
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move16_l_wrapper<shift>::run(ra);
 }
 
@@ -73,7 +73,7 @@ typename detail::get_expr_nomask<V>::type
     static_assert(shift <= 8, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move8_l_wrapper<shift>::run(ra);
 }
 
@@ -101,7 +101,7 @@ typename detail::get_expr_nomask<V>::type
     static_assert(shift <= 4, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move4_l_wrapper<shift>::run(ra);
 }
 
@@ -128,7 +128,7 @@ typename detail::get_expr_nomask<V>::type
     static_assert(shift <= 2, "Shift out of bounds");
 
     typename detail::get_expr_nomask_nosign<V>::type ra;
-    ra = a.wrapped().eval();
+    ra = a.wrapped();
     return detail::insn::i_move2_l_wrapper<shift>::run(ra);
 }
 

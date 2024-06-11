@@ -654,7 +654,7 @@ void test_cmp_equal_impl(std::true_type /*is_V1_vector*/, TestReporter& tr,
 {
     using V = typename simdpp::detail::get_expr_nomask<V1>::type;
     V v1, v2;
-    v1 = q1.eval(); v2 = q2.eval();
+    v1 = q1; v2 = q2;
 
     int memcmp_result = std::memcmp(&v1, &v2, V::length_bytes);
     bool success = expected_equal ? memcmp_result == 0 : memcmp_result != 0;

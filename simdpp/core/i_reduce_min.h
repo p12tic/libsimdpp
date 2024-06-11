@@ -28,49 +28,49 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int8_t reduce_min(const int8<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint8_t reduce_min(const uint8<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int16_t reduce_min(const int16<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint16_t reduce_min(const uint16<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int32_t reduce_min(const int32<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_min(const uint32<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int64_t reduce_min(const int64<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint64_t reduce_min(const uint64<N>& a)
 {
-    return detail::insn::i_reduce_min(a.eval());
+    return detail::insn::i_reduce_min(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

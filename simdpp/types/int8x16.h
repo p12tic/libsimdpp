@@ -53,11 +53,11 @@ public:
     SIMDPP_INL int8<16>(const uint8<16>& d);
     template<class V> SIMDPP_INL explicit int8<16>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int8<16>>(d.wrapped().eval());
+        *this = bit_cast<int8<16>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int8<16>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int8<16>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int8<16>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -83,8 +83,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const int8<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL int8<16>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL int8<16> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL
     /// For internal use only
@@ -125,11 +123,11 @@ public:
     SIMDPP_INL uint8<16>(const int8<16>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint8<16>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint8<16>>(d.wrapped().eval());
+        *this = bit_cast<uint8<16>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint8<16>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint8<16>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint8<16>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -155,8 +153,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const uint8<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint8<16>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL uint8<16> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL
     /// For uinternal use only
@@ -232,8 +228,6 @@ public:
 
     SIMDPP_INL const mask_int8<16>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int8<16>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int8<16> eval() const { return *this; }
 
 private:
     native_type d_;

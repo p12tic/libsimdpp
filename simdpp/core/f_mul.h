@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> mul(const float32<N>& a, const float32<N>& b)
 {
-    return detail::insn::i_fmul(a.eval(), b.eval());
+    return detail::insn::i_fmul(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mul, float32, float32)
@@ -57,7 +57,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mul, float32, float32)
 template<unsigned N> SIMDPP_INL
 float64<N> mul(const float64<N>& a, const float64<N>& b)
 {
-    return detail::insn::i_fmul(a.eval(), b.eval());
+    return detail::insn::i_fmul(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mul, float64, float64)

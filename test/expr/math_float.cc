@@ -37,20 +37,20 @@ void test_expr_math_float_v(TestReporter& ts)
         TEST_EQUAL(ts, mul(a, sub(b, bit_not(c))), a * (b - ~c));
 
         // expressions
-        TEST_EQUAL(ts, add(a, add(b, c)), add(a, add(b, c).eval()));
-        TEST_EQUAL(ts, add(add(b, c), a), add(add(b, c).eval(), a));
-        TEST_EQUAL(ts, sub(a, sub(b, c)), sub(a, sub(b, c).eval()));
-        TEST_EQUAL(ts, sub(sub(b, c), a), sub(sub(b, c).eval(), a));
-        TEST_EQUAL(ts, mul(a, mul(b, c)), mul(a, mul(b, c).eval()));
-        TEST_EQUAL(ts, mul(mul(b, c), a), mul(mul(b, c).eval(), a));
-        TEST_EQUAL(ts, fmadd(a, d, fmadd(b, c, a)), fmadd(a, d, fmadd(b, c, a).eval()));
-        TEST_EQUAL(ts, fmadd(a, fmadd(b, c, a), d), fmadd(a, fmadd(b, c, a).eval(), d));
-        TEST_EQUAL(ts, fmadd(fmadd(b, c, a), a, d), fmadd(fmadd(b, c, a).eval(), a, d));
-        TEST_EQUAL(ts, fmsub(a, d, fmsub(b, c, a)), fmsub(a, d, fmsub(b, c, a).eval()));
-        TEST_EQUAL(ts, fmsub(a, fmsub(b, c, a), d), fmsub(a, fmsub(b, c, a).eval(), d));
-        TEST_EQUAL(ts, fmsub(fmsub(b, c, a), a, d), fmsub(fmsub(b, c, a).eval(), a, d));
-        TEST_EQUAL(ts, abs(mul(a, b)), abs(mul(a, b).eval()));
-        TEST_EQUAL(ts, neg(mul(a, b)), neg(mul(a, b).eval()));
+        TEST_EQUAL(ts, add(a, add(b, c)), add(a, add(b, c)));
+        TEST_EQUAL(ts, add(add(b, c), a), add(add(b, c), a));
+        TEST_EQUAL(ts, sub(a, sub(b, c)), sub(a, sub(b, c)));
+        TEST_EQUAL(ts, sub(sub(b, c), a), sub(sub(b, c), a));
+        TEST_EQUAL(ts, mul(a, mul(b, c)), mul(a, mul(b, c)));
+        TEST_EQUAL(ts, mul(mul(b, c), a), mul(mul(b, c), a));
+        TEST_EQUAL(ts, fmadd(a, d, fmadd(b, c, a)), fmadd(a, d, fmadd(b, c, a)));
+        TEST_EQUAL(ts, fmadd(a, fmadd(b, c, a), d), fmadd(a, fmadd(b, c, a), d));
+        TEST_EQUAL(ts, fmadd(fmadd(b, c, a), a, d), fmadd(fmadd(b, c, a), a, d));
+        TEST_EQUAL(ts, fmsub(a, d, fmsub(b, c, a)), fmsub(a, d, fmsub(b, c, a)));
+        TEST_EQUAL(ts, fmsub(a, fmsub(b, c, a), d), fmsub(a, fmsub(b, c, a), d));
+        TEST_EQUAL(ts, fmsub(fmsub(b, c, a), a, d), fmsub(fmsub(b, c, a), a, d));
+        TEST_EQUAL(ts, abs(mul(a, b)), abs(mul(a, b)));
+        TEST_EQUAL(ts, neg(mul(a, b)), neg(mul(a, b)));
 
         // scalar arguments
         TEST_EQUAL(ts, add(a, make_float<V>(1234.1234f)), a + 1234.1234f);

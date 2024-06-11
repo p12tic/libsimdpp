@@ -38,8 +38,8 @@ typename detail::get_expr_uint<V1, V2>::type
 {
     typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
     typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_isub(ra, rb);
 }
 
@@ -63,8 +63,8 @@ typename detail::get_expr_uint<V1, V2>::type
 {
     typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
     typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_isub(ra, rb);
 }
 
@@ -88,8 +88,8 @@ typename detail::get_expr_uint<V1, V2>::type
 {
     typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
     typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_isub(ra, rb);
 }
 
@@ -117,8 +117,8 @@ typename detail::get_expr_uint<V1, V2>::type
 {
     typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
     typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_isub(ra, rb);
 }
 

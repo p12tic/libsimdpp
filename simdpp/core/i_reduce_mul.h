@@ -30,25 +30,25 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int32_t reduce_mul(const int16<N>& a)
 {
-    return detail::insn::i_reduce_mul(a.eval());
+    return detail::insn::i_reduce_mul(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_mul(const uint16<N>& a)
 {
-    return detail::insn::i_reduce_mul(a.eval());
+    return detail::insn::i_reduce_mul(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int32_t reduce_mul(const int32<N>& a)
 {
-    return detail::insn::i_reduce_mul(uint32<N>(a.eval()));
+    return detail::insn::i_reduce_mul(uint32<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_mul(const uint32<N>& a)
 {
-    return detail::insn::i_reduce_mul(a.eval());
+    return detail::insn::i_reduce_mul(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

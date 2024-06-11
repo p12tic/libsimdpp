@@ -28,49 +28,49 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const int8<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(uint32<N/4>(a.eval()));
+    return detail::insn::i_reduce_popcnt(uint32<N/4>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const uint8<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(uint32<N/4>(a.eval()));
+    return detail::insn::i_reduce_popcnt(uint32<N/4>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const int16<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(uint32<N/2>(a.eval()));
+    return detail::insn::i_reduce_popcnt(uint32<N/2>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const uint16<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(uint32<N/2>(a.eval()));
+    return detail::insn::i_reduce_popcnt(uint32<N/2>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const int32<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(uint32<N>(a.eval()));
+    return detail::insn::i_reduce_popcnt(uint32<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const uint32<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(a.eval());
+    return detail::insn::i_reduce_popcnt(a);
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const int64<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(uint32<N*2>(a.eval()));
+    return detail::insn::i_reduce_popcnt(uint32<N*2>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32_t reduce_popcnt(const uint64<N>& a)
 {
-    return detail::insn::i_reduce_popcnt(uint32<N*2>(a.eval()));
+    return detail::insn::i_reduce_popcnt(uint32<N*2>(a));
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

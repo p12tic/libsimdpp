@@ -32,7 +32,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 mask_float32<N> isnan(const float32<N>& a)
 {
-    return detail::insn::i_isnan(a.eval());
+    return detail::insn::i_isnan(a);
 }
 
 /** Checks whether elements in @a a are IEEE754 NaN.
@@ -53,7 +53,7 @@ mask_float32<N> isnan(const float32<N>& a)
 template<unsigned N> SIMDPP_INL
 mask_float64<N> isnan(const float64<N>& a)
 {
-    return detail::insn::i_isnan(a.eval());
+    return detail::insn::i_isnan(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

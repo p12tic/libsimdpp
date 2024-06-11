@@ -23,7 +23,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 mask_int8<N> operator<=(const int8<N>& a, const int8<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int8, int8)
@@ -31,7 +31,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int8, int8)
 template<unsigned N> SIMDPP_INL
 mask_int8<N> operator<=(const uint8<N>& a, const uint8<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int8, uint8)
@@ -39,7 +39,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int8, uint8)
 template<unsigned N> SIMDPP_INL
 mask_int16<N> operator<=(const int16<N>& a, const int16<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int16, int16)
@@ -47,7 +47,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int16, int16)
 template<unsigned N> SIMDPP_INL
 mask_int16<N> operator<=(const uint16<N>& a, const uint16<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int16, uint16)
@@ -55,7 +55,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int16, uint16)
 template<unsigned N> SIMDPP_INL
 mask_int32<N> operator<=(const int32<N>& a, const int32<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int32, int32)
@@ -63,7 +63,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int32, int32)
 template<unsigned N> SIMDPP_INL
 mask_int32<N> operator<=(const uint32<N>& a, const uint32<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int32, uint32)
@@ -71,7 +71,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int32, uint32)
 template<unsigned N> SIMDPP_INL
 mask_int64<N> operator<=(const int64<N>& a, const int64<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int64, int64)
@@ -79,7 +79,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int64, int64)
 template<unsigned N> SIMDPP_INL
 mask_int64<N> operator<=(const uint64<N>& a, const uint64<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int64, uint64)
 
@@ -97,7 +97,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_int64, uint64)
 template<unsigned N> SIMDPP_INL
 mask_float32<N> operator<=(const float32<N>& a, const float32<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_float32, float32)
@@ -120,7 +120,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_float32, float32)
 template<unsigned N> SIMDPP_INL
 mask_float64<N> operator<=(const float64<N>& a, const float64<N>& b)
 {
-    return detail::insn::i_cmp_le(a.eval(), b.eval());
+    return detail::insn::i_cmp_le(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(operator<=, mask_float64, float64)

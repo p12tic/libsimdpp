@@ -53,11 +53,11 @@ public:
     SIMDPP_INL int32<4>(const uint32<4>& d);
     template<class V> SIMDPP_INL explicit int32<4>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int32<4>>(d.wrapped().eval());
+        *this = bit_cast<int32<4>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int32<4>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<int32<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int32<4>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -83,8 +83,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const int32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL int32<4>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL int32<4> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL
     /// For internal use only
@@ -122,14 +120,14 @@ public:
     SIMDPP_INL uint32<4>(const uint32<4> &) = default;
     SIMDPP_INL uint32<4> &operator=(const uint32<4> &) = default;
 
-    SIMDPP_INL uint32<4>(const int32<4>& d) { *this = d.eval(); }
+    SIMDPP_INL uint32<4>(const int32<4>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint32<4>(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint32<4>>(d.wrapped().eval());
+        *this = bit_cast<uint32<4>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint32<4>& operator=(const any_vec<16,V>& d)
     {
-        *this = bit_cast<uint32<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint32<4>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -155,8 +153,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const uint32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint32<4>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL uint32<4> eval() const { return *this; }
 
 #if SIMDPP_USE_NULL
     /// For uinternal use only
@@ -235,8 +231,6 @@ public:
 
     SIMDPP_INL const mask_int32<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int32<4>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int32<4> eval() const { return *this; }
 
 private:
     native_type d_;

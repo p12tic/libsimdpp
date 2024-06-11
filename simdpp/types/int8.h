@@ -40,11 +40,11 @@ public:
     SIMDPP_INL int8<N>(const uint8<N>& d);
     template<class V> SIMDPP_INL explicit int8<N>(const any_vec<N,V>& d)
     {
-        *this = bit_cast<int8<N>>(d.wrapped().eval());
+        *this = bit_cast<int8<N>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int8<N>& operator=(const any_vec<N,V>& d)
     {
-        *this = bit_cast<int8<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int8<N>>(d.wrapped()); return *this;
     }
 
     template<class E> SIMDPP_INL int8<N>(const expr_vec_construct<E>& e)
@@ -58,8 +58,6 @@ public:
 
     SIMDPP_INL const int8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL int8v& vec(unsigned i)             { return d_[i]; }
-
-    SIMDPP_INL int8<N> eval() const { return *this; }
 
 private:
     /// Creates a signed int8 vector with the contents set to copy of native
@@ -92,14 +90,14 @@ public:
     SIMDPP_INL uint8<N>(const uint8<N>&) = default;
     SIMDPP_INL uint8<N>& operator=(const uint8<N>&) = default;
 
-    SIMDPP_INL uint8<N>(const int8<N>& d) { *this = d.eval(); }
+    SIMDPP_INL uint8<N>(const int8<N>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint8<N>(const any_vec<N,V>& d)
     {
-        *this = bit_cast<uint8<N>>(d.wrapped().eval());
+        *this = bit_cast<uint8<N>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint8<N>& operator=(const any_vec<N,V>& d)
     {
-        *this = bit_cast<uint8<N>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint8<N>>(d.wrapped()); return *this;
     }
 
     template<class E> SIMDPP_INL uint8<N>(const expr_vec_construct<E>& e)
@@ -113,8 +111,6 @@ public:
 
     SIMDPP_INL const uint8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL uint8v& vec(unsigned i)             { return d_[i]; }
-
-    SIMDPP_INL uint8<N> eval() const { return *this; }
 
 private:
     /// Creates a unsigned int8 vector with the contents set to copy of native
@@ -157,8 +153,6 @@ public:
 
     SIMDPP_INL const mask_int8v& vec(unsigned i) const { return d_[i]; }
     SIMDPP_INL mask_int8v& vec(unsigned i)       { return d_[i]; }
-
-    SIMDPP_INL mask_int8<N> eval() const { return *this; }
 
 private:
     detail::vararray<mask_int8v, mask_int8::vec_length> d_;

@@ -38,12 +38,12 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> trunc(const float32<N>& a)
 {
-    return detail::insn::i_trunc(a.eval());
+    return detail::insn::i_trunc(a);
 }
 template<unsigned N> SIMDPP_INL
 float64<N> trunc(const float64<N>& a)
 {
-    return detail::insn::i_trunc(a.eval());
+    return detail::insn::i_trunc(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

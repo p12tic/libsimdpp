@@ -44,11 +44,11 @@ public:
     SIMDPP_INL int32<8>(const uint32<8>& d);
     template<class V> SIMDPP_INL explicit int32<8>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<int32<8>>(d.wrapped().eval());
+        *this = bit_cast<int32<8>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int32<8>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<int32<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int32<8>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -75,8 +75,6 @@ public:
     SIMDPP_INL const int32<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL int32<8>& vec(unsigned)       { return *this; }
 
-    SIMDPP_INL int32<8> eval() const { return *this; }
-
 private:
     native_type d_;
 };
@@ -99,14 +97,14 @@ public:
     SIMDPP_INL uint32<8>(const uint32<8> &) = default;
     SIMDPP_INL uint32<8> &operator=(const uint32<8> &) = default;
 
-    SIMDPP_INL uint32<8>(const int32<8>& d) { *this = d.eval(); }
+    SIMDPP_INL uint32<8>(const int32<8>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint32<8>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<uint32<8>>(d.wrapped().eval());
+        *this = bit_cast<uint32<8>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint32<8>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<uint32<8>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint32<8>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -132,8 +130,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const uint32<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint32<8>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL uint32<8> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -187,8 +183,6 @@ public:
 
     SIMDPP_INL const mask_int32<8>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int32<8>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int32<8> eval() const { return *this; }
 
 private:
     native_type d_;

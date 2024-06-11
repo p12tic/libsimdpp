@@ -33,7 +33,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int8<N> sub_sat(const int8<N>& a, const int8<N>& b)
 {
-    return detail::insn::i_sub_sat(a.eval(), b.eval());
+    return detail::insn::i_sub_sat(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(sub_sat, int8, int8)
@@ -52,7 +52,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(sub_sat, int8, int8)
 template<unsigned N> SIMDPP_INL
 int16<N> sub_sat(const int16<N>& a, const int16<N>& b)
 {
-    return detail::insn::i_sub_sat(a.eval(), b.eval());
+    return detail::insn::i_sub_sat(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(sub_sat, int16, int16)
@@ -71,7 +71,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(sub_sat, int16, int16)
 template<unsigned N> SIMDPP_INL
 uint8<N> sub_sat(const uint8<N>& a, const uint8<N>& b)
 {
-    return detail::insn::i_sub_sat(a.eval(), b.eval());
+    return detail::insn::i_sub_sat(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(sub_sat, uint8, uint8)
@@ -90,7 +90,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(sub_sat, uint8, uint8)
 template<unsigned N> SIMDPP_INL
 uint16<N> sub_sat(const uint16<N>& a, const uint16<N>& b)
 {
-    return detail::insn::i_sub_sat(a.eval(), b.eval());
+    return detail::insn::i_sub_sat(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(sub_sat, uint16, uint16)

@@ -40,7 +40,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> abs(const float32<N>& a)
 {
-    return detail::insn::i_fabs(a.eval());
+    return detail::insn::i_fabs(a);
 }
 
 /** Computes absolute value of floating point values.
@@ -63,7 +63,7 @@ float32<N> abs(const float32<N>& a)
 template<unsigned N> SIMDPP_INL
 float64<N> abs(const float64<N>& a)
 {
-    return detail::insn::i_fabs(a.eval());
+    return detail::insn::i_fabs(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

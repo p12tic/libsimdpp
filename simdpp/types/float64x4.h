@@ -44,11 +44,11 @@ public:
 
     template<class V> SIMDPP_INL explicit float64<4>(const any_vec<32,V>& d)
     {
-        *this = bit_cast<float64<4>>(d.wrapped().eval());
+        *this = bit_cast<float64<4>>(d.wrapped());
     }
     template<class V> SIMDPP_INL float64<4>& operator=(const any_vec<32,V>& d)
     {
-        *this = bit_cast<float64<4>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<float64<4>>(d.wrapped()); return *this;
     }
 
     /// Construct from the underlying vector type
@@ -74,8 +74,6 @@ public:
     /// Access base vectors
     SIMDPP_INL const float64<4>& vec(unsigned) const { return *this; }
     SIMDPP_INL float64<4>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL float64<4> eval() const { return *this; }
 
 private:
     native_type d_;

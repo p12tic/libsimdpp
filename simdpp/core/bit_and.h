@@ -39,8 +39,8 @@ typename detail::get_expr_bitwise2_and<V1, V2>::type
     using E = detail::get_expr_bitwise2_and<V1, V2>;
     typename E::v1_final_type ra;
     typename E::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_bit_and(ra, rb);
 }
 

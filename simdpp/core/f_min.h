@@ -37,7 +37,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> min(const float32<N>& a, const float32<N>& b)
 {
-    return detail::insn::i_min(a.eval(), b.eval());
+    return detail::insn::i_min(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(min, float32, float32)
@@ -62,7 +62,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(min, float32, float32)
 template<unsigned N> SIMDPP_INL
 float64<N> min(const float64<N>& a, const float64<N>& b)
 {
-    return detail::insn::i_min(a.eval(), b.eval());
+    return detail::insn::i_min(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(min, float64, float64)

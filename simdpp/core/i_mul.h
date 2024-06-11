@@ -40,8 +40,8 @@ typename detail::get_expr_uint<V1, V2>::type
 {
     typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
     typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_mul_lo(ra, rb);
 }
 
@@ -65,7 +65,7 @@ SIMDPP_SCALAR_ARG_IMPL_INT_UNSIGNED(mul_lo, expr_mul_lo, any_int16, int16<N>)
 template<unsigned N> SIMDPP_INL
 int16<N> mul_hi(const int16<N>& a, const int16<N>& b)
 {
-    return detail::insn::i_mul_hi(a.wrapped().eval(), b.wrapped().eval());
+    return detail::insn::i_mul_hi(a.wrapped(), b.wrapped());
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mul_hi, int16, int16)
@@ -88,7 +88,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(mul_hi, int16, int16)
 template<unsigned N> SIMDPP_INL
 uint16<N> mul_hi(const uint16<N>& a, const uint16<N>& b)
 {
-    return detail::insn::i_mul_hi(a.wrapped().eval(), b.wrapped().eval());
+    return detail::insn::i_mul_hi(a.wrapped(), b.wrapped());
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(mul_hi, uint16, uint16)
@@ -117,8 +117,8 @@ typename detail::get_expr_uint<V1, V2>::type
 {
     typename detail::get_expr_uint<V1, V2>::v1_final_type ra;
     typename detail::get_expr_uint<V1, V2>::v2_final_type rb;
-    ra = a.wrapped().eval();
-    rb = b.wrapped().eval();
+    ra = a.wrapped();
+    rb = b.wrapped();
     return detail::insn::i_mul_lo(ra, rb);
 }
 

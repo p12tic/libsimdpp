@@ -30,49 +30,49 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int8<N> popcnt(const int8<N>& a)
 {
-    return detail::insn::i_popcnt(uint8<N>(a.eval()));
+    return detail::insn::i_popcnt(uint8<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint8<N> popcnt(const uint8<N>& a)
 {
-    return detail::insn::i_popcnt(a.eval());
+    return detail::insn::i_popcnt(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int16<N> popcnt(const int16<N>& a)
 {
-    return detail::insn::i_popcnt(uint16<N>(a.eval()));
+    return detail::insn::i_popcnt(uint16<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint16<N> popcnt(const uint16<N>& a)
 {
-    return detail::insn::i_popcnt(a.eval());
+    return detail::insn::i_popcnt(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int32<N> popcnt(const int32<N>& a)
 {
-    return detail::insn::i_popcnt(uint32<N>(a.eval()));
+    return detail::insn::i_popcnt(uint32<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint32<N> popcnt(const uint32<N>& a)
 {
-    return detail::insn::i_popcnt(a.eval());
+    return detail::insn::i_popcnt(a);
 }
 
 template<unsigned N> SIMDPP_INL
 int64<N> popcnt(const int64<N>& a)
 {
-    return detail::insn::i_popcnt(uint64<N>(a.eval()));
+    return detail::insn::i_popcnt(uint64<N>(a));
 }
 
 template<unsigned N> SIMDPP_INL
 uint64<N> popcnt(const uint64<N>& a)
 {
-    return detail::insn::i_popcnt(a.eval());
+    return detail::insn::i_popcnt(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

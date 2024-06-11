@@ -45,11 +45,11 @@ public:
     SIMDPP_INL int16<32>(const uint16<32>& d);
     template<class V> SIMDPP_INL explicit int16<32>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int16<32>>(d.wrapped().eval());
+        *this = bit_cast<int16<32>>(d.wrapped());
     }
     template<class V> SIMDPP_INL int16<32>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<int16<32>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<int16<32>>(d.wrapped()); return *this;
     }
 
     /// @{
@@ -80,8 +80,6 @@ public:
     SIMDPP_INL int16<32>& vec(unsigned)       { return *this; }
     /// @}
 
-    SIMDPP_INL int16<32> eval() const { return *this; }
-
 private:
     native_type d_;
 };
@@ -104,14 +102,14 @@ public:
     SIMDPP_INL uint16<32>(const uint16<32> &) = default;
     SIMDPP_INL uint16<32> &operator=(const uint16<32> &) = default;
 
-    SIMDPP_INL uint16<32>(const int16<32>& d) { *this = d.eval(); }
+    SIMDPP_INL uint16<32>(const int16<32>& d) { *this = d; }
     template<class V> SIMDPP_INL explicit uint16<32>(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint16<32>>(d.wrapped().eval());
+        *this = bit_cast<uint16<32>>(d.wrapped());
     }
     template<class V> SIMDPP_INL uint16<32>& operator=(const any_vec<64,V>& d)
     {
-        *this = bit_cast<uint16<32>>(d.wrapped().eval()); return *this;
+        *this = bit_cast<uint16<32>>(d.wrapped()); return *this;
     }
 
     /// @{
@@ -141,8 +139,6 @@ public:
     SIMDPP_INL const uint16<32>& vec(unsigned) const { return *this; }
     SIMDPP_INL uint16<32>& vec(unsigned)       { return *this; }
     /// @}
-
-    SIMDPP_INL uint16<32> eval() const { return *this; }
 
 private:
     native_type d_;
@@ -185,8 +181,6 @@ public:
 
     SIMDPP_INL const mask_int16<32>& vec(unsigned) const { return *this; }
     SIMDPP_INL mask_int16<32>& vec(unsigned)       { return *this; }
-
-    SIMDPP_INL mask_int16<32> eval() const { return *this; }
 
 private:
     native_type d_;

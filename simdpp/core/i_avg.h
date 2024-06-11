@@ -34,7 +34,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 uint8<N> avg(const uint8<N>& a, const uint8<N>& b)
 {
-    return detail::insn::i_avg(a.eval(), b.eval());
+    return detail::insn::i_avg(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg, uint8, uint8)
@@ -58,7 +58,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg, uint8, uint8)
 template<unsigned N> SIMDPP_INL
 int8<N> avg(const int8<N>& a, const int8<N>& b)
 {
-    return detail::insn::i_avg(a.eval(), b.eval());
+    return detail::insn::i_avg(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg, int8, int8)
@@ -77,7 +77,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg, int8, int8)
 template<unsigned N> SIMDPP_INL
 uint16<N> avg(const uint16<N>& a, const uint16<N>& b)
 {
-    return detail::insn::i_avg(a.eval(), b.eval());
+    return detail::insn::i_avg(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg, uint16, uint16)
@@ -101,7 +101,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg, uint16, uint16)
 template<unsigned N> SIMDPP_INL
 int16<N> avg(const int16<N>& a, const int16<N>& b)
 {
-    return detail::insn::i_avg(a.eval(), b.eval());
+    return detail::insn::i_avg(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg, int16, int16)
@@ -125,7 +125,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg, int16, int16)
 template<unsigned N> SIMDPP_INL
 uint32<N> avg(const uint32<N>& a, const uint32<N>& b)
 {
-    return detail::insn::i_avg(a.eval(), b.eval());
+    return detail::insn::i_avg(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg, uint32, uint32)
@@ -150,7 +150,7 @@ SIMDPP_SCALAR_ARG_IMPL_VEC(avg, uint32, uint32)
 template<unsigned N> SIMDPP_INL
 int32<N> avg(const int32<N>& a, const int32<N>& b)
 {
-    return detail::insn::i_avg(a.eval(), b.eval());
+    return detail::insn::i_avg(a, b);
 }
 
 SIMDPP_SCALAR_ARG_IMPL_VEC(avg, int32, int32)

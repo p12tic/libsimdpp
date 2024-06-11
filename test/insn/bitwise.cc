@@ -45,11 +45,11 @@ void test_bitwise_type(TestResultsSet& tc, TestReporter& tr)
     TEST_PUSH_ARRAY_OP1_T(tc, bool, V, test_bits_any, sl);
 
     TEST_EQUAL_ALL_COMB_OP2_EXPLICIT(tr, V,
-                                     test_bits_any(bit_and(ARG1, ARG2).eval()),
+                                     test_bits_any(bit_and(ARG1, ARG2)),
                                      test_bits_any(bit_and(ARG1, ARG2)), sl);
 
     TEST_EQUAL_ALL_COMB_OP2_EXPLICIT(tr, V,
-                                     test_bits_any(bit_andnot(ARG1, ARG2).eval()),
+                                     test_bits_any(bit_andnot(ARG1, ARG2)),
                                      test_bits_any(bit_andnot(ARG1, ARG2)), sl);
 }
 

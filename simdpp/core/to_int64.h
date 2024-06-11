@@ -43,32 +43,32 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const int8<N>& a)
 {
-    return detail::insn::i_to_int64(a.eval());
+    return detail::insn::i_to_int64(a);
 }
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const uint8<N>& a)
 {
-    return (int64<N>) detail::insn::i_to_uint64(a.eval());
+    return (int64<N>) detail::insn::i_to_uint64(a);
 }
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const int16<N>& a)
 {
-    return detail::insn::i_to_int64(a.eval());
+    return detail::insn::i_to_int64(a);
 }
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const uint16<N>& a)
 {
-    return (int64<N>) detail::insn::i_to_uint64(a.eval());
+    return (int64<N>) detail::insn::i_to_uint64(a);
 }
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const int32<N>& a)
 {
-    return detail::insn::i_to_int64(a.eval());
+    return detail::insn::i_to_int64(a);
 }
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const uint32<N>& a)
 {
-    return (int64<N>) detail::insn::i_to_uint64(a.eval());
+    return (int64<N>) detail::insn::i_to_uint64(a);
 }
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const int64<N>& a)
@@ -78,13 +78,13 @@ int64<N> to_int64(const int64<N>& a)
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const uint64<N>& a)
 {
-    return int64<N>(a.eval());
+    return int64<N>(a);
 }
 template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const float32<N>& a)
 {
 #if SIMDPP_HAS_FLOAT32_TO_INT64_CONVERSION
-    return detail::insn::i_to_int64(a.eval());
+    return detail::insn::i_to_int64(a);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE0(a);
 #endif
@@ -93,7 +93,7 @@ template<unsigned N> SIMDPP_INL
 int64<N> to_int64(const float64<N>& a)
 {
 #if SIMDPP_HAS_FLOAT64_TO_INT64_CONVERSION
-    return detail::insn::i_to_int64(a.eval());
+    return detail::insn::i_to_int64(a);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE0(a);
 #endif
@@ -121,48 +121,48 @@ int64<N> to_int64(const float64<N>& a)
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const int8<N>& a)
 {
-    return (uint64<N>) detail::insn::i_to_int64(a.eval());
+    return (uint64<N>) detail::insn::i_to_int64(a);
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const uint8<N>& a)
 {
-    return detail::insn::i_to_uint64(a.eval());
+    return detail::insn::i_to_uint64(a);
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const int16<N>& a)
 {
-    return (uint64<N>) detail::insn::i_to_int64(a.eval());
+    return (uint64<N>) detail::insn::i_to_int64(a);
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const uint16<N>& a)
 {
-    return detail::insn::i_to_uint64(a.eval());
+    return detail::insn::i_to_uint64(a);
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const int32<N>& a)
 {
-    return (uint64<N>) detail::insn::i_to_int64(a.eval());
+    return (uint64<N>) detail::insn::i_to_int64(a);
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const uint32<N>& a)
 {
-    return detail::insn::i_to_uint64(a.eval());
+    return detail::insn::i_to_uint64(a);
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const int64<N>& a)
 {
-    return uint64<N>(a.eval());
+    return uint64<N>(a);
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const uint64<N>& a)
 {
-    return a.eval();
+    return a;
 }
 template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const float32<N>& a)
 {
 #if SIMDPP_HAS_FLOAT32_TO_UINT64_CONVERSION
-    return detail::insn::i_to_uint64(a.eval());
+    return detail::insn::i_to_uint64(a);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE0(a);
 #endif
@@ -171,7 +171,7 @@ template<unsigned N> SIMDPP_INL
 uint64<N> to_uint64(const float64<N>& a)
 {
 #if SIMDPP_HAS_FLOAT64_TO_UINT64_CONVERSION
-    return detail::insn::i_to_uint64(a.eval());
+    return detail::insn::i_to_uint64(a);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE0(a);
 #endif

@@ -40,38 +40,38 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const int8<N>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 }
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const uint8<N>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 }
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const int16<N>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 }
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const uint16<N>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 }
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const int32<N>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 }
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const uint32<N>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 }
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const int64<N>& a)
 {
 #if SIMDPP_HAS_INT64_TO_FLOAT32_CONVERSION
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE0(a);
 #endif
@@ -80,7 +80,7 @@ template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const uint64<N>& a)
 {
 #if SIMDPP_HAS_UINT64_TO_FLOAT32_CONVERSION
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 #else
     return SIMDPP_NOT_IMPLEMENTED_TEMPLATE0(a);
 #endif
@@ -93,7 +93,7 @@ float32<N> to_float32(const float32<N>& a)
 template<unsigned N> SIMDPP_INL
 float32<N> to_float32(const float64<N>& a)
 {
-    return detail::insn::i_to_float32(a.eval());
+    return detail::insn::i_to_float32(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

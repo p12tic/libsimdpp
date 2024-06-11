@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> rcp_e(const float32<N>& a)
 {
-    return detail::insn::i_rcp_e(a.eval());
+    return detail::insn::i_rcp_e(a);
 }
 
 

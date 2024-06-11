@@ -39,7 +39,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 float32<N> sqrt(const float32<N>& a)
 {
-    return detail::insn::i_sqrt(a.eval());
+    return detail::insn::i_sqrt(a);
 }
 
 /** Computes square root.
@@ -60,7 +60,7 @@ float32<N> sqrt(const float32<N>& a)
 template<unsigned N> SIMDPP_INL
 float64<N> sqrt(const float64<N>& a)
 {
-    return detail::insn::i_sqrt(a.eval());
+    return detail::insn::i_sqrt(a);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE

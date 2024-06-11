@@ -36,7 +36,7 @@ namespace SIMDPP_ARCH_NAMESPACE {
 template<unsigned N> SIMDPP_INL
 mask_float32<N> isnan2(const float32<N>& a, const float32<N>& b)
 {
-    return detail::insn::i_isnan2(a.eval(), b.eval());
+    return detail::insn::i_isnan2(a, b);
 }
 
 /** Checks whether corresponding elements in either @a a or @a b are IEEE754
@@ -58,7 +58,7 @@ mask_float32<N> isnan2(const float32<N>& a, const float32<N>& b)
 template<unsigned N> SIMDPP_INL
 mask_float64<N> isnan2(const float64<N>& a, const float64<N>& b)
 {
-    return detail::insn::i_isnan2(a.eval(), b.eval());
+    return detail::insn::i_isnan2(a, b);
 }
 
 

@@ -38,7 +38,7 @@ template<class T, unsigned N, class V> SIMDPP_INL
 void store_u(T* p, const any_vec<N,V>& a)
 {
     static_assert(!is_mask<V>::value, "Masks can not be stored"); // FIXME: automatically convert
-    detail::insn::v_store_u(reinterpret_cast<char*>(p), a.wrapped().eval());
+    detail::insn::v_store_u(reinterpret_cast<char*>(p), a.wrapped());
 }
 
 #ifndef SIMDPP_DOXYGEN
