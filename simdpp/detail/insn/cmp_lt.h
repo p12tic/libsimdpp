@@ -390,7 +390,18 @@ mask_float32x4 i_cmp_lt(const float32x4& a, const float32x4& b)
 #elif SIMDPP_USE_SSE2
     return _mm_cmplt_ps(a.native(), b.native());
 #elif SIMDPP_USE_NEON
+#if SIMDPP_32_BITS && defined(__GNUC__) && (__GNUC__ >= 11) && !defined(__clang__)
+    // BUG: Starting GCC 11 and up until at least GCC 14 floating-point comparison intrinics get
+    // broken down to scalar code on armv7. https://godbolt.org/z/MbnMhzrTT
+    // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=115451
+    float32x4_t va = a.native();
+    float32x4_t vb = b.native();
+    float32x4_t vr;
+    asm("vcgt.f32 %q0, %q1, %q2 " : "=w"(vr) : "w"(vb) , "w"(va));
+    return vr;
+#else
     return vreinterpretq_f32_u32(vcltq_f32(a.native(), b.native()));
+#endif
 #elif SIMDPP_USE_ALTIVEC
     return vec_cmplt(a.native(), b.native());
 #elif SIMDPP_USE_MSA
