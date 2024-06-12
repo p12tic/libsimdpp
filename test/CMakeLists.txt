@@ -259,3 +259,5 @@ add_test(NAME test_compile_fail
             "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
             "-Dlibsimdpp_SOURCE_DIR=${libsimdpp_SOURCE_DIR}"
          WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/compile_fail)
+
+add_subdirectory(math_accuracy)
