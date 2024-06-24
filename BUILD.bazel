@@ -1,0 +1,13 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "simdpp",
+    srcs = glob([
+        "simdpp/**/*.h",
+        "simdpp/**/*.hpp",
+        "simdpp/**/*.inl",
+    ]),
+    hdrs = ["simdpp/simd.h"],
+    includes = ["./"],
+    visibility = ["//visibility:public"],
+)

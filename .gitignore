@@ -10,5 +10,6 @@ libsimdpp.files
 # Misc files created during local development
 *~
 build*
+!BUILD.bazel
 venv
 pywiki
