@@ -229,8 +229,8 @@ int64<4> i_mull(const int32<4>& a, const int32<4>& b)
 #endif
     int64<2> lo = vlo, hi = vhi;
 #else
-    int64x2 lo = vec_vmulesw(a.native(), b.native());
-    int64x2 hi = vec_vmulosw(a.native(), b.native());
+    int64x2 lo = vec_mule(a.native(), b.native());
+    int64x2 hi = vec_mulo(a.native(), b.native());
 #endif
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #elif SIMDPP_USE_MSA
@@ -309,8 +309,8 @@ uint64<4> i_mull(const uint32<4>& a, const uint32<4>& b)
 #endif
     uint64<2> lo = vlo, hi = vhi;
 #else
-    uint64x2 lo = vec_vmuleuw(a.native(), b.native());
-    uint64x2 hi = vec_vmulouw(a.native(), b.native());
+    uint64x2 lo = vec_mule(a.native(), b.native());
+    uint64x2 hi = vec_mulo(a.native(), b.native());
 #endif
     return combine(zip2_lo(lo, hi), zip2_hi(lo, hi));
 #elif SIMDPP_USE_ALTIVEC
