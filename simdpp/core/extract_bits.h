@@ -18,11 +18,12 @@
 namespace simdpp {
 namespace SIMDPP_ARCH_NAMESPACE {
 
-/** Extracts a bit from each byte of each element of a vector containing 8-bit
-    elements.
+/** Extracts a bit from each element of a vector.
 
-    This operation is only sensible if each byte within the vector is either
-    0x00 or 0xff.
+    This operation is only sensible if each element within the vector is either
+    all zeros or all ones.
+
+    For 8-bit version:
 
     @code
     r = ((a[0] & 0x??) ? 0x01 : 0) |
@@ -31,13 +32,35 @@ namespace SIMDPP_ARCH_NAMESPACE {
         ((a[15] & 0x??) ? 0x80 : 0)
     @endcode
 */
-SIMDPP_INL uint16_t extract_bits_any(const uint8<16>& a)
+template<class V>
+SIMDPP_INL uint16_t extract_bits_any(const any_vec8<16, V>& a)
 {
-    return detail::insn::i_extract_bits_any(a);
+    return detail::insn::i_extract_bits_any(uint8<16>(a));
 }
-SIMDPP_INL uint32_t extract_bits_any(const uint8<32>& a)
+template<class V>
+SIMDPP_INL uint32_t extract_bits_any(const any_vec8<32, V>& a)
 {
-    return detail::insn::i_extract_bits_any(a);
+    return detail::insn::i_extract_bits_any(uint8<32>(a));
+}
+template<class V>
+SIMDPP_INL uint8_t extract_bits_any(const any_vec16<8, V>& a)
+{
+    return detail::insn::i_extract_bits_any(uint16<8>(a));
+}
+template<class V>
+SIMDPP_INL uint16_t extract_bits_any(const any_vec16<16, V>& a)
+{
+    return detail::insn::i_extract_bits_any(uint16<16>(a));
+}
+template<class V>
+SIMDPP_INL uint8_t extract_bits_any(const any_vec32<4, V>& a)
+{
+    return detail::insn::i_extract_bits_any(uint32<4>(a));
+}
+template<class V>
+SIMDPP_INL uint8_t extract_bits_any(const any_vec32<8, V>& a)
+{
+    return detail::insn::i_extract_bits_any(uint32<8>(a));
 }
 
 /** Extracts specific bit from each byte of each element of a int8x16 vector.
