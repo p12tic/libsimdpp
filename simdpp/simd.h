@@ -38,6 +38,7 @@
 #include <simdpp/core/f_abs.h>
 #include <simdpp/core/f_add.h>
 #include <simdpp/core/f_ceil.h>
+#include <simdpp/core/f_clamp.h>
 #include <simdpp/core/f_div.h>
 #include <simdpp/core/f_floor.h>
 #include <simdpp/core/f_fmadd.h>
@@ -67,6 +68,7 @@
 #include <simdpp/core/i_add_sat.h>
 #include <simdpp/core/i_avg.h>
 #include <simdpp/core/i_avg_trunc.h>
+#include <simdpp/core/i_clamp.h>
 #include <simdpp/core/i_div_p.h>
 #include <simdpp/core/i_max.h>
 #include <simdpp/core/i_min.h>

@@ -40,6 +40,7 @@ void test_math_int8_n(TestResultsSet& tc)
     TEST_PUSH_ALL_COMB_OP2(tc, int8_n, max, s);
     TEST_PUSH_ALL_COMB_OP2(tc, int8_n, avg, s);
     TEST_PUSH_ALL_COMB_OP2(tc, int8_n, avg_trunc, s);
+    TEST_PUSH_ALL_COMB_OP3(tc, int8_n, clamp, s);
 
     TEST_PUSH_ALL_COMB_OP2(tc, uint8_n, add, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint8_n, add_sat, s);
@@ -49,6 +50,7 @@ void test_math_int8_n(TestResultsSet& tc)
     TEST_PUSH_ALL_COMB_OP2(tc, uint8_n, max, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint8_n, avg, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint8_n, avg_trunc, s);
+    TEST_PUSH_ALL_COMB_OP3(tc, uint8_n, clamp, s);
 
     TEST_PUSH_ARRAY_OP1(tc, int8_n, neg, s);
     TEST_PUSH_ARRAY_OP1(tc, int8_n, abs, s);
@@ -96,6 +98,7 @@ void test_math_int16_n(TestResultsSet& tc)
     TEST_PUSH_ALL_COMB_OP2(tc, int16_n, max, s);
     TEST_PUSH_ALL_COMB_OP2(tc, int16_n, avg, s);
     TEST_PUSH_ALL_COMB_OP2(tc, int16_n, avg_trunc, s);
+    TEST_PUSH_ALL_COMB_OP3(tc, int16_n, clamp, s);
 
     TEST_PUSH_ALL_COMB_OP2(tc, uint16_n, add, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint16_n, add_sat, s);
@@ -107,6 +110,7 @@ void test_math_int16_n(TestResultsSet& tc)
     TEST_PUSH_ALL_COMB_OP2(tc, uint16_n, max, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint16_n, avg, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint16_n, avg_trunc, s);
+    TEST_PUSH_ALL_COMB_OP3(tc, uint16_n, clamp, s);
 
     TEST_PUSH_ALL_COMB_OP2_T(tc, int32<B/2>, int16_n, mull, s);
     TEST_PUSH_ALL_COMB_OP2_T(tc, uint32<B/2>, uint16_n, mull, s);
@@ -166,6 +170,7 @@ void test_math_int32_n(TestResultsSet& tc)
     TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, max, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, avg, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint32_n, avg_trunc, s);
+    TEST_PUSH_ALL_COMB_OP3(tc, uint32_n, clamp, s);
 
     TEST_PUSH_ALL_COMB_OP2_T(tc, uint64<B/4>, uint32_n, mull, s);
     TEST_PUSH_ALL_COMB_OP2_T(tc, uint32_n, uint32_n, mul_lo, s);
@@ -224,6 +229,8 @@ void test_math_int64_n(TestResultsSet& tc)
     TEST_PUSH_ALL_COMB_OP2(tc, int64_n, max, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint64_n, min, s);
     TEST_PUSH_ALL_COMB_OP2(tc, uint64_n, max, s);
+    TEST_PUSH_ALL_COMB_OP3(tc, int64_n, clamp, s);
+    TEST_PUSH_ALL_COMB_OP3(tc, uint64_n, clamp, s);
 #endif
 
     TEST_PUSH_ARRAY_OP1(tc, int64_n, neg, s);
