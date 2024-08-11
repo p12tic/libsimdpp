@@ -101,15 +101,10 @@ void i_load_u(uint64x2& a, const char* p)
     i_load_u(b, p);
     a = b;
 #elif SIMDPP_USE_VSX_207
-#if SIMDPP_64_BITS
-    a = (__vector uint64_t) vec_vsx_ld(0, reinterpret_cast<const uint64_t*>(p));
-#else
-    // BUG: GCC does not support vec_vsx_ld in 32-bit mode even when
-    // VSX 2.07 is enabled
+    // BUG: GCC does not support vec_vsx_ld in even when VSX 2.07 is enabled
     uint8x16 r;
     i_load_u(r, p);
     a = r;
-#endif
 #elif SIMDPP_USE_ALTIVEC
     detail::null::load(a, p);
 #elif SIMDPP_USE_NEON
