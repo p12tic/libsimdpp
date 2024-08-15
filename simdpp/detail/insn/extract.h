@@ -350,7 +350,7 @@ float i_extract(const float32<4>& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return a.el(id);
 #elif SIMDPP_USE_SSE2
-    return bit_cast<float>(i_extract<id>(int32x4(a)));
+    return _mm_cvtss_f32(_mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(id, id, id, id)));
 #elif SIMDPP_USE_NEON
     return vgetq_lane_f32(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
@@ -363,8 +363,8 @@ float i_extract(const float32<4>& a)
 template<unsigned id> SIMDPP_INL
 float i_extract(const float32<8>& a)
 {
-    __m128 val = _mm256_extractf128_ps(a.native(), id / 4);
-    return bit_cast<float>(_mm_extract_epi32(_mm_castps_si128(val), id % 4));
+    float32<4> val = _mm256_extractf128_ps(a.native(), id / 4);
+    return i_extract<id % 4>(val);
 }
 #endif
 
@@ -372,8 +372,8 @@ float i_extract(const float32<8>& a)
 template<unsigned id> SIMDPP_INL
 float i_extract(const float32<16>& a)
 {
-    __m128 val = _mm512_extractf32x4_ps(a.native(), id / 4);
-    return bit_cast<float>(_mm_extract_epi32(_mm_castps_si128(val), id % 4));
+    float32<4> val = _mm512_extractf32x4_ps(a.native(), id / 4);
+    return i_extract<id % 4>(val);
 }
 #endif
 
@@ -385,7 +385,7 @@ double i_extract(const float64<2>& a)
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
-    return bit_cast<double>(i_extract<id>(int64x2(a)));
+    return _mm_cvtsd_f64(_mm_shuffle_pd(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2(id, id)));
 #elif SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     detail::mem_block<float64x2> ax(a);
     return ax[id];
@@ -398,8 +398,12 @@ double i_extract(const float64<2>& a)
 template<unsigned id> SIMDPP_INL
 double i_extract(const float64<4>& a)
 {
-    __m128d val = _mm256_extractf128_pd(a.native(), id / 2);
-    return bit_cast<double>(i_extract<id % 2>((uint64<2>)_mm_castpd_si128(val)));
+#if SIMDPP_USE_AVX2
+    return _mm256_cvtsd_f64(_mm256_permute4x64_pd(a.native(), _MM_SHUFFLE(id, id, id, id)));
+#else
+    float64<2> val = _mm256_extractf128_pd(a.native(), id / 2);
+    return i_extract<id % 2>(val);
+#endif
 }
 #endif
 
@@ -407,8 +411,11 @@ double i_extract(const float64<4>& a)
 template<unsigned id> SIMDPP_INL
 double i_extract(const float64<8>& a)
 {
-    __m128 val = _mm512_extractf32x4_ps(_mm512_castpd_ps(a.native()), id / 2);
-    return bit_cast<double>(i_extract<id % 2>((uint64<2>)_mm_castps_si128(val)));
+    // cannot use _mm512_extractf64x2_pd because there's error on GCC from at least 12.x
+    // error: inlining failed in call to ‘always_inline’
+    // ‘__m128d _mm512_extractf64x2_pd(__m512d, int)’: target specific option mismatch
+    float64<2> val = _mm_castps_pd(_mm512_extractf32x4_ps(_mm512_castpd_ps(a.native()), id / 2));
+    return i_extract<id % 2>(val);
 }
 #endif
 

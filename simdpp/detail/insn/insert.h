@@ -294,17 +294,36 @@ float32<16> i_insert(const float32<16>& a, float x)
 template<unsigned id> SIMDPP_INL
 float64x2 i_insert(const float64x2& a, double x)
 {
+#if SIMDPP_USE_SSE2
+    float64<2> v = _mm_set1_pd(x);
+    switch (id)
+    {
+    case 0: return _mm_shuffle_pd(v.native(), a.native(), 0x2);
+    case 1: return _mm_shuffle_pd(a.native(), v.native(), 0x2);
+    }
+#else
     return float64<2>(i_insert<id>(uint64<2>(a), bit_cast<int64_t>(x)));
+#endif
 }
 
 #if SIMDPP_USE_AVX
 template<unsigned id> SIMDPP_INL
 float64<4> i_insert(const float64<4>& a, double x)
 {
-    __m256d val = a.native();
-    float64<2> val128 = _mm256_extractf128_pd(val, id / 2);
+#if SIMDPP_USE_AVX2
+    float64<4> v = splat(x);
+    switch (id)
+    {
+    case 0: return _mm256_blend_pd(a.native(), v.native(), 0x1);
+    case 1: return _mm256_blend_pd(a.native(), v.native(), 0x2);
+    case 2: return _mm256_blend_pd(a.native(), v.native(), 0x4);
+    case 3: return _mm256_blend_pd(a.native(), v.native(), 0x8);
+    }
+#else
+    float64<2> val128 = _mm256_extractf128_pd(a.native(), id / 2);
     val128 = i_insert<id % 2>(val128, x);
-    return _mm256_insertf128_pd(val, val128.native(), id / 2);
+    return _mm256_insertf128_pd(a.native(), val128.native(), id / 2);
+#endif
 }
 #endif
 
