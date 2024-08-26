@@ -38,6 +38,7 @@
 #include <simdpp/core/f_abs.h>
 #include <simdpp/core/f_add.h>
 #include <simdpp/core/f_ceil.h>
+#include <simdpp/core/f_copysign.h>
 #include <simdpp/core/f_clamp.h>
 #include <simdpp/core/f_div.h>
 #include <simdpp/core/f_floor.h>

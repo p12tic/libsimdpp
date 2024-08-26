@@ -89,6 +89,7 @@ void test_math_float32_n(TestResultsSet& tc, const TestOptions& opts)
     TEST_PUSH_ALL_COMB_OP2(tc, float32_n, min, snan);
     TEST_PUSH_ALL_COMB_OP2(tc, float32_n, max, snan);
     TEST_PUSH_ALL_COMB_OP3(tc, float32_n, clamp, snan);
+    TEST_PUSH_ALL_COMB_OP2(tc, float32_n, copysign, snan);
 
     // Depending on the reduction order precision errors may occur.
     tc.set_precision(2);
@@ -157,6 +158,7 @@ void test_math_float64_n(TestResultsSet& tc, const TestOptions& opts)
     TEST_PUSH_ALL_COMB_OP2(tc, float64_n, min, snan);
     TEST_PUSH_ALL_COMB_OP2(tc, float64_n, max, snan);
     TEST_PUSH_ALL_COMB_OP3(tc, float64_n, clamp, snan);
+    TEST_PUSH_ALL_COMB_OP2(tc, float64_n, copysign, snan);
 
 #if (SIMDPP_USE_FMA3 || SIMDPP_USE_FMA4 || SIMDPP_USE_NULL) && !SIMDPP_USE_AVX512F
     tc.set_fp_zero_equal();
