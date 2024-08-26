@@ -350,7 +350,16 @@ float i_extract(const float32<4>& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return a.el(id);
 #elif SIMDPP_USE_SSE2
-    return _mm_cvtss_f32(_mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(id, id, id, id)));
+    switch (id) {
+    case 0: return _mm_cvtss_f32(a.native());
+#if SIMDPP_USE_SSE3
+    case 1: return _mm_cvtss_f32(_mm_movehdup_ps(a.native()));
+#else
+    case 1: return _mm_cvtss_f32(_mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(id, id, id, id)));
+#endif
+    case 2: return _mm_cvtss_f32(_mm_unpackhi_ps(a.native(), a.native()));
+    case 3: return _mm_cvtss_f32(_mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(id, id, id, id)));
+    }
 #elif SIMDPP_USE_NEON
     return vgetq_lane_f32(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
