@@ -206,6 +206,59 @@ SIMDPP_INL uint8_t i_extract_bits_any(const uint32<8>& ca)
 #endif
 }
 
+SIMDPP_INL uint8_t i_extract_bits_any(const uint64<2>& ca)
+{
+    uint64<2> a = ca;
+#if SIMDPP_USE_NULL
+    uint8_t r = 0;
+    for (unsigned i = 0; i < a.length; i++) {
+        uint8_t x = ca.el(i);
+        x = x & 1;
+        r = (r >> 1) | (x << 1);
+    }
+    return r;
+#elif SIMDPP_USE_SSE2
+    return _mm_movemask_pd(_mm_castsi128_pd(a.native()));
+#elif SIMDPP_USE_NEON
+    uint64<2> mask = make_uint(0x1, 0x2);
+    a = bit_and(a, mask);
+    uint64x1_t r = vadd_u64(vget_low_u64(r2), vget_high_u64(r2));
+    return vget_lane_u8(vreinterpret_u8_u64(r), 0);
+#elif SIMDPP_USE_ALTIVEC
+    uint32<4> mask = make_uint(0x1, 0x0, 0x2, 0x0);
+    a = bit_and(a, mask);
+    uint32<4> zero = make_zero();
+    uint32<4> s = (int32x4)vec_sums((__vector int32_t)a.native(),
+                                    (__vector int32_t)zero.native());
+#if SIMDPP_BIG_ENDIAN
+    return extract<7>(uint16x8(s));
+#else
+    return extract<6>(uint16x8(s));
+#endif
+#elif SIMDPP_USE_MSA
+    uint32<4> mask = make_uint(0x1, 0x0, 0x2, 0x0);
+    a = bit_and(a, mask);
+    a = (v4u32) __msa_hadd_u_d(a.native(), a.native());
+    a = bit_or(a, move4_l<2>(a));
+    return extract<0>(a);
+#endif
+}
+
+SIMDPP_INL uint8_t i_extract_bits_any(const uint64<4>& ca)
+{
+#if SIMDPP_USE_AVX512DQ
+    return _mm256_movepi64_mask(ca.native());
+#elif SIMDPP_USE_AVX2
+    return _mm256_movemask_pd(_mm256_castsi256_pd(ca.native()));
+#else
+    // FIXME: can be improved
+    uint64<2> lo, hi;
+    lo = ca.vec<0>();
+    hi = ca.vec<1>();
+    return i_extract_bits_any(lo) | (i_extract_bits_any(hi) << 2);
+#endif
+}
+
 template<unsigned id> SIMDPP_INL
 uint16_t i_extract_bits(const uint8<16>& ca)
 {

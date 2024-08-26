@@ -106,6 +106,39 @@ void test_extract_bits32_n(TestResultsSet& tc)
     TEST_PUSH_ALL_COMB_OP1_T(tc, std::uint32_t, uint32<B/4>, extract_bits_any, s);
 }
 
+template<unsigned B>
+void test_extract_bits64_n(TestResultsSet& tc)
+{
+    using namespace simdpp;
+
+    TestData<uint64<B/8>> s;
+
+    s.add(make_uint(0x0000000000000000, 0x0000000000000000));
+    s.add(make_uint(0xffffffffffffffff, 0x0000000000000000));
+    s.add(make_uint(0x0000000000000000, 0xffffffffffffffff));
+    s.add(make_uint(0xffffffffffffffff, 0xffffffffffffffff));
+
+    TEST_PUSH_ALL_COMB_OP1_T(tc, std::uint32_t, uint64<B/8>, extract_bits_any, s);
+}
+
+template<unsigned B>
+void test_extract_bits64_n2(TestResultsSet& tc)
+{
+    using namespace simdpp;
+
+    TestData<uint64<B/8>> s;
+
+    s.add(make_uint(0xffffffffffffffff, 0x0000000000000000, 0xffffffffffffffff, 0x0000000000000000));
+    s.add(make_uint(0x0000000000000000, 0xffffffffffffffff, 0x0000000000000000, 0xffffffffffffffff));
+    s.add(make_uint(0x0000000000000000, 0x0000000000000000, 0xffffffffffffffff, 0x0000000000000000));
+    s.add(make_uint(0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0xffffffffffffffff));
+    s.add(make_uint(0x0000000000000000, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff));
+    s.add(make_uint(0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff, 0xffffffffffffffff));
+    s.add(make_uint(0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000));
+
+    TEST_PUSH_ALL_COMB_OP1_T(tc, std::uint32_t, uint64<B/8>, extract_bits_any, s);
+}
+
 template<class V, class V32I>
 void test_popcnt_type(TestResultsSet& tc)
 {
@@ -231,6 +264,8 @@ void test_bitwise(TestResults& res, TestReporter& tr)
     test_extract_bits16_n<32>(tc);
     test_extract_bits32_n<16>(tc);
     test_extract_bits32_n<32>(tc);
+    test_extract_bits64_n<16>(tc);
+    test_extract_bits64_n2<32>(tc);
 }
 
 } // namespace SIMDPP_ARCH_NAMESPACE
