@@ -385,7 +385,10 @@ double i_extract(const float64<2>& a)
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
-    return _mm_cvtsd_f64(_mm_shuffle_pd(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2(id, id)));
+    if (id == 0) {
+        return _mm_cvtsd_f64(a.native());
+    }
+    return _mm_cvtsd_f64(_mm_unpackhi_pd(a.native(), a.native()));
 #elif SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     detail::mem_block<float64x2> ax(a);
     return ax[id];
