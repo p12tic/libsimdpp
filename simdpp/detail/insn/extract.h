@@ -350,7 +350,16 @@ float i_extract(const float32<4>& a)
 #if SIMDPP_USE_NULL || SIMDPP_USE_NEON_NO_FLT_SP
     return a.el(id);
 #elif SIMDPP_USE_SSE2
-    return _mm_cvtss_f32(_mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(id, id, id, id)));
+    switch (id) {
+    case 0: return _mm_cvtss_f32(a.native());
+#if SIMDPP_USE_SSE3
+    case 1: return _mm_cvtss_f32(_mm_movehdup_ps(a.native()));
+#else
+    case 1: return _mm_cvtss_f32(_mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(id, id, id, id)));
+#endif
+    case 2: return _mm_cvtss_f32(_mm_unpackhi_ps(a.native(), a.native()));
+    case 3: return _mm_cvtss_f32(_mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(id, id, id, id)));
+    }
 #elif SIMDPP_USE_NEON
     return vgetq_lane_f32(a.native(), id);
 #elif SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
@@ -385,7 +394,10 @@ double i_extract(const float64<2>& a)
 #if SIMDPP_USE_NULL
     return a.el(id);
 #elif SIMDPP_USE_SSE2
-    return _mm_cvtsd_f64(_mm_shuffle_pd(a.native(), a.native(), SIMDPP_SHUFFLE_MASK_2x2(id, id)));
+    if (id == 0) {
+        return _mm_cvtsd_f64(a.native());
+    }
+    return _mm_cvtsd_f64(_mm_unpackhi_pd(a.native(), a.native()));
 #elif SIMDPP_USE_NEON32 || SIMDPP_USE_ALTIVEC || SIMDPP_USE_MSA
     detail::mem_block<float64x2> ax(a);
     return ax[id];
@@ -399,11 +411,12 @@ template<unsigned id> SIMDPP_INL
 double i_extract(const float64<4>& a)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_cvtsd_f64(_mm256_permute4x64_pd(a.native(), _MM_SHUFFLE(id, id, id, id)));
-#else
+    if (id == 3) {
+        return _mm256_cvtsd_f64(_mm256_permute4x64_pd(a.native(), _MM_SHUFFLE(id, id, id, id)));
+    }
+#endif
     float64<2> val = _mm256_extractf128_pd(a.native(), id / 2);
     return i_extract<id % 2>(val);
-#endif
 }
 #endif
 

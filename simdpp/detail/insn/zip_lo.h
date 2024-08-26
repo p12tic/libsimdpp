@@ -226,8 +226,7 @@ static SIMDPP_INL
 float64x2 i_zip2_lo(const float64x2& a, const float64x2& b)
 {
 #if SIMDPP_USE_SSE2
-    return _mm_castps_pd(_mm_movelh_ps(_mm_castpd_ps(a.native()),
-                                       _mm_castpd_ps(b.native())));
+    return _mm_unpacklo_pd(a.native(), b.native());
 #elif SIMDPP_USE_NEON64
     return vtrn1q_f64(a.native(), b.native());
 #elif SIMDPP_USE_VSX_206
