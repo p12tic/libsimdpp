@@ -399,11 +399,12 @@ template<unsigned id> SIMDPP_INL
 double i_extract(const float64<4>& a)
 {
 #if SIMDPP_USE_AVX2
-    return _mm256_cvtsd_f64(_mm256_permute4x64_pd(a.native(), _MM_SHUFFLE(id, id, id, id)));
-#else
+    if (id == 3) {
+        return _mm256_cvtsd_f64(_mm256_permute4x64_pd(a.native(), _MM_SHUFFLE(id, id, id, id)));
+    }
+#endif
     float64<2> val = _mm256_extractf128_pd(a.native(), id / 2);
     return i_extract<id % 2>(val);
-#endif
 }
 #endif
 
