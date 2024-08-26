@@ -209,7 +209,7 @@ SIMDPP_INL uint8_t i_extract_bits_any(const uint32<8>& ca)
 SIMDPP_INL uint8_t i_extract_bits_any(const uint64<2>& ca)
 {
     uint64<2> a = ca;
-#if SIMDPP_USE_NULL
+#if SIMDPP_USE_NULL || !SIMDPP_HAS_INT64_SIMD
     uint8_t r = 0;
     for (unsigned i = 0; i < a.length; i++) {
         uint8_t x = ca.el(i);
@@ -222,13 +222,13 @@ SIMDPP_INL uint8_t i_extract_bits_any(const uint64<2>& ca)
 #elif SIMDPP_USE_NEON
     uint64<2> mask = make_uint(0x1, 0x2);
     a = bit_and(a, mask);
-    uint64x1_t r = vadd_u64(vget_low_u64(r2), vget_high_u64(r2));
+    uint64x1_t r = vadd_u64(vget_low_u64(a.native()), vget_high_u64(a.native()));
     return vget_lane_u8(vreinterpret_u8_u64(r), 0);
-#elif SIMDPP_USE_ALTIVEC
+#elif SIMDPP_USE_ALTIVEC && SIMDPP_HAS_INT64_SIMD
     uint32<4> mask = make_uint(0x1, 0x0, 0x2, 0x0);
-    a = bit_and(a, mask);
+    uint32<4> m = bit_and(uint32<4>(a), mask);
     uint32<4> zero = make_zero();
-    uint32<4> s = (int32x4)vec_sums((__vector int32_t)a.native(),
+    uint32<4> s = (int32x4)vec_sums((__vector int32_t)m.native(),
                                     (__vector int32_t)zero.native());
 #if SIMDPP_BIG_ENDIAN
     return extract<7>(uint16x8(s));
@@ -237,16 +237,21 @@ SIMDPP_INL uint8_t i_extract_bits_any(const uint64<2>& ca)
 #endif
 #elif SIMDPP_USE_MSA
     uint32<4> mask = make_uint(0x1, 0x0, 0x2, 0x0);
-    a = bit_and(a, mask);
-    a = (v4u32) __msa_hadd_u_d(a.native(), a.native());
-    a = bit_or(a, move4_l<2>(a));
-    return extract<0>(a);
+    uint32<4> b = bit_and(uint32<4>(a), mask);
+    b = (v4u32) __msa_hadd_u_d(b.native(), b.native());
+    b = bit_or(b, move4_l<2>(b));
+    return extract<0>(b);
 #endif
 }
 
 SIMDPP_INL uint8_t i_extract_bits_any(const uint64<4>& ca)
 {
-#if SIMDPP_USE_AVX512DQ
+#if SIMDPP_USE_NULL || !SIMDPP_HAS_INT64_SIMD
+    return (ca.template vec<0>().el(0) & 1) |
+           (ca.template vec<0>().el(1) & 2) |
+           (ca.template vec<1>().el(0) & 4) |
+           (ca.template vec<1>().el(1) & 8);
+#elif SIMDPP_USE_AVX512DQ
     return _mm256_movepi64_mask(ca.native());
 #elif SIMDPP_USE_AVX2
     return _mm256_movemask_pd(_mm256_castsi256_pd(ca.native()));
