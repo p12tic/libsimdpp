@@ -351,6 +351,7 @@ float i_extract(const float32<4>& a)
     return a.el(id);
 #elif SIMDPP_USE_SSE2
     switch (id) {
+    default:
     case 0: return _mm_cvtss_f32(a.native());
 #if SIMDPP_USE_SSE3
     case 1: return _mm_cvtss_f32(_mm_movehdup_ps(a.native()));
