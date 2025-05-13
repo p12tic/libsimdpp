@@ -101,7 +101,7 @@ uint32x4 i_permute4(const uint32x4& a)
 #elif SIMDPP_USE_SSE2
     return _mm_shuffle_epi32(a.native(), _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
-#if __GNUC__
+#if __GNUC__ && !__clang__
     return __builtin_shuffle(a.native(), a.native(), (uint32x4_t){s0, s1, s2, s3});
 #else
     return detail::neon_shuffle_int32x4::permute4<s0,s1,s2,s3>(a);
@@ -151,7 +151,7 @@ float32x4 i_permute4(const float32x4& a)
 #elif SIMDPP_USE_SSE2
     return _mm_shuffle_ps(a.native(), a.native(), _MM_SHUFFLE(s3, s2, s1, s0));
 #elif SIMDPP_USE_NEON
-#if __GNUC__ && SIMDPP_USE_NEON_FLT_SP
+#if __GNUC__ && !__clang__ && SIMDPP_USE_NEON_FLT_SP
     return __builtin_shuffle(a.native(), a.native(), (uint32x4_t){s0, s1, s2, s3});
 #else
     return float32x4(detail::neon_shuffle_int32x4::permute4<s0,s1,s2,s3>(int32x4(a)));

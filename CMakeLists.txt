@@ -37,6 +37,7 @@ simdpp_get_runnable_archs(NATIVE_ARCHS)
 set(SIMDPP_INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include/${PKG_NAME}-${SIMDPP_API_VERSION}")
 set(SIMDPP_DOCDIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PKG_NAME}")
 set(SIMDPP_PKGCONFIGDIR "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
+option(LIBSIMDPP_ENABLE_TESTS "Enable libsimdpp tests" ON)
 
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/libsimdpp.pc.in"
@@ -58,4 +59,7 @@ install(FILES
 enable_testing()
 
 add_subdirectory(simdpp)
+
+if (LIBSIMDPP_ENABLE_TESTS)
 add_subdirectory(test)
+endif()

@@ -21,7 +21,7 @@ foreach(SRC ${ARCH_SOURCES})
     simdpp_multiarch(ARCH_GEN_SOURCES ${SRC} ${COMPILABLE_ARCHS})
 endforeach()
 
-add_executable(test_math_accuracy
+add_executable(test_math_accuracy EXCLUDE_FROM_ALL
     ${SOURCES}
     ${ARCH_GEN_SOURCES}
 )
